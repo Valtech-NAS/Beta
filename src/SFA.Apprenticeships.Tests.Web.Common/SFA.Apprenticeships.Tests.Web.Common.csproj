@@ -55,6 +55,15 @@
     <Reference Include="TechTalk.SpecFlow">
       <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
     </Reference>
+    <Reference Include="TechTalk.SpecFlow.Generator">
+      <HintPath>..\packages\SpecFlow.CustomPlugin.1.9.0\lib\net40\TechTalk.SpecFlow.Generator.dll</HintPath>
+    </Reference>
+    <Reference Include="TechTalk.SpecFlow.Parser">
+      <HintPath>..\packages\SpecFlow.CustomPlugin.1.9.0\lib\net40\TechTalk.SpecFlow.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="TechTalk.SpecFlow.Utils">
+      <HintPath>..\packages\SpecFlow.CustomPlugin.1.9.0\lib\net40\TechTalk.SpecFlow.Utils.dll</HintPath>
+    </Reference>
     <Reference Include="WebDriver">
       <HintPath>..\packages\Selenium.WebDriver.2.39.0\lib\net40\WebDriver.dll</HintPath>
     </Reference>
@@ -71,6 +80,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>REM xcopy $(TargetPath) $(ProjectDir)..\SFA.Apprenticeships.Tests.Web.Candidate\Plugins\ /y</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
