@@ -10,11 +10,5 @@
         {
             Assert.True(true);
         }
-
-        [Test]
-        public void Fail()
-        {
-            Assert.True(false);
-        }
     }
 }
