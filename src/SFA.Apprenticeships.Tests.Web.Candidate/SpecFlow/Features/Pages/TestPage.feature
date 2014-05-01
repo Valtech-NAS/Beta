@@ -1,4 +1,4 @@
-﻿Feature: HomePage
+﻿﻿Feature: HomePage
 	In order to check the site is working
 	As a user
 	I want to be told the page has loaded
