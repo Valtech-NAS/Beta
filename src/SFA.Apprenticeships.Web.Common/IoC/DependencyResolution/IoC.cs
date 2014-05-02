@@ -7,7 +7,7 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
     /// <summary>
     /// IoC Container
     /// </summary>
-    internal static class IoC
+    public static class IoC
     {
         public static IContainer Initialize()
         {
