@@ -129,6 +129,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Lookups.xml" />
     <Content Include="packages.config" />
     <Content Include="Content\_assets\fonts\NTA-Bold-20130221.eot" />
     <Content Include="Content\_assets\fonts\NTA-Bold-20130221.woff" />

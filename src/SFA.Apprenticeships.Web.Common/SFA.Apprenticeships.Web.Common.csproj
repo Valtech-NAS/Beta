@@ -67,13 +67,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Framework\ViewDataDictionaryExtensions.cs" />
     <Compile Include="Helpers\Guard.cs" />
     <Compile Include="Helpers\Throw.cs" />
     <Compile Include="IoC\DependencyResolution\IoC.cs" />
     <Compile Include="IoC\DependencyResolution\StructureMapDependencyResolver.cs" />
     <Compile Include="IoC\DependencyResolution\StructureMapDependencyScope.cs" />
     <Compile Include="IoC\DependencyResolution\NasControllerFactory.cs" />
+    <Compile Include="Models\Common\ReferenceDataTypes.cs" />
+    <Compile Include="Models\Common\ReferenceDataViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\ConfigReferenceDataProvider.cs" />
+    <Compile Include="Providers\IReferenceDataProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

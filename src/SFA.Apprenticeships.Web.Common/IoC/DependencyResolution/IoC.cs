@@ -1,4 +1,5 @@
 using System.Web.Mvc;
+using SFA.Apprenticeships.Web.Common.Providers;
 using StructureMap;
 using StructureMap.Graph;
 
@@ -39,6 +40,7 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
         {
             container.Configure(x =>
             {
+                x.For<IReferenceDataProvider>().Use<ConfigReferenceDataProvider>();
                 //x.For<HttpSessionStateBase>().Use(() => new HttpSessionStateWrapper(HttpContext.Current.Session));
             });
 

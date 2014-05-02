@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<referenceData>
+  <data key="Titles">
+    <item id="Mr" value="Mr" />
+    <item id="Miss" value="Miss" />
+    <item id="Mrs" value="Mrs" />
+    <item id="Ms" value="Ms" />
+  </data>
+  <data key="Genders">
+    <item id="Male" value="Male" />
+    <item id="Female" value="Female" />
+  </data>
+</referenceData>
