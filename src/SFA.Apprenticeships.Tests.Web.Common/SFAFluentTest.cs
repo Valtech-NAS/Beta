@@ -4,9 +4,9 @@
     using System.Configuration;
     using FluentAutomation;
 
-    public class SFAFluentTest : FluentTest
+    public class SfaFluentTest : FluentTest
     {
-        public SFAFluentTest()
+        public SfaFluentTest()
         {
             SeleniumWebDriver.Bootstrap(
                 SeleniumWebDriver.Browser.Chrome,

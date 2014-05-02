@@ -5,7 +5,7 @@
     using SFA.Apprenticeships.Tests.Web.Common;
 
     [TestFixture]
-    public class FluentTestShould : SFAFluentTest
+    public class FluentTestShould : SfaFluentTest
     {
         [Test]
         public void ConnectAndValidateWebPageContent()
