@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate
+﻿using SFA.Apprenticeships.Web.Common.IoC.DependencyResolution;
+
+namespace SFA.Apprenticeships.Web.Candidate
 {
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -13,6 +15,9 @@
 
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
+
+            StructuremapMvc.StartIoC();
+            ControllerBuilder.Current.SetControllerFactory(new NasControllerFactory());
         }
     }
 }
