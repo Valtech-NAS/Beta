@@ -55,6 +55,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.1.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.1.2\lib\net45\System.Web.Http.dll</HintPath>
@@ -67,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\FromJsonAttribute.cs" />
     <Compile Include="Framework\ViewDataDictionaryExtensions.cs" />
     <Compile Include="Helpers\Guard.cs" />
     <Compile Include="Helpers\Throw.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="IoC\DependencyResolution\NasControllerFactory.cs" />
     <Compile Include="Models\Common\ReferenceDataTypes.cs" />
     <Compile Include="Models\Common\ReferenceDataViewModel.cs" />
+    <Compile Include="Models\Errors\ErrorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ConfigReferenceDataProvider.cs" />
     <Compile Include="Providers\IReferenceDataProvider.cs" />

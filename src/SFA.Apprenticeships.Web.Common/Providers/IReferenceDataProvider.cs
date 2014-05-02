@@ -9,6 +9,6 @@ namespace SFA.Apprenticeships.Web.Common.Providers
     /// </summary>
     public interface IReferenceDataProvider
     {
-        IEnumerable<ReferenceDataViewModel> Get(ReferenceDataTypes type);
+        IEnumerable<ReferenceDataViewModel> Get(ReferenceDataType type);
     }
 }

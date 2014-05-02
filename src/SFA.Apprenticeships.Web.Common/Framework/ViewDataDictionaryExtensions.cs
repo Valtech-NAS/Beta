@@ -9,7 +9,7 @@ namespace SFA.Apprenticeships.Web.Common.Framework
         public static void AddLookups(
             this ViewDataDictionary viewData, 
             IReferenceDataProvider referenceDataService,
-            params ReferenceDataTypes[] lookups)
+            params ReferenceDataType[] lookups)
         {
             foreach (var lookup in lookups)
             {
@@ -24,7 +24,7 @@ namespace SFA.Apprenticeships.Web.Common.Framework
         public static void AddLists(
             this ViewDataDictionary viewData, 
             IReferenceDataProvider referenceDataService,
-            params ReferenceDataTypes[] lists)
+            params ReferenceDataType[] lists)
         {
             foreach (var list in lists)
             {

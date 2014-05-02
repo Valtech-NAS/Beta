@@ -18,21 +18,23 @@ namespace SFA.Apprenticeships.Web.Common.Providers
 
         public ConfigReferenceDataProvider()
         {
-            _data = new Lazy<XDocument>(() =>
-            {
-                var dataFilename = HttpContext.Current.Server.MapPath("~/App_Data/Lookups.xml");
+            _data = new Lazy<XDocument>(
+                () =>
+                {
+                    var dataFilename = HttpContext.Current.Server.MapPath("~/App_Data/Lookups.xml");
 
-                if (!File.Exists(dataFilename))
-                    throw new Exception(string.Format("Reference data file not found ({0})", dataFilename));
+                    if (!File.Exists(dataFilename))
+                    {
+                        throw new FileNotFoundException(string.Format("Reference data file not found ({0})", dataFilename));
+                    }
 
-                return XDocument.Load(dataFilename);
-            });
+                    return XDocument.Load(dataFilename);
+                });
         }
 
-        public IEnumerable<ReferenceDataViewModel> Get(ReferenceDataTypes type)
+        public IEnumerable<ReferenceDataViewModel> Get(ReferenceDataType type)
         {
-            var data = GetReferenceData(type.ToString());
-            return data;
+            return GetReferenceData(type.ToString());
         }
 
         #region Helpers
@@ -41,16 +43,18 @@ namespace SFA.Apprenticeships.Web.Common.Providers
             var referenceData = _data.Value.XPathSelectElement("/referenceData");
 
             if (referenceData == null)
-                throw new Exception("Reference data section missing from config file");
+            {
+                throw new InvalidOperationException("Reference data section missing from config file");
+            }
 
             var items = from data in referenceData.Descendants("data")
-                        where (string)data.Attribute("key") == key
-                        from item in data.Descendants("item")
-                        select new ReferenceDataViewModel
-                        {
-                            Id = item.Attribute("id").Value,
-                            Description = item.Attribute("value").Value
-                        };
+                where (string) data.Attribute("key") == key
+                from item in data.Descendants("item")
+                select new ReferenceDataViewModel
+                {
+                    Id = item.Attribute("id").Value,
+                    Description = item.Attribute("value").Value
+                };
 
             return items.ToList();
         }

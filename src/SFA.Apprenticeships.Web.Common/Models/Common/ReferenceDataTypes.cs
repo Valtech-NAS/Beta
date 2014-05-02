@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Models.Common
 {
-    public enum ReferenceDataTypes
+    public enum ReferenceDataType
     {
         Titles,
         Genders,
