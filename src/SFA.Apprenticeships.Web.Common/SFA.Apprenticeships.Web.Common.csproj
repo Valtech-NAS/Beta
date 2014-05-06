@@ -87,7 +87,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Services.Common\SFA.Apprenticeships.Services.Common.csproj">
+      <Project>{78b1f2a1-dcc3-4ed3-8ce0-16e0781b59fa}</Project>
+      <Name>SFA.Apprenticeships.Services.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

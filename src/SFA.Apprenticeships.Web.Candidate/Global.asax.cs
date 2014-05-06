@@ -31,7 +31,6 @@ namespace SFA.Apprenticeships.Web.Candidate
                 }
             }
 
-
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -51,7 +50,7 @@ namespace SFA.Apprenticeships.Web.Candidate
         /// <param name="e"></param>
         protected void Application_Error(object sender, EventArgs e)
         {
-            var ex = Server.GetLastError();
+            //var ex = Server.GetLastError();
             var httpContext = ((MvcApplication)sender).Context;
             var currentRouteData = RouteTable.Routes.GetRouteData(new HttpContextWrapper(httpContext));
             var currentController = string.Empty;

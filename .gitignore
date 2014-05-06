@@ -133,6 +133,9 @@ UpgradeLog*.htm
 App_Data/*.mdf
 App_Data/*.ldf
 
+# Private settings config files
+[Pp]rivate.[Ss]ettings.config
+[Pp]rivate.[Cc]onnectionstrings.config
 
 #LightSwitch generated files
 GeneratedArtifacts/
