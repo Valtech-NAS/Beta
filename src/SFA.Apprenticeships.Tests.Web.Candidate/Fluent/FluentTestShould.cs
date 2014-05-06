@@ -5,12 +5,12 @@
     using SFA.Apprenticeships.Tests.Web.Common;
 
     [TestFixture]
-    public class FluentTestShould : SfaFluentTest
+    public class FluentTestShould : FluentTest
     {
         [Test]
         public void ConnectAndValidateWebPageContent()
         {
-            I.Open(WebRoot);
+            I.Open(SiteConfig.WebRoot);
             I.Assert.Exists("#h1header");
         }
     }
