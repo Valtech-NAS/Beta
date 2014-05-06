@@ -11,7 +11,7 @@
         public static void Before()
         {
             SeleniumWebDriver.Bootstrap(
-                SeleniumWebDriver.Browser.Chrome,
+                //SeleniumWebDriver.Browser.Chrome,
                 SeleniumWebDriver.Browser.Firefox
                 );
         }
