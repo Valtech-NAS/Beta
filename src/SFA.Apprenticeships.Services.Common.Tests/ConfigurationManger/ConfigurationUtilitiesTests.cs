@@ -1,12 +1,9 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
-using SFA.Apprenticeships.Services.Common.ConfigurationUtilities;
 
-namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
+namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
 {
-    using ConfigurationUtilities = SFA.Apprenticeships.Services.Common.ConfigurationUtilities.ConfigurationUtilities;
-
     /// <summary>
     /// This is a test class for ConfigurationUtilities and is intended
     /// to contain all ConfigurationUtilitiesTest Unit Tests
@@ -24,7 +21,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         [TestCase, Description("Tests that the GetConnectionString method throws an ArgumentNullException if the key supplied is null.")]
         public void GetConnectionString_NullKey_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationUtilities.ConfigurationUtilities();
             string key = null;
             Action result = () => target.GetConnectionString(key);
 
@@ -37,7 +34,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         [TestCase]
         public void GetConnectionString_AllValid_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationUtilities.ConfigurationUtilities();
             const string key = "ApplicationExceptions";
 
             var result = target.GetConnectionString(key);
@@ -56,7 +53,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         [TestCase]
         public void GetConnectionString_Missing_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationUtilities.ConfigurationUtilities();
             Action test = () => target.GetConnectionString("missingkey");
 
             test.ShouldThrow<ApplicationException>();
@@ -72,7 +69,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         [TestCase, Description("Tests that the GetAppSetting method throws an ArgumentNullException if the key supplied is null.")]
         public void GetAppSetting_NullKey_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationUtilities.ConfigurationUtilities();
             string key = null;
             Action result = () => target.GetAppSetting(key);
 
@@ -85,7 +82,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         [TestCase]
         public void GetAppSetting_AllValid_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationUtilities.ConfigurationUtilities();
             const string key = "TestValue";
 
             var result = target.GetAppSetting(key);
@@ -101,7 +98,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         [ExpectedException(typeof(ArgumentException))]
         public void GetAppSetting_Missing_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationUtilities.ConfigurationUtilities();
             const string key = "MissingKey";
 
             var result = target.GetAppSetting(key);
@@ -119,7 +116,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         [TestCase, Description("Tests that the TryGetAppSetting method throws an ArgumentNullException if the key supplied is null.")]
         public void TryGetAppSetting_NullKey_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationUtilities.ConfigurationUtilities();
             string key = null;
 
             Action result = () => target.TryGetAppSetting(key);
@@ -133,7 +130,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         [TestCase]
         public void TryGetAppSetting_AllValid_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationUtilities.ConfigurationUtilities();
             const string key = "TestValue";
 
             var result = target.TryGetAppSetting(key);
@@ -153,7 +150,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         /// <param name="key">The input key.</param>
         /// <param name="target">The target.</param>
         /// <returns>The value located by the supplied key</returns>
-        public T GetAppSettingTestHelper<T>(string key, ConfigurationUtilities target)
+        public T GetAppSettingTestHelper<T>(string key, ConfigurationUtilities.ConfigurationUtilities target)
         {
             var returnType = default(T);
             var result = target.GetAppSetting<T>(returnType, key);
@@ -168,7 +165,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         [SetCulture("en-GB")]
         public void GetAppSetting_Generic_AllValid_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationUtilities.ConfigurationUtilities();
             const string key = "TestDate";
             var result = target.GetAppSetting<DateTime>(key);
             result.Should().Be(new DateTime(2014, 12, 31));
@@ -178,15 +175,14 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         /// A test for GetAppSetting
         /// </summary>
         [TestCase, Description("Tests that the GetConnectionString method throws an ArgumentNullException if the key supplied is null.")]
-        [ExpectedException(typeof(ArgumentException))]
         public void GetAppSetting_Generic_Missing_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationUtilities.ConfigurationUtilities();
             const string key = "Missingvalue";
 
-            var result = target.GetAppSetting<DateTime>(key);
+            Action test = () => target.GetAppSetting<DateTime>(key);
 
-            result.Should().Be(default(DateTime));
+            test.ShouldThrow<ArgumentException>();
         }
 
         /// <summary>
@@ -195,7 +191,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         [TestCase]
         public void CheckGetAppSettingThrowsExceptionOnNoKey1()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationUtilities.ConfigurationUtilities();
             Action result = () => target.GetAppSetting<DateTime>(string.Empty);
 
             result.ShouldThrow<ArgumentNullException>();
@@ -207,7 +203,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         [TestCase]
         public void CheckGetAppSettingThrowsExceptionOnNoKey2()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationUtilities.ConfigurationUtilities();
            Action result = () => target.GetAppSetting<DateTime>(DateTime.Today, string.Empty);
 
             result.ShouldThrow<ArgumentNullException>();
@@ -219,7 +215,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         [TestCase]
         public void CheckGetAppSettingThrowsExceptionInvalidKey()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationUtilities.ConfigurationUtilities();
             Action result = () => target.GetAppSetting("test");
 
             result.ShouldThrow<ArgumentException>();
