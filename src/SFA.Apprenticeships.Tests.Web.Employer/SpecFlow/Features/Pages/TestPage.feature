@@ -6,4 +6,4 @@
 @mytag
 Scenario: Home page loads
 	Given I navigated to the homepage
-	Then the screen has the title of 'Candidate Home page'
+	Then the screen has the title of 'Employer Home page'
