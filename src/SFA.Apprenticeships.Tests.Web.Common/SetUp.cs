@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Tests.Web.Common
 {
+    using System.Diagnostics;
+    using System.Linq;
     using FluentAutomation;
     using NUnit.Framework;
 
@@ -16,6 +18,12 @@
         [TearDown]
         public virtual void AfterAllTests()
         {
+            var driverProcesses = Process.GetProcesses().Where(pr => pr.ProcessName == "chromedriver" || pr.ProcessName == "firefox");
+
+            foreach (var process in driverProcesses)
+            {
+                process.Close();
+            }
         }
     }
 }

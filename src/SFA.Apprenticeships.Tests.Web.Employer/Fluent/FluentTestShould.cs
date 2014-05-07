@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Tests.Web.Candidate.Fluent
+﻿namespace SFA.Apprenticeships.Tests.Web.Employer.Fluent
 {
     using FluentAutomation;
     using NUnit.Framework;
@@ -12,7 +12,7 @@
         {
             I.Open(SiteConfig.WebRoot);
             I.Assert.Exists("#h1header");
-            I.Assert.Text(text => text == "Candidate Home page").In("#h1header");
+            I.Assert.Text(text => text == "Employer Home page").In("#h1header");
         }
     }
 }
