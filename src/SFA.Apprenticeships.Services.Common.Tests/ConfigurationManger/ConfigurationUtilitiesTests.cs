@@ -165,6 +165,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         /// A test for GetAppSetting
         /// </summary>
         [TestCase, Description("Tests that the GetConnectionString method throws an ArgumentNullException if the key supplied is null.")]
+        [SetCulture("en-GB")]
         public void GetAppSetting_Generic_AllValid_Test()
         {
             var target = new ConfigurationUtilities();
