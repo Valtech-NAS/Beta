@@ -62,7 +62,7 @@ namespace SFA.Apprenticeships.Services.Common.ConfigurationUtilities
 
             // If result is null throws argument exception in GetApppSetting.
             string result = this.GetAppSetting(key);
-            return (T)Convert.ChangeType(result, typeof(T));
+            return (T)Convert.ChangeType(result, typeof(T), CultureInfo.CurrentCulture);
         }
 
         /// <summary>

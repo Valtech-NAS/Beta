@@ -1,10 +1,8 @@
-﻿using System;
-using FluentAssertions;
-using NUnit.Framework;
-using SFA.Apprenticeships.Services.Common.ConfigurationUtilities;
-
-namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
+﻿namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
 {
+    using System;
+    using FluentAssertions;
+    using NUnit.Framework;
     using ConfigurationUtilities = SFA.Apprenticeships.Services.Common.ConfigurationUtilities.ConfigurationUtilities;
 
     /// <summary>
@@ -165,7 +163,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationUtilitiesTests
         /// A test for GetAppSetting
         /// </summary>
         [TestCase, Description("Tests that the GetConnectionString method throws an ArgumentNullException if the key supplied is null.")]
-        public void GetAppSetting_Generic_AllValid_Test()
+        public void GetAppSetting_Generic_DateConversion_Test()
         {
             var target = new ConfigurationUtilities();
             const string key = "TestDate";
