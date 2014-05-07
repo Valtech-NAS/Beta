@@ -55,6 +55,7 @@
     <Compile Include="ActiveDirectory\ActiveDirectoryServer.cs" />
     <Compile Include="ConfigurationUtilities\ConfigurationUtilities.cs" />
     <Compile Include="ConfigurationUtilities\IConfigurationManager.cs" />
+    <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

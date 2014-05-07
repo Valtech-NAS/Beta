@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SFA.Apprenticeships.Repository.Elasticsearch.Attributes
+namespace SFA.Apprenticeships.Services.Elasticsearch.Attributes
 {
     public class ElasticSearchTypeAttribute : Attribute
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using RestSharp;
 using RestSharp.Deserializers;
-using SFA.Apprenticeships.Repository.Elasticsearch.Abstract;
+using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
-namespace SFA.Apprenticeships.Repository.Elasticsearch.Service
+namespace SFA.Apprenticeships.Services.Elasticsearch.Service
 {
     public class ElasticServiceService : IElasticSearchService
     {
@@ -19,28 +19,28 @@ namespace SFA.Apprenticeships.Repository.Elasticsearch.Service
             _serviceEndpoint = url;
         }
 
-        public IRestResponse SendCommand(Method method, string command)
+        public IRestResponse Execute(Method method, string command)
         {
             var request = new RestRequest(command, method);
-            return Send(request);
+            return Execute(request);
         }
 
-        public IRestResponse SendCommand(Method method, string command, string id, string json)
+        public IRestResponse Execute(Method method, string command, string id, string json)
         {
             var request = new RestRequest("{command}/{id}", method) { RequestFormat = DataFormat.Json };
             request.AddUrlSegment("command", command);
             request.AddUrlSegment("id", id);
             request.AddParameter("application/json", json, ParameterType.RequestBody);
 
-            return Send(request);
+            return Execute(request);
         }
 
-        public IRestResponse SendCommand(string command, string id, string json)
+        public IRestResponse Execute(string command, string id, string json)
         {
-            return SendCommand(Method.PUT, command, id, json);
+            return Execute(Method.PUT, command, id, json);
         }
 
-        public IRestResponse Send(IRestRequest request)
+        public IRestResponse Execute(IRestRequest request)
         {
             var client = new RestClient { BaseUrl = _serviceEndpoint };
             client.AddHandler("application/json", new JsonDeserializer());
@@ -57,7 +57,7 @@ namespace SFA.Apprenticeships.Repository.Elasticsearch.Service
             return response;
         }
 
-        public IRestResponse<T> Send<T>(IRestRequest request) where T : new()
+        public IRestResponse<T> Execute<T>(IRestRequest request) where T : new()
         {
             var client = new RestClient { BaseUrl = _serviceEndpoint };
             client.AddHandler("application/json", new JsonDeserializer());

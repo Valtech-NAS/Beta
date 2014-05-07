@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SFA.Apprenticeships.Repository.Postcode.Entities
+namespace SFA.Apprenticeships.Services.Postcode.Entities
 {
     public class PostcodeInfoResult
     {

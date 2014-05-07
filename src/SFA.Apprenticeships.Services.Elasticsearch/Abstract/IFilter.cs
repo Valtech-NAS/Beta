@@ -1,6 +1,6 @@
-﻿using SFA.Apprenticeships.Repository.Elasticsearch.Entities;
+﻿using SFA.Apprenticeships.Services.Elasticsearch.Entities;
 
-namespace SFA.Apprenticeships.Repository.Elasticsearch.Abstract
+namespace SFA.Apprenticeships.Services.Elasticsearch.Abstract
 {
     public interface ISortTerm
     {

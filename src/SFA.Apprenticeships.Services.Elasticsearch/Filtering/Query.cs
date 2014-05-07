@@ -1,7 +1,7 @@
 ﻿using System;
-using SFA.Apprenticeships.Repository.Elasticsearch.Abstract;
+using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
-namespace SFA.Apprenticeships.Repository.Elasticsearch.Filtering
+namespace SFA.Apprenticeships.Services.Elasticsearch.Filtering
 {
     public class Query<T> where T : class 
     {

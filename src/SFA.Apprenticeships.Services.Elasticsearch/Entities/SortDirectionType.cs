@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace SFA.Apprenticeships.Repository.Elasticsearch.Entities
+namespace SFA.Apprenticeships.Services.Elasticsearch.Entities
 {
     public enum SortDirectionType
     {

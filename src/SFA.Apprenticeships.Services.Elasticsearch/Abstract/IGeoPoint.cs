@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Repository.Elasticsearch.Abstract
+﻿namespace SFA.Apprenticeships.Services.Elasticsearch.Abstract
 {
     public interface IGeoPoint
     {

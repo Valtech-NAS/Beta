@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using RestSharp;
 using RestSharp.Deserializers;
-using SFA.Apprenticeships.Repository.Postcode.Abstract;
-using SFA.Apprenticeships.Repository.Postcode.Entities;
 using SFA.Apprenticeships.Services.Common.ConfigurationUtilities;
+using SFA.Apprenticeships.Services.Postcode.Abstract;
+using SFA.Apprenticeships.Services.Postcode.Entities;
 
-namespace SFA.Apprenticeships.Repository.Postcode.Service
+namespace SFA.Apprenticeships.Services.Postcode.Service
 {
     public class PostcodeService : IPostcodeService
     {

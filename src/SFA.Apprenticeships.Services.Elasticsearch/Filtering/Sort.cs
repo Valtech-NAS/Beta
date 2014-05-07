@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Text;
-using SFA.Apprenticeships.Repository.Elasticsearch.Abstract;
-using SFA.Apprenticeships.Repository.Elasticsearch.Entities;
-using SFA.Apprenticeships.Repository.Elasticsearch.Helpers;
+using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
+using SFA.Apprenticeships.Services.Elasticsearch.Entities;
+using SFA.Apprenticeships.Services.Elasticsearch.Helpers;
 
-namespace SFA.Apprenticeships.Repository.Elasticsearch.Filtering
+namespace SFA.Apprenticeships.Services.Elasticsearch.Filtering
 {
     /// <summary>
     /// Implements one level sort term. Needs enhancing with collection of ISort for multiple level sorts.

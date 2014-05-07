@@ -1,6 +1,6 @@
-﻿using SFA.Apprenticeships.Repository.Elasticsearch.Abstract;
+﻿using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
-namespace SFA.Apprenticeships.Repository.Elasticsearch.Filtering
+namespace SFA.Apprenticeships.Services.Elasticsearch.Filtering
 {
     public class Filter<T> where T : class, ISortTerm
     {

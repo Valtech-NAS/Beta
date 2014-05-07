@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace SFA.Apprenticeships.Repository.Elasticsearch.Helpers
+namespace SFA.Apprenticeships.Services.Common.Helpers
 {
     /// <summary>
     /// TODO::High::Needs moving to 'common' helpers project.

@@ -3,9 +3,9 @@ using System.Collections;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using SFA.Apprenticeships.Repository.Elasticsearch.Attributes;
+using SFA.Apprenticeships.Services.Elasticsearch.Attributes;
 
-namespace SFA.Apprenticeships.Repository.Elasticsearch.Mapping
+namespace SFA.Apprenticeships.Services.Elasticsearch.Mapping
 {
     public static class ElasticsearchMapping
     {

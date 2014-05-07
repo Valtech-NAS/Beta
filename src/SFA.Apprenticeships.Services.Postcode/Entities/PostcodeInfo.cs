@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Repository.Postcode.Entities
+﻿namespace SFA.Apprenticeships.Services.Postcode.Entities
 {
     public class PostcodeInfo
     {

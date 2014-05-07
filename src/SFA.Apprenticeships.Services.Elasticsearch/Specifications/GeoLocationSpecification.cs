@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Text;
-using SFA.Apprenticeships.Repository.Elasticsearch.Abstract;
-using SFA.Apprenticeships.Repository.Elasticsearch.Entities;
+using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
+using SFA.Apprenticeships.Services.Elasticsearch.Entities;
 
-namespace SFA.Apprenticeships.Repository.Elasticsearch.Specifications
+namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
     public class GeoLocationSpecification<T> : ISpecification<T>
     {

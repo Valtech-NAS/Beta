@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Text;
-using SFA.Apprenticeships.Repository.Elasticsearch.Abstract;
+using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
-namespace SFA.Apprenticeships.Repository.Elasticsearch.Specifications
+namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
     public class RangeSpecification<T> : ISpecification<T>
     {

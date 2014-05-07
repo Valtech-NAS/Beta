@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using SFA.Apprenticeships.Repository.Postcode.Entities;
+using SFA.Apprenticeships.Services.Postcode.Entities;
 
-namespace SFA.Apprenticeships.Repository.Postcode.Abstract
+namespace SFA.Apprenticeships.Services.Postcode.Abstract
 {
     public interface IPostcodeService
     {

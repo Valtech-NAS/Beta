@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SFA.Apprenticeships.Repository.Elasticsearch.Entities
+namespace SFA.Apprenticeships.Services.Elasticsearch.Entities
 {
     /// <summary>
     /// Do not change property names

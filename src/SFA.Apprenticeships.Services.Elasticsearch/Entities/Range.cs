@@ -1,7 +1,7 @@
 ﻿using System;
-using SFA.Apprenticeships.Repository.Elasticsearch.Abstract;
+using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
-namespace SFA.Apprenticeships.Repository.Elasticsearch.Entities
+namespace SFA.Apprenticeships.Services.Elasticsearch.Entities
 {
     public class Range<T> : IRange<T>
     {
