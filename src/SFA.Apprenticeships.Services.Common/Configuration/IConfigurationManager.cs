@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace SFA.Apprenticeships.Services.Common.ConfigurationUtilities
+namespace SFA.Apprenticeships.Services.Common.Configuration
 {
     public interface IConfigurationManager
     {

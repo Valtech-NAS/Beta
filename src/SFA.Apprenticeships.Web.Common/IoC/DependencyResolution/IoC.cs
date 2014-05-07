@@ -1,5 +1,5 @@
 using System.Web.Mvc;
-using SFA.Apprenticeships.Services.Common.ConfigurationUtilities;
+using SFA.Apprenticeships.Services.Common.Configuration;
 using SFA.Apprenticeships.Web.Common.Providers;
 using StructureMap;
 using StructureMap.Graph;

@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Globalization;
 
-namespace SFA.Apprenticeships.Services.Common.ConfigurationUtilities
+namespace SFA.Apprenticeships.Services.Common.Configuration
 {
     public class ConfigurationUtilities : IConfigurationManager
     {

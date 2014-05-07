@@ -3,7 +3,7 @@ using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.Protocols;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
-using SFA.Apprenticeships.Services.Common.ConfigurationUtilities;
+using SFA.Apprenticeships.Services.Common.Configuration;
 
 namespace SFA.Apprenticeships.Services.Common.ActiveDirectory
 {

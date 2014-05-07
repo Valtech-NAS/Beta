@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RestSharp;
 using RestSharp.Deserializers;
-using SFA.Apprenticeships.Services.Common.ConfigurationUtilities;
+using SFA.Apprenticeships.Services.Common.Configuration;
 using SFA.Apprenticeships.Services.Postcode.Abstract;
 using SFA.Apprenticeships.Services.Postcode.Entities;
 

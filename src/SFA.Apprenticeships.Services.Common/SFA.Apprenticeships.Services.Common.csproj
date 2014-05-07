@@ -53,8 +53,8 @@
     </Compile>
     <Compile Include="ActiveDirectory\ActiveDirectoryPassword.cs" />
     <Compile Include="ActiveDirectory\ActiveDirectoryServer.cs" />
-    <Compile Include="ConfigurationUtilities\ConfigurationUtilities.cs" />
-    <Compile Include="ConfigurationUtilities\IConfigurationManager.cs" />
+    <Compile Include="Configuration\ConfigurationUtilities.cs" />
+    <Compile Include="Configuration\IConfigurationManager.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
