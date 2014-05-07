@@ -130,12 +130,11 @@ namespace SFA.Apprenticeships.Services.Common.Helpers
 
             // Get the stringvalue attributes
             var attribs = fieldInfo.GetCustomAttributes(typeof(T), false);
-            if (attribs != null && attribs.Length > 0)
+            if (attribs.Length > 0)
             {
                 var attrib = attribs[0] as T;
                 return attrib;
             }
-            ////            var attribs = fieldInfo.GetCustomAttributes(typeof(T), false)[0] as T;
 
             return default(T);
         }

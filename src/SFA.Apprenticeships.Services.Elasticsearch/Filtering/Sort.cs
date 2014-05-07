@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
+using SFA.Apprenticeships.Services.Common.Helpers;
 using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 using SFA.Apprenticeships.Services.Elasticsearch.Entities;
-using SFA.Apprenticeships.Services.Elasticsearch.Helpers;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Filtering
 {
