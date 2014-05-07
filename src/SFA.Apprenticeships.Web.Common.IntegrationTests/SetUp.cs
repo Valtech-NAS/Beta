@@ -22,7 +22,7 @@
 
             foreach (var process in driverProcesses)
             {
-                process.Close();
+                process.Kill();
             }
         }
     }
