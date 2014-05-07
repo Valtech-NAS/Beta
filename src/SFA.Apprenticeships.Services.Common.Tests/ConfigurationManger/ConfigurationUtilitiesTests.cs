@@ -96,15 +96,14 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         /// A test for GetAppSetting
         /// </summary>
         [TestCase]
-        [ExpectedException(typeof(ArgumentException))]
         public void GetAppSetting_Missing_Test()
         {
             var target = new ConfigurationUtilities();
             const string key = "MissingKey";
 
-            var result = target.GetAppSetting(key);
+            Action test = () => target.GetAppSetting(key);
 
-            result.Should().BeNull();
+            test.ShouldThrow<ArgumentException>();
         }
 
         #endregion

@@ -12,6 +12,7 @@ namespace SFA.Apprenticeships.Services.Postcode.Service
     public class PostcodeService : IPostcodeService
     {
         private readonly string _postcodeServiceEndpoint;
+        private IRestClient _client;
 
         /// <summary>
         /// <add key="PostcodeServiceEndpoint" value="http://api.postcodes.io" />
@@ -24,6 +25,22 @@ namespace SFA.Apprenticeships.Services.Postcode.Service
             }
 
             _postcodeServiceEndpoint = configManager.GetAppSetting("PostcodeServiceEndpoint");
+        }
+
+        public IRestClient Client
+        {
+            get
+            {
+                if (_client == null)
+                {
+                    _client = new RestClient { BaseUrl = _postcodeServiceEndpoint };
+                    (_client as RestClient).AddHandler("application/json", new JsonDeserializer());
+                }
+
+                return _client;
+            }
+
+            set { _client = value; }
         }
 
         public string GetPostcodeFromLatLong(string latitudeLongitude)
@@ -43,7 +60,7 @@ namespace SFA.Apprenticeships.Services.Postcode.Service
                 throw new ArgumentNullException("postcode");
             }
 
-            var request = new RestRequest("postcodes?q={postcode}") {RequestFormat = DataFormat.Json};
+            IRestRequest request = new RestRequest("postcodes?q={postcode}") { RequestFormat = DataFormat.Json };
             request.AddUrlSegment("postcode", postcode);
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/json");
@@ -66,8 +83,7 @@ namespace SFA.Apprenticeships.Services.Postcode.Service
 
         public PostcodeInfo GetRandomPostcode()
         {
-            var request = new RestRequest("random/postcodes") {RequestFormat = DataFormat.Json};
-
+            IRestRequest request = new RestRequest("random/postcodes") {RequestFormat = DataFormat.Json};
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/json");
 
@@ -81,13 +97,9 @@ namespace SFA.Apprenticeships.Services.Postcode.Service
             return postcodeInfo.Result.First();
         }
 
-        private T Execute<T>(IRestRequest request) where T : new()
-        {
-            var client = new RestClient { BaseUrl = _postcodeServiceEndpoint };
-
-            client.AddHandler("application/json", new JsonDeserializer());
-            
-            var response = client.Execute<T>(request);
+        protected virtual T Execute<T>(IRestRequest request) where T : new()
+        {           
+            var response = _client.Execute<T>(request);
 
             /* Restsharp derserializer doesnt appear to handle property names that differ from response */
            // var result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(response.Content);
