@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace SFA.Apprenticeships.Services.Common.Configuration
 {
-    public class ConfigurationUtilities : IConfigurationManager
+    public class ConfigurationManager : IConfigurationManager
     {
         /// <summary>
         /// Gets a string representation of the value located by the supplied key.
@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Services.Common.Configuration
                 throw new ArgumentNullException("key");
             }
 
-            string result = ConfigurationManager.AppSettings[key];
+            string result = System.Configuration.ConfigurationManager.AppSettings[key];
             if (result == null)
             {
                 // Create exception for logging.
@@ -110,7 +110,7 @@ namespace SFA.Apprenticeships.Services.Common.Configuration
                 throw new ArgumentNullException("key");
             }
 
-            var result = ConfigurationManager.ConnectionStrings[key];
+            var result = System.Configuration.ConfigurationManager.ConnectionStrings[key];
             if (result == null)
             {
                 throw new ApplicationException(
@@ -129,7 +129,7 @@ namespace SFA.Apprenticeships.Services.Common.Configuration
         /// <returns>The found configuration section.</returns>
         public ConfigurationSection GetSection(string sectionName)
         {
-            var result = (ConfigurationSection)ConfigurationManager.GetSection(sectionName);
+            var result = (ConfigurationSection)System.Configuration.ConfigurationManager.GetSection(sectionName);
             return result;
         }
         #endregion

@@ -1,4 +1,4 @@
-using System.Web.Mvc;
+using SFA.Apprenticeships.Services.Common.ActiveDirectory;
 using SFA.Apprenticeships.Services.Common.Configuration;
 using SFA.Apprenticeships.Web.Common.Providers;
 using StructureMap;
@@ -29,21 +29,24 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
 
         private static IContainer LoadWebConfiguration(this IContainer container)
         {
-            container.Configure(x =>
-            {
-                //x.For<HttpSessionStateBase>().Use(() => new HttpSessionStateWrapper(HttpContext.Current.Session));
-            });
+            container.Configure(
+                x =>
+                {
+                    x.For<IActiveDirectoryConfiguration>().Singleton().Use(ActiveDirectoryConfigurationSection.ConfigurationSectionDetails);
+                    // more entries here
+                });
 
             return container;
         }
 
         private static IContainer LoadCommonConfiguration(this IContainer container)
         {
-            container.Configure(x =>
-            {
-                x.For<IReferenceDataProvider>().Use<ConfigReferenceDataProvider>();
-                x.For<IConfigurationManager>().Use<ConfigurationUtilities>();
-            });
+            container.Configure(
+                x =>
+                {
+                    x.For<IReferenceDataProvider>().Use<ConfigReferenceDataProvider>();
+                    x.For<IConfigurationManager>().Use<ConfigurationManager>();
+                });
 
             return container;
         }

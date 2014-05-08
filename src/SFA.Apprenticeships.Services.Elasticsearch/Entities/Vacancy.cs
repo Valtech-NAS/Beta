@@ -27,7 +27,7 @@ namespace SFA.Apprenticeships.Repository.Elasticsearch.Entities
 
         public List<Attrib> Criteria { get; set; }
 
-        [ElasticSearchType("geo_point")]
+        [ElasticSearchType(Name = "geo_point")]
         public GeoPoint Location { get; set; }
 
         [ElasticSearchType(Name = "date", Format = "yyyy-MM-dd")]

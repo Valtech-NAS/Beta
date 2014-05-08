@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RestSharp;
 using SFA.Apprenticeships.Services.Common.Services;
 using SFA.Apprenticeships.Services.Postcode.Abstract;
 using SFA.Apprenticeships.Services.Postcode.Entities;

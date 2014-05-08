@@ -135,5 +135,29 @@ namespace SFA.Apprenticeships.Services.Postcode.Tests.Service
 
             test.ShouldThrow<ApplicationException>();
         }
+
+        [TestCase(Description = "Checks the implementation and will fail to remind to build test when the service is implemented")]
+        public void GetPostcodeFromLatLongThrowsException()
+        {
+            Action test = () =>
+            {
+                var service = new PostcodeService("http://api.postcodes.io");
+                service.GetPostcodeFromLatLong(string.Empty);
+            };
+
+            test.ShouldThrow<NotImplementedException>();
+        }
+
+        [TestCase(Description = "Checks the implementation and will fail to remind to build test when the service is implemented")]
+        public void ValidatePostcodeThrowsException()
+        {
+            Action test = () =>
+            {
+                var service = new PostcodeService("http://api.postcodes.io");
+                service.ValidatePostcode(string.Empty);
+            };
+
+            test.ShouldThrow<NotImplementedException>();
+        }
     }
 }

@@ -24,7 +24,11 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Service
                 method, 
                 "{command}/{id}", 
                 json,
-                new[] {new KeyValuePair<string, string>("command", command), new KeyValuePair<string, string>("id", id),});
+                new[]
+                {
+                    new KeyValuePair<string, string>("command", command), 
+                    new KeyValuePair<string, string>("id", id),
+                });
 
             return Execute(request);
         }

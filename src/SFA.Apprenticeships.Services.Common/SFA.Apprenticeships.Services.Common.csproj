@@ -61,8 +61,10 @@
     <Compile Include="Abstract\IRestService.cs" />
     <Compile Include="ActiveDirectory\ActiveDirectoryPassword.cs" />
     <Compile Include="ActiveDirectory\ActiveDirectoryServer.cs" />
-    <Compile Include="Configuration\ConfigurationUtilities.cs" />
+    <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\IConfigurationManager.cs" />
+    <Compile Include="ActiveDirectory\IActiveDirectoryConfiguration.cs" />
+    <Compile Include="ActiveDirectory\ActiveDirectoryConfigurationSection.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\RestService.cs" />

@@ -63,7 +63,6 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Mapping
                             break;
 
                         case "System.DateTime": 
-                            // user attribute to set date only
                             propertyType = "\"date\", \"format\":\"yyyy-MM-dd HH:mm:ss\"";
                             break;
 

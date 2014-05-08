@@ -11,6 +11,8 @@ namespace SFA.Apprenticeships.Services.Common.Services
         private readonly string _baseUrl;
         private IRestClient _client;
 
+        protected RestService() { }
+
         protected RestService(string baseUrl)
         {
             if (string.IsNullOrEmpty(baseUrl))

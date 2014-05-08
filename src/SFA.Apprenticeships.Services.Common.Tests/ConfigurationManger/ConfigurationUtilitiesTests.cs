@@ -22,7 +22,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase, Description("Tests that the GetConnectionString method throws an ArgumentNullException if the key supplied is null.")]
         public void GetConnectionString_NullKey_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationManager();
             string key = null;
             Action result = () => target.GetConnectionString(key);
 
@@ -35,7 +35,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void GetConnectionString_AllValid_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationManager();
             const string key = "ApplicationExceptions";
 
             var result = target.GetConnectionString(key);
@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void GetConnectionString_Missing_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationManager();
             Action test = () => target.GetConnectionString("missingkey");
 
             test.ShouldThrow<ApplicationException>();
@@ -70,7 +70,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void GetAppSetting_NullKey_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationManager();
             string key = null;
             Action result = () => target.GetAppSetting(key);
 
@@ -83,7 +83,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void GetAppSetting_AllValid_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationManager();
             const string key = "TestValue";
 
             var result = target.GetAppSetting(key);
@@ -98,7 +98,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void GetAppSetting_Missing_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationManager();
             const string key = "MissingKey";
 
             Action test = () => target.GetAppSetting(key);
@@ -116,7 +116,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void TryGetAppSetting_NullKey_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationManager();
             string key = null;
 
             Action result = () => target.TryGetAppSetting(key);
@@ -130,7 +130,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void TryGetAppSetting_AllValid_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationManager();
             const string key = "TestValue";
 
             var result = target.TryGetAppSetting(key);
@@ -150,7 +150,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         /// <param name="key">The input key.</param>
         /// <param name="target">The target.</param>
         /// <returns>The value located by the supplied key</returns>
-        public T GetAppSettingTestHelper<T>(string key, ConfigurationUtilities target)
+        public T GetAppSettingTestHelper<T>(string key, ConfigurationManager target)
         {
             var returnType = default(T);
             var result = target.GetAppSetting<T>(returnType, key);
@@ -165,7 +165,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [SetCulture("en-GB")]
         public void GetAppSetting_Generic_AllValid_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationManager();
             const string key = "TestDate";
             var result = target.GetAppSetting<DateTime>(key);
             result.Should().Be(new DateTime(2014, 12, 31));
@@ -177,7 +177,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void GetAppSetting_Generic_Missing_Test()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationManager();
             const string key = "Missingvalue";
 
             Action test = () => target.GetAppSetting<DateTime>(key);
@@ -191,7 +191,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void CheckGetAppSettingThrowsExceptionOnNoKey1()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationManager();
             Action result = () => target.GetAppSetting<DateTime>(string.Empty);
 
             result.ShouldThrow<ArgumentNullException>();
@@ -203,7 +203,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void CheckGetAppSettingThrowsExceptionOnNoKey2()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationManager();
            Action result = () => target.GetAppSetting<DateTime>(DateTime.Today, string.Empty);
 
             result.ShouldThrow<ArgumentNullException>();
@@ -215,7 +215,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void CheckGetAppSettingThrowsExceptionInvalidKey()
         {
-            var target = new ConfigurationUtilities();
+            var target = new ConfigurationManager();
             Action result = () => target.GetAppSetting("test");
 
             result.ShouldThrow<ArgumentException>();

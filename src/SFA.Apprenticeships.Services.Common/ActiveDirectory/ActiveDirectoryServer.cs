@@ -3,7 +3,6 @@ using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.Protocols;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
-using SFA.Apprenticeships.Services.Common.Configuration;
 
 namespace SFA.Apprenticeships.Services.Common.ActiveDirectory
 {
@@ -11,29 +10,32 @@ namespace SFA.Apprenticeships.Services.Common.ActiveDirectory
     {
         private const int ValidationFailed = 49;
         private readonly bool _isSecure;
-        private readonly string _username;
-        private readonly string _password;
+        private readonly IActiveDirectoryConfiguration _config;
 
-        public ActiveDirectoryServer(IConfigurationManager configManager, bool isSecure)
+        public ActiveDirectoryServer(IActiveDirectoryConfiguration config, bool isSecure)
         {
-            _isSecure = isSecure;
+            if (_config == null)
+            {
+                throw new ArgumentNullException("config");
+            }
 
-            Server = configManager.GetAppSetting<string>("ActiveDirectoryServer");
-            DistinguishedName = configManager.GetAppSetting<string>("ActiveDirectoryDistinguishedName");
-            _username = configManager.GetAppSetting<string>("ActiveDirectoryUsername");
-            _password = configManager.GetAppSetting<string>("ActiveDirectoryPassword");
-            Port = isSecure
-                ? configManager.GetAppSetting<int>("ActiveDirectorySecurePort")
-                : configManager.GetAppSetting<int>("ActiveDirectoryPort");
+            _isSecure = isSecure;
+            _config = config;
 
             Connection = new LdapConnection(new LdapDirectoryIdentifier(Server, Port));
             Connection.SessionOptions.SecureSocketLayer = isSecure;
             Connection.SessionOptions.VerifyServerCertificate = ServerCallback;
         }
 
-        public string Server { get; private set; }
-        public string DistinguishedName { get; private set; }
-        public int Port { get; private set; }
+        public string Server { get { return _config.Server; } }
+
+        public string DistinguishedName { get { return _config.DistinguishedName; } }
+
+        public int Port
+        {
+            get { return _isSecure ? _config.SslPort : _config.Port; }
+        }
+
         public LdapConnection Connection { get; private set; }
 
         public PrincipalContext Context
@@ -47,8 +49,8 @@ namespace SFA.Apprenticeships.Services.Common.ActiveDirectory
                         Server,
                         DistinguishedName,
                         ContextOptions.Negotiate,
-                        _username,
-                        _password);
+                        _config.Username,
+                        _config.Password);
                 }
 
                 return new PrincipalContext(ContextType.Domain, Server);
