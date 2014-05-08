@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http.Dependencies;
 using Microsoft.Practices.ServiceLocation;
-using SFA.Apprenticeships.Web.Common.Helpers;
 using StructureMap;
 
 namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
@@ -31,7 +30,11 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
         /// <exception cref="System.ArgumentNullException">Container cannot be null</exception>
         public StructureMapDependencyScope(IContainer container)
         {
-            Guard.NotNull(container, "container");
+            if (container == null)
+            {
+                throw new ArgumentNullException("container");
+            }
+
             this.Container = container;
         }
 

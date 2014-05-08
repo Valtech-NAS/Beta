@@ -100,8 +100,6 @@
     </Compile>
     <Compile Include="Attributes\FromJsonAttribute.cs" />
     <Compile Include="Framework\ViewDataDictionaryExtensions.cs" />
-    <Compile Include="Helpers\Guard.cs" />
-    <Compile Include="Helpers\Throw.cs" />
     <Compile Include="IoC\DependencyResolution\IoC.cs" />
     <Compile Include="IoC\DependencyResolution\StructureMapDependencyResolver.cs" />
     <Compile Include="IoC\DependencyResolution\StructureMapDependencyScope.cs" />
