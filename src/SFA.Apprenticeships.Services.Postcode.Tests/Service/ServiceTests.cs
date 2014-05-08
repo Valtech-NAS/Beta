@@ -4,7 +4,6 @@ using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using RestSharp;
-using SFA.Apprenticeships.Services.Common.Configuration;
 using SFA.Apprenticeships.Services.Postcode.Entities;
 using SFA.Apprenticeships.Services.Postcode.Service;
 

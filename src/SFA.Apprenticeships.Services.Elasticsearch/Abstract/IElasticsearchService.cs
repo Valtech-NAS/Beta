@@ -1,8 +1,9 @@
 ﻿using RestSharp;
+using SFA.Apprenticeships.Services.Common.Abstract;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Abstract
 {
-    public interface IElasticSearchService
+    public interface IElasticSearchService : IRestService
     {
         /// <summary>
         /// The command string to pass in the restful url. eg. \vacancies\vacancy.

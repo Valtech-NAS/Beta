@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using SFA.Apprenticeships.Services.Common.Abstract;
 using SFA.Apprenticeships.Services.Postcode.Entities;
 
 namespace SFA.Apprenticeships.Services.Postcode.Abstract
 {
-    public interface IPostcodeService
+    public interface IPostcodeService : IRestService
     {
         /// <summary>
         /// Gets the postcode information for the postcode or partial postcode
