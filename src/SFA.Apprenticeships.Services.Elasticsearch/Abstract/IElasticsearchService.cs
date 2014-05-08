@@ -22,15 +22,5 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Abstract
         /// Attaches the json object to the request body.
         /// </summary>
         IRestResponse Execute(Method method, string command, string id, string json);
-
-        /// <summary>
-        /// Executes the request.
-        /// </summary>
-        IRestResponse Execute(IRestRequest request);
-
-        /// <summary>
-        /// Executes the request and returns response data of type T
-        /// </summary>
-        IRestResponse<T> Execute<T>(IRestRequest request) where T : new();
     }
 }

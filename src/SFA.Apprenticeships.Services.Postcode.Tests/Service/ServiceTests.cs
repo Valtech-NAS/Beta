@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
@@ -12,10 +13,11 @@ namespace SFA.Apprenticeships.Services.Postcode.Tests.Service
     [TestFixture]
     public class ServiceTests
     {
-        [TestCase]
-        public void DoesConstructorThrowExceptionWithNoConfig()
+        [TestCase("")]
+        [TestCase(null)]
+        public void DoesConstructorThrowExceptionWithNoUrl(string url)
         {
-            Action test = () => new PostcodeService(string.Empty);
+            Action test = () => new PostcodeService(url);
 
             test.ShouldThrow<ArgumentNullException>();
         }
@@ -29,7 +31,7 @@ namespace SFA.Apprenticeships.Services.Postcode.Tests.Service
         }
 
         [TestCase]
-        public void GetRandomPasswordReturnsResult()
+        public void GetRandomPostcodeReturnsResult()
         {
             var response = new RestResponse<PostcodeInfoResult>
             {
@@ -51,6 +53,69 @@ namespace SFA.Apprenticeships.Services.Postcode.Tests.Service
             var service = new PostcodeService("http://api.postcodes.io") { Client = restClient };
 
             service.GetRandomPostcode().Postcode.Should().Be("CV1 2WT");
+        }
+
+        [TestCase]
+        public void GetPartialMatchReturnsResult()
+        {
+            var response = new RestResponse<PostcodeInfoResult>
+            {
+                Data = new PostcodeInfoResult
+                {
+                    Result = new List<PostcodeInfo>
+                    {
+                        new PostcodeInfo
+                        {
+                            Postcode = "CV1 2WT"
+                        },
+                         new PostcodeInfo
+                        {
+                            Postcode = "CV1 4WT"
+                        }
+                    }
+                }
+            };
+
+            var restClient = Substitute.For<IRestClient>();
+            restClient.Execute<PostcodeInfoResult>(Arg.Any<IRestRequest>()).Returns(response);
+
+            var service = new PostcodeService("http://api.postcodes.io") { Client = restClient };
+
+            var result = service.GetPartialMatches("any");
+
+            result.Count.Should().Be(2);
+            result.First().Postcode.Should().Be("CV1 2WT");
+        }
+
+        [TestCase]
+        public void GetPostcodeReturnsResult()
+        {
+            var response = new RestResponse<PostcodeInfoResult>
+            {
+                Data = new PostcodeInfoResult
+                {
+                    Result = new List<PostcodeInfo>
+                    {
+                        new PostcodeInfo
+                        {
+                            Postcode = "CV1 2WT"
+                        },
+                         new PostcodeInfo
+                        {
+                            Postcode = "CV1 4WT"
+                        }
+                    }
+                }
+            };
+
+            var restClient = Substitute.For<IRestClient>();
+            restClient.Execute<PostcodeInfoResult>(Arg.Any<IRestRequest>()).Returns(response);
+
+            var service = new PostcodeService("http://api.postcodes.io") { Client = restClient };
+
+            var result = service.GetPostcodeInfo("any");
+
+            result.Postcode.Should().Be("CV1 2WT");
         }
 
         [TestCase]
