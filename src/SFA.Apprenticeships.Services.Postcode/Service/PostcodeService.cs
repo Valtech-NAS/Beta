@@ -17,14 +17,14 @@ namespace SFA.Apprenticeships.Services.Postcode.Service
         /// <summary>
         /// <add key="PostcodeServiceEndpoint" value="http://api.postcodes.io" />
         /// </summary>
-        public PostcodeService(IConfigurationManager configManager)
+        public PostcodeService(string baseUrl)
         {
-            if (configManager == null)
+            if (string.IsNullOrEmpty(baseUrl))
             {
-                throw new ArgumentNullException("configManager");
+                throw new ArgumentNullException("baseUrl");
             }
 
-            _postcodeServiceEndpoint = configManager.GetAppSetting("PostcodeServiceEndpoint");
+            _postcodeServiceEndpoint = baseUrl;
         }
 
         public IRestClient Client

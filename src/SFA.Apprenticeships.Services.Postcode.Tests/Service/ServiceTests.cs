@@ -16,7 +16,7 @@ namespace SFA.Apprenticeships.Services.Postcode.Tests.Service
         [TestCase]
         public void DoesConstructorThrowExceptionWithNoConfig()
         {
-            Action test = () => new PostcodeService(default(IConfigurationManager));
+            Action test = () => new PostcodeService(string.Empty);
 
             test.ShouldThrow<ArgumentNullException>();
         }
@@ -24,10 +24,7 @@ namespace SFA.Apprenticeships.Services.Postcode.Tests.Service
         [TestCase]
         public void CanGetDefaultRestClientWithBaseUrl()
         {
-            var configManager = Substitute.For<IConfigurationManager>();
-            configManager.GetAppSetting("PostcodeServiceEndpoint").Returns("http://api.postcodes.io");
-
-            var service = new PostcodeService(configManager);
+            var service = new PostcodeService("http://api.postcodes.io");
 
             service.Client.BaseUrl.Should().Be("http://api.postcodes.io");
         }
@@ -49,13 +46,10 @@ namespace SFA.Apprenticeships.Services.Postcode.Tests.Service
                 }
             };
 
-            var configManager = Substitute.For<IConfigurationManager>();
-            configManager.GetAppSetting("PostcodeServiceEndpoint").Returns("http://api.postcodes.io");
-
             var restClient = Substitute.For<IRestClient>();
             restClient.Execute<PostcodeInfoResult>(Arg.Any<IRestRequest>()).Returns(response);
 
-            var service = new PostcodeService(configManager) {Client = restClient};
+            var service = new PostcodeService("http://api.postcodes.io") { Client = restClient };
 
             service.GetRandomPostcode().Postcode.Should().Be("CV1 2WT");
         }
@@ -68,13 +62,10 @@ namespace SFA.Apprenticeships.Services.Postcode.Tests.Service
                 ErrorException = new Exception("Test")
             };
 
-            var configManager = Substitute.For<IConfigurationManager>();
-            configManager.GetAppSetting("PostcodeServiceEndpoint").Returns("http://api.postcodes.io");
-
             var restClient = Substitute.For<IRestClient>();
             restClient.Execute<PostcodeInfoResult>(Arg.Any<IRestRequest>()).Returns(response);
 
-            var service = new PostcodeService(configManager) { Client = restClient };
+            var service = new PostcodeService("http://api.postcodes.io") { Client = restClient };
 
             Action test = () => service.GetRandomPostcode();
 

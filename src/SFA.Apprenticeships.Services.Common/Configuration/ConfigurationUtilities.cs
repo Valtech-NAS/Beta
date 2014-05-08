@@ -22,7 +22,9 @@ namespace SFA.Apprenticeships.Services.Common.Configuration
             string result = ConfigurationManager.AppSettings[key];
             if (result == null)
             {
+                // Create exception for logging.
                 var ex = new ApplicationException(string.Format(CultureInfo.InvariantCulture, "The value for '{0}' could not be found in the configuration file", key));
+                // needs logging here
             }
 
             return result;
