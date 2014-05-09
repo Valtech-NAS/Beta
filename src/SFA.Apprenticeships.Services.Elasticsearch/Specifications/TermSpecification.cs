@@ -4,31 +4,18 @@ using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
-    public class TermSpecification<T> : IConstraintSpecification<T>
+    public class TermSpecification<TModel> : AbstractSpecification<TModel, ISortable<string>>, IConstraintSpecification<TModel>
     {
-        private readonly string _fieldname;
-        private readonly Func<T, ISortable<string>> _searchTerm;
-
-        public TermSpecification(Expression<Func<T, ISortable<string>>> fieldname)
+        public TermSpecification(Expression<Func<TModel, ISortable<string>>> fieldname)
+            :base(fieldname)
         {
-            if (fieldname != null)
-            {
-                var memberExpression = fieldname.Body as MemberExpression;
-                if (memberExpression == null)
-                {
-                    throw new ArgumentNullException("fieldname");
-                }
-
-                _fieldname = memberExpression.Member.Name;              
-                _searchTerm = fieldname.Compile();
-            }
         }
 
-        public string Build(T parameters)
+        public override string Build(TModel parameters)
         {
-            var term = _searchTerm.Invoke(parameters);
+            var term = Term.Invoke(parameters);
             return term != null && !string.IsNullOrEmpty(term.Value)
-                ? string.Format("{{\"term\":{{\"{0}\":\"{1}\"}}}}", _fieldname, term.Value.ToLower())
+                ? string.Format("{{\"term\":{{\"{0}\":\"{1}\"}}}}", Fieldname, term.Value.ToLower())
                 : string.Empty;
         }
     }

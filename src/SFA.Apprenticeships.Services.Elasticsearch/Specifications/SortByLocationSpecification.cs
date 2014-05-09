@@ -6,35 +6,22 @@ using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
-    public class SortByLocationSpecification<T> : ISortableSpecification<T>
+    public class SortByLocationSpecification<TModel> : AbstractSpecification<TModel, ISortableGeoLocation>, ISortableSpecification<TModel>
     {
-        private readonly string _fieldname;
-        private readonly Func<T, ISortableGeoLocation> _sortTerm;
-
-        public SortByLocationSpecification(Expression<Func<T, ISortableGeoLocation>> fieldname)
+        public SortByLocationSpecification(Expression<Func<TModel, ISortableGeoLocation>> fieldname)
+            :base(fieldname)
         {
-            if (fieldname != null)
-            {
-                var memberExpression = fieldname.Body as MemberExpression;
-                if (memberExpression == null)
-                {
-                    throw new ArgumentNullException("fieldname");
-                }
-
-                _fieldname = memberExpression.Member.Name;              
-                _sortTerm = fieldname.Compile();
-            }
         }
 
         public int SortOrder { get; set; }
 
-        public string Build(T entity)
+        public override string Build(TModel entity)
         {
-            var term = _sortTerm.Invoke(entity);
+            var term = Term.Invoke(entity);
             if (term != null && term.SortEnabled)
             {
                 var sort = new StringBuilder("{\"_geo_distance\":{");
-                sort.AppendFormat("\"{0}\":{{", _fieldname);
+                sort.AppendFormat("\"{0}\":{{", Fieldname);
                 sort.AppendFormat("\"lat\":{0},", term.lat);
                 sort.AppendFormat("\"lon\":{0}", term.lon);
                 sort.AppendFormat("}},\"order\":\"{0}\",\"unit\":\"mi\"}}}}", term.SortDirection.GetDescription());

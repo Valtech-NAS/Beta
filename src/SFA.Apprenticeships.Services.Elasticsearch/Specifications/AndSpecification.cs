@@ -26,8 +26,8 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
             var ands = new StringBuilder();
 
             foreach (
-                var build in
-                    _specs.Select(spec => spec.Build(entity))
+                var build in _specs
+                        .Select(spec => spec.Build(entity))
                         .Where(build => !string.IsNullOrEmpty(build)))
             {
                 if (ands.Length > 0)

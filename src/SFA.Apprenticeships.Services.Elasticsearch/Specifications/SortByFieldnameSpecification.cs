@@ -5,34 +5,21 @@ using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
-    public class SortByFieldnameSpecification<T> : ISortableSpecification<T>
+    public class SortByFieldnameSpecification<TModel> : AbstractSpecification<TModel, ISortable>, ISortableSpecification<TModel>
     {
-        private readonly string _fieldname;
-        private readonly Func<T, ISortable> _sortTerm;
-
-        public SortByFieldnameSpecification(Expression<Func<T, ISortable>> fieldname)
+        public SortByFieldnameSpecification(Expression<Func<TModel, ISortable>> fieldname)
+            :base(fieldname)
         {
-            if (fieldname != null)
-            {
-                var memberExpression = fieldname.Body as MemberExpression;
-                if (memberExpression == null)
-                {
-                    throw new ArgumentNullException("fieldname");
-                }
-
-                _fieldname = memberExpression.Member.Name;
-                _sortTerm = fieldname.Compile();
-            }
         }
 
         public int SortOrder { get; set; }
 
-        public string Build(T entity)
+        public override string Build(TModel entity)
         {
-            var term = _sortTerm.Invoke(entity);
+            var term = Term.Invoke(entity);
             if (term != null && term.SortEnabled)
             {
-                return string.Format("{{\"{0}\":{{\"order\":\"{1}\"}}}}", _fieldname, term.SortDirection.GetDescription());
+                return string.Format("{{\"{0}\":{{\"order\":\"{1}\"}}}}", Fieldname, term.SortDirection.GetDescription());
             }
 
             return string.Empty;

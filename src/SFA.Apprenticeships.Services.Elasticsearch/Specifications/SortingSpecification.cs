@@ -6,11 +6,11 @@ using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
-    public class SortingSpecification<T> : ISortableSpecification<T>
+    public class SortingSpecification<TModel> : ISortableSpecification<TModel>
     {
-        private readonly IList<ISortableSpecification<T>> _specs;
+        private readonly IList<ISortableSpecification<TModel>> _specs;
 
-        public SortingSpecification(IList<ISortableSpecification<T>> specifications)
+        public SortingSpecification(IList<ISortableSpecification<TModel>> specifications)
         {
             // Use Guard
             if (specifications == null)
@@ -23,7 +23,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 
         public int SortOrder { get; set; }
 
-        public string Build(T entity)
+        public string Build(TModel entity)
         {
             var sorting = new StringBuilder();
 

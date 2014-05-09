@@ -69,6 +69,7 @@
     <Compile Include="Entities\SortDirectionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ElasticSearchService.cs" />
+    <Compile Include="Specifications\AbstractSpecification.cs" />
     <Compile Include="Specifications\QuerySpecification.cs">
       <SubType>Code</SubType>
     </Compile>

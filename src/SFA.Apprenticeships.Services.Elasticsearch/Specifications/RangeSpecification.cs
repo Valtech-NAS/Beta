@@ -5,24 +5,16 @@ using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
-    public class RangeSpecification<T> : IConstraintSpecification<T>
+    public class RangeSpecification<TModel> : AbstractSpecification<TModel, ISortableRange>, IConstraintSpecification<TModel>
     {
-        private readonly string _fieldname;
-        private readonly Func<T, ISortableRange> _searchTerm;
-
-        public RangeSpecification(Expression<Func<T, ISortableRange>> fieldname)
+        public RangeSpecification(Expression<Func<TModel, ISortableRange>> fieldname)
+            : base(fieldname)
         {
-            if (fieldname != null)
-            {
-                var memberExpression = fieldname.Body as MemberExpression;
-                _fieldname = memberExpression.Member.Name;
-                _searchTerm = fieldname.Compile();
-            }
         }
 
-        public string Build(T parameters)
+        public override string Build(TModel parameters)
         {
-            var term = _searchTerm.Invoke(parameters);
+            var term = Term.Invoke(parameters);
             if (term == null || !term.HasValue)
             {
                 return string.Empty;
@@ -35,13 +27,13 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
             {
                 if ((DateTime) term.RangeTo == default(DateTime))
                 {
-                    query.AppendFormat("\"{0}\":{{\"from\":\"{1:yyyy-MM-dd}\"}}", _fieldname, term.RangeFrom);
+                    query.AppendFormat("\"{0}\":{{\"from\":\"{1:yyyy-MM-dd}\"}}", Fieldname, term.RangeFrom);
                 }
                 else
                 {
                     query.AppendFormat(
                         "\"{0}\":{{\"from\":\"{1:yyyy-MM-dd}\",\"to\":\"{2:yyyy-MM-dd}\"}}",
-                        _fieldname,
+                        Fieldname,
                         term.RangeFrom,
                         term.RangeTo);
                 }
@@ -51,11 +43,11 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
                 if ((double) term.RangeTo == default(double))
                 {
-                    query.AppendFormat("\"{0}\":{{\"from\":\"{1}\"}}", _fieldname, term.RangeFrom);
+                    query.AppendFormat("\"{0}\":{{\"from\":\"{1}\"}}", Fieldname, term.RangeFrom);
                 }
                 else
                 {
-                    query.AppendFormat("\"{0}\":{{\"from\":\"{1}\",\"to\":\"{2}\"}}", _fieldname, term.RangeFrom,
+                    query.AppendFormat("\"{0}\":{{\"from\":\"{1}\",\"to\":\"{2}\"}}", Fieldname, term.RangeFrom,
                         term.RangeTo);
                 }
             }

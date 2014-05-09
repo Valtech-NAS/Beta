@@ -6,11 +6,11 @@ using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
-    public class QuerySpecification<T> : ISpecification<T>
+    public class QuerySpecification<TModel> : ISpecification<TModel>
     {
-        private readonly IList<ISpecification<T>> _specs;
+        private readonly IList<ISpecification<TModel>> _specs;
 
-        public QuerySpecification(IList<ISpecification<T>> specifications)
+        public QuerySpecification(IList<ISpecification<TModel>> specifications)
         {
             // Use Guard
             if (specifications == null)
@@ -21,13 +21,12 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
             _specs = specifications;
         }
 
-        public string Build(T entity)
+        public string Build(TModel entity)
         {
             var sort = new StringBuilder();
-
             foreach (
                 var build in _specs
-                    .Where(x => x is ISortableSpecification<T>)
+                    .Where(x => x is ISortableSpecification<TModel>)
                     .Select(spec => spec.Build(entity))
                     .Where(build => !string.IsNullOrEmpty(build)))
             {
@@ -40,10 +39,9 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
             }
 
             var constraint = new StringBuilder();
-
             foreach (
                 var build in _specs
-                    .Where(x => x is IConstraintSpecification<T>)
+                    .Where(x => x is IConstraintSpecification<TModel>)
                     .Select(spec => spec.Build(entity))
                     .Where(build => !string.IsNullOrEmpty(build)))
             {
@@ -55,7 +53,8 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
                 constraint.Append(build);
             }
 
-            var filter =string.Format("{{\"sort\":[{0}],\"query\":{{\"constant_score\":{{\"filter\":{{{1}}}}}}}}}", 
+            var filter = string.Format(
+                "{{\"sort\":[{0}],\"query\":{{\"constant_score\":{{\"filter\":{{{1}}}}}}}}}",
                 sort,
                 constraint);
 
