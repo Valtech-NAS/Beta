@@ -6,11 +6,11 @@ using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
-    public class AndSpecification<T> : IConstraintSpecification<T>
+    public class SortingSpecification<T> : ISortableSpecification<T>
     {
-        private readonly IList<IConstraintSpecification<T>> _specs;
- 
-        public AndSpecification(IList<IConstraintSpecification<T>> specifications)
+        private readonly IList<ISortableSpecification<T>> _specs;
+
+        public SortingSpecification(IList<ISortableSpecification<T>> specifications)
         {
             // Use Guard
             if (specifications == null)
@@ -23,22 +23,22 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 
         public string Build(T entity)
         {
-            var ands = new StringBuilder();
+            var sorting = new StringBuilder();
 
             foreach (
                 var build in
                     _specs.Select(spec => spec.Build(entity))
                         .Where(build => !string.IsNullOrEmpty(build)))
             {
-                if (ands.Length > 0)
+                if (sorting.Length > 0)
                 {
-                    ands.Append(",");
+                    sorting.Append(",");
                 }
 
-                ands.Append(build);
+                sorting.Append(build);
             }
 
-            return ands.Length > 0 ? string.Format("\"and\":[{0}]", ands) : string.Empty;
+            return sorting.Length > 0 ? sorting.ToString() : string.Empty;
         }
     }
 }

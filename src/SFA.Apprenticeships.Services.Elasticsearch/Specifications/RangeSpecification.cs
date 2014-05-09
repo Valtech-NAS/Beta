@@ -5,12 +5,12 @@ using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
-    public class RangeSpecification<T> : ISpecification<T>
+    public class RangeSpecification<T> : IConstraintSpecification<T>
     {
         private readonly string _fieldname;
-        private readonly Func<T, IRange> _searchTerm;
+        private readonly Func<T, ISortableRange> _searchTerm;
 
-        public RangeSpecification(Expression<Func<T, IRange>> fieldname)
+        public RangeSpecification(Expression<Func<T, ISortableRange>> fieldname)
         {
             if (fieldname != null)
             {
@@ -23,7 +23,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
         public string Build(T parameters)
         {
             var term = _searchTerm.Invoke(parameters);
-            if (!term.HasValue)
+            if (term == null || !term.HasValue)
             {
                 return string.Empty;
             }

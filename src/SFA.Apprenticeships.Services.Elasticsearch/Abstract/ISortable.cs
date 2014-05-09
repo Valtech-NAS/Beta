@@ -2,15 +2,14 @@
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Abstract
 {
-    public interface ISortTerm
+    public interface ISortable
     {
-        SortByType SortBy { get; set; }
+        bool SortEnabled { get; set; }
         SortDirectionType SortDirection { get; set; }
-        string SortFieldname { get; set; }
     }
 
-    public interface ISortLocation : ISortTerm
+    public interface ISortable<T> : ISortable
     {
-        GeoLocation Location { get; set; }
+        T Value { get; set; }
     }
 }

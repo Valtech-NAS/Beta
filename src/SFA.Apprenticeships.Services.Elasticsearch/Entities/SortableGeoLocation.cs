@@ -2,11 +2,13 @@
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Entities
 {
-    public class GeoLocation : IGeoPoint
+    public class SortableGeoLocation : ISortableGeoLocation
     {
-        public bool HasValue { get; set; }
         public double Distance { get; set; }
         public double lon { get; set; }
         public double lat { get; set; }
+
+        public bool SortEnabled { get; set; }
+        public SortDirectionType SortDirection { get; set; }
     }
 }

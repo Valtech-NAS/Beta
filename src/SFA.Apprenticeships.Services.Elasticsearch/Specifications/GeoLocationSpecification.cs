@@ -2,17 +2,16 @@
 using System.Linq.Expressions;
 using System.Text;
 using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
-using SFA.Apprenticeships.Services.Elasticsearch.Entities;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
-    public class GeoLocationSpecification<T> : ISpecification<T>
+    public class GeoLocationSpecification<T> : IConstraintSpecification<T>
     {
         private readonly string _fieldname;
-        private readonly Func<T, GeoLocation> _searchTerm;
+        private readonly Func<T, ISortableGeoLocation> _searchTerm;
         private readonly string _units;
 
-        public GeoLocationSpecification(Expression<Func<T, GeoLocation>> fieldname)
+        public GeoLocationSpecification(Expression<Func<T, ISortableGeoLocation>> fieldname)
         {
             if (fieldname != null)
             {
@@ -28,7 +27,10 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
             var point = _searchTerm.Invoke(parameters);
 
             // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (!point.HasValue || point.Distance == 0d) { return string.Empty; }
+            if (point == null || point.Distance == 0d)
+            {
+                return string.Empty;
+            }
 
             var query = new StringBuilder();
 

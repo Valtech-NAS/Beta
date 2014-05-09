@@ -53,11 +53,12 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Abstract\IElasticsearchService.cs" />
-    <Compile Include="Abstract\IFilter.cs" />
+    <Compile Include="Abstract\ISortableGeoLocation.cs" />
+    <Compile Include="Abstract\ISortable.cs" />
+    <Compile Include="Abstract\IConstraintSpecification.cs" />
+    <Compile Include="Abstract\ISortableSpecification.cs" />
     <Compile Include="Attributes\ElasticSearchIgnoreAttribute.cs" />
-    <Compile Include="Entities\SortByType.cs" />
-    <Compile Include="Filtering\Filter.cs" />
-    <Compile Include="Filtering\Query.cs" />
+    <Compile Include="Entities\ElasticSortable.cs" />
     <Compile Include="Mapping\ElasticsearchMapping.cs" />
     <Compile Include="Attributes\ElasticSearchMappingAttribute.cs" />
     <Compile Include="Attributes\ElasticSearchTypeAttribute.cs" />
@@ -68,15 +69,20 @@
     <Compile Include="Entities\SortDirectionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ElasticSearchService.cs" />
-    <Compile Include="Filtering\Sort.cs" />
+    <Compile Include="Specifications\QuerySpecification.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Specifications\SortByLocationSpecification.cs" />
+    <Compile Include="Specifications\SortingSpecification.cs" />
     <Compile Include="Specifications\AndSpecification.cs" />
-    <Compile Include="Entities\GeoLocation.cs" />
+    <Compile Include="Entities\SortableGeoLocation.cs" />
     <Compile Include="Specifications\GeoLocationSpecification.cs" />
     <Compile Include="Abstract\IGeoPoint.cs" />
-    <Compile Include="Abstract\IRange.cs" />
+    <Compile Include="Abstract\ISortableRange.cs" />
     <Compile Include="Abstract\ISpecification.cs" />
     <Compile Include="Entities\Range.cs" />
     <Compile Include="Specifications\RangeSpecification.cs" />
+    <Compile Include="Specifications\SortByFieldnameSpecification.cs" />
     <Compile Include="Specifications\TermSpecification.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,12 +4,12 @@ using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
-    public class TermSpecification<T> : ISpecification<T>
+    public class TermSpecification<T> : IConstraintSpecification<T>
     {
         private readonly string _fieldname;
-        private readonly Func<T, string> _searchTerm;
+        private readonly Func<T, ISortable<string>> _searchTerm;
 
-        public TermSpecification(Expression<Func<T, string>> fieldname)
+        public TermSpecification(Expression<Func<T, ISortable<string>>> fieldname)
         {
             if (fieldname != null)
             {
@@ -27,7 +27,9 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
         public string Build(T parameters)
         {
             var term = _searchTerm.Invoke(parameters);
-            return string.IsNullOrEmpty(term) ? string.Empty : string.Format("{{\"term\":{{\"{0}\":\"{1}\"}}}}", _fieldname, term.ToLower());
+            return term != null && !string.IsNullOrEmpty(term.Value)
+                ? string.Format("{{\"term\":{{\"{0}\":\"{1}\"}}}}", _fieldname, term.Value.ToLower())
+                : string.Empty;
         }
     }
 }
