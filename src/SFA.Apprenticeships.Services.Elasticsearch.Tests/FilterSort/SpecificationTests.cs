@@ -115,7 +115,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
 
             var spec = new SortByFieldnameSpecification<QueryTestModel>(q => q.Wage);
 
-            spec.Build(query).Should().Be("{\"Wage\":{\"order\":\"Descending\"}}");
+            spec.Build(query).Should().Be("{\"Wage\":{\"order\":\"desc\"}}");
         }
 
         [TestCase]
@@ -167,7 +167,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
             var spec = new SortingSpecification<QueryTestModel>(sortSpecs);
 
             var test = spec.Build(query);
-            test.Should().Be("{\"_geo_distance\":{\"Location\":{\"lat\":52.79,\"lon\":-1.92},\"order\":\"asc\",\"unit\":\"mi\"}},{\"Title\":{\"order\":\"Ascending\"}}");
+            test.Should().Be("{\"_geo_distance\":{\"Location\":{\"lat\":52.79,\"lon\":-1.92},\"order\":\"asc\",\"unit\":\"mi\"}},{\"Title\":{\"order\":\"asc\"}}");
         }
 
         [TestCase]
@@ -218,7 +218,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
 
             query
                 .Should()
-                .Be("{\"sort\":[{\"Title\":{\"order\":\"Ascending\"}},{\"_geo_distance\":{\"Location\":{\"lat\":52.79,\"lon\":-1.92},\"order\":\"asc\",\"unit\":\"mi\"}}],\"query\":{\"constant_score\":{\"filter\":{\"and\":[{\"term\":{\"Title\":\"engineer\"}},{\"geo_distance\":{\"distance\":\"20mi\",\"Location\":{\"lat\":52.79,\"lon\":-1.92}}}]}}}}");
+                .Be("{\"sort\":[{\"Title\":{\"order\":\"asc\"}},{\"_geo_distance\":{\"Location\":{\"lat\":52.79,\"lon\":-1.92},\"order\":\"asc\",\"unit\":\"mi\"}}],\"query\":{\"constant_score\":{\"filter\":{\"and\":[{\"term\":{\"Title\":\"engineer\"}},{\"geo_distance\":{\"distance\":\"20mi\",\"Location\":{\"lat\":52.79,\"lon\":-1.92}}}]}}}}");
         }
     }
 }
