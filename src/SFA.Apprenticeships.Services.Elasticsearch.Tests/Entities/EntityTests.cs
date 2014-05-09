@@ -11,7 +11,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.Entities
         [TestCase]
         public void RangeHasValueShouldInitializeToFalse()
         {
-            var test = new Range<int>();
+            var test = new SortableRange<int>();
 
             test.HasValue.Should().BeFalse();
         }
@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.Entities
         [TestCase]
         public void DoesSettingRangeFromValueSetHasValue()
         {
-            var test = new Range<int> {RangeFrom = 1};
+            var test = new SortableRange<int> {RangeFrom = 1};
 
             test.HasValue.Should().BeTrue();
         }
@@ -27,7 +27,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.Entities
         [TestCase]
         public void DoesSettingRangeToValueSetHasValue()
         {
-            var test = new Range<int> { RangeTo = 1 };
+            var test = new SortableRange<int> { RangeTo = 1 };
 
             test.HasValue.Should().BeTrue();
         }
@@ -35,7 +35,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.Entities
         [TestCase]
         public void DoesSettingRangeFromValueWithIncorrectTypeThrowException()
         {
-            Action test = () => new Range<int> { RangeFrom = 1d };
+            Action test = () => new SortableRange<int> { RangeFrom = 1d };
 
             test.ShouldThrow<ArgumentException>();
         }
@@ -43,7 +43,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.Entities
         [TestCase]
         public void DoesSettingRangeToValueWithIncorrectTypeThrowException()
         {
-            Action test = () => new Range<int> {RangeTo = 1d};
+            Action test = () => new SortableRange<int> {RangeTo = 1d};
 
             test.ShouldThrow<ArgumentException>();
         }

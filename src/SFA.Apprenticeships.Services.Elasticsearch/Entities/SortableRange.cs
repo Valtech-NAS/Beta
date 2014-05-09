@@ -3,7 +3,7 @@ using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Entities
 {
-    public class Range<T> : ISortableRange<T> where T : struct
+    public class SortableRange<T> : ISortableRange<T> where T : struct
     {
         public bool HasValue { get; private set; }
         public T From { get; private set; }

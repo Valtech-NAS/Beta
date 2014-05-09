@@ -58,7 +58,7 @@
     <Compile Include="Abstract\IConstraintSpecification.cs" />
     <Compile Include="Abstract\ISortableSpecification.cs" />
     <Compile Include="Attributes\ElasticSearchIgnoreAttribute.cs" />
-    <Compile Include="Entities\ElasticSortable.cs" />
+    <Compile Include="Entities\Sortable.cs" />
     <Compile Include="Mapping\ElasticsearchMapping.cs" />
     <Compile Include="Attributes\ElasticSearchMappingAttribute.cs" />
     <Compile Include="Attributes\ElasticSearchTypeAttribute.cs" />
@@ -81,7 +81,7 @@
     <Compile Include="Abstract\IGeoPoint.cs" />
     <Compile Include="Abstract\ISortableRange.cs" />
     <Compile Include="Abstract\ISpecification.cs" />
-    <Compile Include="Entities\Range.cs" />
+    <Compile Include="Entities\SortableRange.cs" />
     <Compile Include="Specifications\RangeSpecification.cs" />
     <Compile Include="Specifications\SortByFieldnameSpecification.cs" />
     <Compile Include="Specifications\TermSpecification.cs" />

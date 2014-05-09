@@ -14,7 +14,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void TermSpecificationReturnsSortTerm()
         {
-            var query = new QueryTestModel {Title = new ElasticSortable<string> {Value = "Engineer"}};
+            var query = new QueryTestModel {Title = new Sortable<string> {Value = "Engineer"}};
 
             var spec = new TermSpecification<QueryTestModel>(q => q.Title);
 
@@ -24,7 +24,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void TermSpecificationReturnsEmptyString()
         {
-            var query = new QueryTestModel {Title = new ElasticSortable<string>()};
+            var query = new QueryTestModel {Title = new Sortable<string>()};
 
             var spec = new TermSpecification<QueryTestModel>(q => q.Title);
 
@@ -44,7 +44,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void GeoLocationSpecificationReturnsEmptyString()
         {
-            var query = new QueryTestModel { Title = new ElasticSortable<string>() };
+            var query = new QueryTestModel { Title = new Sortable<string>() };
 
             var spec = new GeoLocationSpecification<QueryTestModel>(q => q.Location);
 
@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void RangeSpecificationReturnsSortTerm()
         {
-            var query = new QueryTestModel {Wage = new Range<double> {RangeTo = 10d, RangeFrom = 1d}};
+            var query = new QueryTestModel {Wage = new SortableRange<double> {RangeTo = 10d, RangeFrom = 1d}};
 
             var spec = new RangeSpecification<QueryTestModel>(q => q.Wage);
 
@@ -64,7 +64,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void RangeSpecificationReturnsEmptyString()
         {
-            var query = new QueryTestModel { Wage = new Range<double> {  } };
+            var query = new QueryTestModel { Wage = new SortableRange<double> {  } };
 
             var spec = new RangeSpecification<QueryTestModel>(q => q.Wage);
 
@@ -76,7 +76,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         {
             var query = new QueryTestModel
             {
-                Title = new ElasticSortable<string> { SortEnabled = true, Value = "Engineer" },
+                Title = new Sortable<string> { SortEnabled = true, Value = "Engineer" },
                 Location = new SortableGeoLocation { SortEnabled = true, Distance = 20d, lat = 52.79d, lon = -1.92d },
             };
 
@@ -101,7 +101,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void AndSpecificationReturnsEmptyString()
         {
-            var query = new QueryTestModel { Wage = new Range<double> { RangeTo = 10d, RangeFrom = 1d } };
+            var query = new QueryTestModel { Wage = new SortableRange<double> { RangeTo = 10d, RangeFrom = 1d } };
 
             var spec = new AndSpecification<QueryTestModel>(new List<IConstraintSpecification<QueryTestModel>>());
 
@@ -111,7 +111,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void SortByFieldnameSpecificationReturnsSortTerm()
         {
-            var query = new QueryTestModel { Wage = new Range<double> { SortEnabled = true, SortDirection = SortDirectionType.Descending } };
+            var query = new QueryTestModel { Wage = new SortableRange<double> { SortEnabled = true, SortDirection = SortDirectionType.Descending } };
 
             var spec = new SortByFieldnameSpecification<QueryTestModel>(q => q.Wage);
 
@@ -121,7 +121,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void SortByFieldnameSpecificationReturnsEmptyString()
         {
-            var query = new QueryTestModel { Wage = new Range<double>{SortEnabled = false, SortDirection = SortDirectionType.Descending } };
+            var query = new QueryTestModel { Wage = new SortableRange<double>{SortEnabled = false, SortDirection = SortDirectionType.Descending } };
 
             var spec = new SortByFieldnameSpecification<QueryTestModel>(q => q.Wage);
 
@@ -153,7 +153,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         {
             var query = new QueryTestModel
             {
-                Title = new ElasticSortable<string> { SortEnabled = true, Value = "Engineer" },
+                Title = new Sortable<string> { SortEnabled = true, Value = "Engineer" },
                 Location = new SortableGeoLocation { SortEnabled = true, Distance = 20d, lat = 52.79d, lon = -1.92d },
             };
 
@@ -173,7 +173,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void SortingSpecificationReturnsEmptyString()
         {
-            var query = new QueryTestModel { Wage = new Range<double> { RangeTo = 10d, RangeFrom = 1d } };
+            var query = new QueryTestModel { Wage = new SortableRange<double> { RangeTo = 10d, RangeFrom = 1d } };
 
             var spec = new SortingSpecification<QueryTestModel>(new List<ISortableSpecification<QueryTestModel>>());
 
@@ -185,7 +185,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         {
             var queryParams = new QueryTestModel
             {
-                Title = new ElasticSortable<string> {SortEnabled = true, Value = "Engineer"},
+                Title = new Sortable<string> {SortEnabled = true, Value = "Engineer"},
                 Location = new SortableGeoLocation {SortEnabled = true, Distance = 20d, lat = 52.79d, lon = -1.92d},
             };
 

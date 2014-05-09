@@ -2,7 +2,7 @@
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Entities
 {
-    public class ElasticSortable<T> : ISortable<T>
+    public class Sortable<T> : ISortable<T>
     {
         private T _value;
         public T Value
