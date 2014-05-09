@@ -4,8 +4,21 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Entities
 {
     public class ElasticSortable<T> : ISortable<T>
     {
-        public bool HasValue { get; set; }
-        public T Value { get; set; }
+        private T _value;
+
+        public bool HasValue { get; private set; }
+
+        public T Value
+        {
+            get { return _value; }
+
+            set
+            {
+                _value = value;
+                HasValue = true;
+            }
+        }
+
         public bool SortEnabled { get; set; }
         public SortDirectionType SortDirection { get; set; }
     }
