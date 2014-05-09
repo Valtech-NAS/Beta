@@ -3,7 +3,7 @@ using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.Models
 {
-    public class QueryParameters
+    public class QueryTestModel
     {
         public ISortable<string> Postcode { get; set; }
         public ISortable<string> VacancyType { get; set; }
@@ -16,6 +16,4 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.Models
         public ISortable<string> Employer { get; set; }
         public ISortableGeoLocation Location { get; set; }
     }
-
-
 }

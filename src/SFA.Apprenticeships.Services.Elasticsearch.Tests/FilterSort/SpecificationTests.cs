@@ -14,9 +14,9 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void TermSpecificationReturnsSortTerm()
         {
-            var query = new QueryParameters {Title = new ElasticSortable<string> {Value = "Engineer"}};
+            var query = new QueryTestModel {Title = new ElasticSortable<string> {Value = "Engineer"}};
 
-            var spec = new TermSpecification<QueryParameters>(q => q.Title);
+            var spec = new TermSpecification<QueryTestModel>(q => q.Title);
 
             spec.Build(query).Should().Be("{\"term\":{\"Title\":\"engineer\"}}");
         }
@@ -24,9 +24,9 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void TermSpecificationReturnsEmptyString()
         {
-            var query = new QueryParameters {Title = new ElasticSortable<string>()};
+            var query = new QueryTestModel {Title = new ElasticSortable<string>()};
 
-            var spec = new TermSpecification<QueryParameters>(q => q.Title);
+            var spec = new TermSpecification<QueryTestModel>(q => q.Title);
 
             spec.Build(query).Should().Be("");
         }
@@ -34,9 +34,9 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void GeoLocationSpecificationReturnsSortTerm()
         {
-            var query = new QueryParameters { Location = new SortableGeoLocation { SortEnabled = true, Distance = 20d, lat = 52.79d, lon = -1.92d } };
+            var query = new QueryTestModel { Location = new SortableGeoLocation { SortEnabled = true, Distance = 20d, lat = 52.79d, lon = -1.92d } };
 
-            var spec = new GeoLocationSpecification<QueryParameters>(q => q.Location);
+            var spec = new GeoLocationSpecification<QueryTestModel>(q => q.Location);
 
             spec.Build(query).Should().Be("{\"geo_distance\":{\"distance\":\"20mi\",\"Location\":{\"lat\":52.79,\"lon\":-1.92}}}");
         }
@@ -44,9 +44,9 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void GeoLocationSpecificationReturnsEmptyString()
         {
-            var query = new QueryParameters { Title = new ElasticSortable<string>() };
+            var query = new QueryTestModel { Title = new ElasticSortable<string>() };
 
-            var spec = new GeoLocationSpecification<QueryParameters>(q => q.Location);
+            var spec = new GeoLocationSpecification<QueryTestModel>(q => q.Location);
 
             spec.Build(query).Should().Be("");
         }
@@ -54,9 +54,9 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void RangeSpecificationReturnsSortTerm()
         {
-            var query = new QueryParameters {Wage = new Range<double> {RangeTo = 10d, RangeFrom = 1d}};
+            var query = new QueryTestModel {Wage = new Range<double> {RangeTo = 10d, RangeFrom = 1d}};
 
-            var spec = new RangeSpecification<QueryParameters>(q => q.Wage);
+            var spec = new RangeSpecification<QueryTestModel>(q => q.Wage);
 
             spec.Build(query).Should().Be("{\"range\":{\"Wage\":{\"from\":\"1\",\"to\":\"10\"}}}");
         }
@@ -64,9 +64,9 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void RangeSpecificationReturnsEmptyString()
         {
-            var query = new QueryParameters { Wage = new Range<double> {  } };
+            var query = new QueryTestModel { Wage = new Range<double> {  } };
 
-            var spec = new RangeSpecification<QueryParameters>(q => q.Wage);
+            var spec = new RangeSpecification<QueryTestModel>(q => q.Wage);
 
             spec.Build(query).Should().Be("");
         }
@@ -74,25 +74,25 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void AndSpecificationReturnsSortTerm()
         {
-            var query = new QueryParameters
+            var query = new QueryTestModel
             {
                 Title = new ElasticSortable<string> { SortEnabled = true, Value = "Engineer" },
                 Location = new SortableGeoLocation { SortEnabled = true, Distance = 20d, lat = 52.79d, lon = -1.92d },
             };
 
-            var filterSpecs = new List<IConstraintSpecification<QueryParameters>>
+            var filterSpecs = new List<IConstraintSpecification<QueryTestModel>>
             {
-                new TermSpecification<QueryParameters>(q => q.Employer),
-                new TermSpecification<QueryParameters>(q => q.Provider),
-                new TermSpecification<QueryParameters>(q => q.Title),
-                new TermSpecification<QueryParameters>(q => q.VacancyType),
-                new RangeSpecification<QueryParameters>(q => q.Hours),
-                new RangeSpecification<QueryParameters>(q => q.Wage),
-                new GeoLocationSpecification<QueryParameters>(q => q.Location),
-                new RangeSpecification<QueryParameters>(q => q.PostDate),
+                new TermSpecification<QueryTestModel>(q => q.Employer),
+                new TermSpecification<QueryTestModel>(q => q.Provider),
+                new TermSpecification<QueryTestModel>(q => q.Title),
+                new TermSpecification<QueryTestModel>(q => q.VacancyType),
+                new RangeSpecification<QueryTestModel>(q => q.Hours),
+                new RangeSpecification<QueryTestModel>(q => q.Wage),
+                new GeoLocationSpecification<QueryTestModel>(q => q.Location),
+                new RangeSpecification<QueryTestModel>(q => q.PostDate),
             };
 
-            var spec = new AndSpecification<QueryParameters>(filterSpecs);
+            var spec = new AndSpecification<QueryTestModel>(filterSpecs);
 
             var test = spec.Build(query);
             test.Should().Be("\"and\":[{\"term\":{\"Title\":\"engineer\"}},{\"geo_distance\":{\"distance\":\"20mi\",\"Location\":{\"lat\":52.79,\"lon\":-1.92}}}]");
@@ -101,9 +101,9 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void AndSpecificationReturnsEmptyString()
         {
-            var query = new QueryParameters { Wage = new Range<double> { RangeTo = 10d, RangeFrom = 1d } };
+            var query = new QueryTestModel { Wage = new Range<double> { RangeTo = 10d, RangeFrom = 1d } };
 
-            var spec = new AndSpecification<QueryParameters>(new List<IConstraintSpecification<QueryParameters>>());
+            var spec = new AndSpecification<QueryTestModel>(new List<IConstraintSpecification<QueryTestModel>>());
 
             spec.Build(query).Should().Be("");
         }
@@ -111,9 +111,9 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void SortByFieldnameSpecificationReturnsSortTerm()
         {
-            var query = new QueryParameters { Wage = new Range<double> { SortEnabled = true, SortDirection = SortDirectionType.Descending } };
+            var query = new QueryTestModel { Wage = new Range<double> { SortEnabled = true, SortDirection = SortDirectionType.Descending } };
 
-            var spec = new SortByFieldnameSpecification<QueryParameters>(q => q.Wage);
+            var spec = new SortByFieldnameSpecification<QueryTestModel>(q => q.Wage);
 
             spec.Build(query).Should().Be("{\"Wage\":{\"order\":\"Descending\"}}");
         }
@@ -121,9 +121,9 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void SortByFieldnameSpecificationReturnsEmptyString()
         {
-            var query = new QueryParameters { Wage = new Range<double>{SortEnabled = false, SortDirection = SortDirectionType.Descending } };
+            var query = new QueryTestModel { Wage = new Range<double>{SortEnabled = false, SortDirection = SortDirectionType.Descending } };
 
-            var spec = new SortByFieldnameSpecification<QueryParameters>(q => q.Wage);
+            var spec = new SortByFieldnameSpecification<QueryTestModel>(q => q.Wage);
 
             spec.Build(query).Should().Be("");
         }
@@ -131,9 +131,9 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void SortByLocationSpecificationReturnsSortTerm()
         {
-            var query = new QueryParameters { Location = new SortableGeoLocation { SortEnabled = true, Distance = 20d, lat = 52.79d, lon = -1.92d } };
+            var query = new QueryTestModel { Location = new SortableGeoLocation { SortEnabled = true, Distance = 20d, lat = 52.79d, lon = -1.92d } };
 
-            var spec = new SortByLocationSpecification<QueryParameters>(q => q.Location);
+            var spec = new SortByLocationSpecification<QueryTestModel>(q => q.Location);
 
             spec.Build(query).Should().Be("{\"_geo_distance\":{\"Location\":{\"lat\":52.79,\"lon\":-1.92},\"order\":\"asc\",\"unit\":\"mi\"}}");
         }
@@ -141,9 +141,9 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void SortByLocationSpecificationReturnsEmptyString()
         {
-            var query = new QueryParameters { Location = new SortableGeoLocation { SortEnabled = false } };
+            var query = new QueryTestModel { Location = new SortableGeoLocation { SortEnabled = false } };
 
-            var spec = new SortByLocationSpecification<QueryParameters>(q => q.Location);
+            var spec = new SortByLocationSpecification<QueryTestModel>(q => q.Location);
 
             spec.Build(query).Should().Be("");
         }
@@ -151,20 +151,20 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void SortingSpecificationReturnsSortTerm()
         {
-            var query = new QueryParameters
+            var query = new QueryTestModel
             {
                 Title = new ElasticSortable<string> { SortEnabled = true, Value = "Engineer" },
                 Location = new SortableGeoLocation { SortEnabled = true, Distance = 20d, lat = 52.79d, lon = -1.92d },
             };
 
-            var sortSpecs = new List<ISortableSpecification<QueryParameters>>
+            var sortSpecs = new List<ISortableSpecification<QueryTestModel>>
             {
-                new SortByFieldnameSpecification<QueryParameters>(s => s.Postcode),
-                new SortByFieldnameSpecification<QueryParameters>(s => s.Title),
-                new SortByLocationSpecification<QueryParameters>(s => s.Location)
+                new SortByFieldnameSpecification<QueryTestModel>(s => s.Postcode),
+                new SortByFieldnameSpecification<QueryTestModel>(s => s.Title),
+                new SortByLocationSpecification<QueryTestModel>(s => s.Location)
             };
 
-            var spec = new SortingSpecification<QueryParameters>(sortSpecs);
+            var spec = new SortingSpecification<QueryTestModel>(sortSpecs);
 
             var test = spec.Build(query);
             test.Should().Be("{\"Title\":{\"order\":\"Ascending\"}},{\"_geo_distance\":{\"Location\":{\"lat\":52.79,\"lon\":-1.92},\"order\":\"asc\",\"unit\":\"mi\"}}");
@@ -173,9 +173,9 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void SortingSpecificationReturnsEmptyString()
         {
-            var query = new QueryParameters { Wage = new Range<double> { RangeTo = 10d, RangeFrom = 1d } };
+            var query = new QueryTestModel { Wage = new Range<double> { RangeTo = 10d, RangeFrom = 1d } };
 
-            var spec = new SortingSpecification<QueryParameters>(new List<ISortableSpecification<QueryParameters>>());
+            var spec = new SortingSpecification<QueryTestModel>(new List<ISortableSpecification<QueryTestModel>>());
 
             spec.Build(query).Should().Be("");
         }
@@ -183,38 +183,38 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
         [TestCase]
         public void ExampleQueryTest()
         {
-            var queryParams = new QueryParameters
+            var queryParams = new QueryTestModel
             {
                 Title = new ElasticSortable<string> {SortEnabled = true, Value = "Engineer"},
                 Location = new SortableGeoLocation {SortEnabled = true, Distance = 20d, lat = 52.79d, lon = -1.92d},
             };
 
-            var filterSpecs = new List<IConstraintSpecification<QueryParameters>>
+            var filterSpecs = new List<IConstraintSpecification<QueryTestModel>>
             {
-                new TermSpecification<QueryParameters>(q => q.Employer),
-                new TermSpecification<QueryParameters>(q => q.Provider),
-                new TermSpecification<QueryParameters>(q => q.Title),
-                new TermSpecification<QueryParameters>(q => q.VacancyType),
-                new RangeSpecification<QueryParameters>(q => q.Hours),
-                new RangeSpecification<QueryParameters>(q => q.Wage),
-                new GeoLocationSpecification<QueryParameters>(q => q.Location),
-                new RangeSpecification<QueryParameters>(q => q.PostDate),
+                new TermSpecification<QueryTestModel>(q => q.Employer),
+                new TermSpecification<QueryTestModel>(q => q.Provider),
+                new TermSpecification<QueryTestModel>(q => q.Title),
+                new TermSpecification<QueryTestModel>(q => q.VacancyType),
+                new RangeSpecification<QueryTestModel>(q => q.Hours),
+                new RangeSpecification<QueryTestModel>(q => q.Wage),
+                new GeoLocationSpecification<QueryTestModel>(q => q.Location),
+                new RangeSpecification<QueryTestModel>(q => q.PostDate),
             };
 
-            var sortSpecs = new List<ISortableSpecification<QueryParameters>>
+            var sortSpecs = new List<ISortableSpecification<QueryTestModel>>
             {
-                new SortByFieldnameSpecification<QueryParameters>(s => s.Postcode),
-                new SortByFieldnameSpecification<QueryParameters>(s => s.Title),
-                new SortByLocationSpecification<QueryParameters>(s => s.Location)
+                new SortByFieldnameSpecification<QueryTestModel>(s => s.Postcode),
+                new SortByFieldnameSpecification<QueryTestModel>(s => s.Title),
+                new SortByLocationSpecification<QueryTestModel>(s => s.Location)
             };
 
-            var specs = new List<ISpecification<QueryParameters>>
+            var specs = new List<ISpecification<QueryTestModel>>
             {
-                new SortingSpecification<QueryParameters>(sortSpecs),
-                new AndSpecification<QueryParameters>(filterSpecs)
+                new SortingSpecification<QueryTestModel>(sortSpecs),
+                new AndSpecification<QueryTestModel>(filterSpecs)
             };
 
-            var query = new QuerySpecification<QueryParameters>(specs).Build(queryParams);
+            var query = new QuerySpecification<QueryTestModel>(specs).Build(queryParams);
 
             query
                 .Should()

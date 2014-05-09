@@ -62,7 +62,7 @@
     </Compile>
     <Compile Include="Entities\EntityTests.cs" />
     <Compile Include="FilterSort\SpecificationTests.cs" />
-    <Compile Include="Models\QueryParameters.cs" />
+    <Compile Include="Models\QueryTestModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

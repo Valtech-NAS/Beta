@@ -5,9 +5,6 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Entities
     public class ElasticSortable<T> : ISortable<T>
     {
         private T _value;
-
-        public bool HasValue { get; private set; }
-
         public T Value
         {
             get { return _value; }
@@ -19,6 +16,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Entities
             }
         }
 
+        public bool HasValue { get; private set; }
         public bool SortEnabled { get; set; }
         public SortDirectionType SortDirection { get; set; }
     }
