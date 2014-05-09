@@ -24,6 +24,8 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
             }
         }
 
+        public int SortOrder { get; set; }
+
         public string Build(T entity)
         {
             var term = _sortTerm.Invoke(entity);

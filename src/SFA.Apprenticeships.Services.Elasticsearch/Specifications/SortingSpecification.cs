@@ -21,13 +21,16 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
             _specs = specifications;
         }
 
+        public int SortOrder { get; set; }
+
         public string Build(T entity)
         {
             var sorting = new StringBuilder();
 
             foreach (
-                var build in
-                    _specs.Select(spec => spec.Build(entity))
+                var build in _specs
+                        .OrderBy(s => s.SortOrder)
+                        .Select(spec => spec.Build(entity))
                         .Where(build => !string.IsNullOrEmpty(build)))
             {
                 if (sorting.Length > 0)

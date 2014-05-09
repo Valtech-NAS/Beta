@@ -160,14 +160,14 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
             var sortSpecs = new List<ISortableSpecification<QueryTestModel>>
             {
                 new SortByFieldnameSpecification<QueryTestModel>(s => s.Postcode),
-                new SortByFieldnameSpecification<QueryTestModel>(s => s.Title),
-                new SortByLocationSpecification<QueryTestModel>(s => s.Location)
+                new SortByFieldnameSpecification<QueryTestModel>(s => s.Title) {SortOrder = 2},
+                new SortByLocationSpecification<QueryTestModel>(s => s.Location) {SortOrder = 1}
             };
 
             var spec = new SortingSpecification<QueryTestModel>(sortSpecs);
 
             var test = spec.Build(query);
-            test.Should().Be("{\"Title\":{\"order\":\"Ascending\"}},{\"_geo_distance\":{\"Location\":{\"lat\":52.79,\"lon\":-1.92},\"order\":\"asc\",\"unit\":\"mi\"}}");
+            test.Should().Be("{\"_geo_distance\":{\"Location\":{\"lat\":52.79,\"lon\":-1.92},\"order\":\"asc\",\"unit\":\"mi\"}},{\"Title\":{\"order\":\"Ascending\"}}");
         }
 
         [TestCase]
@@ -204,8 +204,8 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
             var sortSpecs = new List<ISortableSpecification<QueryTestModel>>
             {
                 new SortByFieldnameSpecification<QueryTestModel>(s => s.Postcode),
-                new SortByFieldnameSpecification<QueryTestModel>(s => s.Title),
-                new SortByLocationSpecification<QueryTestModel>(s => s.Location)
+                new SortByFieldnameSpecification<QueryTestModel>(s => s.Title) {SortOrder = 1},
+                new SortByLocationSpecification<QueryTestModel>(s => s.Location) {SortOrder = 2}
             };
 
             var specs = new List<ISpecification<QueryTestModel>>
