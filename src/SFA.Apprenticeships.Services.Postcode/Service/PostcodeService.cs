@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SFA.Apprenticeships.Services.Common.Services;
+using SFA.Apprenticeships.Services.Common.Rest;
 using SFA.Apprenticeships.Services.Postcode.Abstract;
 using SFA.Apprenticeships.Services.Postcode.Entities;
 

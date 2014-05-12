@@ -44,7 +44,9 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ReferenceDataModels\Occupation.cs" />
+    <Compile Include="ReferenceDataModels\Framework.cs" />
+    <Compile Include="ReferenceDataModels\ReferenceData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

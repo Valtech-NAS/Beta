@@ -4,7 +4,7 @@ using RestSharp;
 using RestSharp.Deserializers;
 using SFA.Apprenticeships.Services.Common.Abstract;
 
-namespace SFA.Apprenticeships.Services.Common.Services
+namespace SFA.Apprenticeships.Services.Common.Rest
 {
     public abstract class RestService : IRestService
     {

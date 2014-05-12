@@ -4,23 +4,29 @@ using NUnit.Framework;
 using SFA.Apprenticeships.Services.Common.Configuration;
 using SFA.Apprenticeships.Services.Common.Wcf;
 using SFA.Apprenticeships.Services.ReferenceData.Proxy;
+using SFA.Apprenticeships.Services.ReferenceData.Service;
 
 namespace SFA.Apprenticeships.Srevices.ReferenceData.IntegrationTests
 {
     [TestFixture]
     public class ReferenceDataTests
     {
+        private string _filename;
+
+        [TestFixtureSetUp]
+        public void Setup()
+        {
+            var config = new ConfigurationManager();
+            var path = config.GetAppSetting("ConfigurationPath");
+            var file = config.GetAppSetting("Settings");
+            _filename = string.Format("{0}\\{1}", path, file);
+        }
+
         [TestCase]
-        [Ignore("Need to sort out how to use protected settings")]
         public void DoesTheEndpointRespond()
         {
-            var filename = string.Format(
-                "{0}{1}", 
-                AppDomain.CurrentDomain.BaseDirectory,
-                @"..\..\..\App_Data\private.settings.debug.config");
-
-            var configManager =
-                new ConfigurationManager(new ConfigurationSettingsService(filename, ConfigurationSettingsType.File));
+           var configManager =
+                new ConfigurationManager(new ConfigurationSettingsService(_filename, ConfigurationSettingsType.File));
             
             var result = default(GetApprenticeshipFrameworksResponse);
 
@@ -30,9 +36,35 @@ namespace SFA.Apprenticeships.Srevices.ReferenceData.IntegrationTests
 
             var rq = new GetApprenticeshipFrameworksRequest(new Guid(username), msgId, password);
 
-            Service<IReferenceData>.Use(client=> { result = client.GetApprenticeshipFrameworks(rq); });
+            WcfService<IReferenceData>.Use(client=> { result = client.GetApprenticeshipFrameworks(rq); });
 
             result.Should().NotBeNull();
+        }
+
+        [TestCase]
+        public void GetApprenticeshipFrameworksReturnsList()
+        {
+            var configManager =
+                new ConfigurationManager(new ConfigurationSettingsService(_filename, ConfigurationSettingsType.File));
+
+            var service = new ReferenceDataService(configManager);
+            var test = service.GetApprenticeshipFrameworks();
+
+            test.Should().NotBeNullOrEmpty();
+            test.Count.Should().Be(216);
+        }
+
+        [TestCase]
+        public void GetApprenticeshipOccupationsReturnsList()
+        {
+            var configManager =
+                new ConfigurationManager(new ConfigurationSettingsService(_filename, ConfigurationSettingsType.File));
+
+            var service = new ReferenceDataService(configManager);
+            var test = service.GetApprenticeshipOccupations();
+
+            test.Should().NotBeNullOrEmpty();
+            test.Count.Should().Be(216);
         }
     }
 }

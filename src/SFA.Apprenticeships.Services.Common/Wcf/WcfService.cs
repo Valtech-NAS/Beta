@@ -3,7 +3,7 @@ using System.ServiceModel;
 
 namespace SFA.Apprenticeships.Services.Common.Wcf
 {
-    public class Service<T>
+    public static class WcfService<T>
     {
         public static void Use(Action<T> action)
         {
