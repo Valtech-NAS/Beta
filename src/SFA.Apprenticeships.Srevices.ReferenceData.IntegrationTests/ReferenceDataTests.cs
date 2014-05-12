@@ -48,20 +48,7 @@ namespace SFA.Apprenticeships.Srevices.ReferenceData.IntegrationTests
                 new ConfigurationManager(new ConfigurationSettingsService(_filename, ConfigurationSettingsType.File));
 
             var service = new ReferenceDataService(configManager);
-            var test = service.GetApprenticeshipFrameworks();
-
-            test.Should().NotBeNullOrEmpty();
-            test.Count.Should().Be(216);
-        }
-
-        [TestCase]
-        public void GetApprenticeshipOccupationsReturnsList()
-        {
-            var configManager =
-                new ConfigurationManager(new ConfigurationSettingsService(_filename, ConfigurationSettingsType.File));
-
-            var service = new ReferenceDataService(configManager);
-            var test = service.GetApprenticeshipOccupations();
+            var test = service.GetApprenticeshipFrameworkAndOccupation();
 
             test.Should().NotBeNullOrEmpty();
             test.Count.Should().Be(216);

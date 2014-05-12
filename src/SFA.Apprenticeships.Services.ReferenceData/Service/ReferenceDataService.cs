@@ -26,7 +26,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
             _configManager = configManager;
         }
 
-        public IList<Framework> GetApprenticeshipFrameworks()
+        public IList<FrameworkAndOccupation> GetApprenticeshipFrameworkAndOccupation()
         {
             var msgId = Guid.NewGuid();
             var request = new GetApprenticeshipFrameworksRequest
@@ -42,44 +42,25 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
             if (rs != null)
             {
                 return rs.ApprenticeshipFrameworks.Select(
-                    item => new Framework
+                    item => new FrameworkAndOccupation
                     {
-                        CodeName = item.ApprenticeshipFrameworkCodeName,
-                        ShortName = item.ApprenticeshipFrameworkShortName,
-                        FullName = item.ApprenticeshipFrameworkFullName
+                        Framework = new Models.ReferenceDataModels.ReferenceData
+                        {
+                            CodeName = item.ApprenticeshipFrameworkCodeName,
+                            ShortName = item.ApprenticeshipFrameworkShortName,
+                            FullName = item.ApprenticeshipFrameworkFullName
+                        },
+                        Occupation = new Models.ReferenceDataModels.ReferenceData
+                        {
+                            CodeName = item.ApprenticeshipOccupationCodeName,
+                            ShortName = item.ApprenticeshipOccupationShortName,
+                            FullName = item.ApprenticeshipOccupationFullName
+                        }
                     })
                     .ToList();
             }
 
-            return default(IList<Framework>);
-        }
-
-        public IList<Occupation> GetApprenticeshipOccupations()
-        {
-            var msgId = Guid.NewGuid();
-            var request = new GetApprenticeshipFrameworksRequest
-            {
-                ExternalSystemId = new Guid(_configManager.GetAppSetting(ReferenceDataUsername)),
-                PublicKey = _configManager.GetAppSetting(ReferenceDataPassword),
-                MessageId = msgId,
-            };
-
-            var rs = default(GetApprenticeshipFrameworksResponse);
-            WcfService<IReferenceData>.Use(client => { rs = client.GetApprenticeshipFrameworks(request); });
-
-            if (rs != null)
-            {
-                return rs.ApprenticeshipFrameworks.Select(
-                    item => new Occupation
-                    {
-                        CodeName = item.ApprenticeshipOccupationCodeName,
-                        ShortName = item.ApprenticeshipOccupationShortName,
-                        FullName = item.ApprenticeshipOccupationFullName
-                    })
-                    .ToList();
-            }
-
-            return default(IList<Occupation>);
+            return default(IList<FrameworkAndOccupation>);
         }
     }
 }

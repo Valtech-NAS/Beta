@@ -69,7 +69,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ConfigurationManger\ConfigurationUtilitiesTests.cs" />
+    <Compile Include="ConfigurationManger\ConfigurationManagerTests.cs" />
     <Compile Include="Security\ConfigurationSettingsServiceTests.cs" />
     <Compile Include="TestShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
