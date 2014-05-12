@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Abstract
 {
     public interface IReferenceDataService
     {
-        IList<FrameworkAndOccupation> GetApprenticeshipFrameworkAndOccupation();
+        IList<Frameworks> GetApprenticeshipFrameworks();
+        IList<County> GetCounties();
     }
 }

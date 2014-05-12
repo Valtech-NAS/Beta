@@ -48,10 +48,23 @@ namespace SFA.Apprenticeships.Srevices.ReferenceData.IntegrationTests
                 new ConfigurationManager(new ConfigurationSettingsService(_filename, ConfigurationSettingsType.File));
 
             var service = new ReferenceDataService(configManager);
-            var test = service.GetApprenticeshipFrameworkAndOccupation();
+            var test = service.GetApprenticeshipFrameworks();
 
             test.Should().NotBeNullOrEmpty();
             test.Count.Should().Be(216);
+        }
+
+        [TestCase]
+        public void GetCountiesReturnsList()
+        {
+            var configManager =
+                new ConfigurationManager(new ConfigurationSettingsService(_filename, ConfigurationSettingsType.File));
+
+            var service = new ReferenceDataService(configManager);
+            var test = service.GetCounties();
+
+            test.Should().NotBeNullOrEmpty();
+            test.Count.Should().Be(46);
         }
     }
 }

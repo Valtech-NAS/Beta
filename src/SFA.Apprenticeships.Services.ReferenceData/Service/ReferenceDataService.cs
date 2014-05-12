@@ -26,7 +26,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
             _configManager = configManager;
         }
 
-        public IList<FrameworkAndOccupation> GetApprenticeshipFrameworkAndOccupation()
+        public IList<Frameworks> GetApprenticeshipFrameworks()
         {
             var msgId = Guid.NewGuid();
             var request = new GetApprenticeshipFrameworksRequest
@@ -42,15 +42,15 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
             if (rs != null)
             {
                 return rs.ApprenticeshipFrameworks.Select(
-                    item => new FrameworkAndOccupation
+                    item => new Frameworks
                     {
-                        Framework = new Models.ReferenceDataModels.ReferenceData
+                        Framework = new Framework
                         {
                             CodeName = item.ApprenticeshipFrameworkCodeName,
                             ShortName = item.ApprenticeshipFrameworkShortName,
                             FullName = item.ApprenticeshipFrameworkFullName
                         },
-                        Occupation = new Models.ReferenceDataModels.ReferenceData
+                        Occupation = new Occupation
                         {
                             CodeName = item.ApprenticeshipOccupationCodeName,
                             ShortName = item.ApprenticeshipOccupationShortName,
@@ -60,7 +60,35 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                     .ToList();
             }
 
-            return default(IList<FrameworkAndOccupation>);
+            return default(IList<Frameworks>);
+        }
+
+
+        public IList<County> GetCounties()
+        {
+            var msgId = Guid.NewGuid();
+            var request = new GetCountiesRequest
+            {
+                ExternalSystemId = new Guid(_configManager.GetAppSetting(ReferenceDataUsername)),
+                PublicKey = _configManager.GetAppSetting(ReferenceDataPassword),
+                MessageId = msgId,
+            };
+
+            var rs = default(GetCountiesResponse);
+            WcfService<IReferenceData>.Use(client => { rs = client.GetCounties(request); });
+
+            if (rs != null)
+            {
+                return rs.Counties.Select(
+                    item => new County
+                    {
+                        CodeName = item.CodeName,
+                        FullName = item.FullName
+                    })
+                    .ToList();
+            }
+
+            return default(IList<County>);
         }
     }
 }
