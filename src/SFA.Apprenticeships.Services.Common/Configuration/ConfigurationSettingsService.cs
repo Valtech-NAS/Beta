@@ -31,7 +31,7 @@ namespace SFA.Apprenticeships.Services.Common.Configuration
                     break;
             }
 
-            _nodes = doc.SelectNodes("configuration/AppSettings/add");
+            _nodes = doc.SelectNodes("configuration/appSettings/add");
         }
 
         public string TryGetSetting(string key)
