@@ -50,11 +50,11 @@ namespace SFA.Apprenticeships.Services.Common.Configuration
                 if (result == null)
                 {
                     // Create exception for logging.
-                    var ex =
-                        new ApplicationException(
-                            string.Format(
-                                CultureInfo.InvariantCulture,
-                                "The value for '{0}' could not be found in the configuration file", key));
+                    //var ex =
+                    //    new ApplicationException(
+                    //        string.Format(
+                    //            CultureInfo.InvariantCulture,
+                    //            "The value for '{0}' could not be found in the configuration file", key));
                     // needs logging here
                 }
             }
