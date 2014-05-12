@@ -6,6 +6,26 @@ namespace SFA.Apprenticeships.Services.Common.Configuration
 {
     public class ConfigurationManager : IConfigurationManager
     {
+        private readonly IConfigurationSettingsService _settingsService;
+
+        /// <summary>
+        /// The default configuration manager with no access to private settings.
+        /// </summary>
+        public ConfigurationManager() { }
+
+        /// <summary>
+        /// Provides a mechanism for getting app settings from a private configuration store.
+        /// </summary>
+        public ConfigurationManager(IConfigurationSettingsService service)
+        {
+            if (service == null)
+            {
+                throw new ArgumentNullException("service");
+            }
+
+            _settingsService = service;
+        }
+
         /// <summary>
         /// Gets a string representation of the value located by the supplied key.
         /// If the value is not found, null is returned
@@ -22,9 +42,21 @@ namespace SFA.Apprenticeships.Services.Common.Configuration
             string result = System.Configuration.ConfigurationManager.AppSettings[key];
             if (result == null)
             {
-                // Create exception for logging.
-                var ex = new ApplicationException(string.Format(CultureInfo.InvariantCulture, "The value for '{0}' could not be found in the configuration file", key));
-                // needs logging here
+                if (_settingsService != null)
+                {
+                    result = _settingsService.TryGetSetting(key);
+                }
+
+                if (result == null)
+                {
+                    // Create exception for logging.
+                    var ex =
+                        new ApplicationException(
+                            string.Format(
+                                CultureInfo.InvariantCulture,
+                                "The value for '{0}' could not be found in the configuration file", key));
+                    // needs logging here
+                }
             }
 
             return result;

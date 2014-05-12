@@ -70,11 +70,13 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ConfigurationManger\ConfigurationUtilitiesTests.cs" />
+    <Compile Include="Security\ConfigurationSettingsServiceTests.cs" />
     <Compile Include="TestShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EmbeddedResource Include="App_Data\test.settings.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
