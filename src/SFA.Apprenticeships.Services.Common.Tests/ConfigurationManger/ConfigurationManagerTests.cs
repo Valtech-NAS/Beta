@@ -13,7 +13,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void CtorCorrectlyLoadsConfigFile()
         {
-            Action test = () => new ConfigurationManager(GetSettings());
+            Action test = () => new ConfigurationManager();
 
             test.ShouldNotThrow();
         }
@@ -21,7 +21,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void GetSettingThrowsExceptionWhenNoKeyMatch()
         {
-            var service = new ConfigurationManager(GetSettings());
+            var service = new ConfigurationManager();
 
             Action test = () => service.GetAppSetting("Test.Invalid");
 
@@ -31,7 +31,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void GetSettingByKeyReturnsExpectedValue()
         {
-            var service = new ConfigurationManager(GetSettings());
+            var service = new ConfigurationManager();
 
             service.GetAppSetting("ReferenceDataService.Username").Should().Be("username");
         }
@@ -39,7 +39,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [TestCase]
         public void GetSettingByTypeByKeyReturnsExpectedValue()
         {
-            var service = new ConfigurationManager(GetSettings());
+            var service = new ConfigurationManager();
 
             service.GetAppSetting<int>("Test.Value").Should().Be(99);
         }
@@ -59,7 +59,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [SetCulture("en-GB")]
         public void GetAppSettingReturnsStronglyTypedValue()
         {
-            var target = new ConfigurationManager(GetSettings());
+            var target = new ConfigurationManager();
             const string key = "Test.Date";
             var result = target.GetAppSetting<DateTime>(key);
             result.Should().Be(new DateTime(2014, 12, 31));
@@ -69,15 +69,10 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         [SetCulture("en-GB")]
         public void GetAppSettingReturnsStronglyTypedDefaultValue()
         {
-            var target = new ConfigurationManager(GetSettings());
+            var target = new ConfigurationManager();
             const string key = "Test.Date2";
             var result = target.GetAppSetting<DateTime>(new DateTime(2014,1,1), key);
             result.Should().Be(new DateTime(2014, 1, 1));
-        }
-
-        private string GetSettings()
-        {
-            return System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
         }
     }
 }

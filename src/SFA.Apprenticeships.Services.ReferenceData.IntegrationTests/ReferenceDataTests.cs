@@ -12,16 +12,12 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
     [TestFixture]
     public class ReferenceDataTests
     {
-        private string _filename;
         private IReferenceDataService _service;
 
         [TestFixtureSetUp]
         public void Setup()
         {
-            _filename =
-                System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
-
-            var configManager = new ConfigurationManager(_filename);
+            var configManager = new ConfigurationManager();
             var wcf = new WcfService<IReferenceData>();
             _service = new ReferenceDataService(configManager, wcf);
         }
@@ -29,8 +25,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
         [TestCase]
         public void DoesTheEndpointRespond()
         {
-           var configManager =
-                new ConfigurationManager(_filename);
+           var configManager = new ConfigurationManager();
             
             var result = default(GetApprenticeshipFrameworksResponse);
 
