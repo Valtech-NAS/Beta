@@ -3,26 +3,26 @@ using System.ServiceModel;
 
 namespace SFA.Apprenticeships.Services.Common.Wcf
 {
-    public static class WcfService<T>
+    public class WcfService<T> : IWcfService<T>
     {
-        public static void Use(Action<T> action)
+        public void Use(Action<T> action)
         {
             Use("*", action);
         }
 
-        public static void Use(string endpointConfigurationName, string endpointAddress, Action<T> action)
+        public void Use(string endpointConfigurationName, string endpointAddress, Action<T> action)
         {
             var factory = new ChannelFactory<T>(endpointConfigurationName, new EndpointAddress(endpointAddress));
             CallServiceAction(action, factory);
         }
 
-        public static void Use(string endpointConfigurationName, Action<T> action)
+        public void Use(string endpointConfigurationName, Action<T> action)
         {
             var factory = new ChannelFactory<T>(endpointConfigurationName);
             CallServiceAction(action, factory);
         }
 
-        private static void CallServiceAction(Action<T> action, ChannelFactory<T> factory)
+        protected virtual void CallServiceAction(Action<T> action, ChannelFactory<T> factory)
         {
             var client = factory.CreateChannel();
             var success = false;
@@ -32,7 +32,7 @@ namespace SFA.Apprenticeships.Services.Common.Wcf
                 //Logger.Debug("Calling service {0}", factory.Endpoint.Address);
 
                 action(client);
-                ((IClientChannel)client).Close();
+                ((IClientChannel) client).Close();
                 factory.Close();
                 success = true;
             }
@@ -52,7 +52,7 @@ namespace SFA.Apprenticeships.Services.Common.Wcf
             {
                 if (!success)
                 {
-                    ((IClientChannel)client).Abort();
+                    ((IClientChannel) client).Abort();
                     factory.Abort();
                 }
             }

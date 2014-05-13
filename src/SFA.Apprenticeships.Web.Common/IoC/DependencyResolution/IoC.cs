@@ -1,5 +1,6 @@
 using SFA.Apprenticeships.Services.Common.ActiveDirectory;
 using SFA.Apprenticeships.Services.Common.Configuration;
+using SFA.Apprenticeships.Services.ReferenceData.DependencyResolution;
 using SFA.Apprenticeships.Web.Common.Providers;
 using StructureMap;
 using StructureMap.Graph;
@@ -24,9 +25,14 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
                         scan.WithDefaultConventions();
                     }));
 
-            return container
+            container
                 .LoadCommonConfiguration()
                 .LoadWebConfiguration();
+
+            // services
+            container.LoadConfiguration();
+
+            return container;
         }
 
         private static IContainer LoadWebConfiguration(this IContainer container)
@@ -47,11 +53,13 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
                 x =>
                 {
                     x.For<IReferenceDataProvider>().Use<ConfigReferenceDataProvider>();
+
                     x.For<IConfigurationManager>()
                         .Singleton()
                         .Use<ConfigurationManager>()
                         .Ctor<string>("configFile")
                         .Is(System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting]);
+
                 });
 
             return container;

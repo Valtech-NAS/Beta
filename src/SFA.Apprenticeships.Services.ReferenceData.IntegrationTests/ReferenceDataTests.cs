@@ -33,8 +33,8 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
             var password = configManager.GetAppSetting("ReferenceDataService.Password");
 
             var rq = new GetApprenticeshipFrameworksRequest(new Guid(username), msgId, password);
-
-            WcfService<IReferenceData>.Use(client=> { result = client.GetApprenticeshipFrameworks(rq); });
+            var service = new WcfService<IReferenceData>();
+            service.Use(client=> { result = client.GetApprenticeshipFrameworks(rq); });
 
             result.Should().NotBeNull();
         }
@@ -42,10 +42,10 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
         [TestCase]
         public void GetApprenticeshipFrameworksReturnsList()
         {
-            var configManager =
-                new ConfigurationManager(_filename);
+            var configManager = new ConfigurationManager(_filename);
+            var wcf = new WcfService<IReferenceData>();
 
-            var service = new ReferenceDataService(configManager);
+            var service = new ReferenceDataService(configManager, wcf);
             var test = service.GetApprenticeshipFrameworks();
 
             test.Should().NotBeNullOrEmpty();
@@ -55,14 +55,53 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
         [TestCase]
         public void GetCountiesReturnsList()
         {
-            var configManager =
-                new ConfigurationManager(_filename);
+            var configManager = new ConfigurationManager(_filename);
+            var wcf = new WcfService<IReferenceData>();
 
-            var service = new ReferenceDataService(configManager);
+            var service = new ReferenceDataService(configManager, wcf);
             var test = service.GetCounties();
 
             test.Should().NotBeNullOrEmpty();
             test.Count.Should().Be(46);
+        }
+
+        [TestCase]
+        public void GetErrorCodesReturnsList()
+        {
+            var configManager = new ConfigurationManager(_filename);
+            var wcf = new WcfService<IReferenceData>();
+
+            var service = new ReferenceDataService(configManager, wcf);
+            var test = service.GetErrorCodes();
+
+            test.Should().NotBeNullOrEmpty();
+            test.Count.Should().Be(72);
+        }
+
+        [TestCase]
+        public void GetLocalAuthoritiesReturnsList()
+        {
+            var configManager = new ConfigurationManager(_filename);
+            var wcf = new WcfService<IReferenceData>();
+
+            var service = new ReferenceDataService(configManager, wcf);
+            var test = service.GetLocalAuthorities();
+
+            test.Should().NotBeNullOrEmpty();
+            test.Count.Should().Be(326);
+        }
+
+        [TestCase]
+        public void GetRegionsReturnsList()
+        {
+            var configManager = new ConfigurationManager(_filename);
+            var wcf = new WcfService<IReferenceData>();
+
+            var service = new ReferenceDataService(configManager, wcf);
+            var test = service.GetRegions();
+
+            test.Should().NotBeNullOrEmpty();
+            test.Count.Should().Be(10);
         }
     }
 }

@@ -69,6 +69,7 @@
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rest\RestService.cs" />
+    <Compile Include="Wcf\IWcfService.cs" />
     <Compile Include="Wcf\WcfService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

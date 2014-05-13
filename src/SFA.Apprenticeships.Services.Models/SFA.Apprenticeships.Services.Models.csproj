@@ -44,10 +44,12 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ReferenceDataModels\Region.cs" />
+    <Compile Include="ReferenceDataModels\LocalAuthority.cs" />
+    <Compile Include="ReferenceDataModels\ErrorCode.cs" />
     <Compile Include="ReferenceDataModels\County.cs" />
     <Compile Include="ReferenceDataModels\Occupation.cs" />
     <Compile Include="ReferenceDataModels\Framework.cs" />
-    <Compile Include="ReferenceDataModels\Frameworks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferenceDataModels\ILegacyReferenceData.cs" />
   </ItemGroup>
