@@ -16,17 +16,15 @@ namespace SFA.Apprenticeships.Srevices.ReferenceData.IntegrationTests
         [TestFixtureSetUp]
         public void Setup()
         {
-            var config = new ConfigurationManager();
-            var path = config.GetAppSetting("ConfigurationPath");
-            var file = config.GetAppSetting("Settings");
-            _filename = string.Format("{0}\\{1}", path, file);
+            _filename =
+                System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
         }
 
         [TestCase]
         public void DoesTheEndpointRespond()
         {
            var configManager =
-                new ConfigurationManager(new ConfigurationSettingsService(_filename, ConfigurationSettingsType.File));
+                new ConfigurationManager(_filename);
             
             var result = default(GetApprenticeshipFrameworksResponse);
 
@@ -45,7 +43,7 @@ namespace SFA.Apprenticeships.Srevices.ReferenceData.IntegrationTests
         public void GetApprenticeshipFrameworksReturnsList()
         {
             var configManager =
-                new ConfigurationManager(new ConfigurationSettingsService(_filename, ConfigurationSettingsType.File));
+                new ConfigurationManager(_filename);
 
             var service = new ReferenceDataService(configManager);
             var test = service.GetApprenticeshipFrameworks();
@@ -58,7 +56,7 @@ namespace SFA.Apprenticeships.Srevices.ReferenceData.IntegrationTests
         public void GetCountiesReturnsList()
         {
             var configManager =
-                new ConfigurationManager(new ConfigurationSettingsService(_filename, ConfigurationSettingsType.File));
+                new ConfigurationManager(_filename);
 
             var service = new ReferenceDataService(configManager);
             var test = service.GetCounties();

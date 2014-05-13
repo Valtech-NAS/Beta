@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
+using ConfigurationManager = SFA.Apprenticeships.Services.Common.Configuration.ConfigurationManager;
 
 namespace SFA.Apprenticeships.Services.Common.ActiveDirectory
 {
@@ -14,12 +16,17 @@ namespace SFA.Apprenticeships.Services.Common.ActiveDirectory
         private const string SslPortConstant = "SslPort";
         private const string DefaultValueConstant = "";
 
-        private static readonly ActiveDirectoryConfigurationSection ConfigSectionDetails =
-            ConfigurationManager.GetSection(ConfigSectionNameConstant) as ActiveDirectoryConfigurationSection;
+        private static readonly string ConfigFile = System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
 
         public static ActiveDirectoryConfigurationSection ConfigurationSectionDetails
         {
-            get { return ConfigSectionDetails; }
+            get
+            {
+                var configMap = new ExeConfigurationFileMap {ExeConfigFilename = ConfigFile};
+                var config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
+
+                return config.GetSection(ConfigSectionNameConstant) as ActiveDirectoryConfigurationSection; 
+            }
         }
 
         [ConfigurationProperty(ServerConstant, IsRequired = true, IsKey = true, DefaultValue = DefaultValueConstant)]

@@ -52,7 +52,6 @@ namespace SFA.Apprenticeships.Services.Common.Configuration
         /// Gets the section.
         /// </summary>
         /// <param name="sectionName">Name of the section.</param>
-        /// <returns>Retrieves a config section</returns>
         ConfigurationSection GetSection(string sectionName);
     }
 }

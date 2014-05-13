@@ -11,6 +11,8 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
     /// </summary>
     public static class IoC
     {
+        private const string PrivateConfigurationFile = @"";
+
         public static IContainer Initialize()
         {
             var container = ObjectFactory.Container;
@@ -32,7 +34,7 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
             container.Configure(
                 x =>
                 {
-                    //x.For<IActiveDirectoryConfiguration>().Singleton().Use(ActiveDirectoryConfigurationSection.ConfigurationSectionDetails);
+                    x.For<IActiveDirectoryConfiguration>().Singleton().Use(ActiveDirectoryConfigurationSection.ConfigurationSectionDetails);
                     // more entries here
                 });
 
@@ -45,7 +47,10 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
                 x =>
                 {
                     x.For<IReferenceDataProvider>().Use<ConfigReferenceDataProvider>();
-                    x.For<IConfigurationManager>().Use<ConfigurationManager>();
+                    x.For<IConfigurationManager>()
+                        .Use<ConfigurationManager>()
+                        .Ctor<string>("configFile")
+                        .Is(System.Configuration.ConfigurationManager.AppSettings["ConfigurationPath"]);
                 });
 
             return container;
