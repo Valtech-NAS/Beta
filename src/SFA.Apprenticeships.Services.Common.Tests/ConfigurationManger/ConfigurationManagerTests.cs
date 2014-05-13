@@ -1,225 +1,83 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
+using SFA.Apprenticeships.Services.Common.ActiveDirectory;
 using SFA.Apprenticeships.Services.Common.Configuration;
 
 namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
 {
-    /// <summary>
-    /// This is a test class for ConfigurationUtilities and is intended
-    /// to contain all ConfigurationUtilitiesTest Unit Tests
-    /// Note that this test project does not copy configuration files in from
-    /// any other project. It has it's own configuration files used to test 
-    /// very specific configuration scenarios
-    /// </summary>
     [TestFixture]
-    public class ConfigurationUtilitiesTest
+    public class ConfigurationManagerTests
     {
-        #region GetConnectionString tests
-        /// <summary>
-        /// A test for GetConnectionString
-        /// </summary>
-        [TestCase, Description("Tests that the GetConnectionString method throws an ArgumentNullException if the key supplied is null.")]
-        public void GetConnectionString_NullKey_Test()
-        {
-            var target = new ConfigurationManager();
-            string key = null;
-            Action result = () => target.GetConnectionString(key);
-
-            result.ShouldThrow<ArgumentNullException>();
-        }
-
-        /// <summary>
-        /// A test for GetConnectionString
-        /// </summary>
         [TestCase]
-        public void GetConnectionString_AllValid_Test()
+        public void CtorCorrectlyLoadsConfigFile()
         {
-            var target = new ConfigurationManager();
-            const string key = "ApplicationExceptions";
+            Action test = () => new ConfigurationManager(GetSettings());
 
-            var result = target.GetConnectionString(key);
-
-            const string expectedConnectionString = "TestConnectionString";
-            const string expectedConnectionProvider = "System.Data.SqlClient";
-
-            result.Should().NotBeNull();
-            result.ConnectionString.Should().Be(expectedConnectionString);
-            result.ProviderName.Should().Be(expectedConnectionProvider);
+            test.ShouldNotThrow();
         }
 
-        /// <summary>
-        /// A test for GetConnectionString
-        /// </summary>
         [TestCase]
-        public void GetConnectionString_Missing_Test()
+        public void GetSettingThrowsExceptionWhenNoKeyMatch()
         {
-            var target = new ConfigurationManager();
-            Action test = () => target.GetConnectionString("missingkey");
+            var service = new ConfigurationManager(GetSettings());
 
-            test.ShouldThrow<ApplicationException>();
+            Action test = () => service.GetAppSetting("Test.Invalid");
+
+            test.ShouldThrow<KeyNotFoundException>();
         }
 
-        #endregion
-
-        #region GetAppSetting tests
-
-        /// <summary>
-        /// A test for GetAppSetting
-        /// </summary>
         [TestCase]
-        public void GetAppSetting_NullKey_Test()
+        public void GetSettingByKeyReturnsExpectedValue()
         {
-            var target = new ConfigurationManager();
-            string key = null;
-            Action result = () => target.GetAppSetting(key);
+            var service = new ConfigurationManager(GetSettings());
 
-            result.ShouldThrow<ArgumentNullException>();
+            service.GetAppSetting("ReferenceDataService.Username").Should().Be("username");
         }
 
-        /// <summary>
-        /// A test for GetAppSetting
-        /// </summary>
         [TestCase]
-        public void GetAppSetting_AllValid_Test()
+        public void GetSettingByTypeByKeyReturnsExpectedValue()
         {
-            var target = new ConfigurationManager();
-            const string key = "TestValue";
+            var service = new ConfigurationManager(GetSettings());
 
-            var result = target.GetAppSetting(key);
-
-            result.Should().NotBeNull();
-            result.Should().Be("TestResult");
+            service.GetAppSetting<int>("Test.Value").Should().Be(99);
         }
 
-        /// <summary>
-        /// A test for GetAppSetting
-        /// </summary>
         [TestCase]
-        public void GetAppSetting_Missing_Test()
+        public void GetConfigSectionForAd()
         {
-            var target = new ConfigurationManager();
-            const string key = "MissingKey";
-
-            Action test = () => target.GetAppSetting(key);
-
-            test.ShouldThrow<ArgumentException>();
+            var test = ActiveDirectoryConfigurationSection.ConfigurationSectionDetails;
+           
+            test.DistinguishedName.Should().Be("distinguishedname");
+            test.Server.Should().Be("server");
+            test.Username.Should().Be("username");
+            test.Password.Should().Be("password");
         }
 
-        #endregion
-
-        #region TryGetAppSetting tests
-
-        /// <summary>
-        /// A test for TryGetAppSetting
-        /// </summary>
-        [TestCase]
-        public void TryGetAppSetting_NullKey_Test()
-        {
-            var target = new ConfigurationManager();
-            string key = null;
-
-            Action result = () => target.TryGetAppSetting(key);
-
-            result.ShouldThrow<ArgumentNullException>();
-        }
-
-        /// <summary>
-        /// A test for TryGetAppSetting
-        /// </summary>
-        [TestCase]
-        public void TryGetAppSetting_AllValid_Test()
-        {
-            var target = new ConfigurationManager();
-            const string key = "TestValue";
-
-            var result = target.TryGetAppSetting(key);
-
-            result.Should().NotBeNull();
-            result.Should().Be("TestResult");
-        }
-
-        #endregion
-
-        #region GetAppSetting<t> tests
-
-        /// <summary>
-        /// Gets the app setting test helper.
-        /// </summary>
-        /// <typeparam name="T">type parameter</typeparam>
-        /// <param name="key">The input key.</param>
-        /// <param name="target">The target.</param>
-        /// <returns>The value located by the supplied key</returns>
-        public T GetAppSettingTestHelper<T>(string key, ConfigurationManager target)
-        {
-            var returnType = default(T);
-            var result = target.GetAppSetting<T>(returnType, key);
-
-            return result;
-        }
-
-        /// <summary>
-        /// A test for GetAppSetting
-        /// </summary>
         [TestCase]
         [SetCulture("en-GB")]
-        public void GetAppSetting_Generic_AllValid_Test()
+        public void GetAppSettingReturnsStronglyTypedValue()
         {
-            var target = new ConfigurationManager();
-            const string key = "TestDate";
+            var target = new ConfigurationManager(GetSettings());
+            const string key = "Test.Date";
             var result = target.GetAppSetting<DateTime>(key);
             result.Should().Be(new DateTime(2014, 12, 31));
         }
 
-        /// <summary>
-        /// A test for GetAppSetting
-        /// </summary>
         [TestCase]
-        public void GetAppSetting_Generic_Missing_Test()
+        [SetCulture("en-GB")]
+        public void GetAppSettingReturnsStronglyTypedDefaultValue()
         {
-            var target = new ConfigurationManager();
-            const string key = "Missingvalue";
-
-            Action test = () => target.GetAppSetting<DateTime>(key);
-
-            test.ShouldThrow<ArgumentException>();
+            var target = new ConfigurationManager(GetSettings());
+            const string key = "Test.Date2";
+            var result = target.GetAppSetting<DateTime>(new DateTime(2014,1,1), key);
+            result.Should().Be(new DateTime(2014, 1, 1));
         }
 
-        /// <summary>
-        /// Checks the get app setting throws exception on no key.
-        /// </summary>
-        [TestCase]
-        public void CheckGetAppSettingThrowsExceptionOnNoKey1()
+        private string GetSettings()
         {
-            var target = new ConfigurationManager();
-            Action result = () => target.GetAppSetting<DateTime>(string.Empty);
-
-            result.ShouldThrow<ArgumentNullException>();
+            return System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
         }
-
-        /// <summary>
-        /// Checks the get app setting throws exception on no key.
-        /// </summary>
-        [TestCase]
-        public void CheckGetAppSettingThrowsExceptionOnNoKey2()
-        {
-            var target = new ConfigurationManager();
-           Action result = () => target.GetAppSetting<DateTime>(DateTime.Today, string.Empty);
-
-            result.ShouldThrow<ArgumentNullException>();
-        }
-
-        /// <summary>
-        /// Checks the get app setting throws exception on no key.
-        /// </summary>
-        [TestCase]
-        public void CheckGetAppSettingThrowsExceptionInvalidKey()
-        {
-            var target = new ConfigurationManager();
-            Action result = () => target.GetAppSetting("test");
-
-            result.ShouldThrow<ArgumentException>();
-        }
-        #endregion
     }
 }

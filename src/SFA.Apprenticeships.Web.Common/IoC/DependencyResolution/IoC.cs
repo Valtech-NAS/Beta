@@ -48,9 +48,10 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
                 {
                     x.For<IReferenceDataProvider>().Use<ConfigReferenceDataProvider>();
                     x.For<IConfigurationManager>()
+                        .Singleton()
                         .Use<ConfigurationManager>()
                         .Ctor<string>("configFile")
-                        .Is(System.Configuration.ConfigurationManager.AppSettings["ConfigurationPath"]);
+                        .Is(System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting]);
                 });
 
             return container;

@@ -7,7 +7,6 @@ namespace SFA.Apprenticeships.Services.Common.ActiveDirectory
     public class ActiveDirectoryConfigurationSection : ConfigurationSection, IActiveDirectoryConfiguration
     {
         public const string ConfigSectionNameConstant = "ActiveDirectoryConfiguration";
-
         private const string ServerConstant = "Server";
         private const string DistinguishedNameConstant = "DistinguishedName";
         private const string AdminUsernameConst = "Username";
@@ -16,7 +15,13 @@ namespace SFA.Apprenticeships.Services.Common.ActiveDirectory
         private const string SslPortConstant = "SslPort";
         private const string DefaultValueConstant = "";
 
-        private static readonly string ConfigFile = System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
+        private static readonly string ConfigFile;
+
+        static ActiveDirectoryConfigurationSection()
+        {
+            // Needs the file (path and name) for the private configuration settings file to be set in web.config.
+            ConfigFile = System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
+        }
 
         public static ActiveDirectoryConfigurationSection ConfigurationSectionDetails
         {
