@@ -3,6 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using SFA.Apprenticeships.Services.Common.Configuration;
 using SFA.Apprenticeships.Services.Common.Wcf;
+using SFA.Apprenticeships.Services.ReferenceData.Abstract;
 using SFA.Apprenticeships.Services.ReferenceData.Proxy;
 using SFA.Apprenticeships.Services.ReferenceData.Service;
 
@@ -12,12 +13,17 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
     public class ReferenceDataTests
     {
         private string _filename;
+        private IReferenceDataService _service;
 
         [TestFixtureSetUp]
         public void Setup()
         {
             _filename =
                 System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
+
+            var configManager = new ConfigurationManager(_filename);
+            var wcf = new WcfService<IReferenceData>();
+            _service = new ReferenceDataService(configManager, wcf);
         }
 
         [TestCase]
@@ -41,12 +47,8 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
 
         [TestCase]
         public void GetApprenticeshipFrameworksReturnsList()
-        {
-            var configManager = new ConfigurationManager(_filename);
-            var wcf = new WcfService<IReferenceData>();
-
-            var service = new ReferenceDataService(configManager, wcf);
-            var test = service.GetApprenticeshipFrameworks();
+        {       
+            var test = _service.GetApprenticeshipFrameworks();
 
             test.Should().NotBeNullOrEmpty();
             test.Count.Should().Be(216);
@@ -55,11 +57,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
         [TestCase]
         public void GetCountiesReturnsList()
         {
-            var configManager = new ConfigurationManager(_filename);
-            var wcf = new WcfService<IReferenceData>();
-
-            var service = new ReferenceDataService(configManager, wcf);
-            var test = service.GetCounties();
+            var test = _service.GetCounties();
 
             test.Should().NotBeNullOrEmpty();
             test.Count.Should().Be(46);
@@ -68,11 +66,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
         [TestCase]
         public void GetErrorCodesReturnsList()
         {
-            var configManager = new ConfigurationManager(_filename);
-            var wcf = new WcfService<IReferenceData>();
-
-            var service = new ReferenceDataService(configManager, wcf);
-            var test = service.GetErrorCodes();
+            var test = _service.GetErrorCodes();
 
             test.Should().NotBeNullOrEmpty();
             test.Count.Should().Be(72);
@@ -81,11 +75,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
         [TestCase]
         public void GetLocalAuthoritiesReturnsList()
         {
-            var configManager = new ConfigurationManager(_filename);
-            var wcf = new WcfService<IReferenceData>();
-
-            var service = new ReferenceDataService(configManager, wcf);
-            var test = service.GetLocalAuthorities();
+            var test = _service.GetLocalAuthorities();
 
             test.Should().NotBeNullOrEmpty();
             test.Count.Should().Be(326);
@@ -94,11 +84,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
         [TestCase]
         public void GetRegionsReturnsList()
         {
-            var configManager = new ConfigurationManager(_filename);
-            var wcf = new WcfService<IReferenceData>();
-
-            var service = new ReferenceDataService(configManager, wcf);
-            var test = service.GetRegions();
+            var test = _service.GetRegions();
 
             test.Should().NotBeNullOrEmpty();
             test.Count.Should().Be(10);
