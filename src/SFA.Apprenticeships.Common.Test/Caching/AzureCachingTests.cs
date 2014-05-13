@@ -1,8 +1,10 @@
-﻿namespace SFA.Apprenticeships.Services.Caching.Test
+﻿namespace SFA.Apprenticeships.Common.Caching.Tests.Caching
 {
     using System;
     using FluentAssertions;
+    using Microsoft.ApplicationServer.Caching;
     using NUnit.Framework;
+    using SFA.Apprenticeships.Common.Configuration;
 
     [TestFixture]
     public class AzureCachingTests

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 using SFA.Apprenticeships.Services.Common.ActiveDirectory;
-using SFA.Apprenticeships.Services.Common.Configuration;
+using SFA.Apprenticeships.Common.Configuration;
 
 namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
 {

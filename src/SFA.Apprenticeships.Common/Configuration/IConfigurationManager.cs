@@ -1,7 +1,7 @@
-﻿using System.Configuration;
-
-namespace SFA.Apprenticeships.Services.Common.Configuration
+﻿namespace SFA.Apprenticeships.Common.Configuration
 {
+    using System.Configuration;
+
     public interface IConfigurationManager
     {
         /// <summary>

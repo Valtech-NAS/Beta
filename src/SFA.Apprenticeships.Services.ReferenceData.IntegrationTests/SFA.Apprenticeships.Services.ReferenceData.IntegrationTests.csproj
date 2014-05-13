@@ -61,6 +61,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Common\SFA.Apprenticeships.Common.csproj">
+      <Project>{aad6c913-2503-456f-a593-c0a36c07bd35}</Project>
+      <Name>SFA.Apprenticeships.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Services.Common\SFA.Apprenticeships.Services.Common.csproj">
       <Project>{78b1f2a1-dcc3-4ed3-8ce0-16e0781b59fa}</Project>
       <Name>SFA.Apprenticeships.Services.Common</Name>

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Services.Caching
+﻿namespace SFA.Apprenticeships.Common.Caching
 {
     using System;
     using System.Collections.Generic;

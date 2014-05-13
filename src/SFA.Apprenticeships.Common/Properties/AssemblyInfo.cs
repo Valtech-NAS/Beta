@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SFA.Apprenticeships.Services.Caching")]
+[assembly: AssemblyTitle("SFA.Apprenticeships.Common")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SFA.Apprenticeships.Services.Caching")]
+[assembly: AssemblyProduct("SFA.Apprenticeships.Common")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f7489b5b-e70a-4831-9138-9c8ba38c70f8")]
+[assembly: Guid("1368b667-d48c-49b7-be0f-b7fbf40481b9")]
 
 // Version information for an assembly consists of the following four values:
 //
