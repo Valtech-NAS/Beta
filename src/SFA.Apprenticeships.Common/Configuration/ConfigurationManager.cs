@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Globalization;
-
-namespace SFA.Apprenticeships.Services.Common.Configuration
+﻿namespace SFA.Apprenticeships.Common.Configuration
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Globalization;
+
     public class ConfigurationManager : IConfigurationManager
     {
         public static string ConfigurationFileAppSetting = "ConfigurationPath";
 
-        private readonly System.Configuration.Configuration _config;
+        private readonly Configuration _config;
 
         /// <summary>
         /// TODO::Medium::service needs caching decorator
         /// </summary>
-        public ConfigurationManager(string configFile) 
+        public ConfigurationManager(string configFileAppSettingKey = null)
         {
-            if (string.IsNullOrEmpty(configFile))
-            {
-                throw new ArgumentNullException("configFile");
-            }
+            string configFile = string.IsNullOrEmpty(configFileAppSettingKey)
+                ? System.Configuration.ConfigurationManager.AppSettings[ConfigurationFileAppSetting]
+                : System.Configuration.ConfigurationManager.AppSettings[configFileAppSettingKey];
 
             var configMap = new ExeConfigurationFileMap
             {
@@ -78,7 +77,7 @@ namespace SFA.Apprenticeships.Services.Common.Configuration
                 throw new ArgumentNullException("key");
             }
 
-            string result = this.TryGetAppSetting(key);
+            string result = TryGetAppSetting(key);
             if (result != null)
             {
                 return (T)Convert.ChangeType(result, typeof(T), CultureInfo.InvariantCulture);

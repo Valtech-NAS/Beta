@@ -1,5 +1,5 @@
 using SFA.Apprenticeships.Services.Common.ActiveDirectory;
-using SFA.Apprenticeships.Services.Common.Configuration;
+using SFA.Apprenticeships.Common.Configuration;
 using SFA.Apprenticeships.Services.ReferenceData.DependencyResolution;
 using SFA.Apprenticeships.Web.Common.Providers;
 using StructureMap;

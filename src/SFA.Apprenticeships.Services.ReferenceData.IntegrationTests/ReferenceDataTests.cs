@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
-using SFA.Apprenticeships.Services.Common.Configuration;
+using SFA.Apprenticeships.Common.Configuration;
 using SFA.Apprenticeships.Services.Common.Wcf;
 using SFA.Apprenticeships.Services.ReferenceData.Abstract;
 using SFA.Apprenticeships.Services.ReferenceData.Proxy;

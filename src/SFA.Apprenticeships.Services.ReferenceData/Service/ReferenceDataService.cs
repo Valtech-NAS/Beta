@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using SFA.Apprenticeships.Services.Common.Configuration;
+using SFA.Apprenticeships.Common.Configuration;
 using SFA.Apprenticeships.Services.Common.Wcf;
 using SFA.Apprenticeships.Services.Models.ReferenceDataModels;
 using SFA.Apprenticeships.Services.ReferenceData.Abstract;

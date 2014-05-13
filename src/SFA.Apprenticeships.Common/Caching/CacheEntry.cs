@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Services.Caching
+﻿namespace SFA.Apprenticeships.Common.Caching
 {
     public abstract class BaseCacheEntry : ICacheEntry
     {

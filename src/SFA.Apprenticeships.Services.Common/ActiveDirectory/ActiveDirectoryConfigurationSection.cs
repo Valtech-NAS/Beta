@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Configuration;
-using ConfigurationManager = SFA.Apprenticeships.Services.Common.Configuration.ConfigurationManager;
+using ConfigurationManager = SFA.Apprenticeships.Common.Configuration.ConfigurationManager;
 
 namespace SFA.Apprenticeships.Services.Common.ActiveDirectory
 {
