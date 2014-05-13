@@ -6,7 +6,7 @@ using SFA.Apprenticeships.Services.Common.Wcf;
 using SFA.Apprenticeships.Services.ReferenceData.Proxy;
 using SFA.Apprenticeships.Services.ReferenceData.Service;
 
-namespace SFA.Apprenticeships.Srevices.ReferenceData.IntegrationTests
+namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
 {
     [TestFixture]
     public class ReferenceDataTests
