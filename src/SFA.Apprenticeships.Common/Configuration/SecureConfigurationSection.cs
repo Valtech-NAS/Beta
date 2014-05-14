@@ -4,7 +4,7 @@
 
     public abstract class SecureConfigurationSection<T> : ConfigurationSection where T : ConfigurationSection, new()
     {
-        public static T instance;
+        private static T _instance;
 
         protected SecureConfigurationSection(string configSectionName)
         {
@@ -12,12 +12,12 @@
             var configFile = System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
             var configMap = new ExeConfigurationFileMap { ExeConfigFilename = configFile };
             var config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
-            instance = (T)config.GetSection(configSectionName);
+            _instance = (T)config.GetSection(configSectionName);
         }
 
         public static T Instance
         {
-            get { return instance ?? (instance = new T()); }
+            get { return _instance ?? (_instance = new T()); }
         }
     }
 }
