@@ -18,4 +18,4 @@ Remove-Item C:\Projects\SFA\Configuration\* -recurse
 
 Write-Host "$checkoutRoot\Configuration\**"
 
-Copy-Item "$checkoutRoot\Configuration\**" "C:\Projects\SFA\Configuration"
+Copy-Item "$checkoutRoot\Configuration\**" "C:\Projects\SFA\Configuration" -recurse
