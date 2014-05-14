@@ -1,12 +1,10 @@
-﻿using System;
-using System.Configuration;
-using ConfigurationManager = SFA.Apprenticeships.Common.Configuration.ConfigurationManager;
-
-namespace SFA.Apprenticeships.Services.Common.ActiveDirectory
+﻿namespace SFA.Apprenticeships.Services.Common.ActiveDirectory
 {
-    public class ActiveDirectoryConfigurationSection : ConfigurationSection, IActiveDirectoryConfiguration
+    using System.Configuration;
+    using SFA.Apprenticeships.Common.Configuration;
+
+    public class ActiveDirectoryConfigurationSection : SecureConfigurationSection<ActiveDirectoryConfigurationSection>, IActiveDirectoryConfiguration
     {
-        public const string ConfigSectionNameConstant = "ActiveDirectoryConfiguration";
         private const string ServerConstant = "Server";
         private const string DistinguishedNameConstant = "DistinguishedName";
         private const string AdminUsernameConst = "Username";
@@ -15,23 +13,8 @@ namespace SFA.Apprenticeships.Services.Common.ActiveDirectory
         private const string SslPortConstant = "SslPort";
         private const string DefaultValueConstant = "";
 
-        private static readonly string ConfigFile;
-
-        static ActiveDirectoryConfigurationSection()
+        public ActiveDirectoryConfigurationSection(): base("ActiveDirectoryConfiguration")
         {
-            // Needs the file (path and name) for the private configuration settings file to be set in web.config.
-            ConfigFile = System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
-        }
-
-        public static ActiveDirectoryConfigurationSection ConfigurationSectionDetails
-        {
-            get
-            {
-                var configMap = new ExeConfigurationFileMap {ExeConfigFilename = ConfigFile};
-                var config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
-
-                return config.GetSection(ConfigSectionNameConstant) as ActiveDirectoryConfigurationSection; 
-            }
         }
 
         [ConfigurationProperty(ServerConstant, IsRequired = true, IsKey = true, DefaultValue = DefaultValueConstant)]

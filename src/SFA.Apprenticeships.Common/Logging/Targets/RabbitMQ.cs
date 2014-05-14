@@ -19,7 +19,7 @@
     public class RabbitMQ : TargetWithLayout
     {
         private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-        private static readonly RabbitMQLoggingConfigurationSection RabbitMQConfig = RabbitMQLoggingConfigurationSection.ConfigurationSectionDetails;
+        private static readonly RabbitMQLoggingConfigurationSection RabbitMQConfig = new RabbitMQLoggingConfigurationSection();
         private IAdvancedBus _bus;
         private IExchange _exchange;
 

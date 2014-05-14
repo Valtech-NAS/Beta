@@ -1,12 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Common.Logging.Configuration
 {
     using System.Configuration;
+    using SFA.Apprenticeships.Common.Configuration;
     using SFA.Apprenticeships.Services.Common.ActiveDirectory;
-    using ConfigurationManager = SFA.Apprenticeships.Common.Configuration.ConfigurationManager;
 
-    public class RabbitMQLoggingConfigurationSection : ConfigurationSection, IRabbitMQLoggingConfiguration
+    public class RabbitMQLoggingConfigurationSection : SecureConfigurationSection<RabbitMQLoggingConfigurationSection>, IRabbitMQLoggingConfiguration
     {
-        public const string ConfigSectionNameConstant = "RabbitMQLoggingConfiguration";
         private const string VirtualHostConst = "VirtualHost";
         private const string UserNameConst = "UserName";
         private const string PasswordConst = "Password";
@@ -21,22 +20,8 @@
         private const string QueueNameConst = "QueueName";
         private const string OutputEasyNetQLogsToNLogInternalConst = "OutputEasyNetQLogsToNLogInternal";
 
-        private static readonly string ConfigFile;
-
-        static RabbitMQLoggingConfigurationSection()
+        public RabbitMQLoggingConfigurationSection() : base("RabbitMQLoggingConfiguration")
         {
-            // Needs the file (path and name) for the private configuration settings file to be set in web.config.
-            ConfigFile = System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
-        }
-
-        public static RabbitMQLoggingConfigurationSection ConfigurationSectionDetails
-        {
-            get
-            {
-                var configMap = new ExeConfigurationFileMap {ExeConfigFilename = ConfigFile};
-                var config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
-                return config.GetSection(ConfigSectionNameConstant) as RabbitMQLoggingConfigurationSection; 
-            }
         }
 
         [ConfigurationProperty(VirtualHostConst, IsRequired = false, IsKey = true, DefaultValue = "/")]
