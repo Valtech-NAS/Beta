@@ -1,8 +1,9 @@
-﻿namespace SFA.Apprenticeships.Common.Caching.Tests.Caching
+﻿namespace SFA.Apprenticeships.Common.Tests.Caching
 {
     using System;
     using FluentAssertions;
     using NUnit.Framework;
+    using SFA.Apprenticeships.Common.Caching;
 
     [TestFixture]
     public class MemoryCachingTests

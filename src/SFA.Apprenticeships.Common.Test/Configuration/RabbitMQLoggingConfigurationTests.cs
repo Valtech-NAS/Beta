@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Common.Caching.Tests.Configuration
+﻿namespace SFA.Apprenticeships.Common.Tests.Configuration
 {
     using FluentAssertions;
     using NUnit.Framework;
