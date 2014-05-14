@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using NSubstitute;
+using Moq;
 using NUnit.Framework;
 using RestSharp;
 using SFA.Apprenticeships.Services.Postcode.Entities;
@@ -47,10 +47,10 @@ namespace SFA.Apprenticeships.Services.Postcode.Tests.Service
                 }
             };
 
-            var restClient = Substitute.For<IRestClient>();
-            restClient.Execute<PostcodeInfoResult>(Arg.Any<IRestRequest>()).Returns(response);
+            var restClient = new Mock<IRestClient>();
+            restClient.Setup(x=>x.Execute<PostcodeInfoResult>(It.IsAny<IRestRequest>())).Returns(response);
 
-            var service = new PostcodeService("http://api.postcodes.io") { Client = restClient };
+            var service = new PostcodeService("http://api.postcodes.io") { Client = restClient.Object };
 
             service.GetRandomPostcode().Postcode.Should().Be("CV1 2WT");
         }
@@ -76,10 +76,10 @@ namespace SFA.Apprenticeships.Services.Postcode.Tests.Service
                 }
             };
 
-            var restClient = Substitute.For<IRestClient>();
-            restClient.Execute<PostcodeInfoResult>(Arg.Any<IRestRequest>()).Returns(response);
+            var restClient = new Mock<IRestClient>();
+            restClient.Setup(x => x.Execute<PostcodeInfoResult>(It.IsAny<IRestRequest>())).Returns(response);
 
-            var service = new PostcodeService("http://api.postcodes.io") { Client = restClient };
+            var service = new PostcodeService("http://api.postcodes.io") { Client = restClient.Object };
 
             var result = service.GetPartialMatches("any");
 
@@ -108,10 +108,10 @@ namespace SFA.Apprenticeships.Services.Postcode.Tests.Service
                 }
             };
 
-            var restClient = Substitute.For<IRestClient>();
-            restClient.Execute<PostcodeInfoResult>(Arg.Any<IRestRequest>()).Returns(response);
+            var restClient = new Mock<IRestClient>();
+            restClient.Setup(x => x.Execute<PostcodeInfoResult>(It.IsAny<IRestRequest>())).Returns(response);
 
-            var service = new PostcodeService("http://api.postcodes.io") { Client = restClient };
+            var service = new PostcodeService("http://api.postcodes.io") { Client = restClient.Object };
 
             var result = service.GetPostcodeInfo("any");
 
@@ -126,10 +126,10 @@ namespace SFA.Apprenticeships.Services.Postcode.Tests.Service
                 ErrorException = new Exception("Test")
             };
 
-            var restClient = Substitute.For<IRestClient>();
-            restClient.Execute<PostcodeInfoResult>(Arg.Any<IRestRequest>()).Returns(response);
+            var restClient = new Mock<IRestClient>();
+            restClient.Setup(x => x.Execute<PostcodeInfoResult>(It.IsAny<IRestRequest>())).Returns(response);
 
-            var service = new PostcodeService("http://api.postcodes.io") { Client = restClient };
+            var service = new PostcodeService("http://api.postcodes.io") { Client = restClient.Object };
 
             Action test = () => service.GetRandomPostcode();
 

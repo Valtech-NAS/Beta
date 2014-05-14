@@ -7,11 +7,11 @@
 
     public class MemoryCacheClient : ICacheClient
     {
-        private ObjectCache cache;
+        private readonly ObjectCache _cache;
 
         public MemoryCacheClient()
         {
-            cache = MemoryCache.Default;
+            _cache = MemoryCache.Default;
         }
 
         private void Store(string key, object value, CacheDuration cacheDuration)
@@ -22,12 +22,12 @@
             }
 
             var policy = new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes((int)cacheDuration) };
-            cache.Set(key, value, policy);
+            _cache.Set(key, value, policy);
         }
 
         public T Get<T>(string key) where T : class
         {
-            var result = cache[key] as T;
+            var result = _cache[key] as T;
 
             if (result != null)
             {
@@ -39,7 +39,7 @@
 
         private void Remove(string key)
         {
-            cache.Remove(key);
+            _cache.Remove(key);
         }
 
         public void FlushAll()
@@ -47,7 +47,7 @@
             List<string> cacheKeys = MemoryCache.Default.Select(kvp => kvp.Key).ToList();
             foreach (string cacheKey in cacheKeys)
             {
-                cache.Remove(cacheKey);
+                _cache.Remove(cacheKey);
             }
         }
 
@@ -59,7 +59,7 @@
         {
             var cacheKey = cacheEntry.Key();
 
-            var result = cache[cacheKey] as TResult;
+            var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
                 result = dataFunc();
@@ -76,7 +76,7 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1);
 
-            var result = cache[cacheKey] as TResult;
+            var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
                 result = dataFunc(funcParam1);
@@ -93,7 +93,7 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2);
 
-            var result = cache[cacheKey] as TResult;
+            var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
                 result = dataFunc(funcParam1, funcParam2);
@@ -110,7 +110,7 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2, funcParam3);
 
-            var result = cache[cacheKey] as TResult;
+            var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
                 result = dataFunc(funcParam1, funcParam2, funcParam3);
@@ -127,7 +127,7 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2, funcParam3, funcParam4);
 
-            var result = cache[cacheKey] as TResult;
+            var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
                 result = dataFunc(funcParam1, funcParam2, funcParam3, funcParam4);
@@ -144,7 +144,7 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2, funcParam3, funcParam4, funcParam5);
 
-            var result = cache[cacheKey] as TResult;
+            var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
                 result = dataFunc(funcParam1, funcParam2, funcParam3, funcParam4, funcParam5);
@@ -161,7 +161,7 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2, funcParam3, funcParam4, funcParam5, funcParam6);
 
-            var result = cache[cacheKey] as TResult;
+            var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
                 result = dataFunc(funcParam1, funcParam2, funcParam3, funcParam4, funcParam5, funcParam6);
