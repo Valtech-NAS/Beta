@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using SFA.Apprenticeships.Common.Caching;
 using SFA.Apprenticeships.Services.Models.ReferenceDataModels;
 using SFA.Apprenticeships.Services.ReferenceData.Abstract;
@@ -14,7 +15,7 @@ namespace SFA.Apprenticeships.Web.Common.Providers
     /// </summary>
     public class LegacyReferenceDataProvider : IReferenceDataProvider
     {
-        public const string LegacyReferenceDataCacheKey = "SFA.Apprenticeships.Common.LegacyReferenceData";
+        public const string LegacyReferenceDataCacheKey = "SFA.Apprenticeships.LegacyReferenceData.";
 
         private readonly IReferenceDataService _service;
         private readonly ICacheClient _cache;
@@ -35,11 +36,9 @@ namespace SFA.Apprenticeships.Web.Common.Providers
             var result = new List<ReferenceDataViewModel>();
             var cachedData = default(IList<ILegacyReferenceData>);
 
-            var key = string.Format("{0}.{1}", LegacyReferenceDataCacheKey, type);
-
             if (_cache != null)
             {
-                cachedData = _cache.Get<IList<ILegacyReferenceData>>(key);           
+                cachedData = _cache.Get<IList<ILegacyReferenceData>>(new LegacyDataProviderCacheKeyEntry().Key(type));           
             }
 
             // No cache data found then call the service
@@ -55,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Common.Providers
                     // store to cache
                     if (_cache != null)
                     {
-                        //_cache.Put(BaseCacheEntry, cachedData, key);
+                        _cache.Put(new LegacyDataProviderCacheKeyEntry(), cachedData, type);
                     }
                 }
             }

@@ -38,9 +38,14 @@ namespace SFA.Apprenticeships.Web.Common.Tests.Providers
             _service.GetReferenceData(Arg.Is(LegacyReferenceDataType.County)).Returns(new List<Model.ILegacyReferenceData>(_counties));
             _service.GetReferenceData(Arg.Is(LegacyReferenceDataType.ErrorCode)).Returns(new List<Model.ILegacyReferenceData>(_errorCodes));
             _service.GetReferenceData(Arg.Is(LegacyReferenceDataType.LocalAuthority)).Returns(new List<Model.ILegacyReferenceData>(_localAuthorities));
-            _service.GetReferenceData(Arg.Is(LegacyReferenceDataType.Region)).Returns(new List<Model.ILegacyReferenceData>(_regions));
+            _service.GetReferenceData(Arg.Is(LegacyReferenceDataType.Region)).Returns(new List<Model.ILegacyReferenceData>(_regions));           
+        }
 
+        [SetUp]
+        public void TestSetup()
+        {
             _cache = Substitute.For<ICacheClient>();
+            _service.ClearReceivedCalls();
         }
 
         [TestCase(LegacyReferenceDataType.County)]
@@ -57,6 +62,9 @@ namespace SFA.Apprenticeships.Web.Common.Tests.Providers
             viewModel.Should().NotBeNull();
             viewModel.Count().Should().Be(1);
             viewModel.First(x => x.Id == type.ToString()).Description.Should().Be(string.Format("{0}.1", type));
+
+            _cache.Received(0).Put(Arg.Any<LegacyDataProviderCacheKeyEntry>(), Arg.Any<IList<Model.ILegacyReferenceData>>(), Arg.Any<LegacyReferenceDataType>());
+            _service.Received(1).GetReferenceData(type);
         }
 
         [TestCase(LegacyReferenceDataType.County)]
@@ -66,6 +74,8 @@ namespace SFA.Apprenticeships.Web.Common.Tests.Providers
         [TestCase(LegacyReferenceDataType.Region)]
         public void DoesGetReturnLegacyReferenceDataWithEmptyCache(LegacyReferenceDataType type)
         {
+            _cache.ClearReceivedCalls();
+
             var provider = new LegacyReferenceDataProvider(_service, _cache);
 
             var viewModel = provider.Get(type);
@@ -73,6 +83,9 @@ namespace SFA.Apprenticeships.Web.Common.Tests.Providers
             viewModel.Should().NotBeNull();
             viewModel.Count().Should().Be(1);
             viewModel.First(x => x.Id == type.ToString()).Description.Should().Be(string.Format("{0}.1", type));
+
+            _cache.Received(1).Put(Arg.Any<LegacyDataProviderCacheKeyEntry>(), Arg.Any<IList<Model.ILegacyReferenceData>>(), Arg.Any<LegacyReferenceDataType>());
+            _service.Received(1).GetReferenceData(type);
         }
 
         [TestCase(LegacyReferenceDataType.County)]
@@ -82,11 +95,11 @@ namespace SFA.Apprenticeships.Web.Common.Tests.Providers
         [TestCase(LegacyReferenceDataType.Region)]
         public void DoesGetReturnLegacyReferenceDataWithCache(LegacyReferenceDataType type)
         {
-            _cache.Get<IList<Model.ILegacyReferenceData>>(Arg.Is("SFA.Apprenticeships.Common.LegacyReferenceData.Framework")).Returns(new List<Model.ILegacyReferenceData>(_frameworks));
-            _cache.Get<IList<Model.ILegacyReferenceData>>(Arg.Is("SFA.Apprenticeships.Common.LegacyReferenceData.County")).Returns(new List<Model.ILegacyReferenceData>(_counties));
-            _cache.Get<IList<Model.ILegacyReferenceData>>(Arg.Is("SFA.Apprenticeships.Common.LegacyReferenceData.ErrorCode")).Returns(new List<Model.ILegacyReferenceData>(_errorCodes));
-            _cache.Get<IList<Model.ILegacyReferenceData>>(Arg.Is("SFA.Apprenticeships.Common.LegacyReferenceData.Region")).Returns(new List<Model.ILegacyReferenceData>(_regions));
-            _cache.Get<IList<Model.ILegacyReferenceData>>(Arg.Is("SFA.Apprenticeships.Common.LegacyReferenceData.LocalAuthority")).Returns(new List<Model.ILegacyReferenceData>(_localAuthorities));
+            _cache.Get<IList<Model.ILegacyReferenceData>>(Arg.Is(new LegacyDataProviderCacheKeyEntry().Key("Framework"))).Returns(new List<Model.ILegacyReferenceData>(_frameworks));
+            _cache.Get<IList<Model.ILegacyReferenceData>>(Arg.Is(new LegacyDataProviderCacheKeyEntry().Key("County"))).Returns(new List<Model.ILegacyReferenceData>(_counties));
+            _cache.Get<IList<Model.ILegacyReferenceData>>(Arg.Is(new LegacyDataProviderCacheKeyEntry().Key("ErrorCode"))).Returns(new List<Model.ILegacyReferenceData>(_errorCodes));
+            _cache.Get<IList<Model.ILegacyReferenceData>>(Arg.Is(new LegacyDataProviderCacheKeyEntry().Key("Region"))).Returns(new List<Model.ILegacyReferenceData>(_regions));
+            _cache.Get<IList<Model.ILegacyReferenceData>>(Arg.Is(new LegacyDataProviderCacheKeyEntry().Key("LocalAuthority"))).Returns(new List<Model.ILegacyReferenceData>(_localAuthorities));
 
             var provider = new LegacyReferenceDataProvider(_service, _cache);
 
@@ -95,6 +108,9 @@ namespace SFA.Apprenticeships.Web.Common.Tests.Providers
             viewModel.Should().NotBeNull();
             viewModel.Count().Should().Be(1);
             viewModel.First(x => x.Id == type.ToString()).Description.Should().Be(string.Format("{0}.1", type));
+
+            _cache.Received(0).Put(Arg.Any<LegacyDataProviderCacheKeyEntry>(), Arg.Any<IList<Model.ILegacyReferenceData>>(), Arg.Any<LegacyReferenceDataType>());
+            _service.Received(0).GetReferenceData(type);
         }
     }
 }
