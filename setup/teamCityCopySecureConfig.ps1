@@ -20,4 +20,4 @@ $secureSourcePath = "$checkoutRoot\Configuration\**"
 
 Write-Host $secureSourcePath
 
-Copy-Item $secureSourcePath "C:\Projects\SFA\Configuration"
+Copy-Item "$secureSourcePath" "C:\Projects\SFA\Configuration"
