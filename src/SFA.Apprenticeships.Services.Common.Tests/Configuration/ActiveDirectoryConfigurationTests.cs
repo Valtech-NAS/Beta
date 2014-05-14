@@ -1,10 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Services.Common.Tests.Configuration
 {
-    using System;
-    using System.Collections.Generic;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Common.Configuration;
     using SFA.Apprenticeships.Services.Common.ActiveDirectory;
 
     [TestFixture]

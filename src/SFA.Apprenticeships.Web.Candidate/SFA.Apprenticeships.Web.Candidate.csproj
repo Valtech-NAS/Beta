@@ -80,6 +80,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.dll</HintPath>
@@ -269,6 +273,10 @@
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Common\SFA.Apprenticeships.Common.csproj">
+      <Project>{aad6c913-2503-456f-a593-c0a36c07bd35}</Project>
+      <Name>SFA.Apprenticeships.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Services.ReferenceData\SFA.Apprenticeships.Services.ReferenceData.csproj">
       <Project>{5e8e77ca-bb23-45de-aadd-236cafbc66e3}</Project>
       <Name>SFA.Apprenticeships.Services.ReferenceData</Name>
