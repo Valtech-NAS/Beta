@@ -1,0 +1,77 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using SFA.Apprenticeships.Common.Caching;
+using SFA.Apprenticeships.Services.Models.ReferenceDataModels;
+using SFA.Apprenticeships.Services.ReferenceData.Abstract;
+using SFA.Apprenticeships.Services.ReferenceData.Models;
+using SFA.Apprenticeships.Web.Common.Models.Common;
+
+namespace SFA.Apprenticeships.Web.Common.Providers
+{
+    /// <summary>
+    /// Reference data service that uses the local config file for providing reference data
+    /// </summary>
+    public class LegacyReferenceDataProvider : IReferenceDataProvider
+    {
+        public const string LegacyReferenceDataCacheKey = "SFA.Apprenticeships.Common.LegacyReferenceData";
+
+        private readonly IReferenceDataService _service;
+        private readonly ICacheClient _cache;
+
+        public LegacyReferenceDataProvider(IReferenceDataService service, ICacheClient cache = null)
+        {
+            if (service == null)
+            {
+                throw new ArgumentNullException("service");
+            }
+
+            _service = service;
+            _cache = cache;
+        }
+
+        public IEnumerable<ReferenceDataViewModel> Get(LegacyReferenceDataType type)
+        {
+            var result = new List<ReferenceDataViewModel>();
+            var cachedData = default(IList<ILegacyReferenceData>);
+
+            var key = string.Format("{0}.{1}", LegacyReferenceDataCacheKey, type);
+
+            if (_cache != null)
+            {
+                cachedData = _cache.Get<IList<ILegacyReferenceData>>(key);           
+            }
+
+            // No cache data found then call the service
+            if (cachedData == null || !cachedData.Any())
+            {
+                cachedData = new List<ILegacyReferenceData>();
+
+                var serviceData = _service.GetReferenceData(type);
+                if (serviceData != null)
+                {
+                    (cachedData as List<ILegacyReferenceData>).AddRange(serviceData);
+
+                    // store to cache
+                    if (_cache != null)
+                    {
+                        //_cache.Put(BaseCacheEntry, cachedData, key);
+                    }
+                }
+            }
+
+            // Create the view model
+            result.AddRange(
+                cachedData
+                    .Select(
+                        item =>
+                            new ReferenceDataViewModel
+                            {
+                                Id = item.CodeName,
+                                Description = item.FullName
+                            }));
+
+            return result;
+        }
+    }
+}

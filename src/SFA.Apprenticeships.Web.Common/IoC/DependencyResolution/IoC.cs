@@ -52,7 +52,7 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
             container.Configure(
                 x =>
                 {
-                    x.For<IReferenceDataProvider>().Use<ConfigReferenceDataProvider>();
+                    x.For<IReferenceDataProvider>().Use<LegacyReferenceDataProvider>();
 
                     x.For<IConfigurationManager>()
                         .Singleton()

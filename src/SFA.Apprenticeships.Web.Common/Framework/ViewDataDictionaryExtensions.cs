@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using SFA.Apprenticeships.Web.Common.Models.Common;
+using SFA.Apprenticeships.Services.ReferenceData.Models;
 using SFA.Apprenticeships.Web.Common.Providers;
 
 namespace SFA.Apprenticeships.Web.Common.Framework
@@ -9,7 +9,7 @@ namespace SFA.Apprenticeships.Web.Common.Framework
         public static void AddLookups(
             this ViewDataDictionary viewData, 
             IReferenceDataProvider referenceDataService,
-            params ReferenceDataType[] lookups)
+            params LegacyReferenceDataType[] lookups)
         {
             foreach (var lookup in lookups)
             {
@@ -24,7 +24,7 @@ namespace SFA.Apprenticeships.Web.Common.Framework
         public static void AddLists(
             this ViewDataDictionary viewData, 
             IReferenceDataProvider referenceDataService,
-            params ReferenceDataType[] lists)
+            params LegacyReferenceDataType[] lists)
         {
             foreach (var list in lists)
             {

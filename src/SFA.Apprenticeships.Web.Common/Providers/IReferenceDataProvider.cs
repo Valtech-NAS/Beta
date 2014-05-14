@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SFA.Apprenticeships.Services.ReferenceData.Models;
 using SFA.Apprenticeships.Web.Common.Models.Common;
 
 namespace SFA.Apprenticeships.Web.Common.Providers
@@ -9,6 +10,6 @@ namespace SFA.Apprenticeships.Web.Common.Providers
     /// </summary>
     public interface IReferenceDataProvider
     {
-        IEnumerable<ReferenceDataViewModel> Get(ReferenceDataType type);
+        IEnumerable<ReferenceDataViewModel> Get(LegacyReferenceDataType type);
     }
 }

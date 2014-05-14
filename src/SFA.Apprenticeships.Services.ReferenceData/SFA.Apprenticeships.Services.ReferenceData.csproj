@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Abstract\IReferenceDataService.cs" />
     <Compile Include="DependencyResolution\DependencyResolver.cs" />
+    <Compile Include="Models\LegacyReferenceDataType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Proxy\Reference.cs">
       <AutoGen>True</AutoGen>

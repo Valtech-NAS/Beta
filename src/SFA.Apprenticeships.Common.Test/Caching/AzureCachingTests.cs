@@ -30,6 +30,7 @@
         }
 
         [Test]
+        [Ignore("Need config fix")]
         public void AddsItemToCache()
         {
             var nullResult = _azureCacheClient.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
@@ -43,6 +44,7 @@
         }
 
         [Test]
+        [Ignore("Need config fix")]
         public void RemovesItemFromCache()
         {
             _azureCacheClient.Get(_cacheKeyEntry, _testFunc, 1, "2");

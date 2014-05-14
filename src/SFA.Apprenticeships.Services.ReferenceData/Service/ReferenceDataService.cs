@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using SFA.Apprenticeships.Common.Configuration;
-using SFA.Apprenticeships.Services.Common.Wcf;
+using SFA.Apprenticeships.Services.Common.Abstract;
 using SFA.Apprenticeships.Services.Models.ReferenceDataModels;
 using SFA.Apprenticeships.Services.ReferenceData.Abstract;
+using SFA.Apprenticeships.Services.ReferenceData.Models;
 using SFA.Apprenticeships.Services.ReferenceData.Proxy;
 
 namespace SFA.Apprenticeships.Services.ReferenceData.Service
@@ -34,6 +35,25 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
             _systemId = new Guid(configManager.GetAppSetting(ReferenceDataUsername));
             _publicKey = configManager.GetAppSetting(ReferenceDataPassword);
             _service = service;
+        }
+
+        public IList<ILegacyReferenceData> GetReferenceData(LegacyReferenceDataType type)
+        {
+            switch (type)
+            {
+                case LegacyReferenceDataType.County:
+                    return (IList<ILegacyReferenceData>) GetCounties();
+                case LegacyReferenceDataType.ErrorCode:
+                    return (IList<ILegacyReferenceData>) GetErrorCodes();
+                case LegacyReferenceDataType.Framework:
+                    return (IList<ILegacyReferenceData>) GetApprenticeshipFrameworks();
+                case LegacyReferenceDataType.LocalAuthority:
+                    return (IList<ILegacyReferenceData>) GetLocalAuthorities();
+                case LegacyReferenceDataType.Region:
+                    return (IList<ILegacyReferenceData>) GetRegions();
+                default:
+                    throw new NotImplementedException(string.Format("Legacy reference type '{0}' not implemented.", type));
+            }
         }
 
         public IList<Framework> GetApprenticeshipFrameworks()

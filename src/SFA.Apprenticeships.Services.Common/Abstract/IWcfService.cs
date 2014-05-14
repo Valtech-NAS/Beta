@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SFA.Apprenticeships.Services.Common.Wcf
+namespace SFA.Apprenticeships.Services.Common.Abstract
 {
     public interface IWcfService<T>
     {

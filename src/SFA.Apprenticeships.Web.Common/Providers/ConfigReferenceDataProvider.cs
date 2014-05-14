@@ -32,7 +32,7 @@ namespace SFA.Apprenticeships.Web.Common.Providers
                 });
         }
 
-        public IEnumerable<ReferenceDataViewModel> Get(ReferenceDataType type)
+        public IEnumerable<ReferenceDataViewModel> Get(Enum type)
         {
             return GetReferenceData(type.ToString());
         }

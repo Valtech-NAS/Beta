@@ -104,11 +104,10 @@
     <Compile Include="IoC\DependencyResolution\StructureMapDependencyResolver.cs" />
     <Compile Include="IoC\DependencyResolution\StructureMapDependencyScope.cs" />
     <Compile Include="IoC\DependencyResolution\NasControllerFactory.cs" />
-    <Compile Include="Models\Common\ReferenceDataTypes.cs" />
     <Compile Include="Models\Common\ReferenceDataViewModel.cs" />
     <Compile Include="Models\Errors\ErrorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\ConfigReferenceDataProvider.cs" />
+    <Compile Include="Providers\LegacyReferenceDataProvider.cs" />
     <Compile Include="Providers\IReferenceDataProvider.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +122,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Services.Common\SFA.Apprenticeships.Services.Common.csproj">
       <Project>{78b1f2a1-dcc3-4ed3-8ce0-16e0781b59fa}</Project>
       <Name>SFA.Apprenticeships.Services.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Services.Models\SFA.Apprenticeships.Services.Models.csproj">
+      <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
+      <Name>SFA.Apprenticeships.Services.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Services.ReferenceData\SFA.Apprenticeships.Services.ReferenceData.csproj">
       <Project>{5e8e77ca-bb23-45de-aadd-236cafbc66e3}</Project>
