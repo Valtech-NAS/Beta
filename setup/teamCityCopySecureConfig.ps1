@@ -16,8 +16,6 @@ if(!(Test-Path -Path "c:\Projects\SFA\Configuration" )){
 
 Remove-Item C:\Projects\SFA\Configuration\* -recurse
 
-$secureSourcePath = "$checkoutRoot\Configuration\**"
+Write-Host "$checkoutRoot\Configuration\**"
 
-Write-Host $secureSourcePath
-
-Copy-Item "$secureSourcePath" "C:\Projects\SFA\Configuration"
+Copy-Item "$checkoutRoot\Configuration\**" "C:\Projects\SFA\Configuration"
