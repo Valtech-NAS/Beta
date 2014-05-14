@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Services.Common", "SFA.Apprenticeships.Services.Common\SFA.Apprenticeships.Services.Common.csproj", "{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}"
 EndProject
@@ -49,8 +49,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{16A8BC48-3B19-4BBE-AB1C-7857B2DB784F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Common.Tests", "SFA.Apprenticeships.Common.Test\SFA.Apprenticeships.Common.Tests.csproj", "{2886F449-8488-4883-A80B-B29775D18B29}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Common.Tests", "SFA.Apprenticeships.Web.Common.Tests\SFA.Apprenticeships.Web.Common.Tests.csproj", "{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -118,10 +116,6 @@ Global
 		{2886F449-8488-4883-A80B-B29775D18B29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2886F449-8488-4883-A80B-B29775D18B29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2886F449-8488-4883-A80B-B29775D18B29}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,7 +135,6 @@ Global
 		{8363A28D-668C-44EA-B20A-8866E0D5814C} = {301B3E43-CD0D-4017-B07C-FFF251E5B291}
 		{40EEBA8B-4A7D-4B1B-80C6-9A4A2C3BCA4E} = {301B3E43-CD0D-4017-B07C-FFF251E5B291}
 		{2886F449-8488-4883-A80B-B29775D18B29} = {301B3E43-CD0D-4017-B07C-FFF251E5B291}
-		{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0} = {301B3E43-CD0D-4017-B07C-FFF251E5B291}
 		{AAD6C913-2503-456F-A593-C0A36C07BD35} = {16A8BC48-3B19-4BBE-AB1C-7857B2DB784F}
 	EndGlobalSection
 EndGlobal

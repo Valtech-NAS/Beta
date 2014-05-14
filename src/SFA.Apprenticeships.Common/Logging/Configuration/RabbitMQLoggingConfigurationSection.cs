@@ -60,14 +60,14 @@
             set { this[PasswordConst] = value; }
         }
 
-        [ConfigurationProperty(PortConst, IsRequired = false, IsKey = false, DefaultValue = 5672)]
+        [ConfigurationProperty(PortConst, IsRequired = false, IsKey = false, DefaultValue = (ushort)5672)]
         public ushort Port
         {
             get { return (ushort)this[PortConst]; }
             set { this[PortConst] = value; }
         }
 
-        [ConfigurationProperty(PasswordConst, IsRequired = false, IsKey = false, DefaultValue = "{0}")]
+        [ConfigurationProperty(RoutingKeyConst, IsRequired = false, IsKey = false, DefaultValue = "{0}")]
         public string RoutingKey
         {
             get { return (string)this[RoutingKeyConst]; }
@@ -122,7 +122,7 @@
             set { this[AppIdConst] = value; }
         }
 
-        [ConfigurationProperty(HeartBeatSecondsConst, IsRequired = false, IsKey = false, DefaultValue = 3)]
+        [ConfigurationProperty(HeartBeatSecondsConst, IsRequired = false, IsKey = false, DefaultValue = (ushort)3)]
         public ushort HeartBeatSeconds
         {
             get { return (ushort)this[HeartBeatSecondsConst]; }
