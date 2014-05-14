@@ -2,9 +2,7 @@
 {
     using System;
     using FluentAssertions;
-    using Microsoft.ApplicationServer.Caching;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Common.Configuration;
 
     [TestFixture]
     public class AzureCachingTests

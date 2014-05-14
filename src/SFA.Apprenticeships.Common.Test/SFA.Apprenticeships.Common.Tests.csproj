@@ -78,6 +78,8 @@
   <ItemGroup>
     <Compile Include="Caching\AzureCachingTests.cs" />
     <Compile Include="Caching\MemoryCachingTests.cs" />
+    <Compile Include="Configuration\ConfigurationManagerTests.cs" />
+    <Compile Include="Configuration\RabbitMQLoggingConfigurationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

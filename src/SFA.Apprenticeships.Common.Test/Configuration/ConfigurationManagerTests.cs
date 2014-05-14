@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using NUnit.Framework;
-using SFA.Apprenticeships.Services.Common.ActiveDirectory;
-using SFA.Apprenticeships.Common.Configuration;
-
-namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
+﻿namespace SFA.Apprenticeships.Common.Caching.Tests.Configuration
 {
+    using System;
+    using System.Collections.Generic;
+    using FluentAssertions;
+    using NUnit.Framework;
+    using SFA.Apprenticeships.Common.Configuration;
+
     [TestFixture]
     public class ConfigurationManagerTests
     {
@@ -33,7 +32,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         {
             var service = new ConfigurationManager();
 
-            service.GetAppSetting("ReferenceDataService.Username").Should().Be("username");
+            service.GetAppSetting("Test.StringValue").Should().Be("validstring");
         }
 
         [TestCase]
@@ -41,18 +40,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         {
             var service = new ConfigurationManager();
 
-            service.GetAppSetting<int>("Test.Value").Should().Be(99);
-        }
-
-        [TestCase]
-        public void GetConfigSectionForAd()
-        {
-            var test = ActiveDirectoryConfigurationSection.ConfigurationSectionDetails;
-           
-            test.DistinguishedName.Should().Be("distinguishedname");
-            test.Server.Should().Be("server");
-            test.Username.Should().Be("username");
-            test.Password.Should().Be("password");
+            service.GetAppSetting<int>("Test.IntValue").Should().Be(99);
         }
 
         [TestCase]
@@ -60,7 +48,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         public void GetAppSettingReturnsStronglyTypedValue()
         {
             var target = new ConfigurationManager();
-            const string key = "Test.Date";
+            const string key = "Test.DateValue";
             var result = target.GetAppSetting<DateTime>(key);
             result.Should().Be(new DateTime(2014, 12, 31));
         }
@@ -70,7 +58,7 @@ namespace SFA.Apprenticeships.Services.Common.Tests.ConfigurationManger
         public void GetAppSettingReturnsStronglyTypedDefaultValue()
         {
             var target = new ConfigurationManager();
-            const string key = "Test.Date2";
+            const string key = "Test.DateValue.NotPresent";
             var result = target.GetAppSetting<DateTime>(new DateTime(2014,1,1), key);
             result.Should().Be(new DateTime(2014, 1, 1));
         }
