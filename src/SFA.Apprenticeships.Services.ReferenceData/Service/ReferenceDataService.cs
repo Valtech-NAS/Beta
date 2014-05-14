@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using SFA.Apprenticeships.Common.Configuration;
 using SFA.Apprenticeships.Services.Common.Abstract;
-using SFA.Apprenticeships.Services.Models.ReferenceDataModels;
+using SFA.Apprenticeships.Services.Models.ReferenceData;
 using SFA.Apprenticeships.Services.ReferenceData.Abstract;
 using SFA.Apprenticeships.Services.ReferenceData.Models;
 using SFA.Apprenticeships.Services.ReferenceData.Proxy;
@@ -75,14 +75,14 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                     item => new Framework
                     {
 
-                        CodeName = item.ApprenticeshipFrameworkCodeName,
+                        Id = item.ApprenticeshipFrameworkCodeName,
                         ShortName = item.ApprenticeshipFrameworkShortName,
-                        FullName = item.ApprenticeshipFrameworkFullName,
+                        Description = item.ApprenticeshipFrameworkFullName,
                         Occupation = new Occupation
                         {
-                            CodeName = item.ApprenticeshipOccupationCodeName,
+                            Id = item.ApprenticeshipOccupationCodeName,
                             ShortName = item.ApprenticeshipOccupationShortName,
-                            FullName = item.ApprenticeshipOccupationFullName
+                            Description = item.ApprenticeshipOccupationFullName
                         }
                     })
                     .ToList();
@@ -109,8 +109,8 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                 return rs.Counties.Select(
                     item => new County
                     {
-                        CodeName = item.CodeName,
-                        FullName = item.FullName
+                        Id = item.CodeName,
+                        Description = item.FullName
                     })
                     .ToList();
             }
@@ -136,8 +136,8 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                 return rs.ErrorCodes.Select(
                     item => new ErrorCode
                     {
-                        CodeName = item.InterfaceErrorCode.ToString(CultureInfo.InvariantCulture),
-                        FullName = item.InterfaceErrorDescription
+                        Id = item.InterfaceErrorCode.ToString(CultureInfo.InvariantCulture),
+                        Description = item.InterfaceErrorDescription
                     })
                     .ToList();
             }
@@ -164,9 +164,9 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                     item => new LocalAuthority
                     {
                         County = item.County,
-                        FullName = item.FullName,
+                        Description = item.FullName,
                         ShortName = item.ShortName,
-                        CodeName = item.ShortName,
+                        Id = item.ShortName,
                     })
                     .ToList();
             }
@@ -192,8 +192,8 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                 return rs.Regions.Select(
                     item => new Region
                     {
-                        CodeName = item.CodeName,
-                        FullName = item.FullName,
+                        Id = item.CodeName,
+                        Description = item.FullName,
                     })
                     .ToList();
             }

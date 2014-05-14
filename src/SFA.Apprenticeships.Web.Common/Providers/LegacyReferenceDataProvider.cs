@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using SFA.Apprenticeships.Common.Caching;
-using SFA.Apprenticeships.Services.Models.ReferenceDataModels;
+using SFA.Apprenticeships.Services.Models.ReferenceData;
 using SFA.Apprenticeships.Services.ReferenceData.Abstract;
 using SFA.Apprenticeships.Services.ReferenceData.Models;
 using SFA.Apprenticeships.Web.Common.Models.Common;
 
 namespace SFA.Apprenticeships.Web.Common.Providers
 {
-    /// <summary>
-    /// Reference data service that uses the local config file for providing reference data
-    /// </summary>
     public class LegacyReferenceDataProvider : IReferenceDataProvider
     {
         public const string LegacyReferenceDataCacheKey = "SFA.Apprenticeships.LegacyReferenceData.";
@@ -51,7 +47,6 @@ namespace SFA.Apprenticeships.Web.Common.Providers
                 {
                     (cachedData as List<ILegacyReferenceData>).AddRange(serviceData);
 
-                    // store to cache
                     if (_cache != null)
                     {
                         _cache.Put(new LegacyDataProviderCacheKeyEntry(), cachedData, type);
@@ -66,8 +61,8 @@ namespace SFA.Apprenticeships.Web.Common.Providers
                         item =>
                             new ReferenceDataViewModel
                             {
-                                Id = item.CodeName,
-                                Description = item.FullName
+                                Id = item.Id,
+                                Description = item.Description
                             }));
 
             return result;

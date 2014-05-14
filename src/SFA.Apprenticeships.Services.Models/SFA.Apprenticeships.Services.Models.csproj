@@ -44,14 +44,14 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ReferenceDataModels\Region.cs" />
-    <Compile Include="ReferenceDataModels\LocalAuthority.cs" />
-    <Compile Include="ReferenceDataModels\ErrorCode.cs" />
-    <Compile Include="ReferenceDataModels\County.cs" />
-    <Compile Include="ReferenceDataModels\Occupation.cs" />
-    <Compile Include="ReferenceDataModels\Framework.cs" />
+    <Compile Include="ReferenceData\Region.cs" />
+    <Compile Include="ReferenceData\LocalAuthority.cs" />
+    <Compile Include="ReferenceData\ErrorCode.cs" />
+    <Compile Include="ReferenceData\County.cs" />
+    <Compile Include="ReferenceData\Occupation.cs" />
+    <Compile Include="ReferenceData\Framework.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReferenceDataModels\ILegacyReferenceData.cs" />
+    <Compile Include="ReferenceData\ILegacyReferenceData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
