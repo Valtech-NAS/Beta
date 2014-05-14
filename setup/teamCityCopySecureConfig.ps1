@@ -18,4 +18,6 @@ Remove-Item C:\Projects\SFA\Configuration\* -recurse
 
 $secureSourcePath = "$checkoutRoot\Configuration\**"
 
+Write-Host $secureSourcePath
+
 Copy-Item $secureSourcePath "C:\Projects\SFA\Configuration"
