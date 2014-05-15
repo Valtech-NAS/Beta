@@ -4,13 +4,14 @@ using System.Globalization;
 using System.Linq;
 using SFA.Apprenticeships.Common.Configuration;
 using SFA.Apprenticeships.Services.Common.Abstract;
-using SFA.Apprenticeships.Services.Models.ReferenceData;
 using SFA.Apprenticeships.Services.ReferenceData.Abstract;
 using SFA.Apprenticeships.Services.ReferenceData.Models;
 using SFA.Apprenticeships.Services.ReferenceData.Proxy;
 
 namespace SFA.Apprenticeships.Services.ReferenceData.Service
 {
+    using SFA.Apprenticeships.Common.Entities.ReferenceData;
+
     public class ReferenceDataService : IReferenceDataService
     {
         private const string ReferenceDataPassword = "ReferenceDataService.Password";

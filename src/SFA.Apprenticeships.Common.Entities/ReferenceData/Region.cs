@@ -1,5 +1,5 @@
 ﻿
-namespace SFA.Apprenticeships.Services.Models.ReferenceData
+namespace SFA.Apprenticeships.Common.Entities.ReferenceData
 {
     public class Region : ILegacyReferenceData
     {
