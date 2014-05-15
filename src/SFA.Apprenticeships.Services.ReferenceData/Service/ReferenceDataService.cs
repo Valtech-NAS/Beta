@@ -37,26 +37,49 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
             _service = service;
         }
 
-        public IList<ILegacyReferenceData> GetReferenceData(LegacyReferenceDataType type)
+        public IEnumerable<ILegacyReferenceData> GetReferenceData(LegacyReferenceDataType type)
         {
+            var data = default(IEnumerable<ILegacyReferenceData>);
+
             switch (type)
             {
                 case LegacyReferenceDataType.County:
-                    return (IList<ILegacyReferenceData>) GetCounties();
+                    return GetCounties();
                 case LegacyReferenceDataType.ErrorCode:
-                    return (IList<ILegacyReferenceData>) GetErrorCodes();
+                    return GetErrorCodes();
+                case LegacyReferenceDataType.Occupations:
+                    return GetApprenticeshipOccupations();
                 case LegacyReferenceDataType.Framework:
-                    return (IList<ILegacyReferenceData>) GetApprenticeshipFrameworks();
+                    return new List<ILegacyReferenceData>(GetApprenticeshipFrameworks());
                 case LegacyReferenceDataType.LocalAuthority:
-                    return (IList<ILegacyReferenceData>) GetLocalAuthorities();
+                    return new List<ILegacyReferenceData>(GetLocalAuthorities());
                 case LegacyReferenceDataType.Region:
-                    return (IList<ILegacyReferenceData>) GetRegions();
+                    return new List<ILegacyReferenceData>(GetRegions());
+                    break;
                 default:
                     throw new NotImplementedException(string.Format("Legacy reference type '{0}' not implemented.", type));
             }
         }
 
-        public IList<Framework> GetApprenticeshipFrameworks()
+        public IEnumerable<ILegacyReferenceData> GetApprenticeshipOccupations()
+        {
+            var data = GetApprenticeshipFrameworks();
+
+            if (data != null)
+            {
+                return (data as IEnumerable<Framework>).Select(
+                    item => new Occupation
+                    {
+                        Id = item.Occupation.Id,
+                        ShortName = item.Occupation.ShortName,
+                        Description = item.Occupation.Description
+                    });
+            }
+
+            return default(IList<Occupation>);
+        }
+
+        public IEnumerable<ILegacyReferenceData> GetApprenticeshipFrameworks()
         {
             var msgId = Guid.NewGuid();
             var request = new GetApprenticeshipFrameworksRequest
@@ -84,14 +107,13 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                             ShortName = item.ApprenticeshipOccupationShortName,
                             Description = item.ApprenticeshipOccupationFullName
                         }
-                    })
-                    .ToList();
+                    });
             }
 
             return default(IList<Framework>);
         }
 
-        public IList<County> GetCounties()
+        public IEnumerable<ILegacyReferenceData> GetCounties()
         {
             var msgId = Guid.NewGuid();
             var request = new GetCountiesRequest
@@ -111,14 +133,13 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                     {
                         Id = item.CodeName,
                         Description = item.FullName
-                    })
-                    .ToList();
+                    });
             }
 
-            return default(IList<County>);
+            return default(IEnumerable<County>);
         }
 
-        public IList<ErrorCode> GetErrorCodes()
+        public IEnumerable<ILegacyReferenceData> GetErrorCodes()
         {
             var msgId = Guid.NewGuid();
             var request = new GetErrorCodesRequest
@@ -138,14 +159,13 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                     {
                         Id = item.InterfaceErrorCode.ToString(CultureInfo.InvariantCulture),
                         Description = item.InterfaceErrorDescription
-                    })
-                    .ToList();
+                    });
             }
 
             return default(IList<ErrorCode>);
         }
 
-        public IList<LocalAuthority> GetLocalAuthorities()
+        public IEnumerable<ILegacyReferenceData> GetLocalAuthorities()
         {
             var msgId = Guid.NewGuid();
             var request = new GetLocalAuthoritiesRequest
@@ -167,14 +187,13 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                         Description = item.FullName,
                         ShortName = item.ShortName,
                         Id = item.ShortName,
-                    })
-                    .ToList();
+                    });
             }
 
             return default(IList<LocalAuthority>);
         }
 
-        public IList<Region> GetRegions()
+        public IEnumerable<ILegacyReferenceData> GetRegions()
         {
             var msgId = Guid.NewGuid();
             var request = new GetRegionRequest
@@ -194,8 +213,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                     {
                         Id = item.CodeName,
                         Description = item.FullName,
-                    })
-                    .ToList();
+                    });
             }
 
             return default(IList<Region>);

@@ -3,6 +3,7 @@
     public enum LegacyReferenceDataType
     {
         Framework = 0,
+        Occupations,
         County,
         Region,
         LocalAuthority,

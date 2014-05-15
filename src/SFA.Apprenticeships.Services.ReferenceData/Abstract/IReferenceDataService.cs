@@ -6,11 +6,12 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Abstract
 {
     public interface IReferenceDataService
     {
-        IList<ILegacyReferenceData> GetReferenceData(LegacyReferenceDataType type);
-        IList<Framework> GetApprenticeshipFrameworks();
-        IList<County> GetCounties();
-        IList<ErrorCode> GetErrorCodes();
-        IList<LocalAuthority> GetLocalAuthorities();
-        IList<Region> GetRegions();
+        IEnumerable<ILegacyReferenceData> GetReferenceData(LegacyReferenceDataType type);
+        IEnumerable<ILegacyReferenceData> GetApprenticeshipOccupations();
+        IEnumerable<ILegacyReferenceData> GetApprenticeshipFrameworks();
+        IEnumerable<ILegacyReferenceData> GetCounties();
+        IEnumerable<ILegacyReferenceData> GetErrorCodes();
+        IEnumerable<ILegacyReferenceData> GetLocalAuthorities();
+        IEnumerable<ILegacyReferenceData> GetRegions();
     }
 }

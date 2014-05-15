@@ -6,6 +6,10 @@ namespace SFA.Apprenticeships.Services.Common.Wcf
 {
     public class WcfService<T> : IWcfService<T>
     {
+        public WcfService()
+        {
+        }
+
         public void Use(Action<T> action)
         {
             Use("*", action);

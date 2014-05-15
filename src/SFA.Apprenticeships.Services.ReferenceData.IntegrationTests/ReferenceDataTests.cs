@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using SFA.Apprenticeships.Common.Configuration;
@@ -46,7 +47,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
             var test = _service.GetApprenticeshipFrameworks();
 
             test.Should().NotBeNullOrEmpty();
-            test.Count.Should().Be(216);
+            test.Count().Should().Be(216);
         }
 
         [TestCase]
@@ -55,7 +56,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
             var test = _service.GetCounties();
 
             test.Should().NotBeNullOrEmpty();
-            test.Count.Should().Be(46);
+            test.Count().Should().Be(46);
         }
 
         [TestCase]
@@ -64,7 +65,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
             var test = _service.GetErrorCodes();
 
             test.Should().NotBeNullOrEmpty();
-            test.Count.Should().Be(72);
+            test.Count().Should().Be(72);
         }
 
         [TestCase]
@@ -73,7 +74,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
             var test = _service.GetLocalAuthorities();
 
             test.Should().NotBeNullOrEmpty();
-            test.Count.Should().Be(326);
+            test.Count().Should().Be(326);
         }
 
         [TestCase]
@@ -82,7 +83,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
             var test = _service.GetRegions();
 
             test.Should().NotBeNullOrEmpty();
-            test.Count.Should().Be(10);
+            test.Count().Should().Be(10);
         }
     }
 }

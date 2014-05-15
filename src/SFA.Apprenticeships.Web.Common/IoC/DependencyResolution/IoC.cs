@@ -1,5 +1,7 @@
 using SFA.Apprenticeships.Services.Common.ActiveDirectory;
 using SFA.Apprenticeships.Common.Configuration;
+using SFA.Apprenticeships.Services.Models.ReferenceData;
+using SFA.Apprenticeships.Services.ReferenceData.Abstract;
 using SFA.Apprenticeships.Services.ReferenceData.DependencyResolution;
 using SFA.Apprenticeships.Web.Common.Providers;
 using StructureMap;
@@ -12,8 +14,6 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
     /// </summary>
     public static class IoC
     {
-        private const string PrivateConfigurationFile = @"";
-
         public static IContainer Initialize()
         {
             var container = ObjectFactory.Container;
@@ -25,12 +25,9 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
                         scan.WithDefaultConventions();
                     }));
 
-            container
-                .LoadCommonConfiguration()
-                .LoadWebConfiguration();
-
-            // services
+            container.LoadCommonConfiguration();
             container.LoadConfiguration();
+            container.LoadWebConfiguration();
 
             return container;
         }
@@ -41,6 +38,7 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
                 x =>
                 {
                     x.For<IActiveDirectoryConfiguration>().Singleton().Use(ActiveDirectoryConfigurationSection.Instance);
+                    x.For<IReferenceDataProvider>().Use<LegacyReferenceDataProvider>();
                     // more entries here
                 });
 
@@ -52,13 +50,11 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
             container.Configure(
                 x =>
                 {
-                    x.For<IReferenceDataProvider>().Use<LegacyReferenceDataProvider>();
-
                     x.For<IConfigurationManager>()
                         .Singleton()
                         .Use<ConfigurationManager>()
-                        .Ctor<string>("configFile")
-                        .Is(System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting]);
+                        .Ctor<string>("configFileAppSettingKey")
+                        .Is(ConfigurationManager.ConfigurationFileAppSetting);
 
                 });
 
