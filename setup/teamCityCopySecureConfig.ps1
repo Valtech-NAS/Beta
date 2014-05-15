@@ -10,12 +10,16 @@ if(!(Test-Path -Path "c:\Projects\SFA" )){
     New-Item -ItemType directory -Path "C:\Projects\SFA"
 }
 
-if(!(Test-Path -Path "c:\Projects\SFA\Configuration" )){
-    New-Item -ItemType directory -Path "C:\Projects\SFA\Configuration"
+if(!(Test-Path -Path "c:\Projects\SFA\Apprenticeships" )){
+    New-Item -ItemType directory -Path "C:\Projects\SFA\Apprenticeships"
 }
 
-Remove-Item C:\Projects\SFA\Configuration\* -recurse
+if(!(Test-Path -Path "c:\Projects\SFA\Apprenticeships\Configuration" )){
+    New-Item -ItemType directory -Path "C:\Projects\SFA\Apprenticeships\Configuration"
+}
 
-Write-Host "$checkoutRoot\Configuration\**"
+Remove-Item C:\Projects\SFA\Apprenticeships\Configuration\* -recurse
 
-Copy-Item "$checkoutRoot\Configuration\**" "C:\Projects\SFA\Configuration" -recurse
+Write-Host "$checkoutRoot\Apprenticeships\Configuration\**"
+
+Copy-Item "$checkoutRoot\Configuration\**" "C:\Projects\SFA\Apprenticeships\Configuration" -recurse

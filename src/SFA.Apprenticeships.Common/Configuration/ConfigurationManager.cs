@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Configuration;
     using System.Globalization;
+    using System.IO;
 
     public class ConfigurationManager : IConfigurationManager
     {
@@ -19,6 +20,11 @@
             string configFile = string.IsNullOrEmpty(configFileAppSettingKey)
                 ? System.Configuration.ConfigurationManager.AppSettings[ConfigurationFileAppSetting]
                 : System.Configuration.ConfigurationManager.AppSettings[configFileAppSettingKey];
+
+            if (!File.Exists(configFile))
+            {
+                throw new ConfigurationErrorsException(string.Format("Configuration file: {0} does not exist", configFile));
+            }
 
             var configMap = new ExeConfigurationFileMap
             {
