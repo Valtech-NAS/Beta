@@ -6,7 +6,6 @@ using SFA.Apprenticeships.Services.Models.ReferenceData;
 using SFA.Apprenticeships.Services.ReferenceData.Abstract;
 using SFA.Apprenticeships.Services.ReferenceData.Models;
 using SFA.Apprenticeships.Web.Common.Models.Common;
-using StructureMap;
 
 namespace SFA.Apprenticeships.Web.Common.Providers
 {
@@ -17,14 +16,9 @@ namespace SFA.Apprenticeships.Web.Common.Providers
         private readonly IReferenceDataService _service;
         private readonly ICacheClient _cache;
 
-        [DefaultConstructor]
-        public LegacyReferenceDataProvider(IReferenceDataService service)
-            : this(service, null)
-        {
-        }
-
         public LegacyReferenceDataProvider(IReferenceDataService service, ICacheClient cache = null)
         {
+            
             if (service == null)
             {
                 throw new ArgumentNullException("service");

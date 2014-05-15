@@ -1,7 +1,6 @@
-using SFA.Apprenticeships.Services.Common.ActiveDirectory;
+using SFA.Apprenticeships.Common.Caching;
 using SFA.Apprenticeships.Common.Configuration;
-using SFA.Apprenticeships.Services.Models.ReferenceData;
-using SFA.Apprenticeships.Services.ReferenceData.Abstract;
+using SFA.Apprenticeships.Services.Common.ActiveDirectory;
 using SFA.Apprenticeships.Services.ReferenceData.DependencyResolution;
 using SFA.Apprenticeships.Web.Common.Providers;
 using StructureMap;
@@ -50,6 +49,8 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
             container.Configure(
                 x =>
                 {
+                    x.For<ICacheClient>().Use<MemoryCacheClient>();
+
                     x.For<IConfigurationManager>()
                         .Singleton()
                         .Use<ConfigurationManager>()
