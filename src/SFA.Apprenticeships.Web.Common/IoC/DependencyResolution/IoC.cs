@@ -37,8 +37,11 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
                 x =>
                 {
                     x.For<IActiveDirectoryConfiguration>().Singleton().Use(ActiveDirectoryConfigurationSection.Instance);
-                    x.For<IReferenceDataProvider>().Use<LegacyReferenceDataProvider>();
-                    // more entries here
+
+                    x.For<IReferenceDataProvider>()
+                        .Use<LegacyReferenceDataProvider>()
+                        .DecorateWith((ctx, provider) => new CacheLegacyReferenceDataProvider(ctx.GetInstance<ICacheClient>(), provider));
+
                 });
 
             return container;

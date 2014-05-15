@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using SFA.Apprenticeships.Common.Configuration;
 using SFA.Apprenticeships.Services.ReferenceData.Models;
-using SFA.Apprenticeships.Services.ReferenceData.Service;
 using SFA.Apprenticeships.Web.Common.Providers;
 
 namespace SFA.Apprenticeships.Web.Candidate.Controllers

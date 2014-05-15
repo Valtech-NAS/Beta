@@ -6,7 +6,7 @@ namespace SFA.Apprenticeships.Web.Common.Providers
     {
         protected override string KeyPrefix
         {
-            get { return LegacyReferenceDataProvider.LegacyReferenceDataCacheKey; }
+            get { return CacheLegacyReferenceDataProvider.LegacyReferenceDataCacheKey; }
         }
 
         public override CacheDuration Duration

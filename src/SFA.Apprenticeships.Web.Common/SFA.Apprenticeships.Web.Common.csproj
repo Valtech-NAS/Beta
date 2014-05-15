@@ -107,6 +107,7 @@
     <Compile Include="Models\Common\ReferenceDataViewModel.cs" />
     <Compile Include="Models\Errors\ErrorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\CacheLegacyReferenceDataProvider.cs" />
     <Compile Include="Providers\LegacyReferenceDataProvider.cs" />
     <Compile Include="Providers\IReferenceDataProvider.cs" />
     <Compile Include="Providers\LegacyDataProviderCacheKeyEntry.cs" />
