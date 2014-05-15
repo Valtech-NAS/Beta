@@ -59,7 +59,7 @@
             set { this[RoutingKeyConst] = value; }
         }
 
-        [ConfigurationProperty(HostNameConst, IsRequired = false, IsKey = false, DefaultValue = "localhost")]
+        [ConfigurationProperty(HostNameConst, IsRequired = true, IsKey = false)]
         public string HostName
         {
             get { return (string)this[HostNameConst]; }
