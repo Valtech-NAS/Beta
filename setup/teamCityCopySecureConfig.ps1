@@ -22,4 +22,4 @@ Remove-Item C:\Projects\SFA\Apprenticeships\Configuration\* -recurse
 
 Write-Host "$checkoutRoot\Apprenticeships\Configuration\**"
 
-Copy-Item "$checkoutRoot\Configuration\**" "C:\Projects\SFA\Configuration" -recurse
+Copy-Item "$checkoutRoot\Configuration\**" "C:\Projects\SFA\Apprenticeships\Configuration" -recurse
