@@ -19,15 +19,13 @@
         {
             get
             {
-                if (_instance != null)
+                if (_instance == null)
                 {
-                    return _instance;
+                    var configObj = new T();
+                    var configMap = new ExeConfigurationFileMap {ExeConfigFilename = _configFile};
+                    var config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
+                    _instance = (T) config.GetSection(_configSectionName);
                 }
-
-                var configObj = new T();
-                var configMap = new ExeConfigurationFileMap { ExeConfigFilename = _configFile };
-                var config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
-                _instance = (T) config.GetSection(_configSectionName);
 
                 return _instance;
             }

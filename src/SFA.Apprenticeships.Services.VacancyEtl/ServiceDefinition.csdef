@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition name="SFA.Apprenticeships.Services.VacancyEtl" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2014-01.2.3">
-  <WorkerRole name="WorkerRole.VacancyEtl" vmsize="Small">
+  <WorkerRole name="SFA.Apprenticeships.Services.WorkerRole.VacancyEtl" vmsize="Small">
     <Imports>
       <Import moduleName="Diagnostics" />
     </Imports>

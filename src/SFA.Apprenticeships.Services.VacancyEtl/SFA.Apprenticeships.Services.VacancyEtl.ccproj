@@ -37,22 +37,26 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WorkerRole.VacancyEtl\WorkerRole.VacancyEtl.csproj">
-      <Name>WorkerRole.VacancyEtl</Name>
+    <Folder Include="SFA.Apprenticeships.Services.Legacy.VacancyEtlContent" />
+    <Folder Include="SFA.Apprenticeships.Services.WorkerRole.VacancyEtlContent\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SFA.Apprenticeships.Services.Legacy.VacancyEtlContent\diagnostics.wadcfg">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SFA.Apprenticeships.Services.WorkerRole.VacancyEtlContent\diagnostics.wadcfg">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Services.WorkerRole.VacancyEtl\SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.csproj">
+      <Name>SFA.Apprenticeships.Services.WorkerRole.VacancyEtl</Name>
       <Project>{5069b0ba-5499-4dc1-8f7a-e5022f5e4f7b}</Project>
       <Private>True</Private>
       <RoleType>Worker</RoleType>
-      <RoleName>WorkerRole.VacancyEtl</RoleName>
+      <RoleName>SFA.Apprenticeships.Services.WorkerRole.VacancyEtl</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="WorkerRole.VacancyEtlContent\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="WorkerRole.VacancyEtlContent\diagnostics.wadcfg">
-      <SubType>Content</SubType>
-    </Content>
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>

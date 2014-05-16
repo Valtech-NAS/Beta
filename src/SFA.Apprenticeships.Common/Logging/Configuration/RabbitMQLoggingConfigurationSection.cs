@@ -1,9 +1,8 @@
-﻿namespace SFA.Apprenticeships.Common.Logging.Configuration
-{
-    using System.Configuration;
-    using SFA.Apprenticeships.Common.Configuration;
-    using SFA.Apprenticeships.Services.Common.ActiveDirectory;
+﻿using System.Configuration;
+using SFA.Apprenticeships.Common.Configuration;
 
+namespace SFA.Apprenticeships.Common.Logging.Configuration
+{
     public class RabbitMQLoggingConfigurationSection : SecureConfigurationSection<RabbitMQLoggingConfigurationSection>, IRabbitMQLoggingConfiguration
     {
         private const string VirtualHostConst = "VirtualHost";
