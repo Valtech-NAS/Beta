@@ -5,7 +5,7 @@
     using SFA.Apprenticeships.Common.Configuration.Messaging;
 
     [TestFixture]
-    public class RabbitMQLoggingConfigurationTests
+    public class RabbitMQConfigurationTests
     {
         [Test]
         public void PopulateConfgurationCorrectly()
