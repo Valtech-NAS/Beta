@@ -10,7 +10,7 @@
         [Test]
         public void PopulateConfgurationCorrectly()
         {
-            var testconfig = RabbitMQLoggingConfigurationSection.Instance;
+            var testconfig = RabbitMQConfigurationSection.Instance;
 
             testconfig.VirtualHost.Should().Be("testvh");
             testconfig.UserName.Should().Be("testun");
