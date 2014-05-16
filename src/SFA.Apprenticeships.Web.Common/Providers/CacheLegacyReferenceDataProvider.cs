@@ -35,7 +35,7 @@ namespace SFA.Apprenticeships.Web.Common.Providers
             var data = _cache.Get<IEnumerable<ReferenceDataViewModel>>(new LegacyDataProviderCacheKeyEntry().Key(type));           
 
             // No cache data found then call the service
-            if (data == null)
+            if (data == null || !data.Any())
             {
                 data = _provider.Get(type);
                 if (data != null && data.Any())

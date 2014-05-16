@@ -39,8 +39,7 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
                     x.For<IActiveDirectoryConfiguration>().Singleton().Use(ActiveDirectoryConfigurationSection.Instance);
 
                     // Use cache decorated provider.
-                    x.For<IReferenceDataProvider>()
-                        .Use<LegacyReferenceDataProvider>()
+                    x.For<IReferenceDataProvider>().Use<LegacyReferenceDataProvider>()
                         .DecorateWith((ctx, provider) => new CacheLegacyReferenceDataProvider(ctx.GetInstance<ICacheClient>(), provider));
 
                 });
@@ -53,13 +52,10 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
             container.Configure(
                 x =>
                 {
-                    x.For<ICacheClient>().Use<MemoryCacheClient>();
+                    x.For<ICacheClient>().Singleton().Use<MemoryCacheClient>();
 
-                    x.For<IConfigurationManager>()
-                        .Singleton()
-                        .Use<ConfigurationManager>()
-                        .Ctor<string>("configFileAppSettingKey")
-                        .Is(ConfigurationManager.ConfigurationFileAppSetting);
+                    x.For<IConfigurationManager>().Singleton().Use<ConfigurationManager>()
+                        .Ctor<string>("configFileAppSettingKey").Is(ConfigurationManager.ConfigurationFileAppSetting);
 
                 });
 

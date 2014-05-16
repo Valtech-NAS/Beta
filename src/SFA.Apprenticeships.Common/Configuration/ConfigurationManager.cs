@@ -12,12 +12,9 @@
 
         private readonly Configuration _config;
 
-        /// <summary>
-        /// TODO::Medium::service needs caching decorator
-        /// </summary>
         public ConfigurationManager(string configFileAppSettingKey = null)
         {
-            string configFile = string.IsNullOrEmpty(configFileAppSettingKey)
+            var configFile = string.IsNullOrEmpty(configFileAppSettingKey)
                 ? System.Configuration.ConfigurationManager.AppSettings[ConfigurationFileAppSetting]
                 : System.Configuration.ConfigurationManager.AppSettings[configFileAppSettingKey];
 

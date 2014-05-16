@@ -64,13 +64,14 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
 
             if (data != null)
             {
-                return (data as IEnumerable<Framework>).Select(
-                    item => new Occupation
-                    {
-                        Id = item.Occupation.Id,
-                        ShortName = item.Occupation.ShortName,
-                        Description = item.Occupation.Description
-                    });
+                return (data as IEnumerable<Framework>)
+                    .Select(
+                        item => new Occupation
+                        {
+                            Id = item.Occupation.Id,
+                            ShortName = item.Occupation.ShortName,
+                            Description = item.Occupation.Description
+                        });
             }
 
             return default(IList<Occupation>);
@@ -91,20 +92,21 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
 
             if (rs != null)
             {
-                return rs.ApprenticeshipFrameworks.Select(
-                    item => new Framework
-                    {
-
-                        Id = item.ApprenticeshipFrameworkCodeName,
-                        ShortName = item.ApprenticeshipFrameworkShortName,
-                        Description = item.ApprenticeshipFrameworkFullName,
-                        Occupation = new Occupation
+                return rs.ApprenticeshipFrameworks
+                    .Select(
+                        item => new Framework
                         {
-                            Id = item.ApprenticeshipOccupationCodeName,
-                            ShortName = item.ApprenticeshipOccupationShortName,
-                            Description = item.ApprenticeshipOccupationFullName
-                        }
-                    });
+
+                            Id = item.ApprenticeshipFrameworkCodeName,
+                            ShortName = item.ApprenticeshipFrameworkShortName,
+                            Description = item.ApprenticeshipFrameworkFullName,
+                            Occupation = new Occupation
+                            {
+                                Id = item.ApprenticeshipOccupationCodeName,
+                                ShortName = item.ApprenticeshipOccupationShortName,
+                                Description = item.ApprenticeshipOccupationFullName
+                            }
+                        });
             }
 
             return default(IEnumerable<Framework>);
@@ -125,12 +127,13 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
 
             if (rs != null)
             {
-                return rs.Counties.Select(
-                    item => new County
-                    {
-                        Id = item.CodeName,
-                        Description = item.FullName
-                    });
+                return rs.Counties
+                    .Select(
+                        item => new County
+                        {
+                            Id = item.CodeName,
+                            Description = item.FullName
+                        });
             }
 
             return default(IEnumerable<County>);
@@ -151,12 +154,13 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
 
             if (rs != null)
             {
-                return rs.ErrorCodes.Select(
-                    item => new ErrorCode
-                    {
-                        Id = item.InterfaceErrorCode.ToString(CultureInfo.InvariantCulture),
-                        Description = item.InterfaceErrorDescription
-                    });
+                return rs.ErrorCodes
+                    .Select(
+                        item => new ErrorCode
+                        {
+                            Id = item.InterfaceErrorCode.ToString(CultureInfo.InvariantCulture),
+                            Description = item.InterfaceErrorDescription
+                        });
             }
 
             return default(IEnumerable<ErrorCode>);
@@ -177,14 +181,15 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
 
             if (rs != null)
             {
-                return rs.LocalAuthorities.Select(
-                    item => new LocalAuthority
-                    {
-                        County = item.County,
-                        Description = item.FullName,
-                        ShortName = item.ShortName,
-                        Id = item.ShortName,
-                    });
+                return rs.LocalAuthorities
+                    .Select(
+                        item => new LocalAuthority
+                        {
+                            County = item.County,
+                            Description = item.FullName,
+                            ShortName = item.ShortName,
+                            Id = item.ShortName,
+                        });
             }
 
             return default(IList<LocalAuthority>);
@@ -205,12 +210,13 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
 
             if (rs != null)
             {
-                return rs.Regions.Select(
-                    item => new Region
-                    {
-                        Id = item.CodeName,
-                        Description = item.FullName,
-                    });
+                return rs.Regions
+                    .Select(
+                        item => new Region
+                        {
+                            Id = item.CodeName,
+                            Description = item.FullName,
+                        });
             }
 
             return default(IEnumerable<Region>);
