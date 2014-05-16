@@ -8,7 +8,7 @@
     using NLog;
     using NLog.Common;
     using NLog.Targets;
-    using SFA.Apprenticeships.Common.Logging.Configuration;
+    using SFA.Apprenticeships.Common.Configuration.Messaging;
     using SFA.Apprenticeships.Common.Logging.Layouts;
 
     /// <summary>
