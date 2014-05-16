@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using SFA.Apprenticeships.Common.Configuration;
+using SFA.Apprenticeships.Common.Entities.ReferenceData;
 using SFA.Apprenticeships.Services.Common.Abstract;
 using SFA.Apprenticeships.Services.ReferenceData.Abstract;
 using SFA.Apprenticeships.Services.ReferenceData.Models;
@@ -10,12 +11,10 @@ using SFA.Apprenticeships.Services.ReferenceData.Proxy;
 
 namespace SFA.Apprenticeships.Services.ReferenceData.Service
 {
-    using SFA.Apprenticeships.Common.Entities.ReferenceData;
-
     public class ReferenceDataService : IReferenceDataService
     {
-        private const string ReferenceDataPassword = "ReferenceDataService.Password";
-        private const string ReferenceDataUsername = "ReferenceDataService.Username";
+        public const string ReferenceDataPublicKey = "ReferenceDataService.Password";
+        public const string ReferenceDataSystemIdKey = "ReferenceDataService.Username";
 
         private readonly IWcfService<IReferenceData> _service;
         private readonly Guid _systemId;
@@ -33,15 +32,13 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                 throw new ArgumentNullException("service");
             }
 
-            _systemId = new Guid(configManager.GetAppSetting(ReferenceDataUsername));
-            _publicKey = configManager.GetAppSetting(ReferenceDataPassword);
+            _systemId = new Guid(configManager.GetAppSetting(ReferenceDataSystemIdKey));
+            _publicKey = configManager.GetAppSetting(ReferenceDataPublicKey);
             _service = service;
         }
 
         public IEnumerable<ILegacyReferenceData> GetReferenceData(LegacyReferenceDataType type)
         {
-            var data = default(IEnumerable<ILegacyReferenceData>);
-
             switch (type)
             {
                 case LegacyReferenceDataType.County:
@@ -51,12 +48,11 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                 case LegacyReferenceDataType.Occupations:
                     return GetApprenticeshipOccupations();
                 case LegacyReferenceDataType.Framework:
-                    return new List<ILegacyReferenceData>(GetApprenticeshipFrameworks());
+                    return GetApprenticeshipFrameworks();
                 case LegacyReferenceDataType.LocalAuthority:
-                    return new List<ILegacyReferenceData>(GetLocalAuthorities());
+                    return GetLocalAuthorities();
                 case LegacyReferenceDataType.Region:
-                    return new List<ILegacyReferenceData>(GetRegions());
-                    break;
+                    return GetRegions();
                 default:
                     throw new NotImplementedException(string.Format("Legacy reference type '{0}' not implemented.", type));
             }
@@ -111,7 +107,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                     });
             }
 
-            return default(IList<Framework>);
+            return default(IEnumerable<Framework>);
         }
 
         public IEnumerable<ILegacyReferenceData> GetCounties()
@@ -163,7 +159,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                     });
             }
 
-            return default(IList<ErrorCode>);
+            return default(IEnumerable<ErrorCode>);
         }
 
         public IEnumerable<ILegacyReferenceData> GetLocalAuthorities()
@@ -217,7 +213,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                     });
             }
 
-            return default(IList<Region>);
+            return default(IEnumerable<Region>);
         }
     }
 }

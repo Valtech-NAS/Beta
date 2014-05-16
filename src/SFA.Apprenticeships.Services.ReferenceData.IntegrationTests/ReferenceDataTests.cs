@@ -5,6 +5,7 @@ using NUnit.Framework;
 using SFA.Apprenticeships.Common.Configuration;
 using SFA.Apprenticeships.Services.Common.Wcf;
 using SFA.Apprenticeships.Services.ReferenceData.Abstract;
+using SFA.Apprenticeships.Services.ReferenceData.Models;
 using SFA.Apprenticeships.Services.ReferenceData.Proxy;
 using SFA.Apprenticeships.Services.ReferenceData.Service;
 
@@ -24,15 +25,15 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
         }
 
         [TestCase]
-        public void DoesTheEndpointRespond()
+        public void TheServiceEndpointShouldRespond()
         {
            var configManager = new ConfigurationManager();
             
             var result = default(GetApprenticeshipFrameworksResponse);
 
             var msgId = new Guid();
-            var username = configManager.GetAppSetting("ReferenceDataService.Username");
-            var password = configManager.GetAppSetting("ReferenceDataService.Password");
+            var username = configManager.GetAppSetting(ReferenceDataService.ReferenceDataSystemIdKey);
+            var password = configManager.GetAppSetting(ReferenceDataService.ReferenceDataPublicKey);
 
             var rq = new GetApprenticeshipFrameworksRequest(new Guid(username), msgId, password);
             var service = new WcfService<IReferenceData>();
@@ -42,7 +43,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
         }
 
         [TestCase]
-        public void GetApprenticeshipFrameworksReturnsList()
+        public void GetApprenticeshipFrameworksShouldReturnList()
         {       
             var test = _service.GetApprenticeshipFrameworks();
 
@@ -51,7 +52,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
         }
 
         [TestCase]
-        public void GetCountiesReturnsList()
+        public void GetCountiesShouldReturnList()
         {
             var test = _service.GetCounties();
 
@@ -60,7 +61,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
         }
 
         [TestCase]
-        public void GetErrorCodesReturnsList()
+        public void GetErrorCodesShouldReturnList()
         {
             var test = _service.GetErrorCodes();
 
@@ -69,7 +70,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
         }
 
         [TestCase]
-        public void GetLocalAuthoritiesReturnsList()
+        public void GetLocalAuthoritiesShouldReturnList()
         {
             var test = _service.GetLocalAuthorities();
 
@@ -78,12 +79,25 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
         }
 
         [TestCase]
-        public void GetRegionsReturnsList()
+        public void GetRegionsShouldReturnList()
         {
             var test = _service.GetRegions();
 
             test.Should().NotBeNullOrEmpty();
             test.Count().Should().Be(10);
+        }
+
+        [TestCase(LegacyReferenceDataType.County)]
+        [TestCase(LegacyReferenceDataType.ErrorCode)]
+        [TestCase(LegacyReferenceDataType.Framework)]
+        [TestCase(LegacyReferenceDataType.LocalAuthority)]
+        [TestCase(LegacyReferenceDataType.Occupations)]
+        [TestCase(LegacyReferenceDataType.Region)]
+        public void GetReferenceDataShouldReturnCollection(LegacyReferenceDataType type)
+        {
+            var test = _service.GetReferenceData(type);
+
+            test.Should().NotBeNullOrEmpty();
         }
     }
 }

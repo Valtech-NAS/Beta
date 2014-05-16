@@ -27,7 +27,6 @@ namespace SFA.Apprenticeships.Web.Common.Providers
             var result = new List<ReferenceDataViewModel>();
             var serviceData = _service.GetReferenceData(type);
 
-            // Create the view model
             result.AddRange(
                 serviceData
                     .Select(

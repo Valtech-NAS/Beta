@@ -38,6 +38,7 @@ namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
                 {
                     x.For<IActiveDirectoryConfiguration>().Singleton().Use(ActiveDirectoryConfigurationSection.Instance);
 
+                    // Use cache decorated provider.
                     x.For<IReferenceDataProvider>()
                         .Use<LegacyReferenceDataProvider>()
                         .DecorateWith((ctx, provider) => new CacheLegacyReferenceDataProvider(ctx.GetInstance<ICacheClient>(), provider));

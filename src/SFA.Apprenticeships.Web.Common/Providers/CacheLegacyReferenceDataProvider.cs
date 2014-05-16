@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SFA.Apprenticeships.Common.Caching;
 using SFA.Apprenticeships.Services.ReferenceData.Models;
 using SFA.Apprenticeships.Web.Common.Models.Common;
@@ -37,7 +38,7 @@ namespace SFA.Apprenticeships.Web.Common.Providers
             if (data == null)
             {
                 data = _provider.Get(type);
-                if (data != null)
+                if (data != null && data.Any())
                 {
                     _cache.Put(new LegacyDataProviderCacheKeyEntry(), data, type);
                 }
