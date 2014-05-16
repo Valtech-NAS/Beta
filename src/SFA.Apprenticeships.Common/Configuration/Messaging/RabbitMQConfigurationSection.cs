@@ -3,7 +3,7 @@
     using System.Configuration;
     using SFA.Apprenticeships.Common.Configuration;
 
-    public class RabbitMQLoggingConfigurationSection : SecureConfigurationSection<RabbitMQLoggingConfigurationSection>, IRabbitMQLoggingConfiguration
+    public class RabbitMQConfigurationSection : SecureConfigurationSection<RabbitMQConfigurationSection>, IRabbitMQConfiguration
     {
         private const string VirtualHostConst = "VirtualHost";
         private const string UserNameConst = "UserName";
@@ -21,7 +21,7 @@
 
         private const string OutputEasyNetQLogsToNLogInternalConst = "OutputEasyNetQLogsToNLogInternal";
 
-        public RabbitMQLoggingConfigurationSection() : base("RabbitMQLoggingConfiguration")
+        public RabbitMQConfigurationSection() : base("RabbitMQConfiguration")
         {
         }
 
@@ -134,6 +134,17 @@
         {
             get { return (bool)this[OutputEasyNetQLogsToNLogInternalConst]; }
             set { this[OutputEasyNetQLogsToNLogInternalConst] = value; }
+        }
+
+        public string ConnectionString
+        {
+            get
+            {
+                return
+                    string.Format(
+                        "host={0};virtualHost={1};username={2};password={3};requestedHeartbeat={4};prefetchcount={5};persistentMessages={6}",
+                        HostName, VirtualHost, UserName, Password, HeartBeatSeconds, PreFetchCount, true);
+            }
         }
     }
 }

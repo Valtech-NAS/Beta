@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Common.Configuration.Messaging
 {
-    public interface IRabbitMQLoggingConfiguration
+    public interface IRabbitMQConfiguration
     {
         /// <summary>
         /// 	Gets or sets the virtual host to publish to.
@@ -93,5 +93,11 @@
         /// Switches on/off EasyNetQ's logging to NLog's internal logger.
         /// </summary>
         bool OutputEasyNetQLogsToNLogInternal { get; set; }
+
+
+        /// <summary>
+        /// Connection string to connect to RabbitMQ.
+        /// </summary>
+        string ConnectionString { get; }
     }
 }
