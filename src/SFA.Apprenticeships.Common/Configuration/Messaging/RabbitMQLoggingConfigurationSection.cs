@@ -1,8 +1,8 @@
-﻿using System.Configuration;
-using SFA.Apprenticeships.Common.Configuration;
-
-namespace SFA.Apprenticeships.Common.Logging.Configuration
+﻿namespace SFA.Apprenticeships.Common.Configuration.Messaging
 {
+    using System.Configuration;
+    using SFA.Apprenticeships.Common.Configuration;
+
     public class RabbitMQLoggingConfigurationSection : SecureConfigurationSection<RabbitMQLoggingConfigurationSection>, IRabbitMQLoggingConfiguration
     {
         private const string VirtualHostConst = "VirtualHost";
@@ -17,6 +17,8 @@ namespace SFA.Apprenticeships.Common.Logging.Configuration
         private const string AppIdConst = "AppId";
         private const string HeartBeatSecondsConst = "HeartBeatSeconds";
         private const string QueueNameConst = "QueueName";
+        private const string PreFetchCountConst = "PreFetchCount";
+
         private const string OutputEasyNetQLogsToNLogInternalConst = "OutputEasyNetQLogsToNLogInternal";
 
         public RabbitMQLoggingConfigurationSection() : base("RabbitMQLoggingConfiguration")
@@ -111,6 +113,13 @@ namespace SFA.Apprenticeships.Common.Logging.Configuration
         {
             get { return (ushort)this[HeartBeatSecondsConst]; }
             set { this[HeartBeatSecondsConst] = value; }
+        }
+
+        [ConfigurationProperty(PreFetchCountConst, IsRequired = false, IsKey = false, DefaultValue = (ushort)10)]
+        public ushort PreFetchCount
+        {
+            get { return (ushort)this[PreFetchCountConst]; }
+            set { this[PreFetchCountConst] = value; }
         }
 
         [ConfigurationProperty(QueueNameConst, IsRequired = true, IsKey = false)]

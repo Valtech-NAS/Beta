@@ -109,8 +109,8 @@
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\IConfigurationManager.cs" />
     <Compile Include="Configuration\SecureConfigurationSection.cs" />
-    <Compile Include="Logging\Configuration\RabbitMQLoggingConfigurationSection.cs" />
-    <Compile Include="Logging\Configuration\IRabbitMQLoggingConfiguration.cs" />
+    <Compile Include="Configuration\Messaging\RabbitMQLoggingConfigurationSection.cs" />
+    <Compile Include="Configuration\Messaging\IRabbitMQLoggingConfiguration.cs" />
     <Compile Include="Logging\Layouts\JsonLayout.cs" />
     <Compile Include="Logging\Layouts\JsonProperty.cs" />
     <Compile Include="Logging\Targets\RabbitMQ.cs" />

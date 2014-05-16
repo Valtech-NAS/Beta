@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Common.Logging.Configuration
+﻿namespace SFA.Apprenticeships.Common.Configuration.Messaging
 {
     public interface IRabbitMQLoggingConfiguration
     {
