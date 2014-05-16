@@ -10,7 +10,7 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl
         public override void Run()
         {
             // This is a sample worker implementation. Replace with your logic.
-            Trace.TraceInformation("WorkerRole.VacancyEtl entry point called");
+            Trace.TraceInformation("EtlWorkerRole entry point called");
 
             while (true)
             {
@@ -28,6 +28,12 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
 
             return base.OnStart();
+        }
+
+        public override void OnStop()
+        {
+            // add logic for when stopping ervice
+            base.OnStop();
         }
     }
 }
