@@ -1,4 +1,5 @@
 ﻿using SFA.Apprenticeships.Common.Interfaces.Enums;
+using SFA.Apprenticeships.Common.Interfaces.Enums.Elasticsearch;
 
 namespace SFA.Apprenticeships.Common.Interfaces.Elasticsearch
 {

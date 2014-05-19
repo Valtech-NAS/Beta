@@ -44,6 +44,10 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Attributes\Elasticsearch\ElasticsearchIndexAttribute.cs" />
+    <Compile Include="Attributes\Elasticsearch\ElasticsearchIgnoreAttribute.cs" />
+    <Compile Include="Attributes\Elasticsearch\ElasticsearchMappingAttribute.cs" />
+    <Compile Include="Attributes\Elasticsearch\ElasticsearchTypeAttribute.cs" />
     <Compile Include="Elasticsearch\GeoPoint.cs" />
     <Compile Include="Elasticsearch\Hit.cs" />
     <Compile Include="Elasticsearch\Item.cs" />

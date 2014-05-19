@@ -4,6 +4,7 @@ using NUnit.Framework;
 using SFA.Apprenticeships.Common.Entities.Elasticsearch;
 using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
 using SFA.Apprenticeships.Common.Interfaces.Enums;
+using SFA.Apprenticeships.Common.Interfaces.Enums.Elasticsearch;
 using SFA.Apprenticeships.Services.Elasticsearch.Specifications;
 using SFA.Apprenticeships.Services.Elasticsearch.Tests.Models;
 

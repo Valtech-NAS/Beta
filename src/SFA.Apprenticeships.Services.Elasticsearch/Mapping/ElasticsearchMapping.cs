@@ -3,10 +3,22 @@ using System.Collections;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using SFA.Apprenticeships.Services.Elasticsearch.Attributes;
+using SFA.Apprenticeships.Common.Entities.Attributes.Elasticsearch;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Mapping
 {
+    /// <summary>
+    /// Use to create the mapping in the es database.
+    /// eg _mapping 
+    /// $ curl -XPUT 'http://localhost:9200/twitter/tweet/_mapping' -d '
+    ///{
+    ///    "tweet" : {
+    ///        "properties" : {
+    ///            "message" : {"type" : "string", "store" : true }
+    ///        }
+    ///    }
+    ///}
+    /// </summary>
     public static class ElasticsearchMapping
     {
         public static string  Create<T>()
@@ -17,7 +29,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Mapping
         public static string Create(Type esType)
         {
             // verify the class has the appropriate mapping attribute
-            var attribute = esType.GetCustomAttributes(true).FirstOrDefault() as ElasticSearchMappingAttribute;
+            var attribute = esType.GetCustomAttributes(true).FirstOrDefault() as ElasticsearchMappingAttribute;
             if (attribute == null)
             {
                 throw new ArgumentException("The class must be declared with the ElasticSearchMappingAttribute.");
@@ -73,7 +85,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Mapping
                 }
 
                 var attrs = info.GetCustomAttributes(true);
-                foreach (object attr in attrs)
+                foreach (var attr in attrs)
                 {
                     // add additional indexing
                     //if (attr is ElasticsearchIndex)
@@ -92,16 +104,16 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Mapping
                     //}
 
                     // override property type from attribute
-                    if (attr is ElasticSearchTypeAttribute)
+                    if (attr is ElasticsearchTypeAttribute)
                     {
-                        var typeAttrib = attr as ElasticSearchTypeAttribute;
+                        var typeAttrib = attr as ElasticsearchTypeAttribute;
                         propertyType = string.IsNullOrEmpty(typeAttrib.Format) ? 
                             string.Format("\"{0}\"", typeAttrib.Name.ToLower()) : 
                             string.Format("\"{0}\",\"format\":\"{1}\"", typeAttrib.Name.ToLower(), typeAttrib.Format);
                     }
 
                     // ignore this property in the mapping
-                    if (attr is ElasticSearchIgnoreAttribute)
+                    if (attr is ElasticsearchIgnoreAttribute)
                     {
                         ignoreProperty = true;
                     }

@@ -52,10 +52,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Attributes\ElasticSearchIgnoreAttribute.cs" />
     <Compile Include="Mapping\ElasticsearchMapping.cs" />
-    <Compile Include="Attributes\ElasticSearchMappingAttribute.cs" />
-    <Compile Include="Attributes\ElasticSearchTypeAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ElasticSearchService.cs" />
     <Compile Include="Specifications\AbstractSpecification.cs" />

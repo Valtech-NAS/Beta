@@ -52,7 +52,8 @@
     <Compile Include="Elasticsearch\ISortableRange.cs" />
     <Compile Include="Elasticsearch\ISortableSpecification.cs" />
     <Compile Include="Elasticsearch\ISpecification.cs" />
-    <Compile Include="Enums\SortDirectionType.cs" />
+    <Compile Include="Enums\Elasticsearch\ElasticsearchIndexType.cs" />
+    <Compile Include="Enums\Elasticsearch\SortDirectionType.cs" />
     <Compile Include="Enums\VacancyLocationType.cs" />
     <Compile Include="Enums\WageType.cs" />
     <Compile Include="Enums\VacancyType.cs" />
