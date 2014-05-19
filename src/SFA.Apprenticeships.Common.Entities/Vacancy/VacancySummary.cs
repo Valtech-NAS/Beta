@@ -7,11 +7,15 @@ using SFA.Apprenticeships.Common.Interfaces.Enums.Elasticsearch;
 namespace SFA.Apprenticeships.Common.Entities.Vacancy
 {
     [ElasticsearchMapping(Name = "vacancy", Index = "vacancies")]
+    [Description("VacancySummaryData")]
     public class VacancySummary
     {
         [ElasticsearchIgnore]
         [Description("VacancyReference")]
-        public string Id { get; set; }
+        public ulong Id { get; set; }
+
+        [ElasticsearchIgnore]
+        public Guid UpdateReference { get; set; }
 
         [Description("ApprenticeshipFramework")]
         public string Framework { get; set; }
