@@ -1,15 +1,14 @@
-﻿using System.Web.Http;
-using System.Reflection;
-using System.Web;
-using System.Web.Optimization;
-using SFA.Apprenticeships.Web.Common.IoC.DependencyResolution;
-
-namespace SFA.Apprenticeships.Web.Employer
+﻿namespace SFA.Apprenticeships.Web.Employer
 {
+    using System.Web.Http;
+    using System.Reflection;
+    using System.Web;
+    using System.Web.Optimization;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using SFA.Apprenticeships.Web.Common.IoC;
 
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {

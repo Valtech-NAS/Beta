@@ -3,6 +3,7 @@
     using System.Reflection;
     using EasyNetQ;
     using EasyNetQ.AutoSubscribe;
+    using StructureMap;
 
     public class Bootstrapper
     {
@@ -13,12 +14,11 @@
             _bus = bus;
         }
 
-
         public void LoadConsumers(Assembly assembly, string subscriptionId)
         {
             var autosubscriber = new AutoSubscriber(_bus, subscriptionId)
             {
-                //AutoSubscriberMessageDispatcher = new StructureMapMessageDispatcher(),
+                AutoSubscriberMessageDispatcher = new StructureMapMessageDispatcher(ObjectFactory.Container),
                 GenerateSubscriptionId = c => c.ConcreteType.Name
             };
 

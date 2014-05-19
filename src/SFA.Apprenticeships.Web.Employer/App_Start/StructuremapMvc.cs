@@ -1,10 +1,10 @@
 using System.Web.Http;
 using System.Web.Mvc;
 using Microsoft.Practices.ServiceLocation;
-using SFA.Apprenticeships.Web.Common.IoC.DependencyResolution;
 using SFA.Apprenticeships.Web.Employer;
+using SFA.Apprenticeships.Common.IoC;
+using SFA.Apprenticeships.Web.Common.IoC;
 using StructureMap;
-using StructureMap.Graph;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(StructuremapMvc), "Start")]
 
@@ -17,7 +17,7 @@ namespace SFA.Apprenticeships.Web.Employer
     {
         public static void Start()
         {
-            var container = IoC.Initialize();
+            var container = IoC.Initialize(new[] { "SFA.Apprenticeships.Common", "SFA.Apprenticeships.Web.Common" });
             var resolver = new StructureMapDependencyResolver(container);
 
             container.Configure(x =>
@@ -27,12 +27,6 @@ namespace SFA.Apprenticeships.Web.Employer
 
                 // The structure map resolver.
                 x.For<IServiceLocator>().Use(resolver);
-
-                x.Scan(s =>
-                {
-                    s.TheCallingAssembly();
-                    s.WithDefaultConventions();
-                });
             });
 
             // Set the MVC/WebApi dependency resolver.
