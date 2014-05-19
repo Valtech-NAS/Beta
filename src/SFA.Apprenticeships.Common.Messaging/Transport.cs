@@ -14,7 +14,7 @@
         {
             CustomServiceProvider = new CustomServiceProvider();
             RabbitMqConfiguration = RabbitMQConfigurationSection.Instance;
-        }
+        }   
 
         public static IBus CreateBus()
         {

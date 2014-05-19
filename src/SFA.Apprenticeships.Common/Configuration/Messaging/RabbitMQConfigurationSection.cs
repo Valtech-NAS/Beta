@@ -142,8 +142,8 @@
             {
                 return
                     string.Format(
-                        "host={0};virtualHost={1};username={2};password={3};requestedHeartbeat={4};prefetchcount={5};persistentMessages={6}",
-                        HostName, VirtualHost, UserName, Password, HeartBeatSeconds, PreFetchCount, true);
+                        "host={0};virtualHost={1};username={2};password={3};requestedHeartbeat={4};prefetchcount={5}",
+                        HostName, VirtualHost, UserName, Password, HeartBeatSeconds, PreFetchCount);
             }
         }
     }
