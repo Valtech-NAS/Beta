@@ -8,15 +8,8 @@ namespace SFA.Apprenticeships.Common.Entities.Vacancy
 {
     [ElasticsearchMapping(Name = "vacancy", Index = "vacancies")]
     [Description("VacancySummaryData")]
-    public class VacancySummary
+    public class VacancySummary : VacancyId
     {
-        [ElasticsearchIgnore]
-        [Description("VacancyReference")]
-        public ulong Id { get; set; }
-
-        [ElasticsearchIgnore]
-        public Guid UpdateReference { get; set; }
-
         [Description("ApprenticeshipFramework")]
         public string Framework { get; set; }
 

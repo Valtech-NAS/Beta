@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Text;
+using SFA.Apprenticeships.Common.Helpers;
 using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-using SFA.Apprenticeships.Services.Common.Helpers;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {

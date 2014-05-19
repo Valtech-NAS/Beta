@@ -113,6 +113,7 @@
     <Compile Include="Configuration\SecureConfigurationSection.cs" />
     <Compile Include="Configuration\Messaging\RabbitMQConfigurationSection.cs" />
     <Compile Include="Configuration\Messaging\IRabbitMQConfiguration.cs" />
+    <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Logging\Layouts\JsonLayout.cs" />
     <Compile Include="Logging\Layouts\JsonProperty.cs" />
     <Compile Include="Logging\Targets\RabbitMQ.cs" />

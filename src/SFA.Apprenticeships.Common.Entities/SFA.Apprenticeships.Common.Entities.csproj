@@ -65,6 +65,7 @@
     <Compile Include="ReferenceData\ILegacyReferenceData.cs" />
     <Compile Include="Vacancy\VacancyAddress.cs" />
     <Compile Include="Vacancy\VacancyDetail.cs" />
+    <Compile Include="Vacancy\VacancyId.cs" />
     <Compile Include="Vacancy\VacancySummary.cs" />
   </ItemGroup>
   <ItemGroup>
