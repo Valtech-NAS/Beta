@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using RestSharp;
+using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
 using SFA.Apprenticeships.Services.Common.Rest;
-using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Service
 {

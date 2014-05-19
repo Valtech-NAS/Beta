@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
+using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {

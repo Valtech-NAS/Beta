@@ -52,21 +52,10 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Abstract\IElasticsearchService.cs" />
-    <Compile Include="Abstract\ISortableGeoLocation.cs" />
-    <Compile Include="Abstract\ISortable.cs" />
-    <Compile Include="Abstract\IConstraintSpecification.cs" />
-    <Compile Include="Abstract\ISortableSpecification.cs" />
     <Compile Include="Attributes\ElasticSearchIgnoreAttribute.cs" />
-    <Compile Include="Entities\Sortable.cs" />
     <Compile Include="Mapping\ElasticsearchMapping.cs" />
     <Compile Include="Attributes\ElasticSearchMappingAttribute.cs" />
     <Compile Include="Attributes\ElasticSearchTypeAttribute.cs" />
-    <Compile Include="Entities\GeoPoint.cs" />
-    <Compile Include="Entities\Hit.cs" />
-    <Compile Include="Entities\Item.cs" />
-    <Compile Include="Entities\SearchResponse.cs" />
-    <Compile Include="Entities\SortDirectionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ElasticSearchService.cs" />
     <Compile Include="Specifications\AbstractSpecification.cs" />
@@ -76,17 +65,20 @@
     <Compile Include="Specifications\SortByLocationSpecification.cs" />
     <Compile Include="Specifications\SortingSpecification.cs" />
     <Compile Include="Specifications\AndSpecification.cs" />
-    <Compile Include="Entities\SortableGeoLocation.cs" />
     <Compile Include="Specifications\GeoLocationSpecification.cs" />
-    <Compile Include="Abstract\IGeoPoint.cs" />
-    <Compile Include="Abstract\ISortableRange.cs" />
-    <Compile Include="Abstract\ISpecification.cs" />
-    <Compile Include="Entities\SortableRange.cs" />
     <Compile Include="Specifications\RangeSpecification.cs" />
     <Compile Include="Specifications\SortByFieldnameSpecification.cs" />
     <Compile Include="Specifications\TermSpecification.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Common.Entities\SFA.Apprenticeships.Common.Entities.csproj">
+      <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
+      <Name>SFA.Apprenticeships.Common.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Common.Interfaces\SFA.Apprenticeships.Common.Interfaces.csproj">
+      <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
+      <Name>SFA.Apprenticeships.Common.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Services.Common\SFA.Apprenticeships.Services.Common.csproj">
       <Project>{78b1f2a1-dcc3-4ed3-8ce0-16e0781b59fa}</Project>
       <Name>SFA.Apprenticeships.Services.Common</Name>

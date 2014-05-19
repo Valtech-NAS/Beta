@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Text;
-using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
+using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {

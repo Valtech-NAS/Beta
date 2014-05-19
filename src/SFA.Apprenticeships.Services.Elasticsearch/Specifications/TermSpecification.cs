@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
+using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {

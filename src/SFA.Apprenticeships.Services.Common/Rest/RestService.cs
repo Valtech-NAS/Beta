@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using RestSharp;
 using RestSharp.Deserializers;
-using SFA.Apprenticeships.Services.Common.Abstract;
+using SFA.Apprenticeships.Common.Interfaces.Services;
 
 namespace SFA.Apprenticeships.Services.Common.Rest
 {

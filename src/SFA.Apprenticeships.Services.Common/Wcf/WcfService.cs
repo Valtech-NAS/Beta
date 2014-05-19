@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
-using SFA.Apprenticeships.Services.Common.Abstract;
+using SFA.Apprenticeships.Common.Interfaces.Services;
 
 namespace SFA.Apprenticeships.Services.Common.Wcf
 {
