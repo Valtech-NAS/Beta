@@ -71,6 +71,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RabbitMQ.Client.3.3.0\lib\net30\RabbitMQ.Client.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -114,6 +120,8 @@
     <Compile Include="Configuration\Messaging\RabbitMQConfigurationSection.cs" />
     <Compile Include="Configuration\Messaging\IRabbitMQConfiguration.cs" />
     <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="IoC\CommonRegistry.cs" />
+    <Compile Include="IoC\IoC.cs" />
     <Compile Include="Logging\Layouts\JsonLayout.cs" />
     <Compile Include="Logging\Layouts\JsonProperty.cs" />
     <Compile Include="Logging\Targets\RabbitMQ.cs" />

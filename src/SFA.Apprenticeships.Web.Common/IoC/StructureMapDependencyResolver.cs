@@ -1,8 +1,8 @@
-using System.Web.Http.Dependencies;
-using StructureMap;
-
-namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
+namespace SFA.Apprenticeships.Web.Common.IoC
 {
+    using System.Web.Http.Dependencies;
+    using StructureMap;
+
     /// <summary>
     /// The structure map dependency resolver.
     /// </summary>

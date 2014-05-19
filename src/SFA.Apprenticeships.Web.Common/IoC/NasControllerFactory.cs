@@ -1,10 +1,10 @@
-﻿using System;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-
-namespace SFA.Apprenticeships.Web.Common.IoC.DependencyResolution
+﻿namespace SFA.Apprenticeships.Web.Common.IoC
 {
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
+
     public class NasControllerFactory : DefaultControllerFactory
     {
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
