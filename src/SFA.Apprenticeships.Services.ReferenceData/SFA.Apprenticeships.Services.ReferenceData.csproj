@@ -71,6 +71,10 @@
       <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
       <Name>SFA.Apprenticeships.Common.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Common.Interfaces\SFA.Apprenticeships.Common.Interfaces.csproj">
+      <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
+      <Name>SFA.Apprenticeships.Common.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Common\SFA.Apprenticeships.Common.csproj">
       <Project>{aad6c913-2503-456f-a593-c0a36c07bd35}</Project>
       <Name>SFA.Apprenticeships.Common</Name>

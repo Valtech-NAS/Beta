@@ -64,6 +64,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Common.Entities\SFA.Apprenticeships.Common.Entities.csproj">
+      <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
+      <Name>SFA.Apprenticeships.Common.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Common.Interfaces\SFA.Apprenticeships.Common.Interfaces.csproj">
+      <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
+      <Name>SFA.Apprenticeships.Common.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Services.Common\SFA.Apprenticeships.Services.Common.csproj">
       <Project>{78b1f2a1-dcc3-4ed3-8ce0-16e0781b59fa}</Project>
       <Name>SFA.Apprenticeships.Services.Common</Name>

@@ -52,6 +52,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Common.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Common.Tests", "SFA.Apprenticeships.Web.Common.Tests\SFA.Apprenticeships.Web.Common.Tests.csproj", "{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Common.Interfaces", "SFA.Apprenticeships.Common.Interfaces\SFA.Apprenticeships.Common.Interfaces.csproj", "{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -122,6 +124,10 @@ Global
 		{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -143,5 +149,6 @@ Global
 		{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0} = {301B3E43-CD0D-4017-B07C-FFF251E5B291}
 		{AAD6C913-2503-456F-A593-C0A36C07BD35} = {16A8BC48-3B19-4BBE-AB1C-7857B2DB784F}
 		{4C2BE232-4DBD-44D0-B427-0450E2D857A5} = {16A8BC48-3B19-4BBE-AB1C-7857B2DB784F}
+		{91DB99C3-50A9-4DED-AB90-2FF94D0B130E} = {16A8BC48-3B19-4BBE-AB1C-7857B2DB784F}
 	EndGlobalSection
 EndGlobal

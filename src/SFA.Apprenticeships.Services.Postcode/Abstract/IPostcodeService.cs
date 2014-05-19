@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using SFA.Apprenticeships.Services.Common.Abstract;
+using SFA.Apprenticeships.Common.Interfaces.Services;
 using SFA.Apprenticeships.Services.Postcode.Entities;
 
 namespace SFA.Apprenticeships.Services.Postcode.Abstract

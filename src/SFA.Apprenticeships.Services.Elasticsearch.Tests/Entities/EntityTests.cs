@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
-using SFA.Apprenticeships.Services.Elasticsearch.Entities;
+using SFA.Apprenticeships.Common.Entities.Elasticsearch;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.Entities
 {

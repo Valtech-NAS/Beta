@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
-using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
-using SFA.Apprenticeships.Services.Elasticsearch.Entities;
+using SFA.Apprenticeships.Common.Entities.Elasticsearch;
+using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
+using SFA.Apprenticeships.Common.Interfaces.Enums;
 using SFA.Apprenticeships.Services.Elasticsearch.Specifications;
 using SFA.Apprenticeships.Services.Elasticsearch.Tests.Models;
 

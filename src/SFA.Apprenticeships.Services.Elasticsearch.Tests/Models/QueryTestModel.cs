@@ -1,5 +1,5 @@
 ﻿using System;
-using SFA.Apprenticeships.Services.Elasticsearch.Abstract;
+using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.Models
 {

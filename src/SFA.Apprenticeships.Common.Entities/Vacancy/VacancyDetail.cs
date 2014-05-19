@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Policy;
 using SFA.Apprenticeships.Common.Interfaces.Enums;
 
 namespace SFA.Apprenticeships.Common.Entities.Vacancy
