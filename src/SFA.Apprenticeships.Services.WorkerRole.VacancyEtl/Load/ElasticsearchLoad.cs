@@ -3,7 +3,6 @@ using RestSharp.Extensions;
 using SFA.Apprenticeships.Common.Entities.Attributes.Elasticsearch;
 using SFA.Apprenticeships.Common.Entities.Vacancy;
 using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Abstract;
 
 namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load
 {
@@ -12,24 +11,17 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load
     /// </summary>
     public class ElasticsearchLoad<T> where T : VacancyId
     {
-        private readonly IQueue _queue;
         private readonly IElasticSearchService _service;
         private readonly string _command;
 
-        public ElasticsearchLoad(IElasticSearchService service, IQueue queue)
+        public ElasticsearchLoad(IElasticSearchService service)
         {
             if (service == null)
             {
                 throw new ArgumentNullException("service");
             }
 
-            if (queue == null)
-            {
-                throw new ArgumentNullException("queue");
-            }
-
             _service = service;
-            _queue = queue;
 
             // look for the elasticsearch mapping attribute on the class T
             // find the index and name properties to form the es command
@@ -42,14 +34,14 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load
             _command = string.Format("/{0}/{1}", mapping.Index, mapping.Name);
         }
 
-        public void Execute()
-        {
-            var msg = _queue.GetMessage();
-            if (msg.HasMessage)
-            {
-                _service.Execute(_command, msg.Id, msg.Json);
-            }
-        }
+        //public void Execute()
+        //{
+        //    var msg = _queue.GetMessage();
+        //    if (msg.HasMessage)
+        //    {
+        //        _service.Execute(_command, msg.Id, msg.Json);
+        //    }
+        //}
     }
 }
 

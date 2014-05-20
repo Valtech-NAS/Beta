@@ -1,13 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RestSharp;
+using SFA.Apprenticeships.Common.Configuration;
 using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
 using SFA.Apprenticeships.Services.Common.Rest;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Service
 {
-    public class ElasticServiceService : RestService, IElasticSearchService
+    public class ElasticsearchService : RestService, IElasticSearchService
     {
-        public ElasticServiceService(string url)
+        public const string ElasticsearchEndpointKey = "ElasticsearchEndpoint";
+
+        public ElasticsearchService(IConfigurationManager config)
+        {
+            if (config == null)
+            {
+                throw new ArgumentNullException("config");
+            }
+
+            BaseUrl = config.TryGetAppSetting(ElasticsearchEndpointKey);
+            if (string.IsNullOrEmpty(BaseUrl))
+            {
+                throw new ArgumentException("AppSetting ElasticsearchEndpoint was not found in the config file.");
+            }
+        }
+
+        public ElasticsearchService(string url)
             : base(url)
         {
         }

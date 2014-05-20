@@ -13,7 +13,7 @@ namespace SFA.Apprenticeships.Common.Messaging
 
         public Bootstrapper(IBus bus)
         {
-            if (_bus == null)
+            if (bus == null)
             {
                 throw new ArgumentNullException("bus");
             }

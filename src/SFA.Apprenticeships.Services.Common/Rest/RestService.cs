@@ -8,7 +8,6 @@ namespace SFA.Apprenticeships.Services.Common.Rest
 {
     public abstract class RestService : IRestService
     {
-        private readonly string _baseUrl;
         private IRestClient _client;
 
         protected RestService() { }
@@ -20,8 +19,10 @@ namespace SFA.Apprenticeships.Services.Common.Rest
                 throw new ArgumentNullException("baseUrl");
             }
 
-            _baseUrl = baseUrl;
+            BaseUrl = baseUrl;
         }
+
+        public string BaseUrl { get; protected set; }
 
         public IRestClient Client
         {
@@ -29,7 +30,7 @@ namespace SFA.Apprenticeships.Services.Common.Rest
             {
                 if (_client == null)
                 {
-                    _client = new RestClient { BaseUrl = _baseUrl };
+                    _client = new RestClient { BaseUrl = BaseUrl };
                     (_client as RestClient).AddHandler("application/json", new JsonDeserializer());
                 }
 

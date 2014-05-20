@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using SFA.Apprenticeships.Common.IoC;
+using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Queue;
 
 namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl
 {
@@ -29,6 +30,7 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
 
             IoC.Initialize();
+            RabbitQueue.Setup();
 
             return base.OnStart();
         }

@@ -1,26 +1,16 @@
-﻿using System;
-using System.Reflection;
-using EasyNetQ;
+﻿using System.Reflection;
 using SFA.Apprenticeships.Common.Messaging;
-using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Abstract;
+using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Consumers;
 
 namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Queue
 {
-    class RabbitQueue : IQueue
+    public static class RabbitQueue
     {
-        private readonly IBus _bus;
-
-        public RabbitQueue()
+        public static void Setup()
         {
-            _bus = Transport.CreateBus();
-
-            var bs = new Bootstrapper(_bus);
-            bs.LoadConsumers(Assembly.GetExecutingAssembly(), "test_app");
-        }
-
-        public IQueueMessage GetMessage()
-        {
-            throw new NotImplementedException();
+            var bus = Transport.CreateBus();
+            var bs = new Bootstrapper(bus);
+            bs.LoadConsumers(Assembly.GetExecutingAssembly(), typeof(VacancySummaryConsumerAsync).Name);
         }
     }
 }
