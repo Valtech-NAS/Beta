@@ -87,7 +87,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Service References\Proxy\ReferenceDataService.wsdl" />
+    <None Include="Service References\Proxy\ReferenceDataService1.wsdl" />
     <None Include="Service References\Proxy\SFA.Apprenticeships.Services.ReferenceData.Proxy.ApprenticeshipFrameworkAndOccupationData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -118,7 +118,6 @@
     <None Include="Service References\Proxy\SFA.Apprenticeships.Services.ReferenceData.Proxy.RegionData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="wsdl\ReferenceData51.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\Proxy\" />

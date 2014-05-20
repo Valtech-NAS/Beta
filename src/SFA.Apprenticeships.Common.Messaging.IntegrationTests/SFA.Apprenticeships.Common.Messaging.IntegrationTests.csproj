@@ -70,7 +70,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BindingTests.cs" />
+    <Compile Include="Consumers\ConsumerCounter.cs" />
+    <Compile Include="PublishSubscribeTests.cs" />
     <Compile Include="BootstrapTests.cs" />
     <Compile Include="Consumers\TestConsumerSync.cs" />
     <Compile Include="Consumers\TestConsumerAsync.cs" />

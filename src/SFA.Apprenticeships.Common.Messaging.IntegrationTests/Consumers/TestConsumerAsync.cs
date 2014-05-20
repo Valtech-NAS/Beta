@@ -15,6 +15,7 @@
         private void ConsumeTask(TestMessage message)
         {
             Console.WriteLine("TestMessageConsumerAsync recieved message with TestString:" + message.TestString);
+            ConsumerCounter.IncrementCounter();
         }
     }
 }

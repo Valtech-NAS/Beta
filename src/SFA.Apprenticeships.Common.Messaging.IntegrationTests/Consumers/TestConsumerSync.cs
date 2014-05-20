@@ -9,6 +9,7 @@
         public void Consume(TestMessage message)
         {
             Console.WriteLine("TestMessageConsumerSync recieved message with TestString:" + message.TestString);
+            ConsumerCounter.IncrementCounter();
         }
     }
 }
