@@ -2,7 +2,9 @@
 {
     using SFA.Apprenticeships.Common.Interfaces.Services;
     using SFA.Apprenticeships.Services.Common.Wcf;
+    using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
     using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
+    using SFA.Apprenticeships.Services.Legacy.Vacancy.Service;
     using StructureMap.Configuration.DSL;
 
     public class VacancySummaryRegistry : Registry

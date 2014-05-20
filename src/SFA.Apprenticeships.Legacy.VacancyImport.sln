@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Service
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Common.Messaging.IntegrationConsole", "SFA.Apprenticeships.Common.Messaging.IntegrationConsole\SFA.Apprenticeships.Common.Messaging.IntegrationConsole.csproj", "{D429F1FC-7255-4B84-9124-FE607F5D6C54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests", "SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests\SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests.csproj", "{2BAA69B1-D0C4-447A-8D16-4473C2183CC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,10 @@ Global
 		{D429F1FC-7255-4B84-9124-FE607F5D6C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D429F1FC-7255-4B84-9124-FE607F5D6C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D429F1FC-7255-4B84-9124-FE607F5D6C54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BAA69B1-D0C4-447A-8D16-4473C2183CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BAA69B1-D0C4-447A-8D16-4473C2183CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BAA69B1-D0C4-447A-8D16-4473C2183CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BAA69B1-D0C4-447A-8D16-4473C2183CC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,5 +126,6 @@ Global
 		{26D4B9D7-C39F-4246-BF65-40670A35B79B} = {F78BD9F1-7E9B-4D67-93B4-C76755DDB14A}
 		{EBE35AC3-4BDC-4CEE-92CE-7ABFC56C9FFA} = {F78BD9F1-7E9B-4D67-93B4-C76755DDB14A}
 		{D429F1FC-7255-4B84-9124-FE607F5D6C54} = {F78BD9F1-7E9B-4D67-93B4-C76755DDB14A}
+		{2BAA69B1-D0C4-447A-8D16-4473C2183CC2} = {F78BD9F1-7E9B-4D67-93B4-C76755DDB14A}
 	EndGlobalSection
 EndGlobal
