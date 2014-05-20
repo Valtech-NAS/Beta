@@ -11,7 +11,7 @@
     public class PublishSubscribeTests : RabbitSetUp
     {
         [Test]
-        public void CanConsumeMessages()
+        public void ConsumesSyncAndAsyncMessagesFromQueue()
         {
             var bus = Transport.CreateBus();
             var bs = new Bootstrapper(bus);
