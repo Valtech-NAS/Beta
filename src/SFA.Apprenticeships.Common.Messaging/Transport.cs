@@ -21,5 +21,10 @@
             var rabbitBus = RabbitHutch.CreateBus(RabbitMqConfiguration.ConnectionString, CustomServiceProvider.RegisterCustomServices());
             return rabbitBus;
         }
+
+        public static string QueueName
+        {
+            get { return RabbitMqConfiguration.QueueName; }
+        }
     }
 }

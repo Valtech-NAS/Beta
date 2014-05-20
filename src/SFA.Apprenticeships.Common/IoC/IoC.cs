@@ -2,12 +2,8 @@
 {
     using System.IO;
     using System.Reflection;
-    using System.Security.AccessControl;
     using StructureMap;
 
-    /// <summary>
-    /// IoC Container
-    /// </summary>
     public static class IoC
     {
         public static IContainer Initialize()
@@ -25,6 +21,7 @@
                             var dll = new FileInfo(sfaDll);
                             scan.Assembly(dll.Name.Substring(0, dll.Name.Length - 4));
                         }
+
                         scan.LookForRegistries();
                     }));
 

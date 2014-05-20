@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using SFA.Apprenticeships.Common.IoC;
 
 namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl
 {
@@ -26,6 +27,8 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl
 
             // For information on handling configuration changes
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
+
+            IoC.Initialize();
 
             return base.OnStart();
         }

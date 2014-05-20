@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Common.Messaging
+﻿using System;
+
+namespace SFA.Apprenticeships.Common.Messaging
 {
     using System.Reflection;
     using EasyNetQ;
@@ -7,10 +9,15 @@
 
     public class Bootstrapper
     {
-        private IBus _bus;
+        private readonly IBus _bus;
 
         public Bootstrapper(IBus bus)
         {
+            if (_bus == null)
+            {
+                throw new ArgumentNullException("bus");
+            }
+
             _bus = bus;
         }
 

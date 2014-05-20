@@ -8,7 +8,7 @@
     [TestFixture]
     public class BootstrapTests : RabbitSetUp
     {
-        [Test]
+        [TestCase]
         public void AutoBindsSubscriptions()
         {
             var bus = Transport.CreateBus();
