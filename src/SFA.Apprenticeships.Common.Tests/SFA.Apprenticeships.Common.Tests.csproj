@@ -86,6 +86,7 @@
     <Compile Include="Caching\AzureCachingTests.cs" />
     <Compile Include="Caching\MemoryCachingTests.cs" />
     <Compile Include="Configuration\ConfigurationManagerTests.cs" />
+    <Compile Include="Configuration\LegacyServicesConfigurationTests.cs" />
     <Compile Include="Configuration\RabbitMQConfigurationTests.cs" />
     <Compile Include="DependencyResolutionTests\DependencyRegistrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

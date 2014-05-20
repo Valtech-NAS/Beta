@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using SFA.Apprenticeships.Common.Configuration;
 using SFA.Apprenticeships.Common.Entities.ReferenceData;
 using SFA.Apprenticeships.Common.Interfaces.Services;
 using SFA.Apprenticeships.Services.ReferenceData.Abstract;
@@ -11,20 +10,18 @@ using SFA.Apprenticeships.Services.ReferenceData.Proxy;
 
 namespace SFA.Apprenticeships.Services.ReferenceData.Service
 {
+    using SFA.Apprenticeships.Common.Configuration.LegacyServices;
+
     public class ReferenceDataService : IReferenceDataService
     {
-        public const string ReferenceDataPublicKey = "ReferenceDataService.Password";
-        public const string ReferenceDataSystemIdKey = "ReferenceDataService.Username";
-
         private readonly IWcfService<IReferenceData> _service;
-        private readonly Guid _systemId;
-        private readonly string _publicKey;
+        private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
 
-        public ReferenceDataService(IConfigurationManager configManager, IWcfService<IReferenceData> service)
+        public ReferenceDataService(ILegacyServicesConfiguration legacyServicesConfiguration, IWcfService<IReferenceData> service)
         {
-            if (configManager == null)
+            if (legacyServicesConfiguration == null)
             {
-                throw new ArgumentNullException("configManager");
+                throw new ArgumentNullException("legacyServicesConfiguration");
             }
 
             if (service == null)
@@ -32,8 +29,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
                 throw new ArgumentNullException("service");
             }
 
-            _systemId = new Guid(configManager.GetAppSetting(ReferenceDataSystemIdKey));
-            _publicKey = configManager.GetAppSetting(ReferenceDataPublicKey);
+            _legacyServicesConfiguration = legacyServicesConfiguration;
             _service = service;
         }
 
@@ -82,8 +78,8 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
             var msgId = Guid.NewGuid();
             var request = new GetApprenticeshipFrameworksRequest
             {
-                ExternalSystemId = _systemId,
-                PublicKey = _publicKey,
+                ExternalSystemId = _legacyServicesConfiguration.SystemId,
+                PublicKey = _legacyServicesConfiguration.PublicKey,
                 MessageId = msgId,
             };
 
@@ -117,8 +113,8 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
             var msgId = Guid.NewGuid();
             var request = new GetCountiesRequest
             {
-                ExternalSystemId = _systemId,
-                PublicKey = _publicKey,
+                ExternalSystemId = _legacyServicesConfiguration.SystemId,
+                PublicKey = _legacyServicesConfiguration.PublicKey,
                 MessageId = msgId,
             };
 
@@ -144,8 +140,8 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
             var msgId = Guid.NewGuid();
             var request = new GetErrorCodesRequest
             {
-                ExternalSystemId = _systemId,
-                PublicKey = _publicKey,
+                ExternalSystemId = _legacyServicesConfiguration.SystemId,
+                PublicKey = _legacyServicesConfiguration.PublicKey,
                 MessageId = msgId,
             };
 
@@ -171,8 +167,8 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
             var msgId = Guid.NewGuid();
             var request = new GetLocalAuthoritiesRequest
             {
-                ExternalSystemId = _systemId,
-                PublicKey = _publicKey,
+                ExternalSystemId = _legacyServicesConfiguration.SystemId,
+                PublicKey = _legacyServicesConfiguration.PublicKey,
                 MessageId = msgId,
             };
 
@@ -200,8 +196,8 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
             var msgId = Guid.NewGuid();
             var request = new GetRegionRequest
             {
-                ExternalSystemId = _systemId,
-                PublicKey = _publicKey,
+                ExternalSystemId = _legacyServicesConfiguration.SystemId,
+                PublicKey = _legacyServicesConfiguration.PublicKey,
                 MessageId = msgId,
             };
 
