@@ -100,9 +100,10 @@ publish/
 src/packages/*
 !src/packages/repositories.config
 
-# Windows Azure Build Output
+# Windows Azure Build Output and Confi files
 csx
 *.build.csdef
+*.cscfg
 
 # Windows Store app package directory
 AppPackages/
