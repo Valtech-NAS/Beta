@@ -14,7 +14,7 @@
 
         private void ConsumeTask(TestMessage message)
         {
-            Console.WriteLine(message.TestString);
+            Console.WriteLine("TestMessageConsumerAsync recieved message with TestString:" + message.TestString);
         }
     }
 }
