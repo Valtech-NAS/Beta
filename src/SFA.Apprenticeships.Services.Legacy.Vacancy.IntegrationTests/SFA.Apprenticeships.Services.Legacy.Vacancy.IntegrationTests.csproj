@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{68E0E09A-F600-4A8B-AEBE-2907E5966127}</ProjectGuid>
+    <ProjectGuid>{2BAA69B1-D0C4-447A-8D16-4473C2183CC2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Services.ReferenceData.IntegrationTests</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Services.ReferenceData.IntegrationTests</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,21 +39,16 @@
     <Reference Include="FluentAssertions.Core">
       <HintPath>..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap.Net4">
       <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.Net4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -63,20 +58,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ReferenceDataTests.cs" />
+    <Compile Include="VacancyServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common.Entities\SFA.Apprenticeships.Common.Entities.csproj">
-      <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
-      <Name>SFA.Apprenticeships.Common.Entities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Common.Interfaces\SFA.Apprenticeships.Common.Interfaces.csproj">
-      <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
+      <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
       <Name>SFA.Apprenticeships.Common.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Common\SFA.Apprenticeships.Common.csproj">
@@ -87,9 +77,9 @@
       <Project>{78b1f2a1-dcc3-4ed3-8ce0-16e0781b59fa}</Project>
       <Name>SFA.Apprenticeships.Services.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Services.ReferenceData\SFA.Apprenticeships.Services.ReferenceData.csproj">
-      <Project>{5e8e77ca-bb23-45de-aadd-236cafbc66e3}</Project>
-      <Name>SFA.Apprenticeships.Services.ReferenceData</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Services.Legacy.Vacancy\SFA.Apprenticeships.Services.Legacy.Vacancy.csproj">
+      <Project>{67cdaccd-5217-4110-8432-c6ef164baa0d}</Project>
+      <Name>SFA.Apprenticeships.Services.Legacy.Vacancy</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

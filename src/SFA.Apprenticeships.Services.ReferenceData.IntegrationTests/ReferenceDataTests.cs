@@ -1,17 +1,15 @@
-﻿using System;
-using System.Linq;
-using FluentAssertions;
-using NUnit.Framework;
-using SFA.Apprenticeships.Common.Configuration;
-using SFA.Apprenticeships.Services.Common.Wcf;
-using SFA.Apprenticeships.Services.ReferenceData.Abstract;
-using SFA.Apprenticeships.Services.ReferenceData.Models;
-using SFA.Apprenticeships.Services.ReferenceData.Proxy;
-using SFA.Apprenticeships.Services.ReferenceData.Service;
-
-namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
+﻿namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
 {
+    using System;
+    using System.Linq;
+    using FluentAssertions;
+    using NUnit.Framework;
+    using SFA.Apprenticeships.Services.Common.Wcf;
+    using SFA.Apprenticeships.Services.ReferenceData.Abstract;
+    using SFA.Apprenticeships.Services.ReferenceData.Models;
+    using SFA.Apprenticeships.Services.ReferenceData.Proxy;
     using SFA.Apprenticeships.Common.Configuration.LegacyServices;
+    using StructureMap;
 
     [TestFixture]
     public class ReferenceDataTests
@@ -22,16 +20,14 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
         [TestFixtureSetUp]
         public void Setup()
         {
-            var wcf = new WcfService<IReferenceData>();
-            _legacyServicesConfiguration = LegacyServicesConfigurationSection.Instance;
-            _service = new ReferenceDataService(_legacyServicesConfiguration, wcf);
+            Apprenticeships.Common.IoC.IoC.Initialize();
+            _legacyServicesConfiguration = ObjectFactory.GetInstance<ILegacyServicesConfiguration>();
+            _service = ObjectFactory.GetInstance<IReferenceDataService>();
         }
 
         [TestCase]
         public void TheServiceEndpointShouldRespond()
         {
-           var configManager = new ConfigurationManager();
-            
             var result = default(GetApprenticeshipFrameworksResponse);
 
             var msgId = new Guid();
