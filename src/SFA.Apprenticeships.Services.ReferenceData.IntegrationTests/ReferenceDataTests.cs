@@ -11,17 +11,20 @@ using SFA.Apprenticeships.Services.ReferenceData.Service;
 
 namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
 {
+    using SFA.Apprenticeships.Common.Configuration.LegacyServices;
+
     [TestFixture]
     public class ReferenceDataTests
     {
         private IReferenceDataService _service;
+        private ILegacyServicesConfiguration _legacyServicesConfiguration;
 
         [TestFixtureSetUp]
         public void Setup()
         {
-            var configManager = new ConfigurationManager();
             var wcf = new WcfService<IReferenceData>();
-            _service = new ReferenceDataService(configManager, wcf);
+            _legacyServicesConfiguration = LegacyServicesConfigurationSection.Instance;
+            _service = new ReferenceDataService(_legacyServicesConfiguration, wcf);
         }
 
         [TestCase]
@@ -32,10 +35,8 @@ namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
             var result = default(GetApprenticeshipFrameworksResponse);
 
             var msgId = new Guid();
-            var username = configManager.GetAppSetting(ReferenceDataService.ReferenceDataSystemIdKey);
-            var password = configManager.GetAppSetting(ReferenceDataService.ReferenceDataPublicKey);
 
-            var rq = new GetApprenticeshipFrameworksRequest(new Guid(username), msgId, password);
+            var rq = new GetApprenticeshipFrameworksRequest(_legacyServicesConfiguration.SystemId, msgId, _legacyServicesConfiguration.PublicKey);
             var service = new WcfService<IReferenceData>();
             service.Use(client=> { result = client.GetApprenticeshipFrameworks(rq); });
 
