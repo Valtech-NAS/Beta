@@ -11,17 +11,9 @@
         [Test]
         public void CheckDependencyRegistrationDoesntThrowException()
         {
-            Action test = () => IoC.Initialize(new[] { "SFA.Apprenticeships.Common" });
+            Action test = () => IoC.Initialize();
 
             test.ShouldNotThrow<Exception>();
-        }
-
-        [Test]
-        public void CheckDependencyRegistrationThrowsException()
-        {
-            Action test = () => IoC.Initialize(new[] { "SFA.Apprenticeships.DoesnExist" });
-
-            test.ShouldThrow<Exception>();
         }
     }
 }

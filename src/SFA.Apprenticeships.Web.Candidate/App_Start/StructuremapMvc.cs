@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Web.Candidate
     {
         public static void Start()
         {
-            var container = IoC.Initialize(
+            var container = IoC.Initialize();
                 new[]
                 {
                     new RegisterAssembly {Name = "SFA.Apprenticeships.Common", Priority = 0},

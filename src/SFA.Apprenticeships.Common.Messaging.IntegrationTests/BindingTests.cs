@@ -1,23 +1,31 @@
 ﻿namespace SFA.Apprenticeships.Common.Messaging.IntegrationTests
 {
+    using System;
     using System.Reflection;
     using System.Threading;
+    using FluentAssertions;
     using NUnit.Framework;
+    using SFA.Apprenticeships.Common.Messaging.IntegrationTests.Consumers;
 
     [TestFixture]
     public class BindingTests
     {
-        [Test]
-        public void CanConsumeMessage()
-        {
-            //var bus = Transport.CreateBus();
-            //var bs = new Bootstrapper(bus);
-            //bs.LoadConsumers(Assembly.GetExecutingAssembly(), "test_app");
+        //[Test]
+        //public void CanConsumeMessage()
+        //{
+        //    var bus = Transport.CreateBus();
+        //    var bs = new Bootstrapper(bus);
+        //    bs.LoadConsumers(Assembly.GetExecutingAssembly(), "test_app");
 
-            //bus.Publish(new TestMessage(){Message = "Testing 123"});
+        //    var testMessage = new TestMessage() { TestString = "Testing 123" }
+        //    var currentCounter = TestMessage.Counter;
 
-            Thread.Sleep(1000);
-        }
+        //    bus.Publish(testMessage);
+
+        //    Thread.Sleep(5000);
+
+        //    currentCounter.Should().Be(TestMessage.Counter - 1);
+        //}
 
         [Test]
         public void CanConsumeAsyncMessage()
@@ -35,11 +43,6 @@
         public void CanConsumeTopicAsyncMessage()
         {
 
-        }
-
-        public class TestMessage
-        {
-            public string Message { get; set; }
         }
     }
 }

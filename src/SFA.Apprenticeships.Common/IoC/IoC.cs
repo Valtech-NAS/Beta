@@ -1,7 +1,8 @@
-﻿using System.Linq;
-
-namespace SFA.Apprenticeships.Common.IoC
+﻿namespace SFA.Apprenticeships.Common.IoC
 {
+    using System.IO;
+    using System.Reflection;
+    using System.Security.AccessControl;
     using StructureMap;
 
     /// <summary>
@@ -9,21 +10,26 @@ namespace SFA.Apprenticeships.Common.IoC
     /// </summary>
     public static class IoC
     {
-        public static IContainer Initialize(RegisterAssembly[] registryAssemblies)
+        public static IContainer Initialize()
         {
+            var assemblyPath = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
+            var fileInfo = new FileInfo(assemblyPath);
+            var sfaDlls = Directory.GetFiles(fileInfo.Directory.FullName, "SFA.Apprenticeships.*.dll");
+
+            var container = ObjectFactory.Container;
             ObjectFactory.Initialize(
                 x => x.Scan(
                     scan =>
                     {
-                        foreach (var registryAssembly in registryAssemblies.OrderBy(p => p.Priority))
+                        foreach (var sfaDll in sfaDlls)
                         {
-                            scan.Assembly(registryAssembly.Name);
+                            var dll = new FileInfo(sfaDll);
+                            scan.Assembly(dll.Name.Substring(0, dll.Name.Length - 4));
                         }
-
                         scan.LookForRegistries();
                     }));
 
-            return ObjectFactory.Container;
+            return container;
         }
     }
 }
