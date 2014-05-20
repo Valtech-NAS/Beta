@@ -1,12 +1,18 @@
 ﻿
 using System.ComponentModel;
 using SFA.Apprenticeships.Common.Entities.Attributes.Elasticsearch;
+using SFA.Apprenticeships.Common.Entities.Elasticsearch;
 using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
 
 namespace SFA.Apprenticeships.Common.Entities.Vacancy
 {
     public class VacancyAddress
     {
+        public VacancyAddress()
+        {
+            Location = new GeoPoint();
+        }
+
         [Description("AddressLine1")]
         public string AddressLine1 { get; set; }
 

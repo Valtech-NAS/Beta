@@ -73,7 +73,7 @@ namespace SFA.Apprenticeships.Services.Common.Rest
 
         public virtual IRestResponse Execute(IRestRequest request)
         {
-            var response = _client.Execute(request);
+            var response = Client.Execute(request);
 
             if (response.ErrorException != null)
             {
@@ -87,7 +87,7 @@ namespace SFA.Apprenticeships.Services.Common.Rest
 
         public virtual IRestResponse<T> Execute<T>(IRestRequest request) where T : new()
         {
-            var response = _client.Execute<T>(request);
+            var response = Client.Execute<T>(request);
 
             /* Restsharp derserializer doesnt appear to handle property names that differ from response */
             // var result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(response.Content);

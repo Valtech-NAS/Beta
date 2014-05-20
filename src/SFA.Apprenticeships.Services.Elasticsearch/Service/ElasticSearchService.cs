@@ -36,24 +36,25 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Service
             return Execute(request);
         }
 
-        public IRestResponse Execute(Method method, string command, string id, string json)
+        public IRestResponse Execute(Method method, string index, string document, string id, string json)
         {
             var request = Create(
-                method, 
-                "{command}/{id}", 
+                method,
+                "{index}/{document}/{id}",
                 json,
                 new[]
                 {
-                    new KeyValuePair<string, string>("command", command), 
+                    new KeyValuePair<string, string>("index", index),
+                    new KeyValuePair<string, string>("document", document),
                     new KeyValuePair<string, string>("id", id),
                 });
 
             return Execute(request);
         }
 
-        public IRestResponse Execute(string command, string id, string json)
+        public IRestResponse Execute(string index, string document, string id, string json)
         {
-            return Execute(Method.PUT, command, id, json);
+            return Execute(Method.PUT, index, document, id, json);
         }
     }
 }

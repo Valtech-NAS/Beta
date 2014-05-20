@@ -39,7 +39,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Mapping
 
             // start
             mapping.AppendFormat("{{\"{0}\":{{",
-                string.IsNullOrEmpty(attribute.Name) ? esType.Name.ToLower() : attribute.Name.ToLower());
+                string.IsNullOrEmpty(attribute.Document) ? esType.Name.ToLower() : attribute.Document.ToLower());
 
             mapping.Append(CreateProperties(esType));
 
@@ -51,6 +51,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Mapping
 
         public static string CreateProperties(Type esType)
         {
+            var identity = new StringBuilder();
             var mapping = new StringBuilder("\"properties\":{");
 
             // For all public properties build the mappings
@@ -102,6 +103,17 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Mapping
                            //   }
                            //}
                     //}
+                    if (attr is ElasticsearchIdentityAttribute)
+                    {
+                        if (string.IsNullOrEmpty(identity.ToString()))
+                        {
+                            identity.AppendFormat("\"_id\":{{\"path\":\"{0}\"}}", info.Name);
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("ElasticsearchIdentityAttribute must not be defined more than once on a class.");
+                        }
+                    }
 
                     // override property type from attribute
                     if (attr is ElasticsearchTypeAttribute)
@@ -136,6 +148,11 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Mapping
 
             // finalize
             mapping.Append("}");
+
+            if(!string.IsNullOrEmpty(identity.ToString()))
+            {
+                return string.Format("{0},{1}", identity, mapping);
+            }
 
             return mapping.ToString();
         }

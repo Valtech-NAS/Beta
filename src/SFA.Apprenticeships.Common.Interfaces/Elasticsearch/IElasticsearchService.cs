@@ -15,12 +15,12 @@ namespace SFA.Apprenticeships.Common.Interfaces.Elasticsearch
         /// Uses a PUT to send the api 'command' with appended 'id' to the endpoint.
         /// Attaches the json object to the request body.
         /// </summary>
-        IRestResponse Execute(string command, string id, string json);
+        IRestResponse Execute(string index, string document, string id, string json);
 
         /// <summary>
         /// Uses 'Method' to send the api 'command' with appended 'id' to the endpoint.
         /// Attaches the json object to the request body.
         /// </summary>
-        IRestResponse Execute(Method method, string command, string id, string json);
+        IRestResponse Execute(Method method, string index, string document, string id, string json);
     }
 }

@@ -1,8 +1,15 @@
 ﻿using System;
+using System.Globalization;
+using System.Net;
+using Newtonsoft.Json;
+using RestSharp;
 using RestSharp.Extensions;
 using SFA.Apprenticeships.Common.Entities.Attributes.Elasticsearch;
 using SFA.Apprenticeships.Common.Entities.Vacancy;
 using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
+using SFA.Apprenticeships.Common.JsonConverters;
+using SFA.Apprenticeships.Services.Elasticsearch.Mapping;
+using StructureMap;
 
 namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load
 {
@@ -12,7 +19,7 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load
     public class ElasticsearchLoad<T> where T : VacancyId
     {
         private readonly IElasticSearchService _service;
-        private readonly string _command;
+        private readonly ElasticsearchMappingAttribute _mapping;
 
         public ElasticsearchLoad(IElasticSearchService service)
         {
@@ -22,51 +29,71 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load
             }
 
             _service = service;
-
-            // look for the elasticsearch mapping attribute on the class T
-            // find the index and name properties to form the es command
-            var mapping = typeof (T).GetAttribute<ElasticsearchMappingAttribute>();
-            if (mapping == null || string.IsNullOrEmpty(mapping.Name) || string.IsNullOrEmpty(mapping.Index))
-            {
-                throw new ArgumentException("The generic type must have the ElasticsearchMapping attribute applied with Name and Index properties.");
-            }
-
-            _command = string.Format("/{0}/{1}", mapping.Index, mapping.Name);
+            _mapping = GetMappingAttribute();
         }
 
-        //public void Execute()
-        //{
-        //    var msg = _queue.GetMessage();
-        //    if (msg.HasMessage)
-        //    {
-        //        _service.Execute(_command, msg.Id, msg.Json);
-        //    }
-        //}
+        public void Execute(VacancySummary summary)
+        {
+            var json = JsonConvert.SerializeObject(summary, new EnumToStringConverter());
+
+            var rs = _service.Execute(
+                _mapping.Index,
+                _mapping.Document,
+                summary.Id.ToString(CultureInfo.InvariantCulture),
+                json);
+
+            if (rs.StatusCode != HttpStatusCode.OK)
+            {
+                // TODO::High::Log error
+            }
+        }
+
+        /// <summary>
+        /// Checks the mappings on the es database to verify the database is setup.
+        /// </summary>
+        public static void Setup()
+        {
+            // TODO::sort this static reference.
+            var service = ObjectFactory.GetInstance<IElasticSearchService>();
+            if (service == null)
+            {
+                throw new InvalidOperationException("Failed to build ElasticsearchService");
+            }
+
+            var mappings = ElasticsearchMapping.Create<T>();
+            var attribute = GetMappingAttribute();
+
+            var rs = service.Execute(Method.PUT, attribute.Index);
+            if (rs.StatusCode != HttpStatusCode.OK)
+            {
+                if (!rs.Content.Contains("IndexAlreadyExistsException"))
+                {
+                    throw new ApplicationException(
+                        string.Format("Elasticsearch service returned code '{0}' when writing index. Content: {1}", rs.StatusCode, rs.Content));
+                }
+            }
+
+            rs = service.Execute(attribute.Index, attribute.Document, "_mapping", mappings);
+            if (rs.StatusCode != HttpStatusCode.OK)
+            {
+                throw new ApplicationException(
+                    string.Format("Elasticsearch service returned code '{0}' when writing mappings. Content: {1}", rs.StatusCode, rs.Content));
+            }
+        }
+
+        private static ElasticsearchMappingAttribute GetMappingAttribute()
+        {
+            // look for the elasticsearch mapping attribute on the class T
+            // find the index and document properties to form the es command
+            var mapping = typeof(T).GetAttribute<ElasticsearchMappingAttribute>();
+            if (mapping == null || string.IsNullOrEmpty(mapping.Document) || string.IsNullOrEmpty(mapping.Index))
+            {
+                throw
+                    new ArgumentException(
+                        "The generic type must have the ElasticsearchMapping attribute applied with Document and Index properties.");
+            }
+
+            return mapping;
+        }
     }
 }
-
-/*
- *  var queueConnectionString = CloudConfigurationManager.GetSetting("StorageConnectionString");
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(queueConnectionString);
-
-            // Create the queue client
-            CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
-
-            // Retrieve a reference to a queue
-            var queueName = CloudConfigurationManager.GetSetting("QueueName");
-            var queue = queueClient.GetQueueReference(queueName);
- * 
- *  // Get the next message
-                    var retrievedMessage = queue.GetMessage();
-
-                    if (retrievedMessage != null)
-                    {
-                        var message = retrievedMessage.AsString;
-
-                        repository.SaveAsync(new QueueResponse {Message = message});
-
-                        queue.DeleteMessage(retrievedMessage);
-
-                        SendEmail(message);
-                    }
- */

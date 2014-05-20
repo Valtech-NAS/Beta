@@ -1,16 +1,15 @@
 ﻿using System;
-using System.ComponentModel;
 using SFA.Apprenticeships.Common.Entities.Attributes.Elasticsearch;
 
 namespace SFA.Apprenticeships.Common.Entities.Vacancy
 {
     public abstract class VacancyId
     {
-        [ElasticsearchIgnore]
-        [Description("VacancyReference")]
+        [ElasticsearchIdentity]
+        [ElasticsearchType("long")]
         public ulong Id { get; set; }
 
-        [ElasticsearchIgnore]
+        [ElasticsearchType("string")]
         public Guid UpdateReference { get; set; }
     }
 }

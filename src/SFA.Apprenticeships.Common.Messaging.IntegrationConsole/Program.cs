@@ -1,5 +1,7 @@
 ﻿using SFA.Apprenticeships.Common.Entities.Vacancy;
+using SFA.Apprenticeships.Services.Elasticsearch.Mapping;
 using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Consumers;
+using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load;
 
 namespace SFA.Apprenticeships.Common.Messaging.IntegrationConsole
 {
@@ -10,7 +12,11 @@ namespace SFA.Apprenticeships.Common.Messaging.IntegrationConsole
     {
         static void Main(string[] args)
         {
+            ulong i = 1;
             Common.IoC.IoC.Initialize();
+
+            ElasticsearchLoad<VacancySummary>.Setup();
+
             var bus = Transport.CreateBus();
             var bs = new Bootstrapper(bus);
             bs.LoadConsumers(Assembly.GetAssembly(typeof(VacancySummaryConsumerSync)), typeof(VacancySummaryConsumerAsync).Name);
@@ -22,7 +28,13 @@ namespace SFA.Apprenticeships.Common.Messaging.IntegrationConsole
 
             while (input != "q")
             {
-                var testMessage = new VacancySummary() { UpdateReference = Guid.NewGuid() };
+                var testMessage = new VacancySummary()
+                {
+                    UpdateReference = Guid.NewGuid(),
+                    Id = i++,
+                    Created = DateTime.Now,
+                    ClosingDate = DateTime.Today.AddDays(30),
+                };
                 bus.Publish(testMessage);
                 input = Console.ReadLine();
             }

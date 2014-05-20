@@ -121,6 +121,10 @@
       <Project>{aad6c913-2503-456f-a593-c0a36c07bd35}</Project>
       <Name>SFA.Apprenticeships.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Services.Elasticsearch\SFA.Apprenticeships.Services.Elasticsearch.csproj">
+      <Project>{8dfb3268-8865-4fe4-8e6f-8b2dcee966d9}</Project>
+      <Name>SFA.Apprenticeships.Services.Elasticsearch</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Abstract\" />
