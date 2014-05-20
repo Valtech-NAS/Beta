@@ -1,14 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Common.Messaging.IntegrationTests
 {
     using NUnit.Framework;
-    using SFA.Apprenticeships.Common.IoC;
-
+    
+    [SetUpFixture]
     public class SetUp
     {
         [SetUp]
         public virtual void BeforeAllTests()
         {
-            IoC.Initialize(new[] {"SFA.Apprenticeships.Common", "SFA.Apprenticeships.Common.Messaging.IntegrationTests"});
+            Common.IoC.IoC.Initialize();
         }
 
         [TearDown]

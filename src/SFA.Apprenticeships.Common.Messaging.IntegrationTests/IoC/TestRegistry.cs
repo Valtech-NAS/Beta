@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Common.Messaging.IntegrationTests.DependencyResolution
+﻿namespace SFA.Apprenticeships.Common.Messaging.IntegrationTests.IoC
 {
     using SFA.Apprenticeships.Common.Messaging.IntegrationTests.Consumers;
     using StructureMap.Configuration.DSL;

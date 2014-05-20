@@ -17,7 +17,7 @@ namespace SFA.Apprenticeships.Web.Employer
     {
         public static void Start()
         {
-            var container = IoC.Initialize(new[] { "SFA.Apprenticeships.Common", "SFA.Apprenticeships.Web.Common" });
+            var container = IoC.Initialize();
             var resolver = new StructureMapDependencyResolver(container);
 
             container.Configure(x =>

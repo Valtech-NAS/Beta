@@ -75,7 +75,7 @@
     <Compile Include="Consumers\TestConsumerSync.cs" />
     <Compile Include="Consumers\TestConsumerAsync.cs" />
     <Compile Include="Consumers\TestMessage.cs" />
-    <Compile Include="i\TestRegistry.cs" />
+    <Compile Include="IoC\TestRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SetUp.cs" />
   </ItemGroup>

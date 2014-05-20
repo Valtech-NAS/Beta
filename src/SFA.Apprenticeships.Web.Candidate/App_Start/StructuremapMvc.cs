@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Web.Candidate
     {
         public static void Start()
         {
-            var container = IoC.Initialize(new[] { "SFA.Apprenticeships.Web.Common", "SFA.Apprenticeships.Common" });
+            var container = IoC.Initialize();
             var resolver = new StructureMapDependencyResolver(container);
 
             container.Configure(x =>
