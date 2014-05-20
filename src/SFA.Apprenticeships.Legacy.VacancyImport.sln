@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Common", "SFA.Apprenticeships.Common\SFA.Apprenticeships.Common.csproj", "{AAD6C913-2503-456F-A593-C0A36C07BD35}"
 EndProject
@@ -36,6 +36,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Services.Elasticsearch", "SFA.Apprenticeships.Services.Elasticsearch\SFA.Apprenticeships.Services.Elasticsearch.csproj", "{8DFB3268-8865-4FE4-8E6F-8B2DCEE966D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Services.Elasticsearch.Tests", "SFA.Apprenticeships.Services.Elasticsearch.Tests\SFA.Apprenticeships.Services.Elasticsearch.Tests.csproj", "{40EEBA8B-4A7D-4B1B-80C6-9A4A2C3BCA4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Common.Messaging.IntegrationConsole", "SFA.Apprenticeships.Common.Messaging.IntegrationConsole\SFA.Apprenticeships.Common.Messaging.IntegrationConsole.csproj", "{D429F1FC-7255-4B84-9124-FE607F5D6C54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,10 @@ Global
 		{40EEBA8B-4A7D-4B1B-80C6-9A4A2C3BCA4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40EEBA8B-4A7D-4B1B-80C6-9A4A2C3BCA4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40EEBA8B-4A7D-4B1B-80C6-9A4A2C3BCA4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D429F1FC-7255-4B84-9124-FE607F5D6C54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D429F1FC-7255-4B84-9124-FE607F5D6C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D429F1FC-7255-4B84-9124-FE607F5D6C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D429F1FC-7255-4B84-9124-FE607F5D6C54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,5 +119,6 @@ Global
 		{40EEBA8B-4A7D-4B1B-80C6-9A4A2C3BCA4E} = {9421A31E-F1A0-4953-A3EB-D215A903FA21}
 		{26D4B9D7-C39F-4246-BF65-40670A35B79B} = {F78BD9F1-7E9B-4D67-93B4-C76755DDB14A}
 		{EBE35AC3-4BDC-4CEE-92CE-7ABFC56C9FFA} = {F78BD9F1-7E9B-4D67-93B4-C76755DDB14A}
+		{D429F1FC-7255-4B84-9124-FE607F5D6C54} = {F78BD9F1-7E9B-4D67-93B4-C76755DDB14A}
 	EndGlobalSection
 EndGlobal

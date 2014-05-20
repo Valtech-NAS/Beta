@@ -17,7 +17,7 @@
         //    var bs = new Bootstrapper(bus);
         //    bs.LoadConsumers(Assembly.GetExecutingAssembly(), "test_app");
 
-        //    var testMessage = new TestMessage() { TestString = "Testing 123" }
+        //    var testMessage = new TestMessage() {TestString = "Testing 123"};
         //    var currentCounter = TestMessage.Counter;
 
         //    bus.Publish(testMessage);
