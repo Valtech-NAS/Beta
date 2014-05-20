@@ -15,8 +15,7 @@
             var assemblyPath = (new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath;
             var fileInfo = new FileInfo(assemblyPath);
             var sfaDlls = Directory.GetFiles(fileInfo.Directory.FullName, "SFA.Apprenticeships.*.dll");
-
-            var container = ObjectFactory.Container;
+      
             ObjectFactory.Initialize(
                 x => x.Scan(
                     scan =>
@@ -29,7 +28,7 @@
                         scan.LookForRegistries();
                     }));
 
-            return container;
+            return ObjectFactory.Container;
         }
     }
 }

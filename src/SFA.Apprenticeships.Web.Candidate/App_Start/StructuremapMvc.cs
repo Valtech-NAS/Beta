@@ -20,12 +20,6 @@ namespace SFA.Apprenticeships.Web.Candidate
         public static void Start()
         {
             var container = IoC.Initialize();
-                new[]
-                {
-                    new RegisterAssembly {Name = "SFA.Apprenticeships.Common", Priority = 0},
-                    new RegisterAssembly {Name = "SFA.Apprenticeships.Services.ReferenceData", Priority = 1},
-                    new RegisterAssembly {Name = "SFA.Apprenticeships.Web.Common", Priority = 2},
-                });
 
             var resolver = new StructureMapDependencyResolver(container);
 

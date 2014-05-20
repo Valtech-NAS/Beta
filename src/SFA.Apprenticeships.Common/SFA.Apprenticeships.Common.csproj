@@ -122,7 +122,6 @@
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="IoC\CommonRegistry.cs" />
     <Compile Include="IoC\IoC.cs" />
-    <Compile Include="IoC\RegisterAssembly.cs" />
     <Compile Include="Logging\Layouts\JsonLayout.cs" />
     <Compile Include="Logging\Layouts\JsonProperty.cs" />
     <Compile Include="Logging\Targets\RabbitMQ.cs" />
