@@ -66,8 +66,8 @@
   <Import Project="$(CloudExtensionsDir)Microsoft.WindowsAzure.targets" />
   <PropertyGroup>
     <PreBuildEvent>REM Copy from local dev machines locations
-if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /C $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\SFA.Apprenticeships.Services.VacancyEtl\* $(ProjectDir)
+if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\SFA.Apprenticeships.Services.VacancyEtl\* $(ProjectDir)
 REM Copy from build server locations
-if exist $(ProjectDir)..\..\Configuration xcopy /C $(ProjectDir)..\..\Configuration\Applications\SFA.Apprenticeships.Services.VacancyEtl\* $(ProjectDir)</PreBuildEvent>
+if exist $(ProjectDir)..\..\Configuration xcopy /C /Y $(ProjectDir)..\..\Configuration\Applications\SFA.Apprenticeships.Services.VacancyEtl\* $(ProjectDir)</PreBuildEvent>
   </PropertyGroup>
 </Project>
