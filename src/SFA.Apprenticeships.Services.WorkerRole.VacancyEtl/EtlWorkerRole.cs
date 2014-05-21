@@ -1,19 +1,18 @@
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
+using EasyNetQ;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using SFA.Apprenticeships.Common.Entities.Vacancy;
 using SFA.Apprenticeships.Common.IoC;
+using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
+using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Consumers;
 using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load;
 using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Queue;
+using StructureMap;
 
 namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl
 {
-    using EasyNetQ;
-    using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
-    using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Consumers;
-    using StructureMap;
-
     public class EtlWorkerRole : RoleEntryPoint
     {
         private VacancySchedulerConsumer _vacancySchedulerConsumer;
