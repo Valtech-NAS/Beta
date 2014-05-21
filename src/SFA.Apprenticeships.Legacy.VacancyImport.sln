@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Common", "SFA.Apprenticeships.Common\SFA.Apprenticeships.Common.csproj", "{AAD6C913-2503-456F-A593-C0A36C07BD35}"
 EndProject
@@ -40,8 +40,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Common.Messaging.IntegrationConsole", "SFA.Apprenticeships.Common.Messaging.IntegrationConsole\SFA.Apprenticeships.Common.Messaging.IntegrationConsole.csproj", "{D429F1FC-7255-4B84-9124-FE607F5D6C54}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests", "SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests\SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests.csproj", "{2BAA69B1-D0C4-447A-8D16-4473C2183CC2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Services.VacancyEtl.Tests", "SFA.Apprenticeships.Services.VacancyEtl.Tests\SFA.Apprenticeships.Services.VacancyEtl.Tests.csproj", "{39157C7D-190B-4C9B-BEBB-5217B8D027A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,10 +107,6 @@ Global
 		{2BAA69B1-D0C4-447A-8D16-4473C2183CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BAA69B1-D0C4-447A-8D16-4473C2183CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BAA69B1-D0C4-447A-8D16-4473C2183CC2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{39157C7D-190B-4C9B-BEBB-5217B8D027A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39157C7D-190B-4C9B-BEBB-5217B8D027A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39157C7D-190B-4C9B-BEBB-5217B8D027A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39157C7D-190B-4C9B-BEBB-5217B8D027A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,7 +123,6 @@ Global
 		{8DFB3268-8865-4FE4-8E6F-8B2DCEE966D9} = {C1A24A86-5EDE-47F6-B3B2-D01C46DFB42F}
 		{2886F449-8488-4883-A80B-B29775D18B29} = {9421A31E-F1A0-4953-A3EB-D215A903FA21}
 		{40EEBA8B-4A7D-4B1B-80C6-9A4A2C3BCA4E} = {9421A31E-F1A0-4953-A3EB-D215A903FA21}
-		{39157C7D-190B-4C9B-BEBB-5217B8D027A8} = {9421A31E-F1A0-4953-A3EB-D215A903FA21}
 		{26D4B9D7-C39F-4246-BF65-40670A35B79B} = {F78BD9F1-7E9B-4D67-93B4-C76755DDB14A}
 		{EBE35AC3-4BDC-4CEE-92CE-7ABFC56C9FFA} = {F78BD9F1-7E9B-4D67-93B4-C76755DDB14A}
 		{D429F1FC-7255-4B84-9124-FE607F5D6C54} = {F78BD9F1-7E9B-4D67-93B4-C76755DDB14A}
