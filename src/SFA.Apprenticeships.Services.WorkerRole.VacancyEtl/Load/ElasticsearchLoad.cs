@@ -51,6 +51,7 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load
 
         /// <summary>
         /// Checks the mappings on the es database to verify the database is setup.
+        /// If not, creates the index and mappings.
         /// </summary>
         public static void Setup()
         {

@@ -92,7 +92,7 @@
       <Name>SFA.Apprenticeships.Common.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Common\SFA.Apprenticeships.Common.csproj">
-      <Project>{AAD6C913-2503-456F-A593-C0A36C07BD35}</Project>
+      <Project>{aad6c913-2503-456f-a593-c0a36c07bd35}</Project>
       <Name>SFA.Apprenticeships.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Services.WorkerRole.VacancyEtl\SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.csproj">
