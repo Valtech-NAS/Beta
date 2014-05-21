@@ -2,7 +2,7 @@
 using EasyNetQ.AutoSubscribe;
 using SFA.Apprenticeships.Common.Entities.Vacancy;
 
-namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Consumers
+namespace SFA.Apprenticeships.Services.VacancyEtl.Consumers
 {
     public class VacancySummaryConsumerSync : IConsume<VacancySummary>
     {

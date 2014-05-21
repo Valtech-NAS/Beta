@@ -1,6 +1,6 @@
 ﻿using SFA.Apprenticeships.Common.Entities.Vacancy;
-using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load;
-using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Queue;
+using SFA.Apprenticeships.Services.VacancyEtl.Load;
+using SFA.Apprenticeships.Services.VacancyEtl.Queue;
 
 namespace SFA.Apprenticeships.Common.Messaging.IntegrationConsole
 {

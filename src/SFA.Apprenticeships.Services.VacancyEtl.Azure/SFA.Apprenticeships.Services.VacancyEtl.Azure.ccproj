@@ -11,7 +11,7 @@
     <RootNamespace>SFA.Apprenticeships.Services.VacancyEtl</RootNamespace>
     <AssemblyName>SFA.Apprenticeships.Services.VacancyEtl</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
-    <Name>SFA.Apprenticeships.Services.VacancyEtl</Name>
+    <Name>SFA.Apprenticeships.Services.VacancyEtl.Azure</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,24 +38,23 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SFA.Apprenticeships.Services.Legacy.VacancyEtlContent" />
-    <Folder Include="SFA.Apprenticeships.Services.WorkerRole.VacancyEtlContent\" />
+    <Folder Include="SFA.Apprenticeships.Services.VacancyEtlContent" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SFA.Apprenticeships.Services.Legacy.VacancyEtlContent\diagnostics.wadcfg">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="SFA.Apprenticeships.Services.WorkerRole.VacancyEtlContent\diagnostics.wadcfg">
+    <Content Include="SFA.Apprenticeships.Services.VacancyEtlContent\diagnostics.wadcfg">
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Services.WorkerRole.VacancyEtl\SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.csproj">
-      <Name>SFA.Apprenticeships.Services.WorkerRole.VacancyEtl</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Services.WorkerRole.VacancyEtl\SFA.Apprenticeships.Services.VacancyEtl.csproj">
+      <Name>SFA.Apprenticeships.Services.VacancyEtl</Name>
       <Project>{5069b0ba-5499-4dc1-8f7a-e5022f5e4f7b}</Project>
       <Private>True</Private>
       <RoleType>Worker</RoleType>
-      <RoleName>SFA.Apprenticeships.Services.WorkerRole.VacancyEtl</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+      <RoleName>SFA.Apprenticeships.Services.VacancyEtl</RoleName>
     </ProjectReference>
   </ItemGroup>
   <!-- Import the target files for this project template -->
@@ -66,8 +65,8 @@
   <Import Project="$(CloudExtensionsDir)Microsoft.WindowsAzure.targets" />
   <PropertyGroup>
     <PreBuildEvent>REM Copy from local dev machines locations
-if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\SFA.Apprenticeships.Services.VacancyEtl\* $(ProjectDir)
+if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName)\* $(ProjectDir)
 REM Copy from build server locations
-if exist $(ProjectDir)..\..\Configuration xcopy /C /Y $(ProjectDir)..\..\Configuration\Applications\SFA.Apprenticeships.Services.VacancyEtl\* $(ProjectDir)</PreBuildEvent>
+if exist $(ProjectDir)..\..\Configuration xcopy /C /Y $(ProjectDir)..\..\Configuration\Applications\$(ProjectName)\* $(ProjectDir)</PreBuildEvent>
   </PropertyGroup>
 </Project>

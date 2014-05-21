@@ -4,15 +4,17 @@ using System.Threading;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using SFA.Apprenticeships.Common.Entities.Vacancy;
 using SFA.Apprenticeships.Common.IoC;
-using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load;
-using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Queue;
+using SFA.Apprenticeships.Services.VacancyEtl.Load;
+using SFA.Apprenticeships.Services.VacancyEtl.Queue;
 
-namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl
+namespace SFA.Apprenticeships.Services.VacancyEtl
 {
     using EasyNetQ;
     using SFA.Apprenticeships.Common.Messaging.Interfaces;
     using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
-    using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Consumers;
+    using SFA.Apprenticeships.Services.VacancyEtl.Consumers;
+    using SFA.Apprenticeships.Services.VacancyEtl.Load;
+    using SFA.Apprenticeships.Services.VacancyEtl.Queue;
     using StructureMap;
 
     public class EtlWorkerRole : RoleEntryPoint

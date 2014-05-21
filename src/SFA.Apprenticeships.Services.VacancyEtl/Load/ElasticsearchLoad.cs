@@ -11,7 +11,7 @@ using SFA.Apprenticeships.Common.JsonConverters;
 using SFA.Apprenticeships.Services.Elasticsearch.Mapping;
 using StructureMap;
 
-namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load
+namespace SFA.Apprenticeships.Services.VacancyEtl.Load
 {
     /// <summary>
     /// Monitors the queue for new data items and loads them into the es database.

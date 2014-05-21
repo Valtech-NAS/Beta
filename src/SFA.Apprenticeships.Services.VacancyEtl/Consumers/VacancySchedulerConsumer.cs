@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Consumers
+﻿namespace SFA.Apprenticeships.Services.VacancyEtl.Consumers
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,7 @@
     using SFA.Apprenticeships.Common.Interfaces.Enums;
     using SFA.Apprenticeships.Common.Messaging.Interfaces;
     using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
-    using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Entities;
+    using SFA.Apprenticeships.Services.VacancyEtl.Entities;
 
     public class VacancySchedulerConsumer
     {

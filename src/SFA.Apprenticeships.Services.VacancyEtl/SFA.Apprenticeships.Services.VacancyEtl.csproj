@@ -8,8 +8,8 @@
     <ProjectGuid>{5069B0BA-5499-4DC1-8F7A-E5022F5E4F7B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Services.WorkerRole.VacancyEtl</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Services.WorkerRole.VacancyEtl</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Services.VacancyEtl</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Services.VacancyEtl</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <RoleType>Worker</RoleType>
