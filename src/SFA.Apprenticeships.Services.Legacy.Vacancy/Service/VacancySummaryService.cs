@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Service
 {
     using System;
-    using System.Collections;
+    using System.Collections.ObjectModel;
     using System.Collections.Generic;
     using System.Linq;
     using SFA.Apprenticeships.Common.Configuration.LegacyServices;
@@ -21,6 +21,31 @@
         {
             _legacyServicesConfiguration = legacyServicesConfiguration;
             _service = service;
+        }
+
+        public int GetVacancyCount(VacancyLocationType vacancyLocationType)
+        {
+            var vacancySummaryRequest = new VacancySummaryRequest
+            {
+                ExternalSystemId = _legacyServicesConfiguration.SystemId,
+                PublicKey = _legacyServicesConfiguration.PublicKey,
+                MessageId = Guid.NewGuid(),
+                VacancySearchCriteria = new VacancySearchData()
+                {
+                    PageIndex = 1,
+                    VacancyLocationType = (VacancyDetailsSearchLocationType)vacancyLocationType
+                }
+            };
+
+            var rs = default(VacancySummaryResponse);
+            _service.Use(client => rs = client.Get(vacancySummaryRequest));
+
+            if (rs == null || rs.ResponseData == null)
+            {
+                return 0;
+            }
+
+            return rs.ResponseData.TotalPages;
         }
 
         public IEnumerable<VacancySummary> GetVacancySummary(VacancyLocationType vacancyLocationType, int page = 1)
@@ -45,17 +70,18 @@
                 rs.ResponseData.SearchResults == null ||
                 rs.ResponseData.SearchResults.Length == 0)
             {
-                return Enumerable.Empty<VacancySummary>();
+                return Enumerable.Empty<VacancySummary>().ToList();
             }
 
             return null;
-            //return rs.ResponseData.SearchResults.Select(vacancySummary =>
+
+            //return rs.ResponseData.SearchResults.Select(vs =>
             //{
-            //    new VacancySummary
+            //    new VacancySummary()
             //    {
-            //        A
-            //    }
-            //});
+            //        NumberOfPositions = vs.NumberOfPositions
+            //    };
+            //}).ToList();
         }
     }
 }

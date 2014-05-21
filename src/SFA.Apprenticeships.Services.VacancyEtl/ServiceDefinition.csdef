@@ -2,10 +2,13 @@
 <ServiceDefinition name="SFA.Apprenticeships.Services.VacancyEtl" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2014-01.2.3">
   <WorkerRole name="SFA.Apprenticeships.Services.WorkerRole.VacancyEtl" vmsize="Small">
     <Imports>
-      <Import moduleName="Diagnostics" />
     </Imports>
     <LocalResources>
-      <LocalStorage name="DiagnosticStore" sizeInMB="20000" cleanOnRoleRecycle="false" />
     </LocalResources>
+    <ConfigurationSettings>
+      <Setting name="StorageConnectionString" />
+      <Setting name="QueueName" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+    </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

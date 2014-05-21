@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Common.IoC
 {
+    using EasyNetQ;
     using SFA.Apprenticeships.Common.Caching;
     using SFA.Apprenticeships.Common.Configuration;
     using SFA.Apprenticeships.Common.Configuration.LegacyServices;
