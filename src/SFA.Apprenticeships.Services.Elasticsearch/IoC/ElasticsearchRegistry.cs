@@ -9,7 +9,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.IoC
     {
         public ElasticsearchRegistry()
         {
-            For<IElasticSearchService>().Use<ElasticsearchService>().Ctor<IConfigurationManager>();
+            For<IElasticsearchService>().Use<ElasticsearchService>().Ctor<IConfigurationManager>();
         }
     }
 }

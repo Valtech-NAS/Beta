@@ -7,7 +7,7 @@ using SFA.Apprenticeships.Services.Common.Rest;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Service
 {
-    public class ElasticsearchService : RestService, IElasticSearchService
+    public class ElasticsearchService : RestService, IElasticsearchService
     {
         public const string ElasticsearchEndpointKey = "ElasticsearchEndpoint";
 

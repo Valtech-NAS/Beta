@@ -18,10 +18,9 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load
     /// </summary>
     public class ElasticsearchLoad<T> where T : VacancyId
     {
-        private readonly IElasticSearchService _service;
-        private readonly ElasticsearchMappingAttribute _mapping;
+        private readonly IElasticsearchService _service;
 
-        public ElasticsearchLoad(IElasticSearchService service)
+        public ElasticsearchLoad(IElasticsearchService service)
         {
             if (service == null)
             {
@@ -29,16 +28,18 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load
             }
 
             _service = service;
-            _mapping = GetMappingAttribute();
+            Mapping = GetMappingAttribute();
         }
+
+        public ElasticsearchMappingAttribute Mapping { get; private set; }
 
         public void Execute(VacancySummary summary)
         {
             var json = JsonConvert.SerializeObject(summary, new EnumToStringConverter());
 
             var rs = _service.Execute(
-                _mapping.Index,
-                _mapping.Document,
+                Mapping.Index,
+                Mapping.Document,
                 summary.Id.ToString(CultureInfo.InvariantCulture),
                 json);
 
@@ -54,7 +55,7 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load
         public static void Setup()
         {
             // TODO::sort this static reference.
-            var service = ObjectFactory.GetInstance<IElasticSearchService>();
+            var service = ObjectFactory.GetInstance<IElasticsearchService>();
             if (service == null)
             {
                 throw new InvalidOperationException("Failed to build ElasticsearchService");

@@ -3,7 +3,7 @@ using SFA.Apprenticeships.Common.Interfaces.Services;
 
 namespace SFA.Apprenticeships.Common.Interfaces.Elasticsearch
 {
-    public interface IElasticSearchService : IRestService
+    public interface IElasticsearchService : IRestService
     {
         /// <summary>
         /// The command string to pass in the restful url. eg. \vacancies\vacancy.

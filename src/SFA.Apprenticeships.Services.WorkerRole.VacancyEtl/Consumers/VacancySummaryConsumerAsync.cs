@@ -11,7 +11,7 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Consumers
     {
         private readonly ElasticsearchLoad<VacancySummary> _loader;
  
-        public VacancySummaryConsumerAsync(IElasticSearchService service)
+        public VacancySummaryConsumerAsync(IElasticsearchService service)
         {
             _loader = new ElasticsearchLoad<VacancySummary>(service);
         }
