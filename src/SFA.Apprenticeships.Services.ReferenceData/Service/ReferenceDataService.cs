@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using SFA.Apprenticeships.Common.Entities.ReferenceData;
+using SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService;
+using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
 using SFA.Apprenticeships.Common.Interfaces.Services;
-using SFA.Apprenticeships.Services.ReferenceData.Abstract;
-using SFA.Apprenticeships.Services.ReferenceData.Models;
 using SFA.Apprenticeships.Services.ReferenceData.Proxy;
 
 namespace SFA.Apprenticeships.Services.ReferenceData.Service

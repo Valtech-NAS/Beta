@@ -1,5 +1,5 @@
 ﻿
-namespace SFA.Apprenticeships.Common.Entities.ReferenceData
+namespace SFA.Apprenticeships.Common.Interfaces.ReferenceData
 {
     public interface ILegacyReferenceData
     {

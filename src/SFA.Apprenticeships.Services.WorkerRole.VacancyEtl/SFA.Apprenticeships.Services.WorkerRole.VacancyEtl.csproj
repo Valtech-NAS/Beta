@@ -97,7 +97,6 @@
     <Compile Include="Consumers\VacancySchedulerConsumer.cs" />
     <Compile Include="Consumers\VacancySummaryPageConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryConsumerAsync.cs" />
-    <Compile Include="Consumers\VacancySummaryConsumerSync.cs" />
     <Compile Include="Entities\StorageQueueMessage.cs" />
     <Compile Include="Entities\VacancySummaryPage.cs" />
     <Compile Include="Load\ElasticsearchLoad.cs" />

@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Services.ReferenceData.Models
+﻿
+namespace SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService
 {
     public enum LegacyReferenceDataType
     {

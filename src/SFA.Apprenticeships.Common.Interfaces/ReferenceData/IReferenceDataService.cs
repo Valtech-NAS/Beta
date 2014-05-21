@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using SFA.Apprenticeships.Services.ReferenceData.Models;
+using SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService;
 
-namespace SFA.Apprenticeships.Services.ReferenceData.Abstract
+namespace SFA.Apprenticeships.Common.Interfaces.ReferenceData
 {
-    using SFA.Apprenticeships.Common.Entities.ReferenceData;
-
     public interface IReferenceDataService
     {
         IEnumerable<ILegacyReferenceData> GetReferenceData(LegacyReferenceDataType type);

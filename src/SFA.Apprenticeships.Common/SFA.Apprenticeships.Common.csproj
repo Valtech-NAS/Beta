@@ -130,8 +130,7 @@
     <Compile Include="Configuration\SecureConfigurationSection.cs" />
     <Compile Include="Configuration\Messaging\RabbitMQConfigurationSection.cs" />
     <Compile Include="Configuration\Messaging\IRabbitMQConfiguration.cs" />
-    <Compile Include="EntityMappers\Mapping1.cs" />
-    <Compile Include="EntityMappers\MappingEngine.cs" />
+    <Compile Include="EntityMappers\MapperEngine.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="IoC\CommonRegistry.cs" />
     <Compile Include="IoC\IoC.cs" />

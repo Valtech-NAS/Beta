@@ -1,26 +1,57 @@
-﻿namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Service
-{
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Collections.Generic;
-    using System.Linq;
-    using SFA.Apprenticeships.Common.Configuration.LegacyServices;
-    using SFA.Apprenticeships.Common.Entities.Vacancy;
-    using SFA.Apprenticeships.Common.Interfaces.Enums;
-    using SFA.Apprenticeships.Common.Interfaces.Services;
-    using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
-    using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using SFA.Apprenticeships.Common.Configuration.LegacyServices;
+using SFA.Apprenticeships.Common.Entities.Vacancy;
+using SFA.Apprenticeships.Common.Interfaces.Enums;
+using SFA.Apprenticeships.Common.Interfaces.Mapper;
+using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
+using SFA.Apprenticeships.Common.Interfaces.Services;
+using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
+using SFA.Apprenticeships.Services.Legacy.Vacancy.Mappers;
+using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
 
+namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Service
+{
     public class VacancySummaryService : IVacancySummaryService
     {
 
         private readonly IWcfService<IVacancySummary> _service;
         private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
+        private readonly IMapper _mapper;
 
-        public VacancySummaryService(ILegacyServicesConfiguration legacyServicesConfiguration, IWcfService<IVacancySummary> service)
+        public VacancySummaryService(
+            ILegacyServicesConfiguration legacyServicesConfiguration,
+            IWcfService<IVacancySummary> service,
+            IReferenceDataService referenceDataService) 
+            //, IMapper mapper)
         {
+            if (legacyServicesConfiguration == null)
+            {
+                throw new ArgumentNullException("legacyServicesConfiguration");
+            }
+
+            if (service == null)
+            {
+                throw new ArgumentNullException("service");
+            }
+
+            if (referenceDataService == null)
+            {
+                throw new ArgumentNullException("re");
+            }
+
+            //if (mapper == null)
+            //{
+            //    throw new ArgumentNullException("mapper");
+            //}
+
             _legacyServicesConfiguration = legacyServicesConfiguration;
             _service = service;
+
+            var mapper = new VacancySummaryMapper(referenceDataService);
+            mapper.Initialize();
+            _mapper = mapper;
         }
 
         public int GetVacancyCount(VacancyLocationType vacancyLocationType)
@@ -73,15 +104,8 @@
                 return Enumerable.Empty<VacancySummary>().ToList();
             }
 
-            return null;
-
-            //return rs.ResponseData.SearchResults.Select(vs =>
-            //{
-            //    new VacancySummary()
-            //    {
-            //        NumberOfPositions = vs.NumberOfPositions
-            //    };
-            //}).ToList();
+            return rs.ResponseData.SearchResults
+                .Select(result => _mapper.Map<VacancySummaryData, VacancySummary>(result));
         }
     }
 }

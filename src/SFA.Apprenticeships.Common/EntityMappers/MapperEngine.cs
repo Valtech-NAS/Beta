@@ -1,17 +1,21 @@
 ﻿using System;
 using AutoMapper;
 using AutoMapper.Mappers;
+using SFA.Apprenticeships.Common.Interfaces.Mapper;
 
-namespace SFA.Apprenticeships.Common.Mapper
+namespace SFA.Apprenticeships.Common.EntityMappers
 {
-    public class WebMapper //: IMapper
+    public abstract class MapperEngine : IMapper
     {
         private readonly IMappingEngine _mappingEngine;
 
-        public WebMapper(IMappingEngine mappingEngine)
+        protected MapperEngine()
         {
-            _mappingEngine = mappingEngine;
+            Mapper = new ConfigurationStore(new TypeMapFactory(), MapperRegistry.Mappers);
+            _mappingEngine = new MappingEngine(Mapper);
         }
+
+        public ConfigurationStore Mapper { get; private set; }
 
         public object Map(object source, Type sourceType, Type destinationType)
         {
@@ -19,6 +23,7 @@ namespace SFA.Apprenticeships.Common.Mapper
             {
                 throw new ArgumentNullException("source");
             }
+
             var map = _mappingEngine.ConfigurationProvider.FindTypeMapFor(sourceType, destinationType);
 
             if (map != null)
@@ -36,37 +41,6 @@ namespace SFA.Apprenticeships.Common.Mapper
         }
     }
 
-    public class AutomapperWebConfiguration
-    {
-        private static IMappingEngine _webMapper;
-        private static readonly object _syncRoot = new Object();
-
-        private AutomapperWebConfiguration()
-        {
-        }
-
-        // multi-threaded mapper config.
-        public static IMappingEngine WebMapper
-        {
-            get
-            {
-                if (_webMapper == null)
-                {
-                    lock (_syncRoot)
-                    {
-                        if (_webMapper == null)
-                        {
-                            var configuration = new ConfigurationStore(new TypeMapFactory(), MapperRegistry.Mappers);
-
-                            _webMapper = new MappingEngine(configuration);
-                        }
-                    }
-                }
-
-                return _webMapper;
-            }
-        }
-    }
 
     //static class SearchProfile 
     //{

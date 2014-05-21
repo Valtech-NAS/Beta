@@ -63,7 +63,6 @@
     <Compile Include="ReferenceData\Occupation.cs" />
     <Compile Include="ReferenceData\Framework.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReferenceData\ILegacyReferenceData.cs" />
     <Compile Include="Vacancy\VacancyDetail.cs" />
     <Compile Include="Vacancy\VacancyId.cs" />
     <Compile Include="Vacancy\VacancySummary.cs" />

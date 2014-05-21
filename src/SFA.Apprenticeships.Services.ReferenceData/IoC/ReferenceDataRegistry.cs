@@ -1,6 +1,6 @@
-﻿using SFA.Apprenticeships.Common.Interfaces.Services;
+﻿using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
+using SFA.Apprenticeships.Common.Interfaces.Services;
 using SFA.Apprenticeships.Services.Common.Wcf;
-using SFA.Apprenticeships.Services.ReferenceData.Abstract;
 using SFA.Apprenticeships.Services.ReferenceData.Proxy;
 using SFA.Apprenticeships.Services.ReferenceData.Service;
 using StructureMap.Configuration.DSL;

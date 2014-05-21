@@ -37,11 +37,12 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load
         {
             var json = JsonConvert.SerializeObject(summary, new EnumToStringConverter());
 
-            var rs = _service.Execute(
-                Mapping.Index,
-                Mapping.Document,
-                summary.Id.ToString(CultureInfo.InvariantCulture),
-                json);
+            var rs =
+                _service.Execute(
+                    Mapping.Index,
+                    Mapping.Document,
+                    summary.Id.ToString(CultureInfo.InvariantCulture),
+                    json);
 
             if (rs.StatusCode != HttpStatusCode.OK)
             {
@@ -53,13 +54,11 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load
         /// Checks the mappings on the es database to verify the database is setup.
         /// If not, creates the index and mappings.
         /// </summary>
-        public static void Setup()
+        public static void Setup(IElasticsearchService service)
         {
-            // TODO::sort this static reference.
-            var service = ObjectFactory.GetInstance<IElasticsearchService>();
             if (service == null)
             {
-                throw new InvalidOperationException("Failed to build ElasticsearchService");
+                throw new ArgumentNullException("service");
             }
 
             var mappings = ElasticsearchMapping.Create<T>();

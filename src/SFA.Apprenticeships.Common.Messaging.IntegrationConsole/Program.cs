@@ -1,6 +1,8 @@
 ﻿using SFA.Apprenticeships.Common.Entities.Vacancy;
+using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
 using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load;
 using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Queue;
+using StructureMap;
 
 namespace SFA.Apprenticeships.Common.Messaging.IntegrationConsole
 {
@@ -12,7 +14,7 @@ namespace SFA.Apprenticeships.Common.Messaging.IntegrationConsole
         {
             ulong i = 1;
             Common.IoC.IoC.Initialize();
-            ElasticsearchLoad<VacancySummary>.Setup();
+            ElasticsearchLoad<VacancySummary>.Setup(ObjectFactory.GetInstance<IElasticsearchService>());
             var bus = RabbitQueue.Setup();
 
             Console.WriteLine("Enter 'q' to quite and any antthing else to send a test message");

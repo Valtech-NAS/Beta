@@ -1,4 +1,7 @@
 ﻿
+using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
+using SFA.Apprenticeships.Common.Interfaces.Services;
+
 namespace SFA.Apprenticeships.Common.Entities.ReferenceData
 {
     public class Framework : ILegacyReferenceData
