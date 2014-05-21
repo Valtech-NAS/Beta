@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Service
             _mapper = mapper;
         }
 
-        public int GetVacancyCount(VacancyLocationType vacancyLocationType)
+        public int GetVacancyPageCount(VacancyLocationType vacancyLocationType)
         {
             var vacancySummaryRequest = new VacancySummaryRequest
             {
