@@ -11,10 +11,10 @@ using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
 using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load;
 using StructureMap;
 
-namespace SFA.Apprenticeships.Services.VacancyEtl.Tests
+namespace SFA.Apprenticeships.Services.VacancyEtl.Tests.Loader
 {
     [TestFixture]
-    public class LoadTests
+    public class LoaderTests
     {
         [TestCase]
         public void ShouldBuildElasticsearchLoadAndGetMappingAttributes()
@@ -85,7 +85,7 @@ namespace SFA.Apprenticeships.Services.VacancyEtl.Tests
             var rs = new Mock<IRestResponse>();
             rs.Setup(x => x.StatusCode).Returns(HttpStatusCode.OK);
 
-                        var service = new Mock<IElasticsearchService>();
+            var service = new Mock<IElasticsearchService>();
             service.Setup(x => x.Execute(Method.PUT, "legacy")).Returns(rs.Object);
             service.Setup(x => x.Execute("legacy", "vacancy", "_mapping", It.IsAny<string>())).Returns(rs.Object);
 
