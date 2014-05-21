@@ -1,17 +1,16 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Common.Messaging
+﻿namespace SFA.Apprenticeships.Common.Messaging.RabbitMQ
 {
+    using System;
     using System.Reflection;
     using EasyNetQ;
     using EasyNetQ.AutoSubscribe;
     using StructureMap;
 
-    public class Bootstrapper
+    public class BootstrapSubcribers
     {
         private readonly IBus _bus;
 
-        public Bootstrapper(IBus bus)
+        public BootstrapSubcribers(IBus bus)
         {
             if (bus == null)
             {
@@ -21,7 +20,7 @@ namespace SFA.Apprenticeships.Common.Messaging
             _bus = bus;
         }
 
-        public void LoadConsumers(Assembly assembly, string subscriptionId)
+        public void LoadSubscribers(Assembly assembly, string subscriptionId)
         {
             var autosubscriber = new AutoSubscriber(_bus, subscriptionId)
             {

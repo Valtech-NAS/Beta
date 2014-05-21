@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Common.Messaging
+﻿namespace SFA.Apprenticeships.Common.Messaging.RabbitMQ
 {
     using System.Threading.Tasks;
     using EasyNetQ.AutoSubscribe;

@@ -1,5 +1,5 @@
 ﻿
-namespace SFA.Apprenticeships.Common.Messaging.IntegrationTests
+namespace SFA.Apprenticeships.Common.Messaging.IntegrationTests.RabbitMQ
 {
     using System.Linq;
     using EasyNetQ.Management.Client;

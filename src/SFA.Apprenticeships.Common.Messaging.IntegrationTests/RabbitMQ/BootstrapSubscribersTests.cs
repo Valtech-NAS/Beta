@@ -1,19 +1,20 @@
-﻿namespace SFA.Apprenticeships.Common.Messaging.IntegrationTests
+﻿namespace SFA.Apprenticeships.Common.Messaging.IntegrationTests.RabbitMQ
 {
     using System.Linq;
     using System.Reflection;
     using FluentAssertions;
     using NUnit.Framework;
+    using SFA.Apprenticeships.Common.Messaging.RabbitMQ;
 
     [TestFixture]
-    public class BootstrapTests : RabbitSetUp
+    public class BootstrapSubscribersTests : RabbitSetUp
     {
         [TestCase]
         public void AutoBindsSubscriptions()
         {
             var bus = Transport.CreateBus();
-            var bs = new Bootstrapper(bus);
-            bs.LoadConsumers(Assembly.GetExecutingAssembly(), "test_app");
+            var bs = new BootstrapSubcribers(bus);
+            bs.LoadSubscribers(Assembly.GetExecutingAssembly(), "test_app");
 
             var exchange = GetExchange(ExchangeName);
             exchange.Should().NotBeNull();

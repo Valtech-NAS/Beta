@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Common.Messaging
+﻿namespace SFA.Apprenticeships.Common.Messaging.RabbitMQ
 {
     using EasyNetQ;
     using SFA.Apprenticeships.Common.Configuration.Messaging;
@@ -18,7 +18,9 @@
 
         public static IBus CreateBus()
         {
-            var rabbitBus = RabbitHutch.CreateBus(RabbitMqConfiguration.ConnectionString, CustomServiceProvider.RegisterCustomServices());
+            var rabbitBus = RabbitHutch.CreateBus(
+                                    RabbitMqConfiguration.ConnectionString, 
+                                    CustomServiceProvider.RegisterCustomServices());
             return rabbitBus;
         }
 

@@ -1,11 +1,11 @@
-﻿namespace SFA.Apprenticeships.Common.Messaging.IntegrationTests
+﻿namespace SFA.Apprenticeships.Common.Messaging.IntegrationTests.RabbitMQ
 {
-    using System;
     using System.Reflection;
     using System.Threading;
     using FluentAssertions;
     using NUnit.Framework;
     using SFA.Apprenticeships.Common.Messaging.IntegrationTests.Consumers;
+    using SFA.Apprenticeships.Common.Messaging.RabbitMQ;
 
     [TestFixture]
     public class PublishSubscribeTests : RabbitSetUp
@@ -14,8 +14,8 @@
         public void ConsumesSyncAndAsyncMessagesFromQueue()
         {
             var bus = Transport.CreateBus();
-            var bs = new Bootstrapper(bus);
-            bs.LoadConsumers(Assembly.GetExecutingAssembly(), "test_app");
+            var bs = new BootstrapSubcribers(bus);
+            bs.LoadSubscribers(Assembly.GetExecutingAssembly(), "test_app");
 
             var testMessage = new TestMessage() { TestString = "Testing 123" };
 

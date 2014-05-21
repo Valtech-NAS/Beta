@@ -13,6 +13,7 @@ using StructureMap;
 
 namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl
 {
+    using SFA.Apprenticeships.Common.Messaging.Interfaces;
     public class EtlWorkerRole : RoleEntryPoint
     {
         private VacancySchedulerConsumer _vacancySchedulerConsumer;
@@ -31,8 +32,10 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl
             RabbitQueue.Setup();
             Trace.TraceInformation("RabbitMq setup complete");
 
-            _vacancySchedulerConsumer = new VacancySchedulerConsumer(ObjectFactory.GetInstance<IBus>(), ObjectFactory.GetInstance<IVacancySummaryService>());
-
+            _vacancySchedulerConsumer = new VacancySchedulerConsumer(
+                                                ObjectFactory.GetInstance<IBus>(),
+                                                ObjectFactory.GetInstance<IAzureCloudClient>(),
+                                                ObjectFactory.GetInstance<IVacancySummaryService>());
             while (true)
             {
                 var task = _vacancySchedulerConsumer.CheckScheduleQueue();

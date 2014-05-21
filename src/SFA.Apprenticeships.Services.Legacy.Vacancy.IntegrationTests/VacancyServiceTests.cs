@@ -23,7 +23,7 @@
             _service = ObjectFactory.GetInstance<IVacancySummaryService>();
         }
 
-                [TestCase]
+        [TestCase]
         public void TheServiceEndpointShouldRespond()
         {
             var vacancySummaryRequest = new VacancySummaryRequest

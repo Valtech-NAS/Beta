@@ -7,31 +7,23 @@
     using System.Threading.Tasks;
     using System.Xml.Serialization;
     using EasyNetQ;
-    using Microsoft.WindowsAzure;
-    using Microsoft.WindowsAzure.Storage;
-    using Microsoft.WindowsAzure.Storage.Queue;
     using SFA.Apprenticeships.Common.Interfaces.Enums;
+    using SFA.Apprenticeships.Common.Messaging.Interfaces;
     using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
     using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Entities;
 
     public class VacancySchedulerConsumer
     {
         private readonly IBus _bus;
+        private readonly IAzureCloudClient _cloudClient;
         private readonly IVacancySummaryService _vacancySummaryService;
-        private readonly CloudQueueClient _queueClient;
-        private readonly string _queueName;
+        private const string VacancySearchDataControlQueueName = "vacancysearchdatacontrol";
 
-        public VacancySchedulerConsumer(IBus bus, IVacancySummaryService vacancySummaryService)
+        public VacancySchedulerConsumer(IBus bus, IAzureCloudClient cloudClient,  IVacancySummaryService vacancySummaryService)
         {
             _bus = bus;
+            _cloudClient = cloudClient;
             _vacancySummaryService = vacancySummaryService;
-
-            var queueConnectionString = CloudConfigurationManager.GetSetting("StorageConnectionString");
-            var storageAccount = CloudStorageAccount.Parse(queueConnectionString);
-
-            // Create the queue client
-            _queueClient = storageAccount.CreateCloudQueueClient();
-            _queueName = CloudConfigurationManager.GetSetting("QueueName");
         }
 
         public Task CheckScheduleQueue()
@@ -62,8 +54,8 @@
         private StorageQueueMessage GetLatestQueueMessage()
         {
             StorageQueueMessage scheduledQueueMessage;
-            var queue = _queueClient.GetQueueReference(_queueName);
-            var queueMessage = queue.GetMessage();
+            var queueMessage = _cloudClient.GetMessage(VacancySearchDataControlQueueName);
+
 
             if (queueMessage == null)
             {
@@ -72,14 +64,14 @@
 
             while (true)
             {
-                var nextQueueMessage = queue.GetMessage();
+                var nextQueueMessage = _cloudClient.GetMessage(VacancySearchDataControlQueueName);
                 if (nextQueueMessage == null)
                 {
                     // We have the latest message on the queue.
                     break;
                 }
 
-                queue.DeleteMessage(queueMessage);
+                _cloudClient.DeleteMessage(VacancySearchDataControlQueueName, queueMessage);
                 queueMessage = nextQueueMessage;
             }
             
@@ -89,8 +81,8 @@
             {
                 scheduledQueueMessage = (StorageQueueMessage)dcs.Deserialize(xmlstream);
             }
-            
-            queue.DeleteMessage(queueMessage);
+
+            _cloudClient.DeleteMessage(VacancySearchDataControlQueueName, queueMessage);
             return scheduledQueueMessage;
         }
 
@@ -101,7 +93,7 @@
 
             for (int i = 0; i < nationalCount; i++)
             {
-                var vacancySummaryPage = new VacancySummaryPage()
+                var vacancySummaryPage = new VacancySummaryPage
                 {
                     PageNumber = i + 1,
                     TotalPages = totalCount,
@@ -114,7 +106,7 @@
 
             for (int i = nationalCount; i < totalCount; i++)
             {
-                var vacancySummaryPage = new VacancySummaryPage()
+                var vacancySummaryPage = new VacancySummaryPage
                 {
                     PageNumber = nationalCount + 1,
                     TotalPages = totalCount,
