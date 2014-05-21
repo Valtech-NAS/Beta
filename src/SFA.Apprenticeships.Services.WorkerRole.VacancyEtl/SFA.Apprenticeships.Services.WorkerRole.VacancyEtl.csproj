@@ -93,8 +93,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consumers\VacancySchedulerConsumer.cs" />
+    <Compile Include="Consumers\VacancySummaryPageConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryConsumerSync.cs" />
+    <Compile Include="Entities\VacancySummaryPage.cs" />
     <Compile Include="Load\ElasticsearchLoad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EtlWorkerRole.cs" />
@@ -124,6 +127,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Services.Elasticsearch\SFA.Apprenticeships.Services.Elasticsearch.csproj">
       <Project>{8dfb3268-8865-4fe4-8e6f-8b2dcee966d9}</Project>
       <Name>SFA.Apprenticeships.Services.Elasticsearch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Services.Legacy.Vacancy\SFA.Apprenticeships.Services.Legacy.Vacancy.csproj">
+      <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
+      <Name>SFA.Apprenticeships.Services.Legacy.Vacancy</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

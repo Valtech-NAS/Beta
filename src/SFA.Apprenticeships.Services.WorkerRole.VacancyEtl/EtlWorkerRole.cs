@@ -9,8 +9,15 @@ using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Queue;
 
 namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl
 {
+    using EasyNetQ;
+    using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
+    using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Consumers;
+    using StructureMap;
+
     public class EtlWorkerRole : RoleEntryPoint
     {
+        private VacancySchedulerConsumer _vacancySchedulerConsumer;
+
         public override void Run()
         {
             // This is a sample worker implementation. Replace with your logic.
@@ -25,9 +32,13 @@ namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl
             RabbitQueue.Setup();
             Trace.TraceInformation("RabbitMq setup complete");
 
+            _vacancySchedulerConsumer = new VacancySchedulerConsumer(ObjectFactory.GetInstance<IBus>(), ObjectFactory.GetInstance<IVacancySummaryService>());
+
             while (true)
             {
-                Thread.Yield();
+                var task = _vacancySchedulerConsumer.CheckScheduleQueue();
+                task.Wait();
+                Thread.Sleep(5000);
             }
         }
 
