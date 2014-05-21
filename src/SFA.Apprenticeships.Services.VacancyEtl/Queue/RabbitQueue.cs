@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Queue
+﻿namespace SFA.Apprenticeships.Services.VacancyEtl.Queue
 {
     using System.Reflection;
     using EasyNetQ;
-    using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Consumers;
+    using SFA.Apprenticeships.Services.VacancyEtl.Consumers;
     using SFA.Apprenticeships.Common.Messaging.RabbitMQ;
 
     public static class RabbitQueue

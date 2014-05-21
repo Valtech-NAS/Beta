@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Entities
+﻿namespace SFA.Apprenticeships.Services.VacancyEtl.Entities
 {
     using System.Runtime.Serialization;
 

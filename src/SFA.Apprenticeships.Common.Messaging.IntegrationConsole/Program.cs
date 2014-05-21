@@ -1,7 +1,7 @@
 ﻿using SFA.Apprenticeships.Common.Entities.Vacancy;
 using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Load;
-using SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.Queue;
+using SFA.Apprenticeships.Services.VacancyEtl.Load;
+using SFA.Apprenticeships.Services.VacancyEtl.Queue;
 using StructureMap;
 
 namespace SFA.Apprenticeships.Common.Messaging.IntegrationConsole
@@ -12,7 +12,7 @@ namespace SFA.Apprenticeships.Common.Messaging.IntegrationConsole
     {
         static void Main(string[] args)
         {
-            ulong i = 1;
+            long i = 1;
             Common.IoC.IoC.Initialize();
             ElasticsearchLoad<VacancySummary>.Setup(ObjectFactory.GetInstance<IElasticsearchService>());
             var bus = RabbitQueue.Setup();

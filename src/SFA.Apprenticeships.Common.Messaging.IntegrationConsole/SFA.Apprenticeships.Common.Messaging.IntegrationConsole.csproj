@@ -96,9 +96,9 @@
       <Project>{8dfb3268-8865-4fe4-8e6f-8b2dcee966d9}</Project>
       <Name>SFA.Apprenticeships.Services.Elasticsearch</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Services.WorkerRole.VacancyEtl\SFA.Apprenticeships.Services.WorkerRole.VacancyEtl.csproj">
+    <ProjectReference Include="..\SFA.Apprenticeships.Services.VacancyEtl\SFA.Apprenticeships.Services.VacancyEtl.csproj">
       <Project>{5069b0ba-5499-4dc1-8f7a-e5022f5e4f7b}</Project>
-      <Name>SFA.Apprenticeships.Services.WorkerRole.VacancyEtl</Name>
+      <Name>SFA.Apprenticeships.Services.VacancyEtl</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
