@@ -39,8 +39,6 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Mappers
                 .ForMember(d => d.TypeOfVacancy, opt => opt.ResolveUsing<EnumResolver<VacancyType>>().FromMember(src => src.VacancyType))
                 .ForMember(d => d.VacancyUrl, opt => opt.MapFrom(src => src.VacancyUrl))
                 ;
-            
-            //.AfterMap((s, d) => d.UpdateReference = Guid.NewGuid()); 
 
             Mapper.CreateMap<VacancySummaryData[], IEnumerable<VacancySummary>>().ConvertUsing<SummaryDataConverter>();
         }

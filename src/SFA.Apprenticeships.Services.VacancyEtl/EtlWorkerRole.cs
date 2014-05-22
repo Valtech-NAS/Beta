@@ -37,7 +37,7 @@ namespace SFA.Apprenticeships.Services.VacancyEtl
             Trace.TraceInformation("RabbitMq setup complete");
 
             _vacancySchedulerConsumer = new VacancySchedulerConsumer(
-                                                ObjectFactory.GetInstance<IBus>(),
+                                                bus,
                                                 ObjectFactory.GetInstance<IAzureCloudClient>(),
                                                 ObjectFactory.GetInstance<IVacancySummaryService>());
             while (true)
