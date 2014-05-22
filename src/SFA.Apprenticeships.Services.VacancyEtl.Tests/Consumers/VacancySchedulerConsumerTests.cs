@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Runtime.Serialization;
+    using System.Xml.Serialization;
     using EasyNetQ;
     using Microsoft.WindowsAzure.Storage.Queue;
     using Moq;
@@ -67,7 +68,7 @@
         private Queue<CloudQueueMessage> GetAzureScheduledMessagesQueue(int count)
         {
             var queue = new Queue<CloudQueueMessage>();
-            var serializer = new DataContractSerializer(typeof(StorageQueueMessage));
+            var serializer = new XmlSerializer(typeof(StorageQueueMessage));
 
             for (int i = count; i > 0; i--)
             {
@@ -80,7 +81,7 @@
                 string message;
                 using (var ms = new MemoryStream())
                 {
-                    serializer.WriteObject(ms, storageScheduleMessage);
+                    serializer.Serialize(ms, storageScheduleMessage);
                     ms.Position = 0;
                     var sr = new StreamReader(ms);
                     message = sr.ReadToEnd();
