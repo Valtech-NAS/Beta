@@ -10,7 +10,7 @@
     {
         public static string ConfigurationFileAppSetting = "ConfigurationPath";
 
-        private readonly Configuration _config;
+        public Configuration Configuration { get; private set; }
 
         public ConfigurationManager(string configFileAppSettingKey = null)
         {
@@ -28,7 +28,7 @@
                 ExeConfigFilename = configFile
             };
 
-            _config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
+            Configuration = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
         }
 
         public string TryGetAppSetting(string key)
@@ -38,7 +38,7 @@
                 throw new ArgumentNullException("key");
             }
 
-            var result = _config.AppSettings.Settings[key];
+            var result = Configuration.AppSettings.Settings[key];
             if (result != null)
             {
                 return result.Value;
@@ -91,7 +91,7 @@
 
         public ConfigurationSection GetSection(string sectionName)
         {
-            return _config.GetSection(sectionName);
+            return Configuration.GetSection(sectionName);
         }
 
         public ConnectionStringSettings GetConnectionString(string key)
@@ -101,7 +101,7 @@
                 throw new ArgumentNullException("key");
             }
 
-            var result = _config.ConnectionStrings.ConnectionStrings[key];
+            var result = Configuration.ConnectionStrings.ConnectionStrings[key];
             if (result == null)
             {
                 throw new ApplicationException(

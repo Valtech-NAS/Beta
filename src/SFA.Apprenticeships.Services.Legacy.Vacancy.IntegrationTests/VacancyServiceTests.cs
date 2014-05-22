@@ -6,6 +6,7 @@
     using NUnit.Framework;
     using SFA.Apprenticeships.Common.Configuration.LegacyServices;
     using SFA.Apprenticeships.Common.Interfaces.Enums;
+    using SFA.Apprenticeships.Common.Interfaces.Services;
     using SFA.Apprenticeships.Services.Common.Wcf;
     using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
     using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
@@ -41,7 +42,7 @@
             };
 
             var result = default(VacancySummaryResponse);
-            var service = new WcfService<IVacancySummary>();
+            var service = ObjectFactory.GetInstance<IWcfService<IVacancySummary>>();
             service.Use(client => { result = client.Get(vacancySummaryRequest); });
 
             result.Should().NotBeNull();

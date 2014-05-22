@@ -94,6 +94,10 @@
       <Project>{67cdaccd-5217-4110-8432-c6ef164baa0d}</Project>
       <Name>SFA.Apprenticeships.Services.Legacy.Vacancy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Services.ReferenceData\SFA.Apprenticeships.Services.ReferenceData.csproj">
+      <Project>{5e8e77ca-bb23-45de-aadd-236cafbc66e3}</Project>
+      <Name>SFA.Apprenticeships.Services.ReferenceData</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
