@@ -91,11 +91,11 @@
             var totalCount = nationalCount + nonNationalCount;
             var vacancySumaries = new List<VacancySummaryPage>(totalCount);
 
-            for (int i = 0; i < nationalCount; i++)
+            for (int i = 1; i <= nationalCount; i++)
             {
                 var vacancySummaryPage = new VacancySummaryPage
                 {
-                    PageNumber = i + 1,
+                    PageNumber = i,
                     TotalPages = totalCount,
                     UpdateReference = updateReferenceId,
                     VacancyLocation = VacancyLocationType.National
@@ -104,11 +104,11 @@
                 vacancySumaries.Add(vacancySummaryPage);
             }
 
-            for (int i = nationalCount; i < totalCount; i++)
+            for (int i = nationalCount + 1; i <= totalCount; i++)
             {
                 var vacancySummaryPage = new VacancySummaryPage
                 {
-                    PageNumber = i + 1,
+                    PageNumber = i,
                     TotalPages = totalCount,
                     UpdateReference = updateReferenceId,
                     VacancyLocation = VacancyLocationType.NonNational
