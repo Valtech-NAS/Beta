@@ -5,7 +5,7 @@
     using SFA.Apprenticeships.Common.Messaging.Interfaces;
     using SFA.Apprenticeships.Common.Messaging.ServiceOverrides;
 
-    public class Transport
+    internal class Transport
     {
         private static readonly IRabbitMqServiceProvider CustomServiceProvider;
         private static readonly IRabbitMQConfiguration RabbitMqConfiguration;
@@ -22,11 +22,6 @@
                                     RabbitMqConfiguration.ConnectionString, 
                                     CustomServiceProvider.RegisterCustomServices());
             return rabbitBus;
-        }
-
-        public static string QueueName
-        {
-            get { return RabbitMqConfiguration.QueueName; }
         }
     }
 }

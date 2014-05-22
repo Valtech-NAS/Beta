@@ -1,5 +1,4 @@
-﻿
-namespace SFA.Apprenticeships.Common.Messaging.IntegrationConsole
+﻿namespace SFA.Apprenticeships.Common.Messaging.IntegrationConsole
 {
     using System;
     using System.Threading;
@@ -19,7 +18,7 @@ namespace SFA.Apprenticeships.Common.Messaging.IntegrationConsole
         static void Main(string[] args)
         {
             // This is a sample worker implementation. Replace with your logic.
-            IoC.IoC.Initialize();
+            Common.IoC.IoC.Initialize();
             ElasticsearchLoad<VacancySummary>.Setup(ObjectFactory.GetInstance<IElasticsearchService>());
             var bus = RabbitQueue.Setup();
             var client = new AzureCloudClient(new AzureConsoleConfig(ObjectFactory.GetInstance<IConfigurationManager>()));

@@ -74,12 +74,12 @@
                 _cloudClient.DeleteMessage(VacancySearchDataControlQueueName, queueMessage);
                 queueMessage = nextQueueMessage;
             }
-            
-            var dcs = new DataContractSerializer(typeof(StorageQueueMessage));
+
+            var dcs = new XmlSerializer(typeof(StorageQueueMessage));
 
             using (var xmlstream = new MemoryStream(Encoding.UTF8.GetBytes(queueMessage.AsString)))
             {
-                scheduledQueueMessage = (StorageQueueMessage)dcs.ReadObject(xmlstream);
+                scheduledQueueMessage = (StorageQueueMessage)dcs.Deserialize(xmlstream);
             }
 
             _cloudClient.DeleteMessage(VacancySearchDataControlQueueName, queueMessage);
