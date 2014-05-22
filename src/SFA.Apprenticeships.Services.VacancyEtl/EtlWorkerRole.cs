@@ -33,7 +33,7 @@ namespace SFA.Apprenticeships.Services.VacancyEtl
             ElasticsearchLoad<VacancySummary>.Setup(ObjectFactory.GetInstance<IElasticsearchService>());
             Trace.TraceInformation("Elasticsearch setup complete");
 
-            RabbitQueue.Setup();
+            var bus = RabbitQueue.Setup();
             Trace.TraceInformation("RabbitMq setup complete");
 
             _vacancySchedulerConsumer = new VacancySchedulerConsumer(

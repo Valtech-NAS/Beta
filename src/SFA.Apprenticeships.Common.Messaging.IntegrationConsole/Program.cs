@@ -1,39 +1,44 @@
-﻿using SFA.Apprenticeships.Common.Entities.Vacancy;
-using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-using SFA.Apprenticeships.Services.VacancyEtl.Load;
-using SFA.Apprenticeships.Services.VacancyEtl.Queue;
-using StructureMap;
-
+﻿
 namespace SFA.Apprenticeships.Common.Messaging.IntegrationConsole
 {
     using System;
+    using System.Threading;
+    using EasyNetQ;
+    using SFA.Apprenticeships.Common.Configuration.Azure;
+    using SFA.Apprenticeships.Common.Entities.Vacancy;
+    using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
+    using SFA.Apprenticeships.Common.Messaging.Azure;
+    using SFA.Apprenticeships.Common.Messaging.Interfaces;
+    using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
+    using SFA.Apprenticeships.Services.VacancyEtl.Consumers;
+    using SFA.Apprenticeships.Services.VacancyEtl.Load;
+    using SFA.Apprenticeships.Services.VacancyEtl.Queue;
+    using StructureMap;
 
     class Program
     {
         static void Main(string[] args)
         {
-            long i = 1;
-            Common.IoC.IoC.Initialize();
+            // This is a sample worker implementation. Replace with your logic.
+            IoC.IoC.Initialize();
             ElasticsearchLoad<VacancySummary>.Setup(ObjectFactory.GetInstance<IElasticsearchService>());
             var bus = RabbitQueue.Setup();
+            var client = new AzureCloudClient(new AzureCloudConfig());
 
-            Console.WriteLine("Enter 'q' to quite and any antthing else to send a test message");
+            var vacancySchedulerConsumer = new VacancySchedulerConsumer(
+                                                bus,
+                                                ObjectFactory.GetInstance<IAzureCloudClient>(),
+                                                ObjectFactory.GetInstance<IVacancySummaryService>());
+
+
+            Console.WriteLine("Enter any key to quite");
             Console.WriteLine("---------------------------------------------------------------");
 
-            var input = Console.ReadLine();
-
-            while (input != "q")
+            while (!Console.KeyAvailable)
             {
-                var testMessage = new VacancySummary()
-                {
-                    UpdateReference = Guid.NewGuid(),
-                    Id = i++,
-                    Created = DateTime.Now,
-                    ClosingDate = DateTime.Today.AddDays(30),
-                };
-
-                bus.Publish(testMessage);
-                input = Console.ReadLine();
+                var task = vacancySchedulerConsumer.CheckScheduleQueue();
+                task.Wait();
+                Thread.Sleep(5000);
             }
         }
     }

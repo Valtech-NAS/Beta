@@ -84,6 +84,10 @@
       <Project>{8b5044e4-03de-4724-91bc-05840f0cc3d8}</Project>
       <Name>SFA.Apprenticeships.Common.Messaging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Common.Tests\SFA.Apprenticeships.Common.Tests.csproj">
+      <Project>{2886f449-8488-4883-a80b-b29775d18b29}</Project>
+      <Name>SFA.Apprenticeships.Common.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Common\SFA.Apprenticeships.Common.csproj">
       <Project>{aad6c913-2503-456f-a593-c0a36c07bd35}</Project>
       <Name>SFA.Apprenticeships.Common</Name>
@@ -95,6 +99,14 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Services.Elasticsearch\SFA.Apprenticeships.Services.Elasticsearch.csproj">
       <Project>{8dfb3268-8865-4fe4-8e6f-8b2dcee966d9}</Project>
       <Name>SFA.Apprenticeships.Services.Elasticsearch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Services.Legacy.Vacancy\SFA.Apprenticeships.Services.Legacy.Vacancy.csproj">
+      <Project>{67cdaccd-5217-4110-8432-c6ef164baa0d}</Project>
+      <Name>SFA.Apprenticeships.Services.Legacy.Vacancy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Services.ReferenceData\SFA.Apprenticeships.Services.ReferenceData.csproj">
+      <Project>{5e8e77ca-bb23-45de-aadd-236cafbc66e3}</Project>
+      <Name>SFA.Apprenticeships.Services.ReferenceData</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Services.VacancyEtl\SFA.Apprenticeships.Services.VacancyEtl.csproj">
       <Project>{5069b0ba-5499-4dc1-8f7a-e5022f5e4f7b}</Project>

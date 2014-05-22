@@ -11,8 +11,6 @@ using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
 
 namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Service
 {
-    using SFA.Apprenticeships.Common.Helpers;
-
     public class VacancySummaryService : IVacancySummaryService
     {
 

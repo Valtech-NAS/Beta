@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Common.Entities.Vacancy
     public abstract class VacancyId
     {
         [ElasticsearchIdentity]
+        [ElasticsearchType("long")]
         public long Id { get; set; }
 
         [ElasticsearchType("string")]
