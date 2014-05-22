@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Runtime.Serialization;
     using System.Text;
     using System.Threading.Tasks;
     using System.Xml.Serialization;
@@ -19,7 +20,7 @@
         private readonly IVacancySummaryService _vacancySummaryService;
         private const string VacancySearchDataControlQueueName = "vacancysearchdatacontrol";
 
-        public VacancySchedulerConsumer(IBus bus, IAzureCloudClient cloudClient,  IVacancySummaryService vacancySummaryService)
+        public VacancySchedulerConsumer(IBus bus, IAzureCloudClient cloudClient, IVacancySummaryService vacancySummaryService)
         {
             _bus = bus;
             _cloudClient = cloudClient;
@@ -40,8 +41,8 @@
                 // Check Rabbit procesing queue - should not be doing any still or there is a potential issue.
                 // TODO: Log it.
 
-                var nationalCount = _vacancySummaryService.GetVacancyCount(VacancyLocationType.National);
-                var nonNationalCount = _vacancySummaryService.GetVacancyCount(VacancyLocationType.NonNational);
+                var nationalCount = _vacancySummaryService.GetVacancyPageCount(VacancyLocationType.National);
+                var nonNationalCount = _vacancySummaryService.GetVacancyPageCount(VacancyLocationType.NonNational);
                 var vacancySumaries = BuildVacancySummaries(Guid.Parse(latestScheduledMessage.ClientRequestId), nationalCount, nonNationalCount);
 
                 Parallel.ForEach(
@@ -55,7 +56,6 @@
         {
             StorageQueueMessage scheduledQueueMessage;
             var queueMessage = _cloudClient.GetMessage(VacancySearchDataControlQueueName);
-
 
             if (queueMessage == null)
             {
@@ -75,11 +75,11 @@
                 queueMessage = nextQueueMessage;
             }
             
-            var dcs = new XmlSerializer(typeof(StorageQueueMessage));
+            var dcs = new DataContractSerializer(typeof(StorageQueueMessage));
 
-            using (var xmlstream = new MemoryStream(Encoding.Unicode.GetBytes(queueMessage.AsString)))
+            using (var xmlstream = new MemoryStream(Encoding.UTF8.GetBytes(queueMessage.AsString)))
             {
-                scheduledQueueMessage = (StorageQueueMessage)dcs.Deserialize(xmlstream);
+                scheduledQueueMessage = (StorageQueueMessage)dcs.ReadObject(xmlstream);
             }
 
             _cloudClient.DeleteMessage(VacancySearchDataControlQueueName, queueMessage);

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.IntegrationTests
 {
+    using System;
     using System.Diagnostics;
     using System.Linq;
     using FluentAutomation;
@@ -22,7 +23,14 @@
 
             foreach (var process in driverProcesses)
             {
-                process.Kill();
+                try
+                {
+                    process.Kill();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write("Error killing Process: {0}\nError: {1}\nStacktrace: {2}", process.ProcessName, ex.Message, ex.StackTrace);
+                }
             }
         }
     }

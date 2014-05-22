@@ -6,7 +6,7 @@
 
     public interface IVacancySummaryService
     {
-        int GetVacancyCount(VacancyLocationType vacancyLocationType);
+        int GetVacancyPageCount(VacancyLocationType vacancyLocationType);
 
         IEnumerable<VacancySummary> GetVacancySummary(VacancyLocationType vacancyLocationType, int page);
     }

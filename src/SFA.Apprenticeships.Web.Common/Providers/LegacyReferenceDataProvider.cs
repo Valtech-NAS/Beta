@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SFA.Apprenticeships.Services.ReferenceData.Abstract;
-using SFA.Apprenticeships.Services.ReferenceData.Models;
 using SFA.Apprenticeships.Web.Common.Models.Common;
 
 namespace SFA.Apprenticeships.Web.Common.Providers
 {
+    using SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService;
+    using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
+
     public class LegacyReferenceDataProvider : IReferenceDataProvider
     {
         private readonly IReferenceDataService _service;
