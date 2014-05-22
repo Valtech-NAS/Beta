@@ -93,7 +93,7 @@
         /// <summary>
         /// The number of messages to pull of the queue at a time.
         /// </summary>
-        int PreFetchCount { get; set; }
+        ushort PreFetchCount { get; set; }
 
         /// <summary>
         /// Switches on/off EasyNetQ's logging to NLog's internal logger.
