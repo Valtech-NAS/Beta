@@ -53,7 +53,7 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Service
                 VacancySearchCriteria = new VacancySearchData()
                 {
                     PageIndex = 1,
-                    VacancyLocationType = (VacancyDetailsSearchLocationType)vacancyLocationType
+                    VacancyLocationType =  vacancyLocationType.ToString()
                 }
             };
 
@@ -78,7 +78,7 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Service
                 VacancySearchCriteria = new VacancySearchData()
                 {
                     PageIndex = page,
-                    VacancyLocationType = (VacancyDetailsSearchLocationType)vacancyLocationType
+                    VacancyLocationType = vacancyLocationType.ToString()
                 }
             };
 

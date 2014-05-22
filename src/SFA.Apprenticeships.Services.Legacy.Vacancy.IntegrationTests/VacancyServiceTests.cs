@@ -5,6 +5,7 @@
     using FluentAssertions;
     using NUnit.Framework;
     using SFA.Apprenticeships.Common.Configuration.LegacyServices;
+    using SFA.Apprenticeships.Common.Helpers;
     using SFA.Apprenticeships.Common.Interfaces.Enums;
     using SFA.Apprenticeships.Common.Interfaces.Services;
     using SFA.Apprenticeships.Services.Common.Wcf;
@@ -37,7 +38,7 @@
                 VacancySearchCriteria = new VacancySearchData()
                 {
                     PageIndex = 1,
-                    VacancyLocationType = VacancyDetailsSearchLocationType.NonNational
+                    VacancyLocationType = VacancyDetailsSearchLocationType.NonNational.ToString()
                 }
             };
 

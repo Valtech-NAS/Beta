@@ -108,7 +108,7 @@
             {
                 var vacancySummaryPage = new VacancySummaryPage
                 {
-                    PageNumber = nationalCount + 1,
+                    PageNumber = i + 1,
                     TotalPages = totalCount,
                     UpdateReference = updateReferenceId,
                     VacancyLocation = VacancyLocationType.NonNational

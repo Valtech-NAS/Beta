@@ -9,6 +9,8 @@ using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
 
 namespace SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests
 {
+    using SFA.Apprenticeships.Common.Helpers;
+
     [TestFixture]
     public class MapperTests
     {
@@ -53,8 +55,8 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests
             var data = new VacancySummaryData
             {
                 VacancyReference = 1,
-                VacancyLocationType = VacancyLocationType.NonNational.ToString(),
-                VacancyType = VacancyType.Intermediate.ToString(),
+                VacancyLocationType = VacancyLocationType.NonNational.GetDescription(),
+                VacancyType = VacancyType.Intermediate.GetDescription(),
             };
 
             var test = _mapper.Map<VacancySummaryData, VacancySummary>(data);

@@ -146,7 +146,7 @@ namespace SFA.Apprenticeships.Common.Helpers
         /// <param name="description">The description.</param>
         /// <param name="result">The result.</param>
         /// <returns>the enum from description</returns>
-        public static bool TryGetEnumFromDescriptionAttribute<TEnum>(string description, out TEnum result) where TEnum : struct, IComparable, IConvertible, IFormattable
+        public static bool TryGetEnumFromDescription<TEnum>(string description, out TEnum result) where TEnum : struct, IComparable, IConvertible, IFormattable
         {
             var parsed = false;
             result = default(TEnum);

@@ -37,7 +37,8 @@
             Console.WriteLine("Enter any key to quite");
             Console.WriteLine("---------------------------------------------------------------");
 
-            GetAzureScheduledMessagesQueue(1);
+            var queueItems = GetAzureScheduledMessagesQueue(1);
+            client.AddMessage("vacancysearchdatacontrol", queueItems.Dequeue());
 
             while (!Console.KeyAvailable)
             {

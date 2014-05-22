@@ -31,7 +31,7 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string FrameworkCodeField;
         
-        private SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy.VacancyDetailsSearchLocationType VacancyLocationTypeField;
+        private string VacancyLocationTypeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CountyCodeField;
@@ -97,15 +97,15 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=3)]
-        public SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy.VacancyDetailsSearchLocationType VacancyLocationType {
+        public string VacancyLocationType {
             get {
                 return this.VacancyLocationTypeField;
             }
             set {
-                if ((this.VacancyLocationTypeField.Equals(value) != true)) {
+                //if ((this.VacancyLocationTypeField.Equals(value) != true)) {
                     this.VacancyLocationTypeField = value;
                     this.RaisePropertyChanged("VacancyLocationType");
-                }
+                //}
             }
         }
         
@@ -193,6 +193,9 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         National = 1,
+
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Other = 2,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
