@@ -1,12 +1,12 @@
-﻿using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
-using SFA.Apprenticeships.Common.Interfaces.Services;
-using SFA.Apprenticeships.Services.Common.Wcf;
-using SFA.Apprenticeships.Services.ReferenceData.Proxy;
-using SFA.Apprenticeships.Services.ReferenceData.Service;
-using StructureMap.Configuration.DSL;
-
-namespace SFA.Apprenticeships.Services.ReferenceData.IoC
+﻿namespace SFA.Apprenticeships.Services.ReferenceData.IoC
 {
+    using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
+    using SFA.Apprenticeships.Common.Interfaces.Services;
+    using SFA.Apprenticeships.Services.Common.Wcf;
+    using SFA.Apprenticeships.Services.ReferenceData.Proxy;
+    using SFA.Apprenticeships.Services.ReferenceData.Service;
+    using StructureMap.Configuration.DSL;
+
     using SFA.Apprenticeships.Common.Caching;
 
     public class ReferenceDataRegistry : Registry

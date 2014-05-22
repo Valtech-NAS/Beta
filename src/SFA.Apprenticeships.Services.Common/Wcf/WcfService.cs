@@ -1,13 +1,19 @@
-﻿using System;
-using System.ServiceModel;
-using SFA.Apprenticeships.Common.Interfaces.Services;
-
-namespace SFA.Apprenticeships.Services.Common.Wcf
+﻿namespace SFA.Apprenticeships.Services.Common.Wcf
 {
+    using System;
+    using System.ServiceModel;
+    using SFA.Apprenticeships.Common.Configuration;
+    using SFA.Apprenticeships.Common.Interfaces.Services;
+    using System.Configuration;
+    using System.ServiceModel.Configuration;
+
     public class WcfService<T> : IWcfService<T>
     {
-        public WcfService()
+        private readonly Configuration _configuration;
+
+        public WcfService(IConfigurationManager configurationManager)
         {
+            _configuration = configurationManager.Configuration;
         }
 
         public void Use(Action<T> action)
@@ -17,14 +23,14 @@ namespace SFA.Apprenticeships.Services.Common.Wcf
 
         public void Use(string endpointConfigurationName, string endpointAddress, Action<T> action)
         {
-            var factory = new ChannelFactory<T>(endpointConfigurationName, new EndpointAddress(endpointAddress));
+            var factory = new ConfigurationChannelFactory<T>(endpointConfigurationName, _configuration, new EndpointAddress(endpointAddress));
             CallServiceAction(action, factory);
         }
 
         public void Use(string endpointConfigurationName, Action<T> action)
         {
-            var factory = new ChannelFactory<T>(endpointConfigurationName);
-            CallServiceAction(action, factory);
+            var configChannelFactory = new ConfigurationChannelFactory<T>(endpointConfigurationName, _configuration, null);
+            CallServiceAction(action, configChannelFactory);
         }
 
         protected virtual void CallServiceAction(Action<T> action, ChannelFactory<T> factory)

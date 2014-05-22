@@ -10,6 +10,7 @@
     using SFA.Apprenticeships.Common.Configuration.LegacyServices;
     using SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService;
     using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
+    using SFA.Apprenticeships.Common.Interfaces.Services;
     using SFA.Apprenticeships.Services.Common.Wcf;
 
     using SFA.Apprenticeships.Services.ReferenceData.Proxy;
@@ -38,7 +39,7 @@
             var msgId = new Guid();
 
             var rq = new GetApprenticeshipFrameworksRequest(_legacyServicesConfiguration.SystemId, msgId, _legacyServicesConfiguration.PublicKey);
-            var service = new WcfService<IReferenceData>();
+            var service = ObjectFactory.GetInstance<IWcfService<IReferenceData>>();
             service.Use(client=> { result = client.GetApprenticeshipFrameworks(rq); });
 
             result.Should().NotBeNull();

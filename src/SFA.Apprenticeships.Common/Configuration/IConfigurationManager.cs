@@ -5,6 +5,11 @@
     public interface IConfigurationManager
     {
         /// <summary>
+        /// Exposing entire configuration file (required by Wcf when using custom factory)
+        /// </summary>
+        Configuration Configuration { get; }
+
+        /// <summary>
         /// Gets a string representation of the value located by the supplied key.
         /// If the value is not found an exception is thrown
         /// </summary>
