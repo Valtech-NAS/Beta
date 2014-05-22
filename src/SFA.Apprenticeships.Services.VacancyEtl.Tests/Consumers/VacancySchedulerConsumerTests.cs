@@ -61,6 +61,7 @@
             task.Wait();
 
             _cloudClientMock.Verify(x => x.GetMessage(It.Is<string>(s => s == "vacancysearchdatacontrol")), Times.Exactly(queueItems + 1));
+            _cloudClientMock.Verify(x => x.DeleteMessage(It.Is<string>(s => s == "vacancysearchdatacontrol"), It.IsAny<CloudQueueMessage>()), Times.Exactly(queueItems));
             _vacancySummaryServiceMock.Verify(x => x.GetVacancyPageCount(It.IsAny<VacancyLocationType>()), Times.Exactly(queueItems == 0 ? 0 : 2));
             _busMock.Verify(x => x.Publish(It.IsAny<VacancySummaryPage>()), Times.Exactly(nationalVacancyPages + nonNationalVancanyPages));
         }
