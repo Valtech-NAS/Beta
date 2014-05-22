@@ -1,10 +1,10 @@
-﻿using System;
-using System.Web.Mvc;
-using SFA.Apprenticeships.Services.ReferenceData.Models;
-using SFA.Apprenticeships.Web.Common.Providers;
-
-namespace SFA.Apprenticeships.Web.Candidate.Controllers
+﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
+    using System.Web.Mvc;
+    using SFA.Apprenticeships.Web.Common.Providers;
+    using SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService;
+
     public class AdminController : Controller
     {
         private readonly IReferenceDataProvider _provider;

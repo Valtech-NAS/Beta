@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using SFA.Apprenticeships.Common.Caching;
-using SFA.Apprenticeships.Services.ReferenceData.Models;
-using SFA.Apprenticeships.Web.Common.Models.Common;
-
-namespace SFA.Apprenticeships.Web.Common.Providers
+﻿namespace SFA.Apprenticeships.Web.Common.Providers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using SFA.Apprenticeships.Common.Caching;
+    using SFA.Apprenticeships.Web.Common.Models.Common;
+    using SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService;
+
     public class CacheLegacyReferenceDataProvider : IReferenceDataProvider
     {
         public const string LegacyReferenceDataCacheKey = "SFA.Apprenticeships.LegacyReferenceData.";
