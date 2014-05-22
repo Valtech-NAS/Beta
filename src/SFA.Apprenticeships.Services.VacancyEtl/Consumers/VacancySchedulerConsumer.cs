@@ -77,7 +77,7 @@
 
             var dcs = new XmlSerializer(typeof(StorageQueueMessage));
 
-            using (var xmlstream = new MemoryStream(Encoding.UTF8.GetBytes(queueMessage.AsString)))
+            using (var xmlstream = new MemoryStream(Encoding.Unicode.GetBytes(queueMessage.AsString)))
             {
                 scheduledQueueMessage = (StorageQueueMessage)dcs.Deserialize(xmlstream);
             }
@@ -108,7 +108,7 @@
             {
                 var vacancySummaryPage = new VacancySummaryPage
                 {
-                    PageNumber = nationalCount + 1,
+                    PageNumber = i + 1,
                     TotalPages = totalCount,
                     UpdateReference = updateReferenceId,
                     VacancyLocation = VacancyLocationType.NonNational
