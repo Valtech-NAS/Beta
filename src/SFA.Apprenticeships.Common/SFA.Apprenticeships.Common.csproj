@@ -121,6 +121,7 @@
     <Compile Include="Caching\ICacheClient.cs" />
     <Compile Include="Caching\ICacheEntry.cs" />
     <Compile Include="Caching\MemoryCacheClient.cs" />
+    <Compile Include="Configuration\Azure\AzureConsoleConfig.cs" />
     <Compile Include="Configuration\Azure\AzureCloudConfig.cs" />
     <Compile Include="Configuration\Azure\IAzureCloudConfig.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
