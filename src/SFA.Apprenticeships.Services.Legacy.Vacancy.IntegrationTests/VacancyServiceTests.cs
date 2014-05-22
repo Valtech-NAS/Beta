@@ -5,10 +5,8 @@
     using FluentAssertions;
     using NUnit.Framework;
     using SFA.Apprenticeships.Common.Configuration.LegacyServices;
-    using SFA.Apprenticeships.Common.Helpers;
     using SFA.Apprenticeships.Common.Interfaces.Enums;
     using SFA.Apprenticeships.Common.Interfaces.Services;
-    using SFA.Apprenticeships.Services.Common.Wcf;
     using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
     using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
     using StructureMap;
