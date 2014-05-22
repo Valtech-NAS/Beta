@@ -4,8 +4,8 @@
     using System.Linq;
     using FluentAssertions;
     using NUnit.Framework;
+    using SFA.Apprenticeships.Common.Configuration.LegacyServices;
     using SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService;
-    using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
     using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
     using SFA.Apprenticeships.Services.Common.Wcf;
 
