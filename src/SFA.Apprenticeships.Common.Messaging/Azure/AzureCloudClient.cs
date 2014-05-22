@@ -24,5 +24,10 @@
         {
             _cloudQueueClient.GetQueueReference(queueName).DeleteMessage(queueMessage);
         }
+
+        public void AddMessage(string queueName, CloudQueueMessage queueMessage)
+        {
+            _cloudQueueClient.GetQueueReference(queueName).AddMessage(queueMessage);
+        }
     }
 }
