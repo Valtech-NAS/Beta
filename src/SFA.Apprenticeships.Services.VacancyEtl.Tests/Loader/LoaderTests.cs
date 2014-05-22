@@ -91,7 +91,7 @@ namespace SFA.Apprenticeships.Services.VacancyEtl.Tests.Loader
 
             ObjectFactory.Initialize(x => x.For<IElasticsearchService>().Use(service.Object));
 
-            ElasticsearchLoad<VacancySummary>.Setup();
+            ElasticsearchLoad<VacancySummary>.Setup(service.Object);
 
             service.Verify(x => x.Execute(Method.PUT, "legacy"), Times.Once);
             service.Verify(x => x.Execute("legacy", "vacancy", "_mapping", It.IsAny<string>()), Times.Once);
@@ -112,7 +112,7 @@ namespace SFA.Apprenticeships.Services.VacancyEtl.Tests.Loader
 
             ObjectFactory.Initialize(x => x.For<IElasticsearchService>().Use(service.Object));
 
-            ElasticsearchLoad<VacancySummary>.Setup();
+            ElasticsearchLoad<VacancySummary>.Setup(service.Object);
 
             service.Verify(x => x.Execute(Method.PUT, "legacy"), Times.Once);
             service.Verify(x => x.Execute("legacy", "vacancy", "_mapping", It.IsAny<string>()), Times.Once);

@@ -5,10 +5,8 @@ using SFA.Apprenticeships.Common.Configuration.LegacyServices;
 using SFA.Apprenticeships.Common.Entities.Vacancy;
 using SFA.Apprenticeships.Common.Interfaces.Enums;
 using SFA.Apprenticeships.Common.Interfaces.Mapper;
-using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
 using SFA.Apprenticeships.Common.Interfaces.Services;
 using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
-using SFA.Apprenticeships.Services.Legacy.Vacancy.Mappers;
 using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
 
 namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Service
@@ -23,8 +21,7 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Service
         public VacancySummaryService(
             ILegacyServicesConfiguration legacyServicesConfiguration,
             IWcfService<IVacancySummary> service,
-            IReferenceDataService referenceDataService) 
-            //, IMapper mapper)
+            IMapper mapper)
         {
             if (legacyServicesConfiguration == null)
             {
@@ -36,21 +33,13 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Service
                 throw new ArgumentNullException("service");
             }
 
-            if (referenceDataService == null)
+            if (mapper == null)
             {
-                throw new ArgumentNullException("re");
+                throw new ArgumentNullException("mapper");
             }
-
-            //if (mapper == null)
-            //{
-            //    throw new ArgumentNullException("mapper");
-            //}
 
             _legacyServicesConfiguration = legacyServicesConfiguration;
             _service = service;
-
-            var mapper = new VacancySummaryMapper(referenceDataService);
-            mapper.Initialize();
             _mapper = mapper;
         }
 
@@ -104,8 +93,7 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Service
                 return Enumerable.Empty<VacancySummary>().ToList();
             }
 
-            return rs.ResponseData.SearchResults
-                .Select(result => _mapper.Map<VacancySummaryData, VacancySummary>(result));
+            return _mapper.Map<VacancySummaryData[], IEnumerable<VacancySummary>>(rs.ResponseData.SearchResults);
         }
     }
 }

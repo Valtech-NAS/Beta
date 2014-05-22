@@ -4,11 +4,11 @@
     using System.Linq;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Services.Common.Wcf;
-    using SFA.Apprenticeships.Services.ReferenceData.Abstract;
-    using SFA.Apprenticeships.Services.ReferenceData.Models;
-    using SFA.Apprenticeships.Services.ReferenceData.Proxy;
     using SFA.Apprenticeships.Common.Configuration.LegacyServices;
+    using SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService;
+    using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
+    using SFA.Apprenticeships.Services.Common.Wcf;
+    using SFA.Apprenticeships.Services.ReferenceData.Proxy;
     using StructureMap;
 
     [TestFixture]
@@ -45,7 +45,7 @@
             var test = _service.GetApprenticeshipFrameworks();
 
             test.Should().NotBeNullOrEmpty();
-            test.Count().Should().Be(216);
+            test.Count().Should().Be(217);
         }
 
         [TestCase]

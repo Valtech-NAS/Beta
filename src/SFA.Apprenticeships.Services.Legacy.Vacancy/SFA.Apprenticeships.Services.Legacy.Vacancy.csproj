@@ -59,8 +59,8 @@
   <ItemGroup>
     <Compile Include="Abstract\IVacancySummaryService.cs" />
     <Compile Include="IoC\VacancySummaryRegistry.cs" />
+    <Compile Include="Mappers\EnumResolver.cs" />
     <Compile Include="Mappers\AddressResolver.cs" />
-    <Compile Include="Mappers\FrameworkResolver.cs" />
     <Compile Include="Mappers\VacancySummaryMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Proxy\Reference.cs">

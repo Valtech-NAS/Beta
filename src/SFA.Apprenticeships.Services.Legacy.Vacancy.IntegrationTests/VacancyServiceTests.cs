@@ -4,6 +4,7 @@
     using FluentAssertions;
     using NUnit.Framework;
     using SFA.Apprenticeships.Common.Configuration.LegacyServices;
+    using SFA.Apprenticeships.Common.Interfaces.Enums;
     using SFA.Apprenticeships.Services.Common.Wcf;
     using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
     using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
@@ -43,6 +44,15 @@
             service.Use(client => { result = client.Get(vacancySummaryRequest); });
 
             result.Should().NotBeNull();
+        }
+
+        [TestCase]
+        public void ShouldReturnMappedCollectionFromGetVacancySummary()
+        {
+            var service = ObjectFactory.GetInstance<IVacancySummaryService>();
+            var result = service.GetVacancySummary(VacancyLocationType.NonNational, 1);
+
+            result.Should().NotBeNullOrEmpty();
         }
     }
 }

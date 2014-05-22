@@ -9,11 +9,13 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Mappers
     {
         protected override IGeoPoint ResolveCore(AddressData source)
         {
-            var point = new GeoPoint
+            var point = new GeoPoint();
+
+            if (source != null)
             {
-                lat = (double) source.Latitude.GetValueOrDefault(),
-                lon = (double) source.Longitude.GetValueOrDefault()
-            };
+                point.lat = (double) source.Latitude.GetValueOrDefault();
+                point.lon = (double) source.Longitude.GetValueOrDefault();
+            }
 
             return point;
         }
