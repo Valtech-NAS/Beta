@@ -9,5 +9,7 @@
     {
         CloudQueueMessage GetMessage(string queueName);
         void DeleteMessage(string queueName, CloudQueueMessage queueMessage);
+
+        void AddMessage(string queueName, CloudQueueMessage queueMessage);
     }
 }
