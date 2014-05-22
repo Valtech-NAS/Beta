@@ -7,12 +7,15 @@ using StructureMap.Configuration.DSL;
 
 namespace SFA.Apprenticeships.Services.ReferenceData.IoC
 {
+    using SFA.Apprenticeships.Common.Caching;
+
     public class ReferenceDataRegistry : Registry
     {
         public ReferenceDataRegistry()
         {
             For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
-            For<IReferenceDataService>().Use<ReferenceDataService>();
+            For<IReferenceDataService>().Use<ReferenceDataService>()
+                .DecorateWith((ctx, provider) => new CachedReferenceDataService(ctx.GetInstance<ICacheClient>(), provider));
         }
     }
 }

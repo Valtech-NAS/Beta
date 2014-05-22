@@ -1,15 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
+    using SFA.Apprenticeships.Common.Caching;
     using SFA.Apprenticeships.Common.Configuration.LegacyServices;
     using SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService;
     using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
     using SFA.Apprenticeships.Services.Common.Wcf;
 
     using SFA.Apprenticeships.Services.ReferenceData.Proxy;
+    using SFA.Apprenticeships.Services.ReferenceData.Service;
     using StructureMap;
 
     [TestFixture]
@@ -96,6 +100,26 @@
             var test = _service.GetReferenceData(type);
 
             test.Should().NotBeNullOrEmpty();
+        }
+
+        [TestCase]
+        public void ShouldGetServiceResponseFromCache()
+        {
+            var cache = ObjectFactory.GetInstance<ICacheClient>();
+            cache.FlushAll();
+
+            // call once to fill cache.
+            _service.GetApprenticeshipFrameworks();
+
+            // Mock the service to ensure it's not called but use the same cache.
+            var uncachedServicce = new Mock<IReferenceDataService>();
+            uncachedServicce.Setup(x => x.GetApprenticeshipFrameworks()).Throws<InvalidOperationException>();
+
+            var service = new CachedReferenceDataService(cache, uncachedServicce.Object);
+            var test = service.GetApprenticeshipFrameworks();
+
+            test.Should().NotBeNullOrEmpty();
+            test.Count().Should().Be(217);
         }
     }
 }
