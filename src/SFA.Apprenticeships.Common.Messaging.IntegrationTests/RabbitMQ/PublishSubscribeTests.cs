@@ -2,10 +2,12 @@
 {
     using System.Reflection;
     using System.Threading;
+    using EasyNetQ;
     using FluentAssertions;
     using NUnit.Framework;
     using SFA.Apprenticeships.Common.Messaging.IntegrationTests.Consumers;
-    using SFA.Apprenticeships.Common.Messaging.RabbitMQ;
+    using SFA.Apprenticeships.Common.Messaging.Interfaces;
+    using StructureMap;
 
     [TestFixture]
     public class PublishSubscribeTests : RabbitSetUp
@@ -13,8 +15,9 @@
         [Test]
         public void ConsumesSyncAndAsyncMessagesFromQueue()
         {
-            var bus = Transport.CreateBus();
-            var bs = new BootstrapSubcribers(bus);
+            var bus = ObjectFactory.GetInstance<IBus>();
+            var bs = ObjectFactory.GetInstance<IBootstrapSubcribers>();
+
             bs.LoadSubscribers(Assembly.GetExecutingAssembly(), "test_app");
 
             var testMessage = new TestMessage() { TestString = "Testing 123" };

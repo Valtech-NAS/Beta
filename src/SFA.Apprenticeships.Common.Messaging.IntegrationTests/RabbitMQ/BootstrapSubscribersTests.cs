@@ -4,7 +4,8 @@
     using System.Reflection;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Common.Messaging.RabbitMQ;
+    using SFA.Apprenticeships.Common.Messaging.Interfaces;
+    using StructureMap;
 
     [TestFixture]
     public class BootstrapSubscribersTests : RabbitSetUp
@@ -12,8 +13,7 @@
         [TestCase]
         public void AutoBindsSubscriptions()
         {
-            var bus = Transport.CreateBus();
-            var bs = new BootstrapSubcribers(bus);
+            var bs = ObjectFactory.GetInstance<IBootstrapSubcribers>();
             bs.LoadSubscribers(Assembly.GetExecutingAssembly(), "test_app");
 
             var exchange = GetExchange(ExchangeName);

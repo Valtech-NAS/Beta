@@ -4,9 +4,10 @@
     using System.Reflection;
     using EasyNetQ;
     using EasyNetQ.AutoSubscribe;
+    using SFA.Apprenticeships.Common.Messaging.Interfaces;
     using StructureMap;
 
-    public class BootstrapSubcribers
+    internal class BootstrapSubcribers : IBootstrapSubcribers
     {
         private readonly IBus _bus;
 
