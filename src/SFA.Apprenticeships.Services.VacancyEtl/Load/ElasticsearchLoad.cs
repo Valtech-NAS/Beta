@@ -9,7 +9,6 @@ using SFA.Apprenticeships.Common.Entities.Vacancy;
 using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
 using SFA.Apprenticeships.Common.JsonConverters;
 using SFA.Apprenticeships.Services.Elasticsearch.Mapping;
-using StructureMap;
 
 namespace SFA.Apprenticeships.Services.VacancyEtl.Load
 {

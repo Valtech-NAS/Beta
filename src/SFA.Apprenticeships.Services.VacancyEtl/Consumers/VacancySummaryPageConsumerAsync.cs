@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Services.VacancyEtl.Consumers
 {
     using System;
+    using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
     using System.Threading.Tasks;
     using EasyNetQ;
     using EasyNetQ.AutoSubscribe;
@@ -28,7 +30,9 @@
         {
             try
             {
-                var vacancies = _service.GetVacancySummary(message.VacancyLocation, message.PageNumber);
+                var vacancies = _service.GetVacancySummary(message.VacancyLocation, message.PageNumber).ToList();
+                vacancies.ForEach(x => x.UpdateReference = message.UpdateReference);
+
                 Parallel.ForEach(
                     vacancies,
                     new ParallelOptions() {MaxDegreeOfParallelism = 5},

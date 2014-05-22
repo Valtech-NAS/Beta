@@ -11,6 +11,8 @@ using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
 
 namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Service
 {
+    using SFA.Apprenticeships.Common.Helpers;
+
     public class VacancySummaryService : IVacancySummaryService
     {
 
@@ -93,7 +95,7 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Service
                 return Enumerable.Empty<VacancySummary>().ToList();
             }
 
-            return _mapper.Map<VacancySummaryData[], IEnumerable<VacancySummary>>(rs.ResponseData.SearchResults);
+           return _mapper.Map<VacancySummaryData[], IEnumerable<VacancySummary>>(rs.ResponseData.SearchResults);
         }
     }
 }

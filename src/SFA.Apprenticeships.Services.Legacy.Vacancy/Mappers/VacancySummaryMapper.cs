@@ -5,7 +5,6 @@ using AutoMapper;
 using SFA.Apprenticeships.Common.Entities.Vacancy;
 using SFA.Apprenticeships.Common.EntityMappers;
 using SFA.Apprenticeships.Common.Interfaces.Enums;
-using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
 using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
 
 namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Mappers
@@ -51,8 +50,8 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.Mappers
     {
         public IEnumerable<VacancySummary> Convert(ResolutionContext context)
         {
-            return 
-                from item in (VacancySummaryData[])context.SourceValue
+            return
+                from item in (VacancySummaryData[]) context.SourceValue
                 select context.Engine.Map<VacancySummaryData, VacancySummary>(item);
         }
     }

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests
 {
     using System;
+    using System.Linq;
     using FluentAssertions;
     using NUnit.Framework;
     using SFA.Apprenticeships.Common.Configuration.LegacyServices;
@@ -52,7 +53,7 @@
             var service = ObjectFactory.GetInstance<IVacancySummaryService>();
             var result = service.GetVacancySummary(VacancyLocationType.NonNational, 1);
 
-            result.Should().NotBeNullOrEmpty();
+            result.ToList().Should().NotBeNullOrEmpty();
         }
     }
 }
