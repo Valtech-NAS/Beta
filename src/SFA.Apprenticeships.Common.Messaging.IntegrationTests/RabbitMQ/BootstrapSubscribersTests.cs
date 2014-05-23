@@ -28,6 +28,9 @@
             Common.IoC.IoC.Initialize();
             var rabitConfig = RabbitMqHostsConfiguration.Instance.RabbitHosts["Test"];
             managementClient = new ManagementClient(string.Format("http://{0}", rabitConfig.HostName), rabitConfig.UserName, rabitConfig.Password);
+
+            var bs = ObjectFactory.GetInstance<IBootstrapSubcribers>();
+            bs.LoadSubscribers(Assembly.GetExecutingAssembly(), "test_app");
         }
 
         [TestFixtureTearDown]
@@ -72,9 +75,6 @@
         [TestCase]
         public void AutoBindsSubscriptions()
         {
-            var bs = ObjectFactory.GetInstance<IBootstrapSubcribers>();
-            bs.LoadSubscribers(Assembly.GetExecutingAssembly(), "test_app");
-
             var exchange = GetExchange(ExchangeName);
             exchange.Should().NotBeNull();
             exchange.Durable.Should().Be(true);
@@ -108,10 +108,6 @@
         public void ConsumesSyncAndAsyncMessagesFromQueue()
         {
             var bus = ObjectFactory.GetInstance<IBus>();
-            var bs = ObjectFactory.GetInstance<IBootstrapSubcribers>();
-
-            bs.LoadSubscribers(Assembly.GetExecutingAssembly(), "test_app");
-
             var testMessage = new TestMessage() { TestString = "Testing 123" };
 
             bus.Publish(testMessage);
