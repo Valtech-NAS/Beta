@@ -111,7 +111,7 @@
             var testMessage = new TestMessage() { TestString = "Testing 123" };
 
             bus.Publish(testMessage);
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
             ConsumerCounter.Counter.Should().Be(2);
         }
     }

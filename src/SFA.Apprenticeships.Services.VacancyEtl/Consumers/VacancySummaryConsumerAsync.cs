@@ -1,12 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using EasyNetQ.AutoSubscribe;
-using SFA.Apprenticeships.Common.Entities.Vacancy;
-using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-using SFA.Apprenticeships.Services.VacancyEtl.Load;
-
-namespace SFA.Apprenticeships.Services.VacancyEtl.Consumers
+﻿namespace SFA.Apprenticeships.Services.VacancyEtl.Consumers
 {
+    using System;
+    using System.Threading.Tasks;
+    using EasyNetQ.AutoSubscribe;
+    using SFA.Apprenticeships.Common.Entities.Vacancy;
+    using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
     using SFA.Apprenticeships.Services.VacancyEtl.Load;
 
     public class VacancySummaryConsumerAsync : IConsumeAsync<VacancySummary>

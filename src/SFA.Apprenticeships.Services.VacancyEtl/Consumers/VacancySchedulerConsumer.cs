@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
     using System.Xml.Serialization;
     using EasyNetQ;
+    using Microsoft.WindowsAzure.Storage.Queue;
     using SFA.Apprenticeships.Common.Interfaces.Enums;
     using SFA.Apprenticeships.Common.Messaging.Interfaces;
     using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
@@ -39,10 +40,14 @@
             {
                 // Check Rabbit procesing queue - should not be doing any still or there is a potential issue.
                 // TODO: Log it.
+                var scheduledMessageData = DeserialiseQueueMessage(latestScheduledMessage);
 
                 var nationalCount = _vacancySummaryService.GetVacancyPageCount(VacancyLocationType.National);
                 var nonNationalCount = _vacancySummaryService.GetVacancyPageCount(VacancyLocationType.NonNational);
-                var vacancySumaries = BuildVacancySummaries(Guid.Parse(latestScheduledMessage.ClientRequestId), nationalCount, nonNationalCount);
+                var vacancySumaries = BuildVacancySummaries(Guid.Parse(scheduledMessageData.ClientRequestId), nationalCount, nonNationalCount);
+
+                // Only delete from queue once we have all vacanies from the services without error.
+                _cloudClient.DeleteMessage(VacancySearchDataControlQueueName, latestScheduledMessage);
 
                 Parallel.ForEach(
                     vacancySumaries,
@@ -51,9 +56,8 @@
             }
         }
 
-        private StorageQueueMessage GetLatestQueueMessage()
+        private CloudQueueMessage GetLatestQueueMessage()
         {
-            StorageQueueMessage scheduledQueueMessage;
             var queueMessage = _cloudClient.GetMessage(VacancySearchDataControlQueueName);
 
             if (queueMessage == null)
@@ -74,6 +78,13 @@
                 queueMessage = nextQueueMessage;
             }
 
+            return queueMessage;
+        }
+
+        private StorageQueueMessage DeserialiseQueueMessage(CloudQueueMessage queueMessage)
+        {
+            StorageQueueMessage scheduledQueueMessage;
+
             var dcs = new XmlSerializer(typeof(StorageQueueMessage));
 
             using (var xmlstream = new MemoryStream(Encoding.Unicode.GetBytes(queueMessage.AsString)))
@@ -81,7 +92,6 @@
                 scheduledQueueMessage = (StorageQueueMessage)dcs.Deserialize(xmlstream);
             }
 
-            _cloudClient.DeleteMessage(VacancySearchDataControlQueueName, queueMessage);
             return scheduledQueueMessage;
         }
 

@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using System.Security.Cryptography.X509Certificates;
     using System.Threading.Tasks;
     using EasyNetQ;
     using EasyNetQ.AutoSubscribe;
@@ -11,8 +10,8 @@
 
     public class VacancySummaryPageConsumerAsync : IConsumeAsync<VacancySummaryPage>
     {
-        private IVacancySummaryService _service;
-        private IBus _bus;
+        private readonly IVacancySummaryService _service;
+        private readonly IBus _bus;
 
         public VacancySummaryPageConsumerAsync(IBus bus, IVacancySummaryService service)
         {
