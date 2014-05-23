@@ -99,6 +99,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Consumers\VacancySchedulerConsumer.cs" />
     <Compile Include="Consumers\VacancySummaryPageConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryConsumerAsync.cs" />

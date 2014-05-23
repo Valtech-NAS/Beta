@@ -4,7 +4,6 @@
     using EasyNetQ;
     using SFA.Apprenticeships.Common.Messaging.Interfaces;
     using SFA.Apprenticeships.Services.VacancyEtl.Consumers;
-    using SFA.Apprenticeships.Common.Messaging.RabbitMQ;
     using StructureMap;
 
     public static class RabbitQueue

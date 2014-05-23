@@ -2,6 +2,7 @@ namespace SFA.Apprenticeships.Services.VacancyEtl
 {
     using System.Net;
     using System.Threading;
+    using EasyNetQ;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using SFA.Apprenticeships.Common.Entities.Vacancy;
     using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
@@ -18,27 +19,18 @@ namespace SFA.Apprenticeships.Services.VacancyEtl
     public class EtlWorkerRole : RoleEntryPoint
     {
         private VacancySchedulerConsumer _vacancySchedulerConsumer;
-        private readonly static NLog.Logger Logger = NLog.LogManager.GetLogger("VacanyImporter");
+        private readonly static NLog.Logger Logger = NLog.LogManager.GetLogger(Constants.NamedLoggers.VacanyImporterLogger);
 
         public override void Run()
         {
             // This is a sample worker implementation. Replace with your logic.
             Logger.Trace("EtlWorkerRole entry point called");
 
-            IoC.Initialize();
-            Logger.Trace("IoC initialized");
-
-            ElasticsearchLoad<VacancySummary>.Setup(ObjectFactory.GetInstance<IElasticsearchService>());
-            Logger.Trace("Elasticsearch setup complete");
-
-            var bus = RabbitQueue.Setup();
-            Logger.Trace("RabbitMq setup complete");
-
-            _vacancySchedulerConsumer = new VacancySchedulerConsumer(
-                                                bus,
-                                                ObjectFactory.GetInstance<IAzureCloudClient>(),
-                                                ObjectFactory.GetInstance<IVacancySummaryService>());
-            Logger.Trace("VacancySchedulerConsumer setup complete");
+            if (!Initialise())
+            {
+                // TODO: Check this exits worker.
+                return;
+            }
 
             while (true)
             {
@@ -66,6 +58,34 @@ namespace SFA.Apprenticeships.Services.VacancyEtl
             }
         }
 
+        private bool Initialise()
+        {
+            try
+            {
+                IoC.Initialize();
+                Logger.Trace("IoC initialized");
+
+                ElasticsearchLoad<VacancySummary>.Setup(ObjectFactory.GetInstance<IElasticsearchService>());
+                Logger.Trace("Elasticsearch setup complete");
+
+                var bus = RabbitQueue.Setup();
+                Logger.Trace("RabbitMq setup complete");
+
+                _vacancySchedulerConsumer = new VacancySchedulerConsumer(
+                    bus,
+                    ObjectFactory.GetInstance<IAzureCloudClient>(),
+                    ObjectFactory.GetInstance<IVacancySummaryService>());
+                Logger.Trace("VacancySchedulerConsumer setup complete");
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error initialising VacancyEtl Worker/Server", ex);
+                return false;
+            }
+
+            return true;
+        }
+
         public override bool OnStart()
         {
             // Set the maximum number of concurrent connections 
@@ -79,7 +99,10 @@ namespace SFA.Apprenticeships.Services.VacancyEtl
 
         public override void OnStop()
         {
-            // add logic for when stopping ervice
+            // Kill the bus which will kill any subscriptions
+            ObjectFactory.GetInstance<IBus>().Advanced.Dispose();
+            // Give it 5 seconds to finish processing any in flight subscriptions.
+            Thread.Sleep(5000);
             base.OnStop();
         }
     }

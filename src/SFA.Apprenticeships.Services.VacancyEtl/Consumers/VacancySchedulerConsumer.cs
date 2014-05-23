@@ -15,6 +15,8 @@
 
     public class VacancySchedulerConsumer
     {
+        private readonly static NLog.Logger Logger = NLog.LogManager.GetLogger(Constants.NamedLoggers.VacanyImporterLogger);
+
         private readonly IBus _bus;
         private readonly IAzureCloudClient _cloudClient;
         private readonly IVacancySummaryService _vacancySummaryService;
@@ -38,8 +40,9 @@
 
             if (latestScheduledMessage != null)
             {
-                // Check Rabbit procesing queue - should not be doing any still or there is a potential issue.
-                // TODO: Log it.
+                // TODO: Check Rabbit procesing queue - should not still be processing messages or there maybe a potential issue.
+
+                Logger.Info("Scheduled VacancyEtl Message Received at: {0}", DateTime.Now);
                 var scheduledMessageData = DeserialiseQueueMessage(latestScheduledMessage);
 
                 var nationalCount = _vacancySummaryService.GetVacancyPageCount(VacancyLocationType.National);
