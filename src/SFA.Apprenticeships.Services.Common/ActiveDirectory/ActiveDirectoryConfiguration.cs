@@ -3,7 +3,7 @@
     using System.Configuration;
     using SFA.Apprenticeships.Common.Configuration;
 
-    public class ActiveDirectoryConfigurationSection : SecureConfigurationSection<ActiveDirectoryConfigurationSection>, IActiveDirectoryConfiguration
+    public class ActiveDirectoryConfiguration : SecureConfigurationSection<ActiveDirectoryConfiguration>, IActiveDirectoryConfiguration
     {
         private const string ServerConstant = "Server";
         private const string DistinguishedNameConstant = "DistinguishedName";
@@ -13,7 +13,7 @@
         private const string SslPortConstant = "SslPort";
         private const string DefaultValueConstant = "";
 
-        public ActiveDirectoryConfigurationSection(): base("ActiveDirectoryConfiguration")
+        public ActiveDirectoryConfiguration(): base("ActiveDirectoryConfiguration")
         {
         }
 

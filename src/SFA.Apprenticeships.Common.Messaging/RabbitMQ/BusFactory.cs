@@ -5,21 +5,21 @@
     using SFA.Apprenticeships.Common.Messaging.Interfaces;
     using SFA.Apprenticeships.Common.Messaging.ServiceOverrides;
 
-    internal class Transport
+    internal class BusFactory
     {
-        private static readonly IRabbitMqServiceProvider CustomServiceProvider;
-        private static readonly IRabbitMQConfiguration RabbitMqConfiguration;
+        protected static readonly IRabbitMqServiceProvider CustomServiceProvider;
 
-        static Transport()
+        static BusFactory()
         {
             CustomServiceProvider = new CustomServiceProvider();
-            RabbitMqConfiguration = RabbitMQConfigurationSection.Instance;
-        }   
+        }
 
-        public static IBus CreateBus()
+        public static IBus CreateBus(string rabbitHost)
         {
+            var rabbitMqHostConfiguration = RabbitMqHostsConfiguration.Instance.RabbitHosts[rabbitHost];
+
             var rabbitBus = RabbitHutch.CreateBus(
-                                    RabbitMqConfiguration.ConnectionString, 
+                                    rabbitMqHostConfiguration.ConnectionString, 
                                     CustomServiceProvider.RegisterCustomServices());
             return rabbitBus;
         }

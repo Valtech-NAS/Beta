@@ -10,7 +10,7 @@
         [TestCase]
         public void GetConfigSectionForAd()
         {
-            var test = ActiveDirectoryConfigurationSection.Instance;
+            var test = ActiveDirectoryConfiguration.Instance;
            
             test.DistinguishedName.Should().Be("distinguishedname");
             test.Server.Should().Be("server");

@@ -4,7 +4,7 @@
     using SFA.Apprenticeships.Common.Messaging.Interfaces;
     using SFA.Apprenticeships.Common.Messaging.Serializers;
 
-    internal class CustomServiceProvider : IRabbitMqServiceProvider
+    public class CustomServiceProvider : IRabbitMqServiceProvider
     {
         public Action<EasyNetQ.IServiceRegister> RegisterCustomServices()
         {

@@ -4,13 +4,12 @@
     using System.Configuration;
     using SFA.Apprenticeships.Common.Configuration;
 
-    public class LegacyServicesConfigurationSection : SecureConfigurationSection<LegacyServicesConfigurationSection>, ILegacyServicesConfiguration
+    public class LegacyServicesConfiguration : SecureConfigurationSection<LegacyServicesConfiguration>, ILegacyServicesConfiguration
     {
         private const string SystemIdConst = "SystemId";
         private const string PublicKeyConst = "PublicKey";
 
-        public LegacyServicesConfigurationSection()
-            : base("LegacyServicesConfiguration")
+        public LegacyServicesConfiguration() : base("LegacyServicesConfiguration")
         {
         }
 

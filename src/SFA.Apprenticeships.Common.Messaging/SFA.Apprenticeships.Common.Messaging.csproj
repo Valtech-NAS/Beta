@@ -92,7 +92,7 @@
     <Compile Include="ServiceOverrides\CustomServiceProvider.cs" />
     <Compile Include="Interfaces\IRabbitMqServiceProvider.cs" />
     <Compile Include="RabbitMQ\StructureMapMessageDispatcher.cs" />
-    <Compile Include="RabbitMQ\Transport.cs" />
+    <Compile Include="RabbitMQ\BusFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

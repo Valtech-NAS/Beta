@@ -127,10 +127,11 @@
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\IConfigurationManager.cs" />
     <Compile Include="Configuration\LegacyServices\ILegacyServicesConfiguration.cs" />
-    <Compile Include="Configuration\LegacyServices\LegacyServicesConfigurationSection.cs" />
+    <Compile Include="Configuration\LegacyServices\LegacyServicesConfiguration.cs" />
+    <Compile Include="Configuration\Messaging\RabbitMqHostsConfiguration.cs" />
     <Compile Include="Configuration\SecureConfigurationSection.cs" />
-    <Compile Include="Configuration\Messaging\RabbitMQConfigurationSection.cs" />
-    <Compile Include="Configuration\Messaging\IRabbitMQConfiguration.cs" />
+    <Compile Include="Configuration\Messaging\RabbitMqHostConfiguration.cs" />
+    <Compile Include="Configuration\Messaging\IRabbitMqHostConfiguration.cs" />
     <Compile Include="EntityMappers\MapperEngine.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="IoC\CommonRegistry.cs" />
@@ -138,7 +139,7 @@
     <Compile Include="JsonConverters\EnumToStringConverter.cs" />
     <Compile Include="Logging\Layouts\JsonLayout.cs" />
     <Compile Include="Logging\Layouts\JsonProperty.cs" />
-    <Compile Include="Logging\Targets\RabbitMQ.cs" />
+    <Compile Include="Logging\Targets\RabbitMQTarget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

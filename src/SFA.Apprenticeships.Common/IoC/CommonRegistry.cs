@@ -21,12 +21,12 @@
                 .Ctor<string>("configFileAppSettingKey")
                 .Is(ConfigurationManager.ConfigurationFileAppSetting);
 
-            For<IRabbitMQConfiguration>()
-                .Singleton().Use(RabbitMQConfigurationSection.Instance);
+            For<RabbitMqHostsConfiguration>()
+                .Singleton().Use(RabbitMqHostsConfiguration.Instance);
 
             For<ILegacyServicesConfiguration>()
                 .Singleton()
-                .Use(LegacyServicesConfigurationSection.Instance);
+                .Use(LegacyServicesConfiguration.Instance);
 
             For<IAzureCloudConfig>()
                 .Singleton()

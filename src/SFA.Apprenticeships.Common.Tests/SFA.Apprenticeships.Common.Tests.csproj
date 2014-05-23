@@ -64,6 +64,10 @@
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -88,7 +92,7 @@
     <Compile Include="Caching\MemoryCachingTests.cs" />
     <Compile Include="Configuration\ConfigurationManagerTests.cs" />
     <Compile Include="Configuration\LegacyServicesConfigurationTests.cs" />
-    <Compile Include="Configuration\RabbitMQConfigurationTests.cs" />
+    <Compile Include="Configuration\RabbitMqConfigurationTests.cs" />
     <Compile Include="DependencyResolutionTests\DependencyRegistrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

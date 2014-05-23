@@ -1,31 +1,28 @@
 ﻿namespace SFA.Apprenticeships.Common.Configuration.Messaging
 {
     using System.Configuration;
-    using SFA.Apprenticeships.Common.Configuration;
 
-    public class RabbitMQConfigurationSection : SecureConfigurationSection<RabbitMQConfigurationSection>, IRabbitMQConfiguration
+    public class RabbitMqHostConfiguration : ConfigurationElement, IRabbitMqHostConfiguration
     {
+        private const string NameConst = "Name";
         private const string VirtualHostConst = "VirtualHost";
         private const string UserNameConst = "UserName";
         private const string PasswordConst = "Password";
         private const string PortConst = "Port";
-        private const string RoutingKeyConst = "RoutingKey";
         private const string HostNameConst = "HostName";
-        private const string ExchangeNameConst = "ExchangeName";
-        private const string ExchangeTypeConst = "ExchangeType";
         private const string DurableConst = "Durable";
-        private const string AppIdConst = "AppId";
         private const string HeartBeatSecondsConst = "HeartBeatSeconds";
-        private const string QueueNameConst = "QueueName";
         private const string PreFetchCountConst = "PreFetchCount";
-
         private const string OutputEasyNetQLogsToNLogInternalConst = "OutputEasyNetQLogsToNLogInternal";
 
-        public RabbitMQConfigurationSection() : base("RabbitMQConfiguration")
+        [ConfigurationProperty(NameConst, IsRequired = true, IsKey = true)]
+        public string Name
         {
+            get { return (string)this[NameConst]; }
+            set { this[NameConst] = value; }
         }
 
-        [ConfigurationProperty(VirtualHostConst, IsRequired = false, IsKey = true, DefaultValue = "/")]
+        [ConfigurationProperty(VirtualHostConst, IsRequired = false, IsKey = false, DefaultValue = "/")]
         public string VirtualHost
         {
             get { return (string)this[VirtualHostConst]; }
@@ -53,13 +50,6 @@
             set { this[PortConst] = value; }
         }
 
-        [ConfigurationProperty(RoutingKeyConst, IsRequired = false, IsKey = false, DefaultValue = "{0}")]
-        public string RoutingKey
-        {
-            get { return (string)this[RoutingKeyConst]; }
-            set { this[RoutingKeyConst] = value; }
-        }
-
         [ConfigurationProperty(HostNameConst, IsRequired = true, IsKey = false)]
         public string HostName
         {
@@ -67,45 +57,11 @@
             set { this[HostNameConst] = value; }
         }
 
-        [ConfigurationProperty(ExchangeNameConst, IsRequired = true, IsKey = false)]
-        public string ExchangeName
-        {
-            get { return (string)this[ExchangeNameConst]; }
-            set { this[ExchangeNameConst] = value; }
-        }
-
-        [ConfigurationProperty(ExchangeTypeConst, IsRequired = false, IsKey = false, DefaultValue = EasyNetQ.Topology.ExchangeType.Topic)]
-        public string ExchangeType
-        {
-            get { return (string)this[ExchangeTypeConst]; }
-            set
-            {
-                switch (value)
-                {
-                    case EasyNetQ.Topology.ExchangeType.Topic:
-                    case EasyNetQ.Topology.ExchangeType.Fanout:
-                    case EasyNetQ.Topology.ExchangeType.Header:
-                    case EasyNetQ.Topology.ExchangeType.Direct:
-                        this[ExchangeTypeConst] = value;
-                        break;
-                    default:
-                        throw new ConfigurationErrorsException("ExchangeType not valid ExchangeType, see EasyNetQ.Topology.ExchangeType for valid values");
-                }
-            }
-        }
-
         [ConfigurationProperty(DurableConst, IsRequired = true, IsKey = false, DefaultValue = true)]
         public bool Durable
         {
             get { return (bool)this[DurableConst]; }
             set { this[DurableConst] = value; }
-        }
-
-        [ConfigurationProperty(AppIdConst, IsRequired = true, IsKey = false)]
-        public string AppId
-        {
-            get { return (string)this[AppIdConst]; }
-            set { this[AppIdConst] = value; }
         }
 
         [ConfigurationProperty(HeartBeatSecondsConst, IsRequired = false, IsKey = false, DefaultValue = (ushort)3)]
@@ -120,13 +76,6 @@
         {
             get { return (ushort)this[PreFetchCountConst]; }
             set { this[PreFetchCountConst] = value; }
-        }
-
-        [ConfigurationProperty(QueueNameConst, IsRequired = true, IsKey = false)]
-        public string QueueName
-        {
-            get { return (string)this[QueueNameConst]; }
-            set { this[QueueNameConst] = value; }
         }
 
         [ConfigurationProperty(OutputEasyNetQLogsToNLogInternalConst, IsRequired = false, IsKey = false, DefaultValue = false)]

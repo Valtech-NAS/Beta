@@ -71,7 +71,8 @@
     <Compile Include="ActiveDirectory\ActiveDirectoryPassword.cs" />
     <Compile Include="ActiveDirectory\ActiveDirectoryServer.cs" />
     <Compile Include="ActiveDirectory\IActiveDirectoryConfiguration.cs" />
-    <Compile Include="ActiveDirectory\ActiveDirectoryConfigurationSection.cs" />
+    <Compile Include="ActiveDirectory\ActiveDirectoryConfiguration.cs" />
+    <Compile Include="IoC\ServicesCommonRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rest\RestService.cs" />
     <Compile Include="Wcf\WcfService.cs" />
