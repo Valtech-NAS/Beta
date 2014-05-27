@@ -80,6 +80,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Azure\AzureCloudClient.cs" />
     <Compile Include="IoC\CommonMessagingRegistry.cs" />
     <Compile Include="RabbitMQ\BootstrapSubcribers.cs" />
