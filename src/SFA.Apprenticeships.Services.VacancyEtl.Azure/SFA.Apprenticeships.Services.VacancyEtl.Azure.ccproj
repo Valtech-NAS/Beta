@@ -37,6 +37,14 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="SFA.Apprenticeships.Services.VacancyEtlContent\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SFA.Apprenticeships.Services.VacancyEtlContent\diagnostics.wadcfg">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Services.VacancyEtl\SFA.Apprenticeships.Services.VacancyEtl.csproj">
       <Name>SFA.Apprenticeships.Services.VacancyEtl</Name>
       <Project>{0491054e-caf4-4321-be1d-3e44e739421c}</Project>
@@ -45,14 +53,6 @@
       <RoleName>SFA.Apprenticeships.Services.VacancyEtl</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SFA.Apprenticeships.Services.VacancyEtlContent\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="SFA.Apprenticeships.Services.VacancyEtlContent\diagnostics.wadcfg">
-      <SubType>Content</SubType>
-    </Content>
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
