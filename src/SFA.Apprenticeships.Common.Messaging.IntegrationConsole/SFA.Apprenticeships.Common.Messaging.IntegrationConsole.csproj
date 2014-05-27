@@ -128,7 +128,7 @@
       <Name>SFA.Apprenticeships.Services.ReferenceData</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Services.VacancyEtl\SFA.Apprenticeships.Services.VacancyEtl.csproj">
-      <Project>{5069b0ba-5499-4dc1-8f7a-e5022f5e4f7b}</Project>
+      <Project>{0491054E-CAF4-4321-BE1D-3E44E739421C}</Project>
       <Name>SFA.Apprenticeships.Services.VacancyEtl</Name>
     </ProjectReference>
   </ItemGroup>

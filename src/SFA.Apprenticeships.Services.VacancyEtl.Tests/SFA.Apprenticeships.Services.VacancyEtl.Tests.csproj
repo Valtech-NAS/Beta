@@ -123,7 +123,7 @@
       <Name>SFA.Apprenticeships.Services.Legacy.Vacancy</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Services.VacancyEtl\SFA.Apprenticeships.Services.VacancyEtl.csproj">
-      <Project>{5069B0BA-5499-4DC1-8F7A-E5022F5E4F7B}</Project>
+      <Project>{0491054e-caf4-4321-be1d-3e44e739421c}</Project>
       <Name>SFA.Apprenticeships.Services.VacancyEtl</Name>
     </ProjectReference>
   </ItemGroup>

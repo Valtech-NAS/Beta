@@ -60,10 +60,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Service
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests", "SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests\SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests.csproj", "{2BAA69B1-D0C4-447A-8D16-4473C2183CC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Services.VacancyEtl", "SFA.Apprenticeships.Services.VacancyEtl\SFA.Apprenticeships.Services.VacancyEtl.csproj", "{5069B0BA-5499-4DC1-8F7A-E5022F5E4F7B}"
-EndProject
-Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Services.VacancyEtl.Azure", "SFA.Apprenticeships.Services.VacancyEtl.Azure\SFA.Apprenticeships.Services.VacancyEtl.Azure.ccproj", "{04D6DF96-1684-4EAC-865C-5AB92B5E6DFF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Services.VacancyEtl.Tests", "SFA.Apprenticeships.Services.VacancyEtl.Tests\SFA.Apprenticeships.Services.VacancyEtl.Tests.csproj", "{39157C7D-190B-4C9B-BEBB-5217B8D027A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Common.Messaging", "SFA.Apprenticeships.Common.Messaging\SFA.Apprenticeships.Common.Messaging.csproj", "{8B5044E4-03DE-4724-91BC-05840F0CC3D8}"
@@ -77,6 +73,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Services.VacancyUpdate", "SFA.Apprenticeships.Services.VacancyUpdate\SFA.Apprenticeships.Services.VacancyUpdate.csproj", "{A04055FB-E37A-40F0-BC0E-B35C74E36563}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Common.Tests", "SFA.Apprenticeships.Web.Common.Tests\SFA.Apprenticeships.Web.Common.Tests.csproj", "{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0}"
+EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Services.VacancyEtl.Azure", "SFA.Apprenticeships.Services.VacancyEtl.Azure\SFA.Apprenticeships.Services.VacancyEtl.Azure.ccproj", "{711DF928-D828-4BF9-BE66-22E4AFD554A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Services.VacancyEtl", "SFA.Apprenticeships.Services.VacancyEtl\SFA.Apprenticeships.Services.VacancyEtl.csproj", "{0491054E-CAF4-4321-BE1D-3E44E739421C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -164,14 +164,6 @@ Global
 		{2BAA69B1-D0C4-447A-8D16-4473C2183CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BAA69B1-D0C4-447A-8D16-4473C2183CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BAA69B1-D0C4-447A-8D16-4473C2183CC2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5069B0BA-5499-4DC1-8F7A-E5022F5E4F7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5069B0BA-5499-4DC1-8F7A-E5022F5E4F7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5069B0BA-5499-4DC1-8F7A-E5022F5E4F7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5069B0BA-5499-4DC1-8F7A-E5022F5E4F7B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{04D6DF96-1684-4EAC-865C-5AB92B5E6DFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04D6DF96-1684-4EAC-865C-5AB92B5E6DFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04D6DF96-1684-4EAC-865C-5AB92B5E6DFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04D6DF96-1684-4EAC-865C-5AB92B5E6DFF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{39157C7D-190B-4C9B-BEBB-5217B8D027A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{39157C7D-190B-4C9B-BEBB-5217B8D027A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39157C7D-190B-4C9B-BEBB-5217B8D027A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -200,6 +192,14 @@ Global
 		{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{711DF928-D828-4BF9-BE66-22E4AFD554A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{711DF928-D828-4BF9-BE66-22E4AFD554A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{711DF928-D828-4BF9-BE66-22E4AFD554A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{711DF928-D828-4BF9-BE66-22E4AFD554A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0491054E-CAF4-4321-BE1D-3E44E739421C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0491054E-CAF4-4321-BE1D-3E44E739421C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0491054E-CAF4-4321-BE1D-3E44E739421C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0491054E-CAF4-4321-BE1D-3E44E739421C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -225,8 +225,6 @@ Global
 		{91DB99C3-50A9-4DED-AB90-2FF94D0B130E} = {C44562AB-7261-436D-A164-C6ACD16B34E5}
 		{67CDACCD-5217-4110-8432-C6EF164BAA0D} = {B2A6969F-9504-44F3-929C-2D4C4FAB1576}
 		{2BAA69B1-D0C4-447A-8D16-4473C2183CC2} = {60585263-8161-481E-A39A-0DAEE2BEB80C}
-		{5069B0BA-5499-4DC1-8F7A-E5022F5E4F7B} = {B2A6969F-9504-44F3-929C-2D4C4FAB1576}
-		{04D6DF96-1684-4EAC-865C-5AB92B5E6DFF} = {B2A6969F-9504-44F3-929C-2D4C4FAB1576}
 		{39157C7D-190B-4C9B-BEBB-5217B8D027A8} = {EBD76DE0-71C7-4A7B-9AB8-BDC301995563}
 		{8B5044E4-03DE-4724-91BC-05840F0CC3D8} = {C44562AB-7261-436D-A164-C6ACD16B34E5}
 		{EBE35AC3-4BDC-4CEE-92CE-7ABFC56C9FFA} = {60585263-8161-481E-A39A-0DAEE2BEB80C}
@@ -234,5 +232,7 @@ Global
 		{F86ECD47-6268-4835-AC0F-DB71591D0227} = {B2A6969F-9504-44F3-929C-2D4C4FAB1576}
 		{A04055FB-E37A-40F0-BC0E-B35C74E36563} = {B2A6969F-9504-44F3-929C-2D4C4FAB1576}
 		{A59B16D0-3648-4804-BD5C-4F31C5CDBBE0} = {EBD76DE0-71C7-4A7B-9AB8-BDC301995563}
+		{711DF928-D828-4BF9-BE66-22E4AFD554A3} = {B2A6969F-9504-44F3-929C-2D4C4FAB1576}
+		{0491054E-CAF4-4321-BE1D-3E44E739421C} = {B2A6969F-9504-44F3-929C-2D4C4FAB1576}
 	EndGlobalSection
 EndGlobal

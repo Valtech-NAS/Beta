@@ -5,11 +5,11 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>2.3</ProductVersion>
-    <ProjectGuid>{04d6df96-1684-4eac-865c-5ab92b5e6dff}</ProjectGuid>
+    <ProjectGuid>711df928-d828-4bf9-be66-22e4afd554a3</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Services.VacancyEtl</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Services.VacancyEtl</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Services.VacancyEtl.Azure</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Services.VacancyEtl.Azure</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
     <Name>SFA.Apprenticeships.Services.VacancyEtl.Azure</Name>
   </PropertyGroup>
@@ -37,25 +37,22 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SFA.Apprenticeships.Services.Legacy.VacancyEtlContent" />
-    <Folder Include="SFA.Apprenticeships.Services.VacancyEtlContent\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="SFA.Apprenticeships.Services.Legacy.VacancyEtlContent\diagnostics.wadcfg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="SFA.Apprenticeships.Services.VacancyEtlContent\diagnostics.wadcfg">
-      <SubType>Content</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Services.VacancyEtl\SFA.Apprenticeships.Services.VacancyEtl.csproj">
       <Name>SFA.Apprenticeships.Services.VacancyEtl</Name>
-      <Project>{5069b0ba-5499-4dc1-8f7a-e5022f5e4f7b}</Project>
+      <Project>{0491054e-caf4-4321-be1d-3e44e739421c}</Project>
       <Private>True</Private>
       <RoleType>Worker</RoleType>
       <RoleName>SFA.Apprenticeships.Services.VacancyEtl</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SFA.Apprenticeships.Services.VacancyEtlContent\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SFA.Apprenticeships.Services.VacancyEtlContent\diagnostics.wadcfg">
+      <SubType>Content</SubType>
+    </Content>
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
