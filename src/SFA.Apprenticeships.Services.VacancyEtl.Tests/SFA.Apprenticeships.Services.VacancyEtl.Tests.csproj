@@ -107,22 +107,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common.Entities\SFA.Apprenticeships.Common.Entities.csproj">
-      <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
-      <Name>SFA.Apprenticeships.Common.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common.Interfaces\SFA.Apprenticeships.Common.Interfaces.csproj">
-      <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
-      <Name>SFA.Apprenticeships.Common.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common.Messaging\SFA.Apprenticeships.Common.Messaging.csproj">
-      <Project>{8B5044E4-03DE-4724-91BC-05840F0CC3D8}</Project>
-      <Name>SFA.Apprenticeships.Common.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common\SFA.Apprenticeships.Common.csproj">
-      <Project>{aad6c913-2503-456f-a593-c0a36c07bd35}</Project>
-      <Name>SFA.Apprenticeships.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Services.Legacy.Vacancy\SFA.Apprenticeships.Services.Legacy.Vacancy.csproj">
       <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
       <Name>SFA.Apprenticeships.Services.Legacy.Vacancy</Name>

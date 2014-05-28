@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using RestSharp;
-using SFA.Apprenticeships.Common.Configuration;
-using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-using SFA.Apprenticeships.Services.Common.Rest;
-
-namespace SFA.Apprenticeships.Services.Elasticsearch.Service
+﻿namespace SFA.Apprenticeships.Services.Elasticsearch.Service
 {
+    using System;
+    using System.Collections.Generic;
+    using RestSharp;
+    using SFA.Apprenticeships.Infrastructure.Common.Configuration;
+    using SFA.Apprenticeships.Infrastructure.Common.Rest;
+    using SFA.Apprenticeships.Services.Elasticsearch.Interfaces;
+
     public class ElasticsearchService : RestService, IElasticsearchService
     {
         public const string ElasticsearchEndpointKey = "ElasticsearchEndpoint";

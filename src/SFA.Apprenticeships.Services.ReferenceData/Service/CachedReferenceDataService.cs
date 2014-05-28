@@ -1,23 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using SFA.Apprenticeships.Common.Entities.ReferenceData;
-using SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService;
-using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
-
-namespace SFA.Apprenticeships.Services.ReferenceData.Service
+﻿namespace SFA.Apprenticeships.Services.ReferenceData.Service
 {
-    using SFA.Apprenticeships.Common.Caching;
+    using System;
+    using System.Collections.Generic;
+    using SFA.Apprenticeships.Application.Interfaces.ReferenceData;
+    using SFA.Apprenticeships.Domain.Entities.ReferenceData;
+    using SFA.Apprenticeships.Domain.Interfaces.Services.Caching;
 
     public class CachedReferenceDataService : IReferenceDataService
     {
-        public const string ReferenceDataServiceCacheKey = "SFA.Apprenticeships.LegacyReferenceData.";
+        private static readonly ReferenceDataServiceCacheKeyEntry OccupationsCacheKeyEntry = new ReferenceDataServiceCacheKeyEntry("Occupations");
+        private static readonly ReferenceDataServiceCacheKeyEntry FrameworksCacheKeyEntry = new ReferenceDataServiceCacheKeyEntry("Frameworks");
+        private static readonly ReferenceDataServiceCacheKeyEntry CountriesCacheKeyEntry = new ReferenceDataServiceCacheKeyEntry("Countries");
+        private static readonly ReferenceDataServiceCacheKeyEntry ErrorCodeCacheKeyEntry = new ReferenceDataServiceCacheKeyEntry("ErrorCodes");
+        private static readonly ReferenceDataServiceCacheKeyEntry LocalAuthCacheKeyEntry = new ReferenceDataServiceCacheKeyEntry("LocalAuthorities");
+        private static readonly ReferenceDataServiceCacheKeyEntry RegionCacheKeyEntry = new ReferenceDataServiceCacheKeyEntry("Regions");
 
         private readonly IReferenceDataService _service;
-        private readonly ICacheClient _cache;
+        private readonly ICacheService _cache;
 
-        public CachedReferenceDataService(ICacheClient cache, IReferenceDataService service)
+        public CachedReferenceDataService(ICacheService cache, IReferenceDataService service)
         {
             if (cache == null)
             {
@@ -33,52 +34,34 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
             _service = service;
         }
 
-
-        public IEnumerable<ILegacyReferenceData> GetReferenceData(LegacyReferenceDataType type)
+        public IEnumerable<Occupation> GetApprenticeshipOccupations()
         {
-            var data = _cache.Get<IEnumerable<ILegacyReferenceData>>(new ReferenceDataServiceCacheKeyEntry().Key(type));
-
-            // No cache data found then call the service
-            if (data == null || !data.Any())
-            {
-                data = _service.GetReferenceData(type);
-                if (data != null && data.Any())
-                {
-                    _cache.Put(new ReferenceDataServiceCacheKeyEntry(), data, type);
-                }
-            }
-
-            return data;
+            return _cache.Get(OccupationsCacheKeyEntry, _service.GetApprenticeshipOccupations);
         }
 
-        public IEnumerable<ILegacyReferenceData> GetApprenticeshipOccupations()
+        public IEnumerable<Framework> GetApprenticeshipFrameworks()
         {
-            return GetReferenceData(LegacyReferenceDataType.Occupations);
+            return _cache.Get(FrameworksCacheKeyEntry, _service.GetApprenticeshipFrameworks);
         }
 
-        public IEnumerable<ILegacyReferenceData> GetApprenticeshipFrameworks()
+        public IEnumerable<County> GetCounties()
         {
-            return GetReferenceData(LegacyReferenceDataType.Framework);
+            return _cache.Get(CountriesCacheKeyEntry, _service.GetCounties);
         }
 
-        public IEnumerable<ILegacyReferenceData> GetCounties()
+        public IEnumerable<ErrorCode> GetErrorCodes()
         {
-            return GetReferenceData(LegacyReferenceDataType.County);
+            return _cache.Get(ErrorCodeCacheKeyEntry, _service.GetErrorCodes);
         }
 
-        public IEnumerable<ILegacyReferenceData> GetErrorCodes()
+        public IEnumerable<LocalAuthority> GetLocalAuthorities()
         {
-            return GetReferenceData(LegacyReferenceDataType.ErrorCode);
+            return _cache.Get(LocalAuthCacheKeyEntry, _service.GetLocalAuthorities);
         }
 
-        public IEnumerable<ILegacyReferenceData> GetLocalAuthorities()
+        public IEnumerable<Region> GetRegions()
         {
-            return GetReferenceData(LegacyReferenceDataType.LocalAuthority);
-        }
-
-        public IEnumerable<ILegacyReferenceData> GetRegions()
-        {
-            return GetReferenceData(LegacyReferenceDataType.Region);
+            return _cache.Get(RegionCacheKeyEntry, _service.GetRegions);
         }
     }
 }

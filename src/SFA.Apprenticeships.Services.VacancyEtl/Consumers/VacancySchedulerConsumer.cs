@@ -8,9 +8,7 @@
     using System.Xml.Serialization;
     using EasyNetQ;
     using Microsoft.WindowsAzure.Storage.Queue;
-    using SFA.Apprenticeships.Common.Interfaces.Enums;
-    using SFA.Apprenticeships.Common.Messaging.Interfaces;
-    using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
+    using SFA.Apprenticeships.Domain.Interfaces.Enums;
     using SFA.Apprenticeships.Services.VacancyEtl.Entities;
 
     public class VacancySchedulerConsumer

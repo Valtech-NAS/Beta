@@ -112,25 +112,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common.Entities\SFA.Apprenticeships.Common.Entities.csproj">
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
-      <Name>SFA.Apprenticeships.Common.Entities</Name>
+      <Name>SFA.Apprenticeships.Domain.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common.Interfaces\SFA.Apprenticeships.Common.Interfaces.csproj">
-      <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
-      <Name>SFA.Apprenticeships.Common.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common.Messaging\SFA.Apprenticeships.Common.Messaging.csproj">
-      <Project>{8B5044E4-03DE-4724-91BC-05840F0CC3D8}</Project>
-      <Name>SFA.Apprenticeships.Common.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common\SFA.Apprenticeships.Common.csproj">
-      <Project>{aad6c913-2503-456f-a593-c0a36c07bd35}</Project>
-      <Name>SFA.Apprenticeships.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Services.Elasticsearch\SFA.Apprenticeships.Services.Elasticsearch.csproj">
+    <ProjectReference Include="..\SFA.Apprenticeships.Services.Elasticsearch\SFA.Apprenticeships.Infrastructure.Elasticsearch.csproj">
       <Project>{8dfb3268-8865-4fe4-8e6f-8b2dcee966d9}</Project>
-      <Name>SFA.Apprenticeships.Services.Elasticsearch</Name>
+      <Name>SFA.Apprenticeships.Infrastructure.Elasticsearch</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Services.Legacy.Vacancy\SFA.Apprenticeships.Services.Legacy.Vacancy.csproj">
       <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>

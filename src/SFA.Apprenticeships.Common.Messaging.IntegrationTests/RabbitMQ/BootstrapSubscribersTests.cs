@@ -8,9 +8,7 @@
     using EasyNetQ.Management.Client.Model;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Common.Configuration.Messaging;
     using SFA.Apprenticeships.Common.Messaging.IntegrationTests.Consumers;
-    using SFA.Apprenticeships.Common.Messaging.Interfaces;
     using StructureMap;
 
     [TestFixture]

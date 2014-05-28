@@ -2,14 +2,12 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using SFA.Apprenticeships.Common.Entities.Vacancy;
-using SFA.Apprenticeships.Common.Interfaces.Enums;
-using SFA.Apprenticeships.Services.Legacy.Vacancy.Mappers;
 using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
 
 namespace SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests
 {
-    using SFA.Apprenticeships.Common.Helpers;
+    using SFA.Apprenticeships.Domain.Entities.Vacancy;
+    using SFA.Apprenticeships.Domain.Interfaces.Enums;
 
     [TestFixture]
     public class MapperTests

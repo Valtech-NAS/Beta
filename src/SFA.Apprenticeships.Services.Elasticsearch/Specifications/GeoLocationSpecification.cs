@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Text;
-using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-
-namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
+﻿namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
+    using System;
+    using System.Linq.Expressions;
+    using System.Text;
+    using SFA.Apprenticeships.Services.Elasticsearch.Interfaces;
+
     public class GeoLocationSpecification<TModel> : AbstractSpecification<TModel, ISortableGeoLocation>, IConstraintSpecification<TModel>
     {
         private readonly string _units;

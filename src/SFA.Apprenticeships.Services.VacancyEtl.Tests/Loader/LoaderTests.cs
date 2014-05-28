@@ -5,14 +5,15 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using RestSharp;
-using SFA.Apprenticeships.Common.Entities.Attributes.Elasticsearch;
-using SFA.Apprenticeships.Common.Entities.Vacancy;
-using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
 using SFA.Apprenticeships.Services.VacancyEtl.Load;
 using StructureMap;
 
 namespace SFA.Apprenticeships.Services.VacancyEtl.Tests.Loader
 {
+    using SFA.Apprenticeships.Domain.Entities.Attributes.Elasticsearch;
+    using SFA.Apprenticeships.Domain.Entities.Vacancy;
+    using SFA.Apprenticeships.Domain.Interfaces.Elasticsearch;
+
     [TestFixture]
     public class LoaderTests
     {

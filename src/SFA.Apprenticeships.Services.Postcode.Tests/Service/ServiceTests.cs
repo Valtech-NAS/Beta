@@ -5,8 +5,6 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using RestSharp;
-using SFA.Apprenticeships.Services.Postcode.Entities;
-using SFA.Apprenticeships.Services.Postcode.Service;
 
 namespace SFA.Apprenticeships.Services.Postcode.Tests.Service
 {

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Text;
-using SFA.Apprenticeships.Common.Helpers;
-using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-
-namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
+﻿namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
+    using System;
+    using System.Linq.Expressions;
+    using System.Text;
+    using SFA.Apprenticeships.Infrastructure.Common.Helpers;
+    using SFA.Apprenticeships.Services.Elasticsearch.Interfaces;
+
     public class SortByLocationSpecification<TModel> : AbstractSpecification<TModel, ISortableGeoLocation>, ISortableSpecification<TModel>
     {
         public SortByLocationSpecification(Expression<Func<TModel, ISortableGeoLocation>> fieldname)

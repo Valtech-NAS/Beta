@@ -4,13 +4,11 @@ namespace SFA.Apprenticeships.Services.VacancyEtl
     using System.Threading;
     using EasyNetQ;
     using Microsoft.WindowsAzure.ServiceRuntime;
-    using SFA.Apprenticeships.Common.Entities.Vacancy;
-    using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
     using SFA.Apprenticeships.Common.IoC;
     using System;
     using System.ServiceModel;
-    using SFA.Apprenticeships.Common.Messaging.Interfaces;
-    using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
+    using SFA.Apprenticeships.Domain.Entities.Vacancy;
+    using SFA.Apprenticeships.Domain.Interfaces.Elasticsearch;
     using SFA.Apprenticeships.Services.VacancyEtl.Consumers;
     using SFA.Apprenticeships.Services.VacancyEtl.Load;
     using SFA.Apprenticeships.Services.VacancyEtl.Queue;

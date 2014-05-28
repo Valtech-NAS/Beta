@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Providers
 {
     using System.Collections.Generic;
+    using SFA.Apprenticeships.Domain.Interfaces.Enums.ReferenceDataService;
     using SFA.Apprenticeships.Web.Common.Models.Common;
-    using SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService;
 
     /// <summary>
     /// Integration point and type mapper.

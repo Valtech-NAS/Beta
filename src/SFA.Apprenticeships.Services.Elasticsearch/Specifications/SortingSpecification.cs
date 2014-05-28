@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-
-namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
+﻿namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using SFA.Apprenticeships.Services.Elasticsearch.Interfaces;
+
     public class SortingSpecification<TModel> : ISortableSpecification<TModel>
     {
         private readonly IList<ISortableSpecification<TModel>> _specs;

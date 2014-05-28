@@ -2,7 +2,6 @@
 {
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Common.Configuration.Messaging;
 
     [TestFixture]
     public class RabbitMqConfigurationTests

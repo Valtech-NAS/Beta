@@ -4,14 +4,15 @@ using System.Net;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Extensions;
-using SFA.Apprenticeships.Common.Entities.Attributes.Elasticsearch;
-using SFA.Apprenticeships.Common.Entities.Vacancy;
-using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-using SFA.Apprenticeships.Common.JsonConverters;
 using SFA.Apprenticeships.Services.Elasticsearch.Mapping;
 
 namespace SFA.Apprenticeships.Services.VacancyEtl.Load
 {
+    using SFA.Apprenticeships.Domain.Interfaces.Elasticsearch;
+    using SFA.Apprenticeships.Services.Elasticsearch.Entities;
+    using SFA.Apprenticeships.Services.Elasticsearch.Entities.Attributes;
+    using VacancySummary = SFA.Apprenticeships.Domain.Entities.Vacancy.VacancySummary;
+
     /// <summary>
     /// Monitors the queue for new data items and loads them into the es database.
     /// </summary>

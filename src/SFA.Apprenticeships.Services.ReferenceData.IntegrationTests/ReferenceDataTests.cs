@@ -6,11 +6,9 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Common.Caching;
-    using SFA.Apprenticeships.Common.Configuration.LegacyServices;
-    using SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService;
-    using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
-    using SFA.Apprenticeships.Common.Interfaces.Services;
+    using SFA.Apprenticeships.Domain.Interfaces.Enums.ReferenceDataService;
+    using SFA.Apprenticeships.Domain.Interfaces.ReferenceData;
+    using SFA.Apprenticeships.Domain.Interfaces.Services;
     using SFA.Apprenticeships.Services.Common.Wcf;
 
     using SFA.Apprenticeships.Services.ReferenceData.Proxy;

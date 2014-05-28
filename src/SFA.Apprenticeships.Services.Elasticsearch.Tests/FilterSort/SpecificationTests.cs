@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
-using SFA.Apprenticeships.Common.Entities.Elasticsearch;
-using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-using SFA.Apprenticeships.Common.Interfaces.Enums;
-using SFA.Apprenticeships.Common.Interfaces.Enums.Elasticsearch;
 using SFA.Apprenticeships.Services.Elasticsearch.Specifications;
 using SFA.Apprenticeships.Services.Elasticsearch.Tests.Models;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
 {
+    using SFA.Apprenticeships.Domain.Entities.Elasticsearch;
+    using SFA.Apprenticeships.Domain.Interfaces.Elasticsearch;
+    using SFA.Apprenticeships.Domain.Interfaces.Enums.Elasticsearch;
+
     [TestFixture]
     public class SpecificationTests
     {

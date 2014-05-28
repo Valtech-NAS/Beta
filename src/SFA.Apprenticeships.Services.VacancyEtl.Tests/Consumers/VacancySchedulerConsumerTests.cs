@@ -9,9 +9,7 @@
     using Microsoft.WindowsAzure.Storage.Queue;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Common.Interfaces.Enums;
-    using SFA.Apprenticeships.Common.Messaging.Interfaces;
-    using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
+    using SFA.Apprenticeships.Domain.Interfaces.Enums;
     using SFA.Apprenticeships.Services.VacancyEtl.Consumers;
     using SFA.Apprenticeships.Services.VacancyEtl.Entities;
 

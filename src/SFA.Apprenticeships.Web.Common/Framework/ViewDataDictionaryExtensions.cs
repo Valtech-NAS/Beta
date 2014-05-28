@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Framework
 {
     using System.Web.Mvc;
+    using SFA.Apprenticeships.Domain.Interfaces.Enums.ReferenceDataService;
     using SFA.Apprenticeships.Web.Common.Providers;
-    using SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService;
 
     public static class ViewDataDictionaryExtensions
     {

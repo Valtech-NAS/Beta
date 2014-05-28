@@ -2,7 +2,6 @@
 {
     using System.Reflection;
     using EasyNetQ;
-    using SFA.Apprenticeships.Common.Messaging.Interfaces;
     using SFA.Apprenticeships.Services.VacancyEtl.Consumers;
     using StructureMap;
 

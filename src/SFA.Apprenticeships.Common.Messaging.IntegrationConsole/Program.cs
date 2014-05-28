@@ -6,12 +6,8 @@
     using System.Threading;
     using System.Xml.Serialization;
     using Microsoft.WindowsAzure.Storage.Queue;
-    using SFA.Apprenticeships.Common.Configuration;
-    using SFA.Apprenticeships.Common.Configuration.Azure;
-    using SFA.Apprenticeships.Common.Entities.Vacancy;
-    using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-    using SFA.Apprenticeships.Common.Messaging.Azure;
-    using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
+    using SFA.Apprenticeships.Domain.Interfaces.Elasticsearch;
+    using SFA.Apprenticeships.Services.Elasticsearch.Entities;
     using SFA.Apprenticeships.Services.VacancyEtl.Consumers;
     using SFA.Apprenticeships.Services.VacancyEtl.Entities;
     using SFA.Apprenticeships.Services.VacancyEtl.Load;

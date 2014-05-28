@@ -4,10 +4,8 @@
     using System.Linq;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Common.Configuration.LegacyServices;
-    using SFA.Apprenticeships.Common.Interfaces.Enums;
-    using SFA.Apprenticeships.Common.Interfaces.Services;
-    using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
+    using SFA.Apprenticeships.Domain.Interfaces.Enums;
+    using SFA.Apprenticeships.Domain.Interfaces.Services;
     using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
     using StructureMap;
 

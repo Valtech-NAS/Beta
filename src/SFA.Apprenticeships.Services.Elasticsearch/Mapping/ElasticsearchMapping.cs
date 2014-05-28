@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using SFA.Apprenticeships.Common.Entities.Attributes.Elasticsearch;
-
-namespace SFA.Apprenticeships.Services.Elasticsearch.Mapping
+﻿namespace SFA.Apprenticeships.Services.Elasticsearch.Mapping
 {
+    using System;
+    using System.Collections;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text;
+    using SFA.Apprenticeships.Services.Elasticsearch.Entities.Attributes;
+
     /// <summary>
     /// Use to create the mapping in the es database.
     /// eg _mapping 

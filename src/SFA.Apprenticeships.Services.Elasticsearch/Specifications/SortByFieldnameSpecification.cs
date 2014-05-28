@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq.Expressions;
-using SFA.Apprenticeships.Common.Helpers;
-using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-
-namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
+﻿namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
+    using System;
+    using System.Linq.Expressions;
+    using SFA.Apprenticeships.Infrastructure.Common.Helpers;
+    using SFA.Apprenticeships.Services.Elasticsearch.Interfaces;
+
     public class SortByFieldnameSpecification<TModel> : AbstractSpecification<TModel, ISortable>, ISortableSpecification<TModel>
     {
         public SortByFieldnameSpecification(Expression<Func<TModel, ISortable>> fieldname)

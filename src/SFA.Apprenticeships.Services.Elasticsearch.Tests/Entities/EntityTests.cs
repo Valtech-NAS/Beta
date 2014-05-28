@@ -1,10 +1,11 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
-using SFA.Apprenticeships.Common.Entities.Elasticsearch;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.Entities
 {
+    using SFA.Apprenticeships.Domain.Entities.Elasticsearch;
+
     [TestFixture]
     public class EntityTests
     {

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq.Expressions;
-using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-
-namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
+﻿namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
+    using System;
+    using System.Linq.Expressions;
+    using SFA.Apprenticeships.Services.Elasticsearch.Interfaces;
+
     public abstract class AbstractSpecification<TModel, TProperty> : ISpecification<TModel>
     {
         protected AbstractSpecification(Expression<Func<TModel, TProperty>> fieldname)

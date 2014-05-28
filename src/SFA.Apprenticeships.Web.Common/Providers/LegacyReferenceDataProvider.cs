@@ -5,8 +5,8 @@ using SFA.Apprenticeships.Web.Common.Models.Common;
 
 namespace SFA.Apprenticeships.Web.Common.Providers
 {
-    using SFA.Apprenticeships.Common.Interfaces.Enums.ReferenceDataService;
-    using SFA.Apprenticeships.Common.Interfaces.ReferenceData;
+    using SFA.Apprenticeships.Domain.Interfaces.Enums.ReferenceDataService;
+    using SFA.Apprenticeships.Domain.Interfaces.ReferenceData;
 
     public class LegacyReferenceDataProvider : IReferenceDataProvider
     {

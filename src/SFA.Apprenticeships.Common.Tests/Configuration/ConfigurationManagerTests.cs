@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Common.Configuration;
 
     [TestFixture]
     public class ConfigurationManagerTests

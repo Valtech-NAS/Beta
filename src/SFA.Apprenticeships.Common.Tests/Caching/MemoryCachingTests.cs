@@ -3,7 +3,6 @@
     using System;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Common.Caching;
 
     [TestFixture]
     public class MemoryCachingTests

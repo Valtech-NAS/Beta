@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
     using EasyNetQ;
     using EasyNetQ.AutoSubscribe;
-    using SFA.Apprenticeships.Services.Legacy.Vacancy.Abstract;
     using SFA.Apprenticeships.Services.VacancyEtl.Entities;
 
     public class VacancySummaryPageConsumerAsync : IConsumeAsync<VacancySummaryPage>

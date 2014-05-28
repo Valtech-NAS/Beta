@@ -1,13 +1,21 @@
 ﻿
 namespace SFA.Apprenticeships.Services.ReferenceData.Service
 {
-    using SFA.Apprenticeships.Common.Caching;
+    using SFA.Apprenticeships.Domain.Interfaces.Services.Caching;
 
-    public class ReferenceDataServiceCacheKeyEntry : BaseCacheEntry
+    public class ReferenceDataServiceCacheKeyEntry : BaseCacheKey
     {
+        private const string ReferenceDataServiceCacheKey = "SFA.Apprenticeships.LegacyReferenceData.";
+        private string _subKey;
+
+        public ReferenceDataServiceCacheKeyEntry(string subKey)
+        {
+            _subKey = subKey;
+        }
+
         protected override string KeyPrefix
         {
-            get { return CachedReferenceDataService.ReferenceDataServiceCacheKey; }
+            get { return ReferenceDataServiceCacheKey + "." + _subKey; }
         }
 
         public override CacheDuration Duration

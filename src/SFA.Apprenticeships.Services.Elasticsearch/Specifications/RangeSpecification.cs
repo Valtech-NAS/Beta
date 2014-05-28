@@ -1,10 +1,12 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Text;
-using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
+﻿
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
+    using System;
+    using System.Linq.Expressions;
+    using System.Text;
+    using SFA.Apprenticeships.Services.Elasticsearch.Interfaces;
+
     public class RangeSpecification<TModel> : AbstractSpecification<TModel, ISortableRange>, IConstraintSpecification<TModel>
     {
         public RangeSpecification(Expression<Func<TModel, ISortableRange>> fieldname)

@@ -94,37 +94,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common.Entities\SFA.Apprenticeships.Common.Entities.csproj">
-      <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
-      <Name>SFA.Apprenticeships.Common.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common.Interfaces\SFA.Apprenticeships.Common.Interfaces.csproj">
-      <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
-      <Name>SFA.Apprenticeships.Common.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Common.Messaging.IntegrationTests\SFA.Apprenticeships.Common.Messaging.IntegrationTests.csproj">
       <Project>{ebe35ac3-4bdc-4cee-92ce-7abfc56c9ffa}</Project>
       <Name>SFA.Apprenticeships.Common.Messaging.IntegrationTests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common.Messaging\SFA.Apprenticeships.Common.Messaging.csproj">
-      <Project>{8b5044e4-03de-4724-91bc-05840f0cc3d8}</Project>
-      <Name>SFA.Apprenticeships.Common.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Common.Tests\SFA.Apprenticeships.Common.Tests.csproj">
       <Project>{2886f449-8488-4883-a80b-b29775d18b29}</Project>
       <Name>SFA.Apprenticeships.Common.Tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common\SFA.Apprenticeships.Common.csproj">
-      <Project>{aad6c913-2503-456f-a593-c0a36c07bd35}</Project>
-      <Name>SFA.Apprenticeships.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Services.Common\SFA.Apprenticeships.Services.Common.csproj">
-      <Project>{78b1f2a1-dcc3-4ed3-8ce0-16e0781b59fa}</Project>
-      <Name>SFA.Apprenticeships.Services.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Services.Elasticsearch\SFA.Apprenticeships.Services.Elasticsearch.csproj">
+    <ProjectReference Include="..\SFA.Apprenticeships.Services.Elasticsearch\SFA.Apprenticeships.Infrastructure.Elasticsearch.csproj">
       <Project>{8dfb3268-8865-4fe4-8e6f-8b2dcee966d9}</Project>
-      <Name>SFA.Apprenticeships.Services.Elasticsearch</Name>
+      <Name>SFA.Apprenticeships.Infrastructure.Elasticsearch</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Services.Legacy.Vacancy\SFA.Apprenticeships.Services.Legacy.Vacancy.csproj">
       <Project>{67cdaccd-5217-4110-8432-c6ef164baa0d}</Project>

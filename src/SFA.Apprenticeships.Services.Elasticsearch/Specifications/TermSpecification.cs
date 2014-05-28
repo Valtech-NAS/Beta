@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq.Expressions;
-using SFA.Apprenticeships.Common.Interfaces.Elasticsearch;
-
-namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
+﻿namespace SFA.Apprenticeships.Services.Elasticsearch.Specifications
 {
+    using System;
+    using System.Linq.Expressions;
+    using SFA.Apprenticeships.Services.Elasticsearch.Interfaces;
+
     public class TermSpecification<TModel> : AbstractSpecification<TModel, ISortable<string>>, IConstraintSpecification<TModel>
     {
         public TermSpecification(Expression<Func<TModel, ISortable<string>>> fieldname)
