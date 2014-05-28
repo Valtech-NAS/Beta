@@ -89,7 +89,7 @@ namespace SFA.Apprenticeships.Services.Common.Rest
         {
             var response = Client.Execute<T>(request);
 
-            /* Restsharp derserializer doesnt appear to handle property names that differ from response */
+            /* Restsharp deserializer doesn't appear to handle property names that differ from response */
             // var result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(response.Content);
 
             if (response.ErrorException != null)

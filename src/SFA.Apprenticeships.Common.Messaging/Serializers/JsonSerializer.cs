@@ -6,7 +6,7 @@
     /// <summary>
     /// Json serialiser for rabbit messages that support interface types.
     /// Note: we are using ServiceStack version 3.9.71 as this is stil offered under a BSD license
-    /// and if we upgrade there is a cost associalted with it.
+    /// and if we upgrade there is a cost associated with it.
     /// </summary>
     internal class JsonSerializer : EasyNetQ.ISerializer
     {
