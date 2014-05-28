@@ -34,7 +34,7 @@
                                                 ObjectFactory.GetInstance<IVacancySummaryService>());
 
 
-            Console.WriteLine("Enter any key to quite");
+            Console.WriteLine("Enter any key to quit");
             Console.WriteLine("---------------------------------------------------------------");
 
             var queueItems = GetAzureScheduledMessagesQueue(1);
