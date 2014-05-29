@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
-using SFA.Apprenticeships.Services.Elasticsearch.Specifications;
 using SFA.Apprenticeships.Services.Elasticsearch.Tests.Models;
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
@@ -9,6 +8,7 @@ namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.FilterSort
     using SFA.Apprenticeships.Domain.Entities.Elasticsearch;
     using SFA.Apprenticeships.Domain.Interfaces.Elasticsearch;
     using SFA.Apprenticeships.Domain.Interfaces.Enums.Elasticsearch;
+    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Specifications;
 
     [TestFixture]
     public class SpecificationTests

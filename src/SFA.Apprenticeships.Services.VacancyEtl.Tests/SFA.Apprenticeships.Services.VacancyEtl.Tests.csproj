@@ -106,16 +106,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Services.Legacy.Vacancy\SFA.Apprenticeships.Services.Legacy.Vacancy.csproj">
-      <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
-      <Name>SFA.Apprenticeships.Services.Legacy.Vacancy</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Services.VacancyEtl\SFA.Apprenticeships.Services.VacancyEtl.csproj">
-      <Project>{0491054e-caf4-4321-be1d-3e44e739421c}</Project>
-      <Name>SFA.Apprenticeships.Services.VacancyEtl</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

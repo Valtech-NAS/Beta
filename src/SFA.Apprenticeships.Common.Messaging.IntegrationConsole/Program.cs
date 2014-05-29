@@ -7,7 +7,7 @@
     using System.Xml.Serialization;
     using Microsoft.WindowsAzure.Storage.Queue;
     using SFA.Apprenticeships.Domain.Interfaces.Elasticsearch;
-    using SFA.Apprenticeships.Services.Elasticsearch.Entities;
+    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities;
     using SFA.Apprenticeships.Services.VacancyEtl.Consumers;
     using SFA.Apprenticeships.Services.VacancyEtl.Entities;
     using SFA.Apprenticeships.Services.VacancyEtl.Load;
