@@ -74,6 +74,7 @@
     <Compile Include="Consumers\VacancySchedulerConsumer.cs" />
     <Compile Include="Consumers\VacancySummaryConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryPageConsumerAsync.cs" />
+    <Compile Include="IoC\VacancyEtlRegistry.cs" />
     <Compile Include="Mapper\VacancySummaryMapper.cs" />
     <Compile Include="Messaging\AzureScheduleQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,6 +97,10 @@
       <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
       <Name>SFA.Apprenticeships.Application.VacancyEtl</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
+      <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
@@ -113,6 +118,7 @@
       <Name>SFA.Apprenticeships.Infrastructure.RabbitMq</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

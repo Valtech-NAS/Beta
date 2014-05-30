@@ -39,6 +39,12 @@
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=3.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAzure.Storage.3.0.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
@@ -50,6 +56,8 @@
     <Compile Include="Configuration\AzureCloudConfig.cs" />
     <Compile Include="Configuration\AzureConsoleConfig.cs" />
     <Compile Include="Configuration\IAzureCloudConfig.cs" />
+    <Compile Include="IoC\AzureCommonConsoleRegistry.cs" />
+    <Compile Include="IoC\AzureCommonRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

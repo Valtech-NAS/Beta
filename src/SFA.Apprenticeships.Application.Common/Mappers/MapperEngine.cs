@@ -12,6 +12,7 @@
         {
             Mapper = new ConfigurationStore(new TypeMapFactory(), MapperRegistry.Mappers);
             _mappingEngine = new MappingEngine(Mapper);
+            Initialize();
         }
 
         public ConfigurationStore Mapper { get; private set; }

@@ -94,13 +94,25 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common.Messaging.IntegrationTests\SFA.Apprenticeships.Common.Messaging.IntegrationTests.csproj">
-      <Project>{ebe35ac3-4bdc-4cee-92ce-7abfc56c9ffa}</Project>
-      <Name>SFA.Apprenticeships.Common.Messaging.IntegrationTests</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyEtl\SFA.Apprenticeships.Application.VacancyEtl.csproj">
+      <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
+      <Name>SFA.Apprenticeships.Application.VacancyEtl</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Common.Tests\SFA.Apprenticeships.Common.Tests.csproj">
-      <Project>{2886f449-8488-4883-a80b-b29775d18b29}</Project>
-      <Name>SFA.Apprenticeships.Common.Tests</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.Common\SFA.Apprenticeships.Infrastructure.Azure.Common.csproj">
+      <Project>{4FE5E4BE-91DF-49C6-B6CD-9B69FCD0C0FE}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Azure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.RabbitMq\SFA.Apprenticeships.Infrastructure.RabbitMq.csproj">
+      <Project>{480622E1-7624-449C-904F-AF7FD3590BEF}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.RabbitMq</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyEtl\SFA.Apprenticeships.Infrastructure.VacancyEtl.csproj">
+      <Project>{0491054E-CAF4-4321-BE1D-3E44E739421C}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.VacancyEtl</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

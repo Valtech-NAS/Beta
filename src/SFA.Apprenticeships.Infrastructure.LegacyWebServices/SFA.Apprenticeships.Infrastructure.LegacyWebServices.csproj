@@ -37,6 +37,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -49,6 +52,7 @@
     </Compile>
     <Compile Include="Configuration\ILegacyServicesConfiguration.cs" />
     <Compile Include="Configuration\LegacyServicesConfiguration.cs" />
+    <Compile Include="IoC\LegacyWebServicesRegistry.cs" />
     <Compile Include="Mappers\AddressResolver.cs" />
     <Compile Include="Mappers\VacancySummaryMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

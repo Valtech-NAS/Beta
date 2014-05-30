@@ -6,6 +6,12 @@
     using System.Threading;
     using System.Xml.Serialization;
     using Microsoft.WindowsAzure.Storage.Queue;
+    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
+    using SFA.Apprenticeships.Infrastructure.Azure.Common.IoC;
+    using SFA.Apprenticeships.Infrastructure.Common.IoC;
+    using SFA.Apprenticeships.Infrastructure.RabbitMq.IoC;
+    using SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers;
+    using SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC;
     using StructureMap;
 
     class Program
@@ -14,25 +20,19 @@
         {
             ObjectFactory.Initialize(x =>
             {
-                x.AddRegistry(new CoreRegistry());
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<AzureCommonConsoleRegistry>();
+                x.AddRegistry<RabbitMqRegistry>();
+                x.AddRegistry<VacancyEtlRegistry>();
             });
-            // This is a sample worker implementation. Replace with your logic.
-            Common.IoC.IoC.Initialize();
-            ElasticsearchLoad<VacancySummary>.Setup(ObjectFactory.GetInstance<IElasticsearchService>());
-            var bus = RabbitQueue.Setup();
-            var client = new AzureCloudClient(new AzureConsoleConfig(ObjectFactory.GetInstance<IConfigurationManager>()));
 
-            var vacancySchedulerConsumer = new VacancySchedulerConsumer(
-                                                bus,
-                                                client,
-                                                ObjectFactory.GetInstance<IVacancySummaryService>());
-
+            var vacancySchedulerConsumer = ObjectFactory.GetInstance<VacancySchedulerConsumer>();
 
             Console.WriteLine("Enter any key to quit");
             Console.WriteLine("---------------------------------------------------------------");
 
             var queueItems = GetAzureScheduledMessagesQueue(1);
-            client.AddMessage("vacancysearchdatacontrol", queueItems.Dequeue());
+            //client.AddMessage("vacancysearchdatacontrol", queueItems.Dequeue());
 
             while (!Console.KeyAvailable)
             {
