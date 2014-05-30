@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using SFA.Apprenticeships.Application.Common.Mappers;
     using SFA.Apprenticeships.Application.Interfaces.Messaging;
     using SFA.Apprenticeships.Application.Interfaces.Vacancy;
     using SFA.Apprenticeships.Application.VacancyEtl.Entities;
@@ -13,13 +14,18 @@
     {
         private readonly IMessageBus _bus;
         private readonly IVacancySummaryService _vacancySummaryService;
-        private readonly IMessageService<StorageQueueMessage> _azureMessageService;
+        private readonly IMessageService<StorageQueueMessage> _messagingService;
+        private readonly IMapper _mapper;
 
-        public VacancySummaryProcessor(IMessageBus bus, IVacancySummaryService vacancySummaryService, IMessageService<StorageQueueMessage> azureMessageService)
+        public VacancySummaryProcessor(IMessageBus bus, 
+                                        IVacancySummaryService vacancySummaryService, 
+                                        IMessageService<StorageQueueMessage> messagingService,
+                                        IMapper mapper)
         {
             _bus = bus;
             _vacancySummaryService = vacancySummaryService;
-            _azureMessageService = azureMessageService;
+            _messagingService = messagingService;
+            _mapper = mapper;
         }
 
         public void QueueVacancyPages(StorageQueueMessage scheduledQueueMessage)
@@ -30,7 +36,7 @@
             var vacancySumaries = BuildVacancySummaryPages(Guid.Parse(scheduledQueueMessage.ClientRequestId), nationalCount, nonNationalCount);
 
             // Only delete from queue once we have all vacanies from the services without error.
-            _azureMessageService.DeleteMessage(scheduledQueueMessage.MessageId);
+            _messagingService.DeleteMessage(scheduledQueueMessage.MessageId);
 
             Parallel.ForEach(
                 vacancySumaries,
@@ -77,12 +83,16 @@
             try
             {
                 var vacancies = _vacancySummaryService.GetVacancySummary(vacancySummaryPage.VacancyLocation, vacancySummaryPage.PageNumber).ToList();
-                //vacancies.ForEach(x => x.UpdateReference = vacancySummaryPage.UpdateReference);
+                var vacanciesExtended = _mapper.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(vacancies);
 
                 Parallel.ForEach(
-                    vacancies,
+                    vacanciesExtended,
                     new ParallelOptions() { MaxDegreeOfParallelism = 5 },
-                    vacancySummary => _bus.PublishMessage(vacancySummary));
+                    vacancySummaryExtended =>
+                    {
+                        vacancySummaryExtended.UpdateReference = vacancySummaryPage.UpdateReference;
+                        _bus.PublishMessage(vacancySummaryExtended);
+                    });
             }
             catch (Exception ex)
             {

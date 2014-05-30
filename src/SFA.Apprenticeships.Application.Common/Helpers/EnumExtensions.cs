@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Common.Helpers
+﻿namespace SFA.Apprenticeships.Application.Common.Helpers
 {
     using System;
     using System.ComponentModel;
@@ -53,7 +53,7 @@
             {
                 foreach (var o in from object o in Enum.GetValues(typeof(TEnum))
                                   let en = o as Enum
-                                  let serviceDescription = en.GetDescription()
+                                  let serviceDescription = GetDescription(en)
                                   where !string.IsNullOrEmpty(serviceDescription)
                                 && serviceDescription.Equals(description, StringComparison.OrdinalIgnoreCase)
                                   select o)
@@ -120,7 +120,7 @@
                                 .OfType<Enum>()
                                 .FirstOrDefault(x =>
                                 {
-                                    var attributes = x.GetAttributeValues<DescriptionAttribute>();
+                                    var attributes = GetAttributeValues<DescriptionAttribute>(x);
                                     var attributeValue = attributes != null ? attributes.Description : string.Empty;
                                     return attributeValue.Equals(description, StringComparison.InvariantCultureIgnoreCase);
                                 });

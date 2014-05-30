@@ -1,9 +1,9 @@
 ﻿
-namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
+namespace SFA.Apprenticeships.Application.Common.Mappers
 {
     using System;
     using AutoMapper;
-    using SFA.Apprenticeships.Infrastructure.Common.Helpers;
+    using SFA.Apprenticeships.Application.Common.Helpers;
 
     public class EnumResolver<T> : ValueResolver<string, T> where T : struct, IComparable, IConvertible, IFormattable
     {

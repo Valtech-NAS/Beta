@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using SFA.Apprenticeships.Application.Common.Mappers;
     using SFA.Apprenticeships.Application.Interfaces.Postcode;
-    using SFA.Apprenticeships.Infrastructure.Common.Mappers;
     using SFA.Apprenticeships.Infrastructure.Common.Rest;
     using SFA.Apprenticeships.Infrastructure.Postcode.Entities;
     using PostcodeInfo = SFA.Apprenticeships.Domain.Entities.Postcode.PostcodeInfo;

@@ -10,12 +10,12 @@
     {
         private readonly static NLog.Logger Logger = NLog.LogManager.GetLogger(Constants.NamedLoggers.VacanyImporterLogger);
 
-        private readonly IMessageService<StorageQueueMessage> _azureMessageService;
+        private readonly IMessageService<StorageQueueMessage> _messageService;
         private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
 
-        public VacancySchedulerConsumer(IMessageService<StorageQueueMessage> azureMessageService, IVacancySummaryProcessor vacancySummaryProcessor)
+        public VacancySchedulerConsumer(IMessageService<StorageQueueMessage> messageService, IVacancySummaryProcessor vacancySummaryProcessor)
         {
-            _azureMessageService = azureMessageService;
+            _messageService = messageService;
             _vacancySummaryProcessor = vacancySummaryProcessor;
         }
 
@@ -38,7 +38,7 @@
 
         private StorageQueueMessage GetLatestQueueMessage()
         {
-            var queueMessage = _azureMessageService.GetMessage();
+            var queueMessage = _messageService.GetMessage();
 
             if (queueMessage == null)
             {
@@ -47,14 +47,14 @@
 
             while (true)
             {
-                var nextQueueMessage = _azureMessageService.GetMessage();
+                var nextQueueMessage = _messageService.GetMessage();
                 if (nextQueueMessage == null)
                 {
                     // We have the latest message on the queue.
                     break;
                 }
 
-                _azureMessageService.DeleteMessage(queueMessage.MessageId);
+                _messageService.DeleteMessage(queueMessage.MessageId);
                 queueMessage = nextQueueMessage;
             }
 

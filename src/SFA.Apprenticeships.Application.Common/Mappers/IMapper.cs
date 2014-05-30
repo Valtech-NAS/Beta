@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Common.Mappers
+﻿namespace SFA.Apprenticeships.Application.Common.Mappers
 {
     using System;
 

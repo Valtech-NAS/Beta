@@ -7,12 +7,19 @@
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities.Elasticsearch;
 
     [ElasticsearchMapping(Document = "vacancy", Index = "legacy")]
-    public class VacancySummary : VacancyId
+    public class VacancySummary
     {
         public VacancySummary()
         {
             Location = new GeoPoint();
         }
+
+        [ElasticsearchIdentity]
+        [ElasticsearchType("long")]
+        public long Id { get; set; }
+
+        [ElasticsearchType("string")]
+        public Guid UpdateReference { get; set; }
 
         [Description("ApprenticeshipFramework")]
         public string Framework { get; set; }

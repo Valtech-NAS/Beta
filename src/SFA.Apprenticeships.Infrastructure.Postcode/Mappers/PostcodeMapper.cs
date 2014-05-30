@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
+    using SFA.Apprenticeships.Application.Common.Mappers;
     using SFA.Apprenticeships.Domain.Entities.Postcode;
-    using SFA.Apprenticeships.Infrastructure.Common.Mappers;
 
     public class PostcodeMapper : MapperEngine
     {

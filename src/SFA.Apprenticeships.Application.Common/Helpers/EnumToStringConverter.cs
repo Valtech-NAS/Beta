@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Common.Helpers
+﻿namespace SFA.Apprenticeships.Application.Common.Helpers
 {
     using System;
     using Newtonsoft.Json;

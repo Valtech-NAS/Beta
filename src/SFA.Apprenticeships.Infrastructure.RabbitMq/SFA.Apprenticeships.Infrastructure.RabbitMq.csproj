@@ -61,7 +61,6 @@
     <Compile Include="Configuration\RabbitMqHostsConfiguration.cs" />
     <Compile Include="Interfaces\IBootstrapSubcribers.cs" />
     <Compile Include="Interfaces\IRabbitMqServiceProvider.cs" />
-    <Compile Include="IoC\CommonMessagingRegistry.cs" />
     <Compile Include="MessageBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabbitMQ\BootstrapSubcribers.cs" />

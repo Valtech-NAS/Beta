@@ -5,13 +5,13 @@
     using Newtonsoft.Json;
     using RestSharp;
     using RestSharp.Extensions;
+    using SFA.Apprenticeships.Application.Common.Helpers;
     using SFA.Apprenticeships.Application.Interfaces.Search;
-    using SFA.Apprenticeships.Infrastructure.Common.Helpers;
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities.Attributes;
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Interfaces;
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Mapping;
 
-    public class IndexingService<T> : IIndexingService<T>
+    public class IndexingService<TSource> : IIndexingService<TSource>
     {
         private readonly IElasticsearchService _elasticsearchService;
         private readonly ElasticsearchMappingAttribute _mapping;
@@ -34,7 +34,7 @@
         /// </summary>
         private void Setup()
         {
-            var mappings = ElasticsearchMapping.Create<T>();
+            var mappings = ElasticsearchMapping.Create<TSource>();
             var attribute = GetMappingAttribute();
 
             var rs = _elasticsearchService.Execute(Method.PUT, attribute.Index);
@@ -55,7 +55,7 @@
             }
         }
 
-        public void Index(string id, T objectToIndex)
+        public void Index(string id, TSource objectToIndex)
         {
             var json = JsonConvert.SerializeObject(objectToIndex, new EnumToStringConverter());
 
@@ -76,7 +76,7 @@
         {
             // look for the elasticsearch mapping attribute on the class T
             // find the index and document properties to form the es command
-            var mapping = typeof(T).GetAttribute<ElasticsearchMappingAttribute>();
+            var mapping = typeof(TSource).GetAttribute<ElasticsearchMappingAttribute>();
             if (mapping == null || string.IsNullOrEmpty(mapping.Document) || string.IsNullOrEmpty(mapping.Index))
             {
                 throw

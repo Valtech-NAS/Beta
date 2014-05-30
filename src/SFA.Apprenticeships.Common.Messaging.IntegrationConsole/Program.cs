@@ -6,18 +6,16 @@
     using System.Threading;
     using System.Xml.Serialization;
     using Microsoft.WindowsAzure.Storage.Queue;
-    using SFA.Apprenticeships.Domain.Interfaces.Elasticsearch;
-    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities;
-    using SFA.Apprenticeships.Services.VacancyEtl.Consumers;
-    using SFA.Apprenticeships.Services.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Services.VacancyEtl.Load;
-    using SFA.Apprenticeships.Services.VacancyEtl.Queue;
     using StructureMap;
 
     class Program
     {
         static void Main(string[] args)
         {
+            ObjectFactory.Initialize(x =>
+            {
+                x.AddRegistry(new CoreRegistry());
+            });
             // This is a sample worker implementation. Replace with your logic.
             Common.IoC.IoC.Initialize();
             ElasticsearchLoad<VacancySummary>.Setup(ObjectFactory.GetInstance<IElasticsearchService>());

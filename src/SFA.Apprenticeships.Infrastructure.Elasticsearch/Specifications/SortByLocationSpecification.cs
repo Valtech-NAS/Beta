@@ -3,7 +3,7 @@
     using System;
     using System.Linq.Expressions;
     using System.Text;
-    using SFA.Apprenticeships.Infrastructure.Common.Helpers;
+    using SFA.Apprenticeships.Application.Common.Helpers;
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Interfaces;
 
     public class SortByLocationSpecification<TModel> : AbstractSpecification<TModel, ISortableGeoLocation>, ISortableSpecification<TModel>

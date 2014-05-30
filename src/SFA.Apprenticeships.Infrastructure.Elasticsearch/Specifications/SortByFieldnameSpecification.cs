@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq.Expressions;
-    using SFA.Apprenticeships.Infrastructure.Common.Helpers;
+    using SFA.Apprenticeships.Application.Common.Helpers;
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Interfaces;
 
     public class SortByFieldnameSpecification<TModel> : AbstractSpecification<TModel, ISortable>, ISortableSpecification<TModel>
