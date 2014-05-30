@@ -17,11 +17,11 @@
                 .ForMember(d => d.Country, opt => opt.MapFrom(src => src.Country))
                 .ForMember(d => d.Postcode, opt => opt.MapFrom(src => src.Postcode));
 
-            Mapper.CreateMap<IList<PostcodeInfo>, IList<PostcodeInfo>>().ConvertUsing<PostcodesConverter>();
+            Mapper.CreateMap<IList<Entities.PostcodeInfo>, IList<PostcodeInfo>>().ConvertUsing<PostcodesConverter>();
         }
     }
 
-    class PostcodesConverter : ITypeConverter<IList<PostcodeInfo>, IList<PostcodeInfo>>
+    class PostcodesConverter : ITypeConverter<IList<Entities.PostcodeInfo>, IList<PostcodeInfo>>
     {
         public IList<PostcodeInfo> Convert(ResolutionContext context)
         {

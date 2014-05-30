@@ -27,7 +27,7 @@
 
             var nationalCount = _vacancySummaryService.GetVacancyPageCount(VacancyLocationType.National);
             var nonNationalCount = _vacancySummaryService.GetVacancyPageCount(VacancyLocationType.NonNational);
-            var vacancySumaries = BuildVacancySummaries(Guid.Parse(scheduledQueueMessage.ClientRequestId), nationalCount, nonNationalCount);
+            var vacancySumaries = BuildVacancySummaryPages(Guid.Parse(scheduledQueueMessage.ClientRequestId), nationalCount, nonNationalCount);
 
             // Only delete from queue once we have all vacanies from the services without error.
             _azureMessageService.DeleteMessage(scheduledQueueMessage.MessageId);
@@ -35,15 +35,15 @@
             Parallel.ForEach(
                 vacancySumaries,
                 new ParallelOptions { MaxDegreeOfParallelism = 10 },
-                vacancy => _bus.PublishMessage(vacancy));
+                vacancySummaryPage => _bus.PublishMessage(vacancySummaryPage));
         }
 
-        private IEnumerable<VacancySummaryPage> BuildVacancySummaries(Guid updateReferenceId, int nationalCount, int nonNationalCount)
+        private IEnumerable<VacancySummaryPage> BuildVacancySummaryPages(Guid updateReferenceId, int nationalCount, int nonNationalCount)
         {
             var totalCount = nationalCount + nonNationalCount;
             var vacancySumaries = new List<VacancySummaryPage>(totalCount);
 
-            for (int i = 1; i <= nationalCount; i++)
+            for (var i = 1; i <= nationalCount; i++)
             {
                 var vacancySummaryPage = new VacancySummaryPage
                 {
@@ -56,7 +56,7 @@
                 vacancySumaries.Add(vacancySummaryPage);
             }
 
-            for (int i = nationalCount + 1; i <= totalCount; i++)
+            for (var i = nationalCount + 1; i <= totalCount; i++)
             {
                 var vacancySummaryPage = new VacancySummaryPage
                 {
