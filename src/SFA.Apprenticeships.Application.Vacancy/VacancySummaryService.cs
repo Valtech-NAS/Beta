@@ -1,21 +1,19 @@
-﻿namespace SFA.Apprenticeships.Application.Vacancy.Service
+﻿using CuttingEdge.Conditions;
+
+namespace SFA.Apprenticeships.Application.Vacancy.Service
 {
     using System;
     using System.Collections.Generic;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
+    using Interfaces.Vacancy;
+    using Domain.Entities.Vacancy;
 
-    public class VacancySummaryService : IVacancySummaryService
+    public class VacancySummary : IVacancyProvider
     {
+        private readonly IVacancyProvider _service;
 
-        private readonly IVacancySummaryService _service;
-
-        public VacancySummaryService(IVacancySummaryService service)
+        public VacancySummary(IVacancyProvider service)
         {
-            if (service == null)
-            {
-                throw new ArgumentNullException("service");
-            }
+            Condition.Requires(service).IsNotNull();
 
             _service = service;
         }
@@ -25,7 +23,7 @@
             return _service.GetVacancyPageCount(vacancyLocationType);
         }
 
-        public IEnumerable<VacancySummary> GetVacancySummary(VacancyLocationType vacancyLocationType, int page = 1)
+        public IEnumerable<Domain.Entities.Vacancy.VacancySummary> GetVacancySummary(VacancyLocationType vacancyLocationType, int page = 1)
         {
             return _service.GetVacancySummary(vacancyLocationType, page);
         }

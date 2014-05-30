@@ -1,73 +1,52 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Postcode
+﻿using CuttingEdge.Conditions;
+
+namespace SFA.Apprenticeships.Infrastructure.Postcode
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using SFA.Apprenticeships.Application.Common.Mappers;
-    using SFA.Apprenticeships.Application.Interfaces.Postcode;
-    using SFA.Apprenticeships.Infrastructure.Common.Rest;
-    using SFA.Apprenticeships.Infrastructure.Postcode.Entities;
-    using PostcodeInfo = SFA.Apprenticeships.Domain.Entities.Postcode.PostcodeInfo;
+    using Common.Rest;
+    using Entities;
+    using Application.Interfaces.Location;
+    using Domain.Entities.Location;
 
-    public class PostcodeService : RestService, IPostcodeService
+    /// <summary>
+    /// <add key="PostcodeServiceEndpoint" value="http://api.postcodes.io" />
+    /// </summary>
+    public class PostcodeService : RestService, IPostcodeLookupProvider
     {
-        private readonly IMapper _mapper;
+        public PostcodeService(string baseUrl) : base(baseUrl) {}
 
-        /// <summary>
-        /// <add key="PostcodeServiceEndpoint" value="http://api.postcodes.io" />
-        /// </summary>
-        public PostcodeService(string baseUrl, IMapper mapper)
-            : base(baseUrl)
+        public Location GetLocation(string postcode)
         {
-            _mapper = mapper;
+            var result = GetPartialMatches(postcode).FirstOrDefault();
+
+            return result == null
+                ? null
+                : new Location
+                {
+                    Name = postcode,
+                    GeoPoint = new GeoPoint {Latitude = result.Latitude, Longitude = result.Longitude}
+                };
         }
 
-        public string GetPostcodeFromLatLong(string latitudeLongitude)
+        public IEnumerable<Address> FindAddresses(string postcode)
         {
+            //todo: needs an address lookup
             throw new NotImplementedException();
         }
 
-        public bool ValidatePostcode(string postcode)
+        private IEnumerable<PostcodeInfo> GetPartialMatches(string postcode)
         {
-            throw new NotImplementedException();
-        }
+            Condition.Requires(postcode).IsNotNullOrEmpty();
 
-        public IList<PostcodeInfo> GetPartialMatches(string postcode)
-        {
-            if (string.IsNullOrEmpty(postcode))
-            {
-                throw new ArgumentNullException("postcode");
-            }
+            var request = Create("postcodes?q={postcode}", new[] {new KeyValuePair<string, string>("postcode", postcode)});
+            var postcodes = Execute<PostcodeInfoResult>(request);
 
-            var request = Create("postcodes?q={postcode}", new[] { new KeyValuePair<string, string>("postcode", postcode) });
-            var postcodeInfo = Execute<PostcodeInfoResult>(request);
+            if (postcodes.Data != null && postcodes.Data.Result != null)
+                return postcodes.Data.Result.AsEnumerable();
 
-            if (postcodeInfo.Data != null && postcodeInfo.Data.Result != null)
-            {
-                return _mapper.Map<IList<Entities.PostcodeInfo>, IList<PostcodeInfo>>(postcodeInfo.Data.Result);
-            }
-
-            return new List<PostcodeInfo>();
-        }
-
-        public PostcodeInfo GetPostcodeInfo(string postcode)
-        {
-            var result = GetPartialMatches(postcode);
-
-            return result.FirstOrDefault();
-        }
-
-        public PostcodeInfo GetRandomPostcode()
-        {
-            var postcodeInfo = Execute<PostcodeInfoResult>(Create("random/postcodes"));
-
-            if (postcodeInfo.Data == null)
-            {
-                throw new ApplicationException("No postcode information returned.");
-            }
-
-            return _mapper.Map<Entities.PostcodeInfo, PostcodeInfo>(postcodeInfo.Data.Result.First());
+            return null;
         }
     }
-
 }

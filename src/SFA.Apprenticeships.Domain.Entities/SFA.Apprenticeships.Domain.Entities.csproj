@@ -39,7 +39,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Postcode\PostcodeInfo.cs" />
+    <Compile Include="Location\Address.cs" />
+    <Compile Include="Location\Location.cs" />
     <Compile Include="ReferenceData\Region.cs" />
     <Compile Include="ReferenceData\LocalAuthority.cs" />
     <Compile Include="ReferenceData\ErrorCode.cs" />
@@ -47,7 +48,7 @@
     <Compile Include="ReferenceData\Occupation.cs" />
     <Compile Include="ReferenceData\Framework.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vacancy\GeoPoint.cs" />
+    <Compile Include="Location\GeoPoint.cs" />
     <Compile Include="Vacancy\VacancyDetail.cs" />
     <Compile Include="Vacancy\VacancyLocationType.cs" />
     <Compile Include="Vacancy\VacancySummary.cs" />

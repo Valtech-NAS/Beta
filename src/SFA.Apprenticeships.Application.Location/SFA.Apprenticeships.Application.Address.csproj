@@ -7,8 +7,8 @@
     <ProjectGuid>{1B386440-4479-4A2C-93CA-42A98426019F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Application.Postcode</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Application.Postcode</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Application.Location</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Application.Location</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -41,10 +41,12 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PostcodeService.cs" />
+    <Compile Include="AddressSearchService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancy
 {
     using System.Collections.Generic;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
+    using Domain.Entities.Vacancy;
 
-    public interface IVacancySummaryService
+    public interface IVacancyProvider
     {
         int GetVacancyPageCount(VacancyLocationType vacancyLocationType);
 

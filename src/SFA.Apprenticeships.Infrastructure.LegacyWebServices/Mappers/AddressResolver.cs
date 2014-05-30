@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
+﻿using SFA.Apprenticeships.Domain.Entities.Location;
+
+namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
     using AutoMapper;
     using SFA.Apprenticeships.Domain.Entities.Vacancy;
@@ -12,8 +14,8 @@
 
             if (source != null)
             {
-                point.lat = (double) source.Latitude.GetValueOrDefault();
-                point.lon = (double) source.Longitude.GetValueOrDefault();
+                point.Latitude = (double) source.Latitude.GetValueOrDefault();
+                point.Longitude = (double) source.Longitude.GetValueOrDefault();
             }
 
             return point;

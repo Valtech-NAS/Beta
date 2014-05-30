@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancy
+﻿using SFA.Apprenticeships.Domain.Entities.Location;
+
+namespace SFA.Apprenticeships.Domain.Entities.Vacancy
 {
     using System;
    

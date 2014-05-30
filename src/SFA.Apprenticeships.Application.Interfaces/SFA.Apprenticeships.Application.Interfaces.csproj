@@ -37,12 +37,14 @@
   <ItemGroup>
     <Compile Include="Messaging\IMessageBus.cs" />
     <Compile Include="Messaging\IMessageService.cs" />
-    <Compile Include="Postcode\IPostcodeService.cs" />
+    <Compile Include="Location\IPostcodeLookupProvider.cs" />
+    <Compile Include="Location\ILocationLookupProvider.cs" />
+    <Compile Include="Location\IAddressSearchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferenceData\IReferenceDataService.cs" />
     <Compile Include="Search\IIndexingService.cs" />
     <Compile Include="Vacancy\IVacancySearchService.cs" />
-    <Compile Include="Vacancy\IVacancySummaryService.cs" />
+    <Compile Include="Vacancy\IVacancyProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
