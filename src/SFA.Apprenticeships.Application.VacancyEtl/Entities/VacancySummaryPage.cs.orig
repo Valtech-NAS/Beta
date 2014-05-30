@@ -1,0 +1,20 @@
+<<<<<<< HEAD:src/SFA.Apprenticeships.Application.VacancyEtl/Entities/VacancySummaryPage.cs
+﻿namespace SFA.Apprenticeships.Application.VacancyEtl.Entities
+=======
+﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Entities
+>>>>>>> refactored some app service projects:src/SFA.Apprenticeships.Infrastructure.VacancyEtl/Entities/VacancySummaryPage.cs
+{
+    using System;
+    using SFA.Apprenticeships.Domain.Entities.Vacancy;
+
+    public class VacancySummaryPage
+    {
+        public int PageNumber { get; set; }
+
+        public int TotalPages { get; set; }
+
+        public VacancyLocationType VacancyLocation { get; set; }
+
+        public Guid UpdateReference { get; set; }
+    }
+}
