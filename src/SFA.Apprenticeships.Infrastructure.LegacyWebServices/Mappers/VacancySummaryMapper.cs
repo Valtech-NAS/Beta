@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
-    using SFA.Apprenticeships.Application.Common.Mappers;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
-    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummaryProxy;
+    using Application.Common.Mappers;
+    using Domain.Entities.Vacancy;
+    using VacancySummaryProxy;
 
     public class VacancySummaryMapper : MapperEngine
     {

@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
-    using SFA.Apprenticeships.Application.Common.Mappers;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities;
+    using Application.Common.Mappers;
+    using Application.VacancyEtl.Entities;
+    using Elasticsearch.Entities;
 
     public class VacancySummaryMapper : MapperEngine
     {

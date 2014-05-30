@@ -2,8 +2,8 @@
 {
     using System.Threading.Tasks;
     using EasyNetQ.AutoSubscribe;
-    using SFA.Apprenticeships.Application.VacancyEtl;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
+    using Application.VacancyEtl;
+    using Application.VacancyEtl.Entities;
 
     public class VacancySummaryPageConsumerAsync : IConsumeAsync<VacancySummaryPage>
     {

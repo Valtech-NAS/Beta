@@ -4,10 +4,10 @@
     using System.Globalization;
     using System.Threading.Tasks;
     using EasyNetQ.AutoSubscribe;
-    using SFA.Apprenticeships.Application.Common.Mappers;
-    using SFA.Apprenticeships.Application.Interfaces.Search;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities;
+    using Application.Common.Mappers;
+    using Application.Interfaces.Search;
+    using Application.VacancyEtl.Entities;
+    using Elasticsearch.Entities;
 
     public class VacancySummaryConsumerAsync : IConsumeAsync<VacancySummaryUpdate>
     {
@@ -35,7 +35,7 @@
             }
             catch (Exception ex)
             {
-                // TODO::High::Log this error
+                throw; // TODO::High::Log this error
             }
         }
     }

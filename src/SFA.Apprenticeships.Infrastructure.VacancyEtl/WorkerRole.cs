@@ -1,3 +1,5 @@
+using NLog;
+
 namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 {
     using System;
@@ -7,17 +9,17 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using System.Threading;
     using EasyNetQ;
     using Microsoft.WindowsAzure.ServiceRuntime;
-    using SFA.Apprenticeships.Application.Interfaces.Messaging;
-    using SFA.Apprenticeships.Application.VacancyEtl;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.Interfaces;
-    using SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers;
+    using Application.Interfaces.Messaging;
+    using Application.VacancyEtl;
+    using Application.VacancyEtl.Entities;
+    using RabbitMq.Interfaces;
+    using Consumers;
     using StructureMap;
 
     public class WorkerRole : RoleEntryPoint
     {
         private VacancySchedulerConsumer _vacancySchedulerConsumer;
-        private readonly static NLog.Logger Logger = NLog.LogManager.GetLogger(Constants.NamedLoggers.VacanyImporterLogger);
+        private readonly static Logger Logger = LogManager.GetLogger(Constants.NamedLoggers.VacanyImporterLogger);
 
         public override void Run()
         {

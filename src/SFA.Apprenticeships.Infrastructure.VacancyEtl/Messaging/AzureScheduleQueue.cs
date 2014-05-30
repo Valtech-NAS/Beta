@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Messaging
 {
-    using SFA.Apprenticeships.Application.Interfaces.Messaging;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Infrastructure.Azure.Common;
-    using SFA.Apprenticeships.Infrastructure.Azure.Common.Configuration;
+    using Application.Interfaces.Messaging;
+    using Application.VacancyEtl.Entities;
+    using Azure.Common;
+    using Azure.Common.Configuration;
 
     public class AzureScheduleQueue : IMessageService<StorageQueueMessage>
     {

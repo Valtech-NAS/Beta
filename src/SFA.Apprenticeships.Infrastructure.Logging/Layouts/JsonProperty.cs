@@ -25,8 +25,8 @@ namespace SFA.Apprenticeships.Common.Logging.Layouts
         /// <param name="layout">The layout of the property.</param>
         public JsonProperty(string name, Layout layout)
         {
-            this.Name = name;
-            this.Layout = layout;
+            Name = name;
+            Layout = layout;
         }
 
         /// <summary>

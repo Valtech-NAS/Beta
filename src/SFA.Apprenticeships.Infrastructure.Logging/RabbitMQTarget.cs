@@ -8,8 +8,8 @@
     using NLog;
     using NLog.Common;
     using NLog.Targets;
-    using SFA.Apprenticeships.Common.Logging.Layouts;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.Configuration;
+    using Apprenticeships.Common.Logging.Layouts;
+    using RabbitMq.Configuration;
 
     /// <summary>
 	/// A RabbitMQ-target for NLog that must use a JsonLayout!

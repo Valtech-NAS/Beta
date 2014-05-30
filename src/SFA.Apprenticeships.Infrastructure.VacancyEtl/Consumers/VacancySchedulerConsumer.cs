@@ -2,13 +2,14 @@
 {
     using System;
     using System.Threading.Tasks;
-    using SFA.Apprenticeships.Application.Interfaces.Messaging;
-    using SFA.Apprenticeships.Application.VacancyEtl;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
+    using NLog;
+    using Application.Interfaces.Messaging;
+    using Application.VacancyEtl;
+    using Application.VacancyEtl.Entities;
 
     public class VacancySchedulerConsumer
     {
-        private readonly static NLog.Logger Logger = NLog.LogManager.GetLogger(Constants.NamedLoggers.VacanyImporterLogger);
+        private readonly static Logger Logger = LogManager.GetLogger(Constants.NamedLoggers.VacanyImporterLogger);
 
         private readonly IMessageService<StorageQueueMessage> _messageService;
         private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
