@@ -1,11 +1,10 @@
-﻿using CuttingEdge.Conditions;
-
-namespace SFA.Apprenticeships.Application.Vacancy.Service
+﻿namespace SFA.Apprenticeships.Application.Vacancy
 {
     using System;
     using System.Collections.Generic;
-    using Interfaces.Vacancy;
-    using Domain.Entities.Vacancy;
+    using CuttingEdge.Conditions;
+    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
+    using SFA.Apprenticeships.Domain.Entities.Vacancy;
 
     public class VacancySummary : IVacancyProvider
     {
