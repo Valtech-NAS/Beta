@@ -7,8 +7,8 @@
     <ProjectGuid>{D429F1FC-7255-4B84-9124-FE607F5D6C54}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Common.Messaging.IntegrationConsole</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Common.Messaging.IntegrationConsole</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Infrastructure.VacancyEtl.IntegrationConsole</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Infrastructure.VacancyEtl.IntegrationConsole</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

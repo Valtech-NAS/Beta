@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Common.Messaging.IntegrationTests.Consumers
+﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.Tests.Consumers
 {
     using System;
     using System.Threading.Tasks;

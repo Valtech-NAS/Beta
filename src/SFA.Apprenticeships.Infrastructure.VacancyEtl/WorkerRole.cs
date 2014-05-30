@@ -14,6 +14,12 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using Application.VacancyEtl.Entities;
     using RabbitMq.Interfaces;
     using Consumers;
+    using SFA.Apprenticeships.Infrastructure.Azure.Common.IoC;
+    using SFA.Apprenticeships.Infrastructure.Common.IoC;
+    using SFA.Apprenticeships.Infrastructure.Elasticsearch.IoC;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC;
+    using SFA.Apprenticeships.Infrastructure.RabbitMq.IoC;
+    using SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC;
     using StructureMap;
 
     public class WorkerRole : RoleEntryPoint
@@ -62,7 +68,16 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
         {
             try
             {
-                //IoC.Initialize();
+                ObjectFactory.Initialize(x =>
+                {
+                    x.AddRegistry<CommonRegistry>();
+                    x.AddRegistry<AzureCommonRegistry>();
+                    x.AddRegistry<ElasticsearchRegistry>();
+                    x.AddRegistry<RabbitMqRegistry>();
+                    x.AddRegistry<LegacyWebServicesRegistry>();
+                    x.AddRegistry<VacancyEtlRegistry>();
+                });
+
                 Logger.Trace("IoC initialized");
 
                 var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();

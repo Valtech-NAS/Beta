@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Common.Messaging.IntegrationTests.RabbitMQ
+﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.Tests.RabbitMQ
 {
     using System.Linq;
     using System.Reflection;
@@ -8,24 +8,34 @@
     using EasyNetQ.Management.Client.Model;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Common.Messaging.IntegrationTests.Consumers;
+    using SFA.Apprenticeships.Infrastructure.Common.IoC;
+    using SFA.Apprenticeships.Infrastructure.RabbitMq.Configuration;
+    using SFA.Apprenticeships.Infrastructure.RabbitMq.Interfaces;
+    using SFA.Apprenticeships.Infrastructure.RabbitMq.IoC;
+    using SFA.Apprenticeships.Infrastructure.RabbitMq.Tests.Consumers;
     using StructureMap;
 
     [TestFixture]
     public class BootstrapSubscribersTests 
     {
-        private const string ExchangeName = "SFA.Apprenticeships.Common.Messaging.IntegrationTests.Consumers.TestMessage:SFA.Apprenticeships.Common.Messaging.IntegrationTests";
-        private const string QueueNamre_Sync = "SFA.Apprenticeships.Common.Messaging.IntegrationTests.Consumers.TestMessage:SFA.Apprenticeships.Common.Messaging.IntegrationTests_TestMessageConsumerSync";
-        private const string QueueNamre_Async = "SFA.Apprenticeships.Common.Messaging.IntegrationTests.Consumers.TestMessage:SFA.Apprenticeships.Common.Messaging.IntegrationTests_TestMessageConsumerAsync";
+        private const string ExchangeName = "SFA.Apprenticeships.Infrastructure.RabbitMq.Tests.Consumers.TestMessage:SFA.Apprenticeships.Infrastructure.RabbitMq.Tests";
+        private const string QueueNamre_Sync = "SFA.Apprenticeships.Infrastructure.RabbitMq.Tests.Consumers.TestMessage:SFA.Apprenticeships.Infrastructure.RabbitMq.Tests_TestMessageConsumerSync";
+        private const string QueueNamre_Async = "SFA.Apprenticeships.Infrastructure.RabbitMq.Tests.Consumers.TestMessage:SFA.Apprenticeships.Infrastructure.RabbitMq.Tests_TestMessageConsumerAsync";
 
         private IManagementClient managementClient;
 
         [TestFixtureSetUp]
         public void BeforeAllTests()
         {
-            Common.IoC.IoC.Initialize();
             var rabitConfig = RabbitMqHostsConfiguration.Instance.RabbitHosts["Test"];
             managementClient = new ManagementClient(string.Format("http://{0}", rabitConfig.HostName), rabitConfig.UserName, rabitConfig.Password);
+
+            ObjectFactory.Initialize(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<RabbitMqRegistry>();
+            });
+
 
             var bs = ObjectFactory.GetInstance<IBootstrapSubcribers>();
             bs.LoadSubscribers(Assembly.GetExecutingAssembly(), "test_app");
@@ -110,6 +120,8 @@
 
             bus.Publish(testMessage);
             Thread.Sleep(3000);
+            
+            // Is 2 becasue both the sync and async subscribers received the same message
             ConsumerCounter.Counter.Should().Be(2);
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Common.Messaging.IntegrationTests.Consumers
+﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.Tests.Consumers
 {
     public static class ConsumerCounter
     {

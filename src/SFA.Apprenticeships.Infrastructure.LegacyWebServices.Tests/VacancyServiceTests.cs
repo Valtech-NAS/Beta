@@ -1,26 +1,28 @@
-﻿namespace SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Tests
 {
     using System;
     using System.Linq;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Domain.Interfaces.Enums;
-    using SFA.Apprenticeships.Domain.Interfaces.Services;
-    using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
+    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
+    using SFA.Apprenticeships.Domain.Entities.Vacancy;
+    using SFA.Apprenticeships.Infrastructure.Common.Wcf;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Configuration;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummaryProxy;
     using StructureMap;
 
     [TestFixture]
     public class VacancyServiceTests
     {
-        private IVacancySummaryService _service;
+        private IVacancyService _service;
         private ILegacyServicesConfiguration _legacyServicesConfiguration;
 
         [TestFixtureSetUp]
         public void Setup()
         {
-            Apprenticeships.Common.IoC.IoC.Initialize();
+
             _legacyServicesConfiguration = ObjectFactory.GetInstance<ILegacyServicesConfiguration>();
-            _service = ObjectFactory.GetInstance<IVacancySummaryService>();
+            _service = ObjectFactory.GetInstance<IVacancyService>();
         }
 
         [TestCase]
@@ -48,7 +50,7 @@
         [TestCase]
         public void ShouldReturnMappedCollectionFromGetVacancySummary()
         {
-            var service = ObjectFactory.GetInstance<IVacancySummaryService>();
+            var service = ObjectFactory.GetInstance<IVacancyService>();
             var result = service.GetVacancySummary(VacancyLocationType.NonNational, 1);
 
             result.ToList().Should().NotBeNullOrEmpty();

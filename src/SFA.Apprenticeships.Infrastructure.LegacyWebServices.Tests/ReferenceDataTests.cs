@@ -1,17 +1,15 @@
-﻿namespace SFA.Apprenticeships.Services.ReferenceData.IntegrationTests
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Tests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Domain.Interfaces.Enums.ReferenceDataService;
-    using SFA.Apprenticeships.Domain.Interfaces.ReferenceData;
-    using SFA.Apprenticeships.Domain.Interfaces.Services;
-    using SFA.Apprenticeships.Services.Common.Wcf;
-
-    using SFA.Apprenticeships.Services.ReferenceData.Proxy;
+    using SFA.Apprenticeships.Application.Interfaces.ReferenceData;
+    using SFA.Apprenticeships.Domain.Interfaces.Services.Caching;
+    using SFA.Apprenticeships.Infrastructure.Common.Wcf;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Configuration;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceDataProxy;
     using SFA.Apprenticeships.Services.ReferenceData.Service;
     using StructureMap;
 
@@ -24,7 +22,6 @@
         [TestFixtureSetUp]
         public void Setup()
         {
-            Apprenticeships.Common.IoC.IoC.Initialize();
             _legacyServicesConfiguration = ObjectFactory.GetInstance<ILegacyServicesConfiguration>();
             _service = ObjectFactory.GetInstance<IReferenceDataService>();
         }
@@ -88,23 +85,59 @@
             test.Count().Should().Be(10);
         }
 
-        [TestCase(LegacyReferenceDataType.County)]
-        [TestCase(LegacyReferenceDataType.ErrorCode)]
-        [TestCase(LegacyReferenceDataType.Framework)]
-        [TestCase(LegacyReferenceDataType.LocalAuthority)]
-        [TestCase(LegacyReferenceDataType.Occupations)]
-        [TestCase(LegacyReferenceDataType.Region)]
-        public void GetReferenceDataShouldReturnCollection(LegacyReferenceDataType type)
+        [Test]
+        public void GetCountriesShouldReturnCollection()
         {
-            var test = _service.GetReferenceData(type);
+            var countries = _service.GetCounties();
+            countries.Should().NotBeNullOrEmpty();
+        }
 
-            test.Should().NotBeNullOrEmpty();
+        [Test]
+        public void GetErrorCodesShouldReturnCollection()
+        {
+            var errors = _service.GetErrorCodes();
+            errors.Should().NotBeNullOrEmpty();
+        }
+
+        [Test]
+        public void GetCountiesShouldReturnCollection()
+        {
+            var counties = _service.GetCounties();
+            counties.Should().NotBeNullOrEmpty();
+        }
+
+        [Test]
+        public void GetRegionsShouldReturnCollection()
+        {
+            var regions = _service.GetRegions();
+            regions.Should().NotBeNullOrEmpty();
+        }
+
+        [Test]
+        public void GetLocalAuthsShouldReturnCollection()
+        {
+            var localAuths = _service.GetLocalAuthorities();
+            localAuths.Should().NotBeNullOrEmpty();
+        }
+
+        [Test]
+        public void GetApprenticeshipFrameworksReturnCollection()
+        {
+            var apprenticeshipFrameworks = _service.GetApprenticeshipFrameworks();
+            apprenticeshipFrameworks.Should().NotBeNullOrEmpty();
+        }
+
+        [Test]
+        public void GetApprenticeshipOccupationsReturnCollection()
+        {
+            var apprenticeshipOccupations = _service.GetApprenticeshipOccupations();
+            apprenticeshipOccupations.Should().NotBeNullOrEmpty();
         }
 
         [TestCase]
         public void ShouldGetServiceResponseFromCache()
         {
-            var cache = ObjectFactory.GetInstance<ICacheClient>();
+            var cache = ObjectFactory.GetInstance<ICacheService>();
             cache.FlushAll();
 
             // call once to fill cache.

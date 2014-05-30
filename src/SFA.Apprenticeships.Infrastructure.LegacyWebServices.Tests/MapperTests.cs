@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using FluentAssertions;
-using NUnit.Framework;
-using SFA.Apprenticeships.Services.Legacy.Vacancy.Proxy;
-
-namespace SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests
+﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Tests
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using FluentAssertions;
+    using NUnit.Framework;
+    using SFA.Apprenticeships.Application.Common.Helpers;
     using SFA.Apprenticeships.Domain.Entities.Vacancy;
-    using SFA.Apprenticeships.Domain.Interfaces.Enums;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummaryProxy;
 
     [TestFixture]
     public class MapperTests
@@ -43,8 +43,8 @@ namespace SFA.Apprenticeships.Services.Legacy.Vacancy.IntegrationTests
            var test = _mapper.Map<VacancySummaryData, VacancySummary>(data);
 
             test.Id.Should().Be(1);
-            test.Location.lat.Should().Be(12.9);
-            test.Location.lon.Should().Be(0.18);
+            test.Location.Latitude.Should().Be(12.9);
+            test.Location.Longitude.Should().Be(0.18);
         }
 
         [TestCase]

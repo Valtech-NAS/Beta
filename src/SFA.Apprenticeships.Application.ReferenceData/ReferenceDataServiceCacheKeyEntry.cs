@@ -15,7 +15,7 @@ namespace SFA.Apprenticeships.Services.ReferenceData.Service
 
         protected override string KeyPrefix
         {
-            get { return ReferenceDataServiceCacheKey + "." + _subKey; }
+            get { return ReferenceDataServiceCacheKey + _subKey; }
         }
 
         public override CacheDuration Duration

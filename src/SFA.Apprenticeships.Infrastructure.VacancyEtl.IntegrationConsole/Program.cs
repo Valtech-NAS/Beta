@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Common.Messaging.IntegrationConsole
+﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.IntegrationConsole
 {
     using System;
     using System.Collections.Generic;
