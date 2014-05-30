@@ -75,6 +75,7 @@
     <Compile Include="Consumers\VacancySummaryConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryPageConsumerAsync.cs" />
     <Compile Include="IoC\VacancyEtlRegistry.cs" />
+    <Compile Include="Mapper\GeoPointResolver.cs" />
     <Compile Include="Mapper\VacancySummaryMapper.cs" />
     <Compile Include="Messaging\AzureScheduleQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

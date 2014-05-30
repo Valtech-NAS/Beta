@@ -64,6 +64,7 @@
     <Compile Include="Entities\Elasticsearch\SortableRange.cs" />
     <Compile Include="Entities\Elasticsearch\ElasticsearchIndexType.cs" />
     <Compile Include="Entities\Elasticsearch\SortDirectionType.cs" />
+    <Compile Include="Entities\GeoPoint.cs" />
     <Compile Include="Interfaces\IConstraintSpecification.cs" />
     <Compile Include="Interfaces\IElasticsearchService.cs" />
     <Compile Include="Interfaces\IGeoPoint.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Interfaces\ISortableRange.cs" />
     <Compile Include="Interfaces\ISortableSpecification.cs" />
     <Compile Include="Interfaces\ISpecification.cs" />
+    <Compile Include="IoC\ElasticsearchRegistry.cs" />
     <Compile Include="Mapping\ElasticsearchMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ElasticsearchService.cs" />

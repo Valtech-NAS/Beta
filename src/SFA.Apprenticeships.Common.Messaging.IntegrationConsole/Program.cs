@@ -3,12 +3,17 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Reflection;
     using System.Threading;
     using System.Xml.Serialization;
     using Microsoft.WindowsAzure.Storage.Queue;
     using SFA.Apprenticeships.Application.VacancyEtl.Entities;
+    using SFA.Apprenticeships.Infrastructure.Azure.Common;
     using SFA.Apprenticeships.Infrastructure.Azure.Common.IoC;
     using SFA.Apprenticeships.Infrastructure.Common.IoC;
+    using SFA.Apprenticeships.Infrastructure.Elasticsearch.IoC;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC;
+    using SFA.Apprenticeships.Infrastructure.RabbitMq.Interfaces;
     using SFA.Apprenticeships.Infrastructure.RabbitMq.IoC;
     using SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers;
     using SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC;
@@ -22,17 +27,23 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<AzureCommonConsoleRegistry>();
+                x.AddRegistry<ElasticsearchRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
+                x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<VacancyEtlRegistry>();
             });
+
+            var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
+            subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(VacancySummaryConsumerAsync)), "VacancyEtl");
 
             var vacancySchedulerConsumer = ObjectFactory.GetInstance<VacancySchedulerConsumer>();
 
             Console.WriteLine("Enter any key to quit");
             Console.WriteLine("---------------------------------------------------------------");
 
+            var azureClient = ObjectFactory.GetInstance<IAzureCloudClient>();
             var queueItems = GetAzureScheduledMessagesQueue(1);
-            //client.AddMessage("vacancysearchdatacontrol", queueItems.Dequeue());
+            azureClient.AddMessage("vacancysearchdatacontrol", queueItems.Dequeue());
 
             while (!Console.KeyAvailable)
             {

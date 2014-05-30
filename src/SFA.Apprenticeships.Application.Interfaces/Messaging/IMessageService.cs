@@ -5,7 +5,7 @@
     {
         T GetMessage();
 
-        void DeleteMessage(string id);
+        void DeleteMessage(string id, string popReceipt);
 
         void AddMessage(T queueMessage);
     }

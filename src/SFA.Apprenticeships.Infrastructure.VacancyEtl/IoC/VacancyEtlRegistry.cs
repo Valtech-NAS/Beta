@@ -3,8 +3,6 @@
     using SFA.Apprenticeships.Application.Common.Mappers;
     using SFA.Apprenticeships.Application.Interfaces.Messaging;
     using SFA.Apprenticeships.Application.Interfaces.Search;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
-    using SFA.Apprenticeships.Application.Vacancy.Service;
     using SFA.Apprenticeships.Application.VacancyEtl;
     using SFA.Apprenticeships.Application.VacancyEtl.Entities;
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities;
@@ -20,8 +18,6 @@
         {
             For<IMessageService<StorageQueueMessage>>().Use<AzureScheduleQueue>();
             
-            For<IVacancySummaryService>().Use<VacancySummaryService>();
-
             For<IMapper>().Use<VacancySummaryMapper>().Name = "VacancyEtl.VacancySummaryMapper";
             
             For<IIndexingService<VacancySummary>>().Use<IndexingService<VacancySummary>>();

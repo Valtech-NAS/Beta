@@ -19,14 +19,20 @@
         public StorageQueueMessage GetMessage()
         {
             var message = _azureCloud.GetMessage(_cloudConfig.VacancyScheduleQueueName);
+            if (message == null)
+            {
+                return null;
+            }
+
             var storageMessage = AzureMessageHelper.DeserialiseQueueMessage<StorageQueueMessage>(message);
             storageMessage.MessageId = message.Id;
+            storageMessage.PopReceipt = message.PopReceipt;
             return storageMessage;
         }
 
-        public void DeleteMessage(string id)
+        public void DeleteMessage(string id, string popReceipt)
         {
-            _azureCloud.DeleteMessage(_cloudConfig.VacancyScheduleQueueName, id);
+            _azureCloud.DeleteMessage(_cloudConfig.VacancyScheduleQueueName, id, popReceipt);
         }
 
         public void AddMessage(StorageQueueMessage queueMessage)

@@ -106,6 +106,14 @@
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Elasticsearch\SFA.Apprenticeships.Infrastructure.Elasticsearch.csproj">
+      <Project>{8DFB3268-8865-4FE4-8E6F-8B2DCEE966D9}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Elasticsearch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
+      <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.RabbitMq\SFA.Apprenticeships.Infrastructure.RabbitMq.csproj">
       <Project>{480622E1-7624-449C-904F-AF7FD3590BEF}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.RabbitMq</Name>

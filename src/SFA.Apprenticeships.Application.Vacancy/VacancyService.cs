@@ -6,11 +6,11 @@
     using SFA.Apprenticeships.Application.Interfaces.Vacancy;
     using SFA.Apprenticeships.Domain.Entities.Vacancy;
 
-    public class VacancySummary : IVacancyProvider
+    public class VacancyService : IVacancyService
     {
         private readonly IVacancyProvider _service;
 
-        public VacancySummary(IVacancyProvider service)
+        public VacancyService(IVacancyProvider service)
         {
             Condition.Requires(service).IsNotNull();
 

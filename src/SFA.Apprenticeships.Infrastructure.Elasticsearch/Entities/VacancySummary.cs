@@ -4,7 +4,6 @@ namespace SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities
 {
     using System;
     using System.ComponentModel;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities.Attributes;
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities.Elasticsearch;
 

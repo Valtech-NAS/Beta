@@ -36,11 +36,11 @@
             var vacancySumaries = BuildVacancySummaryPages(Guid.Parse(scheduledQueueMessage.ClientRequestId), nationalCount, nonNationalCount);
 
             // Only delete from queue once we have all vacanies from the services without error.
-            _messagingService.DeleteMessage(scheduledQueueMessage.MessageId);
+            _messagingService.DeleteMessage(scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
 
             Parallel.ForEach(
                 vacancySumaries,
-                new ParallelOptions { MaxDegreeOfParallelism = 10 },
+                new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 vacancySummaryPage => _bus.PublishMessage(vacancySummaryPage));
         }
 
@@ -97,6 +97,7 @@
             catch (Exception ex)
             {
                 // TODO::High::Log this error
+                throw;
             }
         }
     }

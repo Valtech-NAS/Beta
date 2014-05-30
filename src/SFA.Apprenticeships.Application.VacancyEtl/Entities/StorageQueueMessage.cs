@@ -9,6 +9,9 @@
     public sealed class StorageQueueMessage
     {
         public string MessageId { get; set; }
+
+        public string PopReceipt { get; set; }
+
         /// <summary>
         /// Gets or sets the ETag 
         /// </summary>

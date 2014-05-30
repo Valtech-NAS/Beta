@@ -2,6 +2,7 @@
 {
     using SFA.Apprenticeships.Application.Common.Mappers;
     using SFA.Apprenticeships.Application.Interfaces.Vacancy;
+    using SFA.Apprenticeships.Application.Vacancy;
     using SFA.Apprenticeships.Infrastructure.Common.Wcf;
     using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Configuration;
     using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers;
@@ -18,7 +19,8 @@
             For<ILegacyServicesConfiguration>().Singleton().Use(LegacyServicesConfiguration.Instance);
             For<IWcfService<IVacancySummary>>().Use<WcfService<IVacancySummary>>();
             For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
-            For<IVacancySummaryService>().Use<VacancySummaryService>().Ctor<IMapper>().Named("LegacyWebServices.VacancySummaryMapper");
+            For<IVacancyProvider>().Use<VacancyProvider>().Ctor<IMapper>().Named("LegacyWebServices.VacancySummaryMapper");
+            For<IVacancyService>().Use<VacancyService>();
         }
     }
 }

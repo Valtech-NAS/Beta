@@ -31,7 +31,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummaryPro
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string FrameworkCodeField;
         
-        private SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummaryProxy.VacancyDetailsSearchLocationType VacancyLocationTypeField;
+        private string VacancyLocationTypeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CountyCodeField;
@@ -97,12 +97,13 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummaryPro
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=3)]
-        public SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummaryProxy.VacancyDetailsSearchLocationType VacancyLocationType {
+        public string VacancyLocationType {
             get {
                 return this.VacancyLocationTypeField;
             }
             set {
-                if ((this.VacancyLocationTypeField.Equals(value) != true)) {
+                if ((this.VacancyLocationTypeField == null || this.VacancyLocationTypeField.Equals(value) != true))
+                {
                     this.VacancyLocationTypeField = value;
                     this.RaisePropertyChanged("VacancyLocationType");
                 }

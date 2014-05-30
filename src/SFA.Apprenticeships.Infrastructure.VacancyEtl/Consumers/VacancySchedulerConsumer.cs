@@ -55,7 +55,7 @@
                     break;
                 }
 
-                _messageService.DeleteMessage(queueMessage.MessageId);
+                _messageService.DeleteMessage(queueMessage.MessageId, queueMessage.PopReceipt);
                 queueMessage = nextQueueMessage;
             }
 

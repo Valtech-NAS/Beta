@@ -19,9 +19,9 @@
             return _cloudQueueClient.GetQueueReference(queueName).GetMessage();    
         }
 
-        public void DeleteMessage(string queueName, string id)
+        public void DeleteMessage(string queueName, string id, string popReceipt)
         {
-            _cloudQueueClient.GetQueueReference(queueName).DeleteMessage(id, null);
+            _cloudQueueClient.GetQueueReference(queueName).DeleteMessage(id, popReceipt);
         }
 
         public void AddMessage(string queueName, CloudQueueMessage queueMessage)

@@ -10,13 +10,13 @@
     using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Configuration;
     using SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummaryProxy;
 
-    public class VacancySummary : IVacancyProvider
+    public class VacancyProvider : IVacancyProvider
     {
         private readonly IWcfService<IVacancySummary> _service;
         private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
         private readonly IMapper _mapper;
 
-        public VacancySummary(
+        public VacancyProvider(
             ILegacyServicesConfiguration legacyServicesConfiguration,
             IWcfService<IVacancySummary> service,
             IMapper mapper)
@@ -51,8 +51,8 @@
                 VacancySearchCriteria = new VacancySearchData()
                 {
                     PageIndex = 1,
-                    //VacancyLocationType =  vacancyLocationType.ToString()
-                    VacancyLocationType = (VacancyDetailsSearchLocationType)vacancyLocationType
+                    VacancyLocationType =  vacancyLocationType.ToString()
+                    //VacancyLocationType = (VacancyDetailsSearchLocationType)vacancyLocationType
                 }
             };
 
@@ -77,8 +77,8 @@
                 VacancySearchCriteria = new VacancySearchData()
                 {
                     PageIndex = page,
-                    //VacancyLocationType = vacancyLocationType.ToString()
-                    VacancyLocationType = (VacancyDetailsSearchLocationType)vacancyLocationType
+                    VacancyLocationType = vacancyLocationType.ToString()
+                    //VacancyLocationType = (VacancyDetailsSearchLocationType)vacancyLocationType
                 }
             };
 
