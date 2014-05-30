@@ -2,16 +2,16 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 {
     using System;
     using System.Net;
+    using System.Reflection;
     using System.ServiceModel;
     using System.Threading;
     using EasyNetQ;
     using Microsoft.WindowsAzure.ServiceRuntime;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
-    using SFA.Apprenticeships.Infrastructure.Azure.Common;
-    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities;
-    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Interfaces;
+    using SFA.Apprenticeships.Application.Interfaces.Messaging;
+    using SFA.Apprenticeships.Application.VacancyEtl;
+    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
+    using SFA.Apprenticeships.Infrastructure.RabbitMq.Interfaces;
     using SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers;
-    using SFA.Apprenticeships.Infrastructure.VacancyEtl.Queue;
     using StructureMap;
 
     public class WorkerRole : RoleEntryPoint
@@ -63,16 +63,14 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 //IoC.Initialize();
                 Logger.Trace("IoC initialized");
 
-                //ElasticsearchLoad<VacancySummary>.Setup(ObjectFactory.GetInstance<IElasticsearchService>());
-                Logger.Trace("Elasticsearch setup complete");
-
-                var bus = RabbitQueue.Setup();
-                Logger.Trace("RabbitMq setup complete");
+                var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
+                subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(VacancySummaryConsumerAsync)), "VacancyEtl");
+                Logger.Trace("Rabbit subscritions set up");
 
                 _vacancySchedulerConsumer = new VacancySchedulerConsumer(
-                    bus,
-                    ObjectFactory.GetInstance<IAzureCloudClient>(),
-                    ObjectFactory.GetInstance<IVacancySummaryService>());
+                    ObjectFactory.GetInstance<IMessageService<StorageQueueMessage>>(),
+                    ObjectFactory.GetInstance<IVacancySummaryProcessor>());
+
                 Logger.Trace("VacancySchedulerConsumer setup complete");
             }
             catch (Exception ex)
