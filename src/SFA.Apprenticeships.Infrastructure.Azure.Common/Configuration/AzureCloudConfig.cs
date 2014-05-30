@@ -6,9 +6,13 @@
     {
         public AzureCloudConfig()
         {
-            StorageConnectionString = CloudConfigurationManager.GetSetting("StorageConnectionString");    
+            StorageConnectionString = CloudConfigurationManager.GetSetting("StorageConnectionString");
+            VacancyScheduleQueueName = CloudConfigurationManager.GetSetting("VacancyScheduleQueueName");
         }
 
         public string StorageConnectionString { get; private set; }
+
+
+        public string VacancyScheduleQueueName { get; private set; }
     }
 }

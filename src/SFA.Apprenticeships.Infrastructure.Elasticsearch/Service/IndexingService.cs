@@ -1,70 +1,43 @@
-﻿using System;
-using System.Globalization;
-using System.Net;
-using Newtonsoft.Json;
-using RestSharp;
-using RestSharp.Extensions;
-
-namespace SFA.Apprenticeships.Services.VacancyEtl.Load
+﻿namespace SFA.Apprenticeships.Infrastructure.Elasticsearch.Service
 {
-    using SFA.Apprenticeships.Domain.Interfaces.Elasticsearch;
-    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities;
+    using System;
+    using System.Net;
+    using Newtonsoft.Json;
+    using RestSharp;
+    using RestSharp.Extensions;
+    using SFA.Apprenticeships.Application.Interfaces.Search;
+    using SFA.Apprenticeships.Infrastructure.Common.Helpers;
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities.Attributes;
+    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Interfaces;
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Mapping;
-    using VacancySummary = SFA.Apprenticeships.Domain.Entities.Vacancy.VacancySummary;
 
-    /// <summary>
-    /// Monitors the queue for new data items and loads them into the es database.
-    /// </summary>
-    public class ElasticsearchLoad<T> where T : VacancyId
+    public class IndexingService<T> : IIndexingService<T>
     {
-        private readonly IElasticsearchService _service;
+        private readonly IElasticsearchService _elasticsearchService;
+        private readonly ElasticsearchMappingAttribute _mapping;
 
-        public ElasticsearchLoad(IElasticsearchService service)
+        public IndexingService(IElasticsearchService elasticsearchService)
         {
-            if (service == null)
+            if (elasticsearchService == null)
             {
-                throw new ArgumentNullException("service");
+                throw new ArgumentNullException("elasticsearchService");
             }
 
-            _service = service;
-            Mapping = GetMappingAttribute();
-        }
-
-        public ElasticsearchMappingAttribute Mapping { get; private set; }
-
-        public void Execute(VacancySummary summary)
-        {
-            var json = JsonConvert.SerializeObject(summary, new EnumToStringConverter());
-
-            var rs =
-                _service.Execute(
-                    Mapping.Index,
-                    Mapping.Document,
-                    summary.Id.ToString(CultureInfo.InvariantCulture),
-                    json);
-
-            if (rs.StatusCode != HttpStatusCode.OK)
-            {
-                // TODO::High::Log error
-            }
+            _elasticsearchService = elasticsearchService;
+            _mapping = GetMappingAttribute();
+            Setup();
         }
 
         /// <summary>
         /// Checks the mappings on the es database to verify the database is setup.
         /// If not, creates the index and mappings.
         /// </summary>
-        public static void Setup(IElasticsearchService service)
+        private void Setup()
         {
-            if (service == null)
-            {
-                throw new ArgumentNullException("service");
-            }
-
             var mappings = ElasticsearchMapping.Create<T>();
             var attribute = GetMappingAttribute();
 
-            var rs = service.Execute(Method.PUT, attribute.Index);
+            var rs = _elasticsearchService.Execute(Method.PUT, attribute.Index);
             if (rs.StatusCode != HttpStatusCode.OK)
             {
                 if (!rs.Content.Contains("IndexAlreadyExistsException"))
@@ -74,11 +47,28 @@ namespace SFA.Apprenticeships.Services.VacancyEtl.Load
                 }
             }
 
-            rs = service.Execute(attribute.Index, attribute.Document, "_mapping", mappings);
+            rs = _elasticsearchService.Execute(attribute.Index, attribute.Document, "_mapping", mappings);
             if (rs.StatusCode != HttpStatusCode.OK)
             {
                 throw new ApplicationException(
                     string.Format("Elasticsearch service returned code '{0}' when writing mappings. Content: {1}", rs.StatusCode, rs.Content));
+            }
+        }
+
+        public void Index(string id, T objectToIndex)
+        {
+            var json = JsonConvert.SerializeObject(objectToIndex, new EnumToStringConverter());
+
+            var rs =
+                _elasticsearchService.Execute(
+                    _mapping.Index,
+                    _mapping.Document,
+                    id,
+                    json);
+
+            if (rs.StatusCode != HttpStatusCode.OK)
+            {
+                // TODO::High::Log error
             }
         }
 

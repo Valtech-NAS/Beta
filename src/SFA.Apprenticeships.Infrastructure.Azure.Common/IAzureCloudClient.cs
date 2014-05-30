@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Azure.Common.Azure
+﻿namespace SFA.Apprenticeships.Infrastructure.Azure.Common
 {
     using Microsoft.WindowsAzure.Storage.Queue;
 
@@ -8,7 +8,8 @@
     public interface IAzureCloudClient
     {
         CloudQueueMessage GetMessage(string queueName);
-        void DeleteMessage(string queueName, CloudQueueMessage queueMessage);
+
+        void DeleteMessage(string queueName, string id);
 
         void AddMessage(string queueName, CloudQueueMessage queueMessage);
     }

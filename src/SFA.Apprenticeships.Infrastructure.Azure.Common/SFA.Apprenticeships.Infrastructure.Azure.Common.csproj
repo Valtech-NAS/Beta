@@ -63,8 +63,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Azure\AzureCloudClient.cs" />
-    <Compile Include="Azure\IAzureCloudClient.cs" />
+    <Compile Include="AzureCloudClient.cs" />
+    <Compile Include="AzureMessageHelper.cs" />
+    <Compile Include="IAzureCloudClient.cs" />
     <Compile Include="Configuration\AzureCloudConfig.cs" />
     <Compile Include="Configuration\AzureConsoleConfig.cs" />
     <Compile Include="Configuration\IAzureCloudConfig.cs" />

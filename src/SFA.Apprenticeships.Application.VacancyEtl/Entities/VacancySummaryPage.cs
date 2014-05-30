@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Services.VacancyEtl.Entities
+﻿namespace SFA.Apprenticeships.Application.VacancyEtl.Entities
 {
     using System;
-    using SFA.Apprenticeships.Domain.Interfaces.Enums;
+    using SFA.Apprenticeships.Domain.Entities.Vacancy;
 
     public class VacancySummaryPage
     {

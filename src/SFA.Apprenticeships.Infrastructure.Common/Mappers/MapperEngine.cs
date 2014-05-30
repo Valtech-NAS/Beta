@@ -30,8 +30,10 @@
                 return _mappingEngine.Map(source, sourceType, destinationType);
             }
 
-            throw new InvalidOperationException("No mapping configuration registered for mapping " + sourceType.FullName +
-                                                " to " + destinationType.FullName);
+            throw new InvalidOperationException("No mapping configuration registered for mapping " 
+                                                + sourceType.FullName +
+                                                " to " 
+                                                + destinationType.FullName);
         }
 
         public TDestination Map<TSource, TDestination>(TSource sourceObject)

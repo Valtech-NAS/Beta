@@ -1,18 +1,17 @@
-namespace SFA.Apprenticeships.Services.VacancyEtl
+namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 {
+    using System;
     using System.Net;
+    using System.ServiceModel;
     using System.Threading;
     using EasyNetQ;
     using Microsoft.WindowsAzure.ServiceRuntime;
-    using SFA.Apprenticeships.Common.IoC;
-    using System;
-    using System.ServiceModel;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
-    using SFA.Apprenticeships.Domain.Interfaces.Elasticsearch;
+    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
+    using SFA.Apprenticeships.Infrastructure.Azure.Common;
+    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities;
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Interfaces;
-    using SFA.Apprenticeships.Services.VacancyEtl.Consumers;
-    using SFA.Apprenticeships.Services.VacancyEtl.Load;
-    using SFA.Apprenticeships.Services.VacancyEtl.Queue;
+    using SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers;
+    using SFA.Apprenticeships.Infrastructure.VacancyEtl.Queue;
     using StructureMap;
 
     public class WorkerRole : RoleEntryPoint
@@ -61,10 +60,10 @@ namespace SFA.Apprenticeships.Services.VacancyEtl
         {
             try
             {
-                IoC.Initialize();
+                //IoC.Initialize();
                 Logger.Trace("IoC initialized");
 
-                ElasticsearchLoad<VacancySummary>.Setup(ObjectFactory.GetInstance<IElasticsearchService>());
+                //ElasticsearchLoad<VacancySummary>.Setup(ObjectFactory.GetInstance<IElasticsearchService>());
                 Logger.Trace("Elasticsearch setup complete");
 
                 var bus = RabbitQueue.Setup();

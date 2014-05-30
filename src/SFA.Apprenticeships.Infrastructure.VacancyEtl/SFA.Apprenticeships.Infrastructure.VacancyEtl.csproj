@@ -98,9 +98,9 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Consumers\VacancySchedulerConsumer.cs" />
-    <Compile Include="Entities\StorageQueueMessage.cs" />
-    <Compile Include="Entities\VacancySummaryPage.cs" />
-    <Compile Include="Load\ElasticsearchLoad.cs" />
+    <Compile Include="Consumers\VacancySummaryConsumerAsync.cs" />
+    <Compile Include="Consumers\VacancySummaryPageConsumerAsync.cs" />
+    <Compile Include="Messaging\AzureScheduleQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queue\RabbitQueue.cs" />
     <Compile Include="WorkerRole.cs" />
@@ -110,9 +110,33 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyEtl\SFA.Apprenticeships.Application.VacancyEtl.csproj">
+      <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
+      <Name>SFA.Apprenticeships.Application.VacancyEtl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.Common\SFA.Apprenticeships.Infrastructure.Azure.Common.csproj">
+      <Project>{4FE5E4BE-91DF-49C6-B6CD-9B69FCD0C0FE}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Azure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Elasticsearch\SFA.Apprenticeships.Infrastructure.Elasticsearch.csproj">
+      <Project>{8DFB3268-8865-4FE4-8E6F-8B2DCEE966D9}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Elasticsearch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.RabbitMq\SFA.Apprenticeships.Infrastructure.RabbitMq.csproj">
+      <Project>{480622E1-7624-449C-904F-AF7FD3590BEF}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.RabbitMq</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

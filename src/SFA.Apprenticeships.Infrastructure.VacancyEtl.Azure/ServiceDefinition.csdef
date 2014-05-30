@@ -6,7 +6,7 @@
     </Imports>
     <ConfigurationSettings>
       <Setting name="StorageConnectionString" />
-      <Setting name="QueueName" />
+      <Setting name="VacancyScheduleQueueName" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

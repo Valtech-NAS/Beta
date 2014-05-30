@@ -1,15 +1,19 @@
-﻿namespace SFA.Apprenticeships.Application.VacancyEtl
+﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
 {
     using System;
+    using System.Globalization;
     using System.Threading.Tasks;
+    using EasyNetQ.AutoSubscribe;
+    using SFA.Apprenticeships.Application.Interfaces.Search;
+    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities;
 
     public class VacancySummaryConsumerAsync : IConsumeAsync<VacancySummary>
     {
-        private readonly ElasticsearchLoad<VacancySummary> _loader;
- 
-        public VacancySummaryConsumerAsync(IElasticsearchService service)
+        private readonly IIndexingService<VacancySummary> _indexer;
+
+        public VacancySummaryConsumerAsync(IIndexingService<VacancySummary> indexer)
         {
-            _loader = new ElasticsearchLoad<VacancySummary>(service);
+            _indexer = indexer;
         }
 
         [AutoSubscriberConsumer(SubscriptionId = "VacancySummaryConsumerAsync")]
@@ -22,7 +26,7 @@
         {
             try
             {
-                _loader.Execute(message);
+                _indexer.Index(message.Id.ToString(CultureInfo.InvariantCulture), message);
             }
             catch (Exception ex)
             {

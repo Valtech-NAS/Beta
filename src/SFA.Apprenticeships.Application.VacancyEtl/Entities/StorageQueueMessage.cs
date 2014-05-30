@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Services.VacancyEtl.Entities
+﻿namespace SFA.Apprenticeships.Application.VacancyEtl.Entities
 {
     using System;
 
@@ -8,6 +8,7 @@
     [Serializable]
     public sealed class StorageQueueMessage
     {
+        public string MessageId { get; set; }
         /// <summary>
         /// Gets or sets the ETag 
         /// </summary>

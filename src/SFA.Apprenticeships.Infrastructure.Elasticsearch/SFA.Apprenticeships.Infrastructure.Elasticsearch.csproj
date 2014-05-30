@@ -85,6 +85,7 @@
     <Compile Include="Mapping\ElasticsearchMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ElasticsearchService.cs" />
+    <Compile Include="Service\IndexingService.cs" />
     <Compile Include="Specifications\AbstractSpecification.cs" />
     <Compile Include="Specifications\QuerySpecification.cs">
       <SubType>Code</SubType>
@@ -103,6 +104,10 @@
     <Compile Include="Entities\WageType.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>

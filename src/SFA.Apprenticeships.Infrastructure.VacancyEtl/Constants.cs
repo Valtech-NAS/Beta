@@ -1,7 +1,5 @@
-﻿namespace SFA.Apprenticeships.Services.VacancyEtl
+﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 {
-    using EasyNetQ.Events;
-
     public static class Constants
     {
         public static class NamedLoggers

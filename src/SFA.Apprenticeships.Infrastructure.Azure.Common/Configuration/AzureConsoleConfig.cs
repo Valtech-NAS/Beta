@@ -7,8 +7,11 @@
         public AzureConsoleConfig(IConfigurationManager configManager)
         {
             StorageConnectionString = configManager.GetAppSetting("StorageConnectionString");
+            VacancyScheduleQueueName = configManager.GetAppSetting("VacancyScheduleQueueName");
         }
 
         public string StorageConnectionString { get; private set; }
+
+        public string VacancyScheduleQueueName { get; private set; }
     }
 }
