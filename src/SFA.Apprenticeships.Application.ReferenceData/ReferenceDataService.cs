@@ -1,51 +1,25 @@
-﻿namespace SFA.Apprenticeships.Services.ReferenceData.Service
+﻿namespace SFA.Apprenticeships.Application.ReferenceData
 {
     using System;
     using System.Collections.Generic;
-    using SFA.Apprenticeships.Application.Interfaces.ReferenceData;
-    using SFA.Apprenticeships.Domain.Entities.ReferenceData;
+    using Interfaces.ReferenceData;
+    using CuttingEdge.Conditions;
+    using Domain.Entities.ReferenceData;
 
     public class ReferenceDataService : IReferenceDataService
     {
-        private readonly IReferenceDataService _service;
+        private readonly IReferenceDataProvider _service;
 
-        public ReferenceDataService(IReferenceDataService service)
+        public ReferenceDataService(IReferenceDataProvider service)
         {
-            if (service == null)
-            {
-                throw new ArgumentNullException("service");
-            }
+            Condition.Requires(service);
+
             _service = service;
         }
 
-        public IEnumerable<Occupation> GetApprenticeshipOccupations()
+        public IEnumerable<ReferenceDataItem> GetReferenceData(string type)
         {
-            return _service.GetApprenticeshipOccupations();
-        }
-
-        public IEnumerable<Framework> GetApprenticeshipFrameworks()
-        {
-            return _service.GetApprenticeshipFrameworks();
-        }
-
-        public IEnumerable<County> GetCounties()
-        {
-            return _service.GetCounties();
-        }
-
-        public IEnumerable<ErrorCode> GetErrorCodes()
-        {
-            return _service.GetErrorCodes();
-        }
-
-        public IEnumerable<LocalAuthority> GetLocalAuthorities()
-        {
-            return _service.GetLocalAuthorities();
-        }
-
-        public IEnumerable<Region> GetRegions()
-        {
-            return _service.GetRegions();
+            return _service.GetReferenceData(type);
         }
     }
 }

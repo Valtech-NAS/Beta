@@ -1,15 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Framework
 {
     using System.Web.Mvc;
-    using SFA.Apprenticeships.Domain.Interfaces.Enums.ReferenceDataService;
-    using SFA.Apprenticeships.Web.Common.Providers;
+    using Providers;
+    using Models.Common;
 
     public static class ViewDataDictionaryExtensions
     {
-        public static void AddLookups(
-            this ViewDataDictionary viewData, 
-            IReferenceDataProvider referenceDataService,
-            params LegacyReferenceDataType[] lookups)
+        public static void AddLookups(this ViewDataDictionary viewData, IWebReferenceDataProvider referenceDataService,
+            params WebReferenceDataTypes[] lookups)
         {
             foreach (var lookup in lookups)
             {
@@ -21,10 +19,8 @@
             }
         }
 
-        public static void AddLists(
-            this ViewDataDictionary viewData, 
-            IReferenceDataProvider referenceDataService,
-            params LegacyReferenceDataType[] lists)
+        public static void AddLists(this ViewDataDictionary viewData, IWebReferenceDataProvider referenceDataService,
+            params WebReferenceDataTypes[] lists)
         {
             foreach (var list in lists)
             {

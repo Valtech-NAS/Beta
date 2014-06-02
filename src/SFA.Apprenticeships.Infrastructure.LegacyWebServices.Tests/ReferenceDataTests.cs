@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Tests
+﻿using SFA.Apprenticeships.Application.ReferenceData;
+
+namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Tests
 {
     using System;
     using System.Linq;
@@ -10,7 +12,6 @@
     using SFA.Apprenticeships.Infrastructure.Common.Wcf;
     using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Configuration;
     using SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceDataProxy;
-    using SFA.Apprenticeships.Services.ReferenceData.Service;
     using StructureMap;
 
     [TestFixture]
@@ -83,13 +84,6 @@
 
             test.Should().NotBeNullOrEmpty();
             test.Count().Should().Be(10);
-        }
-
-        [Test]
-        public void GetCountriesShouldReturnCollection()
-        {
-            var countries = _service.GetCounties();
-            countries.Should().NotBeNullOrEmpty();
         }
 
         [Test]

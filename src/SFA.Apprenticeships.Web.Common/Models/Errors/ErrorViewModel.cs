@@ -1,7 +1,7 @@
-﻿using System.Web.Mvc;
-
-namespace SFA.Apprenticeships.Web.Common.Models.Errors
+﻿namespace SFA.Apprenticeships.Web.Common.Models.Errors
 {
+    using System.Web.Mvc;
+
     public class ErrorViewModel
     {
         public string PageTitle { get; set; }

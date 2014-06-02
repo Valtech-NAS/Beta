@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Domain.Entities.ReferenceData;
 
-    public interface IReferenceDataService
+    public interface IReferenceDataProvider
     {
         IEnumerable<ReferenceDataItem> GetReferenceData(string type);
     }

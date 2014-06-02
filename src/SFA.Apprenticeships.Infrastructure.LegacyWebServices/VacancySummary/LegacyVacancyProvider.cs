@@ -3,20 +3,20 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using SFA.Apprenticeships.Application.Common.Mappers;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
-    using SFA.Apprenticeships.Infrastructure.Common.Wcf;
-    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Configuration;
-    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummaryProxy;
+    using Application.Common.Mappers;
+    using Application.Interfaces.Vacancy;
+    using Domain.Entities.Vacancy;
+    using Common.Wcf;
+    using Configuration;
+    using VacancySummaryProxy;
 
-    public class VacancyProvider : IVacancyProvider
+    public class LegacyVacancyProvider : IVacancyProvider
     {
         private readonly IWcfService<IVacancySummary> _service;
         private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
         private readonly IMapper _mapper;
 
-        public VacancyProvider(
+        public LegacyVacancyProvider(
             ILegacyServicesConfiguration legacyServicesConfiguration,
             IWcfService<IVacancySummary> service,
             IMapper mapper)
@@ -48,11 +48,10 @@
                 ExternalSystemId = _legacyServicesConfiguration.SystemId,
                 PublicKey = _legacyServicesConfiguration.PublicKey,
                 MessageId = Guid.NewGuid(),
-                VacancySearchCriteria = new VacancySearchData()
+                VacancySearchCriteria = new VacancySearchData
                 {
                     PageIndex = 1,
                     VacancyLocationType =  vacancyLocationType.ToString()
-                    //VacancyLocationType = (VacancyDetailsSearchLocationType)vacancyLocationType
                 }
             };
 
@@ -67,18 +66,17 @@
             return rs.ResponseData.TotalPages;
         }
 
-        public IEnumerable<Domain.Entities.Vacancy.VacancySummary> GetVacancySummary(VacancyLocationType vacancyLocationType, int page = 1)
+        public IEnumerable<VacancySummary> GetVacancySummary(VacancyLocationType vacancyLocationType, int page = 1)
         {
             var vacancySummaryRequest = new VacancySummaryRequest
             {
                 ExternalSystemId = _legacyServicesConfiguration.SystemId,
                 PublicKey = _legacyServicesConfiguration.PublicKey,
                 MessageId = Guid.NewGuid(),
-                VacancySearchCriteria = new VacancySearchData()
+                VacancySearchCriteria = new VacancySearchData
                 {
                     PageIndex = page,
                     VacancyLocationType = vacancyLocationType.ToString()
-                    //VacancyLocationType = (VacancyDetailsSearchLocationType)vacancyLocationType
                 }
             };
 
@@ -90,10 +88,10 @@
                 rs.ResponseData.SearchResults == null ||
                 rs.ResponseData.SearchResults.Length == 0)
             {
-                return Enumerable.Empty<Domain.Entities.Vacancy.VacancySummary>().ToList();
+                return Enumerable.Empty<VacancySummary>().ToList();
             }
 
-           return _mapper.Map<VacancySummaryData[], IEnumerable<Domain.Entities.Vacancy.VacancySummary>>(rs.ResponseData.SearchResults);
+           return _mapper.Map<VacancySummaryData[], IEnumerable<VacancySummary>>(rs.ResponseData.SearchResults);
         }
     }
 }
