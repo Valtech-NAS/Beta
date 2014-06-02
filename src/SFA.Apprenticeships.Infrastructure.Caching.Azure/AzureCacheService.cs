@@ -1,17 +1,17 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Caching.Caching
+﻿namespace SFA.Apprenticeships.Infrastructure.Caching.Azure
 {
     using System;
     using Microsoft.ApplicationServer.Caching;
-    using SFA.Apprenticeships.Domain.Interfaces.Services.Caching;
+    using Domain.Interfaces.Services.Caching;
 
     public class AzureCacheService : ICacheService
     {
-        private DataCache cache;
+        private readonly DataCache _cache;
 
         public AzureCacheService()
         {
             var cacheFactory = new DataCacheFactory();
-            cache = cacheFactory.GetDefaultCache();
+            _cache = cacheFactory.GetDefaultCache();
         }
 
         private void Store(string key, object value, CacheDuration cacheDuration)
@@ -22,29 +22,24 @@
             }
 
             var timespan = TimeSpan.FromMinutes((int)cacheDuration);
-            cache.Add(key, value, timespan);
+            _cache.Add(key, value, timespan);
         }
 
         public T Get<T>(string key) where T : class
         {
-            var result = cache[key] as T;
+            var result = _cache[key] as T;
 
-            if (result != null)
-            {
-                return result;
-            }
-
-            return default(T);
+            return result;
         }
 
         private void Remove(string key)
         {
-            cache.Remove(key);
+            _cache.Remove(key);
         }
 
         public void FlushAll()
         {
-            cache.Clear();
+            _cache.Clear();
         }
 
         #region Get
@@ -55,7 +50,7 @@
         {
             var cacheKey = cacheEntry.Key();
 
-            var result = cache[cacheKey] as TResult;
+            var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
                 result = dataFunc();
@@ -72,7 +67,7 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1);
 
-            var result = cache[cacheKey] as TResult;
+            var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
                 result = dataFunc(funcParam1);
@@ -89,7 +84,7 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2);
 
-            var result = cache[cacheKey] as TResult;
+            var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
                 result = dataFunc(funcParam1, funcParam2);
@@ -106,7 +101,7 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2, funcParam3);
 
-            var result = cache[cacheKey] as TResult;
+            var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
                 result = dataFunc(funcParam1, funcParam2, funcParam3);
@@ -123,7 +118,7 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2, funcParam3, funcParam4);
 
-            var result = cache[cacheKey] as TResult;
+            var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
                 result = dataFunc(funcParam1, funcParam2, funcParam3, funcParam4);
@@ -140,7 +135,7 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2, funcParam3, funcParam4, funcParam5);
 
-            var result = cache[cacheKey] as TResult;
+            var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
                 result = dataFunc(funcParam1, funcParam2, funcParam3, funcParam4, funcParam5);
@@ -157,7 +152,7 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2, funcParam3, funcParam4, funcParam5, funcParam6);
 
-            var result = cache[cacheKey] as TResult;
+            var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
                 result = dataFunc(funcParam1, funcParam2, funcParam3, funcParam4, funcParam5, funcParam6);

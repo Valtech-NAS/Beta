@@ -35,6 +35,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Location\ILocationSearchService.cs" />
     <Compile Include="Messaging\IMessageBus.cs" />
     <Compile Include="Messaging\IMessageService.cs" />
     <Compile Include="Location\IPostcodeLookupProvider.cs" />

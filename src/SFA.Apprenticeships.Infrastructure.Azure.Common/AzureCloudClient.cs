@@ -2,7 +2,7 @@
 {
     using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Queue;
-    using SFA.Apprenticeships.Infrastructure.Azure.Common.Configuration;
+    using Configuration;
 
     public class AzureCloudClient : IAzureCloudClient
     {

@@ -7,8 +7,8 @@
     <ProjectGuid>{B3285E4A-29DD-4CB6-B8C9-51AA06DB4F83}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Infrastructure.Caching</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Infrastructure.Caching</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Infrastructure.Caching.Azure</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Infrastructure.Caching.Azure</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -39,20 +39,12 @@
     <Reference Include="Microsoft.ApplicationServer.Caching.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.3.1.0\lib\net40-full\Microsoft.ApplicationServer.Caching.Core.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap.Net4">
-      <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.Net4.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Caching" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Caching\AzureCacheService.cs" />
-    <Compile Include="Caching\MemoryCacheService.cs" />
-    <Compile Include="IoC\CachingRegistry.cs" />
+    <Compile Include="AzureCacheService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

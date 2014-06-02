@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
+    using Interfaces.Vacancy;
+    using Domain.Entities.Vacancy;
 
     public class VacancyService : IVacancyService
     {
@@ -22,7 +22,7 @@
             return _service.GetVacancyPageCount(vacancyLocationType);
         }
 
-        public IEnumerable<Domain.Entities.Vacancy.VacancySummary> GetVacancySummary(VacancyLocationType vacancyLocationType, int page = 1)
+        public IEnumerable<VacancySummary> GetVacancySummary(VacancyLocationType vacancyLocationType, int page = 1)
         {
             return _service.GetVacancySummary(vacancyLocationType, page);
         }

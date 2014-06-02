@@ -1,10 +1,9 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Caching.Caching
+﻿namespace SFA.Apprenticeships.Infrastructure.Caching.Memory
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Caching;
-    using SFA.Apprenticeships.Domain.Interfaces.Services.Caching;
+    using Domain.Interfaces.Services.Caching;
 
     public class MemoryCacheService : ICacheService
     {
@@ -30,12 +29,7 @@
         {
             var result = _cache[key] as T;
 
-            if (result != null)
-            {
-                return result;
-            }
-
-            return default(T);
+            return result;
         }
 
         private void Remove(string key)
@@ -45,8 +39,8 @@
 
         public void FlushAll()
         {
-            List<string> cacheKeys = Enumerable.Select<KeyValuePair<string, object>, string>(MemoryCache.Default, kvp => kvp.Key).ToList();
-            foreach (string cacheKey in cacheKeys)
+            var cacheKeys = MemoryCache.Default.Select(kvp => kvp.Key).ToList();
+            foreach (var cacheKey in cacheKeys)
             {
                 _cache.Remove(cacheKey);
             }
