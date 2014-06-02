@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Application.Common.Helpers
-{
-    using System;
+﻿using System;
 
+namespace SFA.Apprenticeships.Infrastructure.Common.Helpers
+{
     /// <summary>
     /// String/Formatting Extensions
     /// </summary>

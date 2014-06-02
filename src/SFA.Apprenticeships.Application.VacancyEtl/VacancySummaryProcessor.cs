@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Common.Mappers;
+    using Domain.Interfaces.Services.Mapping;
     using Interfaces.Messaging;
     using Interfaces.Vacancy;
     using Entities;

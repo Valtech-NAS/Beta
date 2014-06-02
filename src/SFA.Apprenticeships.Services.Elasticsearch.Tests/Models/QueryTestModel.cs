@@ -2,8 +2,6 @@
 
 namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.Models
 {
-    using SFA.Apprenticeships.Domain.Interfaces.Elasticsearch;
-
     public class QueryTestModel
     {
         public ISortable<string> Postcode { get; set; }

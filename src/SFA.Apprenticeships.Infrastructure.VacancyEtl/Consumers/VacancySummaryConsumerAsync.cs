@@ -4,9 +4,9 @@
     using System.Globalization;
     using System.Threading.Tasks;
     using EasyNetQ.AutoSubscribe;
-    using Application.Common.Mappers;
     using Application.Interfaces.Search;
     using Application.VacancyEtl.Entities;
+    using Domain.Interfaces.Services.Mapping;
     using Elasticsearch.Entities;
 
     public class VacancySummaryConsumerAsync : IConsumeAsync<VacancySummaryUpdate>

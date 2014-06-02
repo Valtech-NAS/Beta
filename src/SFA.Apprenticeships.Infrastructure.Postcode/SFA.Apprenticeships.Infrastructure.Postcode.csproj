@@ -52,10 +52,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Application.Common\SFA.Apprenticeships.Application.Common.csproj">
-      <Project>{BBD3D133-6BB8-4A6C-B25C-5A9CDA91BC39}</Project>
-      <Name>SFA.Apprenticeships.Application.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>

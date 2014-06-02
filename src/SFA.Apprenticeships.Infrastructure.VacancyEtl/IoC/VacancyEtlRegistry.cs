@@ -1,10 +1,11 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC
+﻿
+namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC
 {
-    using Application.Common.Mappers;
     using Application.Interfaces.Messaging;
     using Application.Interfaces.Search;
     using Application.VacancyEtl;
     using Application.VacancyEtl.Entities;
+    using Domain.Interfaces.Services.Mapping;
     using Elasticsearch.Entities;
     using Elasticsearch.Service;
     using Consumers;

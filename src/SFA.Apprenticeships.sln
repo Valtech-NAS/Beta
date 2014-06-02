@@ -49,9 +49,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.Interfaces", "SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj", "{2C577447-2405-46B3-8065-613A19A58541}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}"
-	ProjectSection(SolutionItems) = preProject
-		SFA.Apprenticeships.Infrastructure.Caching.Azure\SFA.Apprenticeships.Infrastructure.Caching.Azure.csproj = SFA.Apprenticeships.Infrastructure.Caching.Azure\SFA.Apprenticeships.Infrastructure.Caching.Azure.csproj
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Common", "SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj", "{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}"
 EndProject
@@ -74,8 +71,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.VacancyEtl", "SFA.Apprenticeships.Application.VacancyEtl\SFA.Apprenticeships.Application.VacancyEtl.csproj", "{04796403-0EDF-4A8D-B725-180A9F83D958}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Elasticsearch", "SFA.Apprenticeships.Infrastructure.Elasticsearch\SFA.Apprenticeships.Infrastructure.Elasticsearch.csproj", "{8DFB3268-8865-4FE4-8E6F-8B2DCEE966D9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.Common", "SFA.Apprenticeships.Application.Common\SFA.Apprenticeships.Application.Common.csproj", "{BBD3D133-6BB8-4A6C-B25C-5A9CDA91BC39}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.Address", "SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Address.csproj", "{1B386440-4479-4A2C-93CA-42A98426019F}"
 EndProject
@@ -213,10 +208,6 @@ Global
 		{8DFB3268-8865-4FE4-8E6F-8B2DCEE966D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DFB3268-8865-4FE4-8E6F-8B2DCEE966D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DFB3268-8865-4FE4-8E6F-8B2DCEE966D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BBD3D133-6BB8-4A6C-B25C-5A9CDA91BC39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BBD3D133-6BB8-4A6C-B25C-5A9CDA91BC39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BBD3D133-6BB8-4A6C-B25C-5A9CDA91BC39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BBD3D133-6BB8-4A6C-B25C-5A9CDA91BC39}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1B386440-4479-4A2C-93CA-42A98426019F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1B386440-4479-4A2C-93CA-42A98426019F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B386440-4479-4A2C-93CA-42A98426019F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -276,7 +267,6 @@ Global
 		{0491054E-CAF4-4321-BE1D-3E44E739421C} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{04796403-0EDF-4A8D-B725-180A9F83D958} = {99003A13-CC36-4274-9CC2-9F6350B31492}
 		{8DFB3268-8865-4FE4-8E6F-8B2DCEE966D9} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
-		{BBD3D133-6BB8-4A6C-B25C-5A9CDA91BC39} = {2EC3ADC0-EB51-4D4B-9B87-8D159C1326C4}
 		{1B386440-4479-4A2C-93CA-42A98426019F} = {620A2A3B-BC44-409A-9C74-75D2A9C75F79}
 		{711DF928-D828-4BF9-BE66-22E4AFD554A3} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{FE64F0B2-36A4-4F41-8912-81E864E1AF6C} = {EB6F2C1E-20C0-4C55-B5D9-70FBA59E5CF0}

@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
-    using Application.Common.Mappers;
+    using Common.Mapping;
     using Domain.Entities.Vacancy;
     using VacancySummaryProxy;
 

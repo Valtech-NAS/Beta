@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.VacancyEtl
 {
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
+    using Entities;
 
     public interface IVacancySummaryProcessor
     {

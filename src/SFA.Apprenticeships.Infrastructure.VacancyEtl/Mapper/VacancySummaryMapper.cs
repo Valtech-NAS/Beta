@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
-    using Application.Common.Mappers;
     using Application.VacancyEtl.Entities;
+    using Common.Mapping;
     using Elasticsearch.Entities;
 
     public class VacancySummaryMapper : MapperEngine

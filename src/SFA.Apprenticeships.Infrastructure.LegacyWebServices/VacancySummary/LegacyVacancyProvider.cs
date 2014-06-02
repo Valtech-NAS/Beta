@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Common.Mappers;
     using Application.Interfaces.Vacancy;
     using CuttingEdge.Conditions;
     using Domain.Entities.Vacancy;
+    using Domain.Interfaces.Services.Mapping;
     using Common.Wcf;
     using Configuration;
     using VacancySummaryProxy;

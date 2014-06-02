@@ -1,9 +1,10 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Elasticsearch.Specifications
+﻿using SFA.Apprenticeships.Infrastructure.Common.Helpers;
+
+namespace SFA.Apprenticeships.Infrastructure.Elasticsearch.Specifications
 {
     using System;
     using System.Linq.Expressions;
     using System.Text;
-    using SFA.Apprenticeships.Application.Common.Helpers;
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Interfaces;
 
     public class SortByLocationSpecification<TModel> : AbstractSpecification<TModel, ISortableGeoLocation>, ISortableSpecification<TModel>

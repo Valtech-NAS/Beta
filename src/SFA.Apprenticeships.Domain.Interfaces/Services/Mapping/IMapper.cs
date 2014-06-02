@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Application.Common.Mappers
-{
-    using System;
+﻿using System;
 
+namespace SFA.Apprenticeships.Domain.Interfaces.Services.Mapping
+{
     public interface IMapper
     {
         object Map(object source, Type sourceType, Type destinationType);

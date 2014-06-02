@@ -45,6 +45,7 @@
     <Compile Include="Services\Caching\BaseCacheKey.cs" />
     <Compile Include="Services\Caching\ICacheService.cs" />
     <Compile Include="Services\Logging\ILoggingService.cs" />
+    <Compile Include="Services\Mapping\IMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">

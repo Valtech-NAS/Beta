@@ -1,11 +1,12 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Elasticsearch.Service
+﻿using SFA.Apprenticeships.Infrastructure.Common.Helpers;
+
+namespace SFA.Apprenticeships.Infrastructure.Elasticsearch.Service
 {
     using System;
     using System.Net;
     using Newtonsoft.Json;
     using RestSharp;
     using RestSharp.Extensions;
-    using SFA.Apprenticeships.Application.Common.Helpers;
     using SFA.Apprenticeships.Application.Interfaces.Search;
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities.Attributes;
     using SFA.Apprenticeships.Infrastructure.Elasticsearch.Interfaces;

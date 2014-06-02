@@ -1,13 +1,14 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Tests
+﻿using SFA.Apprenticeships.Infrastructure.Common.Helpers;
+
+namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Tests
 {
     using System.Collections.Generic;
     using System.Linq;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.Common.Helpers;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
-    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers;
-    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummaryProxy;
+    using Domain.Entities.Vacancy;
+    using LegacyWebServices.Mappers;
+    using LegacyWebServices.VacancySummaryProxy;
 
     [TestFixture]
     public class MapperTests
