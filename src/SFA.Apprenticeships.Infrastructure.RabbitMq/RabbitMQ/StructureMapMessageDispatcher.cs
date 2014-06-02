@@ -6,18 +6,18 @@
 
     public class StructureMapMessageDispatcher : IAutoSubscriberMessageDispatcher
     {
-        private readonly IContainer container;
+        private readonly IContainer _container;
 
         public StructureMapMessageDispatcher(IContainer container)
         {
-            this.container = container;
+            _container = container;
         }
 
         public void Dispatch<TMessage, TConsumer>(TMessage message)
             where TMessage : class
             where TConsumer : IConsume<TMessage>
         {
-            var consumer = container.GetInstance<TConsumer>();
+            var consumer = _container.GetInstance<TConsumer>();
             consumer.Consume(message);
         }
 
@@ -25,7 +25,7 @@
             where TMessage : class
             where TConsumer : IConsumeAsync<TMessage>
         {
-            var consumer = container.GetInstance<TConsumer>();
+            var consumer = _container.GetInstance<TConsumer>();
             return consumer.Consume(message);
         }
     }

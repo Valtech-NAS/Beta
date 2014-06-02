@@ -1,12 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.ServiceOverrides
 {
     using System;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.Interfaces;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.Serializers;
+    using Interfaces;
+    using Serializers;
+    using EasyNetQ;
+    using EasyNetQ.Consumer;
 
     public class CustomServiceProvider : IRabbitMqServiceProvider
     {
-        public Action<EasyNetQ.IServiceRegister> RegisterCustomServices()
+        public Action<IServiceRegister> RegisterCustomServices()
         {
             JsonSettings.Initialize();
 
@@ -14,19 +16,19 @@
                              .Register(OverrideSerializer);
         }
 
-        private static EasyNetQ.ISerializer OverrideSerializer(EasyNetQ.IServiceProvider provider)
+        private static ISerializer OverrideSerializer(EasyNetQ.IServiceProvider provider)
         {
-            return new JsonSerializer(provider.Resolve<EasyNetQ.ITypeNameSerializer>());
+            return new Serializers.JsonSerializer(provider.Resolve<ITypeNameSerializer>());
         }
 
-        private static EasyNetQ.Consumer.IConsumerErrorStrategy OverrideConsumerErrorStrategy(EasyNetQ.IServiceProvider provider)
+        private static IConsumerErrorStrategy OverrideConsumerErrorStrategy(EasyNetQ.IServiceProvider provider)
         {
             return new ConsumerErrorStrategy(
-                provider.Resolve<EasyNetQ.IConnectionFactory>(),
-                provider.Resolve<EasyNetQ.ISerializer>(),
-                provider.Resolve<EasyNetQ.IEasyNetQLogger>(),
-                provider.Resolve<EasyNetQ.IConventions>(),
-                provider.Resolve<EasyNetQ.ITypeNameSerializer>());
+                provider.Resolve<IConnectionFactory>(),
+                provider.Resolve<ISerializer>(),
+                provider.Resolve<IEasyNetQLogger>(),
+                provider.Resolve<IConventions>(),
+                provider.Resolve<ITypeNameSerializer>());
         }
     }
 }

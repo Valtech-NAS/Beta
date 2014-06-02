@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.IoC
 {
     using EasyNetQ;
-    using SFA.Apprenticeships.Application.Interfaces.Messaging;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.Configuration;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.Interfaces;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.RabbitMQ;
+    using Application.Interfaces.Messaging;
+    using Configuration;
+    using Interfaces;
+    using RabbitMQ;
     using StructureMap.Configuration.DSL;
 
     public class RabbitMqRegistry : Registry

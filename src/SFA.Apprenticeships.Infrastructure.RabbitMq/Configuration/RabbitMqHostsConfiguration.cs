@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Configuration;
-    using SFA.Apprenticeships.Infrastructure.Common.Configuration;
+    using Common.Configuration;
 
     public class RabbitMqHostsConfiguration : SecureConfigurationSection<RabbitMqHostsConfiguration>
     {
@@ -33,14 +33,14 @@
 
         public RabbitMqCollection()
         {
-            this.elements = new List<IRabbitMqHostConfiguration>();
-            this.elementDictionary = new Dictionary<string, IRabbitMqHostConfiguration>();
+            elements = new List<IRabbitMqHostConfiguration>();
+            elementDictionary = new Dictionary<string, IRabbitMqHostConfiguration>();
         }
 
         protected override ConfigurationElement CreateNewElement()
         {
             var element = new RabbitMqHostConfiguration();
-            this.elements.Add(element);
+            elements.Add(element);
 
             return element;
         }
@@ -65,7 +65,7 @@
 
         public new IEnumerator<IRabbitMqHostConfiguration> GetEnumerator()
         {
-            return this.elements.GetEnumerator();
+            return elements.GetEnumerator();
         }
     }
 }

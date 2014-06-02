@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.RabbitMQ
 {
     using EasyNetQ;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.Configuration;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.Interfaces;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.ServiceOverrides;
+    using Configuration;
+    using Interfaces;
+    using ServiceOverrides;
 
     internal class BusFactory
     {
