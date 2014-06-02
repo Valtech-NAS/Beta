@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Application.Common.Mappers
+﻿using CuttingEdge.Conditions;
+
+namespace SFA.Apprenticeships.Application.Common.Mappers
 {
     using System;
     using AutoMapper;
@@ -19,10 +21,7 @@
 
         public object Map(object source, Type sourceType, Type destinationType)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            Condition.Requires("source").IsNotNull();
 
             var map = _mappingEngine.ConfigurationProvider.FindTypeMapFor(sourceType, destinationType);
 

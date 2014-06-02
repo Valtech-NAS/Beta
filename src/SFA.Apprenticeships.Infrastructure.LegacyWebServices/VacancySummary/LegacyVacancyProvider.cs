@@ -5,6 +5,7 @@
     using System.Linq;
     using Application.Common.Mappers;
     using Application.Interfaces.Vacancy;
+    using CuttingEdge.Conditions;
     using Domain.Entities.Vacancy;
     using Common.Wcf;
     using Configuration;
@@ -21,20 +22,9 @@
             IWcfService<IVacancySummary> service,
             IMapper mapper)
         {
-            if (legacyServicesConfiguration == null)
-            {
-                throw new ArgumentNullException("legacyServicesConfiguration");
-            }
-
-            if (service == null)
-            {
-                throw new ArgumentNullException("service");
-            }
-
-            if (mapper == null)
-            {
-                throw new ArgumentNullException("mapper");
-            }
+            Condition.Requires("legacyServicesConfiguration").IsNotNull();
+            Condition.Requires("service").IsNotNull();
+            Condition.Requires("mapper").IsNotNull();
 
             _legacyServicesConfiguration = legacyServicesConfiguration;
             _service = service;

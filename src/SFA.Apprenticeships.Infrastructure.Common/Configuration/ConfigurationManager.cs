@@ -5,6 +5,7 @@
     using System.Configuration;
     using System.Globalization;
     using System.IO;
+    using CuttingEdge.Conditions;
 
     public class ConfigurationManager : IConfigurationManager
     {
@@ -33,10 +34,7 @@
 
         public string TryGetAppSetting(string key)
         {
-            if (string.IsNullOrEmpty(key))
-            {
-                throw new ArgumentNullException("key");
-            }
+            Condition.Requires("key").IsNotNullOrEmpty();
 
             var result = Configuration.AppSettings.Settings[key];
             if (result != null)
@@ -75,10 +73,7 @@
 
         public T GetAppSetting<T>(T defaultValue, string key)
         {
-            if (string.IsNullOrEmpty(key))
-            {
-                throw new ArgumentNullException("key");
-            }
+            Condition.Requires("key").IsNotNullOrEmpty();
 
             string result = TryGetAppSetting(key);
             if (result != null)
@@ -96,10 +91,7 @@
 
         public ConnectionStringSettings GetConnectionString(string key)
         {
-            if (string.IsNullOrEmpty(key))
-            {
-                throw new ArgumentNullException("key");
-            }
+            Condition.Requires("key").IsNotNullOrEmpty();
 
             var result = Configuration.ConnectionStrings.ConnectionStrings[key];
             if (result == null)

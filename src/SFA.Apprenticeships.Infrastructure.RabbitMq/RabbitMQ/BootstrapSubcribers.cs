@@ -4,8 +4,9 @@
     using System.Reflection;
     using EasyNetQ;
     using EasyNetQ.AutoSubscribe;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.Interfaces;
+    using CuttingEdge.Conditions;
     using StructureMap;
+    using Interfaces;
 
     internal class BootstrapSubcribers : IBootstrapSubcribers
     {
@@ -13,10 +14,7 @@
 
         public BootstrapSubcribers(IBus bus)
         {
-            if (bus == null)
-            {
-                throw new ArgumentNullException("bus");
-            }
+            Condition.Requires("bus").IsNotNull();
 
             _bus = bus;
         }

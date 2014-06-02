@@ -13,7 +13,7 @@
 
         public WebReferenceDataProvider(IReferenceDataService service)
         {
-            Condition.Requires("service");
+            Condition.Requires("service").IsNotNull();
 
             _service = service;
         }

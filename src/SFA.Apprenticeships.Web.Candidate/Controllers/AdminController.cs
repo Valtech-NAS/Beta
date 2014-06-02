@@ -1,20 +1,18 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
+﻿using CuttingEdge.Conditions;
+using SFA.Apprenticeships.Web.Common.Providers;
+
+namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
     using System.Web.Mvc;
-    using SFA.Apprenticeships.Domain.Interfaces.Enums.ReferenceDataService;
-    using SFA.Apprenticeships.Web.Common.Providers;
 
     public class AdminController : Controller
     {
-        private readonly IReferenceDataProvider _provider;
+        private readonly IWebReferenceDataProvider _provider;
 
-        public AdminController(IReferenceDataProvider provider)
+        public AdminController(IWebReferenceDataProvider provider)
         {
-            if (provider == null)
-            {
-                throw new ArgumentNullException("provider");
-            }
+            Condition.Requires("provider").IsNotNull();
 
             _provider = provider;
         }

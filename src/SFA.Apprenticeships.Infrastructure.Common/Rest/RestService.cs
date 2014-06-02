@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using CuttingEdge.Conditions;
     using RestSharp;
     using RestSharp.Deserializers;
 
@@ -13,10 +14,7 @@
 
         protected RestService(string baseUrl)
         {
-            if (string.IsNullOrEmpty(baseUrl))
-            {
-                throw new ArgumentNullException("baseUrl");
-            }
+            Condition.Requires("baseUrl").IsNotNullOrEmpty();
 
             BaseUrl = baseUrl;
         }

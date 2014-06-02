@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Application.Common.Helpers
+﻿using CuttingEdge.Conditions;
+
+namespace SFA.Apprenticeships.Application.Common.Helpers
 {
     using System;
     using System.ComponentModel;
@@ -109,11 +111,7 @@
         /// </returns>
         public static T GetEnumFromDescription<T>(this string description) where T : struct, IComparable, IConvertible, IFormattable
         {
-            if (string.IsNullOrEmpty(description))
-            {
-                // should be null reference exception
-                throw new ArgumentException(string.Format("Description cannot be null"));
-            }
+            Condition.Requires("description").IsNotNullOrEmpty();
 
             var typeOfEnum = typeof(T);
             var attributeEnum = Enum.GetValues(typeOfEnum)

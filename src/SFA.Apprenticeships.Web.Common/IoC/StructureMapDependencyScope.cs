@@ -1,3 +1,5 @@
+using CuttingEdge.Conditions;
+
 namespace SFA.Apprenticeships.Web.Common.IoC
 {
     using System;
@@ -30,12 +32,9 @@ namespace SFA.Apprenticeships.Web.Common.IoC
         /// <exception cref="System.ArgumentNullException">Container cannot be null</exception>
         public StructureMapDependencyScope(IContainer container)
         {
-            if (container == null)
-            {
-                throw new ArgumentNullException("container");
-            }
+            Condition.Requires("container").IsNotNull();
 
-            this.Container = container;
+            Container = container;
         }
 
         #endregion
