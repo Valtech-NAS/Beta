@@ -41,7 +41,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\Vacancy\IVacancySummaryProvider.cs" />
     <Compile Include="Services\Caching\CacheDuration.cs" />
     <Compile Include="Services\Caching\BaseCacheKey.cs" />
     <Compile Include="Services\Caching\ICacheService.cs" />
