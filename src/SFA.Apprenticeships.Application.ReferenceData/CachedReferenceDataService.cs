@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.ReferenceData
 {
-    using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Interfaces.ReferenceData;
@@ -9,6 +8,7 @@
 
     public class CachedReferenceDataService : IReferenceDataService
     {
+        private static readonly BaseCacheKey CacheKey = new ReferenceDataServiceCacheKeyEntry();
         private readonly IReferenceDataService _service;
         private readonly ICacheService _cache;
 
@@ -23,9 +23,7 @@
 
         public IEnumerable<ReferenceDataItem> GetReferenceData(string type)
         {
-            var cacheKey = new ReferenceDataServiceCacheKeyEntry(type);
-
-            return _cache.Get(cacheKey, () => _service.GetReferenceData(type));
+            return _cache.Get(CacheKey, _service.GetReferenceData, type);
         }
     }
 }

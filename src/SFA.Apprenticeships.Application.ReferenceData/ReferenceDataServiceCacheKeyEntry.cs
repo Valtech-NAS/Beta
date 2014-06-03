@@ -5,17 +5,11 @@
 
     public class ReferenceDataServiceCacheKeyEntry : BaseCacheKey
     {
-        private const string ReferenceDataServiceCacheKey = "SFA.Apprenticeships.LegacyReferenceData.";
-        private readonly string _subKey;
-
-        public ReferenceDataServiceCacheKeyEntry(string subKey)
-        {
-            _subKey = subKey;
-        }
+        private const string ReferenceDataServiceCacheKey = "SFA.Apprenticeships.LegacyReferenceData";
 
         protected override string KeyPrefix
         {
-            get { return ReferenceDataServiceCacheKey + _subKey; }
+            get { return ReferenceDataServiceCacheKey; }
         }
 
         public override CacheDuration Duration

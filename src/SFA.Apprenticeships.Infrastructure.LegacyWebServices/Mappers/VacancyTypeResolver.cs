@@ -1,0 +1,22 @@
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
+{
+    using System;
+    using AutoMapper;
+    using SFA.Apprenticeships.Domain.Entities.Vacancy;
+
+    public class VacancyTypeResolver : ValueResolver<string, VacancyType>
+    {
+        protected override VacancyType ResolveCore(string source)
+        {
+            switch (source)
+            {
+                case "IntermediateLevelApprenticeship":
+                    return VacancyType.Intermediate;
+                case "AdvancedLevelApprenticeship":
+                    return VacancyType.Advanced;
+                default:
+                    return VacancyType.Unknown;
+            }
+        }
+    }
+}

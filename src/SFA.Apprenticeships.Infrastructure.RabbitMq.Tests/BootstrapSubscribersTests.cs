@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.Tests.RabbitMQ
+﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.Tests
 {
     using System.Linq;
     using System.Reflection;

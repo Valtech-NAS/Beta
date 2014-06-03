@@ -14,15 +14,12 @@
     [TestFixture]
     public class VacancyServiceTests
     {
-        private IVacancyService _service;
         private ILegacyServicesConfiguration _legacyServicesConfiguration;
 
         [TestFixtureSetUp]
         public void Setup()
         {
-
             _legacyServicesConfiguration = ObjectFactory.GetInstance<ILegacyServicesConfiguration>();
-            _service = ObjectFactory.GetInstance<IVacancyService>();
         }
 
         [TestCase]
@@ -54,6 +51,7 @@
             var result = service.GetVacancySummary(VacancyLocationType.NonNational, 1);
 
             result.ToList().Should().NotBeNullOrEmpty();
+            result.ToList().ForEach(r => r.TypeOfLocation.Should().Be(VacancyLocationType.NonNational));
         }
     }
 }
