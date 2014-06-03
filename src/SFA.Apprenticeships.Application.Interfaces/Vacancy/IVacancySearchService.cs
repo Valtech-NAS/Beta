@@ -6,6 +6,6 @@
     public interface IVacancySearchService
     {
         //TODO: Flush out API. need to understand valid combinations of location name, postcode, distance, keyword, etc.
-        IEnumerable<VacancySummary> Search(string postcode, int searchRadius);
+        IEnumerable<VacancySummary> Search(string postcodeOrLocationName, int searchRadius);
     }
 }

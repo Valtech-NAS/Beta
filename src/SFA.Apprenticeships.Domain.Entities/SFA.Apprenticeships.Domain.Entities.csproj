@@ -41,6 +41,7 @@
     </Compile>
     <Compile Include="Location\Address.cs" />
     <Compile Include="Location\Location.cs" />
+    <Compile Include="Location\LocationHelper.cs" />
     <Compile Include="ReferenceData\ReferenceDataItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Location\GeoPoint.cs" />
