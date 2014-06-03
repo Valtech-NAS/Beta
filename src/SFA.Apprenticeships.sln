@@ -60,8 +60,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.Address", "SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Address.csproj", "{1B386440-4479-4A2C-93CA-42A98426019F}"
 EndProject
-Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Infrastructure.VacancyEtl.Azure", "SFA.Apprenticeships.Infrastructure.VacancyEtl.Azure\SFA.Apprenticeships.Infrastructure.VacancyEtl.Azure.ccproj", "{711DF928-D828-4BF9-BE66-22E4AFD554A3}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EB6F2C1E-20C0-4C55-B5D9-70FBA59E5CF0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{FE64F0B2-36A4-4F41-8912-81E864E1AF6C}"
@@ -91,6 +89,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Postcode.Tests", "SFA.Apprenticeships.Infrastructure.Postcode.Tests\SFA.Apprenticeships.Infrastructure.Postcode.Tests.csproj", "{8363A28D-668C-44EA-B20A-8866E0D5814C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Elasticsearch.Tests", "SFA.Apprenticeships.Infrastructure.Elasticsearch.Tests\SFA.Apprenticeships.Infrastructure.Elasticsearch.Tests.csproj", "{0A9AB24F-ECB9-4B1E-880D-38D7ACC72CFE}"
+EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Infrastructure.VacancyEtl.Azure", "SFA.Apprenticeships.Infrastructure.VacancyEtl.Azure\SFA.Apprenticeships.Infrastructure.VacancyEtl.Azure.ccproj", "{711DF928-D828-4BF9-BE66-22E4AFD554A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -182,10 +182,6 @@ Global
 		{1B386440-4479-4A2C-93CA-42A98426019F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B386440-4479-4A2C-93CA-42A98426019F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B386440-4479-4A2C-93CA-42A98426019F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{711DF928-D828-4BF9-BE66-22E4AFD554A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{711DF928-D828-4BF9-BE66-22E4AFD554A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{711DF928-D828-4BF9-BE66-22E4AFD554A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{711DF928-D828-4BF9-BE66-22E4AFD554A3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D429F1FC-7255-4B84-9124-FE607F5D6C54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D429F1FC-7255-4B84-9124-FE607F5D6C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D429F1FC-7255-4B84-9124-FE607F5D6C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -222,6 +218,10 @@ Global
 		{0A9AB24F-ECB9-4B1E-880D-38D7ACC72CFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A9AB24F-ECB9-4B1E-880D-38D7ACC72CFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A9AB24F-ECB9-4B1E-880D-38D7ACC72CFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{711DF928-D828-4BF9-BE66-22E4AFD554A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{711DF928-D828-4BF9-BE66-22E4AFD554A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{711DF928-D828-4BF9-BE66-22E4AFD554A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{711DF928-D828-4BF9-BE66-22E4AFD554A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -248,7 +248,6 @@ Global
 		{04796403-0EDF-4A8D-B725-180A9F83D958} = {99003A13-CC36-4274-9CC2-9F6350B31492}
 		{8DFB3268-8865-4FE4-8E6F-8B2DCEE966D9} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{1B386440-4479-4A2C-93CA-42A98426019F} = {620A2A3B-BC44-409A-9C74-75D2A9C75F79}
-		{711DF928-D828-4BF9-BE66-22E4AFD554A3} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{FE64F0B2-36A4-4F41-8912-81E864E1AF6C} = {EB6F2C1E-20C0-4C55-B5D9-70FBA59E5CF0}
 		{9C779D83-B3D7-4F5E-A20B-9DA2441733E6} = {EB6F2C1E-20C0-4C55-B5D9-70FBA59E5CF0}
 		{8B52C549-CC01-4411-B801-E09FDCCD54C8} = {EB6F2C1E-20C0-4C55-B5D9-70FBA59E5CF0}
@@ -263,5 +262,6 @@ Global
 		{ABD48D09-C35E-42CE-8A4D-81550C2B8554} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{8363A28D-668C-44EA-B20A-8866E0D5814C} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
 		{0A9AB24F-ECB9-4B1E-880D-38D7ACC72CFE} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
+		{711DF928-D828-4BF9-BE66-22E4AFD554A3} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 	EndGlobalSection
 EndGlobal
