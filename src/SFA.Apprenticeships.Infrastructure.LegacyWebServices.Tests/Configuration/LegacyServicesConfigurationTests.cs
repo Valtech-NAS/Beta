@@ -1,8 +1,9 @@
-﻿namespace SFA.Apprenticeships.Common.Tests.Configuration
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Tests.Configuration
 {
     using System;
     using FluentAssertions;
     using NUnit.Framework;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Configuration;
 
     [TestFixture]
     public class LegacyServicesConfigurationTests

@@ -1,9 +1,10 @@
-﻿namespace SFA.Apprenticeships.Common.Tests.Configuration
+﻿namespace SFA.Apprenticeships.Infrastructure.Common.Tests.Configuration
 {
     using System;
     using System.Collections.Generic;
     using FluentAssertions;
     using NUnit.Framework;
+    using SFA.Apprenticeships.Infrastructure.Common.Configuration;
 
     [TestFixture]
     public class ConfigurationManagerTests

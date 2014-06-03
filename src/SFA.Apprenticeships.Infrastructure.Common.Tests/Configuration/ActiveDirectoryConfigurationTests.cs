@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Services.Common.Tests.Configuration
+﻿namespace SFA.Apprenticeships.Infrastructure.Common.Tests.Configuration
 {
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Services.Common.ActiveDirectory;
+    using SFA.Apprenticeships.Infrastructure.Common.ActiveDirectory;
 
     [TestFixture]
     public class ActiveDirectoryConfigurationTests

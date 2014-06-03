@@ -1,13 +1,15 @@
-﻿namespace SFA.Apprenticeships.Common.Tests.Caching
+﻿namespace SFA.Apprenticeships.Infrastructure.Common.Tests.Caching
 {
     using System;
     using FluentAssertions;
     using NUnit.Framework;
+    using SFA.Apprenticeships.Domain.Interfaces.Services.Caching;
+    using SFA.Apprenticeships.Infrastructure.Caching.Memory;
 
     [TestFixture]
-    public class AzureCachingTests
+    public class MemoryCachingTests
     {
-        private AzureCacheClient _azureCacheClient;
+        private MemoryCacheService _memoryCacheService;
         private TestCacheKeyEntry _cacheKeyEntry;
         private TestCachedObject _testCachedObject;
         private Func<int, string, TestCachedObject> _testFunc;
@@ -15,7 +17,7 @@
         [SetUp]
         public void Setup()
         {
-            _azureCacheClient = new AzureCacheClient();
+            _memoryCacheService = new MemoryCacheService();
             _cacheKeyEntry = new TestCacheKeyEntry();
             _testCachedObject = new TestCachedObject() { DateTimeCached = DateTime.Now };
             _testFunc = ((i, s) => _testCachedObject);
@@ -24,45 +26,42 @@
         [TearDown]
         public void TearDown()
         {
-            _azureCacheClient.FlushAll();
+            _memoryCacheService.FlushAll();
         }
 
         [Test]
-        [Ignore("Need config fix")]
         public void AddsItemToCache()
         {
-            var nullResult = _azureCacheClient.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
+            var nullResult = _memoryCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
             nullResult.Should().BeNull();
 
-            _azureCacheClient.Get(_cacheKeyEntry, _testFunc, 1, "2");
-            var notNullResult = _azureCacheClient.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
+            _memoryCacheService.Get(_cacheKeyEntry, _testFunc, 1, "2");
+            var notNullResult = _memoryCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
 
             notNullResult.Should().NotBe(null);
             notNullResult.DateTimeCached.Should().Be(_testCachedObject.DateTimeCached);
         }
 
         [Test]
-        [Ignore("Need config fix")]
         public void RemovesItemFromCache()
         {
-            _azureCacheClient.Get(_cacheKeyEntry, _testFunc, 1, "2");
-            var notNullResult = _azureCacheClient.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
+            _memoryCacheService.Get(_cacheKeyEntry, _testFunc, 1, "2");
+            var notNullResult = _memoryCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
 
             notNullResult.Should().NotBe(null);
             notNullResult.DateTimeCached.Should().Be(_testCachedObject.DateTimeCached);
 
-            _azureCacheClient.Remove(_cacheKeyEntry, 1, "2");
-            var nullResult = _azureCacheClient.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
+            _memoryCacheService.Remove(_cacheKeyEntry, 1, "2");
+            var nullResult = _memoryCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
             nullResult.Should().BeNull();
         }
 
-        [Serializable]
         private class TestCachedObject
         {
             public DateTime DateTimeCached { get; set; }
         }
 
-        private class TestCacheKeyEntry : BaseCacheEntry
+        private class TestCacheKeyEntry : BaseCacheKey
         {
             protected override string KeyPrefix
             {

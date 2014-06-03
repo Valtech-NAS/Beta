@@ -1,7 +1,8 @@
-﻿namespace SFA.Apprenticeships.Common.Tests.Configuration
+﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.Tests.Configuration
 {
     using FluentAssertions;
     using NUnit.Framework;
+    using SFA.Apprenticeships.Infrastructure.RabbitMq.Configuration;
 
     [TestFixture]
     public class RabbitMqConfigurationTests

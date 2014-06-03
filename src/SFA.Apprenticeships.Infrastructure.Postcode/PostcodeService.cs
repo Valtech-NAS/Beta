@@ -1,11 +1,10 @@
-﻿using CuttingEdge.Conditions;
-
-namespace SFA.Apprenticeships.Infrastructure.Postcode
+﻿namespace SFA.Apprenticeships.Infrastructure.Postcode
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Common.Rest;
+    using CuttingEdge.Conditions;
     using Entities;
     using Application.Interfaces.Location;
     using Domain.Entities.Location;
@@ -46,7 +45,7 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode
             if (postcodes.Data != null && postcodes.Data.Result != null)
                 return postcodes.Data.Result.AsEnumerable();
 
-            return null;
+            return Enumerable.Empty<PostcodeInfo>();
         }
     }
 }

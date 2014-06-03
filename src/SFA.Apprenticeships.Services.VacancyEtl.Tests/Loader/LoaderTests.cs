@@ -1,18 +1,15 @@
-﻿using System;
-using System.Globalization;
-using System.Net;
-using FluentAssertions;
-using Moq;
-using NUnit.Framework;
-using RestSharp;
-using SFA.Apprenticeships.Services.VacancyEtl.Load;
-using StructureMap;
-
-namespace SFA.Apprenticeships.Services.VacancyEtl.Tests.Loader
+﻿namespace SFA.Apprenticeships.Services.VacancyEtl.Tests.Loader
 {
-    using SFA.Apprenticeships.Domain.Entities.Attributes.Elasticsearch;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
-    using SFA.Apprenticeships.Domain.Interfaces.Elasticsearch;
+    using System;
+    using System.Globalization;
+    using System.Net;
+    using FluentAssertions;
+    using Moq;
+    using NUnit.Framework;
+    using RestSharp;
+    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities;
+    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Interfaces;
+    using StructureMap;
 
     [TestFixture]
     public class LoaderTests
