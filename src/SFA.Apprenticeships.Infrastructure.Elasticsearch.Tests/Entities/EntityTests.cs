@@ -1,10 +1,9 @@
-﻿using System;
-using FluentAssertions;
-using NUnit.Framework;
-
-namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.Entities
+﻿namespace SFA.Apprenticeships.Infrastructure.Elasticsearch.Tests.Entities
 {
-    using SFA.Apprenticeships.Domain.Entities.Elasticsearch;
+    using System;
+    using FluentAssertions;
+    using NUnit.Framework;
+    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities.Elasticsearch;
 
     [TestFixture]
     public class EntityTests

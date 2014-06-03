@@ -30,7 +30,7 @@
 
             switch (type.ToLower())
             {
-                case "county": 
+                case "counties": 
                     return GetCounties();
                 default:
                     throw new ArgumentOutOfRangeException("type", "Unrecognised reference data name '" + type + "'");

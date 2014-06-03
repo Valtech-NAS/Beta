@@ -40,7 +40,7 @@
             result.Should().NotBeNull();
         }
 
-        [TestCase("County", 46)]
+        [TestCase("Counties", 46)]
         public void GetApprenticeshipFrameworksShouldReturnList(string referenceDataType, int numberReturned)
         {
             var test = _service.GetReferenceData(referenceDataType);
@@ -58,14 +58,14 @@
             cache.FlushAll();
 
             // call once to fill cache.
-            _service.GetReferenceData("County");
+            _service.GetReferenceData("Counties");
 
             // Mock the service to ensure it's not called but use the same cache.
             var uncachedServicce = new Mock<IReferenceDataService>();
             uncachedServicce.Setup(x => x.GetReferenceData(It.IsAny<string>())).Throws<InvalidOperationException>();
 
             var service = new CachedReferenceDataService(cache, uncachedServicce.Object);
-            var test = service.GetReferenceData("County");
+            var test = service.GetReferenceData("Counties");
 
             test.Should().NotBeNullOrEmpty();
             test.Count().Should().Be(46);

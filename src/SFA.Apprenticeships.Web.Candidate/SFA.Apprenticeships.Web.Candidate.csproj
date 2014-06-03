@@ -283,6 +283,22 @@
     <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
+      <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
+      <Project>{a2d82061-bcbd-4030-9eb4-5148aee79241}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>
       <Name>SFA.Apprenticeships.Web.Common</Name>

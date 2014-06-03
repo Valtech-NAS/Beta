@@ -1,7 +1,8 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Services.Elasticsearch.Tests.Models
+﻿namespace SFA.Apprenticeships.Infrastructure.Elasticsearch.Tests.Models
 {
+    using System;
+    using SFA.Apprenticeships.Infrastructure.Elasticsearch.Interfaces;
+
     public class QueryTestModel
     {
         public ISortable<string> Postcode { get; set; }

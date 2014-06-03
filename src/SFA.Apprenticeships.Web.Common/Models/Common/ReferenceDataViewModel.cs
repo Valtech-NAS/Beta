@@ -3,7 +3,7 @@
     using System;
     using System.ComponentModel;
 
-    public class WebReferenceDataViewModel
+    public class ReferenceDataViewModel
     {
         [DisplayName("Code")]
         public string Id { get; set; }
