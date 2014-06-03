@@ -110,7 +110,7 @@ namespace SFA.Apprenticeships.Infrastructure.Common.Helpers
         /// </returns>
         public static T GetEnumFromDescription<T>(this string description) where T : struct, IComparable, IConvertible, IFormattable
         {
-            Condition.Requires("description").IsNotNullOrEmpty();
+            Condition.Requires(description, "description").IsNotNullOrEmpty();
 
             var typeOfEnum = typeof(T);
             var attributeEnum = Enum.GetValues(typeOfEnum)

@@ -12,7 +12,7 @@
 
         public ReferenceDataService(IReferenceDataProvider service)
         {
-            Condition.Requires(service).IsNotNull();
+            Condition.Requires(service, "service").IsNotNull();
 
             _service = service;
         }

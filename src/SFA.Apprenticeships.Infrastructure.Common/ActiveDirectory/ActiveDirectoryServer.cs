@@ -16,7 +16,7 @@ namespace SFA.Apprenticeships.Infrastructure.Common.ActiveDirectory
 
         public ActiveDirectoryServer(IActiveDirectoryConfiguration config, bool isSecure)
         {
-            Condition.Requires("config").IsNotNull();
+            Condition.Requires(config, "config").IsNotNull();
 
             _isSecure = isSecure;
             _config = config;

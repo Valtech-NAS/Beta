@@ -32,7 +32,7 @@ namespace SFA.Apprenticeships.Web.Common.IoC
         /// <exception cref="System.ArgumentNullException">Container cannot be null</exception>
         public StructureMapDependencyScope(IContainer container)
         {
-            Condition.Requires("container").IsNotNull();
+            Condition.Requires(container, "container").IsNotNull();
 
             Container = container;
         }

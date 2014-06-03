@@ -21,7 +21,7 @@
 
         public object Map(object source, Type sourceType, Type destinationType)
         {
-            Condition.Requires("source").IsNotNull();
+            Condition.Requires(source, "source").IsNotNull();
 
             var map = _mappingEngine.ConfigurationProvider.FindTypeMapFor(sourceType, destinationType);
 

@@ -17,7 +17,7 @@
 
         public VacancySearchService(ILocationLookupProvider locationLookupProvider, IVacancySearchProvider vacancySearchProvider, IPostcodeLookupProvider postcodeLookupProvider)
         {
-            Condition.Requires(locationLookupProvider).IsNotNull();
+            Condition.Requires(locationLookupProvider, "locationLookupProvider").IsNotNull();
 
             _locationLookupProvider = locationLookupProvider;
             _vacancySearchProvider = vacancySearchProvider;

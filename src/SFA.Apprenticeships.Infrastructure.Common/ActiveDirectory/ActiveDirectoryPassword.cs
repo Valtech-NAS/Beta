@@ -13,7 +13,7 @@ namespace SFA.Apprenticeships.Infrastructure.Common.ActiveDirectory
 
         public ActiveDirectoryChangePassword(ActiveDirectoryServer server)
         {
-            Condition.Requires("server").IsNotNull();
+            Condition.Requires(server, "server").IsNotNull();
 
             _server = server;
         }

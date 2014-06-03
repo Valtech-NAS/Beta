@@ -12,7 +12,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
 
         public AdminController(IWebReferenceDataProvider provider)
         {
-            Condition.Requires("provider").IsNotNull();
+            Condition.Requires(provider, "provider").IsNotNull();
 
             _provider = provider;
         }

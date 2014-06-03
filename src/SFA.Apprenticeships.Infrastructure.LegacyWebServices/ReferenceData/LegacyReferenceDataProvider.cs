@@ -19,8 +19,8 @@
 
         public LegacyReferenceDataProvider(ILegacyServicesConfiguration legacyServicesConfiguration, IWcfService<IReferenceData> service)
         {
-            Condition.Requires("legacyServicesConfiguration").IsNotNull();
-            Condition.Requires("service").IsNotNull();
+            Condition.Requires(legacyServicesConfiguration, "legacyServicesConfiguration").IsNotNull();
+            Condition.Requires(service, "service").IsNotNull();
 
             _legacyServicesConfiguration = legacyServicesConfiguration;
             _service = service;
@@ -28,7 +28,7 @@
 
         public IEnumerable<ReferenceDataItem> GetReferenceData(string type)
         {
-            Condition.Requires("type").IsNotNullOrWhiteSpace();
+            Condition.Requires(type, "type").IsNotNullOrWhiteSpace();
 
             if (type.Equals(Counties, StringComparison.InvariantCultureIgnoreCase))
                 return GetCounties();

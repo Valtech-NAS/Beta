@@ -14,8 +14,8 @@
 
         public CachedReferenceDataService(ICacheService cache, IReferenceDataService service)
         {
-            Condition.Requires("cache").IsNotNull();
-            Condition.Requires("service").IsNotNull();
+            Condition.Requires(cache, "cache").IsNotNull();
+            Condition.Requires(service, "service").IsNotNull();
 
             _cache = cache;
             _service = service;

@@ -22,9 +22,9 @@
             IWcfService<IVacancySummary> service,
             IMapper mapper)
         {
-            Condition.Requires("legacyServicesConfiguration").IsNotNull();
-            Condition.Requires("service").IsNotNull();
-            Condition.Requires("mapper").IsNotNull();
+            Condition.Requires(legacyServicesConfiguration, "legacyServicesConfiguration").IsNotNull();
+            Condition.Requires(service, "service").IsNotNull();
+            Condition.Requires(mapper, "mapper").IsNotNull();
 
             _legacyServicesConfiguration = legacyServicesConfiguration;
             _service = service;

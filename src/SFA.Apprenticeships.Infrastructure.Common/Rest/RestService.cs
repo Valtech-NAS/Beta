@@ -14,7 +14,7 @@
 
         protected RestService(string baseUrl)
         {
-            Condition.Requires("baseUrl").IsNotNullOrEmpty();
+            Condition.Requires(baseUrl, "baseUrl").IsNotNullOrEmpty();
 
             BaseUrl = baseUrl;
         }

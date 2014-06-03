@@ -14,7 +14,7 @@
 
         public BootstrapSubcribers(IBus bus)
         {
-            Condition.Requires("bus").IsNotNull();
+            Condition.Requires(bus, "bus").IsNotNull();
 
             _bus = bus;
         }
