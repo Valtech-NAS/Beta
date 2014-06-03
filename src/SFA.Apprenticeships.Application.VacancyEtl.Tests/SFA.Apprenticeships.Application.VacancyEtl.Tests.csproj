@@ -7,8 +7,8 @@
     <ProjectGuid>{39157C7D-190B-4C9B-BEBB-5217B8D027A8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Applcation.VacancyEtl.Tests</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Applcation.VacancyEtl.Tests</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Application.VacancyEtl.Tests</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Application.VacancyEtl.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

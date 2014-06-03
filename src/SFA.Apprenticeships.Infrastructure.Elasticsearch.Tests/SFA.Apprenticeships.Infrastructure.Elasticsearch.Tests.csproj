@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="Entities\EntityTests.cs" />
     <Compile Include="FilterSort\SpecificationTests.cs" />
+    <Compile Include="Indexer\IndexerTests.cs" />
     <Compile Include="Models\QueryTestModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -76,6 +77,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Elasticsearch\SFA.Apprenticeships.Infrastructure.Elasticsearch.csproj">
       <Project>{8DFB3268-8865-4FE4-8E6F-8B2DCEE966D9}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Elasticsearch</Name>
