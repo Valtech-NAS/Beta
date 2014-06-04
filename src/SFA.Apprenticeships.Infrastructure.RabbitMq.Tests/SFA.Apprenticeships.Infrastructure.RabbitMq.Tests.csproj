@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\RabbitMQConfigurationTests.cs" />
     <Compile Include="Consumers\ConsumerCounter.cs" />
     <Compile Include="Consumers\TestConsumerAsync.cs" />
     <Compile Include="Consumers\TestConsumerSync.cs" />

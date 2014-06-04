@@ -1,18 +1,17 @@
-﻿using System;
-using System.Web.Http;
-using System.Reflection;
-using System.Web;
-using System.Web.Optimization;
-using SFA.Apprenticeships.Web.Candidate.Controllers;
-using SFA.Apprenticeships.Web.Common.Models.Errors;
-
-namespace SFA.Apprenticeships.Web.Candidate
+﻿namespace SFA.Apprenticeships.Web.Candidate
 {
+    using System;
+    using System.Web.Http;
+    using System.Reflection;
+    using System.Web;
+    using System.Web.Optimization;
+    using SFA.Apprenticeships.Web.Candidate.Controllers;
+    using SFA.Apprenticeships.Web.Common.Models.Errors;
     using System.Web.Mvc;
     using System.Web.Routing;
     using SFA.Apprenticeships.Web.Common.IoC;
 
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {

@@ -1,14 +1,12 @@
-﻿using SFA.Apprenticeships.Infrastructure.Common.Helpers;
-
-namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Tests
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Tests
 {
     using System.Collections.Generic;
     using System.Linq;
     using FluentAssertions;
     using NUnit.Framework;
-    using Domain.Entities.Vacancy;
-    using LegacyWebServices.Mappers;
-    using LegacyWebServices.VacancySummaryProxy;
+    using SFA.Apprenticeships.Domain.Entities.Vacancy;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummaryProxy;
 
     [TestFixture]
     public class MapperTests
@@ -19,7 +17,6 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Tests
         public void Setup()
         {
             _mapper = new VacancySummaryMapper();
-            _mapper.Initialize();
         }
 
         [TestCase]
@@ -54,8 +51,8 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Tests
             var data = new VacancySummaryData
             {
                 VacancyReference = 1,
-                VacancyLocationType = VacancyLocationType.NonNational.GetDescription(),
-                VacancyType = VacancyType.Intermediate.GetDescription(),
+                VacancyLocationType = "MultipleLocation",
+                VacancyType = "IntermediateLevelApprenticeship",
             };
 
             var test = _mapper.Map<VacancySummaryData, VacancySummary>(data);

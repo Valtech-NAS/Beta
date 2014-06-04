@@ -15,8 +15,6 @@
         private readonly IWcfService<IReferenceData> _service;
         private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
 
-        private const string Counties = "Counties";
-
         public LegacyReferenceDataProvider(ILegacyServicesConfiguration legacyServicesConfiguration, IWcfService<IReferenceData> service)
         {
             Condition.Requires(legacyServicesConfiguration, "legacyServicesConfiguration").IsNotNull();
@@ -30,13 +28,17 @@
         {
             Condition.Requires(type, "type").IsNotNullOrWhiteSpace();
 
-            if (type.Equals(Counties, StringComparison.InvariantCultureIgnoreCase))
-                return GetCounties();
-
-            throw new ArgumentOutOfRangeException("type", "Unrecognised reference data name '" + type + "'");
+            switch (type.ToLower())
+            {
+                case "counties": 
+                    return GetCounties();
+                default:
+                    throw new ArgumentOutOfRangeException("type", "Unrecognised reference data name '" + type + "'");
+            }
         }
 
         #region Helpers
+
         IEnumerable<ReferenceDataItem> GetCounties()
         {
             var msgId = Guid.NewGuid();

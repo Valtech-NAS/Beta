@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ServiceDefinition name="SFA.Apprenticeships.Services.VacancyEtl.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2014-01.2.3">
+<ServiceDefinition name="SFA.Apprenticeships.Infrastructure.VacancyEtl.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2014-01.2.3">
   <WorkerRole name="SFA.Apprenticeships.Infrastructure.VacancyEtl" vmsize="Small">
     <Imports>
       <Import moduleName="Diagnostics" />

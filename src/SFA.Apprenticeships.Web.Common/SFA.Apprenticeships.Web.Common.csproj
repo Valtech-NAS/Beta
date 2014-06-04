@@ -76,6 +76,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.1.2\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.1.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
@@ -111,12 +115,10 @@
     <Compile Include="IoC\StructureMapDependencyResolver.cs" />
     <Compile Include="IoC\StructureMapDependencyScope.cs" />
     <Compile Include="IoC\WebCommonRegistry.cs" />
-    <Compile Include="Models\Common\WebReferenceDataTypes.cs" />
-    <Compile Include="Models\Common\WebReferenceDataViewModel.cs" />
+    <Compile Include="Models\Common\ReferenceDataTypes.cs" />
+    <Compile Include="Models\Common\ReferenceDataViewModel.cs" />
     <Compile Include="Models\Errors\ErrorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\WebReferenceDataProvider.cs" />
-    <Compile Include="Providers\IWebReferenceDataProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

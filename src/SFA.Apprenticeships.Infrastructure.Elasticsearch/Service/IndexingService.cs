@@ -15,7 +15,8 @@ namespace SFA.Apprenticeships.Infrastructure.Elasticsearch.Service
     public class IndexingService<TSource> : IIndexingService<TSource>
     {
         private readonly IElasticsearchService _elasticsearchService;
-        private readonly ElasticsearchMappingAttribute _mapping;
+        
+        public readonly ElasticsearchMappingAttribute Mapping;
 
         public IndexingService(IElasticsearchService elasticsearchService)
         {
@@ -25,7 +26,7 @@ namespace SFA.Apprenticeships.Infrastructure.Elasticsearch.Service
             }
 
             _elasticsearchService = elasticsearchService;
-            _mapping = GetMappingAttribute();
+            Mapping = GetMappingAttribute();
             Setup();
         }
 
@@ -62,8 +63,8 @@ namespace SFA.Apprenticeships.Infrastructure.Elasticsearch.Service
 
             var rs =
                 _elasticsearchService.Execute(
-                    _mapping.Index,
-                    _mapping.Document,
+                    Mapping.Index,
+                    Mapping.Document,
                     id,
                     json);
 

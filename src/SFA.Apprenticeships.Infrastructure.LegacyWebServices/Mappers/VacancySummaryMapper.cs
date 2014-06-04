@@ -13,7 +13,6 @@
         {
             Mapper.CreateMap<VacancySummaryData, VacancySummary>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(src => (long)src.VacancyReference))
-                //.ForMember(d => d.UpdateReference, opt => opt.Ignore())
                 .ForMember(d => d.AddressLine1, opt => opt.MapFrom(src => src.VacancyAddress.AddressLine1))
                 .ForMember(d => d.AddressLine2, opt => opt.MapFrom(src => src.VacancyAddress.AddressLine2))
                 .ForMember(d => d.AddressLine3, opt => opt.MapFrom(src => src.VacancyAddress.AddressLine3))
@@ -32,8 +31,8 @@
                 .ForMember(d => d.ProviderName, opt => opt.MapFrom(src => src.LearningProviderName))
                 .ForMember(d => d.Title, opt => opt.MapFrom(src => src.VacancyTitle))
                 .ForMember(d => d.Town, opt => opt.MapFrom(src => src.VacancyAddress.Town))
-                .ForMember(d => d.TypeOfLocation, opt => opt.ResolveUsing<EnumResolver<VacancyLocationType>>().FromMember(src => src.VacancyLocationType))
-                .ForMember(d => d.TypeOfVacancy, opt => opt.ResolveUsing<EnumResolver<VacancyType>>().FromMember(src => src.VacancyType))
+                .ForMember(d => d.TypeOfLocation, opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
+                .ForMember(d => d.TypeOfVacancy, opt => opt.ResolveUsing<VacancyTypeResolver>().FromMember(src => src.VacancyType))
                 .ForMember(d => d.VacancyUrl, opt => opt.MapFrom(src => src.VacancyUrl));
 
             Mapper.CreateMap<VacancySummaryData[], IEnumerable<VacancySummary>>().ConvertUsing<SummaryDataConverter>();

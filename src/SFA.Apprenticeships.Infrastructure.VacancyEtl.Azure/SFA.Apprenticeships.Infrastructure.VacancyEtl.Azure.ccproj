@@ -8,8 +8,8 @@
     <ProjectGuid>711df928-d828-4bf9-be66-22e4afd554a3</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Services.VacancyEtl.Azure</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Services.VacancyEtl.Azure</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Infrastructure.VacancyEtl.Azure</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Infrastructure.VacancyEtl.Azure</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
     <Name>SFA.Apprenticeships.Infrastructure.VacancyEtl.Azure</Name>
   </PropertyGroup>
@@ -37,7 +37,17 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SFA.Apprenticeships.Infrastructure.VacancyEtlContent" />
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyEtl\SFA.Apprenticeships.Infrastructure.VacancyEtl.csproj">
+      <Name>SFA.Apprenticeships.Infrastructure.VacancyEtl</Name>
+      <Project>{0491054e-caf4-4321-be1d-3e44e739421c}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>SFA.Apprenticeships.Infrastructure.VacancyEtl</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SFA.Apprenticeships.Infrastructure.VacancyEtlContent\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SFA.Apprenticeships.Infrastructure.VacancyEtlContent\diagnostics.wadcfg">
