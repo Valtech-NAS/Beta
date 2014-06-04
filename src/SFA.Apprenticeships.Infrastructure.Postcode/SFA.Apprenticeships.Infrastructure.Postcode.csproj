@@ -46,6 +46,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Entities\PostcodeInfo.cs" />
     <Compile Include="Entities\PostcodeInfoResult.cs" />
     <Compile Include="PostcodeService.cs" />
