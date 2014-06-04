@@ -1,9 +1,10 @@
-﻿namespace SFA.Apprenticeships.Application.Address
+﻿using SFA.Apprenticeships.Domain.Interfaces.Logging;
+
+namespace SFA.Apprenticeships.Application.Address
 {
     using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
-    using Domain.Interfaces.Services.Logging;
     using Interfaces.Location;
     using Domain.Entities.Location;
 

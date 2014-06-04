@@ -1,9 +1,10 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Caching.Memory
+﻿using SFA.Apprenticeships.Domain.Interfaces.Caching;
+
+namespace SFA.Apprenticeships.Infrastructure.Caching.Memory
 {
     using System;
     using System.Linq;
     using System.Runtime.Caching;
-    using Domain.Interfaces.Services.Caching;
 
     public class MemoryCacheService : ICacheService
     {

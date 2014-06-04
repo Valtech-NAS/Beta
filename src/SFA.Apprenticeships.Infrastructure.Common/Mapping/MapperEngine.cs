@@ -1,9 +1,10 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Common.Mapping
+﻿using SFA.Apprenticeships.Domain.Interfaces.Mapping;
+
+namespace SFA.Apprenticeships.Infrastructure.Common.Mapping
 {
     using System;
     using AutoMapper;
     using AutoMapper.Mappers;
-    using Domain.Interfaces.Services.Mapping;
     using CuttingEdge.Conditions;
 
     public abstract class MapperEngine : IMapper

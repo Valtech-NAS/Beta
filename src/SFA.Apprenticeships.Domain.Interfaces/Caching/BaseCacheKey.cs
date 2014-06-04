@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Domain.Interfaces.Services.Caching
+﻿using System;
+
+namespace SFA.Apprenticeships.Domain.Interfaces.Caching
 {
     public abstract class BaseCacheKey
     {

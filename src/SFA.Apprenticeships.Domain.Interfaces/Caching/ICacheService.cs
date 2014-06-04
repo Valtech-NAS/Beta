@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Domain.Interfaces.Services.Caching
-{
-    using System;
+﻿using System;
 
+namespace SFA.Apprenticeships.Domain.Interfaces.Caching
+{
     public interface ICacheService
     {
         #region Get

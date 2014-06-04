@@ -1,10 +1,11 @@
-﻿namespace SFA.Apprenticeships.Application.VacancyEtl
+﻿using SFA.Apprenticeships.Domain.Interfaces.Mapping;
+
+namespace SFA.Apprenticeships.Application.VacancyEtl
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Domain.Interfaces.Services.Mapping;
     using Interfaces.Messaging;
     using Interfaces.Vacancy;
     using Entities;

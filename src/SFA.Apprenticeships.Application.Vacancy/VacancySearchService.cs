@@ -1,11 +1,12 @@
-﻿namespace SFA.Apprenticeships.Application.Vacancy
+﻿using SFA.Apprenticeships.Domain.Interfaces.Logging;
+
+namespace SFA.Apprenticeships.Application.Vacancy
 {
     using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Domain.Entities.Location;
     using Domain.Entities.Vacancy;
-    using Domain.Interfaces.Services.Logging;
     using Interfaces.Vacancy;
 
     public class VacancySearchService : IVacancySearchService

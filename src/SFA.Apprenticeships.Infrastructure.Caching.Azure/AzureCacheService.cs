@@ -1,8 +1,9 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Caching.Azure
+﻿using SFA.Apprenticeships.Domain.Interfaces.Caching;
+
+namespace SFA.Apprenticeships.Infrastructure.Caching.Azure
 {
     using System;
     using Microsoft.ApplicationServer.Caching;
-    using Domain.Interfaces.Services.Caching;
 
     public class AzureCacheService : ICacheService
     {

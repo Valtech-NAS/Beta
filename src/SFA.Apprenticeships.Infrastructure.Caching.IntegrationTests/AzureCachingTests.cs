@@ -1,9 +1,10 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Caching.IntegrationTests
+﻿using SFA.Apprenticeships.Domain.Interfaces.Caching;
+
+namespace SFA.Apprenticeships.Infrastructure.Caching.IntegrationTests
 {
     using System;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Domain.Interfaces.Services.Caching;
     using SFA.Apprenticeships.Infrastructure.Caching.Azure;
 
     [TestFixture]

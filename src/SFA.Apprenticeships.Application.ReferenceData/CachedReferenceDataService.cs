@@ -1,10 +1,11 @@
-﻿namespace SFA.Apprenticeships.Application.ReferenceData
+﻿using SFA.Apprenticeships.Domain.Interfaces.Caching;
+
+namespace SFA.Apprenticeships.Application.ReferenceData
 {
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Interfaces.ReferenceData;
     using Domain.Entities.ReferenceData;
-    using Domain.Interfaces.Services.Caching;
 
     public class CachedReferenceDataService : IReferenceDataService
     {

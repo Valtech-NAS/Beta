@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
+﻿using SFA.Apprenticeships.Domain.Interfaces.Mapping;
+
+namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
 {
     using System;
     using System.Globalization;
@@ -6,7 +8,6 @@
     using EasyNetQ.AutoSubscribe;
     using Application.Interfaces.Search;
     using Application.VacancyEtl.Entities;
-    using Domain.Interfaces.Services.Mapping;
     using Elasticsearch.Entities;
 
     public class VacancySummaryConsumerAsync : IConsumeAsync<VacancySummaryUpdate>

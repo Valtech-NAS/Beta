@@ -1,10 +1,11 @@
-﻿namespace SFA.Apprenticeships.Application.Location
+﻿using SFA.Apprenticeships.Domain.Interfaces.Logging;
+
+namespace SFA.Apprenticeships.Application.Location
 {
     using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Domain.Entities.Location;
-    using Domain.Interfaces.Services.Logging;
     using Interfaces.Location;
 
     public class LocationSearchService : ILocationSearchService

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SFA.Apprenticeships.Domain.Interfaces.Services.Mapping
+namespace SFA.Apprenticeships.Domain.Interfaces.Mapping
 {
     public interface IMapper
     {
