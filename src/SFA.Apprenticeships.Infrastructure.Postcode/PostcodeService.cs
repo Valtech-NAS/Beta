@@ -38,7 +38,7 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode
 
         private IEnumerable<PostcodeInfo> GetPartialMatches(string postcode)
         {
-            Condition.Requires(postcode, "postcode").IsNotNullOrEmpty();
+            Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
 
             var request = Create("postcodes?q={postcode}", new[] {new KeyValuePair<string, string>("postcode", postcode)});
             var postcodes = Execute<PostcodeInfoResult>(request);

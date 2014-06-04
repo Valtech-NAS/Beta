@@ -7,6 +7,7 @@
     public interface IPostcodeLookupProvider
     {
         Location GetLocation(string postcode);
+
         IEnumerable<Address> FindAddresses(string postcode);
     }
 }

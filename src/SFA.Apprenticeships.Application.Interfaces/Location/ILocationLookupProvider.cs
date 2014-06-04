@@ -1,10 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Location
 {
     using System;
+    using System.Collections.Generic;
     using Domain.Entities.Location;
 
     public interface ILocationLookupProvider
     {
-        Location GetLocation(string name);
+        IEnumerable<LookupLocation> FindLocation(string placeName);
     }
 }

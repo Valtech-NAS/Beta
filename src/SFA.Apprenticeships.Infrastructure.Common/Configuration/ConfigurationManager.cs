@@ -34,7 +34,7 @@
 
         public string TryGetAppSetting(string key)
         {
-            Condition.Requires(key, "key").IsNotNullOrEmpty();
+            Condition.Requires(key, "key").IsNotNullOrWhiteSpace();
 
             var result = Configuration.AppSettings.Settings[key];
             if (result != null)
@@ -73,7 +73,7 @@
 
         public T GetAppSetting<T>(T defaultValue, string key)
         {
-            Condition.Requires(key, "key").IsNotNullOrEmpty();
+            Condition.Requires(key, "key").IsNotNullOrWhiteSpace();
 
             string result = TryGetAppSetting(key);
             if (result != null)
@@ -91,7 +91,7 @@
 
         public ConnectionStringSettings GetConnectionString(string key)
         {
-            Condition.Requires(key, "key").IsNotNullOrEmpty();
+            Condition.Requires(key, "key").IsNotNullOrWhiteSpace();
 
             var result = Configuration.ConnectionStrings.ConnectionStrings[key];
             if (result == null)

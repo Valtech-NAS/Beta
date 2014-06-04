@@ -6,6 +6,6 @@
 
     public interface IAddressSearchService
     {
-        IEnumerable<Address> FindAddresses(string postcode);
+        IEnumerable<Address> FindAddress(string postcode);
     }
 }

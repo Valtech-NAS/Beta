@@ -40,6 +40,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Location\Address.cs" />
+    <Compile Include="Location\LookupLocation.cs" />
     <Compile Include="Location\Location.cs" />
     <Compile Include="Location\LocationHelper.cs" />
     <Compile Include="ReferenceData\ReferenceDataItem.cs" />
