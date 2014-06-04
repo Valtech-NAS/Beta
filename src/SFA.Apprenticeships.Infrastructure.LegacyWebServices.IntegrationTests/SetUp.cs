@@ -1,0 +1,24 @@
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
+{
+    using NUnit.Framework;
+    using SFA.Apprenticeships.Infrastructure.Caching.Memory.IoC;
+    using SFA.Apprenticeships.Infrastructure.Common.IoC;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC;
+    using StructureMap;
+
+    [SetUpFixture]
+    public class SetUp
+    {
+        [SetUp]
+        public void SetUpTests()
+        {
+            var test = new LegacyWebServicesRegistry();
+            ObjectFactory.Initialize(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<MemoryCacheRegistry>();
+                x.AddRegistry<LegacyWebServicesRegistry>();
+            });
+        }
+    }
+}

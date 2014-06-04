@@ -35,6 +35,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Location\ILocationSearchService.cs" />
     <Compile Include="Messaging\IMessageBus.cs" />
     <Compile Include="Messaging\IMessageService.cs" />

@@ -37,7 +37,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EasyNetQ.0.30.2.258\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
-    <Reference Include="NLog">
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -49,6 +50,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Layouts\JsonLayout.cs" />
     <Compile Include="Layouts\JsonProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Location;
-
-namespace SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities
+﻿namespace SFA.Apprenticeships.Infrastructure.Elasticsearch.Entities
 {
     using System;
     using System.ComponentModel;
