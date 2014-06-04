@@ -34,7 +34,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
                 var messageToIndex = _mapper.Map<VacancySummaryUpdate, VacancySummary>(message);
                 _indexer.Index(message.Id.ToString(CultureInfo.InvariantCulture), messageToIndex);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw; // TODO::High::Log this error
             }
