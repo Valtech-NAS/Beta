@@ -4,7 +4,7 @@
 
     public class LocationHelper
     {
-        const string PostcodeRegex = "TODO";
+        const string PostcodeRegex = "TODO"; // http://regexlib.com/REDetails.aspx?regexp_id=2653
 
         public static bool IsPostcode(string postcode)
         {
