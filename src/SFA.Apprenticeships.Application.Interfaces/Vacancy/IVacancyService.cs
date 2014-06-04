@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Domain.Entities.Vacancy;
 
-    public interface IVacancyService
+    public interface IVacancyService //todo: rename IVacancyService to be more descriptive
     {
         int GetVacancyPageCount(VacancyLocationType vacancyLocationType);
 

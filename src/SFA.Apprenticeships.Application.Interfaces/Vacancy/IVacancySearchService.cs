@@ -4,7 +4,7 @@
     using Domain.Entities.Vacancy;
     using Domain.Entities.Location;
 
-    //TODO: Flush out API. need to understand valid combinations of location name, postcode, distance, keyword, etc.
+    //TODO: Flush out API. need to understand valid combinations of location name, postcode, distance, keyword, etc. (include national)
     public interface IVacancySearchService
     {
         /// <summary>
@@ -14,5 +14,6 @@
         /// <param name="searchRadius">in miles</param>
         /// <returns>0..* matching vacancies</returns>
         IEnumerable<VacancySummary> Search(Location location, int searchRadius);
+
     }
 }
