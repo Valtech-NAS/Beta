@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Postcode.Tests
+﻿namespace SFA.Apprenticeships.Infrastructure.Postcode.IntegrationTests
 {
     using System;
     using FluentAssertions;
