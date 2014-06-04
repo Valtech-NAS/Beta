@@ -19,7 +19,14 @@
         [TestCase]
         public void ShouldBuildElasticsearchLoadAndGetMappingAttributes()
         {
+            var rs = new Mock<IRestResponse>();
+            rs.Setup(x => x.StatusCode).Returns(HttpStatusCode.OK);
+
             var service = new Mock<IElasticsearchService>();
+            
+            service.Setup(x => x.Execute(Method.PUT, "legacy")).Returns(rs.Object);
+            service.Setup(x => x.Execute("legacy", "vacancy", "_mapping", It.IsAny<string>())).Returns(rs.Object);
+
             var test = new IndexingService<VacancySummary>(service.Object);
 
             test.Mapping.Should().NotBeNull();
@@ -27,15 +34,15 @@
             test.Mapping.Document.Should().Be("vacancy");
         }
 
-        //[TestCase]
-        //public void ShouldThrowExceptionForClassWithoutMappingAttributes()
-        //{
-        //    var service = new Mock<IElasticsearchService>();
+        [TestCase]
+        public void ShouldThrowExceptionForClassWithoutMappingAttributes()
+        {
+            var service = new Mock<IElasticsearchService>();
 
-        //    Action test = () => new IndexingService<VacancyId>(service.Object);
+            Action test = () => new IndexingService<TestClassNoIndex>(service.Object);
 
-        //    test.ShouldThrow<ArgumentException>();
-        //}
+            test.ShouldThrow<ArgumentException>();
+        }
 
         [TestCase]
         public void ShouldThrowExceptionForClassWithMappingAttributeWithoutDocumentAttribute()
@@ -69,11 +76,13 @@
             rs.Setup(x => x.StatusCode).Returns(HttpStatusCode.OK);
 
             var service = new Mock<IElasticsearchService>();
+            service.Setup(x => x.Execute(Method.PUT, "legacy")).Returns(rs.Object);
+            service.Setup(x => x.Execute("legacy", "vacancy", "_mapping", It.IsAny<string>())).Returns(rs.Object);
             service.Setup(x => x.Execute("legacy", "vacancy", summary.Id.ToString(CultureInfo.InvariantCulture), It.IsAny<string>())).Returns(rs.Object);
 
             var loader = new IndexingService<VacancySummary>(service.Object);
 
-            loader.Index("", summary);
+            loader.Index(summary.Id.ToString(CultureInfo.InvariantCulture), summary);
 
             service.Verify(x => x.Execute("legacy", "vacancy", summary.Id.ToString(CultureInfo.InvariantCulture), It.IsAny<string>()), Times.Once);
         }
