@@ -15,8 +15,7 @@
         {
             For<IMessageService<StorageQueueMessage>>().Use<AzureScheduleQueue>();
             
-            For<VacancySummaryConsumerAsync>()
-                .Use<VacancySummaryConsumerAsync>();
+            For<VacancySummaryConsumerAsync>().Use<VacancySummaryConsumerAsync>();
 
             For<IMapper>().Singleton().Use<VacancyEtlMapper>().Name = "VacancyEtlMapper";
 

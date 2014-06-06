@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
     using Nest;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
-    using SFA.Apprenticeships.Domain.Entities.Location;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration;
+    using Application.Interfaces.Vacancy;
+    using Domain.Entities.Location;
+    using Domain.Entities.Vacancy;
+    using Elastic.Common.Configuration;
 
     public class VacancySearchProvider : IVacancySearchProvider
     {

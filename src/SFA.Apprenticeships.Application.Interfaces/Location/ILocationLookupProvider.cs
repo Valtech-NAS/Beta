@@ -6,6 +6,6 @@
 
     public interface ILocationLookupProvider
     {
-        IEnumerable<LookupLocation> FindLocation(string placeName);
+        IEnumerable<LookupLocation> FindLocation(string placeName, int maxResults = 50); //todo: replace with paging 
     }
 }
