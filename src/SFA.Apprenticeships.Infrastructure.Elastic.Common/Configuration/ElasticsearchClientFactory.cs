@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Nest;
     using Newtonsoft.Json.Converters;
 
@@ -8,13 +10,20 @@
     {
         private readonly ElasticsearchConfiguration _elasticsearchConfiguration;
         private readonly ConnectionSettings _connectionSettings;
+        private readonly Dictionary<Type, string> _typeIndexNameMap = new Dictionary<Type, string>(); 
 
-        public ElasticsearchClientFactory(ElasticsearchConfiguration elasticsearchConfiguration)
+        public ElasticsearchClientFactory(ElasticsearchConfiguration elasticsearchConfiguration, bool buildIndexes = true)
         {
             _elasticsearchConfiguration = elasticsearchConfiguration;
+            _elasticsearchConfiguration.Indexes.ToList().ForEach(idx => _typeIndexNameMap.Add(idx.MappingType, idx.Name));
+
             _connectionSettings = new ConnectionSettings(_elasticsearchConfiguration.DefaultHost);
             _connectionSettings.AddContractJsonConverters(t => typeof(Enum).IsAssignableFrom(t) ? new StringEnumConverter() : null);
-            CheckIndexes();
+
+            if (buildIndexes)
+            {
+                CheckIndexes();
+            }
         }
 
         private void CheckIndexes()
@@ -37,6 +46,11 @@
         {
             var client = new ElasticClient(_connectionSettings);
             return client;
-        } 
+        }
+
+        public string GetIndexNameForType(Type attributeMappedType)
+        {
+            return _typeIndexNameMap[attributeMappedType];
+        }
     }
 }

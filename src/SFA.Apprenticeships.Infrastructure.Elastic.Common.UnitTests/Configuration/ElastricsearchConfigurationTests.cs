@@ -14,15 +14,15 @@
             var config = ElasticsearchConfiguration.Instance;
 
             config.Should().NotBeNull();
-            config.DefaultHost.AbsolutePath.Should().Be("http://someserver:1234");
+            config.DefaultHost.OriginalString.Should().Be("http://someserver:1234");
 
-            var index1 = config.Indexes["IndexName1"];
+            var index1 = config.Indexes["VacancySummaryIndex"];
             index1.Should().NotBeNull();
             index1.MappingType.Should().Be(typeof (VacancySummary));
 
-            var index2 = config.Indexes["IndexName2"];
+            var index2 = config.Indexes["TestMappingClassIndex"];
             index2.Should().NotBeNull();
-            index2.MappingType.Should().Be(typeof(VacancySummary));
+            index2.MappingType.Should().Be(typeof(TestMappingClass));
         }
     }
 }

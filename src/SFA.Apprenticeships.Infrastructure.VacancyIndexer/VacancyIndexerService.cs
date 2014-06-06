@@ -10,7 +10,6 @@
     {
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
         private readonly IMapper _mapper;
-        private const string IndexName = "vacancysummaries_test";
 
         public VacancyIndexerService(IElasticsearchClientFactory elasticsearchClientFactory, IMapper mapper)
         {
@@ -22,7 +21,7 @@
         {
             var vacancySummaryElastic = _mapper.Map<VacancySummaryUpdate, VacancySummary>(vacancySummaryUpdate);
             var client = _elasticsearchClientFactory.GetElasticClient();
-            client.Index(vacancySummaryElastic, IndexName);
+            client.Index(vacancySummaryElastic, _elasticsearchClientFactory.GetIndexNameForType(typeof(VacancySummary)));
         }
     }
 }
