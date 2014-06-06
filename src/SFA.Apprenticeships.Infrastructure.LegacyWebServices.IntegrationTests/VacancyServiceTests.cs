@@ -51,7 +51,7 @@
             var result = service.GetVacancySummary(VacancyLocationType.NonNational, 1);
 
             result.ToList().Should().NotBeNullOrEmpty();
-            result.ToList().ForEach(r => r.TypeOfLocation.Should().Be(VacancyLocationType.NonNational));
+            result.ToList().ForEach(r => r.VacancyLocationType.Should().Be(VacancyLocationType.NonNational));
         }
     }
 }

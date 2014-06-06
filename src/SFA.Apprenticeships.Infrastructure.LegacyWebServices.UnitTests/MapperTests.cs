@@ -41,7 +41,7 @@
            var test = _mapper.Map<VacancySummaryData, VacancySummary>(data);
 
             test.Id.Should().Be(1);
-            test.Location.Latitude.Should().Be(12.9);
+            test.Location.Latitute.Should().Be(12.9);
             test.Location.Longitude.Should().Be(0.18);
         }
 
@@ -58,8 +58,8 @@
             var test = _mapper.Map<VacancySummaryData, VacancySummary>(data);
 
             test.Id.Should().Be(1);
-            test.TypeOfLocation.Should().Be(VacancyLocationType.NonNational);
-            test.TypeOfVacancy.Should().Be(VacancyType.Intermediate);
+            test.VacancyLocationType.Should().Be(VacancyLocationType.NonNational);
+            test.VacancyType.Should().Be(VacancyType.Intermediate);
         }
 
         [TestCase]

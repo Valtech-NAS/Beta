@@ -1,17 +1,12 @@
-﻿
-using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-
-namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC
+﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC
 {
     using Application.Interfaces.Messaging;
-    using Application.Interfaces.Search;
     using Application.VacancyEtl;
     using Application.VacancyEtl.Entities;
-    using Elasticsearch.Entities;
-    using Elasticsearch.Service;
+    using Domain.Interfaces.Mapping;
     using Consumers;
-    using Mapper;
     using Messaging;
+    using SFA.Apprenticeships.Infrastructure.VacancyEtl.Mapper;
     using StructureMap.Configuration.DSL;
 
     public class VacancyEtlRegistry : Registry
@@ -20,19 +15,15 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC
         {
             For<IMessageService<StorageQueueMessage>>().Use<AzureScheduleQueue>();
             
-            For<IMapper>().Use<VacancySummaryMapper>().Name = "VacancyEtl.VacancySummaryMapper";
-            
-            For<IIndexingService<VacancySummary>>().Use<IndexingService<VacancySummary>>();
-            
             For<VacancySummaryConsumerAsync>()
-                .Use<VacancySummaryConsumerAsync>()
-                .Ctor<IMapper>()
-                .Named("VacancyEtl.VacancySummaryMapper");
+                .Use<VacancySummaryConsumerAsync>();
+
+            For<IMapper>().Singleton().Use<VacancyEtlMapper>().Name = "VacancyEtlMapper";
 
             For<IVacancySummaryProcessor>()
                 .Use<VacancySummaryProcessor>()
                 .Ctor<IMapper>()
-                .Named("VacancyEtl.VacancySummaryMapper");
+                .Named("VacancyEtlMapper");
 
             For<VacancySchedulerConsumer>().Use<VacancySchedulerConsumer>();
         }

@@ -75,8 +75,9 @@
     <Compile Include="Consumers\VacancySummaryConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryPageConsumerAsync.cs" />
     <Compile Include="IoC\VacancyEtlRegistry.cs" />
-    <Compile Include="Mapper\GeoPointResolver.cs" />
-    <Compile Include="Mapper\VacancySummaryMapper.cs" />
+    <Compile Include="Mapper\VacancyEtlMapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Messaging\AzureScheduleQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />
@@ -114,9 +115,9 @@
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Elasticsearch\SFA.Apprenticeships.Infrastructure.Elasticsearch.csproj">
-      <Project>{8DFB3268-8865-4FE4-8E6F-8B2DCEE966D9}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Elasticsearch</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Elastic.Common\SFA.Apprenticeships.Infrastructure.Elastic.Common.csproj">
+      <Project>{f75b0c62-89b5-473d-af2d-366a5a6722ac}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Elastic.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
       <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
@@ -125,6 +126,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.RabbitMq\SFA.Apprenticeships.Infrastructure.RabbitMq.csproj">
       <Project>{480622E1-7624-449C-904F-AF7FD3590BEF}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.RabbitMq</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyIndexer\SFA.Apprenticeships.Infrastructure.VacancyIndexer.csproj">
+      <Project>{02d19199-a4bb-484a-aa48-208c7b6d819f}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.VacancyIndexer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

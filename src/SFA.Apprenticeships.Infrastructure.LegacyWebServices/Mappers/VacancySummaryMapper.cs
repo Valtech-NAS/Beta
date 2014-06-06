@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
-    using Common.Mapping;
     using Domain.Entities.Vacancy;
+    using SFA.Apprenticeships.Infrastructure.Common.Mapper;
     using VacancySummaryProxy;
 
     public class VacancySummaryMapper : MapperEngine
@@ -31,8 +31,8 @@
                 .ForMember(d => d.ProviderName, opt => opt.MapFrom(src => src.LearningProviderName))
                 .ForMember(d => d.Title, opt => opt.MapFrom(src => src.VacancyTitle))
                 .ForMember(d => d.Town, opt => opt.MapFrom(src => src.VacancyAddress.Town))
-                .ForMember(d => d.TypeOfLocation, opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
-                .ForMember(d => d.TypeOfVacancy, opt => opt.ResolveUsing<VacancyTypeResolver>().FromMember(src => src.VacancyType))
+                .ForMember(d => d.VacancyLocationType, opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
+                .ForMember(d => d.VacancyType, opt => opt.ResolveUsing<VacancyTypeResolver>().FromMember(src => src.VacancyType))
                 .ForMember(d => d.VacancyUrl, opt => opt.MapFrom(src => src.VacancyUrl));
 
             Mapper.CreateMap<VacancySummaryData[], IEnumerable<VacancySummary>>().ConvertUsing<SummaryDataConverter>();

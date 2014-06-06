@@ -16,10 +16,10 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using Consumers;
     using SFA.Apprenticeships.Infrastructure.Azure.Common.IoC;
     using SFA.Apprenticeships.Infrastructure.Common.IoC;
-    using SFA.Apprenticeships.Infrastructure.Elasticsearch.IoC;
     using SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC;
     using SFA.Apprenticeships.Infrastructure.RabbitMq.IoC;
     using SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC;
+    using SFA.Apprenticeships.Infrastructure.VacancyIndexer.IoC;
     using StructureMap;
 
     public class WorkerRole : RoleEntryPoint
@@ -72,7 +72,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 {
                     x.AddRegistry<CommonRegistry>();
                     x.AddRegistry<AzureCommonRegistry>();
-                    x.AddRegistry<ElasticsearchRegistry>();
+                    x.AddRegistry<VacancyIndexerRegistry>();
                     x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<LegacyWebServicesRegistry>();
                     x.AddRegistry<VacancyEtlRegistry>();

@@ -13,7 +13,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Vacancy
 
         public string Title { get; set; }
 
-        public VacancyType TypeOfVacancy { get; set; }
+        public VacancyType VacancyType { get; set; }
 
         public DateTime Created { get; set; }
 
@@ -47,7 +47,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Vacancy
 
         public GeoPoint Location { get; set; }
 
-        public VacancyLocationType TypeOfLocation { get; set; }
+        public VacancyLocationType VacancyLocationType { get; set; }
 
         public string VacancyUrl { get; set; }
     }
