@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
-    using System;
     using System.Collections.Generic;
     using Nest;
     using SFA.Apprenticeships.Application.Interfaces.Vacancy;
@@ -20,19 +19,22 @@
         public IEnumerable<VacancySummary> FindVacancies(Location location, int radius)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
+            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (Elastic.Common.Entities.VacancySummary));
+            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(Elastic.Common.Entities.VacancySummary));
 
             var query = client.Search<VacancySummary>(s =>
             {
-                s.Index("vacancysummaries_test");
-                s.Type("vacancy");
+                s.Index(indexName);
+                s.Type(documentTypeName);
                 s.From(0);
                 s.Take(10);
-                /*s.SortGeoDistance(g =>
+                s.SortGeoDistance(g =>
                 {
                     g.PinTo(location.GeoPoint.Latitute, location.GeoPoint.Longitude)
                      .Unit(GeoUnit.mi).OnField(f => f.Location);
                     return g;
-                });*/
+                });
+
                 return s;
             });
 

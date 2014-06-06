@@ -8,5 +8,7 @@
         ElasticClient GetElasticClient();
 
         string GetIndexNameForType(Type attributeMappedType);
+
+        string GetDocumentNameForType(Type attributeMappedType);
     }
 }

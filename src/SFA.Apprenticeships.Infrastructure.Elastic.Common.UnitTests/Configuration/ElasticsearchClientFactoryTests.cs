@@ -16,5 +16,14 @@
             clientFactory.GetIndexNameForType(typeof(VacancySummary)).Should().Be("VacancySummaryIndex");
             clientFactory.GetIndexNameForType(typeof(TestMappingClass)).Should().Be("TestMappingClassIndex");
         }
+
+        [Test]
+        public void ShouldReturnDocumentTypesFromConfigurationForMappedObjectType()
+        {
+            var clientFactory = new ElasticsearchClientFactory(ElasticsearchConfiguration.Instance, false);
+
+            clientFactory.GetDocumentNameForType(typeof(VacancySummary)).Should().Be("vacancy");
+            clientFactory.GetDocumentNameForType(typeof(TestMappingClass)).Should().Be("test_mapping_class");
+        }
     }
 }
