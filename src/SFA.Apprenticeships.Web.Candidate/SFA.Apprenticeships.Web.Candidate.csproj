@@ -193,6 +193,8 @@
     <Content Include="Views\Admin\ReferenceData.cshtml" />
     <Content Include="Views\Admin\_referencedata.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ReferenceDataViewModel.cshtml" />
+    <Content Include="Views\VacancySearch\Index.cshtml" />
+    <Content Include="Views\VacancySearch\Results.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -273,6 +275,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\VacancySearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

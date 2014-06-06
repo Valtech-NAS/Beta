@@ -3,7 +3,7 @@
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
 <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
 <!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
-<!--[if gt IE 8]><!--><html lang="en-GB" class="no-js"><!--<![endif]-->
+<!--[if gt IE 8]><!--><html lang="en-GB" class="no-js not-ie8"><!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,19 +37,21 @@
                     <img src="@Url.Content("~/Content/_assets/img/gov.uk_logotype_crown.png")" alt="Crown">GOV.UK
                 </a>
             </div>
-            <h1 class="global-header__title beta">Apprenticeships <span class="beta__label">Beta</span></h1>
+            <div class="global-header__nav">
+                <h1 class="global-header__title beta">Find an Apprenticeship</h1>
+            </div>
         </div>
     </header>
     <div class="content-container">
-        <div class="phase-notice">
-            <strong>BETA:</strong> This is a prototype
+        <div class="phase-notice gov-border">
+            <strong class="beta__label">Beta</strong> <span>This is a prototype – your <a href="#">feedback</a> will help us to improve it.</span>
         </div>
         <main role="main" id="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer role="contentinfo">
+    <footer class="gov-border" role="contentinfo">
         <div class="footer__wrapper">
             <div class="footer__meta">
                 <ul class="footer__nav" role="navigation">
@@ -59,7 +61,7 @@
                     <li class="footer__ogl"><a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2" class="ir ogl-logo">OGL</a>All content is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2">Open Government Licence v2.0</a>, except where otherwise stated</li>
                 </ul>
                 <a class="footer__copyright" href="http://www.nationalarchives.gov.uk/information-management/our-services/crown-copyright.htm" target="_blank">
-                    <img src="_assets/img/logos/govuk-crest@2x.png" width="125" height="102" alt="Crown copyright logo">
+                    <img src="@Url.Content("~/Content/_assets/img/logos/govuk-crest@2x.png")" width="125" height="102" alt="Crown copyright logo">
                     <p>&copy; Crown copyright</p>
                 </a>
             </div>

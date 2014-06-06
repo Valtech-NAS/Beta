@@ -75,7 +75,7 @@
             //logger.Error(ex, "Unhandled exception in action {0} of controller {1}", currentAction, currentController);
 
             // if the request is AJAX return JSON else view.
-            if (httpContext.Request.Headers["X-Requested-With"].Equals("XMLHttpRequest", StringComparison.InvariantCultureIgnoreCase))
+            if (httpContext.Request.Headers["X-Requested-With"] != null && httpContext.Request.Headers["X-Requested-With"].Equals("XMLHttpRequest", StringComparison.InvariantCultureIgnoreCase))
             {
                 ReturnExceptionJson(httpContext);
             }
