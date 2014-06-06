@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Application.VacancyEtl
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using Interfaces.Messaging;
     using Interfaces.Vacancy;
@@ -84,6 +85,7 @@ namespace SFA.Apprenticeships.Application.VacancyEtl
             try
             {
                 var vacancies = _vacancyProvider.GetVacancySummary(vacancySummaryPage.VacancyLocation, vacancySummaryPage.PageNumber).ToList();
+                Thread.Sleep(1000);
                 var vacanciesExtended = _mapper.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(vacancies);
 
                 Parallel.ForEach(

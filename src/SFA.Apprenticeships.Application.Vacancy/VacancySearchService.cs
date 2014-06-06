@@ -2,12 +2,11 @@
 
 namespace SFA.Apprenticeships.Application.Vacancy
 {
-    using System;
-    using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Domain.Entities.Location;
     using Domain.Entities.Vacancy;
     using Interfaces.Vacancy;
+    using SFA.Apprenticeships.Application.Interfaces.Search;
 
     public class VacancySearchService : IVacancySearchService
     {
@@ -23,7 +22,7 @@ namespace SFA.Apprenticeships.Application.Vacancy
             _loggingService = loggingService;
         }
 
-        public IEnumerable<VacancySummary> Search(Location location, int searchRadius)
+        public SearchResults<VacancySummary> Search(Location location, int searchRadius)
         {
             Condition.Requires(location, "location").IsNotNull();
             Condition.Requires(searchRadius, "searchRadius").IsGreaterOrEqual(0);
