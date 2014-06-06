@@ -106,10 +106,6 @@
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Elasticsearch\SFA.Apprenticeships.Infrastructure.Elasticsearch.csproj">
-      <Project>{8DFB3268-8865-4FE4-8E6F-8B2DCEE966D9}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Elasticsearch</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
       <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
@@ -121,6 +117,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyEtl\SFA.Apprenticeships.Infrastructure.VacancyEtl.csproj">
       <Project>{0491054E-CAF4-4321-BE1D-3E44E739421C}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.VacancyEtl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyIndexer\SFA.Apprenticeships.Infrastructure.VacancyIndexer.csproj">
+      <Project>{02D19199-A4BB-484A-AA48-208C7B6D819F}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.VacancyIndexer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

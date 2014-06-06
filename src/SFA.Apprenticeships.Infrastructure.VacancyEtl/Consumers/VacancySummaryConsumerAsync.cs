@@ -1,23 +1,18 @@
-﻿using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-
+﻿
 namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
 {
     using System;
-    using System.Globalization;
     using System.Threading.Tasks;
     using EasyNetQ.AutoSubscribe;
     using Application.Interfaces.Search;
     using Application.VacancyEtl.Entities;
-    using Elasticsearch.Entities;
 
     public class VacancySummaryConsumerAsync : IConsumeAsync<VacancySummaryUpdate>
     {
-        private readonly IMapper _mapper;
-        private readonly IIndexingService<VacancySummary> _indexer;
+        private readonly IIndexerService<VacancySummaryUpdate> _indexer;
 
-        public VacancySummaryConsumerAsync(IMapper mapper, IIndexingService<VacancySummary> indexer)
+        public VacancySummaryConsumerAsync(IIndexerService<VacancySummaryUpdate> indexer)
         {
-            _mapper = mapper;
             _indexer = indexer;
         }
 
@@ -31,8 +26,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
         {
             try
             {
-                var messageToIndex = _mapper.Map<VacancySummaryUpdate, VacancySummary>(message);
-                _indexer.Index(message.Id.ToString(CultureInfo.InvariantCulture), messageToIndex);
+                _indexer.Index(message);
             }
             catch (Exception)
             {

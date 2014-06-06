@@ -12,7 +12,7 @@
 
             if (source != null)
             {
-                point.Latitude = (double) source.Latitude.GetValueOrDefault();
+                point.Latitute = (double) source.Latitude.GetValueOrDefault();
                 point.Longitude = (double) source.Longitude.GetValueOrDefault();
             }
 

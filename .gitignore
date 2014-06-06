@@ -99,6 +99,8 @@ publish/
 ## TODO: If you have NuGet Package Restore enabled, uncomment the next line
 src/packages/*
 !src/packages/repositories.config
+tools/*/packages/*
+!tools/*/packages/repositories.config
 
 # Windows Azure Build Output and Confi files
 csx

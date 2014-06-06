@@ -7,16 +7,16 @@
     using System.Threading;
     using System.Xml.Serialization;
     using Microsoft.WindowsAzure.Storage.Queue;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Infrastructure.Azure.Common;
-    using SFA.Apprenticeships.Infrastructure.Azure.Common.IoC;
-    using SFA.Apprenticeships.Infrastructure.Common.IoC;
-    using SFA.Apprenticeships.Infrastructure.Elasticsearch.IoC;
-    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.Interfaces;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.IoC;
-    using SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers;
-    using SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC;
+    using Application.VacancyEtl.Entities;
+    using Infrastructure.Azure.Common;
+    using Infrastructure.Azure.Common.IoC;
+    using Infrastructure.Common.IoC;
+    using Infrastructure.LegacyWebServices.IoC;
+    using Infrastructure.RabbitMq.Interfaces;
+    using Infrastructure.RabbitMq.IoC;
+    using Infrastructure.VacancyEtl.Consumers;
+    using Infrastructure.VacancyEtl.IoC;
+    using Infrastructure.VacancyIndexer.IoC;
     using StructureMap;
 
     class Program
@@ -27,7 +27,7 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<AzureCommonConsoleRegistry>();
-                x.AddRegistry<ElasticsearchRegistry>();
+                x.AddRegistry<VacancyIndexerRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<VacancyEtlRegistry>();
