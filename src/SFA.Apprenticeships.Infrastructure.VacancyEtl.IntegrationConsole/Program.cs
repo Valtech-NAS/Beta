@@ -17,6 +17,7 @@
     using Infrastructure.VacancyEtl.Consumers;
     using Infrastructure.VacancyEtl.IoC;
     using Infrastructure.VacancyIndexer.IoC;
+    using SFA.Apprenticeships.Infrastructure.Elastic.Common.IoC;
     using StructureMap;
 
     class Program
@@ -29,6 +30,7 @@
                 x.AddRegistry<AzureCommonConsoleRegistry>();
                 x.AddRegistry<VacancyIndexerRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
+                x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<VacancyEtlRegistry>();
             });
@@ -49,7 +51,7 @@
             {
                 var task = vacancySchedulerConsumer.CheckScheduleQueue();
                 task.Wait();
-                Thread.Sleep(5000);
+                Thread.Sleep(5 * 60 * 1000);
             }
         }
 

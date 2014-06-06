@@ -47,6 +47,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferenceData\IReferenceDataProvider.cs" />
     <Compile Include="ReferenceData\IReferenceDataService.cs" />
+    <Compile Include="Search\SearchResults.cs" />
     <Compile Include="Vacancy\IVacancySearchProvider.cs" />
     <Compile Include="Vacancy\IVacancyService.cs" />
     <Compile Include="Vacancy\IVacancySearchService.cs" />
@@ -58,9 +59,7 @@
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Search\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

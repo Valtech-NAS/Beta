@@ -1,10 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
     using Nest;
-    using Application.Interfaces.Search;
+<<<<<<< HEAD
+    using Application.Interfaces.Vacancy;
     using Domain.Entities.Location;
     using Domain.Entities.Vacancy;
     using Elastic.Common.Configuration;
+=======
+    using SFA.Apprenticeships.Application.Interfaces.Search;
+    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
+    using SFA.Apprenticeships.Domain.Entities.Location;
+    using SFA.Apprenticeships.Domain.Entities.Vacancy;
+    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration;
+>>>>>>> 1f582d8ce177a3e713c4ab5153bdd70a1f017310
 
     public class VacancySearchProvider : IVacancySearchProvider
     {
