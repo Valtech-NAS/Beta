@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Process\Loader.cs" />
-    <Compile Include="Process\Location.cs" />
+    <Compile Include="Process\LocationData.cs" />
     <Compile Include="Process\Mapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

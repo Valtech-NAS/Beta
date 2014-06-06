@@ -35,16 +35,16 @@ namespace LocationLoader.Process
                 csv.Configuration.RegisterClassMap<Mapper>();
 
                 _logger.Debug("Reading...");
-                var allCsvRows = csv.GetRecords<Location>().ToList();
+                var allCsvRows = csv.GetRecords<LocationData>().ToList();
 
                 _logger.Info("Read {0} records from file", allCsvRows.Count);
 
                 _logger.Debug("Connecting to {0}", _endpoint);
                 var settings = new ConnectionSettings(_endpoint);
-                settings.SetDefaultIndex("locations");
+                settings.SetDefaultIndex(IndexName);
 
                 var client = new ElasticClient(settings);
-                client.MapFromAttributes<Location>(IndexName);
+                client.MapFromAttributes<LocationData>(IndexName);
 
                 _logger.Debug("Checking if index already exists");
                 if (client.IndexExists(IndexName).Exists)
@@ -53,8 +53,8 @@ namespace LocationLoader.Process
                     client.DeleteIndex(IndexName);
                 }
 
-                _logger.Debug("Creating index");
-                client.CreateIndex(IndexName, i => i.AddMapping<Location>(m => m.MapFromAttributes()));
+                _logger.Debug("Creating new index");
+                client.CreateIndex(IndexName, i => i.AddMapping<LocationData>(m => m.MapFromAttributes()));
 
                 _logger.Debug("Indexing \"{0}\" in batches of {1}...", IndexName, BatchSize);
                 var loop = 0;
