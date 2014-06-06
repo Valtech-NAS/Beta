@@ -1,6 +1,8 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
+﻿
+namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
     using Nest;
+    using Application.Interfaces.Vacancy;
     using Application.Interfaces.Search;
     using Domain.Entities.Location;
     using Domain.Entities.Vacancy;
