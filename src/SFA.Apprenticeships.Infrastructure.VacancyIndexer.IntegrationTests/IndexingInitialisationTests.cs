@@ -3,10 +3,10 @@
     using FluentAssertions;
     using Nest;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.Interfaces.Search;
     using SFA.Apprenticeships.Application.VacancyEtl.Entities;
     using SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration;
     using SFA.Apprenticeships.Infrastructure.Elastic.Common.IoC;
+    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Services;
     using SFA.Apprenticeships.Infrastructure.VacancyIndexer.IoC;
     using StructureMap;
 

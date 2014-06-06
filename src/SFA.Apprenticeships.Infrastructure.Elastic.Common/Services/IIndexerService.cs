@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Search
+﻿namespace SFA.Apprenticeships.Infrastructure.Elastic.Common.Services
 {
     public interface IIndexerService<in TSource>
     {

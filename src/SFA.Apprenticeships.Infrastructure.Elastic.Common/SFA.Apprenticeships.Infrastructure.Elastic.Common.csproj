@@ -68,6 +68,7 @@
     <Compile Include="Entities\WageType.cs" />
     <Compile Include="IoC\ElasticsearchCommonRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IIndexerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer
 {
-    using SFA.Apprenticeships.Application.Interfaces.Search;
     using SFA.Apprenticeships.Application.VacancyEtl.Entities;
     using SFA.Apprenticeships.Domain.Interfaces.Mapping;
     using SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration;
     using SFA.Apprenticeships.Infrastructure.Elastic.Common.Entities;
+    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Services;
 
     public class VacancyIndexerService : IIndexerService<VacancySummaryUpdate>
     {
