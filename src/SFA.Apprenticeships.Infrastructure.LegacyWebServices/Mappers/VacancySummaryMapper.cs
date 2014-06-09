@@ -12,7 +12,7 @@
         public override void Initialize()
         {
             Mapper.CreateMap<VacancySummaryData, VacancySummary>()
-                .ForMember(d => d.Id, opt => opt.MapFrom(src => (long)src.VacancyReference))
+                .ForMember(d => d.Id, opt => opt.MapFrom(src => src.VacancyReference))
                 .ForMember(d => d.AddressLine1, opt => opt.MapFrom(src => src.VacancyAddress.AddressLine1))
                 .ForMember(d => d.AddressLine2, opt => opt.MapFrom(src => src.VacancyAddress.AddressLine2))
                 .ForMember(d => d.AddressLine3, opt => opt.MapFrom(src => src.VacancyAddress.AddressLine3))
