@@ -2,6 +2,8 @@
 {
     using SFA.Apprenticeships.Application.Interfaces.Location;
     using SFA.Apprenticeships.Application.Location;
+    using SFA.Apprenticeships.Domain.Interfaces.Mapping;
+    using SFA.Apprenticeships.Web.Candidate.Mappers;
     using SFA.Apprenticeships.Web.Candidate.Providers;
     using StructureMap.Configuration.DSL;
 
@@ -10,7 +12,8 @@
         public CandidateRegistry()
         {
             For<ILocationSearchService>().Use<LocationSearchService>();
-            For<ISearchProvider>().Use<SearchProvider>();
+            For<IMapper>().Singleton().Use<CandidateWebMappers>().Name = "CandidateWebMappers";
+            For<ISearchProvider>().Use<SearchProvider>().Ctor<IMapper>().Named("CandidateWebMappers");
         }
     }
 }
