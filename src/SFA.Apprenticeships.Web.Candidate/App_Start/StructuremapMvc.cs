@@ -3,10 +3,8 @@ using SFA.Apprenticeships.Web.Candidate;
 
 namespace SFA.Apprenticeships.Web.Candidate
 {
-    using System.Web.Http;
-    using System.Web.Mvc;
-    using Microsoft.Practices.ServiceLocation;
     using SFA.Apprenticeships.Infrastructure.Common.IoC;
+    using SFA.Apprenticeships.Web.Candidate.IoC;
     using SFA.Apprenticeships.Web.Common.IoC;
     using StructureMap;
 
@@ -21,16 +19,8 @@ namespace SFA.Apprenticeships.Web.Candidate
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<WebCommonRegistry>();
+                x.AddRegistry<CandidateRegistry>();
             });
-        }
-
-        private static IContainer Init()
-        {
-            ObjectFactory.Initialize(
-                x => x.Scan(
-                        scan => scan.LookForRegistries()));
-
-            return ObjectFactory.Container;
         }
     }
 }

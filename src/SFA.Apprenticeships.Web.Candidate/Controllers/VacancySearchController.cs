@@ -9,7 +9,6 @@
     {
         private ISearchProvider _searchProvider;
 
-        // TODO::remove this ctor later
         public VacancySearchController()
         {
         }
