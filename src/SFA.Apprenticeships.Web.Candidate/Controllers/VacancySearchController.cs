@@ -9,7 +9,7 @@
 
     public class VacancySearchController : Controller
     {
-        private ISearchProvider _searchProvider;
+        private readonly ISearchProvider _searchProvider;
 
         public VacancySearchController(ISearchProvider searchProvider)
         {
@@ -49,7 +49,7 @@
             var distances = new SelectList(
                 new[] 
                         {
-                            new { WithinDistance = 2, Name = "This area only" },
+                            new { WithinDistance = 3, Name = "This area only" },
                             new { WithinDistance = 5, Name = "5 miles" },
                             new { WithinDistance = 10, Name = "10 miles" },
                             new { WithinDistance = 15, Name = "15 miles" },

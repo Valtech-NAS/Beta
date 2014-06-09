@@ -1,5 +1,4 @@
-﻿
-namespace SFA.Apprenticeships.Infrastructure.VacancySearch
+﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
     using Nest;
     using Application.Interfaces.Vacancy;
@@ -34,8 +33,10 @@ namespace SFA.Apprenticeships.Infrastructure.VacancySearch
                     g.PinTo(location.GeoPoint.Latitute, location.GeoPoint.Longitude)
                      .Unit(GeoUnit.mi).OnField(f => f.Location);
                     return g;
-                });
-
+                }).Filter(f => f.GeoDistance(vs => vs.Location, descriptor => 
+                    descriptor
+                    .Location(location.GeoPoint.Latitute, location.GeoPoint.Longitude)
+                    .Distance(radius, GeoUnit.mi)));
                 return s;
             });
 
