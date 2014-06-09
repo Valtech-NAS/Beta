@@ -11,10 +11,10 @@
     {
         private readonly static Logger Logger = LogManager.GetLogger(Constants.NamedLoggers.VacanyImporterLogger);
 
-        private readonly IMessageService<StorageQueueMessage> _messageService;
+        private readonly IProcessControlQueue<StorageQueueMessage> _messageService;
         private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
 
-        public VacancySchedulerConsumer(IMessageService<StorageQueueMessage> messageService, IVacancySummaryProcessor vacancySummaryProcessor)
+        public VacancySchedulerConsumer(IProcessControlQueue<StorageQueueMessage> messageService, IVacancySummaryProcessor vacancySummaryProcessor)
         {
             _messageService = messageService;
             _vacancySummaryProcessor = vacancySummaryProcessor;

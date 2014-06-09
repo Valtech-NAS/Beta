@@ -18,7 +18,7 @@ namespace SFA.Apprenticeships.Application.VacancyEtl.UnitTests.Consumers
     public class VacancySummaryProcessorTests
     {
         private Mock<IMessageBus> _busMock;
-        private Mock<IMessageService<StorageQueueMessage>> _messagingServiceMock;
+        private Mock<IProcessControlQueue<StorageQueueMessage>> _messagingServiceMock;
         private Mock<IVacancyIndexDataProvider> _vacancyProviderMock;
         private Mock<IMapper> _mapperMock;
 
@@ -26,7 +26,7 @@ namespace SFA.Apprenticeships.Application.VacancyEtl.UnitTests.Consumers
         public void SetUp()
         {
             _busMock = new Mock<IMessageBus>();
-            _messagingServiceMock = new Mock<IMessageService<StorageQueueMessage>>();
+            _messagingServiceMock = new Mock<IProcessControlQueue<StorageQueueMessage>>();
             _vacancyProviderMock = new Mock<IVacancyIndexDataProvider>();
             _mapperMock = new Mock<IMapper>();
         }
