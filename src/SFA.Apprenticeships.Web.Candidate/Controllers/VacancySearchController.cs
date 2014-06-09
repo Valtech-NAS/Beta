@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using CuttingEdge.Conditions;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
     using Microsoft.Ajax.Utilities;
     using SFA.Apprenticeships.Web.Candidate.Providers;
 
@@ -27,7 +28,7 @@
         }
 
         // GET: VacancySearch/Results
-        public ActionResult Results()
+        public ActionResult Results(VacancySearchViewModel searchViewModel)
         {
             return View();
         }

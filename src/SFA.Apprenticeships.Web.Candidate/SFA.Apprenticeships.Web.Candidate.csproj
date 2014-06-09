@@ -283,6 +283,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ISearchProvider.cs" />
     <Compile Include="Providers\SearchProvider.cs" />
+    <Compile Include="ViewModels\VacancySearch\VacancySearchViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
