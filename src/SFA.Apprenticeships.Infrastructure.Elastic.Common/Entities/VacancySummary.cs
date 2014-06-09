@@ -12,7 +12,7 @@
         }
 
         [ElasticProperty(Index = FieldIndexOption.not_analyzed)]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.analyzed)]
         public Guid UpdateReference { get; set; }

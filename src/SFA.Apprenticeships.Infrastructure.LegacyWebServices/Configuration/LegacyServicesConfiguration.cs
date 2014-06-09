@@ -2,7 +2,7 @@
 {
     using System;
     using System.Configuration;
-    using SFA.Apprenticeships.Infrastructure.Common.Configuration;
+    using Common.Configuration;
 
     public class LegacyServicesConfiguration : SecureConfigurationSection<LegacyServicesConfiguration>, ILegacyServicesConfiguration
     {

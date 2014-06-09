@@ -7,7 +7,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Vacancy
     //TODO : Unflatten / Create Domain!
     public class VacancySummary
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public string Framework { get; set; }
 

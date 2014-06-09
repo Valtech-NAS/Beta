@@ -12,13 +12,13 @@
     [TestFixture]
     public class VacancySchedulerConsumerTests
     {
-        private Mock<IMessageService<StorageQueueMessage>> _messageServiceMock;
+        private Mock<IProcessControlQueue<StorageQueueMessage>> _messageServiceMock;
         private Mock<IVacancySummaryProcessor> _vacancySummaryProcessorMock;
 
         [SetUp]
         public void SetUp()
         {
-            _messageServiceMock = new Mock<IMessageService<StorageQueueMessage>>();
+            _messageServiceMock = new Mock<IProcessControlQueue<StorageQueueMessage>>();
             _vacancySummaryProcessorMock = new Mock<IVacancySummaryProcessor>();
         }
 

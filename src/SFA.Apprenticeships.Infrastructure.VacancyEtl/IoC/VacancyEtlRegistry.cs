@@ -1,19 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC
 {
-    using Application.Interfaces.Messaging;
     using Application.VacancyEtl;
     using Application.VacancyEtl.Entities;
     using Domain.Interfaces.Mapping;
     using Consumers;
     using Messaging;
-    using SFA.Apprenticeships.Infrastructure.VacancyEtl.Mapper;
+    using Mapper;
     using StructureMap.Configuration.DSL;
 
     public class VacancyEtlRegistry : Registry
     {
         public VacancyEtlRegistry()
         {
-            For<IMessageService<StorageQueueMessage>>().Use<AzureScheduleQueue>();
+            For<IProcessControlQueue<StorageQueueMessage>>().Use<AzureScheduleQueue>();
             
             For<VacancySummaryConsumerAsync>().Use<VacancySummaryConsumerAsync>();
 

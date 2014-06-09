@@ -14,17 +14,17 @@
     {
         private readonly IMessageBus _bus;
         private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
-        private readonly IMessageService<StorageQueueMessage> _messagingService;
+        private readonly IProcessControlQueue<StorageQueueMessage> _processControlQueue;
         private readonly IMapper _mapper;
 
         public VacancySummaryProcessor(IMessageBus bus, 
                                        IVacancyIndexDataProvider vacancyIndexDataProvider, 
-                                       IMessageService<StorageQueueMessage> messagingService,
+                                       IProcessControlQueue<StorageQueueMessage> processControlQueue,
                                        IMapper mapper)
         {
             _bus = bus;
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
-            _messagingService = messagingService;
+            _processControlQueue = processControlQueue;
             _mapper = mapper;
         }
 
@@ -36,7 +36,7 @@
             var vacancySumaries = BuildVacancySummaryPages(Guid.Parse(scheduledQueueMessage.ClientRequestId), nationalCount, nonNationalCount);
 
             // Only delete from queue once we have all vacanies from the services without error.
-            _messagingService.DeleteMessage(scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
+            _processControlQueue.DeleteMessage(scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
 
             Parallel.ForEach(
                 vacancySumaries,

@@ -17,7 +17,7 @@
             _postcodeLookupProvider = postcodeLookupProvider;
         }
 
-        public IEnumerable<LookupLocation> FindLocation(string placeNameOrPostcode)
+        public IEnumerable<Location> FindLocation(string placeNameOrPostcode)
         {
             Condition.Requires(placeNameOrPostcode, "placeNameOrPostcode").IsNotNullOrWhiteSpace();
 
@@ -29,11 +29,10 @@
 
                 return new[]
                 {
-                    new LookupLocation
+                    new Location
                     {
                         GeoPoint = location.GeoPoint,
-                        Name = location.Name,
-                        Type = "Postcode"
+                        Name = location.Name
                     }
                 };
             }

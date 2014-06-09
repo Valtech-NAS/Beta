@@ -85,7 +85,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 Logger.Trace("Rabbit subscritions set up");
 
                 _vacancySchedulerConsumer = new VacancySchedulerConsumer(
-                    ObjectFactory.GetInstance<IMessageService<StorageQueueMessage>>(),
+                    ObjectFactory.GetInstance<IProcessControlQueue<StorageQueueMessage>>(),
                     ObjectFactory.GetInstance<IVacancySummaryProcessor>());
 
                 Logger.Trace("VacancySchedulerConsumer setup complete");
