@@ -6,6 +6,7 @@
     using Consumers;
     using Messaging;
     using Mapper;
+    using SFA.Apprenticeships.Infrastructure.VacancyEtl.Mappers;
     using StructureMap.Configuration.DSL;
 
     public class VacancyEtlRegistry : Registry

@@ -82,9 +82,9 @@
     <Compile Include="Helpers\GenericExtensions.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="IoC\CommonRegistry.cs" />
-    <Compile Include="Mapper\EnumResolver.cs" />
-    <Compile Include="Mapper\EnumDescriptionResolver.cs" />
-    <Compile Include="Mapper\MapperEngine.cs" />
+    <Compile Include="Mappers\EnumResolver.cs" />
+    <Compile Include="Mappers\EnumDescriptionResolver.cs" />
+    <Compile Include="Mappers\MapperEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rest\IRestService.cs" />
     <Compile Include="Rest\RestService.cs" />

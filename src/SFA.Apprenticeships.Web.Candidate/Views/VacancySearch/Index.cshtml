@@ -11,6 +11,9 @@
 </div>
 <div class="grid-wrapper">
     <section class="grid grid-2-3">
+        
+        @using(Html.BeginForm("Results", "VacancySearch", FormMethod.Get)){
+
         <div class="form-group">
             <label for="job-title" class="form-label">Job title (optional)</label>
             <span class="form-hint">For example, mechanical engineer</span>
@@ -46,6 +49,8 @@
                 <a class="button-link" href="#">Clear</a>
             </p>
         </div>
+
+        }
         <div class="form-group">
             <p>You can also apply for Apprenticeships in other parts of the UK</p>
             <ul>

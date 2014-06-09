@@ -75,7 +75,7 @@
     <Compile Include="Consumers\VacancySummaryConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryPageConsumerAsync.cs" />
     <Compile Include="IoC\VacancyEtlRegistry.cs" />
-    <Compile Include="Mapper\VacancyEtlMapper.cs">
+    <Compile Include="Mappers\VacancyEtlMapper.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Messaging\AzureScheduleQueue.cs" />

@@ -4,7 +4,7 @@
     using System.Linq;
     using AutoMapper;
     using Domain.Entities.Vacancy;
-    using Common.Mapper;
+    using Common.Mappers;
     using VacancySummaryProxy;
 
     public class VacancySummaryMapper : MapperEngine

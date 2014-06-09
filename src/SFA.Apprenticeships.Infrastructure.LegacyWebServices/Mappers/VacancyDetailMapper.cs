@@ -1,8 +1,7 @@
 namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
-    using System;
     using AutoMapper;
-    using Common.Mapper;
+    using Common.Mappers;
     using Domain.Entities.Vacancy;
     using VacancyDetailProxy;
 
