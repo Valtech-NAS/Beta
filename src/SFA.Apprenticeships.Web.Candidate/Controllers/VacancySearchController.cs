@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System.Web.Mvc;
-    using CuttingEdge.Conditions;
     using Microsoft.Ajax.Utilities;
     using SFA.Apprenticeships.Web.Candidate.Providers;
 
@@ -9,14 +8,8 @@
     {
         private ISearchProvider _searchProvider;
 
-        public VacancySearchController()
-        {
-        }
-
         public VacancySearchController(ISearchProvider searchProvider)
         {
-            Condition.Requires(searchProvider, "searchProvider").IsNotNull();
-
             _searchProvider = searchProvider;
         }
 
