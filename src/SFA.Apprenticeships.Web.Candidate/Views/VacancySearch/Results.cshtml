@@ -1,4 +1,4 @@
-﻿@model dynamic
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.VacancySearchResponseViewModel
 
 @{
     ViewBag.Title = "SFA Apprenticeships";
@@ -16,18 +16,19 @@
             <div class="mob-collpanel toggle-content--mob">
                 <div class="form-group">
                     <label for="job-title" class="form-label">Job title (optional)</label>
-                    <input id="job-title" type="text" class="form-control" value="Mechanical Engineer">
+                    <input id="job-title" type="text" class="form-control" value="@Model.VacancySearch.JobTitle">
                 </div>
                 <div class="form-group">
                     <label for="keywords" class="form-label">Keyword (optional)</label>
-                    <input id="keywords" type="text" class="form-control" value="Engineer">
+                    <input id="keywords" type="text" class="form-control" value="@Model.VacancySearch.Keywords">
                 </div>
                 <div class="form-group">
                     <label for="location" class="form-label">Apprenticeship location</label>
-                    <input id="location" type="text" class="form-control" value="Coventry">
+                    <input id="location" type="text" class="form-control" value="@Model.VacancySearch.Location">
                 </div>
                 <div class="form-group">
                     <label for="loc-within" class="form-label">Within</label>
+                    @Html.DropDownList()
                     <select id="loc-within">
                         <option value="">This area only</option>
                         <option value="">5 miles</option>
