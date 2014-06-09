@@ -30,16 +30,7 @@
             </div>
             <div class="form-group">
                 <label for="loc-within" class="form-label">Within</label>
-                <select id="loc-within" name="withindistance">
-                    <option value="2">This area only</option>
-                    <option value="5">5 miles</option>
-                    <option value="10">10 miles</option>
-                    <option value="10">15 miles</option>
-                    <option value="20">20 miles</option>
-                    <option value="30">30 miles</option>
-                    <option value="40">40 miles</option>
-                    <option value="0">Nationwide</option>
-                </select>
+                @Html.DropDownList("withindistance", (SelectList)ViewBag.Distances, new { id = "loc-within" })
             </div>
             <div class="form-group">
                 <button>Search</button>
