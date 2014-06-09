@@ -21,7 +21,7 @@
         {
             Condition.Requires(placeNameOrPostcode, "placeNameOrPostcode").IsNotNullOrWhiteSpace();
 
-            if (LocationHelper.IsPostcode(placeNameOrPostcode))
+            if (LocationHelper.IsPartialPostcode(placeNameOrPostcode))
             {
                 var location = _postcodeLookupProvider.GetLocation(placeNameOrPostcode);
 
