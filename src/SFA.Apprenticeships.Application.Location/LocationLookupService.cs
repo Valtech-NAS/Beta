@@ -1,11 +1,10 @@
-﻿using SFA.Apprenticeships.Domain.Interfaces.Logging;
-
-namespace SFA.Apprenticeships.Application.Location
+﻿namespace SFA.Apprenticeships.Application.Location
 {
     using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Domain.Entities.Location;
+    using Domain.Interfaces.Logging;
     using Interfaces.Location;
 
     public class LocationSearchService : ILocationSearchService
@@ -16,10 +15,6 @@ namespace SFA.Apprenticeships.Application.Location
 
         public LocationSearchService(ILocationLookupProvider locationLookupProvider, IPostcodeLookupProvider postcodeLookupProvider, ILoggingService loggingService)
         {
-            Condition.Requires(locationLookupProvider, "locationLookupProvider").IsNotNull();
-            Condition.Requires(postcodeLookupProvider, "postcodeLookupProvider").IsNotNull();
-            Condition.Requires(loggingService, "loggingService").IsNotNull();
-
             _locationLookupProvider = locationLookupProvider;
             _postcodeLookupProvider = postcodeLookupProvider;
             _loggingService = loggingService;

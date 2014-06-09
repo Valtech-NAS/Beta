@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using CuttingEdge.Conditions;
     using Interfaces.Vacancy;
     using Domain.Entities.Vacancy;
 
@@ -12,8 +11,6 @@
 
         public VacancyService(IVacancyProvider service)
         {
-            Condition.Requires(service, "service").IsNotNull();
-
             _service = service;
         }
 

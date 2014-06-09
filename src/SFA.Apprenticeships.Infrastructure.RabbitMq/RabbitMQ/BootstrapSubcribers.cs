@@ -4,7 +4,6 @@
     using System.Reflection;
     using EasyNetQ;
     using EasyNetQ.AutoSubscribe;
-    using CuttingEdge.Conditions;
     using StructureMap;
     using Interfaces;
 
@@ -14,8 +13,6 @@
 
         public BootstrapSubcribers(IBus bus)
         {
-            Condition.Requires(bus, "bus").IsNotNull();
-
             _bus = bus;
         }
 

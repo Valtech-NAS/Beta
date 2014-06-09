@@ -1,6 +1,4 @@
-﻿using CuttingEdge.Conditions;
-
-namespace SFA.Apprenticeships.Infrastructure.Common.ActiveDirectory
+﻿namespace SFA.Apprenticeships.Infrastructure.Common.ActiveDirectory
 {
     using System;
     using System.DirectoryServices.Protocols;
@@ -13,8 +11,6 @@ namespace SFA.Apprenticeships.Infrastructure.Common.ActiveDirectory
 
         public ActiveDirectoryChangePassword(ActiveDirectoryServer server)
         {
-            Condition.Requires(server, "server").IsNotNull();
-
             _server = server;
         }
 
