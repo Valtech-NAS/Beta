@@ -1,12 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
-    using System;
     using System.Collections.Generic;
     using Application.Interfaces.Location;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancy;
     using Domain.Entities.Location;
-    using Domain.Entities.Vacancy;
     using Domain.Interfaces.Mapping;
     using Web.Candidate.ViewModels.VacancySearch;
 
@@ -35,13 +33,13 @@
             return new LocationViewModel[]{};
         }
 
-        public VacancySearchResponseViewModel FindVacancies(LocationViewModel location, int radius)
+        public VacancySearchResponseViewModel FindVacancies(string jobTitle, string keywords, LocationViewModel location, int pageNumber, int searchRadius)
         {
             var searchLocation = _mapper.Map<LocationViewModel, Location>(location);
 
-            var searchResponse = _vacancySearchProvider.FindVacancies(searchLocation, radius);
+            var searchResponse = _vacancySearchProvider.FindVacancies(jobTitle, keywords, searchLocation, pageNumber, searchRadius);
 
-            var vacancySearchResponseViewModel = _mapper.Map<SearchResults<VacancySummary>, VacancySearchResponseViewModel>(searchResponse);
+            var vacancySearchResponseViewModel = _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(searchResponse);
 
             return vacancySearchResponseViewModel;
         }

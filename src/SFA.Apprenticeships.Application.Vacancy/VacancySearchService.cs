@@ -2,7 +2,6 @@
 {
     using CuttingEdge.Conditions;
     using Domain.Entities.Location;
-    using Domain.Entities.Vacancy;
     using Domain.Interfaces.Logging;
     using Interfaces.Vacancy;
     using Interfaces.Search;
@@ -18,12 +17,13 @@
             _loggingService = loggingService;
         }
 
-        public SearchResults<VacancySummary> Search(Location location, int searchRadius)
+        public SearchResults<VacancySummaryResponse> Search(string jobTitle, string keywords, Location location, int pageNumber, int searchRadius)
         {
             Condition.Requires(location, "location").IsNotNull();
             Condition.Requires(searchRadius, "searchRadius").IsGreaterOrEqual(0);
+            Condition.Requires(pageNumber, "pageNumber").IsGreaterOrEqual(1);
 
-            var vacancies = _vacancySearchProvider.FindVacancies(location, searchRadius);
+            var vacancies = _vacancySearchProvider.FindVacancies(jobTitle, keywords, location, pageNumber, searchRadius);
 
             return vacancies;
         }

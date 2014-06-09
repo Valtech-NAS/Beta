@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancy
 {
-    using Domain.Entities.Vacancy;
     using Domain.Entities.Location;
     using Search;
 
@@ -13,6 +12,6 @@
         /// <param name="location">location previously obtained from postcode or placename search</param>
         /// <param name="searchRadius">in miles</param>
         /// <returns>0..* matching vacancies</returns>
-        SearchResults<VacancySummary> Search(Location location, int searchRadius);
+        SearchResults<VacancySummaryResponse> Search(string jobTitle, string keywords, Location location, int pageNumber, int searchRadius);
     }
 }

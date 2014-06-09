@@ -1,10 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
+    using System.Globalization;
+    using System.Linq;
     using Nest;
     using Application.Interfaces.Vacancy;
     using Application.Interfaces.Search;
     using Domain.Entities.Location;
-    using Domain.Entities.Vacancy;
     using Elastic.Common.Configuration;
 
     public class VacancySearchProvider : IVacancySearchProvider
@@ -16,16 +17,17 @@
             _elasticsearchClientFactory = elasticsearchClientFactory;
         }
 
-        public SearchResults<VacancySummary> FindVacancies(Location location, int radius)
+        public SearchResults<VacancySummaryResponse> FindVacancies(string jobTitle, string keywords, Location location, int pageNumber, int searchRadius)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (Elastic.Common.Entities.VacancySummary));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(Elastic.Common.Entities.VacancySummary));
 
-            var query = client.Search<VacancySummary>(s =>
+            var query = client.Search<VacancySummaryResponse>(s =>
             {
                 s.Index(indexName);
                 s.Type(documentTypeName);
+                s.Skip((pageNumber - 1) * 10);
                 s.From(0);
                 s.Take(10);
                 s.SortGeoDistance(g =>
@@ -36,11 +38,21 @@
                 }).Filter(f => f.GeoDistance(vs => vs.Location, descriptor => 
                     descriptor
                     .Location(location.GeoPoint.Latitute, location.GeoPoint.Longitude)
-                    .Distance(radius, GeoUnit.mi)));
+                    .Distance(searchRadius, GeoUnit.mi)));
+
                 return s;
             });
 
-            var results = new SearchResults<VacancySummary>(query.Total, query.Documents);
+            var responses = query.Documents;
+            responses.ToList()
+                .ForEach(
+                    r =>
+                        r.Distance =
+                        double.Parse(
+                            query.Hits.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture))
+                                .Sorts.First()
+                                .ToString()));
+            var results = new SearchResults<VacancySummaryResponse>(query.Total, responses);
             return results;
         }
     }
