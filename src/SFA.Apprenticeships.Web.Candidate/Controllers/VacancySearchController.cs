@@ -4,6 +4,7 @@
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
     using Microsoft.Ajax.Utilities;
     using SFA.Apprenticeships.Web.Candidate.Providers;
+    using StructureMap;
 
     public class VacancySearchController : Controller
     {
