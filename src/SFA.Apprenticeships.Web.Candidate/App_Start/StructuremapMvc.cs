@@ -22,13 +22,17 @@ namespace SFA.Apprenticeships.Web.Candidate
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<WebCommonRegistry>();
+
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
+
+                x.AddRegistry<WebCommonRegistry>();
                 x.AddRegistry<CandidateRegistry>();
             });
+
+            WebCommonRegistry.Configure(ObjectFactory.Container);
         }
     }
 }
