@@ -281,10 +281,13 @@
     </Compile>
     <Compile Include="IoC\CandidateRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+<<<<<<< HEAD
     <Compile Include="Providers\ISearchProvider.cs" />
     <Compile Include="Providers\SearchProvider.cs" />
-    <Compile Include="ViewModels\VacancySearch\VacancySearchViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
+=======
+    <Compile Include="ViewModels\VacancySearch\VacancySearchViewModel.cs" />
+>>>>>>> Added vacancy search view model
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Shared\EditorTemplates\" />
@@ -302,25 +305,9 @@
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Elastic.Common\SFA.Apprenticeships.Infrastructure.Elastic.Common.csproj">
-      <Project>{F75B0C62-89B5-473D-AF2D-366A5A6722AC}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Elastic.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
-      <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{a2d82061-bcbd-4030-9eb4-5148aee79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
-      <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancySearch\SFA.Apprenticeships.Infrastructure.VacancySearch.csproj">
-      <Project>{913445EC-3175-4AFB-869C-F03B6FD2940A}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.VacancySearch</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>

@@ -59,7 +59,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 }
                 finally
                 {
-                    Thread.Sleep(60 * 1000);
+                    Thread.Sleep(5 * 60 * 1000);
                 }
             }
         }

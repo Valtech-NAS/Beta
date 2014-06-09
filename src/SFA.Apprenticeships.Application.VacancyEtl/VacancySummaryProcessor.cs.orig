@@ -80,10 +80,17 @@
 
         public void QueueVacancySummaries(VacancySummaryPage vacancySummaryPage)
         {
+<<<<<<< HEAD
             var vacancies = _vacancyIndexDataProvider.GetVacancySummary(vacancySummaryPage.VacancyLocation, vacancySummaryPage.PageNumber).ToList();
             Thread.Sleep(1000);
-
             var vacanciesExtended = _mapper.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(vacancies);
+=======
+            try
+            {
+                Thread.Sleep(1000);
+                var vacancies = _vacancyProvider.GetVacancySummary(vacancySummaryPage.VacancyLocation, vacancySummaryPage.PageNumber).ToList();
+                var vacanciesExtended = _mapper.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(vacancies);
+>>>>>>> 794fb846f121811191d9324b4d54e4bda93a93ee
 
             Parallel.ForEach(
                 vacanciesExtended,
