@@ -6,14 +6,18 @@
 
     public class PostcodeRegistry : Registry
     {
+        public const string PostcodeServiceEndpointAppSetting = "PostcodeServiceEndpoint";
+
         public PostcodeRegistry()
         {
-            // TODO::fix this up later          
-            For<IPostcodeLookupProvider>().Use<PostcodeService>().Ctor<string>("baseUrl").Is("PostcodeServiceEndpoint", x =>
-            {            
-                var cm = x.GetInstance<IConfigurationManager>();
-                return cm.GetAppSetting("PostcodeServiceEndpoint");
-            });
+            For<IPostcodeLookupProvider>()
+                .Use<PostcodeService>()
+                .Ctor<string>("baseUrl")
+                .Is(PostcodeServiceEndpointAppSetting, x =>
+                {
+                    var cm = x.GetInstance<IConfigurationManager>();
+                    return cm.GetAppSetting(PostcodeServiceEndpointAppSetting);
+                });
 
         }
     }
