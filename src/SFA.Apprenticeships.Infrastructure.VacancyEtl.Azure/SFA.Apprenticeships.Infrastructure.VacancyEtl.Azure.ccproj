@@ -44,6 +44,16 @@
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyEtl\SFA.Apprenticeships.Infrastructure.VacancyEtl.csproj">
+      <Name>SFA.Apprenticeships.Infrastructure.VacancyEtl</Name>
+      <Project>{0491054e-caf4-4321-be1d-3e44e739421c}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>SFA.Apprenticeships.Infrastructure.VacancyEtl</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
+  </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
