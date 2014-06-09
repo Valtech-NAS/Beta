@@ -4,7 +4,6 @@
     using System.Linq;
     using AutoMapper;
     using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Infrastructure.Common.Mapper;
     using SFA.Apprenticeships.Infrastructure.Common.Mappers;
 
     public class VacancyEtlMapper : MapperEngine

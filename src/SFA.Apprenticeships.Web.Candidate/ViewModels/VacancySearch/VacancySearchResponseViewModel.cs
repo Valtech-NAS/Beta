@@ -8,5 +8,7 @@
         public int Total { get; set; }
 
         public IEnumerable<VacancySummary> Vacancies { get; set; }
+
+        public VacancySearchViewModel VacancySearch { get; set; }
     }
 }
