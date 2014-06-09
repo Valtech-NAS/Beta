@@ -1,15 +1,14 @@
-﻿
-namespace SFA.Apprenticeships.Web.Candidate.Providers
+﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
     using System.Collections.Generic;
-    using SFA.Apprenticeships.Application.Interfaces.Location;
-    using SFA.Apprenticeships.Application.Interfaces.Search;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
-    using SFA.Apprenticeships.Domain.Entities.Location;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
-    using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using Application.Interfaces.Location;
+    using Application.Interfaces.Search;
+    using Application.Interfaces.Vacancy;
+    using Domain.Entities.Location;
+    using Domain.Entities.Vacancy;
+    using Domain.Interfaces.Mapping;
+    using Web.Candidate.ViewModels.VacancySearch;
 
     public class SearchProvider : ISearchProvider
     {
@@ -17,14 +16,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Providers
         private readonly IVacancySearchProvider _vacancySearchProvider;
         private readonly IMapper _mapper;
 
-
-        public SearchProvider(ILocationSearchService locationSearchService)
+        public SearchProvider(ILocationSearchService locationSearchService, IVacancySearchProvider vacancySearchProvider, IMapper mapper)
         {
             _locationSearchService = locationSearchService;
-        }
-
-        public SearchProvider(IVacancySearchProvider vacancySearchProvider, IMapper mapper)
-        {
             _vacancySearchProvider = vacancySearchProvider;
             _mapper = mapper;
         }
