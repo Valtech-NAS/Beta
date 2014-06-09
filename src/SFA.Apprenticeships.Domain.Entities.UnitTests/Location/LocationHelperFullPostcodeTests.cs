@@ -5,7 +5,7 @@
     using Entities.Location;
 
     [TestFixture]
-    public class LocationHelperTests
+    public class LocationHelperFullPostcodeTests
     {
         [TestCase("CV12WT")]
         [TestCase("cv12wt")]
