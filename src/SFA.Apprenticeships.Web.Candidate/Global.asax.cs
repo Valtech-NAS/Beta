@@ -70,19 +70,20 @@
                 }
             }
 
+            //TODO: review error handling
             //var resolver = DependencyResolver.Current;
             //var logger = resolver.GetService<ILogger>();
             //logger.Error(ex, "Unhandled exception in action {0} of controller {1}", currentAction, currentController);
 
             // if the request is AJAX return JSON else view.
-            if (httpContext.Request.Headers["X-Requested-With"] != null && httpContext.Request.Headers["X-Requested-With"].Equals("XMLHttpRequest", StringComparison.InvariantCultureIgnoreCase))
-            {
-                ReturnExceptionJson(httpContext);
-            }
-            else
-            {
-                ShowErrorPage(httpContext, currentController, currentAction);
-            }
+            //if (httpContext.Request.Headers["X-Requested-With"] != null && httpContext.Request.Headers["X-Requested-With"].Equals("XMLHttpRequest", StringComparison.InvariantCultureIgnoreCase))
+            //{
+            //    ReturnExceptionJson(httpContext);
+            //}
+            //else
+            //{
+            //    ShowErrorPage(httpContext, currentController, currentAction);
+            //}
         }
 
         protected void ReturnExceptionJson(HttpContext context)

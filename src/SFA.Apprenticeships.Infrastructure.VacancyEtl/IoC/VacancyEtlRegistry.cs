@@ -5,7 +5,7 @@
     using Domain.Interfaces.Mapping;
     using Consumers;
     using Messaging;
-    using Mapper;
+    using Mappers;
     using StructureMap.Configuration.DSL;
 
     public class VacancyEtlRegistry : Registry
