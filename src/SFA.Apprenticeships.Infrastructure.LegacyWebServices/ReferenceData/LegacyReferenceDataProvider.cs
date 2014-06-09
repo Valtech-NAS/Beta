@@ -17,9 +17,6 @@
 
         public LegacyReferenceDataProvider(ILegacyServicesConfiguration legacyServicesConfiguration, IWcfService<IReferenceData> service)
         {
-            Condition.Requires(legacyServicesConfiguration, "legacyServicesConfiguration").IsNotNull();
-            Condition.Requires(service, "service").IsNotNull();
-
             _legacyServicesConfiguration = legacyServicesConfiguration;
             _service = service;
         }

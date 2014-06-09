@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Interfaces.ReferenceData;
-    using CuttingEdge.Conditions;
     using Domain.Entities.ReferenceData;
 
     public class ReferenceDataService : IReferenceDataService
@@ -12,8 +11,6 @@
 
         public ReferenceDataService(IReferenceDataProvider service)
         {
-            Condition.Requires(service, "service").IsNotNull();
-
             _service = service;
         }
 

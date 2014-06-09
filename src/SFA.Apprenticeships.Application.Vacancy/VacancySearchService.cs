@@ -1,12 +1,11 @@
-﻿using SFA.Apprenticeships.Domain.Interfaces.Logging;
-
-namespace SFA.Apprenticeships.Application.Vacancy
+﻿namespace SFA.Apprenticeships.Application.Vacancy
 {
     using CuttingEdge.Conditions;
     using Domain.Entities.Location;
     using Domain.Entities.Vacancy;
+    using Domain.Interfaces.Logging;
     using Interfaces.Vacancy;
-    using SFA.Apprenticeships.Application.Interfaces.Search;
+    using Interfaces.Search;
 
     public class VacancySearchService : IVacancySearchService
     {
@@ -15,9 +14,6 @@ namespace SFA.Apprenticeships.Application.Vacancy
 
         public VacancySearchService(IVacancySearchProvider vacancySearchProvider, ILoggingService loggingService)
         {
-            Condition.Requires(vacancySearchProvider, "vacancySearchProvider").IsNotNull();
-            Condition.Requires(loggingService, "loggingService").IsNotNull();
-
             _vacancySearchProvider = vacancySearchProvider;
             _loggingService = loggingService;
         }

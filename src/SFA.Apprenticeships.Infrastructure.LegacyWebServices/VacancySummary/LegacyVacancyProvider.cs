@@ -1,13 +1,11 @@
-﻿using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-
-namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummary
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummary
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Vacancy;
-    using CuttingEdge.Conditions;
     using Domain.Entities.Vacancy;
+    using Domain.Interfaces.Mapping;
     using Common.Wcf;
     using Configuration;
     using VacancySummaryProxy;
@@ -18,15 +16,8 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummary
         private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
         private readonly IMapper _mapper;
 
-        public LegacyVacancyProvider(
-            ILegacyServicesConfiguration legacyServicesConfiguration,
-            IWcfService<IVacancySummary> service,
-            IMapper mapper)
+         public LegacyVacancyProvider(ILegacyServicesConfiguration legacyServicesConfiguration, IWcfService<IVacancySummary> service, IMapper mapper)
         {
-            Condition.Requires(legacyServicesConfiguration, "legacyServicesConfiguration").IsNotNull();
-            Condition.Requires(service, "service").IsNotNull();
-            Condition.Requires(mapper, "mapper").IsNotNull();
-
             _legacyServicesConfiguration = legacyServicesConfiguration;
             _service = service;
             _mapper = mapper;

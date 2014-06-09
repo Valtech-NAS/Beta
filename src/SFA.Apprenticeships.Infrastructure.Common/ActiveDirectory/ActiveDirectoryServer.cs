@@ -1,6 +1,4 @@
-﻿using CuttingEdge.Conditions;
-
-namespace SFA.Apprenticeships.Infrastructure.Common.ActiveDirectory
+﻿namespace SFA.Apprenticeships.Infrastructure.Common.ActiveDirectory
 {
     using System;
     using System.DirectoryServices.AccountManagement;
@@ -16,8 +14,6 @@ namespace SFA.Apprenticeships.Infrastructure.Common.ActiveDirectory
 
         public ActiveDirectoryServer(IActiveDirectoryConfiguration config, bool isSecure)
         {
-            Condition.Requires(config, "config").IsNotNull();
-
             _isSecure = isSecure;
             _config = config;
 

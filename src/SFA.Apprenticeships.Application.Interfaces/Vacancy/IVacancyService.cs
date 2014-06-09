@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Domain.Entities.Vacancy;
 
-    public interface IVacancyService //todo: rename IVacancyService to be more descriptive
+    public interface IVacancyService //todo: rename IVacancyService to be more descriptive (only used in ETL?)
     {
         int GetVacancyPageCount(VacancyLocationType vacancyLocationType);
 
