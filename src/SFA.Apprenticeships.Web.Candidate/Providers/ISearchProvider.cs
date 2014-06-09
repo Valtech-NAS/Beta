@@ -7,6 +7,6 @@
     {
         IEnumerable<LocationViewModel> FindLocation(string placeNameOrPostcode);
 
-        IEnumerable<VacancySearchResponseViewModel> FindVacacnies(LocationViewModel location, int radius);
+        VacancySearchResponseViewModel FindVacancies(LocationViewModel location, int radius);
     }
 }

@@ -12,8 +12,8 @@
         public CandidateRegistry()
         {
             For<ILocationSearchService>().Use<LocationSearchService>();
-            For<IMapper>().Singleton().Use<VacancySearchMapper>().Name = "VacancySearchMapper>";
-            For<ISearchProvider>().Use<SearchProvider>().Ctor<IMapper>().Named("VacancySearchMapper>");
+            For<IMapper>().Singleton().Use<CandidateWebMappers>().Name = "CandidateWebMappers";
+            For<ISearchProvider>().Use<SearchProvider>().Ctor<IMapper>().Named("CandidateWebMappers");
         }
     }
 }

@@ -13,42 +13,41 @@
     <section class="grid grid-2-3">
         
         @using(Html.BeginForm("Results", "VacancySearch", FormMethod.Get)){
-
-        <div class="form-group">
-            <label for="job-title" class="form-label">Job title (optional)</label>
-            <span class="form-hint">For example, mechanical engineer</span>
-            <input id="job-title" name="jobtitle" type="text" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="keywords" class="form-label">Keyword (optional)</label>
-            <span class="form-hint">For example, retail, customer service</span>
-            <input id="keywords" name="keyowrds" type="text" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="location" class="form-label">Apprenticeship location</label>
-            <span class="form-hint">Enter postcode, town or city</span>
-            <input id="location" type="text" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="loc-within" class="form-label">Within</label>
-            <select id="loc-within" name="withindistance">
-                <option value="2">This area only</option>
-                <option value="5">5 miles</option>
-                <option value="10">10 miles</option>
-                <option value="10">15 miles</option>
-                <option value="20">20 miles</option>
-                <option value="30">30 miles</option>
-                <option value="40">40 miles</option>
-                <option value="0">Nationwide</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <a class="button" href="search-results.html">Search</a>
-            <p>
-                <a class="button-link" href="#">Clear</a>
-            </p>
-        </div>
+            <div class="form-group">
+                <label for="job-title" class="form-label">Job title (optional)</label>
+                <span class="form-hint">For example, mechanical engineer</span>
+                <input id="job-title" name="jobTitle" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="keywords" class="form-label">Keyword (optional)</label>
+                <span class="form-hint">For example, retail, customer service</span>
+                <input id="keywords" name="keywords" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="location" class="form-label">Apprenticeship location</label>
+                <span class="form-hint">Enter postcode, town or city</span>
+                <input id="location" name="location" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="loc-within" class="form-label">Within</label>
+                <select id="loc-within" name="withindistance">
+                    <option value="2">This area only</option>
+                    <option value="5">5 miles</option>
+                    <option value="10">10 miles</option>
+                    <option value="10">15 miles</option>
+                    <option value="20">20 miles</option>
+                    <option value="30">30 miles</option>
+                    <option value="40">40 miles</option>
+                    <option value="0">Nationwide</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button>Search</button>
+                <a class="button" href="search-results.html">Search</a>
+                <p>
+                    <a class="button-link" href="#">Clear</a>
+                </p>
+            </div>
 
         }
         <div class="form-group">

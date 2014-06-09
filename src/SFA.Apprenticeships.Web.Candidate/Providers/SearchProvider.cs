@@ -4,8 +4,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Providers
     using System;
     using System.Collections.Generic;
     using SFA.Apprenticeships.Application.Interfaces.Location;
+    using SFA.Apprenticeships.Application.Interfaces.Search;
     using SFA.Apprenticeships.Application.Interfaces.Vacancy;
     using SFA.Apprenticeships.Domain.Entities.Location;
+    using SFA.Apprenticeships.Domain.Entities.Vacancy;
     using SFA.Apprenticeships.Domain.Interfaces.Mapping;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
 
@@ -32,20 +34,15 @@ namespace SFA.Apprenticeships.Web.Candidate.Providers
             throw new NotImplementedException();
         }
 
-        public IEnumerable<VacancySearchResponseViewModel> FindVacacnies(LocationViewModel location, int radius)
+        public VacancySearchResponseViewModel FindVacancies(LocationViewModel location, int radius)
         {
-            var searchLocation = new Location()
-            {
-                Name = "Search Loction",
-                GeoPoint = new GeoPoint()
-                {
-                    Latitute = location.Latitude,
-                    Longitude = location.Longitude
-                }
-            };
-            
+            var searchLocation = _mapper.Map<LocationViewModel, Location>(location);
+
             var searchResponse = _vacancySearchProvider.FindVacancies(searchLocation, radius);
-            return null;
+
+            var vacancySearchResponseViewModel = _mapper.Map<SearchResults<VacancySummary>, VacancySearchResponseViewModel>(searchResponse);
+
+            return vacancySearchResponseViewModel;
         }
     }
 }

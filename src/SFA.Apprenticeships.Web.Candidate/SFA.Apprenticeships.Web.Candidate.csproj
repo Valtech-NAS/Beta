@@ -287,7 +287,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="IoC\CandidateRegistry.cs" />
-    <Compile Include="Mappers\VacancySearchMapper.cs" />
+    <Compile Include="Mappers\CandidateWebMappers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ISearchProvider.cs" />
     <Compile Include="Providers\SearchProvider.cs" />
