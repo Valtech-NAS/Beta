@@ -11,6 +11,6 @@
         /// </summary>
         /// <param name="placeNameOrPostcode">place name (town, city, village, county, etc.) or postcode</param>
         /// <returns>0..* matching locations</returns>
-        IEnumerable<LookupLocation> FindLocation(string placeNameOrPostcode);
+        IEnumerable<Location> FindLocation(string placeNameOrPostcode);
     }
 }

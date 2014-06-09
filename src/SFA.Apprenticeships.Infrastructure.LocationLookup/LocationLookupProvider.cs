@@ -17,11 +17,10 @@
             _elasticsearchClientFactory = elasticsearchClientFactory;
         }
 
-        public IEnumerable<LookupLocation> FindLocation(string placeName, int maxResults = 50)
+        public IEnumerable<Location> FindLocation(string placeName, int maxResults = 50)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
-            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(LookupLocation));
-            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(LocationLookup));
+            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(LocationLookup));
             var term = placeName.ToLowerInvariant();
 
             var exactMatchResults = client.Search<LocationLookup>(s => s
@@ -48,7 +47,7 @@
                 .Take(maxResults)
                 .ToList();
 
-            return results.Select(l => new LookupLocation
+            return results.Select(l => new Location
             {
                 Name = MakeName(l, results.Count),
                 GeoPoint = new Domain.Entities.Location.GeoPoint { Latitute = l.Latitude, Longitude = l.Longitude }

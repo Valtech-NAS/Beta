@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-
-namespace SFA.Apprenticeships.Application.VacancyEtl.UnitTests.Consumers
+﻿namespace SFA.Apprenticeships.Application.VacancyEtl.UnitTests.Consumers
 {
     using System;
     using System.Collections.Generic;
@@ -8,11 +6,11 @@ namespace SFA.Apprenticeships.Application.VacancyEtl.UnitTests.Consumers
     using System.Threading;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.Interfaces.Messaging;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
-    using SFA.Apprenticeships.Application.VacancyEtl;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
+    using Domain.Interfaces.Mapping;
+    using Interfaces.Messaging;
+    using VacancyEtl;
+    using Entities;
+    using Domain.Entities.Vacancy;
 
     [TestFixture]
     public class VacancySummaryProcessorTests
@@ -80,10 +78,10 @@ namespace SFA.Apprenticeships.Application.VacancyEtl.UnitTests.Consumers
                 x =>
                     x.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(
                         It.IsAny<IEnumerable<VacancySummary>>()))
-                .Returns((IEnumerable<VacancySummary> vacanies) =>
+                .Returns((IEnumerable<VacancySummary> vacancies) =>
                 {
-                    var vacUpdates = new List<VacancySummaryUpdate>(vacanies.Count());
-                    vacanies.ToList()
+                    var vacUpdates = new List<VacancySummaryUpdate>(vacancies.Count());
+                    vacancies.ToList()
                         .ForEach(
                             v =>
                                 vacUpdates.Add(new VacancySummaryUpdate()
