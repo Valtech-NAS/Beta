@@ -2,7 +2,7 @@
 {
     using System;
     using AutoMapper;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
+    using Domain.Entities.Vacancy;
 
     public class VacancyTypeResolver : ValueResolver<string, VacancyType>
     {

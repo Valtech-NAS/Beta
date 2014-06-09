@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://services.imservices.org.uk/AVMS/Interfaces/5.1" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="VacancyDetailsService" targetNamespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Capgemini.LSC.Navms.MS.Common.Enums" />
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Capgemini.LSC.Navms.MS.Common.Enum" />
+      <xs:element name="VacancyDetailsRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="VacancySearchCriteria" nillable="true" type="tns:VacancySearchData" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="VacancySearchData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="VacancyReferenceId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="OccupationCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FrameworkCode" nillable="true" type="xs:string" />
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Capgemini.LSC.Navms.MS.Common.Enums" name="VacancyLocationType" type="q1:VacancyDetailsSearchLocationType" />
+          <xs:element minOccurs="0" name="CountyCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Town" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RegionCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyPublishedDate" nillable="true" type="xs:dateTime" />
+          <xs:element name="PageIndex" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="VacancySearchData" nillable="true" type="tns:VacancySearchData" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/" name="ExternalSystemId" type="q2:guid" />
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/" name="MessageId" type="q3:guid" />
+      <xs:element name="PublicKey" nillable="true" type="xs:string" />
+      <xs:element name="VacancyDetailsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MessageId" type="q4:guid" />
+            <xs:element minOccurs="0" name="SearchResults" nillable="true" type="tns:VacancyDetailResponseData" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="VacancyDetailResponseData">
+        <xs:sequence>
+          <xs:element name="AVMSHeader" nillable="true" type="tns:WebInterfaceGenericDetailsData" />
+          <xs:element name="SearchResults" nillable="true" type="tns:ArrayOfVacancyFullData" />
+          <xs:element name="TotalPages" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="VacancyDetailResponseData" nillable="true" type="tns:VacancyDetailResponseData" />
+      <xs:complexType name="WebInterfaceGenericDetailsData">
+        <xs:sequence>
+          <xs:element name="ApprenticeshipVacanciesDescription" nillable="true" type="xs:string" />
+          <xs:element name="ApprenticeshipVacanciesURL" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="WebInterfaceGenericDetailsData" nillable="true" type="tns:WebInterfaceGenericDetailsData" />
+      <xs:complexType name="ArrayOfVacancyFullData">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="VacancyFullData" nillable="true" type="tns:VacancyFullData" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfVacancyFullData" nillable="true" type="tns:ArrayOfVacancyFullData" />
+      <xs:complexType name="VacancyFullData">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:VacancySummaryData">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="ContactPerson" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="ContractOwner" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="DeliveryOrganisation" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="EmployerDescription" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="EmployerWebsite" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="ExpectedDuration" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="FullDescription" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="FutureProspects" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="InterviewFromDate" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="IsDisplayRecruitmentAgency" nillable="true" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsSmallEmployerWageIncentive" type="xs:boolean" />
+              <xs:element minOccurs="0" name="LearningProviderDesc" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="LearningProviderSectorPassRate" nillable="true" type="xs:int" />
+              <xs:element minOccurs="0" name="OtherImportantInformation" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="PersonalQualities" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="PossibleStartDate" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="QualificationRequired" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="SkillsRequired" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="SupplementaryQuestion1" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="SupplementaryQuestion2" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="TrainingToBeProvided" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="VacancyManager" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="VacancyOwner" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="Wage" nillable="true" type="xs:decimal" />
+              <xs:element minOccurs="0" name="WageText" nillable="true" type="xs:string" />
+              <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Capgemini.LSC.Navms.MS.Common.Enum" minOccurs="0" name="WageType" type="q5:WageType" />
+              <xs:element minOccurs="0" name="WorkingWeek" nillable="true" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="VacancyFullData" nillable="true" type="tns:VacancyFullData" />
+      <xs:complexType name="VacancySummaryData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ApprenticeshipFramework" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ClosingDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="CreatedDateTime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="EmployerName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LearningProviderName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NumberOfPositions" type="xs:int" />
+          <xs:element minOccurs="0" name="ShortDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyAddress" nillable="true" type="tns:AddressData" />
+          <xs:element minOccurs="0" name="VacancyLocationType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyReference" type="xs:int" />
+          <xs:element minOccurs="0" name="VacancyTitle" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyUrl" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="VacancySummaryData" nillable="true" type="tns:VacancySummaryData" />
+      <xs:complexType name="AddressData">
+        <xs:sequence>
+          <xs:element name="AddressLine1" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine2" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine3" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine4" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine5" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="County" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GridEastM" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="GridNorthM" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="Latitude" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="Longitude" nillable="true" type="xs:decimal" />
+          <xs:element name="PostCode" nillable="true" type="xs:string" />
+          <xs:element name="Town" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LocalAuthority" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="AddressData" nillable="true" type="tns:AddressData" />
+      <xs:complexType name="SystemFaultContract">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="SystemFaultContract" nillable="true" type="tns:SystemFaultContract" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="anyType" nillable="true" type="xs:anyType" />
+      <xs:element name="anyURI" nillable="true" type="xs:anyURI" />
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary" />
+      <xs:element name="boolean" nillable="true" type="xs:boolean" />
+      <xs:element name="byte" nillable="true" type="xs:byte" />
+      <xs:element name="dateTime" nillable="true" type="xs:dateTime" />
+      <xs:element name="decimal" nillable="true" type="xs:decimal" />
+      <xs:element name="double" nillable="true" type="xs:double" />
+      <xs:element name="float" nillable="true" type="xs:float" />
+      <xs:element name="int" nillable="true" type="xs:int" />
+      <xs:element name="long" nillable="true" type="xs:long" />
+      <xs:element name="QName" nillable="true" type="xs:QName" />
+      <xs:element name="short" nillable="true" type="xs:short" />
+      <xs:element name="string" nillable="true" type="xs:string" />
+      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" />
+      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" />
+      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" />
+      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" />
+      <xs:element name="char" nillable="true" type="tns:char" />
+      <xs:simpleType name="char">
+        <xs:restriction base="xs:int" />
+      </xs:simpleType>
+      <xs:element name="duration" nillable="true" type="tns:duration" />
+      <xs:simpleType name="duration">
+        <xs:restriction base="xs:duration">
+          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" />
+          <xs:minInclusive value="-P10675199DT2H48M5.4775808S" />
+          <xs:maxInclusive value="P10675199DT2H48M5.4775807S" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="guid" nillable="true" type="tns:guid" />
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:attribute name="FactoryType" type="xs:QName" />
+      <xs:attribute name="Id" type="xs:ID" />
+      <xs:attribute name="Ref" type="xs:IDREF" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Capgemini.LSC.Navms.MS.Common.Enums" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Capgemini.LSC.Navms.MS.Common.Enums" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:simpleType name="VacancyDetailsSearchLocationType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="NonNational" />
+          <xs:enumeration value="National" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="VacancyDetailsSearchLocationType" nillable="true" type="tns:VacancyDetailsSearchLocationType" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Capgemini.LSC.Navms.MS.Common.Enum" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Capgemini.LSC.Navms.MS.Common.Enum" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:simpleType name="WageType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Text" />
+          <xs:enumeration value="Weekly" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="WageType" nillable="true" type="tns:WageType" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="VacancyDetailsRequest">
+    <wsdl:part name="parameters" element="tns:VacancyDetailsRequest" />
+  </wsdl:message>
+  <wsdl:message name="VacancyDetailsRequest_Headers">
+    <wsdl:part name="ExternalSystemId" element="tns:ExternalSystemId" />
+    <wsdl:part name="MessageId" element="tns:MessageId" />
+    <wsdl:part name="PublicKey" element="tns:PublicKey" />
+  </wsdl:message>
+  <wsdl:message name="VacancyDetailsResponse">
+    <wsdl:part name="parameters" element="tns:VacancyDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVacancyDetails_Get_SystemFaultContractFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SystemFaultContract" />
+  </wsdl:message>
+  <wsdl:portType name="IVacancyDetails">
+    <wsdl:operation name="Get">
+      <wsdl:input wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IVacancyDetails/Get" name="VacancyDetailsRequest" message="tns:VacancyDetailsRequest" />
+      <wsdl:output wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IVacancyDetails/GetResponse" name="VacancyDetailsResponse" message="tns:VacancyDetailsResponse" />
+      <wsdl:fault wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IVacancyDetails/GetSystemFaultContractFault" name="SystemFaultContractFault" message="tns:IVacancyDetails_Get_SystemFaultContractFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IVacancyDetails" type="tns:IVacancyDetails">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Get">
+      <soap:operation soapAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IVacancyDetails/Get" style="document" />
+      <wsdl:input name="VacancyDetailsRequest">
+        <soap:header message="tns:VacancyDetailsRequest_Headers" part="ExternalSystemId" use="literal" />
+        <soap:header message="tns:VacancyDetailsRequest_Headers" part="MessageId" use="literal" />
+        <soap:header message="tns:VacancyDetailsRequest_Headers" part="PublicKey" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="VacancyDetailsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SystemFaultContractFault">
+        <soap:fault use="literal" name="SystemFaultContractFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="VacancyDetailsService">
+    <wsdl:port name="BasicHttpBinding_IVacancyDetails" binding="tns:BasicHttpBinding_IVacancyDetails">
+      <soap:address location="https://apprenticeshipvacancymatchingservice.lsc.gov.uk/Services/VacancyDetails/VacancyDetails51.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

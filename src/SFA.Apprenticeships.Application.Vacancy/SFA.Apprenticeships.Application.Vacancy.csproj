@@ -45,7 +45,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VacancySearchService.cs" />
-    <Compile Include="VacancyService.cs" />
+    <Compile Include="VacancyDataService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

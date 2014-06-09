@@ -2,7 +2,7 @@
 {
     using Domain.Entities.Vacancy;
     using Domain.Entities.Location;
-    using SFA.Apprenticeships.Application.Interfaces.Search;
+    using Search;
 
     //TODO: Flush out API. need to understand valid combinations of location name, postcode, distance, keyword, etc. (include national)
     public interface IVacancySearchService
@@ -14,6 +14,5 @@
         /// <param name="searchRadius">in miles</param>
         /// <returns>0..* matching vacancies</returns>
         SearchResults<VacancySummary> Search(Location location, int searchRadius);
-
     }
 }

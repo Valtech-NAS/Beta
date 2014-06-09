@@ -4,11 +4,11 @@
     using System.Linq;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
-    using SFA.Apprenticeships.Infrastructure.Common.Wcf;
-    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Configuration;
-    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummaryProxy;
+    using Application.VacancyEtl;
+    using Domain.Entities.Vacancy;
+    using Common.Wcf;
+    using Configuration;
+    using VacancySummaryProxy;
     using StructureMap;
 
     [TestFixture]
@@ -30,7 +30,7 @@
                 ExternalSystemId = _legacyServicesConfiguration.SystemId,
                 PublicKey = _legacyServicesConfiguration.PublicKey,
                 MessageId = Guid.NewGuid(),
-                VacancySearchCriteria = new VacancySearchData()
+                VacancySearchCriteria = new VacancySearchData
                 {
                     PageIndex = 1,
                     VacancyLocationType = VacancyDetailsSearchLocationType.NonNational.ToString()
@@ -47,11 +47,11 @@
         [TestCase]
         public void ShouldReturnMappedCollectionFromGetVacancySummary()
         {
-            var service = ObjectFactory.GetInstance<IVacancyService>();
-            var result = service.GetVacancySummary(VacancyLocationType.NonNational, 1);
+            var service = ObjectFactory.GetInstance<IVacancyIndexDataProvider>();
+            var result = service.GetVacancySummary(VacancyLocationType.NonNational, 1).ToList();
 
-            result.ToList().Should().NotBeNullOrEmpty();
-            result.ToList().ForEach(r => r.VacancyLocationType.Should().Be(VacancyLocationType.NonNational));
+            result.Should().NotBeNullOrEmpty();
+            result.ForEach(r => r.VacancyLocationType.Should().Be(VacancyLocationType.NonNational));
         }
     }
 }

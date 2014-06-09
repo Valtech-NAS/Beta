@@ -1,15 +1,15 @@
-﻿using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-
-namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
 {
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancy;
     using Application.ReferenceData;
-    using Application.Vacancy;
+    using Application.VacancyEtl;
+    using Domain.Interfaces.Mapping;
     using Common.Wcf;
     using Configuration;
     using Mappers;
     using ReferenceDataProxy;
+    using VacancyDetail;
     using VacancySummary;
     using VacancySummaryProxy;
     using StructureMap.Configuration.DSL;
@@ -20,11 +20,12 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
         public LegacyWebServicesRegistry()
         {
             For<IMapper>().Use<VacancySummaryMapper>().Name = "LegacyWebServices.VacancySummaryMapper";
+            For<IMapper>().Use<VacancyDetailMapper>().Name = "LegacyWebServices.VacancyDetailMapper";
             For<ILegacyServicesConfiguration>().Singleton().Use(LegacyServicesConfiguration.Instance);
             For<IWcfService<IVacancySummary>>().Use<WcfService<IVacancySummary>>();
             For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
-            For<IVacancyProvider>().Use<LegacyVacancyProvider>().Ctor<IMapper>().Named("LegacyWebServices.VacancySummaryMapper");
-            For<IVacancyService>().Use<VacancyService>();
+            For<IVacancyIndexDataProvider>().Use<LegacyVacancyIndexDataProvider>().Ctor<IMapper>().Named("LegacyWebServices.VacancySummaryMapper");
+            For<IVacancyDataProvider>().Use<LegacyVacancyDataProvider>().Ctor<IMapper>().Named("LegacyWebServices.VacancyDetailMapper");
             For<IReferenceDataProvider>().Use<LegacyReferenceDataProvider>();
             For<IReferenceDataService>().Use<ReferenceDataService>().Name = "Base.ReferenceDataService";
             For<IReferenceDataService>().Use<CachedReferenceDataService>().Ctor<IReferenceDataService>().Named("Base.ReferenceDataService");
