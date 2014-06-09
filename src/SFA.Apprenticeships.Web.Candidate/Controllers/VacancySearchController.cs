@@ -27,7 +27,7 @@
 
             if (locations.Count() == 1)
             {
-                var results = _searchProvider.FindVacacnies(locations.First(), searchViewModel.WithinDistance);
+                var results = _searchProvider.FindVacancies(locations.First(), searchViewModel.WithinDistance);
                 return View(results);    
             }
 
