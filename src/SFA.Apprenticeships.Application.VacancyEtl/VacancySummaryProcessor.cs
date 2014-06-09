@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-
-namespace SFA.Apprenticeships.Application.VacancyEtl
+﻿namespace SFA.Apprenticeships.Application.VacancyEtl
 {
     using System;
     using System.Collections.Generic;
@@ -8,24 +6,24 @@ namespace SFA.Apprenticeships.Application.VacancyEtl
     using System.Threading;
     using System.Threading.Tasks;
     using Interfaces.Messaging;
-    using Interfaces.Vacancy;
+    using Domain.Interfaces.Mapping;
     using Entities;
     using Domain.Entities.Vacancy;
 
     public class VacancySummaryProcessor : IVacancySummaryProcessor
     {
         private readonly IMessageBus _bus;
-        private readonly IVacancyProvider _vacancyProvider;
+        private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
         private readonly IMessageService<StorageQueueMessage> _messagingService;
         private readonly IMapper _mapper;
 
         public VacancySummaryProcessor(IMessageBus bus, 
-                                        IVacancyProvider vacancyProvider, 
-                                        IMessageService<StorageQueueMessage> messagingService,
-                                        IMapper mapper)
+                                       IVacancyIndexDataProvider vacancyIndexDataProvider, 
+                                       IMessageService<StorageQueueMessage> messagingService,
+                                       IMapper mapper)
         {
             _bus = bus;
-            _vacancyProvider = vacancyProvider;
+            _vacancyIndexDataProvider = vacancyIndexDataProvider;
             _messagingService = messagingService;
             _mapper = mapper;
         }
@@ -33,8 +31,8 @@ namespace SFA.Apprenticeships.Application.VacancyEtl
         public void QueueVacancyPages(StorageQueueMessage scheduledQueueMessage)
         {
 
-            var nationalCount = _vacancyProvider.GetVacancyPageCount(VacancyLocationType.National);
-            var nonNationalCount = _vacancyProvider.GetVacancyPageCount(VacancyLocationType.NonNational);
+            var nationalCount = _vacancyIndexDataProvider.GetVacancyPageCount(VacancyLocationType.National);
+            var nonNationalCount = _vacancyIndexDataProvider.GetVacancyPageCount(VacancyLocationType.NonNational);
             var vacancySumaries = BuildVacancySummaryPages(Guid.Parse(scheduledQueueMessage.ClientRequestId), nationalCount, nonNationalCount);
 
             // Only delete from queue once we have all vacanies from the services without error.
@@ -82,26 +80,18 @@ namespace SFA.Apprenticeships.Application.VacancyEtl
 
         public void QueueVacancySummaries(VacancySummaryPage vacancySummaryPage)
         {
-            try
-            {
-                var vacancies = _vacancyProvider.GetVacancySummary(vacancySummaryPage.VacancyLocation, vacancySummaryPage.PageNumber).ToList();
-                Thread.Sleep(1000);
-                var vacanciesExtended = _mapper.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(vacancies);
+            var vacancies = _vacancyIndexDataProvider.GetVacancySummary(vacancySummaryPage.VacancyLocation, vacancySummaryPage.PageNumber).ToList();
+            Thread.Sleep(1000);
+            var vacanciesExtended = _mapper.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(vacancies);
 
-                Parallel.ForEach(
-                    vacanciesExtended,
-                    new ParallelOptions() { MaxDegreeOfParallelism = 5 },
-                    vacancySummaryExtended =>
-                    {
-                        vacancySummaryExtended.UpdateReference = vacancySummaryPage.UpdateReference;
-                        _bus.PublishMessage(vacancySummaryExtended);
-                    });
-            }
-            catch (Exception ex)
-            {
-                // TODO::High::Log this error
-                throw;
-            }
+            Parallel.ForEach(
+                vacanciesExtended,
+                new ParallelOptions { MaxDegreeOfParallelism = 5 },
+                vacancySummaryExtended =>
+                {
+                    vacancySummaryExtended.UpdateReference = vacancySummaryPage.UpdateReference;
+                    _bus.PublishMessage(vacancySummaryExtended);
+                });
         }
     }
 }

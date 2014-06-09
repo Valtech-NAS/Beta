@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Application.VacancyEtl.UnitTests.Consumers
     {
         private Mock<IMessageBus> _busMock;
         private Mock<IMessageService<StorageQueueMessage>> _messagingServiceMock;
-        private Mock<IVacancyProvider> _vacancyProviderMock;
+        private Mock<IVacancyIndexDataProvider> _vacancyProviderMock;
         private Mock<IMapper> _mapperMock;
 
         [SetUp]
@@ -27,7 +27,7 @@ namespace SFA.Apprenticeships.Application.VacancyEtl.UnitTests.Consumers
         {
             _busMock = new Mock<IMessageBus>();
             _messagingServiceMock = new Mock<IMessageService<StorageQueueMessage>>();
-            _vacancyProviderMock = new Mock<IVacancyProvider>();
+            _vacancyProviderMock = new Mock<IVacancyIndexDataProvider>();
             _mapperMock = new Mock<IMapper>();
         }
 

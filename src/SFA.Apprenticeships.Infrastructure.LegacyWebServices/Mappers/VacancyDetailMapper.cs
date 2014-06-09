@@ -1,17 +1,17 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
+namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
-    using System.Collections.Generic;
-    using System.Linq;
+    using System;
     using AutoMapper;
-    using Domain.Entities.Vacancy;
     using Common.Mapper;
-    using VacancySummaryProxy;
+    using Domain.Entities.Vacancy;
+    using VacancyDetailProxy;
 
-    public class VacancySummaryMapper : MapperEngine
+    public class VacancyDetailMapper : MapperEngine
     {
         public override void Initialize()
         {
-            Mapper.CreateMap<VacancySummaryData, VacancySummary>()
+            //todo: write mapper (this is just a copy from summary entity mapper)
+            Mapper.CreateMap<VacancyFullData, VacancyDetail>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(src => (long)src.VacancyReference))
                 .ForMember(d => d.AddressLine1, opt => opt.MapFrom(src => src.VacancyAddress.AddressLine1))
                 .ForMember(d => d.AddressLine2, opt => opt.MapFrom(src => src.VacancyAddress.AddressLine2))
@@ -35,17 +35,15 @@
                 .ForMember(d => d.VacancyType, opt => opt.ResolveUsing<VacancyTypeResolver>().FromMember(src => src.VacancyType))
                 .ForMember(d => d.VacancyUrl, opt => opt.MapFrom(src => src.VacancyUrl));
 
-            Mapper.CreateMap<VacancySummaryData[], IEnumerable<VacancySummary>>().ConvertUsing<SummaryDataConverter>();
+            Mapper.CreateMap<VacancyFullData, VacancyDetail>().ConvertUsing<DetailDataConverter>();
         }
     }
 
-    class SummaryDataConverter : ITypeConverter<VacancySummaryData[], IEnumerable<VacancySummary>>
+    class DetailDataConverter : ITypeConverter<VacancyFullData, VacancyDetail>
     {
-        public IEnumerable<VacancySummary> Convert(ResolutionContext context)
+        public VacancyDetail Convert(ResolutionContext context)
         {
-            return
-                from item in (VacancySummaryData[])context.SourceValue
-                select context.Engine.Map<VacancySummaryData, VacancySummary>(item);
+            return context.Engine.Map<VacancyFullData, VacancyDetail>((VacancyFullData)context.SourceValue);
         }
     }
 }

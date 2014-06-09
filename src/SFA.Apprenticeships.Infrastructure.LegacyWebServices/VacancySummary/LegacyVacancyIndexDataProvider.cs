@@ -3,20 +3,20 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Vacancy;
+    using Application.VacancyEtl;
     using Domain.Entities.Vacancy;
     using Domain.Interfaces.Mapping;
     using Common.Wcf;
     using Configuration;
     using VacancySummaryProxy;
 
-    public class LegacyVacancyProvider : IVacancyProvider
+    public class LegacyVacancyIndexDataProvider : IVacancyIndexDataProvider
     {
         private readonly IWcfService<IVacancySummary> _service;
         private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
         private readonly IMapper _mapper;
 
-         public LegacyVacancyProvider(ILegacyServicesConfiguration legacyServicesConfiguration, IWcfService<IVacancySummary> service, IMapper mapper)
+         public LegacyVacancyIndexDataProvider(ILegacyServicesConfiguration legacyServicesConfiguration, IWcfService<IVacancySummary> service, IMapper mapper)
         {
             _legacyServicesConfiguration = legacyServicesConfiguration;
             _service = service;

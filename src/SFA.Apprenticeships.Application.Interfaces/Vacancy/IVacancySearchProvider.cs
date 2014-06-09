@@ -2,7 +2,7 @@
 {
     using Domain.Entities.Vacancy;
     using Domain.Entities.Location;
-    using SFA.Apprenticeships.Application.Interfaces.Search;
+    using Search;
 
     public interface IVacancySearchProvider
     {

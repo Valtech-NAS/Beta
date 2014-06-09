@@ -1,9 +1,10 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancy
+﻿namespace SFA.Apprenticeships.Application.VacancyEtl
 {
+    using System;
     using System.Collections.Generic;
     using Domain.Entities.Vacancy;
 
-    public interface IVacancyProvider //todo: rename IVacancyProvider to be more descriptive (only used in ETL?)
+    public interface IVacancyIndexDataProvider
     {
         int GetVacancyPageCount(VacancyLocationType vacancyLocationType);
 
