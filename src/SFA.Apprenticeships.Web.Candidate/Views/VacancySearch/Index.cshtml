@@ -59,3 +59,35 @@
         </div>
     </aside>
 </div>
+
+<script>
+        function GetLocationResults() {
+            jQuery.support.cors = true;
+
+            var data = $("form").serialize();
+
+            $.ajax({
+                url: '@Url.Action("location", "vacancysearch")',
+                type: 'POST',
+                data: data,
+                success: function (response) {
+
+                    var rs = response;
+                },
+                error: function(error) {
+                    var err = error;
+                }
+            });
+
+            return true;
+        };
+
+        $(document).ready(function () {
+            $("#location").on("keyup", function() {
+                if (this.value != null && this.value.length > 2) {
+                    GetLocationResults();
+                }
+                return true;
+            });
+        });
+</script>

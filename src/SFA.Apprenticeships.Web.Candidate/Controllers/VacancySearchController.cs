@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
@@ -42,6 +43,19 @@
             vacancySearchResponseViewModel.VacancySearch = searchViewModel;
 
             return View(vacancySearchResponseViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Location(VacancySearchViewModel locationViewModel)
+        {
+            var matches = _searchProvider.FindLocation(locationViewModel.Location);
+
+            if (this.Request.IsAjaxRequest())
+            {
+                return Json(matches, JsonRequestBehavior.AllowGet);
+            }
+
+            throw new NotImplementedException("Non-js not yet implemented!");
         }
 
         private void PopulateDistances(int selectedValue = 2)
