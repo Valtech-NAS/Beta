@@ -27,9 +27,12 @@
         {
             var locations = _locationSearchService.FindLocation(placeNameOrPostcode);
 
-            var viewModel = _mapper.Map<IEnumerable<Location>, IEnumerable<LocationViewModel>>(locations);
+            if (locations != null)
+            {
+                return _mapper.Map<IEnumerable<Location>, IEnumerable<LocationViewModel>>(locations);
+            }
 
-            return viewModel;
+            return new LocationViewModel[]{};
         }
 
         public VacancySearchResponseViewModel FindVacancies(LocationViewModel location, int radius)
