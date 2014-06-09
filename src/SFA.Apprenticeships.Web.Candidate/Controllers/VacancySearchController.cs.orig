@@ -1,16 +1,26 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System.Web.Mvc;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+<<<<<<< HEAD
+    using CuttingEdge.Conditions;
     using Microsoft.Ajax.Utilities;
     using SFA.Apprenticeships.Web.Candidate.Providers;
+=======
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+>>>>>>> Added vacancy search view model
 
     public class VacancySearchController : Controller
     {
         private ISearchProvider _searchProvider;
 
+        public VacancySearchController()
+        {
+        }
+
         public VacancySearchController(ISearchProvider searchProvider)
         {
+            Condition.Requires(searchProvider, "searchProvider").IsNotNull();
+
             _searchProvider = searchProvider;
         }
 

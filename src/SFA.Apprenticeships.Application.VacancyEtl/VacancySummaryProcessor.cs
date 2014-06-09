@@ -84,8 +84,8 @@ namespace SFA.Apprenticeships.Application.VacancyEtl
         {
             try
             {
-                var vacancies = _vacancyProvider.GetVacancySummary(vacancySummaryPage.VacancyLocation, vacancySummaryPage.PageNumber).ToList();
                 Thread.Sleep(1000);
+                var vacancies = _vacancyProvider.GetVacancySummary(vacancySummaryPage.VacancyLocation, vacancySummaryPage.PageNumber).ToList();
                 var vacanciesExtended = _mapper.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(vacancies);
 
                 Parallel.ForEach(

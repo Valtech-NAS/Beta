@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
+    using System.ServiceModel;
     using System.Threading;
     using System.Xml.Serialization;
     using Microsoft.WindowsAzure.Storage.Queue;
@@ -43,15 +44,37 @@
             Console.WriteLine("Enter any key to quit");
             Console.WriteLine("---------------------------------------------------------------");
 
-            var azureClient = ObjectFactory.GetInstance<IAzureCloudClient>();
-            var queueItems = GetAzureScheduledMessagesQueue(1);
-            azureClient.AddMessage("vacancysearchdatacontrol", queueItems.Dequeue());
+            if (args != null && args.Length > 0)
+            {
+                //Any args means 
+                var azureClient = ObjectFactory.GetInstance<IAzureCloudClient>();
+                var queueItems = GetAzureScheduledMessagesQueue(1);
+                azureClient.AddMessage("vacancysearchdatacontrol", queueItems.Dequeue());
+            }
 
             while (!Console.KeyAvailable)
             {
-                var task = vacancySchedulerConsumer.CheckScheduleQueue();
-                task.Wait();
-                Thread.Sleep(5 * 60 * 1000);
+                try
+                {
+                    var task = vacancySchedulerConsumer.CheckScheduleQueue();
+                    task.Wait();
+                }
+                catch (CommunicationException ce)
+                {
+                    Console.WriteLine("CommunicationException returned from legacy web services, error: {0}", ce.Message);
+                }
+                catch (TimeoutException te)
+                {
+                    Console.WriteLine("TimeoutException returned from legacy web services, error: {0}", te.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Unknown Exception returned from VacancySchedulerConsumer", ex);
+                }
+                finally
+                {
+                    Thread.Sleep(5 * 60 * 1000);
+                }
             }
         }
 
