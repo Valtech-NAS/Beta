@@ -163,3 +163,5 @@ $RECYCLE.BIN/
 
 #wsdl directory
 [Ww]sdl
+
+*.dgml
