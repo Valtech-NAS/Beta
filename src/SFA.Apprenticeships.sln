@@ -114,8 +114,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.LocationLookup.IntegrationTests", "SFA.Apprenticeships.Infrastructure.LocationLookup.IntegrationTests\SFA.Apprenticeships.Infrastructure.LocationLookup.IntegrationTests.csproj", "{134A03E5-1F77-4644-B8E6-43BBF5EF3918}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Candidate.UnitTests", "SFA.Apprenticeships.Web.Candidate.UnitTests\SFA.Apprenticeships.Web.Candidate.UnitTests.csproj", "{80129D31-FBAC-42B0-9A96-251C71E86BC7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -290,10 +288,6 @@ Global
 		{134A03E5-1F77-4644-B8E6-43BBF5EF3918}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{134A03E5-1F77-4644-B8E6-43BBF5EF3918}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{134A03E5-1F77-4644-B8E6-43BBF5EF3918}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80129D31-FBAC-42B0-9A96-251C71E86BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80129D31-FBAC-42B0-9A96-251C71E86BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80129D31-FBAC-42B0-9A96-251C71E86BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80129D31-FBAC-42B0-9A96-251C71E86BC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -346,6 +340,5 @@ Global
 		{C9034A07-3292-40B8-BD96-C74BB458AE51} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
 		{1C6F7710-0AE6-4D9F-BC73-0FAA9C9C60CA} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{134A03E5-1F77-4644-B8E6-43BBF5EF3918} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
-		{80129D31-FBAC-42B0-9A96-251C71E86BC7} = {8B52C549-CC01-4411-B801-E09FDCCD54C8}
 	EndGlobalSection
 EndGlobal
