@@ -13,11 +13,12 @@
             For<IPostcodeLookupProvider>()
                 .Use<PostcodeService>()
                 .Ctor<string>("baseUrl")
-                .Is(PostcodeServiceEndpointAppSetting, x =>
-                {
-                    var cm = x.GetInstance<IConfigurationManager>();
-                    return cm.GetAppSetting(PostcodeServiceEndpointAppSetting);
-                });
+                .Is(PostcodeServiceEndpointAppSetting,
+                    x =>
+                    {
+                        var cm = x.GetInstance<IConfigurationManager>();
+                        return cm.GetAppSetting(PostcodeServiceEndpointAppSetting);
+                    });
 
         }
     }

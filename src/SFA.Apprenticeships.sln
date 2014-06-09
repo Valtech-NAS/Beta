@@ -114,10 +114,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.LocationLookup.IntegrationTests", "SFA.Apprenticeships.Infrastructure.LocationLookup.IntegrationTests\SFA.Apprenticeships.Infrastructure.LocationLookup.IntegrationTests.csproj", "{134A03E5-1F77-4644-B8E6-43BBF5EF3918}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{9AB915F9-719D-4601-8132-5414ED44466B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Domain.Entities.UnitTests", "SFA.Apprenticeships.Domain.Entities.UnitTests\SFA.Apprenticeships.Domain.Entities.UnitTests.csproj", "{4741B9B0-C694-4D34-8D30-D5B82BC87724}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -292,10 +288,6 @@ Global
 		{134A03E5-1F77-4644-B8E6-43BBF5EF3918}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{134A03E5-1F77-4644-B8E6-43BBF5EF3918}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{134A03E5-1F77-4644-B8E6-43BBF5EF3918}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4741B9B0-C694-4D34-8D30-D5B82BC87724}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4741B9B0-C694-4D34-8D30-D5B82BC87724}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4741B9B0-C694-4D34-8D30-D5B82BC87724}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4741B9B0-C694-4D34-8D30-D5B82BC87724}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -348,7 +340,5 @@ Global
 		{C9034A07-3292-40B8-BD96-C74BB458AE51} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
 		{1C6F7710-0AE6-4D9F-BC73-0FAA9C9C60CA} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{134A03E5-1F77-4644-B8E6-43BBF5EF3918} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
-		{9AB915F9-719D-4601-8132-5414ED44466B} = {EB6F2C1E-20C0-4C55-B5D9-70FBA59E5CF0}
-		{4741B9B0-C694-4D34-8D30-D5B82BC87724} = {9AB915F9-719D-4601-8132-5414ED44466B}
 	EndGlobalSection
 EndGlobal
