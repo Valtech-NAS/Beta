@@ -1,10 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System.Web.Mvc;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
-    using Microsoft.Ajax.Utilities;
     using SFA.Apprenticeships.Web.Candidate.Providers;
-    using StructureMap;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
 
     public class VacancySearchController : Controller
     {

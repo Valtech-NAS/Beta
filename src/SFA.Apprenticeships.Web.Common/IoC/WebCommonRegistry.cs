@@ -2,13 +2,12 @@
 {
     using System.Web.Http;
     using System.Web.Mvc;
+    using Application.Interfaces.ReferenceData;
     using CuttingEdge.Conditions;
+    using Infrastructure.LegacyWebServices.ReferenceData;
     using Microsoft.Practices.ServiceLocation;
     using StructureMap;
     using StructureMap.Configuration.DSL;
-    using Application.Interfaces.ReferenceData;
-    using Infrastructure.LegacyWebServices.ReferenceData;
-    using StructureMap.Configuration.DSL.Expressions;
 
     public class WebCommonRegistry : Registry
     {

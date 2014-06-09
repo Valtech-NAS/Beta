@@ -4,20 +4,17 @@
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Domain.Entities.Location;
-    using Domain.Interfaces.Logging;
     using Interfaces.Location;
 
     public class LocationSearchService : ILocationSearchService
     {
         private readonly ILocationLookupProvider _locationLookupProvider;
         private readonly IPostcodeLookupProvider _postcodeLookupProvider;
-        private readonly ILoggingService _loggingService;
 
-        public LocationSearchService(ILocationLookupProvider locationLookupProvider, IPostcodeLookupProvider postcodeLookupProvider, ILoggingService loggingService)
+        public LocationSearchService(ILocationLookupProvider locationLookupProvider, IPostcodeLookupProvider postcodeLookupProvider)
         {
             _locationLookupProvider = locationLookupProvider;
             _postcodeLookupProvider = postcodeLookupProvider;
-            _loggingService = loggingService;
         }
 
         public IEnumerable<LookupLocation> FindLocation(string placeNameOrPostcode)

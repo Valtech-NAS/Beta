@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Web.Candidate
     using SFA.Apprenticeships.Infrastructure.Common.IoC;
     using SFA.Apprenticeships.Infrastructure.Elastic.Common.IoC;
     using SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC;
+    using SFA.Apprenticeships.Infrastructure.LocationLookup.IoC;
     using SFA.Apprenticeships.Infrastructure.Postcode.IoC;
     using SFA.Apprenticeships.Infrastructure.VacancySearch.IoC;
     using SFA.Apprenticeships.Web.Candidate.IoC;
@@ -27,6 +28,7 @@ namespace SFA.Apprenticeships.Web.Candidate
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
+                x.AddRegistry<LocationLookupRegistry>();
 
                 x.AddRegistry<WebCommonRegistry>();
                 x.AddRegistry<CandidateRegistry>();
