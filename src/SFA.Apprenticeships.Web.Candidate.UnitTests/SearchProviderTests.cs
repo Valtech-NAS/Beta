@@ -36,11 +36,11 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests
                 new Location {Name = "Location1", GeoPoint = new GeoPoint {Latitute = 0.1d, Longitude = 0.2d}}
             };
 
-            _locationSearchService.Setup(x => x.FindLocation(It.IsAny<string>())).Returns(locations);
+            _locationSearchService.Setup(x => x.FindLocation("Location1")).Returns(locations);
 
             var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchProvider.Object, _mapper);
-            var test = searchProvider.FindLocation("test");
-            var result = test.FirstOrDefault(x => x.Name == "Location1");
+            var test = searchProvider.FindLocation("Location1");
+            var result = test.First();
 
             result.Should().NotBeNull();
             result.Latitude.Should().Be(0.1d);
