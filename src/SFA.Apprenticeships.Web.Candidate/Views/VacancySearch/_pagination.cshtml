@@ -1,22 +1,24 @@
 ﻿@using PagedList.Mvc
 @model SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.VacancySearchResponseViewModel
 
-@Html.PagedListPager(Model.Vacancies, page =>
+@if (Model.Total > 0)
 {
-    Model.VacancySearch.PageNumber = page;
-    return Url.Action("results", Model.VacancySearch);
-},
-    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
-        new PagedListRenderOptions
-        {
-            DisplayLinkToFirstPage = PagedListDisplayMode.Never,
-            DisplayLinkToLastPage = PagedListDisplayMode.Never,
-            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-            DisplayLinkToNextPage = PagedListDisplayMode.Always,
-            DisplayLinkToIndividualPages = false,
-            DisplayPageCountAndCurrentLocation = true,
-        },
-        new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "pagedList" }))
+    @Html.PagedListPager(Model.Vacancies, page =>
+    {
+        Model.VacancySearch.PageNumber = page;
+        return Url.Action("results", Model.VacancySearch);
+    },
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayLinkToIndividualPages = false,
+                DisplayPageCountAndCurrentLocation = true,
+            },
+            new AjaxOptions {HttpMethod = "GET", UpdateTargetId = "pagedList"}))
 
 
 @*<div class="page-navigation">
@@ -31,3 +33,4 @@
             <span class="counter">3 of 6</span>
         </a>
     </div>*@
+}

@@ -25,14 +25,17 @@
             _searchProvider = searchProvider;
         }
 
-        // GET: VacancySearch
         public ActionResult Index()
         {
             PopulateDistances();
             return View();
         }
 
-        // GET: VacancySearch/Results
+        public ActionResult Search(VacancySearchResponseViewModel searchViewModel)
+        {
+            return Results(searchViewModel.VacancySearch);
+        }
+
         public ActionResult Results(VacancySearchViewModel searchViewModel)
         {
             PopulateDistances(searchViewModel.WithinDistance);
@@ -40,16 +43,16 @@
 
             if (locations != null && locations.Any() )
             {
-                var results = _searchProvider.FindVacancies(searchViewModel.JobTitle, 
+                var results = _searchProvider.FindVacancies(searchViewModel.JobTitle,
                                                             searchViewModel.Keywords,
-                                                            locations.First(), 
-                                                            searchViewModel.PageNumber, 
+                                                            locations.First(),
+                                                            searchViewModel.PageNumber,
                                                             searchViewModel.WithinDistance);
                 results.VacancySearch = searchViewModel;
 
                 if (!this.Request.IsAjaxRequest())
                 {
-                    return View(results);
+                    return View("Results", results);
                 }
 
                 var view = this.ControllerContext.RenderPartialToString("_searchResults", results);
@@ -61,7 +64,7 @@
             vacancySearchResponseViewModel.Vacancies = new PagedList<VacancySummaryResponse>(null, 1, 10);
             vacancySearchResponseViewModel.VacancySearch = searchViewModel;
 
-            return View(vacancySearchResponseViewModel);
+            return View("Results", vacancySearchResponseViewModel);
         }
 
         [HttpPost]
@@ -95,6 +98,7 @@
                 "Name",
                 selectedValue
             );
+
             ViewBag.Distances = distances;
         }
     }
