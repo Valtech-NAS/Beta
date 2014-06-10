@@ -67,7 +67,6 @@
             return View("Results", vacancySearchResponseViewModel);
         }
 
-        [HttpPost]
         public ActionResult Location(string term)
         {
             var matches = _searchProvider.FindLocation(term);

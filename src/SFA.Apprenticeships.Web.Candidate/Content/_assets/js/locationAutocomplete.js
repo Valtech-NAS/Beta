@@ -19,7 +19,7 @@
             //var data = $("form").serialize();
             $.ajax({
                 url: settings.url,
-                type: 'POST',
+                type: 'GET',
                 data: {term: term},
                 success: function(response) {
                     tags = [];
