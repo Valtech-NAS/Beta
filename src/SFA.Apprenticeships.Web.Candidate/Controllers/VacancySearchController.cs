@@ -4,9 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using System.Web.Mvc.Html;
+    using PagedList;
     using SFA.Apprenticeships.Application.Interfaces.Vacancy;
     using SFA.Apprenticeships.Web.Candidate.Providers;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using SFA.Apprenticeships.Web.Common.Framework;
 
     public class VacancySearchController : Controller
     {
@@ -35,7 +38,7 @@
             PopulateDistances(searchViewModel.WithinDistance);
             var locations = _searchProvider.FindLocation(searchViewModel.Location);
 
-            if (locations != null && locations.Count() == 1)
+            if (locations != null && locations.Any() )
             {
                 var results = _searchProvider.FindVacancies(searchViewModel.JobTitle, 
                                                             searchViewModel.Keywords,
@@ -43,12 +46,19 @@
                                                             searchViewModel.PageNumber, 
                                                             searchViewModel.WithinDistance);
                 results.VacancySearch = searchViewModel;
-                return View(results);    
+
+                if (!this.Request.IsAjaxRequest())
+                {
+                    return View(results);
+                }
+
+                var view = this.ControllerContext.RenderPartialToString("_searchResults", results);
+                return Json(view, JsonRequestBehavior.AllowGet);
             }
 
             // Test code, to be removed
             var vacancySearchResponseViewModel = new VacancySearchResponseViewModel();
-            vacancySearchResponseViewModel.Vacancies = new List<VacancySummaryResponse>();
+            vacancySearchResponseViewModel.Vacancies = new PagedList<VacancySummaryResponse>(null, 1, 10);
             vacancySearchResponseViewModel.VacancySearch = searchViewModel;
 
             return View(vacancySearchResponseViewModel);

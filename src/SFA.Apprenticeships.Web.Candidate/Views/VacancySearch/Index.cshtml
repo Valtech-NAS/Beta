@@ -13,7 +13,7 @@
 <div class="grid-wrapper">
     <section class="grid grid-2-3">
         
-        @using(Html.BeginForm("results", "vacancysearch", FormMethod.Get)){
+        @using(Html.BeginForm("results", "vacancysearch", FormMethod.Post)){
             <div class="form-group">
                 <label for="job-title" class="form-label">Job title (optional)</label>
                 <span class="form-hint">For example, mechanical engineer</span>
@@ -60,7 +60,7 @@
 
 @section scripts
 {
-    <!-- Needs sorting with Henry -->
+    <!-- TODO::Needs sorting with Henry -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 

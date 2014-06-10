@@ -24,7 +24,7 @@
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(Elastic.Common.Entities.VacancySummary));
 
             var search = client.Search<VacancySummaryResponse>(s =>
-            {
+            {              
                 s.Index(indexName);
                 s.Type(documentTypeName);
                 s.Skip((pageNumber - 1) * 10);
@@ -67,7 +67,7 @@
                             search.Hits.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture))
                                 .Sorts.First()
                                 .ToString()));
-            var results = new SearchResults<VacancySummaryResponse>(search.Total, responses);
+            var results = new SearchResults<VacancySummaryResponse>(search.Total, pageNumber, responses);
             return results;
         }
     }

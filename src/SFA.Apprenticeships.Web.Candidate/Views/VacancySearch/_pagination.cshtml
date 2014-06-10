@@ -1,0 +1,33 @@
+﻿@using PagedList.Mvc
+@model SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.VacancySearchResponseViewModel
+
+@Html.PagedListPager(Model.Vacancies, page =>
+{
+    Model.VacancySearch.PageNumber = page;
+    return Url.Action("results", Model.VacancySearch);
+},
+    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+        new PagedListRenderOptions
+        {
+            DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+            DisplayLinkToLastPage = PagedListDisplayMode.Never,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+            DisplayLinkToIndividualPages = false,
+            DisplayPageCountAndCurrentLocation = true,
+        },
+        new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "pagedList" }))
+
+
+@*<div class="page-navigation">
+        <a href="#" class="page-navigation__btn previous">
+            <i class="arrow-button"></i>
+            <span class="description">Previous <span class="hide-mob">page</span></span>
+            <span class="counter">1 of 6</span>
+        </a>
+        <a href="#" class="page-navigation__btn next">
+            <i class="arrow-button"></i>
+            <span class="description">Next <span class="hide-mob">page</span></span>
+            <span class="counter">3 of 6</span>
+        </a>
+    </div>*@
