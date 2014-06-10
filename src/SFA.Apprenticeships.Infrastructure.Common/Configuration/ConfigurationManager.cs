@@ -19,6 +19,8 @@
                 ? System.Configuration.ConfigurationManager.AppSettings[ConfigurationFileAppSetting]
                 : System.Configuration.ConfigurationManager.AppSettings[configFileAppSettingKey];
 
+            configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFile);
+
             if (!File.Exists(configFile))
             {
                 throw new ConfigurationErrorsException(string.Format((string) "Configuration file: {0} does not exist", (object) configFile));

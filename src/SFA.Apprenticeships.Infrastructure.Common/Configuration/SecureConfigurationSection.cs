@@ -15,7 +15,6 @@ namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
         {
             // Needs the file (path and name) for the private configuration settings file to be set in web.config.
             _configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting]);
-
             _configSectionName = configSectionName;
         }
 
