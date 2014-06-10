@@ -202,6 +202,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Lookups.xml" />
+    <Content Include="Configs\debug.settings.config" />
+    <Content Include="Configs\release.settings.config" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -417,6 +419,12 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <Import Project="..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>REM Copy from local dev machines locations
+if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\Shared\$(ConfigurationName)\$(ConfigurationName).settings.config $(ProjectDir)Configs
+REM Copy from build server locations
+if exist $(ProjectDir)..\..\Configuration xcopy /C /Y $(ProjectDir)..\..\Configuration\Applications\Shared\$(ConfigurationName)\$(ConfigurationName).settings.config $(ProjectDir)Configs</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
+﻿using System;
+using System.IO;
+
+namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
 {
     using System.Configuration;
 
@@ -11,7 +14,8 @@
         protected SecureConfigurationSection(string configSectionName)
         {
             // Needs the file (path and name) for the private configuration settings file to be set in web.config.
-            _configFile = System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
+            _configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting]);
+
             _configSectionName = configSectionName;
         }
 
