@@ -50,78 +50,33 @@
             </div>
         </fieldset>
         <ul class="search-results">
-            <li class="search-results__item section-border">
-                <div class="hgroup-medium">
-                    <h3 class="heading-medium"><a href="search-details.html">Mechanical Engineer – Precision Toolmaker</a></h3>
-                    <h4 class="subtitle">R G Engineering</h4>
-                </div>
-                <p class="search-shortdesc">
-                    An exciting opportunity has arisen for the right candidate to gain an engineering qualification through an apprenticeship. If you have got drive and want to learn a highly skilled trade then look no further.
-                </p>
-                <p>
-                    <a href="search-details.html">Read more</a>
-                </p>
-                <div class="inl-block-wrapper">
-                    <ul class="list-text btm-align width-all-2-3">
-                        <li><b>Distance:</b> 5.2 miles</li>
-                        <li><b>Closing date:</b> 30 Jun 14</li>
-                    </ul>
-                    <div class="btm-align width-all-1-3">
-                        <div class="search-save">
-                            <input type="checkbox" class="save-trigger" id="save-trigger1">
-                            <label for="save-trigger1">Save</label>
+            @foreach (var vacancy in Model.Vacancies)
+            {
+                <li class="search-results__item section-border">
+                    <div class="hgroup-medium">
+                        <h3 class="heading-medium"><a href="#">@vacancy.Title</a></h3>
+                        <h4 class="subtitle">@vacancy.EmployerName</h4>
+                    </div>
+                    <p class="search-shortdesc">
+                        @vacancy.Description
+                    </p>
+                    <p>
+                        <a href="#">Read more</a>
+                    </p>
+                    <div class="inl-block-wrapper">
+                        <ul class="list-text btm-align width-all-2-3">
+                            <li><b>Distance:</b> @vacancy.DistanceAsString miles</li>
+                            <li><b>Closing date:</b> @vacancy.ClosingDate</li>
+                        </ul>
+                        <div class="btm-align width-all-1-3">
+                            <div class="search-save">
+                                <input type="checkbox" class="save-trigger" id="save-trigger1">
+                                <label for="save-trigger1">Save</label>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </li>
-            <li class="search-results__item section-border">
-                <div class="hgroup-medium">
-                    <h3 class="heading-medium"><a href="#">Advanced Apprenticeship in Electro-technical Installation/Maintenance</a></h3>
-                    <h4 class="subtitle">Johnson Controls Ltd</h4>
-                </div>
-                <p class="search-shortdesc">
-                    Electro-technical Engineers are responsible for the installation, maintenance, and the diagnosis and repair of faults, for a variety of Electrical Services and Equipment in commercial, industrial and retail buildings.
-                </p>
-                <p>
-                    <a href="#">Read more</a>
-                </p>
-                <div class="inl-block-wrapper">
-                    <ul class="list-text btm-align width-all-2-3">
-                        <li><b>Distance:</b> 5.2 miles</li>
-                        <li><b>Closing date:</b> 14 Jun 14</li>
-                    </ul>
-                    <div class="btm-align width-all-1-3">
-                        <div class="search-save">
-                            <input type="checkbox" class="save-trigger" id="save-trigger2">
-                            <label for="save-trigger2">Save</label>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="search-results__item section-border">
-                <div class="hgroup-medium">
-                    <h3 class="heading-medium"><a href="#">Engineering Compressed Air Service Apprentice</a></h3>
-                    <h4 class="subtitle">Direct Air &amp; Pipe Work Ltd</h4>
-                </div>
-                <p class="search-shortdesc">
-                    Training to become a Compressed Air Service Engineer Once qualified working at Customers Premises around the Midlands and UK with company vehicle carrying out routine servicing/repairs of compressed air equipment.
-                </p>
-                <p>
-                    <a href="#">Read more</a>
-                </p>
-                <div class="inl-block-wrapper">
-                    <ul class="list-text btm-align width-all-2-3">
-                        <li><b>Distance:</b> 5.2 miles</li>
-                        <li><b>Closing date:</b> 18 Jun 14</li>
-                    </ul>
-                    <div class="btm-align width-all-1-3">
-                        <div class="search-save">
-                            <input type="checkbox" class="save-trigger" id="save-trigger3">
-                            <label for="save-trigger3">Save</label>
-                        </div>
-                    </div>
-                </div>
-            </li>
+                </li>
+            }
         </ul>
         <div class="page-navigation">
             <a href="#" class="page-navigation__btn previous">

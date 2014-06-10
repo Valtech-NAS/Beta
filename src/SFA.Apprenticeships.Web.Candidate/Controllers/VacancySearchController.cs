@@ -4,13 +4,14 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
     using SFA.Apprenticeships.Domain.Entities.Vacancy;
     using SFA.Apprenticeships.Web.Candidate.Providers;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
 
     public class VacancySearchController : Controller
     {
-        private ISearchProvider _searchProvider;
+        private readonly ISearchProvider _searchProvider;
 
         public VacancySearchController(ISearchProvider searchProvider)
         {
@@ -32,14 +33,18 @@
 
             if (locations != null && locations.Count() == 1)
             {
-                var results = _searchProvider.FindVacancies(locations.First(), searchViewModel.WithinDistance);
+                var results = _searchProvider.FindVacancies(searchViewModel.JobTitle, 
+                                                            searchViewModel.Keywords,
+                                                            locations.First(), 
+                                                            searchViewModel.PageNumber, 
+                                                            searchViewModel.WithinDistance);
                 results.VacancySearch = searchViewModel;
                 return View(results);    
             }
 
             // Test code, to be removed
             var vacancySearchResponseViewModel = new VacancySearchResponseViewModel();
-            vacancySearchResponseViewModel.Vacancies = new List<VacancySummary>();
+            vacancySearchResponseViewModel.Vacancies = new List<VacancySummaryResponse>();
             vacancySearchResponseViewModel.VacancySearch = searchViewModel;
 
             return View(vacancySearchResponseViewModel);
