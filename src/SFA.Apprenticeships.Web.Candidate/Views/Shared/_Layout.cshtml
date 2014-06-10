@@ -10,11 +10,10 @@
     <title>@ViewBag.Title</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!--[if gt IE 8]><!-->@Styles.Render("~/content/css/bundle")<!--<![endif]-->
-    <!--[if lte IE 8]><!-->@Styles.Render("~/content/css/bundle-ie8")<!--<![endif]-->
-    <!--[if lte IE 8]><!-->@Styles.Render("~/content/css/fonts-ie8")<!--<![endif]-->
-    <!--[if gte IE 9]><!-->@Styles.Render("~/content/css/fonts")<!--<![endif]-->
+    <!--[if gt IE 8]><!-->@Styles.Render("~/Content/_assets/css/main.css")<!--<![endif]-->
+    <!--[if lte IE 8]>@Styles.Render("~/Content/_assets/css/main-ie8.css")<![endif]-->
+    <!--[if lte IE 8]>@Styles.Render("~/Content/_assets/css/fonts-ie8.css")<![endif]-->
+    <!--[if gte IE 9]><!-->@Styles.Render("~/Content/_assets/css/fonts.css")<!--<![endif]-->
     <link rel="shortcut icon" href="@Url.Content("~/Content/_assets/img/favicon.ico")" type="image/x-icon">
     
     <script>
