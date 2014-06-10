@@ -3,44 +3,21 @@
     using FluentAssertions;
     using Nest;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
     using SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.IoC;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Services;
-    using SFA.Apprenticeships.Infrastructure.VacancyIndexer.IoC;
+    using SFA.Apprenticeships.Infrastructure.VacancyIndexer.Services;
     using StructureMap;
 
     [TestFixture]
     public class IndexingInitialisationTests
     {
         private ElasticClient _elasticClient;
-        private ElasticsearchConfiguration _elasticsearchConfiguration = ElasticsearchConfiguration.Instance;
+        private readonly ElasticsearchConfiguration _elasticsearchConfiguration = ElasticsearchConfiguration.Instance;
 
         [SetUp]
         public void SetUp()
         {
-            ObjectFactory.Initialize(x =>
-            {
-                x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry<VacancyIndexerRegistry>();
-            });
-
             var settings = new ConnectionSettings(_elasticsearchConfiguration.DefaultHost);
             _elasticClient = new ElasticClient(settings);
-
-            foreach (IElasticsearchIndexConfiguration elasticsearchIndexConfiguration in _elasticsearchConfiguration.Indexes)
-            {
-                _elasticClient.DeleteIndex(elasticsearchIndexConfiguration.Name);
-            }
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            foreach (IElasticsearchIndexConfiguration elasticsearchIndexConfiguration in _elasticsearchConfiguration.Indexes)
-            {
-                _elasticClient.DeleteIndex(elasticsearchIndexConfiguration.Name);
-            }            
         }
 
         [Test]
@@ -51,7 +28,7 @@
                 _elasticClient.IndexExists(index.Name).Exists.Should().BeFalse();
             }
             
-            var vis = ObjectFactory.GetInstance<IIndexerService<VacancySummaryUpdate>>();
+            var vis = ObjectFactory.GetInstance<IVacancyIndexerService>();
 
             foreach (var index in _elasticsearchConfiguration.Indexes)
             {
