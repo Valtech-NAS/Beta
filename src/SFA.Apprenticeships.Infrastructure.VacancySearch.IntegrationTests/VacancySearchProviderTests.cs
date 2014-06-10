@@ -31,7 +31,7 @@
                 }
             };
 
-            var vacs = vsp.FindVacancies(location, 10);
+            //var vacs = vsp.FindVacancies(location, 10);
         }
 
 

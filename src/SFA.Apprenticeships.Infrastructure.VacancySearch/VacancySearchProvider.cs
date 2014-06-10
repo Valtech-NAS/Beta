@@ -23,7 +23,7 @@
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (Elastic.Common.Entities.VacancySummary));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(Elastic.Common.Entities.VacancySummary));
 
-            var query = client.Search<VacancySummaryResponse>(s =>
+            var search = client.Search<VacancySummaryResponse>(s =>
             {
                 s.Index(indexName);
                 s.Type(documentTypeName);
@@ -40,19 +40,34 @@
                     .Location(location.GeoPoint.Latitute, location.GeoPoint.Longitude)
                     .Distance(searchRadius, GeoUnit.mi)));
 
+                s.Query(q =>
+                {
+                    BaseQuery query = null;
+                    if (!string.IsNullOrEmpty(jobTitle))
+                    {
+                        query &= q.QueryString(m => m.OnField(f => f.Title).Query(jobTitle));
+                    }
+                    if (!string.IsNullOrEmpty(keywords))
+                    {
+                        query &= q.QueryString(m => m.OnField(f => f.Description).Query(keywords));
+
+                    }
+                    return query;
+                });
+
                 return s;
             });
 
-            var responses = query.Documents;
+            var responses = search.Documents;
             responses.ToList()
                 .ForEach(
                     r =>
                         r.Distance =
                         double.Parse(
-                            query.Hits.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture))
+                            search.Hits.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture))
                                 .Sorts.First()
                                 .ToString()));
-            var results = new SearchResults<VacancySummaryResponse>(query.Total, responses);
+            var results = new SearchResults<VacancySummaryResponse>(search.Total, responses);
             return results;
         }
     }
