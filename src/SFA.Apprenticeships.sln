@@ -120,6 +120,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{50739E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Domain.Entities.UnitTests", "SFA.Apprenticeships.Domain.Entities.UnitTests\SFA.Apprenticeships.Domain.Entities.UnitTests.csproj", "{4741B9B0-C694-4D34-8D30-D5B82BC87724}"
 EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Web.Candidate.Azure", "SFA.Apprenticeships.Web.Candidate.Azure\SFA.Apprenticeships.Web.Candidate.Azure.ccproj", "{AF84EB1F-B9E9-4269-B2B4-452A6D92897A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -302,6 +304,10 @@ Global
 		{4741B9B0-C694-4D34-8D30-D5B82BC87724}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4741B9B0-C694-4D34-8D30-D5B82BC87724}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4741B9B0-C694-4D34-8D30-D5B82BC87724}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF84EB1F-B9E9-4269-B2B4-452A6D92897A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF84EB1F-B9E9-4269-B2B4-452A6D92897A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF84EB1F-B9E9-4269-B2B4-452A6D92897A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF84EB1F-B9E9-4269-B2B4-452A6D92897A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -357,5 +363,6 @@ Global
 		{80129D31-FBAC-42B0-9A96-251C71E86BC7} = {8B52C549-CC01-4411-B801-E09FDCCD54C8}
 		{50739E9C-CFCF-4A42-95B9-443D46850B77} = {EB6F2C1E-20C0-4C55-B5D9-70FBA59E5CF0}
 		{4741B9B0-C694-4D34-8D30-D5B82BC87724} = {50739E9C-CFCF-4A42-95B9-443D46850B77}
+		{AF84EB1F-B9E9-4269-B2B4-452A6D92897A} = {22CE73E4-F469-434C-AC5D-D926EBBAC3D5}
 	EndGlobalSection
 EndGlobal
