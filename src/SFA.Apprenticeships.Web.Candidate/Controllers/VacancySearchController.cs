@@ -57,7 +57,7 @@
 
             if (this.Request.IsAjaxRequest())
             {
-                return Json(matches, JsonRequestBehavior.AllowGet);
+                return Json(matches.Take(25), JsonRequestBehavior.AllowGet);
             }
 
             throw new NotImplementedException("Non-js not yet implemented!");

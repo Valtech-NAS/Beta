@@ -1,4 +1,5 @@
-﻿@model dynamic
+﻿@using Newtonsoft.Json
+@model SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.VacancySearchViewModel
 
 @{
     ViewBag.Title = "SFA Apprenticeships";
@@ -33,11 +34,9 @@
                 @Html.DropDownList("withindistance", (SelectList)ViewBag.Distances, new { id = "loc-within" })
             </div>
             <div class="form-group">
-                <button>Search</button>
+              
                 <a class="button" href="search-results.html">Search</a>
-                <p>
                     <a class="button-link" href="#">Clear</a>
-                </p>
             </div>
 
         }
@@ -60,8 +59,23 @@
     </aside>
 </div>
 
-<script>
-        function GetLocationResults() {
+@section scripts
+{
+    <!-- Needs sorting with Henry -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <script>
+        var tags = [];
+        $("#location").autocomplete({
+            delay: 300,
+            minLength: 3,
+            source: function (request, response) {
+                getLocationResults(response);
+            }
+        });
+
+        function getLocationResults(callback) {
             jQuery.support.cors = true;
 
             var data = $("form").serialize();
@@ -70,24 +84,22 @@
                 url: '@Url.Action("location", "vacancysearch")',
                 type: 'POST',
                 data: data,
-                success: function (response) {
-
-                    var rs = response;
+                success: function(response) {
+                    tags = [];
+                    if (response != null) {
+                        response.forEach(function(item) {
+                            tags.push(item.Name);
+                        });
+                    }
+                    callback(tags);
                 },
                 error: function(error) {
-                    var err = error;
+                    tags = ['invalid'];
+                    callback(tags);
                 }
             });
 
             return true;
         };
-
-        $(document).ready(function () {
-            $("#location").on("keyup", function() {
-                if (this.value != null && this.value.length > 2) {
-                    GetLocationResults();
-                }
-                return true;
-            });
-        });
-</script>
+    </script>
+}

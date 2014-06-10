@@ -3,7 +3,8 @@
     using System;
     using Nest;
 
-    [ElasticType(Name = "location")]
+    //[ElasticType(Name = "location")]
+    [ElasticType(Name = "locationdatas")]
     public class LocationLookup
     {
         [ElasticProperty(Name = "name", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.analyzed)]
