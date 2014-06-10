@@ -13,8 +13,14 @@ namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
 
         protected SecureConfigurationSection(string configSectionName)
         {
-            // Needs the file (path and name) for the private configuration settings file to be set in web.config.
-            _configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting]);
+            //If full path specified, i.e. in unit/integration tests
+            _configFile = System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
+
+            if (!File.Exists(_configFile))
+            {
+                //Relative path specified, i.e. in Web App for Azure deployment
+                _configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _configFile);
+            }
             _configSectionName = configSectionName;
         }
 

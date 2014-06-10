@@ -19,7 +19,10 @@
                 ? System.Configuration.ConfigurationManager.AppSettings[ConfigurationFileAppSetting]
                 : System.Configuration.ConfigurationManager.AppSettings[configFileAppSettingKey];
 
-            configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFile);
+            if (!File.Exists(configFile))
+            {
+                configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFile);
+            }
 
             if (!File.Exists(configFile))
             {
