@@ -20,17 +20,17 @@ namespace SFA.Apprenticeships.Web.Candidate
                 "~/Content/_assets/js/vendor/modernizr-custom.js"));
 
             //todo: we could/should aggregate some of these "single file" bundles
-            bundles.Add(new Bundle("~/content/css/bundle").Include(
-                "~/Content/_assets/css/main.css"));
+            //bundles.Add(new Bundle("~/content/css/bundle").Include(
+            //    "~/Content/_assets/css/main.css"));
 
-            bundles.Add(new Bundle("~/content/css/fonts").Include(
-                "~/Content/_assets/css/fonts.css"));
+            //bundles.Add(new Bundle("~/content/css/fonts").Include(
+            //    "~/Content/_assets/css/fonts.css"));
 
-            bundles.Add(new Bundle("~/content/css/bundle-ie8").Include(
-                "~/Content/_assets/css/main-ie8.css"));
+            //bundles.Add(new Bundle("~/content/css/bundle-ie8").Include(
+            //    "~/Content/_assets/css/main-ie8.css"));
 
-            bundles.Add(new Bundle("~/content/css/fonts-ie8").Include(
-                "~/Content/_assets/css/fonts-ie8.css"));
+            //bundles.Add(new Bundle("~/content/css/fonts-ie8").Include(
+            //    "~/Content/_assets/css/fonts-ie8.css"));
         }
     }
 }

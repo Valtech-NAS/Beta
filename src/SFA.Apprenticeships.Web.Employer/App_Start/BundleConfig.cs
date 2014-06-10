@@ -19,17 +19,17 @@ namespace SFA.Apprenticeships.Web.Employer
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                 "~/Content/_assets/js/vendor/modernizr-custom.js"));
 
-            bundles.Add(new Bundle("~/content/css/bundle").Include(
-                "~/Content/_assets/css/main.css"));
+            //bundles.Add(new Bundle("~/content/css/bundle").Include(
+            //    "~/Content/_assets/css/main.css"));
 
-            bundles.Add(new Bundle("~/content/css/fonts").Include(
-                "~/Content/_assets/css/fonts.css"));
+            //bundles.Add(new Bundle("~/content/css/fonts").Include(
+            //    "~/Content/_assets/css/fonts.css"));
 
-            bundles.Add(new Bundle("~/content/css/bundle-ie8").Include(
-                "~/Content/_assets/css/main-ie8.css"));
+            //bundles.Add(new Bundle("~/content/css/bundle-ie8").Include(
+            //    "~/Content/_assets/css/main-ie8.css"));
 
-            bundles.Add(new Bundle("~/content/css/fonts-ie8").Include(
-                "~/Content/_assets/css/fonts-ie8.css"));
+            //bundles.Add(new Bundle("~/content/css/fonts-ie8").Include(
+            //    "~/Content/_assets/css/fonts-ie8.css"));
         }
     }
 }
