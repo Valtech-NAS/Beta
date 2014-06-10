@@ -106,6 +106,7 @@ tools/*/packages/*
 csx
 *.build.csdef
 *.cscfg
+*.settings.config
 
 # Windows Store app package directory
 AppPackages/
