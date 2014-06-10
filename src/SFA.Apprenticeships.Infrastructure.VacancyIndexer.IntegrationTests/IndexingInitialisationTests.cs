@@ -25,16 +25,22 @@
         {
             foreach (var index in _elasticsearchConfiguration.Indexes)
             {
-                _elasticClient.IndexExists(index.Name).Exists.Should().BeFalse();
+                if (index.Name.EndsWith("_integration_test"))
+                {
+                    _elasticClient.IndexExists(index.Name).Exists.Should().BeFalse();
+                }
             }
             
             var vis = ObjectFactory.GetInstance<IVacancyIndexerService>();
 
             foreach (var index in _elasticsearchConfiguration.Indexes)
             {
-                _elasticClient.IndexExists(index.Name).Exists.Should().BeTrue();
-                var mapping = _elasticClient.GetMapping(index.MappingType, index.Name);
-                mapping.Should().NotBeNull();
+                if (index.Name.EndsWith("_integration_test"))
+                {
+                    _elasticClient.IndexExists(index.Name).Exists.Should().BeTrue();
+                    var mapping = _elasticClient.GetMapping(index.MappingType, index.Name);
+                    mapping.Should().NotBeNull();
+                }
             }
         }
     }
