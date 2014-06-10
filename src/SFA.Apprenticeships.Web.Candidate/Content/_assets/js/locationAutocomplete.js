@@ -2,7 +2,7 @@
 (function ($) {
     $.fn.locationMatch = function (options) {
 
-        var settings = $.extend({delay: 300, minLength: 3}, options);
+        var settings = $.extend({ delay: 300, minLength: 3, maxListSize: 25, url: '' }, options);
         var tags = [];
 
         this.autocomplete({
@@ -24,8 +24,13 @@
                 success: function(response) {
                     tags = [];
                     if (response != null) {
-                        response.forEach(function(item) {
-                            tags.push(item.Name);
+                        var i = 0;
+                        response.forEach(function (item) {
+                            if (i++ < settings.maxListSize) {
+                                tags.push(item.Name);
+                            } else {
+                                return;
+                            }
                         });
                     }
                     callback(tags);

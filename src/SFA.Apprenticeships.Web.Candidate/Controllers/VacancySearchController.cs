@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Web.Mvc;
     using SFA.Apprenticeships.Application.Interfaces.Vacancy;
-    using SFA.Apprenticeships.Domain.Entities.Vacancy;
     using SFA.Apprenticeships.Web.Candidate.Providers;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
 
@@ -14,6 +13,8 @@
         private readonly ISearchProvider _searchProvider;
 
         // TODO::needs to be config item?
+        // Note::there is also a client side setting that limits the list on client side
+        // This value limits data set to the client.
         private const int LocationResultCount = 25;
 
         public VacancySearchController(ISearchProvider searchProvider)
