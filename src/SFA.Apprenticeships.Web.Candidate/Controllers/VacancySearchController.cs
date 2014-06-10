@@ -13,6 +13,9 @@
     {
         private readonly ISearchProvider _searchProvider;
 
+        // TODO::needs to be config item?
+        private const int LocationResultCount = 25;
+
         public VacancySearchController(ISearchProvider searchProvider)
         {
             _searchProvider = searchProvider;
@@ -51,13 +54,13 @@
         }
 
         [HttpPost]
-        public ActionResult Location(VacancySearchViewModel locationViewModel)
+        public ActionResult Location(string term)
         {
-            var matches = _searchProvider.FindLocation(locationViewModel.Location);
+            var matches = _searchProvider.FindLocation(term);
 
             if (this.Request.IsAjaxRequest())
             {
-                return Json(matches.Take(25), JsonRequestBehavior.AllowGet);
+                return Json(matches.Take(LocationResultCount), JsonRequestBehavior.AllowGet);
             }
 
             throw new NotImplementedException("Non-js not yet implemented!");

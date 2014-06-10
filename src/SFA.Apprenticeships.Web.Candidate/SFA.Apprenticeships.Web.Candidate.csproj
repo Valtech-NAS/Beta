@@ -177,6 +177,7 @@
     <None Include="Microsoft.WindowsAzure.Caching\PerformanceCounters.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Content\_assets\js\locationAutocomplete.js" />
     <Content Include="packages.config" />
     <Content Include="Content\_assets\fonts\NTA-Bold-20130221.eot" />
     <Content Include="Content\_assets\fonts\NTA-Bold-20130221.woff" />

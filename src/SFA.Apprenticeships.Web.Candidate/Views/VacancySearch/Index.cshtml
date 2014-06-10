@@ -65,41 +65,8 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
+    <script src="~/Content/_assets/js/locationAutocomplete.js"></script>      
     <script>
-        var tags = [];
-        $("#location").autocomplete({
-            delay: 300,
-            minLength: 3,
-            source: function (request, response) {
-                getLocationResults(response);
-            }
-        });
-
-        function getLocationResults(callback) {
-            jQuery.support.cors = true;
-
-            var data = $("form").serialize();
-
-            $.ajax({
-                url: '@Url.Action("location", "vacancysearch")',
-                type: 'POST',
-                data: data,
-                success: function(response) {
-                    tags = [];
-                    if (response != null) {
-                        response.forEach(function(item) {
-                            tags.push(item.Name);
-                        });
-                    }
-                    callback(tags);
-                },
-                error: function(error) {
-                    tags = ['invalid'];
-                    callback(tags);
-                }
-            });
-
-            return true;
-        };
+        $("#location").locationMatch({ url: '@Url.Action("location", "vacancysearch")' });
     </script>
 }
