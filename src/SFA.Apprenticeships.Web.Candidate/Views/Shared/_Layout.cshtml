@@ -20,8 +20,7 @@
         var html = document.documentElement;
         html.className += " js-enabled";
     </script>
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/scripts")
+    @Scripts.Render("~/Content/_assets/js/vendor/modernizr-custom.js")
 
 </head>
 <body>
@@ -70,7 +69,7 @@
     </footer>
     
     <!-- Placed at the end of the document so the pages load faster -->
-    @Scripts.Render("~/bundles/scripts")
+    @Scripts.Render("~/Content/_assets/js/scripts.min.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>
