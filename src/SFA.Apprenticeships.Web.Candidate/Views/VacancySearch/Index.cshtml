@@ -13,25 +13,27 @@
 <div class="grid-wrapper">
     <section class="grid grid-2-3">
         
-        @using(Html.BeginForm("results", "vacancysearch", FormMethod.Post)){
+        @using(Html.BeginForm("results", "vacancysearch", FormMethod.Get)){
             <div class="form-group">
                 <label for="job-title" class="form-label">Job title (optional)</label>
                 <span class="form-hint">For example, mechanical engineer</span>
-                <input id="job-title" name="jobTitle" type="text" class="form-control">
+                @Html.TextBoxFor(m => m.JobTitle, new { @class = "form-control", @id = "job-title", @name = "JobTitle" })
             </div>
             <div class="form-group">
                 <label for="keywords" class="form-label">Keyword (optional)</label>
                 <span class="form-hint">For example, retail, customer service</span>
-                <input id="keywords" name="keywords" type="text" class="form-control">
+                @Html.TextBoxFor(m => m.Keywords, new { @class = "form-control", @id = "keywords", @name = "Keywords" })
             </div>
             <div class="form-group">
                 <label for="location" class="form-label">Apprenticeship location</label>
                 <span class="form-hint">Enter postcode, town or city</span>
-                <input id="location" name="location" type="text" class="form-control">
+                @Html.TextBoxFor(m => m.Location, new { @class = "form-control", @id = "location", @name = "Location" })
+                @Html.HiddenFor(m => m.Latitude, new { @id = "latitude", @name = "Latitude" })
+                @Html.HiddenFor(m => m.Longitude, new { @id = "longitude", @name = "Longitude" })
             </div>
             <div class="form-group">
                 <label for="loc-within" class="form-label">Within</label>
-                @Html.DropDownList("withindistance", (SelectList)ViewBag.Distances, new { id = "loc-within" })
+                @Html.DropDownListFor(m => m.WithinDistance, (SelectList)ViewBag.Distances, new { @id = "loc-within", @name = "WithinDistance" })
             </div>
             <div class="form-group">
                 <button class="button">Search</button>
@@ -60,12 +62,16 @@
 
 @section scripts
 {
-    <!-- TODO::Needs sorting with Henry -->
+        <!-- TODO::Needs sorting with Henry -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
-    <script src="~/Content/_assets/js/locationAutocomplete.js"></script>      
+    <script src="~/Content/_assets/js/nas/locationAutocomplete.js"></script>      
     <script>
-        $("#location").locationMatch({ url: '@Url.Action("location", "vacancysearch")' });
+        $("#location").locationMatch({
+            url: '@Url.Action("location", "vacancysearch")',
+            longitude: '#longitude',
+            latitude: '#latitude'
+        });
     </script>
 }

@@ -2,6 +2,19 @@
 {
     public class VacancySearchViewModel
     {
+        public VacancySearchViewModel() { }
+
+        public VacancySearchViewModel(VacancySearchViewModel viewModel)
+        {
+            JobTitle = viewModel.JobTitle;
+            Keywords = viewModel.Keywords;
+            Location = viewModel.Location;
+            Longitude = viewModel.Longitude;
+            Latitude = viewModel.Latitude;
+            WithinDistance = viewModel.WithinDistance;
+            PageNumber = viewModel.PageNumber;
+        }
+
         private int _pageNumber = 1;
 
         public string JobTitle { get; set; }
@@ -9,6 +22,8 @@
         public string Keywords { get; set; }
 
         public string Location { get; set; }
+        public double? Longitude { get; set; }
+        public double? Latitude { get; set; }
 
         public int WithinDistance { get; set; }
 

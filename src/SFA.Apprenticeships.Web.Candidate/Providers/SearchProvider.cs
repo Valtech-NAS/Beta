@@ -33,11 +33,11 @@
             return new LocationViewModel[]{};
         }
 
-        public VacancySearchResponseViewModel FindVacancies(string jobTitle, string keywords, LocationViewModel location, int pageNumber, int searchRadius)
+        public VacancySearchResponseViewModel FindVacancies(string jobTitle, string keywords, LocationViewModel location, int pageNumber, int pageSize, int searchRadius)
         {
             var searchLocation = _mapper.Map<LocationViewModel, Location>(location);
 
-            var searchResponse = _vacancySearchProvider.FindVacancies(jobTitle, keywords, searchLocation, pageNumber, searchRadius);
+            var searchResponse = _vacancySearchProvider.FindVacancies(jobTitle, keywords, searchLocation, pageNumber, pageSize, searchRadius);
 
             var vacancySearchResponseViewModel = _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(searchResponse);
 

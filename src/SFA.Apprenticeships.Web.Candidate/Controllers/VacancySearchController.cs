@@ -18,6 +18,7 @@
         // TODO::needs to be config item?
         // Note::there is also a client side setting that limits the list on client side
         // This value limits data set to the client.
+        public const int SearchPageSize = 10;
         private const int LocationResultCount = 25;
 
         public VacancySearchController(ISearchProvider searchProvider)
@@ -39,15 +40,27 @@
         public ActionResult Results(VacancySearchViewModel searchViewModel)
         {
             PopulateDistances(searchViewModel.WithinDistance);
-            var locations = _searchProvider.FindLocation(searchViewModel.Location);
 
-            if (locations != null && locations.Any() )
+            var location = new LocationViewModel(searchViewModel); 
+            if (!searchViewModel.Latitude.HasValue || !searchViewModel.Longitude.HasValue)
+            {
+                // TODO::If no lat/long need to fail validation - this route is just for testing
+                var locations = _searchProvider.FindLocation(searchViewModel.Location);
+                location = locations.FirstOrDefault();
+            }
+
+            if (location != null )
             {
                 var results = _searchProvider.FindVacancies(searchViewModel.JobTitle,
                                                             searchViewModel.Keywords,
-                                                            locations.First(),
+                                                            location,
                                                             searchViewModel.PageNumber,
+                                                            SearchPageSize,
                                                             searchViewModel.WithinDistance);
+
+                var pages = results.Pages(SearchPageSize);
+                results.PrevPage = searchViewModel.PageNumber == 1 ? 1 : searchViewModel.PageNumber - 1;
+                results.NextPage = searchViewModel.PageNumber == pages ? pages : searchViewModel.PageNumber + 1;
                 results.VacancySearch = searchViewModel;
 
                 if (!this.Request.IsAjaxRequest())
@@ -61,7 +74,7 @@
 
             // Test code, to be removed
             var vacancySearchResponseViewModel = new VacancySearchResponseViewModel();
-            vacancySearchResponseViewModel.Vacancies = new PagedList<VacancySummaryResponse>(null, 1, 10);
+            vacancySearchResponseViewModel.Vacancies = new PagedList<VacancySummaryResponse>(null, 1, SearchPageSize);
             vacancySearchResponseViewModel.VacancySearch = searchViewModel;
 
             return View("Results", vacancySearchResponseViewModel);
@@ -77,6 +90,16 @@
             }
 
             throw new NotImplementedException("Non-js not yet implemented!");
+        }
+
+        public ActionResult Previous(VacancySearchViewModel searchViewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult Next(VacancySearchViewModel searchViewModel)
+        {
+            throw new NotImplementedException();
         }
 
         private void PopulateDistances(int selectedValue = 2)

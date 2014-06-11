@@ -54,7 +54,6 @@
             }
         }
 
-        // TODO::page size needs to be configurable
         protected class SearchResultsConverter : ITypeConverter<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>
         {
             public VacancySearchResponseViewModel Convert(ResolutionContext context)
@@ -63,8 +62,8 @@
 
                 var viewModel = new VacancySearchResponseViewModel
                 {
-                    Total = source.Results.Count(),
-                    Vacancies = new PagedList<VacancySummaryResponse>(source.Results, source.PageNumber, 5),
+                    TotalHits = source.Total,
+                    Vacancies = source.Results,
                 };
 
                 return viewModel;

@@ -12,6 +12,6 @@
         /// <param name="location">location previously obtained from postcode or placename search</param>
         /// <param name="searchRadius">in miles</param>
         /// <returns>0..* matching vacancies</returns>
-        SearchResults<VacancySummaryResponse> Search(string jobTitle, string keywords, Location location, int pageNumber, int searchRadius);
+        SearchResults<VacancySummaryResponse> Search(string jobTitle, string keywords, Location location, int pageNumber, int pageSize, int searchRadius);
     }
 }

@@ -210,8 +210,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="Content\PagedList.css" />
-    <Content Include="Content\_assets\js\locationAutocomplete.js" />
-    <Content Include="Content\_assets\js\pagination.js" />
+    <Content Include="Content\_assets\js\nas\locationAutocomplete.js" />
+    <Content Include="Content\_assets\js\nas\pagination.js" />
     <Content Include="packages.config" />
     <Content Include="Content\_assets\fonts\NTA-Bold-20130221.eot" />
     <Content Include="Content\_assets\fonts\NTA-Bold-20130221.woff" />
@@ -328,9 +328,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ISearchProvider.cs" />
     <Compile Include="Providers\SearchProvider.cs" />
+    <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchResponseViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchViewModel.cs" />
-    <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Shared\EditorTemplates\" />

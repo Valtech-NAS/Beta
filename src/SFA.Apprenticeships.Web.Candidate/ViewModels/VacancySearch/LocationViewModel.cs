@@ -3,6 +3,18 @@ namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     public class LocationViewModel
     {
+        public LocationViewModel() { }
+
+        public LocationViewModel(VacancySearchViewModel model)
+        {
+            if (model != null)
+            {
+                Name = model.Location;
+                Longitude = model.Longitude.GetValueOrDefault();
+                Latitude = model.Latitude.GetValueOrDefault();
+            }
+        }
+
         public string Name { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
