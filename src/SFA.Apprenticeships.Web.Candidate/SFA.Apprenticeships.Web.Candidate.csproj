@@ -210,6 +210,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\_assets\img\arrow-left.png" />
+    <Content Include="Content\_assets\img\arrow-right.png" />
+    <Content Include="Content\_assets\img\arrow-sprite-2x.png" />
     <Content Include="Content\_assets\js\locationAutocomplete.js" />
     <Content Include="Content\_assets\js\pagination.js" />
     <Content Include="packages.config" />

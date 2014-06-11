@@ -17,7 +17,7 @@
 
 .pagination li a {
     display: block;
-    padding: 30px 10px;
+    padding: 30px 10px 60px;
     position: relative;
     text-decoration: none;
     width: 100%;
@@ -48,27 +48,28 @@
 }
 
 .pagination .PagedList-skipToPrevious a:after {
-    background-color: white;
-    background-image: url(../img/arrow-sprite.png);
+    background: white url(_assets/img/arrow-left.png) no-repeat left top;
     background-repeat: no-repeat;
     content: 'Previous page';
     display: inline-block;
     margin-left: 10px;
     position: absolute;
     padding-left: 40px;
-    top: 35%; left: 0;
+    padding-top: 2px;
+    padding-bottom: 15px;
+    top: 30%; left: 0;
 }
 
 .pagination .PagedList-skipToNext a:before {
-    background-color: white;
-    background-image: url(../img/arrow-sprite.png);
-    background-repeat: no-repeat;
+    background: white url(_assets/img/arrow-right.png) no-repeat right top;
     content: 'Next page';
     display: inline-block;
     margin-right: 10px;
     position: absolute;
     padding-right: 40px;
-    top: 35%; right: 0;
+    padding-top: 2px;
+    padding-bottom: 15px;
+    top: 30%; right: 0;
 }
 
 .pagination .PagedList-skipToPrevious a:hover:after {
