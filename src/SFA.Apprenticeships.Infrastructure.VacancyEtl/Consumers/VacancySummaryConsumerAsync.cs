@@ -4,21 +4,21 @@
     using System.Threading.Tasks;
     using EasyNetQ.AutoSubscribe;
     using Application.VacancyEtl.Entities;
-    using Elastic.Common.Services;
+    using SFA.Apprenticeships.Infrastructure.VacancyIndexer.Services;
 
     public class VacancySummaryConsumerAsync : IConsumeAsync<VacancySummaryUpdate>
     {
-        private readonly IIndexerService<VacancySummaryUpdate> _indexer;
+        private readonly IVacancyIndexerService _vacancyIndexer;
 
-        public VacancySummaryConsumerAsync(IIndexerService<VacancySummaryUpdate> indexer)
+        public VacancySummaryConsumerAsync(IVacancyIndexerService vacancyIndexer)
         {
-            _indexer = indexer;
+            _vacancyIndexer = vacancyIndexer;
         }
 
         [AutoSubscriberConsumer(SubscriptionId = "VacancySummaryConsumerAsync")]
-        public Task Consume(VacancySummaryUpdate message)
+        public Task Consume(VacancySummaryUpdate vacancySummaryToIndex)
         {
-            return Task.Run(() => _indexer.Index(message));
+            return Task.Run(() => _vacancyIndexer.Index(vacancySummaryToIndex));
         }
     }
 }

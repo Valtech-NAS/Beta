@@ -63,7 +63,7 @@
 
                 var viewModel = new VacancySearchResponseViewModel
                 {
-                    Total = source.Results.Count(),
+                    Total = source.Total,
                     Vacancies = new PagedList<VacancySummaryResponse>(source.Results, source.PageNumber, 5),
                 };
 

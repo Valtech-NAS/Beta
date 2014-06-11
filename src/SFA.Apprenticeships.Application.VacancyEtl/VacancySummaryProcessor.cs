@@ -94,5 +94,11 @@
                     _bus.PublishMessage(vacancySummaryExtended);
                 });
         }
+
+
+        public void QueueVacancySummaryCleanUp(VacancySummaryPage lastSummaryPage)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

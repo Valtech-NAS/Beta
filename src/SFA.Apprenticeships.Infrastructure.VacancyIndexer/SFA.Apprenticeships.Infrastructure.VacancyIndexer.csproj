@@ -63,7 +63,8 @@
     <Compile Include="IoC\VacancyIndexerRegistry.cs" />
     <Compile Include="Mappers\GeoPointDomainToElasticResolver.cs" />
     <Compile Include="Mappers\VacancyIndexerMapper.cs" />
-    <Compile Include="VacancyIndexerService.cs" />
+    <Compile Include="Services\IVacancyIndexerService.cs" />
+    <Compile Include="Services\VacancyIndexerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

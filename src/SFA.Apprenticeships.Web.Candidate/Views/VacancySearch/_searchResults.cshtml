@@ -2,7 +2,6 @@
 @model SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.VacancySearchResponseViewModel
 
 <div id="pagedListInternal">
-    @{Html.RenderPartial("_pagination", Model);}
 
     <ul class="search-results">
         @foreach (var vacancy in Model.Vacancies)
