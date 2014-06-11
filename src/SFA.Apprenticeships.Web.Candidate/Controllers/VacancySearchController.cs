@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
-    using System.Web.Mvc.Html;
-    using PagedList;
     using SFA.Apprenticeships.Application.Interfaces.Vacancy;
     using SFA.Apprenticeships.Web.Candidate.Providers;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
@@ -73,9 +71,11 @@
             }
 
             // Test code, to be removed
-            var vacancySearchResponseViewModel = new VacancySearchResponseViewModel();
-            vacancySearchResponseViewModel.Vacancies = new PagedList<VacancySummaryResponse>(null, 1, SearchPageSize);
-            vacancySearchResponseViewModel.VacancySearch = searchViewModel;
+            var vacancySearchResponseViewModel = new VacancySearchResponseViewModel
+            {
+                Vacancies = new List<VacancySummaryResponse>(),
+                VacancySearch = searchViewModel
+            };
 
             return View("Results", vacancySearchResponseViewModel);
         }

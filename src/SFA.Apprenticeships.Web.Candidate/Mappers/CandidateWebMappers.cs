@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
-    using PagedList;
     using SFA.Apprenticeships.Application.Interfaces.Search;
     using SFA.Apprenticeships.Application.Interfaces.Vacancy;
     using SFA.Apprenticeships.Domain.Entities.Location;
