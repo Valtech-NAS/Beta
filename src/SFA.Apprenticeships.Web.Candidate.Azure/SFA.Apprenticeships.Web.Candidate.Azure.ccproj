@@ -37,6 +37,16 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Candidate\SFA.Apprenticeships.Web.Candidate.csproj">
+    <Name>SFA.Apprenticeships.Web.Candidate</Name>
+    <Project>{470ba0c8-fe2e-4db9-92c8-6f37095688ee}</Project>
+    <Private>True</Private>
+    <RoleType>Web</RoleType>
+    <RoleName>SFA.Apprenticeships.Web.Candidate</RoleName>
+    <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="SFA.Apprenticeships.Web.CandidateContent\" />
   </ItemGroup>
   <ItemGroup>
