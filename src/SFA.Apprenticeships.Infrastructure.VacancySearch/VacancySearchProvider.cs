@@ -19,8 +19,6 @@
 
         public SearchResults<VacancySummaryResponse> FindVacancies(string jobTitle, string keywords, Location location, int pageNumber, int pageSize, int searchRadius)
         {
-            const int pageSize = 10; //todo: move to argument
-
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (Elastic.Common.Entities.VacancySummary));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(Elastic.Common.Entities.VacancySummary));
