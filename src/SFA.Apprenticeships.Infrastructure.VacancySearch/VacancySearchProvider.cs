@@ -17,10 +17,8 @@
             _elasticsearchClientFactory = elasticsearchClientFactory;
         }
 
-        public SearchResults<VacancySummaryResponse> FindVacancies(string jobTitle, string keywords, Location location, int pageNumber, int searchRadius)
+        public SearchResults<VacancySummaryResponse> FindVacancies(string jobTitle, string keywords, Location location, int pageNumber, int pageSize, int searchRadius)
         {
-            const int pageSize = 10; //todo: move to argument
-
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (Elastic.Common.Entities.VacancySummary));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(Elastic.Common.Entities.VacancySummary));
@@ -28,9 +26,8 @@
             var search = client.Search<VacancySummaryResponse>(s =>
             {              
                 s.Index(indexName);
-                s.Type(documentTypeName);
+                s.Type(documentTypeName);     
                 s.Skip((pageNumber - 1) * pageSize);
-                s.From(0);
                 s.Take(pageSize);
                 s.SortGeoDistance(g =>
                 {

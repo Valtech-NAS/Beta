@@ -1,36 +1,29 @@
-﻿@using PagedList.Mvc
+﻿@using SFA.Apprenticeships.Web.Candidate.Controllers
+@using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 @model SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.VacancySearchResponseViewModel
 
-@if (Model.Total > 0)
+@{
+    var pages = Model.Pages(VacancySearchController.SearchPageSize);
+    var prevLink = Model.VacancySearch.PageNumber > 1 ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) {PageNumber = Model.PrevPage}) : "#";
+    var nextLink = Model.VacancySearch.PageNumber < pages ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) {PageNumber = Model.NextPage}) : "#";
+}
+
+@if (Model.TotalHits > 0)
 {
-    @Html.PagedListPager(Model.Vacancies, page =>
-    {
-        Model.VacancySearch.PageNumber = page;
-        return Url.Action("results", Model.VacancySearch);
-    },
-        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
-            new PagedListRenderOptions
-            {
-                DisplayLinkToFirstPage = PagedListDisplayMode.Never,
-                DisplayLinkToLastPage = PagedListDisplayMode.Never,
-                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                DisplayLinkToIndividualPages = false,
-                DisplayPageCountAndCurrentLocation = true,
-            },
-            new AjaxOptions {HttpMethod = "GET", UpdateTargetId = "pagedList"}))
-
-
-@*<div class="page-navigation">
-        <a href="#" class="page-navigation__btn previous">
-            <i class="arrow-button"></i>
-            <span class="description">Previous <span class="hide-mob">page</span></span>
-            <span class="counter">1 of 6</span>
-        </a>
-        <a href="#" class="page-navigation__btn next">
+    <div class="page-navigation" data-ajax-update="#pagedList" data-ajax-method="GET">
+            <a href="@prevLink"
+               style="visibility: @(Model.VacancySearch.PageNumber == 1?"hidden":"visible")"
+               class="page-navigation__btn previous">
+                <i class="arrow-button"></i>
+                <span class="description">Previous <span class="hide-mob">page</span></span>
+                <span class="counter">@Model.PrevPage of @pages</span>
+            </a>
+        <a href="@nextLink"
+           style="visibility: @(Model.VacancySearch.PageNumber == pages?"hidden":"visible")"
+           class="page-navigation__btn next">
             <i class="arrow-button"></i>
             <span class="description">Next <span class="hide-mob">page</span></span>
-            <span class="counter">3 of 6</span>
+            <span class="counter">@Model.NextPage of @pages</span>
         </a>
-    </div>*@
+    </div>
 }
