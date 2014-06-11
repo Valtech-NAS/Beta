@@ -19,6 +19,8 @@
 
         public SearchResults<VacancySummaryResponse> FindVacancies(string jobTitle, string keywords, Location location, int pageNumber, int searchRadius)
         {
+            const int pageSize = 10; //todo: move to argument
+
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (Elastic.Common.Entities.VacancySummary));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(Elastic.Common.Entities.VacancySummary));
@@ -27,9 +29,9 @@
             {              
                 s.Index(indexName);
                 s.Type(documentTypeName);
-                s.Skip((pageNumber - 1) * 10);
+                s.Skip((pageNumber - 1) * pageSize);
                 s.From(0);
-                s.Take(10);
+                s.Take(pageSize);
                 s.SortGeoDistance(g =>
                 {
                     g.PinTo(location.GeoPoint.Latitute, location.GeoPoint.Longitude)
@@ -58,8 +60,8 @@
                 return s;
             });
 
-            var responses = search.Documents;
-            responses.ToList()
+            var responses = search.Documents.ToList();
+            responses
                 .ForEach(
                     r =>
                         r.Distance =
@@ -67,7 +69,9 @@
                             search.Hits.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture))
                                 .Sorts.First()
                                 .ToString()));
+
             var results = new SearchResults<VacancySummaryResponse>(search.Total, pageNumber, responses);
+            
             return results;
         }
     }
