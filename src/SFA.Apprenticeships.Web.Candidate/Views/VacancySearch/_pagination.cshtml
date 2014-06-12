@@ -10,15 +10,15 @@
 @if (Model.TotalHits > 0)
 {
     <div class="page-navigation" data-ajax-update="#pagedList" data-ajax-method="GET">
-            <a href="@prevLink"
-               style="visibility: @(Model.VacancySearch.PageNumber == 1?"hidden":"visible")"
-               class="page-navigation__btn previous">
-                <i class="arrow-button"></i>
-                <span class="description">Previous <span class="hide-mob">page</span></span>
-                <span class="counter">@Model.PrevPage of @pages</span>
-            </a>
+        <a href="@prevLink"
+           style="visibility: @(Model.VacancySearch.PageNumber == 1 ? "hidden" : "visible")"
+           class="page-navigation__btn previous">
+            <i class="arrow-button"></i>
+            <span class="description">Previous <span class="hide-mob">page</span></span>
+            <span class="counter">@Model.PrevPage of @pages</span>
+        </a>
         <a href="@nextLink"
-           style="visibility: @(Model.VacancySearch.PageNumber == pages?"hidden":"visible")"
+           style="visibility: @(Model.VacancySearch.PageNumber == pages ? "hidden" : "visible")"
            class="page-navigation__btn next">
             <i class="arrow-button"></i>
             <span class="description">Next <span class="hide-mob">page</span></span>
