@@ -7,10 +7,12 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests
     using Moq;
     using NUnit.Framework;
     using SFA.Apprenticeships.Application.Interfaces.Location;
+    using SFA.Apprenticeships.Application.Interfaces.Search;
     using SFA.Apprenticeships.Application.Interfaces.Vacancy;
     using SFA.Apprenticeships.Domain.Entities.Location;
     using SFA.Apprenticeships.Web.Candidate.Mappers;
     using SFA.Apprenticeships.Web.Candidate.Providers;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
 
     [TestFixture]
     public class SearchProviderTests
@@ -56,6 +58,34 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests
             var test = searchProvider.FindLocation(string.Empty);
 
             test.Should().BeEmpty();
+        }
+
+        [TestCase]
+        public void ShouldFindVacanciesFromCriteria()
+        {
+            const int pageSize = 10;
+            var results = new SearchResults<VacancySummaryResponse>(100, 1, new List<VacancySummaryResponse>());
+
+            _vacancySearchProvider.Setup(
+                x => x.FindVacancies(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<Location>(),
+                    1,
+                    pageSize,
+                    It.IsAny<int>())).Returns(results);
+
+            var search = new VacancySearchViewModel { Location = "Test", Longitude = 0d, Latitude = 0d, PageNumber = 1, WithinDistance = 2 };
+
+            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchProvider.Object, _mapper);
+            var test = searchProvider.FindVacancies(search, 10);
+
+            test.Should().NotBeNull();
+            test.Pages(pageSize).Should().Be(10);
+            test.NextPage.Should().Be(2);
+            test.PrevPage.Should().Be(1);
+            test.TotalHits.Should().Be(100);
+            test.VacancySearch.Should().Be(search);
         }
     }
 }

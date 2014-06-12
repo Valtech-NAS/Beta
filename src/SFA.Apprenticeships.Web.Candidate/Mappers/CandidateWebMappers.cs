@@ -7,7 +7,6 @@
     using SFA.Apprenticeships.Application.Interfaces.Vacancy;
     using SFA.Apprenticeships.Domain.Entities.Location;
     using SFA.Apprenticeships.Infrastructure.Common.Mappers;
-    using SFA.Apprenticeships.Web.Candidate.Controllers;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
 
     public class CandidateWebMappers : MapperEngine
@@ -17,7 +16,7 @@
             Mapper.CreateMap<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>()
                 .ConvertUsing<SearchResultsConverter>();
 
-            Mapper.CreateMap<LocationViewModel, Location>()
+            Mapper.CreateMap<VacancySearchViewModel, Location>()
                 .ConvertUsing<LocationResolver>();
 
             Mapper.CreateMap<Location, LocationViewModel>()
@@ -39,15 +38,15 @@
             }
         }
 
-        protected class LocationResolver : ITypeConverter<LocationViewModel, Location>
+        protected class LocationResolver : ITypeConverter<VacancySearchViewModel, Location>
         {
             public Location Convert(ResolutionContext context)
             {
-                var viewModel = (LocationViewModel) context.SourceValue;
+                var viewModel = (VacancySearchViewModel)context.SourceValue;
                 var location = new Location
                 {
-                    Name = "From LocationViewModel",
-                    GeoPoint = new GeoPoint { Latitute = viewModel.Latitude, Longitude = viewModel.Longitude }
+                    Name = viewModel.Location,
+                    GeoPoint = new GeoPoint { Latitute = viewModel.Latitude.GetValueOrDefault(), Longitude = viewModel.Longitude.GetValueOrDefault() }
                 };
 
                 return location;
