@@ -11,6 +11,6 @@
 
         public VacancyLocationType VacancyLocation { get; set; }
 
-        public Guid UpdateReference { get; set; }
+        public DateTime ScheduledRefreshDateTime { get; set; }
     }
 }

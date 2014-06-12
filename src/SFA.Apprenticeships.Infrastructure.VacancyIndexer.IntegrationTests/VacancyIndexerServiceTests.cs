@@ -45,7 +45,7 @@
 
             var itemReference = items.Documents.First().UpdateReference;
 
-            var count = vacancyIndexer.VacanciesWithoutUpdateReference(itemReference);
+            //var count = vacancyIndexer.VacanciesWithoutUpdateReference(itemReference);
         }
     }
 }

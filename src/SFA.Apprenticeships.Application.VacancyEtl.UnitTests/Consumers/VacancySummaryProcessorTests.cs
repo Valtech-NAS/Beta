@@ -17,16 +17,16 @@
     {
         private Mock<IMessageBus> _busMock;
         private Mock<IProcessControlQueue<StorageQueueMessage>> _messagingServiceMock;
-        private Mock<IVacancyIndexDataProvider> _vacancyProviderMock;
         private Mock<IMapper> _mapperMock;
+        private Mock<IVacancyIndexDataProvider> _vacancyProviderMock;
 
         [SetUp]
         public void SetUp()
         {
             _busMock = new Mock<IMessageBus>();
             _messagingServiceMock = new Mock<IProcessControlQueue<StorageQueueMessage>>();
-            _vacancyProviderMock = new Mock<IVacancyIndexDataProvider>();
             _mapperMock = new Mock<IMapper>();
+            _vacancyProviderMock = new Mock<IVacancyIndexDataProvider>();
         }
 
         [TestCase(0, 0)]
@@ -39,17 +39,18 @@
             _vacancyProviderMock.Setup(x => x.GetVacancyPageCount(VacancyLocationType.National)).Returns(nationalVacancyPages);
             _vacancyProviderMock.Setup(x => x.GetVacancyPageCount(VacancyLocationType.NonNational)).Returns(nonNationalVancanyPages);
 
-            var vacancyConsumer = new VacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object, _messagingServiceMock.Object, _mapperMock.Object);
+            var vacancyConsumer = new VacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object, _mapperMock.Object, _messagingServiceMock.Object);
             
             var scheduledMessage = new StorageQueueMessage()
             {
-                ClientRequestId = Guid.NewGuid().ToString(),
+                ClientRequestId = Guid.NewGuid(),
+                ExpectedExecutionTime = DateTime.Today,
                 MessageId = "456",
                 PopReceipt = "789"
             };
             vacancyConsumer.QueueVacancyPages(scheduledMessage);
 
-            Thread.Sleep(50); //Slight delay to ensure parallel foreach has completed before assertions are made
+            Thread.Sleep(100); //Slight delay to ensure parallel foreach has completed before assertions are made
 
             _messagingServiceMock.Verify(x => x.DeleteMessage(It.Is<string>(mid => mid == scheduledMessage.MessageId), It.Is<string>(pr => pr == scheduledMessage.PopReceipt)), Times.Once);
             _busMock.Verify(x => x.PublishMessage(It.IsAny<VacancySummaryPage>()), Times.Exactly(nationalVacancyPages + nonNationalVancanyPages));
@@ -60,7 +61,7 @@
         [TestCase(VacancyLocationType.Unknown, 10)]
         public void ShouldQueueCorrectNumberOfVacanySummaries(VacancyLocationType vacancyLocationType, int vacanciesReturned)
         {
-            var summaryPage = new VacancySummaryPage { VacancyLocation = vacancyLocationType, PageNumber = vacanciesReturned, UpdateReference = Guid.NewGuid() };
+            var summaryPage = new VacancySummaryPage { VacancyLocation = vacancyLocationType, PageNumber = vacanciesReturned, ScheduledRefreshDateTime = DateTime.Today };
 
             _vacancyProviderMock.Setup(x => x.GetVacancySummary(vacancyLocationType, vacanciesReturned))
                 .Returns((VacancyLocationType vlt, int vr) =>
@@ -87,12 +88,12 @@
                                 vacUpdates.Add(new VacancySummaryUpdate()
                                 {
                                     Id = v.Id,
-                                    UpdateReference = summaryPage.UpdateReference
+                                    ScheduledRefreshDateTime = summaryPage.ScheduledRefreshDateTime
                                 }));
                     return vacUpdates;
                 });
 
-            var vacancyConsumer = new VacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object, _messagingServiceMock.Object, _mapperMock.Object);
+            var vacancyConsumer = new VacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object, _mapperMock.Object, _messagingServiceMock.Object);
             
             vacancyConsumer.QueueVacancySummaries(summaryPage);
 
@@ -101,7 +102,7 @@
                                                 It.Is<int>(pn => pn == vacanciesReturned)), 
                                                 Times.Once);
             _mapperMock.Verify(x => x.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(It.Is<IEnumerable<VacancySummary>>(vc => vc.Count() == vacanciesReturned)), Times.Once);
-            _busMock.Verify(x => x.PublishMessage(It.Is<VacancySummaryUpdate>(vsu => vsu.UpdateReference == summaryPage.UpdateReference)), Times.Exactly(vacanciesReturned));
+            _busMock.Verify(x => x.PublishMessage(It.IsAny<VacancySummary>()), Times.Exactly(vacanciesReturned));
         }
     }
 }

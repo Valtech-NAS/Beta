@@ -21,6 +21,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC;
     using SFA.Apprenticeships.Infrastructure.VacancyIndexer.IoC;
     using StructureMap;
+    using VacancyIndexer.Services;
 
     public class WorkerRole : RoleEntryPoint
     {
@@ -85,8 +86,9 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 Logger.Trace("Rabbit subscritions set up");
 
                 _vacancySchedulerConsumer = new VacancySchedulerConsumer(
-                    ObjectFactory.GetInstance<IProcessControlQueue<StorageQueueMessage>>(),
-                    ObjectFactory.GetInstance<IVacancySummaryProcessor>());
+                        ObjectFactory.GetInstance<IProcessControlQueue<StorageQueueMessage>>(),
+                        ObjectFactory.GetInstance<IVacancySummaryProcessor>(),
+                        ObjectFactory.GetInstance<IVacancyIndexerService>());
 
                 Logger.Trace("VacancySchedulerConsumer setup complete");
             }

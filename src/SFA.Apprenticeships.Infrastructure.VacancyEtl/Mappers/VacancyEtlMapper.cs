@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Infrastructure.Common.Mappers;
+    using Application.VacancyEtl.Entities;
+    using Common.Mappers;
 
     public class VacancyEtlMapper : MapperEngine
     {
