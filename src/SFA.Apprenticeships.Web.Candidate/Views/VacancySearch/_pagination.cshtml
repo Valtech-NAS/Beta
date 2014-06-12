@@ -1,9 +1,8 @@
-﻿@using SFA.Apprenticeships.Web.Candidate.Controllers
-@using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
+﻿@using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 @model SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.VacancySearchResponseViewModel
 
 @{
-    var pages = Model.Pages(VacancySearchController.SearchPageSize);
+    var pages = Model.Pages;
     var prevLink = Model.VacancySearch.PageNumber > 1 ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) {PageNumber = Model.PrevPage}) : "#";
     var nextLink = Model.VacancySearch.PageNumber < pages ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) {PageNumber = Model.NextPage}) : "#";
 }
