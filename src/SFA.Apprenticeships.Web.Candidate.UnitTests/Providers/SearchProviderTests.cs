@@ -1,5 +1,5 @@
 ﻿
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests
+namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers
 {
     using System.Collections.Generic;
     using System.Linq;
