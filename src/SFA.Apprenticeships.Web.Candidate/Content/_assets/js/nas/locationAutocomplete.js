@@ -33,8 +33,6 @@
 
         function getLocationResults(callback, term) {
             jQuery.support.cors = true;
-
-            //var data = $("form").serialize();
             $.ajax({
                 url: settings.url,
                 type: 'GET',
@@ -47,9 +45,7 @@
                         response.forEach(function(item) {
                             if (i++ < settings.maxListSize) {
                                 tags.push(item.Name);
-                            } else {
-                                return;
-                            }
+                            } 
                         });
                     }
                     callback(tags);
@@ -59,23 +55,19 @@
                     callback(tags);
                 }
             });
-
             return true;
         };
 
         function getLonLatFromName(name) {
-
             if (locations != null) {
                 var index = tags.indexOf(name);
                 if (index != -1) {
                     var search = locations[index];
-
                     if (search != null) {
                         return search;
                     }
                 }
             }
-
             return location(name);
         };
     };

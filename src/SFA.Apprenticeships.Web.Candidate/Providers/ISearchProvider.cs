@@ -7,6 +7,6 @@
     {
         IEnumerable<LocationViewModel> FindLocation(string placeNameOrPostcode);
 
-        VacancySearchResponseViewModel FindVacancies(string jobTitle, string keywords, LocationViewModel location, int pageNumber, int pageSize, int searchRadius);
+        VacancySearchResponseViewModel FindVacancies(VacancySearchViewModel search, LocationViewModel location, int pageSize);
     }
 }

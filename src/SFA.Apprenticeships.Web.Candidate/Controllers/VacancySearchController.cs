@@ -49,18 +49,7 @@
 
             if (location != null )
             {
-                var results = _searchProvider.FindVacancies(searchViewModel.JobTitle,
-                                                            searchViewModel.Keywords,
-                                                            location,
-                                                            searchViewModel.PageNumber,
-                                                            SearchPageSize,
-                                                            searchViewModel.WithinDistance);
-
-                var pages = results.Pages(SearchPageSize);
-                results.PrevPage = searchViewModel.PageNumber == 1 ? 1 : searchViewModel.PageNumber - 1;
-                results.NextPage = searchViewModel.PageNumber == pages ? pages : searchViewModel.PageNumber + 1;
-                results.VacancySearch = searchViewModel;
-
+                var results = _searchProvider.FindVacancies(searchViewModel, location, SearchPageSize);
                 if (!this.Request.IsAjaxRequest())
                 {
                     return View("Results", results);
@@ -70,7 +59,7 @@
                 return Json(view, JsonRequestBehavior.AllowGet);
             }
 
-            // Test code, to be removed
+            // TODO::Test code, to be removed
             var vacancySearchResponseViewModel = new VacancySearchResponseViewModel
             {
                 Vacancies = new List<VacancySummaryResponse>(),

@@ -203,6 +203,12 @@
     <None Include="Microsoft.WindowsAzure.Caching\PerformanceCounters.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Content\_assets\img\arrow-left.png" />
+    <Content Include="Content\_assets\img\arrow-right.png" />
+    <Content Include="Content\_assets\img\icon-star-filled-2x.png" />
+    <Content Include="Content\_assets\img\icon-star-filled.png" />
+    <Content Include="Content\_assets\img\icon-star-hollow-2x.png" />
+    <Content Include="Content\_assets\img\icon-star-hollow.png" />
     <Content Include="Content\_assets\js\nas\locationAutocomplete.js" />
     <Content Include="Content\_assets\js\nas\pagination.js" />
     <Content Include="Content\_assets\img\arrow-sprite-2x.png" />

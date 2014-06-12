@@ -6,6 +6,7 @@
     using Application.Interfaces.Vacancy;
     using Domain.Entities.Location;
     using Domain.Interfaces.Mapping;
+    using SFA.Apprenticeships.Web.Candidate.Controllers;
     using Web.Candidate.ViewModels.VacancySearch;
 
     public class SearchProvider : ISearchProvider
@@ -33,13 +34,18 @@
             return new LocationViewModel[]{};
         }
 
-        public VacancySearchResponseViewModel FindVacancies(string jobTitle, string keywords, LocationViewModel location, int pageNumber, int pageSize, int searchRadius)
+        public VacancySearchResponseViewModel FindVacancies(VacancySearchViewModel search, LocationViewModel location, int pageSize)
         {
             var searchLocation = _mapper.Map<LocationViewModel, Location>(location);
 
-            var searchResponse = _vacancySearchProvider.FindVacancies(jobTitle, keywords, searchLocation, pageNumber, pageSize, searchRadius);
+            var searchResponse = _vacancySearchProvider.FindVacancies(search.JobTitle, search.Keywords, searchLocation, search.PageNumber, pageSize, search.WithinDistance);
 
             var vacancySearchResponseViewModel = _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(searchResponse);
+
+            var pages = vacancySearchResponseViewModel.Pages(VacancySearchController.SearchPageSize);
+            vacancySearchResponseViewModel.PrevPage = search.PageNumber == 1 ? 1 : search.PageNumber - 1;
+            vacancySearchResponseViewModel.NextPage = search.PageNumber == pages ? pages : search.PageNumber + 1;
+            vacancySearchResponseViewModel.VacancySearch = search;
 
             return vacancySearchResponseViewModel;
         }

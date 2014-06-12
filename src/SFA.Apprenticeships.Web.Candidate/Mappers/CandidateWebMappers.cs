@@ -7,6 +7,7 @@
     using SFA.Apprenticeships.Application.Interfaces.Vacancy;
     using SFA.Apprenticeships.Domain.Entities.Location;
     using SFA.Apprenticeships.Infrastructure.Common.Mappers;
+    using SFA.Apprenticeships.Web.Candidate.Controllers;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
 
     public class CandidateWebMappers : MapperEngine
