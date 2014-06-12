@@ -12,16 +12,10 @@
 </div>
 <div class="grid-wrapper">
     <section class="grid grid-2-3">
-        
         @using(Html.BeginForm("results", "vacancysearch", FormMethod.Get)){
             <div class="form-group">
-                <label for="job-title" class="form-label">Job title (optional)</label>
-                <span class="form-hint">For example, mechanical engineer</span>
-                @Html.TextBoxFor(m => m.JobTitle, new { @class = "form-control", @id = "job-title", @name = "JobTitle" })
-            </div>
-            <div class="form-group">
-                <label for="keywords" class="form-label">Keyword (optional)</label>
-                <span class="form-hint">For example, retail, customer service</span>
+                <label for="keywords" class="form-label">Keywords (optional)</label>
+                <span class="form-hint">For example, mechanical engineer, retail, customer service</span>
                 @Html.TextBoxFor(m => m.Keywords, new { @class = "form-control", @id = "keywords", @name = "Keywords" })
             </div>
             <div class="form-group">
@@ -39,7 +33,6 @@
                 <button class="button">Search</button>
                 <a class="button-link" href="#">Clear</a>
             </div>
-
         }
         <div class="form-group">
             <p>You can also apply for Apprenticeships in other parts of the UK</p>

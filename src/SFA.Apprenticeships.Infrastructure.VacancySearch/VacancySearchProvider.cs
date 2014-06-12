@@ -17,7 +17,12 @@
             _elasticsearchClientFactory = elasticsearchClientFactory;
         }
 
-        public SearchResults<VacancySummaryResponse> FindVacancies(string jobTitle, string keywords, Location location, int pageNumber, int pageSize, int searchRadius)
+        public SearchResults<VacancySummaryResponse> FindVacancies(string keywords, 
+                                                                    Location location, 
+                                                                    int pageNumber, 
+                                                                    int pageSize, 
+                                                                    int searchRadius,
+                                                                    VacancySortType sortType)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (Elastic.Common.Entities.VacancySummary));
@@ -29,31 +34,51 @@
                 s.Type(documentTypeName);     
                 s.Skip((pageNumber - 1) * pageSize);
                 s.Take(pageSize);
-                s.SortGeoDistance(g =>
+
+                switch (sortType)
                 {
-                    g.PinTo(location.GeoPoint.Latitute, location.GeoPoint.Longitude)
-                     .Unit(GeoUnit.mi).OnField(f => f.Location);
-                    return g;
-                }).Filter(f => f.GeoDistance(vs => vs.Location, descriptor => 
-                    descriptor
-                    .Location(location.GeoPoint.Latitute, location.GeoPoint.Longitude)
-                    .Distance(searchRadius, GeoUnit.mi)));
+                    case VacancySortType.Distance:
+                        s.SortGeoDistance(g =>
+                        {
+                            g.PinTo(location.GeoPoint.Latitute, location.GeoPoint.Longitude)
+                             .Unit(GeoUnit.mi).OnField(f => f.Location);
+                            return g;
+                        });
+                        break;
+                    case VacancySortType.ClosingDate:
+                        s.Sort(v => v.OnField(f => f.ClosingDate).Descending());
+                        break;
+                    case VacancySortType.Relevancy:
+                        //No sort - let Elasticsearch score based on query.
+                        break;
+                }
 
-                s.Query(q =>
+                if (location != null)
                 {
-                    BaseQuery query = null;
-                    if (!string.IsNullOrEmpty(jobTitle))
-                    {
-                        query &= q.QueryString(m => m.OnField(f => f.Title).Query(jobTitle));
-                    }
-                    if (!string.IsNullOrEmpty(keywords))
-                    {
-                        query &= q.QueryString(m => m.OnField(f => f.Description).Query(keywords));
+                    //Needed for both Distance and ClosingDate
+                    s.Filter(f => f.GeoDistance(
+                                        vs => vs.Location, 
+                                        descriptor =>
+                                            descriptor
+                                            .Location(location.GeoPoint.Latitute, location.GeoPoint.Longitude)
+                                            .Distance(searchRadius, GeoUnit.mi)));
+                }
 
-                    }
-                    return query;
-                });
+                if (!string.IsNullOrEmpty(keywords))
+                {
+                    s.Query(q =>
+                    {
+                        BaseQuery query = q.Fuzzy(f => f.MinSimilarity(5).PrefixLength(1).OnField(n => n.Title).Value(keywords).Boost(2.0))
+                                            ||
+                                          q.Fuzzy(f => f.MinSimilarity(2).PrefixLength(1).OnField(n => n.Description).Value(keywords).Boost(1.0));
+                        //query = q.Term(f => f.Title, keywords, 2.0)
+                        //        ||
+                        //        q.Term(f => f.Description, keywords, 1.0);
 
+                        return query;
+                    });    
+                }
+                
                 return s;
             });
 

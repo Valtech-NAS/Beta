@@ -1,12 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
+    using Application.Interfaces.Search;
+
     public class VacancySearchViewModel
     {
         public VacancySearchViewModel() { }
 
         public VacancySearchViewModel(VacancySearchViewModel viewModel)
         {
-            JobTitle = viewModel.JobTitle;
             Keywords = viewModel.Keywords;
             Location = viewModel.Location;
             Longitude = viewModel.Longitude;
@@ -17,8 +18,6 @@
 
         private int _pageNumber = 1;
 
-        public string JobTitle { get; set; }
-
         public string Keywords { get; set; }
 
         public string Location { get; set; }
@@ -26,6 +25,8 @@
         public double? Latitude { get; set; }
 
         public int WithinDistance { get; set; }
+
+        public VacancySortType SortType { get; set; }
 
         public int PageNumber
         {
