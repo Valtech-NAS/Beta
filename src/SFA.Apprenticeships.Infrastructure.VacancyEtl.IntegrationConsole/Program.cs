@@ -9,16 +9,16 @@
     using System.Xml.Serialization;
     using Microsoft.WindowsAzure.Storage.Queue;
     using Application.VacancyEtl.Entities;
-    using Infrastructure.Azure.Common;
-    using Infrastructure.Azure.Common.IoC;
-    using Infrastructure.Common.IoC;
-    using Infrastructure.LegacyWebServices.IoC;
-    using Infrastructure.RabbitMq.Interfaces;
-    using Infrastructure.RabbitMq.IoC;
-    using Infrastructure.VacancyEtl.Consumers;
-    using Infrastructure.VacancyEtl.IoC;
-    using Infrastructure.VacancyIndexer.IoC;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.IoC;
+    using Azure.Common;
+    using Azure.Common.IoC;
+    using Common.IoC;
+    using LegacyWebServices.IoC;
+    using RabbitMq.Interfaces;
+    using RabbitMq.IoC;
+    using Consumers;
+    using IoC;
+    using VacancyIndexer.IoC;
+    using Elastic.Common.IoC;
     using StructureMap;
 
     class Program
@@ -87,7 +87,8 @@
             {
                 var storageScheduleMessage = new StorageQueueMessage
                 {
-                    ClientRequestId = Guid.NewGuid().ToString(),
+                    ClientRequestId = Guid.NewGuid(),
+                    ExpectedExecutionTime = DateTime.Now,
                     SchedulerJobId = i.ToString()
                 };
 

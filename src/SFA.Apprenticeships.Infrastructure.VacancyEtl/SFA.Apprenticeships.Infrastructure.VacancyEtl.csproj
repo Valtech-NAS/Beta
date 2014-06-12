@@ -81,12 +81,11 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Consumers\VacancySchedulerConsumer.cs" />
+    <Compile Include="Consumers\VacancySummaryCompleteConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryPageConsumerAsync.cs" />
     <Compile Include="IoC\VacancyEtlRegistry.cs" />
-    <Compile Include="Mappers\VacancyEtlMapper.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Mappers\VacancyEtlMapper.cs" />
     <Compile Include="Messaging\AzureScheduleQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />

@@ -20,12 +20,12 @@
         /// <summary>
         /// Gets or sets the Client Request ID
         /// </summary>
-        public string ClientRequestId { get; set; }
+        public Guid ClientRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets the Expected executionTime
         /// </summary>
-        public string ExpectedExecutionTime { get; set; }
+        public DateTime ExpectedExecutionTime { get; set; }
 
         /// <summary>
         /// Gets or sets the Scheduler Job ID

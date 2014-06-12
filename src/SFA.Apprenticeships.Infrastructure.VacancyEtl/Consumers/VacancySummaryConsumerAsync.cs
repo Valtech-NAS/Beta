@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
 {
-    using System;
     using System.Threading.Tasks;
     using EasyNetQ.AutoSubscribe;
     using Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Infrastructure.VacancyIndexer.Services;
+    using VacancyIndexer.Services;
 
     public class VacancySummaryConsumerAsync : IConsumeAsync<VacancySummaryUpdate>
     {

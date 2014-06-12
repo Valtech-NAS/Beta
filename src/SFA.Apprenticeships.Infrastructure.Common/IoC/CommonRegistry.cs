@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.IoC
 {
-    using SFA.Apprenticeships.Infrastructure.Common.ActiveDirectory;
-    using SFA.Apprenticeships.Infrastructure.Common.Configuration;
+    using ActiveDirectory;
+    using Configuration;
     using StructureMap.Configuration.DSL;
 
     public class CommonRegistry : Registry
