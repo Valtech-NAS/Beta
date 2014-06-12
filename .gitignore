@@ -110,6 +110,7 @@ csx
 *.build.csdef
 *.cscfg
 settings.config
+*.azurePubxml
 
 # Windows Store app package directory
 AppPackages/

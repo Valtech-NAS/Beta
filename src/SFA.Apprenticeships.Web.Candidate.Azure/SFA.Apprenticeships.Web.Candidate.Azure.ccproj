@@ -38,21 +38,28 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Candidate\SFA.Apprenticeships.Web.Candidate.csproj">
-    <Name>SFA.Apprenticeships.Web.Candidate</Name>
-    <Project>{470ba0c8-fe2e-4db9-92c8-6f37095688ee}</Project>
-    <Private>True</Private>
-    <RoleType>Web</RoleType>
-    <RoleName>SFA.Apprenticeships.Web.Candidate</RoleName>
-    <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+      <Name>SFA.Apprenticeships.Web.Candidate</Name>
+      <Project>{470ba0c8-fe2e-4db9-92c8-6f37095688ee}</Project>
+      <Private>True</Private>
+      <RoleType>Web</RoleType>
+      <RoleName>SFA.Apprenticeships.Web.Candidate</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Profiles" />
     <Folder Include="SFA.Apprenticeships.Web.CandidateContent\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SFA.Apprenticeships.Web.CandidateContent\diagnostics.wadcfg">
       <SubType>Content</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishProfile Include="Profiles\web-candidate-Staging.azurePubxml" />
+    <PublishProfile Include="Profiles\web-candidate-DEV-Production.azurePubxml" />
+    <PublishProfile Include="Profiles\web-candidate-DEV-Staging.azurePubxml" />
+    <PublishProfile Include="Profiles\web-candidate-Production.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
@@ -62,8 +69,8 @@
   <Import Project="$(CloudExtensionsDir)Microsoft.WindowsAzure.targets" />
   <PropertyGroup>
     <PreBuildEvent>REM Copy from local dev machines locations
-if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName)\* $(ProjectDir)
+if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /E /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName) $(ProjectDir)
 REM Copy from build server locations
-if exist $(ProjectDir)..\..\Configuration xcopy /C /Y $(ProjectDir)..\..\Configuration\Applications\$(ProjectName)\* $(ProjectDir)</PreBuildEvent>
+if exist $(ProjectDir)..\..\Configuration xcopy /E /Y $(ProjectDir)..\..\Configuration\Applications\$(ProjectName) $(ProjectDir)</PreBuildEvent>
   </PropertyGroup>
 </Project>
