@@ -36,8 +36,8 @@
             var fuzzyMatchResults = client.Search<LocationLookup>(s => s
                 .Index(indexName)
                 .Query(q =>
-                    q.Fuzzy(f => f.OnField(n => n.Name).Value(term).Boost(2.0)) ||
-                    q.Fuzzy(f => f.OnField(n => n.County).Value(term).Boost(1.0))
+                    q.Fuzzy(f => f.MinSimilarity(5).PrefixLength(1).OnField(n => n.Name).Value(term).Boost(2.0)) ||
+                    q.Fuzzy(f => f.MinSimilarity(0.5).PrefixLength(1).OnField(n => n.County).Value(term).Boost(1.0))
                 )
                 .From(0)
                 .Size(maxResults));
