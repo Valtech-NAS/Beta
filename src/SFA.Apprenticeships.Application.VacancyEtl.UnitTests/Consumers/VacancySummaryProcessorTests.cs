@@ -17,6 +17,7 @@
     {
         private Mock<IMessageBus> _busMock;
         private Mock<IProcessControlQueue<StorageQueueMessage>> _messagingServiceMock;
+        private Mock<IMapper> _mapperMock;
         private Mock<IVacancyIndexDataProvider> _vacancyProviderMock;
 
         [SetUp]
@@ -24,6 +25,7 @@
         {
             _busMock = new Mock<IMessageBus>();
             _messagingServiceMock = new Mock<IProcessControlQueue<StorageQueueMessage>>();
+            _mapperMock = new Mock<IMapper>();
             _vacancyProviderMock = new Mock<IVacancyIndexDataProvider>();
         }
 
@@ -37,7 +39,7 @@
             _vacancyProviderMock.Setup(x => x.GetVacancyPageCount(VacancyLocationType.National)).Returns(nationalVacancyPages);
             _vacancyProviderMock.Setup(x => x.GetVacancyPageCount(VacancyLocationType.NonNational)).Returns(nonNationalVancanyPages);
 
-            var vacancyConsumer = new VacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object, _messagingServiceMock.Object);
+            var vacancyConsumer = new VacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object, _mapperMock.Object, _messagingServiceMock.Object);
             
             var scheduledMessage = new StorageQueueMessage()
             {
@@ -73,7 +75,25 @@
                     return sumaries;
                 });
 
-            var vacancyConsumer = new VacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object, _messagingServiceMock.Object);
+            _mapperMock.Setup(
+                x =>
+                    x.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(
+                        It.IsAny<IEnumerable<VacancySummary>>()))
+                .Returns((IEnumerable<VacancySummary> vacancies) =>
+                {
+                    var vacUpdates = new List<VacancySummaryUpdate>(vacancies.Count());
+                    vacancies.ToList()
+                        .ForEach(
+                            v =>
+                                vacUpdates.Add(new VacancySummaryUpdate()
+                                {
+                                    Id = v.Id,
+                                    ScheduledRefreshDateTime = summaryPage.ScheduledRefreshDateTime
+                                }));
+                    return vacUpdates;
+                });
+
+            var vacancyConsumer = new VacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object, _mapperMock.Object, _messagingServiceMock.Object);
             
             vacancyConsumer.QueueVacancySummaries(summaryPage);
 
@@ -81,7 +101,7 @@
                                                 It.Is<VacancyLocationType>(vlt => vlt == vacancyLocationType),
                                                 It.Is<int>(pn => pn == vacanciesReturned)), 
                                                 Times.Once);
-
+            _mapperMock.Verify(x => x.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(It.Is<IEnumerable<VacancySummary>>(vc => vc.Count() == vacanciesReturned)), Times.Once);
             _busMock.Verify(x => x.PublishMessage(It.IsAny<VacancySummary>()), Times.Exactly(vacanciesReturned));
         }
     }
