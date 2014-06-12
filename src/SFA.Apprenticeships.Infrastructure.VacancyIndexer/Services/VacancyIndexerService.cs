@@ -1,10 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer.Services
 {
     using System;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Entities;
+    using Nest;
+    using Application.VacancyEtl.Entities;
+    using Domain.Interfaces.Mapping;
+    using Elastic.Common.Configuration;
+    using Elastic.Common.Entities;
 
     public class VacancyIndexerService : IVacancyIndexerService
     {
@@ -19,36 +20,52 @@
 
         public void Index(VacancySummaryUpdate vacancySummaryToIndex)
         {
+            var indexAlias = GetIndexAlias();
+            var newIndexName = GetIndexNameAndDateExtension(indexAlias, vacancySummaryToIndex.ScheduledRefreshDateTime);
             var vacancySummaryElastic = _mapper.Map<VacancySummaryUpdate, VacancySummary>(vacancySummaryToIndex);
-            var client = _elasticsearchClientFactory.GetElasticClient();
-            client.Index(vacancySummaryElastic, _elasticsearchClientFactory.GetIndexNameForType(typeof(VacancySummary)));
-        }
-
-        public int VacanciesWithoutUpdateReference(Guid updateReference)
-        {
-            var client = _elasticsearchClientFactory.GetElasticClient();
-
-            var search = client.Count(new [] {"vacancies_search"}, new[] {"vacancy"}, qd =>
-            {
-                //qd.Text(t => t.)
-                qd.QueryString(qs => qs.OnField("UpdateReference").Query(updateReference.ToString()));
-                return qd;
-            });
-
-            return search.Count;
-        }
-
-        public void ClearObsoleteVacancie(Guid updateReference)
-        {
-            var client = _elasticsearchClientFactory.GetElasticClient();
-            var index = _elasticsearchClientFactory.GetIndexNameForType(typeof (VacancySummary));
             
-            client.DeleteByQuery(r =>
+            var client = _elasticsearchClientFactory.GetElasticClient();
+            client.Index(vacancySummaryElastic, newIndexName);
+        }
+
+        public void CreateScheduledIndex(DateTime scheduledRefreshDateTime)
+        {
+            var indexAlias = GetIndexAlias();
+            var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
+            var client = _elasticsearchClientFactory.GetElasticClient();
+
+            var indexExistsResponse = client.IndexExists(newIndexName);
+            if (!indexExistsResponse.Exists)
             {
-                r.Index(index);
-                r.Match(mqd => mqd.OnField("UpdateReference").QueryString(updateReference.ToString()));
-                return r;
-            });
+                var indexSettings = new IndexSettings();
+                client.CreateIndex(newIndexName, indexSettings);
+                client.MapFromAttributes(typeof (VacancySummary), newIndexName);
+            }
+            else
+            {
+                //TODO: specialise the exception type thrown here and log - should prevent the indexing job from continuing.
+                throw new Exception(string.Format("Index already created: {0}", newIndexName));
+            }
+        }
+
+        public void SwapIndex(DateTime scheduledRefreshDateTime)
+        {
+            var indexAlias = GetIndexAlias();
+            var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
+            var client = _elasticsearchClientFactory.GetElasticClient();
+            
+            var existingIndexesOnAlias = client.GetIndicesPointingToAlias(indexAlias);
+            client.Swap(indexAlias, existingIndexesOnAlias, new[] {newIndexName});
+        }
+
+        private string GetIndexAlias()
+        {
+            return _elasticsearchClientFactory.GetIndexNameForType(typeof(VacancySummary));
+        }
+
+        private string GetIndexNameAndDateExtension(string indexAlias, DateTime dateTime)
+        {
+            return string.Format("{0}.{1}", indexAlias, dateTime.ToString("yyyy-MM-dd"));
         }
     }
 }

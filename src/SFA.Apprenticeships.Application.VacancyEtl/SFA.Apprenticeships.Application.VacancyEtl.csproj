@@ -42,6 +42,7 @@
     </Compile>
     <Compile Include="Entities\StorageQueueMessage.cs" />
     <Compile Include="Entities\VacancySummaryPage.cs" />
+    <Compile Include="Entities\VacancySummaryPageComplete.cs" />
     <Compile Include="Entities\VacancySummaryUpdate.cs" />
     <Compile Include="IProcessControlQueue.cs" />
     <Compile Include="IVacancyIndexDataProvider.cs" />

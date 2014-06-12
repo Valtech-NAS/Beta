@@ -1,12 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.VacancyEtl.Entities
 {
     using System;
-    using Domain.Entities.Vacancy;
-
+    
     /// <summary>
-    /// Adds update reference required for tidy up process
+    /// Message to indicate last summary page has been processed.
     /// </summary>
-    public class VacancySummaryUpdate : VacancySummary
+    public class VacancySummaryUpdateComplete
     {
         public DateTime ScheduledRefreshDateTime { get; set; }
     }

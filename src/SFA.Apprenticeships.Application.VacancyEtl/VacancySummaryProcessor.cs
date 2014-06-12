@@ -3,10 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Interfaces.Messaging;
     using Domain.Interfaces.Mapping;
+    using Interfaces.Messaging;
     using Entities;
     using Domain.Entities.Vacancy;
 
@@ -14,18 +13,18 @@
     {
         private readonly IMessageBus _bus;
         private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
-        private readonly IProcessControlQueue<StorageQueueMessage> _processControlQueue;
         private readonly IMapper _mapper;
+        private readonly IProcessControlQueue<StorageQueueMessage> _processControlQueue;
 
         public VacancySummaryProcessor(IMessageBus bus, 
                                        IVacancyIndexDataProvider vacancyIndexDataProvider, 
-                                       IProcessControlQueue<StorageQueueMessage> processControlQueue,
-                                       IMapper mapper)
+                                       IMapper mapper,
+                                       IProcessControlQueue<StorageQueueMessage> processControlQueue)
         {
             _bus = bus;
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
-            _processControlQueue = processControlQueue;
             _mapper = mapper;
+            _processControlQueue = processControlQueue;
         }
 
         public void QueueVacancyPages(StorageQueueMessage scheduledQueueMessage)
@@ -33,9 +32,9 @@
 
             var nationalCount = _vacancyIndexDataProvider.GetVacancyPageCount(VacancyLocationType.National);
             var nonNationalCount = _vacancyIndexDataProvider.GetVacancyPageCount(VacancyLocationType.NonNational);
-            var vacancySumaries = BuildVacancySummaryPages(Guid.Parse(scheduledQueueMessage.ClientRequestId), nationalCount, nonNationalCount);
+            var vacancySumaries = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, nationalCount, nonNationalCount);
 
-            // Only delete from queue once we have all vacanies from the services without error.
+            // Only delete from queue once we have all vacancies from the service without error.
             _processControlQueue.DeleteMessage(scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
 
             Parallel.ForEach(
@@ -44,7 +43,7 @@
                 vacancySummaryPage => _bus.PublishMessage(vacancySummaryPage));
         }
 
-        private IEnumerable<VacancySummaryPage> BuildVacancySummaryPages(Guid updateReferenceId, int nationalCount, int nonNationalCount)
+        private IEnumerable<VacancySummaryPage> BuildVacancySummaryPages(DateTime scheduledRefreshDateTime, int nationalCount, int nonNationalCount)
         {
             var totalCount = nationalCount + nonNationalCount;
             var vacancySumaries = new List<VacancySummaryPage>(totalCount);
@@ -55,7 +54,7 @@
                 {
                     PageNumber = i,
                     TotalPages = totalCount,
-                    UpdateReference = updateReferenceId,
+                    ScheduledRefreshDateTime = scheduledRefreshDateTime,
                     VacancyLocation = VacancyLocationType.National
                 };
 
@@ -68,7 +67,7 @@
                 {
                     PageNumber = i,
                     TotalPages = totalCount,
-                    UpdateReference = updateReferenceId,
+                    ScheduledRefreshDateTime = scheduledRefreshDateTime,
                     VacancyLocation = VacancyLocationType.NonNational
                 };
 
@@ -81,8 +80,6 @@
         public void QueueVacancySummaries(VacancySummaryPage vacancySummaryPage)
         {
             var vacancies = _vacancyIndexDataProvider.GetVacancySummary(vacancySummaryPage.VacancyLocation, vacancySummaryPage.PageNumber).ToList();
-            Thread.Sleep(1000);
-
             var vacanciesExtended = _mapper.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(vacancies);
 
             Parallel.ForEach(
@@ -90,15 +87,9 @@
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 vacancySummaryExtended =>
                 {
-                    vacancySummaryExtended.UpdateReference = vacancySummaryPage.UpdateReference;
+                    vacancySummaryExtended.ScheduledRefreshDateTime = vacancySummaryPage.ScheduledRefreshDateTime;
                     _bus.PublishMessage(vacancySummaryExtended);
                 });
-        }
-
-
-        public void QueueVacancySummaryCleanUp(VacancySummaryPage lastSummaryPage)
-        {
-            throw new NotImplementedException();
         }
     }
 }

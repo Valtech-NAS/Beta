@@ -3,9 +3,9 @@
     using System;
     using System.Threading.Tasks;
     using NLog;
-    using Application.Interfaces.Messaging;
     using Application.VacancyEtl;
     using Application.VacancyEtl.Entities;
+    using VacancyIndexer.Services;
 
     public class VacancySchedulerConsumer
     {
@@ -13,11 +13,15 @@
 
         private readonly IProcessControlQueue<StorageQueueMessage> _messageService;
         private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
+        private readonly IVacancyIndexerService _vacancyIndexerService;
 
-        public VacancySchedulerConsumer(IProcessControlQueue<StorageQueueMessage> messageService, IVacancySummaryProcessor vacancySummaryProcessor)
+        public VacancySchedulerConsumer(IProcessControlQueue<StorageQueueMessage> messageService, 
+                                        IVacancySummaryProcessor vacancySummaryProcessor,
+                                        IVacancyIndexerService vacancyIndexerService)
         {
             _messageService = messageService;
             _vacancySummaryProcessor = vacancySummaryProcessor;
+            _vacancyIndexerService = vacancyIndexerService;
         }
 
         public Task CheckScheduleQueue()
@@ -31,7 +35,9 @@
 
             if (latestScheduledMessage != null)
             {
+                _vacancyIndexerService.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
                 // TODO: Check Rabbit procesing queue - should not still be processing messages or there maybe a potential issue.
+
                 Logger.Info("Scheduled VacancyEtl Message Received at: {0}", DateTime.Now);
                 _vacancySummaryProcessor.QueueVacancyPages(latestScheduledMessage);
             }

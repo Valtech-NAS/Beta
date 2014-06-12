@@ -6,6 +6,5 @@
     {
         void QueueVacancyPages(StorageQueueMessage scheduledQueueMessage);
         void QueueVacancySummaries(VacancySummaryPage vacancySummaryPage);
-        void QueueVacancySummaryCleanUp(VacancySummaryPage lastSummaryPage);
     }
 }

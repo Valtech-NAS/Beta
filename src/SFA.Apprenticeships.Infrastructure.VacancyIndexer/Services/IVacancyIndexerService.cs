@@ -5,22 +5,26 @@
 
     public interface IVacancyIndexerService
     {
+        /// <summary>
+        /// Indexes the vacancy summary to an elasticsearch index.
+        /// The index the summary is indexed to should not be referenced by anything.
+        /// See <see cref="SwapIndex"/> for more details.
+        /// </summary>
+        /// <param name="vacancySummaryToIndex"></param>
         void Index(VacancySummaryUpdate vacancySummaryToIndex);
 
         /// <summary>
-        /// Returns the number of items in the index that are not indexed 
-        /// with the <param name="updateReference"></param> supplied.
+        /// Creates an index to be used for the latest update 
+        /// of vacancy summary information.
         /// </summary>
-        /// <param name="updateReference"></param>
-        /// <returns></returns>
-        int VacanciesWithoutUpdateReference(Guid updateReference);
+        /// <param name="scheduledRefreshDateTime"></param>
+        void CreateScheduledIndex(DateTime scheduledRefreshDateTime);
 
         /// <summary>
-        /// Deletes all vacancies where the <param name="updateReference"></param> does
-        /// not match.
+        /// Swaps any existing aliases used for serving vacacny summary data
+        /// to use the new index that contains the latest indexed data.
         /// </summary>
-        /// <param name="updateReference"></param>
-        /// <returns></returns>
-        void ClearObsoleteVacancie(Guid updateReference);
+        /// <param name="scheduledRefreshDateTime"></param>
+        void SwapIndex(DateTime scheduledRefreshDateTime);
     }
 }
