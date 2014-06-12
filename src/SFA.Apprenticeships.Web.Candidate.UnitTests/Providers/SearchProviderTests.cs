@@ -81,7 +81,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers
             var test = searchProvider.FindVacancies(search, 10);
 
             test.Should().NotBeNull();
-            test.Pages(pageSize).Should().Be(10);
+            test.Pages.Should().Be(10);
             test.NextPage.Should().Be(2);
             test.PrevPage.Should().Be(1);
             test.TotalHits.Should().Be(100);
