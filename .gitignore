@@ -6,6 +6,9 @@
 *.user
 *.sln.docstates
 
+# Orig files from merge conflicts
+*.orig
+
 # Build results
 
 [Dd]ebug/
