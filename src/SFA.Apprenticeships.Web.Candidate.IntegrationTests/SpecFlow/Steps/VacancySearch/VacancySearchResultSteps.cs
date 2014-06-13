@@ -42,12 +42,12 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vaca
             ThenIExpectToSeeSearchResults();
         }
 
-        [Then(@"I expect to see the '(.*)' page of results")]
-        public void ThenIExpectToSeeThePageOfResults(string p0)
+        [Then(@"I expect to see the '(.*)' page of '(.*)' results")]
+        public void ThenIExpectToSeeThePageOfResults(string p0, int count)
         {
             if (p0 == "next")
             {
-                CheckNavigationLinks(10, 1, 3);
+                CheckNavigationLinks(count, 1, 3);
             }
         }
 

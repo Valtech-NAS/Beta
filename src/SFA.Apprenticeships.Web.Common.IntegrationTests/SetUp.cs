@@ -19,7 +19,8 @@
         [TearDown]
         public virtual void AfterAllTests()
         {
-            var driverProcesses = Process.GetProcesses().Where(pr => pr.ProcessName == "chromedriver" || pr.ProcessName == "firefox");
+            var driverProcesses =
+                Process.GetProcesses().Where(pr => pr.ProcessName == "chromedriver" || pr.ProcessName == "firefox");
 
             foreach (var process in driverProcesses)
             {
@@ -29,7 +30,11 @@
                 }
                 catch (Exception ex)
                 {
-                    Console.Write("Error killing Process: {0}\nError: {1}\nStacktrace: {2}", process.ProcessName, ex.Message, ex.StackTrace);
+                    Console.Write(
+                        "Error killing Process: {0}\nError: {1}\nStacktrace: {2}", 
+                        process.ProcessName,
+                        ex.Message, 
+                        ex.StackTrace);
                 }
             }
         }

@@ -22,11 +22,5 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages
             I.Assert.Exists(".global-header__title").Text(PageTitle);
             I.Assert.Exists(".heading-xlarge").Text(Heading);
         }
-
-        public void GoToPage()
-        {
-            //Go();
-            Verify();
-        }
     }
 }

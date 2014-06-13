@@ -123,7 +123,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 21
  testRunner.And("I navigate to the next page of \'10\' results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 22
- testRunner.Then("I expect to see the \'next\' page of results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I expect to see the \'next\' page of \'10\' results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -13,9 +13,8 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vaca
         [Given(@"I am a candidate with preferences")]
         public void GivenIAmACandidateWithPreferences(Table table)
         {
-            Page = Pages.Get<VacancySearchIndexPage>().Go();
-            
-            Page.GoToPage();
+            Page = Pages.Get<VacancySearchIndexPage>().Go();        
+            Page.Verify();
 
             table.RowCount.Should().Be(1);
             EnterCandidateCriteria(table.Rows[0]["Location"], table.Rows[0]["Distance"]);

@@ -19,4 +19,4 @@ Scenario: View apprenticeships in my area - next page
 	And I have searched for vacancies
 	When I see my first '10' search results
 	And I navigate to the next page of '10' results
-	Then I expect to see the 'next' page of results
+	Then I expect to see the 'next' page of '10' results
