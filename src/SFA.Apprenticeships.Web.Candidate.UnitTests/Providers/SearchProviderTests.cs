@@ -69,11 +69,11 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers
             _vacancySearchProvider.Setup(
                 x => x.FindVacancies(
                     It.IsAny<string>(),
-                    It.IsAny<string>(),
                     It.IsAny<Location>(),
                     1,
                     pageSize,
-                    It.IsAny<int>())).Returns(results);
+                    It.IsAny<int>(),
+                    VacancySortType.Distance)).Returns(results);
 
             var search = new VacancySearchViewModel { Location = "Test", Longitude = 0d, Latitude = 0d, PageNumber = 1, WithinDistance = 2 };
 
