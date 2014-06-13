@@ -14,6 +14,7 @@
             Latitude = viewModel.Latitude;
             WithinDistance = viewModel.WithinDistance;
             PageNumber = viewModel.PageNumber;
+            SortType = viewModel.SortType;
         }
 
         private int _pageNumber = 1;
