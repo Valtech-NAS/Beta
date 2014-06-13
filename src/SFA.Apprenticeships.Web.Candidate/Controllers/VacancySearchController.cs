@@ -24,17 +24,26 @@
             _searchProvider = searchProvider;
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
             PopulateDistances();
-            return View();
+            return View(new VacancySearchViewModel { WithinDistance = 2 });
         }
 
+        [HttpGet]
+        public ActionResult Clear()
+        {
+            return RedirectToAction("index");
+        }
+
+        [HttpGet]
         public ActionResult Search(VacancySearchResponseViewModel searchViewModel)
         {
             return RedirectToAction("results", searchViewModel.VacancySearch);
         }
 
+        [HttpGet]
         public ActionResult Results(VacancySearchViewModel searchViewModel)
         {
             PopulateDistances(searchViewModel.WithinDistance);
@@ -69,6 +78,7 @@
             return View("results", vacancySearchResponseViewModel);
         }
 
+        [HttpGet]
         public ActionResult Location(string term)
         {
             var matches = _searchProvider.FindLocation(term);

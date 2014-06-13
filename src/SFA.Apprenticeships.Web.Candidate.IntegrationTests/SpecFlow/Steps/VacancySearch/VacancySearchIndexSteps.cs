@@ -1,33 +1,72 @@
 ﻿
 namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.VacancySearch
 {
+    using FluentAssertions;
+    using SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages;
+    using SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Common;
+    using Specflow.FluentAutomation.Ext;
     using TechTalk.SpecFlow;
 
     [Binding]
-    public class VacancySearchIndexSteps
+    public class VacancySearchIndexSteps : CommonSteps
     {
-        [Then(@"I expect to see search results")]
-        public void ThenIExpectToSeeSearchResults()
+        [Given(@"I am a candidate with preferences")]
+        public void GivenIAmACandidateWithPreferences(Table table)
+        {
+            Page = Pages.Get<VacancySearchIndexPage>().Go();
+            
+            Page.GoToPage();
+
+            table.RowCount.Should().Be(1);
+            EnterCandidateCriteria(table.Rows[0]["Location"], table.Rows[0]["Distance (miles)"]);
+        }
+
+        [When(@"I search for vancancies")]
+        [Given(@"I have searched for vancancies")]
+        public void WhenISearchForVancancies()
+        {
+            ClickButton("Search");
+        }
+
+        [Then(@"I expect to see a validation message")]
+        public void ThenIExpectToSeeAValidationMessage(Table table)
         {
             ScenarioContext.Current.Pending();
+        }
+
+        [Given(@"I enhance my search with the following '(.*)'")]
+        public void GivenIEnhanceMySearchWithTheFollowing(string keywords)
+        {
+            Page.I.Enter(keywords).In("#keywords");
         }
 
         [When(@"I clear my search criteria")]
         public void WhenIClearMySearchCriteria()
         {
-            ScenarioContext.Current.Pending();
+            ClickLink("Clear");
         }
 
         [Then(@"I expect to see the search page")]
         public void ThenIExpectToSeeTheSearchPage()
         {
-            ScenarioContext.Current.Pending();
+            Page.Verify();
         }
 
         [Then(@"all search fields are reset")]
         public void ThenAllSearchFieldsAreReset()
         {
-            ScenarioContext.Current.Pending();
+            Page.I.Assert.Text(string.Empty).In("#keywords");
+            Page.I.Assert.Text(string.Empty).In("#location");
+            Page.I.Assert.Value("2").In("#loc-within");
+        }
+
+        public void EnterCandidateCriteria(string location, string range)
+        {
+            Page.I
+                .Enter(location).In("#location")
+                .Wait(1)
+                .Click("ul.ui-autocomplete li.ui-menu-item:first")
+                .Select(range).From("#loc-within");
         }
     }
 }

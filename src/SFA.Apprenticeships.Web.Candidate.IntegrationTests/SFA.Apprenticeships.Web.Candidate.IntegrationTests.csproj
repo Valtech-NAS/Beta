@@ -131,6 +131,7 @@
     <Compile Include="Fluent\FluentTestShould.cs" />
     <Compile Include="Pages\HomePage.cs" />
     <Compile Include="Pages\IPageUnderTest.cs" />
+    <Compile Include="Pages\VacancySearchResultPage.cs" />
     <Compile Include="Pages\VacancySearchIndexPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SetUp.cs" />
@@ -151,9 +152,8 @@
     </Compile>
     <Compile Include="SpecFlow\Hooks\BeforeAllScenarios.cs" />
     <Compile Include="SpecFlow\Steps\Common\CommonSteps.cs" />
-    <Compile Include="SpecFlow\Steps\Common\VacancySearchCommonSteps.cs" />
-    <Compile Include="SpecFlow\Steps\Home\HomePageSteps.cs" />
     <Compile Include="SpecFlow\Steps\VacancySearch\VacancySearchIndexSteps.cs" />
+    <Compile Include="SpecFlow\Steps\Home\HomePageSteps.cs" />
     <Compile Include="SpecFlow\Steps\VacancySearch\VacancySearchResultSteps.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -104,8 +104,7 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Search for apprenticeships - clear my criteria")]
-        [NUnit.Framework.TestCaseAttribute("", null)]
-        [NUnit.Framework.TestCaseAttribute("admin", null)]
+        [NUnit.Framework.TestCaseAttribute("admin and other keywords", null)]
         public virtual void SearchForApprenticeships_ClearMyCriteria(string search_Keywords, string[] exampleTags)
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Search for apprenticeships - clear my criteria", exampleTags);
@@ -135,7 +134,7 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void SearchForApprenticeships_UnspecifiedLocation()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Search for apprenticeships - unspecified location", ((string[])(null)));
-#line 31
+#line 30
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -144,9 +143,9 @@ this.ScenarioSetup(scenarioInfo);
             table3.AddRow(new string[] {
                         "Coventry",
                         "5 miles"});
-#line 32
+#line 31
  testRunner.Given("I am a candidate with preferences", ((string)(null)), table3, "Given ");
-#line 35
+#line 34
  testRunner.When("I search for vancancies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -155,7 +154,7 @@ this.ScenarioSetup(scenarioInfo);
             table4.AddRow(new string[] {
                         "location",
                         "something to say about it"});
-#line 36
+#line 35
  testRunner.Then("I expect to see a validation message", ((string)(null)), table4, "Then ");
 #line hidden
             this.ScenarioCleanup();

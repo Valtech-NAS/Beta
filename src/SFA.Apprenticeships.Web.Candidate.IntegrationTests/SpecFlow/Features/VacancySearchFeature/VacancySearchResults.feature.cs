@@ -86,8 +86,8 @@ this.ScenarioSetup(scenarioInfo);
                         "Location",
                         "Distance (miles)"});
             table1.AddRow(new string[] {
-                        "Coventry",
-                        "5"});
+                        "Warwick",
+                        "10 miles"});
 #line 8
  testRunner.Given("I am a candidate with preferences", ((string)(null)), table1, "Given ");
 #line 11
@@ -95,9 +95,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 12
  testRunner.When("I see my first \'10\' search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 13
- testRunner.Then("I expect the search results to be sorted by \'distance\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 14
- testRunner.And("I expect to be able to navigate to the next page of results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("I expect the search results to be sorted by \'sort-distance\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -107,24 +105,24 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void ViewApprenticeshipsInMyArea_NextPage()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("View apprenticeships in my area - next page", ((string[])(null)));
-#line 16
+#line 15
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Location",
                         "Distance (miles)"});
             table2.AddRow(new string[] {
-                        "Coventry",
-                        "5"});
-#line 17
+                        "Warwick (Warwickshire)",
+                        "10 miles"});
+#line 16
  testRunner.Given("I am a candidate with preferences", ((string)(null)), table2, "Given ");
-#line 20
+#line 19
  testRunner.And("I have searched for vancancies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 21
+#line 20
  testRunner.When("I see my first \'10\' search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 21
+ testRunner.And("I navigate to the next page of \'10\' results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 22
- testRunner.And("I navigate to the next page of results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 23
  testRunner.Then("I expect to see the \'next\' page of results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

@@ -7,17 +7,16 @@ Feature: VacancySearchResults
 Scenario: View apprenticeships in my area
 	Given I am a candidate with preferences
 	| Location | Distance (miles) |
-	| Coventry | 5                |
+	| Warwick  | 10 miles         |
 	And I have searched for vancancies
 	When I see my first '10' search results
-	Then I expect the search results to be sorted by 'distance'
-	And I expect to be able to navigate to the next page of results
+	Then I expect the search results to be sorted by 'sort-distance'
 
 Scenario: View apprenticeships in my area - next page
 	Given I am a candidate with preferences
-	| Location | Distance (miles) |
-	| Coventry | 5                |
+	| Location               | Distance (miles) |
+	| Warwick (Warwickshire) | 10 miles         |
 	And I have searched for vancancies
 	When I see my first '10' search results
-	And I navigate to the next page of results
+	And I navigate to the next page of '10' results
 	Then I expect to see the 'next' page of results
