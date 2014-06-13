@@ -18,7 +18,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vaca
             Page.GoToPage();
 
             table.RowCount.Should().Be(1);
-            EnterCandidateCriteria(table.Rows[0]["Location"], table.Rows[0]["Distance (miles)"]);
+            EnterCandidateCriteria(table.Rows[0]["Location"], table.Rows[0]["Distance"]);
         }
 
         [When(@"I search for vacancies")]

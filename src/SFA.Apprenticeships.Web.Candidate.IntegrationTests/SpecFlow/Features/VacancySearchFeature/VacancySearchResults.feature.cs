@@ -84,7 +84,7 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Location",
-                        "Distance (miles)"});
+                        "Distance"});
             table1.AddRow(new string[] {
                         "Warwick",
                         "10 miles"});
@@ -110,9 +110,9 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Location",
-                        "Distance (miles)"});
+                        "Distance"});
             table2.AddRow(new string[] {
-                        "Warwick (Warwickshire)",
+                        "Warwick",
                         "10 miles"});
 #line 16
  testRunner.Given("I am a candidate with preferences", ((string)(null)), table2, "Given ");
