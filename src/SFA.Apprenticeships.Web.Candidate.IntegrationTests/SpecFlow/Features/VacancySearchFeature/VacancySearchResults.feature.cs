@@ -121,9 +121,39 @@ this.ScenarioSetup(scenarioInfo);
 #line 20
  testRunner.When("I see my first \'10\' search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 21
- testRunner.And("I navigate to the next page of \'10\' results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And("I have paged through the next \'1\' pages", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "* ");
 #line 22
- testRunner.Then("I expect to see the \'next\' page of \'10\' results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I expect to see the results for page \'2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("View apprenticeships in my area - prev page")]
+        public virtual void ViewApprenticeshipsInMyArea_PrevPage()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("View apprenticeships in my area - prev page", ((string[])(null)));
+#line 24
+this.ScenarioSetup(scenarioInfo);
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Location",
+                        "Distance"});
+            table3.AddRow(new string[] {
+                        "Warwick",
+                        "10 miles"});
+#line 25
+ testRunner.Given("I am a candidate with preferences", ((string)(null)), table3, "Given ");
+#line 28
+ testRunner.And("I have searched for vacancies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 29
+  testRunner.And("I see my first \'10\' search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "* ");
+#line 30
+  testRunner.And("I have paged through the next \'3\' pages", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "* ");
+#line 31
+ testRunner.When("I have paged through the previous \'2\' pages", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 32
+ testRunner.Then("I expect to see the results for page \'2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

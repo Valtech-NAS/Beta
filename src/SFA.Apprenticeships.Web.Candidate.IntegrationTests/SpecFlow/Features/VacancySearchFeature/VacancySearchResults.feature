@@ -6,17 +6,27 @@ Feature: VacancySearchResults
 
 Scenario: View apprenticeships in my area
 	Given I am a candidate with preferences
-	| Location | Distance |
-	| Warwick  | 10 miles |
+		| Location | Distance |
+		| Warwick  | 10 miles |
 	And I have searched for vacancies
 	When I see my first '10' search results
 	Then I expect the search results to be sorted by 'sort-distance'
 
 Scenario: View apprenticeships in my area - next page
 	Given I am a candidate with preferences
-	| Location | Distance |
-	| Warwick  | 10 miles |
+		| Location | Distance |
+		| Warwick  | 10 miles |
 	And I have searched for vacancies
 	When I see my first '10' search results
-	And I navigate to the next page of '10' results
-	Then I expect to see the 'next' page of '10' results
+		* I have paged through the next '1' pages
+	Then I expect to see the results for page '2'
+
+Scenario: View apprenticeships in my area - prev page
+	Given I am a candidate with preferences
+		| Location | Distance |
+		| Warwick  | 10 miles |
+	And I have searched for vacancies
+		* I see my first '10' search results
+		* I have paged through the next '3' pages
+	When I have paged through the previous '2' pages
+	Then I expect to see the results for page '2'

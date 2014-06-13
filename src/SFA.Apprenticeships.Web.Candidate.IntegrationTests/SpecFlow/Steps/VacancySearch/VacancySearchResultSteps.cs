@@ -17,10 +17,11 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vaca
         }
 
         [When(@"I see my first '(.*)' search results")]
+        [Given(@"I see my first '(.*)' search results")]
         public void WhenISeeMyFirstSearchResults(int count)
         {
             ThenIExpectToSeeSearchResults();
-            CheckNavigationLinks(count, -1, 2);
+            CheckNavigationLinks(count, 1);
         }
 
         [Then(@"I expect the search results to be sorted by '(.*)'")]
@@ -32,42 +33,67 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vaca
         [Then(@"I expect to be able to navigate to the next page of results")]
         public void ThenIExpectToBeAbleToNavigateToTheNextPageOfResults()
         {
-            CheckNavigationLinks(10, 1, 2);
+            CheckNavigationLinks(10, 1);
         }
 
-        [When(@"I navigate to the next page of '(.*)' results")]
-        public void WhenINavigateToTheNextPageOfResults(int count)
+        [Given(@"I have paged through the next '(.*)' pages")]
+        [When(@"I have paged through the next '(.*)' pages")]
+        public void GivenIHavePagedThroughTheNextPages(int pages)
+        {
+            for (var i = 0; i < pages; i++)
+            {
+                WhenINavigateToTheNextPageOfResults(-1);
+            }
+        }
+
+        [When(@"I have paged through the previous '(.*)' pages")]
+        public void WhenIHavePagedThroughThePreviousPages(int pages)
+        {
+            for (var i = 0; i < pages; i++)
+            {
+                WhenINavigateToThePreviousPageOfResults(-1);
+            }
+        }
+
+        [Then(@"I expect to see the results for page '(.*)'")]
+        public void ThenIExpectToSeeTheResultsForPage(int pageNumber)
+        {
+            CheckNavigationLinks(-1, pageNumber);
+        }
+
+        private void WhenINavigateToTheNextPageOfResults(int count)
         {
             ClickLink("a.page-navigation__btn.next", string.Empty);
             ThenIExpectToSeeSearchResults();
         }
 
-        [Then(@"I expect to see the '(.*)' page of '(.*)' results")]
-        public void ThenIExpectToSeeThePageOfResults(string p0, int count)
+        private void WhenINavigateToThePreviousPageOfResults(int count)
         {
-            if (p0 == "next")
-            {
-                CheckNavigationLinks(count, 1, 3);
-            }
+            ClickLink("a.page-navigation__btn.previous", string.Empty);
+            ThenIExpectToSeeSearchResults();
         }
 
-        private void CheckNavigationLinks(int count, int prevPage, int nextPage)
+        private void CheckNavigationLinks(int count, int pageNumber)
         {
-            Page.I.Assert.Count(count).Of("li.search-results__item");
+            if (count == -1)
+            {
+                Page.I.Assert.Exists("li.search-results__item");
+            }
+            else
+            {
+                Page.I.Assert.Count(count).Of("li.search-results__item");
+            }
 
-            if (prevPage != -1)
+            if (pageNumber > 1)
             {
                 Page.I.Assert
-                    .Text(x => x.StartsWith(prevPage.ToString()))
+                    .Text(x => x.StartsWith((pageNumber - 1).ToString()))
                     .In("a.page-navigation__btn.previous span.counter");
             }
 
-            if (nextPage != -1)
-            {
-                Page.I.Assert
-                    .Text(x => x.StartsWith(nextPage.ToString()))
-                    .In("a.page-navigation__btn.next span.counter");
-            }
+            Page.I.Assert
+                .Text(x => x.StartsWith((pageNumber + 1).ToString()))
+                .In("a.page-navigation__btn.next span.counter");
         }
     }
 }
