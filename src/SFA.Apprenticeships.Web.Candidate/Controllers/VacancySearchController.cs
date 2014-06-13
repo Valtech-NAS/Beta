@@ -4,10 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
-    using SFA.Apprenticeships.Web.Candidate.Providers;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
-    using SFA.Apprenticeships.Web.Common.Framework;
+    using Application.Interfaces.Search;
+    using Application.Interfaces.Vacancy;
+    using Providers;
+    using ViewModels.VacancySearch;
+    using Common.Framework;
 
     public class VacancySearchController : Controller
     {
@@ -29,6 +30,7 @@
         {
             PopulateDistances();
             return View(new VacancySearchViewModel { WithinDistance = 2 });
+            PopulateSortType();
         }
 
         [HttpGet]
@@ -47,6 +49,7 @@
         public ActionResult Results(VacancySearchViewModel searchViewModel)
         {
             PopulateDistances(searchViewModel.WithinDistance);
+            PopulateSortType(searchViewModel.SortType);
 
             var location = new LocationViewModel(searchViewModel); 
             if (!searchViewModel.Latitude.HasValue || !searchViewModel.Longitude.HasValue)
@@ -91,6 +94,8 @@
             throw new NotImplementedException("Non-js not yet implemented!");
         }
 
+        #region Dropdown View Bag Helpers
+
         private void PopulateDistances(int selectedValue = 2)
         {
             var distances = new SelectList(
@@ -112,5 +117,24 @@
 
             ViewBag.Distances = distances;
         }
+
+        private void PopulateSortType(VacancySortType selectedSortType = VacancySortType.Distance)
+        {
+            var sortTypes = new SelectList(
+                new[] 
+                        {
+                            new { SortType = VacancySortType.Distance, Name = "Distance" },
+                            new { SortType = VacancySortType.ClosingDate, Name = "Closing Date" },
+                            //new { SortType = VacancySortType.Relevancy, Name = "Relevancy (Test)" }
+                        },
+                "SortType",
+                "Name",
+                selectedSortType
+            );
+
+            ViewBag.SortTypes = sortTypes;
+        }
+
+        #endregion
     }
 }

@@ -6,7 +6,8 @@
     using Application.Interfaces.Vacancy;
     using Domain.Entities.Location;
     using Domain.Interfaces.Mapping;
-    using Web.Candidate.ViewModels.VacancySearch;
+    using Controllers;
+    using ViewModels.VacancySearch;
 
     public class SearchProvider : ISearchProvider
     {
@@ -37,7 +38,7 @@
         {
             var searchLocation = _mapper.Map<VacancySearchViewModel, Location>(search);
 
-            var searchResponse = _vacancySearchProvider.FindVacancies(search.JobTitle, search.Keywords, searchLocation, search.PageNumber, pageSize, search.WithinDistance);
+            var searchResponse = _vacancySearchProvider.FindVacancies(search.Keywords, searchLocation, search.PageNumber, pageSize, search.WithinDistance, search.SortType);
 
             var vacancySearchResponseViewModel = _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(searchResponse);
             vacancySearchResponseViewModel.PageSize = pageSize;

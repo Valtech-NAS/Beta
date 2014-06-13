@@ -40,14 +40,14 @@
         {
             // arrange
             var service = ObjectFactory.GetInstance<ILocationLookupProvider>();
-            const string term = "Cheyles";
+            const string term = "Chellsmore";
 
             // act
             var results = service.FindLocation(term).ToList();
 
             // assert
-            Assert.AreEqual(11, results.Count);
-            Assert.AreEqual("Chesley (Kent)", results.First().Name);
+            Assert.AreEqual(1, results.Count);
+            Assert.AreEqual("Cheylesmore", results.First().Name);
         }
 
         [Test]
@@ -61,7 +61,7 @@
             var results = service.FindLocation(term, 250).ToList();
 
             // assert
-            Assert.AreEqual(88, results.Count);
+            Assert.IsTrue(results.Count > 10);
             Assert.AreEqual("Warwick (Warwickshire)", results.First().Name);
         }
 
@@ -76,7 +76,7 @@
             var results = service.FindLocation(term, 250).ToList();
 
             // assert
-            Assert.AreEqual(240, results.Count);
+            Assert.AreEqual(241, results.Count);
         }
     }
 }

@@ -20,7 +20,7 @@
                 <div class="inl-block-wrapper">
                     <ul class="list-text btm-align width-all-2-3">
                         <li><b>Distance:</b> @vacancy.DistanceAsString miles</li>
-                        <li><b>Closing date:</b> @vacancy.ClosingDate</li>
+                        <li><b>Closing date:</b> @vacancy.ClosingDate.ToUniversalTime().ToString("dd MMM yy")</li>
                     </ul>
                     <div class="btm-align width-all-1-3">
                         <div class="search-save">

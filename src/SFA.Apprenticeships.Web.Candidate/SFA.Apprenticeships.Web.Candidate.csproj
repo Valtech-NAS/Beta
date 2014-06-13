@@ -212,6 +212,7 @@
     <Content Include="Content\_assets\js\nas\locationAutocomplete.js" />
     <Content Include="Content\_assets\js\nas\pagination.js" />
     <Content Include="Content\_assets\img\arrow-sprite-2x.png" />
+    <Content Include="Content\_assets\js\vendor\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="Content\_assets\js\vendor\zxcvbn-async.js" />
     <Content Include="Content\_assets\js\vendor\zxcvbn.js" />
     <Content Include="packages.config" />
