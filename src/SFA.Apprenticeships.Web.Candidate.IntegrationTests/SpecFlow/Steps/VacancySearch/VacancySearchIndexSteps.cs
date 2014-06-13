@@ -21,9 +21,9 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vaca
             EnterCandidateCriteria(table.Rows[0]["Location"], table.Rows[0]["Distance (miles)"]);
         }
 
-        [When(@"I search for vancancies")]
-        [Given(@"I have searched for vancancies")]
-        public void WhenISearchForVancancies()
+        [When(@"I search for vacancies")]
+        [Given(@"I have searched for vacancies")]
+        public void WhenISearchForvacancies()
         {
             ClickButton("Search");
         }

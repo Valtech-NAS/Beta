@@ -86,16 +86,16 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Location",
-                        "Within_Distance"});
+                        "Distance (miles)"});
             table1.AddRow(new string[] {
-                        "Coventry",
-                        "5 miles"});
+                        "Warwick",
+                        "10 miles"});
 #line 8
  testRunner.Given("I am a candidate with preferences", ((string)(null)), table1, "Given ");
 #line 11
  testRunner.And(string.Format("I enhance my search with the following \'{0}\'", search_Keywords), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
- testRunner.When("I search for vancancies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I search for vacancies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 13
  testRunner.Then("I expect to see search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -113,10 +113,10 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Location",
-                        "Within_Distance"});
+                        "Distance (miles)"});
             table2.AddRow(new string[] {
-                        "Coventry",
-                        "5 miles"});
+                        "Warwick",
+                        "10 miles"});
 #line 20
  testRunner.Given("I am a candidate with preferences", ((string)(null)), table2, "Given ");
 #line 23
@@ -139,14 +139,14 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "Location",
-                        "Within_Distance"});
+                        "Distance (miles)"});
             table3.AddRow(new string[] {
-                        "Coventry",
-                        "5 miles"});
+                        "Warwick",
+                        "10 miles"});
 #line 31
  testRunner.Given("I am a candidate with preferences", ((string)(null)), table3, "Given ");
 #line 34
- testRunner.When("I search for vancancies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I search for vacancies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                         "field_name",

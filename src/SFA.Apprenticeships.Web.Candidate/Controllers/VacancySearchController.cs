@@ -29,8 +29,8 @@
         public ActionResult Index()
         {
             PopulateDistances();
-            return View(new VacancySearchViewModel { WithinDistance = 2 });
             PopulateSortType();
+            return View(new VacancySearchViewModel { WithinDistance = 2 });
         }
 
         [HttpGet]

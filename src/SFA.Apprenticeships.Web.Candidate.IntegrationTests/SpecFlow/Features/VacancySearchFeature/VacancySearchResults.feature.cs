@@ -91,7 +91,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 8
  testRunner.Given("I am a candidate with preferences", ((string)(null)), table1, "Given ");
 #line 11
- testRunner.And("I have searched for vancancies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I have searched for vacancies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
  testRunner.When("I see my first \'10\' search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 13
@@ -117,7 +117,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 16
  testRunner.Given("I am a candidate with preferences", ((string)(null)), table2, "Given ");
 #line 19
- testRunner.And("I have searched for vancancies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I have searched for vacancies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 20
  testRunner.When("I see my first \'10\' search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 21
