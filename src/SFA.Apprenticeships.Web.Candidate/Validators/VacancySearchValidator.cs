@@ -31,7 +31,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Validators
         }
     }
 
-    public static class VacancySearchValidatorValidatorRules
+    public static class VacancySearchValidatorRules
     {
         public static void AddBrowserRules(this AbstractValidator<VacancySearchViewModel> validator)
         {

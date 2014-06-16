@@ -28,7 +28,17 @@
                 if (settings.latitude != null) {
                     $(settings.latitude).val(longLat.Latitude);
                 }
-            }
+            },
+            change: function(event, ui) {
+                if (ui.item == null) {
+                    if (settings.longitude != null) {
+                        $(settings.longitude).val(null);
+                    }
+                    if (settings.latitude != null) {
+                        $(settings.latitude).val(null);
+                    }
+                }
+            },
         });
 
         function getLocationResults(callback, term) {

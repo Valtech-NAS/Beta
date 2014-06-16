@@ -25,6 +25,7 @@
                 @Html.TextBoxFor(m => m.Location, new { @class = "form-control", @id = "location", @name = "Location" })
                 @Html.HiddenFor(m => m.Latitude, new { @id = "latitude", @name = "Latitude" })
                 @Html.HiddenFor(m => m.Longitude, new { @id = "longitude", @name = "Longitude" })
+                @*@Html.ValidationMessageFor(x => x.Location)*@
             </div>
             <div class="form-group">
                 <label for="loc-within" class="form-label">Within</label>

@@ -6,12 +6,10 @@
     using System.Web.Mvc;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancy;
-    using FluentValidation;
+    using Common.Framework;
     using Providers;
     using SFA.Apprenticeships.Web.Candidate.Validators;
-    using SFA.Apprenticeships.Web.Common.Validations;
     using ViewModels.VacancySearch;
-    using Common.Framework;
 
     public class VacancySearchController : Controller
     {
@@ -53,15 +51,13 @@
         [HttpGet]
         public ActionResult Results(VacancySearchViewModel searchViewModel)
         {
-            if (!_validator.Validate(searchViewModel, ModelState))
-            {
-                PopulateDistances();
-                PopulateSortType();
-                return View("index", searchViewModel);
-            }
-
             PopulateDistances(searchViewModel.WithinDistance);
             PopulateSortType(searchViewModel.SortType);
+
+            if (!_validator.Validate(searchViewModel, ModelState))
+            {
+                return View("index", searchViewModel);
+            }
 
             var location = new LocationViewModel(searchViewModel); 
             if (!searchViewModel.Latitude.HasValue || !searchViewModel.Longitude.HasValue)

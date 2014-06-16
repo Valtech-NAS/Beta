@@ -4,7 +4,7 @@
     using FluentValidation.Attributes;
     using SFA.Apprenticeships.Web.Candidate.Validators;
 
-    [Validator(typeof(VacancySearchValidator))]
+    //[Validator(typeof(VacancySearchValidator))]
     public class VacancySearchViewModel
     {
         public VacancySearchViewModel() { }
