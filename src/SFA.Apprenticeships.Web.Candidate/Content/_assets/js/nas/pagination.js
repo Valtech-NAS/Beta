@@ -7,6 +7,9 @@ $(document).ready(function(){
 
     //Needs off/on to prevent multiple firing as binds additional handlers on each load.
     $("#pagedList").off("click", "a.page-navigation__btn").on("click", "a.page-navigation__btn", function (e) {
+        if (!Modernizr.history) {
+            return true;
+        }
         e.preventDefault();
         console.log(e);
         loadResultsPage(this.href, true);
@@ -37,8 +40,8 @@ $(document).ready(function(){
     }
 
     $(window).on('popstate', function (event) {
-        console.log("Popping url: " + event.originalEvent.state);
-        if (event.originalEvent && event.originalEvent.state) {
+        if (Modernizr.history) {
+            console.log("Popping url: " + event.originalEvent.state);
             if (event.originalEvent.state.isInitial) {
                 window.location = event.originalEvent.state.url;
             } else {
@@ -49,8 +52,11 @@ $(document).ready(function(){
     });
 
     $(window).on('load', function() {
-        console.log("Pushing start url: " + window.location.href);
-        history.replaceState({ isInitial: true, url: window.location.href }, "SFA Apprenticeships", window.location.href);
+        if (Modernizr.history) {
+            console.log("Pushing start url: " + window.location.href);
+            history.replaceState({ isInitial: true, url: window.location.href }, "SFA Apprenticeships", window.location.href);
+        } else {
+            $('html,body').stop().animate({ scrollTop: 0 });
+        }
     });
-
 });
