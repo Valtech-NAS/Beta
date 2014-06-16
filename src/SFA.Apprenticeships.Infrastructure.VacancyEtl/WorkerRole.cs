@@ -1,3 +1,8 @@
+using SFA.Apprenticeships.Application.VacancyEtl;
+using SFA.Apprenticeships.Application.VacancyEtl.Entities;
+using SFA.Apprenticeships.Infrastructure.Elastic.Common.IoC;
+using SFA.Apprenticeships.Infrastructure.VacancyIndexer.Services;
+
 namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 {
     using System;
@@ -71,6 +76,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                     x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<LegacyWebServicesRegistry>();
                     x.AddRegistry<VacancyEtlRegistry>();
+                    x.AddRegistry<ElasticsearchCommonRegistry>();
                 });
 
                 Logger.Debug("IoC initialized");
