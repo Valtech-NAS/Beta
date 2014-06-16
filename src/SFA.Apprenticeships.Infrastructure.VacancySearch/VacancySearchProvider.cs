@@ -84,18 +84,10 @@
                     s.Query(q =>
                     {
                         BaseQuery query = q.FuzzyLikeThis(flt => flt
-                                                .OnFields(new[] {"title"})
-                                                .LikeText(keywords)
-                                                .Boost(2)
-                                                .PrefixLength(1)
-                                                .MinimumSimilarity(2))
-                                            ||
-                                            q.FuzzyLikeThis(flt => flt
-                                                    .OnFields(new[] { "description" })
-                                                    .LikeText(keywords)
-                                                    .Boost(1)
-                                                    .PrefixLength(1)
-                                                    .MinimumSimilarity(2));
+                                            .OnFields(new[] { "title", "description", "employerName" })
+                                            .LikeText(keywords)
+                                            .PrefixLength(1)
+                                            .MinimumSimilarity(2));
                         return query;
                     });    
                 }
