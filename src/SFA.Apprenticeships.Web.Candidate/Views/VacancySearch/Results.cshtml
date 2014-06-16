@@ -19,8 +19,8 @@
             <fieldset class="search-filter">
                 <legend class="heading-medium mob-collpanel-trigger">Filter results</legend>
                 <div class="mob-collpanel toggle-content--mob">
-                    @Html.FormTextFor(m => m.VacancySearch.Keywords)
-                    @Html.FormTextFor(m => m.VacancySearch.Location)
+                    @Html.FormTextFor(m => m.VacancySearch.Keywords, hintText: "")
+                    @Html.FormTextFor(m => m.VacancySearch.Location, hintText: "")
                     
                     @* TODO::Create a form control for this. *@
                     <div class="form-group">

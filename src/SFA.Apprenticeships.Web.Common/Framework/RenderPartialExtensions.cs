@@ -127,7 +127,7 @@
             IDictionary<string, object> htmlAttributes)
         {
             var metadata = ModelMetadata.FromLambdaExpression(expression, html.ViewData);
-            var labelText = metadata.Description ?? hintText ?? string.Empty;
+            var labelText = hintText ?? metadata.Description ?? string.Empty;
             if (String.IsNullOrEmpty(labelText))
             {
                 return MvcHtmlString.Empty;
