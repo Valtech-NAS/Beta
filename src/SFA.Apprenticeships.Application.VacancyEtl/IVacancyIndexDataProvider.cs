@@ -8,6 +8,6 @@
     {
         int GetVacancyPageCount(VacancyLocationType vacancyLocationType);
 
-        IEnumerable<VacancySummary> GetVacancySummary(VacancyLocationType vacancyLocationType, int page);
+        IEnumerable<VacancySummary> GetVacancySummaries(VacancyLocationType vacancyLocationType, int page);
     }
 }

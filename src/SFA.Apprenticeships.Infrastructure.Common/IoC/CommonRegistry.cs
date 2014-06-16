@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.IoC
 {
+    using System.IO;
     using ActiveDirectory;
     using Configuration;
     using StructureMap.Configuration.DSL;

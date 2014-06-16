@@ -5,6 +5,7 @@
     public interface IVacancySummaryProcessor
     {
         void QueueVacancyPages(StorageQueueMessage scheduledQueueMessage);
+
         void QueueVacancySummaries(VacancySummaryPage vacancySummaryPage);
     }
 }

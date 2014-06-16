@@ -48,7 +48,7 @@
         public void ShouldReturnMappedCollectionFromGetVacancySummary()
         {
             var service = ObjectFactory.GetInstance<IVacancyIndexDataProvider>();
-            var result = service.GetVacancySummary(VacancyLocationType.NonNational, 1).ToList();
+            var result = service.GetVacancySummaries(VacancyLocationType.NonNational, 1).ToList();
 
             result.Should().NotBeNullOrEmpty();
             result.ForEach(r => r.VacancyLocationType.Should().Be(VacancyLocationType.NonNational));
