@@ -11,6 +11,7 @@
     <h2 class="subtitle">Search and apply for an Apprenticeship in England</h2>
 </div>
 <div class="grid-wrapper">
+    @Html.ValidationSummary(true)
     <section class="grid grid-2-3">
         @using(Html.BeginForm("results", "vacancysearch", FormMethod.Get)){
             <div class="form-group">

@@ -7,6 +7,7 @@
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancy;
     using Providers;
+    using SFA.Apprenticeships.Web.Common.Validations;
     using ViewModels.VacancySearch;
     using Common.Framework;
 
@@ -48,6 +49,13 @@
         [HttpGet]
         public ActionResult Results(VacancySearchViewModel searchViewModel)
         {
+            if (!Validate(searchViewModel))
+            {
+                PopulateDistances();
+                PopulateSortType();
+                return View("index", searchViewModel);
+            }
+
             PopulateDistances(searchViewModel.WithinDistance);
             PopulateSortType(searchViewModel.SortType);
 
@@ -136,5 +144,23 @@
         }
 
         #endregion
+
+        private bool Validate(VacancySearchViewModel model)
+        {
+            ModelState.Clear();
+            ValidatePage(model, ModelState);
+
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError(string.Empty, "Please enter a valid location and try again.");
+            }
+
+            return ModelState.IsValid;
+        }
+
+        private static void ValidatePage(VacancySearchViewModel model, ModelStateDictionary modelState)
+        {
+            model.ValidateModel(VacancySearchViewModel.GetValidator(), modelState);
+        }
     }
 }

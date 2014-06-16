@@ -1,7 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     using Application.Interfaces.Search;
+    using FluentValidation;
+    using FluentValidation.Attributes;
+    using SFA.Apprenticeships.Web.Candidate.Validators;
 
+    [Validator(typeof(VacancySearchValidator))]
     public class VacancySearchViewModel
     {
         public VacancySearchViewModel() { }
@@ -33,6 +37,11 @@
         {
             get { return _pageNumber; }
             set { _pageNumber = value; }
+        }
+
+        public static AbstractValidator<VacancySearchViewModel> GetValidator()
+        {
+            return new VacancySearchFullValidator();
         }
     }
 }
