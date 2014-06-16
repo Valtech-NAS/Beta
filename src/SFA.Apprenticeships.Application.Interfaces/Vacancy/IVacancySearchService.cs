@@ -9,9 +9,18 @@
         /// <summary>
         /// returns vacancies matching search criteria
         /// </summary>
+        /// <param name="keywords">keywords to be searched</param>
         /// <param name="location">location previously obtained from postcode or placename search</param>
+        /// <param name="pageNumber">current page</param>
+        /// <param name="pageSize">number of results per page</param>
         /// <param name="searchRadius">in miles</param>
+        /// <param name="sortType">the sort order for the results</param>
         /// <returns>0..* matching vacancies</returns>
-        SearchResults<VacancySummaryResponse> Search(string jobTitle, string keywords, Location location, int pageNumber, int pageSize, int searchRadius);
+        SearchResults<VacancySummaryResponse> Search(string keywords, 
+                                                        Location location, 
+                                                        int pageNumber, 
+                                                        int pageSize, 
+                                                        int searchRadius,
+                                                        VacancySortType sortType);
     }
 }

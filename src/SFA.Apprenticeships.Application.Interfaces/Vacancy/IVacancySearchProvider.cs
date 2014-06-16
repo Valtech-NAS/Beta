@@ -5,6 +5,11 @@
 
     public interface IVacancySearchProvider
     {
-        SearchResults<VacancySummaryResponse> FindVacancies(string jobTitle, string keywords, Location location, int pageNumber, int pageSize, int searchRadius);
+        SearchResults<VacancySummaryResponse> FindVacancies(string keywords, 
+                                                            Location location, 
+                                                            int pageNumber, 
+                                                            int pageSize, 
+                                                            int searchRadius,
+                                                            VacancySortType sortType);
     }
 }

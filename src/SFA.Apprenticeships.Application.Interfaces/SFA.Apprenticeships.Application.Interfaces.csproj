@@ -47,6 +47,7 @@
     <Compile Include="ReferenceData\IReferenceDataProvider.cs" />
     <Compile Include="ReferenceData\IReferenceDataService.cs" />
     <Compile Include="Search\SearchResults.cs" />
+    <Compile Include="Search\VacancySortType.cs" />
     <Compile Include="Vacancy\IVacancyDataProvider.cs" />
     <Compile Include="Vacancy\IVacancySearchProvider.cs" />
     <Compile Include="Vacancy\IVacancyDataService.cs" />
