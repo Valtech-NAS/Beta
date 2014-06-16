@@ -63,7 +63,7 @@
         {
             var summaryPage = new VacancySummaryPage { VacancyLocation = vacancyLocationType, PageNumber = vacanciesReturned, ScheduledRefreshDateTime = DateTime.Today };
 
-            _vacancyProviderMock.Setup(x => x.GetVacancySummary(vacancyLocationType, vacanciesReturned))
+            _vacancyProviderMock.Setup(x => x.GetVacancySummaries(vacancyLocationType, vacanciesReturned))
                 .Returns((VacancyLocationType vlt, int vr) =>
                 {
                     var sumaries = new List<VacancySummary>(vr);
@@ -97,7 +97,7 @@
             
             vacancyConsumer.QueueVacancySummaries(summaryPage);
 
-            _vacancyProviderMock.Verify(x => x.GetVacancySummary(
+            _vacancyProviderMock.Verify(x => x.GetVacancySummaries(
                                                 It.Is<VacancyLocationType>(vlt => vlt == vacancyLocationType),
                                                 It.Is<int>(pn => pn == vacanciesReturned)), 
                                                 Times.Once);

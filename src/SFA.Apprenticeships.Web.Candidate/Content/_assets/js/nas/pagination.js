@@ -26,9 +26,9 @@ $(document).ready(function(){
                 $(container).html(response);
                 if (updateHistory && window.history && history.pushState) {
                     console.log("Pushing url: " + url);
-                    history.pushState(url, "SFA Apprenticeships", url);
+                    history.pushState({ isInitial: false, url: url }, "SFA Apprenticeships", url);
                 }
-                $('body').stop().animate({ scrollTop: 0 });
+                $('html,body').stop().animate({ scrollTop: 0 });
             },
             error: function (error) {
 
@@ -39,14 +39,18 @@ $(document).ready(function(){
     $(window).on('popstate', function (event) {
         console.log("Popping url: " + event.originalEvent.state);
         if (event.originalEvent && event.originalEvent.state) {
-            console.log("Popping load call");
-            loadResultsPage(event.originalEvent.state, false);
+            if (event.originalEvent.state.isInitial) {
+                window.location = event.originalEvent.state.url;
+            } else {
+                console.log("Popping load call");
+                loadResultsPage(event.originalEvent.state.url, false);
+            }
         }
     });
 
     $(window).on('load', function() {
         console.log("Pushing start url: " + window.location.href);
-        history.replaceState(window.location.href, "SFA Apprenticeships", window.location.href);
+        history.replaceState({ isInitial: true, url: window.location.href }, "SFA Apprenticeships", window.location.href);
     });
 
 });

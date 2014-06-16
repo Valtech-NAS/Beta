@@ -48,7 +48,7 @@
             return rs.ResponseData.TotalPages;
         }
 
-        public IEnumerable<VacancySummary> GetVacancySummary(VacancyLocationType vacancyLocationType, int page = 1)
+        public IEnumerable<VacancySummary> GetVacancySummaries(VacancyLocationType vacancyLocationType, int page = 1)
         {
             var vacancySummaryRequest = new VacancySummaryRequest
             {

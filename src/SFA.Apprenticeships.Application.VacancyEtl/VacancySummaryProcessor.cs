@@ -79,7 +79,7 @@
 
         public void QueueVacancySummaries(VacancySummaryPage vacancySummaryPage)
         {
-            var vacancies = _vacancyIndexDataProvider.GetVacancySummary(vacancySummaryPage.VacancyLocation, vacancySummaryPage.PageNumber).ToList();
+            var vacancies = _vacancyIndexDataProvider.GetVacancySummaries(vacancySummaryPage.VacancyLocation, vacancySummaryPage.PageNumber).ToList();
             var vacanciesExtended = _mapper.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(vacancies);
 
             Parallel.ForEach(

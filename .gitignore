@@ -105,7 +105,7 @@ src/packages/*
 tools/*/packages/*
 !tools/*/packages/repositories.config
 
-# Windows Azure Build Output and Confi files
+# Windows Azure Build Output and Config files
 csx
 *.build.csdef
 *.cscfg

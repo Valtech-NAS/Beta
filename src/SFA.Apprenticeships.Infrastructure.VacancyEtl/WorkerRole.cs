@@ -1,4 +1,7 @@
-using NLog;
+using SFA.Apprenticeships.Application.VacancyEtl;
+using SFA.Apprenticeships.Application.VacancyEtl.Entities;
+using SFA.Apprenticeships.Infrastructure.Elastic.Common.IoC;
+using SFA.Apprenticeships.Infrastructure.VacancyIndexer.Services;
 
 namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 {
@@ -7,21 +10,18 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using System.Reflection;
     using System.ServiceModel;
     using System.Threading;
-    using EasyNetQ;
     using Microsoft.WindowsAzure.ServiceRuntime;
-    using Application.Interfaces.Messaging;
-    using Application.VacancyEtl;
-    using Application.VacancyEtl.Entities;
+    using EasyNetQ;
+    using NLog;
     using RabbitMq.Interfaces;
     using Consumers;
-    using SFA.Apprenticeships.Infrastructure.Azure.Common.IoC;
-    using SFA.Apprenticeships.Infrastructure.Common.IoC;
-    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.IoC;
-    using SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC;
-    using SFA.Apprenticeships.Infrastructure.VacancyIndexer.IoC;
+    using Azure.Common.IoC;
+    using Common.IoC;
+    using LegacyWebServices.IoC;
+    using RabbitMq.IoC;
+    using IoC;
+    using VacancyIndexer.IoC;
     using StructureMap;
-    using VacancyIndexer.Services;
 
     public class WorkerRole : RoleEntryPoint
     {
@@ -30,12 +30,11 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
         public override void Run()
         {
-            // This is a sample worker implementation. Replace with your logic.
-            Logger.Trace("EtlWorkerRole entry point called");
+            Logger.Debug("EtlWorkerRole entry point called");
 
             if (!Initialise())
             {
-                // TODO: Check this exits worker.
+                Logger.Warn("EtlWorkerRole failed to initialise");
                 return;
             }
 
@@ -45,22 +44,22 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 {
                     var task = _vacancySchedulerConsumer.CheckScheduleQueue();
                     task.Wait();
+                    Thread.Sleep(TimeSpan.FromMinutes(5));
                 }
                 catch (CommunicationException ce)
                 {
-                    Logger.Warn("CommunicationException returned from legacy web services, error: {0}", ce.Message);
+                    Logger.Warn("CommunicationException from legacy web services", ce);
+                    return;
                 }
                 catch (TimeoutException te)
                 {
-                    Logger.Warn("TimeoutException returned from legacy web services, error: {0}", te.Message);
+                    Logger.Warn("TimeoutException from legacy web services", te);
+                    return;
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("Unknown Exception returned from VacancySchedulerConsumer", ex);
-                }
-                finally
-                {
-                    Thread.Sleep(5 * 60 * 1000);
+                    Logger.Error("Exception from VacancySchedulerConsumer", ex);
+                    return;
                 }
             }
         }
@@ -77,32 +76,31 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                     x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<LegacyWebServicesRegistry>();
                     x.AddRegistry<VacancyEtlRegistry>();
+                    x.AddRegistry<ElasticsearchCommonRegistry>();
                 });
 
-                Logger.Trace("IoC initialized");
+                Logger.Debug("IoC initialized");
 
                 var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
                 subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(VacancySummaryConsumerAsync)), "VacancyEtl");
-                Logger.Trace("Rabbit subscritions set up");
+                Logger.Debug("Rabbit subscriptions setup");
 
-                _vacancySchedulerConsumer = new VacancySchedulerConsumer(
-                        ObjectFactory.GetInstance<IProcessControlQueue<StorageQueueMessage>>(),
-                        ObjectFactory.GetInstance<IVacancySummaryProcessor>(),
-                        ObjectFactory.GetInstance<IVacancyIndexerService>());
+                _vacancySchedulerConsumer = ObjectFactory.GetInstance<VacancySchedulerConsumer>();
 
-                Logger.Trace("VacancySchedulerConsumer setup complete");
+                Logger.Debug("VacancySchedulerConsumer setup complete");
+                return true;
             }
             catch (Exception ex)
             {
                 Logger.Error("Error initialising VacancyEtl Worker/Server", ex);
                 return false;
             }
-
-            return true;
         }
 
         public override bool OnStart()
         {
+            Logger.Debug("EtlWorkerRole OnStart called");
+
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
 
@@ -114,10 +112,14 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
         public override void OnStop()
         {
+            Logger.Debug("EtlWorkerRole OnStop called");
+
             // Kill the bus which will kill any subscriptions
             ObjectFactory.GetInstance<IBus>().Advanced.Dispose();
+
             // Give it 5 seconds to finish processing any in flight subscriptions.
-            Thread.Sleep(5000);
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+
             base.OnStop();
         }
     }
