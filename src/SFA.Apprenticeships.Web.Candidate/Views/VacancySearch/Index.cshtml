@@ -1,4 +1,5 @@
-﻿@using Newtonsoft.Json
+﻿
+@using SFA.Apprenticeships.Web.Common.Framework
 @model SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.VacancySearchViewModel
 
 @{
@@ -13,28 +14,24 @@
 <div class="grid-wrapper">
     @Html.ValidationSummary(true)
     <section class="grid grid-2-3">
-        @using(Html.BeginForm("results", "vacancysearch", FormMethod.Get)){
-            <div class="form-group">
-                <label for="keywords" class="form-label">Keywords (optional)</label>
-                <span class="form-hint">For example, mechanical engineer, retail, customer service</span>
-                @Html.TextBoxFor(m => m.Keywords, new { @class = "form-control", @id = "keywords", @name = "Keywords" })
-            </div>
-            <div class="form-group">
-                <label for="location" class="form-label">Apprenticeship location</label>
-                <span class="form-hint">Enter postcode, town or city</span>
-                @Html.TextBoxFor(m => m.Location, new { @class = "form-control", @id = "location", @name = "Location" })
-                @Html.HiddenFor(m => m.Latitude, new { @id = "latitude", @name = "Latitude" })
-                @Html.HiddenFor(m => m.Longitude, new { @id = "longitude", @name = "Longitude" })
-                @*@Html.ValidationMessageFor(x => x.Location)*@
-            </div>
+        @using (Html.BeginForm("results", "vacancysearch", FormMethod.Get))
+        {
+
+            @Html.FormTextFor(m => m.Keywords)
+            @Html.FormTextFor(m => m.Location)
+
             <div class="form-group">
                 <label for="loc-within" class="form-label">Within</label>
-                @Html.DropDownListFor(m => m.WithinDistance, (SelectList)ViewBag.Distances, new { @id = "loc-within", @name = "WithinDistance" })
+                @Html.DropDownListFor(m => m.WithinDistance, (SelectList) ViewBag.Distances, new {@id = "loc-within", @name = "WithinDistance"})
             </div>
+
             <div class="form-group">
                 <button class="button">Search</button>
                 <a class="button-link" href="@Url.Action("clear")">Clear</a>
             </div>
+
+            @Html.HiddenFor(m => m.Latitude)
+            @Html.HiddenFor(m => m.Longitude)
         }
         <div class="form-group">
             <p>You can also apply for Apprenticeships in other parts of the UK</p>
@@ -60,10 +57,10 @@
     <script src="~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js"></script>   
     <script src="~/Content/_assets/js/nas/locationAutocomplete.js"></script>      
     <script>
-        $("#location").locationMatch({
+        $("#Location").locationMatch({
             url: '@Url.Action("location", "vacancysearch")',
-            longitude: '#longitude',
-            latitude: '#latitude'
+            longitude: '#Longitude',
+            latitude: '#Latitude'
         });
     </script>
 }

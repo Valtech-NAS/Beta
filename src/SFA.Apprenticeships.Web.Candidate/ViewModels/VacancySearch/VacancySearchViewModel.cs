@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using Application.Interfaces.Search;
     using FluentValidation.Attributes;
     using SFA.Apprenticeships.Web.Candidate.Validators;
@@ -22,8 +24,9 @@
 
         private int _pageNumber = 1;
 
+        [Display(Name = "Keywords (optional)", Description = "For example, mechanical engineer, retail, customer service")]
         public string Keywords { get; set; }
-
+        [Display(Name = "Apprenticeship location", Description = "Enter postcode, town or city")]
         public string Location { get; set; }
         public double? Longitude { get; set; }
         public double? Latitude { get; set; }

@@ -1,4 +1,6 @@
-﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.VacancySearchResponseViewModel
+﻿
+@using SFA.Apprenticeships.Web.Common.Framework
+@model SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.VacancySearchResponseViewModel
 
 @{
     ViewBag.Title = "SFA Apprenticeships";
@@ -17,20 +19,18 @@
             <fieldset class="search-filter">
                 <legend class="heading-medium mob-collpanel-trigger">Filter results</legend>
                 <div class="mob-collpanel toggle-content--mob">
-                    <div class="form-group">
-                        <label for="keywords" class="form-label">Keywords (optional)</label>
-                        @Html.TextBoxFor(m => m.VacancySearch.Keywords, new {@class = "form-control", @id = "keywords", @name = "Keywords"})
-                    </div>
-                    <div class="form-group">
-                        <label for="location" class="form-label">Apprenticeship location</label>
-                        @Html.TextBoxFor(m => m.VacancySearch.Location, new {@class = "form-control", @id = "location", @name = "Location"})
-                        @Html.HiddenFor(m => m.VacancySearch.Latitude, new {@id = "latitude", @name = "Latitude"})
-                        @Html.HiddenFor(m => m.VacancySearch.Longitude, new {@id = "longitude", @name = "Longitude"})
-                    </div>
+                    @Html.FormTextFor(m => m.VacancySearch.Keywords)
+                    @Html.FormTextFor(m => m.VacancySearch.Location)
+                    
+                    @* TODO::Create a form control for this. *@
                     <div class="form-group">
                         <label for="loc-within" class="form-label">Within</label>
                         @Html.DropDownListFor(m => m.VacancySearch.WithinDistance, (SelectList) ViewBag.Distances, new {@id = "loc-within", @name = "WithinDistance"})
                     </div>
+                    
+                    @Html.HiddenFor(m => m.VacancySearch.Latitude, new { @id = "Latitude" })
+                    @Html.HiddenFor(m => m.VacancySearch.Longitude, new { @id = "Longitude" })
+
                     <div class="form-group">
                         <button class="button">Update results</button>
                     </div>
@@ -61,10 +61,10 @@
     <script src="~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="~/Content/_assets/js/nas/locationAutocomplete.js" type="text/javascript"></script>
     <script>
-        $("#location").locationMatch({
+        $("#VacancySearch_Location").locationMatch({
             url: '@Url.Action("location", "vacancysearch")',
-            longitude: '#longitude',
-            latitude: '#latitude',
+            longitude: '#Longitude',
+            latitude: '#Latitude',
         });
     </script>
 }
