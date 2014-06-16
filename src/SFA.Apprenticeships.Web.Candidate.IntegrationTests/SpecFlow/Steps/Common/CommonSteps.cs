@@ -31,7 +31,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Comm
 
         public IPageUnderTest GetPage()
         {
-            return (IPageUnderTest)ScenarioContext.Current.Get<FluentAutomation.PageObject>("currentPageUnderTest");
+            return ScenarioContext.Current.Get<IPageUnderTest>("currentPageUnderTest");
         }
 
         public void ClickButton(string buttonText)
