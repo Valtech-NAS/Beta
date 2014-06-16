@@ -21,6 +21,12 @@ namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
                 //Relative path specified, i.e. in Web App for Azure deployment
                 _configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _configFile);
             }
+
+            if (!File.Exists(_configFile))
+            {
+                throw new FileNotFoundException("Config file does not exist", _configFile);
+            }
+
             _configSectionName = configSectionName;
         }
 
