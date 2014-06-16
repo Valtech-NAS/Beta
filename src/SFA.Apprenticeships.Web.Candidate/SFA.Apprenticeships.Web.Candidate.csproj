@@ -222,6 +222,7 @@
     <Content Include="Content\_assets\js\nas\pagination.js" />
     <Content Include="Content\_assets\img\arrow-sprite-2x.png" />
     <Content Include="Content\_assets\js\vendor\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\_assets\js\vendor\zxcvbn-async.js" />
     <Content Include="Content\_assets\js\vendor\zxcvbn.js" />
     <Content Include="packages.config" />
@@ -339,6 +340,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ISearchProvider.cs" />
     <Compile Include="Providers\SearchProvider.cs" />
+    <Compile Include="Validators\IValidateModel.cs" />
     <Compile Include="Validators\VacancySearchValidator.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchResponseViewModel.cs" />

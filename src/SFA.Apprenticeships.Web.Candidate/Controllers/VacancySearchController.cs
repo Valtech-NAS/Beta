@@ -6,7 +6,9 @@
     using System.Web.Mvc;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancy;
+    using FluentValidation;
     using Providers;
+    using SFA.Apprenticeships.Web.Candidate.Validators;
     using SFA.Apprenticeships.Web.Common.Validations;
     using ViewModels.VacancySearch;
     using Common.Framework;
@@ -14,6 +16,7 @@
     public class VacancySearchController : Controller
     {
         private readonly ISearchProvider _searchProvider;
+        private readonly IValidateModel<VacancySearchViewModel> _validator;
 
         // TODO::needs to be config item?
         public const int SearchPageSize = 10;
@@ -21,9 +24,10 @@
         // This value limits data set to the client.
         private const int LocationResultCount = 25;
 
-        public VacancySearchController(ISearchProvider searchProvider)
+        public VacancySearchController(ISearchProvider searchProvider, IValidateModel<VacancySearchViewModel> validator)
         {
             _searchProvider = searchProvider;
+            _validator = validator;
         }
 
         [HttpGet]
@@ -49,7 +53,7 @@
         [HttpGet]
         public ActionResult Results(VacancySearchViewModel searchViewModel)
         {
-            if (!Validate(searchViewModel))
+            if (!_validator.Validate(searchViewModel, ModelState))
             {
                 PopulateDistances();
                 PopulateSortType();
@@ -144,23 +148,5 @@
         }
 
         #endregion
-
-        private bool Validate(VacancySearchViewModel model)
-        {
-            ModelState.Clear();
-            ValidatePage(model, ModelState);
-
-            if (!ModelState.IsValid)
-            {
-                ModelState.AddModelError(string.Empty, "Please enter a valid location and try again.");
-            }
-
-            return ModelState.IsValid;
-        }
-
-        private static void ValidatePage(VacancySearchViewModel model, ModelStateDictionary modelState)
-        {
-            model.ValidateModel(VacancySearchViewModel.GetValidator(), modelState);
-        }
     }
 }

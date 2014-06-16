@@ -9,10 +9,12 @@ namespace SFA.Apprenticeships.Web.Common.Validations
 
     public static class ValidationExtensions
     {
-        public static ModelStateDictionary ValidateModel<TModel, TValidator>(this TModel model, TValidator validator,
+        public static ModelStateDictionary ValidateModel<TModel, TValidator>(
+            this TModel model, 
+            TValidator validator,
             ModelStateDictionary modelState)
             where TModel : class
-            where TValidator : AbstractValidator<TModel>
+            where TValidator : IValidator
         {
             var result = validator.Validate(model);
 
@@ -43,7 +45,7 @@ namespace SFA.Apprenticeships.Web.Common.Validations
         public static ModelStateDictionary ValidateModel<TModel, TProperty, TValidator>(this TModel model,
             Expression<Func<TModel, TProperty>> expression, TValidator validator, ModelStateDictionary modelState)
             where TModel : class
-            where TValidator : AbstractValidator<TProperty>
+            where TValidator : IValidator
         {
             var property = expression.Body as MemberExpression;
             if (property != null)
