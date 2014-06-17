@@ -1,15 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces.Search;
-    using Application.Interfaces.Vacancy;
     using Common.Framework;
     using Infrastructure.Common.Configuration;
     using Providers;
-    using SFA.Apprenticeships.Web.Candidate.Validators;
+    using Validators;
     using ViewModels.VacancySearch;
 
     public class VacancySearchController : Controller
@@ -18,7 +16,9 @@
         private readonly ISearchProvider _searchProvider;
         private readonly IValidateModel<VacancySearchViewModel> _validator;
 
-        public VacancySearchController(IConfigurationManager configManager, ISearchProvider searchProvider, IValidateModel<VacancySearchViewModel> validator)
+        public VacancySearchController(IConfigurationManager configManager, 
+                                    ISearchProvider searchProvider, 
+                                    IValidateModel<VacancySearchViewModel> validator)
         {
             _configManager = configManager;
             _searchProvider = searchProvider;
@@ -61,17 +61,22 @@
             PopulateDistances(searchViewModel.WithinDistance);
             PopulateSortType(searchViewModel.SortType);
 
+            var location = new LocationViewModel(searchViewModel);
+            if (!searchViewModel.Latitude.HasValue || !searchViewModel.Longitude.HasValue)
+            {
+                //Either user not selected item from dropdown or javascript disabled.
+                var locations = _searchProvider.FindLocation(searchViewModel.Location);
+                if (locations.Count() == 1)
+                {
+                    location = locations.Single();
+                    searchViewModel.Latitude = location.Latitude;
+                    searchViewModel.Longitude = location.Longitude;
+                }
+            }
+
             if (!_validator.Validate(searchViewModel, ModelState))
             {
                 return View("index", searchViewModel);
-            }
-
-            var location = new LocationViewModel(searchViewModel); 
-            if (!searchViewModel.Latitude.HasValue || !searchViewModel.Longitude.HasValue)
-            {
-                // TODO::If no lat/long need to fail validation - this route is just for testing
-                var locations = _searchProvider.FindLocation(searchViewModel.Location);
-                location = locations.FirstOrDefault();
             }
 
             if (location != null )
@@ -86,14 +91,7 @@
                 return Json(view, JsonRequestBehavior.AllowGet);
             }
 
-            // TODO::Test code, to be removed
-            var vacancySearchResponseViewModel = new VacancySearchResponseViewModel
-            {
-                Vacancies = new List<VacancySummaryResponse>(),
-                VacancySearch = searchViewModel
-            };
-
-            return View("results", vacancySearchResponseViewModel);
+            return View("index", searchViewModel);
         }
 
         [HttpGet]
