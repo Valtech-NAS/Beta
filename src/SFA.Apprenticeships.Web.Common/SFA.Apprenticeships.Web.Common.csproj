@@ -116,6 +116,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Attributes\FromJsonAttribute.cs" />
+    <Compile Include="Controllers\SfaControllerBase.cs" />
     <Compile Include="Framework\HtmlExtensions.cs" />
     <Compile Include="Framework\RenderPartialExtensions.cs" />
     <Compile Include="Framework\ViewDataDictionaryExtensions.cs" />
@@ -143,6 +144,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.Session\SFA.Apprenticeships.Infrastructure.Azure.Session.csproj">
+      <Project>{2FC1A9D8-E66E-49D0-BEFF-C845AFDF34F6}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Azure.Session</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
       <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>

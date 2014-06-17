@@ -1,14 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System.Web.SessionState;
+    using Infrastructure.Azure.Session;
     using NLog;
     using System.Web.Mvc;
 
     public class HomeController : Controller
     {
+        private readonly ISessionState _session;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public HomeController()
+        public HomeController(ISessionState session)
         {
+            _session = session;
         }
 
         //

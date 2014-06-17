@@ -3,14 +3,15 @@ using SFA.Apprenticeships.Web.Candidate;
 
 namespace SFA.Apprenticeships.Web.Candidate
 {
-    using SFA.Apprenticeships.Infrastructure.Common.IoC;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.IoC;
-    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC;
-    using SFA.Apprenticeships.Infrastructure.LocationLookup.IoC;
-    using SFA.Apprenticeships.Infrastructure.Postcode.IoC;
-    using SFA.Apprenticeships.Infrastructure.VacancySearch.IoC;
-    using SFA.Apprenticeships.Web.Candidate.IoC;
-    using SFA.Apprenticeships.Web.Common.IoC;
+    using Infrastructure.Azure.Session.IoC;
+    using Infrastructure.Common.IoC;
+    using Infrastructure.Elastic.Common.IoC;
+    using Infrastructure.LegacyWebServices.IoC;
+    using Infrastructure.LocationLookup.IoC;
+    using Infrastructure.Postcode.IoC;
+    using Infrastructure.VacancySearch.IoC;
+    using IoC;
+    using Common.IoC;
     using StructureMap;
 
     /// <summary>
@@ -30,6 +31,7 @@ namespace SFA.Apprenticeships.Web.Candidate
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
 
+                x.AddRegistry<SessionRegistry>();
                 x.AddRegistry<WebCommonRegistry>();
                 x.AddRegistry<CandidateRegistry>();
             });

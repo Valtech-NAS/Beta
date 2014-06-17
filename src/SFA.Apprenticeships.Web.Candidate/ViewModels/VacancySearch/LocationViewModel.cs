@@ -1,6 +1,8 @@
-﻿
-namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
+    using System;
+
+    [Serializable]
     public class LocationViewModel
     {
         public LocationViewModel() { }

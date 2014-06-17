@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
-    using SFA.Apprenticeships.Application.Interfaces.Location;
-    using SFA.Apprenticeships.Application.Location;
-    using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-    using SFA.Apprenticeships.Web.Candidate.Mappers;
-    using SFA.Apprenticeships.Web.Candidate.Providers;
-    using SFA.Apprenticeships.Web.Candidate.Validators;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using Application.Interfaces.Location;
+    using Application.Location;
+    using Domain.Interfaces.Mapping;
+    using Mappers;
+    using Providers;
+    using Validators;
+    using ViewModels.VacancySearch;
     using StructureMap.Configuration.DSL;
 
     public class CandidateRegistry : Registry

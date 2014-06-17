@@ -4,13 +4,15 @@
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces.Search;
+    using Common.Controllers;
     using Common.Framework;
+    using Infrastructure.Azure.Session;
     using Infrastructure.Common.Configuration;
     using Providers;
     using Validators;
     using ViewModels.VacancySearch;
 
-    public class VacancySearchController : Controller
+    public class VacancySearchController : SfaControllerBase
     {
         private readonly IConfigurationManager _configManager;
         private readonly ISearchProvider _searchProvider;
@@ -18,7 +20,8 @@
 
         public VacancySearchController(IConfigurationManager configManager, 
                                     ISearchProvider searchProvider, 
-                                    IValidateModel<VacancySearchViewModel> validator)
+                                    IValidateModel<VacancySearchViewModel> validator,
+                                    ISessionState session) : base (session)
         {
             _configManager = configManager;
             _searchProvider = searchProvider;
@@ -81,6 +84,7 @@
 
             if (location != null )
             {
+                Session.Store("location", location);
                 var results = _searchProvider.FindVacancies(searchViewModel, VacancyResultsPerPage);
                 if (!this.Request.IsAjaxRequest())
                 {
