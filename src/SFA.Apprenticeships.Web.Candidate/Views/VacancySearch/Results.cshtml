@@ -5,12 +5,26 @@
 @{
     ViewBag.Title = "SFA Apprenticeships";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string resultMessage;
+
+    if (Model.TotalHits == 0)
+    {
+        resultMessage = "There are <b class=\"bold-medium\">no</b> Apprenticeships that match your search";
+    }
+    else if (Model.TotalHits == 1)
+    {
+        resultMessage = "There is <b class=\"bold-medium\">1</b> Apprenticeship that closely matches your search";
+    }
+    else
+    {
+        resultMessage = string.Format("There are <b class=\"bold-medium\">{0}</b> Apprenticeships that closely match your search", Model.TotalHits);
+    }
 }
 
 <div class="search-results-wrapper grid-wrapper">
     <div class="hgroup">
         <h1 class="heading-xlarge">Search results</h1>
-        <p>There are <b class="bold-medium">@Model.TotalHits</b> Apprenticeships that closely match your search.</p>
+        <p>@Html.Raw(resultMessage)</p>
     </div>
 
     @using (Html.BeginForm("search", "vacancysearch", FormMethod.Get))
