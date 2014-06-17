@@ -4,8 +4,8 @@
     using System.Linq;
     using FluentAssertions;
     using FluentAutomation;
-    using SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages;
-    using SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Common;
+    using Pages;
+    using Common;
     using Specflow.FluentAutomation.Ext;
     using TechTalk.SpecFlow;
 
@@ -31,25 +31,25 @@
         public void ThenIExpectTheSearchResultsToBeSortedBy(string sortBy)
         {
             Page.I.Assert.Value(sortBy).In("#sort-results");
-            var resultDistances = Page.I.FindMultiple(".distance-value")().ToArray();
-            resultDistances.Should().NotBeNull();
-            resultDistances.Count().Should().Be(5);
+            var sortValues = Page.I.FindMultiple(sortBy == "Distance" ? ".distance-value" : ".closing-date-value")().ToArray();
+            sortValues.Should().NotBeNull();
+            sortValues.Count().Should().Be(5);
 
             switch (sortBy){
                 case "Distance":
-                    for (int i = 0; i < resultDistances.Count() - 1; i++)
+                    for (int i = 0; i < sortValues.Count() - 1; i++)
                     {
-                        double.Parse(resultDistances[i].Text)
+                        double.Parse(sortValues[i].Text)
                             .Should()
-                            .BeLessOrEqualTo(double.Parse(resultDistances[i + 1].Text));
+                            .BeLessOrEqualTo(double.Parse(sortValues[i + 1].Text));
                     }
                     break;
                 case "ClosingDate":
-                    for (int i = 0; i < resultDistances.Count() - 1; i++)
+                    for (int i = 0; i < sortValues.Count() - 1; i++)
                     {
-                        DateTime.Parse(resultDistances[i].Text)
+                        DateTime.Parse(sortValues[i].Text)
                             .Should()
-                            .BeOnOrBefore(DateTime.Parse(resultDistances[i + 1].Text));
+                            .BeOnOrBefore(DateTime.Parse(sortValues[i + 1].Text));
                     }
                     break;
             }
@@ -74,7 +74,7 @@
         {
             for (var i = 0; i < pages; i++)
             {
-                WhenINavigateToTheNextPageOfResults(-1);
+                WhenINavigateToTheNextPageOfResults();
             }
         }
 
@@ -83,7 +83,7 @@
         {
             for (var i = 0; i < pages; i++)
             {
-                WhenINavigateToThePreviousPageOfResults(-1);
+                WhenINavigateToThePreviousPageOfResults();
             }
         }
 
@@ -93,13 +93,13 @@
             CheckNavigationLinks(-1, pageNumber);
         }
 
-        private void WhenINavigateToTheNextPageOfResults(int count)
+        private void WhenINavigateToTheNextPageOfResults()
         {
             ClickLink("a.page-navigation__btn.next", string.Empty);
             ThenIExpectToSeeSearchResults();
         }
 
-        private void WhenINavigateToThePreviousPageOfResults(int count)
+        private void WhenINavigateToThePreviousPageOfResults()
         {
             ClickLink("a.page-navigation__btn.previous", string.Empty);
             ThenIExpectToSeeSearchResults();
