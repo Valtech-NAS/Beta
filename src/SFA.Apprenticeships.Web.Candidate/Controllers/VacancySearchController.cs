@@ -7,25 +7,32 @@
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancy;
     using Common.Framework;
+    using Infrastructure.Common.Configuration;
     using Providers;
     using SFA.Apprenticeships.Web.Candidate.Validators;
     using ViewModels.VacancySearch;
 
     public class VacancySearchController : Controller
     {
+        private readonly IConfigurationManager _configManager;
         private readonly ISearchProvider _searchProvider;
         private readonly IValidateModel<VacancySearchViewModel> _validator;
 
-        // TODO::needs to be config item?
-        public const int SearchPageSize = 10;
-        // Note::there is also a client side setting that limits the list on client side
-        // This value limits data set to the client.
-        private const int LocationResultCount = 25;
-
-        public VacancySearchController(ISearchProvider searchProvider, IValidateModel<VacancySearchViewModel> validator)
+        public VacancySearchController(IConfigurationManager configManager, ISearchProvider searchProvider, IValidateModel<VacancySearchViewModel> validator)
         {
+            _configManager = configManager;
             _searchProvider = searchProvider;
             _validator = validator;
+        }
+
+        private int VacancyResultsPerPage
+        {
+            get { return _configManager.GetAppSetting<int>("VacancyResultsPerPage"); }
+        }
+
+        private int LocationResultLimit
+        {
+            get { return _configManager.GetAppSetting<int>("LocationResultLimit"); }
         }
 
         [HttpGet]
@@ -69,7 +76,7 @@
 
             if (location != null )
             {
-                var results = _searchProvider.FindVacancies(searchViewModel, SearchPageSize);
+                var results = _searchProvider.FindVacancies(searchViewModel, VacancyResultsPerPage);
                 if (!this.Request.IsAjaxRequest())
                 {
                     return View("results", results);
@@ -96,7 +103,7 @@
 
             if (this.Request.IsAjaxRequest())
             {
-                return Json(matches.Take(LocationResultCount), JsonRequestBehavior.AllowGet);
+                return Json(matches.Take(LocationResultLimit), JsonRequestBehavior.AllowGet);
             }
 
             throw new NotImplementedException("Non-js not yet implemented!");
