@@ -51,9 +51,8 @@
                     tags = [];
                     locations = response;
                     if (response != null) {
-                        var i = 0;
-                        response.forEach(function(item) {
-                            if (i++ < settings.maxListSize) {
+                        $.each(response, function (i, item){
+                            if (i < settings.maxListSize) {
                                 tags.push(item.Name);
                             } 
                         });
@@ -70,7 +69,7 @@
 
         function getLonLatFromName(name) {
             if (locations != null) {
-                var index = tags.indexOf(name);
+                var index = $.inArray(name, tags);
                 if (index != -1) {
                     var search = locations[index];
                     if (search != null) {

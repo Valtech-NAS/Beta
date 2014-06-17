@@ -48,7 +48,7 @@
                         break;
                     case VacancySortType.ClosingDate:
                         distanceSortItemIndex = 1;
-                        s.Sort(v => v.OnField(f => f.ClosingDate).Descending());
+                        s.Sort(v => v.OnField(f => f.ClosingDate).Ascending());
                         //Need this to get the distance from the sort.
                         //Was trying to get distance in relevancy without this sort but can't .. yet
                         s.SortGeoDistance(g =>
@@ -84,18 +84,10 @@
                     s.Query(q =>
                     {
                         BaseQuery query = q.FuzzyLikeThis(flt => flt
-                                                .OnFields(new[] {"title"})
-                                                .LikeText(keywords)
-                                                .Boost(2)
-                                                .PrefixLength(3)
-                                                .MinimumSimilarity(1))
-                                            ||
-                                            q.FuzzyLikeThis(flt => flt
-                                                    .OnFields(new[] { "description" })
-                                                    .LikeText(keywords)
-                                                    .Boost(1)
-                                                    .PrefixLength(3)
-                                                    .MinimumSimilarity(1));
+                                            .OnFields(new[] { "title", "description", "employerName" })
+                                            .LikeText(keywords)
+                                            .PrefixLength(1)
+                                            .MinimumSimilarity(2));
                         return query;
                     });    
                 }
