@@ -15,7 +15,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Helpers
     public class FormTextForTests : BaseExtensionTests
     {
         /// <summary>
-        /// Tests the label for span throws exception when expression is null.
+        /// Tests the FormTextFor throws exception when expression is null.
         /// </summary>
         [Test]
         public void TestFormTextForThrowsExceptionWhenExpressionIsNull()
@@ -34,7 +34,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Helpers
         }
 
         /// <summary>
-        /// Tests the label for span throws exception when helper is null.
+        /// Tests the FormTextFor throws exception when helper is null.
         /// </summary>
         [Test]
         public void TestFormTextForThrowsExceptionWhenHelperIsNull()
@@ -53,7 +53,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Helpers
         }
 
         /// <summary>
-        /// Tests the label for span renders property name when no display name assigned.
+        /// Tests the FormTextFor renders property name when no display name assigned.
         /// </summary>
         [Test]
         public void TestFormTextForRendersPropertyNameWhenNoDisplayNameAssigned()
@@ -72,7 +72,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Helpers
         }
 
         /// <summary>
-        /// Tests the display name of the label for span renders.
+        /// Tests the display and hint text of the FormTextFor renders.
         /// </summary>
         [Test]
         public void TestFormTextForRendersDisplayNameAndHintText()
