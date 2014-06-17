@@ -58,8 +58,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Validators
 
         public static void AddServerRules(this AbstractValidator<VacancySearchViewModel> validator)
         {
-            validator.RuleFor(x => x.Longitude).NotEmpty().Must(y => y.HasValue).OverridePropertyName("Location");
-            validator.RuleFor(x => x.Longitude).NotEmpty().Must(y => y.HasValue).OverridePropertyName("Location");
+            validator.RuleFor(x => x.Latitude).Must(y => y.HasValue);
+            validator.RuleFor(x => x.Longitude).Must(y => y.HasValue);
         }
     }
 }
