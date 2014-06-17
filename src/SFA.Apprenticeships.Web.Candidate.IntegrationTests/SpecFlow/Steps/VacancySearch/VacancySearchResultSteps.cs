@@ -1,6 +1,9 @@
-﻿
-namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.VacancySearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.VacancySearch
 {
+    using System;
+    using System.Linq;
+    using FluentAssertions;
+    using FluentAutomation;
     using SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages;
     using SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Common;
     using Specflow.FluentAutomation.Ext;
@@ -28,7 +31,36 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vaca
         public void ThenIExpectTheSearchResultsToBeSortedBy(string sortBy)
         {
             Page.I.Assert.Value(sortBy).In("#sort-results");
+            var resultDistances = Page.I.FindMultiple(".distance-value")().ToArray();
+            resultDistances.Should().NotBeNull();
+            resultDistances.Count().Should().Be(5);
+
+            switch (sortBy){
+                case "Distance":
+                    for (int i = 0; i < resultDistances.Count() - 1; i++)
+                    {
+                        double.Parse(resultDistances[i].Text)
+                            .Should()
+                            .BeLessOrEqualTo(double.Parse(resultDistances[i + 1].Text));
+                    }
+                    break;
+                case "ClosingDate":
+                    for (int i = 0; i < resultDistances.Count() - 1; i++)
+                    {
+                        DateTime.Parse(resultDistances[i].Text)
+                            .Should()
+                            .BeOnOrBefore(DateTime.Parse(resultDistances[i + 1].Text));
+                    }
+                    break;
+            }
         }
+
+        [Given(@"I update search results to be sorted by '(.*)'")]
+        public void GivenIUpdateSearchResultsToBeSortedBy(string sortBy)
+        {
+            Page.I.Select(Option.Value, sortBy).From("#sort-results");
+        }
+
 
         [Then(@"I expect to be able to navigate to the next page of results")]
         public void ThenIExpectToBeAbleToNavigateToTheNextPageOfResults()

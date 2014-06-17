@@ -1,5 +1,4 @@
-﻿
-namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Common
+﻿namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Common
 {
     using SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages;
     using TechTalk.SpecFlow;
@@ -13,9 +12,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Comm
             get
             {
                 return _page;
-                
             }
-
             set
             {
                 _page = value;

@@ -36,7 +36,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vaca
         [Given(@"I enhance my search with the following '(.*)'")]
         public void GivenIEnhanceMySearchWithTheFollowing(string keywords)
         {
-            Page.I.Enter(keywords).In("#keywords");
+            Page.I.Enter(keywords).In("#Keywords");
         }
 
         [When(@"I clear my search criteria")]
@@ -54,15 +54,15 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vaca
         [Then(@"all search fields are reset")]
         public void ThenAllSearchFieldsAreReset()
         {
-            Page.I.Assert.Text(string.Empty).In("#keywords");
-            Page.I.Assert.Text(string.Empty).In("#location");
+            Page.I.Assert.Text(string.Empty).In("#Keywords");
+            Page.I.Assert.Text(string.Empty).In("#Location");
             Page.I.Assert.Value("2").In("#loc-within");
         }
 
         public void EnterCandidateCriteria(string location, string range)
         {
             Page.I
-                .Enter(location).In("#location")
+                .Enter(location).In("#Location")
                 .Wait(1)
                 .Click("ul.ui-autocomplete li.ui-menu-item:first")
                 .Select(range).From("#loc-within");
