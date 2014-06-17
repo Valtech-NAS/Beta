@@ -5,6 +5,7 @@
     using System.Reflection;
     using System.Web;
     using System.Web.Optimization;
+    using FluentValidation.Mvc;
     using SFA.Apprenticeships.Web.Candidate.Controllers;
     using SFA.Apprenticeships.Web.Common.Models.Errors;
     using System.Web.Mvc;
@@ -40,6 +41,8 @@
             ViewEngines.Engines.Add(new RazorViewEngine());
 
             ControllerBuilder.Current.SetControllerFactory(new NasControllerFactory());
+
+            FluentValidationModelValidatorProvider.Configure();
         }
 
         /// <summary>

@@ -221,7 +221,10 @@
     <Content Include="Content\_assets\js\nas\locationAutocomplete.js" />
     <Content Include="Content\_assets\js\nas\pagination.js" />
     <Content Include="Content\_assets\img\arrow-sprite-2x.png" />
+    <Content Include="Content\_assets\js\vendor\jquery-1.11.1.js" />
     <Content Include="Content\_assets\js\vendor\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.validate.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\_assets\js\vendor\zxcvbn-async.js" />
     <Content Include="Content\_assets\js\vendor\zxcvbn.js" />
@@ -305,7 +308,7 @@
     <Content Include="Content\_assets\img\uploads\employer-logo.jpg" />
     <Content Include="Content\_assets\js\scripts.min.js" />
     <Content Include="Content\_assets\js\vendor\goog\webfont-debug.js" />
-    <Content Include="Content\_assets\js\vendor\jquery-1.11.0.min.js" />
+    <Content Include="Content\_assets\js\vendor\jquery-1.11.1.min.js" />
     <Content Include="Content\_assets\js\vendor\modernizr-2.7.1.js" />
     <Content Include="Content\_assets\js\vendor\modernizr-custom.js" />
     <Content Include="Global.asax" />
