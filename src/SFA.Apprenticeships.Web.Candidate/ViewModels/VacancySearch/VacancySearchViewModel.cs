@@ -1,12 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using Application.Interfaces.Search;
     using FluentValidation.Attributes;
     using SFA.Apprenticeships.Web.Candidate.Validators;
 
-    //[Validator(typeof(VacancySearchValidator))]
+    [Validator(typeof(VacancySearchClientSideValidator))]
     public class VacancySearchViewModel
     {
         public VacancySearchViewModel() { }
@@ -26,8 +25,11 @@
 
         [Display(Name = "Keywords (optional)", Description = "For example, mechanical engineer, retail, customer service")]
         public string Keywords { get; set; }
+
         [Display(Name = "Apprenticeship location", Description = "Enter postcode, town or city")]
+        [Required(ErrorMessage = "Sorry, we didn't find a match for the location. Please try again.")]
         public string Location { get; set; }
+
         public double? Longitude { get; set; }
         public double? Latitude { get; set; }
 

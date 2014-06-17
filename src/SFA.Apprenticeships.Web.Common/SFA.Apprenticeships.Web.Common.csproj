@@ -116,6 +116,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Attributes\FromJsonAttribute.cs" />
+    <Compile Include="Framework\HtmlExtensions.cs" />
     <Compile Include="Framework\RenderPartialExtensions.cs" />
     <Compile Include="Framework\ViewDataDictionaryExtensions.cs" />
     <Compile Include="IoC\NasControllerFactory.cs" />

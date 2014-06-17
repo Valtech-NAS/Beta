@@ -6,6 +6,14 @@ namespace SFA.Apprenticeships.Web.Candidate.Validators
     using FluentValidation.Mvc;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
 
+    public class VacancySearchClientSideValidator : AbstractValidator<VacancySearchViewModel>
+    {
+        public VacancySearchClientSideValidator()
+        {
+            this.AddCommonRules();
+           // this.AddClientRules();
+        }
+    }
 
     public class VacancySearchValidator : AbstractValidator<VacancySearchViewModel>, IValidateModel<VacancySearchViewModel>
     {
