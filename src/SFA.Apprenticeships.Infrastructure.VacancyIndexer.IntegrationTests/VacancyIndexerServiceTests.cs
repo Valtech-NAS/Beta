@@ -25,14 +25,13 @@
         [Test]
         public void ShouldGetItemCountWithUpdateReference()
         {
-            var vacancyIndexer = ObjectFactory.GetInstance<IVacancyIndexerService>();
             var elasticsearchClientFactory = ObjectFactory.GetInstance<IElasticsearchClientFactory>();
-            var index = elasticsearchClientFactory.GetIndexNameForType(typeof (VacancySummary));
+            var indexName = elasticsearchClientFactory.GetIndexNameForType(typeof (VacancySummary));
             var documentTypeName = elasticsearchClientFactory.GetDocumentNameForType(typeof(Elastic.Common.Entities.VacancySummary));
 
             var items = _elasticClient.Search<VacancySummary>(d =>
             {
-                d.Index("vacancies_search");
+                d.Index(indexName);
                 d.Type(documentTypeName);
                 d.From(0);
                 d.Take(10);
