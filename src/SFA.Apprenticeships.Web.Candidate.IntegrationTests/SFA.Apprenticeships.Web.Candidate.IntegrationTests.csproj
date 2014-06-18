@@ -163,6 +163,9 @@
     <Compile Include="SpecFlow\Steps\VacancySearch\VacancySearchResultSteps.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Release.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>

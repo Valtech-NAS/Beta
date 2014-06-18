@@ -1,6 +1,7 @@
 $subscription = "Visual Studio Ultimate with MSDN"
 $projectname = "SFA.Apprenticeships.Web.Candidate.Azure"
 $service = "web-candidatedev"
+$storage = "webcandidatedev"
 $slot = "staging" #staging or production
 $package = "src\$projectname\bin\release\app.publish\$projectname.cspkg"
 $configuration = "src\$projectname\bin\release\app.publish\ServiceConfiguration.Cloud.cscfg"
@@ -10,7 +11,7 @@ $deploymentLabel = "ContinuousDeploy to $service v%build.number%"
 Write-Output "Running Azure Imports"
 Import-Module "C:\Program Files (x86)\Microsoft SDKs\Windows Azure\PowerShell\ServiceManagement\Azure\*.psd1"
 Import-AzurePublishSettingsFile "C:\TeamCity\Visual Studio Ultimate with MSDN-6-13-2014-credentials.publishsettings"
-Set-AzureSubscription -CurrentStorageAccount $service -SubscriptionName $subscription
+Set-AzureSubscription -CurrentStorageAccount $storage -SubscriptionName $subscription
  
 function Publish(){
  $deployment = Get-AzureDeployment -ServiceName $service -Slot $slot -ErrorVariable a -ErrorAction silentlycontinue 
