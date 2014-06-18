@@ -67,7 +67,7 @@ namespace AddressLoader.Process
                 var indexStart = DateTime.Now;
                 var result = client.IndexMany(batch, indexName);
 
-                _logger.Debug("Read {0} records in {1}ms, index in {2}ms",
+                _logger.Debug("Read {0} records in {1}ms, indexed in {2}ms",
                     result.Items.Count(), 
                     indexStart.Subtract(readStart).TotalMilliseconds, 
                     DateTime.Now.Subtract(indexStart).TotalMilliseconds);
