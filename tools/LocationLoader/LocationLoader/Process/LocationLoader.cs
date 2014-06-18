@@ -11,12 +11,12 @@ namespace LocationLoader.Process
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        private readonly int _batchSize = 5000;
-        private readonly string _indexName = "locations";
+        private readonly int _batchSize;
+        private readonly string _indexName;
         private readonly string _filename;
         private readonly Uri _endpoint;
 
-        public LocationLoader(string filename, string endpoint, int batchSize = 500, string indexName = "locations")
+        public LocationLoader(string filename, string endpoint, int batchSize = 5000, string indexName = "locations")
         {
             if (!File.Exists(filename))
                 throw new FileNotFoundException(string.Format("Cannot find location file \"{0}\"", filename), filename);
