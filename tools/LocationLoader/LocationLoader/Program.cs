@@ -1,5 +1,5 @@
 ﻿using System;
-using LocationLoader.Process;
+using LocationLoader;
 using NLog;
 
 namespace LocationLoader
@@ -7,6 +7,7 @@ namespace LocationLoader
     internal class Program
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+     
         private static void Main(string[] args)
         {
             try
@@ -19,7 +20,7 @@ namespace LocationLoader
                 }
                 #endregion
 
-                new Loader(args[0], args[1]).Run();
+                new Process.LocationLoader(args[0], args[1]).Run();
             }
 
             catch (Exception ex)

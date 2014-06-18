@@ -53,9 +53,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Process\Loader.cs" />
+    <Compile Include="Process\LocationLoader.cs" />
     <Compile Include="Process\LocationData.cs" />
-    <Compile Include="Process\Mapper.cs" />
+    <Compile Include="Process\LocationMapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
