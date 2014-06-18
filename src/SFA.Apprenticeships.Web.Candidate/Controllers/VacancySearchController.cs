@@ -111,6 +111,12 @@
             throw new NotImplementedException("Non-js not yet implemented!");
         }
 
+        [HttpGet]
+        public ActionResult Details()
+        {
+            return View();
+        }
+
         #region Dropdown View Bag Helpers
 
         private void PopulateDistances(int selectedValue = 2)
