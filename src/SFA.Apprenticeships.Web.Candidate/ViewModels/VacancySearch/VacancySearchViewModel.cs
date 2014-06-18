@@ -27,7 +27,7 @@
         public string Keywords { get; set; }
 
         [Display(Name = "Apprenticeship location", Description = "Enter postcode, town or city")]
-        [Required(ErrorMessage = "Sorry, we didn't find a match for the location. Please try again.")]
+        //[Required(ErrorMessage = "Sorry, we didn't find a match for the location. Please try again.")]
         public string Location { get; set; }
 
         public double? Longitude { get; set; }

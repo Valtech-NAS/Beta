@@ -3,7 +3,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages
 {
     using System;
     using FluentAutomation;
-    using SFA.Apprenticeships.Web.Common.IntegrationTests;
+    using Common.IntegrationTests;
 
     public class VacancySearchResultPage : PageObject<VacancySearchResultPage>, IPageUnderTest
     {
@@ -21,6 +21,8 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages
         {
             I.Assert.Exists(".global-header__title").Text(PageTitle);
             I.Assert.Exists(".heading-xlarge").Text(Heading);
+            var results = I.Find("#pagedList")();
+            I.WaitUntil(() => !results.Attributes.Get("class").Contains("updating"));
         }
 
         public void GoToPage()

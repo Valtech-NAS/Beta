@@ -19,8 +19,8 @@
                 </p>
                 <div class="inl-block-wrapper">
                     <ul class="list-text btm-align width-all-2-3">
-                        <li><b>Distance:</b> @vacancy.DistanceAsString miles</li>
-                        <li><b>Closing date:</b> @vacancy.ClosingDate.ToUniversalTime().ToString("dd MMM yy")</li>
+                        <li><b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles</li>
+                        <li><b>Closing date:</b> <span class="closing-date-value">@vacancy.ClosingDate.ToUniversalTime().ToString("dd MMM yy")</span></li>
                     </ul>
                     <div class="btm-align width-all-1-3">
                         <div class="search-save">

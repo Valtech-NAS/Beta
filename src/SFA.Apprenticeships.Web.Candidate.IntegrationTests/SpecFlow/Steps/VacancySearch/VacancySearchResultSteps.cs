@@ -1,8 +1,11 @@
-﻿
-namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.VacancySearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.VacancySearch
 {
-    using SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages;
-    using SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Common;
+    using System;
+    using System.Linq;
+    using FluentAssertions;
+    using FluentAutomation;
+    using Pages;
+    using Common;
     using Specflow.FluentAutomation.Ext;
     using TechTalk.SpecFlow;
 
@@ -28,7 +31,36 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vaca
         public void ThenIExpectTheSearchResultsToBeSortedBy(string sortBy)
         {
             Page.I.Assert.Value(sortBy).In("#sort-results");
+            var sortValues = Page.I.FindMultiple(sortBy == "Distance" ? ".distance-value" : ".closing-date-value")().ToArray();
+            sortValues.Should().NotBeNull();
+            sortValues.Count().Should().Be(5);
+
+            switch (sortBy){
+                case "Distance":
+                    for (int i = 0; i < sortValues.Count() - 1; i++)
+                    {
+                        double.Parse(sortValues[i].Text)
+                            .Should()
+                            .BeLessOrEqualTo(double.Parse(sortValues[i + 1].Text));
+                    }
+                    break;
+                case "ClosingDate":
+                    for (int i = 0; i < sortValues.Count() - 1; i++)
+                    {
+                        DateTime.Parse(sortValues[i].Text)
+                            .Should()
+                            .BeOnOrBefore(DateTime.Parse(sortValues[i + 1].Text));
+                    }
+                    break;
+            }
         }
+
+        [Given(@"I update search results to be sorted by '(.*)'")]
+        public void GivenIUpdateSearchResultsToBeSortedBy(string sortBy)
+        {
+            Page.I.Select(Option.Value, sortBy).From("#sort-results");
+        }
+
 
         [Then(@"I expect to be able to navigate to the next page of results")]
         public void ThenIExpectToBeAbleToNavigateToTheNextPageOfResults()
@@ -42,7 +74,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vaca
         {
             for (var i = 0; i < pages; i++)
             {
-                WhenINavigateToTheNextPageOfResults(-1);
+                WhenINavigateToTheNextPageOfResults();
             }
         }
 
@@ -51,7 +83,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vaca
         {
             for (var i = 0; i < pages; i++)
             {
-                WhenINavigateToThePreviousPageOfResults(-1);
+                WhenINavigateToThePreviousPageOfResults();
             }
         }
 
@@ -61,13 +93,13 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vaca
             CheckNavigationLinks(-1, pageNumber);
         }
 
-        private void WhenINavigateToTheNextPageOfResults(int count)
+        private void WhenINavigateToTheNextPageOfResults()
         {
             ClickLink("a.page-navigation__btn.next", string.Empty);
             ThenIExpectToSeeSearchResults();
         }
 
-        private void WhenINavigateToThePreviousPageOfResults(int count)
+        private void WhenINavigateToThePreviousPageOfResults()
         {
             ClickLink("a.page-navigation__btn.previous", string.Empty);
             ThenIExpectToSeeSearchResults();

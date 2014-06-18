@@ -28,11 +28,13 @@
     </div>
 
     @using (Html.BeginForm("search", "vacancysearch", FormMethod.Get))
-    {
+    {                      
         <section class="grid grid-1-3">
             <fieldset class="search-filter">
+                @Html.ValidationSummary(false)
                 <legend class="heading-medium mob-collpanel-trigger">Filter results</legend>
                 <div class="mob-collpanel toggle-content--mob">
+
                     @Html.FormTextFor(m => m.VacancySearch.Keywords, hintText: "")
                     @Html.FormTextFor(m => m.VacancySearch.Location, hintText: "")
                     
@@ -79,6 +81,14 @@
             url: '@Url.Action("location", "vacancysearch")',
             longitude: '#Longitude',
             latitude: '#Latitude',
+        });
+
+        $(document).ready(function () {
+            $("form").submit(function () {
+                if ($("#VacancySearch_Location").hasClass("input-validation-error")) {
+                    $("#VacancySearch_Location").parent().addClass("input-validation-error");
+                }
+            });
         });
     </script>
 }

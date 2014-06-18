@@ -5,7 +5,7 @@ if (!window.console.log) window.console.log = function () { };
 // Hooks up the pagination control and manages the history.
 $(document).ready(function(){
 
-    //Needs off/on to prevent multiple firing as binds additional handlers on each load.
+    //Needs off/on to prevent multiple firing as binds additional handlers on each page load.
     $("#pagedList").off("click", "a.page-navigation__btn").on("click", "a.page-navigation__btn", function (e) {
         if (!Modernizr.history) {
             return true;
@@ -21,12 +21,14 @@ $(document).ready(function(){
         var pagenavigation = $("div.page-navigation");
         var container = pagenavigation.attr("data-ajax-update");
         var method = pagenavigation.attr("data-ajax-method");
+        $(container).addClass("updating");
 
         $.ajax({
             url: url,
             type: method,
             success: function (response) {
                 $(container).html(response);
+                $(container).removeClass("updating");
                 if (updateHistory && window.history && history.pushState) {
                     console.log("Pushing url: " + url);
                     history.pushState({ isInitial: false, url: url }, "SFA Apprenticeships", url);

@@ -122,6 +122,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Domain.
 EndProject
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Web.Candidate.Azure", "SFA.Apprenticeships.Web.Candidate.Azure\SFA.Apprenticeships.Web.Candidate.Azure.ccproj", "{AF84EB1F-B9E9-4269-B2B4-452A6D92897A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Azure.Session", "SFA.Apprenticeships.Infrastructure.Azure.Session\SFA.Apprenticeships.Infrastructure.Azure.Session.csproj", "{2FC1A9D8-E66E-49D0-BEFF-C845AFDF34F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -203,7 +205,6 @@ Global
 		{D429F1FC-7255-4B84-9124-FE607F5D6C54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D429F1FC-7255-4B84-9124-FE607F5D6C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D429F1FC-7255-4B84-9124-FE607F5D6C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D429F1FC-7255-4B84-9124-FE607F5D6C54}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -308,6 +309,10 @@ Global
 		{AF84EB1F-B9E9-4269-B2B4-452A6D92897A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF84EB1F-B9E9-4269-B2B4-452A6D92897A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF84EB1F-B9E9-4269-B2B4-452A6D92897A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FC1A9D8-E66E-49D0-BEFF-C845AFDF34F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FC1A9D8-E66E-49D0-BEFF-C845AFDF34F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FC1A9D8-E66E-49D0-BEFF-C845AFDF34F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FC1A9D8-E66E-49D0-BEFF-C845AFDF34F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -364,5 +369,6 @@ Global
 		{50739E9C-CFCF-4A42-95B9-443D46850B77} = {EB6F2C1E-20C0-4C55-B5D9-70FBA59E5CF0}
 		{4741B9B0-C694-4D34-8D30-D5B82BC87724} = {50739E9C-CFCF-4A42-95B9-443D46850B77}
 		{AF84EB1F-B9E9-4269-B2B4-452A6D92897A} = {22CE73E4-F469-434C-AC5D-D926EBBAC3D5}
+		{2FC1A9D8-E66E-49D0-BEFF-C845AFDF34F6} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 	EndGlobalSection
 EndGlobal
