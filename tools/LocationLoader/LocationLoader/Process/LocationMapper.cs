@@ -6,9 +6,9 @@ namespace LocationLoader.Process
     /// <summary>
     /// mapper class for CSV mapping
     /// </summary>
-    internal class Mapper : CsvClassMap<LocationData>
+    internal class LocationMapper : CsvClassMap<LocationData>
     {
-        public Mapper()
+        public LocationMapper()
         {
             Map(m => m.Name).Name("Town");
             Map(m => m.County).Name("County");

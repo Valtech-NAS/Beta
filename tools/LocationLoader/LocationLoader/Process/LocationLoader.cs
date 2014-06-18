@@ -7,22 +7,24 @@ using NLog;
 
 namespace LocationLoader.Process
 {
-    public class Loader
+    public class LocationLoader
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        private const int BatchSize = 5000;
-        private const string IndexName = "locations";
+        private readonly int _batchSize = 5000;
+        private readonly string _indexName = "locations";
         private readonly string _filename;
         private readonly Uri _endpoint;
 
-        public Loader(string filename, string endpoint)
+        public LocationLoader(string filename, string endpoint, int batchSize = 500, string indexName = "locations")
         {
             if (!File.Exists(filename))
                 throw new FileNotFoundException(string.Format("Cannot find location file \"{0}\"", filename), filename);
 
             _filename = filename;
             _endpoint = new Uri(endpoint);
+            _batchSize = batchSize;
+            _indexName = indexName;
         }
 
         public void Run()
@@ -32,7 +34,7 @@ namespace LocationLoader.Process
             using (TextReader reader = File.OpenText(_filename))
             {
                 var csv = new CsvReader(reader);
-                csv.Configuration.RegisterClassMap<Mapper>();
+                csv.Configuration.RegisterClassMap<LocationMapper>();
 
                 _logger.Debug("Reading...");
                 var allCsvRows = csv.GetRecords<LocationData>().ToList();
@@ -41,35 +43,35 @@ namespace LocationLoader.Process
 
                 _logger.Debug("Connecting to {0}", _endpoint);
                 var settings = new ConnectionSettings(_endpoint);
-                settings.SetDefaultIndex(IndexName);
+                settings.SetDefaultIndex(_indexName);
 
                 var client = new ElasticClient(settings);
-                client.MapFromAttributes<LocationData>(IndexName);
+                client.MapFromAttributes<LocationData>(_indexName);
 
                 _logger.Debug("Checking if index already exists");
-                if (client.IndexExists(IndexName).Exists)
+                if (client.IndexExists(_indexName).Exists)
                 {
                     _logger.Debug("Deleting existing index");
-                    client.DeleteIndex(IndexName);
+                    client.DeleteIndex(_indexName);
                 }
 
                 _logger.Debug("Creating new index");
-                client.CreateIndex(IndexName, i => i.AddMapping<LocationData>(m => m.MapFromAttributes()));
+                client.CreateIndex(_indexName, i => i.AddMapping<LocationData>(m => m.MapFromAttributes()));
 
-                _logger.Debug("Indexing \"{0}\" in batches of {1}...", IndexName, BatchSize);
+                _logger.Debug("Indexing \"{0}\" in batches of {1}...", _indexName, _batchSize);
                 var loop = 0;
                 while (true)
                 {
-                    var batch = allCsvRows.Skip(loop*BatchSize).Take(BatchSize).ToList();
+                    var batch = allCsvRows.Skip(loop*_batchSize).Take(_batchSize).ToList();
                     if (!batch.Any()) break;
 
-                    var result = client.IndexMany(batch, IndexName);
+                    var result = client.IndexMany(batch, _indexName);
                     _logger.Debug("Indexed {0} records in {1}ms", result.Items.Count(), result.Took);
 
                     loop++;
                 }
 
-                _logger.Info("Indexed {0} records into \"{1}\" at {2}", allCsvRows.Count, IndexName, _endpoint);
+                _logger.Info("Indexed {0} records into \"{1}\" at {2}", allCsvRows.Count, _indexName, _endpoint);
             }
         }
     }
