@@ -8,14 +8,7 @@ param(
 	[string]$buildnumber
 )
 
-#$projectname = "SFA.Apprenticeships.Web.Candidate.Azure"
-#$sitename = "Candidate"
-#$buildConfiguration = "Release"
-#$StorageAccountName = "nasbuilds"
-#$storage = "archive"
-#$storageAccountKey = "P1wxhz2gYA9dPs26J4oJc2vTidBt0aV6oHgi7KR6QGJnpMHU+gE6h5jyK8sB7eQ3Sdr8LrVe/4yIVAvAeQhAQw=="
 $srcpath = "src\$projectname\bin\$buildConfiguration\app.publish"
-#$buildnumber = "%dep.SfaApprenticeships_Ci_CompileAndUnitTest.system.BuildNumber%"
  
 Write-Output "Running Azure Imports"
 Import-Module "C:\Program Files (x86)\Microsoft SDKs\Windows Azure\PowerShell\ServiceManagement\Azure\*.psd1"
