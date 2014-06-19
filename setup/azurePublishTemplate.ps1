@@ -1,10 +1,10 @@
 param(
-	[string]$buildConfiguration
-    [string]$subscription
-	[string]$projectname
-	[string]$service
-	[string]$storage
-	[string]$slot
+	[string]$buildConfiguration,
+    [string]$subscription,
+	[string]$projectname,
+	[string]$service,
+	[string]$storage,
+	[string]$slot,
 	[string]$buildNumber
 )
 
