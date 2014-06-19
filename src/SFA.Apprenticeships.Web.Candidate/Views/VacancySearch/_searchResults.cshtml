@@ -8,14 +8,14 @@
         {
             <li class="search-results__item section-border">
                 <div class="hgroup-medium">
-                    <h3 class="heading-medium">@Html.ActionLink(@vacancy.Title, "Details")</h3>
+                    <h3 class="heading-medium">@Html.ActionLink(@vacancy.Title, "Details", new { id = vacancy.Id })</h3>
                     <h4 class="subtitle">@vacancy.EmployerName</h4>
                 </div>
                 <p class="search-shortdesc">
                     @vacancy.Description
                 </p>
                 <p>
-                    @Html.ActionLink("Read more", "Details")
+                    @Html.ActionLink("Read more", "Details", new { id = vacancy.Id })
                 </p>
                 <div class="inl-block-wrapper">
                     <ul class="list-text btm-align width-all-2-3">

@@ -25,7 +25,7 @@
                 .ForMember(d => d.EmployerName, opt => opt.MapFrom(src => src.EmployerName))
                 .ForMember(d => d.Framework, opt => opt.MapFrom(src => src.ApprenticeshipFramework))
                 .ForMember(d => d.LocalAuthority, opt => opt.MapFrom(src => src.VacancyAddress.LocalAuthority))
-                .ForMember(d => d.Location, opt => opt.ResolveUsing<AddressResolver>().FromMember(src => src.VacancyAddress))
+                .ForMember(d => d.Location, opt => opt.ResolveUsing<VacancySummaryAddressResolver>().FromMember(src => src.VacancyAddress))
                 .ForMember(d => d.NumberOfPositions, opt => opt.MapFrom(src => src.NumberOfPositions))
                 .ForMember(d => d.PostCode, opt => opt.MapFrom(src => src.VacancyAddress.PostCode))
                 .ForMember(d => d.ProviderName, opt => opt.MapFrom(src => src.LearningProviderName))

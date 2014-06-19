@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces.Search;
+    using Application.Interfaces.Vacancy;
     using Common.Controllers;
     using Common.Framework;
     using Infrastructure.Azure.Session;
@@ -17,15 +18,18 @@
         private readonly IConfigurationManager _configManager;
         private readonly ISearchProvider _searchProvider;
         private readonly IValidateModel<VacancySearchViewModel> _validator;
+        private readonly IVacancyDataProvider _vacancyDataProvider;
 
         public VacancySearchController(IConfigurationManager configManager, 
                                     ISearchProvider searchProvider, 
                                     IValidateModel<VacancySearchViewModel> validator,
+                                    IVacancyDataProvider vacancyDataProvider,
                                     ISessionState session) : base (session)
         {
             _configManager = configManager;
             _searchProvider = searchProvider;
             _validator = validator;
+            _vacancyDataProvider = vacancyDataProvider;
         }
 
         private int VacancyResultsPerPage
@@ -112,9 +116,10 @@
         }
 
         [HttpGet]
-        public ActionResult Details()
+        public ActionResult Details(int id)
         {
-            return View();
+            var vacancy = _vacancyDataProvider.GetVacancyDetails(id);
+            return View(vacancy);
         }
 
         #region Dropdown View Bag Helpers

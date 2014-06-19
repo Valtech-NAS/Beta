@@ -1,28 +1,30 @@
-﻿
+﻿@model SFA.Apprenticeships.Domain.Entities.Vacancy.VacancyDetail
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "SFA Apprenticeships - " + Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .blocked-backgroud {
+        background-color: red;
+    }
+</style>
+
 <div class="hgroup text">
-    <h1 class="heading-xlarge">Mechanical Engineer – Precision Toolmaker</h1>
-    <h2 class="subtitle">R G Engineering</h2>
+    <h1 class="heading-xlarge" id="vacancy-title">@Model.Title</h1>
+    <h2 class="subtitle" id="vacancy-subtitle-employer-name">@Model.EmployerName</h2>
 </div>
 <section class="grid-wrapper">
     <div class="grid grid-2-3">
         <div class="inner-block-padr">
             <div class="text">
-                <p>
-                    An exciting opportunity has arisen for the right candidate to gain an engineering
-                    qualification through an apprenticeship. If you have got drive
-                    and want to learn a highly skilled trade then look no further.
-                </p>
+                <p id="vacancy-description">@Model.Description</p>
             </div>
         </div>
     </div>
     <div class="grid grid-1-3">
-        <a href="apply-index.html" class="button button-with-hint">Apply for vacancy</a>
-        <p class="copy-16">Closing date: 30 Jun 14</p>
+        <a href="#" class="button button-with-hint">Apply for vacancy</a>
+        <p class="copy-16">Closing date: <span id="vacancy-closing-date">@Model.ClosingDate.ToUniversalTime().ToString("dd MMM yy")</span></p>
     </div>
 </section>
 <section class="section-border">
@@ -74,65 +76,44 @@
     <div class="grid grid-2-3">
         <div class="inner-block-padr">
             <div class="text">
-                <p>
-                    The apprenticeship will involve learning to operate a variety of
-                    machinery such as milling machines, surface grinders and bandsaws.
-                </p>
-                <p>
-                    The successful candidate will also be required to manufacture parts
-                    using raw materials from engineering drawings, sketches or verbal
-                    instructions.
-                </p>
-                <p>Further duties include:</p>
-                <ul>
-                    <li>checking parts using measuring equipment</li>
-                    <li>recording process times</li>
-                    <li>reporting defects</li>
-                    <li>planning process methods</li>
-                    <li>ensuring Health and Safety requirements are adhered to</li>
-                </ul>
-                <p>
-                    The apprenticeship is subject to a mandatory 3-month probationary
-                    period. There will also be a 1-day trial prior to an offer.
-                </p>
+                <p id="vacancy-full-descrpition">@Html.Raw(Model.FullDescription)</p>
             </div>
         </div>
     </div>
     <div class="grid grid-1-3">
         <ul class="list-text">
             <li class="bold-medium">Weekly wage</li>
-            <li>&pound;107.20</li>
+            <li id="vacancy-wage">&pound;@string.Format("{0:N2}", @Model.Wage)</li>
+            <li id="vacancy-wage-description">@Model.WageDescription</li>
         </ul>
         <ul class="list-text">
             <li>
                 <h3 class="bold-medium">Working week</h3>
             </li>
-            <li>Mon - Thurs: 07:30 - 16:30</li>
-            <li>Fri: 07:30 - 12:30</li>
-            <li>Total hours per week: 38</li>
+            <li id="vacancy-working-week">@Model.WorkingWeek</li>
         </ul>
         <ul class="list-text">
             <li>
                 <h3 class="bold-medium">Expected duration</h3>
             </li>
-            <li>18 months</li>
+            <li id="vacancy-expected-duration">@Model.ExpectedDuration</li>
         </ul>
         <ul class="list-text">
             <li class="bold-medium">Distance</li>
-            <li>5.2 miles</li>
+            <li id="vacancy-distance">TO BE CALCULATED</li>
         </ul>
         <ul class="list-text">
             <li>
                 <h3 class="bold-medium">Vacancy type</h3>
             </li>
-            <li>Intermediate Level Apprenticeship</li>
+            <li id="vacancy-type">@Model.VacancyType (will need formatted)</li>
         </ul>
         <ul class="list-text">
             <li class="bold-medium">Reference number</li>
-            <li>VAC000409315</li>
+            <li id="vacancy-reference-id">@Html.Raw("VAC" + Model.Id.ToString("D9"))</li>
         </ul>
     </div>
-    <p class="subtext">Content provided by R G Engineering - 01 May 14</p>
+    <p class="subtext blocked-backgroud">Content provided by R G Engineering - 01 May 14</p>
 </section>
 <section class="section-border grid-wrapper" id="course-info">
     <h2 class="heading-large">2. Information for candidate</h2>
@@ -140,90 +121,62 @@
         <div class="inner-block-padr">
             <div class="text">
                 <h3 class="heading-medium">Desired skills</h3>
-                <ul class="list-text">
-                    <li>A high standard of maths and IT.</li>
-                    <li>Excellent communication skills.</li>
-                    <li>Confidential approach on sensitive projects</li>
-                </ul>
+                <p id="vacancy-skills-required">@Html.Raw(Model.SkillsRequired)</p>
                 <h3 class="heading-medium">Qualifications required</h3>
-                <p>GSCE grade A-C in Mathematics and English. (or equivalent)</p>
+                <p id="vacancy-qualifications-required">@Model.QualificationRequired</p>
             </div>
         </div>
     </div>
     <div class="grid grid-1-2">
         <div class="text">
             <h3 class="heading-medium">Future prospects</h3>
-            <p>Advancement to Level 3 qualification is encouraged and supported.</p>
-            <p>
-                On successful completion of the apprenticeship, there will be a full-time
-                position available, leading to competitive salary in excess of
-                &pound;28k + benefits.
-            </p>
+            <p id="vacancy-future-prospects">@Model.FutureProspects</p>
             <h3 class="heading-medium">Reality check</h3>
-            <ul class="list-text">
-                <li>You must be capable of standing during all working hours.</li>
-                <li>A degree of physical work will be required.</li>
-            </ul>
+            <p class="blocked-backgroud">What field is this from?</p>
         </div>
     </div>
-    <p class="subtext">Content provided by Valkyrie Support Services - 01 May 14</p>
+    <p class="subtext blocked-backgroud">Content provided by Valkyrie Support Services - 01 May 14</p>
 </section>
 <section class="section-border grid-wrapper" id="employer-info">
     <h2 class="heading-large">3. About the employer</h2>
     <div class="grid grid-2-3">
         <div class="inner-block-padr">
             <div class="text">
-                <p>
-                    Established in 1978, R G Engineering Ltd is proud to have developed
-                    partnerships with leading companies that include Rolls-Royce
-                    Aero Engines, Denso, and GKN Aerospace. We supply design and
-                    manufacture products and onsite customer support to the aerospace,
-                    automotive, and robotic markets.
-                </p>
-                <p>
-                    Being a medium company we are able to dedicate ourselves to 100%
-                    customer focus, delivering high quality parts in short lead-time’s
-                    without compromise.
-                </p>
+                <p id="vacancy-emnployer-description">@Html.Raw(Model.EmployerDescription)</p>
             </div>
         </div>
     </div>
     <div class="grid grid-1-3">
         <ul class="list-text">
             <li class="bold-medium">Contact</li>
-            <li>
-                <a href="http://www.rgeng.co.uk">http://www.rgeng.co.uk</a>
-            </li>
+            <li>@Model.EmployerName</li>
+            <li><a href="@Model.EmployerWebsite" target="_blank" title="@Model.EmployerName Web Site">@Model.EmployerWebsite</a></li>
         </ul>
         <ul class="list-text">
-            <li>Hotchkiss Way</li>
-            <li>Binley Industrial Estate</li>
-            <li>Coventry</li>
-            <li>West Midlands</li>
-            <li>CV3 2RL</li>
+            <li>@Model.AddressLine1</li>
+            <li>@Model.AddressLine2</li>
+            <li>@Model.AddressLine3</li>
+            <li>@Model.AddressLine4</li>
+            <li>@Model.AddressLine5</li>
+            <li>@Model.Town</li>
+            <li>@Model.County</li>
+            <li>@Model.PostCode</li>
         </ul>
         <div class="ad-details__map">
-            <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=CV3+2RL,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+            <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.PostCode),+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
         </div>
     </div>
-    <p class="subtext">Content provided by R G Engineering - 01 May 14</p>
+    <p class="subtext blocked-backgroud">Content provided by R G Engineering - 01 May 14</p>
 </section>
 <section class="section-border grid-wrapper" id="provider-info">
     <h2 class="heading-large">4. Learning provider</h2>
     <div class="grid grid-2-3">
         <div class="inner-block-padr">
             <div class="text">
-                <p>
-                    The successful candidate will be trained onsite and be supported
-                    by a Valkyrie tutor to achieve the engineering qualification.
-                </p>
+                <p>@Html.Raw(Model.ProviderDescription)</p>
                 <h3 class="heading-medium">Apprenticeship framework</h3>
-                <p>Engineering Manufacture (Operator &amp; Semi Skilled)</p>
-                <p>
-                    This Learning Provider has achieved a sector success rate of 88%
-                    for this type of apprenticeship training
-                </p>
+                <p>@Html.Raw(Model.Framework)</p>
             </div>
         </div>
     </div>
@@ -232,28 +185,29 @@
             <li>
                 <h3 class="bold-medium">Learning provider</h3>
             </li>
-            <li>Valkyrie Support Services Ltd</li>
+            <li>@Model.ProviderName</li>
         </ul>
         <ul class="list-text">
             <li>
                 <h3 class="bold-medium">Contact</h3>
             </li>
-            <li>Hannah Durber</li>
-            <li>01889 566263</li>
-            <li>School House Farm</li>
-            <li>Beamhurst</li>
-            <li>Uttoxeter</li>
-            <li>ST14 5EA</li>
+            <li class="blocked-backgroud">Hannah Durber</li>
+            <li class="blocked-backgroud">01889 566263</li>
+            <li class="blocked-backgroud">School House Farm</li>
+            <li class="blocked-backgroud">Beamhurst</li>
+            <li class="blocked-backgroud">Uttoxeter</li>
+            <li class="blocked-backgroud">ST14 5EA</li>
             <li>
-                <a href="mailto:hannahdurber@vsslearning.co.uk">hannahdurber@vsslearning.co.uk</a>
+                <a href="mailto:hannahdurber@vsslearning.co.uk" class="blocked-backgroud">hannahdurber@vsslearning.co.uk</a>
             </li>
         </ul>
         <div class="ad-details__map">
+            <p class="blocked-backgroud">Where do we get the address for this map?</p>
             <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=ST14+5EA,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
         </div>
     </div>
-    <p class="subtext">Content provided by Valkyrie Support Services - 01 May 14</p>
+    <p class="subtext blocked-backgroud">Content provided by Valkyrie Support Services - 01 May 14</p>
 </section>
 <section id="before-apply">
     <h2 class="heading-large">5. Before you apply</h2>
@@ -266,9 +220,9 @@
         </ul>
     </div>
     <div class="form-group">
-        <a class="button button-with-hint" href="apply-index.html">Apply for vacancy</a>
-        <p class="copy-16">Closing date: 30 Jun 14</p>
-        <a class="button-link" href="search-results.html">Back</a>
+        <a class="button button-with-hint" href="#">Apply for vacancy</a>
+        <p class="copy-16">Closing date: @Model.ClosingDate.ToUniversalTime().ToString("dd MMM yy")</p>
+        <a class="button-link" href="javascript:history.back()" title="Back to search results">Back</a>
     </div>
 </section>
 

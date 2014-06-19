@@ -10,6 +10,7 @@
     using Mappers;
     using ReferenceDataProxy;
     using VacancyDetail;
+    using VacancyDetailProxy;
     using VacancySummary;
     using VacancySummaryProxy;
     using StructureMap.Configuration.DSL;
@@ -23,6 +24,7 @@
             For<IMapper>().Use<VacancyDetailMapper>().Name = "LegacyWebServices.VacancyDetailMapper";
             For<ILegacyServicesConfiguration>().Singleton().Use(LegacyServicesConfiguration.Instance);
             For<IWcfService<IVacancySummary>>().Use<WcfService<IVacancySummary>>();
+            For<IWcfService<IVacancyDetails>>().Use<WcfService<IVacancyDetails>>();
             For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
             For<IVacancyIndexDataProvider>().Use<LegacyVacancyIndexDataProvider>().Ctor<IMapper>().Named("LegacyWebServices.VacancySummaryMapper");
             For<IVacancyDataProvider>().Use<LegacyVacancyDataProvider>().Ctor<IMapper>().Named("LegacyWebServices.VacancyDetailMapper");

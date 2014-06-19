@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
     using AutoMapper;
-    using VacancySummaryProxy;
+    using VacancyDetailProxy;
     using Domain.Entities.Location;
 
-    public class AddressResolver : ValueResolver<AddressData, GeoPoint>
+    public class VacancyDetailAddressResolver : ValueResolver<AddressData, GeoPoint>
     {
         protected override GeoPoint ResolveCore(AddressData source)
         {
