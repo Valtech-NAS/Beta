@@ -11,18 +11,20 @@ namespace LocationLoader.Process
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
+        private readonly bool _append;
         private readonly int _batchSize;
         private readonly string _indexName;
         private readonly string _filename;
         private readonly Uri _endpoint;
 
-        public LocationLoader(string filename, string endpoint, int batchSize = 5000, string indexName = "locations")
+        public LocationLoader(string filename, string endpoint, bool append, int batchSize = 5000, string indexName = "locations")
         {
             if (!File.Exists(filename))
                 throw new FileNotFoundException(string.Format("Cannot find location file \"{0}\"", filename), filename);
 
             _filename = filename;
             _endpoint = new Uri(endpoint);
+            _append = append;
             _batchSize = batchSize;
             _indexName = indexName;
         }
@@ -51,12 +53,26 @@ namespace LocationLoader.Process
                 _logger.Debug("Checking if index already exists");
                 if (client.IndexExists(_indexName).Exists)
                 {
-                    _logger.Debug("Deleting existing index");
-                    client.DeleteIndex(_indexName);
+                    if (!_append)
+                    {
+                        _logger.Debug("Deleting existing index");
+                        client.DeleteIndex(_indexName);
+                    }
+                }
+                else
+                {
+                    throw new Exception("Cannot append to existing data because there is no existing index");
                 }
 
-                _logger.Debug("Creating new index");
-                client.CreateIndex(_indexName, i => i.AddMapping<LocationData>(m => m.MapFromAttributes()));
+                if (_append)
+                {
+                    _logger.Debug("Appending to existing index");
+                }
+                else
+                {
+                    _logger.Debug("Creating new index");
+                    client.CreateIndex(_indexName, i => i.AddMapping<LocationData>(m => m.MapFromAttributes()));
+                }
 
                 _logger.Debug("Indexing \"{0}\" in batches of {1}...", _indexName, _batchSize);
                 var loop = 0;

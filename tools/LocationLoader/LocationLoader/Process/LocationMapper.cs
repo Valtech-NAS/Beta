@@ -12,10 +12,8 @@ namespace LocationLoader.Process
         {
             Map(m => m.Name).Name("Town");
             Map(m => m.County).Name("County");
-            Map(m => m.Country).Name("Country");
             Map(m => m.Latitude).Name("Latitude");
             Map(m => m.Longitude).Name("Longitude");
-            Map(m => m.Postcode).Name("Postcode");
         }
     }
 }
