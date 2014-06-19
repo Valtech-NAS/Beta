@@ -98,10 +98,13 @@
             </li>
             <li id="vacancy-expected-duration">@Model.ExpectedDuration</li>
         </ul>
-        <ul class="list-text">
-            <li class="bold-medium">Distance</li>
-            <li id="vacancy-distance">TO BE CALCULATED</li>
-        </ul>
+        @if (TempData["distance"] != null)
+        {
+            <ul class="list-text">
+                <li class="bold-medium">Distance</li>
+                <li id="vacancy-distance">@TempData["distance"] miles</li>
+            </ul>
+        }
         <ul class="list-text">
             <li>
                 <h3 class="bold-medium">Vacancy type</h3>
@@ -113,7 +116,6 @@
             <li id="vacancy-reference-id">@Html.Raw("VAC" + Model.Id.ToString("D9"))</li>
         </ul>
     </div>
-    <p class="subtext blocked-backgroud">Content provided by R G Engineering - 01 May 14</p>
 </section>
 <section class="section-border grid-wrapper" id="course-info">
     <h2 class="heading-large">2. Information for candidate</h2>
@@ -129,13 +131,13 @@
     </div>
     <div class="grid grid-1-2">
         <div class="text">
-            <h3 class="heading-medium">Future prospects</h3>
-            <p id="vacancy-future-prospects">@Model.FutureProspects</p>
-            <h3 class="heading-medium">Reality check</h3>
-            <p class="blocked-backgroud">What field is this from?</p>
+            @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
+            {
+                <h3 class="heading-medium">Future prospects</h3>
+                <p id="vacancy-future-prospects">@Model.FutureProspects</p>
+            }
         </div>
     </div>
-    <p class="subtext blocked-backgroud">Content provided by Valkyrie Support Services - 01 May 14</p>
 </section>
 <section class="section-border grid-wrapper" id="employer-info">
     <h2 class="heading-large">3. About the employer</h2>
@@ -167,16 +169,16 @@
             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
         </div>
     </div>
-    <p class="subtext blocked-backgroud">Content provided by R G Engineering - 01 May 14</p>
 </section>
 <section class="section-border grid-wrapper" id="provider-info">
     <h2 class="heading-large">4. Learning provider</h2>
     <div class="grid grid-2-3">
         <div class="inner-block-padr">
             <div class="text">
-                <p>@Html.Raw(Model.ProviderDescription)</p>
+                <p>@Html.Raw(Model.TrainingToBeProvided)</p>
                 <h3 class="heading-medium">Apprenticeship framework</h3>
                 <p>@Html.Raw(Model.Framework)</p>
+                <p>The Learning Provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprencticeship training.</p>
             </div>
         </div>
     </div>
@@ -191,23 +193,14 @@
             <li>
                 <h3 class="bold-medium">Contact</h3>
             </li>
-            <li class="blocked-backgroud">Hannah Durber</li>
-            <li class="blocked-backgroud">01889 566263</li>
-            <li class="blocked-backgroud">School House Farm</li>
-            <li class="blocked-backgroud">Beamhurst</li>
-            <li class="blocked-backgroud">Uttoxeter</li>
-            <li class="blocked-backgroud">ST14 5EA</li>
-            <li>
-                <a href="mailto:hannahdurber@vsslearning.co.uk" class="blocked-backgroud">hannahdurber@vsslearning.co.uk</a>
-            </li>
+            <li>@Model.Contact</li>
         </ul>
-        <div class="ad-details__map">
+        @*<div class="ad-details__map">
             <p class="blocked-backgroud">Where do we get the address for this map?</p>
             <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=ST14+5EA,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
-        </div>
+        </div>*@
     </div>
-    <p class="subtext blocked-backgroud">Content provided by Valkyrie Support Services - 01 May 14</p>
 </section>
 <section id="before-apply">
     <h2 class="heading-large">5. Before you apply</h2>

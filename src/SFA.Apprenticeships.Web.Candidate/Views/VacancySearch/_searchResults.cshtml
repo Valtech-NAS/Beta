@@ -1,39 +1,47 @@
 ﻿
 @model SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.VacancySearchResponseViewModel
 
-<div id="pagedListInternal">
+@if (Model.TotalHits > 0) {
+    <fieldset>
+        <legend class="visuallyhidden">Search items</legend>
+        <div class="float-right-wrap">
+            <div class="form-group form-group-compound">
+                <label for="sort-results" class="heading-medium inline">Sort results</label>
+                @Html.DropDownListFor(m => m.VacancySearch.SortType, (SelectList)ViewBag.SortTypes, new { @id = "sort-results", @name = "sortType", @onchange = "this.form.submit();" })
+            </div>
+        </div>
+    </fieldset>
+}
 
-    <ul class="search-results">
-        @foreach (var vacancy in Model.Vacancies)
-        {
-            <li class="search-results__item section-border">
-                <div class="hgroup-medium">
-                    <h3 class="heading-medium">@Html.ActionLink(@vacancy.Title, "Details", new { id = vacancy.Id })</h3>
-                    <h4 class="subtitle">@vacancy.EmployerName</h4>
-                </div>
-                <p class="search-shortdesc">
-                    @vacancy.Description
-                </p>
-                <p>
-                    @Html.ActionLink("Read more", "Details", new { id = vacancy.Id })
-                </p>
-                <div class="inl-block-wrapper">
-                    <ul class="list-text btm-align width-all-2-3">
-                        <li><b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles</li>
-                        <li><b>Closing date:</b> <span class="closing-date-value">@vacancy.ClosingDate.ToUniversalTime().ToString("dd MMM yy")</span></li>
-                    </ul>
-                    <div class="btm-align width-all-1-3">
-                        <div class="search-save">
-                            <input type="checkbox" class="save-trigger" id="save-trigger1">
-                            <label for="save-trigger1">Save</label>
-                        </div>
+<ul class="search-results">
+    @foreach (var vacancy in Model.Vacancies)
+    {
+        <li class="search-results__item section-border">
+            <div class="hgroup-medium">
+                <h3 class="heading-medium">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString })</h3>
+                <h4 class="subtitle">@vacancy.EmployerName</h4>
+            </div>
+            <p class="search-shortdesc">
+                @vacancy.Description
+            </p>
+            <p>
+                @Html.ActionLink("Read more", "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString })
+            </p>
+            <div class="inl-block-wrapper">
+                <ul class="list-text btm-align width-all-2-3">
+                    <li><b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles</li>
+                    <li><b>Closing date:</b> <span class="closing-date-value">@vacancy.ClosingDate.ToUniversalTime().ToString("dd MMM yy")</span></li>
+                </ul>
+                <div class="btm-align width-all-1-3">
+                    <div class="search-save">
+                        <input type="checkbox" class="save-trigger" id="save-trigger1">
+                        <label for="save-trigger1">Save</label>
                     </div>
                 </div>
-            </li>
-        }
-    </ul>
+            </div>
+        </li>
+    }
+</ul>
 
-    @{Html.RenderPartial("_pagination", Model);}
-</div>
+@{Html.RenderPartial("_pagination", Model);}
 
-<script src="~/Content/_assets/js/nas/pagination.js" type="text/javascript"></script>

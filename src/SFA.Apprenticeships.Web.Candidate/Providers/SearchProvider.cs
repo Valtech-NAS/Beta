@@ -6,7 +6,6 @@
     using Application.Interfaces.Vacancy;
     using Domain.Entities.Location;
     using Domain.Interfaces.Mapping;
-    using Controllers;
     using ViewModels.VacancySearch;
 
     public class SearchProvider : ISearchProvider

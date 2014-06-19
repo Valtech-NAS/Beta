@@ -12,6 +12,7 @@
     [Binding]
     public class VacancySearchResultSteps : CommonSteps
     {
+        [When(@"I expect to see search results")]
         [Then(@"I expect to see search results")]
         public void ThenIExpectToSeeSearchResults()
         {

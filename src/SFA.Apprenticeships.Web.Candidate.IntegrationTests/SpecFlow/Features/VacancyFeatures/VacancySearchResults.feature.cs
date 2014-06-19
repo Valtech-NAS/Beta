@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Features.VacancySearchFeature
+namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Features.VacancyFeatures
 {
     using TechTalk.SpecFlow;
     

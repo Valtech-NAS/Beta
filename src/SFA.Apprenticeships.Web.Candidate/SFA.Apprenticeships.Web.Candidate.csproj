@@ -261,7 +261,7 @@
     <Content Include="Views\VacancySearch\_searchResults.cshtml" />
     <Content Include="Views\VacancySearch\_pagination.cshtml" />
     <Content Include="Views\VacancySearch\Details.cshtml" />
-    <Content Include="Views\Error\Error404.cshtml" />
+    <Content Include="Views\VacancySearch\VacancyNotFound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
