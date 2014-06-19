@@ -4,7 +4,7 @@ param(
 	[string]$projectname,
 	[string]$sitename,
 	[string]$storage,
-	[string]$storagekey
+	[string]$storagekey,
 	[string]$buildnumber
 )
 
