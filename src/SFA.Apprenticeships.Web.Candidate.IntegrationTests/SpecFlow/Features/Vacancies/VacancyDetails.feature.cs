@@ -74,28 +74,27 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Features.V
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("View apprenticeship details in my area")]
-        [NUnit.Framework.CategoryAttribute("mytag")]
-        public virtual void ViewApprenticeshipDetailsInMyArea()
+        [NUnit.Framework.TestCaseAttribute("Warwick", "10 miles", null)]
+        [NUnit.Framework.TestCaseAttribute("London", "10 miles", null)]
+        [NUnit.Framework.TestCaseAttribute("Leeds", "10 miles", null)]
+        [NUnit.Framework.TestCaseAttribute("Bristol", "10 miles", null)]
+        [NUnit.Framework.TestCaseAttribute("CV1 2WT", "10 miles", null)]
+        [NUnit.Framework.TestCaseAttribute("N7 8LS", "10 miles", null)]
+        public virtual void ViewApprenticeshipDetailsInMyArea(string location, string distance, string[] exampleTags)
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("View apprenticeship details in my area", new string[] {
-                        "mytag"});
-#line 8
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("View apprenticeship details in my area", exampleTags);
+#line 7
 this.ScenarioSetup(scenarioInfo);
-#line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Location",
-                        "Distance"});
-            table1.AddRow(new string[] {
-                        "Warwick",
-                        "10 miles"});
+#line 8
+ testRunner.Given(string.Format("I am a candidate searching for \'{0}\' with a radius of \'{1}\'", location, distance), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
- testRunner.Given("I am a candidate with preferences", ((string)(null)), table1, "Given ");
-#line 12
  testRunner.When("I search for vacancies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 13
- testRunner.Then("I expect to see search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 14
- testRunner.Then("I select the result from position \'1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 10
+ testRunner.And("I expect to see search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 11
+ testRunner.And("I select the result returned from position \'1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 12
+ testRunner.Then("I expect to see a populated vacancy detail page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

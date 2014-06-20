@@ -12,6 +12,12 @@
     [Binding]
     public class VacancySearchResultSteps : CommonSteps
     {
+
+        public VacancySearchResultSteps()
+        {
+            
+        }
+
         [When(@"I expect to see search results")]
         [Then(@"I expect to see search results")]
         public void ThenIExpectToSeeSearchResults()
@@ -127,6 +133,12 @@
             Page.I.Assert
                 .Text(x => x.StartsWith((pageNumber + 1).ToString()))
                 .In("a.page-navigation__btn.next span.counter");
+        }
+
+        [When(@"I select the result returned from position '(.*)'")]
+        public void WhenISelectTheResultReturnedFromPosition(int resultIndex)
+        {
+            Page.I.Click(() => Page.I.FindMultiple(".vacancy-title-link:first a")().Skip(resultIndex - 1).First());
         }
     }
 }

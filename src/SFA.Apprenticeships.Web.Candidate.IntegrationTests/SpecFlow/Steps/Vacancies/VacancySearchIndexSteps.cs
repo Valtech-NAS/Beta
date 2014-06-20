@@ -20,6 +20,14 @@
             EnterCandidateCriteria(table.Rows[0]["Location"], table.Rows[0]["Distance"]);
         }
 
+        [Given(@"I am a candidate searching for '(.*)' with a radius of '(.*)'")]
+        public void GivenIAmACandidateSearchingForWithARadiusOf(string searchLocation, string searchRadius)
+        {
+            Page = Pages.Get<VacancySearchIndexPage>().Go();
+            Page.Verify();
+            EnterCandidateCriteria(searchLocation, searchRadius);
+        }
+
         [When(@"I search for vacancies")]
         [Given(@"I have searched for vacancies")]
         public void WhenISearchForvacancies()

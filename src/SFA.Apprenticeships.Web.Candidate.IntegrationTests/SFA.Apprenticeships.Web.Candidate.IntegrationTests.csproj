@@ -164,6 +164,7 @@
     </Compile>
     <Compile Include="SpecFlow\Hooks\BeforeAllScenarios.cs" />
     <Compile Include="SpecFlow\Steps\Common\CommonSteps.cs" />
+    <Compile Include="SpecFlow\Steps\Vacancies\VacancyDetailsSteps.cs" />
     <Compile Include="SpecFlow\Steps\Vacancies\VacancySearchIndexSteps.cs" />
     <Compile Include="SpecFlow\Steps\Home\HomePageSteps.cs" />
     <Compile Include="SpecFlow\Steps\Vacancies\VacancySearchResultSteps.cs" />

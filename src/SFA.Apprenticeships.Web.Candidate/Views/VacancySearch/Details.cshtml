@@ -125,7 +125,7 @@
                 <h3 class="heading-medium">Desired skills</h3>
                 <p id="vacancy-skills-required">@Html.Raw(Model.SkillsRequired)</p>
                 <h3 class="heading-medium">Qualifications required</h3>
-                <p id="vacancy-qualifications-required">@Model.QualificationRequired</p>
+                <p id="vacancy-qualifications-required">@Html.Raw(Model.QualificationRequired)</p>
             </div>
         </div>
     </div>
@@ -144,15 +144,18 @@
     <div class="grid grid-2-3">
         <div class="inner-block-padr">
             <div class="text">
-                <p id="vacancy-emnployer-description">@Html.Raw(Model.EmployerDescription)</p>
+                <p id="vacancy-employer-description">@Html.Raw(Model.EmployerDescription)</p>
             </div>
         </div>
     </div>
     <div class="grid grid-1-3">
         <ul class="list-text">
             <li class="bold-medium">Contact</li>
-            <li>@Model.EmployerName</li>
-            <li><a href="@Model.EmployerWebsite" target="_blank" title="@Model.EmployerName Web Site">@Model.EmployerWebsite</a></li>
+            <li id="vacancy-employer-name">@Model.EmployerName</li>
+            @if (!string.IsNullOrWhiteSpace(Model.EmployerWebsite))
+            {
+                <li><a href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Web Site">@Model.EmployerWebsite</a></li>
+            }
         </ul>
         <ul class="list-text">
             <li>@Model.AddressLine1</li>
@@ -175,9 +178,9 @@
     <div class="grid grid-2-3">
         <div class="inner-block-padr">
             <div class="text">
-                <p>@Html.Raw(Model.TrainingToBeProvided)</p>
+                <p id="vacancy-training-to-be-provided">@Html.Raw(Model.TrainingToBeProvided)</p>
                 <h3 class="heading-medium">Apprenticeship framework</h3>
-                <p>@Html.Raw(Model.Framework)</p>
+                <p id="vacancy-framework">@Html.Raw(Model.Framework)</p>
                 <p>The Learning Provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprencticeship training.</p>
             </div>
         </div>
@@ -187,14 +190,17 @@
             <li>
                 <h3 class="bold-medium">Learning provider</h3>
             </li>
-            <li>@Model.ProviderName</li>
+            <li id="vacancy-provider-name">@Model.ProviderName</li>
         </ul>
-        <ul class="list-text">
-            <li>
-                <h3 class="bold-medium">Contact</h3>
-            </li>
-            <li>@Model.Contact</li>
-        </ul>
+        @if (!string.IsNullOrWhiteSpace(Model.Contact))
+        {
+            <ul class="list-text">
+                <li>
+                    <h3 class="bold-medium">Contact</h3>
+                </li>
+                <li id="vacancy-provider-contact">@Model.Contact</li>
+            </ul>
+        }
         @*<div class="ad-details__map">
             <p class="blocked-backgroud">Where do we get the address for this map?</p>
             <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=ST14+5EA,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>

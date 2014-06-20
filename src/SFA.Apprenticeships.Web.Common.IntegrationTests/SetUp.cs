@@ -14,6 +14,9 @@
         {
             SeleniumWebDriver.Bootstrap(SeleniumWebDriver.Browser.Firefox);
             FluentSession.EnableStickySession();
+
+            //See for more settings: http://fluent.stirno.com/docs/#settings
+            Settings.DefaultWaitUntilTimeout = TimeSpan.FromSeconds(5);
         }
 
         [TearDown]

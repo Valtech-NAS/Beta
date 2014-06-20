@@ -19,8 +19,8 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages
 
         public void Verify()
         {
-            I.Assert.Exists(".global-header__title").Text(PageTitle);
-            I.Assert.Exists(".heading-xlarge").Text(Heading);
+            I.Assert.Text(PageTitle).In(".global-header__title");
+            I.Assert.Text(Heading).In(".heading-xlarge");
             var results = I.Find("#pagedList")();
             I.WaitUntil(() => !results.Attributes.Get("class").Contains("updating"));
         }
