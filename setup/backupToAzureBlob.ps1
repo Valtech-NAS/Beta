@@ -5,7 +5,8 @@ param(
 	[string]$sitename,
 	[string]$storage,
 	[string]$storagekey,
-	[string]$buildnumber
+	[string]$buildnumber,
+	[string]$environment
 )
 
 $srcpath = "src\$projectname\bin\$buildConfiguration\app.publish"
@@ -20,8 +21,8 @@ $context = New-AzureStorageContext -StorageAccountName $StorageAccountName -Stor
 
 $fqName = "$srcpath\ServiceConfiguration.Cloud.cscfg"
 Write-Host "Writing file $fqName" 
-Set-AzureStorageBlobContent -Blob "$sitename\$buildnumber\$fqName" -Container "$storage" -File "$fqName" -Context $context -Force
+Set-AzureStorageBlobContent -Blob "$environment\$sitename\$buildnumber\ServiceConfiguration.Cloud.cscfg" -Container "$storage" -File "$fqName" -Context $context -Force
 
 $fqName = "$srcpath\SFA.Apprenticeships.Web.Candidate.Azure.cspkg"
 Write-Host "Writing file $fqName" 
-Set-AzureStorageBlobContent -Blob "$sitename\$buildnumber\SFA.Apprenticeships.Web.Candidate.Azure.cspkg" -Container "$storage" -File "$fqName" -Context $context -Force
+Set-AzureStorageBlobContent -Blob "$environment\$sitename\$buildnumber\SFA.Apprenticeships.Web.Candidate.Azure.cspkg" -Container "$storage" -File "$fqName" -Context $context -Force
