@@ -147,26 +147,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TestPage.feature</DependentUpon>
     </Compile>
-    <Compile Include="SpecFlow\Features\VacancyFeatures\VacancyDetails.feature.cs">
+    <Compile Include="SpecFlow\Features\Vacancies\VacancyDetails.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>VacancyDetails.feature</DependentUpon>
     </Compile>
-    <Compile Include="SpecFlow\Features\VacancyFeatures\VacancySearch.feature.cs">
+    <Compile Include="SpecFlow\Features\Vacancies\VacancySearch.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>VacancySearch.feature</DependentUpon>
     </Compile>
-    <Compile Include="SpecFlow\Features\VacancyFeatures\VacancySearchResults.feature.cs">
+    <Compile Include="SpecFlow\Features\Vacancies\VacancySearchResults.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>VacancySearchResults.feature</DependentUpon>
     </Compile>
     <Compile Include="SpecFlow\Hooks\BeforeAllScenarios.cs" />
     <Compile Include="SpecFlow\Steps\Common\CommonSteps.cs" />
-    <Compile Include="SpecFlow\Steps\Vacancy\VacancySearchIndexSteps.cs" />
+    <Compile Include="SpecFlow\Steps\Vacancies\VacancySearchIndexSteps.cs" />
     <Compile Include="SpecFlow\Steps\Home\HomePageSteps.cs" />
-    <Compile Include="SpecFlow\Steps\Vacancy\VacancySearchResultSteps.cs" />
+    <Compile Include="SpecFlow\Steps\Vacancies\VacancySearchResultSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Release.config">
@@ -180,15 +180,15 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>TestPage.feature.cs</LastGenOutput>
     </None>
-    <None Include="SpecFlow\Features\VacancyFeatures\VacancyDetails.feature">
+    <None Include="SpecFlow\Features\Vacancies\VacancyDetails.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>VacancyDetails.feature.cs</LastGenOutput>
     </None>
-    <None Include="SpecFlow\Features\VacancyFeatures\VacancySearch.feature">
+    <None Include="SpecFlow\Features\Vacancies\VacancySearch.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>VacancySearch.feature.cs</LastGenOutput>
     </None>
-    <None Include="SpecFlow\Features\VacancyFeatures\VacancySearchResults.feature">
+    <None Include="SpecFlow\Features\Vacancies\VacancySearchResults.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>VacancySearchResults.feature.cs</LastGenOutput>
     </None>

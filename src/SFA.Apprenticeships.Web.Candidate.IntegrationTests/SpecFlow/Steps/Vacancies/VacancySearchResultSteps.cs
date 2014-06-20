@@ -1,11 +1,11 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.VacancySearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vacancies
 {
     using System;
     using System.Linq;
+    using Common;
     using FluentAssertions;
     using FluentAutomation;
     using Pages;
-    using Common;
     using Specflow.FluentAutomation.Ext;
     using TechTalk.SpecFlow;
 

@@ -24,7 +24,7 @@
 <div class="search-results-wrapper grid-wrapper">
     <div class="hgroup">
         <h1 class="heading-xlarge">Search results</h1>
-        <p>@Html.Raw(resultMessage)</p>
+        <p id="vacancy-result-summary">@Html.Raw(resultMessage)</p>
     </div>
 
     @using (Html.BeginForm("search", "vacancysearch", FormMethod.Get))

@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Features.VacancyFeatures
+namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Features.Vacancies
 {
     using TechTalk.SpecFlow;
     
@@ -182,6 +182,32 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.When("I have paged through the previous \'2\' pages", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 41
  testRunner.Then("I expect to see the results for page \'2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Search where no results are returned for location")]
+        public virtual void SearchWhereNoResultsAreReturnedForLocation()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Search where no results are returned for location", ((string[])(null)));
+#line 43
+this.ScenarioSetup(scenarioInfo);
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Location",
+                        "Distance"});
+            table5.AddRow(new string[] {
+                        "Dundee",
+                        "10 miles"});
+#line 44
+ testRunner.Given("I am a candidate with preferences", ((string)(null)), table5, "Given ");
+#line 47
+ testRunner.When("I search for vacancies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 48
+ testRunner.Then("I expect no search results to be returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 49
+ testRunner.And("I expect the sort dropdown to be removed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

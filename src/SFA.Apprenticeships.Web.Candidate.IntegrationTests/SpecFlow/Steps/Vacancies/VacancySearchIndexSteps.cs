@@ -1,9 +1,9 @@
-﻿
-namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.VacancySearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vacancies
 {
+    using System.Linq;
+    using Common;
     using FluentAssertions;
-    using SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages;
-    using SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Common;
+    using Pages;
     using Specflow.FluentAutomation.Ext;
     using TechTalk.SpecFlow;
 
@@ -66,6 +66,18 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vaca
                 .Wait(1)
                 .Click("ul.ui-autocomplete li.ui-menu-item:first")
                 .Select(range).From("#loc-within");
+        }
+
+        [Then(@"I expect no search results to be returned")]
+        public void ThenIExpectNoSearchResultsToBeReturned()
+        {
+            Page.I.Assert.Text("There are no Apprenticeships that match your search").In("#vacancy-result-summary");
+        }
+
+        [Then(@"I expect the sort dropdown to be removed")]
+        public void ThenIExpectTheSortDropdownToBeRemoved()
+        {
+            Page.I.WaitUntil(() => !(Page.I.FindMultiple("#sort-results")()).Any());
         }
     }
 }

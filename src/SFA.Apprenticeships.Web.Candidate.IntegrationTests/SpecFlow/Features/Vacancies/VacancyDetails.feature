@@ -11,4 +11,4 @@ Scenario: View apprenticeship details in my area
 	| Warwick  | 10 miles |
 	When I search for vacancies
 	Then I expect to see search results
-	#Then I select the result from position '1'
+	Then I select the result from position '1'

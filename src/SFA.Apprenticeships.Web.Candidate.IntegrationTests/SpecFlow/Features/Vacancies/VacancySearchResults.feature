@@ -39,3 +39,11 @@ Scenario: View apprenticeships in my area - prev page
 		* I have paged through the next '3' pages
 	When I have paged through the previous '2' pages
 	Then I expect to see the results for page '2'
+
+Scenario: Search where no results are returned for location
+	Given I am a candidate with preferences
+		| Location | Distance |
+		| Dundee  | 10 miles |
+	When I search for vacancies
+	Then I expect no search results to be returned
+	And I expect the sort dropdown to be removed

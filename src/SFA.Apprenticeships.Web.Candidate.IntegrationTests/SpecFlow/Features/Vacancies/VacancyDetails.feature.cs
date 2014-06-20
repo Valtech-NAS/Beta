@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Features.VacancyFeatures
+namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Features.Vacancies
 {
     using TechTalk.SpecFlow;
     
@@ -94,6 +94,8 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.When("I search for vacancies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 13
  testRunner.Then("I expect to see search results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 14
+ testRunner.Then("I select the result from position \'1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
