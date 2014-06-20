@@ -3,10 +3,10 @@ using FluentAutomation.Interfaces;
 
 namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages
 {
-    public interface IPageUnderTest
+    public interface ISfaPage
     {
         void Verify();
 
-        INativeActionSyntaxProvider I { get; }
+        IActionSyntaxProvider I { get; }
     }
 }

@@ -10,20 +10,20 @@
     using TechTalk.SpecFlow;
 
     [Binding]
-    public class VacancySearchResultSteps : CommonSteps
+    public class VacancySearchResultSteps : CommonSteps<VacancySearchResultPage>
     {
+        private readonly VacancySearchResultPage _vacancySearchResultPage;
 
-        public VacancySearchResultSteps()
+        public VacancySearchResultSteps(FluentTest test, VacancySearchResultPage vacancySearchResultPage) : base(test)
         {
-            
+            _vacancySearchResultPage = vacancySearchResultPage;
         }
 
         [When(@"I expect to see search results")]
         [Then(@"I expect to see search results")]
         public void ThenIExpectToSeeSearchResults()
         {
-            Page = Pages.Get<VacancySearchResultPage>();
-            Page.Verify();
+            _vacancySearchResultPage.Verify();
         }
 
         [When(@"I see my first '(.*)' search results")]
@@ -37,8 +37,8 @@
         [Then(@"I expect the search results to be sorted by '(.*)'")]
         public void ThenIExpectTheSearchResultsToBeSortedBy(string sortBy)
         {
-            Page.I.Assert.Value(sortBy).In("#sort-results");
-            var sortValues = Page.I.FindMultiple(sortBy == "Distance" ? ".distance-value" : ".closing-date-value")().ToArray();
+            I.Assert.Value(sortBy).In("#sort-results");
+            var sortValues = I.FindMultiple(sortBy == "Distance" ? ".distance-value" : ".closing-date-value").Elements.ToArray();
             sortValues.Should().NotBeNull();
             sortValues.Count().Should().Be(5);
 
@@ -46,17 +46,17 @@
                 case "Distance":
                     for (int i = 0; i < sortValues.Count() - 1; i++)
                     {
-                        double.Parse(sortValues[i].Text)
+                        double.Parse(sortValues[i].Item2().Text)
                             .Should()
-                            .BeLessOrEqualTo(double.Parse(sortValues[i + 1].Text));
+                            .BeLessOrEqualTo(double.Parse(sortValues[i + 1].Item2().Text));
                     }
                     break;
                 case "ClosingDate":
                     for (int i = 0; i < sortValues.Count() - 1; i++)
                     {
-                        DateTime.Parse(sortValues[i].Text)
+                        DateTime.Parse(sortValues[i].Item2().Text)
                             .Should()
-                            .BeOnOrBefore(DateTime.Parse(sortValues[i + 1].Text));
+                            .BeOnOrBefore(DateTime.Parse(sortValues[i + 1].Item2().Text));
                     }
                     break;
             }
@@ -65,7 +65,7 @@
         [Given(@"I update search results to be sorted by '(.*)'")]
         public void GivenIUpdateSearchResultsToBeSortedBy(string sortBy)
         {
-            Page.I.Select(Option.Value, sortBy).From("#sort-results");
+            I.Select(Option.Value, sortBy).From("#sort-results");
         }
 
 
@@ -116,21 +116,21 @@
         {
             if (count == -1)
             {
-                Page.I.Assert.Exists("li.search-results__item");
+                I.Assert.Exists("li.search-results__item");
             }
             else
             {
-                Page.I.Assert.Count(count).Of("li.search-results__item");
+                I.Assert.Count(count).Of("li.search-results__item");
             }
 
             if (pageNumber > 1)
             {
-                Page.I.Assert
+                I.Assert
                     .Text(x => x.StartsWith((pageNumber - 1).ToString()))
                     .In("a.page-navigation__btn.previous span.counter");
             }
 
-            Page.I.Assert
+            I.Assert
                 .Text(x => x.StartsWith((pageNumber + 1).ToString()))
                 .In("a.page-navigation__btn.next span.counter");
         }
@@ -138,7 +138,9 @@
         [When(@"I select the result returned from position '(.*)'")]
         public void WhenISelectTheResultReturnedFromPosition(int resultIndex)
         {
-            Page.I.Click(() => Page.I.FindMultiple(".vacancy-title-link:first a")().Skip(resultIndex - 1).First());
+            var links = I.FindMultiple(".vacancy-title-link:first a");
+            var l = links.Children.Skip(resultIndex - 1).First()();
+            I.Click(l);
         }
     }
 }

@@ -98,8 +98,7 @@
                     return View("results", results);
                 }
 
-                var view = this.RenderPartialViewToString("_searchResults", results);
-                return Json(view, JsonRequestBehavior.AllowGet);
+                return PartialView("_searchResults", results);
             }
 
             return View("index", searchViewModel);

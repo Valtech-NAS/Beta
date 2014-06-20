@@ -40,7 +40,7 @@
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
 
-            ControllerBuilder.Current.SetControllerFactory(new NasControllerFactory());
+            ControllerBuilder.Current.SetControllerFactory(new DefaultControllerFactory());
 
             FluentValidationModelValidatorProvider.Configure();
         }

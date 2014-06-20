@@ -1,39 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Common
 {
+    using FluentAutomation;
     using Pages;
     using TechTalk.SpecFlow;
 
-    public abstract class CommonSteps
+    public abstract class CommonSteps<T> : PageObject<T> where T : PageObject, ISfaPage
     {
-        private IPageUnderTest _page;
-
-        public IPageUnderTest Page
+        public CommonSteps(FluentTest test):base(test)
         {
-            get
-            {
-                return _page;
-            }
-            set
-            {
-                _page = value;
-                SetPage(value);
-            }
-        }
-
-        public void SetPage(IPageUnderTest page)
-        {
-            ScenarioContext.Current.Remove("currentPageUnderTest");
-            ScenarioContext.Current.Add("currentPageUnderTest", page);
-        }
-
-        public IPageUnderTest GetPage()
-        {
-            return ScenarioContext.Current.Get<IPageUnderTest>("currentPageUnderTest");
         }
 
         public void ClickButton(string buttonText)
         {
-            Page.I.Click(string.Format(":button['{0}']", buttonText));
+            I.Click(string.Format(":button['{0}']", buttonText));
         }
 
         public void ClickLink(string linkText)
@@ -43,7 +22,7 @@
 
         public void ClickLink(string linkSelector, string linkText)
         {
-            Page.I.Click(string.IsNullOrEmpty(linkText)
+            I.Click(string.IsNullOrEmpty(linkText)
                 ? linkSelector
                 : string.Format("{0}['{1}']", linkSelector, linkText));
         }

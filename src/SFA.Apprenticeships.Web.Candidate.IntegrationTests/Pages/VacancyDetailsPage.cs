@@ -3,7 +3,7 @@
     using System;
     using FluentAutomation;
 
-    public class VacancyDetailsPage : PageObject<VacancyDetailsPage>, IPageUnderTest
+    public class VacancyDetailsPage : PageObject<VacancyDetailsPage>, ISfaPage
     {
         public const string PageTitle = "Find an Apprenticeship";
         public const string Heading = "Search results";

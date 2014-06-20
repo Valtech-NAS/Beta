@@ -5,7 +5,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages
     using FluentAutomation;
     using Common.IntegrationTests;
 
-    public class VacancySearchResultPage : PageObject<VacancySearchResultPage>, IPageUnderTest
+    public class VacancySearchResultPage : PageObject<VacancySearchResultPage>, ISfaPage
     {
         public const string PageTitle = "Find an Apprenticeship";
         public const string Heading = "Search results";
@@ -21,8 +21,8 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages
         {
             I.Assert.Text(PageTitle).In(".global-header__title");
             I.Assert.Text(Heading).In(".heading-xlarge");
-            var results = I.Find("#pagedList")();
-            I.WaitUntil(() => !results.Attributes.Get("class").Contains("updating"));
+            I.Assert.Exists("#pagedList");
+            I.Assert.Not.Exists("#pagedList .updating");
         }
 
         public void GoToPage()

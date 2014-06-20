@@ -5,7 +5,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages
     using FluentAutomation;
     using SFA.Apprenticeships.Web.Common.IntegrationTests;
 
-    public class VacancySearchIndexPage : PageObject<VacancySearchIndexPage>, IPageUnderTest
+    public class VacancySearchIndexPage : PageObject<VacancySearchIndexPage>, ISfaPage
     {
         public const string PageTitle = "Find an Apprenticeship";
         public const string Heading = "Find an Apprenticeship";
@@ -14,6 +14,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages
             : base(test)
         {
             Uri = new Uri(string.Format("{0}{1}", SiteConfig.WebRoot, @"vacancysearch/index"));
+            Go();
             At = () => I.Expect.Exists("html");
         }
 
