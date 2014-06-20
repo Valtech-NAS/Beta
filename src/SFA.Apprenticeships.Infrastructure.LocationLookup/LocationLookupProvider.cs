@@ -26,9 +26,7 @@
             var exactMatchResults = client.Search<LocationLookup>(s => s
                 .Index(indexName)
                 .Query(q => q
-                    .MultiMatch(m => m
-                        .OnFields(f => f.County, f => f.Name)
-                        .QueryString(term))
+                    .Match(m => m.OnField(f => f.Name).QueryString(term))
                 )
                 .From(0)
                 .Size(maxResults));
@@ -57,7 +55,7 @@
         #region Helpers
         private static string MakeName(LocationLookup locationData, int total)
         {
-            return total != 1 ?
+            return total != 1 && locationData.Name != locationData.County ?
                 string.Format("{0} ({1})", locationData.Name, locationData.County) :
                 locationData.Name;
         }
