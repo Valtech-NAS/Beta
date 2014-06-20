@@ -61,7 +61,7 @@
             var results = service.FindLocation(term, 250).ToList();
 
             // assert
-            Assert.AreEqual(244, results.Count);
+            Assert.AreEqual(236, results.Count);
             Assert.AreEqual("Warwickshire", results.First().Name);
         }
 
@@ -76,7 +76,7 @@
             var results = service.FindLocation(term, 250).ToList();
 
             // assert
-            Assert.AreEqual(244, results.Count);
+            Assert.AreEqual(236, results.Count);
             Assert.AreEqual("Warwickshire", results.First().Name);
         }
     }
