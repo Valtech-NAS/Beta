@@ -14,9 +14,6 @@
         [ElasticProperty(Index = FieldIndexOption.not_analyzed)]
         public int Id { get; set; }
 
-        [ElasticProperty(Index = FieldIndexOption.analyzed)]
-        public Guid UpdateReference { get; set; }
-
         [ElasticProperty(Index = FieldIndexOption.not_analyzed)]
         public string Framework { get; set; }
 

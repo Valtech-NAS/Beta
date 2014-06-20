@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces.Search;
+    using Application.Interfaces.Vacancy;
     using Common.Controllers;
     using Common.Framework;
     using Infrastructure.Azure.Session;
@@ -17,15 +18,18 @@
         private readonly IConfigurationManager _configManager;
         private readonly ISearchProvider _searchProvider;
         private readonly IValidateModel<VacancySearchViewModel> _validator;
+        private readonly IVacancyDataProvider _vacancyDataProvider;
 
         public VacancySearchController(IConfigurationManager configManager, 
                                     ISearchProvider searchProvider, 
                                     IValidateModel<VacancySearchViewModel> validator,
+                                    IVacancyDataProvider vacancyDataProvider,
                                     ISessionState session) : base (session)
         {
             _configManager = configManager;
             _searchProvider = searchProvider;
             _validator = validator;
+            _vacancyDataProvider = vacancyDataProvider;
         }
 
         private int VacancyResultsPerPage
@@ -64,14 +68,16 @@
             PopulateDistances(searchViewModel.WithinDistance);
             PopulateSortType(searchViewModel.SortType);
 
+            searchViewModel.CheckLatLonLocHash();
             var location = new LocationViewModel(searchViewModel);
             if (!searchViewModel.Latitude.HasValue || !searchViewModel.Longitude.HasValue)
             {
                 //Either user not selected item from dropdown or javascript disabled.
-                var locations = _searchProvider.FindLocation(searchViewModel.Location);
-                if (locations.Count() == 1)
+                var locations = _searchProvider.FindLocation(searchViewModel.Location).ToList();
+                if (locations.Any())
                 {
-                    location = locations.Single();
+                    location = locations.First();
+                    searchViewModel.Location = location.Name;
                     searchViewModel.Latitude = location.Latitude;
                     searchViewModel.Longitude = location.Longitude;
                 }
@@ -82,16 +88,17 @@
                 return View("index", searchViewModel);
             }
 
-            if (location != null )
+            if (location != null)
             {
                 Session.Store("location", location);
+
                 var results = _searchProvider.FindVacancies(searchViewModel, VacancyResultsPerPage);
                 if (!this.Request.IsAjaxRequest())
                 {
                     return View("results", results);
                 }
 
-                var view = this.ControllerContext.RenderPartialToString("_searchResults", results);
+                var view = this.RenderPartialViewToString("_searchResults", results);
                 return Json(view, JsonRequestBehavior.AllowGet);
             }
 
@@ -109,6 +116,27 @@
             }
 
             throw new NotImplementedException("Non-js not yet implemented!");
+        }
+
+        [HttpGet]
+        public ActionResult DetailsWithDistance(int id, string distance)
+        {
+            TempData["distance"] = distance;
+            return RedirectToAction("Details", new {id});
+        }
+
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            var vacancy = _vacancyDataProvider.GetVacancyDetails(id);
+
+            if (vacancy == null)
+            {
+                Response.StatusCode = 404;
+                return View("vacancynotfound");
+            }
+
+            return View(vacancy);
         }
 
         #region Dropdown View Bag Helpers

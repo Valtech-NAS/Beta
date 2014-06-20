@@ -15,7 +15,9 @@
         private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
         private readonly IMapper _mapper;
 
-         public LegacyVacancyDataProvider(ILegacyServicesConfiguration legacyServicesConfiguration, IWcfService<IVacancyDetails> service, IMapper mapper)
+         public LegacyVacancyDataProvider(ILegacyServicesConfiguration legacyServicesConfiguration, 
+                                            IWcfService<IVacancyDetails> service, 
+                                            IMapper mapper)
         {
             _legacyServicesConfiguration = legacyServicesConfiguration;
             _service = service;
@@ -29,11 +31,10 @@
                 ExternalSystemId = _legacyServicesConfiguration.SystemId,
                 PublicKey = _legacyServicesConfiguration.PublicKey,
                 MessageId = Guid.NewGuid(),
-                VacancySearchCriteria = new VacancyDetailProxy.VacancySearchData
+                VacancySearchCriteria = new VacancySearchData
                 {
                     VacancyReferenceId = vacancyId,
-                    PageIndex = 1,
-                    VacancyLocationType = VacancyDetailProxy.VacancyDetailsSearchLocationType.National
+                    PageIndex = 1
                 }
             };
 

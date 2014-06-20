@@ -34,6 +34,7 @@
 
                 @Html.HiddenFor(m => m.Latitude)
                 @Html.HiddenFor(m => m.Longitude)
+                @Html.Hidden("Hash", Model.LatLonLocHash())
             }
             <div class="form-group">
                 <p>You can also apply for Apprenticeships in other parts of the UK</p>
