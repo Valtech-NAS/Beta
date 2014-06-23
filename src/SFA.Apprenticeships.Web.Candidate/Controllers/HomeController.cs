@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Web.Candidate.Controllers
+﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using Common.Controllers;
     using NLog;
     using System.Web.Mvc;

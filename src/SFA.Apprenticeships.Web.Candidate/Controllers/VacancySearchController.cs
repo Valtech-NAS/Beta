@@ -14,10 +14,11 @@
 
     public class VacancySearchController : SfaControllerBase
     {
-        private readonly IConfigurationManager _configManager;
         private readonly ISearchProvider _searchProvider;
         private readonly IValidateModel<VacancySearchViewModel> _validator;
         private readonly IVacancyDataProvider _vacancyDataProvider;
+        private readonly int _vacancyResultsPerPage;
+        private readonly int _locationResultLimit;
 
         public VacancySearchController(IConfigurationManager configManager, 
                                     ISearchProvider searchProvider, 
@@ -25,20 +26,11 @@
                                     IVacancyDataProvider vacancyDataProvider,
                                     ISessionState session) : base (session)
         {
-            _configManager = configManager;
             _searchProvider = searchProvider;
             _validator = validator;
             _vacancyDataProvider = vacancyDataProvider;
-        }
-
-        private int VacancyResultsPerPage
-        {
-            get { return _configManager.GetAppSetting<int>("VacancyResultsPerPage"); }
-        }
-
-        private int LocationResultLimit
-        {
-            get { return _configManager.GetAppSetting<int>("LocationResultLimit"); }
+            _vacancyResultsPerPage = configManager.GetAppSetting<int>("VacancyResultsPerPage");
+            _locationResultLimit = configManager.GetAppSetting<int>("LocationResultLimit");
         }
 
         [HttpGet]
@@ -46,6 +38,7 @@
         {
             PopulateDistances();
             PopulateSortType();
+
             return View(new VacancySearchViewModel { WithinDistance = 2 });
         }
 
@@ -91,8 +84,8 @@
             {
                 Session.Store("location", location);
 
-                var results = _searchProvider.FindVacancies(searchViewModel, VacancyResultsPerPage);
-                if (!this.Request.IsAjaxRequest())
+                var results = _searchProvider.FindVacancies(searchViewModel, _vacancyResultsPerPage);
+                if (!Request.IsAjaxRequest())
                 {
                     return View("results", results);
                 }
@@ -108,9 +101,9 @@
         {
             var matches = _searchProvider.FindLocation(term);
 
-            if (this.Request.IsAjaxRequest())
+            if (Request.IsAjaxRequest())
             {
-                return Json(matches.Take(LocationResultLimit), JsonRequestBehavior.AllowGet);
+                return Json(matches.Take(_locationResultLimit), JsonRequestBehavior.AllowGet);
             }
 
             throw new NotImplementedException("Non-js not yet implemented!");
@@ -151,7 +144,7 @@
                             new { WithinDistance = 20, Name = "20 miles" },
                             new { WithinDistance = 30, Name = "30 miles" },
                             new { WithinDistance = 40, Name = "40 miles" },
-                            new { WithinDistance = 0, Name = "Nationwide" },
+                            new { WithinDistance = 0, Name = "Nationwide" }
                         },
                 "WithinDistance",
                 "Name",
@@ -167,8 +160,8 @@
                 new[] 
                         {
                             new { SortType = VacancySortType.Distance, Name = "Distance" },
-                            new { SortType = VacancySortType.ClosingDate, Name = "Closing Date" },
-                            //new { SortType = VacancySortType.Relevancy, Name = "Relevancy (Test)" }
+                            new { SortType = VacancySortType.ClosingDate, Name = "Closing Date" }
+                            //new { SortType = VacancySortType.Relevancy, Name = "Best Match" }
                         },
                 "SortType",
                 "Name",
