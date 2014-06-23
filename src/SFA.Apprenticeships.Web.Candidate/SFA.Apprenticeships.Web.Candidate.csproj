@@ -246,15 +246,11 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_ErrorLayout.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Error\Index.cshtml" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\ReferenceData.cshtml" />
-    <Content Include="Views\Admin\_referencedata.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ReferenceDataViewModel.cshtml" />
     <Content Include="Views\VacancySearch\Index.cshtml" />
     <Content Include="Views\VacancySearch\Results.cshtml" />
@@ -262,6 +258,10 @@
     <Content Include="Views\VacancySearch\_pagination.cshtml" />
     <Content Include="Views\VacancySearch\Details.cshtml" />
     <Content Include="Views\VacancySearch\VacancyNotFound.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\InternalServerError.cshtml" />
+    <Content Include="Views\Error\SessionExpired.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -336,7 +336,6 @@
     <Compile Include="App_Start\WebApiConfig.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VacancySearchController.cs" />

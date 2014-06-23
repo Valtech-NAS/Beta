@@ -63,28 +63,12 @@ namespace SFA.Apprenticeships.Web.Common.Framework
             return MvcHtmlString.Create(container.ToString());
         }
 
-        /// <summary>
-        /// Creates the hint element within the form control.
-        /// </summary>
-        /// <returns>The Html to render.</returns>
-        public static MvcHtmlString HintFor<TModel, TValue>(
-            this HtmlHelper<TModel> helper,
-            Expression<Func<TModel, TValue>> expression,
-            string hintText = null,
-            object htmlAttributes = null)
+        private static MvcHtmlString HintFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, string hintText = null, object htmlAttributes = null)
         {
             return HintFor(helper, expression, hintText, new RouteValueDictionary(htmlAttributes));
         }
 
-        /// <summary>
-        /// Creates the hint element within the form control.
-        /// </summary>
-        /// <returns>The Html to render.</returns>
-        public static MvcHtmlString HintFor<TModel, TValue>(
-            this HtmlHelper<TModel> helper,
-            Expression<Func<TModel, TValue>> expression,
-            string hintText,
-            IDictionary<string, object> htmlAttributes)
+        private static MvcHtmlString HintFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, string hintText, IDictionary<string, object> htmlAttributes)
         {
             Condition.Requires(helper, "helper").IsNotNull();
             Condition.Requires(expression, "expression").IsNotNull();
@@ -105,6 +89,5 @@ namespace SFA.Apprenticeships.Web.Common.Framework
             tag.SetInnerText(labelText);
             return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
         }
-
     }
 }

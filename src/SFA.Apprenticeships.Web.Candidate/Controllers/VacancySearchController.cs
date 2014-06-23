@@ -6,7 +6,6 @@
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancy;
     using Common.Controllers;
-    using Common.Framework;
     using Infrastructure.Azure.Session;
     using Infrastructure.Common.Configuration;
     using Providers;

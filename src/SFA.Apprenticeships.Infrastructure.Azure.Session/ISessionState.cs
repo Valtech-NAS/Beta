@@ -1,5 +1,6 @@
 namespace SFA.Apprenticeships.Infrastructure.Azure.Session
 {
+    //todo: need to move this as it should be somewhere more abstract rather than in an azure specific project
     public interface ISessionState
     {
         ISessionState Clear();

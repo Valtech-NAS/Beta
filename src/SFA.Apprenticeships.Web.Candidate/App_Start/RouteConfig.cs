@@ -2,13 +2,15 @@
 {
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Controllers;
 
     public class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("{resource}.ico/{*pathInfo}");
+            routes.IgnoreRoute("{folder}/{*pathInfo}", new { folder = "Content" });
+            routes.IgnoreRoute("{folder}/{*pathInfo}", new { folder = "Scripts" });
 
             routes.MapRoute(
                 name: "Default",

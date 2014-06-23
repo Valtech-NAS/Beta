@@ -2,7 +2,7 @@
 {
     using System.Web.Mvc;
     using Models.Common;
-    using SFA.Apprenticeships.Application.Interfaces.ReferenceData;
+    using Application.Interfaces.ReferenceData;
 
     public static class ViewDataDictionaryExtensions
     {

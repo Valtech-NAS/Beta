@@ -1,74 +1,27 @@
-﻿using System.Web.Mvc;
-using SFA.Apprenticeships.Web.Common.Models.Errors;
-
-namespace SFA.Apprenticeships.Web.Candidate.Controllers
+﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System.Web.Mvc;
+
     public class ErrorController : Controller
     {
-        //private readonly ILogger _logger;
-
-        public ErrorController()
-        {
-        }
-
-        //public ErrorController(ILogger logger)
-        //{
-        //    _logger = logger;
-        //}
-
-        [AllowAnonymousAttribute]
-        public ActionResult Index()
-        {
-            ErrorViewModel viewModel = CreateViewModel();
-            viewModel.PageTitle = "Error";
-            viewModel.WarningMessage = "GenericErrorMessage";
-
-            return View(viewModel);
-        }
-
-        [AllowAnonymousAttribute]
         public ActionResult NotFound()
         {
-            ErrorViewModel viewModel = CreateViewModel();
-            viewModel.PageTitle = "Not found";
-            viewModel.WarningMessage = "PageNotFoundMessage";
-
-            return View("index", viewModel);
+            return View("NotFound");
         }
 
-        [AllowAnonymousAttribute]
-        public ActionResult Stop()
+        public ActionResult InternalServerError()
         {
-            ErrorViewModel viewModel = CreateViewModel();
-            viewModel.PageTitle = "AuthenticationAttemptCancelled";
-            viewModel.WarningMessage = string.Empty;
-            viewModel.ShowCloseButton = true;
-
-            return View("index", viewModel);
+            return View("InternalServerError");
         }
 
-        [AllowAnonymousAttribute]
-        public ActionResult NotAuthorized()
+        public ActionResult AccessDenied()
         {
-            //if (_logger != null)
-            //{
-            //    _logger.Info(
-            //        string.Format(
-            //            "User {0} does not have permissions to log on",
-            //            this.HttpContext.User.Identity.Name));
-            //}
-
-            ErrorViewModel viewModel = CreateViewModel();
-            viewModel.PageTitle = string.Format("AuthenticationFailedTitle", HttpContext.User.Identity.Name);
-            viewModel.WarningMessage = "AuthenticationFailedMessage";
-            viewModel.ShowCloseButton = true;
-
-            return View("index", viewModel);
+            return View("AccessDenied");
         }
 
-        private ErrorViewModel CreateViewModel()
+        public ActionResult SessionExpired()
         {
-            return ViewData.Model as ErrorViewModel ?? new ErrorViewModel();
+            return View("SessionExpired");
         }
     }
 }

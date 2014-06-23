@@ -1,8 +1,3 @@
-using SFA.Apprenticeships.Application.VacancyEtl;
-using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-using SFA.Apprenticeships.Infrastructure.Elastic.Common.IoC;
-using SFA.Apprenticeships.Infrastructure.VacancyIndexer.Services;
-
 namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 {
     using System;
@@ -13,9 +8,10 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using Microsoft.WindowsAzure.ServiceRuntime;
     using EasyNetQ;
     using NLog;
+    using Azure.Common.IoC;
+    using Elastic.Common.IoC;
     using RabbitMq.Interfaces;
     using Consumers;
-    using Azure.Common.IoC;
     using Common.IoC;
     using LegacyWebServices.IoC;
     using RabbitMq.IoC;

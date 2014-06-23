@@ -1,5 +1,4 @@
-﻿
-namespace SFA.Apprenticeships.Web.Common.Validations
+﻿namespace SFA.Apprenticeships.Web.Common.Validations
 {
     using System;
     using System.Linq.Expressions;
@@ -21,13 +20,6 @@ namespace SFA.Apprenticeships.Web.Common.Validations
             result.AddToModelState(modelState, string.Empty);
 
             return modelState;
-        }
-
-        private static void AddModelErrorIfInvalid(this ModelStateDictionary modelState, string errorKey,
-            string errorMessage)
-        {
-            if (!modelState.IsValid)
-                modelState.AddModelError(errorKey, errorMessage);
         }
 
         /// <summary>
