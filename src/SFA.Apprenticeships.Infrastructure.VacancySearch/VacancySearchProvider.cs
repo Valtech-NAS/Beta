@@ -41,7 +41,7 @@
                     case VacancySortType.Distance:
                         s.SortGeoDistance(g =>
                         {
-                            g.PinTo(location.GeoPoint.Latitute, location.GeoPoint.Longitude)
+                            g.PinTo(location.GeoPoint.Latitude, location.GeoPoint.Longitude)
                              .Unit(GeoUnit.mi).OnField(f => f.Location);
                             return g;
                         });
@@ -53,7 +53,7 @@
                         //Was trying to get distance in relevancy without this sort but can't .. yet
                         s.SortGeoDistance(g =>
                         {
-                            g.PinTo(location.GeoPoint.Latitute, location.GeoPoint.Longitude)
+                            g.PinTo(location.GeoPoint.Latitude, location.GeoPoint.Longitude)
                              .Unit(GeoUnit.mi).OnField(f => f.Location);
                             return g;   
                         });
@@ -65,7 +65,7 @@
                         //s.ScriptFields(sf => 
                         //    sf.Add("distance2", sfd => sfd.Params(fp =>
                         //    {
-                        //    fp.Add("lat", location.GeoPoint.Latitute);
+                        //    fp.Add("lat", location.GeoPoint.Latitude);
                         //    fp.Add("lon", location.GeoPoint.Longitude);
                         //    return fp;
                         //}).Script("doc[\u0027location\u0027].distanceInMiles(lat,lon)")));
@@ -75,7 +75,7 @@
                 if (location != null)
                 {
                     s.Filter(f => f.GeoDistance(vs => vs.Location, descriptor => descriptor
-                                            .Location(location.GeoPoint.Latitute, location.GeoPoint.Longitude)
+                                            .Location(location.GeoPoint.Latitude, location.GeoPoint.Longitude)
                                             .Distance(searchRadius, GeoUnit.mi)));
                 }
 

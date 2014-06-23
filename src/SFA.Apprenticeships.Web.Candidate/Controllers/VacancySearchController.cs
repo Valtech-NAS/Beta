@@ -16,19 +16,19 @@
     {
         private readonly ISearchProvider _searchProvider;
         private readonly IValidateModel<VacancySearchViewModel> _validator;
-        private readonly IVacancyDataProvider _vacancyDataProvider;
+        private readonly IVacancyDetailProvider _vacancyDetailProvider;
         private readonly int _vacancyResultsPerPage;
         private readonly int _locationResultLimit;
 
         public VacancySearchController(IConfigurationManager configManager, 
                                     ISearchProvider searchProvider, 
                                     IValidateModel<VacancySearchViewModel> validator,
-                                    IVacancyDataProvider vacancyDataProvider,
+                                    IVacancyDetailProvider vacancyDetailProvider,
                                     ISessionState session) : base (session)
         {
             _searchProvider = searchProvider;
             _validator = validator;
-            _vacancyDataProvider = vacancyDataProvider;
+            _vacancyDetailProvider = vacancyDetailProvider;
             _vacancyResultsPerPage = configManager.GetAppSetting<int>("VacancyResultsPerPage");
             _locationResultLimit = configManager.GetAppSetting<int>("LocationResultLimit");
         }
@@ -119,7 +119,7 @@
         [HttpGet]
         public ActionResult Details(int id)
         {
-            var vacancy = _vacancyDataProvider.GetVacancyDetails(id);
+            var vacancy = _vacancyDetailProvider.GetVacancyDetailViewModel(id);
 
             if (vacancy == null)
             {

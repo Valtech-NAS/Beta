@@ -26,7 +26,7 @@
                 Name = "SFA",
                 GeoPoint = new GeoPoint()
                 {
-                    Latitute = 52.4009991288043,
+                    Latitude = 52.4009991288043,
                     Longitude = -1.50812239495425
                 }
             };
@@ -42,7 +42,7 @@
         //    Description = "Description",
         //    ClosingDate = DateTime.Now.AddMonths(3),
         //    Created = DateTime.Now,
-        //    Location = new GeoPoint() { Latitute = 1, Longitude = 2 },
+        //    Location = new GeoPoint() { Latitude = 1, Longitude = 2 },
         //    VacancyType = VacancyType.Intermediate,
         //    VacancyLocationType = VacancyLocationType.NonNational,
         //    AddressLine1 = "Add1",

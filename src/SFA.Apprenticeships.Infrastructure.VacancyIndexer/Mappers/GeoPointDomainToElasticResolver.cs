@@ -11,7 +11,7 @@
 
             if (source != null)
             {
-                point.lat = source.Latitute;
+                point.lat = source.Latitude;
                 point.lon = source.Longitude;
             }
 

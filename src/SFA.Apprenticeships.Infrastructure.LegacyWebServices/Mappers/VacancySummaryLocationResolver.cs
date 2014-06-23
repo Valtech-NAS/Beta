@@ -4,7 +4,7 @@
     using VacancySummaryProxy;
     using Domain.Entities.Location;
 
-    public class VacancySummaryAddressResolver : ValueResolver<AddressData, GeoPoint>
+    public class VacancySummaryLocationResolver : ValueResolver<AddressData, GeoPoint>
     {
         protected override GeoPoint ResolveCore(AddressData source)
         {
@@ -12,7 +12,7 @@
 
             if (source != null)
             {
-                point.Latitute = (double) source.Latitude.GetValueOrDefault();
+                point.Latitude = (double) source.Latitude.GetValueOrDefault();
                 point.Longitude = (double) source.Longitude.GetValueOrDefault();
             }
 

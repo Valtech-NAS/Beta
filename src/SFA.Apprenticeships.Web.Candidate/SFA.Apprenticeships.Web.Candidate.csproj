@@ -346,10 +346,13 @@
     <Compile Include="Mappers\CandidateWebMappers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ISearchProvider.cs" />
+    <Compile Include="Providers\IVacancyDetailProvider.cs" />
     <Compile Include="Providers\SearchProvider.cs" />
+    <Compile Include="Providers\VacancyDetailProvider.cs" />
     <Compile Include="Validators\IValidateModel.cs" />
     <Compile Include="Validators\VacancySearchValidator.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\VacancyDetail.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchResponseViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchViewModel.cs" />
   </ItemGroup>

@@ -62,7 +62,7 @@
     <Compile Include="Configuration\LegacyServicesConfiguration.cs" />
     <Compile Include="IoC\LegacyWebServicesRegistry.cs" />
     <Compile Include="Mappers\VacancyDetailAddressResolver.cs" />
-    <Compile Include="Mappers\VacancySummaryAddressResolver.cs" />
+    <Compile Include="Mappers\VacancySummaryLocationResolver.cs" />
     <Compile Include="Mappers\VacancyDetailMapper.cs" />
     <Compile Include="Mappers\VacancyTypeResolver.cs" />
     <Compile Include="Mappers\VacancyLocationTypeResolver.cs" />

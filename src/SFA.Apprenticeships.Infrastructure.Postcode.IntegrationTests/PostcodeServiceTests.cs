@@ -43,7 +43,7 @@
         {
             var service = new PostcodeService(PostcodeIOUrl);
             var location = service.GetLocation(SfaPostCode);
-            location.GeoPoint.Latitute.Should().Be(52.4009991288043);
+            location.GeoPoint.Latitude.Should().Be(52.4009991288043);
             location.GeoPoint.Longitude.Should().Be(-1.50812239495425);
         }
 

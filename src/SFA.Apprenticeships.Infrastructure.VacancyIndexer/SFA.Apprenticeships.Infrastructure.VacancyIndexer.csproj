@@ -61,7 +61,9 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="IoC\VacancyIndexerRegistry.cs" />
-    <Compile Include="Mappers\GeoPointDomainToElasticResolver.cs" />
+    <Compile Include="Mappers\GeoPointDomainToElasticResolver.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Mappers\VacancyIndexerMapper.cs" />
     <Compile Include="Services\IVacancyIndexerService.cs" />
     <Compile Include="Services\VacancyIndexerService.cs" />

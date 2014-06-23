@@ -48,7 +48,7 @@
             return results.Select(l => new Location
             {
                 Name = MakeName(l, results.Count),
-                GeoPoint = new Domain.Entities.Location.GeoPoint { Latitute = l.Latitude, Longitude = l.Longitude }
+                GeoPoint = new Domain.Entities.Location.GeoPoint { Latitude = l.Latitude, Longitude = l.Longitude }
             });
         }
 

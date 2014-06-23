@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Infrastructure.Common.Mappers;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Entities;
+    using Application.VacancyEtl.Entities;
+    using Common.Mappers;
+    using Elastic.Common.Entities;
 
     public class VacancyIndexerMapper : MapperEngine
     {
@@ -15,7 +15,9 @@
                 .ForMember(d => d.Location, opt => opt.ResolveUsing<GeoPointDomainToElasticResolver>().FromMember(src => src.Location));
 
             Mapper.CreateMap<Domain.Entities.Vacancy.VacancySummary, VacancySummaryUpdate>();
+
             Mapper.CreateMap<IEnumerable<VacancySummaryUpdate>, IEnumerable<VacancySummary>>().ConvertUsing<EnumerableVacancySummaryConverter>();
+
             Mapper.CreateMap<IEnumerable<Domain.Entities.Vacancy.VacancySummary>, IEnumerable<VacancySummaryUpdate>>().ConvertUsing<EnumerableVacancySummaryUpdateConverter>();
         }
     }

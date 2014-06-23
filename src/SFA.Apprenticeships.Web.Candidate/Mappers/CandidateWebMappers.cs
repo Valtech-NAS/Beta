@@ -3,11 +3,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
-    using SFA.Apprenticeships.Application.Interfaces.Search;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
-    using SFA.Apprenticeships.Domain.Entities.Location;
-    using SFA.Apprenticeships.Infrastructure.Common.Mappers;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using Application.Interfaces.Search;
+    using Application.Interfaces.Vacancy;
+    using Domain.Entities.Location;
+    using Domain.Entities.Vacancy;
+    using Infrastructure.Common.Mappers;
+    using ViewModels.VacancySearch;
 
     public class CandidateWebMappers : MapperEngine
     {
@@ -21,11 +22,13 @@
 
             Mapper.CreateMap<Location, LocationViewModel>()
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
-                .ForMember(d => d.Latitude, opt => opt.MapFrom(s => s.GeoPoint.Latitute))
+                .ForMember(d => d.Latitude, opt => opt.MapFrom(s => s.GeoPoint.Latitude))
                 .ForMember(d => d.Longitude, opt => opt.MapFrom(s => s.GeoPoint.Longitude));
 
             Mapper.CreateMap<IEnumerable<Location>, IEnumerable<LocationViewModel>>()
                 .ConvertUsing<EnumerableLocationConverter>();
+
+            Mapper.CreateMap<VacancyDetail, VacancyDetailViewModel>();
         }
 
         protected class EnumerableLocationConverter : ITypeConverter<IEnumerable<Location>, IEnumerable<LocationViewModel>>
@@ -46,7 +49,7 @@
                 var location = new Location
                 {
                     Name = viewModel.Location,
-                    GeoPoint = new GeoPoint { Latitute = viewModel.Latitude.GetValueOrDefault(), Longitude = viewModel.Longitude.GetValueOrDefault() }
+                    GeoPoint = new GeoPoint { Latitude = viewModel.Latitude.GetValueOrDefault(), Longitude = viewModel.Longitude.GetValueOrDefault() }
                 };
 
                 return location;
@@ -69,5 +72,4 @@
             }
         }
     }
-
 }

@@ -35,7 +35,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers
         {
             var locations = new List<Location>
             {
-                new Location {Name = "Location1", GeoPoint = new GeoPoint {Latitute = 0.1d, Longitude = 0.2d}}
+                new Location {Name = "Location1", GeoPoint = new GeoPoint {Latitude = 0.1d, Longitude = 0.2d}}
             };
 
             _locationSearchService.Setup(x => x.FindLocation("Location1")).Returns(locations);

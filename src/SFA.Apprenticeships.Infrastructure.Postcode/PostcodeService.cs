@@ -25,7 +25,7 @@
                 : new Location
                 {
                     Name = postcode,
-                    GeoPoint = new GeoPoint {Latitute = result.Latitude, Longitude = result.Longitude}
+                    GeoPoint = new GeoPoint {Latitude = result.Latitude, Longitude = result.Longitude}
                 };
         }
 

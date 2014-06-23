@@ -1,12 +1,11 @@
-﻿
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Validators
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Validators
 {
     using System.Web.Mvc;
     using FluentAssertions;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Web.Candidate.Validators;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using Candidate.Validators;
+    using Candidate.ViewModels.VacancySearch;
 
     [TestFixture]
     public class VacancySearchValidatorTests
@@ -53,7 +52,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Validators
         public void ValidateShouldReturnFalseWhenNoMatch()
         {
             var viewModel = new VacancySearchViewModel { Location = "", Latitude = 0.1d, Longitude = 1.0d };
-           var test = _validator.Validate(viewModel, new ModelStateDictionary());
+            var test = _validator.Validate(viewModel, new ModelStateDictionary());
 
             test.Should().BeFalse();
         }

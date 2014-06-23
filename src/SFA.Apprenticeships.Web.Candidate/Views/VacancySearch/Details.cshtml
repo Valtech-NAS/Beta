@@ -1,4 +1,4 @@
-﻿@model SFA.Apprenticeships.Domain.Entities.Vacancy.VacancyDetail
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.VacancyDetailViewModel
 @{
     ViewBag.Title = "SFA Apprenticeships - " + Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -92,12 +92,15 @@
             </li>
             <li id="vacancy-working-week">@Model.WorkingWeek</li>
         </ul>
-        <ul class="list-text">
-            <li>
-                <h3 class="bold-medium">Expected duration</h3>
-            </li>
-            <li id="vacancy-expected-duration">@Model.ExpectedDuration</li>
-        </ul>
+        @if (!string.IsNullOrWhiteSpace(Model.ExpectedDuration))
+        {
+            <ul class="list-text">
+                <li>
+                    <h3 class="bold-medium">Expected duration</h3>
+                </li>
+                <li id="vacancy-expected-duration">@Model.ExpectedDuration</li>
+            </ul>
+        }
         @if (TempData["distance"] != null)
         {
             <ul class="list-text">
@@ -109,11 +112,11 @@
             <li>
                 <h3 class="bold-medium">Vacancy type</h3>
             </li>
-            <li id="vacancy-type">@Model.VacancyType (will need formatted)</li>
+            <li id="vacancy-type">@Model.VacancyType</li>
         </ul>
         <ul class="list-text">
             <li class="bold-medium">Reference number</li>
-            <li id="vacancy-reference-id">@Html.Raw("VAC" + Model.Id.ToString("D9"))</li>
+            <li id="vacancy-reference-id">@Model.FullVacancyReferenceId</li>
         </ul>
     </div>
 </section>
@@ -122,6 +125,7 @@
     <div class="grid grid-1-2">
         <div class="inner-block-padr">
             <div class="text">
+                @**Both Skills Required and Quals Required are optional - but displaying headers regradless*@
                 <h3 class="heading-medium">Desired skills</h3>
                 <p id="vacancy-skills-required">@Html.Raw(Model.SkillsRequired)</p>
                 <h3 class="heading-medium">Qualifications required</h3>
@@ -134,7 +138,7 @@
             @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
             {
                 <h3 class="heading-medium">Future prospects</h3>
-                <p id="vacancy-future-prospects">@Model.FutureProspects</p>
+                <p id="vacancy-future-prospects">@Html.Raw(Model.FutureProspects)</p>
             }
         </div>
     </div>
@@ -158,17 +162,14 @@
             }
         </ul>
         <ul class="list-text">
-            <li>@Model.AddressLine1</li>
-            <li>@Model.AddressLine2</li>
-            <li>@Model.AddressLine3</li>
-            <li>@Model.AddressLine4</li>
-            <li>@Model.AddressLine5</li>
-            <li>@Model.Town</li>
-            <li>@Model.County</li>
-            <li>@Model.PostCode</li>
+            <li>@Model.VacancyAddress.AddressLine1</li>
+            <li>@Model.VacancyAddress.AddressLine2</li>
+            <li>@Model.VacancyAddress.AddressLine3</li>
+            <li>@Model.VacancyAddress.AddressLine4</li>
+            <li>@Model.VacancyAddress.Postcode</li>
         </ul>
         <div class="ad-details__map">
-            <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.PostCode),+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+            <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
         </div>
     </div>
@@ -178,10 +179,16 @@
     <div class="grid grid-2-3">
         <div class="inner-block-padr">
             <div class="text">
-                <p id="vacancy-training-to-be-provided">@Html.Raw(Model.TrainingToBeProvided)</p>
+                @if (!string.IsNullOrWhiteSpace(Model.TrainingToBeProvided))
+                {
+                    <p id="vacancy-training-to-be-provided">@Html.Raw(Model.TrainingToBeProvided)</p>
+                }
                 <h3 class="heading-medium">Apprenticeship framework</h3>
                 <p id="vacancy-framework">@Html.Raw(Model.Framework)</p>
-                <p>The Learning Provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprencticeship training.</p>
+                @if (Model.ProviderSectorPassRate.HasValue)
+                {
+                    <p>The Learning Provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprencticeship training.</p>
+                }
             </div>
         </div>
     </div>
