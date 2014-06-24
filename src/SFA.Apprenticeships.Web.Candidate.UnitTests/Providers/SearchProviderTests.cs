@@ -6,13 +6,13 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.Interfaces.Location;
-    using SFA.Apprenticeships.Application.Interfaces.Search;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancy;
-    using SFA.Apprenticeships.Domain.Entities.Location;
-    using SFA.Apprenticeships.Web.Candidate.Mappers;
-    using SFA.Apprenticeships.Web.Candidate.Providers;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using Application.Interfaces.Location;
+    using Application.Interfaces.Search;
+    using Application.Interfaces.Vacancy;
+    using Domain.Entities.Location;
+    using Mappers;
+    using Candidate.Providers;
+    using Candidate.ViewModels.VacancySearch;
 
     [TestFixture]
     public class SearchProviderTests

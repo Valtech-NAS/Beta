@@ -18,7 +18,7 @@
             FluentSession.EnableStickySession();
 
             //See for more settings: http://fluent.stirno.com/docs/#settings
-            FluentSettings.Current.WaitTimeout = TimeSpan.FromSeconds(5);
+            FluentSettings.Current.WaitTimeout = TimeSpan.FromSeconds(10);
         }
 
         [TearDown]

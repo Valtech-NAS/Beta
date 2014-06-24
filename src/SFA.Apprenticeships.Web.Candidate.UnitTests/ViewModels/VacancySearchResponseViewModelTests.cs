@@ -1,9 +1,8 @@
-﻿
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.ViewModels
 {
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using Candidate.ViewModels.VacancySearch;
 
     [TestFixture]
     public class VacancySearchResponseViewModelTests
