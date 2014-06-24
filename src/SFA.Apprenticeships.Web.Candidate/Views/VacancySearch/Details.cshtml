@@ -27,108 +27,65 @@
         <p class="copy-16">Closing date: <span id="vacancy-closing-date">@Model.ClosingDate.ToUniversalTime().ToString("dd MMM yy")</span></p>
     </div>
 </section>
-<section class="section-border">
-    <ul class="list-flowing-3cols">
-        <li class="inner-block-padr">
-            <h2 class="heading-small">
-                <a href="#vacancy-info">1. Vacancy summary</a>
-            </h2>
-            <p>
-                Information about responsibilities, working hours and wage
-            </p>
-        </li>
-        <li class="inner-block-padr">
-            <h2 class="heading-small">
-                <a href="#course-info">2. Information for candidate</a>
-            </h2>
-            <p>
-                Includes qualifications, skills and personal qualities required for role
-            </p>
-        </li>
-        <li class="inner-block-padr">
-            <h2 class="heading-small">
-                <a href="#employer-info">3. About the employer</a>
-            </h2>
-            <p>
-                Includes company profile, address and contact details
-            </p>
-        </li>
-        <li class="inner-block-padr">
-            <h2 class="heading-small">
-                <a href="#provider-info">4. Learning provider</a>
-            </h2>
-            <p>
-                Details of training plans and role of learning provider
-            </p>
-        </li>
-        <li class="inner-block-padr">
-            <h2 class="heading-small">
-                <a href="#before-apply">5. Before you apply</a>
-            </h2>
-            <p>
-                What you must do before you apply for the vacancy
-            </p>
-        </li>
-    </ul>
-</section>
 <section class="section-border grid-wrapper" id="vacancy-info">
-    <h2 class="heading-large">1. Vacancy summary</h2>
-    <div class="grid grid-2-3">
-        <div class="inner-block-padr">
-            <div class="text">
-                <p id="vacancy-full-descrpition">@Html.Raw(Model.FullDescription)</p>
-            </div>
-        </div>
-    </div>
+    <h2 class="heading-large">Vacancy summary</h2>
     <div class="grid grid-1-3">
-        <ul class="list-text">
-            <li class="bold-medium">Weekly wage</li>
-            <li id="vacancy-wage">&pound;@string.Format("{0:N2}", @Model.Wage)</li>
-            <li id="vacancy-wage-description">@Model.WageDescription</li>
-        </ul>
-        <ul class="list-text">
-            <li>
-                <h3 class="bold-medium">Working week</h3>
-            </li>
-            <li id="vacancy-working-week">@Model.WorkingWeek</li>
-        </ul>
-        @if (!string.IsNullOrWhiteSpace(Model.ExpectedDuration))
-        {
+        <div class="inner-block-padr">
+            <ul class="list-text">
+                <li><h3 class="bold-small">Weekly wage</h3></li>
+                <li id="vacancy-wage">&pound;@string.Format("{0:N2}", @Model.Wage)</li>
+                <li id="vacancy-wage-description">@Model.WageDescription</li>
+            </ul>
             <ul class="list-text">
                 <li>
-                    <h3 class="bold-medium">Expected duration</h3>
+                    <h3 class="bold-small">Working week</h3>
                 </li>
-                <li id="vacancy-expected-duration">@Model.ExpectedDuration</li>
+                <li id="vacancy-working-week">@Model.WorkingWeek</li>
             </ul>
-        }
-        @if (TempData["distance"] != null)
-        {
+            @if (!string.IsNullOrWhiteSpace(Model.ExpectedDuration))
+            {
+                <ul class="list-text">
+                    <li>
+                        <h3 class="bold-small">Expected duration</h3>
+                    </li>
+                    <li id="vacancy-expected-duration">@Model.ExpectedDuration</li>
+                </ul>
+            }
+            @if (TempData["distance"] != null)
+            {
+                <ul class="list-text">
+                    <li class="bold-small">Distance</li>
+                    <li id="vacancy-distance">@TempData["distance"] miles</li>
+                </ul>
+            }
             <ul class="list-text">
-                <li class="bold-medium">Distance</li>
-                <li id="vacancy-distance">@TempData["distance"] miles</li>
+                <li>
+                    <h3 class="bold-small">Vacancy type</h3>
+                </li>
+                <li id="vacancy-type">@Model.VacancyType</li>
             </ul>
-        }
-        <ul class="list-text">
-            <li>
-                <h3 class="bold-medium">Vacancy type</h3>
-            </li>
-            <li id="vacancy-type">@Model.VacancyType</li>
-        </ul>
-        <ul class="list-text">
-            <li class="bold-medium">Reference number</li>
-            <li id="vacancy-reference-id">@Model.FullVacancyReferenceId</li>
-        </ul>
+            <ul class="list-text">
+                <li class="bold-small">Reference number</li>
+                <li id="vacancy-reference-id">@Model.FullVacancyReferenceId</li>
+            </ul>
+        </div>
     </div>
+    <div class="grid grid-2-3">
+        <div class="text">
+            <p id="vacancy-full-descrpition">@Html.Raw(Model.FullDescription)</p>
+        </div>
+    </div>
+    
 </section>
 <section class="section-border grid-wrapper" id="course-info">
-    <h2 class="heading-large">2. Information for candidate</h2>
+    <h2 class="heading-large">Information for candidate</h2>
     <div class="grid grid-1-2">
         <div class="inner-block-padr">
             <div class="text">
                 @**Both Skills Required and Quals Required are optional - but displaying headers regradless*@
-                <h3 class="heading-medium">Desired skills</h3>
+                <h3 class="heading-small">Desired skills</h3>
                 <p id="vacancy-skills-required">@Html.Raw(Model.SkillsRequired)</p>
-                <h3 class="heading-medium">Qualifications required</h3>
+                <h3 class="heading-small">Qualifications required</h3>
                 <p id="vacancy-qualifications-required">@Html.Raw(Model.QualificationRequired)</p>
             </div>
         </div>
@@ -137,45 +94,47 @@
         <div class="text">
             @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
             {
-                <h3 class="heading-medium">Future prospects</h3>
+                <h3 class="heading-small">Future prospects</h3>
                 <p id="vacancy-future-prospects">@Html.Raw(Model.FutureProspects)</p>
             }
         </div>
     </div>
 </section>
-<section class="section-border grid-wrapper" id="employer-info">
-    <h2 class="heading-large">3. About the employer</h2>
-    <div class="grid grid-2-3">
-        <div class="inner-block-padr">
-            <div class="text">
-                <p id="vacancy-employer-description">@Html.Raw(Model.EmployerDescription)</p>
+<section class="section-border" id="employer-info">
+    <h2 class="heading-large">About the employer</h2>
+    <div class="text">
+        <p id="vacancy-employer-description">@Html.Raw(Model.EmployerDescription)</p>
+    </div>
+    <div class="grid-wrapper">
+        <div class="grid grid-1-2">
+            <div class="inner-block-padr">
+                <ul class="list-text">
+                    <li class="bold-small">Contact</li>
+                    <li id="vacancy-employer-name">@Model.EmployerName</li>
+                    @if (!string.IsNullOrWhiteSpace(Model.EmployerWebsite))
+                    {
+                        <li><a href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Web Site">@Model.EmployerWebsite</a></li>
+                    }
+                </ul>
+                <ul class="list-text">
+                    <li>@Model.VacancyAddress.AddressLine1</li>
+                    <li>@Model.VacancyAddress.AddressLine2</li>
+                    <li>@Model.VacancyAddress.AddressLine3</li>
+                    <li>@Model.VacancyAddress.AddressLine4</li>
+                    <li>@Model.VacancyAddress.Postcode</li>
+                </ul>
             </div>
         </div>
-    </div>
-    <div class="grid grid-1-3">
-        <ul class="list-text">
-            <li class="bold-medium">Contact</li>
-            <li id="vacancy-employer-name">@Model.EmployerName</li>
-            @if (!string.IsNullOrWhiteSpace(Model.EmployerWebsite))
-            {
-                <li><a href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Web Site">@Model.EmployerWebsite</a></li>
-            }
-        </ul>
-        <ul class="list-text">
-            <li>@Model.VacancyAddress.AddressLine1</li>
-            <li>@Model.VacancyAddress.AddressLine2</li>
-            <li>@Model.VacancyAddress.AddressLine3</li>
-            <li>@Model.VacancyAddress.AddressLine4</li>
-            <li>@Model.VacancyAddress.Postcode</li>
-        </ul>
-        <div class="ad-details__map">
-            <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
-            <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+        <div class="grid grid-1-2">
+            <div class="ad-details__map">
+                <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+            </div>
         </div>
     </div>
 </section>
 <section class="section-border grid-wrapper" id="provider-info">
-    <h2 class="heading-large">4. Learning provider</h2>
+    <h2 class="heading-large">Learning provider</h2>
     <div class="grid grid-2-3">
         <div class="inner-block-padr">
             <div class="text">
@@ -183,7 +142,7 @@
                 {
                     <p id="vacancy-training-to-be-provided">@Html.Raw(Model.TrainingToBeProvided)</p>
                 }
-                <h3 class="heading-medium">Apprenticeship framework</h3>
+                <h3 class="heading-small">Apprenticeship framework</h3>
                 <p id="vacancy-framework">@Html.Raw(Model.Framework)</p>
                 @if (Model.ProviderSectorPassRate.HasValue)
                 {
@@ -195,7 +154,7 @@
     <div class="grid grid-1-3">
         <ul class="list-text">
             <li>
-                <h3 class="bold-medium">Learning provider</h3>
+                <h3 class="bold-small">Learning provider</h3>
             </li>
             <li id="vacancy-provider-name">@Model.ProviderName</li>
         </ul>
@@ -203,7 +162,7 @@
         {
             <ul class="list-text">
                 <li>
-                    <h3 class="bold-medium">Contact</h3>
+                    <h3 class="bold-small">Contact</h3>
                 </li>
                 <li id="vacancy-provider-contact">@Model.Contact</li>
             </ul>
@@ -216,7 +175,7 @@
     </div>
 </section>
 <section id="before-apply">
-    <h2 class="heading-large">5. Before you apply</h2>
+    <h2 class="heading-large">Before you apply</h2>
     <div class="text">
         <p>You will need to:</p>
         <ul>
