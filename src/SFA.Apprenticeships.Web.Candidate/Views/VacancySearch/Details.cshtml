@@ -108,21 +108,23 @@
     <div class="grid-wrapper">
         <div class="grid grid-1-2">
             <div class="inner-block-padr">
-                <ul class="list-text">
+                <ul class="list-text vcard">
                     <li class="bold-small">Contact</li>
                     <li id="vacancy-employer-name">@Model.EmployerName</li>
                     @if (!string.IsNullOrWhiteSpace(Model.EmployerWebsite))
                     {
-                        <li><a href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Web Site">@Model.EmployerWebsite</a></li>
+                        <li><a href="@Model.EmployerWebsite" class="url" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Web Site">@Model.EmployerWebsite</a></li>
                     }
                 </ul>
-                <ul class="list-text">
-                    <li>@Model.VacancyAddress.AddressLine1</li>
-                    <li>@Model.VacancyAddress.AddressLine2</li>
-                    <li>@Model.VacancyAddress.AddressLine3</li>
-                    <li>@Model.VacancyAddress.AddressLine4</li>
-                    <li>@Model.VacancyAddress.Postcode</li>
-                </ul>
+                <div class="vcard">
+                    <ul class="list-text adr">
+                        <li class="street-address">@Model.VacancyAddress.AddressLine1</li>
+                        <li class="street-address">@Model.VacancyAddress.AddressLine2</li>
+                        <li class="locality">@Model.VacancyAddress.AddressLine3</li>
+                        <li class="region">@Model.VacancyAddress.AddressLine4</li>
+                        <li class="postal-code">@Model.VacancyAddress.Postcode</li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="grid grid-1-2">
