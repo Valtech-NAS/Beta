@@ -4,7 +4,6 @@
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces.Search;
-    using Application.Interfaces.Vacancy;
     using Common.Controllers;
     using Infrastructure.Azure.Session;
     using Infrastructure.Common.Configuration;
@@ -72,12 +71,32 @@
                     searchViewModel.Location = location.Name;
                     searchViewModel.Latitude = location.Latitude;
                     searchViewModel.Longitude = location.Longitude;
+
+                    if (locations.Count() > 1)
+                    {
+                        ViewBag.LocationSearches = locations.Skip(1).Select(l =>
+                        {
+                            var vsvm = new VacancySearchViewModel
+                            {
+                                Keywords = searchViewModel.Keywords,
+                                Location = l.Name,
+                                Latitude = l.Latitude,
+                                Longitude = l.Longitude,
+                                PageNumber = searchViewModel.PageNumber,
+                                SortType = searchViewModel.SortType,
+                                WithinDistance = searchViewModel.WithinDistance
+                            };
+                            vsvm.Hash = vsvm.LatLonLocHash();
+
+                            return vsvm;
+                        }).ToArray();
+                    }
                 }
             }
 
             if (!_validator.Validate(searchViewModel, ModelState))
             {
-                return View("index", searchViewModel);
+                return View("results", new VacancySearchResponseViewModel() {VacancySearch = searchViewModel});
             }
 
             if (location != null)
@@ -93,7 +112,7 @@
                 return PartialView("_searchResults", results);
             }
 
-            return View("index", searchViewModel);
+            return View("results", new VacancySearchResponseViewModel() { VacancySearch = searchViewModel });
         }
 
         [HttpGet]

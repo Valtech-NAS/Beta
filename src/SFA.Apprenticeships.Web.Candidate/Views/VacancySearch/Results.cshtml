@@ -38,6 +38,17 @@
                     @Html.FormTextFor(m => m.VacancySearch.Keywords, hintText: "")
                     @Html.FormTextFor(m => m.VacancySearch.Location, hintText: "")
                     
+                    @if (ViewBag.LocationSearches != null && ViewBag.LocationSearches.Length > 0)
+                    {
+                        <ul class="list-text list-max-11">
+                            <li>Did you mean: </li>
+                            @foreach (var locationSearch in ViewBag.LocationSearches)
+                            {
+                                <li><a href="@Url.Action("results", locationSearch)">@locationSearch.Location</a></li>
+                            }
+                        </ul>
+                    }
+
                     @* TODO::Create a form control for this. *@
                     <div class="form-group">
                         <label for="loc-within" class="form-label">Within</label>
