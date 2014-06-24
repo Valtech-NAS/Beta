@@ -4,9 +4,9 @@
     using FluentAssertions;
     using Nest;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Entities;
-    using SFA.Apprenticeships.Infrastructure.VacancyIndexer.Services;
+    using Elastic.Common.Configuration;
+    using Elastic.Common.Entities;
+    using Services;
     using StructureMap;
 
     [TestFixture]

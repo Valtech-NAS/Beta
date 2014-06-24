@@ -1,14 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.UnitTests
 {
     using System;
-    using System.Collections.Generic;
     using Application.Interfaces.Messaging;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.VacancyEtl;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers;
-    using VacancyIndexer.Services;
+    using Application.VacancyEtl;
+    using Application.VacancyEtl.Entities;
+    using Consumers;
 
     [TestFixture]
     public class VacancySummaryPageConsumerAsyncTests

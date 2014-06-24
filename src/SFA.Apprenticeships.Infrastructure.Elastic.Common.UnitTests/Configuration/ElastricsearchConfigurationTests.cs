@@ -2,8 +2,8 @@
 {
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Entities;
+    using Common.Configuration;
+    using Entities;
 
     [TestFixture]
     public class ElastricsearchConfigurationTests

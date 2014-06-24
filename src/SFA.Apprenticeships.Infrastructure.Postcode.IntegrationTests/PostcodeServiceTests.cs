@@ -5,8 +5,8 @@
     using Moq;
     using NUnit.Framework;
     using RestSharp;
-    using SFA.Apprenticeships.Infrastructure.Postcode;
-    using SFA.Apprenticeships.Infrastructure.Postcode.Entities;
+    using Postcode;
+    using Entities;
 
     [TestFixture]
     public class PostcodeServiceTests

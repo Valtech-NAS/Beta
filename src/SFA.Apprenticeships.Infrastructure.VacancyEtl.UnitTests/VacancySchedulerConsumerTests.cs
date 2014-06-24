@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.VacancyEtl;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers;
+    using Application.VacancyEtl;
+    using Application.VacancyEtl.Entities;
+    using Consumers;
     using VacancyIndexer.Services;
 
     [TestFixture]

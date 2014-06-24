@@ -1,17 +1,16 @@
-﻿using SFA.Apprenticeships.Domain.Interfaces.Caching;
-
-namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
     using System;
     using System.Linq;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.Interfaces.ReferenceData;
-    using SFA.Apprenticeships.Application.ReferenceData;
-    using SFA.Apprenticeships.Infrastructure.Common.Wcf;
-    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Configuration;
-    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceDataProxy;
+    using Application.Interfaces.ReferenceData;
+    using Application.ReferenceData;
+    using Common.Wcf;
+    using Domain.Interfaces.Caching;
+    using Configuration;
+    using ReferenceDataProxy;
     using StructureMap;
 
     [TestFixture]
