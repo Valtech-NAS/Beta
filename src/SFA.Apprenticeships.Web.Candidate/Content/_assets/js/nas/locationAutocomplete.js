@@ -41,14 +41,12 @@
             },
         });
 
-        function getLocationResults(callbackImp, term) {
+        function getLocationResults(callback, term) {
             jQuery.support.cors = true;
             $.ajax({
                 url: settings.url,
                 type: 'GET',
                 data: { term: term },
-                dataType: 'jsonp',
-                jsonp: 'callback',
                 success: function(response) {
                     tags = [];
                     locations = response;
@@ -59,14 +57,14 @@
                             } 
                         });
                     }
-                    callbackImp(tags);
+                    callback(tags);
                 },
                 error: function(error) {
                     tags = ['invalid'];
-                    callbackImp(tags);
+                    callback(tags);
                 }
             });
-            //return true;
+            return true;
         };
 
         function getLonLatFromName(name) {

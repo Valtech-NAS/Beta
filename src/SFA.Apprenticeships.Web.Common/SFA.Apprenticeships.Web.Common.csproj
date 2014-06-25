@@ -116,7 +116,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Controllers\SfaControllerBase.cs" />
-    <Compile Include="Framework\JsonpResult.cs" />
     <Compile Include="Framework\RuntimeHelper.cs" />
     <Compile Include="Framework\HttpServerUtilityExtensions.cs" />
     <Compile Include="Framework\HtmlExtensions.cs" />
