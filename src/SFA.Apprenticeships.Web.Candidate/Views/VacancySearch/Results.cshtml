@@ -27,7 +27,7 @@
         <p id="vacancy-result-summary">@Html.Raw(resultMessage)</p>
     </div>
 
-    @using (Html.BeginForm("search", "vacancysearch", FormMethod.Get))
+    @using (Html.BeginForm("results", "vacancysearch", FormMethod.Get))
     {                      
         <section class="grid grid-1-3">
             <fieldset class="search-filter">

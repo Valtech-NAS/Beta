@@ -1,10 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
+    using System.IO;
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces.Search;
     using Common.Controllers;
+    using Common.Framework;
     using Infrastructure.Azure.Session;
     using Infrastructure.Common.Configuration;
     using Providers;
@@ -45,12 +47,6 @@
         public ActionResult Clear()
         {
             return RedirectToAction("index");
-        }
-
-        [HttpGet]
-        public ActionResult Search(VacancySearchResponseViewModel searchViewModel)
-        {
-            return RedirectToAction("results", searchViewModel.VacancySearch);
         }
 
         [HttpGet]
@@ -109,10 +105,27 @@
                     return View("results", results);
                 }
 
-                return PartialView("_searchResults", results);
+                var view = RenderRazorViewToString("_searchResults", results);
+                var jsonp = new JsonpResult(view);
+                return jsonp;
             }
 
             return View("results", new VacancySearchResponseViewModel() { VacancySearch = searchViewModel });
+        }
+
+        public string RenderRazorViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext,
+                                                                         viewName);
+                var viewContext = new ViewContext(ControllerContext, viewResult.View,
+                                             ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
         }
 
         [HttpGet]
@@ -122,7 +135,8 @@
 
             if (Request.IsAjaxRequest())
             {
-                return Json(matches.Take(_locationResultLimit), JsonRequestBehavior.AllowGet);
+                var json = new JsonpResult(matches.Take(_locationResultLimit));
+                return json;
             }
 
             throw new NotImplementedException("Non-js not yet implemented!");

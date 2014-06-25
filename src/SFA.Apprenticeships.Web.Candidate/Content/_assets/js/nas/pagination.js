@@ -26,6 +26,8 @@ $(document).ready(function(){
         $.ajax({
             url: url,
             type: method,
+            dataType: 'jsonp',
+            jsonp: 'callback',
             success: function (response) {
                 $(container).html(response);
                 $(container).removeClass("updating");
