@@ -59,9 +59,9 @@
                     }
                     callback(tags);
                 },
-                error: function(error) {
-                    tags = ['invalid'];
-                    callback(tags);
+                error: function (error) {
+                    //Ignore, could be proxy issues so will work as 
+                    //non-JS version.
                 }
             });
             return true;

@@ -8,7 +8,7 @@
 
 @if (Model.TotalHits > 0)
 {
-    <div class="page-navigation" data-ajax-update="#pagedList" data-ajax-method="GET">
+    <div class="page-navigation">
         <a href="@prevLink"
            style="visibility: @(Model.VacancySearch.PageNumber == 1 ? "hidden" : "visible")"
            class="page-navigation__btn previous">

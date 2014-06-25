@@ -104,12 +104,7 @@
                 Session.Store("location", location);
 
                 var results = _searchProvider.FindVacancies(searchViewModel, _vacancyResultsPerPage);
-                if (!Request.IsAjaxRequest())
-                {
-                    return View("results", results);
-                }
-
-                return PartialView("_searchResults", results);
+                return View("results", results);
             }
 
             return View("results", new VacancySearchResponseViewModel() { VacancySearch = searchViewModel });
