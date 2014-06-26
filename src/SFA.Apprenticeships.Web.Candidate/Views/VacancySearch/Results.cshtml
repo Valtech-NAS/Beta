@@ -38,6 +38,17 @@
                     @Html.FormTextFor(m => m.VacancySearch.Keywords, hintText: "")
                     @Html.FormTextFor(m => m.VacancySearch.Location, hintText: "")
                     
+                    @if (ViewBag.LocationSearches != null && ViewBag.LocationSearches.Length > 0)
+                    {
+                        <ul class="list-text list-max-11">
+                            <li>Did you mean: </li>
+                            @foreach (var locationSearch in ViewBag.LocationSearches)
+                            {
+                                <li><a href="@Url.Action("results", locationSearch)">@locationSearch.Location</a></li>
+                            }
+                        </ul>
+                    }
+
                     @* TODO::Create a form control for this. *@
                     <div class="form-group">
                         <label for="loc-within" class="form-label">Within</label>
@@ -68,7 +79,6 @@
 {
     <script src="~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="~/Content/_assets/js/nas/locationAutocomplete.js" type="text/javascript"></script>
-    <script src="~/Content/_assets/js/nas/pagination.js" type="text/javascript"></script>
     <script>
         $("#VacancySearch_Location").locationMatch({
             url: '@Url.Action("location", "vacancysearch")',

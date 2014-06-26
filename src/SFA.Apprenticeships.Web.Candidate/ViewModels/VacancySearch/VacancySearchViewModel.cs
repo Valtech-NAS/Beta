@@ -49,6 +49,10 @@
 
         public int LatLonLocHash()
         {
+            if (!Latitude.HasValue && !Longitude.HasValue && Location == null)
+            {
+                return 0;
+            }
             return string.Format("{0}{1}{2}", Longitude, Latitude, Location).GetHashCode();
         }
 

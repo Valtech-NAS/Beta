@@ -1,11 +1,10 @@
-﻿using SFA.Apprenticeships.Domain.Interfaces.Caching;
-
-namespace SFA.Apprenticeships.Infrastructure.Caching.IntegrationTests
+﻿namespace SFA.Apprenticeships.Infrastructure.Caching.IntegrationTests
 {
     using System;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Infrastructure.Caching.Azure;
+    using Domain.Interfaces.Caching;
+    using Azure;
 
     [TestFixture]
     public class AzureCachingTests

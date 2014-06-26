@@ -1,5 +1,4 @@
-﻿
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Helpers
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Helpers
 {
     using System.Collections;
     using System.Collections.Generic;

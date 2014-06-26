@@ -2,12 +2,12 @@
 {
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Infrastructure.Common.ActiveDirectory;
+    using ActiveDirectory;
 
     [TestFixture]
     public class ActiveDirectoryConfigurationTests
     {
-        [TestCase]
+        [Test]
         public void GetConfigSectionForAd()
         {
             var test = ActiveDirectoryConfiguration.Instance;

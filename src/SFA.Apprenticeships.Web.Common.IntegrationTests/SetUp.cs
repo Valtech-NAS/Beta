@@ -5,8 +5,6 @@
     using System.Linq;
     using FluentAutomation;
     using NUnit.Framework;
-    using OpenQA.Selenium;
-    using OpenQA.Selenium.Firefox;
 
     [SetUpFixture]
     public class SetUp
@@ -18,7 +16,7 @@
             FluentSession.EnableStickySession();
 
             //See for more settings: http://fluent.stirno.com/docs/#settings
-            FluentSettings.Current.WaitTimeout = TimeSpan.FromSeconds(5);
+            FluentSettings.Current.WaitTimeout = TimeSpan.FromSeconds(10);
         }
 
         [TearDown]

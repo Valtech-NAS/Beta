@@ -3,7 +3,7 @@
     using System;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Infrastructure.Common.IoC;
+    using Common.IoC;
     using StructureMap;
 
     [TestFixture]
@@ -12,13 +12,7 @@
         [Test]
         public void CheckRegistryDoesntThrowException()
         {
-            Action test = () =>
-            {
-                ObjectFactory.Initialize(x =>
-                {
-                    x.AddRegistry<CommonRegistry>();
-                });
-            };
+            Action test = () => ObjectFactory.Initialize(x => x.AddRegistry<CommonRegistry>());
 
             test.ShouldNotThrow<Exception>();
         }

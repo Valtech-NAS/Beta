@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Infrastructure.Common.Configuration;
+    using Common.Configuration;
 
     [TestFixture]
     public class ConfigurationManagerTests
     {
-        [TestCase]
+        [Test]
         public void CtorCorrectlyLoadsConfigFile()
         {
             Action test = () => new ConfigurationManager();
@@ -17,7 +17,7 @@
             test.ShouldNotThrow();
         }
 
-        [TestCase]
+        [Test]
         public void GetSettingThrowsExceptionWhenNoKeyMatch()
         {
             var service = new ConfigurationManager();
@@ -27,7 +27,7 @@
             test.ShouldThrow<KeyNotFoundException>();
         }
 
-        [TestCase]
+        [Test]
         public void GetSettingByKeyReturnsExpectedValue()
         {
             var service = new ConfigurationManager();
@@ -35,7 +35,7 @@
             service.GetAppSetting("Test.StringValue").Should().Be("validstring");
         }
 
-        [TestCase]
+        [Test]
         public void GetSettingByTypeByKeyReturnsExpectedValue()
         {
             var service = new ConfigurationManager();
@@ -43,7 +43,7 @@
             service.GetAppSetting<int>("Test.IntValue").Should().Be(99);
         }
 
-        [TestCase]
+        [Test]
         [SetCulture("en-GB")]
         public void GetAppSettingReturnsStronglyTypedValue()
         {
@@ -53,7 +53,7 @@
             result.Should().Be(new DateTime(2014, 12, 31));
         }
 
-        [TestCase]
+        [Test]
         [SetCulture("en-GB")]
         public void GetAppSettingReturnsStronglyTypedDefaultValue()
         {

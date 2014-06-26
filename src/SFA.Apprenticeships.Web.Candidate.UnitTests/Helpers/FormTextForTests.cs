@@ -1,12 +1,11 @@
-﻿
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Helpers
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Helpers
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Linq.Expressions;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Web.Common.Framework;
+    using Common.Framework;
 
     /// <summary>
     /// tests to overload the LabelFor method
