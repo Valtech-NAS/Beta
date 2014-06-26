@@ -31,7 +31,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Validators
             if (!modelState.IsValid)
             {
                 modelState.Clear();
-                modelState.AddModelError("Location", "Sorry, we didn't find a match for the location. Please try again and select an item from the drop-down that matches your location.");
+                modelState.AddModelError("Location", "Sorry, we didn't find a match for the location entered");
             }
 
             return modelState.IsValid;
