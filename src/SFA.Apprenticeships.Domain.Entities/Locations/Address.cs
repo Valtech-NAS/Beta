@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Location
-{
-    using System;
+﻿using System;
 
+namespace SFA.Apprenticeships.Domain.Entities.Locations
+{
     public class Address
     {
         public string AddressLine1 { get; set; }

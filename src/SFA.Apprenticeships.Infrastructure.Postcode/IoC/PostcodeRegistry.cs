@@ -1,7 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Postcode.IoC
 {
-    using SFA.Apprenticeships.Application.Interfaces.Location;
-    using SFA.Apprenticeships.Infrastructure.Common.Configuration;
+    using System;
+    using Application.Interfaces.Locations;
+    using Common.Configuration;
     using StructureMap.Configuration.DSL;
 
     public class PostcodeRegistry : Registry
@@ -19,7 +20,6 @@
                         var cm = x.GetInstance<IConfigurationManager>();
                         return cm.GetAppSetting(PostcodeServiceEndpointAppSetting);
                     });
-
         }
     }
 }

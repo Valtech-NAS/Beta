@@ -1,12 +1,14 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers
+﻿using SFA.Apprenticeships.Application.Interfaces.Vacancies;
+using SFA.Apprenticeships.Domain.Entities.Locations;
+using SFA.Apprenticeships.Domain.Entities.Vacancies;
+
+namespace SFA.Apprenticeships.Web.Candidate.Mappers
 {
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
     using Application.Interfaces.Search;
-    using Application.Interfaces.Vacancy;
-    using Domain.Entities.Location;
-    using Domain.Entities.Vacancy;
+    using Domain.Entities.Locations;
     using Infrastructure.Common.Mappers;
     using ViewModels.VacancySearch;
 

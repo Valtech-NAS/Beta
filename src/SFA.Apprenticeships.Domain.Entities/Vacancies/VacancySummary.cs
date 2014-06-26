@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancy
+﻿using System;
+using SFA.Apprenticeships.Domain.Entities.Locations;
+
+namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
-    using System;
-    using Location;
-   
     public class VacancySummary
     {
         public int Id { get; set; }

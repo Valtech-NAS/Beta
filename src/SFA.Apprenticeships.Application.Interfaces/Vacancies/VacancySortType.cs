@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Search
+﻿using System;
+
+namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
 {
     public enum VacancySortType
     {

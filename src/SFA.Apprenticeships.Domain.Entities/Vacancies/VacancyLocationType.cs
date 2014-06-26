@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancy
+﻿using System;
+
+namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
     public enum VacancyLocationType
     {

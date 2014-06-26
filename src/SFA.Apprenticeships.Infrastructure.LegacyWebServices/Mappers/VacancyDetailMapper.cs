@@ -2,14 +2,13 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
     using AutoMapper;
     using Common.Mappers;
-    using Domain.Entities.Vacancy;
     using VacancyDetailProxy;
 
     public class VacancyDetailMapper : MapperEngine
     {
         public override void Initialize()
         {
-            Mapper.CreateMap<VacancyFullData, VacancyDetail>()
+            Mapper.CreateMap<VacancyFullData, Domain.Entities.Vacancies.VacancyDetail>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(src => src.VacancyReference))
                 .ForMember(d => d.LocalAuthority, opt => opt.MapFrom(src => src.VacancyAddress.LocalAuthority))
                 .ForMember(d => d.Created, opt => opt.MapFrom(src => src.CreatedDateTime))

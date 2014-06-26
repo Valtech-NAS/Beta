@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Application.VacancyEtl
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies;
+
+namespace SFA.Apprenticeships.Application.VacancyEtl
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +9,6 @@
     using Domain.Interfaces.Mapping;
     using Interfaces.Messaging;
     using Entities;
-    using Domain.Entities.Vacancy;
 
     public class VacancySummaryProcessor : IVacancySummaryProcessor
     {

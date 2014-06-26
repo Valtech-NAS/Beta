@@ -1,7 +1,9 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch.IntegrationTests
+﻿using SFA.Apprenticeships.Domain.Entities.Locations;
+
+namespace SFA.Apprenticeships.Infrastructure.VacancySearch.IntegrationTests
 {
     using NUnit.Framework;
-    using Domain.Entities.Location;
+    using Domain.Entities.Locations;
     using Elastic.Common.IoC;
     using StructureMap;
 

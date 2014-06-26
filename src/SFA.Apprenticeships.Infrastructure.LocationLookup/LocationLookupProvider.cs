@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Location;
-    using Domain.Entities.Location;
+    using Application.Interfaces.Locations;
+    using Domain.Entities.Locations;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
 
@@ -20,7 +20,7 @@
         public IEnumerable<Location> FindLocation(string placeName, int maxResults = 50)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
-            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(LocationLookup));
+            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (LocationLookup));
             var term = placeName.ToLowerInvariant();
 
             var exactMatchResults = client.Search<LocationLookup>(s => s
@@ -48,16 +48,16 @@
             return results.Select(l => new Location
             {
                 Name = MakeName(l, results.Count),
-                GeoPoint = new Domain.Entities.Location.GeoPoint { Latitude = l.Latitude, Longitude = l.Longitude }
+                GeoPoint = new Domain.Entities.Locations.GeoPoint {Latitude = l.Latitude, Longitude = l.Longitude}
             });
         }
 
         #region Helpers
         private static string MakeName(LocationLookup locationData, int total)
         {
-            return total != 1 && locationData.Name != locationData.County ?
-                string.Format("{0} ({1})", locationData.Name, locationData.County) :
-                locationData.Name;
+            return total != 1 && locationData.Name != locationData.County
+                ? string.Format("{0} ({1})", locationData.Name, locationData.County)
+                : locationData.Name;
         }
 
         private class LocationLookupComparer : IEqualityComparer<LocationLookup>
@@ -70,7 +70,8 @@
 
             public int GetHashCode(LocationLookup obj)
             {
-                return string.Format("{0},{1}", obj.Longitude, obj.Latitude).ToLower().GetHashCode(); ;
+                return string.Format("{0},{1}", obj.Longitude, obj.Latitude).ToLower().GetHashCode();
+                ;
             }
         }
         #endregion

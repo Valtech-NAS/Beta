@@ -1,11 +1,13 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
+﻿using SFA.Apprenticeships.Application.Interfaces.Vacancies;
+using SFA.Apprenticeships.Domain.Entities.Locations;
+
+namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
     using System.Globalization;
     using System.Linq;
     using Nest;
-    using Application.Interfaces.Vacancy;
     using Application.Interfaces.Search;
-    using Domain.Entities.Location;
+    using Domain.Entities.Locations;
     using Elastic.Common.Configuration;
 
     public class VacancySearchProvider : IVacancySearchProvider

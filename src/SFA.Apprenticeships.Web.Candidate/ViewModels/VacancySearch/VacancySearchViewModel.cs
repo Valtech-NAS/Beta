@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
+﻿using SFA.Apprenticeships.Application.Interfaces.Vacancies;
+
+namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     using System.ComponentModel.DataAnnotations;
     using Application.Interfaces.Search;

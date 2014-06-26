@@ -1,7 +1,8 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancy
-{
-    using Domain.Entities.Vacancy;
+﻿using System;
+using SFA.Apprenticeships.Domain.Entities.Vacancies;
 
+namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
+{
     public interface IVacancyDataService
     {
         /// <summary>

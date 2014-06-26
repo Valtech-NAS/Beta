@@ -2,7 +2,7 @@
 {
     using System;
     using NUnit.Framework;
-    using Entities.Location;
+    using Locations;
 
     [TestFixture]
     public class LocationHelperFullPostcodeTests

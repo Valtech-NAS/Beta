@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Mappers
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies;
+
+namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Mappers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -10,18 +12,18 @@
     {
         public override void Initialize()
         {
-            Mapper.CreateMap<Domain.Entities.Vacancy.VacancySummary, VacancySummaryUpdate>();
-            Mapper.CreateMap<IEnumerable<Domain.Entities.Vacancy.VacancySummary>, IEnumerable<VacancySummaryUpdate>>().ConvertUsing<EnumerableVacancySummaryUpdateConverter>();
+            Mapper.CreateMap<VacancySummary, VacancySummaryUpdate>();
+            Mapper.CreateMap<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>().ConvertUsing<EnumerableVacancySummaryUpdateConverter>();
         }
     }
 
-    class EnumerableVacancySummaryUpdateConverter : ITypeConverter<IEnumerable<Domain.Entities.Vacancy.VacancySummary>, IEnumerable<VacancySummaryUpdate>>
+    class EnumerableVacancySummaryUpdateConverter : ITypeConverter<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>
     {
         public IEnumerable<VacancySummaryUpdate> Convert(ResolutionContext context)
         {
             return
-                from item in (IEnumerable<Domain.Entities.Vacancy.VacancySummary>)context.SourceValue
-                select context.Engine.Map<Domain.Entities.Vacancy.VacancySummary, VacancySummaryUpdate>(item);
+                from item in (IEnumerable<VacancySummary>)context.SourceValue
+                select context.Engine.Map<VacancySummary, VacancySummaryUpdate>(item);
         }
     }
 }

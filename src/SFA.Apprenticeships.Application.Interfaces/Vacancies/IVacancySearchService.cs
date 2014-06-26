@@ -1,8 +1,9 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancy
-{
-    using Domain.Entities.Location;
-    using Search;
+﻿using System;
+using SFA.Apprenticeships.Application.Interfaces.Search;
+using SFA.Apprenticeships.Domain.Entities.Locations;
 
+namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
+{
     //TODO: Flush out API. need to understand valid combinations of location name, postcode, distance, keyword, etc. (include national)
     public interface IVacancySearchService
     {

@@ -1,7 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
+﻿using SFA.Apprenticeships.Domain.Entities.Locations;
+
+namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     using System;
-    using Domain.Entities.Location;
+    using Domain.Entities.Locations;
 
     public class VacancyDetailViewModel
     {

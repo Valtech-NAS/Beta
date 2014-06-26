@@ -46,6 +46,10 @@
     <Compile Include="Caching\ICacheService.cs" />
     <Compile Include="Logging\ILoggingService.cs" />
     <Compile Include="Mapping\IMapper.cs" />
+    <Compile Include="Repositories\IApplicationReadRepository.cs" />
+    <Compile Include="Repositories\ICandidateRepository.cs" />
+    <Compile Include="Repositories\IWriteRepository.cs" />
+    <Compile Include="Repositories\IReadRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">

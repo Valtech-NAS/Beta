@@ -1,7 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
+﻿using SFA.Apprenticeships.Application.Interfaces.Vacancies;
+
+namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     using System.Collections.Generic;
-    using Application.Interfaces.Vacancy;
 
     public class VacancySearchResponseViewModel
     {

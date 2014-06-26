@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    using Application.Interfaces.Location;
+    using Application.Interfaces.Locations;
     using Elastic.Common.IoC;
     using IoC;
     using NUnit.Framework;
