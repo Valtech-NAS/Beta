@@ -1,9 +1,7 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Locations;
-
-namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     using System;
-    using Domain.Entities.Locations;
+    using Locations;
 
     public class VacancyDetailViewModel
     {
@@ -46,7 +44,7 @@ namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 
         public string ExpectedDuration { get; set; }
 
-        public Address VacancyAddress { get; set; }
+        public AddressViewModel VacancyAddress { get; set; }
 
         #endregion
 

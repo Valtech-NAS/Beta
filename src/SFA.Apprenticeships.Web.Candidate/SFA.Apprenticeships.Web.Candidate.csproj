@@ -266,6 +266,12 @@
     <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\Error\SessionExpired.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Application\Index.cshtml" />
+    <Content Include="Views\Application\Apply.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CandidateViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\QualificationsViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\WorkExperienceViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AboutYouViewModel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -340,6 +346,7 @@
     <Compile Include="App_Start\WebApiConfig.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VacancySearchController.cs" />
@@ -355,14 +362,18 @@
     <Compile Include="Providers\VacancyDetailProvider.cs" />
     <Compile Include="Validators\IValidateModel.cs" />
     <Compile Include="Validators\VacancySearchValidator.cs" />
+    <Compile Include="ViewModels\Applications\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\AboutYouViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\WorkExperienceViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\QualificationsViewModel.cs" />
+    <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
-    <Compile Include="ViewModels\VacancySearch\VacancyDetail.cs" />
+    <Compile Include="ViewModels\VacancySearch\VacancyDetailViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchResponseViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchViewModel.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Shared\EditorTemplates\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>

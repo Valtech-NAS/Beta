@@ -1,0 +1,31 @@
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate.CandidateViewModel
+
+<fieldset class="fieldset-with-border">
+    <legend class="heading-large">Your details</legend>
+    <div class="form-group">
+        <label for="first-name" class="form-label">Full name</label>
+        <span class="form-prepopped">@Html.DisplayFor(model => model.FullName)</span>
+    </div>
+    <div class="form-group date-input">
+        <p class="form-label">Date of birth</p>
+        <span class="form-prepopped">@Html.DisplayFor(model => model.DateOfBirth)</span>
+    </div>
+    <div class="form-group">
+        <span class="form-label">Address</span>
+        <ul class="list-text form-prepopped">
+            <li>@Model.Address.AddressLine1</li>
+            <li>@Model.Address.AddressLine2</li>
+            <li>@Model.Address.AddressLine3</li>
+            <li>@Model.Address.AddressLine4</li>
+            <li>@Model.Address.Postcode</li>
+        </ul>
+    </div>
+    <div class="form-group">
+        <label for="email-address" class="form-label">Email address</label>
+        <span class="form-prepopped">@Model.EmailAddress</span>
+    </div>
+    <div class="form-group">
+        <label for="tel-number" class="form-label">Phone</label>
+        <span class="form-prepopped">@Model.PhoneNumber</span>
+    </div>
+</fieldset>

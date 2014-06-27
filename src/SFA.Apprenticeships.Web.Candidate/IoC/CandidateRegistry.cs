@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
-    using System;
     using Application.Interfaces.Locations;
     using Application.Location;
     using Domain.Interfaces.Mapping;

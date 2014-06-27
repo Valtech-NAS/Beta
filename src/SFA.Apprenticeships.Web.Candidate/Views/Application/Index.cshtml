@@ -1,0 +1,18 @@
+﻿@model int
+
+@{
+    ViewBag.Title = "SFA Apprenticeships - Login/Registration Step";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login/Registration Step</h2>
+
+<p>Select a dummy profile below to use to submit the application:</p>
+
+<ul>
+    <li><a href="@Url.Action("apply", new { id = Model, profileId = 1 })">Dummy Candidate Profile 1</a></li>
+    <li><a href="@Url.Action("apply", new { id = Model, profileId = 2 })">Dummy Candidate Profile 2</a></li>
+    <li><a href="@Url.Action("apply", new { id = Model, profileId = 3 })">Dummy Candidate Profile 3</a></li>
+    <li><a href="@Url.Action("apply", new { id = Model, profileId = 4 })">Dummy candidate profile 4</a></li>
+</ul>
+
