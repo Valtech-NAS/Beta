@@ -96,18 +96,11 @@
 
             if (!_validator.Validate(searchViewModel, ModelState))
             {
-                return View("results", new VacancySearchResponseViewModel() {VacancySearch = searchViewModel});
+                return View("results", new VacancySearchResponseViewModel {VacancySearch = searchViewModel});
             }
 
-            if (location != null)
-            {
-                Session.Store("location", location);
-
-                var results = _searchProvider.FindVacancies(searchViewModel, _vacancyResultsPerPage);
-                return View("results", results);
-            }
-
-            return View("results", new VacancySearchResponseViewModel() {VacancySearch = searchViewModel});
+            var results = _searchProvider.FindVacancies(searchViewModel, _vacancyResultsPerPage);
+            return View("results", results);
         }
 
         [HttpGet]

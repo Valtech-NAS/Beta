@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Location
 {
-    using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
@@ -18,7 +17,7 @@
             _postcodeLookupProvider = postcodeLookupProvider;
         }
 
-        public IEnumerable<Domain.Entities.Locations.Location> FindLocation(string placeNameOrPostcode)
+        public IEnumerable<Location> FindLocation(string placeNameOrPostcode)
         {
             Condition.Requires(placeNameOrPostcode, "placeNameOrPostcode").IsNotNullOrWhiteSpace();
 
@@ -31,7 +30,7 @@
 
                 return new[]
                 {
-                    new Domain.Entities.Locations.Location
+                    new Location
                     {
                         GeoPoint = location.GeoPoint,
                         Name = location.Name

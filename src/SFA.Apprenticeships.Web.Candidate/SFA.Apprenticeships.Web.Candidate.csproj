@@ -223,6 +223,7 @@
     <Content Include="Content\_assets\img\icon-star-filled.png" />
     <Content Include="Content\_assets\img\icon-star-hollow-2x.png" />
     <Content Include="Content\_assets\img\icon-star-hollow.png" />
+    <Content Include="Content\_assets\js\nas\validationscripts.js" />
     <Content Include="Content\_assets\js\nas\interactions.js" />
     <Content Include="Content\_assets\js\nas\locationAutocomplete.js" />
     <Content Include="Content\_assets\img\arrow-sprite-2x.png" />
@@ -364,6 +365,7 @@
     <Compile Include="Providers\SearchProvider.cs" />
     <Compile Include="Providers\VacancyDetailProvider.cs" />
     <Compile Include="Validators\IValidateModel.cs" />
+    <Compile Include="Validators\AboutYouViewModelValidator.cs" />
     <Compile Include="Validators\VacancySearchValidator.cs" />
     <Compile Include="ViewModels\Applications\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\AboutYouViewModel.cs" />

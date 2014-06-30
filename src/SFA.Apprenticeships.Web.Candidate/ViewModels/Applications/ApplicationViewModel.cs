@@ -4,6 +4,8 @@
 
     public class ApplicationViewModel
     {
+        public int VacancyId { get; set; }
+
         public string VacancyTitle { get; set; }
 
         public string VacancySummary { get; set; }

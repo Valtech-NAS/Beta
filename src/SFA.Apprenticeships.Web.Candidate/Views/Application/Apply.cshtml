@@ -19,20 +19,39 @@
     </div>
 </section>
 
-@Html.DisplayFor(m => m.Candidate)
-@Html.EditorFor(m => m.Candidate.Qualifications)
-@Html.EditorFor(m => m.Candidate.AboutYou)
+@using (Html.BeginForm("Apply", "Application", FormMethod.Post))
+{
+    @Html.ValidationSummary(false)
 
-<fieldset>
-    <legend class="heading-large">Before you apply</legend>
-    <p>Check you've completed the form properly</p>
-    <div class="form-group">
-        <a href="#" class="button">Apply</a>
-        <p>
-            <a href="#" class="button-link">Back</a>
-        </p>
-    </div>
-</fieldset>
+    @*Outputting all readonly fields to save reloading them on server*@
+    @*May want to reload to save any potential tampering*@
+    @Html.HiddenFor(m => m.VacancyId)
+    @Html.HiddenFor(m => m.VacancySummary)
+    @Html.HiddenFor(m => m.VacancyTitle)
+    @Html.HiddenFor(m => m.EmployerName)
+    
+    @Html.HiddenFor(m => m.Candidate.EmailAddress)
+    @Html.HiddenFor(m => m.Candidate.DateOfBirth)
+    @Html.HiddenFor(m => m.Candidate.FullName)
+    @Html.HiddenFor(m => m.Candidate.Address.AddressLine1)
+    @Html.HiddenFor(m => m.Candidate.Address.AddressLine2)
+    @Html.HiddenFor(m => m.Candidate.Address.AddressLine3)
+    @Html.HiddenFor(m => m.Candidate.Address.AddressLine4)
+    @Html.HiddenFor(m => m.Candidate.Address.Postcode)
+    
+    @Html.DisplayFor(m => m.Candidate)
+    @Html.EditorFor(m => m.Candidate.Qualifications)
+    @Html.EditorFor(m => m.Candidate.AboutYou)
 
-
+    <fieldset>
+        <legend class="heading-large">Before you apply</legend>
+        <p>Check you've completed the form properly</p>
+        <div class="form-group">
+            <button class="button">Apply</button>
+            <p>
+                <a href="#" class="button-link">Back</a>
+            </p>
+        </div>
+    </fieldset>
+}
 

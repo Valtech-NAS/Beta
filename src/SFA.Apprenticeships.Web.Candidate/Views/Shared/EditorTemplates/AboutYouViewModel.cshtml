@@ -12,24 +12,10 @@
             </p>
         </details>
     </div>
-    <div class="form-group">
-        <label for="question1" class="form-label">What are your strengths?</label>
-        <span class="form-hint">For example, team working, organising</span>
-        @Html.TextAreaFor(m => m.WhatAreYourStrenghs, new { @id = "question1", @class = "form-control" })
-    </div>
-    <div class="form-group">
-        <label for="question2" class="form-label">Where do you feel you could improve?</label>
-        <span class="form-hint">For example, time managing, confidence</span>
-        @Html.TextAreaFor(m => m.WhatDoYouFeelYouCouldImprove, new { @id = "question2", @class = "form-control" })
-    </div>
-    <div class="form-group">
-        <label for="question3" class="form-label">What are your hobbies/interests?</label>
-        <span class="form-hint">These can include any personal achievements</span>
-        @Html.TextAreaFor(m => m.WhatAreYourHobbiesInterests, new { @id = "question3", @class = "form-control" })
-    </div>
-    <div class="form-group">
-        <label for="question4" class="form-label">Is there anything we can do to support your interview?</label>
-        <span class="form-hint">For example, do you need a signer, information in braille</span>
-        @Html.TextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview, new { @id = "question4", @class = "form-control"})
-    </div>
+
+    @Html.FormTextAreaFor(m => m.WhatAreYourStrengths, hintText: "For example, team working, organising")
+    @Html.FormTextAreaFor(m => m.WhatDoYouFeelYouCouldImprove, hintText: "For example, time managing, confidence")
+    @Html.FormTextAreaFor(m => m.WhatAreYourHobbiesInterests, hintText: "These can include any personal achievements")
+    @Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview, hintText: "For example, do you need a signer, information in braille")
+
 </fieldset>

@@ -42,6 +42,37 @@ namespace SFA.Apprenticeships.Web.Common.Framework
                 htmlAttributes);
         }
 
+        /// <summary>
+        /// Creates the NAS form element with the appropriate classes.
+        /// </summary>
+        /// <returns>The html to render</returns>
+        public static MvcHtmlString FormTextAreaFor<TModel, TProperty>(
+            this HtmlHelper<TModel> helper,
+            Expression<Func<TModel, TProperty>> expression,
+            string labelText = null,
+            string hintText = null,
+            object htmlAttributes = null)
+        {
+            Condition.Requires(helper, "helper").IsNotNull();
+            Condition.Requires(expression, "expression").IsNotNull();
+
+            ModelState modelState;
+            var validationError = false;
+            var name = ExpressionHelper.GetExpressionText(expression);
+
+            if (!string.IsNullOrEmpty(name) && helper.ViewData.ModelState.TryGetValue(name, out modelState))
+            {
+                validationError = modelState.Errors.Count > 0;
+            }
+
+            return FormText(
+                helper.LabelFor(expression, labelText, new { @class = "form-label" }).ToString(),
+                helper.HintFor(expression, hintText, new { @class = "form-hint" }).ToString(),
+                helper.TextAreaFor(expression, new { @class = "form-control" }).ToString(),
+                validationError,
+                htmlAttributes);
+        }
+
         private static MvcHtmlString FormText(string labelContent, string hintContent, string fieldContent, bool validationError = false, object htmlAttributes = null)
         {
             var container = new TagBuilder("div");

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using Locations;
 
     public class VacancyDetailViewModel
@@ -24,6 +25,8 @@
         
         public string VacancyType { get; set; }
 
+        [UIHint("Date")]
+        [DataType(DataType.DateTime)]
         public DateTime ClosingDate { get; set; }
 
         public double Wage { get; set; }

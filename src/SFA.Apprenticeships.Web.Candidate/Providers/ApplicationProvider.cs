@@ -29,6 +29,7 @@
             var appViewModel = new ApplicationViewModel
             {
                 Candidate = profile,
+                VacancyId = vacancy.Id,
                 EmployerName = vacancy.EmployerName,
                 VacancySummary = vacancy.Description,
                 VacancyTitle = vacancy.Title
