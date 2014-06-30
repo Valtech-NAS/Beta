@@ -17,6 +17,7 @@
             For<IMapper>().Singleton().Use<CandidateWebMappers>().Name = "CandidateWebMappers";
             For<ISearchProvider>().Use<SearchProvider>().Ctor<IMapper>().Named("CandidateWebMappers");
             For<IVacancyDetailProvider>().Use<VacancyDetailProvider>().Ctor<IMapper>().Named("CandidateWebMappers");
+            For<IApplicationProvider>().Use<ApplicationProvider>();
 
             For<IValidateModel<VacancySearchViewModel>>().Use<VacancySearchValidator>();
         }

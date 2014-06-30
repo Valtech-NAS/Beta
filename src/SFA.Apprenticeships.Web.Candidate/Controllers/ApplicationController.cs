@@ -1,48 +1,35 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
     using System.Web.Mvc;
     using Common.Controllers;
     using Infrastructure.Azure.Session;
     using Providers;
-    using ViewModels.Applications;
-    using ViewModels.Candidate;
-    using ViewModels.Locations;
 
     public class ApplicationController : SfaControllerBase
     {
-        private const string ApplyForVacancyId = "ApplyForVacancyId";
+        private readonly IApplicationProvider _applicationProvider;
 
-        public ApplicationController(ISessionState sessionState) : base(sessionState)
+        public ApplicationController(ISessionState sessionState, IApplicationProvider applicationProvider) : base(sessionState)
         {
+            _applicationProvider = applicationProvider;
         }
 
         public ActionResult Index(int id)
         {
-            Session.Store(ApplyForVacancyId, id);
             return View(id);
         }
 
         public ActionResult Apply(int id, int profileId)
         {
-            var x = new ApplicationViewModel
+            var applicationViewModel = _applicationProvider.GetApplicationViewModel(id, profileId);
+
+            if (applicationViewModel == null)
             {
-                EmployerName = "Emp name",
-                VacancySummary = "Vac summary",
-                VacancyTitle = "Vac title",
-                Candidate = new CandidateViewModel
-                {
-                    FullName = "Full name",
-                    DateOfBirth = DateTime.Today,
-                    EmailAddress = "email@asdf.com",
-                    PhoneNumber = "495872349857",
-                    Address = new AddressViewModel(),
-                    AboutYou = new AboutYouViewModel()
-                }
-            };
+                Response.StatusCode = 404;
+                return View("vacancynotfound");
+            }
 
-
-            return View(x);
+            return View(applicationViewModel);
         }
     }
 }
