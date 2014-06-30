@@ -29,10 +29,10 @@
             var routeData = new RouteData();
             var action = "InternalServerError";
 
-            if (exception is HttpException)
-            {
-                var httpEx = exception as HttpException;
+            var httpEx = exception as HttpException;
 
+            if (httpEx != null)
+            {
                 switch (httpEx.GetHttpCode())
                 {
                     case 404:
@@ -47,7 +47,7 @@
 
             httpContext.ClearError();
             httpContext.Response.Clear();
-            httpContext.Response.StatusCode = exception is HttpException ? ((HttpException)exception).GetHttpCode() : 500;
+            httpContext.Response.StatusCode = httpEx != null ? httpEx.GetHttpCode() : 500;
             httpContext.Response.TrySkipIisCustomErrors = true;
 
             routeData.Values["controller"] = "Error";
