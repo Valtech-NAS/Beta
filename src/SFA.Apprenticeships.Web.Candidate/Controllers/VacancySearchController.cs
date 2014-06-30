@@ -138,7 +138,7 @@
             if (vacancy == null)
             {
                 Response.StatusCode = 404;
-                return View("vacancynotfound");
+                return View("VacancyNotFound");
             }
 
             return View(vacancy);

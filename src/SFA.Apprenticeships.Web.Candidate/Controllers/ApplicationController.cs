@@ -26,7 +26,7 @@
             if (applicationViewModel == null)
             {
                 Response.StatusCode = 404;
-                return View("vacancynotfound");
+                return View("VacancyNotFound");
             }
 
             return View(applicationViewModel);

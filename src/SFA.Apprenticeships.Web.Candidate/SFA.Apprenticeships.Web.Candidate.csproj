@@ -261,7 +261,6 @@
     <Content Include="Views\VacancySearch\_searchResults.cshtml" />
     <Content Include="Views\VacancySearch\_pagination.cshtml" />
     <Content Include="Views\VacancySearch\Details.cshtml" />
-    <Content Include="Views\VacancySearch\VacancyNotFound.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\Error\SessionExpired.cshtml" />
@@ -273,8 +272,7 @@
     <Content Include="Views\Shared\EditorTemplates\WorkExperienceViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AboutYouViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Date.cshtml" />
-    <Content Include="Views\Shared\_VacancyNotFound.cshtml" />
-    <Content Include="Views\Application\VacancyNotFound.cshtml" />
+    <Content Include="Views\Shared\VacancyNotFound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
