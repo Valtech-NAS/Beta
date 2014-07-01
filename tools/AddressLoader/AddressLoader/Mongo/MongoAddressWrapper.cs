@@ -1,15 +1,17 @@
-using System;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-
 namespace AddressLoader.Mongo
 {
+    using MongoDB.Bson;
+    using MongoDB.Bson.Serialization.Attributes;
+
     [BsonIgnoreExtraElements]
     public class MongoAddressWrapper
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
+
+        [BsonElement("uprn")]
+        public string Uprn { get; set; }
 
         [BsonElement("presentation")]
         public MongoAddress Address { get; set; }

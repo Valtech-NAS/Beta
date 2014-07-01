@@ -20,6 +20,7 @@ namespace AddressLoader.Mongo
                 AddressLine3 = mongoAddress.Address.AddressLine3,
                 AddressLine4 = mongoAddress.Address.AddressLine4,
                 Postcode = mongoAddress.Address.Postcode,
+                Uprn = mongoAddress.Uprn,
                 Location = new Location
                 {
                     Longitude = mongoAddress.Location.Longitude,
