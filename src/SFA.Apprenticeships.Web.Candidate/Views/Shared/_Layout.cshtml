@@ -21,9 +21,6 @@
         html.className += " js-enabled";
     </script>
     @Scripts.Render("~/Content/_assets/js/vendor/modernizr-custom.js")
-    @Scripts.Render("~/Content/_assets/js/vendor/jquery-1.11.1.min.js")
-    @Scripts.Render("~/Content/_assets/js/vendor/jquery.validate.min.js")
-    @Scripts.Render("~/Content/_assets/js/vendor/jquery.validate.unobtrusive.min.js")
     
 </head>
 <body>
@@ -72,9 +69,10 @@
     </footer>
     
     <!-- Placed at the end of the document so the pages load faster -->
+    @Scripts.Render("~/Content/_assets/js/scripts.min.js")
+    @Scripts.Render("~/Content/_assets/js/vendor/jquery.validate.min.js")
+    @Scripts.Render("~/Content/_assets/js/vendor/jquery.validate.unobtrusive.min.js")
     @RenderSection("scripts", required: false)
-    <script src="~/Content/_assets/js/vendor/fastclick.js" type="text/javascript"></script>
-    <script src="~/Content/_assets/js/nas/interactions.js" type="text/javascript"></script>
     <script src="~/Content/_assets/js/nas/validationscripts.js" type="text/javascript"></script>
 </body>
 </html>

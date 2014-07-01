@@ -5,6 +5,7 @@
     using System.ComponentModel.DataAnnotations;
     using Locations;
 
+    [Serializable]
     public class CandidateViewModel
     {
         public string FullName { get; set; }

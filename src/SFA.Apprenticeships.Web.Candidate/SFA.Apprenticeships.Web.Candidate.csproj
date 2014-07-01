@@ -224,11 +224,8 @@
     <Content Include="Content\_assets\img\icon-star-hollow-2x.png" />
     <Content Include="Content\_assets\img\icon-star-hollow.png" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
-    <Content Include="Content\_assets\js\nas\interactions.js" />
     <Content Include="Content\_assets\js\nas\locationAutocomplete.js" />
     <Content Include="Content\_assets\img\arrow-sprite-2x.png" />
-    <Content Include="Content\_assets\js\nas\oldBrowsers.js" />
-    <Content Include="Content\_assets\js\vendor\fastclick.js" />
     <Content Include="Content\_assets\js\vendor\jquery-1.11.1.js" />
     <Content Include="Content\_assets\js\vendor\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.js" />
@@ -274,6 +271,9 @@
     <Content Include="Views\Shared\EditorTemplates\AboutYouViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Date.cshtml" />
     <Content Include="Views\Shared\VacancyNotFound.cshtml" />
+    <Content Include="Views\Application\Preview.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\QualificationsViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\AboutYouViewModel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -373,6 +373,7 @@
     <Compile Include="ViewModels\Candidate\WorkExperienceViewModel.cs" />
     <Compile Include="ViewModels\Candidate\QualificationsViewModel.cs" />
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
+    <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancyDetailViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchResponseViewModel.cs" />
@@ -444,11 +445,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>18850</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/candidate</IISUrl>
+          <IISUrl>http://local.candidates.gov.uk</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

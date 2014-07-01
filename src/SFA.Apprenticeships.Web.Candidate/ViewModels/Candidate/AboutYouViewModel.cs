@@ -1,9 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
     using FluentValidation.Attributes;
     using Validators;
 
+    [Serializable]
     [Validator(typeof(AboutYouViewModelValidator))]
     public class AboutYouViewModel
     {
