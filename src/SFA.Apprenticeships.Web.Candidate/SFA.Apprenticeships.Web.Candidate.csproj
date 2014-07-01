@@ -271,6 +271,9 @@
     <Content Include="Views\Shared\EditorTemplates\AboutYouViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Date.cshtml" />
     <Content Include="Views\Shared\VacancyNotFound.cshtml" />
+    <Content Include="Views\Application\Preview.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\QualificationsViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\AboutYouViewModel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -370,6 +373,7 @@
     <Compile Include="ViewModels\Candidate\WorkExperienceViewModel.cs" />
     <Compile Include="ViewModels\Candidate\QualificationsViewModel.cs" />
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
+    <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancyDetailViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchResponseViewModel.cs" />

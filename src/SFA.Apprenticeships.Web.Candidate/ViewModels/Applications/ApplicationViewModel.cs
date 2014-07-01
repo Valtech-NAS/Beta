@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Applications
 {
+    using System;
     using Candidate;
 
+    [Serializable]
     public class ApplicationViewModel
     {
         public int VacancyId { get; set; }

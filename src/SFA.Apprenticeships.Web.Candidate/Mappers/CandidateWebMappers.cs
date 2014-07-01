@@ -30,6 +30,7 @@
 
             Mapper.CreateMap<VacancyDetail, VacancyDetailViewModel>();
             Mapper.CreateMap<Address, AddressViewModel>();
+            Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
         }
 
         protected class EnumerableLocationConverter :

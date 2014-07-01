@@ -9,6 +9,8 @@
 
     public class ApplicationController : SfaControllerBase
     {
+        private const string TempAppFormSessionId = "TempAppForm";
+
         private readonly IApplicationProvider _applicationProvider;
         private readonly AboutYouViewModelValidator _validator;
 
@@ -48,8 +50,14 @@
                 return View(applicationViewModel);
             }
 
-            //TODO: If successful, redirect to preview page
-            return View();
+            Session.Store(TempAppFormSessionId, applicationViewModel);
+            return RedirectToAction("Preview", new { id = applicationViewModel.VacancyId });
+        }
+
+        public ActionResult Preview(int id)
+        {
+            var appForm = Session.Get<ApplicationViewModel>(TempAppFormSessionId);
+            return View(appForm);
         }
     }
 }
