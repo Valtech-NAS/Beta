@@ -224,7 +224,6 @@
     <Content Include="Content\_assets\img\icon-star-hollow-2x.png" />
     <Content Include="Content\_assets\img\icon-star-hollow.png" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
-    <Content Include="Content\_assets\js\nas\interactions.js" />
     <Content Include="Content\_assets\js\nas\locationAutocomplete.js" />
     <Content Include="Content\_assets\img\arrow-sprite-2x.png" />
     <Content Include="Content\_assets\js\vendor\jquery-1.11.1.js" />
