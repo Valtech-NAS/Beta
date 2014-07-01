@@ -12,11 +12,12 @@
         private const string TempAppFormSessionId = "TempAppForm";
 
         private readonly IApplicationProvider _applicationProvider;
-        private readonly AboutYouViewModelValidator _validator;
+        private readonly CandidateViewModelValidator _validator;
 
         public ApplicationController(ISessionState sessionState, 
                                     IApplicationProvider applicationProvider,
-                                    AboutYouViewModelValidator validator) : base(sessionState)
+                                    CandidateViewModelValidator validator)
+            : base(sessionState)
         {
             _applicationProvider = applicationProvider;
             _validator = validator;
@@ -27,9 +28,9 @@
             return View(id);
         }
 
-        public ActionResult Apply(int id, int profileId)
+        public ActionResult Apply(int id, int mockProfileId)
         {
-            var applicationViewModel = _applicationProvider.GetApplicationViewModel(id, profileId);
+            var applicationViewModel = _applicationProvider.GetApplicationViewModel(id, mockProfileId);
 
             if (applicationViewModel == null)
             {
@@ -41,9 +42,11 @@
         }
 
         [HttpPost]
-        public ActionResult Apply(ApplicationViewModel applicationViewModel)
+        public ActionResult Apply(int id, int mockProfileId, ApplicationViewModel applicationViewModel)
         {
-            var result = _validator.Validate(applicationViewModel.Candidate.AboutYou);
+            applicationViewModel = _applicationProvider.MergeApplicationViewModel(id, mockProfileId, applicationViewModel);
+            
+            var result = _validator.Validate(applicationViewModel.Candidate);
 
             if (!result.IsValid)
             {
@@ -51,7 +54,7 @@
             }
 
             Session.Store(TempAppFormSessionId, applicationViewModel);
-            return RedirectToAction("Preview", new { id = applicationViewModel.VacancyId });
+            return RedirectToAction("Preview", new { id = applicationViewModel.VacancyDetail.Id });
         }
 
         public ActionResult Preview(int id)

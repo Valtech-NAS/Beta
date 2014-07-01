@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using Locations;
 
+    [Serializable]
     public class VacancyDetailViewModel
     {
         #region Vacancy
@@ -48,6 +49,10 @@
         public string ExpectedDuration { get; set; }
 
         public AddressViewModel VacancyAddress { get; set; }
+
+        public string SupplementaryQuestion1 { get; set; }
+
+        public string SupplementaryQuestion2 { get; set; }
 
         #endregion
 

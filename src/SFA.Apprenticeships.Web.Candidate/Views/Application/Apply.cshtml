@@ -9,39 +9,24 @@
 <section class="section-border">
     <div class="text">
         <div class="hgroup-medium">
-            <h3 class="heading-medium">@Model.VacancyTitle</h3>
-            <span class="subtitle">@Model.EmployerName</span>
+            <h3 class="heading-medium">@Model.VacancyDetail.Title</h3>
+            <span class="subtitle">@Model.VacancyDetail.EmployerName</span>
         </div>
-        <p>@Model.VacancySummary</p>
+        <p>@Model.VacancyDetail.Description</p>
         <p>
             <a href="search-details.html">Back to vacancy</a>
         </p>
     </div>
 </section>
 
-@using (Html.BeginForm("Apply", "Application", FormMethod.Post))
+@using (Html.BeginForm("Apply", "Application", new { id = Model.VacancyDetail.Id, mockProfileId = Model.Candidate.Id }, FormMethod.Post))
 {
     @Html.ValidationSummary(false)
-
-    @*Outputting all readonly fields to save reloading them on server*@
-    @*May want to reload to save any potential tampering*@
-    @Html.HiddenFor(m => m.VacancyId)
-    @Html.HiddenFor(m => m.VacancySummary)
-    @Html.HiddenFor(m => m.VacancyTitle)
-    @Html.HiddenFor(m => m.EmployerName)
-    
-    @Html.HiddenFor(m => m.Candidate.EmailAddress)
-    @Html.HiddenFor(m => m.Candidate.DateOfBirth)
-    @Html.HiddenFor(m => m.Candidate.FullName)
-    @Html.HiddenFor(m => m.Candidate.Address.AddressLine1)
-    @Html.HiddenFor(m => m.Candidate.Address.AddressLine2)
-    @Html.HiddenFor(m => m.Candidate.Address.AddressLine3)
-    @Html.HiddenFor(m => m.Candidate.Address.AddressLine4)
-    @Html.HiddenFor(m => m.Candidate.Address.Postcode)
     
     @Html.DisplayFor(m => m.Candidate)
     @Html.EditorFor(m => m.Candidate.Qualifications)
     @Html.EditorFor(m => m.Candidate.AboutYou)
+    @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)
 
     <fieldset>
         <legend class="heading-large">Before you apply</legend>

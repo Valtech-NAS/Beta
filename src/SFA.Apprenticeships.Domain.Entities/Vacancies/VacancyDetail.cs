@@ -69,6 +69,10 @@ namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 
         public bool IsSmallEmployerWageIncentive { get; set; }
 
+        public string SupplementaryQuestion1 { get; set; }
+
+        public string SupplementaryQuestion2 { get; set; }
+
         #endregion
 
         #region Provider
@@ -97,10 +101,6 @@ namespace SFA.Apprenticeships.Domain.Entities.Vacancies
         public string QualificationRequired { get; set; }
 
         public string SkillsRequired { get; set; }
-
-        public string SupplementaryQuestion1 { get; set; }
-
-        public string SupplementaryQuestion2 { get; set; }
 
         #endregion 
     }

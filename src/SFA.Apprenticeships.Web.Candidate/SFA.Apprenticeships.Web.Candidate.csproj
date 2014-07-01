@@ -274,6 +274,8 @@
     <Content Include="Views\Application\Preview.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\QualificationsViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\AboutYouViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmployerQuestionAnswersViewModel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -364,10 +366,13 @@
     <Compile Include="Providers\IVacancyDetailProvider.cs" />
     <Compile Include="Providers\SearchProvider.cs" />
     <Compile Include="Providers\VacancyDetailProvider.cs" />
+    <Compile Include="Validators\CandidateViewModelValidator.cs" />
+    <Compile Include="Validators\EmployerQuestionAnswersViewModelValidator.cs" />
     <Compile Include="Validators\IValidateModel.cs" />
     <Compile Include="Validators\AboutYouViewModelValidator.cs" />
     <Compile Include="Validators\VacancySearchValidator.cs" />
     <Compile Include="ViewModels\Applications\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\EmployerQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Candidate\AboutYouViewModel.cs" />
     <Compile Include="ViewModels\Candidate\CandidateViewModel.cs" />
     <Compile Include="ViewModels\Candidate\WorkExperienceViewModel.cs" />

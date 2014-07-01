@@ -1,5 +1,34 @@
 ﻿$(document).ready(function() {
 
+    //$.validator.prototype.resetSummary = function () {
+    //    var form = $(this.currentForm);
+    //    form.find("[data-valmsg-summary=true]")
+    //        .removeClass("validation-summary-errors")
+    //        .addClass("validation-summary-valid")
+    //        .find("ul")
+    //        .empty();
+    //    return this;
+    //};
+
+    //$.validator.setDefaults({
+    //    showErrors: function (errorMap, errorList) {
+    //        this.defaultShowErrors();
+    //        this.checkForm();
+    //        if (this.errorList.length) {
+    //            $(this.currentForm).triggerHandler("invalid-form", [this]);
+    //        } else {
+    //            this.resetSummary();
+    //        }
+    //    }
+    //});
+
+    //$("form").each(function() {
+    //    var validator = $.data(this, 'validator');
+    //    validator.setDefaults({
+    //        debug: true
+    //    });
+    //});
+
     $("form").each(function () {
         var validator = $.data(this, 'validator');
         var settings = validator.settings;
@@ -12,6 +41,7 @@
         settings.success = function (label, element) {
             $(element).parent().removeClass("input-validation-error");
             oldSuccessFunction(label, element);
+
         };
     });
 });
