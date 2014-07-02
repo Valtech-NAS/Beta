@@ -20,6 +20,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Features.V
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("VacancyDetails")]
+    [NUnit.Framework.IgnoreAttribute()]
     [NUnit.Framework.CategoryAttribute("vacancydetail")]
     [NUnit.Framework.CategoryAttribute("US124")]
     [NUnit.Framework.CategoryAttribute("US238")]
@@ -37,6 +38,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Features.V
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "VacancyDetails", "In order to confirm a candidate can view vacnacy full details.\r\nas a candidate\r\nI" +
                     " want to be read full vacancies details in my area", ProgrammingLanguage.CSharp, new string[] {
+                        "ignore",
                         "vacancydetail",
                         "US124",
                         "US238"});
