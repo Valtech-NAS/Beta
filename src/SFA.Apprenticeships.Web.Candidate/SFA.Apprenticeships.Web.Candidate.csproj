@@ -350,6 +350,7 @@
     <Compile Include="App_Start\WebApiConfig.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Constants\Whitelists.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -359,6 +360,10 @@
     </Compile>
     <Compile Include="IoC\CandidateRegistry.cs" />
     <Compile Include="Mappers\CandidateWebMappers.cs" />
+    <Compile Include="Constants\ViewModels\AboutYouMessages.cs" />
+    <Compile Include="Constants\ViewModels\ApplicationMessages.cs" />
+    <Compile Include="Constants\ViewModels\EmployerQuestionAnswersMessages.cs" />
+    <Compile Include="Constants\ViewModels\VacancySearchMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationProvider.cs" />
     <Compile Include="Providers\IApplicationProvider.cs" />
@@ -383,8 +388,11 @@
     <Compile Include="ViewModels\VacancySearch\VacancyDetailViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchResponseViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\VacancySummaryViewModel.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Constants\Pages\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>

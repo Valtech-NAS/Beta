@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Validators;
 
@@ -10,19 +11,19 @@
     public class AboutYouViewModel
     {
         [UIHint("FreetextLimited")]
-        [Display(Name = "What are your strengths?")]
+        [Display(Name = AboutYouMessages.WhatAreYourStrengthsMessages.LabelText, Description = AboutYouMessages.WhatAreYourStrengthsMessages.HintText)]
         public string WhatAreYourStrengths { get; set; }
 
         [UIHint("FreetextLimited")]
-        [Display(Name = "Where do you feel you could improve?")]
+        [Display(Name = AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.LabelText, Description = AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.HintText)]
         public string WhatDoYouFeelYouCouldImprove { get; set; }
 
         [UIHint("FreetextLimited")]
-        [Display(Name = "What are your hobbies/interests?")]
+        [Display(Name = AboutYouMessages.WhatAreYourHobbiesInterestsMessages.LabelText, Description = AboutYouMessages.WhatAreYourHobbiesInterestsMessages.HintText)]
         public string WhatAreYourHobbiesInterests { get; set; }
 
         [UIHint("FreetextLimited")]
-        [Display(Name = "Is there anything we can do to support your interview?")]
+        [Display(Name = AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.LabelText, Description = AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.HintText)]
         public string AnythingWeCanDoToSupportYourInterview { get; set; }
     }
 }

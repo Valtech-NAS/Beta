@@ -2,7 +2,7 @@
 (function($) {
     $.fn.locationMatch = function(options) {
 
-        var settings = $.extend({ delay: 300, minLength: 3, maxListSize: 25, url: '', longitude: null, latitude: null }, options);
+        var settings = $.extend({ delay: 300, minLength: 3, maxListSize: 25, url: '', longitude: null, latitude: null, latlonhash: null }, options);
         var tags = [];
         var locations;
 
@@ -21,6 +21,10 @@
             select: function(event, ui) {
                 this.value = ui.item.value;
                 var longLat = getLonLatFromName(ui.item.value);
+
+                if (settings.latlonhash != null) {
+                    $(settings.latlonhash).val(0);
+                }
 
                 if (settings.longitude != null) {
                     $(settings.longitude).val(longLat.Longitude);

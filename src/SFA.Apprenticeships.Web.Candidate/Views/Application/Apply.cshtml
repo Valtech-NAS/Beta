@@ -14,7 +14,7 @@
         </div>
         <p>@Model.VacancyDetail.Description</p>
         <p>
-            <a href="search-details.html">Back to vacancy</a>
+            <a href="@Url.Action("Details", "VacancySearch", new { @id = Model.VacancyDetail.Id })">Back to vacancy</a>
         </p>
     </div>
 </section>
@@ -34,7 +34,7 @@
         <div class="form-group">
             <button class="button">Apply</button>
             <p>
-                <a href="#" class="button-link">Back</a>
+                <a href="javascript:history.back();" class="button-link">Back</a>
             </p>
         </div>
     </fieldset>
