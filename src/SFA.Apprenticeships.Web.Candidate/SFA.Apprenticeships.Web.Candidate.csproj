@@ -277,6 +277,7 @@
     <Content Include="Views\Shared\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EmployerQuestionAnswersViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EducationViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EducationViewModel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

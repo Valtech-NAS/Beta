@@ -1,0 +1,20 @@
+﻿@model EducationViewModel
+
+<fieldset class="fieldset-with-border" id="applyEducation">
+    <legend class="heading-large">Education</legend>
+    <div class="form-group">
+        <label for="school-name" class="form-label">Name of most recent school/college</label>
+        @Html.DisplayTextFor(m => m.NameOfMostRecentSchoolCollege)
+    </div>
+    <div class="inline-fixed">
+        <p class="form-label">Years attended</p>
+        <div class="form-group">
+            <label for="school-from" class="form-label form-hint">From</label>
+            @Html.DisplayTextFor(m => m.FromYear)
+        </div>
+        <div class="form-group">
+            <label for="school-to" class="form-label form-hint">To</label>
+            @Html.DisplayTextFor(m => m.ToYear)
+        </div>
+    </div>
+</fieldset>
