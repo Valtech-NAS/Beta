@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
+    using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.Candidate;
 
@@ -9,27 +10,35 @@
         {
             RuleFor(x => x.WhatAreYourStrengths)
                 .Length(0, 4000)
-                .WithMessage("'What are your strengths' must not exceed 4000 characters")
+                .WithMessage(AboutYouMessages.WhatAreYourStrengthsMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage("'What are your strengths' must be supplied");
+                .WithMessage(AboutYouMessages.WhatAreYourStrengthsMessages.RequiredErrorText)
+                .Matches(AboutYouMessages.WhatAreYourStrengthsMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouMessages.WhatAreYourStrengthsMessages.WhiteListErrorText);
 
             RuleFor(x => x.WhatDoYouFeelYouCouldImprove)
                 .Length(0, 4000)
-                .WithMessage("'What do you feel you could improve' must not exceed 4000 characters")
+                .WithMessage(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage("'What do you feel you could improve' must be supplied");
+                .WithMessage(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.RequiredErrorText)
+                .Matches(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.WhiteListErrorText);
 
             RuleFor(x => x.WhatAreYourHobbiesInterests)
                 .Length(0, 4000)
-                .WithMessage("'What are your hobbies/interests' must not exceed 4000 characters")
+                .WithMessage(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage("'What are your hobbies/interests' must be supplied");
+                .WithMessage(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.RequiredErrorText)
+                .Matches(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.WhiteListErrorText);
 
             RuleFor(x => x.AnythingWeCanDoToSupportYourInterview)
                 .Length(0, 4000)
-                .WithMessage("'Is there anything we can do to support your interview' must not exceed 4000 characters")
+                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage("'Is there anything we can do to support your interview' must be supplied");
+                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.RequiredErrorText)
+                .Matches(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListErrorText);
         }
     }
 }

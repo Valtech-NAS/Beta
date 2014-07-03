@@ -1,16 +1,19 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.Vacancies;
-
-namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     using System.ComponentModel.DataAnnotations;
-    using Application.Interfaces.Search;
+    using Application.Interfaces.Vacancies;
+    using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Validators;
 
-    [Validator(typeof(VacancySearchClientSideValidator))]
+    [Validator(typeof (VacancySearchClientSideValidator))]
     public class VacancySearchViewModel
     {
-        public VacancySearchViewModel() { }
+        private int _pageNumber = 1;
+
+        public VacancySearchViewModel()
+        {
+        }
 
         public VacancySearchViewModel(VacancySearchViewModel viewModel)
         {
@@ -24,13 +27,10 @@ namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
             Hash = viewModel.Hash;
         }
 
-        private int _pageNumber = 1;
-
-        [Display(Name = "Keywords (optional)", Description = "For example, mechanical engineer, retail, customer service")]
+        [Display(Name = VacancySearchMessages.KeywordMessages.LabelText, Description = VacancySearchMessages.KeywordMessages.HintText)]
         public string Keywords { get; set; }
 
-        [Display(Name = "Apprenticeship location", Description = "Enter postcode, town or city")]
-        //[Required(ErrorMessage = "Sorry, we didn't find a match for the location. Please try again.")]
+        [Display(Name = VacancySearchMessages.LocationMessages.LabelText, Description = VacancySearchMessages.LocationMessages.HintText)]
         public string Location { get; set; }
 
         public double? Longitude { get; set; }
@@ -59,9 +59,9 @@ namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
         }
 
         /// <summary>
-        /// Check to allow non-js browsers to function as expected.
-        /// Without this, the lat and lon would always take precedence and updates to
-        /// the location field would never be honoured.
+        ///     Check to allow non-js browsers to function as expected.
+        ///     Without this, the lat and lon would always take precedence and updates to
+        ///     the location field would never be honoured.
         /// </summary>
         public void CheckLatLonLocHash()
         {

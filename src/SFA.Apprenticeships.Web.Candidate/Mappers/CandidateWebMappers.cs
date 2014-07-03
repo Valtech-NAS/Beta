@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using AutoMapper;
@@ -13,7 +12,7 @@
 
     public class CandidateWebMappers : MapperEngine
     {
-        public override void Initialize()
+        public override void Initialise()
         {
             Mapper.CreateMap<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>()
                 .ConvertUsing<SearchResultsConverter>();
@@ -25,23 +24,10 @@
                 .ForMember(d => d.Latitude, opt => opt.MapFrom(s => s.GeoPoint.Latitude))
                 .ForMember(d => d.Longitude, opt => opt.MapFrom(s => s.GeoPoint.Longitude));
 
-            Mapper.CreateMap<IEnumerable<Location>, IEnumerable<LocationViewModel>>()
-                .ConvertUsing<EnumerableLocationConverter>();
-
             Mapper.CreateMap<VacancyDetail, VacancyDetailViewModel>();
+            Mapper.CreateMap<VacancySummaryResponse, VacancySummaryViewModel>();
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
-        }
-
-        protected class EnumerableLocationConverter :
-            ITypeConverter<IEnumerable<Location>, IEnumerable<LocationViewModel>>
-        {
-            public IEnumerable<LocationViewModel> Convert(ResolutionContext context)
-            {
-                return
-                    from item in (IEnumerable<Location>) context.SourceValue
-                    select context.Engine.Map<Location, LocationViewModel>(item);
-            }
         }
 
         protected class LocationResolver : ITypeConverter<VacancySearchViewModel, Location>
@@ -64,8 +50,7 @@
             }
         }
 
-        protected class SearchResultsConverter :
-            ITypeConverter<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>
+        protected class SearchResultsConverter : ITypeConverter<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>
         {
             public VacancySearchResponseViewModel Convert(ResolutionContext context)
             {
@@ -74,7 +59,7 @@
                 var viewModel = new VacancySearchResponseViewModel
                 {
                     TotalHits = source.Total,
-                    Vacancies = source.Results,
+                    Vacancies = context.Engine.Map<IEnumerable<VacancySummaryResponse>, IEnumerable<VacancySummaryViewModel>>(source.Results)
                 };
 
                 return viewModel;

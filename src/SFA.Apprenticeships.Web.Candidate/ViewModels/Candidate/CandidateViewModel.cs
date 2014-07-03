@@ -2,12 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using Locations;
 
     [Serializable]
     public class CandidateViewModel
     {
+        public int Id { get; set; }
+
         public string FullName { get; set; }
 
         public DateTime DateOfBirth { get; set; }
@@ -23,6 +24,8 @@
         public IEnumerable<WorkExperienceViewModel> WorkExperience { get; set; }
 
         public AboutYouViewModel AboutYou { get; set; }
+
+        public EmployerQuestionAnswersViewModel  EmployerQuestionAnswers { get; set; }
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
     using System.Web.Mvc;
+    using Constants.ViewModels;
     using FluentValidation;
     using FluentValidation.Mvc;
     using ViewModels.VacancySearch;
@@ -29,7 +30,7 @@
             if (!modelState.IsValid)
             {
                 modelState.Clear();
-                modelState.AddModelError("Location", "Sorry, we didn't find a match for the location entered");
+                modelState.AddModelError("Location", VacancySearchMessages.LocationMessages.NoResultsErrorText);
             }
 
             return modelState.IsValid;
@@ -42,9 +43,9 @@
         {
             validator.RuleFor(x => x.Location)
                 .NotEmpty()
-                .WithMessage("Please provide a location.")
+                .WithMessage(VacancySearchMessages.LocationMessages.RequiredErrorText)
                 .Length(3, 99)
-                .WithMessage("Location name or postcode must be 3 or more characters.");
+                .WithMessage(VacancySearchMessages.LocationMessages.LengthErrorText);
         }
 
         public static void AddServerRules(this AbstractValidator<VacancySearchViewModel> validator)

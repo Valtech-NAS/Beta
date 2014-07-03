@@ -1,8 +1,8 @@
-﻿using System;
-using SFA.Apprenticeships.Domain.Entities.Locations;
-
-namespace SFA.Apprenticeships.Domain.Entities.Vacancies
+﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
+    using System;
+    using Locations;
+
     public class VacancySummary
     {
         public int Id { get; set; }
@@ -18,6 +18,5 @@ namespace SFA.Apprenticeships.Domain.Entities.Vacancies
         public GeoPoint Location { get; set; }
 
         public VacancyLocationType VacancyLocationType { get; set; }
-
     }
 }

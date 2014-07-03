@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.Vacancies;
-
-namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     using System.Collections.Generic;
 
@@ -8,7 +6,7 @@ namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
     {
         public int TotalHits { get; set; }
         public int PageSize { get; set; }
-        public IEnumerable<VacancySummaryResponse> Vacancies { get; set; }
+        public IEnumerable<VacancySummaryViewModel> Vacancies { get; set; }
         public VacancySearchViewModel VacancySearch { get; set; }
 
         public int PrevPage
