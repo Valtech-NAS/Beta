@@ -3,5 +3,5 @@
     using System;
     using Entities.Candidates;
 
-    public interface ICandidateRepository : IWriteRepository<Candidate>, IReadRepository<Candidate> {}
+    public interface ICandidateWriteRepository : IWriteRepository<Candidate> { }
 }

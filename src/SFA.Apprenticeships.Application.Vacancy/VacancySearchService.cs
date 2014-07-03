@@ -1,12 +1,10 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.Vacancies;
-using SFA.Apprenticeships.Domain.Entities.Locations;
-
-namespace SFA.Apprenticeships.Application.Vacancy
+﻿namespace SFA.Apprenticeships.Application.Vacancy
 {
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
     using Domain.Interfaces.Logging;
     using Interfaces.Search;
+    using Interfaces.Vacancies;
 
     public class VacancySearchService : IVacancySearchService
     {

@@ -1,9 +1,8 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.Vacancies;
-
-namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancyDetail
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancyDetail
 {
     using System;
     using System.Linq;
+    using Application.Interfaces.Vacancies; 
     using Domain.Interfaces.Mapping;
     using Common.Wcf;
     using Configuration;

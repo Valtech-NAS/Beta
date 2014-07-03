@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
 
     public abstract class SecureConfigurationSection<T> : ConfigurationSection where T : ConfigurationSection, new()
     {
+        //todo: should statics be used here?
         private static T _instance;
         private static string _configFile;
         private static string _configSectionName;
@@ -36,7 +37,6 @@ namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
             {
                 if (_instance == null)
                 {
-                    var configObj = new T();
                     var configMap = new ExeConfigurationFileMap {ExeConfigFilename = _configFile};
                     var config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
                     _instance = (T) config.GetSection(_configSectionName);

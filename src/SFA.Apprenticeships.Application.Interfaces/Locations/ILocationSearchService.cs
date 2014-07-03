@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SFA.Apprenticeships.Application.Interfaces.Locations
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Locations
 {
+    using System;
+    using System.Collections.Generic;
+
     public interface ILocationSearchService
     {
         /// <summary>

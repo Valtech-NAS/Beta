@@ -5,7 +5,7 @@
     using Domain.Entities.Candidates;
 
     /// <summary>
-    /// For candidate users to manage their profile and dashboard entities
+    /// For candidate users to manage their profile and other dashboard entities
     /// </summary>
     public interface ICandidateService
     {

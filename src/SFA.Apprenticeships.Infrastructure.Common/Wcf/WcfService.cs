@@ -4,7 +4,7 @@
     using System.Configuration;
     using System.ServiceModel;
     using System.ServiceModel.Configuration;
-    using SFA.Apprenticeships.Infrastructure.Common.Configuration;
+    using Configuration;
 
     public class WcfService<T> : IWcfService<T>
     {

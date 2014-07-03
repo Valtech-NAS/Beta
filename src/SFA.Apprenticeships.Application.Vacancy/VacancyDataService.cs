@@ -1,9 +1,8 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.Vacancies;
-using SFA.Apprenticeships.Domain.Entities.Vacancies;
-
-namespace SFA.Apprenticeships.Application.Vacancy
+﻿namespace SFA.Apprenticeships.Application.Vacancy
 {
     using System;
+    using Interfaces.Vacancies;
+    using Domain.Entities.Vacancies;
 
     public class VacancyDataService : IVacancyDataService
     {

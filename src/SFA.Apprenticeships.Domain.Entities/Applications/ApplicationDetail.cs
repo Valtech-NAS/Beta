@@ -2,5 +2,8 @@
 {
     using System;
 
-    public class ApplicationDetail : BaseEntity {}
+    public class ApplicationDetail : BaseEntity
+    {
+        //todo: ApplicationDetail, status, etc.
+    }
 }
