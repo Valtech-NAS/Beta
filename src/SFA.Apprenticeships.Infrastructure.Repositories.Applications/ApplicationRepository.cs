@@ -13,7 +13,7 @@
     {
         private readonly IMapper _mapper;
 
-        protected ApplicationRepository(IConfigurationManager configurationManager, IMapper mapper)
+        public ApplicationRepository(IConfigurationManager configurationManager, IMapper mapper)
             : base(configurationManager, "Applications.mongoDB", "applications")
         {
             _mapper = mapper;
