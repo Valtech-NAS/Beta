@@ -46,12 +46,18 @@
             var existingApplicationViewModel = GetApplicationViewModel(vacancyId, mockProfileId);
 
             userApplicationViewModel.VacancyDetail = existingApplicationViewModel.VacancyDetail;
+            userApplicationViewModel.Candidate.Id = existingApplicationViewModel.Candidate.Id;
             userApplicationViewModel.Candidate.FullName = existingApplicationViewModel.Candidate.FullName;
             userApplicationViewModel.Candidate.EmailAddress = existingApplicationViewModel.Candidate.EmailAddress;
             userApplicationViewModel.Candidate.DateOfBirth = existingApplicationViewModel.Candidate.DateOfBirth;
             userApplicationViewModel.Candidate.Address = existingApplicationViewModel.Candidate.Address;
-            userApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 = existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1;
-            userApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2;
+
+            if (!string.IsNullOrWhiteSpace(existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1) ||
+                !string.IsNullOrWhiteSpace(existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2))
+            {
+                userApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 = existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1;
+                userApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2;    
+            }
 
             return userApplicationViewModel;
         }

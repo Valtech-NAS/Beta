@@ -44,4 +44,12 @@
 
         };
     });
+
+    //$.validator.addMethod("fraction", function (value, element, param) {
+    //    return value != "";
+    //}, "Error message here");
+
+    //$.validator.addClassRules("fraction", {
+    //    fraction: true
+    //});
 });

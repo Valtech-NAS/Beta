@@ -20,7 +20,8 @@ namespace SFA.Apprenticeships.Web.Common.Framework
             Expression<Func<TModel, TProperty>> expression,
             string labelText = null,
             string hintText = null,
-            object htmlAttributes = null)
+            object htmlAttributes = null,
+            string textHtmlAttributes = null)
         {
             Condition.Requires(helper, "helper").IsNotNull();
             Condition.Requires(expression, "expression").IsNotNull();
@@ -37,7 +38,7 @@ namespace SFA.Apprenticeships.Web.Common.Framework
             return FormText(
                 helper.LabelFor(expression, labelText, new { @class = "form-label" }).ToString(),
                 helper.HintFor(expression, hintText, new { @class = "form-hint" }).ToString(),
-                helper.TextBoxFor(expression, new { @class = "form-control" }).ToString(),
+                helper.TextBoxFor(expression, new { @class = textHtmlAttributes == null ? "form-control" : "form-control " + textHtmlAttributes }).ToString(),
                 validationError,
                 htmlAttributes);
         }

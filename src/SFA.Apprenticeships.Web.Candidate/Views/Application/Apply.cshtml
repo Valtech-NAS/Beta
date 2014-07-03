@@ -24,6 +24,7 @@
     @Html.ValidationSummary(false)
     
     @Html.DisplayFor(m => m.Candidate)
+    @Html.EditorFor(m => m.Candidate.Education)
     @Html.EditorFor(m => m.Candidate.Qualifications)
     @Html.EditorFor(m => m.Candidate.AboutYou)
     @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)

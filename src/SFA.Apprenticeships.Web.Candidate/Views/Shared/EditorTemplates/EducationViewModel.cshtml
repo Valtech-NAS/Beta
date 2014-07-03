@@ -1,0 +1,10 @@
+﻿@model EducationViewModel
+
+<fieldset class="fieldset-with-border">
+    <legend class="heading-large">Education</legend>
+    @Html.FormTextFor(m => m.NameOfMostRecentSchoolCollege, htmlAttributes: new { @class = "form-group-compound" })
+    <div class="inline-fixed">
+        @Html.FormTextFor(m => m.FromYear, textHtmlAttributes: "form-control-medium")
+        @Html.FormTextFor(m => m.ToYear, textHtmlAttributes: "form-control-medium")
+    </div>
+</fieldset>
