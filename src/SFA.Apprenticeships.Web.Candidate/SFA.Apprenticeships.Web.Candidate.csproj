@@ -360,10 +360,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="IoC\CandidateRegistry.cs" />
+    <Compile Include="IoC\CandidateWebRegistry.cs" />
     <Compile Include="Mappers\CandidateWebMappers.cs" />
     <Compile Include="Constants\ViewModels\AboutYouMessages.cs" />
-    <Compile Include="Constants\ViewModels\ApplicationMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerQuestionAnswersMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancySearchMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -37,7 +37,7 @@ namespace SFA.Apprenticeships.Web.Candidate
 
                 x.AddRegistry<SessionRegistry>();
                 x.AddRegistry<WebCommonRegistry>();
-                x.AddRegistry<CandidateRegistry>();
+                x.AddRegistry<CandidateWebRegistry>();
             });
 
             WebCommonRegistry.Configure(ObjectFactory.Container);

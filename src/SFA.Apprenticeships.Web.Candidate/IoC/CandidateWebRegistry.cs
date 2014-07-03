@@ -9,9 +9,9 @@
     using Validators;
     using ViewModels.VacancySearch;
 
-    public class CandidateRegistry : Registry
+    public class CandidateWebRegistry : Registry
     {
-        public CandidateRegistry()
+        public CandidateWebRegistry()
         {
             For<ILocationSearchService>().Use<LocationSearchService>();
             For<IMapper>().Singleton().Use<CandidateWebMappers>().Name = "CandidateWebMappers";

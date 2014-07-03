@@ -4,7 +4,7 @@
     {
         public static class NameWhitelist
         {
-            public const string RegularExpression = @"^[a-zA-Z0-9',+\-]+$";
+            public const string RegularExpression = @"^[a-zA-Z',+\-]+$";
             public const string ErrorText = "must only contain lower and upper case letters";
         }
 

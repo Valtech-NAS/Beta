@@ -11,7 +11,7 @@
         public ApplicationRepositoryRegistry()
         {
             For<IMapper>().Use<ApplicationDetailMappers>().Name = "ApplicationDetailMapper";
-            For<IApplicationWriteRepository>().Use<ApplicationRepository>().Ctor<IMapper>("ApplicationDetailMapper");
+            For<IApplicationWriteRepository>().Use<ApplicationRepository>().Ctor<IMapper>().Named("ApplicationDetailMapper");
         }
     }
 }
