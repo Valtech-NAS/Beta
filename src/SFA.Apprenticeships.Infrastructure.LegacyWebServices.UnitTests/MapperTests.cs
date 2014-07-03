@@ -1,11 +1,12 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies;
+
+namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using FluentAssertions;
     using NUnit.Framework;
-    using Domain.Entities.Vacancy;
     using Mappers;
     using VacancyDetailProxy;
     using AddressData = VacancySummaryProxy.AddressData;
@@ -41,7 +42,7 @@
                 VacancyType = "IntermediateLevelApprenticeship",
             };
 
-            var test = _vacancyDetailMapper.Map<VacancyFullData, VacancyDetail>(data);
+            var test = _vacancyDetailMapper.Map<VacancyFullData, Domain.Entities.Vacancies.VacancyDetail>(data);
 
             test.Id.Should().Be(1);
             test.VacancyLocationType.Should().Be(VacancyLocationType.NonNational);
@@ -68,7 +69,7 @@
                 }
             };
 
-            var test = _vacancySummaryMapper.Map<VacancySummaryData[], IEnumerable<VacancySummary>>(data).ToList();
+            var test = _vacancySummaryMapper.Map<VacancySummaryData[], IEnumerable<Domain.Entities.Vacancies.VacancySummary>>(data).ToList();
 
             test[0].Id.Should().Be(1);
             test[0].EmployerName.Should().Be("EmpName");

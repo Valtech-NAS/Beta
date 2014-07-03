@@ -1,7 +1,8 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
+﻿using SFA.Apprenticeships.Application.Interfaces.Vacancies;
+
+namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
 {
     using Application.Interfaces.ReferenceData;
-    using Application.Interfaces.Vacancy;
     using Application.ReferenceData;
     using Application.VacancyEtl;
     using Domain.Interfaces.Mapping;

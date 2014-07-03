@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
-    using Application.Interfaces.Vacancy;
-    using Domain.Entities.Vacancy;
+    using Application.Interfaces.Vacancies;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Mapping;
     using ViewModels.VacancySearch;
 
@@ -18,14 +18,15 @@
 
         public VacancyDetailViewModel GetVacancyDetailViewModel(int id)
         {
-            var vacancyDetail = _vacancyDataProvider.GetVacancyDetails(id);
+            VacancyDetail vacancyDetail = _vacancyDataProvider.GetVacancyDetails(id);
 
             if (vacancyDetail == null)
             {
                 return null;
             }
 
-            var vacancyDetailViewModel = _vacancyDetailMapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            VacancyDetailViewModel vacancyDetailViewModel =
+                _vacancyDetailMapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
             return vacancyDetailViewModel;
         }
     }

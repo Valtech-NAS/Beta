@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
-    using Interfaces.Location;
-    using Domain.Entities.Location;
+    using Domain.Entities.Locations;
     using Domain.Interfaces.Logging;
+    using Interfaces.Locations;
 
     public class AddressSearchService : IAddressSearchService
     {

@@ -1,48 +1,31 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Postcode.IntegrationTests
 {
     using System;
+    using Application.Interfaces.Locations;
+    using Common.IoC;
     using FluentAssertions;
-    using Moq;
+    using IoC;
     using NUnit.Framework;
-    using RestSharp;
-    using Postcode;
-    using Entities;
+    using StructureMap;
 
     [TestFixture]
     public class PostcodeServiceTests
     {
-        private const string PostcodeIOUrl = "http://api.postcodes.io";
-        private const string SfaPostCode = "CV1 2WT";
-
-        [TestCase(null)]
-        public void DoesConstructorThrowExceptionWithNullUrl(string url)
+        [SetUp]
+        public void SetUp()
         {
-            Action test = () => new PostcodeService(url);
-
-            test.ShouldThrow<ArgumentNullException>();
-        }
-
-        [TestCase("")]
-        public void DoesConstructorThrowExceptionWithNoUrl(string url)
-        {
-            Action test = () => new PostcodeService(url);
-
-            test.ShouldThrow<ArgumentException>();
-        }
-
-        [TestCase]
-        public void CanGetDefaultRestClientWithBaseUrl()
-        {
-            var service = new PostcodeService(PostcodeIOUrl);
-
-            service.Client.BaseUrl.Should().Be(PostcodeIOUrl);
+            ObjectFactory.Initialize(x =>
+            {
+                x.AddRegistry<PostcodeRegistry>();
+                x.AddRegistry<CommonRegistry>();
+            });
         }
 
         [Test]
         public void ShouldReturnCorrectLocationForPostcode()
         {
-            var service = new PostcodeService(PostcodeIOUrl);
-            var location = service.GetLocation(SfaPostCode);
+            var service = ObjectFactory.GetInstance<IPostcodeLookupProvider>();
+            var location = service.GetLocation("CV1 2WT");
             location.GeoPoint.Latitude.Should().Be(52.4009991288043);
             location.GeoPoint.Longitude.Should().Be(-1.50812239495425);
         }
@@ -50,27 +33,9 @@
         [Test]
         public void ShouldReturnNullForNonExistentPostcode()
         {
-            var service = new PostcodeService(PostcodeIOUrl);
+            var service = ObjectFactory.GetInstance<IPostcodeLookupProvider>();
             var location = service.GetLocation("ZZ1 0ZZ");
             location.Should().BeNull();
-        }
-
-        [TestCase]
-        public void ServiceThrowsRestClientException()
-        {
-            var response = new RestResponse<PostcodeInfoResult>
-            {
-                ErrorException = new Exception("Test")
-            };
-
-            var restClient = new Mock<IRestClient>();
-            restClient.Setup(x => x.Execute<PostcodeInfoResult>(It.IsAny<IRestRequest>())).Returns(response);
-
-            var service = new PostcodeService(PostcodeIOUrl) { Client = restClient.Object };
-
-            Action test = () => service.GetLocation(SfaPostCode);
-
-            test.ShouldThrow<ApplicationException>();
         }
     }
 }

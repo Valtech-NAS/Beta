@@ -39,18 +39,27 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Location\Address.cs" />
-    <Compile Include="Location\Location.cs" />
-    <Compile Include="Location\LocationHelper.cs" />
+    <Compile Include="Applications\ApplicationDetail.cs" />
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="Candidates\Candidate.cs" />
+    <Compile Include="Candidates\Education.cs" />
+    <Compile Include="Candidates\Qualification.cs" />
+    <Compile Include="Candidates\WorkExperience.cs" />
+    <Compile Include="Locations\Address.cs" />
+    <Compile Include="Locations\Location.cs" />
+    <Compile Include="Locations\LocationHelper.cs" />
     <Compile Include="ReferenceData\ReferenceDataItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Location\GeoPoint.cs" />
-    <Compile Include="Vacancy\VacancyDetail.cs" />
-    <Compile Include="Vacancy\VacancyLocationType.cs" />
-    <Compile Include="Vacancy\VacancySummary.cs" />
-    <Compile Include="Vacancy\VacancyType.cs" />
-    <Compile Include="Vacancy\WageType.cs" />
+    <Compile Include="Locations\GeoPoint.cs" />
+    <Compile Include="Users\User.cs" />
+    <Compile Include="Users\UserRoles.cs" />
+    <Compile Include="Vacancies\VacancyDetail.cs" />
+    <Compile Include="Vacancies\VacancyLocationType.cs" />
+    <Compile Include="Vacancies\VacancySummary.cs" />
+    <Compile Include="Vacancies\VacancyType.cs" />
+    <Compile Include="Vacancies\WageType.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -16,6 +16,7 @@
 
         public ActionResult AccessDenied()
         {
+            Response.StatusCode = 401;
             return View("AccessDenied");
         }
 

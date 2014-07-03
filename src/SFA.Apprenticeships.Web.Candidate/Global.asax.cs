@@ -32,7 +32,7 @@
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            Server.HandleError<ErrorController>(((MvcApplication)sender).Context);
+            //Server.HandleError<ErrorController>(((MvcApplication)sender).Context);
         }
     }
 }

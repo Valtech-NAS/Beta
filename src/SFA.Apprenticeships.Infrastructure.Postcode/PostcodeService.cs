@@ -3,18 +3,17 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Locations;
+    using Common.Configuration;
     using Common.Rest;
     using CuttingEdge.Conditions;
+    using Domain.Entities.Locations;
     using Entities;
-    using Application.Interfaces.Location;
-    using Domain.Entities.Location;
 
-    /// <summary>
-    /// <add key="PostcodeServiceEndpoint" value="http://api.postcodes.io" />
-    /// </summary>
     public class PostcodeService : RestService, IPostcodeLookupProvider
     {
-        public PostcodeService(string baseUrl) : base(baseUrl) {}
+        public PostcodeService(IConfigurationManager configurationManager) : 
+            base(configurationManager.GetAppSetting("PostcodeServiceEndpoint")) { }
 
         public Location GetLocation(string postcode)
         {
@@ -39,7 +38,8 @@
         {
             Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
 
-            var request = Create("postcodes?q={postcode}", new[] {new KeyValuePair<string, string>("postcode", postcode)});
+            var request = Create("postcodes?q={postcode}",
+                new[] {new KeyValuePair<string, string>("postcode", postcode)});
             var postcodes = Execute<PostcodeInfoResult>(request);
 
             if (postcodes.Data != null && postcodes.Data.Result != null)

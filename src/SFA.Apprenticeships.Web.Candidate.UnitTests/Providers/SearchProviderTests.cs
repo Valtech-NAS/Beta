@@ -1,18 +1,18 @@
-﻿
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using FluentAssertions;
-    using Moq;
-    using NUnit.Framework;
-    using Application.Interfaces.Location;
+    using Application.Interfaces.Locations;
     using Application.Interfaces.Search;
-    using Application.Interfaces.Vacancy;
-    using Domain.Entities.Location;
-    using Mappers;
+    using Application.Interfaces.Vacancies;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
+    using Domain.Entities.Locations;
+    using FluentAssertions;
+    using Mappers;
+    using Moq;
+    using NUnit.Framework;
 
     [TestFixture]
     public class SearchProviderTests
@@ -40,7 +40,8 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers
 
             _locationSearchService.Setup(x => x.FindLocation("Location1")).Returns(locations);
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchProvider.Object, _mapper);
+            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchProvider.Object,
+                _mapper);
             var test = searchProvider.FindLocation("Location1");
             var result = test.First();
 
@@ -52,9 +53,11 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers
         [TestCase]
         public void ShouldReturnLocationViewModelsFromNullLocation()
         {
-            _locationSearchService.Setup(x => x.FindLocation(It.IsAny<string>())).Returns(default(IEnumerable<Location>));
+            _locationSearchService.Setup(x => x.FindLocation(It.IsAny<string>()))
+                .Returns(default(IEnumerable<Location>));
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchProvider.Object, _mapper);
+            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchProvider.Object,
+                _mapper);
             var test = searchProvider.FindLocation(string.Empty);
 
             test.Should().BeEmpty();
@@ -75,9 +78,17 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers
                     It.IsAny<int>(),
                     VacancySortType.Distance)).Returns(results);
 
-            var search = new VacancySearchViewModel { Location = "Test", Longitude = 0d, Latitude = 0d, PageNumber = 1, WithinDistance = 2 };
+            var search = new VacancySearchViewModel
+            {
+                Location = "Test",
+                Longitude = 0d,
+                Latitude = 0d,
+                PageNumber = 1,
+                WithinDistance = 2
+            };
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchProvider.Object, _mapper);
+            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchProvider.Object,
+                _mapper);
             var test = searchProvider.FindVacancies(search, 10);
 
             test.Should().NotBeNull();

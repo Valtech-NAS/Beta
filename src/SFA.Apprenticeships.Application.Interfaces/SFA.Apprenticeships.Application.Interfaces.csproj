@@ -38,21 +38,22 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Location\ILocationSearchService.cs" />
+    <Compile Include="Candidates\ICandidateService.cs" />
+    <Compile Include="Locations\ILocationSearchService.cs" />
     <Compile Include="Messaging\IMessageBus.cs" />
-    <Compile Include="Location\IPostcodeLookupProvider.cs" />
-    <Compile Include="Location\ILocationLookupProvider.cs" />
-    <Compile Include="Location\IAddressSearchService.cs" />
+    <Compile Include="Locations\IPostcodeLookupProvider.cs" />
+    <Compile Include="Locations\ILocationLookupProvider.cs" />
+    <Compile Include="Locations\IAddressSearchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferenceData\IReferenceDataProvider.cs" />
     <Compile Include="ReferenceData\IReferenceDataService.cs" />
     <Compile Include="Search\SearchResults.cs" />
-    <Compile Include="Search\VacancySortType.cs" />
-    <Compile Include="Vacancy\IVacancyDataProvider.cs" />
-    <Compile Include="Vacancy\IVacancySearchProvider.cs" />
-    <Compile Include="Vacancy\IVacancyDataService.cs" />
-    <Compile Include="Vacancy\IVacancySearchService.cs" />
-    <Compile Include="Vacancy\VacancySummaryResponse.cs" />
+    <Compile Include="Vacancies\VacancySortType.cs" />
+    <Compile Include="Vacancies\IVacancyDataProvider.cs" />
+    <Compile Include="Vacancies\IVacancySearchProvider.cs" />
+    <Compile Include="Vacancies\IVacancyDataService.cs" />
+    <Compile Include="Vacancies\IVacancySearchService.cs" />
+    <Compile Include="Vacancies\VacancySummaryResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">

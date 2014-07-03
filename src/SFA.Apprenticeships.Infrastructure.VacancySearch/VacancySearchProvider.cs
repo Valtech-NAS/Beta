@@ -1,12 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using Nest;
-    using Application.Interfaces.Vacancy;
     using Application.Interfaces.Search;
-    using Domain.Entities.Location;
+    using Application.Interfaces.Vacancies;
+    using Domain.Entities.Locations;
     using Elastic.Common.Configuration;
+    using Elastic.Common.Entities;
+    using Nest;
 
     public class VacancySearchProvider : IVacancySearchProvider
     {
@@ -17,32 +19,32 @@
             _elasticsearchClientFactory = elasticsearchClientFactory;
         }
 
-        public SearchResults<VacancySummaryResponse> FindVacancies(string keywords, 
-                                                                    Location location, 
-                                                                    int pageNumber, 
-                                                                    int pageSize, 
-                                                                    int searchRadius,
-                                                                    VacancySortType sortType)
+        public SearchResults<VacancySummaryResponse> FindVacancies(string keywords,
+            Location location,
+            int pageNumber,
+            int pageSize,
+            int searchRadius,
+            VacancySortType sortType)
         {
             int distanceSortItemIndex = 0;
-            var client = _elasticsearchClientFactory.GetElasticClient();
-            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (Elastic.Common.Entities.VacancySummary));
-            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(Elastic.Common.Entities.VacancySummary));
+            ElasticClient client = _elasticsearchClientFactory.GetElasticClient();
+            string indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (VacancySummary));
+            string documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (VacancySummary));
 
-            var search = client.Search<VacancySummaryResponse>(s =>
-            {              
+            IQueryResponse<VacancySummaryResponse> search = client.Search<VacancySummaryResponse>(s =>
+            {
                 s.Index(indexName);
-                s.Type(documentTypeName);     
-                s.Skip((pageNumber - 1) * pageSize);
+                s.Type(documentTypeName);
+                s.Skip((pageNumber - 1)*pageSize);
                 s.Take(pageSize);
-                
+
                 switch (sortType)
                 {
                     case VacancySortType.Distance:
                         s.SortGeoDistance(g =>
                         {
                             g.PinTo(location.GeoPoint.Latitude, location.GeoPoint.Longitude)
-                             .Unit(GeoUnit.mi).OnField(f => f.Location);
+                                .Unit(GeoUnit.mi).OnField(f => f.Location);
                             return g;
                         });
                         break;
@@ -54,8 +56,8 @@
                         s.SortGeoDistance(g =>
                         {
                             g.PinTo(location.GeoPoint.Latitude, location.GeoPoint.Longitude)
-                             .Unit(GeoUnit.mi).OnField(f => f.Location);
-                            return g;   
+                                .Unit(GeoUnit.mi).OnField(f => f.Location);
+                            return g;
                         });
                         break;
                     case VacancySortType.Relevancy:
@@ -75,8 +77,8 @@
                 if (location != null)
                 {
                     s.Filter(f => f.GeoDistance(vs => vs.Location, descriptor => descriptor
-                                            .Location(location.GeoPoint.Latitude, location.GeoPoint.Longitude)
-                                            .Distance(searchRadius, GeoUnit.mi)));
+                        .Location(location.GeoPoint.Latitude, location.GeoPoint.Longitude)
+                        .Distance(searchRadius, GeoUnit.mi)));
                 }
 
                 if (!string.IsNullOrEmpty(keywords))
@@ -84,28 +86,28 @@
                     s.Query(q =>
                     {
                         BaseQuery query = q.FuzzyLikeThis(flt => flt
-                                            .OnFields(new[] { "title", "description", "employerName" })
-                                            .LikeText(keywords)
-                                            .PrefixLength(1)
-                                            .MinimumSimilarity(2));
+                            .OnFields(new[] {"title", "description", "employerName"})
+                            .LikeText(keywords)
+                            .PrefixLength(1)
+                            .MinimumSimilarity(2));
                         return query;
-                    });    
+                    });
                 }
-                
+
                 return s;
             });
 
-            var responses = search.Documents.ToList();
+            List<VacancySummaryResponse> responses = search.Documents.ToList();
             if (sortType != VacancySortType.Relevancy)
             {
                 responses.ForEach(r => r.Distance =
-                                        double.Parse(search.Hits.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture))
-                                        .Sorts.Skip(distanceSortItemIndex).First()
-                                        .ToString()));
+                    double.Parse(search.Hits.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture))
+                        .Sorts.Skip(distanceSortItemIndex).First()
+                        .ToString()));
             }
 
             var results = new SearchResults<VacancySummaryResponse>(search.Total, pageNumber, responses);
-            
+
             return results;
         }
 

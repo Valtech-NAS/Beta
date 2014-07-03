@@ -1,11 +1,12 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies;
+
+namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
     using System;
     using System.Linq;
     using FluentAssertions;
     using NUnit.Framework;
     using Application.VacancyEtl;
-    using Domain.Entities.Vacancy;
     using Common.Wcf;
     using Configuration;
     using VacancySummaryProxy;

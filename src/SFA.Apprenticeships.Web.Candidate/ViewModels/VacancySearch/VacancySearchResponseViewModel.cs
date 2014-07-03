@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     using System.Collections.Generic;
-    using Application.Interfaces.Vacancy;
 
     public class VacancySearchResponseViewModel
     {
         public int TotalHits { get; set; }
         public int PageSize { get; set; }
-        public IEnumerable<VacancySummaryResponse> Vacancies { get; set; }
+        public IEnumerable<VacancySummaryViewModel> Vacancies { get; set; }
         public VacancySearchViewModel VacancySearch { get; set; }
 
         public int PrevPage

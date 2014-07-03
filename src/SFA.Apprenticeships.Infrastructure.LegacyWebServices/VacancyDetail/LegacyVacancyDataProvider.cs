@@ -2,8 +2,7 @@
 {
     using System;
     using System.Linq;
-    using Application.Interfaces.Vacancy;
-    using Domain.Entities.Vacancy;
+    using Application.Interfaces.Vacancies; 
     using Domain.Interfaces.Mapping;
     using Common.Wcf;
     using Configuration;
@@ -24,7 +23,7 @@
             _mapper = mapper;
         }
 
-        public VacancyDetail GetVacancyDetails(int vacancyId)
+        public Domain.Entities.Vacancies.VacancyDetail GetVacancyDetails(int vacancyId)
         {
             var vacancyDetailRequest = new VacancyDetailsRequest
             {
@@ -46,10 +45,10 @@
                 rs.SearchResults.SearchResults == null ||
                 rs.SearchResults.SearchResults.Length == 0)
             {
-                return default(VacancyDetail);
+                return default(Domain.Entities.Vacancies.VacancyDetail);
             }
 
-            return _mapper.Map<VacancyFullData, VacancyDetail>(rs.SearchResults.SearchResults.First());
+            return _mapper.Map<VacancyFullData, Domain.Entities.Vacancies.VacancyDetail>(rs.SearchResults.SearchResults.First());
         }
     }
 }

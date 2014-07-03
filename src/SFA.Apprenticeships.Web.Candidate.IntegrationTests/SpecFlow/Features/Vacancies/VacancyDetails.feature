@@ -1,4 +1,4 @@
-﻿@vacancydetail @US124 @US238 
+﻿@ignore @vacancydetail @US124 @US238 
 Feature: VacancyDetails
 	In order to confirm a candidate can view vacnacy full details.
 	as a candidate

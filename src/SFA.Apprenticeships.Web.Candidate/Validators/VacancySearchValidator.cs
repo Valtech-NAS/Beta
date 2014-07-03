@@ -1,17 +1,16 @@
-﻿
-namespace SFA.Apprenticeships.Web.Candidate.Validators
+﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
     using System.Web.Mvc;
+    using Constants.ViewModels;
     using FluentValidation;
     using FluentValidation.Mvc;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using ViewModels.VacancySearch;
 
     public class VacancySearchClientSideValidator : AbstractValidator<VacancySearchViewModel>
     {
         public VacancySearchClientSideValidator()
         {
             this.AddCommonRules();
-            this.AddBrowserRules();
         }
     }
 
@@ -25,13 +24,13 @@ namespace SFA.Apprenticeships.Web.Candidate.Validators
 
         public bool Validate(VacancySearchViewModel model, ModelStateDictionary modelState)
         {                    
-            var result = this.Validate(model);
+            var result = Validate(model);
             result.AddToModelState(modelState, string.Empty);
 
             if (!modelState.IsValid)
             {
                 modelState.Clear();
-                modelState.AddModelError("Location", "Sorry, we didn't find a match for the location entered");
+                modelState.AddModelError("Location", VacancySearchMessages.LocationMessages.NoResultsErrorText);
             }
 
             return modelState.IsValid;
@@ -40,20 +39,13 @@ namespace SFA.Apprenticeships.Web.Candidate.Validators
 
     public static class VacancySearchValidatorRules
     {
-        public static void AddBrowserRules(this AbstractValidator<VacancySearchViewModel> validator)
-        {
-            //validator.RuleFor(x => x.Latitude)
-            //    .NotEmpty()
-            //    .WithMessage("Sorry, we didn't find a match for the location. Please try again.");
-        }
-
         public static void AddCommonRules(this AbstractValidator<VacancySearchViewModel> validator)
         {
             validator.RuleFor(x => x.Location)
                 .NotEmpty()
-                .WithMessage("Please provide a location.")
+                .WithMessage(VacancySearchMessages.LocationMessages.RequiredErrorText)
                 .Length(3, 99)
-                .WithMessage("Location name or postcode must be 3 or more characters.");
+                .WithMessage(VacancySearchMessages.LocationMessages.LengthErrorText);
         }
 
         public static void AddServerRules(this AbstractValidator<VacancySearchViewModel> validator)

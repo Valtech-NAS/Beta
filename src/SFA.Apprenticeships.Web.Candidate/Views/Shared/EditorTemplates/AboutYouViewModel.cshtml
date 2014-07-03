@@ -1,0 +1,21 @@
+﻿@model AboutYouViewModel
+
+<fieldset class="fieldset-with-border">
+    <legend class="heading-large">About you</legend>
+    <div class="form-group text">
+        <details>
+            <summary role="button">Help with this section</summary>
+            <p class="panel-indent">
+                Think carefully about how you answer these questions. Where possible,
+                keep the vacancy that you're applying for in mind, and tailor your
+                answers to match the role.
+            </p>
+        </details>
+    </div>
+
+    @Html.FormTextAreaFor(m => m.WhatAreYourStrengths)
+    @Html.FormTextAreaFor(m => m.WhatDoYouFeelYouCouldImprove)
+    @Html.FormTextAreaFor(m => m.WhatAreYourHobbiesInterests)
+    @Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview)
+
+</fieldset>

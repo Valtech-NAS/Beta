@@ -223,11 +223,9 @@
     <Content Include="Content\_assets\img\icon-star-filled.png" />
     <Content Include="Content\_assets\img\icon-star-hollow-2x.png" />
     <Content Include="Content\_assets\img\icon-star-hollow.png" />
-    <Content Include="Content\_assets\js\nas\interactions.js" />
+    <Content Include="Content\_assets\js\nas\validationscripts.js" />
     <Content Include="Content\_assets\js\nas\locationAutocomplete.js" />
     <Content Include="Content\_assets\img\arrow-sprite-2x.png" />
-    <Content Include="Content\_assets\js\nas\oldBrowsers.js" />
-    <Content Include="Content\_assets\js\vendor\fastclick.js" />
     <Content Include="Content\_assets\js\vendor\jquery-1.11.1.js" />
     <Content Include="Content\_assets\js\vendor\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.js" />
@@ -261,11 +259,24 @@
     <Content Include="Views\VacancySearch\_searchResults.cshtml" />
     <Content Include="Views\VacancySearch\_pagination.cshtml" />
     <Content Include="Views\VacancySearch\Details.cshtml" />
-    <Content Include="Views\VacancySearch\VacancyNotFound.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\Error\SessionExpired.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Application\Index.cshtml" />
+    <Content Include="Views\Application\Apply.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CandidateViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\QualificationsViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\WorkExperienceViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AboutYouViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Date.cshtml" />
+    <Content Include="Views\Shared\VacancyNotFound.cshtml" />
+    <Content Include="Views\Application\Preview.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\QualificationsViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\AboutYouViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmployerQuestionAnswersViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EducationViewModel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -340,28 +351,51 @@
     <Compile Include="App_Start\WebApiConfig.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Constants\ViewModels\EducationMessages.cs" />
+    <Compile Include="Constants\Whitelists.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VacancySearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="IoC\CandidateRegistry.cs" />
+    <Compile Include="IoC\CandidateWebRegistry.cs" />
     <Compile Include="Mappers\CandidateWebMappers.cs" />
+    <Compile Include="Constants\ViewModels\AboutYouMessages.cs" />
+    <Compile Include="Constants\ViewModels\EmployerQuestionAnswersMessages.cs" />
+    <Compile Include="Constants\ViewModels\VacancySearchMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\ApplicationProvider.cs" />
+    <Compile Include="Providers\IApplicationProvider.cs" />
     <Compile Include="Providers\ISearchProvider.cs" />
     <Compile Include="Providers\IVacancyDetailProvider.cs" />
     <Compile Include="Providers\SearchProvider.cs" />
     <Compile Include="Providers\VacancyDetailProvider.cs" />
+    <Compile Include="Validators\ApplicationViewModelValidator.cs" />
+    <Compile Include="Validators\EducationViewModelClientValidator.cs" />
+    <Compile Include="Validators\CandidateViewModelValidator.cs" />
+    <Compile Include="Validators\EmployerQuestionAnswersViewModelValidator.cs" />
     <Compile Include="Validators\IValidateModel.cs" />
+    <Compile Include="Validators\AboutYouViewModelValidator.cs" />
     <Compile Include="Validators\VacancySearchValidator.cs" />
+    <Compile Include="ViewModels\Applications\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\EducationViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\EmployerQuestionAnswersViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\AboutYouViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\WorkExperienceViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\QualificationsViewModel.cs" />
+    <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
+    <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
-    <Compile Include="ViewModels\VacancySearch\VacancyDetail.cs" />
+    <Compile Include="ViewModels\VacancySearch\VacancyDetailViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchResponseViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\VacancySummaryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Shared\EditorTemplates\" />
+    <Folder Include="Constants\Pages\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
@@ -408,6 +442,14 @@
       <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
+      <Project>{91822365-711d-4976-ad7f-069063d8b487}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Applications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Candidates\SFA.Apprenticeships.Infrastructure.Repositories.Candidates.csproj">
+      <Project>{aa87bd85-5a33-46b8-b26f-c6b680876486}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancySearch\SFA.Apprenticeships.Infrastructure.VacancySearch.csproj">
       <Project>{913445EC-3175-4AFB-869C-F03B6FD2940A}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.VacancySearch</Name>
@@ -428,11 +470,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>18850</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/candidate</IISUrl>
+          <IISUrl>http://local.candidates.gov.uk</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

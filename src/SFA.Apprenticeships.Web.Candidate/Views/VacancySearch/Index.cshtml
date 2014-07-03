@@ -56,25 +56,14 @@
 
 @section scripts
 {   
-    <script src="~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js"></script>   
-    <script src="~/Content/_assets/js/nas/locationAutocomplete.js"></script>      
+    <script src="~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+    <script src="~/Content/_assets/js/nas/locationAutocomplete.js" type="text/javascript"></script>
     <script>
-
         $("#Location").locationMatch({
             url: '@Url.Action("location", "vacancysearch")',
-            longitude: '#Longitude',
-            latitude: '#Latitude'
-        });
-        //$.validator.setDefaults({
-        //    ignore: ""
-        //});
-
-        $(document).ready(function() {
-            $("form").submit(function () {
-                if ($("#Location").hasClass("input-validation-error")) {
-                    $("#Location").parent().addClass("input-validation-error");
-                }
-            });
+            longitude: '#@(Html.IdFor(m => m.Longitude))',
+            latitude: '#@(Html.IdFor(m => m.Latitude))',
+            latlonhash: '#@(Html.IdFor(m => m.Hash))'
         });
     </script>
 }

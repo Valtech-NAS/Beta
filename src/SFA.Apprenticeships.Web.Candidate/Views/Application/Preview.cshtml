@@ -1,0 +1,22 @@
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApplicationViewModel
+
+@{
+    ViewBag.Title = "SFA Apprenticeships - Apply for Vacancy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="heading-xlarge">Previewing vacancy</h1>
+<section class="section-border">
+    <div class="text">
+        <div class="hgroup-medium">
+            <h3 class="heading-medium">@Model.VacancyDetail.Title</h3>
+            <span class="subtitle">@Model.VacancyDetail.EmployerName</span>
+        </div>
+        <p>@Model.VacancyDetail.Description</p>
+    </div>
+</section>
+    
+@Html.DisplayFor(m => m.Candidate)
+@Html.DisplayFor(m => m.Candidate.Qualifications)
+@Html.DisplayFor(m => m.Candidate.AboutYou)
+@Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers)

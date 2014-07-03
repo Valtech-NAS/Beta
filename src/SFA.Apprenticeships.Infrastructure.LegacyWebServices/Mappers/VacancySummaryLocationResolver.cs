@@ -1,8 +1,10 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
+﻿using SFA.Apprenticeships.Domain.Entities.Locations;
+
+namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
     using AutoMapper;
     using VacancySummaryProxy;
-    using Domain.Entities.Location;
+    using Domain.Entities.Locations;
 
     public class VacancySummaryLocationResolver : ValueResolver<AddressData, GeoPoint>
     {

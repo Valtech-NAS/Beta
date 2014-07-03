@@ -1,17 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Application.Location
 {
-    using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
-    using Domain.Entities.Location;
-    using Interfaces.Location;
+    using Domain.Entities.Locations;
+    using Interfaces.Locations;
 
     public class LocationSearchService : ILocationSearchService
     {
         private readonly ILocationLookupProvider _locationLookupProvider;
         private readonly IPostcodeLookupProvider _postcodeLookupProvider;
 
-        public LocationSearchService(ILocationLookupProvider locationLookupProvider, IPostcodeLookupProvider postcodeLookupProvider)
+        public LocationSearchService(ILocationLookupProvider locationLookupProvider,
+            IPostcodeLookupProvider postcodeLookupProvider)
         {
             _locationLookupProvider = locationLookupProvider;
             _postcodeLookupProvider = postcodeLookupProvider;

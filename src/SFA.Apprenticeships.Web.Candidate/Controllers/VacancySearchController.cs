@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
     using System.Web.Mvc;
-    using Application.Interfaces.Search;
+    using Application.Interfaces.Vacancies;
     using Common.Controllers;
     using Infrastructure.Azure.Session;
     using Infrastructure.Common.Configuration;
@@ -19,11 +19,11 @@
         private readonly int _vacancyResultsPerPage;
         private readonly int _locationResultLimit;
 
-        public VacancySearchController(IConfigurationManager configManager, 
-                                    ISearchProvider searchProvider, 
-                                    IValidateModel<VacancySearchViewModel> validator,
-                                    IVacancyDetailProvider vacancyDetailProvider,
-                                    ISessionState session) : base (session)
+        public VacancySearchController(IConfigurationManager configManager,
+            ISearchProvider searchProvider,
+            IValidateModel<VacancySearchViewModel> validator,
+            IVacancyDetailProvider vacancyDetailProvider,
+            ISessionState session) : base(session)
         {
             _searchProvider = searchProvider;
             _validator = validator;
@@ -38,7 +38,7 @@
             PopulateDistances();
             PopulateSortType();
 
-            return View(new VacancySearchViewModel { WithinDistance = 2 });
+            return View(new VacancySearchViewModel {WithinDistance = 2});
         }
 
         [HttpGet]
@@ -96,18 +96,11 @@
 
             if (!_validator.Validate(searchViewModel, ModelState))
             {
-                return View("results", new VacancySearchResponseViewModel() {VacancySearch = searchViewModel});
+                return View("results", new VacancySearchResponseViewModel {VacancySearch = searchViewModel});
             }
 
-            if (location != null)
-            {
-                Session.Store("location", location);
-
-                var results = _searchProvider.FindVacancies(searchViewModel, _vacancyResultsPerPage);
-                return View("results", results);
-            }
-
-            return View("results", new VacancySearchResponseViewModel() { VacancySearch = searchViewModel });
+            var results = _searchProvider.FindVacancies(searchViewModel, _vacancyResultsPerPage);
+            return View("results", results);
         }
 
         [HttpGet]
@@ -138,32 +131,31 @@
             if (vacancy == null)
             {
                 Response.StatusCode = 404;
-                return View("vacancynotfound");
+                return View("VacancyNotFound");
             }
 
             return View(vacancy);
         }
 
         #region Dropdown View Bag Helpers
-
         private void PopulateDistances(int selectedValue = 2)
         {
             var distances = new SelectList(
-                new[] 
-                        {
-                            new { WithinDistance = 2, Name = "This area only" },
-                            new { WithinDistance = 5, Name = "5 miles" },
-                            new { WithinDistance = 10, Name = "10 miles" },
-                            new { WithinDistance = 15, Name = "15 miles" },
-                            new { WithinDistance = 20, Name = "20 miles" },
-                            new { WithinDistance = 30, Name = "30 miles" },
-                            new { WithinDistance = 40, Name = "40 miles" },
-                            new { WithinDistance = 0, Name = "Nationwide" }
-                        },
+                new[]
+                {
+                    new {WithinDistance = 2, Name = "This area only"},
+                    new {WithinDistance = 5, Name = "5 miles"},
+                    new {WithinDistance = 10, Name = "10 miles"},
+                    new {WithinDistance = 15, Name = "15 miles"},
+                    new {WithinDistance = 20, Name = "20 miles"},
+                    new {WithinDistance = 30, Name = "30 miles"},
+                    new {WithinDistance = 40, Name = "40 miles"},
+                    new {WithinDistance = 0, Name = "Nationwide"}
+                },
                 "WithinDistance",
                 "Name",
                 selectedValue
-            );
+                );
 
             ViewBag.Distances = distances;
         }
@@ -171,20 +163,19 @@
         private void PopulateSortType(VacancySortType selectedSortType = VacancySortType.Distance)
         {
             var sortTypes = new SelectList(
-                new[] 
-                        {
-                            new { SortType = VacancySortType.Distance, Name = "Distance" },
-                            new { SortType = VacancySortType.ClosingDate, Name = "Closing Date" }
-                            //new { SortType = VacancySortType.Relevancy, Name = "Best Match" }
-                        },
+                new[]
+                {
+                    new {SortType = VacancySortType.Distance, Name = "Distance"},
+                    new {SortType = VacancySortType.ClosingDate, Name = "Closing Date"}
+                    //new { SortType = VacancySortType.Relevancy, Name = "Best Match" }
+                },
                 "SortType",
                 "Name",
                 selectedSortType
-            );
+                );
 
             ViewBag.SortTypes = sortTypes;
         }
-
         #endregion
     }
 }
