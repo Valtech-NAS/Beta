@@ -7,7 +7,7 @@
 
     public class ApplicationDetailMappers : MapperEngine
     {
-        public override void Initialize()
+        public override void Initialise()
         {
             Mapper.CreateMap<Candidate, MongoApplicationDetail>();
             Mapper.CreateMap<MongoApplicationDetail, Candidate>();

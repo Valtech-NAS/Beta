@@ -7,7 +7,7 @@
 
     public class CandidateMappers : MapperEngine
     {
-        public override void Initialize()
+        public override void Initialise()
         {
             Mapper.CreateMap<Candidate, MongoCandidate>();
             Mapper.CreateMap<MongoCandidate, Candidate>();
