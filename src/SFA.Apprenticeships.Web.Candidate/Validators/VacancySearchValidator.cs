@@ -45,7 +45,13 @@
                 .NotEmpty()
                 .WithMessage(VacancySearchMessages.LocationMessages.RequiredErrorText)
                 .Length(3, 99)
-                .WithMessage(VacancySearchMessages.LocationMessages.LengthErrorText);
+                .WithMessage(VacancySearchMessages.LocationMessages.LengthErrorText)
+                .Matches(VacancySearchMessages.LocationMessages.WhiteList)
+                .WithMessage(VacancySearchMessages.LocationMessages.WhiteListErrorText);
+
+            validator.RuleFor(x => x.Keywords)
+                .Matches(VacancySearchMessages.KeywordMessages.WhiteList)
+                .WithMessage(VacancySearchMessages.KeywordMessages.WhiteListErrorText);
         }
 
         public static void AddServerRules(this AbstractValidator<VacancySearchViewModel> validator)
