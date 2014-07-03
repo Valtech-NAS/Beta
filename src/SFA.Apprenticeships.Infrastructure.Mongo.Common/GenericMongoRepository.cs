@@ -9,9 +9,12 @@
         protected readonly MongoCollection<T> Collection;
 
         protected GenericMongoRepository(IConfigurationManager configurationManager, string mongoConnectionSettingName,
-            string mongoDbName, string mongoCollectionName)
+            string mongoCollectionName)
         {
-            Collection = new MongoClient(configurationManager.GetAppSetting(mongoConnectionSettingName))
+            var mongoConnectionString = configurationManager.GetAppSetting(mongoConnectionSettingName);
+            var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
+
+            Collection = new MongoClient(mongoConnectionString)
                 .GetServer()
                 .GetDatabase(mongoDbName)
                 .GetCollection<T>(mongoCollectionName);

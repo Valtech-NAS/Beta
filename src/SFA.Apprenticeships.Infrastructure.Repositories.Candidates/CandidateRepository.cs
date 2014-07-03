@@ -15,7 +15,7 @@
         private readonly IMapper _mapper;
 
         public CandidateRepository(IConfigurationManager configurationManager, IMapper mapper)
-            : base(configurationManager, "Candidates.mongoDB", "candidateDB", "candidates")
+            : base(configurationManager, "Candidates.mongoDB", "candidates")
         {
             _mapper = mapper;
         }
