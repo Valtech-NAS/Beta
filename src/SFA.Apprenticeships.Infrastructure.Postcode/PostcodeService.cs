@@ -4,17 +4,16 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Locations;
+    using Common.Configuration;
     using Common.Rest;
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
     using Entities;
 
-    /// <summary>
-    /// <add key="PostcodeServiceEndpoint" value="http://api.postcodes.io" />
-    /// </summary>
     public class PostcodeService : RestService, IPostcodeLookupProvider
     {
-        public PostcodeService(string baseUrl) : base(baseUrl) {}
+        public PostcodeService(IConfigurationManager configurationManager) : 
+            base(configurationManager.GetAppSetting("PostcodeServiceEndpoint")) { }
 
         public Location GetLocation(string postcode)
         {

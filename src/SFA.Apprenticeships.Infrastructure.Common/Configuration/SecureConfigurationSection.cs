@@ -37,6 +37,7 @@ namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
             {
                 if (_instance == null)
                 {
+                    var initialiser = new T(); //note: do not remove... required to initialise string fields
                     var configMap = new ExeConfigurationFileMap {ExeConfigFilename = _configFile};
                     var config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
                     _instance = (T) config.GetSection(_configSectionName);
