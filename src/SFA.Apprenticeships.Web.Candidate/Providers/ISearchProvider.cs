@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System.Collections.Generic;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using ViewModels.VacancySearch;
 
     public interface ISearchProvider
     {

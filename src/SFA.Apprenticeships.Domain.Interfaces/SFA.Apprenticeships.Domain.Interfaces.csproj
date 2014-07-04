@@ -44,7 +44,6 @@
     <Compile Include="Caching\CacheDuration.cs" />
     <Compile Include="Caching\BaseCacheKey.cs" />
     <Compile Include="Caching\ICacheService.cs" />
-    <Compile Include="Logging\ILoggingService.cs" />
     <Compile Include="Mapping\IMapper.cs" />
     <Compile Include="Repositories\IApplicationWriteRepository.cs" />
     <Compile Include="Repositories\IApplicationReadRepository.cs" />

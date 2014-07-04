@@ -1,11 +1,10 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies;
-
-namespace SFA.Apprenticeships.Application.VacancyEtl.UnitTests.Consumers
+﻿namespace SFA.Apprenticeships.Application.VacancyEtl.UnitTests.Consumers
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using Domain.Entities.Vacancies;
     using Moq;
     using NUnit.Framework;
     using Domain.Interfaces.Mapping;
