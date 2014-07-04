@@ -1,9 +1,8 @@
-﻿using System;
-using System.Globalization;
-using SFA.Apprenticeships.Domain.Entities.Vacancies;
-
-namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
 {
+    using System;
+    using Domain.Entities.Vacancies;
+
     public class VacancySummaryResponse : VacancySummary
     {
         public double Distance { get; set; }
