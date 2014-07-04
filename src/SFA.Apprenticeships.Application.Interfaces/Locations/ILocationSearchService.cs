@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Domain.Entities.Locations;
 
     public interface ILocationSearchService
     {
@@ -10,6 +11,6 @@
         /// </summary>
         /// <param name="placeNameOrPostcode">place name (town, city, village, county, etc.) or postcode</param>
         /// <returns>0..* matching locations</returns>
-        IEnumerable<Domain.Entities.Locations.Location> FindLocation(string placeNameOrPostcode);
+        IEnumerable<Location> FindLocation(string placeNameOrPostcode);
     }
 }

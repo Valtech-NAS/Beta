@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
-    using System.Collections.Generic;
+    using System;
     using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Search;
@@ -26,12 +26,12 @@
             int searchRadius,
             VacancySortType sortType)
         {
-            int distanceSortItemIndex = 0;
-            ElasticClient client = _elasticsearchClientFactory.GetElasticClient();
-            string indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (VacancySummary));
-            string documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (VacancySummary));
+            var distanceSortItemIndex = 0;
+            var client = _elasticsearchClientFactory.GetElasticClient();
+            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (VacancySummary));
+            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (VacancySummary));
 
-            IQueryResponse<VacancySummaryResponse> search = client.Search<VacancySummaryResponse>(s =>
+            var search = client.Search<VacancySummaryResponse>(s =>
             {
                 s.Index(indexName);
                 s.Type(documentTypeName);
@@ -85,7 +85,7 @@
                 {
                     s.Query(q =>
                     {
-                        BaseQuery query = q.FuzzyLikeThis(flt => flt
+                        var query = q.FuzzyLikeThis(flt => flt
                             .OnFields(new[] {"title", "description", "employerName"})
                             .LikeText(keywords)
                             .PrefixLength(1)
@@ -97,7 +97,7 @@
                 return s;
             });
 
-            List<VacancySummaryResponse> responses = search.Documents.ToList();
+            var responses = search.Documents.ToList();
             if (sortType != VacancySortType.Relevancy)
             {
                 responses.ForEach(r => r.Distance =
