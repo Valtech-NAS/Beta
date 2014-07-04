@@ -1,9 +1,8 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies;
-
-namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
     using System;
     using AutoMapper;
+    using Domain.Entities.Vacancies;
 
     public class VacancyLocationTypeResolver : ValueResolver<string, VacancyLocationType>
     {
@@ -19,10 +18,14 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
                 case "National":
                     return VacancyLocationType.National;
                 case "Standard":
-                case "MultipleLocation": //TODO: MultiLocation are posted once for each location so are equivelent to NonNational but needs backed by requirements in new system.
+                case "MultipleLocation":
+                    //TODO: MultiLocation are posted once for each location so are equivelent to NonNational but needs backed by requirements in new system.
                     return VacancyLocationType.NonNational;
                 default:
-                    throw new ArgumentException(string.Format("The vacancy location is not valid: {0}, it must be either National or Standard to map correctly", source));
+                    throw new ArgumentException(
+                        string.Format(
+                            "The vacancy location is not valid: {0}, it must be either National or Standard to map correctly",
+                            source));
             }
         }
     }

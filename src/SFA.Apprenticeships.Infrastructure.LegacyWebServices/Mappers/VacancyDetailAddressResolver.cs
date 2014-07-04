@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Locations;
-
-namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
     using AutoMapper;
     using VacancyDetailProxy;
@@ -31,7 +29,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 
             return address;
         }
-        private string AddAddressLine(string addressLine, string addressLineToAdd)
+        private static string AddAddressLine(string addressLine, string addressLineToAdd)
         {
             if (!string.IsNullOrWhiteSpace(addressLineToAdd))
             {

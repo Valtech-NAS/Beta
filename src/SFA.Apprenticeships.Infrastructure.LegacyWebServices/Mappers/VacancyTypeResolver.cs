@@ -1,9 +1,8 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies;
-
-namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
     using System;
     using AutoMapper;
+    using Domain.Entities.Vacancies;
 
     public class VacancyTypeResolver : ValueResolver<string, VacancyType>
     {
