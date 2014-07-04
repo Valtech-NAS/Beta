@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://schemas.imservices.org.uk/nas/gatewayservice/1" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="GatewayService" targetNamespace="http://schemas.imservices.org.uk/nas/gatewayservice/1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.imservices.org.uk/nas/gatewayservice/1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.imservice.org.uk/nas/gatewayservice/1/datatypes" />
+      <xs:import namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" />
+      <xs:element name="CreateApplicationRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q1="http://schemas.imservice.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="Application" nillable="true" type="q1:Application" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateApplicationResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ApplicationId" type="xs:int" />
+            <xs:element xmlns:q2="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="ValidationErrors" nillable="true" type="q2:ValidationErrors" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateCandidateRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q3="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="Candidate" nillable="true" type="q3:Candidate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateCandidateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="CandidateId" type="xs:int" />
+            <xs:element xmlns:q4="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="ValidationErrors" nillable="true" type="q4:ValidationErrors" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="anyType" nillable="true" type="xs:anyType" />
+      <xs:element name="anyURI" nillable="true" type="xs:anyURI" />
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary" />
+      <xs:element name="boolean" nillable="true" type="xs:boolean" />
+      <xs:element name="byte" nillable="true" type="xs:byte" />
+      <xs:element name="dateTime" nillable="true" type="xs:dateTime" />
+      <xs:element name="decimal" nillable="true" type="xs:decimal" />
+      <xs:element name="double" nillable="true" type="xs:double" />
+      <xs:element name="float" nillable="true" type="xs:float" />
+      <xs:element name="int" nillable="true" type="xs:int" />
+      <xs:element name="long" nillable="true" type="xs:long" />
+      <xs:element name="QName" nillable="true" type="xs:QName" />
+      <xs:element name="short" nillable="true" type="xs:short" />
+      <xs:element name="string" nillable="true" type="xs:string" />
+      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" />
+      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" />
+      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" />
+      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" />
+      <xs:element name="char" nillable="true" type="tns:char" />
+      <xs:simpleType name="char">
+        <xs:restriction base="xs:int" />
+      </xs:simpleType>
+      <xs:element name="duration" nillable="true" type="tns:duration" />
+      <xs:simpleType name="duration">
+        <xs:restriction base="xs:duration">
+          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" />
+          <xs:minInclusive value="-P10675199DT2H48M5.4775808S" />
+          <xs:maxInclusive value="P10675199DT2H48M5.4775807S" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="guid" nillable="true" type="tns:guid" />
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:attribute name="FactoryType" type="xs:QName" />
+      <xs:attribute name="Id" type="xs:ID" />
+      <xs:attribute name="Ref" type="xs:IDREF" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.imservice.org.uk/nas/gatewayservice/1/datatypes" elementFormDefault="qualified" targetNamespace="http://schemas.imservice.org.uk/nas/gatewayservice/1/datatypes" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="Application">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CandidateId" type="xs:int" />
+          <xs:element minOccurs="0" name="VacancyId" type="xs:int" />
+          <xs:element minOccurs="0" name="AdditionalQuestionAnswer" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyRef" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Application" nillable="true" type="tns:Application" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" elementFormDefault="qualified" targetNamespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="ValidationErrors">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ValidationError" nillable="true" type="tns:ValidationError" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ValidationErrors" nillable="true" type="tns:ValidationErrors" />
+      <xs:complexType name="ValidationError">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ErrorCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="KeyData" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ValidationError" nillable="true" type="tns:ValidationError" />
+      <xs:complexType name="Candidate">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MiddleName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DateOfBirth" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="AddressLine1" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine2" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine3" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine4" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TownCity" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="County" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Postcode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LandlineTelephone" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MobileTelephone" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Candidate" nillable="true" type="tns:Candidate" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="CreateApplicationRequest">
+    <wsdl:part name="parameters" element="tns:CreateApplicationRequest" />
+  </wsdl:message>
+  <wsdl:message name="CreateApplicationResponse">
+    <wsdl:part name="parameters" element="tns:CreateApplicationResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateCandidateRequest">
+    <wsdl:part name="parameters" element="tns:CreateCandidateRequest" />
+  </wsdl:message>
+  <wsdl:message name="CreateCandidateResponse">
+    <wsdl:part name="parameters" element="tns:CreateCandidateResponse" />
+  </wsdl:message>
+  <wsdl:portType name="GatewayServiceContract">
+    <wsdl:operation name="CreateApplication">
+      <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/CreateApplication" name="CreateApplicationRequest" message="tns:CreateApplicationRequest" />
+      <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/CreateApplicationResponse" name="CreateApplicationResponse" message="tns:CreateApplicationResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateCandidate">
+      <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/CreateCandidate" name="CreateCandidateRequest" message="tns:CreateCandidateRequest" />
+      <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/CreateCandidateResponse" name="CreateCandidateResponse" message="tns:CreateCandidateResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DefaultEndpoint" type="tns:GatewayServiceContract">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateApplication">
+      <soap:operation soapAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/CreateApplication" style="document" />
+      <wsdl:input name="CreateApplicationRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="CreateApplicationResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateCandidate">
+      <soap:operation soapAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/CreateCandidate" style="document" />
+      <wsdl:input name="CreateCandidateRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="CreateCandidateResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GatewayService">
+    <wsdl:port name="DefaultEndpoint" binding="tns:DefaultEndpoint">
+      <soap:address location="http://sfacapvm1.cloudapp.net/NASGatewayService/GatewayService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
