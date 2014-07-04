@@ -1,15 +1,14 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies;
-
-namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummary
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummary
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.VacancyEtl;
-    using Domain.Interfaces.Mapping;
     using Common.Wcf;
     using Configuration;
     using VacancySummaryProxy;
+    using Domain.Entities.Vacancies;
+    using Domain.Interfaces.Mapping;
 
     public class LegacyVacancyIndexDataProvider : IVacancyIndexDataProvider
     {
@@ -49,7 +48,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummary
             return rs.ResponseData.TotalPages;
         }
 
-        public IEnumerable<Domain.Entities.Vacancies.VacancySummary> GetVacancySummaries(VacancyLocationType vacancyLocationType, int page = 1)
+        public IEnumerable<VacancySummary> GetVacancySummaries(VacancyLocationType vacancyLocationType, int page = 1)
         {
             var vacancySummaryRequest = new VacancySummaryRequest
             {
@@ -71,10 +70,10 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummary
                 rs.ResponseData.SearchResults == null ||
                 rs.ResponseData.SearchResults.Length == 0)
             {
-                return Enumerable.Empty<Domain.Entities.Vacancies.VacancySummary>().ToList();
+                return Enumerable.Empty<VacancySummary>();
             }
 
-           return _mapper.Map<VacancySummaryData[], IEnumerable<Domain.Entities.Vacancies.VacancySummary>>(rs.ResponseData.SearchResults);
+           return _mapper.Map<VacancySummaryData[], IEnumerable<VacancySummary>>(rs.ResponseData.SearchResults);
         }
     }
 }
