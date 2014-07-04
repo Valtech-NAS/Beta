@@ -1,12 +1,13 @@
-﻿using System;
-using SFA.Apprenticeships.Application.Interfaces.Search;
-
-namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
 {
+    using System;
+    using Search;
+    using Domain.Entities.Locations;
+
     public interface IVacancySearchProvider
     {
         SearchResults<VacancySummaryResponse> FindVacancies(string keywords, 
-                                                            Domain.Entities.Locations.Location location, 
+                                                            Location location, 
                                                             int pageNumber, 
                                                             int pageSize, 
                                                             int searchRadius,
