@@ -38,6 +38,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Users\IRegistrationService.cs" />
     <Compile Include="Candidates\ICandidateService.cs" />
     <Compile Include="Locations\ILocationSearchService.cs" />
     <Compile Include="Messaging\IMessageBus.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="ReferenceData\IReferenceDataProvider.cs" />
     <Compile Include="ReferenceData\IReferenceDataService.cs" />
     <Compile Include="Search\SearchResults.cs" />
+    <Compile Include="Users\IAuthenticationService.cs" />
     <Compile Include="Vacancies\VacancySortType.cs" />
     <Compile Include="Vacancies\IVacancyDataProvider.cs" />
     <Compile Include="Vacancies\IVacancySearchProvider.cs" />

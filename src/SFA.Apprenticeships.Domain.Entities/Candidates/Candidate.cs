@@ -15,6 +15,8 @@
             WorkExperience = new List<WorkExperience>();
         }
 
+        public int LegacyCandidateId { get; set; } //todo: temporary "weak link" to legacy
+
         //todo: add Candidate.Title?
         public string FirstName { get; set; }
         public string MiddleNames { get; set; }

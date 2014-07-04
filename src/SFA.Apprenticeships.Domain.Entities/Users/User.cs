@@ -4,7 +4,9 @@
 
     public class User : BaseEntity
     {
-        //todo: User entity, status, etc.
+        public string Username { get; set; }
+
+        public UserRoles Status { get; set; }
 
         public UserRoles Roles { get; set; }
     }

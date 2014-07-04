@@ -45,10 +45,9 @@
     <Compile Include="Caching\BaseCacheKey.cs" />
     <Compile Include="Caching\ICacheService.cs" />
     <Compile Include="Mapping\IMapper.cs" />
-    <Compile Include="Repositories\IApplicationWriteRepository.cs" />
-    <Compile Include="Repositories\IApplicationReadRepository.cs" />
-    <Compile Include="Repositories\ICandidateWriteRepository.cs" />
-    <Compile Include="Repositories\ICandidateReadRepository.cs" />
+    <Compile Include="Repositories\IApplicationRepository.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\ICandidateRepository.cs" />
     <Compile Include="Repositories\IWriteRepository.cs" />
     <Compile Include="Repositories\IReadRepository.cs" />
   </ItemGroup>

@@ -5,11 +5,17 @@
     using Domain.Entities.Candidates;
 
     /// <summary>
-    /// For candidate users to manage their profile and other dashboard entities
+    /// For candidate users to register, manage their profile and other dashboard entities
     /// </summary>
     public interface ICandidateService
     {
-        Candidate GetCandidate(int candidateId);
+        bool IsUsernameAvailable(string username);
+
+        Candidate RegisterCandidate(Candidate newCandidate, string password);
+
+        Candidate Authenticate(string username, string password);
+
+        Candidate GetCandidate(Guid id);
 
         Candidate SaveCandidate(Candidate candidate);
 
