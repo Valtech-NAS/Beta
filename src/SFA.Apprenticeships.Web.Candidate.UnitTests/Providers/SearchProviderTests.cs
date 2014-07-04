@@ -18,7 +18,7 @@
     public class SearchProviderTests
     {
         private Mock<ILocationSearchService> _locationSearchService;
-        private Mock<IVacancySearchProvider> _vacancySearchProvider;
+        private Mock<IVacancySearchService> _vacancySearchService;
 
         private CandidateWebMappers _mapper;
 
@@ -26,7 +26,7 @@
         public void Setup()
         {
             _locationSearchService = new Mock<ILocationSearchService>();
-            _vacancySearchProvider = new Mock<IVacancySearchProvider>();
+            _vacancySearchService = new Mock<IVacancySearchService>();
             _mapper = new CandidateWebMappers();
         }
 
@@ -40,7 +40,7 @@
 
             _locationSearchService.Setup(x => x.FindLocation("Location1")).Returns(locations);
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchProvider.Object,
+            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object,
                 _mapper);
             var test = searchProvider.FindLocation("Location1");
             var result = test.First();
@@ -56,7 +56,7 @@
             _locationSearchService.Setup(x => x.FindLocation(It.IsAny<string>()))
                 .Returns(default(IEnumerable<Location>));
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchProvider.Object,
+            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object,
                 _mapper);
             var test = searchProvider.FindLocation(string.Empty);
 
@@ -69,8 +69,8 @@
             const int pageSize = 10;
             var results = new SearchResults<VacancySummaryResponse>(100, 1, new List<VacancySummaryResponse>());
 
-            _vacancySearchProvider.Setup(
-                x => x.FindVacancies(
+            _vacancySearchService.Setup(
+                x => x.Search(
                     It.IsAny<string>(),
                     It.IsAny<Location>(),
                     1,
@@ -87,7 +87,7 @@
                 WithinDistance = 2
             };
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchProvider.Object,
+            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object,
                 _mapper);
             var test = searchProvider.FindVacancies(search, 10);
 
