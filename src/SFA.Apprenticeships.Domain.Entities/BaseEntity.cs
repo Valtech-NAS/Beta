@@ -7,6 +7,7 @@
     /// </summary>
     public abstract class BaseEntity
     {
-        public int Id { get; set; }
+        //todo: temporarily a Guid... change to ObjectId? http://stackoverflow.com/questions/21726985/net-layered-architecture-mongodb-what-to-use-as-id
+        public Guid Id { get; set; } 
     }
 }

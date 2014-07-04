@@ -6,7 +6,7 @@
     public class MongoApplicationDetail
     {
         [BsonId]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         //todo: MongoApplicationDetail props
     }

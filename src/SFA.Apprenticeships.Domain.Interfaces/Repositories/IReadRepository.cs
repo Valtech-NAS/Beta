@@ -5,6 +5,6 @@
 
     public interface IReadRepository<T> where T : BaseEntity
     {
-        T Get(int id);
+        T Get(Guid id);
     }
 }

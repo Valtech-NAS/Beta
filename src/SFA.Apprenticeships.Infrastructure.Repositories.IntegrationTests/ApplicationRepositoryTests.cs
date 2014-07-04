@@ -37,7 +37,7 @@
         {
             return new ApplicationDetail
             {
-                Id = 111
+                Id = Guid.NewGuid()
             };
         }
 

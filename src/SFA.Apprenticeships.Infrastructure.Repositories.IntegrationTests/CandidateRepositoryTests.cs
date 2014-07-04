@@ -50,7 +50,7 @@
         {
             return new Candidate
             {
-                Id = 111,
+                Id = Guid.NewGuid(),
                 FirstName = "Peter",
                 MiddleNames = string.Empty,
                 LastName = "Griffin",

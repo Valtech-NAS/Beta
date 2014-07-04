@@ -19,7 +19,7 @@
             _mapper = mapper;
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             Collection.Remove(Query<MongoApplicationDetail>.EQ(o => o.Id, id));
         }

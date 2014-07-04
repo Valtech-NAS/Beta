@@ -5,7 +5,7 @@
 
     public interface IWriteRepository<T> where T : BaseEntity
     {
-        void Delete(int id);
+        void Delete(Guid id);
         T Save(T entity);
     }
 }
