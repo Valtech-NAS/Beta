@@ -36,11 +36,12 @@
 
         public Candidate RegisterCandidate(Candidate newCandidate, string password)
         {
-            var username = newCandidate.EmailAddress;
+            //todo: extract to command/strategy?
+            var username = newCandidate.PersonalDetails.EmailAddress;
             var newCandidateId = Guid.NewGuid();
             var activationCode = "TODO"; //todo: generate a unique activation code (ICodeProvider)
 
-            newCandidate.Id = newCandidateId;
+            newCandidate.EntityId = newCandidateId;
 
             _registrationService.Register(username, newCandidateId, activationCode);
 
@@ -60,9 +61,9 @@
             //todo: check status of user (may not be active)
             //todo: check role of user? (may not be a candidate ... User.Roles)
 
-            _authenticationService.AuthenticateUser(user.Id, password);
+            _authenticationService.AuthenticateUser(user.EntityId, password);
 
-            var candidate = _candidateReadRepository.Get(user.Id);
+            var candidate = _candidateReadRepository.Get(user.EntityId);
 
             return candidate;
         }

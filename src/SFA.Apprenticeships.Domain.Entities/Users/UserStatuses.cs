@@ -4,7 +4,8 @@
 
     public enum UserStatuses
     {
-        PendingActivation, 
-        Active
+        Unknown = 0,
+        PendingActivation = 10, 
+        Active = 20
     }
 }

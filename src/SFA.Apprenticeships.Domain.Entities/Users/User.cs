@@ -6,7 +6,7 @@
     {
         public string Username { get; set; }
 
-        public UserRoles Status { get; set; }
+        public UserStatuses Status { get; set; }
 
         public UserRoles Roles { get; set; }
     }

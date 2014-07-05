@@ -37,7 +37,35 @@
         {
             return new ApplicationDetail
             {
-                Id = Guid.NewGuid()
+                EntityId = Guid.NewGuid(),
+                CandidateId = Guid.NewGuid(),
+                LegacyApplicationId = 12345,
+                CandidateDetails =
+                {
+                    FirstName = "Johnny",
+                    LastName = "Candidate",
+                    DateOfBirth = DateTime.Now.AddYears(-30),
+                    EmailAddress = "email@server.com",
+                    PhoneNumber = "07777111222",
+                    Address =
+                    {
+                        AddressLine1 = "Address line 1",
+                        AddressLine2 = "Address line 2",
+                        AddressLine3 = "Address line 3",
+                        AddressLine4 = "Address line 4",
+                        Postcode = "CV1 2WT"
+                    }
+                },
+                CandidateInformation =
+                {
+                    AboutYou =
+                    {
+                        HobbiesAndInterests = "Hobbies and interests",
+                        Improvements = "Improvements are not needed",
+                        Strengths = "My strengths are many",
+                        Support = "Third line"
+                    }
+                }
             };
         }
 

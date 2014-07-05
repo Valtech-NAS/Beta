@@ -4,6 +4,10 @@ namespace SFA.Apprenticeships.Domain.Entities.Candidates
 
     public class Qualification
     {
-        //todo: Qualification
+        public string QualificationType { get; set; }
+        public string Subject { get; set; }
+        public string Grade { get; set; }
+        public bool IsPredicted { get; set; }
+        public int Year { get; set; }
     }
 }
