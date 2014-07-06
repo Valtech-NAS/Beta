@@ -11,7 +11,10 @@
         {
             CandidateDetails = new PersonalDetails();
             CandidateInformation = new ApplicationInformation();
+            Status = ApplicationStatuses.Unknown;
         }
+
+        public ApplicationStatuses Status { get; set; }
 
         public Guid CandidateId { get; set; }
 

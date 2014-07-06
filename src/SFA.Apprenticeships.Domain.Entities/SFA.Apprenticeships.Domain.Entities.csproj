@@ -40,6 +40,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Applications\ApplicationDetail.cs" />
+    <Compile Include="Applications\ApplicationStatuses.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Candidates\AboutYou.cs" />
     <Compile Include="Candidates\ApplicationInformation.cs" />
@@ -63,7 +64,6 @@
     <Compile Include="Vacancies\VacancyType.cs" />
     <Compile Include="Vacancies\WageType.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
