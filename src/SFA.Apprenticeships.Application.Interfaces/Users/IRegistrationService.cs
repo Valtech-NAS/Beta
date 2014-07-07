@@ -8,15 +8,15 @@
     /// </summary>
     public interface IRegistrationService
     {
-        bool IsUsernameAvailable(string username);
+        bool IsUsernameAvailable(string username); // true if matches an existing *activated* account
 
         void Register(string username, Guid userId, string activationCode);
 
-        void SendActivationCode(string username);
+        void SendActivationCode(string username); // resend an activation code
 
         void ActivateUser(string username, string activationCode);
 
-        void SendPasswordCode(string username);
+        void SendPasswordCode(string username); // resend a password reset code
 
         void ChangeForgottenPassword(string username, string passwordCode, string newPassword);
     }
