@@ -13,6 +13,8 @@
 
         Candidate RegisterCandidate(Candidate newCandidate, string password);
 
+        void ActivateCandidate(string username, string activationCode);
+
         Candidate Authenticate(string username, string password);
 
         Candidate GetCandidate(Guid id);

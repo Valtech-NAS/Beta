@@ -7,6 +7,7 @@
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
     using Interfaces.Users;
+    using Strategies;
 
     public class CandidateService : ICandidateService
     {
@@ -16,9 +17,11 @@
         private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly IRegistrationService _registrationService;
         private readonly IUserReadRepository _userReadRepository;
-        //todo: private readonly IApplicationSubmissionQueue _applicationSubmissionQueue;
+        private readonly IActivateCandidateStrategy _activateCandidateStrategy;
+        private readonly ISubmitApplicationStrategy _submitApplicationStrategy;
+        private readonly IRegisterCandidateStrategy _registerCandidateStrategy;
 
-        public CandidateService(IApplicationWriteRepository applicationWriteRepository, ICandidateReadRepository candidateReadRepository, ICandidateWriteRepository candidateWriteRepository, IAuthenticationService authenticationService, IRegistrationService registrationService, IUserReadRepository userReadRepository)
+        public CandidateService(IApplicationWriteRepository applicationWriteRepository, ICandidateReadRepository candidateReadRepository, ICandidateWriteRepository candidateWriteRepository, IAuthenticationService authenticationService, IRegistrationService registrationService, IUserReadRepository userReadRepository, IActivateCandidateStrategy activateCandidateStrategy, ISubmitApplicationStrategy submitApplicationStrategy, IRegisterCandidateStrategy registerCandidateStrategy)
         {
             _applicationWriteRepository = applicationWriteRepository;
             _authenticationService = authenticationService;
@@ -26,36 +29,39 @@
             _candidateWriteRepository = candidateWriteRepository;
             _registrationService = registrationService;
             _userReadRepository = userReadRepository;
-            //todo: _applicationSubmissionQueue = applicationSubmissionQueue
+            _activateCandidateStrategy = activateCandidateStrategy;
+            _submitApplicationStrategy = submitApplicationStrategy;
+            _registerCandidateStrategy = registerCandidateStrategy;
         }
 
         public bool IsUsernameAvailable(string username)
         {
+            Condition.Requires(username).IsNotNullOrEmpty();
+
             return _registrationService.IsUsernameAvailable(username);
         }
 
         public Candidate RegisterCandidate(Candidate newCandidate, string password)
         {
-            //todo: extract to command/strategy?
-            var username = newCandidate.PersonalDetails.EmailAddress;
-            var newCandidateId = Guid.NewGuid();
-            var activationCode = "TODO"; //todo: generate a unique activation code (ICodeProvider)
+            Condition.Requires(newCandidate);
+            Condition.Requires(password).IsNotNullOrEmpty();
 
-            newCandidate.EntityId = newCandidateId;
+            return _registerCandidateStrategy.RegisterCandidate(newCandidate, password);
+        }
 
-            _registrationService.Register(username, newCandidateId, activationCode);
+        public void ActivateCandidate(string username, string activationCode)
+        {
+            Condition.Requires(username).IsNotNullOrEmpty();
+            Condition.Requires(activationCode).IsNotNullOrEmpty();
 
-            _authenticationService.CreateUser(newCandidateId, password);
-
-            var candidate = _candidateWriteRepository.Save(newCandidate);
-
-            var legacyCandidateId = 123; //todo: send candidate to legacy
-
-            return candidate;
+            _activateCandidateStrategy.ActivateCandidate(username, activationCode);
         }
 
         public Candidate Authenticate(string username, string password)
         {
+            Condition.Requires(username).IsNotNullOrEmpty();
+            Condition.Requires(password).IsNotNullOrEmpty();
+
             var user = _userReadRepository.Get(username);
 
             //todo: check status of user (may not be active)
@@ -91,8 +97,7 @@
         {
             Condition.Requires(application);
 
-            //todo: _applicationSubmissionQueue.Queue(application);
-            throw new NotImplementedException();
+            _submitApplicationStrategy.SubmitApplication(application);
         }
     }
 }
