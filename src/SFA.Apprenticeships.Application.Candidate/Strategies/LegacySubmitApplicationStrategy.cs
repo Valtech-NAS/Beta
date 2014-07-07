@@ -11,6 +11,7 @@
         {
             //todo: create/update application status
             //todo: queue application for submission to legacy
+            //todo: send email confirmation to candidate
 
             throw new NotImplementedException();
         }
