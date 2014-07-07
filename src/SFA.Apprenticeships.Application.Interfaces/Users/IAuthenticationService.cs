@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// For users to authentication against the directory
+    /// To authenticate users against the directory and manage user directory accounts
     /// </summary>
     public interface IAuthenticationService
     {

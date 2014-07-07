@@ -9,8 +9,6 @@
     /// </summary>
     public interface ICandidateService
     {
-        bool IsUsernameAvailable(string username);
-
         Candidate RegisterCandidate(Candidate newCandidate, string password);
 
         void ActivateCandidate(string username, string activationCode);

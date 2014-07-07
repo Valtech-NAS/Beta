@@ -15,30 +15,21 @@
         private readonly IAuthenticationService _authenticationService;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
-        private readonly IRegistrationService _registrationService;
         private readonly IUserReadRepository _userReadRepository;
         private readonly IActivateCandidateStrategy _activateCandidateStrategy;
         private readonly ISubmitApplicationStrategy _submitApplicationStrategy;
         private readonly IRegisterCandidateStrategy _registerCandidateStrategy;
 
-        public CandidateService(IApplicationWriteRepository applicationWriteRepository, ICandidateReadRepository candidateReadRepository, ICandidateWriteRepository candidateWriteRepository, IAuthenticationService authenticationService, IRegistrationService registrationService, IUserReadRepository userReadRepository, IActivateCandidateStrategy activateCandidateStrategy, ISubmitApplicationStrategy submitApplicationStrategy, IRegisterCandidateStrategy registerCandidateStrategy)
+        public CandidateService(IApplicationWriteRepository applicationWriteRepository, ICandidateReadRepository candidateReadRepository, ICandidateWriteRepository candidateWriteRepository, IAuthenticationService authenticationService, IUserReadRepository userReadRepository, IActivateCandidateStrategy activateCandidateStrategy, ISubmitApplicationStrategy submitApplicationStrategy, IRegisterCandidateStrategy registerCandidateStrategy)
         {
             _applicationWriteRepository = applicationWriteRepository;
             _authenticationService = authenticationService;
             _candidateReadRepository = candidateReadRepository;
             _candidateWriteRepository = candidateWriteRepository;
-            _registrationService = registrationService;
             _userReadRepository = userReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
             _submitApplicationStrategy = submitApplicationStrategy;
             _registerCandidateStrategy = registerCandidateStrategy;
-        }
-
-        public bool IsUsernameAvailable(string username)
-        {
-            Condition.Requires(username).IsNotNullOrEmpty();
-
-            return _registrationService.IsUsernameAvailable(username);
         }
 
         public Candidate RegisterCandidate(Candidate newCandidate, string password)

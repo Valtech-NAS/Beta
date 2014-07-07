@@ -14,7 +14,7 @@
 
         void SendActivationCode(string username); // resend an activation code
 
-        void ActivateUser(string username, string activationCode);
+        void Activate(string username, string activationCode);
 
         void SendPasswordCode(string username); // resend a password reset code
 
