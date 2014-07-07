@@ -31,7 +31,9 @@
     {                      
         <section class="grid grid-1-3">
             <fieldset class="search-filter">
-                @Html.ValidationSummary(false)
+                
+                @Html.Partial("ValidationSummary", ViewData.ModelState)
+
                 <legend class="heading-medium mob-collpanel-trigger">Filter results</legend>
                 <div class="mob-collpanel toggle-content--mob">
 
