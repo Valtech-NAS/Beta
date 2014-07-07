@@ -9,5 +9,9 @@
         public UserStatuses Status { get; set; }
 
         public UserRoles Roles { get; set; }
+
+        public string ActivationCode { get; set; }
+
+        public string PasswordResetCode { get; set; }
     }
 }

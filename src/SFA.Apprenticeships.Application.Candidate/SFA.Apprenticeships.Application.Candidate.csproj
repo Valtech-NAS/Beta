@@ -45,6 +45,7 @@
     </Compile>
     <Compile Include="CandidateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategies\ILegacyCandidateProvider.cs" />
     <Compile Include="Strategies\IRegisterCandidateStrategy.cs" />
     <Compile Include="Strategies\IActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\ISubmitApplicationStrategy.cs" />
