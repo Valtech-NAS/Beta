@@ -9,21 +9,8 @@
     {
         public EmployerQuestionAnswersViewModelClientValidator()
         {
-            RuleFor(x => x.CandidateAnswer1)
-                .NotEmpty()
-                .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer1.RequiredErrorText)
-                .Length(0, 4000)
-                .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer1.TooLongErrorText)
-                .Matches(EmployerQuestionAnswersMessages.CandidateAnswer1.WhitelistRegularExpression)
-                .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer1.WhitelistErrorText);
-
-            RuleFor(x => x.CandidateAnswer2)
-                .NotEmpty()
-                .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer2.RequiredErrorText)
-                .Length(0, 4000)
-                .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer2.TooLongErrorText)
-                .Matches(EmployerQuestionAnswersMessages.CandidateAnswer2.WhitelistRegularExpression)
-                .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer2.WhitelistErrorText);
+            this.AddCommonRules();
+            this.AddClientRules();
         }
     }
 
@@ -31,21 +18,48 @@
     {
         public EmployerQuestionAnswersViewModelServerValidator()
         {
-            RuleFor(x => x.CandidateAnswer1)
-                .NotEmpty().When(x => !string.IsNullOrWhiteSpace(x.SupplementaryQuestion1))
-                .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer1.RequiredErrorText)
+            this.AddCommonRules();
+            this.AddServerRules();
+        }
+    }
+
+    internal static class EmployerQuestionValidaitonRules
+    {
+        internal static void AddCommonRules(this AbstractValidator<EmployerQuestionAnswersViewModel> validator)
+        {
+            validator.RuleFor(x => x.CandidateAnswer1)
                 .Length(0, 4000)
                 .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer1.TooLongErrorText)
                 .Matches(EmployerQuestionAnswersMessages.CandidateAnswer1.WhitelistRegularExpression)
                 .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer1.WhitelistErrorText);
 
-            RuleFor(x => x.CandidateAnswer2)
-                .NotEmpty().When(x => !string.IsNullOrWhiteSpace(x.SupplementaryQuestion2))
-                .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer2.RequiredErrorText)
+            validator.RuleFor(x => x.CandidateAnswer2)
                 .Length(0, 4000)
                 .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer2.TooLongErrorText)
                 .Matches(EmployerQuestionAnswersMessages.CandidateAnswer2.WhitelistRegularExpression)
                 .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer2.WhitelistErrorText);
+        }
+
+        internal static void AddClientRules(this AbstractValidator<EmployerQuestionAnswersViewModel> validator)
+        {
+            validator.RuleFor(x => x.CandidateAnswer1)
+                .NotEmpty()
+                .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer1.RequiredErrorText);
+
+            validator.RuleFor(x => x.CandidateAnswer2)
+                .NotEmpty()
+                .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer2.RequiredErrorText);
+        }
+
+        internal static void AddServerRules(this AbstractValidator<EmployerQuestionAnswersViewModel> validator)
+        {
+            validator.RuleFor(x => x.CandidateAnswer1)
+                .NotEmpty().When(x => !string.IsNullOrWhiteSpace(x.SupplementaryQuestion1))
+                .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer1.RequiredErrorText);
+
+            validator.RuleFor(x => x.CandidateAnswer2)
+                .NotEmpty().When(x => !string.IsNullOrWhiteSpace(x.SupplementaryQuestion2))
+                .WithMessage(EmployerQuestionAnswersMessages.CandidateAnswer2.RequiredErrorText);
         }
     }
 }

@@ -7,10 +7,6 @@
     [Serializable]
     public class CandidateViewModel
     {
-        public CandidateViewModel()
-        {
-        }
-
         public int Id { get; set; }
 
         public string FullName { get; set; }

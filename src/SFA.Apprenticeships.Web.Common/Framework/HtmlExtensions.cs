@@ -165,7 +165,7 @@
             }
 
             var tag = new TagBuilder("a");
-            tag.Attributes.Add("href", "#" + elementId.ToLower());
+            tag.Attributes.Add("name", elementId.ToLower());
             return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
         }
 
