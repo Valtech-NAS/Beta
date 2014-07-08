@@ -4,7 +4,7 @@
     {
         public static class NameWhitelist
         {
-            public const string RegularExpression = @"^[a-zA-Z',+\-]+$";
+            public const string RegularExpression = @"^[a-zA-Z()',+\-\s]+$";
             public const string ErrorText = "must only contain lower and upper case letters";
         }
 
@@ -17,7 +17,7 @@
         public static class YearWhitelist
         {
             public const string RegularExpression = @"^[0-9]{4}$";
-            public const string ErrorText = @"must contain digits only";
+            public const string ErrorText = @"must contain a 4 digit year";
         }
     }
 }

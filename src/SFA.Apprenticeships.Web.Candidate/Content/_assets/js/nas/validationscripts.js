@@ -1,34 +1,5 @@
 ﻿$(document).ready(function() {
 
-    //$.validator.prototype.resetSummary = function () {
-    //    var form = $(this.currentForm);
-    //    form.find("[data-valmsg-summary=true]")
-    //        .removeClass("validation-summary-errors")
-    //        .addClass("validation-summary-valid")
-    //        .find("ul")
-    //        .empty();
-    //    return this;
-    //};
-
-    //$.validator.setDefaults({
-    //    showErrors: function (errorMap, errorList) {
-    //        this.defaultShowErrors();
-    //        this.checkForm();
-    //        if (this.errorList.length) {
-    //            $(this.currentForm).triggerHandler("invalid-form", [this]);
-    //        } else {
-    //            this.resetSummary();
-    //        }
-    //    }
-    //});
-
-    //$("form").each(function() {
-    //    var validator = $.data(this, 'validator');
-    //    validator.setDefaults({
-    //        debug: true
-    //    });
-    //});
-
     $("form").each(function () {
         var validator = $.data(this, 'validator');
         var settings = validator.settings;
@@ -43,13 +14,26 @@
             oldSuccessFunction(label, element);
 
         };
+        settings.showErrors = function (errorMap, errorList) {
+            //See http://stackoverflow.com/questions/7935568/jquery-validation-show-validation-summary-during-eager-validation
+            this.defaultShowErrors();
+            var errors = $(".field-validation-error span");
+
+            if (errors && errors.length == 0) {
+                $(".validation-summary-errors > div.panel-body > ul").empty();
+                $(".validation-summary-errors").removeClass("validation-summary-errors").addClass("validation-summary-valid");
+                return;
+            }
+
+            var errorSummary = "";
+            $.each(errors, function(index, error) {
+                var li = "<li><a href='#" + $(error).attr("for").toLowerCase()  + "'>" + $(error).html() + "</a></li>";
+                errorSummary += li;
+            });
+            
+            $(".validation-summary-valid").addClass("validation-summary-errors").removeClass("validation-summary-valid");
+            $(".validation-summary-errors > div.panel-body > ul").empty();
+            $(".validation-summary-errors > div.panel-body > ul").html(errorSummary);
+        };
     });
-
-    //$.validator.addMethod("fraction", function (value, element, param) {
-    //    return value != "";
-    //}, "Error message here");
-
-    //$.validator.addClassRules("fraction", {
-    //    fraction: true
-    //});
 });

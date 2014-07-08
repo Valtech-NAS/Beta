@@ -10,8 +10,7 @@
         private readonly ILocationLookupProvider _locationLookupProvider;
         private readonly IPostcodeLookupProvider _postcodeLookupProvider;
 
-        public LocationSearchService(ILocationLookupProvider locationLookupProvider,
-            IPostcodeLookupProvider postcodeLookupProvider)
+        public LocationSearchService(ILocationLookupProvider locationLookupProvider, IPostcodeLookupProvider postcodeLookupProvider)
         {
             _locationLookupProvider = locationLookupProvider;
             _postcodeLookupProvider = postcodeLookupProvider;
@@ -21,7 +20,6 @@
         {
             Condition.Requires(placeNameOrPostcode, "placeNameOrPostcode").IsNotNullOrWhiteSpace();
 
-            // TODO::needs to be partial match ??
             if (LocationHelper.IsPostcode(placeNameOrPostcode))
             {
                 var location = _postcodeLookupProvider.GetLocation(placeNameOrPostcode);

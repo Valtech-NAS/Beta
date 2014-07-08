@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq
 {
+    using Domain.Interfaces.Messaging;
     using EasyNetQ;
-    using Application.Interfaces.Messaging;
 
     public class MessageBus : IMessageBus
     {

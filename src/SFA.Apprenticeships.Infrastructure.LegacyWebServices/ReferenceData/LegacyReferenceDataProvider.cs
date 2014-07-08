@@ -5,9 +5,9 @@
     using System.Linq;
     using CuttingEdge.Conditions;
     using Application.Interfaces.ReferenceData;
-    using Domain.Entities.ReferenceData;
     using Common.Wcf;
     using Configuration;
+    using Domain.Entities.ReferenceData;
     using ReferenceDataProxy;
 
     public class LegacyReferenceDataProvider : IReferenceDataProvider
@@ -35,7 +35,6 @@
         }
 
         #region Helpers
-
         IEnumerable<ReferenceDataItem> GetCounties()
         {
             var msgId = Guid.NewGuid();

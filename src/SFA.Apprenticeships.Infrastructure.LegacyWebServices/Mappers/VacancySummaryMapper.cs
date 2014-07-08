@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using AutoMapper;
+    using System;
     using Common.Mappers;
     using VacancySummaryProxy;
 

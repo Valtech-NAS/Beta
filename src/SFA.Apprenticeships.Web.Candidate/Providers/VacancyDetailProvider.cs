@@ -7,26 +7,26 @@
 
     public class VacancyDetailProvider : IVacancyDetailProvider
     {
-        private readonly IVacancyDataProvider _vacancyDataProvider;
+        private readonly IVacancyDataService _vacancyDataService;
         private readonly IMapper _vacancyDetailMapper;
 
-        public VacancyDetailProvider(IVacancyDataProvider vacancyDataProvider, IMapper vacancyDetailMapper)
+        public VacancyDetailProvider(IVacancyDataService vacancyDataService, IMapper vacancyDetailMapper)
         {
-            _vacancyDataProvider = vacancyDataProvider;
+            _vacancyDataService = vacancyDataService;
             _vacancyDetailMapper = vacancyDetailMapper;
         }
 
         public VacancyDetailViewModel GetVacancyDetailViewModel(int id)
         {
-            VacancyDetail vacancyDetail = _vacancyDataProvider.GetVacancyDetails(id);
+            var vacancyDetail = _vacancyDataService.GetVacancyDetails(id);
 
             if (vacancyDetail == null)
             {
                 return null;
             }
 
-            VacancyDetailViewModel vacancyDetailViewModel =
-                _vacancyDetailMapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var vacancyDetailViewModel = _vacancyDetailMapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+
             return vacancyDetailViewModel;
         }
     }

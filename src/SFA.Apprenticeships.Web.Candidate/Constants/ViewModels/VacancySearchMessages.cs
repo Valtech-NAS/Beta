@@ -17,7 +17,7 @@
             public const string RequiredErrorText = "Please provide a location.";
             public const string LengthErrorText = "Location name or postcode must be 3 or more characters.";
             public const string NoResultsErrorText = "Sorry, we didn't find a match for the location entered";
-            public const string WhiteList = Whitelists.NameWhitelist.RegularExpression;
+            public const string WhiteList = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'Apprenticeship location' " + Whitelists.NameWhitelist.ErrorText;
         }
     }

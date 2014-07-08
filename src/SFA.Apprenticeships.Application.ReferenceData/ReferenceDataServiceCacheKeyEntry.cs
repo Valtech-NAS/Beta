@@ -6,7 +6,7 @@ namespace SFA.Apprenticeships.Application.ReferenceData
 
     public class ReferenceDataServiceCacheKeyEntry : BaseCacheKey
     {
-        private const string ReferenceDataServiceCacheKey = "SFA.Apprenticeships.LegacyReferenceData";
+        private const string ReferenceDataServiceCacheKey = "SFA.Apprenticeships.ReferenceData";
 
         protected override string KeyPrefix
         {

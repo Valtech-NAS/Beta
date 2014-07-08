@@ -1,6 +1,6 @@
 namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
-    using AutoMapper;
+    using System;
     using Common.Mappers;
     using VacancyDetailProxy;
 
@@ -25,7 +25,6 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
                 .ForMember(d => d.ProviderDescription, opt => opt.MapFrom(src => src.LearningProviderDesc))
                 .ForMember(d => d.Contact, opt => opt.MapFrom(src => src.ContactPerson))
                 .ForMember(d => d.ProviderSectorPassRate, opt => opt.MapFrom(src => src.LearningProviderSectorPassRate));
-;
         }
     }
 }

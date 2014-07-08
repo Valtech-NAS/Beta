@@ -4,6 +4,10 @@
 
     public class WorkExperience
     {
-        //todo: WorkExperience type
+        public string Employer { get; set; }
+        public string JobTitle { get; set; }
+        public string Description { get; set; }
+        public int FromYear { get; set; }
+        public int ToYear { get; set; }
     }
 }

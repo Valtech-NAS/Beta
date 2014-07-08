@@ -5,6 +5,7 @@
     using System.Web.Mvc;
     using Application.Interfaces.Vacancies;
     using Common.Controllers;
+    using FluentValidation.Mvc;
     using Infrastructure.Azure.Session;
     using Infrastructure.Common.Configuration;
     using Providers;
@@ -14,19 +15,22 @@
     public class VacancySearchController : SfaControllerBase
     {
         private readonly ISearchProvider _searchProvider;
-        private readonly IValidateModel<VacancySearchViewModel> _validator;
+        private readonly VacancySearchViewModelClientValidator _searchRequestValidator;
+        private readonly VacancySearchViewModelLocationValidator _searchLocationValidator;
         private readonly IVacancyDetailProvider _vacancyDetailProvider;
         private readonly int _vacancyResultsPerPage;
         private readonly int _locationResultLimit;
 
         public VacancySearchController(IConfigurationManager configManager,
             ISearchProvider searchProvider,
-            IValidateModel<VacancySearchViewModel> validator,
+            VacancySearchViewModelClientValidator searchRequestValidator,
+            VacancySearchViewModelLocationValidator searchLocationValidator,
             IVacancyDetailProvider vacancyDetailProvider,
             ISessionState session) : base(session)
         {
             _searchProvider = searchProvider;
-            _validator = validator;
+            _searchRequestValidator = searchRequestValidator;
+            _searchLocationValidator = searchLocationValidator;
             _vacancyDetailProvider = vacancyDetailProvider;
             _vacancyResultsPerPage = configManager.GetAppSetting<int>("VacancyResultsPerPage");
             _locationResultLimit = configManager.GetAppSetting<int>("LocationResultLimit");
@@ -58,6 +62,14 @@
         {
             PopulateDistances(searchViewModel.WithinDistance);
             PopulateSortType(searchViewModel.SortType);
+
+            var clientResult = _searchRequestValidator.Validate(searchViewModel);
+            if (!clientResult.IsValid)
+            {
+                ModelState.Clear();
+                clientResult.AddToModelState(ModelState, string.Empty);
+                return View("results", new VacancySearchResponseViewModel { VacancySearch = searchViewModel });
+            }
 
             searchViewModel.CheckLatLonLocHash();
             var location = new LocationViewModel(searchViewModel);
@@ -94,9 +106,12 @@
                 }
             }
 
-            if (!_validator.Validate(searchViewModel, ModelState))
+            var locationResult = _searchLocationValidator.Validate(searchViewModel);
+            if (!locationResult.IsValid)
             {
-                return View("results", new VacancySearchResponseViewModel {VacancySearch = searchViewModel});
+                ModelState.Clear();
+                locationResult.AddToModelState(ModelState, string.Empty);
+                return View("results", new VacancySearchResponseViewModel { VacancySearch = searchViewModel });
             }
 
             var results = _searchProvider.FindVacancies(searchViewModel, _vacancyResultsPerPage);

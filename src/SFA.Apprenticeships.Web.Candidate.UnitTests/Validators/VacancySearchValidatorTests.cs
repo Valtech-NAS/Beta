@@ -10,34 +10,35 @@
     [TestFixture]
     public class VacancySearchValidatorTests
     {
-        private VacancySearchValidator _validator;
+        private VacancySearchViewModelClientValidator _viewModelClientValidator;
+        private VacancySearchViewModelLocationValidator _viewModelLocationValidator;
 
         [SetUp]
         public void Setup()
         {
-            _validator = new VacancySearchValidator();
+            _viewModelClientValidator = new VacancySearchViewModelClientValidator();
+            _viewModelLocationValidator = new VacancySearchViewModelLocationValidator();
         }
 
         [Test]
         public void ShouldHaveErrorWhenLocationIsEmpty()
         {
             var viewModel = new VacancySearchViewModel { Location = "", Latitude = 0.1d, Longitude = 1.0d };
-            _validator.ShouldHaveValidationErrorFor(x => x.Location, viewModel);
+            _viewModelClientValidator.ShouldHaveValidationErrorFor(x => x.Location, viewModel);
         }
 
         [Test]
         public void ShouldHaveErrorWhenLocationIsUnder3Characters()
         {
             var viewModel = new VacancySearchViewModel { Location = "xx", Latitude = 0.1d, Longitude = 1.0d };
-            _validator.ShouldHaveValidationErrorFor(x => x.Location, viewModel);
+            _viewModelClientValidator.ShouldHaveValidationErrorFor(x => x.Location, viewModel);
         }
 
         [Test]
         public void ShouldHaveErrorWhenLocationIsNotMatched()
         {
             var viewModel = new VacancySearchViewModel { Location = "Test" };
-            _validator.ShouldHaveValidationErrorFor(x => x.Latitude, viewModel);
-            _validator.ShouldHaveValidationErrorFor(x => x.Longitude, viewModel);
+            _viewModelLocationValidator.ShouldHaveValidationErrorFor(x => x.Location, viewModel);
         }
 
 
@@ -45,25 +46,25 @@
         public void ShouldNotHaveErrorWhenLocationMatched()
         {
             var viewModel = new VacancySearchViewModel {Location = "Test", Latitude = 0.1d, Longitude = 1.0d};
-            _validator.ShouldNotHaveValidationErrorFor(x => x.Location, viewModel);
+            _viewModelClientValidator.ShouldNotHaveValidationErrorFor(x => x.Location, viewModel);
         }
 
         [Test]
         public void ValidateShouldReturnFalseWhenNoMatch()
         {
             var viewModel = new VacancySearchViewModel { Location = "", Latitude = 0.1d, Longitude = 1.0d };
-            var test = _validator.Validate(viewModel, new ModelStateDictionary());
+            var test = _viewModelClientValidator.Validate(viewModel);
 
-            test.Should().BeFalse();
+            test.IsValid.Should().BeFalse();
         }
 
         [Test]
         public void ValidateShouldReturnTrueWhenMatch()
         {
             var viewModel = new VacancySearchViewModel { Location = "Test", Latitude = 0.1d, Longitude = 1.0d };
-            var test = _validator.Validate(viewModel, new ModelStateDictionary());
+            var test = _viewModelClientValidator.Validate(viewModel);
 
-            test.Should().BeTrue();
+            test.IsValid.Should().BeTrue();
         }
     }
 }

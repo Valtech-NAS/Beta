@@ -27,6 +27,7 @@ namespace SFA.Apprenticeships.Web.Candidate
             {
                 x.AddRegistry<CommonRegistry>();
 
+                // service layer
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
@@ -35,6 +36,7 @@ namespace SFA.Apprenticeships.Web.Candidate
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
 
+                // web layer
                 x.AddRegistry<SessionRegistry>();
                 x.AddRegistry<WebCommonRegistry>();
                 x.AddRegistry<CandidateWebRegistry>();

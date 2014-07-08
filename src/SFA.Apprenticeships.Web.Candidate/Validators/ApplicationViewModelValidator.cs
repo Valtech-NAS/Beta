@@ -3,11 +3,19 @@
     using FluentValidation;
     using ViewModels.Applications;
 
-    public class ApplicationViewModelValidator : AbstractValidator<ApplicationViewModel>
+    public class ApplicationViewModelClientValidator : AbstractValidator<ApplicationViewModel>
     {
-        public ApplicationViewModelValidator()
+        public ApplicationViewModelClientValidator()
         {
-            RuleFor(x => x.Candidate).SetValidator(new CandidateViewModelValidator());
+            RuleFor(x => x.Candidate).SetValidator(new CandidateViewModelClientValidator());
+        }
+    }
+
+    public class ApplicationViewModelServerValidator : AbstractValidator<ApplicationViewModel>
+    {
+        public ApplicationViewModelServerValidator()
+        {
+            RuleFor(x => x.Candidate).SetValidator(new CandidateViewModelServerValidator());
         }
     }
 }

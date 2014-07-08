@@ -1,9 +1,9 @@
-﻿using System;
-using SFA.Apprenticeships.Application.Interfaces.Search;
-using SFA.Apprenticeships.Domain.Entities.Locations;
-
-namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
 {
+    using System;
+    using Domain.Entities.Locations;
+    using Search;
+
     //TODO: Flush out API. need to understand valid combinations of location name, postcode, distance, keyword, etc. (include national)
     public interface IVacancySearchService
     {
@@ -17,11 +17,11 @@ namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
         /// <param name="searchRadius">in miles</param>
         /// <param name="sortType">the sort order for the results</param>
         /// <returns>0..* matching vacancies</returns>
-        SearchResults<VacancySummaryResponse> Search(string keywords, 
-                                                        Location location, 
-                                                        int pageNumber, 
-                                                        int pageSize, 
-                                                        int searchRadius,
-                                                        VacancySortType sortType);
+        SearchResults<VacancySummaryResponse> Search(string keywords,
+            Location location,
+            int pageNumber,
+            int pageSize,
+            int searchRadius,
+            VacancySortType sortType);
     }
 }

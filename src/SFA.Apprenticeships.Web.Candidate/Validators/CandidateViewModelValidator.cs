@@ -3,9 +3,20 @@
     using FluentValidation;
     using ViewModels.Candidate;
 
-    public class CandidateViewModelValidator : AbstractValidator<CandidateViewModel>
+    public class CandidateViewModelClientValidator : AbstractValidator<CandidateViewModel>
     {
-        public CandidateViewModelValidator()
+        public CandidateViewModelClientValidator()
+        {
+            RuleFor(x => x.AboutYou).SetValidator(new AboutYouViewModelValidator());
+            RuleFor(x => x.Education).SetValidator(new EducationViewModelClientValidator());
+            RuleFor(x => x.EmployerQuestionAnswers).SetValidator(new EmployerQuestionAnswersViewModelClientValidator());
+
+        }
+    }
+
+    public class CandidateViewModelServerValidator : AbstractValidator<CandidateViewModel>
+    {
+        public CandidateViewModelServerValidator()
         {
             RuleFor(x => x.AboutYou).SetValidator(new AboutYouViewModelValidator());
             RuleFor(x => x.Education).SetValidator(new EducationViewModelServerValidator());

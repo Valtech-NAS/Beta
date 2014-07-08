@@ -67,7 +67,7 @@
             var s = helper.FormTextFor(expression);
 
             // Assert
-            Assert.AreEqual("<div class=\"form-group\"><label class=\"form-label\" for=\"Value\">Value</label><input class=\"form-control\" id=\"Value\" name=\"Value\" type=\"text\" value=\"\" /></div>", s.ToString());
+            Assert.AreEqual("<div class=\"form-group\"><a name=\"value\"></a><label class=\"form-label\" for=\"Value\">Value</label><input class=\"form-control\" id=\"Value\" name=\"Value\" type=\"text\" value=\"\" /></div>", s.ToString());
         }
 
         /// <summary>
@@ -87,7 +87,7 @@
 
             // Assert
             Assert.AreEqual(
-                "<div class=\"form-group\"><label class=\"form-label\" for=\"HasAttribute\">Keywords</label><span class=\"form-hint\">For example</span><input class=\"form-control\" id=\"HasAttribute\" name=\"HasAttribute\" type=\"text\" value=\"\" /></div>",
+                "<div class=\"form-group\"><a name=\"hasattribute\"></a><label class=\"form-label\" for=\"HasAttribute\">Keywords</label><span class=\"form-hint\">For example</span><input class=\"form-control\" id=\"HasAttribute\" name=\"HasAttribute\" type=\"text\" value=\"\" /></div>",
                 s.ToString());
         }
 

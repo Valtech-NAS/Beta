@@ -21,8 +21,8 @@
 
 @using (Html.BeginForm("Apply", "Application", new { id = Model.VacancyDetail.Id, mockProfileId = Model.Candidate.Id }, FormMethod.Post))
 {
-    @Html.ValidationSummary(false)
-    
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
     @Html.DisplayFor(m => m.Candidate)
     @Html.EditorFor(m => m.Candidate.Education)
     @Html.EditorFor(m => m.Candidate.Qualifications)
@@ -35,7 +35,7 @@
         <div class="form-group">
             <button class="button">Apply</button>
             <p>
-                <a href="javascript:history.back();" class="button-link">Back</a>
+                <a href="@Url.Action("Details", "VacancySearch", new { @id = Model.VacancyDetail.Id })" class="button-link">Back</a>
             </p>
         </div>
     </fieldset>

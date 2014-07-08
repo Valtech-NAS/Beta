@@ -245,6 +245,7 @@
     <Content Include="Content\_assets\img\PostVacancyAuthenticateUser.hbs" />
     <None Include="Content\_assets\js\vendor\jquery.validate-vsdoc.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.min.js" />
+    <Content Include="robots.txt" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -277,6 +278,8 @@
     <Content Include="Views\Shared\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EmployerQuestionAnswersViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EducationViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EducationViewModel.cshtml" />
+    <Content Include="Views\Shared\ValidationSummary.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -373,12 +376,11 @@
     <Compile Include="Providers\SearchProvider.cs" />
     <Compile Include="Providers\VacancyDetailProvider.cs" />
     <Compile Include="Validators\ApplicationViewModelValidator.cs" />
-    <Compile Include="Validators\EducationViewModelClientValidator.cs" />
+    <Compile Include="Validators\EducationViewModelValidator.cs" />
     <Compile Include="Validators\CandidateViewModelValidator.cs" />
     <Compile Include="Validators\EmployerQuestionAnswersViewModelValidator.cs" />
-    <Compile Include="Validators\IValidateModel.cs" />
     <Compile Include="Validators\AboutYouViewModelValidator.cs" />
-    <Compile Include="Validators\VacancySearchValidator.cs" />
+    <Compile Include="Validators\VacancySearchViewModelValidator.cs" />
     <Compile Include="ViewModels\Applications\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EducationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EmployerQuestionAnswersViewModel.cs" />
@@ -405,6 +407,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
       <Project>{a64fc67f-c873-4422-93dd-fbd8a6370ec3}</Project>
       <Name>SFA.Apprenticeships.Application.Location</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
+      <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancy</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>

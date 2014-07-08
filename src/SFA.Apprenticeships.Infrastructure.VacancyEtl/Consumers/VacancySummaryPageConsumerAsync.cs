@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
 {
     using System.Threading.Tasks;
-    using Application.Interfaces.Messaging;
+    using Domain.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
     using Application.VacancyEtl;
     using Application.VacancyEtl.Entities;

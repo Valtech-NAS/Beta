@@ -15,6 +15,7 @@
         {
             public const string LabelText = "From";
             public const string RequiredErrorText = "'From' must be supplied";
+            public const string NotInFutureErrorText = "'From' must not be in the future";
             public const string WhiteListRegularExpression = Whitelists.YearWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'From' " + Whitelists.YearWhitelist.ErrorText;
         }
@@ -23,7 +24,7 @@
         {
             public const string LabelText = "To";
             public const string RequiredErrorText = "'To' must be supplied";
-            public const string BeforeOrEqualErrorText = "'From' can not be greater than the 'To' year";
+            public const string BeforeOrEqualErrorText = "'From' cannot be greater than the 'To' year";
             public const string WhiteListRegularExpression = Whitelists.YearWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'To' " + Whitelists.YearWhitelist.ErrorText;
         }

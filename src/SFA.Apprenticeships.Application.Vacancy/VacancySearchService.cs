@@ -2,19 +2,16 @@
 {
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
-    using Domain.Interfaces.Logging;
     using Interfaces.Search;
     using Interfaces.Vacancies;
 
     public class VacancySearchService : IVacancySearchService
     {
         private readonly IVacancySearchProvider _vacancySearchProvider;
-        private readonly ILoggingService _loggingService;
 
-        public VacancySearchService(IVacancySearchProvider vacancySearchProvider, ILoggingService loggingService)
+        public VacancySearchService(IVacancySearchProvider vacancySearchProvider)
         {
             _vacancySearchProvider = vacancySearchProvider;
-            _loggingService = loggingService;
         }
 
         public SearchResults<VacancySummaryResponse> Search(string keywords, 

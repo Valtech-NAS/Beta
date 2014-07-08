@@ -9,8 +9,7 @@
     using Mongo.Common;
     using MongoDB.Driver.Builders;
 
-    public class CandidateRepository : GenericMongoRepository<MongoCandidate>, ICandidateReadRepository,
-        ICandidateWriteRepository
+    public class CandidateRepository : GenericMongoRepository<MongoCandidate>, ICandidateReadRepository, ICandidateWriteRepository
     {
         private readonly IMapper _mapper;
 
@@ -20,14 +19,14 @@
             _mapper = mapper;
         }
 
-        public Candidate Get(int id)
+        public Candidate Get(Guid id)
         {
             var mongoEntity = Collection.FindOneById(id);
 
             return _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             Collection.Remove(Query<MongoCandidate>.EQ(o => o.Id, id));
         }

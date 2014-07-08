@@ -4,4 +4,6 @@
     using Entities.Applications;
 
     public interface IApplicationReadRepository : IReadRepository<ApplicationDetail> { }
+
+    public interface IApplicationWriteRepository : IWriteRepository<ApplicationDetail> { }
 }

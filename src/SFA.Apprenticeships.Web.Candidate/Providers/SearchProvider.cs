@@ -12,14 +12,14 @@
     public class SearchProvider : ISearchProvider
     {
         private readonly ILocationSearchService _locationSearchService;
-        private readonly IVacancySearchProvider _vacancySearchProvider;
+        private readonly IVacancySearchService _vacancySearchService;
         private readonly IMapper _mapper;
 
-        public SearchProvider(ILocationSearchService locationSearchService, IVacancySearchProvider vacancySearchProvider,
+        public SearchProvider(ILocationSearchService locationSearchService, IVacancySearchService vacancySearchService,
             IMapper mapper)
         {
             _locationSearchService = locationSearchService;
-            _vacancySearchProvider = vacancySearchProvider;
+            _vacancySearchService = vacancySearchService;
             _mapper = mapper;
         }
 
@@ -39,7 +39,7 @@
         {
             var searchLocation = _mapper.Map<VacancySearchViewModel, Location>(search);
 
-            var searchResponse = _vacancySearchProvider.FindVacancies(search.Keywords, searchLocation, search.PageNumber,
+            var searchResponse = _vacancySearchService.Search(search.Keywords, searchLocation, search.PageNumber,
                 pageSize, search.WithinDistance, search.SortType);
 
             var vacancySearchResponseViewModel =

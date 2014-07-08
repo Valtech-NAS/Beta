@@ -3,9 +3,10 @@
     using System;
     using System.Linq;
     using Application.Interfaces.Vacancies; 
-    using Domain.Interfaces.Mapping;
     using Common.Wcf;
     using Configuration;
+    using Domain.Entities.Vacancies;
+    using Domain.Interfaces.Mapping;
     using VacancyDetailProxy;
 
     public class LegacyVacancyDataProvider : IVacancyDataProvider
@@ -15,15 +16,15 @@
         private readonly IMapper _mapper;
 
          public LegacyVacancyDataProvider(ILegacyServicesConfiguration legacyServicesConfiguration, 
-                                            IWcfService<IVacancyDetails> service, 
-                                            IMapper mapper)
+                                          IWcfService<IVacancyDetails> service,  
+                                          IMapper mapper)
         {
             _legacyServicesConfiguration = legacyServicesConfiguration;
             _service = service;
             _mapper = mapper;
         }
 
-        public Domain.Entities.Vacancies.VacancyDetail GetVacancyDetails(int vacancyId)
+        public VacancyDetail GetVacancyDetails(int vacancyId)
         {
             var vacancyDetailRequest = new VacancyDetailsRequest
             {
@@ -45,10 +46,10 @@
                 rs.SearchResults.SearchResults == null ||
                 rs.SearchResults.SearchResults.Length == 0)
             {
-                return default(Domain.Entities.Vacancies.VacancyDetail);
+                return default(VacancyDetail);
             }
 
-            return _mapper.Map<VacancyFullData, Domain.Entities.Vacancies.VacancyDetail>(rs.SearchResults.SearchResults.First());
+            return _mapper.Map<VacancyFullData, VacancyDetail>(rs.SearchResults.SearchResults.First());
         }
     }
 }
