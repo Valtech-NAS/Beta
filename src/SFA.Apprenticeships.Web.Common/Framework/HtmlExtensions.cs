@@ -43,9 +43,10 @@
             }
 
             return FormText(
-                helper.LabelFor(expression, labelText, new { @class = "form-label" }).ToString(),
-                helper.HintFor(expression, hintText, new { @class = "form-hint" }).ToString(),
+                helper.LabelFor(expression, labelText, new {@class = "form-label"}).ToString(),
+                helper.HintFor(expression, hintText, new {@class = "form-hint"}).ToString(),
                 helper.TextBoxFor(expression, controlAttributes).ToString(),
+                helper.ValidationMessageFor(expression, null, new { @class = "hidden" }).ToString(),
                 AnchorFor(helper, expression).ToString(),
                 string.Empty,
                 validationError,
@@ -88,6 +89,7 @@
                 helper.LabelFor(expression, labelText, new { @class = "form-label" }).ToString(),
                 helper.HintFor(expression, hintText, new { @class = "form-hint" }).ToString(),
                 helper.TextAreaFor(expression, controlAttributes).ToString(),
+                helper.ValidationMessageFor(expression, null, new { @class = "hidden"}).ToString(),
                 AnchorFor(helper, expression).ToString(),
                 CharactersLeftFor(helper, expression).ToString(),
                 validationError,
@@ -96,7 +98,8 @@
 
         private static MvcHtmlString FormText(string labelContent, 
                                             string hintContent, 
-                                            string fieldContent, 
+                                            string fieldContent,
+                                            string validationMessage,
                                             string anchorTag,
                                             string maxLengthSpan,
                                             bool validationError = false, 
@@ -115,12 +118,13 @@
             }
             container.AddCssClass("form-group");
 
-            container.InnerHtml += anchorTag;
-            container.InnerHtml += labelContent;
-            container.InnerHtml += hintContent;
-            container.InnerHtml += fieldContent;
-            container.InnerHtml += maxLengthSpan;
-
+            container.InnerHtml += string.Concat(anchorTag, 
+                                                labelContent, 
+                                                hintContent, 
+                                                fieldContent, 
+                                                validationMessage,
+                                                maxLengthSpan);
+            
             return MvcHtmlString.Create(container.ToString());
         }
 
