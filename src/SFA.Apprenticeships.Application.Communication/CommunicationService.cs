@@ -40,6 +40,10 @@
                     //todo: get candidate, invoke strategy to send application acknowledgement email to candidate
                     break;
 
+                case CandidateMessageTypes.PasswordChanged:
+                    //todo: get candidate, invoke strategy to send password changed email to candidate
+                    break;
+                    
                 default:
                     throw new ArgumentOutOfRangeException("messageType");
             }

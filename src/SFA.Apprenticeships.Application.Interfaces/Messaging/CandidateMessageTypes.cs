@@ -6,6 +6,7 @@
     {
         SendActivationCode,
         SendPasswordCode,
-        ApplicationSubmitted
+        ApplicationSubmitted,
+        PasswordChanged
     }
 }
