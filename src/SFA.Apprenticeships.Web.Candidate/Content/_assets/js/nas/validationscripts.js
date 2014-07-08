@@ -30,6 +30,9 @@
                 var li = "<li><a href='#" + $(error).attr("for").toLowerCase()  + "'>" + $(error).html() + "</a></li>";
                 errorSummary += li;
             });
+            
+            $(".validation-summary-valid").addClass("validation-summary-errors").removeClass("validation-summary-valid");
+            $(".validation-summary-errors > div.panel-body > ul").empty();
             $(".validation-summary-errors > div.panel-body > ul").html(errorSummary);
         };
     });
