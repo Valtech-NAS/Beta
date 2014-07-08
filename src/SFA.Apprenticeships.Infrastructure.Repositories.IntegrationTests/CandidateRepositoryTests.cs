@@ -81,8 +81,7 @@
                     },
                     EducationHistory =
                     {
-                        new Education { FromYear = 1987, ToYear = 1997, Institution = "Some school" },
-                        new Education { FromYear = 1997, ToYear = 1999, Institution = "Another school" }
+                        FromYear = 1987, ToYear = 1997, Institution = "Some school"
                     },
                     Qualifications =
                     {

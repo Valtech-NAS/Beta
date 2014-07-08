@@ -7,13 +7,13 @@
     {
         public ApplicationInformation()
         {
-            EducationHistory = new List<Education>();
+            EducationHistory = new Education();
             Qualifications = new List<Qualification>();
             WorkExperience = new List<WorkExperience>();
             AboutYou = new AboutYou();
         }
 
-        public IList<Education> EducationHistory { get; set; } //note: for legacy integration just need the latest
+        public Education EducationHistory { get; set; }
         public IList<Qualification> Qualifications { get; set; }
         public IList<WorkExperience> WorkExperience { get; set; }
         public AboutYou AboutYou { get; set; }
