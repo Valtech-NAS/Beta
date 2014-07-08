@@ -40,6 +40,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Messaging\IMessageBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Caching\CacheDuration.cs" />
     <Compile Include="Caching\BaseCacheKey.cs" />

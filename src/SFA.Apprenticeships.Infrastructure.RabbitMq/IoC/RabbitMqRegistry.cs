@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.IoC
 {
+    using Domain.Interfaces.Messaging;
     using EasyNetQ;
-    using Application.Interfaces.Messaging;
     using Configuration;
     using Interfaces;
     using RabbitMQ;

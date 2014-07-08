@@ -5,10 +5,10 @@
     using System.Linq;
     using System.Threading;
     using Domain.Entities.Vacancies;
+    using Domain.Interfaces.Messaging;
     using Moq;
     using NUnit.Framework;
     using Domain.Interfaces.Mapping;
-    using Interfaces.Messaging;
     using VacancyEtl;
     using Entities;
 

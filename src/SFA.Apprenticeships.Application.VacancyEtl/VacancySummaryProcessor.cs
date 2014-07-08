@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Mapping;
-    using Interfaces.Messaging;
+    using Domain.Interfaces.Messaging;
     using Entities;
 
     public class VacancySummaryProcessor : IVacancySummaryProcessor

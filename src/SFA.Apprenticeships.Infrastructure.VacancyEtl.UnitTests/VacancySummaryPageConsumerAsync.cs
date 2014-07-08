@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.UnitTests
 {
     using System;
-    using Application.Interfaces.Messaging;
+    using Domain.Interfaces.Messaging;
     using Moq;
     using NUnit.Framework;
     using Application.VacancyEtl;
