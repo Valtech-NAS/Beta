@@ -69,10 +69,11 @@
 
         private CandidateViewModel GetDummyCandidateViewModel(int dummyProfileId)
         {
+            CandidateViewModel candidateView;
             switch (dummyProfileId)
             {
                 case 1:
-                    return BuildCandidateViewModel("John Doe", 
+                    candidateView = BuildCandidateViewModel("John Doe", 
                                                     "john.doe@test-apprentice.com",
                                                     new DateTime(1997, 01, 01), 
                                                     "077-JOHN-DOE",
@@ -80,36 +81,50 @@
                                                     "MissingInAction Town",
                                                     "JD1 MIA"
                                                     );
+                    candidateView.Education = BuildEducationViewModel(2000, 2001, "John Doe School Of Tractors");
+                    break;
                 case 2:
-                    return BuildCandidateViewModel("Susan Defoe", 
+                    candidateView = BuildCandidateViewModel("Susan Defoe", 
                                                     "susan.defoe@test-apprentice.com", 
                                                     new DateTime(1996, 02, 02), 
                                                     "076-SUS-DEFOE",
                                                     "11 William Road",
                                                     "Deerstown",
                                                     "WD2 V1T");
+                    candidateView.Education = BuildEducationViewModel(2010, 2012, "Defoe Agricultural College");
+                    break;
                 case 3:
-                    return BuildCandidateViewModel("Mike Snow", 
+                    candidateView = BuildCandidateViewModel("Mike Snow", 
                                                     "mike.snow@test-apprentice.com", 
                                                     new DateTime(1996, 03, 03), 
                                                     "075-MIKE-SNOW",
                                                     "12 Salted Drive",
                                                     "Musical Avenue",
                                                     "MS3 9VT");
+                    break;
                 case 4:
-                    return BuildCandidateViewModel("Barley Mow", 
+                    candidateView = BuildCandidateViewModel("Barley Mow", 
                                                     "barley.mow@test-apprentice.com", 
                                                     new DateTime(1996, 04, 04), 
                                                     "075-BARLEY-MOW",
                                                     "13 Wheaty fields",
                                                     "Oatsville",
                                                     "BW12 1OT");
+                    break;
                 default:
                     return null;
             }
+
+            return candidateView;
         }
 
-        private CandidateViewModel BuildCandidateViewModel(string fullName, string emailAddress, DateTime dateOfBirth, string phoneNumber, string addressLine1, string town, string postCode)
+        private CandidateViewModel BuildCandidateViewModel(string fullName, 
+                                            string emailAddress, 
+                                            DateTime dateOfBirth, 
+                                            string phoneNumber, 
+                                            string addressLine1, 
+                                            string town, 
+                                            string postCode)
         {
             var candidate = new CandidateViewModel()
             {
@@ -124,6 +139,16 @@
             };
 
             return candidate;
+        }
+
+        private EducationViewModel BuildEducationViewModel(int fromYear, int toYear, string nameOfSchool)
+        {
+            return new EducationViewModel()
+            {
+                FromYear = fromYear.ToString(),
+                ToYear = toYear.ToString(),
+                NameOfMostRecentSchoolCollege = nameOfSchool
+            };
         }
     }
 }
