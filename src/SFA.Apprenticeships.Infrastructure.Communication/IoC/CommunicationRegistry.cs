@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Infrastructure.Communication.IoC
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IoC
 {
     using System;
     using Application.Interfaces.Messaging;
@@ -10,9 +8,8 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.IoC
     {
         public CommunicationRegistry()
         {
-            //todo: initialise CommunicationRegistry
-            //For<IEmailDispatcher>().Use<SendGridEmailDispatcher>();
-            //For<ISmsDispatcher>().Use<TwilioSmsDispatcher>();
+            For<IEmailDispatcher>().Use<SendGridEmailDispatcher>();
+            For<ISmsDispatcher>().Use<TwilioSmsDispatcher>();
         }
     }
 }

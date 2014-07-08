@@ -38,9 +38,12 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Messaging\CandidateMessageTypes.cs" />
+    <Compile Include="Messaging\EmailRequest.cs" />
     <Compile Include="Messaging\ICommunicationService.cs" />
     <Compile Include="Messaging\IEmailDispatcher.cs" />
     <Compile Include="Messaging\ISmsDispatcher.cs" />
+    <Compile Include="Messaging\SmsRequest.cs" />
     <Compile Include="Users\IRegistrationService.cs" />
     <Compile Include="Candidates\ICandidateService.cs" />
     <Compile Include="Locations\ILocationSearchService.cs" />

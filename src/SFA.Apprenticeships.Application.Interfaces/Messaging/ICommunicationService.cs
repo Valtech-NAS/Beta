@@ -4,10 +4,11 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// Used to send SMS / Email messages to users
+    /// Responsible for gathering required info for sending SMS / Email messages to users. 
+    /// Sending is delegated to a strategy for each message
     /// </summary>
     public interface ICommunicationService
     {
-        void SendMessageToCandidate(Guid candidateId, string messageId, params KeyValuePair<string, string>[] tokens);
+        void SendMessageToCandidate(Guid candidateId, CandidateMessageTypes messageType, IEnumerable<KeyValuePair<string, string>> tokens);
     }
 }

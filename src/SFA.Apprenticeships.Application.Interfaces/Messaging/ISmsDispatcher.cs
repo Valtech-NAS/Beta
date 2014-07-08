@@ -7,6 +7,6 @@
     /// </summary>
     public interface ISmsDispatcher
     {
-        void SendSms(string mobileNumber, string message);
+        void SendSms(SmsRequest request);
     }
 }

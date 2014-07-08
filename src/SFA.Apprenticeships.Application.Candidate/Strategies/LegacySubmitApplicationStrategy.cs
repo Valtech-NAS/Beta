@@ -11,7 +11,7 @@
         {
             //todo: create/update application status
             //todo: queue application for submission to legacy
-            //todo: send email confirmation to candidate
+            //todo: send email acknowledgement to candidate via ICommunicationService.SendMessageToCandidate()
 
             throw new NotImplementedException();
         }
