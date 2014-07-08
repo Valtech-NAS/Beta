@@ -27,8 +27,6 @@
             For<IVacancyDetailProvider>().Use<VacancyDetailProvider>().Ctor<IMapper>().Named("CandidateWebMappers");
             For<IApplicationProvider>().Use<ApplicationProvider>();
 
-            // validators
-            For<IValidateModel<VacancySearchViewModel>>().Use<VacancySearchValidator>();
         }
     }
 }

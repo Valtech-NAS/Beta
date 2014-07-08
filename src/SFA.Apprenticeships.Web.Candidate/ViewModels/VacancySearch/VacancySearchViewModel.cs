@@ -6,7 +6,7 @@
     using FluentValidation.Attributes;
     using Validators;
 
-    [Validator(typeof (VacancySearchClientSideValidator))]
+    [Validator(typeof (VacancySearchViewModelClientValidator))]
     public class VacancySearchViewModel
     {
         private int _pageNumber = 1;
