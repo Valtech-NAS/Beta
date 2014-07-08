@@ -88,6 +88,8 @@
         {
             Condition.Requires(application);
 
+            //todo: ensure candidate has not already applied for the vacancy
+
             _submitApplicationStrategy.SubmitApplication(application);
         }
     }

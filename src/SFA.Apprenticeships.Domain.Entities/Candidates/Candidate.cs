@@ -19,6 +19,6 @@
 
         public ApplicationInformation ApplicationTemplate { get; set; }
 
-        //public VacancyProfile VacancyProfile { get; set; } //todo: add candidate's vacancy profile
+        //public VacancyProfile VacancyProfile { get; set; } //todo: add candidate's vacancy profile (matching)
     }
 }
