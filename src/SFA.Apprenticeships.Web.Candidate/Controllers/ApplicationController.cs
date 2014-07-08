@@ -2,24 +2,22 @@
 {
     using System.Web.Mvc;
     using Common.Controllers;
-    using Common.Validations;
     using FluentValidation.Mvc;
     using Infrastructure.Azure.Session;
     using Providers;
     using Validators;
     using ViewModels.Applications;
-    using WebGrease.Css.Extensions;
 
     public class ApplicationController : SfaControllerBase
     {
         private const string TempAppFormSessionId = "TempAppForm";
 
         private readonly IApplicationProvider _applicationProvider;
-        private readonly ApplicationViewModelValidator _validator;
+        private readonly ApplicationViewModelServerValidator _validator;
 
         public ApplicationController(ISessionState sessionState, 
                                     IApplicationProvider applicationProvider,
-                                    ApplicationViewModelValidator validator)
+                                    ApplicationViewModelServerValidator validator)
             : base(sessionState)
         {
             _applicationProvider = applicationProvider;
@@ -53,6 +51,7 @@
 
             if (!result.IsValid)
             {
+                ModelState.Clear();
                 result.AddToModelState(ModelState, string.Empty);
                 return View(applicationViewModel);
             }

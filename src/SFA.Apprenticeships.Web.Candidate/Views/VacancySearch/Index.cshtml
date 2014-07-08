@@ -15,8 +15,8 @@
         <section class="grid grid-2-3">
             @using (Html.BeginForm("results", "vacancysearch", FormMethod.Get, new { @id = "#searchForm" }))
             {
-                @Html.ValidationSummary(false)
-                
+                @Html.Partial("ValidationSummary", ViewData.ModelState)
+
                 @Html.FormTextFor(m => m.Keywords)
                 @Html.FormTextFor(m => m.Location)
 
