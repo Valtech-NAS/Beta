@@ -7,6 +7,6 @@
     /// </summary>
     public interface ISmsDispatcher
     {
-        //todo: ISmsDispatcher
+        void SendSms(string mobileNumber, string message);
     }
 }

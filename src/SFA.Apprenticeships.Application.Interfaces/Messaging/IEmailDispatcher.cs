@@ -7,6 +7,7 @@
     /// </summary>
     public interface IEmailDispatcher
     {
-        //todo: IEmailDispatcher
+        //todo: finish IEmailDispatcher.SendEmail signature 
+        void SendEmail(string to, string from, string subject, string message);
     }
 }
