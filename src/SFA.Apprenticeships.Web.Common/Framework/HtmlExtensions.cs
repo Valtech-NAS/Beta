@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Linq.Expressions;
     using System.Web.Mvc;
     using System.Web.Mvc.Html;
@@ -42,11 +41,13 @@
                 validationError = modelState.Errors.Count > 0;
             }
 
+            var validator = helper.ValidationMessageFor(expression, null, new {@class = "hidden"});
+
             return FormText(
                 helper.LabelFor(expression, labelText, new {@class = "form-label"}).ToString(),
                 helper.HintFor(expression, hintText, new {@class = "form-hint"}).ToString(),
                 helper.TextBoxFor(expression, controlAttributes).ToString(),
-                helper.ValidationMessageFor(expression, null, new { @class = "hidden" }).ToString(),
+                validator == null ? "" : validator.ToString(),
                 AnchorFor(helper, expression).ToString(),
                 string.Empty,
                 validationError,
@@ -85,11 +86,13 @@
                 validationError = modelState.Errors.Count > 0;
             }
 
+            var validator = helper.ValidationMessageFor(expression, null, new { @class = "hidden" });
+
             return FormText(
                 helper.LabelFor(expression, labelText, new { @class = "form-label" }).ToString(),
                 helper.HintFor(expression, hintText, new { @class = "form-hint" }).ToString(),
                 helper.TextAreaFor(expression, controlAttributes).ToString(),
-                helper.ValidationMessageFor(expression, null, new { @class = "hidden"}).ToString(),
+                validator == null ? "" : validator.ToString(),
                 AnchorFor(helper, expression).ToString(),
                 CharactersLeftFor(helper, expression).ToString(),
                 validationError,
