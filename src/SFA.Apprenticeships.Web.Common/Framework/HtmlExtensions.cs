@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Linq.Expressions;
     using System.Web.Mvc;
     using System.Web.Mvc.Html;
@@ -42,10 +41,13 @@
                 validationError = modelState.Errors.Count > 0;
             }
 
+            var validator = helper.ValidationMessageFor(expression, null, new {@class = "hidden"});
+
             return FormText(
-                helper.LabelFor(expression, labelText, new { @class = "form-label" }).ToString(),
-                helper.HintFor(expression, hintText, new { @class = "form-hint" }).ToString(),
+                helper.LabelFor(expression, labelText, new {@class = "form-label"}).ToString(),
+                helper.HintFor(expression, hintText, new {@class = "form-hint"}).ToString(),
                 helper.TextBoxFor(expression, controlAttributes).ToString(),
+                validator == null ? "" : validator.ToString(),
                 AnchorFor(helper, expression).ToString(),
                 string.Empty,
                 validationError,
@@ -84,10 +86,13 @@
                 validationError = modelState.Errors.Count > 0;
             }
 
+            var validator = helper.ValidationMessageFor(expression, null, new { @class = "hidden" });
+
             return FormText(
                 helper.LabelFor(expression, labelText, new { @class = "form-label" }).ToString(),
                 helper.HintFor(expression, hintText, new { @class = "form-hint" }).ToString(),
                 helper.TextAreaFor(expression, controlAttributes).ToString(),
+                validator == null ? "" : validator.ToString(),
                 AnchorFor(helper, expression).ToString(),
                 CharactersLeftFor(helper, expression).ToString(),
                 validationError,
@@ -96,7 +101,8 @@
 
         private static MvcHtmlString FormText(string labelContent, 
                                             string hintContent, 
-                                            string fieldContent, 
+                                            string fieldContent,
+                                            string validationMessage,
                                             string anchorTag,
                                             string maxLengthSpan,
                                             bool validationError = false, 
@@ -115,12 +121,13 @@
             }
             container.AddCssClass("form-group");
 
-            container.InnerHtml += anchorTag;
-            container.InnerHtml += labelContent;
-            container.InnerHtml += hintContent;
-            container.InnerHtml += fieldContent;
-            container.InnerHtml += maxLengthSpan;
-
+            container.InnerHtml += string.Concat(anchorTag, 
+                                                labelContent, 
+                                                hintContent, 
+                                                fieldContent, 
+                                                validationMessage,
+                                                maxLengthSpan);
+            
             return MvcHtmlString.Create(container.ToString());
         }
 

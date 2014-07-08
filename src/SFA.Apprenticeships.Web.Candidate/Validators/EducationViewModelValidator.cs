@@ -52,13 +52,24 @@
             validator.RuleFor(x => x.ToYear)
                 .Must(BeBeforeOrEqual)
                 .WithMessage(EducationMessages.ToYearMessages.BeforeOrEqualErrorText);
+
+            validator.RuleFor(x => x.FromYear)
+                .Must(BeNowOrInThePast)
+                .WithMessage(EducationMessages.FromYearMessages.NotInFutureErrorText);
+                
         }
 
         private static bool BeBeforeOrEqual(EducationViewModel instance, string toYear)
         {
             var to = int.Parse(toYear);
             var from = int.Parse(instance.FromYear);
-            return from <= to && from <= DateTime.Now.Year;
+            return from <= to;
+        }
+
+        private static bool BeNowOrInThePast(EducationViewModel instance, string fromYear)
+        {
+            var from = int.Parse(fromYear);
+            return from <= DateTime.Now.Year;
         }
     }
 }

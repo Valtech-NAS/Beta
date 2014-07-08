@@ -14,29 +14,26 @@
             oldSuccessFunction(label, element);
 
         };
-        settings.showErrors = function(errorMap, errorList) {
-            //this.defaultShowErrors();
-            //$(".validation-summary-errors > div.panel-body > ul").empty();
-            $.each(errorList, function(index, error) {
-                //$(".validation-summary-errors > div.panel-body > ul").append("<li><a href='#" + error.element.id.toLowerCase() + "'>" + error.message + "</a></li>");
-                error.message = "<b>" + error.message + "</b>";
-            });
+        settings.showErrors = function (errorMap, errorList) {
+            //See http://stackoverflow.com/questions/7935568/jquery-validation-show-validation-summary-during-eager-validation
             this.defaultShowErrors();
-        };
-        settings.errorPlacement = function (error, element) {
-            if (showErrorMessage) {
-                var li = document.createElement("li");
-                li.appendChild(document.createTextNode(error.html()));
-                $ul.append(li);
+            var errors = $(".field-validation-error span");
+
+            if (errors && errors.length == 0) {
+                $(".validation-summary-errors > div.panel-body > ul").empty();
+                $(".validation-summary-errors").removeClass("validation-summary-errors").addClass("validation-summary-valid");
+                return;
             }
-        },
+
+            var errorSummary = "";
+            $.each(errors, function(index, error) {
+                var li = "<li><a href='#" + $(error).attr("for").toLowerCase()  + "'>" + $(error).html() + "</a></li>";
+                errorSummary += li;
+            });
+            
+            $(".validation-summary-valid").addClass("validation-summary-errors").removeClass("validation-summary-valid");
+            $(".validation-summary-errors > div.panel-body > ul").empty();
+            $(".validation-summary-errors > div.panel-body > ul").html(errorSummary);
+        };
     });
-
-    //$.validator.addMethod("fraction", function (value, element, param) {
-    //    return value != "";
-    //}, "Error message here");
-
-    //$.validator.addClassRules("fraction", {
-    //    fraction: true
-    //});
 });

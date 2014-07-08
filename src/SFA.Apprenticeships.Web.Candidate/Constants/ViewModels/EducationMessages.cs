@@ -15,6 +15,7 @@
         {
             public const string LabelText = "From";
             public const string RequiredErrorText = "'From' must be supplied";
+            public const string NotInFutureErrorText = "'From' must not be in the future";
             public const string WhiteListRegularExpression = Whitelists.YearWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'From' " + Whitelists.YearWhitelist.ErrorText;
         }
