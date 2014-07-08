@@ -81,7 +81,6 @@
                                                     "MissingInAction Town",
                                                     "JD1 MIA"
                                                     );
-                    candidateView.Education = BuildEducationViewModel(2000, 2001, "John Doe School Of Tractors");
                     break;
                 case 2:
                     candidateView = BuildCandidateViewModel("Susan Defoe", 
@@ -99,8 +98,10 @@
                                                     new DateTime(1996, 03, 03), 
                                                     "075-MIKE-SNOW",
                                                     "12 Salted Drive",
-                                                    "Musical Avenue",
+                                                    "Downhill Avenue",
                                                     "MS3 9VT");
+                    candidateView.Education = BuildEducationViewModel(2000, 2001, "Ski Schkool");
+                    candidateView.AboutYou = BuildAboutYouViewModel("Strong at skiing", "Could improve my bobsleding", "Golf is a hobbie", "Coach me at skiing");
                     break;
                 case 4:
                     candidateView = BuildCandidateViewModel("Barley Mow", 
@@ -110,6 +111,7 @@
                                                     "13 Wheaty fields",
                                                     "Oatsville",
                                                     "BW12 1OT");
+                    candidateView.AboutYou = BuildAboutYouViewModel("Strong at sorting the wheat from the chaff", "Could improve hay bailing", "In my spare time I love to shear sheep", "");
                     break;
                 default:
                     return null;
@@ -148,6 +150,17 @@
                 FromYear = fromYear.ToString(),
                 ToYear = toYear.ToString(),
                 NameOfMostRecentSchoolCollege = nameOfSchool
+            };
+        }
+
+        private AboutYouViewModel BuildAboutYouViewModel(string strengths, string improve, string hobbies, string support)
+        {
+            return new AboutYouViewModel()
+            {
+                WhatAreYourStrengths = strengths,
+                WhatDoYouFeelYouCouldImprove = improve,
+                WhatAreYourHobbiesInterests = hobbies,
+                AnythingWeCanDoToSupportYourInterview = support
             };
         }
     }
