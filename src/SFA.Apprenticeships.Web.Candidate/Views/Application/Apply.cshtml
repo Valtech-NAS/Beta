@@ -35,7 +35,7 @@
         <div class="form-group">
             <button class="button">Apply</button>
             <p>
-                <a href="javascript:history.back();" class="button-link">Back</a>
+                <a href="@Url.Action("Details", "VacancySearch", new { @id = Model.VacancyDetail.Id })" class="button-link">Back</a>
             </p>
         </div>
     </fieldset>

@@ -15,43 +15,14 @@
         /// </summary>
         /// <returns>The html to render</returns>
         public static MvcHtmlString FormTextFor<TModel, TProperty>(
-            this HtmlHelper<TModel> helper,
-            Expression<Func<TModel, TProperty>> expression,
-            string labelText = null,
-            string hintText = null,
-            object containerHtmlAttributes = null,
-            object controlHtmlAttributes = null)
+                    this HtmlHelper<TModel> helper,
+                    Expression<Func<TModel, TProperty>> expression,
+                    string labelText = null,
+                    string hintText = null,
+                    object containerHtmlAttributes = null,
+                    object controlHtmlAttributes = null)
         {
-            Condition.Requires(helper, "helper").IsNotNull();
-            Condition.Requires(expression, "expression").IsNotNull();
-
-            ModelState modelState;
-            var validationError = false;
-            var name = ExpressionHelper.GetExpressionText(expression);
-            RouteValueDictionary controlAttributes = containerHtmlAttributes != null ? new RouteValueDictionary(controlHtmlAttributes) : new RouteValueDictionary();
-           
-            if (controlAttributes.ContainsKey("class")){
-                controlAttributes["class"] += " form-control";
-            }else{
-                controlAttributes.Add("class", "form-control");
-            }
-
-            if (!string.IsNullOrEmpty(name) && helper.ViewData.ModelState.TryGetValue(name, out modelState))
-            {
-                validationError = modelState.Errors.Count > 0;
-            }
-
-            var validator = helper.ValidationMessageFor(expression, null, new {@class = "hidden"});
-
-            return FormText(
-                helper.LabelFor(expression, labelText, new {@class = "form-label"}).ToString(),
-                helper.HintFor(expression, hintText, new {@class = "form-hint"}).ToString(),
-                helper.TextBoxFor(expression, controlAttributes).ToString(),
-                validator == null ? "" : validator.ToString(),
-                AnchorFor(helper, expression).ToString(),
-                string.Empty,
-                validationError,
-                containerHtmlAttributes);
+            return BuildFormControl(helper, expression, helper.TextBoxFor, labelText, hintText, false, containerHtmlAttributes, controlHtmlAttributes);
         }
 
         /// <summary>
@@ -59,12 +30,25 @@
         /// </summary>
         /// <returns>The html to render</returns>
         public static MvcHtmlString FormTextAreaFor<TModel, TProperty>(
-            this HtmlHelper<TModel> helper,
-            Expression<Func<TModel, TProperty>> expression,
-            string labelText = null,
-            string hintText = null,
-            object containerHtmlAttributes = null,
-            object controlHtmlAttributes = null)
+                    this HtmlHelper<TModel> helper,
+                    Expression<Func<TModel, TProperty>> expression,
+                    string labelText = null,
+                    string hintText = null,
+                    object containerHtmlAttributes = null,
+                    object controlHtmlAttributes = null)
+        {
+            return BuildFormControl(helper, expression, helper.TextAreaFor, labelText, hintText, true, containerHtmlAttributes, controlHtmlAttributes);
+        }
+
+        private static MvcHtmlString BuildFormControl<TModel, TProperty>(
+                    HtmlHelper<TModel> helper,
+                    Expression<Func<TModel, TProperty>> expression,
+                    Func<Expression<Func<TModel, TProperty>>, IDictionary<string, object>, MvcHtmlString> controlFunc,
+                    string labelText = null,
+                    string hintText = null,
+                    bool addMaxLengthCounter = false,
+                    object containerHtmlAttributes = null,
+                    object controlHtmlAttributes = null)
         {
             Condition.Requires(helper, "helper").IsNotNull();
             Condition.Requires(expression, "expression").IsNotNull();
@@ -73,60 +57,52 @@
             var validationError = false;
             var name = ExpressionHelper.GetExpressionText(expression);
 
-            RouteValueDictionary controlAttributes = containerHtmlAttributes != null ? new RouteValueDictionary(controlHtmlAttributes) : new RouteValueDictionary();
-
-            if (controlAttributes.ContainsKey("class")){
-                controlAttributes["class"] += " form-control";
-            }else{
-                controlAttributes.Add("class", "form-control");
-            }
-
             if (!string.IsNullOrEmpty(name) && helper.ViewData.ModelState.TryGetValue(name, out modelState))
             {
                 validationError = modelState.Errors.Count > 0;
             }
 
+            RouteValueDictionary controlAttributes = containerHtmlAttributes != null ? new RouteValueDictionary(controlHtmlAttributes) : new RouteValueDictionary();
+
+            if (controlAttributes.ContainsKey("class"))
+            {
+                controlAttributes["class"] += " form-control";
+            }
+            else
+            {
+                controlAttributes.Add("class", "form-control");
+            }
+
             var validator = helper.ValidationMessageFor(expression, null, new { @class = "hidden" });
 
             return FormText(
-                helper.LabelFor(expression, labelText, new { @class = "form-label" }).ToString(),
-                helper.HintFor(expression, hintText, new { @class = "form-hint" }).ToString(),
-                helper.TextAreaFor(expression, controlAttributes).ToString(),
-                validator == null ? "" : validator.ToString(),
-                AnchorFor(helper, expression).ToString(),
-                CharactersLeftFor(helper, expression).ToString(),
+                helper.LabelFor(expression, labelText, new { @class = "form-label" }),
+                helper.HintFor(expression, hintText, new { @class = "form-hint" }),
+                controlFunc(expression, controlAttributes),
+                validator,
+                AnchorFor(helper, expression),
+                addMaxLengthCounter ? CharactersLeftFor(helper, expression) : null,
                 validationError,
                 containerHtmlAttributes);
         }
 
-        private static MvcHtmlString FormText(string labelContent, 
-                                            string hintContent, 
-                                            string fieldContent,
-                                            string validationMessage,
-                                            string anchorTag,
-                                            string maxLengthSpan,
+        private static MvcHtmlString FormText(MvcHtmlString labelContent,
+                                            MvcHtmlString hintContent,
+                                            MvcHtmlString fieldContent,
+                                            MvcHtmlString validationMessage,
+                                            MvcHtmlString anchorTag,
+                                            MvcHtmlString maxLengthSpan,
                                             bool validationError = false, 
                                             object containerHtmlAttributes = null)
         {
             var container = new TagBuilder("div");
             
-            if (validationError)
-            {
-                container.AddCssClass(HtmlHelper.ValidationInputCssClassName);
-            }
-
-            if (containerHtmlAttributes != null)
-            {
-                container.MergeAttributes(new RouteValueDictionary(containerHtmlAttributes));
-            }
+            if (validationError) { container.AddCssClass(HtmlHelper.ValidationInputCssClassName);             }
+            if (containerHtmlAttributes != null) { container.MergeAttributes(new RouteValueDictionary(containerHtmlAttributes)); }
+            //Needs added after container.MergeAttributes as MergeAttributes will overwrite existing values.
             container.AddCssClass("form-group");
 
-            container.InnerHtml += string.Concat(anchorTag, 
-                                                labelContent, 
-                                                hintContent, 
-                                                fieldContent, 
-                                                validationMessage,
-                                                maxLengthSpan);
+            container.InnerHtml += string.Concat(anchorTag, labelContent, hintContent, fieldContent, maxLengthSpan, validationMessage);
             
             return MvcHtmlString.Create(container.ToString());
         }
