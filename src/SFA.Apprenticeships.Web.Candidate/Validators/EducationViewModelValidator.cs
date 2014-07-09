@@ -61,6 +61,11 @@
 
         private static bool BeBeforeOrEqual(EducationViewModel instance, string toYear)
         {
+            if (toYear == null)
+            {
+                //Will be picked up by required validator
+                return true;
+            }
             var to = int.Parse(toYear);
             var from = int.Parse(instance.FromYear);
             return from <= to;
@@ -68,6 +73,11 @@
 
         private static bool BeNowOrInThePast(EducationViewModel instance, string fromYear)
         {
+            if (fromYear == null)
+            {
+                //Will be picked up by required validator
+                return true;
+            }
             var from = int.Parse(fromYear);
             return from <= DateTime.Now.Year;
         }
