@@ -43,7 +43,7 @@
     <Compile Include="Applications\ApplicationStatuses.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Candidates\AboutYou.cs" />
-    <Compile Include="Candidates\ApplicationInformation.cs" />
+    <Compile Include="Candidates\ApplicationTemplate.cs" />
     <Compile Include="Candidates\Candidate.cs" />
     <Compile Include="Candidates\Education.cs" />
     <Compile Include="Candidates\RegistrationDetails.cs" />

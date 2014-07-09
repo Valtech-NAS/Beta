@@ -10,7 +10,7 @@
         public ApplicationDetail()
         {
             CandidateDetails = new RegistrationDetails();
-            CandidateInformation = new ApplicationInformation();
+            CandidateInformation = new ApplicationTemplate();
             Status = ApplicationStatuses.Unknown;
         }
 
@@ -22,6 +22,6 @@
 
         public RegistrationDetails CandidateDetails { get; set; }
 
-        public ApplicationInformation CandidateInformation { get; set; }
+        public ApplicationTemplate CandidateInformation { get; set; }
     }
 }
