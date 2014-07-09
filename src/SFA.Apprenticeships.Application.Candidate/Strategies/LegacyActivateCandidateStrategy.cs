@@ -29,13 +29,13 @@
             //todo: assert status
             //user.Status == UserStatuses.PendingActivation
 
-            //todo: validate activation code and update user status to "activated"
+            //todo: validate activation code
             //_registrationService.Activate(username, activationCode);
 
             //todo: create candidate in legacy
             //var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
 
-            //todo: update candidate with legacy candidate id
+            //todo: update candidate with legacy candidate id and update user status to "activated"
             //candidate.LegacyCandidateId = legacyCandidateId;
             //_candidateWriteRepository.Save(candidate);
         }
