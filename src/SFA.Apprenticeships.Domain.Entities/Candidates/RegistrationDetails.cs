@@ -3,9 +3,9 @@
     using System;
     using Locations;
 
-    public class PersonalDetails
+    public class RegistrationDetails
     {
-        public PersonalDetails()
+        public RegistrationDetails()
         {
             Address = new Address();
         }

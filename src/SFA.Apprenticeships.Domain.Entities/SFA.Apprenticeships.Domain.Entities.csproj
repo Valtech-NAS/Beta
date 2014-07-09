@@ -46,7 +46,7 @@
     <Compile Include="Candidates\ApplicationInformation.cs" />
     <Compile Include="Candidates\Candidate.cs" />
     <Compile Include="Candidates\Education.cs" />
-    <Compile Include="Candidates\PersonalDetails.cs" />
+    <Compile Include="Candidates\RegistrationDetails.cs" />
     <Compile Include="Candidates\Qualification.cs" />
     <Compile Include="Candidates\WorkExperience.cs" />
     <Compile Include="Locations\Address.cs" />

@@ -9,13 +9,13 @@
         {
             Roles = UserRoles.Candidate;
             Status = UserStatuses.Unknown;
-            PersonalDetails = new PersonalDetails();
+            RegistrationDetails = new RegistrationDetails();
             ApplicationTemplate = new ApplicationInformation();
         }
 
         public int LegacyCandidateId { get; set; } // temporary "weak link" to legacy candidate record
 
-        public PersonalDetails PersonalDetails { get; set; }
+        public RegistrationDetails RegistrationDetails { get; set; }
 
         public ApplicationInformation ApplicationTemplate { get; set; }
 
