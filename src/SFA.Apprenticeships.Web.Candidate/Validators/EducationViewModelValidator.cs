@@ -61,7 +61,7 @@
 
         private static bool BeBeforeOrEqual(EducationViewModel instance, string toYear)
         {
-            if (toYear == null)
+            if (string.IsNullOrEmpty(toYear))
             {
                 //Will be picked up by required validator
                 return true;
@@ -73,7 +73,7 @@
 
         private static bool BeNowOrInThePast(EducationViewModel instance, string fromYear)
         {
-            if (fromYear == null)
+            if (string.IsNullOrEmpty(fromYear))
             {
                 //Will be picked up by required validator
                 return true;
