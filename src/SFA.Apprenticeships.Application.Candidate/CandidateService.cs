@@ -32,15 +32,17 @@
             _registerCandidateStrategy = registerCandidateStrategy;
         }
 
-        public Candidate RegisterCandidate(Candidate newCandidate, string password)
+        public Candidate Register(Candidate newCandidate, string password)
         {
             Condition.Requires(newCandidate);
             Condition.Requires(password).IsNotNullOrEmpty();
 
-            return _registerCandidateStrategy.RegisterCandidate(newCandidate, password);
+            var candidate = _registerCandidateStrategy.RegisterCandidate(newCandidate, password);
+
+            return candidate;
         }
 
-        public void ActivateCandidate(string username, string activationCode)
+        public void Activate(string username, string activationCode)
         {
             Condition.Requires(username).IsNotNullOrEmpty();
             Condition.Requires(activationCode).IsNotNullOrEmpty();
@@ -55,7 +57,7 @@
 
             var user = _userReadRepository.Get(username);
 
-            //todo: check status of user (may not be active)
+            //todo: check status of user (may not allowed to authenticate if locked)
             //todo: check role of user? (may not be a candidate ... User.Roles)
 
             _authenticationService.AuthenticateUser(user.EntityId, password);

@@ -9,9 +9,9 @@
     /// </summary>
     public interface ICandidateService
     {
-        Candidate RegisterCandidate(Candidate newCandidate, string password);
+        Candidate Register(Candidate newCandidate, string password);
 
-        void ActivateCandidate(string username, string activationCode);
+        void Activate(string username, string activationCode);
 
         Candidate Authenticate(string username, string password);
 

@@ -20,7 +20,7 @@
             //todo: other strategies go here...
         }
 
-        public void SendMessageToCandidate(Guid candidateId, CandidateMessageTypes messageType, IEnumerable<KeyValuePair<string, string>> tokens)
+        public void SendMessageToCandidate(Guid candidateId, CandidateMessageTypes messageType, IList<KeyValuePair<CommunicationTokens, string>> tokens)
         {
             switch (messageType)
             {
