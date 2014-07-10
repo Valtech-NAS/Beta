@@ -4,11 +4,10 @@
 	I want to find a vacant apprenticeship by entering the location
 
 Scenario: Find vacant apprenticeship by location
-	Given I navigated to the HomePage page
-		And I navigated to the VacancySearchPage page
+	Given I navigated to the VacancySearchPage page
+	And I was on the VacancySearchPage page
 	When I enter data
-		 | Field            | Value                    |
-		 | Find by location | Coventry (West Midlands) |
-		And I choose Search
-		And I wait 10 second for the VacancySearchResultPage page
-	Then I am on the VacancySearchResultPage page
+		 | Field    | Value                    |
+		 | Location | Coventry (West Midlands) |
+	And I choose Search
+	And I am on the VacancySearchResultPage page

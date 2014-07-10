@@ -1,26 +1,24 @@
-﻿
-
-using Microsoft.VisualStudio.TestTools.UITesting;
-using Microsoft.VisualStudio.TestTools.UITesting.HtmlControls;
-using OpenQA.Selenium;
-using SpecBind.Pages;
-
-namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Pages
+﻿namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Pages
 {
+    using global::SpecBind.Pages;
+    using OpenQA.Selenium;
+
     [PageNavigation("/vacancysearch/results")]
     [PageAlias("VacancySearchResultPage")]
     public class VacancySearchResultPage
     {
+        private readonly ISearchContext _context;
+
         public VacancySearchResultPage(ISearchContext context)
         {
-
+            _context = context;
         }
 
         [ElementLocator(Id = "Location")]
-        public HtmlEdit FindByLocation { get; set; }
+        public IWebElement Location { get; set; }
 
-        [ElementLocator(Id = "SearchButton", Type = "submit")]
-        public HtmlButton Search { get; set; }
+        [ElementLocator(Id = "search-button", Type = "submit", TagName = "button")]
+        public IWebElement Search { get; set; }
 
         [ElementLocator(Id = "search-results")]
         public IElementList<IWebElement, SearchResultList> SearchResults { get; set; }
