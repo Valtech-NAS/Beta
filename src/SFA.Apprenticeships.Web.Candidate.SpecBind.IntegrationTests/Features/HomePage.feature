@@ -1,16 +1,17 @@
 ﻿Feature: HomePage
-	In order to avoid silly mistakes
-	As a math idiot
-	I want to be told the sum of two numbers
+	In order to check that I am on the home page
+	As a candidate user
+	I want to check the header of the page
 
-@mytag
-Scenario: Add two numbers
-	Given I have entered 50 into the calculator
-	And I have entered 70 into the calculator
-	When I press add
-	Then the result should be 120 on the screen
-
-Scenario: Test Scenario
+Background: 
 	Given I navigated to the HomePage page
 	When I am on the HomePage page
+
+@pageload
+Scenario: Home Page Test Scenario
 	Then I wait to see Header
+
+@pagenavigation
+Scenario: Vacancy Search Navigation Test
+	When I choose VacancySearchLink
+	Then I wait for the VacancySearchPage page
