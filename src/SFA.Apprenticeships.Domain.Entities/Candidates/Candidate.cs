@@ -9,15 +9,15 @@
         {
             Roles = UserRoles.Candidate;
             Status = UserStatuses.Unknown;
-            PersonalDetails = new PersonalDetails();
-            ApplicationTemplate = new ApplicationInformation();
+            RegistrationDetails = new RegistrationDetails();
+            ApplicationTemplate = new ApplicationTemplate();
         }
 
         public int LegacyCandidateId { get; set; } // temporary "weak link" to legacy candidate record
 
-        public PersonalDetails PersonalDetails { get; set; }
+        public RegistrationDetails RegistrationDetails { get; set; }
 
-        public ApplicationInformation ApplicationTemplate { get; set; }
+        public ApplicationTemplate ApplicationTemplate { get; set; }
 
         //public VacancyProfile VacancyProfile { get; set; } //todo: add candidate's vacancy profile (matching)
     }

@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
 
-    public class ApplicationInformation
+    public class ApplicationTemplate
     {
-        public ApplicationInformation()
+        public ApplicationTemplate()
         {
             EducationHistory = new Education();
             Qualifications = new List<Qualification>();

@@ -9,8 +9,8 @@
 
         public ApplicationDetail()
         {
-            CandidateDetails = new PersonalDetails();
-            CandidateInformation = new ApplicationInformation();
+            CandidateDetails = new RegistrationDetails();
+            CandidateInformation = new ApplicationTemplate();
             Status = ApplicationStatuses.Unknown;
         }
 
@@ -20,8 +20,8 @@
 
         public int LegacyApplicationId { get; set; } // temporary "weak link" to legacy application record
 
-        public PersonalDetails CandidateDetails { get; set; }
+        public RegistrationDetails CandidateDetails { get; set; }
 
-        public ApplicationInformation CandidateInformation { get; set; }
+        public ApplicationTemplate CandidateInformation { get; set; }
     }
 }

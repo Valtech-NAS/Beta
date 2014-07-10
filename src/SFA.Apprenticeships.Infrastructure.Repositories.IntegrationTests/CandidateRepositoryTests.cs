@@ -53,7 +53,7 @@
                 Username = "peter@griffin.net",
                 LegacyCandidateId = 12345,
                 Status = UserStatuses.Active,
-                PersonalDetails =
+                RegistrationDetails =
                 {
                     FirstName = "Peter",
                     MiddleNames = string.Empty,

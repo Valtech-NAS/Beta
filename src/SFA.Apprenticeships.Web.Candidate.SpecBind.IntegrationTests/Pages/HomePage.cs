@@ -11,7 +11,7 @@
         ///     Initializes a new instance of the <see cref="HomePage" /> class by using the provided parent control.
         /// </summary>
         /// <param name="parent">The <see cref="UITestControl" /> that contains this control.</param>
-        public HomePage(ISearchContext test)
+        public HomePage(ISearchContext context)
         {
         }
 
@@ -21,5 +21,8 @@
         /// <value>The students link button.</value>
         [ElementLocator(Class = "global-header__title")]
         public IWebElement Header { get; set; }
+
+        [ElementLocator(Id = "vacancysearch")]
+        public IWebElement VacancySearchLink { get; set; }
     }
 }

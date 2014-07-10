@@ -21,7 +21,7 @@
 
         public Candidate RegisterCandidate(Candidate newCandidate, string password)
         {
-            var username = newCandidate.PersonalDetails.EmailAddress;
+            var username = newCandidate.RegistrationDetails.EmailAddress;
             var newCandidateId = Guid.NewGuid();
             var activationCode = "TODO"; //todo: generate a unique activation code (ICodeProvider)
 
