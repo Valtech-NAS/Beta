@@ -38,6 +38,8 @@
             //todo: update candidate with legacy candidate id and update user status to "activated"
             //candidate.LegacyCandidateId = legacyCandidateId;
             //_candidateWriteRepository.Save(candidate);
+
+            //todo: send a welcome email?
         }
     }
 }
