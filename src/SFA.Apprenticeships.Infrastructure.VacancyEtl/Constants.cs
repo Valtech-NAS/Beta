@@ -4,7 +4,7 @@
     {
         public static class NamedLoggers
         {
-            public const string VacanyImporterLogger = "VacanyImporter";
+            public const string VacancyImporterLogger = "VacancyImporter";
         }
     }
 }
