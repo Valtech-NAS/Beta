@@ -23,7 +23,7 @@
         {
             var mongoEntity = Collection.FindOneById(id);
 
-            return _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
+            return mongoEntity == null ? null : _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
         }
 
         public void Delete(Guid id)

@@ -17,13 +17,15 @@
             : base(configurationManager, "Users.mongoDB", "users")
         {
             _mapper = mapper;
+
+            Collection.CreateIndex(new IndexKeysBuilder().Ascending("EmailAddress"), IndexOptions.SetUnique(true));
         }
 
         public User Get(Guid id)
         {
             var mongoEntity = Collection.FindOneById(id);
 
-            return _mapper.Map<MongoUser, User>(mongoEntity);
+            return mongoEntity == null ? null : _mapper.Map<MongoUser, User>(mongoEntity);
         }
 
         public User Get(string username, bool errorIfNotFound = true)
@@ -43,12 +45,11 @@
 
         public User Save(User entity)
         {
-            //if (entity.IsNew())
-            //{
-            //    //todo: ensure unique (username) if new or unactivated: cannot have >1 activated or >1 unactivated but can have one of each
-            //}
+            var mongoEntity = _mapper.Map<User, MongoUser>(entity);
 
-            throw new NotImplementedException();
+            Collection.Save(mongoEntity);
+
+            return _mapper.Map<MongoUser, User>(mongoEntity);
         }
     }
 }
