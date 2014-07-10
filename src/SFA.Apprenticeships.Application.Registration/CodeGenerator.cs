@@ -2,7 +2,6 @@
 
 namespace SFA.Apprenticeships.Application.Registration
 {
-    using System;
     using System.Text;
     using Interfaces.Users;
 
@@ -12,10 +11,6 @@ namespace SFA.Apprenticeships.Application.Registration
 
         // Letters O and I are omitted to avoid confusion with numbers 0 and 1.
         public const string Alphanumerics = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
-
-        public CodeGenerator()
-        {
-        }
 
         public string Generate()
         {
