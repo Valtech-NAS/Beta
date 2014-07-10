@@ -1,8 +1,7 @@
-﻿using System.Security.Cryptography;
-
-namespace SFA.Apprenticeships.Application.Registration
+﻿namespace SFA.Apprenticeships.Application.Registration
 {
     using System.Text;
+    using System.Security.Cryptography;
     using Interfaces.Users;
 
     public class CodeGenerator : ICodeGenerator
@@ -17,9 +16,9 @@ namespace SFA.Apprenticeships.Application.Registration
             var bytes = GenerateRandomBytes(CodeLength);
             var sb = new StringBuilder(CodeLength);
 
-            for (int i = 0; i < CodeLength; i++)
+            for (var i = 0; i < CodeLength; i++)
             {
-                int index = bytes[i] % Alphanumerics.Length;
+                var index = bytes[i] % Alphanumerics.Length;
 
                 sb.Append(Alphanumerics[index]);
             }
