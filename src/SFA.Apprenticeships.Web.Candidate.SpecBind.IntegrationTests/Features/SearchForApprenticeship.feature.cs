@@ -20,20 +20,20 @@ namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
     [Microsoft.VisualStudio.TestTools.UnitTesting.DeploymentItemAttribute("SpecBind.Selenium.dll")]
-    public partial class HomePageFeature
+    public partial class SearchForApprenticeshipFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "HomePage.feature"
+#line 1 "SearchForApprenticeship.feature"
 #line hidden
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "HomePage", "In order to check that I am on the home page\r\nAs a candidate user\r\nI want to chec" +
-                    "k the header of the page", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SearchForApprenticeship", "In order to find a vacant apprenticeship quickly\r\nAs a system user\r\nI want to fin" +
+                    "d a vacant apprenticeship by entering the location", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -48,9 +48,9 @@ namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features
         public virtual void TestInitialize()
         {
             if (((TechTalk.SpecFlow.FeatureContext.Current != null) 
-                        && (TechTalk.SpecFlow.FeatureContext.Current.FeatureInfo.Title != "HomePage")))
+                        && (TechTalk.SpecFlow.FeatureContext.Current.FeatureInfo.Title != "SearchForApprenticeship")))
             {
-                SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features.HomePageFeature.FeatureSetup(null);
+                SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features.SearchForApprenticeshipFeature.FeatureSetup(null);
             }
         }
         
@@ -70,50 +70,33 @@ namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void FeatureBackground()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Find vacant apprenticeship by location")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SearchForApprenticeship")]
+        public virtual void FindVacantApprenticeshipByLocation()
         {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Find vacant apprenticeship by location", ((string[])(null)));
 #line 6
+this.ScenarioSetup(scenarioInfo);
 #line 7
  testRunner.Given("I navigated to the HomePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
- testRunner.When("I am on the HomePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.And("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Home Page Test Scenario")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "HomePage")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("pageload")]
-        public virtual void HomePageTestScenario()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Home Page Test Scenario", new string[] {
-                        "pageload"});
-#line 11
-this.ScenarioSetup(scenarioInfo);
-#line 6
-this.FeatureBackground();
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table1.AddRow(new string[] {
+                        "Find by location",
+                        "Coventry (West Midlands)"});
+#line 9
+ testRunner.When("I enter data", ((string)(null)), table1, "When ");
 #line 12
- testRunner.Then("I wait to see Header", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Vacancy Search Navigation Test")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "HomePage")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("pagenavigation")]
-        public virtual void VacancySearchNavigationTest()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Vacancy Search Navigation Test", new string[] {
-                        "pagenavigation"});
-#line 15
-this.ScenarioSetup(scenarioInfo);
-#line 6
-this.FeatureBackground();
-#line 16
- testRunner.When("I choose VacancySearchLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 17
- testRunner.Then("I wait for the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+  testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 13
+  testRunner.And("I wait 10 second for the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 14
+ testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
