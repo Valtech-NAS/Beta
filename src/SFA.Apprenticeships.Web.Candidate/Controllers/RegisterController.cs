@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
+﻿using SFA.Apprenticeships.Infrastructure.Azure.Session;
+
+namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System.Web.Mvc;
     using Common.Controllers;
@@ -17,6 +19,12 @@
         }
 
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Activation()
         {
             return View();
         }

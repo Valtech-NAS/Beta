@@ -1,0 +1,40 @@
+﻿@model ActivationViewModel
+
+@{
+    ViewBag.Title = "SFA Apprenticeships - Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 id="accountCreated" class="heading-xlarge">Account created</h1>
+<p class="text">You have successfully created an account.</p>
+
+@using (Html.BeginForm("Activation", "Register", FormMethod.Get, new { @id = "activation-form" }))
+{
+    <p class="text">
+        A confirmation email has been sent to <b class="email-address">@Html.DisplayFor(m => m.EmailAddress)</b>. It’ll
+        contain a 6-digit code you’ll need to activate your account.
+    </p>
+    <h2 class="heading-medium">Activate your account</h2>
+    <div class="text">
+        <p>
+            To activate your account you’ll need to enter the 6-digit code you received
+            in your confirmation email.
+        </p>
+    </div>
+
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    @Html.FormTextFor(m => m.ActivationCode, controlHtmlAttributes: new { @class = "form-control-2-3", @maxlength = "6" })
+
+    <div class="form-group">
+        <button class="button" id="activate-button">Activate and continue</button>
+    </div>
+}
+
+<div class="panel-indent text">
+    <p>
+        You must activate your account within 30 days of receiving your confirmation email.
+        After 30 days your account will be deleted and you will need to register
+        again.
+    </p>
+</div>

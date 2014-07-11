@@ -283,6 +283,7 @@
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AddressViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateViewModel.cshtml" />
+    <Content Include="Views\Register\Activation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -358,6 +359,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\ActivationCodeMessages.cs" />
     <Compile Include="Constants\ViewModels\RegisterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EducationMessages.cs" />
     <Compile Include="Constants\Whitelists.cs" />
@@ -381,6 +383,7 @@
     <Compile Include="Providers\IVacancyDetailProvider.cs" />
     <Compile Include="Providers\SearchProvider.cs" />
     <Compile Include="Providers\VacancyDetailProvider.cs" />
+    <Compile Include="Validators\ActivationViewModelValidator.cs" />
     <Compile Include="Validators\ApplicationViewModelValidator.cs" />
     <Compile Include="Validators\DateOfBirthViewModelValidator.cs" />
     <Compile Include="Validators\RegisterViewModelValidator.cs" />
@@ -399,6 +402,7 @@
     <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
+    <Compile Include="ViewModels\Register\ActivationViewModel.cs" />
     <Compile Include="ViewModels\Register\RegisterViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancyDetailViewModel.cs" />
