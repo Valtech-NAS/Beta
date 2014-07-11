@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Pages
+﻿namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Pages.VacancySearch
 {
     using global::SpecBind.Pages;
     using global::SpecBind.Selenium;
@@ -28,8 +28,7 @@
     [ElementLocator(Class = "search-results__item")]
     public class SearchResultLi : WebElement
     {
-        public SearchResultLi(ISearchContext parent)
-            : base(parent)
+        public SearchResultLi(ISearchContext parent) : base(parent)
         {
         }
 

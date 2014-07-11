@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Pages
+﻿namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Pages.VacancySearch
 {
     using System.Reflection;
     using global::SpecBind.BrowserSupport;
@@ -15,6 +15,7 @@
 
         public VacancySearchPage(IBrowser browser, ISearchContext context)
         {
+            //These are here to show examples of gaining access to driver.
             _driver = Driver(browser);
             _context = context;
         }

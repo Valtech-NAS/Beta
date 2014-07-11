@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features
+namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features.VacancySearch
 {
     using TechTalk.SpecFlow;
     
@@ -25,7 +25,7 @@ namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "SearchForApprenticeship.feature"
+#line 1 "SearchResults.feature"
 #line hidden
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]
@@ -50,7 +50,7 @@ namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features
             if (((TechTalk.SpecFlow.FeatureContext.Current != null) 
                         && (TechTalk.SpecFlow.FeatureContext.Current.FeatureInfo.Title != "SearchForApprenticeship")))
             {
-                SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features.SearchForApprenticeshipFeature.FeatureSetup(null);
+                SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features.VacancySearch.SearchForApprenticeshipFeature.FeatureSetup(null);
             }
         }
         
