@@ -20,9 +20,20 @@
                     string labelText = null,
                     string hintText = null,
                     object containerHtmlAttributes = null,
+                    object labelHtmlAttributes = null,
+                    object hintHtmlAttributes = null,
                     object controlHtmlAttributes = null)
         {
-            return BuildFormControl(helper, expression, helper.TextBoxFor, labelText, hintText, false, containerHtmlAttributes, controlHtmlAttributes);
+            return BuildFormControl(helper, 
+                                    expression, 
+                                    helper.TextBoxFor, 
+                                    labelText, 
+                                    hintText, 
+                                    false, 
+                                    containerHtmlAttributes, 
+                                    labelHtmlAttributes,
+                                    hintHtmlAttributes,
+                                    controlHtmlAttributes);
         }
 
         /// <summary>
@@ -35,9 +46,20 @@
                     string labelText = null,
                     string hintText = null,
                     object containerHtmlAttributes = null,
+                    object labelHtmlAttributes = null,
+                    object hintHtmlAttributes = null,
                     object controlHtmlAttributes = null)
         {
-            return BuildFormControl(helper, expression, helper.TextAreaFor, labelText, hintText, true, containerHtmlAttributes, controlHtmlAttributes);
+            return BuildFormControl(helper, 
+                                    expression, 
+                                    helper.TextAreaFor, 
+                                    labelText, 
+                                    hintText, 
+                                    true, 
+                                    containerHtmlAttributes, 
+                                    labelHtmlAttributes,
+                                    hintHtmlAttributes,
+                                    controlHtmlAttributes);
         }
 
         private static MvcHtmlString BuildFormControl<TModel, TProperty>(
@@ -48,6 +70,8 @@
                     string hintText = null,
                     bool addMaxLengthCounter = false,
                     object containerHtmlAttributes = null,
+                    object labelHtmlAttributes = null,
+                    object hintHtmlAttributes = null,
                     object controlHtmlAttributes = null)
         {
             Condition.Requires(helper, "helper").IsNotNull();
@@ -62,28 +86,37 @@
                 validationError = modelState.Errors.Count > 0;
             }
 
-            RouteValueDictionary controlAttributes = containerHtmlAttributes != null ? new RouteValueDictionary(controlHtmlAttributes) : new RouteValueDictionary();
-
-            if (controlAttributes.ContainsKey("class"))
-            {
-                controlAttributes["class"] += " form-control";
-            }
-            else
-            {
-                controlAttributes.Add("class", "form-control");
-            }
+            RouteValueDictionary controlAttributes = MergeAttributes("form-control", controlHtmlAttributes);
+            RouteValueDictionary labelAttributes = MergeAttributes("form-label", labelHtmlAttributes);
+            RouteValueDictionary hintAttributes = MergeAttributes("form-label", hintHtmlAttributes);
 
             var validator = helper.ValidationMessageFor(expression, null, new { @class = "hidden" });
 
             return FormText(
-                helper.LabelFor(expression, labelText, new { @class = "form-label" }),
-                helper.HintFor(expression, hintText, new { @class = "form-hint" }),
+                helper.LabelFor(expression, labelText, labelAttributes),
+                helper.HintFor(expression, hintText, hintAttributes),
                 controlFunc(expression, controlAttributes),
                 validator,
                 AnchorFor(helper, expression),
                 addMaxLengthCounter ? CharactersLeftFor(helper, expression) : null,
                 validationError,
                 containerHtmlAttributes);
+        }
+
+        private static RouteValueDictionary MergeAttributes(string baseClassName, object extendedAttributes)
+        {
+            RouteValueDictionary mergeAttributes = extendedAttributes != null ? new RouteValueDictionary(extendedAttributes) : new RouteValueDictionary();
+
+            if (mergeAttributes.ContainsKey("class"))
+            {
+                mergeAttributes["class"] += " " + baseClassName;
+            }
+            else
+            {
+                mergeAttributes.Add("class", baseClassName);
+            }
+
+            return mergeAttributes;
         }
 
         private static MvcHtmlString FormText(MvcHtmlString labelContent,
@@ -105,11 +138,6 @@
             container.InnerHtml += string.Concat(anchorTag, labelContent, hintContent, fieldContent, maxLengthSpan, validationMessage);
             
             return MvcHtmlString.Create(container.ToString());
-        }
-
-        private static MvcHtmlString HintFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, string hintText = null, object htmlAttributes = null)
-        {
-            return HintFor(helper, expression, hintText, new RouteValueDictionary(htmlAttributes));
         }
 
         private static MvcHtmlString HintFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, string hintText, IDictionary<string, object> htmlAttributes)
