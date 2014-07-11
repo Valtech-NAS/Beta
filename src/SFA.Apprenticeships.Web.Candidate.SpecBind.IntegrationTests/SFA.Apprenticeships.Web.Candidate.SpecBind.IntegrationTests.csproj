@@ -70,6 +70,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Bindings\SearchResults.cs" />
     <Compile Include="Features\HomePage.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -80,7 +81,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SearchForApprenticeship.feature</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SearchResultList.cs" />
+    <Compile Include="Pages\SearchResultItem.cs" />
     <Compile Include="Pages\VacancySearchResultPage.cs" />
     <Compile Include="Pages\VacancySearchPage.cs" />
     <Compile Include="Pages\HomePage.cs" />
@@ -100,9 +101,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Steps\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

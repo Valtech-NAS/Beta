@@ -71,11 +71,11 @@ namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Find vacant apprenticeship by location")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Find vacancy apprenticeship by location")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SearchForApprenticeship")]
-        public virtual void FindVacantApprenticeshipByLocation()
+        public virtual void FindVacancyApprenticeshipByLocation()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Find vacant apprenticeship by location", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Find vacancy apprenticeship by location", ((string[])(null)));
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -88,13 +88,32 @@ this.ScenarioSetup(scenarioInfo);
                         "Value"});
             table1.AddRow(new string[] {
                         "Location",
-                        "Coventry (West Midlands)"});
+                        "Coventry"});
 #line 9
  testRunner.When("I enter data", ((string)(null)), table1, "When ");
 #line 12
  testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
  testRunner.And("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table2.AddRow(new string[] {
+                        "Title",
+                        "Exists",
+                        ""});
+            table2.AddRow(new string[] {
+                        "Subtitle",
+                        "Exists",
+                        ""});
+            table2.AddRow(new string[] {
+                        "ShortDescription",
+                        "Exists",
+                        ""});
+#line 14
+ testRunner.Then("I see SearchResults list Exists", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
