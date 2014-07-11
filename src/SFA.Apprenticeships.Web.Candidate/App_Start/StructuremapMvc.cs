@@ -1,3 +1,4 @@
+
 using SFA.Apprenticeships.Web.Candidate;
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(StructuremapMvc), "Start")]
 
@@ -12,6 +13,7 @@ namespace SFA.Apprenticeships.Web.Candidate
     using Infrastructure.LocationLookup.IoC;
     using Infrastructure.Postcode.IoC;
     using Infrastructure.VacancySearch.IoC;
+    using Infrastructure.Repositories.Users.IoC;
     using IoC;
     using Common.IoC;
     using StructureMap;
@@ -35,6 +37,7 @@ namespace SFA.Apprenticeships.Web.Candidate
                 x.AddRegistry<LocationLookupRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
+                x.AddRegistry<UserRepositoryRegistry>();
 
                 // web layer
                 x.AddRegistry<SessionRegistry>();

@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
+using FluentValidation.Results;
 using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
 using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
 
@@ -39,9 +41,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Validators
                 .WithMessage(ActivationCodeMessages.ActivationCode.WrongActivationCodeErrorText);
         }
 
-        private static bool BeTheSameAsCodeHeldOnRecord(ActivationViewModel model, string codeOnRecord)
+        private static bool BeTheSameAsCodeHeldOnRecord(ActivationViewModel model, string activationCode)
         {
-            throw new System.NotImplementedException();
+            return activationCode != null && (!string.IsNullOrEmpty(activationCode) && model.IsActivated);
         }
     }
 }

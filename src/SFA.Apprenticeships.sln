@@ -146,6 +146,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Applica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.UnitTests", "SFA.Apprenticeships.Application.UnitTests\SFA.Apprenticeships.Application.UnitTests.csproj", "{980296FF-5859-4FB1-8100-A836ED103FE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.Authentication", "SFA.Apprenticeships.Application.Authentication\SFA.Apprenticeships.Application.Authentication.csproj", "{2752E3B6-358D-4C06-A31F-867304CAC53D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -377,6 +379,10 @@ Global
 		{980296FF-5859-4FB1-8100-A836ED103FE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{980296FF-5859-4FB1-8100-A836ED103FE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{980296FF-5859-4FB1-8100-A836ED103FE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2752E3B6-358D-4C06-A31F-867304CAC53D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2752E3B6-358D-4C06-A31F-867304CAC53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2752E3B6-358D-4C06-A31F-867304CAC53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2752E3B6-358D-4C06-A31F-867304CAC53D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -446,5 +452,6 @@ Global
 		{4696D786-2F3C-4A12-BD6B-38E2981D6DF1} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{F01914FA-A911-4345-ACD4-FD80ADE21A8C} = {620A2A3B-BC44-409A-9C74-75D2A9C75F79}
 		{980296FF-5859-4FB1-8100-A836ED103FE4} = {9C779D83-B3D7-4F5E-A20B-9DA2441733E6}
+		{2752E3B6-358D-4C06-A31F-867304CAC53D} = {620A2A3B-BC44-409A-9C74-75D2A9C75F79}
 	EndGlobalSection
 EndGlobal

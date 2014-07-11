@@ -8,7 +8,7 @@
 <h1 id="accountCreated" class="heading-xlarge">Account created</h1>
 <p class="text">You have successfully created an account.</p>
 
-@using (Html.BeginForm("Activation", "Register", FormMethod.Get, new { @id = "activation-form" }))
+@using (Html.BeginForm("Activate", "Register", FormMethod.Post, new { @id = "activation-form" }))
 {
     <p class="text">
         A confirmation email has been sent to <b class="email-address">@Html.DisplayFor(m => m.EmailAddress)</b>. It’ll
@@ -29,6 +29,8 @@
     <div class="form-group">
         <button class="button" id="activate-button">Activate and continue</button>
     </div>
+    
+    @Html.HiddenFor(m => m.EmailAddress)
 }
 
 <div class="panel-indent text">

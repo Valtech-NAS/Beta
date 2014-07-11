@@ -11,11 +11,11 @@
         public ActivationViewModel()
         { }
 
-        public int Id { get; set; }
-
         public string EmailAddress { get; set; }
 
         [Display(Name = ActivationCodeMessages.ActivationCode.LabelText, Description = ActivationCodeMessages.ActivationCode.HintText)]
         public string ActivationCode { get; set; }
+
+        public bool IsActivated { get; set; }
     }
 }

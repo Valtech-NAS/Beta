@@ -4,16 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{980296FF-5859-4FB1-8100-A836ED103FE4}</ProjectGuid>
+    <ProjectGuid>{2752E3B6-358D-4C06-A31F-867304CAC53D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Application.UnitTests</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Application.UnitTests</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Application.Authentication</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Application.Authentication</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,45 +30,31 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeGeneratorTests.cs" />
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AuthenticationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Application.Registration\SFA.Apprenticeships.Application.Registration.csproj">
-      <Project>{f01914fa-a911-4345-acd4-fd80ade21a8c}</Project>
-      <Name>SFA.Apprenticeships.Application.Registration</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
+      <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
+      <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
+      <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

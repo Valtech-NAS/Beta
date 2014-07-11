@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
+﻿using SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy;
+
+namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
 {
     using Application.Interfaces.ReferenceData;
     using Application.ReferenceData;
@@ -26,6 +28,7 @@
             For<IWcfService<IVacancySummary>>().Use<WcfService<IVacancySummary>>();
             For<IWcfService<IVacancyDetails>>().Use<WcfService<IVacancyDetails>>();
             For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
+            For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
             For<IVacancyIndexDataProvider>().Use<LegacyVacancyIndexDataProvider>().Ctor<IMapper>().Named("LegacyWebServices.VacancySummaryMapper");
             For<IVacancyDataProvider>().Use<LegacyVacancyDataProvider>().Ctor<IMapper>().Named("LegacyWebServices.VacancyDetailMapper");
             For<IReferenceDataProvider>().Use<LegacyReferenceDataProvider>();
