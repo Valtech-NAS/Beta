@@ -88,7 +88,7 @@
 
             RouteValueDictionary controlAttributes = MergeAttributes("form-control", controlHtmlAttributes);
             RouteValueDictionary labelAttributes = MergeAttributes("form-label", labelHtmlAttributes);
-            RouteValueDictionary hintAttributes = MergeAttributes("form-label", hintHtmlAttributes);
+            RouteValueDictionary hintAttributes = MergeAttributes("form-hint", hintHtmlAttributes);
 
             var validator = helper.ValidationMessageFor(expression, null, new { @class = "hidden" });
 
