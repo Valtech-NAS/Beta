@@ -127,6 +127,7 @@
     <Compile Include="Models\Common\ReferenceDataViewModel.cs" />
     <Compile Include="Models\Errors\ErrorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validations\EqualToValueFluentValidationPropertyValidator.cs" />
     <Compile Include="Validations\ValidationExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
