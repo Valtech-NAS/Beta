@@ -29,10 +29,22 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
         private int VacancyIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string AdditionalQuestionAnswerField;
+        private string VacancyRefField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string VacancyRefField;
+        private SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.School SchoolField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.EducationResults EducationResultsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.WorkExperiences WorkExperiencesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AdditionalQuestion1AnswerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AdditionalQuestion2AnswerField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -70,20 +82,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-        public string AdditionalQuestionAnswer {
-            get {
-                return this.AdditionalQuestionAnswerField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AdditionalQuestionAnswerField, value) != true)) {
-                    this.AdditionalQuestionAnswerField = value;
-                    this.RaisePropertyChanged("AdditionalQuestionAnswer");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string VacancyRef {
             get {
                 return this.VacancyRefField;
@@ -92,6 +91,396 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
                 if ((object.ReferenceEquals(this.VacancyRefField, value) != true)) {
                     this.VacancyRefField = value;
                     this.RaisePropertyChanged("VacancyRef");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.School School {
+            get {
+                return this.SchoolField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SchoolField, value) != true)) {
+                    this.SchoolField = value;
+                    this.RaisePropertyChanged("School");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+        public SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.EducationResults EducationResults {
+            get {
+                return this.EducationResultsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EducationResultsField, value) != true)) {
+                    this.EducationResultsField = value;
+                    this.RaisePropertyChanged("EducationResults");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+        public SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.WorkExperiences WorkExperiences {
+            get {
+                return this.WorkExperiencesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WorkExperiencesField, value) != true)) {
+                    this.WorkExperiencesField = value;
+                    this.RaisePropertyChanged("WorkExperiences");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+        public string AdditionalQuestion1Answer {
+            get {
+                return this.AdditionalQuestion1AnswerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AdditionalQuestion1AnswerField, value) != true)) {
+                    this.AdditionalQuestion1AnswerField = value;
+                    this.RaisePropertyChanged("AdditionalQuestion1Answer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+        public string AdditionalQuestion2Answer {
+            get {
+                return this.AdditionalQuestion2AnswerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AdditionalQuestion2AnswerField, value) != true)) {
+                    this.AdditionalQuestion2AnswerField = value;
+                    this.RaisePropertyChanged("AdditionalQuestion2Answer");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="School", Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes")]
+    [System.SerializableAttribute()]
+    public partial class School : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TownField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime AttendedFromField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime AttendedToField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Town {
+            get {
+                return this.TownField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TownField, value) != true)) {
+                    this.TownField = value;
+                    this.RaisePropertyChanged("Town");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+        public System.DateTime AttendedFrom {
+            get {
+                return this.AttendedFromField;
+            }
+            set {
+                if ((this.AttendedFromField.Equals(value) != true)) {
+                    this.AttendedFromField = value;
+                    this.RaisePropertyChanged("AttendedFrom");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public System.DateTime AttendedTo {
+            get {
+                return this.AttendedToField;
+            }
+            set {
+                if ((this.AttendedToField.Equals(value) != true)) {
+                    this.AttendedToField = value;
+                    this.RaisePropertyChanged("AttendedTo");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="EducationResults", Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes", ItemName="EducationResult")]
+    [System.SerializableAttribute()]
+    public class EducationResults : System.Collections.Generic.List<SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.EducationResult> {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="WorkExperiences", Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes", ItemName="WorkExperience")]
+    [System.SerializableAttribute()]
+    public class WorkExperiences : System.Collections.Generic.List<SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.WorkExperience> {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EducationResult", Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes")]
+    [System.SerializableAttribute()]
+    public partial class EducationResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SubjectField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LevelField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GradeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime DateAchievedField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Subject {
+            get {
+                return this.SubjectField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SubjectField, value) != true)) {
+                    this.SubjectField = value;
+                    this.RaisePropertyChanged("Subject");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public string Level {
+            get {
+                return this.LevelField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LevelField, value) != true)) {
+                    this.LevelField = value;
+                    this.RaisePropertyChanged("Level");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+        public string Grade {
+            get {
+                return this.GradeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GradeField, value) != true)) {
+                    this.GradeField = value;
+                    this.RaisePropertyChanged("Grade");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public System.DateTime DateAchieved {
+            get {
+                return this.DateAchievedField;
+            }
+            set {
+                if ((this.DateAchievedField.Equals(value) != true)) {
+                    this.DateAchievedField = value;
+                    this.RaisePropertyChanged("DateAchieved");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WorkExperience", Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes")]
+    [System.SerializableAttribute()]
+    public partial class WorkExperience : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmployerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime FromDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime ToDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TypeOfWorkField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PartialCompletionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool VoluntaryField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Employer {
+            get {
+                return this.EmployerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmployerField, value) != true)) {
+                    this.EmployerField = value;
+                    this.RaisePropertyChanged("Employer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime FromDate {
+            get {
+                return this.FromDateField;
+            }
+            set {
+                if ((this.FromDateField.Equals(value) != true)) {
+                    this.FromDateField = value;
+                    this.RaisePropertyChanged("FromDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime ToDate {
+            get {
+                return this.ToDateField;
+            }
+            set {
+                if ((this.ToDateField.Equals(value) != true)) {
+                    this.ToDateField = value;
+                    this.RaisePropertyChanged("ToDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TypeOfWork {
+            get {
+                return this.TypeOfWorkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TypeOfWorkField, value) != true)) {
+                    this.TypeOfWorkField = value;
+                    this.RaisePropertyChanged("TypeOfWork");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+        public bool PartialCompletion {
+            get {
+                return this.PartialCompletionField;
+            }
+            set {
+                if ((this.PartialCompletionField.Equals(value) != true)) {
+                    this.PartialCompletionField = value;
+                    this.RaisePropertyChanged("PartialCompletion");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+        public bool Voluntary {
+            get {
+                return this.VoluntaryField;
+            }
+            set {
+                if ((this.VoluntaryField.Equals(value) != true)) {
+                    this.VoluntaryField = value;
+                    this.RaisePropertyChanged("Voluntary");
                 }
             }
         }

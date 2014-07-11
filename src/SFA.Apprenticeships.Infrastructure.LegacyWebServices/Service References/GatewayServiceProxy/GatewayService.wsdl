@@ -77,17 +77,63 @@
       <xs:attribute name="Ref" type="xs:IDREF" />
     </xs:schema>
     <xs:schema xmlns:tns="http://schemas.imservice.org.uk/nas/gatewayservice/1/datatypes" elementFormDefault="qualified" targetNamespace="http://schemas.imservice.org.uk/nas/gatewayservice/1/datatypes" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" />
       <xs:complexType name="Application">
         <xs:sequence>
           <xs:element minOccurs="0" name="CandidateId" type="xs:int" />
           <xs:element minOccurs="0" name="VacancyId" type="xs:int" />
-          <xs:element minOccurs="0" name="AdditionalQuestionAnswer" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="VacancyRef" nillable="true" type="xs:string" />
+          <xs:element xmlns:q1="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="School" nillable="true" type="q1:School" />
+          <xs:element xmlns:q2="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="EducationResults" nillable="true" type="q2:EducationResults" />
+          <xs:element xmlns:q3="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="WorkExperiences" nillable="true" type="q3:WorkExperiences" />
+          <xs:element minOccurs="0" name="AdditionalQuestion1Answer" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AdditionalQuestion2Answer" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:complexType>
       <xs:element name="Application" nillable="true" type="tns:Application" />
     </xs:schema>
     <xs:schema xmlns:tns="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" elementFormDefault="qualified" targetNamespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="School">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Town" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AttendedFrom" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="AttendedTo" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="School" nillable="true" type="tns:School" />
+      <xs:complexType name="EducationResults">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="EducationResult" nillable="true" type="tns:EducationResult" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="EducationResults" nillable="true" type="tns:EducationResults" />
+      <xs:complexType name="EducationResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Level" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Grade" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DateAchieved" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="EducationResult" nillable="true" type="tns:EducationResult" />
+      <xs:complexType name="WorkExperiences">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="WorkExperience" nillable="true" type="tns:WorkExperience" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="WorkExperiences" nillable="true" type="tns:WorkExperiences" />
+      <xs:complexType name="WorkExperience">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Employer" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ToDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="TypeOfWork" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PartialCompletion" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Voluntary" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="WorkExperience" nillable="true" type="tns:WorkExperience" />
       <xs:complexType name="ValidationErrors">
         <xs:sequence>
           <xs:element minOccurs="0" maxOccurs="unbounded" name="ValidationError" nillable="true" type="tns:ValidationError" />
