@@ -1,15 +1,57 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.CreateCandidate
 {
     using System;
+    using System.Linq;
     using Application.Candidate.Strategies;
-    using Domain.Entities.Candidates;
+    using Common.Wcf;
+    using GatewayServiceProxy;
+    using Candidate = Domain.Entities.Candidates.Candidate;
 
     public class LegacyCandidateProvider : ILegacyCandidateProvider
     {
+        private readonly IWcfService<GatewayServiceContract> _service;
+
+        public LegacyCandidateProvider(IWcfService<GatewayServiceContract> service)
+        {
+            _service = service;
+        }
+
         public int CreateCandidate(Candidate candidate)
         {
-            //todo: LegacyCandidateProvider w/s integration
-            throw new NotImplementedException();
+            var request = new CreateCandidateRequest
+            {
+                Candidate = new GatewayServiceProxy.Candidate
+                {
+                    EmailAddress = candidate.RegistrationDetails.EmailAddress,
+                    FirstName = candidate.RegistrationDetails.FirstName,
+                    MiddleName = candidate.RegistrationDetails.MiddleNames,
+                    Surname = candidate.RegistrationDetails.LastName,
+                    DateOfBirth = candidate.RegistrationDetails.DateOfBirth.Date,
+                    //todo: confirm mapping of address (which of the 6 legacy fields to map our 4 fields to) - outstanding query with John
+                    AddressLine1 = candidate.RegistrationDetails.Address.AddressLine1,
+                    AddressLine2 = candidate.RegistrationDetails.Address.AddressLine2,
+                    AddressLine3 = candidate.RegistrationDetails.Address.AddressLine3,
+                    AddressLine4 = candidate.RegistrationDetails.Address.AddressLine4,
+                    Postcode = candidate.RegistrationDetails.Address.Postcode,
+                    LandlineTelephone = candidate.RegistrationDetails.PhoneNumber,
+                    MobileTelephone = candidate.RegistrationDetails.PhoneNumber,
+                }
+            };
+
+            var response = default(CreateCandidateResponse);
+            _service.Use(client => response = client.CreateCandidate(request));
+
+            if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
+            {
+                //todo: should use an application exception type
+                throw new Exception("Failed to create candidate in legacy system");
+            }
+
+            var legacyCandidateId = response.CandidateId;
+
+            //todo: add logging
+
+            return legacyCandidateId;
         }
     }
 }
