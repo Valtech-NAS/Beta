@@ -357,6 +357,8 @@
     <Compile Include="App_Start\WebApiConfig.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\RegisterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EducationMessages.cs" />
     <Compile Include="Constants\Whitelists.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
@@ -380,6 +382,8 @@
     <Compile Include="Providers\SearchProvider.cs" />
     <Compile Include="Providers\VacancyDetailProvider.cs" />
     <Compile Include="Validators\ApplicationViewModelValidator.cs" />
+    <Compile Include="Validators\DateOfBirthViewModelValidator.cs" />
+    <Compile Include="Validators\RegisterViewModelValidator.cs" />
     <Compile Include="Validators\EducationViewModelValidator.cs" />
     <Compile Include="Validators\CandidateViewModelValidator.cs" />
     <Compile Include="Validators\EmployerQuestionAnswersViewModelValidator.cs" />
