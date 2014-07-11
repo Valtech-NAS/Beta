@@ -61,7 +61,7 @@
 
             validator.RuleFor(x => x.Password)
                 .Length(8, 127)
-                .WithMessage(RegisterViewModelMessages.PasswordMessages.WhiteListRegularExpression)
+                .WithMessage(RegisterViewModelMessages.PasswordMessages.LengthErrorText)
                 .NotEmpty()
                 .WithMessage(RegisterViewModelMessages.PasswordMessages.RequiredErrorText)
                 .Matches(RegisterViewModelMessages.PasswordMessages.WhiteListRegularExpression)

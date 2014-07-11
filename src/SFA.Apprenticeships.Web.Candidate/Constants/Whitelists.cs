@@ -36,8 +36,11 @@
         public static class PasswordWhitelist
         {
             //Modified from https://www.owasp.org/index.php/OWASP_Validation_Regex_Repository
-            public const string RegularExpression = @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,127}$";
-            public const string ErrorText = @" must be at least 8 characters requiring numbers and both lowercase and uppercase letters";
+            //public const string RegularExpression = @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[A-Z]).{8,127}$";
+            //Modified to http://stackoverflow.com/questions/5859632/regular-expression-for-password-validation
+
+            public const string RegularExpression = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,127}$";
+            public const string ErrorText = @" must be at least 8 character with upper and lower case and have at least a number or a special character";
         }
     }
 }

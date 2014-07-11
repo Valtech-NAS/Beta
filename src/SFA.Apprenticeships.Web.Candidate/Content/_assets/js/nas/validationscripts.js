@@ -37,3 +37,29 @@
         };
     });
 });
+
+/*
+ * This is a fix to support client side validation of checkboxes being 
+ * specific values, see links below for more details
+ * http://stackoverflow.com/questions/9808794/validate-checkbox-on-the-client-with-fluentvalidation-mvc-3
+ * http://pastebin.com/7uzUJz71
+ */
+(function ($) {
+    $.validator.unobtrusive.adapters.add('equaltovalue', ['valuetocompare'], function (options) {
+        options.rules['equaltovalue'] = options.params;
+        if (options.message != null) {
+            options.messages['equaltovalue'] = options.message;
+        }
+    });
+
+    $.validator.addMethod('equaltovalue', function (value, element, params) {
+        if ($(element).is(':checkbox')) {
+            if ($(element).is(':checked')) {
+                return params.valuetocompare.toLowerCase() === 'true';
+            } else {
+                return params.valuetocompare.toLowerCase() === 'false';
+            }
+        }
+        return params.valuetocompare.toLowerCase() === value.toLowerCase();
+    });
+})(jQuery);

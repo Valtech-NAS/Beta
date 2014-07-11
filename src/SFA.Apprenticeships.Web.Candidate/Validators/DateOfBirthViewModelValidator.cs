@@ -40,7 +40,7 @@
 
             validator.RuleFor(x => x.Year)
                 .InclusiveBetween(DateTime.Now.Year - 100, DateTime.Now.Year)
-                .WithMessage(DateViewModelMessages.YearMessages.RangeErrorText)
+                .WithMessage(string.Format(DateViewModelMessages.YearMessages.RangeErrorText, DateTime.Now.Year - 100, DateTime.Now.Year))
                 .NotEmpty()
                 .WithMessage(DateViewModelMessages.YearMessages.RequiredErrorText);
         }
@@ -52,11 +52,16 @@
                 .WithMessage(DateViewModelMessages.MustBeValidDate);
         }
 
-        private static bool BeValidDate(DateViewModel instance, int day)
+        private static bool BeValidDate(DateViewModel instance, int? day)
         {
+            if (!instance.Year.HasValue || !instance.Month.HasValue || !instance.Day.HasValue)
+            {
+                return false;
+            }
+
             try
             {
-                var date = new DateTime(instance.Year, instance.Month, instance.Day);
+                var date = new DateTime(instance.Year.Value, instance.Month.Value, instance.Day.Value);
             }
             catch (ArgumentOutOfRangeException)
             {

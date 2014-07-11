@@ -44,7 +44,7 @@
         {
             public const string LabelText = "Create password";
             public const string RequiredErrorText = "'Password' must be supplied";
-            public const string TooLongErrorText = "'Password' must not exceed xxx charachers";
+            public const string LengthErrorText = "'Password' must be at least 8 characters long";
             public const string WhiteListRegularExpression = Whitelists.PasswordWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'Password' " + Whitelists.PasswordWhitelist.ErrorText;
         }
