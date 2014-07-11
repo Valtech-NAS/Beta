@@ -11,7 +11,7 @@
         {
             var viewModel = (RegisterViewModel)context.SourceValue;
 
-            var candidate = new Domain.Entities.Candidates.Candidate
+            var candidate = new Candidate
             {
                 RegistrationDetails = new RegistrationDetails
                 {
@@ -33,9 +33,9 @@
                         },
                         Uprn = viewModel.Address.Uprn
                     },
-                    DateOfBirth =
-                        new DateTime(viewModel.DateOfBirth.Year, viewModel.DateOfBirth.Month,
-                            viewModel.DateOfBirth.Day)
+                    DateOfBirth = 
+                        new DateTime(viewModel.DateOfBirth.Year.Value, viewModel.DateOfBirth.Month.Value,
+                            viewModel.DateOfBirth.Day.Value)
                 }
             };
 
