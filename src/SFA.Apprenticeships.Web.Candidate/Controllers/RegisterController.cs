@@ -29,7 +29,13 @@
 
         public ActionResult Index()
         {
-        var validationResult = _registerViewModelServerValidator.Validate(registerView);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Index(RegisterViewModel registerView)
+        {
+            var validationResult = _registerViewModelServerValidator.Validate(registerView);
 
             if (!validationResult.IsValid)
             {
@@ -37,6 +43,7 @@
                 validationResult.AddToModelState(ModelState, string.Empty);
                 return View(registerView);
             }
+
             return View();
         }
 
@@ -51,7 +58,7 @@
             return View(model);
         }
 
-         [HttpPost]
+        [HttpPost]
         public ActionResult Activate(ActivationViewModel activationViewModel)
         {
             activationViewModel.IsActivated = _candidateServiceProvider.Activate(activationViewModel);
@@ -67,7 +74,7 @@
 
             }
 
-            return RedirectToAction("complete","register", activationViewModel.EmailAddress);
+            return RedirectToAction("complete", "register", activationViewModel.EmailAddress);
         }
 
         public ActionResult Complete(string email)
