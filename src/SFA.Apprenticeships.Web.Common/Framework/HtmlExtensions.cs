@@ -10,6 +10,8 @@
 
     public static class HtmlExtensions
     {
+        #region Text and TextArea
+
         /// <summary>
         /// Creates the NAS form element with the appropriate classes.
         /// </summary>
@@ -77,18 +79,11 @@
             Condition.Requires(helper, "helper").IsNotNull();
             Condition.Requires(expression, "expression").IsNotNull();
 
-            ModelState modelState;
-            var validationError = false;
-            var name = ExpressionHelper.GetExpressionText(expression);
-
-            if (!string.IsNullOrEmpty(name) && helper.ViewData.ModelState.TryGetValue(name, out modelState))
-            {
-                validationError = modelState.Errors.Count > 0;
-            }
-
+            var validationError = ValidationError(helper, expression);
+            RouteValueDictionary containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
             RouteValueDictionary controlAttributes = MergeAttributes("form-control", controlHtmlAttributes);
             RouteValueDictionary labelAttributes = MergeAttributes("form-label", labelHtmlAttributes);
-            RouteValueDictionary hintAttributes = MergeAttributes("form-label", hintHtmlAttributes);
+            RouteValueDictionary hintAttributes = MergeAttributes("form-hint", hintHtmlAttributes);
 
             var validator = helper.ValidationMessageFor(expression, null, new { @class = "hidden" });
 
@@ -99,45 +94,98 @@
                 validator,
                 AnchorFor(helper, expression),
                 addMaxLengthCounter ? CharactersLeftFor(helper, expression) : null,
-                validationError,
-                containerHtmlAttributes);
-        }
-
-        private static RouteValueDictionary MergeAttributes(string baseClassName, object extendedAttributes)
-        {
-            RouteValueDictionary mergeAttributes = extendedAttributes != null ? new RouteValueDictionary(extendedAttributes) : new RouteValueDictionary();
-
-            if (mergeAttributes.ContainsKey("class"))
-            {
-                mergeAttributes["class"] += " " + baseClassName;
-            }
-            else
-            {
-                mergeAttributes.Add("class", baseClassName);
-            }
-
-            return mergeAttributes;
+                containerAttributes,
+                validationError
+                );
         }
 
         private static MvcHtmlString FormText(MvcHtmlString labelContent,
-                                            MvcHtmlString hintContent,
-                                            MvcHtmlString fieldContent,
-                                            MvcHtmlString validationMessage,
-                                            MvcHtmlString anchorTag,
-                                            MvcHtmlString maxLengthSpan,
-                                            bool validationError = false, 
-                                            object containerHtmlAttributes = null)
+                                    MvcHtmlString hintContent,
+                                    MvcHtmlString fieldContent,
+                                    MvcHtmlString validationMessage,
+                                    MvcHtmlString anchorTag,
+                                    MvcHtmlString maxLengthSpan,
+                                    RouteValueDictionary containerHtmlAttributes,
+                                    bool validationError = false
+                                    )
         {
             var container = new TagBuilder("div");
-            
-            if (validationError) { container.AddCssClass(HtmlHelper.ValidationInputCssClassName);             }
-            if (containerHtmlAttributes != null) { container.MergeAttributes(new RouteValueDictionary(containerHtmlAttributes)); }
-            //Needs added after container.MergeAttributes as MergeAttributes will overwrite existing values.
-            container.AddCssClass("form-group");
+            container.MergeAttributes(containerHtmlAttributes);
+
+            if (validationError)
+            {
+                container.AddCssClass(HtmlHelper.ValidationInputCssClassName);
+            }
 
             container.InnerHtml += string.Concat(anchorTag, labelContent, hintContent, fieldContent, maxLengthSpan, validationMessage);
-            
+
             return MvcHtmlString.Create(container.ToString());
+        }
+
+        #endregion
+
+        #region Checkbox
+
+        /// <summary>
+        /// Creates the NAS form element with the appropriate classes.
+        /// </summary>
+        /// <returns>The html to render</returns>
+        public static MvcHtmlString FormCheckBoxFor<TModel>(
+                    this HtmlHelper<TModel> helper,
+                    Expression<Func<TModel, bool>> expression,
+                    string labelText = null,
+                    string hintText = null,
+                    object containerHtmlAttributes = null,
+                    object labelHtmlAttributes = null,
+                    object hintHtmlAttributes = null,
+                    object controlHtmlAttributes = null)
+        {
+            var container = new TagBuilder("div");
+            var label = new TagBuilder("label");
+
+            RouteValueDictionary containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
+            RouteValueDictionary controlAttributes = MergeAttributes("", controlHtmlAttributes);
+            RouteValueDictionary labelAttributes = MergeAttributes("", labelHtmlAttributes);
+            //RouteValueDictionary hintAttributes = MergeAttributes("form-hint", hintHtmlAttributes);
+            
+            var validationError = ValidationError(helper, expression);
+            var validator = helper.ValidationMessageFor(expression, null, new { @class = "hidden" });
+            var anchorTag = AnchorFor(helper, expression);
+
+            container.MergeAttributes(containerAttributes);
+
+            if (validationError)
+            {
+                container.AddCssClass(HtmlHelper.ValidationInputCssClassName);
+            }
+
+            label.MergeAttributes(labelAttributes);
+            label.Attributes.Add("for", helper.ViewData.TemplateInfo.GetFullHtmlFieldId(ExpressionHelper.GetExpressionText(expression)));
+            label.InnerHtml = helper.CheckBoxFor(expression, controlAttributes).ToString();
+            label.InnerHtml += GetDisplayName(helper, expression, labelText);
+
+            container.InnerHtml += string.Concat(anchorTag, label.ToString(), validator);
+
+            return MvcHtmlString.Create(container.ToString());
+        }
+
+        #endregion
+
+        #region Hint, Anchor, Characters Left
+
+        public static MvcHtmlString GetDisplayName<TModel, TProperty>(
+                    this HtmlHelper<TModel> htmlHelper,
+                    Expression<Func<TModel, TProperty>> expression,
+                    string labelText = null)
+        {
+            if (!string.IsNullOrWhiteSpace(labelText))
+            {
+                return MvcHtmlString.Create(labelText);
+            }
+
+            var metaData = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
+            string value = metaData.DisplayName ?? (metaData.PropertyName ?? ExpressionHelper.GetExpressionText(expression));
+            return MvcHtmlString.Create(value);
         }
 
         private static MvcHtmlString HintFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, string hintText, IDictionary<string, object> htmlAttributes)
@@ -194,5 +242,41 @@
             tag.SetInnerText("4000");
             return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
         }
+
+        #endregion
+
+        #region Helpers
+
+        private static bool ValidationError<TModel, TProperty>(HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
+        {
+            ModelState modelState;
+            var validationError = false;
+            var name = ExpressionHelper.GetExpressionText(expression);
+
+            if (!string.IsNullOrEmpty(name) && helper.ViewData.ModelState.TryGetValue(name, out modelState))
+            {
+                validationError = modelState.Errors.Count > 0;
+            }
+
+            return validationError;
+        }
+
+        private static RouteValueDictionary MergeAttributes(string baseClassName, object extendedAttributes)
+        {
+            RouteValueDictionary mergeAttributes = extendedAttributes != null ? new RouteValueDictionary(extendedAttributes) : new RouteValueDictionary();
+
+            if (mergeAttributes.ContainsKey("class"))
+            {
+                mergeAttributes["class"] += " " + baseClassName;
+            }
+            else
+            {
+                mergeAttributes.Add("class", baseClassName);
+            }
+
+            return mergeAttributes;
+        }
+
+        #endregion
     }
 }

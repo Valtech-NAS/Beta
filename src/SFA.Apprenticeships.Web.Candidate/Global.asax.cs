@@ -4,11 +4,12 @@
     using System.Web.Http;
     using System.Web;
     using System.Web.Optimization;
+    using Common.Validations;
     using FluentValidation.Mvc;
     using Common.Framework;
-    using Controllers;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using FluentValidation.Validators;
 
     public class MvcApplication : HttpApplication
     {
@@ -27,7 +28,11 @@
 
             ControllerBuilder.Current.SetControllerFactory(new DefaultControllerFactory());
 
-            FluentValidationModelValidatorProvider.Configure();
+            FluentValidationModelValidatorProvider.Configure(provider =>
+            {
+                provider.AddImplicitRequiredValidator = false;
+                provider.Add(typeof(EqualValidator), (metadata, context, description, validator) => new EqualToValueFluentValidationPropertyValidator(metadata, context, description, validator));
+            });
         }
 
         protected void Application_Error(object sender, EventArgs e)
