@@ -27,14 +27,13 @@
                     MiddleName = candidate.RegistrationDetails.MiddleNames,
                     Surname = candidate.RegistrationDetails.LastName,
                     DateOfBirth = candidate.RegistrationDetails.DateOfBirth.Date,
-                    //todo: confirm mapping of address (which of the 6 legacy fields to map our 4 fields to) - outstanding query with John
                     AddressLine1 = candidate.RegistrationDetails.Address.AddressLine1,
                     AddressLine2 = candidate.RegistrationDetails.Address.AddressLine2,
                     AddressLine3 = candidate.RegistrationDetails.Address.AddressLine3,
                     AddressLine4 = candidate.RegistrationDetails.Address.AddressLine4,
                     Postcode = candidate.RegistrationDetails.Address.Postcode,
                     LandlineTelephone = candidate.RegistrationDetails.PhoneNumber,
-                    MobileTelephone = candidate.RegistrationDetails.PhoneNumber,
+                    MobileTelephone = string.Empty
                 }
             };
 

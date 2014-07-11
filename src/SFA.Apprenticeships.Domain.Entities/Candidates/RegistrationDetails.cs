@@ -17,6 +17,6 @@
         public DateTime DateOfBirth { get; set; }
         public Address Address { get; set; }
         public string EmailAddress { get; set; }
-        public string PhoneNumber { get; set; } //todo: Candidate.Mobile and/or Landline? PhoneType??
+        public string PhoneNumber { get; set; }
     }
 }
