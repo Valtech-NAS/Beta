@@ -8,11 +8,7 @@
 
         public string Lastname { get; set; }
 
-        public short Day { get; set; }
-
-        public short Month { get; set; }
-
-        public short Year { get; set; }
+        public DateViewModel DateOfBirth { get; set; }
 
         public AddressViewModel Address{ get; set; }
 

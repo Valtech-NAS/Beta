@@ -1,0 +1,10 @@
+﻿@model DateViewModel
+
+<div class="form-group date-input">
+    <p class="form-label">Date of birth</p>
+    
+    @Html.FormTextFor(m => m.Day, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { @class = "form-hint" }, controlHtmlAttributes: new { type = "tel", maxlength = "2", pattern = "[0-9]*" })
+    @Html.FormTextFor(m => m.Month, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { @class = "form-hint" }, controlHtmlAttributes: new { type = "tel", maxlength = "2", pattern = "[0-9]*" })
+    @Html.FormTextFor(m => m.Year, containerHtmlAttributes: new { @class = "form-group-compound form-group-year" }, labelHtmlAttributes: new { @class = "form-hint" }, controlHtmlAttributes: new { type = "tel", maxlength = "4", pattern = "[0-9]*" })
+    
+</div>

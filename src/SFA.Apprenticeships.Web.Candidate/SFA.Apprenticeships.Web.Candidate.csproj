@@ -282,6 +282,7 @@
     <Content Include="Views\Shared\ValidationSummary.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AddressViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateViewModel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -391,6 +392,7 @@
     <Compile Include="ViewModels\Candidate\CandidateViewModel.cs" />
     <Compile Include="ViewModels\Candidate\WorkExperienceViewModel.cs" />
     <Compile Include="ViewModels\Candidate\QualificationsViewModel.cs" />
+    <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\Register\RegisterViewModel.cs" />
