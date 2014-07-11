@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies;
-
-namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
     using System;
     using System.Linq;
@@ -10,6 +8,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
     using Common.Wcf;
     using Configuration;
     using VacancySummaryProxy;
+    using Domain.Entities.Vacancies;
     using StructureMap;
 
     [TestFixture]
