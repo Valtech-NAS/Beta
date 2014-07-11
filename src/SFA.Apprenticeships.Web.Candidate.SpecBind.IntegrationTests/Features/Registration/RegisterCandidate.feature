@@ -1,11 +1,11 @@
-﻿Feature: RegisterCandidate
-	In order to avoid silly mistakes
-	As a math idiot
-	I want to be told the sum of two numbers
+﻿Feature: Register Candidate
+	In order to apply for a vacnacy
+	As an apprentice
+	I want to be able to register for the service
 
 @mytag
-Scenario: Add two numbers
-	Given I have entered 50 into the calculator
-	And I have entered 70 into the calculator
-	When I press add
-	Then the result should be 120 on the screen
+Scenario: As a candidate I am on the registration page and all required fields are present
+	Given I navigated to the RegisterCandidatePage page
+	When I am on the RegisterCandidatePage page
+	Then I wait to see Firstname
+	And I wait to see Lastname
