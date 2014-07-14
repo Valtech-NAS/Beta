@@ -11,7 +11,7 @@
     {
         public static string ConfigurationFileAppSetting = "ConfigurationPath";
 
-        public Configuration Configuration { get; private set; }
+        public System.Configuration.Configuration Configuration { get; private set; }
 
         public ConfigurationManager(string configFileAppSettingKey = null)
         {

@@ -1,12 +1,11 @@
 using SFA.Apprenticeships.Web.Employer;
-using StructureMap;
-
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(StructuremapMvc), "Start")]
 
 namespace SFA.Apprenticeships.Web.Employer
 {
-    using SFA.Apprenticeships.Infrastructure.Common.IoC;
-    using SFA.Apprenticeships.Web.Common.IoC;
+    using Common.IoC;
+    using Infrastructure.Common.IoC;
+    using StructureMap;
 
     /// <summary>
     /// StructureMap MVC initialization. Sets the MVC resolver and the WebApi resolver to use structure map.

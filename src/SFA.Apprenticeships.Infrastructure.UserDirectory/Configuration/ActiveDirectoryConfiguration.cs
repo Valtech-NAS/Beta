@@ -1,9 +1,9 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Common.ActiveDirectory
+﻿namespace SFA.Apprenticeships.Infrastructure.UserDirectory.Configuration
 {
     using System.Configuration;
-    using SFA.Apprenticeships.Infrastructure.Common.Configuration;
+    using Common.Configuration;
 
-    public class ActiveDirectoryConfiguration : SecureConfigurationSection<ActiveDirectoryConfiguration>, IActiveDirectoryConfiguration
+    public class ActiveDirectoryConfiguration : SecureConfigurationSection<ActiveDirectoryConfiguration>
     {
         private const string ServerConstant = "Server";
         private const string DistinguishedNameConstant = "DistinguishedName";

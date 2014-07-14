@@ -1,11 +1,12 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers
+﻿using SFA.Apprenticeships.Infrastructure.Common.Mappers;
+
+namespace SFA.Apprenticeships.Web.Candidate.Mappers
 {
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Candidates;
-    using Infrastructure.Common.Mappers;
     using ViewModels.Locations;
     using ViewModels.VacancySearch;
     using Resolvers;

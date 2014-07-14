@@ -2,8 +2,15 @@
 {
     using System;
     using Interfaces.Users;
+
     public class AuthenticationService : IAuthenticationService
     {
+     
+
+        public AuthenticationService()
+        {
+        }
+
         public void AuthenticateUser(Guid id, string password)
         {
             throw new NotImplementedException();

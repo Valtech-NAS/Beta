@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
+﻿using SFA.Apprenticeships.Infrastructure.Common.Configuration;
+
+namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
     using System.Linq;
@@ -7,7 +9,6 @@
     using Common.Controllers;
     using FluentValidation.Mvc;
     using Infrastructure.Azure.Session;
-    using Infrastructure.Common.Configuration;
     using Providers;
     using Validators;
     using ViewModels.VacancySearch;
