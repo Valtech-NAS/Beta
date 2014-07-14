@@ -1,5 +1,4 @@
-﻿
-namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
 {
     using NUnit.Framework;
     using System.Linq;
@@ -20,29 +19,20 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
             Assert.IsNotNull(SendGridConfiguration.Instance.Password);
         }
 
-       [Test]
-       public void ShouldGetMultipleTemplates()
-       {
-           var templates = SendGridConfiguration.Instance.Templates;
+        [Test]
+        public void ShouldGetMultipleTemplates()
+        {
+            var templates = SendGridConfiguration.Instance.Templates;
 
-           Assert.IsNotNull(templates);
-           Assert.IsTrue((templates.Count > 1));
+            Assert.IsNotNull(templates);
+            Assert.IsTrue(templates.Count() > 1);
         }
 
-        [Test]
-        public void ShouldGetFirstTemplateConfigurationByName()
+        [TestCase(0)]
+        [TestCase(1)]
+        public void ShouldGetMultipleTemplateConfiguration(int index)
         {
-            var template = SendGridConfiguration.Instance.Templates["Candiate.ActivationCodeEmail"];
-
-            Assert.IsNotNull(template);
-            Assert.IsNotNull(template.Name);
-            Assert.IsNotNull(template.Id);
-        }
-
-        [Test]
-        public void ShouldGetSecondTemplateConfigurationByIndex()
-        {
-            var template = SendGridConfiguration.Instance.Templates.ElementAt(1);
+            var template = SendGridConfiguration.Instance.Templates.ElementAt(index);
 
             Assert.IsNotNull(template);
             Assert.IsNotNull(template.Name);

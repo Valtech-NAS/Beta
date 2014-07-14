@@ -1,16 +1,19 @@
-﻿using System.Collections.Generic;
-
-namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
 {
+    using System;
+    using System.Collections.Generic;
     using NUnit.Framework;
     using StructureMap;
     using Common.IoC;
     using IoC;
+    using Common.Configuration;
     using Application.Interfaces.Messaging;
 
     [TestFixture]
     public class SendGridEmailDispatcherTests
     {
+        private IConfigurationManager _configManager;
+
         [SetUp]
         public void SetUp()
         {
@@ -19,6 +22,8 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
                 x.AddRegistry<CommunicationRegistry>();
                 x.AddRegistry<CommonRegistry>();
             });
+
+            _configManager = ObjectFactory.GetInstance<IConfigurationManager>();
         }
 
         [Test]
@@ -40,19 +45,50 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
 
             var request = new EmailRequest
             {
-                Subject = "Hello, World",
-                FromEmail = "from@example.com",
-                ToEmail = "to@example.com",
-                Tokens = new KeyValuePair<string, string>[]
+                Subject = "Hello, World at " + DateTime.Now.ToLongTimeString(),
+                FromEmail = TestFromEmail,
+                ToEmail = TestToEmail,
+                Tokens = new[]
                 {
-                }
+                    new KeyValuePair<string, string>(
+                        "Candidate.ActivationCode", DateTime.Now.ToLongDateString())
+                },
+                TemplateName = TestTemplateName
             };
 
             // Act.
             dispatcher.SendEmail(request);
 
-            // Assert.
-            Assert.Inconclusive();
+            // Assert: we do not expect an exception.
         }
+
+        [Test]
+        // TODO: AG: make exception more specific when exceptions generally.
+        [ExpectedException(typeof(Exception))]
+        public void ShouldThrowIfTemplateNameIsInvalid()
+        {
+            // Arrange.
+            var dispatcher = ObjectFactory.GetInstance<IEmailDispatcher>();
+
+            var request = new EmailRequest
+            {
+                Subject = "Hello, World at " + DateTime.Now.ToLongTimeString(),
+                FromEmail = TestFromEmail,
+                ToEmail = TestToEmail,
+                Tokens = new KeyValuePair<string, string>[]
+                {
+                },
+                TemplateName = "Invalid.Template.Name"
+            };
+
+            // Act.
+            dispatcher.SendEmail(request);
+        }
+
+        public string TestToEmail { get { return _configManager.GetAppSetting("Email.Test.To"); } }
+
+        public string TestFromEmail { get { return _configManager.GetAppSetting("Email.Test.From"); } }
+
+        public string TestTemplateName { get { return _configManager.GetAppSetting("Email.Test.TemplateName"); } }
     }
 }
