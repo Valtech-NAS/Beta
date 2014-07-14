@@ -16,7 +16,7 @@ namespace SFA.Apprenticeships.Web.Candidate
     using Common.IoC;
     using StructureMap;
     using Infrastructure.Common.IoC;
-
+    using Infrastructure.UserDirectory.IoC;
 
     /// <summary>
     /// StructureMap MVC initialization. Sets the MVC resolver and the WebApi resolver to use structure map.
@@ -38,6 +38,7 @@ namespace SFA.Apprenticeships.Web.Candidate
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
+                x.AddRegistry<UserDirectoryRegistry>();
 
                 // web layer
                 x.AddRegistry<SessionRegistry>();

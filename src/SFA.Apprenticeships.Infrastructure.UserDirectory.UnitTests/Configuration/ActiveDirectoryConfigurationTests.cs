@@ -16,6 +16,7 @@
             test.Server.Should().Be("server");
             test.Username.Should().Be("username");
             test.Password.Should().Be("password");
+            test.SecureMode.Should().BeTrue();
         }
     }
 }

@@ -12,15 +12,17 @@
         private const string PortConstant = "Port";
         private const string SslPortConstant = "SslPort";
         private const string DefaultValueConstant = "";
+        private const string SecureModeConstant = "SecureMode";
 
-        public ActiveDirectoryConfiguration(): base("ActiveDirectoryConfiguration")
+        public ActiveDirectoryConfiguration()
+            : base("ActiveDirectoryConfiguration")
         {
         }
 
         [ConfigurationProperty(ServerConstant, IsRequired = true, IsKey = true, DefaultValue = DefaultValueConstant)]
         public string Server
         {
-            get { return (string) this[ServerConstant]; }
+            get { return (string)this[ServerConstant]; }
             set { this[ServerConstant] = value; }
         }
 
@@ -56,6 +58,13 @@
         public int SslPort
         {
             get { return (int)this[SslPortConstant]; }
+            set { this[SslPortConstant] = value; }
+        }
+
+        [ConfigurationProperty(SecureModeConstant, IsRequired = false, DefaultValue = true)]
+        public bool SecureMode
+        {
+            get { return (bool)this[SecureModeConstant]; }
             set { this[SslPortConstant] = value; }
         }
     }

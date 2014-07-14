@@ -13,13 +13,12 @@
         private readonly bool _isSecure;
         private readonly ActiveDirectoryConfiguration _config;
 
-        public ActiveDirectoryServer(ActiveDirectoryConfiguration config, bool isSecure)
+        public ActiveDirectoryServer(ActiveDirectoryConfiguration config)
         {
-            _isSecure = isSecure;
             _config = config;
-
+            _isSecure = _config.SecureMode;
             Connection = new LdapConnection(new LdapDirectoryIdentifier(Server, Port));
-            Connection.SessionOptions.SecureSocketLayer = isSecure;
+            Connection.SessionOptions.SecureSocketLayer = _isSecure;
             Connection.SessionOptions.VerifyServerCertificate = ServerCallback;
         }
 
@@ -53,8 +52,6 @@
             }
         }
 
-
-        //removing username and password parameters requirment and using config values instead
         public bool Bind()
         {
             Connection.Credential = new NetworkCredential(_config.Username, _config.Password);

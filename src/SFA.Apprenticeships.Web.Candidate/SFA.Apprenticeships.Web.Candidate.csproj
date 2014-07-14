@@ -502,6 +502,10 @@
       <Project>{4696D786-2F3C-4A12-BD6B-38E2981D6DF1}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Users</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.UserDirectory\SFA.Apprenticeships.Infrastructure.UserDirectory.csproj">
+      <Project>{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.UserDirectory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancySearch\SFA.Apprenticeships.Infrastructure.VacancySearch.csproj">
       <Project>{913445EC-3175-4AFB-869C-F03B6FD2940A}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.VacancySearch</Name>
