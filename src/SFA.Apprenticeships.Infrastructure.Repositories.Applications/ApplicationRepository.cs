@@ -9,7 +9,7 @@
     using Mongo.Common;
     using MongoDB.Driver.Builders;
 
-    public class ApplicationRepository : GenericMongoRepository<MongoApplicationDetail>, IApplicationWriteRepository
+    public class ApplicationRepository : GenericMongoClient<MongoApplicationDetail>, IApplicationWriteRepository
     {
         private readonly IMapper _mapper;
 

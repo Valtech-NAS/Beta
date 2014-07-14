@@ -38,6 +38,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Locations\IAddressSearchProvider.cs" />
     <Compile Include="Messaging\CandidateMessageTypes.cs" />
     <Compile Include="Messaging\CommunicationTokens.cs" />
     <Compile Include="Messaging\EmailRequest.cs" />

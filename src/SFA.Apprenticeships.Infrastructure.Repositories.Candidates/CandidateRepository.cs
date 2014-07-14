@@ -9,7 +9,7 @@
     using Mongo.Common;
     using MongoDB.Driver.Builders;
 
-    public class CandidateRepository : GenericMongoRepository<MongoCandidate>, ICandidateReadRepository, ICandidateWriteRepository
+    public class CandidateRepository : GenericMongoClient<MongoCandidate>, ICandidateReadRepository, ICandidateWriteRepository
     {
         private readonly IMapper _mapper;
 
