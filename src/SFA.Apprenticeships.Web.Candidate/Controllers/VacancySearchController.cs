@@ -20,7 +20,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         private readonly VacancySearchViewModelLocationValidator _searchLocationValidator;
         private readonly IVacancyDetailProvider _vacancyDetailProvider;
         private readonly int _vacancyResultsPerPage;
-        private readonly int _locationResultLimit;
 
         public VacancySearchController(IConfigurationManager configManager,
             ISearchProvider searchProvider,
@@ -34,7 +33,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
             _searchLocationValidator = searchLocationValidator;
             _vacancyDetailProvider = vacancyDetailProvider;
             _vacancyResultsPerPage = configManager.GetAppSetting<int>("VacancyResultsPerPage");
-            _locationResultLimit = configManager.GetAppSetting<int>("LocationResultLimit");
         }
 
         [HttpGet]
@@ -117,19 +115,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
 
             var results = _searchProvider.FindVacancies(searchViewModel, _vacancyResultsPerPage);
             return View("results", results);
-        }
-
-        [HttpGet]
-        public ActionResult Location(string term)
-        {
-            var matches = _searchProvider.FindLocation(term);
-
-            if (Request.IsAjaxRequest())
-            {
-                return Json(matches.Take(_locationResultLimit), JsonRequestBehavior.AllowGet);
-            }
-
-            throw new NotImplementedException("Non-js not yet implemented!");
         }
 
         [HttpGet]

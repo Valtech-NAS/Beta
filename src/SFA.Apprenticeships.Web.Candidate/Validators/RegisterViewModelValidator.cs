@@ -26,6 +26,7 @@
         internal static void AddCommonRules(this AbstractValidator<RegisterViewModel> validator)
         {
             validator.RuleFor(x => x.DateOfBirth).SetValidator(new DateOfBirthViewModelClientValidator());
+            validator.RuleFor(x => x.Address).SetValidator(new AddressViewModelValidator());
 
             validator.RuleFor(x => x.Firstname)
                 .Length(0, 35)

@@ -223,6 +223,7 @@
     <Content Include="Content\_assets\img\icon-star-filled.png" />
     <Content Include="Content\_assets\img\icon-star-hollow-2x.png" />
     <Content Include="Content\_assets\img\icon-star-hollow.png" />
+    <Content Include="Content\_assets\js\nas\addressLookup.js" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
     <Content Include="Content\_assets\js\nas\locationAutocomplete.js" />
     <Content Include="Content\_assets\img\arrow-sprite-2x.png" />
@@ -359,6 +360,7 @@
     <Compile Include="App_Start\WebApiConfig.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Constants\ViewModels\AddressMessages.cs" />
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ActivationCodeMessages.cs" />
     <Compile Include="Constants\ViewModels\RegisterViewModelMessages.cs" />
@@ -367,6 +369,7 @@
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\VacancySearchController.cs" />
     <Compile Include="Global.asax.cs">
@@ -391,6 +394,7 @@
     <Compile Include="Providers\IVacancyDetailProvider.cs" />
     <Compile Include="Providers\SearchProvider.cs" />
     <Compile Include="Providers\VacancyDetailProvider.cs" />
+    <Compile Include="Validators\AddressViewModelValidator.cs" />
     <Compile Include="Validators\ActivationViewModelValidator.cs" />
     <Compile Include="Validators\ApplicationViewModelValidator.cs" />
     <Compile Include="Validators\DateOfBirthViewModelValidator.cs" />
@@ -420,6 +424,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Constants\Pages\" />
+    <Folder Include="Views\Location\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Address\SFA.Apprenticeships.Application.Address.csproj">

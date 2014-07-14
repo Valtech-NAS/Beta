@@ -60,7 +60,7 @@
     <script src="~/Content/_assets/js/nas/locationAutocomplete.js" type="text/javascript"></script>
     <script>
         $("#Location").locationMatch({
-            url: '@Url.Action("location", "vacancysearch")',
+            url: '@Url.Action("location", "Location")',
             longitude: '#@(Html.IdFor(m => m.Longitude))',
             latitude: '#@(Html.IdFor(m => m.Latitude))',
             latlonhash: '#@(Html.IdFor(m => m.Hash))'
