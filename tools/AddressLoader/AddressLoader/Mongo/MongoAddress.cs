@@ -1,8 +1,8 @@
-using System;
-using MongoDB.Bson.Serialization.Attributes;
-
 namespace AddressLoader.Mongo
 {
+    using System;
+    using MongoDB.Bson.Serialization.Attributes;
+
     [BsonIgnoreExtraElements]
     public class MongoAddress
     {

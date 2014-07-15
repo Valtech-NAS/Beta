@@ -10,10 +10,10 @@
 
     public class AddressLoader
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly string _aliasName;
         private readonly int _batchSize;
         private readonly Uri _endpoint;
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly string _mongoCollectionName;
         private readonly string _mongoConnectionString;
         private readonly string _mongoDatabaseName;
@@ -35,12 +35,13 @@
             if (isTestMode) _logger.Debug("** TEST MODE **");
 
             _logger.Debug("Connecting to {0}", _mongoConnectionString);
-            var addressProvider = new MongoAddressProvider(_mongoConnectionString, _mongoDatabaseName, _mongoCollectionName);
+            var addressProvider = new MongoAddressProvider(_mongoConnectionString, _mongoDatabaseName,
+                _mongoCollectionName);
 
             _logger.Debug("Connecting to {0}", _endpoint);
             var settings = new ConnectionSettings(_endpoint);
 
-            string indexName = string.Format("{0}.{1:yyyy-MM-dd}", _aliasName, DateTime.Now);
+            var indexName = string.Format("{0}.{1:yyyy-MM-dd}", _aliasName, DateTime.Now);
             _logger.Debug("Using index \"{0}\"", indexName);
 
             settings.SetDefaultIndex(indexName);
@@ -59,13 +60,13 @@
             client.CreateIndex(indexName, i => i.AddMapping<AddressData>(m => m.MapFromAttributes()));
 
             _logger.Debug("Indexing \"{0}\" in batches of {1}...", indexName, _batchSize);
-            int total = 0;
-            int batchItemCount = 0;
+            var total = 0;
+            var batchItemCount = 0;
             var batchItems = new List<AddressData>();
             var readWatch = new Stopwatch();
             readWatch.Start();
 
-            foreach (MongoAddressWrapper address in addressProvider.AllResidentialAddresses)
+            foreach (var address in addressProvider.AllResidentialAddresses)
             {
                 if (batchItemCount == _batchSize)
                 {
@@ -80,7 +81,7 @@
                     readWatch.Start();
                 }
 
-                AddressData add = address.ToAddress();
+                var add = address.ToAddress();
                 batchItems.Add(add);
                 batchItemCount++;
 
@@ -90,14 +91,14 @@
             if (!isTestMode)
             {
                 IndexItems(client, batchItems, indexName, readWatch.ElapsedMilliseconds);
-                total += _batchSize;
+                total += batchItemCount;
             }
 
             _logger.Info("Indexed {0} records into \"{1}\" at {2}", total, indexName, _endpoint);
 
             _logger.Debug("Creating/swapping alias");
 
-            IEnumerable<string> existingIndexesOnAlias = client.GetIndicesPointingToAlias(_aliasName);
+            var existingIndexesOnAlias = client.GetIndicesPointingToAlias(_aliasName);
             client.Swap(_aliasName, existingIndexesOnAlias, new[] {indexName});
 
             _logger.Debug("Alias \"{0}\" now points to index \"{1}\"", _aliasName, indexName);
@@ -108,7 +109,7 @@
         {
             var indexWatch = new Stopwatch();
             indexWatch.Start();
-            IBulkResponse result = client.IndexMany(batchItems, indexName);
+            var result = client.IndexMany(batchItems, indexName);
             indexWatch.Stop();
 
             _logger.Debug("Read {0} records in {1}ms, indexed in {2}ms",

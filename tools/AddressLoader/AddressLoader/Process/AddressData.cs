@@ -1,8 +1,8 @@
-﻿using System;
-using Nest;
-
-namespace AddressLoader.Process
+﻿namespace AddressLoader.Process
 {
+    using System;
+    using Nest;
+
     /// <summary>
     /// DTO for mapping elasticsearch index to
     /// </summary>

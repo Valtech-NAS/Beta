@@ -1,8 +1,6 @@
-using System;
-using AddressLoader.Domain;
-
 namespace AddressLoader.Mongo
 {
+    using System;
     using Process;
 
     public static class MongoAddressMapper
