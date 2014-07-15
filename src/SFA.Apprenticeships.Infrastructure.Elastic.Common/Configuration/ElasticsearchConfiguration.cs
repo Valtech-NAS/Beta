@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Configuration;
-    using SFA.Apprenticeships.Infrastructure.Common.Configuration;
+    using Infrastructure.Common.Configuration;
 
     public class ElasticsearchConfiguration : SecureConfigurationSection<ElasticsearchConfiguration>
     {

@@ -1,24 +1,24 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Common.ActiveDirectory
+﻿namespace SFA.Apprenticeships.Infrastructure.UserDirectory.ActiveDirectory
 {
     using System;
     using System.DirectoryServices.AccountManagement;
     using System.DirectoryServices.Protocols;
     using System.Net;
     using System.Security.Cryptography.X509Certificates;
+    using Configuration;
 
     public class ActiveDirectoryServer : IDisposable
     {
         private const int ValidationFailed = 49;
         private readonly bool _isSecure;
-        private readonly IActiveDirectoryConfiguration _config;
+        private readonly ActiveDirectoryConfiguration _config;
 
-        public ActiveDirectoryServer(IActiveDirectoryConfiguration config, bool isSecure)
+        public ActiveDirectoryServer(ActiveDirectoryConfiguration config)
         {
-            _isSecure = isSecure;
             _config = config;
-
+            _isSecure = _config.SecureMode;
             Connection = new LdapConnection(new LdapDirectoryIdentifier(Server, Port));
-            Connection.SessionOptions.SecureSocketLayer = isSecure;
+            Connection.SessionOptions.SecureSocketLayer = _isSecure;
             Connection.SessionOptions.VerifyServerCertificate = ServerCallback;
         }
 
@@ -52,9 +52,9 @@
             }
         }
 
-        public bool Bind(string username, string password)
+        public bool Bind()
         {
-            Connection.Credential = new NetworkCredential(username, password);
+            Connection.Credential = new NetworkCredential(_config.Username, _config.Password);
             Connection.AuthType = AuthType.Negotiate;
 
             try

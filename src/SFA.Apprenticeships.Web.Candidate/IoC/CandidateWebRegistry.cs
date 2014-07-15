@@ -1,4 +1,5 @@
 ﻿using SFA.Apprenticeships.Application.Communication.Strategies;
+using SFA.Apprenticeships.Infrastructure.UserDirectory;
 
 namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
@@ -40,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC
             For<IAuthenticationService>().Use<AuthenticationService>();
             For<ICommunicationService>().Use<CommunicationService>();
             For<ICodeGenerator>().Use<CodeGenerator>();
+            For<IUserDirectoryProvider>().Use<ActiveDirectoryUserDirectoryProvider>();
 
             // providers (web)
             For<IMapper>().Singleton().Use<CandidateWebMappers>().Name = "CandidateWebMappers";

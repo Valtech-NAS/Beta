@@ -1,45 +1,30 @@
 ﻿@model AddressViewModel
 
-<div class="form-group form-group-compound">
-    <label for="post-code" class="form-label">Postcode</label>
-    <input id="post-code" type="text" class="form-control form-control-large " autocapitalize="characters" autocorrect="off" value="">
+<div id="address-lookup" class="hide-nojs">
+    <div class="form-group form-group-compound">
+        <label for="post-code" class="form-label">Postcode</label>
+        <input id="post-code" type="text" class="form-control form-control-large" autocapitalize="characters" autocorrect="off" value="">
+    </div>
+    <div class="form-group form-group-compound">
+        <a href="#" id="find-addresses" class="button address-find-btn">Find address</a>
+    </div>
+    <div id="address-list" class="address-find-select form-group toggle-content">
+        <label for="address-select" class="form-label">Select your address</label>
+        <select id="address-select">
+        </select>
+    </div>
+    <div id="address-manual" class="form-group">
+        <a href="#" class="address-manual-btn">I want to enter address manually</a>
+    </div>
 </div>
-<div class="form-group form-group-compound">
-    <a href="#" class="button address-find-btn">Find address</a>
-</div>
-<div class="address-find-select form-group toggle-content">
-    <label for="address-select" class="form-label">Select your address</label>
-    <select name="" id="address-select">
-        <option value="void">-- 5 found --</option>
-        <option class="address-select-option" value="36 Bolton Road">36 Bolton Road</option>
-        <option class="address-select-option" value="37 Bolton Road">37 Bolton Road</option>
-        <option class="address-select-option" value="38 Bolton Road">38 Bolton Road</option>
-        <option class="address-select-option" value="39 Bolton Road">39 Bolton Road</option>
-        <option class="address-select-option" value="40 Bolton Road">40 Bolton Road</option>
-    </select>
-</div>
-<div class="form-group">
-    <a href="#" class="address-manual-btn">I want to enter address manually</a>
-</div>
-<div class="address-manual-input panel-indent toggle-content">
-    <div class="form-group form-group-compound">
-        <label for="address1" class="form-label">First line of address</label>
-        <input id="address1" type="text" class="form-control" autocorrect="off" value="">
-    </div>
-    <div class="form-group form-group-compound">
-        <label for="address2" class="form-label">Second line (optional)</label>
-        <input id="address2" type="text" class="form-control" autocorrect="off">
-    </div>
-    <div class="form-group form-group-compound">
-        <label for="address3" class="form-label">Town or city</label>
-        <input id="address3" type="text" class="form-control" autocorrect="off" value="">
-    </div>
-    <div class="form-group form-group-compound">
-        <label for="address3b" class="form-label">County</label>
-        <input id="address3b" type="text" class="form-control" autocorrect="off" value="">
-    </div>
-    <div class="form-group form-group-compound">
-        <label for="address4" class="form-label">Post code</label>
-        <input id="address4" type="text" class="form-control form-control-large" autocapitalize="characters" autocorrect="off" value="">
-    </div>
+
+<div id="address-details" class="address-manual-input panel-indent toggle-content">
+    @Html.FormTextFor(m => m.AddressLine1, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
+    @Html.FormTextFor(m => m.AddressLine2, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
+    @Html.FormTextFor(m => m.AddressLine3, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
+    @Html.FormTextFor(m => m.AddressLine4, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
+    @Html.FormTextFor(m => m.Postcode, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { @class = "form-control-large", type = "text", autocapitalize = "characters", autocorrect = "off" })
+    @Html.HiddenFor(m => m.Uprn)
+    @Html.HiddenFor(m => m.GeoPoint.Latitude)
+    @Html.HiddenFor(m => m.GeoPoint.Longitude)
 </div>

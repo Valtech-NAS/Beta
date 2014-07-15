@@ -21,8 +21,12 @@
         [ElementLocator(Id = "Lastname")]
         public IWebElement Lastname { get; set; }
 
-        //[ElementLocator(Class = "date-input")]
-        //public DateOfBirthTemplate DateOfBirth { get; set; }
+        [ElementLocator(Class = "date-input")]
+        public DateOfBirthTemplate DateOfBirth { get; set; }
+
+        public IWebElement Day { get { return DateOfBirth.Day; } }
+        public IWebElement Month { get { return DateOfBirth.Month; } }
+        public IWebElement Year { get { return DateOfBirth.Year; } }
 
         //todo:Add address template
         //public AddressTemplate Address { get; set; }

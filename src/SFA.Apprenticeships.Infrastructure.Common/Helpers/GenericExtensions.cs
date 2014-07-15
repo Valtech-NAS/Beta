@@ -1,10 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-
-namespace SFA.Apprenticeships.Infrastructure.Common.Helpers
+﻿namespace SFA.Apprenticeships.Infrastructure.Common.Helpers
 {
+    using System;
+    using System.IO;
+    using System.Runtime.Serialization;
+    using System.Runtime.Serialization.Formatters.Binary;
     /// <summary>
     /// Generic object extensions.
     /// </summary>

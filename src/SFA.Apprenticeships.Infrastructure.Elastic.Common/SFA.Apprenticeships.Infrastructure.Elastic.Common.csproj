@@ -61,6 +61,7 @@
     <Compile Include="Configuration\IElasticsearchIndexConfiguration.cs" />
     <Compile Include="Configuration\ElasticsearchIndexConfiguration.cs" />
     <Compile Include="Configuration\ElasticsearchConfiguration.cs" />
+    <Compile Include="Entities\AddressLookup.cs" />
     <Compile Include="Entities\GeoPoint.cs" />
     <Compile Include="Entities\LocationLookup.cs" />
     <Compile Include="Entities\VacancyLocationType.cs" />

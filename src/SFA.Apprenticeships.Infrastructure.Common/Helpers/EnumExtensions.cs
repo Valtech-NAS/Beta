@@ -1,11 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using CuttingEdge.Conditions;
-
-namespace SFA.Apprenticeships.Infrastructure.Common.Helpers
+﻿namespace SFA.Apprenticeships.Infrastructure.Common.Helpers
 {
+    using System;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Reflection;
+    using CuttingEdge.Conditions;
+
     /// <summary>
     /// Enum extensions and helpers
     /// </summary>

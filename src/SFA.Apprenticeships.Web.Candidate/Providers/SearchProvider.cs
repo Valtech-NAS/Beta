@@ -7,6 +7,7 @@
     using Application.Interfaces.Vacancies;
     using Domain.Entities.Locations;
     using Domain.Interfaces.Mapping;
+    using ViewModels.Locations;
     using ViewModels.VacancySearch;
 
     public class SearchProvider : ISearchProvider
@@ -48,6 +49,28 @@
             vacancySearchResponseViewModel.VacancySearch = search;
 
             return vacancySearchResponseViewModel;
+        }
+
+        public IEnumerable<AddressViewModel> FindAddresses(string postcode)
+        {
+            var addresses = new List<AddressViewModel>();
+
+            for(int i = 1; i <= 10; i++)
+            {
+                var a = new AddressViewModel
+                {
+                    AddressLine1 = "AddressLine 1 " + i, 
+                    AddressLine2 = "AddressLine 2 " + i,
+                    AddressLine3 = "AddressLine 3 " + i,
+                    AddressLine4 = "AddressLine 4 " + i,
+                    Postcode = "Postcode " + i,
+                    Uprn = "Uprn " + i,
+                    GeoPoint = new GeoPointViewModel() { Latitude = i, Longitude = i }
+                };
+                addresses.Add(a);
+            }
+
+            return addresses;
         }
     }
 }

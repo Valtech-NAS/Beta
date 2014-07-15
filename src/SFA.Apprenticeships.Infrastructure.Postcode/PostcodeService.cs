@@ -28,12 +28,6 @@
                 };
         }
 
-        public IEnumerable<Address> FindAddresses(string postcode)
-        {
-            //todo: needs an address lookup
-            throw new NotImplementedException();
-        }
-
         private IEnumerable<PostcodeInfo> GetPartialMatches(string postcode)
         {
             Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();

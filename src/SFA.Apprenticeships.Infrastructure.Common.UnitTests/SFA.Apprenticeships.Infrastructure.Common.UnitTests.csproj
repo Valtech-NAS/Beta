@@ -67,7 +67,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Configuration\ActiveDirectoryConfigurationTests.cs" />
     <Compile Include="Configuration\ConfigurationManagerTests.cs" />
     <Compile Include="IoC\CommonRegistryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

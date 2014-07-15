@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
+﻿using System.Web.Routing;
+using SFA.Apprenticeships.Web.Candidate.ViewModels.Locations;
+
+namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System.Web.Mvc;
     using Common.Controllers;
@@ -13,6 +16,7 @@
         private readonly IAddressSearchServiceProvider _addressSearchServiceProvider;
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
+        private const string DummyEmailAddress = "chris.monney@gmail.com";
 
         public RegisterController(ISessionState session,
         RegisterViewModelServerValidator registerViewModelServerValidator,
@@ -44,7 +48,21 @@
                 return View(registerView);
             }
 
-            return View();
+            registerView.Address = new AddressViewModel()
+            {
+                AddressLine1 = "104 Livingstone Walk",
+                AddressLine2 = "Hemel Hempstead",
+                Postcode = "HP2 6AL",
+                GeoPoint = new GeoPointViewModel()
+                {
+                    Latitude = 51.7715110,
+                    Longitude = -0.4534940
+                }
+            };
+
+            var succeeded = _candidateServiceProvider.Register(registerView);
+
+            return succeeded ? (ActionResult)RedirectToAction("Activation") : View(registerView);
         }
 
         [HttpGet]
@@ -52,7 +70,7 @@
         {
             var model = new ActivationViewModel()
             {
-                EmailAddress = "chris.monney@gmail.com"
+                EmailAddress = DummyEmailAddress
             };
 
             return View(model);
@@ -65,23 +83,18 @@
 
             var activatedResult = _activationViewModelServerValidator.Validate(activationViewModel);
 
+            if (activatedResult.IsValid) return RedirectToAction("Complete", "Register");
 
-            if (!activatedResult.IsValid)
-            {
-                ModelState.Clear();
-                activatedResult.AddToModelState(ModelState, string.Empty);
-                return View("Activation", activationViewModel);
-
-            }
-
-            return RedirectToAction("complete", "register", activationViewModel.EmailAddress);
+            ModelState.Clear();
+            activatedResult.AddToModelState(ModelState, string.Empty);
+            return View("Activation", activationViewModel);
         }
 
-        public ActionResult Complete(string email)
+        public ActionResult Complete()
         {
-            ViewBag.Message = email;
+            ViewBag.Message = DummyEmailAddress;
 
-            return View(email);
+            return View();
         }
     }
 }

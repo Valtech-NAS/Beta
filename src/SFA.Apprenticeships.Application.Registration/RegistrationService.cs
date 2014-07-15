@@ -26,6 +26,7 @@
             var user = new User
             {
                 ActivationCode = activationCode,
+                ActivateCodeExpiry = DateTime.Now.AddDays(30), //todo: set from config
                 Status = UserStatuses.PendingActivation,
                 EntityId = userId,
                 Username = username,

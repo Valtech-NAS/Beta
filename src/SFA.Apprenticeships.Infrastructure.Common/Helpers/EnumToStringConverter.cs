@@ -2,7 +2,6 @@
 {
     using System;
     using Newtonsoft.Json;
-
     public class EnumToStringConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)

@@ -2,7 +2,7 @@
 {
     using System;
     using AutoMapper;
-    using SFA.Apprenticeships.Infrastructure.Common.Helpers;
+    using Helpers;
 
     public class EnumDescriptionResolver<T> : ValueResolver<string, T> where T : struct, IComparable, IConvertible, IFormattable
     {
