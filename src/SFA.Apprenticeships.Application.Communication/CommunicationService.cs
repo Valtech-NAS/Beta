@@ -22,14 +22,16 @@
 
         public void SendMessageToCandidate(Guid candidateId, CandidateMessageTypes messageType, IList<KeyValuePair<CommunicationTokens, string>> tokens)
         {
+            var templateName = GetTemplateName(messageType);
+
             switch (messageType)
             {
                 case CandidateMessageTypes.SendActivationCode:
-                    //todo: get candidate, invoke strategy to send activation code email / SMS to candidate
                     var candidate = _candidateReadRepository.Get(candidateId);
                     var user = _userReadRepository.Get(candidate.Username);
                     var activationCode = user.ActivationCode;
-                    _sendActivationCodeStrategy.Send(candidate, activationCode);
+
+                    _sendActivationCodeStrategy.Send(templateName, candidate, activationCode);
                     break;
 
                 case CandidateMessageTypes.SendPasswordCode:
@@ -43,10 +45,18 @@
                 case CandidateMessageTypes.PasswordChanged:
                     //todo: get candidate, invoke strategy to send password changed email to candidate
                     break;
-                    
+
                 default:
                     throw new ArgumentOutOfRangeException("messageType");
             }
+        }
+
+        private static string GetTemplateName(Enum messageType)
+        {
+            const string format = "{0}.{1}";
+            var enumType = messageType.GetType();
+
+            return string.Format(format, enumType.Name, Enum.GetName(enumType, messageType));
         }
     }
 }

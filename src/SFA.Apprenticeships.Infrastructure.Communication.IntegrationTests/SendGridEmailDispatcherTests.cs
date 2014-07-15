@@ -63,6 +63,56 @@
         }
 
         [Test]
+        public void ShoudSendEmailWithSubjectInTemplate()
+        {
+            // Arrange.
+            var dispatcher = ObjectFactory.GetInstance<IEmailDispatcher>();
+
+            // NOTE: Subject is not set and is defined in SendGrid email template.
+            var request = new EmailRequest
+            {
+                FromEmail = TestFromEmail,
+                ToEmail = TestToEmail,
+                Tokens = new[]
+                {
+                    new KeyValuePair<string, string>(
+                        "Candidate.ActivationCode", DateTime.Now.ToLongDateString())
+                },
+                TemplateName = TestTemplateName
+            };
+
+            // Act.
+            dispatcher.SendEmail(request);
+
+            // Assert: we do not expect an exception.
+        }
+
+        [Test]
+        public void ShoudSendEmailWithFromEmailInTemplateConfiguration()
+        {
+            // Arrange.
+            var dispatcher = ObjectFactory.GetInstance<IEmailDispatcher>();
+
+            // NOTE: FromEmail is not set and is defined in SendGrid email template.
+            var request = new EmailRequest
+            {
+                Subject = "Hello, World at " + DateTime.Now.ToLongTimeString(),
+                ToEmail = TestToEmail,
+                Tokens = new[]
+                {
+                    new KeyValuePair<string, string>(
+                        "Candidate.ActivationCode", DateTime.Now.ToLongDateString())
+                },
+                TemplateName = TestTemplateName
+            };
+
+            // Act.
+            dispatcher.SendEmail(request);
+
+            // Assert: we do not expect an exception.
+        }
+
+        [Test]
         // TODO: AG: make exception more specific when exceptions generally.
         [ExpectedException(typeof(Exception))]
         public void ShouldThrowIfTemplateNameIsInvalid()
