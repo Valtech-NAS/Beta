@@ -48,11 +48,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                 return View(registerView);
             }
 
+            
+            //todo remove this when address is fully integrated
             registerView.Address = new AddressViewModel()
             {
-                AddressLine1 = "104 Livingstone Walk",
-                AddressLine2 = "Hemel Hempstead",
-                Postcode = "HP2 6AL",
                 GeoPoint = new GeoPointViewModel()
                 {
                     Latitude = 51.7715110,

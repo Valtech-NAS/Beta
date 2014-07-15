@@ -23,8 +23,6 @@
 
         public bool CreateUser(string username, string password)
         {
-            UserPrincipal userPrincipal;
-
             using (var context = _server.Context)
             {
                 var user = UserPrincipal.FindByIdentity(context, username);
@@ -33,35 +31,31 @@
                 {
                     throw new Exception("User already exist"); //todo: should use an application exception type
                 }
-            
+
                 // Create the new UserPrincipal object
-                userPrincipal = new UserPrincipal(context)
+                var userPrincipal = new UserPrincipal(context)
                 {
-                    PasswordNeverExpires = true, 
-                    PasswordNotRequired = false, 
-                    UserCannotChangePassword = false, 
-                    Surname = username, 
-                    GivenName = username, 
-                    SamAccountName = username, 
+                    PasswordNeverExpires = true,
+                    PasswordNotRequired = false,
+                    UserCannotChangePassword = false,
+                    Surname = username,
+                    GivenName = username,
+                    Name = username,
                     Enabled = false,
                 };
+
+                // create the account
+                userPrincipal.Save();
+
+                // set initial password
+                if (!ChangePassword(username, null, password)) return false;
+
+                userPrincipal.Enabled = true;
+
+                userPrincipal.Save();
+
+                return true;
             }
-
-            // create the account
-            userPrincipal.Save();
-
-            // Use admin cred's
-            if (!_server.Bind()) return false;
-
-            var rs = _changePassword.Change(username, null, password);
-
-            if (rs.ResultCode != ResultCode.Success) return false;
-
-            userPrincipal.Enabled = true;
-
-            userPrincipal.Save();
-
-            return true;
         }
 
         public bool ChangePassword(string username, string oldPassword, string newPassword)

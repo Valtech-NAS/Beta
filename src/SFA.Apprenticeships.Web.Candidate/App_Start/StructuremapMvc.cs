@@ -1,3 +1,4 @@
+using SFA.Apprenticeships.Infrastructure.Address.IoC;
 using SFA.Apprenticeships.Web.Candidate;
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(StructuremapMvc), "Start")]
 
@@ -39,6 +40,7 @@ namespace SFA.Apprenticeships.Web.Candidate
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
+                x.AddRegistry<AddressRegistry>();
 
                 // web layer
                 x.AddRegistry<SessionRegistry>();

@@ -467,6 +467,10 @@
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Address\SFA.Apprenticeships.Infrastructure.Address.csproj">
+      <Project>{969662B6-BB64-48EE-880D-9646AB6146A4}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Address</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.Session\SFA.Apprenticeships.Infrastructure.Azure.Session.csproj">
       <Project>{2FC1A9D8-E66E-49D0-BEFF-C845AFDF34F6}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.Session</Name>

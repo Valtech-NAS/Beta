@@ -27,27 +27,70 @@
 
         public Candidate RegisterCandidate(Candidate newCandidate, string password)
         {
-            var username = newCandidate.RegistrationDetails.EmailAddress;
             var newCandidateId = Guid.NewGuid();
+
+            try
+            {
+                //Create user in active directory first so that if that fails the user can try again with the same username
+                CreateUserOnAuthenticationService(password, newCandidateId);
+
+                newCandidate.EntityId = newCandidateId;
+
+                var candidate = ProcessUserCandidateRegistration(newCandidate);
+
+                //Send activation code
+                SendActivationCode(candidate.EntityId, candidate, candidate.ActivationCode);
+
+                return candidate;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private Candidate ProcessUserCandidateRegistration(Candidate newCandidate)
+        {
             var activationCode = _codeGenerator.Generate();
+            var username = newCandidate.RegistrationDetails.EmailAddress;
 
-            newCandidate.EntityId = newCandidateId;
+            newCandidate.ActivationCode = activationCode;
+            newCandidate.ActivateCodeExpiry = DateTime.Now.AddDays(30); //todo: set from config
+            newCandidate.Status = UserStatuses.PendingActivation;
+            newCandidate.Username = username;
+            newCandidate.PasswordResetCode = string.Empty;
+            newCandidate.Roles = UserRoles.Candidate;
 
-            _registrationService.Register(username, newCandidateId, activationCode, UserRoles.Candidate);
-
-            _authenticationService.CreateUser(newCandidateId, password);
+            //Create user on registration service
+            CreateUserOnRegistrationService(newCandidate.Username, newCandidate.EntityId, newCandidate.ActivationCode,
+                newCandidate.Roles);
 
             var candidate = _candidateWriteRepository.Save(newCandidate);
 
+            return candidate;
+        }
+
+        private void CreateUserOnRegistrationService(string username, Guid newCandidateId, string activationCode, UserRoles role)
+        {
+            _registrationService.Register(username, newCandidateId, activationCode, role);
+        }
+
+        private void SendActivationCode(Guid newCandidateId, Candidate candidate, string activationCode)
+        {
             _communicationService.SendMessageToCandidate(newCandidateId, CandidateMessageTypes.SendActivationCode,
                 new[]
                 {
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateLastName, candidate.RegistrationDetails.LastName),
+                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName,
+                        candidate.RegistrationDetails.FirstName),
+                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateLastName,
+                        candidate.RegistrationDetails.LastName),
                     new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ActivationCode, activationCode)
                 });
+        }
 
-            return candidate;
+        private void CreateUserOnAuthenticationService(string password, Guid newCandidateId)
+        {
+            _authenticationService.CreateUser(newCandidateId, password);
         }
     }
 }
