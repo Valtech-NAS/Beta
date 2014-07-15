@@ -17,18 +17,27 @@
 
         public void Send(string templateName, Candidate candidate, string activationCode)
         {
+            var emailAddress = candidate.RegistrationDetails.EmailAddress;
+
             var request = new EmailRequest
             {
-                ToEmail = candidate.RegistrationDetails.EmailAddress,
+                ToEmail = emailAddress,
                 TemplateName = templateName,
-                Tokens = new[]
-                {
-                    new KeyValuePair<string, string>(
-                        "Candidate.ActivationCode", activationCode)
-                },
+                Tokens = CreateTokens(activationCode, emailAddress),
             };
 
             _bus.PublishMessage(request);
+        }
+
+        private static IEnumerable<KeyValuePair<string, string>> CreateTokens(string activationCode, string emailAddress)
+        {
+            return new[]
+            {
+                new KeyValuePair<string, string>(
+                    "Candidate.ActivationCode", activationCode),
+                new KeyValuePair<string, string>(
+                    "Candidate.EmailAddress", emailAddress),
+            };
         }
     }
 }
