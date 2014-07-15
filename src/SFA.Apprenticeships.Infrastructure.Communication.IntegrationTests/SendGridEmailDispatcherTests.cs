@@ -48,11 +48,7 @@
                 Subject = "Hello, World at " + DateTime.Now.ToLongTimeString(),
                 FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
-                Tokens = new[]
-                {
-                    new KeyValuePair<string, string>(
-                        "Candidate.ActivationCode", DateTime.Now.ToLongDateString())
-                },
+                Tokens = CreateTokens(),
                 TemplateName = TestTemplateName
             };
 
@@ -73,11 +69,7 @@
             {
                 FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
-                Tokens = new[]
-                {
-                    new KeyValuePair<string, string>(
-                        "Candidate.ActivationCode", DateTime.Now.ToLongDateString())
-                },
+                Tokens = CreateTokens(),
                 TemplateName = TestTemplateName
             };
 
@@ -98,11 +90,7 @@
             {
                 Subject = "Hello, World at " + DateTime.Now.ToLongTimeString(),
                 ToEmail = TestToEmail,
-                Tokens = new[]
-                {
-                    new KeyValuePair<string, string>(
-                        "Candidate.ActivationCode", DateTime.Now.ToLongDateString())
-                },
+                Tokens = CreateTokens(),
                 TemplateName = TestTemplateName
             };
 
@@ -125,9 +113,7 @@
                 Subject = "Hello, World at " + DateTime.Now.ToLongTimeString(),
                 FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
-                Tokens = new KeyValuePair<string, string>[]
-                {
-                },
+                Tokens = CreateTokens(),
                 TemplateName = "Invalid.Template.Name"
             };
 
@@ -135,10 +121,23 @@
             dispatcher.SendEmail(request);
         }
 
-        public string TestToEmail { get { return _configManager.GetAppSetting("Email.Test.To"); } }
+        private string TestToEmail { get { return _configManager.GetAppSetting("Email.Test.To"); } }
 
-        public string TestFromEmail { get { return _configManager.GetAppSetting("Email.Test.From"); } }
+        private string TestActivationCode { get { return "ABC123"; } }
 
-        public string TestTemplateName { get { return _configManager.GetAppSetting("Email.Test.TemplateName"); } }
+        private string TestFromEmail { get { return _configManager.GetAppSetting("Email.Test.From"); } }
+
+        private string TestTemplateName { get { return _configManager.GetAppSetting("Email.Test.TemplateName"); } }
+
+        private IEnumerable<KeyValuePair<string, string>> CreateTokens()
+        {
+            return new[]
+            {
+                new KeyValuePair<string, string>(
+                    "Candidate.ActivationCode", TestActivationCode),
+                new KeyValuePair<string, string>(
+                    "Candidate.EmailAddress", TestToEmail),
+            };
+        }
     }
 }
