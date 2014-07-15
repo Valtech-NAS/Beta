@@ -28,8 +28,10 @@ namespace AddressLoader.Process
             _mongoCollectionName = mongoCollectionName;
         }
 
-        public void Run()
+        public void Run(bool isTestMode)
         {
+            if (isTestMode) _logger.Debug("** TEST MODE **");
+
             _logger.Debug("Connecting to {0}", _mongoConnectionString);
             var addressProvider = new MongoAddressProvider(_mongoConnectionString, _mongoDatabaseName, _mongoCollectionName);
 
@@ -44,7 +46,7 @@ namespace AddressLoader.Process
             var client = new ElasticClient(settings);
             client.MapFromAttributes<AddressData>();
 
-            _logger.Debug("Checking if indexed already exists");
+            _logger.Debug("Checking if index already exists");
             if (client.IndexExists(indexName).Exists)
             {
                 _logger.Debug("Deleting existing index");
@@ -75,7 +77,7 @@ namespace AddressLoader.Process
                 loop++;
                 total += batch.Count;
 
-                //if (loop > 9) break; //todo: temp code for testing
+                if (isTestMode && loop > 2) break;
             }
 
             _logger.Info("Indexed {0} records into \"{1}\" at {2}", total, indexName, _endpoint);
