@@ -65,7 +65,7 @@
             var readWatch = new Stopwatch();
             readWatch.Start();
 
-            foreach (MongoAddressWrapper address in addressProvider.Collection.FindAll())
+            foreach (MongoAddressWrapper address in addressProvider.AllResidentialAddresses)
             {
                 if (batchItemCount == _batchSize)
                 {

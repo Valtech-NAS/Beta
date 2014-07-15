@@ -1,6 +1,7 @@
 ﻿namespace AddressLoader.Mongo
 {
     using MongoDB.Driver;
+    using MongoDB.Driver.Builders;
 
     public class MongoAddressProvider
     {
@@ -14,9 +15,13 @@
                 .GetCollection<MongoAddressWrapper>(mongoCollectionName);
         }
 
-        public MongoCollection<MongoAddressWrapper> Collection
+        public MongoCursor<MongoAddressWrapper> AllResidentialAddresses
         {
-            get { return _collection; }
+            get
+            {
+                var query = Query.EQ("details.isResidential", true);
+                return _collection.Find(query);
+            }
         }
 
         //public IEnumerable<Address> Fetch(int skip, int take)
