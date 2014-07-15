@@ -6,7 +6,8 @@
     /// <summary>
     /// DTO for mapping elasticsearch index to
     /// </summary>
-    internal class AddressData
+    [ElasticType(Name = "address")]
+    public class Address
     {
         [ElasticProperty(Name = "addressline1", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.not_analyzed)]
         public string AddressLine1 { get; set; }

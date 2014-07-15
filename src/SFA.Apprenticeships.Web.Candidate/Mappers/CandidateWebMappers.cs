@@ -1,16 +1,15 @@
-﻿using SFA.Apprenticeships.Infrastructure.Common.Mappers;
-
-namespace SFA.Apprenticeships.Web.Candidate.Mappers
+﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers
 {
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Candidates;
-    using ViewModels.Locations;
-    using ViewModels.VacancySearch;
+    using Infrastructure.Common.Mappers;
     using Resolvers;
+    using ViewModels.Locations;
     using ViewModels.Register;
+    using ViewModels.VacancySearch;
 
     public class CandidateWebMappers : MapperEngine
     {
@@ -33,7 +32,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Mappers
 
             Mapper.CreateMap<RegisterViewModel, Candidate>()
                 .ConvertUsing<CandidateResolver>();
-
         }
     }
 }

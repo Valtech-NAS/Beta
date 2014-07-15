@@ -3,11 +3,13 @@ using AddressLoader.Domain;
 
 namespace AddressLoader.Mongo
 {
+    using Process;
+
     public static class MongoAddressMapper
     {
-        public static Address ToAddress(this MongoAddressWrapper mongoAddress)
+        public static AddressData ToAddress(this MongoAddressWrapper mongoAddress)
         {
-            return new Address
+            return new AddressData
             {
                 AddressLine1 =
                     string.IsNullOrWhiteSpace(mongoAddress.Address.AddressLine1)
@@ -21,11 +23,8 @@ namespace AddressLoader.Mongo
                 AddressLine4 = mongoAddress.Address.AddressLine4,
                 Postcode = mongoAddress.Address.Postcode,
                 Uprn = mongoAddress.Uprn,
-                Location = new Location
-                {
-                    Longitude = mongoAddress.Location.Longitude,
-                    Latitude = mongoAddress.Location.Latitude
-                }
+                Longitude = mongoAddress.Location.Longitude,
+                Latitude = mongoAddress.Location.Latitude
             };
         }
     }

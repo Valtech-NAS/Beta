@@ -1,26 +1,25 @@
-﻿using SFA.Apprenticeships.Application.Communication.Strategies;
-using SFA.Apprenticeships.Infrastructure.UserDirectory;
-
-namespace SFA.Apprenticeships.Web.Candidate.IoC
+﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
+    using Application.Address;
+    using Application.Authentication;
+    using Application.Candidate;
+    using Application.Candidate.Strategies;
+    using Application.Communication;
+    using Application.Communication.Strategies;
+    using Application.Interfaces.Candidates;
     using Application.Interfaces.Locations;
+    using Application.Interfaces.Messaging;
+    using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Location;
+    using Application.Registration;
     using Application.Vacancy;
     using Domain.Interfaces.Mapping;
+    using Infrastructure.LegacyWebServices.CreateCandidate;
+    using Infrastructure.UserDirectory;
     using Mappers;
     using Providers;
     using StructureMap.Configuration.DSL;
-    using Application.Candidate;
-    using Application.Interfaces.Candidates;
-    using Application.Interfaces.Users;
-    using Application.Registration;
-    using Application.Address;
-    using Application.Authentication;
-    using Application.Candidate.Strategies;
-    using Application.Communication;
-    using Application.Interfaces.Messaging;
-    using Infrastructure.LegacyWebServices.CreateCandidate;
 
     public class CandidateWebRegistry : Registry
     {

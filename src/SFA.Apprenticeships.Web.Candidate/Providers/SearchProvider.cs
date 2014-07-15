@@ -14,13 +14,17 @@
     {
         private readonly ILocationSearchService _locationSearchService;
         private readonly IVacancySearchService _vacancySearchService;
+        private readonly IAddressSearchService _addressSearchService;
         private readonly IMapper _mapper;
 
-        public SearchProvider(ILocationSearchService locationSearchService, IVacancySearchService vacancySearchService,
+        public SearchProvider(ILocationSearchService locationSearchService, 
+            IVacancySearchService vacancySearchService,
+            IAddressSearchService addressSearchService,
             IMapper mapper)
         {
             _locationSearchService = locationSearchService;
             _vacancySearchService = vacancySearchService;
+            _addressSearchService = addressSearchService;
             _mapper = mapper;
         }
 
@@ -53,24 +57,28 @@
 
         public IEnumerable<AddressViewModel> FindAddresses(string postcode)
         {
-            var addresses = new List<AddressViewModel>();
+            var domainAddresses = _addressSearchService.FindAddress(postcode);
+            var viewModelAddress = _mapper.Map<IEnumerable<Address>, IEnumerable<AddressViewModel>>(domainAddresses);
+            return viewModelAddress;
 
-            for(int i = 1; i <= 10; i++)
-            {
-                var a = new AddressViewModel
-                {
-                    AddressLine1 = "AddressLine 1 " + i, 
-                    AddressLine2 = "AddressLine 2 " + i,
-                    AddressLine3 = "AddressLine 3 " + i,
-                    AddressLine4 = "AddressLine 4 " + i,
-                    Postcode = "Postcode " + i,
-                    Uprn = "Uprn " + i,
-                    GeoPoint = new GeoPointViewModel() { Latitude = i, Longitude = i }
-                };
-                addresses.Add(a);
-            }
+            //var addresses = new List<AddressViewModel>();
 
-            return addresses;
+            //for(int i = 1; i <= 10; i++)
+            //{
+            //    var a = new AddressViewModel
+            //    {
+            //        AddressLine1 = "AddressLine 1 " + i, 
+            //        AddressLine2 = "AddressLine 2 " + i,
+            //        AddressLine3 = "AddressLine 3 " + i,
+            //        AddressLine4 = "AddressLine 4 " + i,
+            //        Postcode = "Postcode " + i,
+            //        Uprn = "Uprn " + i,
+            //        GeoPoint = new GeoPointViewModel() { Latitude = i, Longitude = i }
+            //    };
+            //    addresses.Add(a);
+            //}
+
+            //return addresses;
         }
     }
 }

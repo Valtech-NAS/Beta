@@ -499,6 +499,10 @@
       <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.RabbitMq\SFA.Apprenticeships.Infrastructure.RabbitMq.csproj">
+      <Project>{480622E1-7624-449C-904F-AF7FD3590BEF}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.RabbitMq</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
       <Project>{91822365-711d-4976-ad7f-069063d8b487}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Applications</Name>

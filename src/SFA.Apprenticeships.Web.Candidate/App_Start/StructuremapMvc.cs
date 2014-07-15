@@ -4,6 +4,8 @@ using SFA.Apprenticeships.Web.Candidate;
 
 namespace SFA.Apprenticeships.Web.Candidate
 {
+    using Infrastructure.Address.IoC;
+    using Infrastructure.RabbitMq.IoC;
     using Infrastructure.Repositories.Applications.IoC;
     using Infrastructure.Azure.Session.IoC;
     using Infrastructure.Repositories.Candidates.IoC;
@@ -35,6 +37,7 @@ namespace SFA.Apprenticeships.Web.Candidate
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
+                x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
