@@ -1,9 +1,8 @@
-﻿using System;
-using System.IO;
-
-namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
+﻿namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
 {
+    using System;
     using System.Configuration;
+    using System.IO;
 
     public abstract class SecureConfigurationSection<T> : ConfigurationSection where T : ConfigurationSection, new()
     {
@@ -15,7 +14,7 @@ namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
         protected SecureConfigurationSection(string configSectionName)
         {
             //If full path specified, i.e. in unit/integration tests
-            _configFile = System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
+            _configFile = System.Configuration.ConfigurationManager.AppSettings[Common.Configuration.ConfigurationManager.ConfigurationFileAppSetting];
 
             if (!File.Exists(_configFile))
             {

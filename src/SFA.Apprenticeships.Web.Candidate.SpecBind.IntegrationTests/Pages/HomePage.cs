@@ -8,9 +8,9 @@
     public class HomePage
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="HomePage" /> class by using the provided parent control.
+        /// Initializes a new instance of the <see cref="HomePage" /> class by using the provided parent control.
         /// </summary>
-        /// <param name="parent">The <see cref="UITestControl" /> that contains this control.</param>
+        /// <param name="context">The <see cref="ISearchContext" /> that contains this control.</param>
         public HomePage(ISearchContext context)
         {
         }

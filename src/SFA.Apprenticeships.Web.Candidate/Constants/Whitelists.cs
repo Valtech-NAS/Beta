@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Constants
 {
+    using System.IO;
+
     public static class Whitelists
     {
         public static class NameWhitelist
@@ -41,6 +43,13 @@
 
             public const string RegularExpression = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,127}$";
             public const string ErrorText = @" must be at least 8 character with upper and lower case and have at least a number or a special character";
+        }
+
+        public static class PostcodeWhitelist
+        {
+            // See http://stackoverflow.com/questions/164979/uk-postcode-regex-comprehensive
+            public const string RegularExpression = "(GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) [0-9][A-Z-[CIKMOV]]{2})";
+            public const string ErrorText = @" is not a valid format";
         }
     }
 }

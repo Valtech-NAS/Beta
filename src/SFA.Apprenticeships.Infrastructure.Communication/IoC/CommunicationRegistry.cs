@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IoC
+﻿using SFA.Apprenticeships.Infrastructure.Communication.Configuration;
+
+namespace SFA.Apprenticeships.Infrastructure.Communication.IoC
 {
     using System;
     using Application.Interfaces.Messaging;
@@ -10,6 +12,7 @@
         {
             For<IEmailDispatcher>().Use<SendGridEmailDispatcher>();
             For<ISmsDispatcher>().Use<TwilioSmsDispatcher>();
+            For<SendGridConfiguration>().Singleton().Use(SendGridConfiguration.Instance);
         }
     }
 }

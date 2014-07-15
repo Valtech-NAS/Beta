@@ -11,6 +11,7 @@
         public string ToEmail { get; set; }
         public string FromEmail { get; set; }
         public string Subject { get; set; }
+        public string TemplateName { get; set; }
         public IEnumerable<KeyValuePair<string, string>> Tokens { get; set; }
     }
 }

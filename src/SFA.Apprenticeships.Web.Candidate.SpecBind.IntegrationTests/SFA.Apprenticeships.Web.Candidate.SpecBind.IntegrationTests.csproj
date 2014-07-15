@@ -75,16 +75,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HomePage.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\SearchForApprenticeship.feature.cs">
+    <Compile Include="Features\Registration\RegisterCandidate.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SearchForApprenticeship.feature</DependentUpon>
+      <DependentUpon>RegisterCandidate.feature</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SearchResultList.cs" />
-    <Compile Include="Pages\VacancySearchResultPage.cs" />
-    <Compile Include="Pages\VacancySearchPage.cs" />
+    <Compile Include="Features\VacancySearch\SearchResults.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchResults.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Registration\RegisterCandidatePage.cs" />
+    <Compile Include="Pages\VacancySearch\VacancySearchResultPage.cs" />
+    <Compile Include="Pages\VacancySearch\VacancySearchPage.cs" />
     <Compile Include="Pages\HomePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Templates\EditorFor\DateOfBirthTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -94,15 +100,17 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>HomePage.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\SearchForApprenticeship.feature">
+    <None Include="Features\Registration\RegisterCandidate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>SearchForApprenticeship.feature.cs</LastGenOutput>
+      <LastGenOutput>RegisterCandidate.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\VacancySearch\SearchResults.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SearchResults.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Steps\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Common.ActiveDirectory
+﻿namespace SFA.Apprenticeships.Infrastructure.UserDirectory.ActiveDirectory
 {
     using System;
     using System.DirectoryServices.Protocols;

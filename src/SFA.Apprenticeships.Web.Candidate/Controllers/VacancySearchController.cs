@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
+﻿using SFA.Apprenticeships.Infrastructure.Common.Configuration;
+
+namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
     using System.Linq;
@@ -7,7 +9,6 @@
     using Common.Controllers;
     using FluentValidation.Mvc;
     using Infrastructure.Azure.Session;
-    using Infrastructure.Common.Configuration;
     using Providers;
     using Validators;
     using ViewModels.VacancySearch;
@@ -19,7 +20,6 @@
         private readonly VacancySearchViewModelLocationValidator _searchLocationValidator;
         private readonly IVacancyDetailProvider _vacancyDetailProvider;
         private readonly int _vacancyResultsPerPage;
-        private readonly int _locationResultLimit;
 
         public VacancySearchController(IConfigurationManager configManager,
             ISearchProvider searchProvider,
@@ -33,7 +33,6 @@
             _searchLocationValidator = searchLocationValidator;
             _vacancyDetailProvider = vacancyDetailProvider;
             _vacancyResultsPerPage = configManager.GetAppSetting<int>("VacancyResultsPerPage");
-            _locationResultLimit = configManager.GetAppSetting<int>("LocationResultLimit");
         }
 
         [HttpGet]
@@ -116,19 +115,6 @@
 
             var results = _searchProvider.FindVacancies(searchViewModel, _vacancyResultsPerPage);
             return View("results", results);
-        }
-
-        [HttpGet]
-        public ActionResult Location(string term)
-        {
-            var matches = _searchProvider.FindLocation(term);
-
-            if (Request.IsAjaxRequest())
-            {
-                return Json(matches.Take(_locationResultLimit), JsonRequestBehavior.AllowGet);
-            }
-
-            throw new NotImplementedException("Non-js not yet implemented!");
         }
 
         [HttpGet]
