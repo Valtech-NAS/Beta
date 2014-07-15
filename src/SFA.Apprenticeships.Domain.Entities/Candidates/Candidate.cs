@@ -1,14 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Candidates
 {
     using System;
-    using Users;
 
-    public class Candidate : User
+    public class Candidate : BaseEntity
     {
         public Candidate()
         {
-            Roles = UserRoles.Candidate;
-            Status = UserStatuses.Unknown;
             RegistrationDetails = new RegistrationDetails();
             ApplicationTemplate = new ApplicationTemplate();
         }

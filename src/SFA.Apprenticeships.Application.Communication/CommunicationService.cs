@@ -28,7 +28,7 @@
             {
                 case CandidateMessageTypes.SendActivationCode:
                     var candidate = _candidateReadRepository.Get(candidateId);
-                    var user = _userReadRepository.Get(candidate.Username);
+                    var user = _userReadRepository.Get(candidate.RegistrationDetails.EmailAddress);
                     var activationCode = user.ActivationCode;
 
                     _sendActivationCodeStrategy.Send(templateName, candidate, activationCode);
