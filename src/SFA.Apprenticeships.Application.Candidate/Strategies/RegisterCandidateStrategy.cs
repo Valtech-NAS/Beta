@@ -29,47 +29,29 @@
         {
             var newCandidateId = Guid.NewGuid();
 
-            try
-            {
-                //Create user in active directory first so that if that fails the user can try again with the same username
-                CreateUserOnAuthenticationService(password, newCandidateId);
+            //Create user in active directory first so that if that fails the user can try again with the same username
+            CreateUserOnAuthenticationService(password, newCandidateId);
 
-                newCandidate.EntityId = newCandidateId;
+            newCandidate.EntityId = newCandidateId;
 
-                var candidate = ProcessUserCandidateRegistration(newCandidate);
-
-                //Send activation code
-                SendActivationCode(candidate.EntityId, candidate, candidate.ActivationCode);
-
-                return candidate;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        private Candidate ProcessUserCandidateRegistration(Candidate newCandidate)
-        {
+            //Generate activation code
             var activationCode = _codeGenerator.Generate();
+
             var username = newCandidate.RegistrationDetails.EmailAddress;
 
-            newCandidate.ActivationCode = activationCode;
-            newCandidate.ActivateCodeExpiry = DateTime.Now.AddDays(30); //todo: set from config
-            newCandidate.Status = UserStatuses.PendingActivation;
-            newCandidate.Username = username;
-            newCandidate.PasswordResetCode = string.Empty;
-            newCandidate.Roles = UserRoles.Candidate;
-
             //Create user on registration service
-            CreateUserOnRegistrationService(newCandidate.Username, newCandidate.EntityId, newCandidate.ActivationCode,
-                newCandidate.Roles);
+            CreateUserOnRegistrationService(username, newCandidate.EntityId, activationCode, UserRoles.Candidate);
 
             var candidate = _candidateWriteRepository.Save(newCandidate);
+
+            //Send activation code
+            SendActivationCode(candidate.EntityId, candidate, activationCode);
 
             return candidate;
         }
 
+        #region Helpers
+        
         private void CreateUserOnRegistrationService(string username, Guid newCandidateId, string activationCode, UserRoles role)
         {
             _registrationService.Register(username, newCandidateId, activationCode, role);
@@ -92,5 +74,7 @@
         {
             _authenticationService.CreateUser(newCandidateId, password);
         }
+
+        #endregion
     }
 }
