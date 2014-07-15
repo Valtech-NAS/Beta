@@ -384,10 +384,8 @@
     <Compile Include="Mappers\Resolvers\LocationResolver.cs" />
     <Compile Include="Mappers\Resolvers\SearchResultsResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\AddressSearchServiceProvider.cs" />
     <Compile Include="Providers\ApplicationProvider.cs" />
     <Compile Include="Providers\CandidateServiceProvider.cs" />
-    <Compile Include="Providers\IAddressSearchServiceProvider.cs" />
     <Compile Include="Providers\IApplicationProvider.cs" />
     <Compile Include="Providers\ICandidateServiceProvider.cs" />
     <Compile Include="Providers\ISearchProvider.cs" />

@@ -57,28 +57,8 @@
 
         public IEnumerable<AddressViewModel> FindAddresses(string postcode)
         {
-            var domainAddresses = _addressSearchService.FindAddress(postcode);
-            var viewModelAddress = _mapper.Map<IEnumerable<Address>, IEnumerable<AddressViewModel>>(domainAddresses);
-            return viewModelAddress;
-
-            //var addresses = new List<AddressViewModel>();
-
-            //for(int i = 1; i <= 10; i++)
-            //{
-            //    var a = new AddressViewModel
-            //    {
-            //        AddressLine1 = "AddressLine 1 " + i, 
-            //        AddressLine2 = "AddressLine 2 " + i,
-            //        AddressLine3 = "AddressLine 3 " + i,
-            //        AddressLine4 = "AddressLine 4 " + i,
-            //        Postcode = "Postcode " + i,
-            //        Uprn = "Uprn " + i,
-            //        GeoPoint = new GeoPointViewModel() { Latitude = i, Longitude = i }
-            //    };
-            //    addresses.Add(a);
-            //}
-
-            //return addresses;
+            var addresses = _addressSearchService.FindAddress(postcode);
+            return addresses != null ? _mapper.Map<IEnumerable<Address>, IEnumerable<AddressViewModel>>(addresses) : new AddressViewModel[] { };
         }
     }
 }

@@ -48,7 +48,6 @@
             For<IVacancyDetailProvider>().Use<VacancyDetailProvider>().Ctor<IMapper>().Named("CandidateWebMappers");
             For<IApplicationProvider>().Use<ApplicationProvider>();
             For<ICandidateServiceProvider>().Use<CandidateServiceProvider>().Ctor<IMapper>().Named("CandidateWebMappers");
-            For<IAddressSearchServiceProvider>().Use<AddressSearchServiceProvider>().Ctor<IMapper>().Named("CandidateWebMappers");
         }
     }
 }

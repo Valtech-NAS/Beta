@@ -4,16 +4,19 @@
     using System.Collections.Generic;
     using Application.Interfaces.Locations;
     using CuttingEdge.Conditions;
+    using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
     using Nest;
 
     public class AddressSearchProvider : IAddressSearchProvider
     {
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
+        private readonly IMapper _mapper;
 
-        public AddressSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory)
+        public AddressSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory, IMapper mapper)
         {
             _elasticsearchClientFactory = elasticsearchClientFactory;
+            _mapper = mapper;
         }
 
         public IEnumerable<Domain.Entities.Locations.Address> FindAddresses(string postcode)
@@ -24,7 +27,7 @@
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(Elastic.Common.Entities.Address));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(Elastic.Common.Entities.Address));
 
-            var search = client.Search<Domain.Entities.Locations.Address>(s =>
+            var search = client.Search<Elastic.Common.Entities.Address>(s =>
             {
                 s.Index(indexName);
                 s.Type(documentTypeName);
@@ -33,7 +36,12 @@
                 return s;
             });
 
-            return search.Documents;
+            var addresses =
+                _mapper
+                    .Map<IEnumerable<Elastic.Common.Entities.Address>, IEnumerable<Domain.Entities.Locations.Address>>(
+                        search.Documents);
+
+            return  addresses;
         }
     }
 }

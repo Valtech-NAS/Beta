@@ -1,19 +1,16 @@
-﻿using System.Web.Routing;
-using SFA.Apprenticeships.Web.Candidate.ViewModels.Locations;
-
-namespace SFA.Apprenticeships.Web.Candidate.Controllers
+﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System.Web.Mvc;
     using Common.Controllers;
     using FluentValidation.Mvc;
     using Infrastructure.Azure.Session;
+    using ViewModels.Locations;
     using Validators;
     using ViewModels.Register;
     using Providers;
     public class RegisterController : SfaControllerBase
     {
         private readonly ICandidateServiceProvider _candidateServiceProvider;
-        private readonly IAddressSearchServiceProvider _addressSearchServiceProvider;
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
         private const string DummyEmailAddress = "chris.monney@gmail.com";
@@ -21,13 +18,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         public RegisterController(ISessionState session,
         RegisterViewModelServerValidator registerViewModelServerValidator,
             ActivationViewModelServerValidator activationViewModelServerValidator,
-            IAddressSearchServiceProvider addressSearchServiceProvider,
             ICandidateServiceProvider candidateServiceProvider)
             : base(session)
         {
             _registerViewModelServerValidator = registerViewModelServerValidator;
             _activationViewModelServerValidator = activationViewModelServerValidator;
-            _addressSearchServiceProvider = addressSearchServiceProvider;
             _candidateServiceProvider = candidateServiceProvider;
         }
 

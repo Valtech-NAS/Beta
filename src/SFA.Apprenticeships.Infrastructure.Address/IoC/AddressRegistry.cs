@@ -2,13 +2,16 @@
 {
     using System;
     using Application.Interfaces.Locations;
+    using Domain.Interfaces.Mapping;
+    using Mappers;
     using StructureMap.Configuration.DSL;
 
     public class AddressRegistry : Registry
     {
         public AddressRegistry()
         {
-            For<IAddressSearchProvider>().Use<AddressSearchProvider>();
+            For<IMapper>().Use<AddressMapper>().Name = "AddressMapper";
+            For<IAddressSearchProvider>().Use<AddressSearchProvider>().Ctor<IMapper>().Named("AddressMapper");
         }
     }
 }
