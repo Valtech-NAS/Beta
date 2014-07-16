@@ -21,6 +21,11 @@
         $("#Address_GeoPoint_Latitude").val("");
         $("#Address_GeoPoint_Longitude").val("");
     });
+
+    $("#address-manual-btn").click(function (e) {
+        e.preventDefault();
+        $("#address-details").show();
+    });
 });
 
 // provides the matching addresses from postcode
