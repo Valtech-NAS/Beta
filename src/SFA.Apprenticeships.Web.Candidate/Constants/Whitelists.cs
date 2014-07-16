@@ -7,7 +7,7 @@
         public static class NameWhitelist
         {
             public const string RegularExpression = @"^[a-zA-Z()',+\-\s]+$";
-            public const string ErrorText = "must only contain lower and upper case letters";
+            public const string ErrorText = "contains some invalid characters";
         }
 
         public static class EmailAddressWhitelist
@@ -20,7 +20,7 @@
         public static class FreetextWhitelist
         {
             public const string RegularExpression = @"^[a-zA-Z0-9?$@#()""'!,+\-=_:;.&€£*%\s]+$";
-            public const string ErrorText = @"must only contain lower and upper case letters, spaces, tabs, digits or one of the following ?$@#()""'!,+\-=_:;.&€£*%";
+            public const string ErrorText = @"contains some invalid characters";
         }
 
         public static class YearWhitelist
