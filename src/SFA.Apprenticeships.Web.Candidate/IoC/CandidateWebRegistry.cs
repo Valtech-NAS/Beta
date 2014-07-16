@@ -40,7 +40,6 @@
             For<IAuthenticationService>().Use<AuthenticationService>();
             For<ICommunicationService>().Use<CommunicationService>();
             For<ICodeGenerator>().Use<CodeGenerator>();
-            For<IUserDirectoryProvider>().Use<ActiveDirectoryUserDirectoryProvider>();
 
             // providers (web)
             For<IMapper>().Singleton().Use<CandidateWebMappers>().Name = "CandidateWebMappers";
