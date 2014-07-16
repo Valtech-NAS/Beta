@@ -6,7 +6,7 @@
 
     public abstract class SecureConfigurationSection<T> : ConfigurationSection where T : ConfigurationSection, new()
     {
-        //todo: should statics be used here?
+        // TODO: DONTKNOW: should statics be used here?
         private static T _instance;
         private static string _configFile;
         private static string _configSectionName;

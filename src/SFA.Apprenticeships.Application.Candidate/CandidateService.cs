@@ -57,8 +57,8 @@
 
             var user = _userReadRepository.Get(username);
 
-            //todo: check status of user (may not allowed to authenticate if locked)
-            //todo: check role of user? (may not be a candidate ... User.Roles)
+            // TODO: NOTIMPL: check status of user (may not allowed to authenticate if locked)
+            // TODO: NOTIMPL: check role of user? (may not be a candidate ... User.Roles)
 
             _authenticationService.AuthenticateUser(user.EntityId, password);
 
@@ -90,7 +90,7 @@
         {
             Condition.Requires(application);
 
-            //todo: ensure candidate has not already applied for the vacancy
+            // TODO: NOTIMPL: ensure candidate has not already applied for the vacancy
 
             _submitApplicationStrategy.SubmitApplication(application);
         }

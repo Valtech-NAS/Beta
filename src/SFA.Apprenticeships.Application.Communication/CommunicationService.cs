@@ -17,7 +17,8 @@
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
             _sendActivationCodeStrategy = sendActivationCodeStrategy;
-            //todo: other strategies go here...
+            
+            // TODO: NOTIMPL: other strategies go here...
         }
 
         public void SendMessageToCandidate(Guid candidateId, CandidateMessageTypes messageType, IList<KeyValuePair<CommunicationTokens, string>> tokens)
@@ -35,15 +36,15 @@
                     break;
 
                 case CandidateMessageTypes.SendPasswordCode:
-                    //todo: get candidate, invoke strategy to send forgotten password email to candidate
+                    // TODO: NOTIMPL: get candidate, invoke strategy to send forgotten password email to candidate
                     break;
 
                 case CandidateMessageTypes.ApplicationSubmitted:
-                    //todo: get candidate, invoke strategy to send application acknowledgement email to candidate
+                    // TODO: NOTIMPL: get candidate, invoke strategy to send application acknowledgement email to candidate
                     break;
 
                 case CandidateMessageTypes.PasswordChanged:
-                    //todo: get candidate, invoke strategy to send password changed email to candidate
+                    // TODO: NOTIMPL: get candidate, invoke strategy to send password changed email to candidate
                     break;
 
                 default:

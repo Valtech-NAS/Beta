@@ -82,7 +82,7 @@
             }
             catch (DirectoryOperationException doex)
             {
-                // TODO::Low::Act on the exceptions
+                // TODO: EXCEPTION: Low::Act on the exceptions.
                 switch (doex.Response.ResultCode)
                 {
                     case ResultCode.UnwillingToPerform:

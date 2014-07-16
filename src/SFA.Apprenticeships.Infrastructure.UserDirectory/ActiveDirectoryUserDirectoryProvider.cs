@@ -34,7 +34,7 @@
 
                 if (user != null)
                 {
-                    throw new Exception("User already exist"); //todo: should use an application exception type
+                    throw new Exception("User already exist"); // TODO: EXCEPTION: should use an application exception type
                 }
 
                 // Create the new UserPrincipal object

@@ -19,7 +19,7 @@
                     return VacancyLocationType.National;
                 case "Standard":
                 case "MultipleLocation":
-                    //TODO: MultiLocation are posted once for each location so are equivelent to NonNational but needs backed by requirements in new system.
+                    // TODO: DONTKNOW: MultiLocation are posted once for each location so are equivelent to NonNational but needs backed by requirements in new system.
                     return VacancyLocationType.NonNational;
                 default:
                     throw new ArgumentException(

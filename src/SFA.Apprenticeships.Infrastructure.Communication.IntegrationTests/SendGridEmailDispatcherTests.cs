@@ -101,7 +101,7 @@
         }
 
         [Test]
-        // TODO: AG: make exception more specific when exceptions generally.
+        // TODO: EXCEPTION: make exception more specific when exceptions generally.
         [ExpectedException(typeof(Exception))]
         public void ShouldThrowIfTemplateNameIsInvalid()
         {

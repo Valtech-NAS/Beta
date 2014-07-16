@@ -237,8 +237,8 @@
 
             var tag = new TagBuilder("span");
             tag.Attributes.Add("class", "form-hint maxchar-count");
-            
-            //TODO: This needs to be calculated dyamically either by refelction from from the generated HTML of the control.
+
+            // TODO: NOTIMPL: This needs to be calculated dyamically either by refelction from from the generated HTML of the control.
             tag.SetInnerText("4000");
             return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
         }

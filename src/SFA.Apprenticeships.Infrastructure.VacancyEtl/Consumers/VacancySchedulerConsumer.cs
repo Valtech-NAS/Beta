@@ -36,7 +36,7 @@
             if (latestScheduledMessage != null)
             {
                 _vacancyIndexerService.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
-                // TODO: Check Rabbit procesing queue - should not still be processing messages or there maybe a potential issue.
+                // TODO: NOTIMPL: Check Rabbit procesing queue - should not still be processing messages or there maybe a potential issue.
 
                 Logger.Debug("Scheduled VacancyEtl Message Received at: {0}", DateTime.Now);
                 _vacancySummaryProcessor.QueueVacancyPages(latestScheduledMessage);

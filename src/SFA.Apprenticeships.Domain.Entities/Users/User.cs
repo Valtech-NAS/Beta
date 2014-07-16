@@ -16,6 +16,6 @@
 
         public string PasswordResetCode { get; set; }
 
-        public DateTime PasswordResetCodeExpiry { get; set; } //todo: set as 1 day (from config)
+        public DateTime PasswordResetCodeExpiry { get; set; } // TODO: CONFIG: set as 1 day (from config)
     }
 }

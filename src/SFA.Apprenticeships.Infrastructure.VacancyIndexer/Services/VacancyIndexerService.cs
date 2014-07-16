@@ -43,7 +43,7 @@
             }
             else
             {
-                //TODO: specialise the exception type thrown here and log - should prevent the indexing job from continuing.
+                // TODO: EXCEPTION: specialise the exception type thrown here and log - should prevent the indexing job from continuing.
                 throw new Exception(string.Format("Index already created: {0}", newIndexName));
             }
         }

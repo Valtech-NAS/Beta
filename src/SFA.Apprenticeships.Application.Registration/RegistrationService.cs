@@ -26,7 +26,7 @@
             var user = new User
             {
                 ActivationCode = activationCode,
-                ActivateCodeExpiry = DateTime.Now.AddDays(30), //todo: set from config
+                ActivateCodeExpiry = DateTime.Now.AddDays(30), // TODO: CONFIG: set from config
                 Status = UserStatuses.PendingActivation,
                 EntityId = userId,
                 Username = username,
@@ -42,7 +42,7 @@
             var user = _userReadRepository.Get(username);
 
             if (!user.ActivationCode.Equals(activationCode, StringComparison.InvariantCultureIgnoreCase))
-                throw new Exception("Invalid activation code"); //todo: should use an application exception type
+                throw new Exception("Invalid activation code"); // TODO: EXCEPTION: should use an application exception type
 
             user.Status = UserStatuses.Active;
             user.ActivationCode = string.Empty;

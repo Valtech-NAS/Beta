@@ -2,8 +2,8 @@
 {
     using System;
 
-    public class LegacyApplicationProvider //todo: ILegacyApplicationProvider
+    public class LegacyApplicationProvider // TODO: NOTIMPL: ILegacyApplicationProvider
     {
-        //todo: LegacyApplicationProvider w/s integration
+        // TODO: NOTIMPL: LegacyApplicationProvider w/s integration
     }
 }

@@ -9,6 +9,6 @@
         Employer = 2,
         VacancyManager = 4,
         Provider = 8,
-        //todo: add all user roles
+        // TODO: NOTIMPL: add all user roles
     }
 }

@@ -42,13 +42,13 @@
 
             if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
             {
-                //todo: should use an application exception type
+                // TODO: EXCEPTION: should use an application exception type
                 throw new Exception("Failed to create candidate in legacy system");
             }
 
             var legacyCandidateId = response.CandidateId;
 
-            //todo: add logging
+            // TODO: LOGGING: add logging
 
             return legacyCandidateId;
         }

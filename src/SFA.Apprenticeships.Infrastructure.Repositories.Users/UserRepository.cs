@@ -32,8 +32,8 @@
         {
             var mongoEntity = Collection.FindOne(Query.EQ("Username", username));
 
-            if (mongoEntity == null && errorIfNotFound) 
-                throw new Exception("Unknown user name"); //todo: should use an application exception type
+            if (mongoEntity == null && errorIfNotFound)
+                throw new Exception("Unknown user name"); // TODO: EXCEPTION: should use an application exception type
 
             return mongoEntity == null ? null : _mapper.Map<MongoUser, User>(mongoEntity);
         }

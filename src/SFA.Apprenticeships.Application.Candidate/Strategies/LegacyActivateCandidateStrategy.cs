@@ -31,18 +31,18 @@
             switch (user.Status)
             {
                 case UserStatuses.Unknown:
-                    throw new Exception("Unknown user name"); //todo: should use an application exception type
+                    throw new Exception("Unknown user name"); // TODO: EXCEPTION: should use an application exception type
                 case UserStatuses.PendingActivation:
                     ProcessPendingActivation(username, activationCode, candidate);
                     break;
                 case UserStatuses.Active:
-                    throw new Exception("User is already active"); //todo: should use an application exception type
+                    throw new Exception("User is already active"); // TODO: EXCEPTION: should use an application exception type
                 case UserStatuses.Inactive:
-                    throw new Exception("User is inactive"); //todo: should use an application exception type
+                    throw new Exception("User is inactive"); // TODO: EXCEPTION: should use an application exception type
                 case UserStatuses.Blocked:
-                    throw new Exception("User is blocked"); //todo: should use an application exception type
+                    throw new Exception("User is blocked"); // TODO: EXCEPTION: should use an application exception type
                 default:
-                    throw new Exception("User status is unknown"); //todo: should use an application exception type
+                    throw new Exception("User status is unknown"); // TODO: EXCEPTION: should use an application exception type
             }
         }
 
@@ -53,7 +53,7 @@
             candidate.LegacyCandidateId = legacyCandidateId;
             _candidateWriteRepository.Save(candidate);
 
-            //todo: send a welcome email?
+            // TODO: NOTIMPL: send a welcome email?
         }
     }
 }

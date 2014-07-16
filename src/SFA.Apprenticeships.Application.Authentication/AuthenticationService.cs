@@ -36,7 +36,7 @@
         {
             if (!succeeded)
             {
-                throw new Exception(errorMessage); //todo: should use an application exception type
+                throw new Exception(errorMessage); // TODO: EXCEPTION: should use an application exception type
             }
         }
     }

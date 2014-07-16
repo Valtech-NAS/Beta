@@ -75,7 +75,7 @@
 
         private static bool ServerCallback(LdapConnection connection, X509Certificate certificate)
         {
-            // TODO::High::Validate certificate
+            // TODO: NOTIMPL: High::Validate certificate
             return true;
             //try
             //{

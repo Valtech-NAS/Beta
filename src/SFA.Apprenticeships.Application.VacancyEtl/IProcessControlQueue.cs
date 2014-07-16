@@ -6,6 +6,6 @@
 
         void DeleteMessage(string id, string popReceipt);
 
-        void AddMessage(T queueMessage); //todo: only used in test harness
+        void AddMessage(T queueMessage); // TODO: DONTKNOW: only used in test harness
     }
 }

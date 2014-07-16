@@ -23,7 +23,7 @@
         }
 
         /// <summary>
-        /// TODO::This method added to overcome the issue in FluentValidation MVC5 implementation. 
+        ///  TODO: DONTKNOW: This method added to overcome the issue in FluentValidation MVC5 implementation. 
         /// Once fixed the above method can be re-instated.
         /// </summary>
         /// <typeparam name="TModel">The parent model</typeparam>

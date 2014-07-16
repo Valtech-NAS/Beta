@@ -6,7 +6,7 @@
 
     public class MongoApplicationDetail : ApplicationDetail
     {
-        //todo: temporarily a Guid... change to ObjectId? http://stackoverflow.com/questions/21726985/net-layered-architecture-mongodb-what-to-use-as-id
+        // TODO: TEMPCODE: temporarily a Guid... change to ObjectId? http://stackoverflow.com/questions/21726985/net-layered-architecture-mongodb-what-to-use-as-id
         [BsonId]
         public Guid Id
         {

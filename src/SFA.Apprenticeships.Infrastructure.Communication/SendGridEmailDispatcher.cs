@@ -113,7 +113,7 @@
             {
                 var message = string.Format("Invalid email template name: \"{0}\".", templateName);
 
-                // TODO: AG: template is invalid, log / throw domain exception.
+                // TODO: EXCEPTION: template is invalid, log / throw domain exception.
                 throw new Exception(message);
             }
 
@@ -131,7 +131,7 @@
             }
             catch (Exception e)
             {
-                // TODO: AG: failed to send, log / throw domain exception.
+                // TODO: EXCEPTION: failed to send, log / throw domain exception.
                 throw new Exception("Failed to dispatch email.", e);
             }
         }
