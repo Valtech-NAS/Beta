@@ -31,6 +31,7 @@
                     AddressLine2 = candidate.RegistrationDetails.Address.AddressLine2,
                     AddressLine3 = candidate.RegistrationDetails.Address.AddressLine3,
                     AddressLine4 = candidate.RegistrationDetails.Address.AddressLine4,
+                    TownCity = "N/A",
                     Postcode = candidate.RegistrationDetails.Address.Postcode,
                     LandlineTelephone = candidate.RegistrationDetails.PhoneNumber,
                     MobileTelephone = string.Empty

@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Web.Mvc;
+    using Domain.Interfaces.Configuration;
     using Infrastructure.Common.Configuration;
     using Providers;
 

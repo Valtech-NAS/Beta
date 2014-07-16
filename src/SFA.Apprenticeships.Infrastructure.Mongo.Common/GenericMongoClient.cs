@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Mongo.Common
 {
-    using System;
-    using Infrastructure.Common.Configuration;
+    using Domain.Interfaces.Configuration;
     using MongoDB.Driver;
 
     public class GenericMongoClient<T>
@@ -11,8 +10,8 @@
         protected GenericMongoClient(IConfigurationManager configurationManager, string mongoConnectionSettingName,
             string mongoCollectionName)
         {
-            var mongoConnectionString = configurationManager.GetAppSetting(mongoConnectionSettingName);
-            var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
+            string mongoConnectionString = configurationManager.GetAppSetting(mongoConnectionSettingName);
+            string mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
 
             Collection = new MongoClient(mongoConnectionString)
                 .GetServer()

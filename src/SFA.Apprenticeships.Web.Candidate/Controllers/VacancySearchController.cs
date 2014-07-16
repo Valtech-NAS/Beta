@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using System.Web.Mvc;
     using Application.Interfaces.Vacancies;
     using Common.Controllers;
+    using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Infrastructure.Azure.Session;
     using Providers;

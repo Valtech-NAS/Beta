@@ -1,12 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Postcode
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Locations;
-    using Common.Configuration;
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
+    using Domain.Interfaces.Configuration;
     using Entities;
     using Rest;
 

@@ -29,33 +29,24 @@
         {
             var newCandidateId = Guid.NewGuid();
 
-            //Create user in active directory first so that if that fails the user can try again with the same username
-            CreateUserOnAuthenticationService(password, newCandidateId);
+            _authenticationService.CreateUser(newCandidateId, password);
 
             newCandidate.EntityId = newCandidateId;
 
-            //Generate activation code
             var activationCode = _codeGenerator.Generate();
 
             var username = newCandidate.RegistrationDetails.EmailAddress;
 
-            //Create user on registration service
-            CreateUserOnRegistrationService(username, newCandidate.EntityId, activationCode, UserRoles.Candidate);
+            _registrationService.Register(username, newCandidateId, activationCode, UserRoles.Candidate);
 
             var candidate = _candidateWriteRepository.Save(newCandidate);
 
-            //Send activation code
             SendActivationCode(candidate.EntityId, candidate, activationCode);
 
             return candidate;
         }
 
         #region Helpers
-        
-        private void CreateUserOnRegistrationService(string username, Guid newCandidateId, string activationCode, UserRoles role)
-        {
-            _registrationService.Register(username, newCandidateId, activationCode, role);
-        }
 
         private void SendActivationCode(Guid newCandidateId, Candidate candidate, string activationCode)
         {
@@ -68,11 +59,6 @@
                         candidate.RegistrationDetails.LastName),
                     new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ActivationCode, activationCode)
                 });
-        }
-
-        private void CreateUserOnAuthenticationService(string password, Guid newCandidateId)
-        {
-            _authenticationService.CreateUser(newCandidateId, password);
         }
 
         #endregion
