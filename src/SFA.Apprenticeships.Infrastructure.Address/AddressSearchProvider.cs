@@ -19,7 +19,7 @@
             _mapper = mapper;
         }
 
-        public IEnumerable<Domain.Entities.Locations.Address> FindAddresses(string postcode)
+        public IEnumerable<Domain.Entities.Locations.Address> FindAddress(string postcode)
         {
             Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
 

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Text.RegularExpressions;
-
-namespace SFA.Apprenticeships.Domain.Entities.Locations
+﻿namespace SFA.Apprenticeships.Domain.Entities.Locations
 {
+    using System;
+    using System.Text.RegularExpressions;
+
     public class LocationHelper
     {
         // adapted from http://stackoverflow.com/a/164994/1882637

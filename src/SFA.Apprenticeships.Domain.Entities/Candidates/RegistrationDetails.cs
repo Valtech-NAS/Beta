@@ -10,7 +10,6 @@
             Address = new Address();
         }
 
-        // TODO: NOTIMPL: add Candidate.Title?
         public string FirstName { get; set; }
         public string MiddleNames { get; set; }
         public string LastName { get; set; }

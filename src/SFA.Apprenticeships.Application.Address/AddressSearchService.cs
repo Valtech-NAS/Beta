@@ -22,7 +22,7 @@
             if (!LocationHelper.IsPostcode(postcode))
                 throw new ArgumentException("Invalid postcode specified");
 
-            return _addressSearchProvider.FindAddresses(postcode);
+            return _addressSearchProvider.FindAddress(postcode);
         }
     }
 }

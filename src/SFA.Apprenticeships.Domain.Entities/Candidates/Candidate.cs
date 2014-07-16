@@ -15,7 +15,5 @@
         public RegistrationDetails RegistrationDetails { get; set; }
 
         public ApplicationTemplate ApplicationTemplate { get; set; }
-
-        //public VacancyProfile VacancyProfile { get; set; } //todo: add candidate's vacancy profile (matching)
     }
 }
