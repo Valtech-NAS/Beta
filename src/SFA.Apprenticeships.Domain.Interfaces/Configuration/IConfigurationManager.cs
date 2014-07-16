@@ -1,13 +1,11 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
+﻿namespace SFA.Apprenticeships.Domain.Interfaces.Configuration
 {
-    using System.Configuration;
-
     public interface IConfigurationManager
     {
         /// <summary>
         /// Exposing entire configuration file (required by Wcf when using custom factory)
         /// </summary>
-        System.Configuration.Configuration Configuration { get; }
+        string ConfigurationFilePath { get; }
 
         /// <summary>
         /// Gets a string representation of the value located by the supplied key.
@@ -37,26 +35,12 @@
         /// The app setting strongly typed
         /// </returns>
         T GetAppSetting<T>(T defaultValue, string key);
-        
-        /// <summary>
-        /// Gets a string representation of the value located by the supplied key.
-        /// If the value is not found, null is returned
-        /// </summary>
-        /// <param name="key">The key to find the required value.</param>
-        /// <returns>The value located by the supplied key</returns>
-        string TryGetAppSetting(string key);
 
         /// <summary>
         /// Gets the connection string.
         /// </summary>
         /// <param name="key">The connection key.</param>
         /// <returns>The specified connection string</returns>
-        ConnectionStringSettings GetConnectionString(string key);
-
-        /// <summary>
-        /// Gets the section.
-        /// </summary>
-        /// <param name="sectionName">Name of the section.</param>
-        ConfigurationSection GetSection(string sectionName);
+        string GetConnectionString(string key);
     }
 }

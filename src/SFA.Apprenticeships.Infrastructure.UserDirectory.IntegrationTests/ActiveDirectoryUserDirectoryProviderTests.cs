@@ -2,8 +2,9 @@
 {
     using System;
     using Application.Authentication;
-    using NUnit.Framework;
+    using FluentAssertions;
     using IoC;
+    using NUnit.Framework;
     using StructureMap;
 
     public class ActiveDirectoryUserDirectoryProviderTests
@@ -22,33 +23,35 @@
         [Test]
         public void ShouldCreateActiveDirectoryUser()
         {
-            var username = CreateUsername();
-            var succeeded = _service.CreateUser(username, Password);
-            Assert.IsTrue(succeeded);
+            string username = CreateUsername();
+            bool succeeded = _service.CreateUser(username, Password);
+            succeeded.Should().BeTrue();
         }
 
         [Test]
         public void ShouldCreateActiveDirectoryUserAndAuthenticate()
         {
-            var username = Guid.NewGuid().ToString();
-            var succeeded = _service.CreateUser(username, Password);
-            Assert.IsTrue(succeeded);
+            string username = Guid.NewGuid().ToString();
+            bool succeeded = _service.CreateUser(username, Password);
+            succeeded.Should().BeTrue();
 
-            var authenticationSucceeded = _service.AuthenticateUser(username, Password);
-            Assert.IsTrue(authenticationSucceeded);
+            bool authenticationSucceeded = _service.AuthenticateUser(username, Password);
+            authenticationSucceeded.Should().BeTrue();
         }
 
         [Test]
         public void ShouldCreateActiveDirectoryUserAndChangePassword()
         {
-            var username = Guid.NewGuid().ToString();
-            var succeeded = _service.CreateUser(username, Password);
-            Assert.IsTrue(succeeded);
+            string username = Guid.NewGuid().ToString();
+            bool succeeded = _service.CreateUser(username, Password);
+            succeeded.Should().BeTrue();
 
-            var changePasswordSucceeded = _service.ChangePassword(username, Password, NewPassword);
-            Assert.IsTrue(changePasswordSucceeded);
+            bool changePasswordSucceeded = _service.ChangePassword(username, Password, NewPassword);
+            changePasswordSucceeded.Should().BeTrue();
+
+            bool authenticationSucceeded = _service.AuthenticateUser(username, NewPassword);
+            authenticationSucceeded.Should().BeTrue();
         }
-
 
         private static string CreateUsername()
         {

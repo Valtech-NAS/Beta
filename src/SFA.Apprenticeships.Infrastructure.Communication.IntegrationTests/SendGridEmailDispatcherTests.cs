@@ -2,11 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using Domain.Interfaces.Configuration;
     using NUnit.Framework;
     using StructureMap;
     using Common.IoC;
     using IoC;
-    using Common.Configuration;
     using Application.Interfaces.Messaging;
 
     [TestFixture]

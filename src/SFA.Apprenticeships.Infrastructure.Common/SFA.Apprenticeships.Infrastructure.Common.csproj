@@ -57,7 +57,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\ConfigurationManager.cs" />
-    <Compile Include="Configuration\IConfigurationManager.cs" />
     <Compile Include="Configuration\SecureConfigurationSection.cs" />
     <Compile Include="IoC\CommonRegistry.cs" />
     <Compile Include="Mappers\EnumResolver.cs" />

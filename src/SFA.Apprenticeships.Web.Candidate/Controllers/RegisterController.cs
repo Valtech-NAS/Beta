@@ -4,7 +4,6 @@
     using Common.Controllers;
     using FluentValidation.Mvc;
     using Infrastructure.Azure.Session;
-    using ViewModels.Locations;
     using Validators;
     using ViewModels.Register;
     using Providers;
@@ -13,7 +12,6 @@
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
-        private const string DummyEmailAddress = "chris.monney@gmail.com";
 
         public RegisterController(ISessionState session,
         RegisterViewModelServerValidator registerViewModelServerValidator,
@@ -43,18 +41,11 @@
                 return View(registerView);
             }
 
-            
-            //todo remove this when address is fully integrated
-            registerView.Address = new AddressViewModel()
-            {
-                GeoPoint = new GeoPointViewModel()
-                {
-                    Latitude = 51.7715110,
-                    Longitude = -0.4534940
-                }
-            };
-
             var succeeded = _candidateServiceProvider.Register(registerView);
+
+            TempData["EmailAddress"] = registerView.EmailAddress;
+
+            //FormsAuthentication.SetAuthCookie(registerView.EmailAddress, false);
 
             return succeeded ? (ActionResult)RedirectToAction("Activation") : View(registerView);
         }
@@ -62,9 +53,9 @@
         [HttpGet]
         public ActionResult Activation()
         {
-            var model = new ActivationViewModel()
+            var model = new ActivationViewModel
             {
-                EmailAddress = DummyEmailAddress
+                EmailAddress = TempData["EmailAddress"].ToString()
             };
 
             return View(model);
@@ -77,7 +68,11 @@
 
             var activatedResult = _activationViewModelServerValidator.Validate(activationViewModel);
 
-            if (activatedResult.IsValid) return RedirectToAction("Complete", "Register");
+            if (activatedResult.IsValid)
+            {
+                TempData["EmailAddress"] = activationViewModel.EmailAddress;
+                return RedirectToAction("Complete", "Register");
+            }
 
             ModelState.Clear();
             activatedResult.AddToModelState(ModelState, string.Empty);
@@ -86,7 +81,7 @@
 
         public ActionResult Complete()
         {
-            ViewBag.Message = DummyEmailAddress;
+            ViewBag.Message = TempData["EmailAddress"].ToString();
 
             return View();
         }

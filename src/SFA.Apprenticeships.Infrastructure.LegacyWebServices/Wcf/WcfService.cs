@@ -1,17 +1,34 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Wcf
 {
     using System;
+    using System.Configuration;
+    using System.Runtime.InteropServices;
     using System.ServiceModel;
     using System.ServiceModel.Configuration;
-    using Common.Configuration;
+    using Domain.Interfaces.Configuration;
 
     public class WcfService<T> : IWcfService<T>
     {
-        private readonly System.Configuration.Configuration _configuration;
+        private static Configuration _configuration;
+        private static readonly object _lock = new object();
 
         public WcfService(IConfigurationManager configurationManager)
         {
-            _configuration = configurationManager.Configuration;
+            if (_configuration != null) return;
+
+            lock (_lock)
+            {
+                if (_configuration != null)
+                {
+                    return;
+                }
+                var configMap = new ExeConfigurationFileMap
+                {
+                    ExeConfigFilename = configurationManager.ConfigurationFilePath
+                };
+                _configuration = ConfigurationManager.OpenMappedExeConfiguration(configMap,
+                    ConfigurationUserLevel.None);
+            }
         }
 
         public void Use(Action<T> action)

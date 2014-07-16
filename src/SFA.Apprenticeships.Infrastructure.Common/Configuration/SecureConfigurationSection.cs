@@ -14,7 +14,7 @@
         protected SecureConfigurationSection(string configSectionName)
         {
             //If full path specified, i.e. in unit/integration tests
-            _configFile = System.Configuration.ConfigurationManager.AppSettings[Common.Configuration.ConfigurationManager.ConfigurationFileAppSetting];
+            _configFile = System.Configuration.ConfigurationManager.AppSettings[ConfigurationManager.ConfigurationFileAppSetting];
 
             if (!File.Exists(_configFile))
             {

@@ -3,6 +3,7 @@
     using System;
     using Common.Configuration;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Entities;

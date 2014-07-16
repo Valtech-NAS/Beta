@@ -2,6 +2,7 @@
 {
     using System;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
 
@@ -9,11 +10,15 @@
     {
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
+        private readonly int _activationCodeExpiryDays;
 
-        public RegistrationService(IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository)
+        public RegistrationService(IUserReadRepository userReadRepository, 
+                                    IUserWriteRepository userWriteRepository,
+                                    IConfigurationManager configurationManager)
         {
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
+            _activationCodeExpiryDays = configurationManager.GetAppSetting<int>("ActivationCodeExpiryDays");
         }
 
         public bool IsUsernameAvailable(string username)
@@ -26,7 +31,7 @@
             var user = new User
             {
                 ActivationCode = activationCode,
-                ActivateCodeExpiry = DateTime.Now.AddDays(30), // TODO: CONFIG: set from config
+                ActivateCodeExpiry = DateTime.Now.AddDays(_activationCodeExpiryDays),
                 Status = UserStatuses.PendingActivation,
                 EntityId = userId,
                 Username = username,
