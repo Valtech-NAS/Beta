@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Pages.Registration
 {
     using global::SpecBind.Pages;
+    using global::SpecBind.Selenium;
     using OpenQA.Selenium;
     using Templates.EditorFor;
 
@@ -57,14 +58,52 @@
         public IWebElement Latitude { get { return Address.Latitude; } }
         public IWebElement Longitude { get { return Address.Longitude; } }
 
-        #region Buttons
+        #region Search Inputs
 
-        public IWebElement FindAddresses { get { return Address.FindAddresses; } }
+        [ElementLocator(Id = "postcode-search")]
+        public IWebElement PostcodeSearch { get; set; }
 
-        IElementList<IWebElement, AddressDropdownItem> AddressDropdown { get { return Address.AddressDropdown; } }
+        [ElementLocator(Id = "find-addresses")]
+        public IWebElement FindAddresses { get; set; }
+
+        [ElementLocator(Id = "address-select")]
+        public IElementList<IWebElement, AddressDropdownItem> AddressDropdown { get; set; }
+
+        [ElementLocator(Id = "address-select")]
+        public IWebElement Addresses { get; set; }
 
         #endregion
 
         #endregion
+    }
+
+    [ElementLocator(TagName = "option")]
+    public class AddressDropdownItem : WebElement
+    {
+        public AddressDropdownItem(ISearchContext parent) : base(parent)
+        {
+        }
+
+        public string DisplayText
+        {
+            get
+            {
+                var text = AddressLine1;
+                if (!string.IsNullOrWhiteSpace(AddressLine2))
+                {
+                    text += AddressLine2;
+                }
+                return text;
+            }
+        }
+
+        public string AddressLine1 { get { return this.GetAttribute("data-address-line1"); } }
+        public string AddressLine2 { get { return this.GetAttribute("data-address-line2"); } }
+        public string AddressLine3 { get { return this.GetAttribute("data-address-line3"); } }
+        public string AddressLine4 { get { return this.GetAttribute("data-address-line4"); } }
+        public string Postcode { get { return this.GetAttribute("data-post-code"); } }
+        public string Uprn { get { return this.GetAttribute("value"); } }
+        public string Latitude { get { return this.GetAttribute("data-lat"); } }
+        public string Longitude { get { return this.GetAttribute("data-lon"); } }
     }
 }

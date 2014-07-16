@@ -124,12 +124,14 @@ this.ScenarioSetup(scenarioInfo);
                         "Field",
                         "Value"});
             table1.AddRow(new string[] {
-                        "Postcode",
-                        "CV1 2WT"});
+                        "PostcodeSearch",
+                        "N7 8LS"});
 #line 22
- testRunner.When("I enter data", ((string)(null)), table1, "When ");
+ testRunner.And("I enter data", ((string)(null)), table1, "And ");
 #line 25
  testRunner.And("I choose FindAddresses", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 26
+ testRunner.And("I wait to see AddressDropdown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -137,9 +139,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Value"});
             table2.AddRow(new string[] {
                         "AddressLine1",
-                        "Exists",
-                        ""});
-#line 26
+                        "Equals",
+                        "Flat A"});
+#line 27
  testRunner.And("I am on AddressDropdown list item matching criteria", ((string)(null)), table2, "And ");
 #line hidden
             this.ScenarioCleanup();

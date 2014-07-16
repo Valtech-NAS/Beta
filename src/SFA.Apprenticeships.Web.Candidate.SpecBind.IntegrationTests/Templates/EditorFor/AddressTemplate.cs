@@ -11,15 +11,6 @@
         {
         }
 
-        [ElementLocator(Id = "find-addresses")]
-        public IWebElement FindAddresses { get; set; }
-
-        [ElementLocator(Class = "address-select")]
-        public IElementList<IWebElement, AddressDropdownItem> AddressDropdown { get; set; }
-
-        [ElementLocator(Id = "address-select")]
-        public IWebElement Addresses { get; set; }
-
         [ElementLocator(Id = "Address_AddressLine1")]
         public IWebElement AddressLine1 { get; set; }
 
@@ -44,17 +35,5 @@
         [ElementLocator(Id = "Address_Longitude")]
         public IWebElement Longitude { get; set; }
 
-    }
-
-    [ElementLocator(TagName = "option")]
-    public class AddressDropdownItem : WebElement
-    {
-        public AddressDropdownItem(ISearchContext parent) : base(parent)
-        {
-        }
-
-        public string AddressLine1 { get { return this.Text ; } }
-        public string AddressLine2 { get { return this.GetAttribute("data-address-line2"); } }
-        public string Postcode { get { return this.GetAttribute("data-post0code") ; } }
     }
 }

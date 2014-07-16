@@ -19,11 +19,20 @@ Scenario: As a candidate I am on the registration page and all required fields a
 Scenario: As a candidate on the registration page I want to be able to pick my address from a list returned from the postcode search
 	Given I navigated to the RegisterCandidatePage page
 	When I am on the RegisterCandidatePage page
-	When I enter data
-		 | Field    | Value   |
-		 | Postcode | CV1 2WT |
+	And I enter data
+		 | Field          | Value  |
+		 | PostcodeSearch | N7 8LS |
 	And I choose FindAddresses
+	And I wait to see AddressDropdown
 	And I am on AddressDropdown list item matching criteria
-		    | Field        | Rule   | Value |
-		    | AddressLine1 | Exists |       |
+		    | Field        | Rule   | Value  |
+		    | AddressLine1 | Equals | Flat A |
+			#| DisplayText  | Equals | Flat A, 6 Furlong Road |
+		    #| AddressLine2 | Equals | 6 Furlong Road         |
+		    #| AddressLine3 | Equals | London                 |
+		    #| AddressLine4 | Equals | Isnlington             |
+		    #| Postcode     | Equals | N7 8LS                 |
+		    #| Nprn         | Exists |                        |
+		    #| Latitude     | Exists |                        |
+		    #| Longitude    | Exists |                        |
 		    
