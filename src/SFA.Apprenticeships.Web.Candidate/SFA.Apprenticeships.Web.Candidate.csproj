@@ -286,6 +286,7 @@
     <Content Include="Views\Shared\EditorTemplates\DateViewModel.cshtml" />
     <Content Include="Views\Register\Activation.cshtml" />
     <Content Include="Views\Register\Complete.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -363,6 +364,7 @@
     <Compile Include="Constants\ViewModels\AddressMessages.cs" />
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ActivationCodeMessages.cs" />
+    <Compile Include="Constants\ViewModels\LoginViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\RegisterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EducationMessages.cs" />
     <Compile Include="Constants\Whitelists.cs" />
@@ -370,6 +372,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\VacancySearchController.cs" />
     <Compile Include="Global.asax.cs">
@@ -396,6 +399,7 @@
     <Compile Include="Validators\ActivationViewModelValidator.cs" />
     <Compile Include="Validators\ApplicationViewModelValidator.cs" />
     <Compile Include="Validators\DateOfBirthViewModelValidator.cs" />
+    <Compile Include="Validators\LoginViewModelValidator.cs" />
     <Compile Include="Validators\RegisterViewModelValidator.cs" />
     <Compile Include="Validators\EducationViewModelValidator.cs" />
     <Compile Include="Validators\CandidateViewModelValidator.cs" />
@@ -412,6 +416,7 @@
     <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
+    <Compile Include="ViewModels\Login\LoginViewModel.cs" />
     <Compile Include="ViewModels\Register\ActivationViewModel.cs" />
     <Compile Include="ViewModels\Register\RegisterViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />

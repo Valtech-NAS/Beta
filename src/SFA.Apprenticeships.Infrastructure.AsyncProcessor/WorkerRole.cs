@@ -5,13 +5,13 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
     using System.Reflection;
     using System.Threading;
     using Communication.IoC;
+    using Consumers;
     using EasyNetQ;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
+    using RabbitMq.Interfaces;
     using RabbitMq.IoC;
     using StructureMap;
-    using Consumers;
-    using RabbitMq.Interfaces;
 
     public class WorkerRole : RoleEntryPoint
     {
@@ -23,6 +23,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
 
             Initialise();
         }
+
         public override bool OnStart()
         {
             Logger.Debug("OnStart called.");
@@ -62,7 +63,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
             }
             catch (Exception e)
             {
-                Logger.Error("Initialisation error.", e);
+                Logger.ErrorException("Initialisation error.", e);
             }
         }
 
@@ -72,7 +73,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
             var bootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
 
             bootstrapper.LoadSubscribers(
-                Assembly.GetAssembly(typeof(EmailConsumerAsync)), asyncProcessorSubscriptionId);
+                Assembly.GetAssembly(typeof (EmailConsumerAsync)), asyncProcessorSubscriptionId);
 
             Logger.Debug("RabbitMQ initialized.");
         }

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using ViewModels.Login;
     using ViewModels.Register;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Users;
@@ -50,6 +51,21 @@
         public bool IsUsernameAvailable(string username)
         {
             return _registrationService.IsUsernameAvailable(username);
+        }
+
+        public bool Authenticate(LoginViewModel model)
+        {
+            try
+            {
+                var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
+
+                return candidate != null;
+            }
+            catch (Exception)
+            {
+                // TODO: LOGGING: AG: do not like consuming exception here (and elsewhere in this class).
+                return false;
+            }
         }
     }
 }
