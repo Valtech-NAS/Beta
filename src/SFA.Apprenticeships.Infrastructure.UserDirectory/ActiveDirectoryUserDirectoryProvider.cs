@@ -18,7 +18,12 @@
 
         public bool AuthenticateUser(string username, string password)
         {
-            return _server.Context.ValidateCredentials(username, password);
+            using (var context = _server.Context)
+            {
+                var user = UserPrincipal.FindByIdentity(context, username);
+
+                return user != null && context.ValidateCredentials(user.UserPrincipalName, password);
+            }
         }
 
         public bool CreateUser(string username, string password)
@@ -41,6 +46,7 @@
                     Surname = username,
                     GivenName = username,
                     Name = username,
+                    UserPrincipalName = username,
                     Enabled = false,
                 };
 
@@ -48,7 +54,7 @@
                 userPrincipal.Save();
 
                 // set initial password
-                if (!ChangePassword(username, null, password)) return false;
+                if (!SetUserPassword(username, null, password)) return false;
 
                 userPrincipal.Enabled = true;
 
@@ -58,13 +64,16 @@
             }
         }
 
-        public bool ChangePassword(string username, string oldPassword, string newPassword)
+        private bool SetUserPassword(string username, string oldPassword, string newPassword)
         {
             if (!_server.Bind()) return false;
-
             var rs = _changePassword.Change(username, oldPassword, newPassword);
-
             return (rs.ResultCode == ResultCode.Success);
+        }
+
+        public bool ChangePassword(string username, string oldPassword, string newPassword)
+        {
+            return AuthenticateUser(username, oldPassword) && SetUserPassword(username, null, newPassword);
         }
     }
 }
