@@ -33,7 +33,7 @@
                 VacancySearchCriteria = new VacancySearchData
                 {
                     PageIndex = 1,
-                    VacancyLocationType =  vacancyLocationType.ToString()
+                    VacancyLocationType = vacancyLocationType.ToString()
                 }
             };
 

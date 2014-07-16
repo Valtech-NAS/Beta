@@ -87,21 +87,5 @@
         {
             return Configuration.GetSection(sectionName);
         }
-
-        public string GetConnectionString(string key)
-        {
-            Condition.Requires(key, "key").IsNotNullOrWhiteSpace();
-
-            var result = Configuration.ConnectionStrings.ConnectionStrings[key];
-            if (result == null)
-            {
-                throw new ApplicationException(
-                    string.Format(
-                        "The connection string '{0}' could not be found in the configuration file",
-                        key));
-            }
-
-            return result.ConnectionString;
-        }
     }
 }

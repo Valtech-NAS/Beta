@@ -6,7 +6,6 @@
     using CuttingEdge.Conditions;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
-    using Nest;
 
     public class AddressSearchProvider : IAddressSearchProvider
     {

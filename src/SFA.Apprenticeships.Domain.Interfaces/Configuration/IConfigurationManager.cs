@@ -35,12 +35,5 @@
         /// The app setting strongly typed
         /// </returns>
         T GetAppSetting<T>(T defaultValue, string key);
-
-        /// <summary>
-        /// Gets the connection string.
-        /// </summary>
-        /// <param name="key">The connection key.</param>
-        /// <returns>The specified connection string</returns>
-        string GetConnectionString(string key);
     }
 }
