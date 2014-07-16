@@ -1,13 +1,10 @@
 namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
 {
     using System;
-    using System.Collections.Generic;
     using System.Net;
     using System.Reflection;
     using System.Threading;
-    using Application.Interfaces.Messaging;
     using Communication.IoC;
-    using Domain.Interfaces.Messaging;
     using EasyNetQ;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;

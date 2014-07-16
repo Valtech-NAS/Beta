@@ -1,6 +1,7 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC
+﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.IoC
 {
-    using AsyncProcessor.Consumers;
+    using System;
+    using Consumers;
     using StructureMap.Configuration.DSL;
 
     public class AsyncProcessorRegistry : Registry

@@ -7,7 +7,6 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
     using Application.VacancyEtl;
     using Application.Interfaces.Vacancies;
     using Domain.Interfaces.Mapping;
-    using Common.Wcf;
     using Configuration;
     using Mappers;
     using ReferenceDataProxy;
@@ -17,6 +16,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
     using VacancySummaryProxy;
     using StructureMap.Configuration.DSL;
     using ReferenceData;
+    using Wcf;
 
     public class LegacyWebServicesRegistry : Registry
     {

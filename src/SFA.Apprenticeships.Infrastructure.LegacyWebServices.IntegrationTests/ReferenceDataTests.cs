@@ -7,11 +7,11 @@
     using NUnit.Framework;
     using Application.Interfaces.ReferenceData;
     using Application.ReferenceData;
-    using Common.Wcf;
     using Domain.Interfaces.Caching;
     using Configuration;
     using ReferenceDataProxy;
     using StructureMap;
+    using Wcf;
 
     [TestFixture]
     public class ReferenceDataTests

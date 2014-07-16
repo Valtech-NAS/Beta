@@ -1,9 +1,10 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Common.Wcf
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Wcf
 {
     using System;
     using System.ServiceModel;
     using System.ServiceModel.Configuration;
-    using Configuration;
+    using Common.Configuration;
+
     public class WcfService<T> : IWcfService<T>
     {
         private readonly System.Configuration.Configuration _configuration;

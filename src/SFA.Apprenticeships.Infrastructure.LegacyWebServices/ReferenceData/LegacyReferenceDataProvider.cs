@@ -5,10 +5,10 @@
     using System.Linq;
     using CuttingEdge.Conditions;
     using Application.Interfaces.ReferenceData;
-    using Common.Wcf;
     using Configuration;
     using Domain.Entities.ReferenceData;
     using ReferenceDataProxy;
+    using Wcf;
 
     public class LegacyReferenceDataProvider : IReferenceDataProvider
     {

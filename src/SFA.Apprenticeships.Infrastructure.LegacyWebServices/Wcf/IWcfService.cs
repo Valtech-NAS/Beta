@@ -1,8 +1,7 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Common.Wcf
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Wcf
 {
     using System;
 
-    //TODO: ???? Where/too techy here - Infrastrcucture web common?
     public interface IWcfService<T>
     {
         void Use(Action<T> action);

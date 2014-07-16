@@ -3,8 +3,8 @@
     using System;
     using System.Linq;
     using Application.Candidate.Strategies;
-    using Common.Wcf;
     using GatewayServiceProxy;
+    using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
 
     public class LegacyCandidateProvider : ILegacyCandidateProvider

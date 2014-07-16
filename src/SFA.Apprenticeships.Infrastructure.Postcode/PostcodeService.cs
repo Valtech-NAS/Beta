@@ -5,10 +5,10 @@
     using System.Linq;
     using Application.Interfaces.Locations;
     using Common.Configuration;
-    using Common.Rest;
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
     using Entities;
+    using Rest;
 
     public class PostcodeService : RestService, IPostcodeLookupProvider
     {

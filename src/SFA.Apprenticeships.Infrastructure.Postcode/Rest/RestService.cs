@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Common.Rest
+﻿namespace SFA.Apprenticeships.Infrastructure.Postcode.Rest
 {
     using System;
     using System.Collections.Generic;

@@ -90,7 +90,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
     <Compile Include="Consumers\EmailConsumerAsync.cs" />
     <Compile Include="IoC\AsyncProcessorRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
