@@ -130,19 +130,92 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.And("I enter data", ((string)(null)), table1, "And ");
 #line 25
  testRunner.And("I choose FindAddresses", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 26
- testRunner.And("I wait to see AddressDropdown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
             table2.AddRow(new string[] {
+                        "Text",
+                        "Equals",
+                        "Flat A, 6 Furlong Road"});
+            table2.AddRow(new string[] {
                         "AddressLine1",
                         "Equals",
                         "Flat A"});
+            table2.AddRow(new string[] {
+                        "AddressLine2",
+                        "Equals",
+                        "6 Furlong Road"});
+            table2.AddRow(new string[] {
+                        "AddressLine3",
+                        "Equals",
+                        "London"});
+            table2.AddRow(new string[] {
+                        "AddressLine4",
+                        "Equals",
+                        "Islington"});
+            table2.AddRow(new string[] {
+                        "Postcode",
+                        "Equals",
+                        "N7 8LS"});
+            table2.AddRow(new string[] {
+                        "Uprn",
+                        "Equals",
+                        "5300034721"});
+            table2.AddRow(new string[] {
+                        "Latitude",
+                        "Equals",
+                        "51.54751633697479"});
+            table2.AddRow(new string[] {
+                        "Longitude",
+                        "Equals",
+                        "-0.10660693737952387"});
 #line 27
  testRunner.And("I am on AddressDropdown list item matching criteria", ((string)(null)), table2, "And ");
+#line 38
+ testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 39
+ testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table3.AddRow(new string[] {
+                        "AddressLine1",
+                        "Equals",
+                        "Flat A"});
+            table3.AddRow(new string[] {
+                        "AddressLine2",
+                        "Equals",
+                        "6 Furlong Road"});
+            table3.AddRow(new string[] {
+                        "AddressLine3",
+                        "Equals",
+                        "London"});
+            table3.AddRow(new string[] {
+                        "AddressLine4",
+                        "Equals",
+                        "Islington"});
+            table3.AddRow(new string[] {
+                        "Postcode",
+                        "Equals",
+                        "N7 8LS"});
+            table3.AddRow(new string[] {
+                        "Uprn",
+                        "Equals",
+                        "5300034721"});
+            table3.AddRow(new string[] {
+                        "Latitude",
+                        "Equals",
+                        "51.54751633697479"});
+            table3.AddRow(new string[] {
+                        "Longitude",
+                        "Equals",
+                        "-0.10660693737952387"});
+#line 40
+ testRunner.Then("I see", ((string)(null)), table3, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
