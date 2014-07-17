@@ -14,10 +14,9 @@
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
 
         public RegisterController(ISessionState session,
-        RegisterViewModelServerValidator registerViewModelServerValidator,
-            ActivationViewModelServerValidator activationViewModelServerValidator,
-            ICandidateServiceProvider candidateServiceProvider)
-            : base(session)
+                                    RegisterViewModelServerValidator registerViewModelServerValidator,
+                                    ActivationViewModelServerValidator activationViewModelServerValidator,
+                                    ICandidateServiceProvider candidateServiceProvider) : base(session)
         {
             _registerViewModelServerValidator = registerViewModelServerValidator;
             _activationViewModelServerValidator = activationViewModelServerValidator;

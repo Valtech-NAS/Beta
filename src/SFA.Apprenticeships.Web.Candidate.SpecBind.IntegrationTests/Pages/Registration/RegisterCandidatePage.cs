@@ -93,13 +93,13 @@
         {
         }
 
-        public string AddressLine1 { get { return this.GetAttribute("address-line1"); } }
-        public string AddressLine2 { get { return this.GetAttribute("address-line2"); } }
-        public string AddressLine3 { get { return this.GetAttribute("address-line3"); } }
-        public string AddressLine4 { get { return this.GetAttribute("address-line4"); } }
-        public string Postcode { get { return this.GetAttribute("post-code"); } }
+        public string AddressLine1 { get { return this.GetAttribute("data-address-line1"); } }
+        public string AddressLine2 { get { return this.GetAttribute("data-address-line2"); } }
+        public string AddressLine3 { get { return this.GetAttribute("data-address-line3"); } }
+        public string AddressLine4 { get { return this.GetAttribute("data-address-line4"); } }
+        public string Postcode { get { return this.GetAttribute("data-post-code"); } }
         public string Uprn { get { return this.GetAttribute("value"); } }
-        public string Latitude { get { return this.GetAttribute("lat"); } }
-        public string Longitude { get { return this.GetAttribute("lon"); } }
+        public string Latitude { get { return this.GetAttribute("data-lat"); } }
+        public string Longitude { get { return this.GetAttribute("data-lon"); } }
     }
 }

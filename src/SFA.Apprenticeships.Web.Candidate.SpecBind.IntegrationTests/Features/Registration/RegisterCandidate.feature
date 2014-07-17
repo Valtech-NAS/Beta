@@ -23,7 +23,6 @@ Scenario: As a candidate on the registration page I want to be able to pick my a
 		 | Field          | Value  |
 		 | PostcodeSearch | N7 8LS |
 	And I choose FindAddresses
-	#And I wait to see AddressDropdown
 	And I am on AddressDropdown list item matching criteria
 		    | Field        | Rule   | Value                  |
 		    | Text         | Equals | Flat A, 6 Furlong Road |

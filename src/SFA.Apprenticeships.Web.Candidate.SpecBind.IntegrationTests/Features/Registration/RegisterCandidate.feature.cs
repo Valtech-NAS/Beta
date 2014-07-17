@@ -171,11 +171,11 @@ this.ScenarioSetup(scenarioInfo);
                         "Longitude",
                         "Equals",
                         "-0.10660693737952387"});
-#line 27
+#line 26
  testRunner.And("I am on AddressDropdown list item matching criteria", ((string)(null)), table2, "And ");
-#line 38
+#line 37
  testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 39
+#line 38
  testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -214,7 +214,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Longitude",
                         "Equals",
                         "-0.10660693737952387"});
-#line 40
+#line 39
  testRunner.Then("I see", ((string)(null)), table3, "Then ");
 #line hidden
             this.ScenarioCleanup();

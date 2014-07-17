@@ -3,14 +3,14 @@
         var option = $(this);
         var selected = $(this).find('option:selected');
         if (option && option.val() !== "") {
-            $("#Address_AddressLine1").val(selected.attr("address-line1"));
-            $("#Address_AddressLine2").val(selected.attr("address-line2"));
-            $("#Address_AddressLine3").val(selected.attr("address-line3"));
-            $("#Address_AddressLine4").val(selected.attr("address-line4"));
-            $("#Address_Postcode").val(selected.attr("post-code"));
+            $("#Address_AddressLine1").val(selected.attr("data-address-line1"));
+            $("#Address_AddressLine2").val(selected.attr("data-address-line2"));
+            $("#Address_AddressLine3").val(selected.attr("data-address-line3"));
+            $("#Address_AddressLine4").val(selected.attr("data-address-line4"));
+            $("#Address_Postcode").val(selected.attr("data-post-code"));
             $("#Address_Uprn").val(option.val());
-            $("#Address_GeoPoint_Latitude").val(selected.attr("lat"));
-            $("#Address_GeoPoint_Longitude").val(selected.attr("lon"));
+            $("#Address_GeoPoint_Latitude").val(selected.attr("data-lat"));
+            $("#Address_GeoPoint_Longitude").val(selected.attr("data-lon"));
             $("#address-details").removeClass("toggle-content");
             $("#address-manual").addClass("hidden");
         }
@@ -66,13 +66,13 @@
                                             .val(item.Uprn)
                                             .html(displayVal)
                                             .addClass("address-select-option")
-                                            .attr("address-line1", _.escape(item.AddressLine1))
-                                            .attr("address-line2", _.escape(item.AddressLine2))
-                                            .attr("address-line3", _.escape(item.AddressLine3))
-                                            .attr("address-line4", _.escape(item.AddressLine4))
-                                            .attr("post-code", _.escape(item.Postcode))
-                                            .attr("lat", item.GeoPoint.Latitude)
-                                            .attr("lon", item.GeoPoint.Longitude);
+                                            .attr("data-address-line1", _.escape(item.AddressLine1))
+                                            .attr("data-address-line2", _.escape(item.AddressLine2))
+                                            .attr("data-address-line3", _.escape(item.AddressLine3))
+                                            .attr("data-address-line4", _.escape(item.AddressLine4))
+                                            .attr("data-post-code", _.escape(item.Postcode))
+                                            .attr("data-lat", item.GeoPoint.Latitude)
+                                            .attr("data-lon", item.GeoPoint.Longitude);
                             addressList.append(opt);
                         });
 
