@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Pages.Registration
 {
     using global::SpecBind.Pages;
+    using global::SpecBind.Selenium;
     using OpenQA.Selenium;
     using Templates.EditorFor;
 
@@ -21,15 +22,8 @@
         [ElementLocator(Id = "Lastname")]
         public IWebElement Lastname { get; set; }
 
-        //[ElementLocator(Class = "date-input")]
-        //public DateOfBirthTemplate DateOfBirth { get; set; }
-
-        //todo:Add address template
-        //public AddressTemplate Address { get; set; }
-
         [ElementLocator(Id = "EmailAddress")]
         public IWebElement EmailAddress { get; set; }
-
 
         [ElementLocator(Id = "Phonenumber")]
         public IWebElement Phonenumber { get; set; }
@@ -40,5 +34,76 @@
         [ElementLocator(Id = "HasAcceptedTermsAndConditions")]
         public IWebElement HasAcceptedTermsAndConditions { get; set; }
 
+        #region Date of birth
+
+        [ElementLocator(Class = "date-input")]
+        public DateOfBirthTemplate DateOfBirth { get; set; }
+
+        public IWebElement Day { get { return DateOfBirth.Day; } }
+        public IWebElement Month { get { return DateOfBirth.Month; } }
+        public IWebElement Year { get { return DateOfBirth.Year; } }
+
+        #endregion
+
+        #region Address Template
+
+        [ElementLocator(Id = "address-details")]
+        public AddressTemplate Address { get; set; }
+
+        public IWebElement AddressLine1 { get { return Address.AddressLine1; } }
+        public IWebElement AddressLine2 { get { return Address.AddressLine2; } }
+        public IWebElement AddressLine3 { get { return Address.AddressLine3; } }
+        public IWebElement AddressLine4 { get { return Address.AddressLine4; } }
+        public IWebElement Postcode { get { return Address.Postcode; } }
+        public IWebElement Latitude { get { return Address.Latitude; } }
+        public IWebElement Longitude { get { return Address.Longitude; } }
+
+        #region Search Inputs
+
+        [ElementLocator(Id = "postcode-search")]
+        public IWebElement PostcodeSearch { get; set; }
+
+        [ElementLocator(Id = "find-addresses")]
+        public IWebElement FindAddresses { get; set; }
+
+        [ElementLocator(Id = "address-select")]
+        public IElementList<IWebElement, AddressDropdownItem> AddressDropdown { get; set; }
+
+        [ElementLocator(Id = "address-select")]
+        public IWebElement Addresses { get; set; }
+
+        #endregion
+
+        #endregion
+    }
+
+    [ElementLocator(TagName = "option")]
+    public class AddressDropdownItem : WebElement
+    {
+        public AddressDropdownItem(ISearchContext parent) : base(parent)
+        {
+        }
+
+        public string DisplayText
+        {
+            get
+            {
+                var text = AddressLine1;
+                if (!string.IsNullOrWhiteSpace(AddressLine2))
+                {
+                    text += AddressLine2;
+                }
+                return text;
+            }
+        }
+
+        public string AddressLine1 { get { return this.GetAttribute("data-address-line1"); } }
+        public string AddressLine2 { get { return this.GetAttribute("data-address-line2"); } }
+        public string AddressLine3 { get { return this.GetAttribute("data-address-line3"); } }
+        public string AddressLine4 { get { return this.GetAttribute("data-address-line4"); } }
+        public string Postcode { get { return this.GetAttribute("data-post-code"); } }
+        public string Uprn { get { return this.GetAttribute("value"); } }
+        public string Latitude { get { return this.GetAttribute("data-lat"); } }
+        public string Longitude { get { return this.GetAttribute("data-lon"); } }
     }
 }

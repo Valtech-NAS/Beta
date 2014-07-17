@@ -23,7 +23,7 @@
             }
 
             var exception = server.GetLastError();
-            //todo: Logger.ErrorException(exception.Message, exception);
+            // TODO: LOGGING: Logger.ErrorException(exception.Message, exception);
 
             var controller = DependencyResolver.Current.GetService<T>();
             var routeData = new RouteData();

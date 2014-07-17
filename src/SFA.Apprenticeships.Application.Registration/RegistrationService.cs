@@ -2,6 +2,7 @@
 {
     using System;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
 
@@ -9,11 +10,15 @@
     {
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
+        private readonly int _activationCodeExpiryDays;
 
-        public RegistrationService(IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository)
+        public RegistrationService(IUserReadRepository userReadRepository, 
+                                    IUserWriteRepository userWriteRepository,
+                                    IConfigurationManager configurationManager)
         {
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
+            _activationCodeExpiryDays = configurationManager.GetAppSetting<int>("ActivationCodeExpiryDays");
         }
 
         public bool IsUsernameAvailable(string username)
@@ -26,6 +31,7 @@
             var user = new User
             {
                 ActivationCode = activationCode,
+                ActivateCodeExpiry = DateTime.Now.AddDays(_activationCodeExpiryDays),
                 Status = UserStatuses.PendingActivation,
                 EntityId = userId,
                 Username = username,
@@ -41,7 +47,7 @@
             var user = _userReadRepository.Get(username);
 
             if (!user.ActivationCode.Equals(activationCode, StringComparison.InvariantCultureIgnoreCase))
-                throw new Exception("Invalid activation code"); //todo: should use an application exception type
+                throw new Exception("Invalid activation code"); // TODO: EXCEPTION: should use an application exception type
 
             user.Status = UserStatuses.Active;
             user.ActivationCode = string.Empty;

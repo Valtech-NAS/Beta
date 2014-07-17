@@ -6,6 +6,6 @@
 
     public interface ILocationLookupProvider
     {
-        IEnumerable<Location> FindLocation(string placeName, int maxResults = 50); //todo: replace with paging request
+        IEnumerable<Location> FindLocation(string placeName, int maxResults = 50); // TODO: NOTIMPL: replace with paging request
     }
 }

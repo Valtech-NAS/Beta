@@ -7,19 +7,24 @@
     using Application.Interfaces.Vacancies;
     using Domain.Entities.Locations;
     using Domain.Interfaces.Mapping;
+    using ViewModels.Locations;
     using ViewModels.VacancySearch;
 
     public class SearchProvider : ISearchProvider
     {
         private readonly ILocationSearchService _locationSearchService;
         private readonly IVacancySearchService _vacancySearchService;
+        private readonly IAddressSearchService _addressSearchService;
         private readonly IMapper _mapper;
 
-        public SearchProvider(ILocationSearchService locationSearchService, IVacancySearchService vacancySearchService,
+        public SearchProvider(ILocationSearchService locationSearchService, 
+            IVacancySearchService vacancySearchService,
+            IAddressSearchService addressSearchService,
             IMapper mapper)
         {
             _locationSearchService = locationSearchService;
             _vacancySearchService = vacancySearchService;
+            _addressSearchService = addressSearchService;
             _mapper = mapper;
         }
 
@@ -48,6 +53,12 @@
             vacancySearchResponseViewModel.VacancySearch = search;
 
             return vacancySearchResponseViewModel;
+        }
+
+        public IEnumerable<AddressViewModel> FindAddresses(string postcode)
+        {
+            var addresses = _addressSearchService.FindAddress(postcode);
+            return addresses != null ? _mapper.Map<IEnumerable<Address>, IEnumerable<AddressViewModel>>(addresses) : new AddressViewModel[] { };
         }
     }
 }

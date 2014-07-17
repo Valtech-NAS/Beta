@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.VacancyEtl;
-    using Common.Wcf;
     using Configuration;
     using VacancySummaryProxy;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Mapping;
+    using Wcf;
 
     public class LegacyVacancyIndexDataProvider : IVacancyIndexDataProvider
     {
@@ -33,7 +33,7 @@
                 VacancySearchCriteria = new VacancySearchData
                 {
                     PageIndex = 1,
-                    VacancyLocationType =  vacancyLocationType.ToString()
+                    VacancyLocationType = vacancyLocationType.ToString()
                 }
             };
 

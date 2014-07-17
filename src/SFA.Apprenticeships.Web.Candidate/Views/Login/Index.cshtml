@@ -1,0 +1,50 @@
+﻿@model LoginViewModel
+
+@{
+    ViewBag.Title = "SFA Apprenticeships - Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("ValidationSummary", ViewData.ModelState)
+
+<div class="grid-wrapper">
+    <div class="grid grid-1-2">
+        @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+        {
+            <fieldset>
+                <legend class="heading-large">Sign in</legend>
+                <p>
+                    Sign in or
+                    @Html.ActionLink("create an account", controllerName: "Register", actionName: "Index")
+                    to get started.
+                </p>
+
+                @Html.FormTextFor(
+                    m => m.EmailAddress,
+                    containerHtmlAttributes: new { @class = "form-group-compound" },
+                    controlHtmlAttributes: new { @class = "form-control-3-4" })
+
+                <div class="form-group">
+                    <a id="password"></a>
+                    @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-3-4" })
+                    @Html.ValidationMessageFor(m => m.Password, null, new { @class = "hidden" })
+                    <a class="form-hint" href="#">Forgotten password?</a>
+                </div>
+
+                <div class="form-group">
+                    <button class="button" id="triggerSignIn">Sign in</button>
+                </div>
+            </fieldset>
+        }
+    </div>
+    <div class="grid grid-1-2">
+        <h2 class="heading-large">Create an account</h2>
+        <p class="text">
+            If you create an account with GOV.UK you can save and track your applications,
+            set up vacancy alerts and manage your profile.
+        </p>
+
+        @Html.ActionLink("Create account", controllerName: "Register", actionName: "Index")
+    </div>
+</div>

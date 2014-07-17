@@ -4,7 +4,6 @@
     using Candidates.IoC;
     using Common.IoC;
     using Domain.Entities.Candidates;
-    using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using NUnit.Framework;
     using StructureMap;
@@ -50,9 +49,7 @@
             var candidate = new Candidate
             {
                 EntityId = Guid.NewGuid(),
-                Username = "peter@griffin.net",
                 LegacyCandidateId = 12345,
-                Status = UserStatuses.Active,
                 RegistrationDetails =
                 {
                     FirstName = "Peter",

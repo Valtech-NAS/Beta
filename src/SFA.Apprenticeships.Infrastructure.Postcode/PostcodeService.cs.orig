@@ -1,31 +1,23 @@
-﻿using CuttingEdge.Conditions;
-
-namespace SFA.Apprenticeships.Infrastructure.Postcode
+﻿namespace SFA.Apprenticeships.Infrastructure.Postcode
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Locations;
 <<<<<<< HEAD
-    using SFA.Apprenticeships.Application.Common.Mappers;
-    using SFA.Apprenticeships.Application.Interfaces.Postcode;
-    using SFA.Apprenticeships.Infrastructure.Common.Rest;
-    using SFA.Apprenticeships.Infrastructure.Postcode.Entities;
-    using PostcodeInfo = SFA.Apprenticeships.Domain.Entities.Postcode.PostcodeInfo;
-
-    public class PostcodeService : RestService, IPostcodeService
+    using Common.Configuration;
 =======
     using Common.Rest;
+>>>>>>> US413 Refactored IConfigurationManager and removed dummy data in RegisterController. Wrote Integration Test for LegacyCandidateProvider
+    using CuttingEdge.Conditions;
+    using Domain.Entities.Locations;
+    using Domain.Interfaces.Configuration;
     using Entities;
-    using Application.Interfaces.Location;
-    using Domain.Entities.Location;
+    using Rest;
 
-    /// <summary>
-    /// <add key="PostcodeServiceEndpoint" value="http://api.postcodes.io" />
-    /// </summary>
     public class PostcodeService : RestService, IPostcodeLookupProvider
->>>>>>> refactored some app service projects
     {
-        public PostcodeService(string baseUrl) : base(baseUrl) {}
+        public PostcodeService(IConfigurationManager configurationManager) : 
+            base(configurationManager.GetAppSetting("PostcodeServiceEndpoint")) { }
 
         public Location GetLocation(string postcode)
         {
@@ -40,23 +32,18 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode
                 };
         }
 
-        public IEnumerable<Address> FindAddresses(string postcode)
-        {
-            //todo: needs an address lookup
-            throw new NotImplementedException();
-        }
-
         private IEnumerable<PostcodeInfo> GetPartialMatches(string postcode)
         {
-            Condition.Requires(postcode).IsNotNullOrEmpty();
+            Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
 
-            var request = Create("postcodes?q={postcode}", new[] {new KeyValuePair<string, string>("postcode", postcode)});
+            var request = Create("postcodes?q={postcode}",
+                new[] {new KeyValuePair<string, string>("postcode", postcode)});
             var postcodes = Execute<PostcodeInfoResult>(request);
 
             if (postcodes.Data != null && postcodes.Data.Result != null)
                 return postcodes.Data.Result.AsEnumerable();
 
-            return null;
+            return Enumerable.Empty<PostcodeInfo>();
         }
     }
 }

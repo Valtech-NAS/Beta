@@ -18,7 +18,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancySearch.IntegrationTests
             });
         }
 
-        //TODO: populate index with test data and test search results are correct
+        // TODO: NOTIMPL: populate index with test data and test search results are correct
         [Test]
         public void ShouldReturnPopulatedVacancySummaries()
         {

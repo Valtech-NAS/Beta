@@ -45,11 +45,12 @@
             const string emptyHtml = "<span></span>";
             const string emptyText = "";
 
+            var subject = DefaultSubject(request);
+
             // NOTE: https://github.com/sendgrid/sendgrid-csharp.
             var message = new SendGridMessage
             {
-                Subject = request.Subject,
-                From = new MailAddress(request.FromEmail),
+                Subject = subject,
                 To = new[]
                 {
                     new MailAddress(request.ToEmail)
@@ -59,6 +60,13 @@
             };
 
             return message;
+        }
+
+        private static string DefaultSubject(EmailRequest request)
+        {
+            const string emptySubject = " "; // CRITICAL: must be a single space.
+
+            return string.IsNullOrWhiteSpace(request.Subject) ? emptySubject : request.Subject;
         }
 
         private static void PopulateTemplate(EmailRequest request, SendGridMessage message)
@@ -85,8 +93,15 @@
         private void AttachTemplate(EmailRequest request, SendGridMessage message)
         {
             var template = GetTemplateConfiguration(request.TemplateName);
+            var fromEmail = DefaultFromEmail(request, template);
 
+            message.From = new MailAddress(fromEmail);
             message.EnableTemplateEngine(template.Id);
+        }
+
+        private static string DefaultFromEmail(EmailRequest request, SendGridTemplateConfiguration template)
+        {
+            return String.IsNullOrWhiteSpace(request.FromEmail) ? template.FromEmail : request.FromEmail;
         }
 
         private SendGridTemplateConfiguration GetTemplateConfiguration(string templateName)
@@ -98,7 +113,7 @@
             {
                 var message = string.Format("Invalid email template name: \"{0}\".", templateName);
 
-                // TODO: AG: template is invalid, log / throw domain exception.
+                // TODO: EXCEPTION: template is invalid, log / throw domain exception.
                 throw new Exception(message);
             }
 
@@ -116,7 +131,7 @@
             }
             catch (Exception e)
             {
-                // TODO: AG: failed to send, log / throw domain exception.
+                // TODO: EXCEPTION: failed to send, log / throw domain exception.
                 throw new Exception("Failed to dispatch email.", e);
             }
         }

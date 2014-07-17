@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Domain.Entities.Locations
+﻿namespace SFA.Apprenticeships.Domain.Entities.Locations
 {
     public class GeoPoint
     {

@@ -93,6 +93,8 @@
     </Compile>
     <Compile Include="VacancyDetail\LegacyVacancyDataProvider.cs" />
     <Compile Include="VacancySummary\LegacyVacancyIndexDataProvider.cs" />
+    <Compile Include="Wcf\IWcfService.cs" />
+    <Compile Include="Wcf\WcfService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

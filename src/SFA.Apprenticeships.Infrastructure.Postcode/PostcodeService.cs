@@ -1,14 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Postcode
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Locations;
-    using Common.Configuration;
-    using Common.Rest;
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
+    using Domain.Interfaces.Configuration;
     using Entities;
+    using Rest;
 
     public class PostcodeService : RestService, IPostcodeLookupProvider
     {
@@ -26,12 +25,6 @@
                     Name = postcode,
                     GeoPoint = new GeoPoint {Latitude = result.Latitude, Longitude = result.Longitude}
                 };
-        }
-
-        public IEnumerable<Address> FindAddresses(string postcode)
-        {
-            //todo: needs an address lookup
-            throw new NotImplementedException();
         }
 
         private IEnumerable<PostcodeInfo> GetPartialMatches(string postcode)

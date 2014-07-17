@@ -7,11 +7,11 @@
     using NUnit.Framework;
     using Application.Interfaces.ReferenceData;
     using Application.ReferenceData;
-    using Common.Wcf;
     using Domain.Interfaces.Caching;
     using Configuration;
     using ReferenceDataProxy;
     using StructureMap;
+    using Wcf;
 
     [TestFixture]
     public class ReferenceDataTests
@@ -49,7 +49,7 @@
         }
 
         /// <summary>
-        /// TODO: remove and test cache without specifically linking to a service / provider.
+        /// TODO: DONTKNOW: remove and test cache without specifically linking to a service / provider.
         /// </summary>
         [TestCase]
         public void ShouldGetServiceResponseFromCache()

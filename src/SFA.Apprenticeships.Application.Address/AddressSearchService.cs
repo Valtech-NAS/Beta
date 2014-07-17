@@ -8,11 +8,11 @@
 
     public class AddressSearchService : IAddressSearchService
     {
-        private readonly IPostcodeLookupProvider _postcodeLookupProvider;
+        private readonly IAddressSearchProvider _addressSearchProvider;
 
-        public AddressSearchService(IPostcodeLookupProvider postcodeLookupProvider)
+        public AddressSearchService(IAddressSearchProvider addressSearchProvider)
         {
-            _postcodeLookupProvider = postcodeLookupProvider;
+            _addressSearchProvider = addressSearchProvider;
         }
 
         public IEnumerable<Address> FindAddress(string postcode)
@@ -22,7 +22,7 @@
             if (!LocationHelper.IsPostcode(postcode))
                 throw new ArgumentException("Invalid postcode specified");
 
-            return _postcodeLookupProvider.FindAddresses(postcode);
+            return _addressSearchProvider.FindAddress(postcode);
         }
     }
 }

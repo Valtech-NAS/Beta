@@ -12,6 +12,10 @@
 
         public string ActivationCode { get; set; }
 
+        public DateTime ActivateCodeExpiry { get; set; }
+
         public string PasswordResetCode { get; set; }
+
+        public DateTime PasswordResetCodeExpiry { get; set; } // TODO: CONFIG: set as 1 day (from config)
     }
 }

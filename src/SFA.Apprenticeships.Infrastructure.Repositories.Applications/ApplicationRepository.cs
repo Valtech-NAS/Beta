@@ -3,13 +3,14 @@
     using System;
     using Common.Configuration;
     using Domain.Entities.Applications;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Entities;
     using Mongo.Common;
     using MongoDB.Driver.Builders;
 
-    public class ApplicationRepository : GenericMongoRepository<MongoApplicationDetail>, IApplicationWriteRepository
+    public class ApplicationRepository : GenericMongoClient<MongoApplicationDetail>, IApplicationWriteRepository
     {
         private readonly IMapper _mapper;
 

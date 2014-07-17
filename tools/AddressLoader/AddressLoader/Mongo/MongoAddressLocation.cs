@@ -1,8 +1,8 @@
-using System;
-using MongoDB.Bson.Serialization.Attributes;
-
 namespace AddressLoader.Mongo
 {
+    using System;
+    using MongoDB.Bson.Serialization.Attributes;
+
     public class MongoAddressLocation
     {
         [BsonElement("long")]

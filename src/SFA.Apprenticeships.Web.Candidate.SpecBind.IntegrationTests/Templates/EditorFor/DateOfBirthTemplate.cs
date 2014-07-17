@@ -4,19 +4,20 @@
     using global::SpecBind.Selenium;
     using OpenQA.Selenium;
 
+    [ElementLocator(Class = "date-input")]
     public class DateOfBirthTemplate : WebElement
     {
         public DateOfBirthTemplate(ISearchContext searchContext) : base(searchContext)
         {
         }
 
-        [ElementLocator(Type = "input", Index = 1)]
+        [ElementLocator(Id = "DateOfBirth_Day")]
         public IWebElement Day { get; set; }
 
-        [ElementLocator(Type = "input", Index = 2)]
+        [ElementLocator(Id = "DateOfBirth_Month")]
         public IWebElement Month { get; set; }
 
-        [ElementLocator(Type = "input", Index = 3)]
+        [ElementLocator(Id = "DateOfBirth_Year")]
         public IWebElement Year { get; set; }
 
     }

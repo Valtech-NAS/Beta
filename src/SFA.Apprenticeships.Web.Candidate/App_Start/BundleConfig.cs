@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Web.Candidate
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                 "~/Content/_assets/js/vendor/modernizr-custom.js"));
 
-            //todo: we could/should aggregate some of these "single file" bundles
+            // TODO: DEADCODE: we could/should aggregate some of these "single file" bundles
             //bundles.Add(new Bundle("~/content/css/bundle").Include(
             //    "~/Content/_assets/css/main.css"));
 

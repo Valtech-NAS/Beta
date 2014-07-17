@@ -2,12 +2,12 @@
 {
     using System;
     using System.Linq;
-    using Application.Interfaces.Vacancies; 
-    using Common.Wcf;
+    using Application.Interfaces.Vacancies;
     using Configuration;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Mapping;
     using VacancyDetailProxy;
+    using Wcf;
 
     public class LegacyVacancyDataProvider : IVacancyDataProvider
     {

@@ -1,12 +1,13 @@
-﻿using System;
-using Nest;
-
-namespace AddressLoader.Process
+﻿namespace AddressLoader.Process
 {
+    using System;
+    using Nest;
+
     /// <summary>
     /// DTO for mapping elasticsearch index to
     /// </summary>
-    internal class AddressData
+    [ElasticType(Name = "address")]
+    public class AddressData
     {
         [ElasticProperty(Name = "addressline1", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.not_analyzed)]
         public string AddressLine1 { get; set; }
@@ -25,6 +26,9 @@ namespace AddressLoader.Process
 
         [ElasticProperty(Name = "latitude", Type = FieldType.double_type, Store = true, Index = FieldIndexOption.not_analyzed)]
         public double Latitude { get; set; }
+
+        [ElasticProperty(Name = "uprn", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.not_analyzed)]
+        public string Uprn { get; set; }
 
         [ElasticProperty(Name = "postcode", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.analyzed)]
         public string Postcode { get; set; }

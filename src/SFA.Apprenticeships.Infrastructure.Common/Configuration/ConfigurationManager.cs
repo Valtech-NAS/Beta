@@ -6,32 +6,19 @@
     using System.Globalization;
     using System.IO;
     using CuttingEdge.Conditions;
+    using Domain.Interfaces.Configuration;
 
     public class ConfigurationManager : IConfigurationManager
     {
-        public static string ConfigurationFileAppSetting = "ConfigurationPath";
+        internal const string ConfigurationFileAppSetting = "ConfigurationPath";
 
-        public Configuration Configuration { get; private set; }
+        private Configuration Configuration { get; set; }
 
-        public ConfigurationManager(string configFileAppSettingKey = null)
+        public ConfigurationManager()
         {
-            var configFile = string.IsNullOrEmpty(configFileAppSettingKey)
-                ? System.Configuration.ConfigurationManager.AppSettings[ConfigurationFileAppSetting]
-                : System.Configuration.ConfigurationManager.AppSettings[configFileAppSettingKey];
-
-            if (!File.Exists(configFile))
-            {
-                configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFile);
-            }
-
-            if (!File.Exists(configFile))
-            {
-                throw new ConfigurationErrorsException(string.Format((string) "Configuration file: {0} does not exist", (object) configFile));
-            }
-
             var configMap = new ExeConfigurationFileMap
             {
-                ExeConfigFilename = configFile
+                ExeConfigFilename = ConfigurationFilePath
             };
 
             Configuration = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
@@ -40,22 +27,29 @@
         public string TryGetAppSetting(string key)
         {
             Condition.Requires(key, "key").IsNotNullOrWhiteSpace();
-
             var result = Configuration.AppSettings.Settings[key];
-            if (result != null)
+            return result != null ? result.Value : null;
+        }
+
+        public string ConfigurationFilePath
+        {
+            get
             {
-                return result.Value;
+                var configFile = System.Configuration.ConfigurationManager.AppSettings[ConfigurationFileAppSetting];
+
+                if (!File.Exists(configFile))
+                {
+                    configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFile);
+                }
+
+                if (!File.Exists(configFile))
+                {
+                    throw new ConfigurationErrorsException(
+                        string.Format((string) "Configuration file: {0} does not exist", (object) configFile));
+                }
+
+                return configFile;
             }
-
-            // Create exception for logging.
-            //var ex =
-            //    new ApplicationException(
-            //        string.Format(
-            //            CultureInfo.InvariantCulture,
-            //            "The value for '{0}' could not be found in the configuration file", key));
-            // needs logging here
-
-            return null;
         }
 
         public string GetAppSetting(string key)
@@ -80,7 +74,7 @@
         {
             Condition.Requires(key, "key").IsNotNullOrWhiteSpace();
 
-            string result = TryGetAppSetting(key);
+            var result = TryGetAppSetting(key);
             if (result != null)
             {
                 return (T)Convert.ChangeType(result, typeof(T), CultureInfo.InvariantCulture);
@@ -92,22 +86,6 @@
         public ConfigurationSection GetSection(string sectionName)
         {
             return Configuration.GetSection(sectionName);
-        }
-
-        public ConnectionStringSettings GetConnectionString(string key)
-        {
-            Condition.Requires(key, "key").IsNotNullOrWhiteSpace();
-
-            var result = Configuration.ConnectionStrings.ConnectionStrings[key];
-            if (result == null)
-            {
-                throw new ApplicationException(
-                    string.Format(
-                        "The connection string '{0}' could not be found in the configuration file",
-                        key));
-            }
-
-            return result;
         }
     }
 }

@@ -3,6 +3,9 @@ namespace AddressLoader.Mongo
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
 
+    /// <summary>
+    /// Wrapper DTO to ease deserialisation of address data from the source database
+    /// </summary>
     [BsonIgnoreExtraElements]
     public class MongoAddressWrapper
     {

@@ -10,20 +10,17 @@
     public class RegisterController : SfaControllerBase
     {
         private readonly ICandidateServiceProvider _candidateServiceProvider;
-        private readonly IAddressSearchServiceProvider _addressSearchServiceProvider;
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
 
         public RegisterController(ISessionState session,
         RegisterViewModelServerValidator registerViewModelServerValidator,
             ActivationViewModelServerValidator activationViewModelServerValidator,
-            IAddressSearchServiceProvider addressSearchServiceProvider,
             ICandidateServiceProvider candidateServiceProvider)
             : base(session)
         {
             _registerViewModelServerValidator = registerViewModelServerValidator;
             _activationViewModelServerValidator = activationViewModelServerValidator;
-            _addressSearchServiceProvider = addressSearchServiceProvider;
             _candidateServiceProvider = candidateServiceProvider;
         }
 
@@ -44,15 +41,21 @@
                 return View(registerView);
             }
 
-            return View();
+            var succeeded = _candidateServiceProvider.Register(registerView);
+
+            TempData["EmailAddress"] = registerView.EmailAddress;
+
+            //FormsAuthentication.SetAuthCookie(registerView.EmailAddress, false);
+
+            return succeeded ? (ActionResult)RedirectToAction("Activation") : View(registerView);
         }
 
         [HttpGet]
         public ActionResult Activation()
         {
-            var model = new ActivationViewModel()
+            var model = new ActivationViewModel
             {
-                EmailAddress = "chris.monney@gmail.com"
+                EmailAddress = TempData["EmailAddress"].ToString()
             };
 
             return View(model);
@@ -65,23 +68,22 @@
 
             var activatedResult = _activationViewModelServerValidator.Validate(activationViewModel);
 
-
-            if (!activatedResult.IsValid)
+            if (activatedResult.IsValid)
             {
-                ModelState.Clear();
-                activatedResult.AddToModelState(ModelState, string.Empty);
-                return View("Activation", activationViewModel);
-
+                TempData["EmailAddress"] = activationViewModel.EmailAddress;
+                return RedirectToAction("Complete", "Register");
             }
 
-            return RedirectToAction("complete", "register", activationViewModel.EmailAddress);
+            ModelState.Clear();
+            activatedResult.AddToModelState(ModelState, string.Empty);
+            return View("Activation", activationViewModel);
         }
 
-        public ActionResult Complete(string email)
+        public ActionResult Complete()
         {
-            ViewBag.Message = email;
+            ViewBag.Message = TempData["EmailAddress"].ToString();
 
-            return View(email);
+            return View();
         }
     }
 }

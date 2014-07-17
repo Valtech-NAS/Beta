@@ -3,8 +3,8 @@
     using System;
     using System.Linq;
     using Application.Candidate.Strategies;
-    using Common.Wcf;
     using GatewayServiceProxy;
+    using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
 
     public class LegacyCandidateProvider : ILegacyCandidateProvider
@@ -31,6 +31,7 @@
                     AddressLine2 = candidate.RegistrationDetails.Address.AddressLine2,
                     AddressLine3 = candidate.RegistrationDetails.Address.AddressLine3,
                     AddressLine4 = candidate.RegistrationDetails.Address.AddressLine4,
+                    TownCity = "N/A",
                     Postcode = candidate.RegistrationDetails.Address.Postcode,
                     LandlineTelephone = candidate.RegistrationDetails.PhoneNumber,
                     MobileTelephone = string.Empty
@@ -42,13 +43,13 @@
 
             if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
             {
-                //todo: should use an application exception type
+                // TODO: EXCEPTION: should use an application exception type
                 throw new Exception("Failed to create candidate in legacy system");
             }
 
             var legacyCandidateId = response.CandidateId;
 
-            //todo: add logging
+            // TODO: LOGGING: add logging
 
             return legacyCandidateId;
         }

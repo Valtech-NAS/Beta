@@ -27,27 +27,40 @@
 
         public Candidate RegisterCandidate(Candidate newCandidate, string password)
         {
-            var username = newCandidate.RegistrationDetails.EmailAddress;
             var newCandidateId = Guid.NewGuid();
-            var activationCode = _codeGenerator.Generate();
-
-            newCandidate.EntityId = newCandidateId;
-
-            _registrationService.Register(username, newCandidateId, activationCode, UserRoles.Candidate);
 
             _authenticationService.CreateUser(newCandidateId, password);
 
+            newCandidate.EntityId = newCandidateId;
+
+            var activationCode = _codeGenerator.Generate();
+
+            var username = newCandidate.RegistrationDetails.EmailAddress;
+
+            _registrationService.Register(username, newCandidateId, activationCode, UserRoles.Candidate);
+
             var candidate = _candidateWriteRepository.Save(newCandidate);
 
-            _communicationService.SendMessageToCandidate(newCandidateId, CandidateMessageTypes.SendActivationCode,
-                new[]
-                {
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateLastName, candidate.RegistrationDetails.LastName),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ActivationCode, activationCode)
-                });
+            SendActivationCode(candidate.EntityId, candidate, activationCode);
 
             return candidate;
         }
+
+        #region Helpers
+
+        private void SendActivationCode(Guid newCandidateId, Candidate candidate, string activationCode)
+        {
+            _communicationService.SendMessageToCandidate(newCandidateId, CandidateMessageTypes.SendActivationCode,
+                new[]
+                {
+                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName,
+                        candidate.RegistrationDetails.FirstName),
+                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateLastName,
+                        candidate.RegistrationDetails.LastName),
+                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ActivationCode, activationCode)
+                });
+        }
+
+        #endregion
     }
 }

@@ -1,13 +1,14 @@
-
+using SFA.Apprenticeships.Infrastructure.Address.IoC;
 using SFA.Apprenticeships.Web.Candidate;
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(StructuremapMvc), "Start")]
 
 namespace SFA.Apprenticeships.Web.Candidate
 {
+    using Infrastructure.Address.IoC;
+    using Infrastructure.RabbitMq.IoC;
     using Infrastructure.Repositories.Applications.IoC;
     using Infrastructure.Azure.Session.IoC;
     using Infrastructure.Repositories.Candidates.IoC;
-    using Infrastructure.Common.IoC;
     using Infrastructure.Elastic.Common.IoC;
     using Infrastructure.LegacyWebServices.IoC;
     using Infrastructure.LocationLookup.IoC;
@@ -17,6 +18,8 @@ namespace SFA.Apprenticeships.Web.Candidate
     using IoC;
     using Common.IoC;
     using StructureMap;
+    using Infrastructure.Common.IoC;
+    using Infrastructure.UserDirectory.IoC;
 
     /// <summary>
     /// StructureMap MVC initialization. Sets the MVC resolver and the WebApi resolver to use structure map.
@@ -34,10 +37,13 @@ namespace SFA.Apprenticeships.Web.Candidate
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
+                x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
+                x.AddRegistry<UserDirectoryRegistry>();
+                x.AddRegistry<AddressRegistry>();
 
                 // web layer
                 x.AddRegistry<SessionRegistry>();

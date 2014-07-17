@@ -3,13 +3,14 @@
     using System;
     using Common.Configuration;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Entities;
     using Mongo.Common;
     using MongoDB.Driver.Builders;
 
-    public class UserRepository : GenericMongoRepository<MongoUser>, IUserReadRepository, IUserWriteRepository
+    public class UserRepository : GenericMongoClient<MongoUser>, IUserReadRepository, IUserWriteRepository
     {
         private readonly IMapper _mapper;
 
@@ -18,7 +19,7 @@
         {
             _mapper = mapper;
 
-            Collection.CreateIndex(new IndexKeysBuilder().Ascending("EmailAddress"), IndexOptions.SetUnique(true));
+            Collection.CreateIndex(new IndexKeysBuilder().Ascending("Username"), IndexOptions.SetUnique(true));
         }
 
         public User Get(Guid id)
@@ -30,10 +31,10 @@
 
         public User Get(string username, bool errorIfNotFound = true)
         {
-            var mongoEntity = Collection.FindOne(Query.EQ("username", username));
+            var mongoEntity = Collection.FindOne(Query.EQ("Username", username));
 
-            if (mongoEntity == null && errorIfNotFound) 
-                throw new Exception("Unknown user name"); //todo: should use an application exception type
+            if (mongoEntity == null && errorIfNotFound)
+                throw new Exception("Unknown user name"); // TODO: EXCEPTION: should use an application exception type
 
             return mongoEntity == null ? null : _mapper.Map<MongoUser, User>(mongoEntity);
         }

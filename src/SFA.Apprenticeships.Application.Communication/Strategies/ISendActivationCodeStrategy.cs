@@ -5,6 +5,6 @@
 
     public interface ISendActivationCodeStrategy
     {
-        void Send(Candidate candidate, string activationCode);
+        void Send(string templateName, Candidate candidate, string activationCode);
     }
 }

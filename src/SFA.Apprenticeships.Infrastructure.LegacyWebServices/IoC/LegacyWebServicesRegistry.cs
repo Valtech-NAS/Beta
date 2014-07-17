@@ -2,12 +2,13 @@
 
 namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
 {
+    using Application.Candidate.Strategies;
     using Application.Interfaces.ReferenceData;
     using Application.ReferenceData;
     using Application.VacancyEtl;
     using Application.Interfaces.Vacancies;
+    using CreateCandidate;
     using Domain.Interfaces.Mapping;
-    using Common.Wcf;
     using Configuration;
     using Mappers;
     using ReferenceDataProxy;
@@ -17,6 +18,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
     using VacancySummaryProxy;
     using StructureMap.Configuration.DSL;
     using ReferenceData;
+    using Wcf;
 
     public class LegacyWebServicesRegistry : Registry
     {
@@ -34,6 +36,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
             For<IReferenceDataProvider>().Use<LegacyReferenceDataProvider>();
             For<IReferenceDataService>().Use<ReferenceDataService>().Name = "Base.ReferenceDataService";
             For<IReferenceDataService>().Use<CachedReferenceDataService>().Ctor<IReferenceDataService>().Named("Base.ReferenceDataService");
+            For<ILegacyCandidateProvider>().Use<LegacyCandidateProvider>();
         }
     }
 }

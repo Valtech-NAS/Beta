@@ -19,6 +19,7 @@
     {
         private Mock<ILocationSearchService> _locationSearchService;
         private Mock<IVacancySearchService> _vacancySearchService;
+        private Mock<IAddressSearchService> _addressSearchService;
 
         private CandidateWebMappers _mapper;
 
@@ -27,6 +28,7 @@
         {
             _locationSearchService = new Mock<ILocationSearchService>();
             _vacancySearchService = new Mock<IVacancySearchService>();
+            _addressSearchService = new Mock<IAddressSearchService>();
             _mapper = new CandidateWebMappers();
         }
 
@@ -40,8 +42,7 @@
 
             _locationSearchService.Setup(x => x.FindLocation("Location1")).Returns(locations);
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object,
-                _mapper);
+            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object, _addressSearchService.Object, _mapper);
             var test = searchProvider.FindLocation("Location1");
             var result = test.First();
 
@@ -56,8 +57,7 @@
             _locationSearchService.Setup(x => x.FindLocation(It.IsAny<string>()))
                 .Returns(default(IEnumerable<Location>));
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object,
-                _mapper);
+            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object, _addressSearchService.Object, _mapper);
             var test = searchProvider.FindLocation(string.Empty);
 
             test.Should().BeEmpty();
@@ -87,8 +87,7 @@
                 WithinDistance = 2
             };
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object,
-                _mapper);
+            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object, _addressSearchService.Object, _mapper);
             var test = searchProvider.FindVacancies(search, 10);
 
             test.Should().NotBeNull();

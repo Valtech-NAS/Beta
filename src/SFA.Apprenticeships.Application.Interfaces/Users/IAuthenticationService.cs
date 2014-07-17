@@ -11,6 +11,6 @@
 
         void CreateUser(Guid id, string password);
 
-        void ChangePassword(Guid id, string newPassword);
+        void ChangePassword(Guid id, string oldPassword, string newPassword);
     }
 }

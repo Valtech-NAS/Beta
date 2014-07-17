@@ -1,5 +1,3 @@
-using System;
-
 namespace AddressLoader.Domain
 {
     public class Location

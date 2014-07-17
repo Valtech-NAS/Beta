@@ -3,6 +3,8 @@
     using System;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
+    using Domain.Entities.Users;
+    using Domain.Entities.Candidates;
 
     public class LegacyActivateCandidateStrategy : IActivateCandidateStrategy
     {
@@ -23,23 +25,35 @@
 
         public void ActivateCandidate(string username, string activationCode)
         {
-            //var user = _userReadRepository.Get(username);
-            //var candidate = _candidateReadRepository.Get(user.EntityId);
+            var user = _userReadRepository.Get(username);
+            var candidate = _candidateReadRepository.Get(user.EntityId);
 
-            //todo: assert status
-            //user.Status == UserStatuses.PendingActivation
+            switch (user.Status)
+            {
+                case UserStatuses.Unknown:
+                    throw new Exception("Unknown user name"); // TODO: EXCEPTION: should use an application exception type
+                case UserStatuses.PendingActivation:
+                    ProcessPendingActivation(username, activationCode, candidate);
+                    break;
+                case UserStatuses.Active:
+                    throw new Exception("User is already active"); // TODO: EXCEPTION: should use an application exception type
+                case UserStatuses.Inactive:
+                    throw new Exception("User is inactive"); // TODO: EXCEPTION: should use an application exception type
+                case UserStatuses.Blocked:
+                    throw new Exception("User is blocked"); // TODO: EXCEPTION: should use an application exception type
+                default:
+                    throw new Exception("User status is unknown"); // TODO: EXCEPTION: should use an application exception type
+            }
+        }
 
-            //todo: validate activation code
-            //_registrationService.Activate(username, activationCode);
+        private void ProcessPendingActivation(string username, string activationCode, Candidate candidate)
+        {
+            _registrationService.Activate(username, activationCode);
+            var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
+            candidate.LegacyCandidateId = legacyCandidateId;
+            _candidateWriteRepository.Save(candidate);
 
-            //todo: create candidate in legacy
-            //var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
-
-            //todo: update candidate with legacy candidate id and update user status to "activated"
-            //candidate.LegacyCandidateId = legacyCandidateId;
-            //_candidateWriteRepository.Save(candidate);
-
-            //todo: send a welcome email?
+            // TODO: NOTIMPL: send a welcome email?
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿
-using System;
-
-namespace SFA.Apprenticeships.Domain.Entities.Vacancies
+﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
     public enum WageType
     {

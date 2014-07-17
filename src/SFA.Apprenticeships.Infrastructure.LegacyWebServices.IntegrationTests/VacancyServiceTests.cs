@@ -5,11 +5,11 @@
     using FluentAssertions;
     using NUnit.Framework;
     using Application.VacancyEtl;
-    using Common.Wcf;
     using Configuration;
     using VacancySummaryProxy;
     using Domain.Entities.Vacancies;
     using StructureMap;
+    using Wcf;
 
     [TestFixture]
     public class VacancyServiceTests

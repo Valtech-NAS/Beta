@@ -3,13 +3,14 @@
     using System;
     using Common.Configuration;
     using Domain.Entities.Candidates;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Entities;
     using Mongo.Common;
     using MongoDB.Driver.Builders;
 
-    public class CandidateRepository : GenericMongoRepository<MongoCandidate>, ICandidateReadRepository, ICandidateWriteRepository
+    public class CandidateRepository : GenericMongoClient<MongoCandidate>, ICandidateReadRepository, ICandidateWriteRepository
     {
         private readonly IMapper _mapper;
 

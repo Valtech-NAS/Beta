@@ -5,7 +5,7 @@
 
     public class ApplicationDetail : BaseEntity
     {
-        //todo: ApplicationDetail, status, vacancy info, etc.
+        // TODO: DONTKNOW: ApplicationDetail, status, vacancy info, etc.
 
         public ApplicationDetail()
         {
