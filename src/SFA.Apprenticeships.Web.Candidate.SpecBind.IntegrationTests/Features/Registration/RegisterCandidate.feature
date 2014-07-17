@@ -23,16 +23,27 @@ Scenario: As a candidate on the registration page I want to be able to pick my a
 		 | Field          | Value  |
 		 | PostcodeSearch | N7 8LS |
 	And I choose FindAddresses
-	And I wait to see AddressDropdown
+	#And I wait to see AddressDropdown
 	And I am on AddressDropdown list item matching criteria
-		    | Field        | Rule   | Value  |
-		    | AddressLine1 | Equals | Flat A |
-			#| DisplayText  | Equals | Flat A, 6 Furlong Road |
-		    #| AddressLine2 | Equals | 6 Furlong Road         |
-		    #| AddressLine3 | Equals | London                 |
-		    #| AddressLine4 | Equals | Isnlington             |
-		    #| Postcode     | Equals | N7 8LS                 |
-		    #| Nprn         | Exists |                        |
-		    #| Latitude     | Exists |                        |
-		    #| Longitude    | Exists |                        |
-		    
+		    | Field        | Rule   | Value                  |
+		    | Text         | Equals | Flat A, 6 Furlong Road |
+		    | AddressLine1 | Equals | Flat A                 |
+		    | AddressLine2 | Equals | 6 Furlong Road         |
+		    | AddressLine3 | Equals | London                 |
+		    | AddressLine4 | Equals | Islington              |
+		    | Postcode     | Equals | N7 8LS                 |
+		    | Uprn         | Equals | 5300034721             |
+		    | Latitude     | Equals | 51.54751633697479      |
+		    | Longitude    | Equals | -0.10660693737952387   |
+	And I choose WrappedElement
+	And I am on the RegisterCandidatePage page
+	Then I see
+			    | Field        | Rule   | Value                |
+			    | AddressLine1 | Equals | Flat A               |
+			    | AddressLine2 | Equals | 6 Furlong Road       |
+			    | AddressLine3 | Equals | London               |
+			    | AddressLine4 | Equals | Islington            |
+			    | Postcode     | Equals | N7 8LS               |
+			    | Uprn         | Equals | 5300034721           |
+			    | Latitude     | Equals | 51.54751633697479    |
+			    | Longitude    | Equals | -0.10660693737952387 |

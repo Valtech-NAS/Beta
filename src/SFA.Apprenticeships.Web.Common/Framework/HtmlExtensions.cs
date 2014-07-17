@@ -79,7 +79,7 @@
             Condition.Requires(helper, "helper").IsNotNull();
             Condition.Requires(expression, "expression").IsNotNull();
 
-            var validationError = ValidationError(helper, expression);
+            var validationError = HasValidationError(helper, expression);
             RouteValueDictionary containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
             RouteValueDictionary controlAttributes = MergeAttributes("form-control", controlHtmlAttributes);
             RouteValueDictionary labelAttributes = MergeAttributes("form-label", labelHtmlAttributes);
@@ -148,7 +148,7 @@
             RouteValueDictionary labelAttributes = MergeAttributes("", labelHtmlAttributes);
             //RouteValueDictionary hintAttributes = MergeAttributes("form-hint", hintHtmlAttributes);
             
-            var validationError = ValidationError(helper, expression);
+            var validationError = HasValidationError(helper, expression);
             var validator = helper.ValidationMessageFor(expression, null, new { @class = "hidden" });
             var anchorTag = AnchorFor(helper, expression);
 
@@ -247,23 +247,17 @@
 
         #region Helpers
 
-        private static bool ValidationError<TModel, TProperty>(HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
+        private static bool HasValidationError<TModel, TProperty>(HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
         {
-            ModelState modelState;
-            var validationError = false;
-            var name = ExpressionHelper.GetExpressionText(expression);
-
-            if (!string.IsNullOrEmpty(name) && helper.ViewData.ModelState.TryGetValue(name, out modelState))
-            {
-                validationError = modelState.Errors.Count > 0;
-            }
-
-            return validationError;
+            var expressionText = ExpressionHelper.GetExpressionText(expression);
+            var htmlFieldPrefix = helper.ViewData.TemplateInfo.HtmlFieldPrefix;
+            var fullyQualifiedName = string.IsNullOrEmpty(htmlFieldPrefix) ? expressionText : string.Join(".", htmlFieldPrefix, expressionText);
+            return !helper.ViewData.ModelState.IsValidField(fullyQualifiedName);
         }
 
         private static RouteValueDictionary MergeAttributes(string baseClassName, object extendedAttributes)
         {
-            RouteValueDictionary mergeAttributes = extendedAttributes != null ? new RouteValueDictionary(extendedAttributes) : new RouteValueDictionary();
+            var mergeAttributes = extendedAttributes != null ? new RouteValueDictionary(extendedAttributes) : new RouteValueDictionary();
 
             if (mergeAttributes.ContainsKey("class"))
             {

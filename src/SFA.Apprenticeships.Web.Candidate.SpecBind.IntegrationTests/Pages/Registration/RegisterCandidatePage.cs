@@ -10,6 +10,7 @@
     public class RegisterCandidatePage
     {
         private readonly ISearchContext _context;
+        private IElementList<IWebElement, AddressDropdownItem> _addressDropdown;
 
         public RegisterCandidatePage(ISearchContext context)
         {
@@ -55,8 +56,12 @@
         public IWebElement AddressLine3 { get { return Address.AddressLine3; } }
         public IWebElement AddressLine4 { get { return Address.AddressLine4; } }
         public IWebElement Postcode { get { return Address.Postcode; } }
-        public IWebElement Latitude { get { return Address.Latitude; } }
-        public IWebElement Longitude { get { return Address.Longitude; } }
+
+        public string Uprn { get { return Address.Uprn.GetAttribute("value"); } }
+
+        public string Latitude { get { return Address.Latitude.GetAttribute("value"); } }
+
+        public string Longitude { get { return Address.Longitude.GetAttribute("value"); } }
 
         #region Search Inputs
 
@@ -67,7 +72,11 @@
         public IWebElement FindAddresses { get; set; }
 
         [ElementLocator(Id = "address-select")]
-        public IElementList<IWebElement, AddressDropdownItem> AddressDropdown { get; set; }
+        public IElementList<IWebElement, AddressDropdownItem> AddressDropdown
+        {
+            get { return _addressDropdown; }
+            set { _addressDropdown = value; }
+        }
 
         [ElementLocator(Id = "address-select")]
         public IWebElement Addresses { get; set; }
@@ -84,26 +93,13 @@
         {
         }
 
-        public string DisplayText
-        {
-            get
-            {
-                var text = AddressLine1;
-                if (!string.IsNullOrWhiteSpace(AddressLine2))
-                {
-                    text += AddressLine2;
-                }
-                return text;
-            }
-        }
-
-        public string AddressLine1 { get { return this.GetAttribute("data-address-line1"); } }
-        public string AddressLine2 { get { return this.GetAttribute("data-address-line2"); } }
-        public string AddressLine3 { get { return this.GetAttribute("data-address-line3"); } }
-        public string AddressLine4 { get { return this.GetAttribute("data-address-line4"); } }
-        public string Postcode { get { return this.GetAttribute("data-post-code"); } }
+        public string AddressLine1 { get { return this.GetAttribute("address-line1"); } }
+        public string AddressLine2 { get { return this.GetAttribute("address-line2"); } }
+        public string AddressLine3 { get { return this.GetAttribute("address-line3"); } }
+        public string AddressLine4 { get { return this.GetAttribute("address-line4"); } }
+        public string Postcode { get { return this.GetAttribute("post-code"); } }
         public string Uprn { get { return this.GetAttribute("value"); } }
-        public string Latitude { get { return this.GetAttribute("data-lat"); } }
-        public string Longitude { get { return this.GetAttribute("data-lon"); } }
+        public string Latitude { get { return this.GetAttribute("lat"); } }
+        public string Longitude { get { return this.GetAttribute("lon"); } }
     }
 }
