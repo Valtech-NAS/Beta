@@ -32,6 +32,8 @@
         [HttpPost]
         public ActionResult Index(RegisterViewModel registerView)
         {
+            registerView.IsUsernameAvailable = IsUsernameAvailable(registerView.EmailAddress);
+
             var validationResult = _registerViewModelServerValidator.Validate(registerView);
 
             if (!validationResult.IsValid)
@@ -88,14 +90,14 @@
 
         public JsonResult CheckUsername(CheckUsernameViewModel model)
         {
-            var usernameIsAvailable = false;
-
-            if (ModelState.IsValid)
-            {
-                usernameIsAvailable = _candidateServiceProvider.IsUsernameAvailable(model.Email);
-            }
-
+            if (!ModelState.IsValid) return Json(new {Result = false}, JsonRequestBehavior.AllowGet);
+            var usernameIsAvailable = IsUsernameAvailable(model.Email);
             return Json(new { Result = usernameIsAvailable }, JsonRequestBehavior.AllowGet);
+        }
+
+        private bool IsUsernameAvailable(string username)
+        {
+            return _candidateServiceProvider.IsUsernameAvailable(username);
         }
     }
 }

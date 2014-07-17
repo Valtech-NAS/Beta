@@ -76,6 +76,14 @@
         internal static void AddServerRules(this AbstractValidator<RegisterViewModel> validator)
         {
             validator.RuleFor(x => x.DateOfBirth).SetValidator(new DateOfBirthViewModelServerValidator());
+            validator.RuleFor(x => x.EmailAddress)
+               .Must(UsernameNotAvailable)
+               .WithMessage(RegisterViewModelMessages.EmailAddressMessages.UsernameNotAvailableErrorText);
+        }
+
+        private static bool UsernameNotAvailable(RegisterViewModel model, string emailAddress)
+        {
+            return emailAddress != null && (!string.IsNullOrEmpty(emailAddress) && model.IsUsernameAvailable);
         }
     }
 }

@@ -30,5 +30,7 @@
 
         [Display(Name = RegisterViewModelMessages.TermsAndConditions.LabelText)]
         public bool HasAcceptedTermsAndConditions { get; set; }
+
+        public bool IsUsernameAvailable { get; set; }
     }
 }

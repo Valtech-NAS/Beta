@@ -28,6 +28,7 @@
             public const string TooLongErrorText = "'Email address' must not exceed 100 characters";
             public const string WhiteListRegularExpression = Whitelists.EmailAddressWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'Email address' " + Whitelists.EmailAddressWhitelist.ErrorText;
+            public static string UsernameNotAvailableErrorText = "An account has already been registered with the email address supplied";
         }
 
         public static class PhoneNumberMessages
