@@ -21,8 +21,8 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
     public class WorkerRole : RoleEntryPoint
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private VacancySchedulerConsumer _vacancySchedulerConsumer;
-        private readonly static Logger Logger = LogManager.GetLogger(Constants.NamedLoggers.VacancyImporterLogger);
 
         public override void Run()
         {

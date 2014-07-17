@@ -9,7 +9,7 @@
 
     public class VacancySchedulerConsumer
     {
-        private readonly static Logger Logger = LogManager.GetLogger(Constants.NamedLoggers.VacancyImporterLogger);
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IProcessControlQueue<StorageQueueMessage> _messageService;
         private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
