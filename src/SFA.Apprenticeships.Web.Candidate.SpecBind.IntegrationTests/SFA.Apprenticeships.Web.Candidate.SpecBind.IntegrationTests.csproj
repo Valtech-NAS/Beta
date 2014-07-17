@@ -75,16 +75,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HomePage.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Registration\RegisterCandidate.feature.cs">
+    <Compile Include="Features\Login\LoginCandidate.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RegisterCandidate.feature</DependentUpon>
+      <DependentUpon>LoginCandidate.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\VacancySearch\SearchResults.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SearchResults.feature</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Login\LoginCandidatePage.cs" />
     <Compile Include="Pages\Registration\RegisterCandidatePage.cs" />
     <Compile Include="Pages\VacancySearch\VacancySearchResultPage.cs" />
     <Compile Include="Pages\VacancySearch\VacancySearchPage.cs" />
@@ -101,6 +102,10 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>HomePage.feature.cs</LastGenOutput>
     </None>
+    <None Include="Features\Login\LoginCandidate.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>LoginCandidate.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\Registration\RegisterCandidate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RegisterCandidate.feature.cs</LastGenOutput>
@@ -109,7 +114,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>SearchResults.feature.cs</LastGenOutput>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Choose>
