@@ -44,7 +44,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CachedReferenceDataService.cs" />
     <Compile Include="ReferenceDataService.cs" />
     <Compile Include="ReferenceDataServiceCacheKeyEntry.cs" />
   </ItemGroup>

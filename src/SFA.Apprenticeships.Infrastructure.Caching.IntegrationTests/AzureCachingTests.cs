@@ -19,7 +19,7 @@
         {
             _azureCacheService = new AzureCacheService();
             _cacheKeyEntry = new TestCacheKeyEntry();
-            _testCachedObject = new TestCachedObject() { DateTimeCached = DateTime.Now };
+            _testCachedObject = new TestCachedObject { DateTimeCached = DateTime.Now };
             _testFunc = ((i, s) => _testCachedObject);
         }
 
@@ -30,7 +30,6 @@
         }
 
         [Test]
-        [Ignore("Need config fix")]
         public void AddsItemToCache()
         {
             var nullResult = _azureCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
@@ -44,7 +43,6 @@
         }
 
         [Test]
-        [Ignore("Need config fix")]
         public void RemovesItemFromCache()
         {
             _azureCacheService.Get(_cacheKeyEntry, _testFunc, 1, "2");

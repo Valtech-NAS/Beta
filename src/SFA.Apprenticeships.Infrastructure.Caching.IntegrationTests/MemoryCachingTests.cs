@@ -19,7 +19,7 @@
         {
             _memoryCacheService = new MemoryCacheService();
             _cacheKeyEntry = new TestCacheKeyEntry();
-            _testCachedObject = new TestCachedObject() { DateTimeCached = DateTime.Now };
+            _testCachedObject = new TestCachedObject { DateTimeCached = DateTime.Now };
             _testFunc = ((i, s) => _testCachedObject);
         }
 

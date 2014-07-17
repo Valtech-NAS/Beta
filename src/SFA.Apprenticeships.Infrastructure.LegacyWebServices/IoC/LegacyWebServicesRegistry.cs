@@ -1,23 +1,22 @@
-﻿using SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy;
-
-namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
 {
     using Application.Candidate.Strategies;
     using Application.Interfaces.ReferenceData;
+    using Application.Interfaces.Vacancies;
     using Application.ReferenceData;
     using Application.VacancyEtl;
-    using Application.Interfaces.Vacancies;
+    using Configuration;
     using CreateCandidate;
     using Domain.Interfaces.Mapping;
-    using Configuration;
+    using GatewayServiceProxy;
     using Mappers;
+    using ReferenceData;
     using ReferenceDataProxy;
+    using StructureMap.Configuration.DSL;
     using VacancyDetail;
     using VacancyDetailProxy;
     using VacancySummary;
     using VacancySummaryProxy;
-    using StructureMap.Configuration.DSL;
-    using ReferenceData;
     using Wcf;
 
     public class LegacyWebServicesRegistry : Registry
@@ -31,11 +30,30 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
             For<IWcfService<IVacancyDetails>>().Use<WcfService<IVacancyDetails>>();
             For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
             For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
-            For<IVacancyIndexDataProvider>().Use<LegacyVacancyIndexDataProvider>().Ctor<IMapper>().Named("LegacyWebServices.VacancySummaryMapper");
-            For<IVacancyDataProvider>().Use<LegacyVacancyDataProvider>().Ctor<IMapper>().Named("LegacyWebServices.VacancyDetailMapper");
-            For<IReferenceDataProvider>().Use<LegacyReferenceDataProvider>();
-            For<IReferenceDataService>().Use<ReferenceDataService>().Name = "Base.ReferenceDataService";
-            For<IReferenceDataService>().Use<CachedReferenceDataService>().Ctor<IReferenceDataService>().Named("Base.ReferenceDataService");
+            For<IVacancyIndexDataProvider>()
+                .Use<LegacyVacancyIndexDataProvider>()
+                .Ctor<IMapper>()
+                .Named("LegacyWebServices.VacancySummaryMapper");
+            For<IVacancyDataProvider>()
+                .Use<LegacyVacancyDataProvider>()
+                .Ctor<IMapper>()
+                .Named("LegacyWebServices.VacancyDetailMapper");
+
+            For<IReferenceDataProvider>()
+                .Use<LegacyReferenceDataProvider>()
+                .Name = "LegacyReferenceDataProvider";
+
+            For<IReferenceDataProvider>()
+                .Use<CachedLegacyReferenceDataProvider>()
+                .Ctor<IReferenceDataProvider>()
+                .Named("LegacyReferenceDataProvider")
+                .Name = "CachedLegacyReferenceDataProvider";
+
+            For<IReferenceDataService>()
+                .Use<ReferenceDataService>()
+                .Ctor<IReferenceDataProvider>()
+                .Named("CachedLegacyReferenceDataProvider");
+
             For<ILegacyCandidateProvider>().Use<LegacyCandidateProvider>();
         }
     }

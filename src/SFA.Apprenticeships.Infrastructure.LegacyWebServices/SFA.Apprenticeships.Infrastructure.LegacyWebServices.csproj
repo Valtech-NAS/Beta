@@ -70,6 +70,7 @@
     <Compile Include="Mappers\VacancyLocationTypeResolver.cs" />
     <Compile Include="Mappers\VacancySummaryMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReferenceData\CachedLegacyReferenceDataProvider.cs" />
     <Compile Include="Service References\GatewayServiceProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
