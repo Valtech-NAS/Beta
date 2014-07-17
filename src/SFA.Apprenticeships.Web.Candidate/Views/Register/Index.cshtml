@@ -1,4 +1,4 @@
-﻿@model RegisterViewModel
+@model RegisterViewModel
 
 @{
     ViewBag.Title = "SFA Apprenticeships - Register";
@@ -24,7 +24,7 @@
 
             @Html.EditorFor(a => a.Address)
             @Html.FormTextFor(m => m.EmailAddress, controlHtmlAttributes: new { @class = "linked-input-master", type = "email", spellcheck = "false" }, hintHtmlAttributes: new { @class = "text" })
-            <span id="display-message" class="form-hint"></span>
+            <span id="display-message" class="validation-message"></span>
 
             @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { @class = "form-control-1-3", type = "tel" }, hintHtmlAttributes: new { @class = "text" })
 
