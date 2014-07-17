@@ -209,6 +209,7 @@
     <Content Include="Configs\dataCacheClient.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\_assets\js\nas\usernameUniquenessCheck.js" />
     <Content Include="Content\_assets\js\vendor\jquery-1.11.1.min.js.map">
       <DependentUpon>jquery-1.11.1.min.js</DependentUpon>
     </Content>
