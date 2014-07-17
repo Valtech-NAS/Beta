@@ -2,7 +2,11 @@
 {
     using System;
     using System.Linq;
+    using Caching.Memory.IoC;
+    using Common.IoC;
+    using Domain.Entities.ReferenceData;
     using FluentAssertions;
+    using IoC;
     using Moq;
     using NUnit.Framework;
     using Application.Interfaces.ReferenceData;
@@ -22,6 +26,14 @@
         [TestFixtureSetUp]
         public void Setup()
         {
+            ObjectFactory.Initialize(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry<MemoryCacheRegistry>();
+                x.For<IReferenceDataService>().Use<ReferenceDataService>();
+            });
+
             _legacyServicesConfiguration = ObjectFactory.GetInstance<ILegacyServicesConfiguration>();
             _service = ObjectFactory.GetInstance<IReferenceDataService>();
         }
@@ -44,8 +56,9 @@
         public void GetApprenticeshipFrameworksShouldReturnList(string referenceDataType, int numberReturned)
         {
             var test = _service.GetReferenceData(referenceDataType);
-            test.Should().NotBeNullOrEmpty();
-            test.Count().Should().Be(numberReturned);
+            var items = test as ReferenceDataItem[] ?? test.ToArray();
+            items.Should().NotBeNullOrEmpty();
+            items.Count().Should().Be(numberReturned);
         }
 
         /// <summary>
@@ -67,8 +80,9 @@
             var service = new CachedReferenceDataService(cache, uncachedServicce.Object);
             var test = service.GetReferenceData("Counties");
 
-            test.Should().NotBeNullOrEmpty();
-            test.Count().Should().Be(46);
+            var items = test as ReferenceDataItem[] ?? test.ToArray();
+            items.Should().NotBeNullOrEmpty();
+            items.Count().Should().Be(46);
         }
     }
 }
