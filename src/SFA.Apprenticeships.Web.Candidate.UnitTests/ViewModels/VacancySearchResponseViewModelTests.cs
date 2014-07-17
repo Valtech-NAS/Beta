@@ -4,6 +4,7 @@
     using NUnit.Framework;
     using Candidate.ViewModels.VacancySearch;
 
+    //todo: refactor to be a more general set of "paging" tests as it's nothing specifically to do with vacancy searches
     [TestFixture]
     public class VacancySearchResponseViewModelTests
     {

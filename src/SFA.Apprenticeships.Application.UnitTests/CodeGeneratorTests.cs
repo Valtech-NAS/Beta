@@ -1,5 +1,4 @@
-﻿
-namespace SFA.Apprenticeships.Application.UnitTests
+﻿namespace SFA.Apprenticeships.Application.UnitTests
 {
     using System;
     using System.Collections.Generic;
@@ -16,13 +15,13 @@ namespace SFA.Apprenticeships.Application.UnitTests
             const int sampleSize = 100;
             var sampleCodes = new List<string>();
 
-            for (int i = 0; i < sampleSize; i++)
+            for (var i = 0; i < sampleSize; i++)
             {
                 // Arrange.
                 var generator = new CodeGenerator();
 
                 // Act.
-                string code = generator.Generate();
+                var code = generator.Generate();
 
                 // Assert.
                 Assert.IsFalse(String.IsNullOrWhiteSpace(code));

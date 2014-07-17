@@ -57,9 +57,7 @@
     <Compile Include="AzureMessageHelper.cs" />
     <Compile Include="IAzureCloudClient.cs" />
     <Compile Include="Configuration\AzureCloudConfig.cs" />
-    <Compile Include="Configuration\AzureConsoleConfig.cs" />
     <Compile Include="Configuration\IAzureCloudConfig.cs" />
-    <Compile Include="IoC\AzureCommonConsoleRegistry.cs" />
     <Compile Include="IoC\AzureCommonRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

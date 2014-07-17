@@ -90,6 +90,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Consumers\EmailConsumerAsync.cs" />
     <Compile Include="IoC\AsyncProcessorRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -110,17 +113,9 @@
       <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
-      <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
-      <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.Common\SFA.Apprenticeships.Infrastructure.Azure.Common.csproj">
       <Project>{4fe5e4be-91df-49c6-b6cd-9b69fcd0c0fe}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
-      <Project>{78b1f2a1-dcc3-4ed3-8ce0-16e0781b59fa}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Communication\SFA.Apprenticeships.Infrastructure.Communication.csproj">
       <Project>{d34d27d3-79a9-407e-86ef-af3ac0ea024b}</Project>
