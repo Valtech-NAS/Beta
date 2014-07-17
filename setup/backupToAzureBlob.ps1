@@ -23,4 +23,4 @@ $fqName = "$srcpath\ServiceConfiguration.Cloud.cscfg"
 Set-AzureStorageBlobContent -Blob "$environment\$sitename\$buildnumber\ServiceConfiguration.Cloud.cscfg" -Container "$storage" -File "$fqName" -Context $context -Force
 
 $fqName = "$srcpath\$projectname.cspkg"
-Set-AzureStorageBlobContent -Blob "$environment\$sitename\$buildnumber\SFA.Apprenticeships.Web.Candidate.Azure.cspkg" -Container "$storage" -File "$fqName" -Context $context -Force
+Set-AzureStorageBlobContent -Blob "$environment\$sitename\$buildnumber\$projectname.cspkg" -Container "$storage" -File "$fqName" -Context $context -Force
