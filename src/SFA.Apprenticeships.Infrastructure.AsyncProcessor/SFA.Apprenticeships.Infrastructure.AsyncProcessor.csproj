@@ -100,9 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Configs\dataCacheClient.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Configs\settings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -133,9 +130,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configs\readme2.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Configs\readme.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -150,9 +144,9 @@
   </Target>
   <PropertyGroup>
     <PreBuildEvent>REM Copy from local dev machines locations
-if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\Shared\$(ConfigurationName)\*.config $(ProjectDir)Configs
+if exist $(ProjectDir)..\..\..\Apprenticeships copy /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\Shared\$(ConfigurationName)\settings.config $(ProjectDir)Configs\settings.config
 REM Copy from build server locations
-if exist $(ProjectDir)..\Configuration xcopy /C /Y $(ProjectDir)..\Configuration\Applications\Shared\$(ConfigurationName)\*.config $(ProjectDir)Configs</PreBuildEvent>
+if exist $(ProjectDir)..\..\Configuration copy /Y $(ProjectDir)..\..\Configuration\Applications\Shared\$(ConfigurationName)\settings.config $(ProjectDir)Configs\settings.config</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
