@@ -97,7 +97,7 @@
 
         private bool IsUsernameAvailable(string username)
         {
-            return _candidateServiceProvider.IsUsernameAvailable(username);
+            return _candidateServiceProvider.IsUsernameAvailable(username.Trim()); //TODO Consider doing this everywhere
         }
     }
 }
