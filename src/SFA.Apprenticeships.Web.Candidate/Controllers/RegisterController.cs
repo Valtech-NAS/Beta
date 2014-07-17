@@ -16,7 +16,8 @@
         public RegisterController(ISessionState session,
                                     RegisterViewModelServerValidator registerViewModelServerValidator,
                                     ActivationViewModelServerValidator activationViewModelServerValidator,
-                                    ICandidateServiceProvider candidateServiceProvider) : base(session)
+                                    ICandidateServiceProvider candidateServiceProvider)
+            : base(session)
         {
             _registerViewModelServerValidator = registerViewModelServerValidator;
             _activationViewModelServerValidator = activationViewModelServerValidator;
@@ -83,6 +84,18 @@
             ViewBag.Message = TempData["EmailAddress"].ToString();
 
             return View();
+        }
+
+        public JsonResult CheckUsername(CheckUsernameViewModel model)
+        {
+            var usernameIsAvailable = false;
+
+            if (ModelState.IsValid)
+            {
+                usernameIsAvailable = _candidateServiceProvider.IsUsernameAvailable(model.Email);
+            }
+
+            return Json(new { Result = usernameIsAvailable }, JsonRequestBehavior.AllowGet);
         }
     }
 }

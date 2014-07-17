@@ -209,7 +209,6 @@
     <Content Include="Configs\dataCacheClient.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Content\_assets\js\nas\usernameUniquenessCheck.js" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -224,7 +223,7 @@
     <Content Include="Content\_assets\img\icon-star-filled.png" />
     <Content Include="Content\_assets\img\icon-star-hollow-2x.png" />
     <Content Include="Content\_assets\img\icon-star-hollow.png" />
-    <Content Include="Content\_assets\js\nas\addressLookup.js" />
+    <Content Include="Content\_assets\js\nas\lookupService.js" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
     <Content Include="Content\_assets\js\nas\locationAutocomplete.js" />
     <Content Include="Content\_assets\img\arrow-sprite-2x.png" />
@@ -419,6 +418,7 @@
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\Login\LoginViewModel.cs" />
     <Compile Include="ViewModels\Register\ActivationViewModel.cs" />
+    <Compile Include="ViewModels\Register\CheckUsernameViewModel.cs" />
     <Compile Include="ViewModels\Register\RegisterViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancyDetailViewModel.cs" />

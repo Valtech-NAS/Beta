@@ -32,10 +32,10 @@
 (function ($) {
 
     $.fn.addressLookup = function (options) {
+        var self = this;
+        var settings = options;
 
-        var settings = $.extend({ url: '' }, options);
-
-        this.click(function (e) {
+        self.click(function (e) {
             e.preventDefault();
             $("#address-manual").removeClass("hidden");
             $("#address-list").addClass("toggle-content");
@@ -88,4 +88,23 @@
             return true;
         };
     };
+
+    $.fn.usernameLookup = function (apiurl) {
+
+        var self = this;
+
+        self.focusout(function () {
+
+            var data = { Email: $(this).val() };
+
+            $.getJSON(apiurl, data, function (response) {
+                $('#display-message').html('<p> Username is available: ' + response.Result + '</p>');
+            });
+        });
+
+        self.focusin(function() {
+            $('#display-message').html('');
+        });
+    };
+
 })(jQuery);
