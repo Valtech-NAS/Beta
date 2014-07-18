@@ -6,9 +6,11 @@
     using System.Net;
     using System.Security.Cryptography.X509Certificates;
     using Configuration;
+    using NLog;
 
     public class ActiveDirectoryServer : IDisposable
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private const int ValidationFailed = 49;
         private readonly bool _isSecure;
         private readonly ActiveDirectoryConfiguration _config;
@@ -64,6 +66,8 @@
             }
             catch (LdapException ldapException)
             {
+                Logger.ErrorException("Active directory binding failed: ", ldapException);
+
                 if (ldapException.ErrorCode == ValidationFailed)
                 {
                     return false;

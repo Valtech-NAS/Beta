@@ -3,9 +3,11 @@
     using System;
     using System.DirectoryServices.Protocols;
     using System.Text;
+    using NLog;
 
     public class ActiveDirectoryChangePassword
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private const string LdapServerPolicyHintsOid = "1.2.840.113556.1.4.2066";
         private readonly ActiveDirectoryServer _server;
 
@@ -82,6 +84,8 @@
             }
             catch (DirectoryOperationException doex)
             {
+                Logger.ErrorException("Active directory change password. ", doex);
+
                 // TODO: EXCEPTION: Low::Act on the exceptions.
                 switch (doex.Response.ResultCode)
                 {
