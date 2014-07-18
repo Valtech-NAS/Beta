@@ -31,7 +31,7 @@
 
         public static class PhoneNumberWhitelist
         {
-            public const string RegularExpression = @"^[0-9]{8,16}$";
+            public const string RegularExpression = @"^[0-9+\s-()]{8,16}$";
             public const string ErrorText = @"must only contain numbers";
         }
 

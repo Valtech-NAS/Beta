@@ -26,7 +26,7 @@
         [ElementLocator(Id = "EmailAddress")]
         public IWebElement EmailAddress { get; set; }
 
-        [ElementLocator(Id = "Phonenumber")]
+        [ElementLocator(Id = "PhoneNumber")]
         public IWebElement Phonenumber { get; set; }
 
         [ElementLocator(Id = "Password")]
@@ -37,6 +37,9 @@
 
         [ElementLocator(Id = "create-account-btn")]
         public IWebElement CreateAccountButton { get; set; }
+
+        [ElementLocator(Id = "email-available-message")]
+        public IWebElement EmailAddressAvailableMessage { get; set; }
 
         #region Date of birth
 
