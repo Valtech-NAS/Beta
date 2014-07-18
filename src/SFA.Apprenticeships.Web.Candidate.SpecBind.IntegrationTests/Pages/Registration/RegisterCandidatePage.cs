@@ -7,12 +7,12 @@
 
     [PageNavigation("/register/index")]
     [PageAlias("RegisterCandidatePage")]
-    public class RegisterCandidatePage
+    public class RegisterCandidatePage : BaseValidationPage
     {
         private readonly ISearchContext _context;
         private IElementList<IWebElement, AddressDropdownItem> _addressDropdown;
 
-        public RegisterCandidatePage(ISearchContext context)
+        public RegisterCandidatePage(ISearchContext context) : base(context)
         {
             _context = context;
         }
@@ -34,6 +34,9 @@
 
         [ElementLocator(Id = "HasAcceptedTermsAndConditions")]
         public IWebElement HasAcceptedTermsAndConditions { get; set; }
+
+        [ElementLocator(Id = "create-account-btn")]
+        public IWebElement CreateAccountButton { get; set; }
 
         #region Date of birth
 
