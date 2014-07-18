@@ -287,6 +287,10 @@
     <Content Include="Views\Register\Activation.cshtml" />
     <Content Include="Views\Register\Complete.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="NLog.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
