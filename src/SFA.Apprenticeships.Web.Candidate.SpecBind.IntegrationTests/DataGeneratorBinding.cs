@@ -25,5 +25,11 @@
             // Do some database stuff here
             this.tokenManager.SetToken(EmailTokenId, email);
         }
+
+        [Then("I get the token for my newly created account")]
+        public void GivenIGetTokenForMyNewlyCreatedAccount(Table emailTable)
+        {
+
+        }
     }
 }

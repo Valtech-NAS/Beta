@@ -114,3 +114,4 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 	Then I am on the ActivationPage page
 
 
+
