@@ -86,10 +86,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RegisterCandidate.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\VacancySearch\SearchResults.feature.cs">
+    <Compile Include="Features\VacancySearch\VacancySearch.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SearchResults.feature</DependentUpon>
+      <DependentUpon>VacancySearch.feature</DependentUpon>
     </Compile>
     <Compile Include="Pages\BaseValidationPage.cs" />
     <Compile Include="Pages\Login\LoginCandidatePage.cs" />
@@ -118,9 +118,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RegisterCandidate.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\VacancySearch\SearchResults.feature">
+    <None Include="Features\VacancySearch\VacancySearch.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>SearchResults.feature.cs</LastGenOutput>
+      <LastGenOutput>VacancySearch.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>

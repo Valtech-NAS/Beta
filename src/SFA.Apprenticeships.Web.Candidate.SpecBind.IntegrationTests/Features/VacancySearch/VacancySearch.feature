@@ -1,11 +1,11 @@
-﻿Feature: SearchForApprenticeship
-	In order to find a vacant apprenticeship quickly
+﻿@ignore
+Feature: SearchForApprenticeship
+	In order to find a vacancy apprenticeship quickly
 	As a system user
-	I want to find a vacant apprenticeship by entering the location
+	I want to find a vacancy apprenticeship by location or keywords
 
-Scenario: Find vacancy apprenticeship by location
+Scenario: Find apprenticeships by location
 	Given I navigated to the VacancySearchPage page
-	And I was on the VacancySearchPage page
 	When I enter data
 		 | Field    | Value    |
 		 | Location | Coventry |

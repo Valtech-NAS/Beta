@@ -14,6 +14,9 @@
         {
             _context = context;
         }
+        
+        [ElementLocator(Id = "Keywords")]
+        public IWebElement Keywords { get; set; }
 
         [ElementLocator(Id = "Location")]
         public IWebElement Location { get; set; }
@@ -22,13 +25,16 @@
         public IWebElement Search { get; set; }
 
         [ElementLocator(Class = "search-results")]
-        public IElementList<IWebElement, SearchResultLi> SearchResults { get; set; }
+        public IWebElement SearchResults { get; set; }
+
+        [ElementLocator(Class = "search-results")]
+        public IElementList<IWebElement, SearchResultItem> SearchResultItems { get; set; }
     }
 
     [ElementLocator(Class = "search-results__item")]
-    public class SearchResultLi : WebElement
+    public class SearchResultItem : WebElement
     {
-        public SearchResultLi(ISearchContext parent) : base(parent)
+        public SearchResultItem(ISearchContext parent) : base(parent)
         {
         }
 

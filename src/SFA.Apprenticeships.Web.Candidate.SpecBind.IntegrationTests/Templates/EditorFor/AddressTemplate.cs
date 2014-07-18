@@ -7,8 +7,6 @@
     [ElementLocator(Id = "address-details")]
     public class AddressTemplate : WebElement
     {
-        private IWebElement _uprn;
-
         public AddressTemplate(ISearchContext searchContext) : base(searchContext)
         {
         }
@@ -29,11 +27,7 @@
         public IWebElement Postcode { get; set; }
 
         [ElementLocator(Id = "Address_Uprn")]
-        public IWebElement Uprn
-        {
-            get { return _uprn; }
-            set { _uprn = value; }
-        }
+        public IWebElement Uprn { get; set; }
 
         [ElementLocator(Id = "Address_GeoPoint_Latitude")]
         public IWebElement Latitude { get; set; }
