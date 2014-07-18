@@ -27,16 +27,27 @@
         public IWebElement SignInButton { get; set; }
 
         [ElementLocator(Class = "validation-summary-errors")]
-        public IElementList<IWebElement, ValidationSummaryItem> ValidationSummary { get; set; }
+        public IWebElement ValidationSummary { get; set; }
 
-        public string ValidationSummaryCount { get { return ValidationSummary.Count().ToString(); } }
+        [ElementLocator(Class = "validation-summary-errors")]
+        public IElementList<IWebElement, ValidationSummaryItem> ValidationSummaryItems { get; set; }
 
-        [ElementLocator(CssSelector = "a")]
+        public string ValidationSummaryCount { get { return ValidationSummaryItems.Count().ToString(); } }
+
+        [ElementLocator(TagName = "a")]
         public class ValidationSummaryItem : WebElement
         {
             public ValidationSummaryItem(ISearchContext parent)
                 : base(parent)
             {
+            }
+
+            public string Href
+            {
+                get
+                {
+                    return this.GetAttribute("href").Substring(this.GetAttribute("href").IndexOf("#"));
+                }
             }
         }
     }
