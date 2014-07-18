@@ -13,6 +13,7 @@
 
         public ActionResult Index()
         {
+            _logger.Info("This is a test");
             return View();
         }
     }

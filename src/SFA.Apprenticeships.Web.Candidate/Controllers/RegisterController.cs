@@ -4,11 +4,14 @@
     using Common.Controllers;
     using FluentValidation.Mvc;
     using Infrastructure.Azure.Session;
+    using NLog;
     using Validators;
     using ViewModels.Register;
     using Providers;
     public class RegisterController : SfaControllerBase
     {
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
@@ -26,6 +29,7 @@
 
         public ActionResult Index()
         {
+            _logger.Debug("Someone trying to register");
             return View();
         }
 

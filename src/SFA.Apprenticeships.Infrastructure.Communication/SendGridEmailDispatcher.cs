@@ -5,12 +5,15 @@
     using System.Linq;
     using System.Net;
     using System.Net.Mail;
+    using NLog;
     using SendGrid;
     using Application.Interfaces.Messaging;
     using Configuration;
 
     public class SendGridEmailDispatcher : IEmailDispatcher
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly string _userName;
         private readonly string _password;
 
@@ -25,6 +28,8 @@
 
         public void SendEmail(EmailRequest request)
         {
+            Logger.Debug("SendEmail From={0} To={1}, Subject={2}, Template={3}", request.FromEmail, request.ToEmail, request.Subject,request.TemplateName );
+            
             var message = ComposeMessage(request);
 
             DispatchMessage(message);
@@ -109,15 +114,14 @@
             var template = _templates
                 .FirstOrDefault(each => each.Name == templateName);
 
-            if (template == null)
-            {
-                var message = string.Format("Invalid email template name: \"{0}\".", templateName);
+            if (template != null) return template;
 
-                // TODO: EXCEPTION: template is invalid, log / throw domain exception.
-                throw new Exception(message);
-            }
+            var message = string.Format("Invalid email template name: \"{0}\".", templateName);
 
-            return template;
+            Logger.Error("GetTemplateConfiguration : {0}", message);
+
+            // TODO: EXCEPTION: template is invalid, log / throw domain exception.
+            throw new Exception(message);
         }
 
         private void DispatchMessage(SendGridMessage message)
@@ -128,9 +132,11 @@
                 var web = new Web(credentials);
 
                 web.Deliver(message);
+                Logger.Info("DispatchMessage:  Successfully dispatched email");
             }
             catch (Exception e)
             {
+                Logger.ErrorException("DispatchMessage: Failed to dispatch email.", e);
                 // TODO: EXCEPTION: failed to send, log / throw domain exception.
                 throw new Exception("Failed to dispatch email.", e);
             }

@@ -24,7 +24,7 @@
 
             @Html.EditorFor(a => a.Address)
             @Html.FormTextFor(m => m.EmailAddress, controlHtmlAttributes: new { @class = "linked-input-master", type = "email", spellcheck = "false" }, hintHtmlAttributes: new { @class = "text" })
-            <span id="display-message" class="validation-message"></span>
+            <span id="email-available-message" class="validation-message"></span>
 
             @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { @class = "form-control-1-3", type = "tel" }, hintHtmlAttributes: new { @class = "text" })
 
@@ -259,7 +259,7 @@
     </fieldset>
 
     <div class="form-group">
-        <button class="button">Create account</button>
+        <button id="create-account-btn" class="button">Create account</button>
     </div>
 }
 

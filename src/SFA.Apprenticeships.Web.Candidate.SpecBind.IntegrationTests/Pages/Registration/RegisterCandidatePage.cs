@@ -7,12 +7,12 @@
 
     [PageNavigation("/register/index")]
     [PageAlias("RegisterCandidatePage")]
-    public class RegisterCandidatePage
+    public class RegisterCandidatePage : BaseValidationPage
     {
         private readonly ISearchContext _context;
         private IElementList<IWebElement, AddressDropdownItem> _addressDropdown;
 
-        public RegisterCandidatePage(ISearchContext context)
+        public RegisterCandidatePage(ISearchContext context) : base(context)
         {
             _context = context;
         }
@@ -26,7 +26,7 @@
         [ElementLocator(Id = "EmailAddress")]
         public IWebElement EmailAddress { get; set; }
 
-        [ElementLocator(Id = "Phonenumber")]
+        [ElementLocator(Id = "PhoneNumber")]
         public IWebElement Phonenumber { get; set; }
 
         [ElementLocator(Id = "Password")]
@@ -34,6 +34,12 @@
 
         [ElementLocator(Id = "HasAcceptedTermsAndConditions")]
         public IWebElement HasAcceptedTermsAndConditions { get; set; }
+
+        [ElementLocator(Id = "create-account-btn")]
+        public IWebElement CreateAccountButton { get; set; }
+
+        [ElementLocator(Id = "email-available-message")]
+        public IWebElement EmailAddressAvailableMessage { get; set; }
 
         #region Date of birth
 

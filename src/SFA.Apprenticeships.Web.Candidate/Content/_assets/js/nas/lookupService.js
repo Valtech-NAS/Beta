@@ -98,7 +98,7 @@
             var data = { Email: $(this).val() };
 
             $.getJSON(apiurl, data, function (response) {
-                $('#display-message').html('<p> Username is available: ' + response.Result + '</p>');
+                $('#email-available-message').html('<p> Username is available: ' + response.Result + '</p>');
             });
         });
 

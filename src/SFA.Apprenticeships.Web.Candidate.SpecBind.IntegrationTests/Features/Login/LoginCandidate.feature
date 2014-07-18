@@ -10,8 +10,9 @@ Scenario: As a candidate all required fields are present
 	Then I wait to see EmailAddress
 	And I wait to see Password
 	And I see
-         | Field                  | Rule   | Value |
-         | ValidationSummaryCount | Equals | 0     |
+	         | Field             | Rule           | Value |
+	         | ValidationSummary | Does Not Exist |       |
+
 
 Scenario: As a candidate I can login with a registered and activated email address and password
 	Given I navigated to the LoginCandidatePage page
@@ -40,7 +41,12 @@ Scenario: As a candidate I cannot login with an invalid password
 		| EmailAddress | valtechnas@gmail.com |
 		| Password     | ?S3cret01!           |
 	And I choose SignInButton
-	And I am on the LoginCandidatePage page
+	And I wait to see ValidationSummary
 	Then I see
          | Field                  | Rule   | Value |
          | ValidationSummaryCount | Equals | 1     |
+	And I am on ValidationSummaryItems list item matching criteria
+		    | Field | Rule   | Value                                    |
+		    | Text  | Equals | 'Email address' or 'password' is invalid |
+		    | Href  | Equals | #emailaddress                            |
+		    

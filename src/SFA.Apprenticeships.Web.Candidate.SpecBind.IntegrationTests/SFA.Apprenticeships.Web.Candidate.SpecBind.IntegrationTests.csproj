@@ -70,6 +70,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="DataGeneratorBinding.cs" />
     <Compile Include="Features\HomePage.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -80,12 +81,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LoginCandidate.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Registration\RegisterCandidate.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegisterCandidate.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\VacancySearch\SearchResults.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SearchResults.feature</DependentUpon>
     </Compile>
+    <Compile Include="Pages\BaseValidationPage.cs" />
     <Compile Include="Pages\Login\LoginCandidatePage.cs" />
+    <Compile Include="Pages\Registration\ActivationPage.cs" />
     <Compile Include="Pages\Registration\RegisterCandidatePage.cs" />
     <Compile Include="Pages\VacancySearch\VacancySearchResultPage.cs" />
     <Compile Include="Pages\VacancySearch\VacancySearchPage.cs" />
