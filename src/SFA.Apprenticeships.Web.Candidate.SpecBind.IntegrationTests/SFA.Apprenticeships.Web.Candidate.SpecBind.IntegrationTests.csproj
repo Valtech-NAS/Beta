@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="Pages\BaseValidationPage.cs" />
     <Compile Include="Pages\Login\LoginCandidatePage.cs" />
+    <Compile Include="Pages\Registration\ActivationPage.cs" />
     <Compile Include="Pages\Registration\RegisterCandidatePage.cs" />
     <Compile Include="Pages\VacancySearch\VacancySearchResultPage.cs" />
     <Compile Include="Pages\VacancySearch\VacancySearchPage.cs" />
