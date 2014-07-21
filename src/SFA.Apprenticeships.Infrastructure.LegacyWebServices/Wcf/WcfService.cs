@@ -6,9 +6,11 @@
     using System.ServiceModel;
     using System.ServiceModel.Configuration;
     using Domain.Interfaces.Configuration;
+    using NLog;
 
     public class WcfService<T> : IWcfService<T>
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private static Configuration _configuration;
         private static readonly object _lock = new object();
 
@@ -55,23 +57,28 @@
 
             try
             {
-                //Logger.Debug("Calling service {0}", factory.Endpoint.Address);
+                Logger.Debug("Calling service {0}", factory.Endpoint.Address);
 
                 action(client);
                 ((IClientChannel) client).Close();
                 factory.Close();
                 success = true;
+                Logger.Info("Call succeeded and client is now closed");
             }
-            catch (CommunicationException)
+            catch (CommunicationException ex)
             {
+                Logger.FatalException("WCF CommunicationException ", ex);
+
                 throw; // handle WCF CommunicationException
             }
-            catch (TimeoutException)
+            catch (TimeoutException ex)
             {
+                Logger.FatalException("WCF TimeoutException ", ex);
                 throw; // handle WCF TimeoutException
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Logger.ErrorException("Non-WCF TimeoutException ", exception);
                 throw; // handle non-WCF Exception
             }
             finally
@@ -80,6 +87,7 @@
                 {
                     ((IClientChannel) client).Abort();
                     factory.Abort();
+                    Logger.Error("WCF failed and client was aborted");
                 }
             }
         }

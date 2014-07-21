@@ -9,11 +9,11 @@
     {
         private const string EmailTokenId = "EmailToken";
 
-        private readonly ITokenManager tokenManager;
+        private readonly ITokenManager _tokenManager;
 
         public DataGeneratorBinding(ITokenManager tokenManager)
         {
-            this.tokenManager = tokenManager;
+            _tokenManager = tokenManager;
         }
 
         [Given("I have created a new email address")]
@@ -23,7 +23,7 @@
             var emailSuffix = rnd.Next(10000, 99999);
             var email = string.Format("specflowtest{0}@test.test", emailSuffix);
             // Do some database stuff here
-            this.tokenManager.SetToken(EmailTokenId, email);
+            _tokenManager.SetToken(EmailTokenId, email);
         }
 
         [Then("I get the token for my newly created account")]

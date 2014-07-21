@@ -7,11 +7,13 @@
     using Application.Interfaces.ReferenceData;
     using Configuration;
     using Domain.Entities.ReferenceData;
+    using NLog;
     using ReferenceDataProxy;
     using Wcf;
 
     public class LegacyReferenceDataProvider : IReferenceDataProvider
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IWcfService<IReferenceData> _service;
         private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
 
@@ -45,11 +47,15 @@
                 MessageId = msgId,
             };
 
+            Logger.Info("Calling legacy reference data for MessageId={0}", msgId);
+
             var rs = default(GetCountiesResponse);
             _service.Use(client => { rs = client.GetCounties(request); });
 
             if (rs != null)
             {
+                Logger.Info("Returning legacy reference data response - GetCountiesResponse for MessageId={0}", msgId);
+
                 return rs.Counties.Select(
                     item => new ReferenceDataItem
                     {
@@ -57,6 +63,8 @@
                         Description = item.FullName
                     });
             }
+
+            Logger.Info("No GetCountiesResponse from Legacy reference data provider");
 
             return default(IEnumerable<ReferenceDataItem>);
         }

@@ -5,9 +5,11 @@
     using Application.ReferenceData;
     using Domain.Entities.ReferenceData;
     using Domain.Interfaces.Caching;
+    using NLog;
 
     public class CachedLegacyReferenceDataProvider : IReferenceDataProvider
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private static readonly BaseCacheKey CacheKey = new ReferenceDataServiceCacheKeyEntry();
         private readonly ICacheService _cache;
         private readonly IReferenceDataProvider _referenceDataProvider;
@@ -20,7 +22,13 @@
 
         public IEnumerable<ReferenceDataItem> GetReferenceData(string type)
         {
-            return _cache.Get(CacheKey, _referenceDataProvider.GetReferenceData, type);
+            Logger.Info("GetReferenceData called for CacheKey={0}, Type={1}", CacheKey.Key(), type);
+
+            var items = _cache.Get(CacheKey, _referenceDataProvider.GetReferenceData, type);
+
+            Logger.Info("Successfully returned items for {0}", type);
+
+            return items;
         }
     }
 }

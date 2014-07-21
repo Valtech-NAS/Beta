@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Applications
 {
     using System;
-    using Common.Configuration;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;

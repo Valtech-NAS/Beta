@@ -6,18 +6,20 @@
     using Configuration;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Mapping;
+    using NLog;
     using VacancyDetailProxy;
     using Wcf;
 
     public class LegacyVacancyDataProvider : IVacancyDataProvider
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IWcfService<IVacancyDetails> _service;
         private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
         private readonly IMapper _mapper;
 
-         public LegacyVacancyDataProvider(ILegacyServicesConfiguration legacyServicesConfiguration, 
-                                          IWcfService<IVacancyDetails> service,  
-                                          IMapper mapper)
+        public LegacyVacancyDataProvider(ILegacyServicesConfiguration legacyServicesConfiguration,
+                                         IWcfService<IVacancyDetails> service,
+                                         IMapper mapper)
         {
             _legacyServicesConfiguration = legacyServicesConfiguration;
             _service = service;
@@ -46,9 +48,11 @@
                 rs.SearchResults.SearchResults == null ||
                 rs.SearchResults.SearchResults.Length == 0)
             {
+                Logger.Info("No results returned from Legacy Vacancy Data Provider for VacancyId={0}", vacancyId);
                 return default(VacancyDetail);
             }
 
+            Logger.Info("{0} results returned from Legacy Vacancy Data Provider for VacancyId={1}", rs.SearchResults.SearchResults.Count(), vacancyId);
             return _mapper.Map<VacancyFullData, VacancyDetail>(rs.SearchResults.SearchResults.First());
         }
     }

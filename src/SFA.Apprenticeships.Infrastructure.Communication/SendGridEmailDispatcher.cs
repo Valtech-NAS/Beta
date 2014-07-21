@@ -132,7 +132,7 @@
                 var web = new Web(credentials);
 
                 web.Deliver(message);
-                Logger.Info("DispatchMessage:  Successfully dispatched email");
+                Logger.Info("DispatchMessage:  Successfully dispatched email to {0}", message.To.ToString());
             }
             catch (Exception e)
             {

@@ -5,6 +5,7 @@
     using System.Linq;
     using Application.VacancyEtl;
     using Configuration;
+    using NLog;
     using VacancySummaryProxy;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Mapping;
@@ -12,11 +13,12 @@
 
     public class LegacyVacancyIndexDataProvider : IVacancyIndexDataProvider
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IWcfService<IVacancySummary> _service;
         private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
         private readonly IMapper _mapper;
 
-         public LegacyVacancyIndexDataProvider(ILegacyServicesConfiguration legacyServicesConfiguration, IWcfService<IVacancySummary> service, IMapper mapper)
+        public LegacyVacancyIndexDataProvider(ILegacyServicesConfiguration legacyServicesConfiguration, IWcfService<IVacancySummary> service, IMapper mapper)
         {
             _legacyServicesConfiguration = legacyServicesConfiguration;
             _service = service;
@@ -37,13 +39,18 @@
                 }
             };
 
+            Logger.Info("Calling Legacy webservice for VacancyPageCount MessageId={0}", vacancySummaryRequest.MessageId);
+
             var rs = default(VacancySummaryResponse);
             _service.Use(client => rs = client.Get(vacancySummaryRequest));
 
             if (rs == null || rs.ResponseData == null)
             {
+                Logger.Info("No pages returned from Legacy webservice for VacancyPageCount MessageId={0}", vacancySummaryRequest.MessageId);
                 return 0;
             }
+
+            Logger.Info("{0} pages returned from Legacy webservice for VacancyPageCount MessageId={1}", rs.ResponseData.TotalPages, vacancySummaryRequest.MessageId);
 
             return rs.ResponseData.TotalPages;
         }
@@ -62,18 +69,23 @@
                 }
             };
 
+            Logger.Info("Calling Legacy webservice for VacancySummaries MessageId={0}", vacancySummaryRequest.MessageId);
+
             var rs = default(VacancySummaryResponse);
             _service.Use(client => rs = client.Get(vacancySummaryRequest));
 
-            if (rs == null || 
-                rs.ResponseData == null || 
+            if (rs == null ||
+                rs.ResponseData == null ||
                 rs.ResponseData.SearchResults == null ||
                 rs.ResponseData.SearchResults.Length == 0)
             {
+                Logger.Info("No results returned from Legacy webservice for VacancySummaries");
                 return Enumerable.Empty<VacancySummary>();
             }
 
-           return _mapper.Map<VacancySummaryData[], IEnumerable<VacancySummary>>(rs.ResponseData.SearchResults);
+            Logger.Info("{0} results returned from Legacy webservice for VacancySummaries", rs.ResponseData.SearchResults.Count());
+
+            return _mapper.Map<VacancySummaryData[], IEnumerable<VacancySummary>>(rs.ResponseData.SearchResults);
         }
     }
 }
