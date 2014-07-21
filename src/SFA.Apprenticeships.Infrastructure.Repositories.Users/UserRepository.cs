@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Users
 {
     using System;
-    using Common.Configuration;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
@@ -9,9 +8,11 @@
     using Entities;
     using Mongo.Common;
     using MongoDB.Driver.Builders;
+    using NLog;
 
     public class UserRepository : GenericMongoClient<MongoUser>, IUserReadRepository, IUserWriteRepository
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IMapper _mapper;
 
         public UserRepository(IConfigurationManager configurationManager, IMapper mapper)
@@ -24,17 +25,25 @@
 
         public User Get(Guid id)
         {
-            var mongoEntity = Collection.FindOneById(id);
+            Logger.Debug("Called Mongodb to get user with Id={0}", id);
+
+            MongoUser mongoEntity = Collection.FindOneById(id);
 
             return mongoEntity == null ? null : _mapper.Map<MongoUser, User>(mongoEntity);
         }
 
         public User Get(string username, bool errorIfNotFound = true)
         {
-            var mongoEntity = Collection.FindOne(Query.EQ("Username", username));
+            Logger.Debug("Called Mongodb to get user with username={0}", username);
+
+            MongoUser mongoEntity = Collection.FindOne(Query.EQ("Username", username));
 
             if (mongoEntity == null && errorIfNotFound)
+            {
+                Logger.Debug("Unknown username={0}", username);
+
                 throw new Exception("Unknown user name"); // TODO: EXCEPTION: should use an application exception type
+            }
 
             return mongoEntity == null ? null : _mapper.Map<MongoUser, User>(mongoEntity);
         }
@@ -46,9 +55,13 @@
 
         public User Save(User entity)
         {
-            var mongoEntity = _mapper.Map<User, MongoUser>(entity);
+            Logger.Debug("Called Mongodb to save user with username={0}", entity.Username);
+
+            MongoUser mongoEntity = _mapper.Map<User, MongoUser>(entity);
 
             Collection.Save(mongoEntity);
+
+            Logger.Debug("Saved User to Mongodb with username={0}", entity.Username);
 
             return _mapper.Map<MongoUser, User>(mongoEntity);
         }
