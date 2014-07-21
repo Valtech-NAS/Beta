@@ -5,7 +5,7 @@
 
     public class ApplicationDetail : BaseEntity
     {
-        // TODO: DONTKNOW: ApplicationDetail, status, vacancy info, etc.
+        // TODO: DONTKNOW: ApplicationDetail, status, vacancy info (VacancySummary), etc.
 
         public ApplicationDetail()
         {
@@ -18,7 +18,7 @@
 
         public Guid CandidateId { get; set; }
 
-        public int LegacyApplicationId { get; set; } // temporary "weak link" to legacy application record
+        public int LegacyApplicationId { get; set; } // temporary "weak link" to legacy application record (could be via an index)
 
         public RegistrationDetails CandidateDetails { get; set; }
 

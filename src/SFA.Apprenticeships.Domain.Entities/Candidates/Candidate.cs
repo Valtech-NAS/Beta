@@ -10,7 +10,7 @@
             ApplicationTemplate = new ApplicationTemplate();
         }
 
-        public int LegacyCandidateId { get; set; } // temporary "weak link" to legacy candidate record
+        public int LegacyCandidateId { get; set; } // temporary "weak link" to legacy candidate record (could be via an index)
 
         public RegistrationDetails RegistrationDetails { get; set; }
 
