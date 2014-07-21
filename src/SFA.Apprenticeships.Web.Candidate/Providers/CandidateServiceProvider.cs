@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using System.Collections.Generic;
+    using Domain.Entities.Users;
     using ViewModels.Login;
     using ViewModels.Register;
     using Application.Interfaces.Candidates;
@@ -14,7 +16,10 @@
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
 
-        public CandidateServiceProvider(ICandidateService candidateService, IRegistrationService registrationService, IMapper mapper)
+        public CandidateServiceProvider(
+            ICandidateService candidateService,
+            IRegistrationService registrationService,
+            IMapper mapper)
         {
             _candidateService = candidateService;
             _registrationService = registrationService;
@@ -27,6 +32,7 @@
             {
                 var candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
                 _candidateService.Register(candidate, model.Password);
+
                 return true;
             }
             catch (Exception)
@@ -53,19 +59,40 @@
             return _registrationService.IsUsernameAvailable(username);
         }
 
-        public bool Authenticate(LoginViewModel model)
+        public Candidate Authenticate(LoginViewModel model)
         {
             try
             {
-                var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
-
-                return candidate != null;
+                return _candidateService.Authenticate(model.EmailAddress, model.Password);
             }
             catch (Exception)
             {
                 // TODO: LOGGING: AG: do not like consuming exception here (and elsewhere in this class).
-                return false;
+                return null;
             }
+        }
+
+        public UserStatuses GetUserStatus(string username)
+        {
+            return _registrationService.GetUserStatus(username);
+        }
+
+        public string[] GetRoles(string username)
+        {
+            var claims = new List<string>();
+
+            switch (GetUserStatus(username))
+            {
+                case UserStatuses.Active:
+                    claims.Add("Activated");
+                    break;
+
+                case UserStatuses.PendingActivation:
+                    claims.Add("Unactivated");
+                    break;
+            }
+
+            return claims.ToArray();
         }
     }
 }

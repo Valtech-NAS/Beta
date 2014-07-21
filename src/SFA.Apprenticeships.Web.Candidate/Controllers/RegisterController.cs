@@ -1,30 +1,38 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System.Web.Mvc;
+    using System.Web.Security;
     using Common.Controllers;
+    using Common.Services;
     using FluentValidation.Mvc;
+    using FluentValidation.Results;
     using Infrastructure.Azure.Session;
     using NLog;
+    using Providers;
     using Validators;
     using ViewModels.Register;
-    using Providers;
+
     public class RegisterController : SfaControllerBase
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
+        private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
+        private readonly IAuthenticationTicketService _ticketService;
 
-        public RegisterController(ISessionState session,
-                                    RegisterViewModelServerValidator registerViewModelServerValidator,
-                                    ActivationViewModelServerValidator activationViewModelServerValidator,
-                                    ICandidateServiceProvider candidateServiceProvider)
+        public RegisterController(
+            ISessionState session,
+            RegisterViewModelServerValidator registerViewModelServerValidator,
+            ActivationViewModelServerValidator activationViewModelServerValidator,
+            ICandidateServiceProvider candidateServiceProvider,
+            IAuthenticationTicketService ticketService)
             : base(session)
         {
             _registerViewModelServerValidator = registerViewModelServerValidator;
             _activationViewModelServerValidator = activationViewModelServerValidator;
             _candidateServiceProvider = candidateServiceProvider;
+            _ticketService = ticketService;
         }
 
         public ActionResult Index()
@@ -34,69 +42,101 @@
         }
 
         [HttpPost]
-        public ActionResult Index(RegisterViewModel registerView)
+        public ActionResult Index(RegisterViewModel model)
         {
-            registerView.IsUsernameAvailable = IsUsernameAvailable(registerView.EmailAddress);
+            model.IsUsernameAvailable = IsUsernameAvailable(model.EmailAddress);
 
-            var validationResult = _registerViewModelServerValidator.Validate(registerView);
+            ValidationResult validationResult = _registerViewModelServerValidator.Validate(model);
 
             if (!validationResult.IsValid)
             {
                 ModelState.Clear();
                 validationResult.AddToModelState(ModelState, string.Empty);
-                return View(registerView);
+
+                return View(model);
             }
 
-            var succeeded = _candidateServiceProvider.Register(registerView);
+            var succeeded = _candidateServiceProvider.Register(model);
 
-            TempData["EmailAddress"] = registerView.EmailAddress;
+            if (succeeded)
+            {
+                FormsAuthenticationTicket ticket = _ticketService.CreateTicket(model.EmailAddress, "Unactivated");
 
-            //FormsAuthentication.SetAuthCookie(registerView.EmailAddress, false);
+                _ticketService.AddTicket(Response.Cookies, ticket);
 
-            return succeeded ? (ActionResult)RedirectToAction("Activation") : View(registerView);
+                return RedirectToAction("Activation");
+            }
+
+            return View(model);
         }
 
         [HttpGet]
-        public ActionResult Activation()
+        public ActionResult Activation(string returnUrl)
         {
             var model = new ActivationViewModel
             {
-                EmailAddress = TempData["EmailAddress"].ToString()
+                EmailAddress = UserContext.UserName
             };
+
+            if (!string.IsNullOrWhiteSpace(returnUrl))
+            {
+                TempData["ReturnUrl"] = returnUrl;
+            }
 
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Activate(ActivationViewModel activationViewModel)
+        public ActionResult Activate(ActivationViewModel model)
         {
-            activationViewModel.IsActivated = _candidateServiceProvider.Activate(activationViewModel);
+            model.IsActivated = _candidateServiceProvider.Activate(model);
 
-            var activatedResult = _activationViewModelServerValidator.Validate(activationViewModel);
+            var activatedResult = _activationViewModelServerValidator.Validate(model);
 
             if (activatedResult.IsValid)
             {
-                TempData["EmailAddress"] = activationViewModel.EmailAddress;
+                var ticket = _ticketService.CreateTicket(User.Identity.Name, "Activated");
+
+                _ticketService.AddTicket(Response.Cookies, ticket);
+
+                var returnUrl = TempData["ReturnUrl"] as string;
+
+                if (!string.IsNullOrWhiteSpace(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+
                 return RedirectToAction("Complete", "Register");
             }
 
             ModelState.Clear();
             activatedResult.AddToModelState(ModelState, string.Empty);
-            return View("Activation", activationViewModel);
+
+            return View("Activation", model);
         }
 
         public ActionResult Complete()
         {
-            ViewBag.Message = TempData["EmailAddress"].ToString();
+            ViewBag.Message = UserContext.UserName;
 
             return View();
         }
 
         public JsonResult CheckUsername(CheckUsernameViewModel model)
         {
-            if (!ModelState.IsValid) return Json(new {Result = false}, JsonRequestBehavior.AllowGet);
+            if (!ModelState.IsValid)
+            {
+                return Json(new {Result = false}, JsonRequestBehavior.AllowGet);
+            }
+
             var usernameIsAvailable = IsUsernameAvailable(model.Email);
-            return Json(new { Result = usernameIsAvailable }, JsonRequestBehavior.AllowGet);
+
+            return Json(
+                new
+                {
+                    Result = usernameIsAvailable
+                },
+                JsonRequestBehavior.AllowGet);
         }
 
         private bool IsUsernameAvailable(string username)

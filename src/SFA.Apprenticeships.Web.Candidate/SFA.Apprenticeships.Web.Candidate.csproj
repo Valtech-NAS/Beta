@@ -265,8 +265,8 @@
     <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\Error\SessionExpired.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Application\_DELETE.cshtml" />
     <Content Include="Views\Application\Index.cshtml" />
-    <Content Include="Views\Application\Apply.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CandidateViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\QualificationsViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\WorkExperienceViewModel.cshtml" />
@@ -365,6 +365,7 @@
     <Compile Include="App_Start\WebApiConfig.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Attributes\AuthorizeCandidate.cs" />
     <Compile Include="Constants\ViewModels\AddressMessages.cs" />
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ActivationCodeMessages.cs" />
@@ -432,6 +433,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Constants\Pages\" />
+    <Folder Include="Services\" />
     <Folder Include="Views\Location\" />
   </ItemGroup>
   <ItemGroup>

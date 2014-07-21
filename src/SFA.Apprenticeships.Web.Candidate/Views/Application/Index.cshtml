@@ -1,25 +1,45 @@
-﻿@model int
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApplicationViewModel
+
+@* TODO: AG: DEADCODE: remove. *@
 
 @{
-    ViewBag.Title = "SFA Apprenticeships - Login/Registration Step";
+    ViewBag.Title = "SFA Apprenticeships - Apply for Vacancy";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="heading-xlarge">Login/Registration Step</h1>
-
+<h1 class="heading-xlarge">Apply for vacancy</h1>
 <section class="section-border">
     <div class="text">
         <div class="hgroup-medium">
-            <h3 class="heading-medium">This is a temporary page before login and registration is built.</h3>
-            <span class="subtitle">Select a dummy profile below to test creating an application:</span>
+            <h3 class="heading-medium">@Model.VacancyDetail.Title</h3>
+            <span class="subtitle">@Model.VacancyDetail.EmployerName</span>
         </div>
-        <ul>
-            <li><a href="@Url.Action("apply", new { id = Model, mockProfileId = 1 })">John Doe (Prepopulated sections: None)</a></li>
-            <li><a href="@Url.Action("apply", new { id = Model, mockProfileId = 2 })">Susan Defoe (Prepopulated sections: Education)</a></li>
-            <li><a href="@Url.Action("apply", new { id = Model, mockProfileId = 3 })">Mike Snow (Prepopulated sections: Education, About me)</a></li>
-            <li><a href="@Url.Action("apply", new { id = Model, mockProfileId = 4 })">Barley Mow (Prepopulated sections: About me)</a></li>
-        </ul>
+        <p>@Model.VacancyDetail.Description</p>
+        <p>
+            <a href="@Url.Action("Details", "VacancySearch", new { @id = Model.VacancyDetail.Id })">Back to vacancy</a>
+        </p>
     </div>
 </section>
 
+@using (Html.BeginForm("Apply", "Application", new { id = Model.VacancyDetail.Id, mockProfileId = Model.Candidate.Id }, FormMethod.Post))
+{
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    @Html.DisplayFor(m => m.Candidate)
+    @Html.EditorFor(m => m.Candidate.Education)
+    @Html.EditorFor(m => m.Candidate.Qualifications)
+    @Html.EditorFor(m => m.Candidate.AboutYou)
+    @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)
+
+    <fieldset>
+        <legend class="heading-large">Before you apply</legend>
+        <p>Check you've completed the form properly</p>
+        <div class="form-group">
+            <button class="button">Apply</button>
+            <p>
+                <a href="@Url.Action("Details", "VacancySearch", new { @id = Model.VacancyDetail.Id })" class="button-link">Back</a>
+            </p>
+        </div>
+    </fieldset>
+}
 

@@ -70,5 +70,12 @@
         {
             throw new NotImplementedException();
         }
+
+        public UserStatuses GetUserStatus(string username)
+        {
+            var user = _userReadRepository.Get(username);
+
+            return user.Status;
+        }
     }
 }

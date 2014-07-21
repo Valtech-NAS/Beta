@@ -1,28 +1,29 @@
-using SFA.Apprenticeships.Infrastructure.Address.IoC;
 using SFA.Apprenticeships.Web.Candidate;
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(StructuremapMvc), "Start")]
+using WebActivatorEx;
+
+[assembly: PreApplicationStartMethod(typeof (StructuremapMvc), "Start")]
 
 namespace SFA.Apprenticeships.Web.Candidate
 {
+    using Common.IoC;
     using Infrastructure.Address.IoC;
-    using Infrastructure.RabbitMq.IoC;
-    using Infrastructure.Repositories.Applications.IoC;
     using Infrastructure.Azure.Session.IoC;
-    using Infrastructure.Repositories.Candidates.IoC;
+    using Infrastructure.Common.IoC;
     using Infrastructure.Elastic.Common.IoC;
     using Infrastructure.LegacyWebServices.IoC;
     using Infrastructure.LocationLookup.IoC;
     using Infrastructure.Postcode.IoC;
-    using Infrastructure.VacancySearch.IoC;
+    using Infrastructure.RabbitMq.IoC;
+    using Infrastructure.Repositories.Applications.IoC;
+    using Infrastructure.Repositories.Candidates.IoC;
     using Infrastructure.Repositories.Users.IoC;
-    using IoC;
-    using Common.IoC;
-    using StructureMap;
-    using Infrastructure.Common.IoC;
     using Infrastructure.UserDirectory.IoC;
+    using Infrastructure.VacancySearch.IoC;
+    using IoC;
+    using StructureMap;
 
     /// <summary>
-    /// StructureMap MVC initialization. Sets the MVC resolver and the WebApi resolver to use structure map.
+    ///     StructureMap MVC initialization. Sets the MVC resolver and the WebApi resolver to use structure map.
     /// </summary>
     public static class StructuremapMvc
     {

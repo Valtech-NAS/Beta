@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using System.Web.Mvc;
+    using Attributes;
     using Common.Controllers;
     using FluentValidation.Mvc;
     using Infrastructure.Azure.Session;
@@ -24,28 +26,25 @@
             _validator = validator;
         }
 
+        [AuthorizeCandidate(Roles = "Activated")]
         public ActionResult Index(int id)
         {
-            return View(id);
-        }
+            var candidateId = new Guid(User.Identity.Name); // TODO: AG: move to UserContext?
+            var model = _applicationProvider.GetApplicationViewModel(id, candidateId);
 
-        public ActionResult Apply(int id, int mockProfileId)
-        {
-            var applicationViewModel = _applicationProvider.GetApplicationViewModel(id, mockProfileId);
-
-            if (applicationViewModel == null)
+            if (model == null)
             {
                 Response.StatusCode = 404;
                 return View("VacancyNotFound");
             }
 
-            return View(applicationViewModel);
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Apply(int id, int mockProfileId, ApplicationViewModel applicationViewModel)
+        public ActionResult Apply(int id, ApplicationViewModel applicationViewModel)
         {
-            applicationViewModel = _applicationProvider.MergeApplicationViewModel(id, mockProfileId, applicationViewModel);
+            applicationViewModel = _applicationProvider.MergeApplicationViewModel(id, applicationViewModel);
             
             var result = _validator.Validate(applicationViewModel);
 
@@ -53,6 +52,7 @@
             {
                 ModelState.Clear();
                 result.AddToModelState(ModelState, string.Empty);
+
                 return View(applicationViewModel);
             }
 
