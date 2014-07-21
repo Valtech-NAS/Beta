@@ -4,9 +4,12 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using NLog;
 
     public static class HttpServerUtilityExtensions
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         public static void HandleError<T>(this HttpServerUtility server, HttpContext httpContext) where T : Controller
         {
             var currentController = " ";
@@ -23,7 +26,9 @@
             }
 
             var exception = server.GetLastError();
-            // TODO: LOGGING: Logger.ErrorException(exception.Message, exception);
+
+            // TODO: LOGGING: review logging level.
+            Logger.Error(exception.Message, exception);
 
             var controller = DependencyResolver.Current.GetService<T>();
             var routeData = new RouteData();

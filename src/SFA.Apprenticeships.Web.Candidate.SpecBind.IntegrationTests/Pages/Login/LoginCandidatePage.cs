@@ -20,8 +20,7 @@
         [ElementLocator(Id = "Password")]
         public IWebElement Password { get; set; }
 
-        // TODO: AG: triggerSignIn button id.
-        [ElementLocator(Id = "triggerSignIn")]
+        [ElementLocator(Id = "signInButton")]
         public IWebElement SignInButton { get; set; }
     }
 }

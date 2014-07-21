@@ -81,6 +81,7 @@
             return RedirectToAction("Index", "VacancySearch");
         }
 
+        // TODO: duplicated code (see LoginController).
         private void AddCookies(Candidate candidate)
         {
             var roles = _candidateServiceProvider.GetRoles(candidate.RegistrationDetails.EmailAddress);
@@ -88,12 +89,13 @@
 
             _ticketService.AddTicket(Response.Cookies, ticket);
 
-            var cookie = CreateContextCookie(candidate.RegistrationDetails);
+            var cookie = CreateUserContextCookie(candidate.RegistrationDetails);
 
             Response.Cookies.Add(cookie);
         }
 
-        private static HttpCookie CreateContextCookie(RegistrationDetails registrationDetails)
+        // TODO: duplicated code (see LoginController).
+        private static HttpCookie CreateUserContextCookie(RegistrationDetails registrationDetails)
         {
             var cookie = new HttpCookie("User.Context");
 

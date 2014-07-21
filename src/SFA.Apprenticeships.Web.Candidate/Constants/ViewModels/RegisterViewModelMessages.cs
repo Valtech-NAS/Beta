@@ -55,5 +55,9 @@
             public const string LabelText = "I accept the terms & conditions";
             public const string MustAcceptTermsAndConditions = "You must accept the terms and conditions";
         }
+        public static class RegistrationMessages
+        {
+            public const string RegistrationFailedErrorText = "Registration failed";
+        }
     }
 }

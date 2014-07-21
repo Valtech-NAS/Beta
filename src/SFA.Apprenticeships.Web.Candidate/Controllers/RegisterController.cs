@@ -1,9 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
     using Common.Controllers;
     using Common.Services;
+    using Constants.ViewModels;
+    using Domain.Entities.Candidates;
     using FluentValidation.Mvc;
     using FluentValidation.Results;
     using Infrastructure.Azure.Session;
@@ -14,7 +17,7 @@
 
     public class RegisterController : SfaControllerBase
     {
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
@@ -37,7 +40,7 @@
 
         public ActionResult Index()
         {
-            _logger.Debug("Someone trying to register");
+            Logger.Debug("Someone trying to register");
             return View();
         }
 
@@ -56,18 +59,22 @@
                 return View(model);
             }
 
-            var succeeded = _candidateServiceProvider.Register(model);
+            var candidate = _candidateServiceProvider.Register(model);
 
-            if (succeeded)
+            if (candidate == null)
             {
-                FormsAuthenticationTicket ticket = _ticketService.CreateTicket(model.EmailAddress, "Unactivated");
+                // TODO: Registration failed.
+                ModelState.Clear();
+                ModelState.AddModelError(
+                    "EmailAddress",
+                    RegisterViewModelMessages.RegistrationMessages.RegistrationFailedErrorText);
 
-                _ticketService.AddTicket(Response.Cookies, ticket);
-
-                return RedirectToAction("Activation");
+                return View(model);
             }
 
-            return View(model);
+            AddCookies(candidate);
+
+            return RedirectToAction("Activation");
         }
 
         [HttpGet]
@@ -106,7 +113,7 @@
                     return Redirect(returnUrl);
                 }
 
-                return RedirectToAction("Complete", "Register");
+                return RedirectToAction("Index", "VacancySearch");
             }
 
             ModelState.Clear();
@@ -141,7 +148,27 @@
 
         private bool IsUsernameAvailable(string username)
         {
-            return _candidateServiceProvider.IsUsernameAvailable(username.Trim()); //TODO Consider doing this everywhere
+            return _candidateServiceProvider.IsUsernameAvailable(username.Trim()); // TODO Consider doing this everywhere
+        }
+        private void AddCookies(Candidate candidate)
+        {
+            var ticket = _ticketService.CreateTicket(candidate.EntityId.ToString(), "Unactivated");
+
+            _ticketService.AddTicket(Response.Cookies, ticket);
+
+            var cookie = CreateUserContextCookie(candidate.RegistrationDetails);
+
+            Response.Cookies.Add(cookie);
+        }
+
+        private static HttpCookie CreateUserContextCookie(RegistrationDetails registrationDetails)
+        {
+            var cookie = new HttpCookie("User.Context");
+
+            cookie.Values.Add("UserName", registrationDetails.EmailAddress);
+            cookie.Values.Add("FullName", registrationDetails.FirstName + " " + registrationDetails.LastName);
+
+            return cookie;
         }
     }
 }

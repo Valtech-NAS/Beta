@@ -125,7 +125,6 @@
     <Compile Include="Framework\HttpServerUtilityExtensions.cs" />
     <Compile Include="Framework\HtmlExtensions.cs" />
     <Compile Include="Framework\ViewDataDictionaryExtensions.cs" />
-    <Compile Include="IAuthCookieService.cs" />
     <Compile Include="IoC\StructureMapDependencyResolver.cs" />
     <Compile Include="IoC\StructureMapDependencyScope.cs" />
     <Compile Include="IoC\WebCommonRegistry.cs" />

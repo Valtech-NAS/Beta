@@ -5,12 +5,13 @@
     using System.Web.Mvc;
     using System.Web.Mvc.Filters;
     using System.Web.Security;
+    using NLog;
     using Services;
-
-    // TODO: AG: review all references to "Debug.".
 
     public class AuthenticateUserAttribute : ActionFilterAttribute, IAuthenticationFilter
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         public void OnAuthentication(AuthenticationContext filterContext)
         {
             HttpContextBase httpContext = filterContext.RequestContext.HttpContext;
@@ -20,8 +21,9 @@
 
             if (ticket == null)
             {
-                // Debug.WriteLine("User is not logged in (no authentication ticket)");
-                // Debug.WriteLine("User.IsAuthenticated {0}", httpContext.User.Identity.IsAuthenticated);
+                Logger.Debug("User is not logged in (no authentication ticket)");
+                Logger.Debug("User.IsAuthenticated {0}", httpContext.User.Identity.IsAuthenticated);
+
                 return;
             }
 
@@ -29,12 +31,12 @@
 
             httpContext.User = new GenericPrincipal(new FormsIdentity(ticket), claims);
 
-            // Debug.WriteLine("User.IsAuthenticated {0}", httpContext.User.Identity.IsAuthenticated);
-            // Debug.WriteLine("Claims {0}", new object[] {string.Join(",", claims)});
+            Logger.Debug("User.IsAuthenticated {0}", httpContext.User.Identity.IsAuthenticated);
+            Logger.Debug("Claims {0}", string.Join(",", claims));
 
-            // Debug.WriteLine("Activated: {0}", httpContext.User.IsInRole("Activated"));
-            // Debug.WriteLine("Unactivated: {0}", httpContext.User.IsInRole("Unactivated"));
-            // Debug.WriteLine("Candidate: {0}", httpContext.User.IsInRole("Candidate"));
+            Logger.Debug("Activated: {0}", httpContext.User.IsInRole("Activated"));
+            Logger.Debug("Unactivated: {0}", httpContext.User.IsInRole("Unactivated"));
+            Logger.Debug("Candidate: {0}", httpContext.User.IsInRole("Candidate"));
         }
 
         public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)

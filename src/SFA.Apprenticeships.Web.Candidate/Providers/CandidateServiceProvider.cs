@@ -26,18 +26,18 @@
             _mapper = mapper;
         }
 
-        public bool Register(RegisterViewModel model)
+        public Candidate Register(RegisterViewModel model)
         {
             try
             {
                 var candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
                 _candidateService.Register(candidate, model.Password);
 
-                return true;
+                return candidate;
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
         }
 
@@ -46,6 +46,7 @@
             try
             {
                 _candidateService.Activate(model.EmailAddress, model.ActivationCode);
+
                 return true;
             }
             catch (Exception )
@@ -67,7 +68,7 @@
             }
             catch (Exception)
             {
-                // TODO: LOGGING: AG: do not like consuming exception here (and elsewhere in this class).
+                // TODO: LOGGING: do not like consuming exception here (and elsewhere in this class).
                 return null;
             }
         }

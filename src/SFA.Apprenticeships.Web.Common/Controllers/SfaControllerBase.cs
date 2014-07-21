@@ -16,7 +16,7 @@
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            // TODO: AG: what if UserContext is null?
+            // TODO: DONTKNOW: what if UserContext is null when used elsewhere?
             UserContext = GetUserContext();
 
             base.OnActionExecuting(filterContext);

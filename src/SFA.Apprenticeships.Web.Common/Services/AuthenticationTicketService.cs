@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Services
 {
     using System;
-    using System.Diagnostics;
     using System.Web;
     using System.Web.Security;
+    using NLog;
 
     public class AuthenticationTicketService : IAuthenticationTicketService
     {
@@ -11,6 +11,8 @@
 
         private const int CookieUpdateWindow = 900;
         private const int CookieExpirationSeconds = 1800;
+
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public FormsAuthenticationTicket CreateTicket(string userName, params string[] claims)
         {
@@ -22,8 +24,8 @@
                 isPersistent: false,
                 userData: StringifyClaims(claims));
 
-            // Debug.WriteLine("Ticket created for {0} with {1} at {2} expires {3}",
-            //     ticket.Name, ticket.UserData, ticket.IssueDate, ticket.Expiration);
+            Logger.Debug("Ticket created for {0} with {1} at {2} expires {3}",
+                ticket.Name, ticket.UserData, ticket.IssueDate, ticket.Expiration);
 
             return ticket;
         }
@@ -35,7 +37,7 @@
                 HttpOnly = true
             });
 
-            // Debug.WriteLine("Ticket added: {0}", CookieName);
+            Logger.Debug("Ticket added: {0}", CookieName);
         }
 
         public FormsAuthenticationTicket GetTicket(HttpCookieCollection cookies)
@@ -59,7 +61,7 @@
 
             cookies.Add(CreateExpiredCookie());
 
-            // Debug.WriteLine("Ticket expired: {0}", CookieName);
+            Logger.Debug("Ticket expired: {0}", CookieName);
         }
 
         public void RefreshTicket(HttpCookieCollection cookies)
@@ -82,8 +84,8 @@
 
                 AddTicket(cookies, newTicket);
 
-                // Debug.WriteLine("Ticket issued for {0} because it only had {1}s to expire and the update window is {2}s",
-                //     ticket.Name, timeToExpiry, CookieUpdateWindow);
+                Logger.Debug("Ticket issued for {0} because it only had {1}s to expire and the update window is {2}s",
+                    ticket.Name, timeToExpiry, CookieUpdateWindow);
             }
         }
 

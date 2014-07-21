@@ -2,8 +2,10 @@
 {
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Providers;
+    using StructureMap.Pipeline;
 
-    public class AuthorizeCandidate : AuthorizeAttribute
+    public class AuthorizeCandidateAttribute : AuthorizeAttribute
     {
         public override void OnAuthorization(AuthorizationContext filterContext)
         {

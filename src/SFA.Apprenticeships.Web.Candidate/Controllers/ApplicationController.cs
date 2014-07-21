@@ -29,7 +29,7 @@
         [AuthorizeCandidate(Roles = "Activated")]
         public ActionResult Index(int id)
         {
-            var candidateId = new Guid(User.Identity.Name); // TODO: AG: move to UserContext?
+            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
             var model = _applicationProvider.GetApplicationViewModel(id, candidateId);
 
             if (model == null)
