@@ -47,11 +47,11 @@
         private void ProcessPendingActivation(string username, string activationCode, Candidate candidate)
         {
             _registrationService.Activate(username, activationCode);
+            
             var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
             candidate.LegacyCandidateId = legacyCandidateId;
-            _candidateWriteRepository.Save(candidate);
 
-            // TODO: NOTIMPL: send a welcome email?
+            _candidateWriteRepository.Save(candidate);
         }
     }
 }
