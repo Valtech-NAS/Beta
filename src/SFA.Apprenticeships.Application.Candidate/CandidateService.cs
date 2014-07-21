@@ -57,7 +57,7 @@
 
             var user = _userReadRepository.Get(username);
 
-            // TODO: NOTIMPL: check status of user (may not allowed to authenticate if locked)
+            // TODO: NOTIMPL: check status of user (not allowed to authenticate if locked)
             // TODO: NOTIMPL: check role of user? (may not be a candidate ... User.Roles)
 
             _authenticationService.AuthenticateUser(user.EntityId, password);

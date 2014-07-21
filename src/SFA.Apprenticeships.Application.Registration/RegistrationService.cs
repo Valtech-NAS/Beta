@@ -23,6 +23,7 @@
 
         public bool IsUsernameAvailable(string username)
         {
+            // TODO: NOTIMPL: check status of user (unactivated account should also be considered "available")
             return _userReadRepository.Get(username, false) == null;
         }
 
