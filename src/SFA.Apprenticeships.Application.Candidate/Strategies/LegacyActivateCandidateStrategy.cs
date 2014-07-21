@@ -30,8 +30,6 @@
 
             switch (user.Status)
             {
-                case UserStatuses.Unknown:
-                    throw new Exception("Unknown user name"); // TODO: EXCEPTION: should use an application exception type
                 case UserStatuses.PendingActivation:
                     ProcessPendingActivation(username, activationCode, candidate);
                     break;
@@ -39,8 +37,8 @@
                     throw new Exception("User is already active"); // TODO: EXCEPTION: should use an application exception type
                 case UserStatuses.Inactive:
                     throw new Exception("User is inactive"); // TODO: EXCEPTION: should use an application exception type
-                case UserStatuses.Blocked:
-                    throw new Exception("User is blocked"); // TODO: EXCEPTION: should use an application exception type
+                case UserStatuses.Locked:
+                    throw new Exception("User is locked"); // TODO: EXCEPTION: should use an application exception type
                 default:
                     throw new Exception("User status is unknown"); // TODO: EXCEPTION: should use an application exception type
             }
