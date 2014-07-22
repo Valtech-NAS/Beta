@@ -23,7 +23,7 @@
         public static class EmailAddressMessages
         {
             public const string LabelText = "Enter email address";
-            public const string HintText = "This will be the main way we contact you. The email address you choose will be seen by employers and will also be your username";
+            public const string HintText = "This will be the main way we contact you. The address you choose will be your username and can be seen by employers.";
             public const string RequiredErrorText = "'Email address' must be supplied";
             public const string TooLongErrorText = "'Email address' must not exceed 100 characters";
             public const string WhiteListRegularExpression = Whitelists.EmailAddressWhitelist.RegularExpression;
@@ -33,8 +33,8 @@
 
         public static class PhoneNumberMessages
         {
-            public const string LabelText = "Enter phone number";
-            public const string HintText = "You'll need regular access to your email (for example, to activate your account). Answer 'Yes' and you'll receive notifications via email and SMS.";
+            public const string LabelText = "Enter mobile phone number";
+            public const string HintText = "If you don't have a mobile, enter a landline number.";
             public const string RequiredErrorText = "'Phone number' must be supplied";
             public const string LengthErrorText = "'Phone number' must be between 8 and 16 digits";
             public const string WhiteListRegularExpression = Whitelists.PhoneNumberWhitelist.RegularExpression;
