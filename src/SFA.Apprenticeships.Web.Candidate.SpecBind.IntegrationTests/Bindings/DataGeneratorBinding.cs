@@ -15,13 +15,13 @@
     {
         private const string EmailTokenId = "EmailToken";
         private const string ActivationTokenId = "ActivationToken";
-
+        private string _email;
         private readonly ITokenManager _tokenManager;
         private readonly IUserReadRepository _userReadRepository;
+        private readonly IUserWriteRepository _userWriteRepository;
 
         public DataGeneratorBinding(ITokenManager tokenManager)
         {
-            //Lookup email...
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
@@ -30,29 +30,36 @@
 
             _tokenManager = tokenManager;
             _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
+            _userWriteRepository = ObjectFactory.GetInstance<IUserWriteRepository>();
         }
 
         [Given("I have created a new email address")]
         public void GivenICreateANewUserEmailAddress()
         {
             var rnd = new Random();
-            var emailSuffix = rnd.Next(10000, 99999);
-            var email = string.Format("specflowtest{0}@test.test", emailSuffix);
-            // Do some database stuff here
+            var emailSuffix = rnd.Next();
+            var email = string.Format("specflowtest{0}@test.test", emailSuffix).ToLower();
+            _email = email;
             _tokenManager.SetToken(EmailTokenId, email);
         }
 
-        [Then("I get the token for my newly created account")]
-        public void GivenIGetTokenForMyNewlyCreatedAccount(Table emailTable)
+        [When("I get the token for my newly created account")]
+        public void WhenIGetTokenForMyNewlyCreatedAccount()
         {
-            if (emailTable.RowCount != 1 || !emailTable.ContainsColumn("Email"))
-            {
-                throw new ConfigurationErrorsException("Email address table should only contain 1 row with Email column");
-            }
-
-            var email = emailTable.Rows[0]["Email"];
-
+            string email =_tokenManager.GetTokenByKey(EmailTokenId);
+            
             var user = _userReadRepository.Get(email);
+
+            if (user != null)
+            {
+                _tokenManager.SetToken(ActivationTokenId, user.ActivationCode);
+            }
+        }
+
+        [Then("I set my token here")]
+        public void ThenISetMyTokenHere()
+        {
+            var user = _userReadRepository.Get(_email);
 
             if (user != null)
             {
