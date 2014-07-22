@@ -5,6 +5,7 @@
     using System.Web.Mvc;
     using System.Web.Mvc.Filters;
     using System.Web.Security;
+    using Constants;
     using NLog;
     using Services;
 
@@ -34,9 +35,8 @@
             Logger.Debug("User.IsAuthenticated {0}", httpContext.User.Identity.IsAuthenticated);
             Logger.Debug("Claims {0}", string.Join(",", claims));
 
-            Logger.Debug("Activated: {0}", httpContext.User.IsInRole("Activated"));
-            Logger.Debug("Unactivated: {0}", httpContext.User.IsInRole("Unactivated"));
-            Logger.Debug("Candidate: {0}", httpContext.User.IsInRole("Candidate"));
+            Logger.Debug("Activated: {0}", httpContext.User.IsInRole(UserRoleNames.Activated));
+            Logger.Debug("Unactivated: {0}", httpContext.User.IsInRole(UserRoleNames.Unactivated));
         }
 
         public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)

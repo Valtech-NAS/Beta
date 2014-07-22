@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using Common.Constants;
     using Common.Providers;
     using Domain.Entities.Users;
     using Infrastructure.Azure.Session;
@@ -99,11 +100,11 @@
             switch (GetUserStatus(username))
             {
                 case UserStatuses.Active:
-                    claims.Add("Activated");
+                    claims.Add(UserRoleNames.Activated);
                     break;
 
                 case UserStatuses.PendingActivation:
-                    claims.Add("Unactivated");
+                    claims.Add(UserRoleNames.Unactivated);
                     break;
             }
 

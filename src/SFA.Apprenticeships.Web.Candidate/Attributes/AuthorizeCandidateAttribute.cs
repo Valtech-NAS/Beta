@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Common.Constants;
 
     public class AuthorizeCandidateAttribute : AuthorizeAttribute
     {
@@ -19,13 +20,18 @@
         {
             var user = filterContext.RequestContext.HttpContext.User;
 
-            if (user.Identity.IsAuthenticated && !user.IsInRole("Activated"))
+            if (user.Identity.IsAuthenticated)
             {
-                OnUnactivated(filterContext);
+                if (user.IsInRole(UserRoleNames.Unactivated))
+                {
+                    OnUnauthorizedUnactivated(filterContext);
+                    return;
+                }
+
+                OnUnauthorizedActivated(filterContext);
             }
         }
-
-        private void OnUnactivated(AuthorizationContext filterContext)
+        private void OnUnauthorizedUnactivated(AuthorizationContext filterContext)
         {
             var routeValues = new RouteValueDictionary
             {
@@ -36,6 +42,18 @@
 
             filterContext.Result = new RedirectToRouteResult(routeValues);
         }
+
+        private void OnUnauthorizedActivated(AuthorizationContext filterContext)
+        {
+            var routeValues = new RouteValueDictionary
+            {
+                {"Controller", "VacancySearch"},
+                {"Action", "Index"}
+            };
+
+            filterContext.Result = new RedirectToRouteResult(routeValues);
+        }
+
 
         private static string GetReturnUrl(AuthorizationContext filterContext)
         {

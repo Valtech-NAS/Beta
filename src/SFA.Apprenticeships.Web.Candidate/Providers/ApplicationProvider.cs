@@ -35,8 +35,10 @@
 
             var candidate = _candidateService.GetCandidate(candidateId);
 
+            // TODO: create mapper.
             var candidateViewModel = new CandidateViewModel
             {
+                Id = candidateId,
                 FullName = candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
                 EmailAddress = candidate.RegistrationDetails.EmailAddress,
                 DateOfBirth = candidate.RegistrationDetails.DateOfBirth,
@@ -68,10 +70,9 @@
             return applicationViewModel;
         }
 
-        public ApplicationViewModel MergeApplicationViewModel(int vacancyId, ApplicationViewModel applicationViewModel)
+        public ApplicationViewModel MergeApplicationViewModel(int vacancyId, Guid candidateId, ApplicationViewModel applicationViewModel)
         {
-            var existingApplicationViewModel = GetApplicationViewModel(
-                vacancyId, applicationViewModel.Candidate.Id);
+            var existingApplicationViewModel = GetApplicationViewModel(vacancyId, candidateId);
 
             applicationViewModel.VacancyDetail = existingApplicationViewModel.VacancyDetail;
             applicationViewModel.Candidate.Id = existingApplicationViewModel.Candidate.Id;

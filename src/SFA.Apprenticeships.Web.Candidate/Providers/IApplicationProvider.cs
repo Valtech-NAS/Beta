@@ -7,7 +7,7 @@
     {
         ApplicationViewModel GetApplicationViewModel(int vacancyId, Guid candidateId);
 
-        ApplicationViewModel MergeApplicationViewModel(int vacancyId, ApplicationViewModel userApplicationViewModel);
+        ApplicationViewModel MergeApplicationViewModel(int vacancyId, Guid candidateId, ApplicationViewModel userApplicationViewModel);
 
         void SaveApplication(ApplicationViewModel applicationViewModel);
     }

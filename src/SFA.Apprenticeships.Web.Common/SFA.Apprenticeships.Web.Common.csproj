@@ -120,6 +120,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Attributes\AuthenticateUserAttribute.cs" />
+    <Compile Include="Constants\UserRoleNames.cs" />
     <Compile Include="Controllers\SfaControllerBase.cs" />
     <Compile Include="Framework\RuntimeHelper.cs" />
     <Compile Include="Framework\HttpServerUtilityExtensions.cs" />

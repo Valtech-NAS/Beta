@@ -3,6 +3,7 @@
     using System;
     using System.Web.Mvc;
     using Attributes;
+    using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
     using FluentValidation.Mvc;
@@ -28,7 +29,7 @@
             _validator = validator;
         }
 
-        [AuthorizeCandidate(Roles = "Activated")]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Index(int id)
         {
             var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
@@ -44,9 +45,11 @@
         }
 
         [HttpPost]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Apply(int id, ApplicationViewModel applicationViewModel)
         {
-            applicationViewModel = _applicationProvider.MergeApplicationViewModel(id, applicationViewModel);
+            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
+            applicationViewModel = _applicationProvider.MergeApplicationViewModel(id, candidateId, applicationViewModel);
             
             var result = _validator.Validate(applicationViewModel);
 

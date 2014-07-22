@@ -1,6 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System.Web.Mvc;
+    using System.Web.Security;
+    using Attributes;
+    using Common.Attributes;
+    using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
     using Constants.ViewModels;
@@ -24,14 +28,14 @@
         public RegisterController(
             ISessionState session,
             IUserServiceProvider userServiceProvider,
+            ICandidateServiceProvider candidateServiceProvider,
             RegisterViewModelServerValidator registerViewModelServerValidator,
-            ActivationViewModelServerValidator activationViewModelServerValidator,
-            ICandidateServiceProvider candidateServiceProvider)
+            ActivationViewModelServerValidator activationViewModelServerValidator)
             : base(session, userServiceProvider)
         {
+            _candidateServiceProvider = candidateServiceProvider;
             _registerViewModelServerValidator = registerViewModelServerValidator;
             _activationViewModelServerValidator = activationViewModelServerValidator;
-            _candidateServiceProvider = candidateServiceProvider;
         }
 
         public ActionResult Index()
@@ -74,6 +78,7 @@
         }
 
         [HttpGet]
+        [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
         public ActionResult Activation(string returnUrl)
         {
             var model = new ActivationViewModel
@@ -99,7 +104,7 @@
             if (activatedResult.IsValid)
             {
                 UserServiceProvider.SetAuthenticationCookie(
-                    HttpContext, User.Identity.Name, "Activated");
+                    HttpContext, User.Identity.Name, UserRoleNames.Activated);
 
                 // Redirect to last viewed vacancy (if any).
                 var lastViewedVacancyId = _candidateServiceProvider.LastViewedVacancyId;
@@ -141,7 +146,7 @@
         {
             if (!ModelState.IsValid)
             {
-                return Json(new {Result = false}, JsonRequestBehavior.AllowGet);
+                return Json(new { Result = false }, JsonRequestBehavior.AllowGet);
             }
 
             var usernameIsAvailable = IsUsernameAvailable(model.Email);
@@ -163,7 +168,7 @@
             var registrationDetails = candidate.RegistrationDetails;
 
             UserServiceProvider.SetAuthenticationCookie(
-                HttpContext, candidate.EntityId.ToString(), "Unactivated");
+                HttpContext, candidate.EntityId.ToString(), UserRoleNames.Unactivated);
 
             UserServiceProvider.SetUserContextCookie(
                 HttpContext, registrationDetails.EmailAddress, registrationDetails.FullName);

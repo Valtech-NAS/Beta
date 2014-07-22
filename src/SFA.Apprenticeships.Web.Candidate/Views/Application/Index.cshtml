@@ -21,7 +21,7 @@
     </div>
 </section>
 
-@using (Html.BeginForm("Apply", "Application", new { id = Model.VacancyDetail.Id, mockProfileId = Model.Candidate.Id }, FormMethod.Post))
+@using (Html.BeginForm("Apply", "Application", new { id = Model.VacancyDetail.Id }, FormMethod.Post))
 {
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
