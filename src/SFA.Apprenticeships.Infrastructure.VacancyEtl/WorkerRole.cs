@@ -26,11 +26,11 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
         public override void Run()
         {
-            Logger.Debug("EtlWorkerRole entry point called");
+            Logger.Debug("Vanancy Etl Process Run Called");
 
             if (!Initialise())
             {
-                Logger.Warn("EtlWorkerRole failed to initialise");
+                Logger.Fatal("Vanancy Etl Process failed to initialise");
                 return;
             }
 
@@ -75,7 +75,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                     x.AddRegistry<ElasticsearchCommonRegistry>();
                 });
 
-                Logger.Debug("IoC initialized");
+                Logger.Debug("Vanancy Etl Process IoC initialized");
 
                 var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
                 subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(VacancySummaryConsumerAsync)), "VacancyEtl");
@@ -83,19 +83,19 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
                 _vacancySchedulerConsumer = ObjectFactory.GetInstance<VacancySchedulerConsumer>();
 
-                Logger.Debug("VacancySchedulerConsumer setup complete");
+                Logger.Debug("Vanancy Etl Process setup complete");
                 return true;
             }
             catch (Exception ex)
             {
-                Logger.Error("Error initialising VacancyEtl Worker/Server", ex);
+                Logger.Error("Vanancy Etl Process failed to initialise", ex);
                 return false;
             }
         }
 
         public override bool OnStart()
         {
-            Logger.Debug("EtlWorkerRole OnStart called");
+            Logger.Debug("Vanancy Etl Process OnStart called");
 
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
@@ -108,7 +108,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
         public override void OnStop()
         {
-            Logger.Debug("EtlWorkerRole OnStop called");
+            Logger.Debug("Vanancy Etl Process OnStop called");
 
             // Kill the bus which will kill any subscriptions
             ObjectFactory.GetInstance<IBus>().Advanced.Dispose();
