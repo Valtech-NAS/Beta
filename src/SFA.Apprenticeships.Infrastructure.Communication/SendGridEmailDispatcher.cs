@@ -28,7 +28,7 @@
 
         public void SendEmail(EmailRequest request)
         {
-            Logger.Debug("SendEmail From={0} To={1}, Subject={2}, Template={3}", request.FromEmail, request.ToEmail, request.Subject,request.TemplateName );
+            Logger.Debug("SendEmail From={0} To={1}, Subject={2}, Template={3}", request.FromEmail, request.ToEmail, request.Subject,request.TemplateName);
             
             var message = ComposeMessage(request);
 
@@ -131,12 +131,13 @@
                 var credentials = new NetworkCredential(_userName, _password);
                 var web = new Web(credentials);
 
+                Logger.Info("Dispatching email to {0}", message.To.ToString());
                 web.Deliver(message);
-                Logger.Info("DispatchMessage:  Successfully dispatched email to {0}", message.To.ToString());
+                Logger.Info("Successfully dispatched email to {0}", message.To.ToString());
             }
             catch (Exception e)
             {
-                Logger.ErrorException("DispatchMessage: Failed to dispatch email.", e);
+                Logger.ErrorException("Failed to dispatch email.", e);
                 // TODO: EXCEPTION: failed to send, log / throw domain exception.
                 throw new Exception("Failed to dispatch email.", e);
             }

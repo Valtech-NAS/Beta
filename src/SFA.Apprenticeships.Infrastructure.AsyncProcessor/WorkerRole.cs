@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
 
         public override void Run()
         {
-            Logger.Debug("Run called.");
+            Logger.Debug("AsyncProcessorRun called.");
 
             Initialise();
         }
@@ -39,7 +39,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
 
         public override void OnStop()
         {
-            Logger.Debug("OnStop called.");
+            Logger.Debug("AsyncProcessor OnStop called.");
 
             // Kill the bus which will kill any subscriptions
             ObjectFactory.GetInstance<IBus>().Advanced.Dispose();
@@ -54,16 +54,16 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
         {
             try
             {
-                Logger.Debug("Initialising...");
+                Logger.Debug("AsyncProcessor Initialising...");
 
                 InitializeIoC();
                 InitializeRabbitMQSubscribers();
 
-                Logger.Debug("Initialised.");
+                Logger.Debug("AsyncProcessor Initialised.");
             }
             catch (Exception e)
             {
-                Logger.ErrorException("Initialisation error.", e);
+                Logger.ErrorException("AsyncProcessor Initialisation error.", e);
             }
         }
 
@@ -72,21 +72,24 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
             const string asyncProcessorSubscriptionId = "AsyncProcessor";
             var bootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
 
-            bootstrapper.LoadSubscribers(
-                Assembly.GetAssembly(typeof (EmailConsumerAsync)), asyncProcessorSubscriptionId);
+            Logger.Debug("RabbitMQ initialising");
 
-            Logger.Debug("RabbitMQ initialized.");
+            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof (EmailConsumerAsync)), asyncProcessorSubscriptionId);
+
+            Logger.Debug("RabbitMQ initialised");
         }
 
         private static void InitializeIoC()
         {
+            Logger.Debug("IoC container initialising");
+
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<CommunicationRegistry>();
             });
 
-            Logger.Debug("IoC initialized.");
+            Logger.Debug("IoC container initialised");
         }
     }
 }
