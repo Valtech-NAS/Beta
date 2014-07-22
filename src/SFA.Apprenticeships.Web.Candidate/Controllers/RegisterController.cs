@@ -1,10 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System.Web;
     using System.Web.Mvc;
-    using System.Web.Security;
     using Common.Controllers;
-    using Common.Services;
+    using Common.Providers;
     using Constants.ViewModels;
     using Domain.Entities.Candidates;
     using FluentValidation.Mvc;
@@ -22,20 +20,18 @@
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
-        private readonly IAuthenticationTicketService _ticketService;
 
         public RegisterController(
             ISessionState session,
+            IUserServiceProvider userServiceProvider,
             RegisterViewModelServerValidator registerViewModelServerValidator,
             ActivationViewModelServerValidator activationViewModelServerValidator,
-            ICandidateServiceProvider candidateServiceProvider,
-            IAuthenticationTicketService ticketService)
-            : base(session)
+            ICandidateServiceProvider candidateServiceProvider)
+            : base(session, userServiceProvider)
         {
             _registerViewModelServerValidator = registerViewModelServerValidator;
             _activationViewModelServerValidator = activationViewModelServerValidator;
             _candidateServiceProvider = candidateServiceProvider;
-            _ticketService = ticketService;
         }
 
         public ActionResult Index()
@@ -72,7 +68,7 @@
                 return View(model);
             }
 
-            AddCookies(candidate);
+            SetCookies(candidate);
 
             return RedirectToAction("Activation");
         }
@@ -87,7 +83,7 @@
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                TempData["ReturnUrl"] = returnUrl;
+                UserServiceProvider.SetAuthenticationReturnUrlCookie(HttpContext, returnUrl);
             }
 
             return View(model);
@@ -102,14 +98,26 @@
 
             if (activatedResult.IsValid)
             {
-                var ticket = _ticketService.CreateTicket(User.Identity.Name, "Activated");
+                UserServiceProvider.SetAuthenticationCookie(
+                    HttpContext, User.Identity.Name, "Activated");
 
-                _ticketService.AddTicket(Response.Cookies, ticket);
+                // Redirect to last viewed vacancy (if any).
+                var lastViewedVacancyId = _candidateServiceProvider.LastViewedVacancyId;
 
-                var returnUrl = TempData["ReturnUrl"] as string;
+                if (lastViewedVacancyId.HasValue)
+                {
+                    _candidateServiceProvider.LastViewedVacancyId = null;
+
+                    return RedirectToAction("Details", "VacancySearch", new { id = lastViewedVacancyId.Value });
+                }
+
+                // Redirect to return URL (if any).
+                var returnUrl = UserServiceProvider.GetAuthenticationReturnUrl(HttpContext);
 
                 if (!string.IsNullOrWhiteSpace(returnUrl))
                 {
+                    UserServiceProvider.DeleteAuthenticationReturnUrlCookie(HttpContext);
+
                     return Redirect(returnUrl);
                 }
 
@@ -150,25 +158,15 @@
         {
             return _candidateServiceProvider.IsUsernameAvailable(username.Trim()); // TODO Consider doing this everywhere
         }
-        private void AddCookies(Candidate candidate)
+        private void SetCookies(Candidate candidate)
         {
-            var ticket = _ticketService.CreateTicket(candidate.EntityId.ToString(), "Unactivated");
+            var registrationDetails = candidate.RegistrationDetails;
 
-            _ticketService.AddTicket(Response.Cookies, ticket);
+            UserServiceProvider.SetAuthenticationCookie(
+                HttpContext, candidate.EntityId.ToString(), "Unactivated");
 
-            var cookie = CreateUserContextCookie(candidate.RegistrationDetails);
-
-            Response.Cookies.Add(cookie);
-        }
-
-        private static HttpCookie CreateUserContextCookie(RegistrationDetails registrationDetails)
-        {
-            var cookie = new HttpCookie("User.Context");
-
-            cookie.Values.Add("UserName", registrationDetails.EmailAddress);
-            cookie.Values.Add("FullName", registrationDetails.FirstName + " " + registrationDetails.LastName);
-
-            return cookie;
+            UserServiceProvider.SetUserContextCookie(
+                HttpContext, registrationDetails.EmailAddress, registrationDetails.FullName);
         }
     }
 }

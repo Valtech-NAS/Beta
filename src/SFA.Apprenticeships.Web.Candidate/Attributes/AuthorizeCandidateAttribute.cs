@@ -2,8 +2,6 @@
 {
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Providers;
-    using StructureMap.Pipeline;
 
     public class AuthorizeCandidateAttribute : AuthorizeAttribute
     {

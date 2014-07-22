@@ -12,5 +12,6 @@
         Domain.Entities.Candidates.Candidate Authenticate(LoginViewModel model);
         UserStatuses GetUserStatus(string username);
         string[] GetRoles(string username);
+        int? LastViewedVacancyId { get; set; }
     }
 }

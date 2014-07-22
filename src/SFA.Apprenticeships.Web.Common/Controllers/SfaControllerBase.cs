@@ -4,42 +4,28 @@
     using Attributes;
     using Domain.Entities.Users;
     using Infrastructure.Azure.Session;
+    using Providers;
 
     [AuthenticateUser]
     public abstract class SfaControllerBase : Controller
     {
-        protected SfaControllerBase(ISessionState session)
+        protected SfaControllerBase(ISessionState session, IUserServiceProvider userServiceProvider)
         {
             Session = session;
-            
-        }
-
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            // TODO: DONTKNOW: what if UserContext is null when used elsewhere?
-            UserContext = GetUserContext();
-
-            base.OnActionExecuting(filterContext);
+            UserServiceProvider = userServiceProvider;
         }
 
         protected new ISessionState Session { get; private set; }
 
-        protected UserContext UserContext { get; private set; }
+        public IUserServiceProvider UserServiceProvider { get; private set; }
 
-        private UserContext GetUserContext()
+        protected UserContext UserContext { get; set; }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var cookie = Request.Cookies["User.Context"];
+            UserContext = UserServiceProvider.GetUserContext(filterContext.HttpContext);
 
-            if (cookie == null)
-            {
-                return null;
-            }
-
-            return new UserContext
-            {
-                UserName = cookie.Values["UserName"],
-                FullName = cookie.Values["FullName"]
-            };
+            base.OnActionExecuting(filterContext);
         }
     }
 }

@@ -2,7 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
+    using Common.Providers;
     using Domain.Entities.Users;
+    using Infrastructure.Azure.Session;
     using ViewModels.Login;
     using ViewModels.Register;
     using Application.Interfaces.Candidates;
@@ -12,17 +15,28 @@
 
     public class CandidateServiceProvider : ICandidateServiceProvider
     {
+        private static class SessionKeys
+        {
+            public const string LastViewedVacancyId = "LastViewedVacancyId";
+        }
+
+        private ISessionState _session;
         private readonly IRegistrationService _registrationService;
         private readonly ICandidateService _candidateService;
+        private readonly IUserServiceProvider _userServiceProvider;
         private readonly IMapper _mapper;
 
         public CandidateServiceProvider(
+            ISessionState session,
             ICandidateService candidateService,
             IRegistrationService registrationService,
+            IUserServiceProvider userServiceProvider,
             IMapper mapper)
         {
+            _session = session;
             _candidateService = candidateService;
             _registrationService = registrationService;
+            _userServiceProvider = userServiceProvider;
             _mapper = mapper;
         }
 
@@ -49,7 +63,7 @@
 
                 return true;
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return false;
             }
@@ -94,6 +108,42 @@
             }
 
             return claims.ToArray();
+        }
+
+        public int? LastViewedVacancyId
+        {
+            get
+            {
+                var stringValue = _session.Get<string>(SessionKeys.LastViewedVacancyId);
+
+                if (string.IsNullOrWhiteSpace(stringValue))
+                {
+                    return null;
+                }
+
+                int intValue;
+
+                if (!Int32.TryParse(stringValue, out intValue))
+                {
+                    return null;
+                }
+
+                return intValue;
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    _session.Delete(SessionKeys.LastViewedVacancyId);
+                    return;
+                }
+
+                var stringValue = value.Value.ToString(CultureInfo.InvariantCulture);
+
+                _session.Store(
+                    SessionKeys.LastViewedVacancyId, stringValue);
+            }
         }
     }
 }

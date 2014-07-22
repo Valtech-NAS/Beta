@@ -5,7 +5,7 @@
     using System.Web.Security;
     using NLog;
 
-    public class AuthenticationTicketService : IAuthenticationTicketService
+    internal class AuthenticationTicketService : IAuthenticationTicketService
     {
         private static readonly string CookieName = FormsAuthentication.FormsCookieName;
 
@@ -42,7 +42,7 @@
 
         public FormsAuthenticationTicket GetTicket(HttpCookieCollection cookies)
         {
-            var cookie = cookies[CookieName];
+            var cookie = cookies.Get(CookieName);
 
             if (cookie == null || string.IsNullOrWhiteSpace(cookie.Value))
             {
@@ -54,7 +54,8 @@
 
         public void DeleteTicket(HttpCookieCollection cookies)
         {
-            if (cookies[CookieName] == null)
+
+            if (cookies.Get(CookieName) == null)
             {
                 return;
             }

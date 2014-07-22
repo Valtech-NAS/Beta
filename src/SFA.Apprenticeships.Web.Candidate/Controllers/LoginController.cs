@@ -1,9 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System.Web;
     using System.Web.Mvc;
     using Common.Controllers;
-    using Common.Services;
+    using Common.Providers;
     using Constants.ViewModels;
     using Domain.Entities.Candidates;
     using FluentValidation.Mvc;
@@ -15,19 +14,17 @@
     public class LoginController : SfaControllerBase
     {
         private readonly ICandidateServiceProvider _candidateServiceProvider;
-        private readonly IAuthenticationTicketService _ticketService;
         private readonly LoginViewModelServerValidator _loginViewModelServerValidator;
 
         public LoginController(
             ISessionState session,
+            IUserServiceProvider userServiceProvider,
             LoginViewModelServerValidator loginViewModelServerValidator,
-            ICandidateServiceProvider candidateServiceProvider,
-            IAuthenticationTicketService ticketService)
-            : base(session)
+            ICandidateServiceProvider candidateServiceProvider)
+            : base(session, userServiceProvider)
         {
             _loginViewModelServerValidator = loginViewModelServerValidator;
             _candidateServiceProvider = candidateServiceProvider;
-            _ticketService = ticketService;
         }
 
         [HttpGet]
@@ -35,7 +32,7 @@
         {
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                TempData["ReturnUrl"] = returnUrl;
+                UserServiceProvider.SetAuthenticationReturnUrlCookie(HttpContext, returnUrl);
             }
 
             return View();
@@ -69,40 +66,41 @@
                 return View(model);
             }
 
-            AddCookies(candidate);
+            SetCookies(candidate);
 
-            var returnUrl = TempData["ReturnUrl"] as string;
+            // Redirect to last viewed vacancy (if any).
+            var lastViewedVacancyId = _candidateServiceProvider.LastViewedVacancyId;
+
+            if (lastViewedVacancyId.HasValue)
+            {
+                _candidateServiceProvider.LastViewedVacancyId = null;
+
+                return RedirectToAction("Details", "VacancySearch", new { id = lastViewedVacancyId.Value });
+            }
+
+            // Redirect to return URL (if any).
+            var returnUrl = UserServiceProvider.GetAuthenticationReturnUrl(HttpContext);
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
+                UserServiceProvider.DeleteAuthenticationReturnUrlCookie(HttpContext);
+
                 return Redirect(returnUrl);
             }
 
             return RedirectToAction("Index", "VacancySearch");
         }
 
-        // TODO: duplicated code (see LoginController).
-        private void AddCookies(Candidate candidate)
+        private void SetCookies(Candidate candidate)
         {
-            var roles = _candidateServiceProvider.GetRoles(candidate.RegistrationDetails.EmailAddress);
-            var ticket = _ticketService.CreateTicket(candidate.EntityId.ToString(), roles);
+            var registrationDetails = candidate.RegistrationDetails;
+            var roles = _candidateServiceProvider.GetRoles(registrationDetails.EmailAddress);
 
-            _ticketService.AddTicket(Response.Cookies, ticket);
+            UserServiceProvider.SetAuthenticationCookie(
+                HttpContext, candidate.EntityId.ToString(), roles);
 
-            var cookie = CreateUserContextCookie(candidate.RegistrationDetails);
-
-            Response.Cookies.Add(cookie);
-        }
-
-        // TODO: duplicated code (see LoginController).
-        private static HttpCookie CreateUserContextCookie(RegistrationDetails registrationDetails)
-        {
-            var cookie = new HttpCookie("User.Context");
-
-            cookie.Values.Add("UserName", registrationDetails.EmailAddress);
-            cookie.Values.Add("FullName", registrationDetails.FirstName + " " + registrationDetails.LastName);
-
-            return cookie;
+            UserServiceProvider.SetUserContextCookie(
+                HttpContext, registrationDetails.EmailAddress, registrationDetails.FullName);
         }
     }
 }
