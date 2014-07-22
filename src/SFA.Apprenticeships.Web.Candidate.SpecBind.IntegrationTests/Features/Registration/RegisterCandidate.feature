@@ -118,9 +118,15 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 	And I choose CreateAccountButton
 	And I wait 70 second for the ActivationPage page
 	And I am on the ActivationPage page
+	And I enter data
+		| Field          | Value             |
+		| ActivationCode | {ActivationToken} |
+	And I am on the ActivationPage page
+	And I choose ActivateButton 
 	Then I see 
-		| Field        | Rule   | Value                        |
+		| Field        | Rule   | Value        |
 		| EmailAddress | Equals | {EmailToken} |
+
 
 
 

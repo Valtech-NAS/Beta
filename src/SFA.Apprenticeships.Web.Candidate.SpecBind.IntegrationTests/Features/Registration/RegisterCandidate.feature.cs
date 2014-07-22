@@ -444,14 +444,27 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
-                        "Rule",
                         "Value"});
             table14.AddRow(new string[] {
+                        "ActivationCode",
+                        "{ActivationToken}"});
+#line 121
+ testRunner.And("I enter data", ((string)(null)), table14, "And ");
+#line 124
+ testRunner.And("I am on the ActivationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 125
+ testRunner.And("I choose ActivateButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table15.AddRow(new string[] {
                         "EmailAddress",
                         "Equals",
                         "{EmailToken}"});
-#line 121
- testRunner.Then("I see", ((string)(null)), table14, "Then ");
+#line 126
+ testRunner.Then("I see", ((string)(null)), table15, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

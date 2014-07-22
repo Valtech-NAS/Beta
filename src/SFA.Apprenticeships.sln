@@ -55,6 +55,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.VacancyEtl", "SFA.Apprenticeships.Application.VacancyEtl\SFA.Apprenticeships.Application.VacancyEtl.csproj", "{04796403-0EDF-4A8D-B725-180A9F83D958}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EB6F2C1E-20C0-4C55-B5D9-70FBA59E5CF0}"
+	ProjectSection(SolutionItems) = preProject
+		Specbind.testsettings = Specbind.testsettings
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{FE64F0B2-36A4-4F41-8912-81E864E1AF6C}"
 EndProject
