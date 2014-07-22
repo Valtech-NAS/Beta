@@ -8,9 +8,12 @@
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Messaging;
     using Entities;
+    using NLog;
 
     public class VacancySummaryProcessor : IVacancySummaryProcessor
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly IMessageBus _bus;
         private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
         private readonly IMapper _mapper;
@@ -29,9 +32,14 @@
 
         public void QueueVacancyPages(StorageQueueMessage scheduledQueueMessage)
         {
-
+            Logger.Debug("Loading national and non-national vacancy counts");
+            
             var nationalCount = _vacancyIndexDataProvider.GetVacancyPageCount(VacancyLocationType.National);
+            Logger.Debug("Loaded national vacancy count of: {0}", nationalCount);
+            
             var nonNationalCount = _vacancyIndexDataProvider.GetVacancyPageCount(VacancyLocationType.NonNational);
+            Logger.Debug("Loaded non-national vacancy count of: {0}", nationalCount);
+
             var vacancySumaries = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, nationalCount, nonNationalCount);
 
             // Only delete from queue once we have all vacancies from the service without error.
@@ -41,6 +49,8 @@
                 vacancySumaries,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 vacancySummaryPage => _bus.PublishMessage(vacancySummaryPage));
+
+            Logger.Debug("Posted {0} vacancy summary pages to queue", vacancySumaries.Count());
         }
 
         private IEnumerable<VacancySummaryPage> BuildVacancySummaryPages(DateTime scheduledRefreshDateTime, int nationalCount, int nonNationalCount)
@@ -79,8 +89,12 @@
 
         public void QueueVacancySummaries(VacancySummaryPage vacancySummaryPage)
         {
+            Logger.Debug("Loading legacy vacancy search page number: {0}", vacancySummaryPage.PageNumber);
+
             var vacancies = _vacancyIndexDataProvider.GetVacancySummaries(vacancySummaryPage.VacancyLocation, vacancySummaryPage.PageNumber).ToList();
             var vacanciesExtended = _mapper.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(vacancies);
+
+            Logger.Debug("Loaded and transformed legacy vacancy search page number: {0}", vacancySummaryPage.PageNumber);
 
             Parallel.ForEach(
                 vacanciesExtended,
