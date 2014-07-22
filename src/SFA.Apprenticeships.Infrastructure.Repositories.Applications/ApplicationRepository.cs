@@ -19,6 +19,16 @@
             _mapper = mapper;
         }
 
+        /* TODO: Map legacy application statuses
+                 Unsent
+                 Sent
+                 In progress
+                 Withdrawn
+                 Unsuccessful
+                 Successful
+                 Past Application
+         */
+
         public void Delete(Guid id)
         {
             Collection.Remove(Query<MongoApplicationDetail>.EQ(o => o.Id, id));
