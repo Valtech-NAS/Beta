@@ -160,11 +160,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.UserDirectory.IntegrationTests", "SFA.Apprenticeships.Infrastructure.UserDirectory.IntegrationTests\SFA.Apprenticeships.Infrastructure.UserDirectory.IntegrationTests.csproj", "{AC61A264-5D06-4FF3-BF54-99C9B525E360}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E224926-25D2-44D4-A036-080333957D0D}"
-	ProjectSection(SolutionItems) = preProject
-		SpecBind.testsettings = SpecBind.testsettings
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
