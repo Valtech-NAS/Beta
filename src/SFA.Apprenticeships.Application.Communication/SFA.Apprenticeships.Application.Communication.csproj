@@ -39,6 +39,10 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CommunicationService.cs" />
+    <Compile Include="Strategies\ISendAccountUnlockCodeStrategy.cs" />
+    <Compile Include="Strategies\ISendApplicationSubmittedStrategy.cs" />
+    <Compile Include="Strategies\ISendPasswordChangedStrategy.cs" />
+    <Compile Include="Strategies\ISendPasswordResetCodeStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\ISendActivationCodeStrategy.cs" />
     <Compile Include="Strategies\QueueEmailOnlyActivationCodeStrategy.cs" />

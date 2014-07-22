@@ -11,11 +11,9 @@
             _userDirectoryProvider = userDirectoryProvider;
         }
 
-        public void AuthenticateUser(Guid id, string password)
+        public bool AuthenticateUser(Guid id, string password)
         {
-            var succeeded = _userDirectoryProvider.AuthenticateUser(id.ToString(), password);
-
-            CheckAndThrowFailureError(succeeded, "User Authentication failed");
+            return _userDirectoryProvider.AuthenticateUser(id.ToString(), password);
         }
 
         public void CreateUser(Guid id, string password)

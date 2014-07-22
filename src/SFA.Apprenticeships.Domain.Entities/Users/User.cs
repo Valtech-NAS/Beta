@@ -12,10 +12,16 @@
 
         public string ActivationCode { get; set; }
 
-        public DateTime ActivateCodeExpiry { get; set; }
+        public DateTime? ActivateCodeExpiry { get; set; }
+
+        public int LoginRemainingAttempts { get; set; } // used for incorrect password count
 
         public string PasswordResetCode { get; set; }
 
-        public DateTime PasswordResetCodeExpiry { get; set; } // TODO: CONFIG: set as 1 day (from config)
+        public DateTime? PasswordResetCodeExpiry { get; set; }
+        
+        public int PasswordResetRemainingAttempts { get; set; } // used for incorrect password reset count
+
+        public string AccountUnlockCode { get; set; }
     }
 }

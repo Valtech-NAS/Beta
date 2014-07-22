@@ -2,11 +2,10 @@
 {
     using System;
     using Candidates;
+    using Vacancies;
 
     public class ApplicationDetail : BaseEntity
     {
-        // TODO: DONTKNOW: ApplicationDetail, status, vacancy info (VacancySummary), etc.
-
         public ApplicationDetail()
         {
             CandidateDetails = new RegistrationDetails();
@@ -16,9 +15,15 @@
 
         public ApplicationStatuses Status { get; set; }
 
+        public DateTime? DateApplied { get; set; }
+
+        public bool IsArchived { get; set; }
+
         public Guid CandidateId { get; set; }
 
         public int LegacyApplicationId { get; set; } // temporary "weak link" to legacy application record (could be via an index)
+
+        public VacancySummary Vacancy { get; set; }
 
         public RegistrationDetails CandidateDetails { get; set; }
 

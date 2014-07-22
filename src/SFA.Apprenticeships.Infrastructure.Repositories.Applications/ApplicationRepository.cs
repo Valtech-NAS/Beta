@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Applications
 {
     using System;
+    using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
@@ -10,7 +11,8 @@
     using MongoDB.Driver.Builders;
     using NLog;
 
-    public class ApplicationRepository : GenericMongoClient<MongoApplicationDetail>, IApplicationWriteRepository
+    public class ApplicationRepository : GenericMongoClient<MongoApplicationDetail>, IApplicationReadRepository, 
+        IApplicationWriteRepository
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IMapper _mapper;
@@ -44,11 +46,24 @@
             
             var mongoEntity = _mapper.Map<ApplicationDetail, MongoApplicationDetail>(entity);
 
+            UpdateEntityTimestamps(mongoEntity);
+
             Collection.Save(mongoEntity);
 
             Logger.Debug("Saved ApplicationDetail to Mongodb with Id={0}", entity.EntityId);
 
             return _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
+        }
+
+        public ApplicationDetail Get(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<ApplicationSummary> GetForCandidate(Guid candidateId)
+        {
+            //todo: retrieve vacancies for the specified candidate, should exclude any that are archived
+            throw new NotImplementedException();
         }
     }
 }

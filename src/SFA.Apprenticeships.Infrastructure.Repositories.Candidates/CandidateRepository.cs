@@ -26,7 +26,7 @@
         {
             Logger.Debug("Called Mongodb to get candidate with Id={0}", id);
 
-            MongoCandidate mongoEntity = Collection.FindOneById(id);
+            var mongoEntity = Collection.FindOneById(id);
 
             return mongoEntity == null ? null : _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
         }
@@ -42,7 +42,9 @@
         {
             Logger.Debug("Called Mongodb to save candidate EntityId={0}, FirstName={1}, EmailAddress={2}", entity.EntityId, entity.RegistrationDetails.FirstName, entity.RegistrationDetails.EmailAddress);
             
-            MongoCandidate mongoEntity = _mapper.Map<Candidate, MongoCandidate>(entity);
+            var mongoEntity = _mapper.Map<Candidate, MongoCandidate>(entity);
+
+            UpdateEntityTimestamps(mongoEntity);
 
             Collection.Save(mongoEntity);
 

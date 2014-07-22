@@ -5,7 +5,8 @@
     public enum CandidateMessageTypes
     {
         SendActivationCode,
-        SendPasswordCode,
+        SendPasswordResetCode,
+        SendAccountUnlockCode,
         ApplicationSubmitted,
         PasswordChanged
     }

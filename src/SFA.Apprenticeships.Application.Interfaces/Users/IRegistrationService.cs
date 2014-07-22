@@ -16,12 +16,16 @@
 
         void Activate(string username, string activationCode);
 
-        void ResendActivationCode(string username); // resend an activation code - todo: may remove
+        void ResendActivationCode(string username);
 
-        void ResendPasswordCode(string username); // resend a password reset code - todo: may remove
+        void SendPasswordResetCode(string username);
 
-        void ChangeForgottenPassword(string username, string passwordCode, string newPassword);
+        void ResetForgottenPassword(string username, string passwordCode, string newPassword);
+
+        void ResendAccountUnlockCode(string username);
+
+        void UnlockAccount(string username, string accountUnlockCode);
+
         UserStatuses GetUserStatus(string username);
     }
 }
-             

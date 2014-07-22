@@ -12,17 +12,22 @@
     {
         private readonly IRegistrationService _registrationService;
         private readonly IAuthenticationService _authenticationService;
+        private readonly IUserReadRepository _userReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly ICommunicationService _communicationService;
         private readonly ICodeGenerator _codeGenerator;
 
-        public RegisterCandidateStrategy(IRegistrationService registrationService, IAuthenticationService authenticationService, ICandidateWriteRepository candidateWriteRepository, ICommunicationService communicationService, ICodeGenerator codeGenerator)
+        public RegisterCandidateStrategy(IRegistrationService registrationService,
+            IAuthenticationService authenticationService, ICandidateWriteRepository candidateWriteRepository,
+            ICommunicationService communicationService, ICodeGenerator codeGenerator,
+            IUserReadRepository userReadRepository)
         {
             _registrationService = registrationService;
             _authenticationService = authenticationService;
             _candidateWriteRepository = candidateWriteRepository;
             _communicationService = communicationService;
             _codeGenerator = codeGenerator;
+            _userReadRepository = userReadRepository;
         }
 
         public Candidate RegisterCandidate(Candidate newCandidate, string password)
@@ -36,6 +41,11 @@
             var activationCode = _codeGenerator.Generate();
 
             var username = newCandidate.RegistrationDetails.EmailAddress;
+
+            //todo: check if username is already in use
+            var user = _userReadRepository.Get(username);
+            // todo: if username in use and pending and not expired activation code then need to reuse the existing user
+            // todo: if username in use and pending but has expired activation code then need to overwrite the existing one (incl p/w)
 
             _registrationService.Register(username, newCandidateId, activationCode, UserRoles.Candidate);
 

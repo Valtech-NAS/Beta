@@ -33,10 +33,8 @@
         {
             return new[]
             {
-                new KeyValuePair<string, string>(
-                    "Candidate.ActivationCode", activationCode),
-                new KeyValuePair<string, string>(
-                    "Candidate.EmailAddress", emailAddress),
+                new KeyValuePair<string, string>("Candidate.ActivationCode", activationCode),
+                new KeyValuePair<string, string>("Candidate.EmailAddress", emailAddress),
             };
         }
     }

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Candidates
 {
     using System;
+    using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
 
@@ -19,8 +20,12 @@
 
         Candidate SaveCandidate(Candidate candidate);
 
+        ApplicationDetail CreateApplication(Guid candidateId, int vacancyId); // note: only an int due to legacy - will be a Guid
+
         ApplicationDetail SaveApplication(ApplicationDetail application);
 
+        IList<ApplicationSummary> GetApplications(Guid candidateId);
+ 
         void SubmitApplication(ApplicationDetail application);
     }
 }

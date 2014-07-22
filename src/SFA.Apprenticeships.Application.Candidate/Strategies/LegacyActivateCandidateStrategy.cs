@@ -3,8 +3,6 @@
     using System;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
-    using Domain.Entities.Users;
-    using Domain.Entities.Candidates;
 
     public class LegacyActivateCandidateStrategy : IActivateCandidateStrategy
     {
@@ -28,24 +26,9 @@
             var user = _userReadRepository.Get(username);
             var candidate = _candidateReadRepository.Get(user.EntityId);
 
-            switch (user.Status)
-            {
-                case UserStatuses.PendingActivation:
-                    ProcessPendingActivation(username, activationCode, candidate);
-                    break;
-                case UserStatuses.Active:
-                    throw new Exception("User is already active"); // TODO: EXCEPTION: should use an application exception type
-                case UserStatuses.Inactive:
-                    throw new Exception("User is inactive"); // TODO: EXCEPTION: should use an application exception type
-                case UserStatuses.Locked:
-                    throw new Exception("User is locked"); // TODO: EXCEPTION: should use an application exception type
-                default:
-                    throw new Exception("User status is unknown"); // TODO: EXCEPTION: should use an application exception type
-            }
-        }
+            //todo: use a helper here to assert state == pending (no need to cover all other specific states)
+            //user.AssertState(UserStatuses.PendingActivation, "User is in invalid state for activation");
 
-        private void ProcessPendingActivation(string username, string activationCode, Candidate candidate)
-        {
             _registrationService.Activate(username, activationCode);
             
             var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);

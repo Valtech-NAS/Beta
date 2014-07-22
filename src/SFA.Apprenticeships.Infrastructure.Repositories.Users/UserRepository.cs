@@ -27,7 +27,7 @@
         {
             Logger.Debug("Called Mongodb to get user with Id={0}", id);
 
-            MongoUser mongoEntity = Collection.FindOneById(id);
+            var mongoEntity = Collection.FindOneById(id);
 
             return mongoEntity == null ? null : _mapper.Map<MongoUser, User>(mongoEntity);
         }
@@ -36,7 +36,7 @@
         {
             Logger.Debug("Called Mongodb to get user with username={0}", username);
 
-            MongoUser mongoEntity = Collection.FindOne(Query.EQ("Username", username));
+            var mongoEntity = Collection.FindOne(Query.EQ("Username", username));
 
             if (mongoEntity == null && errorIfNotFound)
             {
@@ -50,14 +50,16 @@
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public User Save(User entity)
         {
             Logger.Debug("Called Mongodb to save user with username={0}", entity.Username);
 
-            MongoUser mongoEntity = _mapper.Map<User, MongoUser>(entity);
+            var mongoEntity = _mapper.Map<User, MongoUser>(entity);
+
+            UpdateEntityTimestamps(mongoEntity);
 
             Collection.Save(mongoEntity);
 

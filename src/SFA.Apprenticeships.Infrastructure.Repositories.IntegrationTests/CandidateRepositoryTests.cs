@@ -21,6 +21,7 @@
             });
         }
 
+        //todo: why are these commented out?
         [Test]
         public void ShouldCreateUpdateAndRemoveCandidate()
         {
@@ -42,6 +43,8 @@
             //writer.Delete(savedCandidate.EntityId);
             //Assert.IsNull(reader.Get(savedCandidate.EntityId));
         }
+
+        //todo: assert update of create and update timestamps for create, update, save of entity
 
         #region Helpers
         private static Candidate CreateTestCandidate()

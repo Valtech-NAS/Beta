@@ -1,24 +1,40 @@
 ﻿namespace SFA.Apprenticeships.Application.Registration
 {
     using System;
+    using CuttingEdge.Conditions;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
+    using Strategies;
 
     public class RegistrationService : IRegistrationService
     {
         private readonly IUserReadRepository _userReadRepository;
-        private readonly IUserWriteRepository _userWriteRepository;
-        private readonly int _activationCodeExpiryDays;
+        private readonly IRegisterUserStrategy _registerUserStrategy;
+        private readonly IActivateUserStrategy _activateUserStrategy;
+        private readonly IResetForgottenPasswordStrategy _resetForgottenPasswordStrategy;
+        private readonly ISendPasswordCodeStrategy _sendPasswordCodeStrategy;
+        private readonly IResendActivationCodeStrategy _resendActivationCodeStrategy;
+        private readonly IResendAccountUnlockCodeStrategy _resendAccountUnlockCodeStrategy;
+        private readonly IUnlockAccountStrategy _unlockAccountStrategy;
 
-        public RegistrationService(IUserReadRepository userReadRepository, 
-                                    IUserWriteRepository userWriteRepository,
-                                    IConfigurationManager configurationManager)
+        public RegistrationService(IUserReadRepository userReadRepository,
+            IRegisterUserStrategy registerUserStrategy,
+            IActivateUserStrategy activateUserStrategy,
+            IResetForgottenPasswordStrategy resetForgottenPasswordStrategy,
+            ISendPasswordCodeStrategy sendPasswordCodeStrategy,
+            IResendActivationCodeStrategy resendActivationCodeStrategy,
+            IResendAccountUnlockCodeStrategy resendAccountUnlockCodeStrategy,
+            IUnlockAccountStrategy unlockAccountStrategy)
         {
             _userReadRepository = userReadRepository;
-            _userWriteRepository = userWriteRepository;
-            _activationCodeExpiryDays = configurationManager.GetAppSetting<int>("ActivationCodeExpiryDays");
+            _registerUserStrategy = registerUserStrategy;
+            _activateUserStrategy = activateUserStrategy;
+            _resetForgottenPasswordStrategy = resetForgottenPasswordStrategy;
+            _sendPasswordCodeStrategy = sendPasswordCodeStrategy;
+            _resendActivationCodeStrategy = resendActivationCodeStrategy;
+            _resendAccountUnlockCodeStrategy = resendAccountUnlockCodeStrategy;
+            _unlockAccountStrategy = unlockAccountStrategy;
         }
 
         public bool IsUsernameAvailable(string username)
@@ -29,50 +45,62 @@
 
         public void Register(string username, Guid userId, string activationCode, UserRoles roles)
         {
-            var user = new User
-            {
-                ActivationCode = activationCode,
-                ActivateCodeExpiry = DateTime.Now.AddDays(_activationCodeExpiryDays),
-                Status = UserStatuses.PendingActivation,
-                EntityId = userId,
-                Username = username,
-                PasswordResetCode = string.Empty,
-                Roles = roles
-            };
+            Condition.Requires(username).IsNotNullOrEmpty();
+            Condition.Requires(activationCode).IsNotNullOrEmpty();
 
-            _userWriteRepository.Save(user);
+            _registerUserStrategy.Register(username, userId, activationCode, roles);
         }
 
         public void Activate(string username, string activationCode)
         {
-            var user = _userReadRepository.Get(username);
+            Condition.Requires(username).IsNotNullOrEmpty();
+            Condition.Requires(activationCode).IsNotNullOrEmpty();
 
-            if (!user.ActivationCode.Equals(activationCode, StringComparison.InvariantCultureIgnoreCase))
-                throw new Exception("Invalid activation code"); // TODO: EXCEPTION: should use an application exception type
-
-            user.Status = UserStatuses.Active;
-            user.ActivationCode = string.Empty;
-
-            _userWriteRepository.Save(user);
+            _activateUserStrategy.Activate(username, activationCode);
         }
 
         public void ResendActivationCode(string username)
         {
-            throw new NotImplementedException();
+            Condition.Requires(username).IsNotNullOrEmpty();
+
+            _resendActivationCodeStrategy.ResendActivationCode(username);
         }
 
-        public void ResendPasswordCode(string username)
+        public void SendPasswordResetCode(string username)
         {
-            throw new NotImplementedException();
+            Condition.Requires(username).IsNotNullOrEmpty();
+
+            _sendPasswordCodeStrategy.SendPasswordResetCode(username);
         }
 
-        public void ChangeForgottenPassword(string username, string passwordCode, string newPassword)
+        public void ResetForgottenPassword(string username, string passwordCode, string newPassword)
         {
-            throw new NotImplementedException();
+            Condition.Requires(username).IsNotNullOrEmpty();
+            Condition.Requires(passwordCode).IsNotNullOrEmpty();
+            Condition.Requires(newPassword).IsNotNullOrEmpty();
+
+            _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
+        }
+
+        public void ResendAccountUnlockCode(string username)
+        {
+            Condition.Requires(username).IsNotNullOrEmpty();
+
+            _resendAccountUnlockCodeStrategy.ResendAccountUnlockCode(username);
+        }
+
+        public void UnlockAccount(string username, string accountUnlockCode)
+        {
+            Condition.Requires(username).IsNotNullOrEmpty();
+            Condition.Requires(accountUnlockCode).IsNotNullOrEmpty();
+
+            _unlockAccountStrategy.UnlockAccount(username, accountUnlockCode);
         }
 
         public UserStatuses GetUserStatus(string username)
         {
+            Condition.Requires(username).IsNotNullOrEmpty();
+
             var user = _userReadRepository.Get(username);
 
             return user.Status;

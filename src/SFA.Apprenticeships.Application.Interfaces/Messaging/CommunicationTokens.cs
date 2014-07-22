@@ -6,6 +6,10 @@
     {
         CandidateFirstName,
         CandidateLastName,
-        ActivationCode
+        ActivationCode,
+        PasswordResetCode,
+        AccountUnlockCode,
+        ApplicationVacancyTitle,
+        ApplicationVacancyReference
     }
 }

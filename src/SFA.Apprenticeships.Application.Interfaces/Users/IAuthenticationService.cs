@@ -7,7 +7,7 @@
     /// </summary>
     public interface IAuthenticationService
     {
-        void AuthenticateUser(Guid id, string password);
+        bool AuthenticateUser(Guid id, string password);
 
         void CreateUser(Guid id, string password);
 

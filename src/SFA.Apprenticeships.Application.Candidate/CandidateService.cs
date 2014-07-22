@@ -1,35 +1,41 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate
 {
     using System;
+    using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
-    using Interfaces.Users;
     using Strategies;
 
     public class CandidateService : ICandidateService
     {
+        private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly IApplicationWriteRepository _applicationWriteRepository;
-        private readonly IAuthenticationService _authenticationService;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
-        private readonly IUserReadRepository _userReadRepository;
         private readonly IActivateCandidateStrategy _activateCandidateStrategy;
+        private readonly IAuthenticateCandidateStrategy _authenticateCandidateStrategy;
         private readonly ISubmitApplicationStrategy _submitApplicationStrategy;
         private readonly IRegisterCandidateStrategy _registerCandidateStrategy;
+        private readonly ICreateApplicationStrategy _createApplicationStrategy;
 
-        public CandidateService(IApplicationWriteRepository applicationWriteRepository, ICandidateReadRepository candidateReadRepository, ICandidateWriteRepository candidateWriteRepository, IAuthenticationService authenticationService, IUserReadRepository userReadRepository, IActivateCandidateStrategy activateCandidateStrategy, ISubmitApplicationStrategy submitApplicationStrategy, IRegisterCandidateStrategy registerCandidateStrategy)
+        public CandidateService(IApplicationReadRepository applicationReadRepository, 
+            IApplicationWriteRepository applicationWriteRepository, ICandidateReadRepository candidateReadRepository, 
+            ICandidateWriteRepository candidateWriteRepository, IActivateCandidateStrategy activateCandidateStrategy, 
+            IAuthenticateCandidateStrategy authenticateCandidateStrategy, ISubmitApplicationStrategy submitApplicationStrategy, 
+            IRegisterCandidateStrategy registerCandidateStrategy, ICreateApplicationStrategy createApplicationStrategy)
         {
+            _applicationReadRepository = applicationReadRepository;
             _applicationWriteRepository = applicationWriteRepository;
-            _authenticationService = authenticationService;
             _candidateReadRepository = candidateReadRepository;
             _candidateWriteRepository = candidateWriteRepository;
-            _userReadRepository = userReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
+            _authenticateCandidateStrategy = authenticateCandidateStrategy;
             _submitApplicationStrategy = submitApplicationStrategy;
             _registerCandidateStrategy = registerCandidateStrategy;
+            _createApplicationStrategy = createApplicationStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -55,16 +61,7 @@
             Condition.Requires(username).IsNotNullOrEmpty();
             Condition.Requires(password).IsNotNullOrEmpty();
 
-            var user = _userReadRepository.Get(username);
-
-            // TODO: NOTIMPL: check status of user (not allowed to authenticate if locked)
-            // TODO: NOTIMPL: check role of user? (may not be a candidate ... User.Roles)
-
-            _authenticationService.AuthenticateUser(user.EntityId, password);
-
-            var candidate = _candidateReadRepository.Get(user.EntityId);
-
-            return candidate;
+            return _authenticateCandidateStrategy.AuthenticateCandidate(username, password);
         }
 
         public Candidate GetCandidate(Guid id)
@@ -79,6 +76,11 @@
             return _candidateWriteRepository.Save(candidate);
         }
 
+        public ApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
+        {
+            return _createApplicationStrategy.CreateApplication(candidateId, vacancyId);
+        }
+
         public ApplicationDetail SaveApplication(ApplicationDetail application)
         {
             Condition.Requires(application);
@@ -86,11 +88,14 @@
             return _applicationWriteRepository.Save(application);
         }
 
+        public IList<ApplicationSummary> GetApplications(Guid candidateId)
+        {
+            return _applicationReadRepository.GetForCandidate(candidateId);
+        }
+
         public void SubmitApplication(ApplicationDetail application)
         {
             Condition.Requires(application);
-
-            // TODO: NOTIMPL: ensure candidate has not already applied for the vacancy
 
             _submitApplicationStrategy.SubmitApplication(application);
         }
