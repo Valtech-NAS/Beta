@@ -2,9 +2,10 @@
 {
     using System.Web.Mvc;
     using Common.Controllers;
+    using Common.Providers;
     using Constants.ViewModels;
+    using Domain.Entities.Candidates;
     using FluentValidation.Mvc;
-    using FluentValidation.Results;
     using Infrastructure.Azure.Session;
     using Providers;
     using Validators;
@@ -17,49 +18,89 @@
 
         public LoginController(
             ISessionState session,
+            IUserServiceProvider userServiceProvider,
             LoginViewModelServerValidator loginViewModelServerValidator,
             ICandidateServiceProvider candidateServiceProvider)
-            : base(session)
+            : base(session, userServiceProvider)
         {
             _loginViewModelServerValidator = loginViewModelServerValidator;
             _candidateServiceProvider = candidateServiceProvider;
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string returnUrl)
         {
+            if (!string.IsNullOrWhiteSpace(returnUrl))
+            {
+                UserServiceProvider.SetAuthenticationReturnUrlCookie(HttpContext, returnUrl);
+            }
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(LoginViewModel loginView)
+        public ActionResult Index(LoginViewModel model)
         {
             // Validate view model.
-            ValidationResult validationResult = _loginViewModelServerValidator.Validate(loginView);
+            var validationResult = _loginViewModelServerValidator.Validate(model);
 
             if (!validationResult.IsValid)
             {
                 ModelState.Clear();
                 validationResult.AddToModelState(ModelState, string.Empty);
 
-                return View(loginView);
+                return View(model);
             }
 
             // Attempt to authenticate candidate.
-            bool authenticated = _candidateServiceProvider.Authenticate(loginView);
+            var candidate = _candidateServiceProvider.Authenticate(model);
 
-            if (authenticated)
+            if (candidate == null)
             {
-                return RedirectToAction("Index", "VacancySearch");
+                // Authentication failed.
+                ModelState.Clear();
+                ModelState.AddModelError(
+                    "EmailAddress",
+                    LoginViewModelMessages.AuthenticationMessages.AuthenticationFailedErrorText);
+
+                return View(model);
             }
 
-            // Authentication failed.
-            ModelState.Clear();
-            ModelState.AddModelError(
-                "EmailAddress",
-                LoginViewModelMessages.AuthenticationMessages.AuthenticationFailedErrorText);
+            SetCookies(candidate);
 
-            return View(loginView);
+            // Redirect to last viewed vacancy (if any).
+            var lastViewedVacancyId = _candidateServiceProvider.LastViewedVacancyId;
+
+            if (lastViewedVacancyId.HasValue)
+            {
+                _candidateServiceProvider.LastViewedVacancyId = null;
+
+                return RedirectToAction("Details", "VacancySearch", new { id = lastViewedVacancyId.Value });
+            }
+
+            // Redirect to return URL (if any).
+            var returnUrl = UserServiceProvider.GetAuthenticationReturnUrl(HttpContext);
+
+            if (!string.IsNullOrWhiteSpace(returnUrl))
+            {
+                UserServiceProvider.DeleteAuthenticationReturnUrlCookie(HttpContext);
+
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction("Index", "VacancySearch");
+        }
+
+        private void SetCookies(Candidate candidate)
+        {
+            var registrationDetails = candidate.RegistrationDetails;
+            var roles = _candidateServiceProvider.GetRoles(registrationDetails.EmailAddress);
+
+            UserServiceProvider.SetAuthenticationCookie(
+                HttpContext, candidate.EntityId.ToString(), roles);
+
+            UserServiceProvider.SetUserContextCookie(
+                HttpContext, registrationDetails.EmailAddress, registrationDetails.FullName);
         }
     }
 }

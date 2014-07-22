@@ -1,15 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LocationLookup
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Locations;
     using Domain.Entities.Locations;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
+    using Nest;
+    using NLog;
+    using GeoPoint = Domain.Entities.Locations.GeoPoint;
 
     internal class LocationLookupProvider : ILocationLookupProvider
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
 
         public LocationLookupProvider(IElasticsearchClientFactory elasticsearchClientFactory)
@@ -19,11 +22,13 @@
 
         public IEnumerable<Location> FindLocation(string placeName, int maxResults = 50)
         {
-            var client = _elasticsearchClientFactory.GetElasticClient();
-            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (LocationLookup));
-            var term = placeName.ToLowerInvariant();
+            ElasticClient client = _elasticsearchClientFactory.GetElasticClient();
+            string indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (LocationLookup));
+            string term = placeName.ToLowerInvariant();
 
-            var exactMatchResults = client.Search<LocationLookup>(s => s
+            Logger.Debug("Calling find location for Term={0} on IndexName={1}", term, indexName);
+
+            IQueryResponse<LocationLookup> exactMatchResults = client.Search<LocationLookup>(s => s
                 .Index(indexName)
                 .Query(q => q
                     .Match(m => m.OnField(f => f.Name).QueryString(term))
@@ -31,7 +36,7 @@
                 .From(0)
                 .Size(maxResults));
 
-            var fuzzyMatchResults = client.Search<LocationLookup>(s => s
+            IQueryResponse<LocationLookup> fuzzyMatchResults = client.Search<LocationLookup>(s => s
                 .Index(indexName)
                 .Query(q =>
                     q.Fuzzy(f => f.MinSimilarity(5).PrefixLength(1).OnField(n => n.Name).Value(term).Boost(2.0)) ||
@@ -40,19 +45,22 @@
                 .From(0)
                 .Size(maxResults));
 
-            var results = exactMatchResults.Documents.Concat(fuzzyMatchResults.Documents)
+            List<LocationLookup> results = exactMatchResults.Documents.Concat(fuzzyMatchResults.Documents)
                 .Distinct((new LocationLookupComparer()))
                 .Take(maxResults)
                 .ToList();
 
+            Logger.Debug("{0} search results were returned", results.Count);
+
             return results.Select(l => new Location
             {
                 Name = MakeName(l, results.Count),
-                GeoPoint = new Domain.Entities.Locations.GeoPoint {Latitude = l.Latitude, Longitude = l.Longitude}
+                GeoPoint = new GeoPoint {Latitude = l.Latitude, Longitude = l.Longitude}
             });
         }
 
         #region Helpers
+
         private static string MakeName(LocationLookup locationData, int total)
         {
             return total != 1 && locationData.Name != locationData.County
@@ -71,9 +79,9 @@
             public int GetHashCode(LocationLookup obj)
             {
                 return string.Format("{0},{1}", obj.Longitude, obj.Latitude).ToLower().GetHashCode();
-                ;
             }
         }
+
         #endregion
     }
 }

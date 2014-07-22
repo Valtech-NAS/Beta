@@ -21,6 +21,7 @@
         void ResendPasswordCode(string username); // resend a password reset code - todo: may remove
 
         void ChangeForgottenPassword(string username, string passwordCode, string newPassword);
+        UserStatuses GetUserStatus(string username);
     }
 }
              

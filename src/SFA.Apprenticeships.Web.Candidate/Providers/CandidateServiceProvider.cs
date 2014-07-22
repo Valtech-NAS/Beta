@@ -1,6 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using Common.Constants;
+    using Common.Providers;
+    using Domain.Entities.Users;
+    using Infrastructure.Azure.Session;
     using ViewModels.Login;
     using ViewModels.Register;
     using Application.Interfaces.Candidates;
@@ -10,28 +16,43 @@
 
     public class CandidateServiceProvider : ICandidateServiceProvider
     {
+        private static class SessionKeys
+        {
+            public const string LastViewedVacancyId = "LastViewedVacancyId";
+        }
+
+        private ISessionState _session;
         private readonly IRegistrationService _registrationService;
         private readonly ICandidateService _candidateService;
+        private readonly IUserServiceProvider _userServiceProvider;
         private readonly IMapper _mapper;
 
-        public CandidateServiceProvider(ICandidateService candidateService, IRegistrationService registrationService, IMapper mapper)
+        public CandidateServiceProvider(
+            ISessionState session,
+            ICandidateService candidateService,
+            IRegistrationService registrationService,
+            IUserServiceProvider userServiceProvider,
+            IMapper mapper)
         {
+            _session = session;
             _candidateService = candidateService;
             _registrationService = registrationService;
+            _userServiceProvider = userServiceProvider;
             _mapper = mapper;
         }
 
-        public bool Register(RegisterViewModel model)
+        public Candidate Register(RegisterViewModel model)
         {
             try
             {
                 var candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
                 _candidateService.Register(candidate, model.Password);
-                return true;
+
+                return candidate;
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
         }
 
@@ -40,9 +61,10 @@
             try
             {
                 _candidateService.Activate(model.EmailAddress, model.ActivationCode);
+
                 return true;
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return false;
             }
@@ -53,18 +75,75 @@
             return _registrationService.IsUsernameAvailable(username);
         }
 
-        public bool Authenticate(LoginViewModel model)
+        public Candidate Authenticate(LoginViewModel model)
         {
             try
             {
-                var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
-
-                return candidate != null;
+                return _candidateService.Authenticate(model.EmailAddress, model.Password);
             }
             catch (Exception)
             {
-                // TODO: LOGGING: AG: do not like consuming exception here (and elsewhere in this class).
-                return false;
+                // TODO: LOGGING: do not like consuming exception here (and elsewhere in this class).
+                return null;
+            }
+        }
+
+        public UserStatuses GetUserStatus(string username)
+        {
+            return _registrationService.GetUserStatus(username);
+        }
+
+        public string[] GetRoles(string username)
+        {
+            var claims = new List<string>();
+
+            switch (GetUserStatus(username))
+            {
+                case UserStatuses.Active:
+                    claims.Add(UserRoleNames.Activated);
+                    break;
+
+                case UserStatuses.PendingActivation:
+                    claims.Add(UserRoleNames.Unactivated);
+                    break;
+            }
+
+            return claims.ToArray();
+        }
+
+        public int? LastViewedVacancyId
+        {
+            get
+            {
+                var stringValue = _session.Get<string>(SessionKeys.LastViewedVacancyId);
+
+                if (string.IsNullOrWhiteSpace(stringValue))
+                {
+                    return null;
+                }
+
+                int intValue;
+
+                if (!Int32.TryParse(stringValue, out intValue))
+                {
+                    return null;
+                }
+
+                return intValue;
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    _session.Delete(SessionKeys.LastViewedVacancyId);
+                    return;
+                }
+
+                var stringValue = value.Value.ToString(CultureInfo.InvariantCulture);
+
+                _session.Store(
+                    SessionKeys.LastViewedVacancyId, stringValue);
             }
         }
     }

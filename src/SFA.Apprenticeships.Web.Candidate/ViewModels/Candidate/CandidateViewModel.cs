@@ -7,7 +7,7 @@
     [Serializable]
     public class CandidateViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string FullName { get; set; }
 

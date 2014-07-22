@@ -127,7 +127,7 @@
             var testMessage = new TestMessage {TestString = "Testing 123"};
 
             bus.Publish(testMessage);
-            Thread.Sleep(3000);
+            Thread.Sleep(5000);
 
             // Is 2 becasue both the sync and async subscribers received the same message
             ConsumerCounter.Counter.Should().Be(2);

@@ -6,6 +6,8 @@
     using CuttingEdge.Conditions;
     using Infrastructure.LegacyWebServices.ReferenceData;
     using Microsoft.Practices.ServiceLocation;
+    using Providers;
+    using Services;
     using StructureMap;
     using StructureMap.Configuration.DSL;
 
@@ -14,6 +16,8 @@
         public WebCommonRegistry()
         {
             For<IReferenceDataProvider>().Use<LegacyReferenceDataProvider>();
+            For<IAuthenticationTicketService>().Use<AuthenticationTicketService>();
+            For<IUserServiceProvider>().Use<UserServiceProvider>();
         }
 
         public static void Configure(IContainer container)

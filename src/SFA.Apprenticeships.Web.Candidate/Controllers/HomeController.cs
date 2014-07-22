@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using Common.Controllers;
+    using Common.Providers;
     using NLog;
     using System.Web.Mvc;
     using Infrastructure.Azure.Session;
@@ -9,7 +10,8 @@
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public HomeController(ISessionState session) : base(session) {}
+        public HomeController(ISessionState session, IUserServiceProvider userServiceProvider)
+            : base(session, userServiceProvider) {}
 
         public ActionResult Index()
         {

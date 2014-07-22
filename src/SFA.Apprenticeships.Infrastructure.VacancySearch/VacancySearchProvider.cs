@@ -9,9 +9,11 @@
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
+    using NLog;
 
     public class VacancySearchProvider : IVacancySearchProvider
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
 
         public VacancySearchProvider(IElasticsearchClientFactory elasticsearchClientFactory)
@@ -30,6 +32,8 @@
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (VacancySummary));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (VacancySummary));
+
+            Logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName, indexName);
 
             var search = client.Search<VacancySummaryResponse>(s =>
             {
@@ -105,6 +109,8 @@
                         .Sorts.Skip(distanceSortItemIndex).First()
                         .ToString()));
             }
+
+            Logger.Debug("{0} search results returned", search.Total);
 
             var results = new SearchResults<VacancySummaryResponse>(search.Total, pageNumber, responses);
 

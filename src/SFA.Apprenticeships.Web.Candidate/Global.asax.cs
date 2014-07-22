@@ -1,15 +1,21 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate
 {
     using System;
+    using System.Security.Principal;
     using System.Web.Http;
     using System.Web;
     using System.Web.Optimization;
+    using System.Web.Security;
+    using Application.Interfaces.Candidates;
+    using Application.Interfaces.Users;
     using Common.Validations;
+    using Domain.Entities.Users;
     using FluentValidation.Mvc;
     using Common.Framework;
     using System.Web.Mvc;
     using System.Web.Routing;
     using FluentValidation.Validators;
+    using StructureMap;
 
     public class MvcApplication : HttpApplication
     {

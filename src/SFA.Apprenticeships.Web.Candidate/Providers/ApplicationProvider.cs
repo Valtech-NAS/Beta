@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using Application.Interfaces.Candidates;
+    using Domain.Interfaces.Mapping;
     using ViewModels.Applications;
     using ViewModels.Candidate;
     using ViewModels.Locations;
@@ -9,57 +11,84 @@
     internal class ApplicationProvider : IApplicationProvider
     {
         private readonly IVacancyDetailProvider _vacancyDetailProvider;
+        private readonly ICandidateService _candidateService;
+        private IMapper _mapper;
 
-        public ApplicationProvider(IVacancyDetailProvider vacancyDetailProvider)
+        public ApplicationProvider(
+            IVacancyDetailProvider vacancyDetailProvider,
+            ICandidateService candidateService,
+            IMapper mapper)
         {
+            _mapper = mapper;
+            _candidateService = candidateService;
             _vacancyDetailProvider = vacancyDetailProvider;
         }
 
-        public ApplicationViewModel GetApplicationViewModel(int vacancyId, int mockProfileId)
+        public ApplicationViewModel GetApplicationViewModel(int vacancyId, Guid candidateId)
         {
-            var vacancy = _vacancyDetailProvider.GetVacancyDetailViewModel(vacancyId);
+            var vacancyViewModel = _vacancyDetailProvider.GetVacancyDetailViewModel(vacancyId);
 
-            if (vacancy == null)
+            if (vacancyViewModel == null)
             {
                 return null;
             }
 
-            var profile = GetDummyCandidateViewModel(mockProfileId);
-            profile.Id = mockProfileId;
-            profile.EmployerQuestionAnswers = new EmployerQuestionAnswersViewModel
+            var candidate = _candidateService.GetCandidate(candidateId);
+
+            // TODO: create mapper.
+            var candidateViewModel = new CandidateViewModel
             {
-                SupplementaryQuestion1 = vacancy.SupplementaryQuestion1,
-                SupplementaryQuestion2 = vacancy.SupplementaryQuestion2
+                Id = candidateId,
+                FullName = candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
+                EmailAddress = candidate.RegistrationDetails.EmailAddress,
+                DateOfBirth = candidate.RegistrationDetails.DateOfBirth,
+                PhoneNumber = candidate.RegistrationDetails.PhoneNumber,
+                Address = new AddressViewModel
+                {
+                    AddressLine1 = candidate.RegistrationDetails.Address.AddressLine1,
+                    AddressLine2 = candidate.RegistrationDetails.Address.AddressLine2,
+                    AddressLine3 = candidate.RegistrationDetails.Address.AddressLine3,
+                    AddressLine4 = candidate.RegistrationDetails.Address.AddressLine4,
+                    Postcode = candidate.RegistrationDetails.Address.Postcode
+                },
+                AboutYou = new AboutYouViewModel(),
+                Qualifications = new List<QualificationsViewModel>(),
+                WorkExperience = new List<WorkExperienceViewModel>(),
+                EmployerQuestionAnswers = new EmployerQuestionAnswersViewModel
+                {
+                    SupplementaryQuestion1 = vacancyViewModel.SupplementaryQuestion1,
+                    SupplementaryQuestion2 = vacancyViewModel.SupplementaryQuestion2
+                }
             };
 
-            var appViewModel = new ApplicationViewModel
+            var applicationViewModel = new ApplicationViewModel
             {
-                Candidate = profile,
-                VacancyDetail = vacancy,
+                Candidate = candidateViewModel,
+                VacancyDetail = vacancyViewModel,
             };
 
-            return appViewModel;
+            return applicationViewModel;
         }
 
-        public ApplicationViewModel MergeApplicationViewModel(int vacancyId, int mockProfileId, ApplicationViewModel userApplicationViewModel)
+        public ApplicationViewModel MergeApplicationViewModel(int vacancyId, Guid candidateId, ApplicationViewModel applicationViewModel)
         {
-            var existingApplicationViewModel = GetApplicationViewModel(vacancyId, mockProfileId);
+            var existingApplicationViewModel = GetApplicationViewModel(vacancyId, candidateId);
 
-            userApplicationViewModel.VacancyDetail = existingApplicationViewModel.VacancyDetail;
-            userApplicationViewModel.Candidate.Id = existingApplicationViewModel.Candidate.Id;
-            userApplicationViewModel.Candidate.FullName = existingApplicationViewModel.Candidate.FullName;
-            userApplicationViewModel.Candidate.EmailAddress = existingApplicationViewModel.Candidate.EmailAddress;
-            userApplicationViewModel.Candidate.DateOfBirth = existingApplicationViewModel.Candidate.DateOfBirth;
-            userApplicationViewModel.Candidate.Address = existingApplicationViewModel.Candidate.Address;
+            applicationViewModel.VacancyDetail = existingApplicationViewModel.VacancyDetail;
+            applicationViewModel.Candidate.Id = existingApplicationViewModel.Candidate.Id;
+            applicationViewModel.Candidate.FullName = existingApplicationViewModel.Candidate.FullName;
+            applicationViewModel.Candidate.EmailAddress = existingApplicationViewModel.Candidate.EmailAddress;
+            applicationViewModel.Candidate.DateOfBirth = existingApplicationViewModel.Candidate.DateOfBirth;
+            applicationViewModel.Candidate.Address = existingApplicationViewModel.Candidate.Address;
 
             if (!string.IsNullOrWhiteSpace(existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1) ||
                 !string.IsNullOrWhiteSpace(existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2))
             {
-                userApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 = existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1;
-                userApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2;    
+                applicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 = existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1;
+                applicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2;    
             }
 
-            return userApplicationViewModel;
+            return applicationViewModel;
         }
 
         public void SaveApplication(ApplicationViewModel applicationViewModel)

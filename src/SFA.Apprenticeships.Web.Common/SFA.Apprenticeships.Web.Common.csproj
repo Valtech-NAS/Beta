@@ -54,6 +54,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RabbitMQ.Client, Version=3.3.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RabbitMQ.Client.3.3.0\lib\net30\RabbitMQ.Client.dll</HintPath>
@@ -115,6 +119,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Attributes\AuthenticateUserAttribute.cs" />
+    <Compile Include="Constants\UserRoleNames.cs" />
     <Compile Include="Controllers\SfaControllerBase.cs" />
     <Compile Include="Framework\RuntimeHelper.cs" />
     <Compile Include="Framework\HttpServerUtilityExtensions.cs" />
@@ -127,6 +133,10 @@
     <Compile Include="Models\Common\ReferenceDataViewModel.cs" />
     <Compile Include="Models\Errors\ErrorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\IUserServiceProvider.cs" />
+    <Compile Include="Providers\UserServiceProvider.cs" />
+    <Compile Include="Services\AuthenticationTicketService.cs" />
+    <Compile Include="Services\IAuthenticationTicketService.cs" />
     <Compile Include="Validations\EqualToValueFluentValidationPropertyValidator.cs" />
     <Compile Include="Validations\ValidationExtensions.cs" />
   </ItemGroup>

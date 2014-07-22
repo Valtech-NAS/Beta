@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using System.Web.Mvc;
     using Application.Interfaces.Vacancies;
     using Common.Controllers;
+    using Common.Providers;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Infrastructure.Azure.Session;
@@ -20,15 +21,21 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         private readonly VacancySearchViewModelClientValidator _searchRequestValidator;
         private readonly VacancySearchViewModelLocationValidator _searchLocationValidator;
         private readonly IVacancyDetailProvider _vacancyDetailProvider;
+        private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly int _vacancyResultsPerPage;
 
-        public VacancySearchController(IConfigurationManager configManager,
+        public VacancySearchController(
+            ISessionState session,
+            IUserServiceProvider userServiceProvider,
+            IConfigurationManager configManager,
             ISearchProvider searchProvider,
             VacancySearchViewModelClientValidator searchRequestValidator,
             VacancySearchViewModelLocationValidator searchLocationValidator,
             IVacancyDetailProvider vacancyDetailProvider,
-            ISessionState session) : base(session)
+            ICandidateServiceProvider candidateServiceProvider)
+            : base(session, userServiceProvider)
         {
+            _candidateServiceProvider = candidateServiceProvider;
             _searchProvider = searchProvider;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
@@ -135,6 +142,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                 Response.StatusCode = 404;
                 return View("VacancyNotFound");
             }
+
+            _candidateServiceProvider.LastViewedVacancyId = id;
 
             return View(vacancy);
         }
