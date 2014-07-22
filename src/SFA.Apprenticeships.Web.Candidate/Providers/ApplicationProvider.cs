@@ -35,7 +35,7 @@
 
             var candidate = _candidateService.GetCandidate(candidateId);
 
-            // TODO: create mapper.
+            // TODO: should call the application creation operation on the candidate service (sprint 15)
             var candidateViewModel = new CandidateViewModel
             {
                 Id = candidateId,

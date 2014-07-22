@@ -14,7 +14,7 @@
 
     public class ApplicationController : SfaControllerBase
     {
-        private const string TempAppFormSessionId = "TempAppForm";
+        private const string TempAppFormSessionId = "TempAppForm"; // TODO: TEMP: will not be using session
 
         private readonly IApplicationProvider _applicationProvider;
         private readonly ApplicationViewModelServerValidator _validator;
