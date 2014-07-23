@@ -39,7 +39,7 @@
 
             if (Request.IsAjaxRequest())
             {
-                return Json(matches, JsonRequestBehavior.AllowGet);
+                return Json(matches.OrderBy(a => a.Uprn), JsonRequestBehavior.AllowGet);
             }
 
             throw new NotImplementedException("Non-js not yet implemented!");

@@ -16,12 +16,17 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
     public class WorkerRole : RoleEntryPoint
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly CancellationTokenSource _cancelSource = new CancellationTokenSource();
 
         public override void Run()
         {
             Logger.Debug("AsyncProcessor Run called.");
 
             Initialise();
+
+            _cancelSource.Token.WaitHandle.WaitOne();
+
+            Logger.Debug("AsyncProcessor Run exiting.");
         }
 
         public override bool OnStart()
@@ -46,6 +51,8 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
 
             // Give it 5 seconds to finish processing any in flight subscriptions.
             Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            _cancelSource.Cancel();
 
             base.OnStop();
         }

@@ -1,4 +1,4 @@
-namespace SFA.Apprenticeships.Common.Logging.Layouts
+namespace SFA.Apprenticeships.Infrastructure.Logging.Layouts
 {
     using NLog.Config;
     using NLog.Layouts;
