@@ -9,7 +9,7 @@
 
     public class ConfigurationManager : IConfigurationManager
     {
-        internal const string ConfigurationFileAppSetting = "ConfigurationPath";
+        internal const string ConfigurationFileAppSettingName = "ConfigurationPath";
 
         private Configuration Configuration { get; set; }
 
@@ -35,7 +35,7 @@
         {
             get
             {
-                var configFile = System.Configuration.ConfigurationManager.AppSettings[ConfigurationFileAppSetting];
+                var configFile = System.Configuration.ConfigurationManager.AppSettings[ConfigurationFileAppSettingName];
 
                 if (!File.Exists(configFile))
                 {
