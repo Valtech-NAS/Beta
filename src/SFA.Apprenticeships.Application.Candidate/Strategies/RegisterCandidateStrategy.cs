@@ -10,14 +10,14 @@
 
     public class RegisterCandidateStrategy : IRegisterCandidateStrategy
     {
-        private readonly IRegistrationService _registrationService;
+        private readonly IUserAccountService _registrationService;
         private readonly IAuthenticationService _authenticationService;
         private readonly IUserReadRepository _userReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly ICommunicationService _communicationService;
         private readonly ICodeGenerator _codeGenerator;
 
-        public RegisterCandidateStrategy(IRegistrationService registrationService,
+        public RegisterCandidateStrategy(IUserAccountService registrationService,
             IAuthenticationService authenticationService, ICandidateWriteRepository candidateWriteRepository,
             ICommunicationService communicationService, ICodeGenerator codeGenerator,
             IUserReadRepository userReadRepository)

@@ -7,12 +7,12 @@
     public class LegacyActivateCandidateStrategy : IActivateCandidateStrategy
     {
         private readonly IUserReadRepository _userReadRepository;
-        private readonly IRegistrationService _registrationService;
+        private readonly IUserAccountService _registrationService;
         private readonly ILegacyCandidateProvider _legacyCandidateProvider;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
 
-        public LegacyActivateCandidateStrategy(IUserReadRepository userReadRepository, IRegistrationService registrationService, ILegacyCandidateProvider legacyCandidateProvider, ICandidateWriteRepository candidateWriteRepository, ICandidateReadRepository candidateReadRepository)
+        public LegacyActivateCandidateStrategy(IUserReadRepository userReadRepository, IUserAccountService registrationService, ILegacyCandidateProvider legacyCandidateProvider, ICandidateWriteRepository candidateWriteRepository, ICandidateReadRepository candidateReadRepository)
         {
             _userReadRepository = userReadRepository;
             _registrationService = registrationService;

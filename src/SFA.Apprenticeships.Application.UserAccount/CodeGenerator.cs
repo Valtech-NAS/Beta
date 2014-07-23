@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Registration
+﻿namespace SFA.Apprenticeships.Application.UserAccount
 {
     using System.Text;
     using System.Security.Cryptography;

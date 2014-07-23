@@ -12,16 +12,11 @@
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Location;
-    using Application.Registration;
+    using Application.UserAccount;
     using Application.Vacancy;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
-    using Infrastructure.Common.Configuration;
-    using Infrastructure.LegacyWebServices.CreateCandidate;
-    using Infrastructure.UserDirectory;
     using Mappers;
     using Providers;
-    using StructureMap;
     using StructureMap.Configuration.DSL;
 
     public class CandidateWebRegistry : Registry
@@ -37,7 +32,7 @@
             For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>();
             For<ISubmitApplicationStrategy>().Use<LegacySubmitApplicationStrategy>();
             For<ISendActivationCodeStrategy>().Use<QueueEmailOnlyActivationCodeStrategy>();
-            For<IRegistrationService>().Use<RegistrationService>();
+            For<IUserAccountService>().Use<UserAccountService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<IAuthenticationService>().Use<AuthenticationService>();
             For<ICommunicationService>().Use<CommunicationService>();

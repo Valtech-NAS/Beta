@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Registration
+﻿namespace SFA.Apprenticeships.Application.UserAccount
 {
     using System;
     using CuttingEdge.Conditions;
@@ -7,7 +7,7 @@
     using Interfaces.Users;
     using Strategies;
 
-    public class RegistrationService : IRegistrationService
+    public class UserAccountService : IUserAccountService
     {
         private readonly IUserReadRepository _userReadRepository;
         private readonly IRegisterUserStrategy _registerUserStrategy;
@@ -18,7 +18,7 @@
         private readonly IResendAccountUnlockCodeStrategy _resendAccountUnlockCodeStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
 
-        public RegistrationService(IUserReadRepository userReadRepository,
+        public UserAccountService(IUserReadRepository userReadRepository,
             IRegisterUserStrategy registerUserStrategy,
             IActivateUserStrategy activateUserStrategy,
             IResetForgottenPasswordStrategy resetForgottenPasswordStrategy,

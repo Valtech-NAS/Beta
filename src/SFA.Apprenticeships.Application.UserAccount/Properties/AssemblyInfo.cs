@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-[assembly: AssemblyTitle("SFA.Apprenticeships.Application.Registration")]
+[assembly: AssemblyTitle("SFA.Apprenticeships.Application.UserAccount")]
 [assembly: AssemblyDescription("")]
 // Version information for an assembly consists of the following four values:
 //

@@ -5,7 +5,7 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
-    using Registration.Strategies;
+    using UserAccount.Strategies;
 
     public class AuthenticateCandidateStrategy : IAuthenticateCandidateStrategy
     {

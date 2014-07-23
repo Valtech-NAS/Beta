@@ -22,7 +22,7 @@
         }
 
         private ISessionState _session;
-        private readonly IRegistrationService _registrationService;
+        private readonly IUserAccountService _registrationService;
         private readonly ICandidateService _candidateService;
         private readonly IUserServiceProvider _userServiceProvider;
         private readonly IMapper _mapper;
@@ -30,7 +30,7 @@
         public CandidateServiceProvider(
             ISessionState session,
             ICandidateService candidateService,
-            IRegistrationService registrationService,
+            IUserAccountService registrationService,
             IUserServiceProvider userServiceProvider,
             IMapper mapper)
         {

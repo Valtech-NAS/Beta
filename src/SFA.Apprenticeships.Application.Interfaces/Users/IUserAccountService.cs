@@ -8,7 +8,7 @@
     /// Role agnostic (i.e. is not aware of specific roles such as candidate).
     /// Uses the user repository
     /// </summary>
-    public interface IRegistrationService
+    public interface IUserAccountService
     {
         bool IsUsernameAvailable(string username); // true if matches an existing *activated* account
 
