@@ -51,13 +51,16 @@
     <Compile Include="Strategies\IResetForgottenPasswordStrategy.cs" />
     <Compile Include="Strategies\IRegisterUserStrategy.cs" />
     <Compile Include="Strategies\IResendActivationCodeStrategy.cs" />
-    <Compile Include="Strategies\ISendPasswordCodeStrategy.cs" />
+    <Compile Include="Strategies\ISendPasswordResetCodeStrategy.cs" />
     <Compile Include="RegistrationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\LockAccountStrategy.cs" />
     <Compile Include="Strategies\RegisterUserStrategy.cs" />
-    <Compile Include="Strategies\SendPasswordCodeStrategy.cs" />
+    <Compile Include="Strategies\ResendAccountUnlockCodeStrategy.cs" />
+    <Compile Include="Strategies\ResendActivationCodeStrategy.cs" />
+    <Compile Include="Strategies\SendPasswordResetCodeStrategy.cs" />
     <Compile Include="Strategies\ResetForgottenPasswordStrategy.cs" />
+    <Compile Include="Strategies\UnlockAccountStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

@@ -13,7 +13,7 @@
         private readonly IRegisterUserStrategy _registerUserStrategy;
         private readonly IActivateUserStrategy _activateUserStrategy;
         private readonly IResetForgottenPasswordStrategy _resetForgottenPasswordStrategy;
-        private readonly ISendPasswordCodeStrategy _sendPasswordCodeStrategy;
+        private readonly ISendPasswordResetCodeStrategy _sendPasswordCodeStrategy;
         private readonly IResendActivationCodeStrategy _resendActivationCodeStrategy;
         private readonly IResendAccountUnlockCodeStrategy _resendAccountUnlockCodeStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
@@ -22,7 +22,7 @@
             IRegisterUserStrategy registerUserStrategy,
             IActivateUserStrategy activateUserStrategy,
             IResetForgottenPasswordStrategy resetForgottenPasswordStrategy,
-            ISendPasswordCodeStrategy sendPasswordCodeStrategy,
+            ISendPasswordResetCodeStrategy sendPasswordCodeStrategy,
             IResendActivationCodeStrategy resendActivationCodeStrategy,
             IResendAccountUnlockCodeStrategy resendAccountUnlockCodeStrategy,
             IUnlockAccountStrategy unlockAccountStrategy)

@@ -6,6 +6,6 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
 
     public interface ISendApplicationSubmittedStrategy
     {
-        void Send(string templateName, Candidate candidate, ApplicationDetail applicationDetail);        
+        void Send(string templateName, Candidate candidate, ApplicationDetail applicationDetail);
     }
 }

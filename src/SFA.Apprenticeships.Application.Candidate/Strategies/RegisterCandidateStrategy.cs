@@ -57,7 +57,6 @@
         }
 
         #region Helpers
-
         private void SendActivationCode(Guid newCandidateId, Candidate candidate, string activationCode)
         {
             _communicationService.SendMessageToCandidate(newCandidateId, CandidateMessageTypes.SendActivationCode,

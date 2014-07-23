@@ -45,6 +45,10 @@
     <Compile Include="Strategies\ISendPasswordResetCodeStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\ISendActivationCodeStrategy.cs" />
+    <Compile Include="Strategies\QueueApplicationSubmittedStrategy.cs" />
+    <Compile Include="Strategies\QueueEmailOnlyAccountUnlockCodeStrategy.cs" />
+    <Compile Include="Strategies\QueueEmailOnlyPasswordChangedStrategy.cs" />
+    <Compile Include="Strategies\QueueEmailOnlyPasswordResetCodeStrategy.cs" />
     <Compile Include="Strategies\QueueEmailOnlyActivationCodeStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
