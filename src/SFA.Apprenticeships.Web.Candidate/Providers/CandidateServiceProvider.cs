@@ -6,7 +6,6 @@
     using Common.Constants;
     using Common.Providers;
     using Domain.Entities.Users;
-    using Infrastructure.Azure.Session;
     using ViewModels.Login;
     using ViewModels.Register;
     using Application.Interfaces.Candidates;
@@ -21,14 +20,14 @@
             public const string LastViewedVacancyId = "LastViewedVacancyId";
         }
 
-        private ISessionState _session;
+        private readonly ISessionStateProvider _session;
         private readonly IUserAccountService _registrationService;
         private readonly ICandidateService _candidateService;
         private readonly IUserServiceProvider _userServiceProvider;
         private readonly IMapper _mapper;
 
         public CandidateServiceProvider(
-            ISessionState session,
+            ISessionStateProvider session,
             ICandidateService candidateService,
             IUserAccountService registrationService,
             IUserServiceProvider userServiceProvider,

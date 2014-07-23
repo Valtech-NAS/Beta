@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Infrastructure.Common.Configuration;
-
-namespace SFA.Apprenticeships.Web.Candidate.Controllers
+﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
     using System.Linq;
@@ -10,7 +8,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using Common.Providers;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
-    using Infrastructure.Azure.Session;
     using Providers;
     using Validators;
     using ViewModels.VacancySearch;
@@ -25,7 +22,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         private readonly int _vacancyResultsPerPage;
 
         public VacancySearchController(
-            ISessionState session,
+            ISessionStateProvider session,
             IUserServiceProvider userServiceProvider,
             IConfigurationManager configManager,
             ISearchProvider searchProvider,

@@ -1,9 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System.Web.Mvc;
-    using System.Web.Security;
     using Attributes;
-    using Common.Attributes;
     using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
@@ -11,7 +9,6 @@
     using Domain.Entities.Candidates;
     using FluentValidation.Mvc;
     using FluentValidation.Results;
-    using Infrastructure.Azure.Session;
     using NLog;
     using Providers;
     using Validators;
@@ -26,7 +23,7 @@
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
 
         public RegisterController(
-            ISessionState session,
+            ISessionStateProvider session,
             IUserServiceProvider userServiceProvider,
             ICandidateServiceProvider candidateServiceProvider,
             RegisterViewModelServerValidator registerViewModelServerValidator,

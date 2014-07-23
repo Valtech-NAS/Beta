@@ -32,6 +32,7 @@ namespace SFA.Apprenticeships.Web.Candidate
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<SessionRegistry>();
 
                 // service layer
                 x.AddRegistry<VacancySearchRegistry>();
@@ -47,7 +48,6 @@ namespace SFA.Apprenticeships.Web.Candidate
                 x.AddRegistry<AddressRegistry>();
 
                 // web layer
-                x.AddRegistry<SessionRegistry>();
                 x.AddRegistry<WebCommonRegistry>();
                 x.AddRegistry<CandidateWebRegistry>();
             });

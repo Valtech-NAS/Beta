@@ -6,7 +6,6 @@
     using Constants.ViewModels;
     using Domain.Entities.Candidates;
     using FluentValidation.Mvc;
-    using Infrastructure.Azure.Session;
     using Providers;
     using Validators;
     using ViewModels.Login;
@@ -17,7 +16,7 @@
         private readonly LoginViewModelServerValidator _loginViewModelServerValidator;
 
         public LoginController(
-            ISessionState session,
+            ISessionStateProvider session,
             IUserServiceProvider userServiceProvider,
             LoginViewModelServerValidator loginViewModelServerValidator,
             ICandidateServiceProvider candidateServiceProvider)

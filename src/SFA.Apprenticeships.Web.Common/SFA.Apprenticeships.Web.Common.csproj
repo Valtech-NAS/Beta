@@ -131,12 +131,12 @@
     <Compile Include="IoC\WebCommonRegistry.cs" />
     <Compile Include="Models\Common\ReferenceDataTypes.cs" />
     <Compile Include="Models\Common\ReferenceDataViewModel.cs" />
-    <Compile Include="Models\Errors\ErrorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IUserServiceProvider.cs" />
     <Compile Include="Providers\UserServiceProvider.cs" />
     <Compile Include="Services\AuthenticationTicketService.cs" />
     <Compile Include="Services\IAuthenticationTicketService.cs" />
+    <Compile Include="Providers\ISessionStateProvider.cs" />
     <Compile Include="Validations\EqualToValueFluentValidationPropertyValidator.cs" />
     <Compile Include="Validations\ValidationExtensions.cs" />
   </ItemGroup>
@@ -154,14 +154,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.Session\SFA.Apprenticeships.Infrastructure.Azure.Session.csproj">
-      <Project>{2FC1A9D8-E66E-49D0-BEFF-C845AFDF34F6}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Azure.Session</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
-      <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

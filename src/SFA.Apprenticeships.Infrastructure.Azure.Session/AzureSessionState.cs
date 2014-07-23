@@ -2,8 +2,9 @@
 {
     using System.Web;
     using NLog;
+    using Web.Common.Providers;
 
-    public class AzureSessionState : ISessionState
+    public class AzureSessionState : ISessionStateProvider
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly HttpSessionStateBase _session;
@@ -13,14 +14,14 @@
             _session = session;
         }
 
-        public ISessionState Clear()
+        public ISessionStateProvider Clear()
         {
             Logger.Debug("Clearing session");
             _session.RemoveAll();
             return this;
         }
 
-        public ISessionState Delete(string key)
+        public ISessionStateProvider Delete(string key)
         {
             Logger.Debug("Deleting '{0}' from session", key);
             _session.Remove(key);
@@ -39,7 +40,7 @@
             return _session[key] as T;
         }
 
-        public ISessionState Store(string key, object value)
+        public ISessionStateProvider Store(string key, object value)
         {
             Logger.Debug("Storing '{0}' in session", key);
             _session[key] = value;

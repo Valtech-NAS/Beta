@@ -3,19 +3,18 @@
     using System.Web.Mvc;
     using Attributes;
     using Domain.Entities.Users;
-    using Infrastructure.Azure.Session;
     using Providers;
 
     [AuthenticateUser]
     public abstract class SfaControllerBase : Controller
     {
-        protected SfaControllerBase(ISessionState session, IUserServiceProvider userServiceProvider)
+        protected SfaControllerBase(ISessionStateProvider session, IUserServiceProvider userServiceProvider)
         {
             Session = session;
             UserServiceProvider = userServiceProvider;
         }
 
-        protected new ISessionState Session { get; private set; }
+        protected new ISessionStateProvider Session { get; private set; }
 
         public IUserServiceProvider UserServiceProvider { get; private set; }
 

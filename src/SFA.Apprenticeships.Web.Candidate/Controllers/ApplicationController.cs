@@ -7,7 +7,6 @@
     using Common.Controllers;
     using Common.Providers;
     using FluentValidation.Mvc;
-    using Infrastructure.Azure.Session;
     using Providers;
     using Validators;
     using ViewModels.Applications;
@@ -19,7 +18,7 @@
         private readonly IApplicationProvider _applicationProvider;
         private readonly ApplicationViewModelServerValidator _validator;
 
-        public ApplicationController(ISessionState sessionState,
+        public ApplicationController(ISessionStateProvider sessionState,
             IUserServiceProvider userServiceProvider,
             IApplicationProvider applicationProvider,
             ApplicationViewModelServerValidator validator)

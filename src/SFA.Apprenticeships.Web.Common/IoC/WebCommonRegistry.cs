@@ -2,9 +2,7 @@
 {
     using System.Web.Http;
     using System.Web.Mvc;
-    using Application.Interfaces.ReferenceData;
     using CuttingEdge.Conditions;
-    using Infrastructure.LegacyWebServices.ReferenceData;
     using Microsoft.Practices.ServiceLocation;
     using Providers;
     using Services;
@@ -15,7 +13,6 @@
     {
         public WebCommonRegistry()
         {
-            For<IReferenceDataProvider>().Use<LegacyReferenceDataProvider>();
             For<IAuthenticationTicketService>().Use<AuthenticationTicketService>();
             For<IUserServiceProvider>().Use<UserServiceProvider>();
         }
