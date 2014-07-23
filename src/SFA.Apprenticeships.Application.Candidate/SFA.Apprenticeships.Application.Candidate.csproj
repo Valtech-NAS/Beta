@@ -62,6 +62,10 @@
       <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Registration\SFA.Apprenticeships.Application.Registration.csproj">
+      <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>
+      <Name>SFA.Apprenticeships.Application.Registration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>

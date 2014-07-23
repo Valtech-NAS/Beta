@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Users
+﻿namespace SFA.Apprenticeships.Application.Registration.Strategies
 {
     using System;
     using Domain.Entities.Users;
