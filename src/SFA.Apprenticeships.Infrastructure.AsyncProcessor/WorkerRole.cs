@@ -16,7 +16,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
     public class WorkerRole : RoleEntryPoint
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        CancellationTokenSource _cancelSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource _cancelSource = new CancellationTokenSource();
 
         public override void Run()
         {
