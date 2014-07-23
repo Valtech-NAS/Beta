@@ -7,7 +7,9 @@
         CandidateFirstName,
         CandidateLastName,
         ActivationCode,
+        ActivationCodeExpiryDays,
         PasswordResetCode,
+        PasswordResetCodeExpiryDays,
         AccountUnlockCode,
         ApplicationVacancyTitle,
         ApplicationVacancyReference
