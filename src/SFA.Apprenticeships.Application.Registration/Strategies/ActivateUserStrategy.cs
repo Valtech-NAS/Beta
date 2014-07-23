@@ -24,13 +24,7 @@ namespace SFA.Apprenticeships.Application.Registration.Strategies
             if (!user.ActivationCode.Equals(activationCode, StringComparison.InvariantCultureIgnoreCase))
                 throw new Exception("Invalid activation code"); // TODO: EXCEPTION: should use an application exception type
 
-            user.Status = UserStatuses.Active;
-            user.ActivationCode = string.Empty;
-            user.ActivateCodeExpiry = null;
-            user.LoginRemainingAttempts = 3; //todo: value from config/setting
-            user.PasswordResetCode = string.Empty;
-            user.PasswordResetCodeExpiry = null;
-            user.PasswordResetRemainingAttempts = 3; //todo: value from config/setting
+            user.SetStateActive();
 
             _userWriteRepository.Save(user);
         }

@@ -14,13 +14,13 @@
 
         public DateTime? ActivateCodeExpiry { get; set; }
 
-        public int LoginRemainingAttempts { get; set; } // used for incorrect password count
+        public int LoginIncorrectAttempts { get; set; }
 
         public string PasswordResetCode { get; set; }
 
         public DateTime? PasswordResetCodeExpiry { get; set; }
         
-        public int PasswordResetRemainingAttempts { get; set; } // used for incorrect password reset count
+        public int PasswordResetIncorrectAttempts { get; set; }
 
         public string AccountUnlockCode { get; set; }
     }

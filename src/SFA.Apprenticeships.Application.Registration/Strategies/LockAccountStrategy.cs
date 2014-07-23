@@ -25,8 +25,7 @@
             //todo: create and set an unlock code, set code expiry, save user, send email containing unlock code
             var accountUnlockCode = _codeGenerator.Generate();
 
-            user.AccountUnlockCode = accountUnlockCode;
-            user.Status = UserStatuses.Locked;
+            user.SetStateLocked(accountUnlockCode);
 
             //_userWriteRepository.Save(user);
 

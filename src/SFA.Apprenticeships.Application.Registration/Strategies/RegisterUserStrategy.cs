@@ -23,15 +23,12 @@ namespace SFA.Apprenticeships.Application.Registration.Strategies
 
             var newUser = new User
             {
-                ActivationCode = activationCode,
-                ActivateCodeExpiry = DateTime.Now.AddDays(_activationCodeExpiryDays),
-                Status = UserStatuses.PendingActivation,
                 EntityId = userId,
                 Username = username,
-                PasswordResetCode = string.Empty,
                 Roles = roles
-                //todo: init values (in User.ctor)
             };
+
+            newUser.SetStatePendingActivation(activationCode, DateTime.Now.AddDays(_activationCodeExpiryDays));
 
             _userWriteRepository.Save(newUser);
         }

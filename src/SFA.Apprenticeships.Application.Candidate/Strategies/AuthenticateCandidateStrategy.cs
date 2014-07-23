@@ -54,14 +54,14 @@
         private void RegisterFailedLogin(User user)
         {
             //todo: if too many fails then lock the account
-            if (user.LoginRemainingAttempts == 0)
+            if (user.LoginIncorrectAttempts == 3) //todo: from config
             {
                 _lockAccountStrategy.LockAccount(user);
             }
             else
             {
                 //todo: decrement counter and save user
-                user.LoginRemainingAttempts--;
+                user.LoginIncorrectAttempts++;
                 //_userWriteRepository.Save(user);
             }
         }

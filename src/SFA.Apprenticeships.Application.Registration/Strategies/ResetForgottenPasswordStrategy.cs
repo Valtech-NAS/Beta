@@ -35,14 +35,14 @@ namespace SFA.Apprenticeships.Application.Registration.Strategies
         private void RegisterFailedPasswordReset(User user)
         {
             //todo: if too many fails then lock the account
-            if (user.PasswordResetRemainingAttempts == 0)
+            if (user.PasswordResetIncorrectAttempts == 3) //todo: from config
             {
                 _lockAccountStrategy.LockAccount(user);
             }
             else
             {
                 //todo: decrement counter and save user
-                user.PasswordResetRemainingAttempts--;
+                user.PasswordResetIncorrectAttempts++;
                 //_userWriteRepository.Save(user);
             }
         }
