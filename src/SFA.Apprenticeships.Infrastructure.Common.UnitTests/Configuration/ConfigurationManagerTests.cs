@@ -52,15 +52,5 @@
             var result = target.GetAppSetting<DateTime>(key);
             result.Should().Be(new DateTime(2014, 12, 31));
         }
-
-        [Test]
-        [SetCulture("en-GB")]
-        public void GetAppSettingReturnsStronglyTypedDefaultValue()
-        {
-            var target = new ConfigurationManager();
-            const string key = "Test.DateValue.NotPresent";
-            var result = target.GetAppSetting<DateTime>(new DateTime(2014,1,1), key);
-            result.Should().Be(new DateTime(2014, 1, 1));
-        }
     }
 }

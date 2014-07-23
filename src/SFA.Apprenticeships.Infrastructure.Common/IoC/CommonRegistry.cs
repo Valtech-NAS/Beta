@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.IoC
 {
+    using System;
     using Configuration;
     using Domain.Interfaces.Configuration;
     using StructureMap.Configuration.DSL;
@@ -9,9 +10,7 @@
     {
         public CommonRegistry()
         {
-            For<IConfigurationManager>()
-                .Singleton()
-                .Use<ConfigurationManager>();
+            For<IConfigurationManager>().Singleton().Use<ConfigurationManager>();
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer.Mappers
 {
     using AutoMapper;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Entities;
+    using Elastic.Common.Entities;
 
-    public class GeoPointDomainToElasticResolver : ValueResolver<Domain.Entities.Locations.GeoPoint, Elastic.Common.Entities.GeoPoint>
+    public class GeoPointDomainToElasticResolver : ValueResolver<Domain.Entities.Locations.GeoPoint, GeoPoint>
     {
         protected override GeoPoint ResolveCore(Domain.Entities.Locations.GeoPoint source)
         {

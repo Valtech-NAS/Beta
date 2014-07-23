@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Configuration;
-    using System.Globalization;
     using System.IO;
     using CuttingEdge.Conditions;
     using Domain.Interfaces.Configuration;
@@ -28,6 +27,7 @@
         {
             Condition.Requires(key, "key").IsNotNullOrWhiteSpace();
             var result = Configuration.AppSettings.Settings[key];
+
             return result != null ? result.Value : null;
         }
 
@@ -45,7 +45,7 @@
                 if (!File.Exists(configFile))
                 {
                     throw new ConfigurationErrorsException(
-                        string.Format((string) "Configuration file: {0} does not exist", (object) configFile));
+                        string.Format("Configuration file: {0} does not exist", (object) configFile));
                 }
 
                 return configFile;
@@ -67,20 +67,7 @@
         public T GetAppSetting<T>(string key)
         {
             var setting = GetAppSetting(key);
-            return (T)Convert.ChangeType(setting, typeof(T));
-        }
-
-        public T GetAppSetting<T>(T defaultValue, string key)
-        {
-            Condition.Requires(key, "key").IsNotNullOrWhiteSpace();
-
-            var result = TryGetAppSetting(key);
-            if (result != null)
-            {
-                return (T)Convert.ChangeType(result, typeof(T), CultureInfo.InvariantCulture);
-            }
-
-            return defaultValue;
+            return (T) Convert.ChangeType(setting, typeof (T));
         }
 
         public ConfigurationSection GetSection(string sectionName)

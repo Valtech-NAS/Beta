@@ -59,7 +59,6 @@
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\SecureConfigurationSection.cs" />
     <Compile Include="IoC\CommonRegistry.cs" />
-    <Compile Include="Mappers\EnumResolver.cs" />
     <Compile Include="Mappers\MapperEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
