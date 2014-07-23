@@ -32,6 +32,14 @@
 
         public Candidate RegisterCandidate(Candidate newCandidate, string password)
         {
+            var username = newCandidate.RegistrationDetails.EmailAddress;
+
+            //todo: check if username is already in use
+            var user = _userReadRepository.Get(username);
+
+            // todo: if username in use and pending and not expired activation code then need to reuse the existing user
+            // todo: if username in use and pending and expired activation code then need to overwrite the existing one (incl p/w in AD)
+
             var newCandidateId = Guid.NewGuid();
 
             _authenticationService.CreateUser(newCandidateId, password);
@@ -39,13 +47,6 @@
             newCandidate.EntityId = newCandidateId;
 
             var activationCode = _codeGenerator.Generate();
-
-            var username = newCandidate.RegistrationDetails.EmailAddress;
-
-            //todo: check if username is already in use
-            var user = _userReadRepository.Get(username);
-            // todo: if username in use and pending and not expired activation code then need to reuse the existing user
-            // todo: if username in use and pending but has expired activation code then need to overwrite the existing one (incl p/w)
 
             _registrationService.Register(username, newCandidateId, activationCode, UserRoles.Candidate);
 

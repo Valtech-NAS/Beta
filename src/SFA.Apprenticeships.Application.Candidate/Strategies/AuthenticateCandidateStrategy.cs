@@ -28,7 +28,7 @@
         {
             var user = _userReadRepository.Get(username);
 
-            // TODO: NOTIMPL: check status of user (only allowed to authenticate if active or pending)
+            // TODO: NOTIMPL: check status of user (only allowed to authenticate if active or pending and not pending expired)
             //throw new Exception("Authentication not allowed"); // TODO: EXCEPTION: should use an application exception type
 
             var authenticated = _authenticationService.AuthenticateUser(user.EntityId, password);
