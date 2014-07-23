@@ -22,7 +22,7 @@
 
         public void LockAccount(User user)
         {
-            //todo: create and set an unlock code, set code expiry, save user, send email
+            //todo: create and set an unlock code, set code expiry, save user, send email containing unlock code
             var accountUnlockCode = _codeGenerator.Generate();
 
             user.AccountUnlockCode = accountUnlockCode;

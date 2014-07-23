@@ -15,6 +15,7 @@ namespace SFA.Apprenticeships.Application.Registration.Strategies
         public void ResendActivationCode(string username)
         {
             //todo: send same code if exists and not expired
+            //todo: reset expiry period each time requested
             //_communicationService.SendMessageToCandidate(); SendActivationCode
             // note: similar to SendActivationCode(Guid newCandidateId, Candidate candidate, string activationCode)
 

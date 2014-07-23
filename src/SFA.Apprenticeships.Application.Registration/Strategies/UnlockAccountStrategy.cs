@@ -11,7 +11,7 @@
 
             // TODO: check if code is correct and not expired
 
-            // TODO: if correct then update user account status and clear user properties
+            // TODO: if correct then update user account status and clear user properties related to locking
 
             throw new NotImplementedException();
         }
