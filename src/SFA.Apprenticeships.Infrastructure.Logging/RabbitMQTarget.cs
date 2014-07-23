@@ -5,10 +5,10 @@
     using System.Text;
     using EasyNetQ;
     using EasyNetQ.Topology;
+    using Layouts;
     using NLog;
     using NLog.Common;
     using NLog.Targets;
-    using Apprenticeships.Common.Logging.Layouts;
     using RabbitMq.Configuration;
 
     /// <summary>
