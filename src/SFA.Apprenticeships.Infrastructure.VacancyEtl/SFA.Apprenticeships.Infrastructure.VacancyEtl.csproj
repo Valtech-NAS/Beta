@@ -143,6 +143,10 @@
       <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
+      <Project>{a2d82061-bcbd-4030-9eb4-5148aee79241}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.RabbitMq\SFA.Apprenticeships.Infrastructure.RabbitMq.csproj">
       <Project>{480622E1-7624-449C-904F-AF7FD3590BEF}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.RabbitMq</Name>

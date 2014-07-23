@@ -265,7 +265,7 @@
     <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\Error\SessionExpired.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
-    <Content Include="Views\Application\Index.cshtml" />
+    <Content Include="Views\Application\Apply.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CandidateViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\QualificationsViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\WorkExperienceViewModel.cshtml" />

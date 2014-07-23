@@ -124,6 +124,10 @@
       <Project>{d34d27d3-79a9-407e-86ef-af3ac0ea024b}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Communication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
+      <Project>{a2d82061-bcbd-4030-9eb4-5148aee79241}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.RabbitMq\SFA.Apprenticeships.Infrastructure.RabbitMq.csproj">
       <Project>{480622e1-7624-449c-904f-af7fd3590bef}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.RabbitMq</Name>

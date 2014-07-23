@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
 
         public override void Run()
         {
-            Logger.Debug("AsyncProcessorRun called.");
+            Logger.Debug("AsyncProcessor Run called.");
 
             Initialise();
         }

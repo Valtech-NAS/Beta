@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions.Core">
+      <HintPath>..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.Core.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -54,6 +60,7 @@
     <Compile Include="ApplicationRepositoryTests.cs" />
     <Compile Include="CandidateRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -81,6 +88,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Candidates\SFA.Apprenticeships.Infrastructure.Repositories.Candidates.csproj">
       <Project>{AA87BD85-5A33-46B8-B26F-C6B680876486}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">
+      <Project>{4696D786-2F3C-4A12-BD6B-38E2981D6DF1}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Users</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

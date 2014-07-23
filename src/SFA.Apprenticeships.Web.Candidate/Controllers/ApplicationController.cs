@@ -30,7 +30,7 @@
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult Index(int id)
+        public ActionResult Apply(int id)
         {
             var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
             var model = _applicationProvider.GetApplicationViewModel(id, candidateId);
