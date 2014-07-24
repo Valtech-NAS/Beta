@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using Domain.Interfaces.Configuration;
     using NUnit.Framework;
     using StructureMap;
@@ -101,8 +102,7 @@
         }
 
         [Test]
-        // TODO: EXCEPTION: make exception more specific when exceptions generally.
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(ConfigurationErrorsException))]
         public void ShouldThrowIfTemplateNameIsInvalid()
         {
             // Arrange.
