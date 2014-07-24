@@ -21,6 +21,7 @@
 
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
+        private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
 
         public RegisterController(
@@ -28,12 +29,14 @@
             IUserServiceProvider userServiceProvider,
             ICandidateServiceProvider candidateServiceProvider,
             RegisterViewModelServerValidator registerViewModelServerValidator,
-            ActivationViewModelServerValidator activationViewModelServerValidator)
+            ActivationViewModelServerValidator activationViewModelServerValidator,
+            ForgottenPasswordViewModelServerValidator forgottenPasswordViewModelServerValidator)
             : base(session, userServiceProvider)
         {
             _candidateServiceProvider = candidateServiceProvider;
             _registerViewModelServerValidator = registerViewModelServerValidator;
             _activationViewModelServerValidator = activationViewModelServerValidator;
+            _forgottenPasswordViewModelServerValidator = forgottenPasswordViewModelServerValidator;
         }
 
         public ActionResult Index()
@@ -57,7 +60,7 @@
                 return View(model);
             }
 
-            var candidate = _candidateServiceProvider.Register(model);
+            Candidate candidate = _candidateServiceProvider.Register(model);
 
             if (candidate == null)
             {
@@ -97,7 +100,7 @@
         {
             model.IsActivated = _candidateServiceProvider.Activate(model);
 
-            var activatedResult = _activationViewModelServerValidator.Validate(model);
+            ValidationResult activatedResult = _activationViewModelServerValidator.Validate(model);
 
             if (activatedResult.IsValid)
             {
@@ -105,17 +108,17 @@
                     HttpContext, User.Identity.Name, UserRoleNames.Activated);
 
                 // Redirect to last viewed vacancy (if any).
-                var lastViewedVacancyId = _candidateServiceProvider.LastViewedVacancyId;
+                int? lastViewedVacancyId = _candidateServiceProvider.LastViewedVacancyId;
 
                 if (lastViewedVacancyId.HasValue)
                 {
                     _candidateServiceProvider.LastViewedVacancyId = null;
 
-                    return RedirectToAction("Details", "VacancySearch", new { id = lastViewedVacancyId.Value });
+                    return RedirectToAction("Details", "VacancySearch", new {id = lastViewedVacancyId.Value});
                 }
 
                 // Redirect to return URL (if any).
-                var returnUrl = UserServiceProvider.GetAuthenticationReturnUrl(HttpContext);
+                string returnUrl = UserServiceProvider.GetAuthenticationReturnUrl(HttpContext);
 
                 if (!string.IsNullOrWhiteSpace(returnUrl))
                 {
@@ -140,20 +143,67 @@
             return View();
         }
 
-        [AllowCrossSiteJson]
+        [HttpGet]
+        public ActionResult ForgottenPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ForgottenPassword(ForgottenPasswordViewModel model)
+        {
+            ValidationResult validationResult = _forgottenPasswordViewModelServerValidator.Validate(model);
+
+            if (!validationResult.IsValid)
+            {
+                ModelState.Clear();
+                validationResult.AddToModelState(ModelState, string.Empty);
+
+                return View(model);
+            }
+
+            return RedirectToAction("EnterPasswordResetCode");
+        }
+
+        public ActionResult EnterPasswordResetCode()
+        {
+            return View();
+        } 
+        
+        [HttpPost]
+        public ActionResult EnterPasswordResetCode(EnterPasswordResetCodeViewModel model)
+        {
+            return View(model);
+        }
+
+        public ActionResult ResetPassword()
+        {
+            return View();
+        } 
+        
+        [HttpPost]
+        public ActionResult ResetPassword(PasswordResetViewModel model)
+        {
+            return View(model);
+        }
+
+        #region Helpers
+	[AllowCrossSiteJson]
         public JsonResult CheckUsername(string username)
         {
-            var usernameIsAvailable = IsUsernameAvailable(username);
-            return Json(new{ usernameIsAvailable }, JsonRequestBehavior.AllowGet);
+            bool usernameIsAvailable = IsUsernameAvailable(username);
+            return Json(new {usernameIsAvailable}, JsonRequestBehavior.AllowGet);
         }
 
         private bool IsUsernameAvailable(string username)
         {
-            return _candidateServiceProvider.IsUsernameAvailable(username.Trim()); // TODO Consider doing this everywhere
+            return _candidateServiceProvider.IsUsernameAvailable(username.Trim());
+            // TODO Consider doing this everywhere
         }
+
         private void SetCookies(Candidate candidate)
         {
-            var registrationDetails = candidate.RegistrationDetails;
+            RegistrationDetails registrationDetails = candidate.RegistrationDetails;
 
             UserServiceProvider.SetAuthenticationCookie(
                 HttpContext, candidate.EntityId.ToString(), UserRoleNames.Unactivated);
@@ -161,5 +211,7 @@
             UserServiceProvider.SetUserContextCookie(
                 HttpContext, registrationDetails.EmailAddress, registrationDetails.FullName);
         }
+
+        #endregion
     }
 }
