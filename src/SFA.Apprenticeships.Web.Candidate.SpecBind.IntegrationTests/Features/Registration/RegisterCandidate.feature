@@ -130,8 +130,3 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 	And I am on the ActivationPage page
 	And I choose ActivateButton
 	Then I am on the VacancySearchPage page
-	
-
-
-
-

@@ -12,6 +12,7 @@
         {
             For<IMapper>().Use<ApplicationDetailMappers>().Name = "ApplicationDetailMapper";
             For<IApplicationWriteRepository>().Use<ApplicationRepository>().Ctor<IMapper>().Named("ApplicationDetailMapper");
+            For<IApplicationReadRepository>().Use<ApplicationRepository>().Ctor<IMapper>().Named("ApplicationDetailMapper");
         }
     }
 }
