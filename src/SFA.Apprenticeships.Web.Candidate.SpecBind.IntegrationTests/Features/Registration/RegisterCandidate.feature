@@ -69,8 +69,10 @@ Scenario: As a candidate I want to be told quickly that my email/username is ava
 	And I enter data
 		| Field        | Value        |
 		| EmailAddress | {EmailToken} |
-		| Phonenumber  | 07999999999  |
+	And I choose Phonenumber
+	And I am on the RegisterCandidatePage page
 	And I wait to see EmailAddressAvailableMessage
+	And I am on the RegisterCandidatePage page
 	Then I see 
 		| Field                        | Rule   | Value                       |
 		| EmailAddressAvailableMessage | Equals | Username is available: true |
@@ -85,6 +87,7 @@ Scenario: As a candidate I want to be told quickly that my email/username is not
 	And I choose Phonenumber
 	And I am on the RegisterCandidatePage page
 	And I wait to see EmailAddressAvailableMessage
+	And I am on the RegisterCandidatePage page
 	Then I see 
 		| Field                        | Rule   | Value                        |
 		| EmailAddressAvailableMessage | Equals | Username is available: false |
@@ -117,8 +120,9 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 	And I am on the RegisterCandidatePage page
 	And I choose CreateAccountButton
 	And I wait 70 second for the ActivationPage page
-	And I am on the ActivationPage page
 	And I get the token for my newly created account
+	And I am on the ActivationPage page
+	And I wait to see EmailAddress
 	And I am on the ActivationPage page
 	And I enter data
 		| Field          | Value             |
