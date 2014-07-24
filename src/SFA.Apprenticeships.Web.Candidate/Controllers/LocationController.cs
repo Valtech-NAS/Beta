@@ -3,8 +3,8 @@
     using System;
     using System.Linq;
     using System.Web.Mvc;
+    using Common.Attributes;
     using Domain.Interfaces.Configuration;
-    using Infrastructure.Common.Configuration;
     using Providers;
 
     public class LocationController : Controller
@@ -20,6 +20,7 @@
         }
 
         [HttpGet]
+        [AllowCrossSiteJson]
         public ActionResult Location(string term)
         {
             var matches = _searchProvider.FindLocation(term);
@@ -33,6 +34,7 @@
         }
 
         [HttpGet]
+        [AllowCrossSiteJson]
         public ActionResult Addresses(string postcode)
         {
             var matches = _searchProvider.FindAddresses(postcode);
