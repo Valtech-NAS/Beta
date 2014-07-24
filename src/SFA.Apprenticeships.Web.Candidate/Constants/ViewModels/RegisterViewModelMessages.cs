@@ -4,20 +4,20 @@
     {
         public static class FirstnameMessages
         {
-            public const string LabelText = "Firstname";
-            public const string RequiredErrorText = "'Firstname' must be supplied";
-            public const string TooLongErrorText = "'Firstname' must not exceed 35 characters";
+            public const string LabelText = "First name";
+            public const string RequiredErrorText = "'First name' must be supplied";
+            public const string TooLongErrorText = "'First name' must not exceed 35 characters";
             public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "'Firstname' " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "'First name' " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class LastnameMessages
         {
-            public const string LabelText = "Lastname";
-            public const string RequiredErrorText = "'Lastname' must be supplied";
-            public const string TooLongErrorText = "'Lastname' must not exceed 35 characters";
+            public const string LabelText = "Last name";
+            public const string RequiredErrorText = "'Last name' must be supplied";
+            public const string TooLongErrorText = "'Last name' must not exceed 35 characters";
             public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "'Lastname' " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "'Last name' " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class EmailAddressMessages
