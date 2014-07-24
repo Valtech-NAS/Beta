@@ -19,6 +19,10 @@
     <script>
         var html = document.documentElement;
         html.className += " js-enabled";
+
+        if (!('open' in document.createElement('details'))) {
+            document.documentElement.className += ' no-details';
+        }
     </script>
     @Scripts.Render("~/Content/_assets/js/vendor/modernizr-custom.js")
     
