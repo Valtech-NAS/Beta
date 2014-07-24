@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
     using System.Net;
     using System.Net.Mail;
@@ -28,10 +29,7 @@
 
         public void SendEmail(EmailRequest request)
         {
-            Logger.Debug("SendEmail From={0} To={1}, Subject={2}, Template={3}", request.FromEmail, request.ToEmail, request.Subject,request.TemplateName);
-            
             var message = ComposeMessage(request);
-
             DispatchMessage(message);
         }
 
@@ -111,17 +109,14 @@
 
         private SendGridTemplateConfiguration GetTemplateConfiguration(string templateName)
         {
-            var template = _templates
-                .FirstOrDefault(each => each.Name == templateName);
+            var template = _templates.FirstOrDefault(each => each.Name == templateName);
 
-            if (template != null) return template;
+            if (template != null) { return template; }
 
-            var message = string.Format("Invalid email template name: \"{0}\".", templateName);
+            var erroeMessage = string.Format("GetTemplateConfiguration : Invalid email template name: {0}", templateName);
+            Logger.Error(erroeMessage);
 
-            Logger.Error("GetTemplateConfiguration : {0}", message);
-
-            // TODO: EXCEPTION: template is invalid, log / throw domain exception.
-            throw new Exception(message);
+            throw new ConfigurationErrorsException(erroeMessage);
         }
 
         private void DispatchMessage(SendGridMessage message)
@@ -131,9 +126,9 @@
                 var credentials = new NetworkCredential(_userName, _password);
                 var web = new Web(credentials);
 
-                Logger.Info("Dispatching email to {0}", message.To.ToString());
+                Logger.Info("Dispatching email:", LogSendGridMessage(message));
                 web.Deliver(message);
-                Logger.Info("Successfully dispatched email to {0}", message.To.ToString());
+                Logger.Info("Dispatched email:", LogSendGridMessage(message));
             }
             catch (Exception e)
             {
@@ -141,6 +136,14 @@
                 // TODO: EXCEPTION: failed to send, log / throw domain exception.
                 throw new Exception("Failed to dispatch email.", e);
             }
+        }
+
+        private static string LogSendGridMessage(SendGridMessage message)
+        {
+            var messageLog = string.Format("From:{0}, ", message.From.Address);
+            message.To.ToList().ForEach(t => messageLog += string.Format("To:{0},", t.Address));
+            messageLog += string.Format("Subject:{0}", message.Subject);
+            return messageLog;
         }
     }
 }
