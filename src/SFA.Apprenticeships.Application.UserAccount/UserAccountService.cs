@@ -1,11 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Application.UserAccount
 {
     using System;
+    using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
     using Strategies;
+    using Web.Common.Constants;
 
     public class UserAccountService : IUserAccountService
     {
@@ -98,13 +100,34 @@
             _unlockAccountStrategy.UnlockAccount(username, accountUnlockCode);
         }
 
-        public UserStatuses GetUserStatus(string username)
+        public UserStatuses GetStatus(string username)
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
             User user = _userReadRepository.Get(username);
 
             return user.Status;
+        }
+
+        public string[] GetRoleNames(string username)
+        {
+            var claims = new List<string>();
+
+            // Add 'roles' for user status.
+            switch (GetStatus(username))
+            {
+                case UserStatuses.Active:
+                    claims.Add(UserRoleNames.Activated);
+                    break;
+
+                case UserStatuses.PendingActivation:
+                    claims.Add(UserRoleNames.Unactivated);
+                    break;
+            }
+
+            // TODO: Add actual user roles.
+
+            return claims.ToArray();
         }
     }
 }

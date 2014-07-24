@@ -11,9 +11,7 @@
         Candidate Register(RegisterViewModel model);
         bool Activate(ActivationViewModel model);
         bool IsUsernameAvailable(string username);
-        Candidate Authenticate(LoginViewModel model);
-        UserStatuses GetUserStatus(string username);
-        string[] GetRoles(string username);
+        Candidate Authenticate(LoginViewModel model, out UserStatuses userStatus);
 
         void RequestForgottenPasswordReset(ForgottenPasswordViewModel model);
 

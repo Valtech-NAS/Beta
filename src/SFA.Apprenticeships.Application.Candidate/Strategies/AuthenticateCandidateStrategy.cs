@@ -60,11 +60,12 @@
             }
             else
             {
-                //todo: decrement counter and save user
+                //todo: increment counter and save user
                 user.LoginIncorrectAttempts++;
                 //_userWriteRepository.Save(user);
             }
         }
+
         #endregion
     }
 }

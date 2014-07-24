@@ -5,6 +5,7 @@
     using Common.Providers;
     using Constants.ViewModels;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Users;
     using FluentValidation.Mvc;
     using Providers;
     using Validators;
@@ -52,7 +53,9 @@
             }
 
             // Attempt to authenticate candidate.
-            var candidate = _candidateServiceProvider.Authenticate(model);
+            UserStatuses userStatus;
+
+            var candidate = _candidateServiceProvider.Authenticate(model, out userStatus);
 
             if (candidate == null)
             {
@@ -64,8 +67,6 @@
 
                 return View(model);
             }
-
-            SetCookies(candidate);
 
             // Redirect to last viewed vacancy (if any).
             var lastViewedVacancyId = _candidateServiceProvider.LastViewedVacancyId;
@@ -89,19 +90,7 @@
 
             return RedirectToAction("Index", "VacancySearch");
         }
-
-        private void SetCookies(Candidate candidate)
-        {
-            var registrationDetails = candidate.RegistrationDetails;
-            var roles = _candidateServiceProvider.GetRoles(registrationDetails.EmailAddress);
-
             string fullName = registrationDetails.FirstName + " " + registrationDetails.LastName;
 
-            UserServiceProvider.SetAuthenticationCookie(
-                HttpContext, candidate.EntityId.ToString(), roles);
-
-            UserServiceProvider.SetUserContextCookie(
-                HttpContext, registrationDetails.EmailAddress, fullName);
-        }
     }
 }
