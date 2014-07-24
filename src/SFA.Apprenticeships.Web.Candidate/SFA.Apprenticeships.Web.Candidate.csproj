@@ -429,7 +429,6 @@
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\Login\LoginViewModel.cs" />
     <Compile Include="ViewModels\Register\ActivationViewModel.cs" />
-    <Compile Include="ViewModels\Register\CheckUsernameViewModel.cs" />
     <Compile Include="ViewModels\Register\RegisterViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancyDetailViewModel.cs" />

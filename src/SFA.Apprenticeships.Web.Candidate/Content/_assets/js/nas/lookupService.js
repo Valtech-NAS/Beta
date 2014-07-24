@@ -95,10 +95,20 @@
 
         self.focusout(function () {
 
-            var data = { Email: $(this).val() };
+            var username = $(this).val();
 
-            $.getJSON(apiurl, data, function (response) {
-                $('#email-available-message').html('<p> Username is available: ' + response.Result + '</p>');
+            $.ajax({
+                url: apiurl,
+                type: 'GET',
+                data: { username: username },
+                success: function(response) {
+                    $('#email-available-message').html('<p> Username is available: ' + response.usernameIsAvailable + '</p>');
+                },
+                error: function (error) {
+                    //Ignore, could be proxy issues so will work as 
+                    //non-JS version.
+                    //console.log(error);
+                }
             });
         });
 
