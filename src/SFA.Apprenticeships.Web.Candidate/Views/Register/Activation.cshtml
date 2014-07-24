@@ -12,12 +12,12 @@
 {
     <p class="text">
         A confirmation email has been sent to <b class="email-address">@Html.DisplayFor(m => m.EmailAddress)</b>. It’ll
-        contain a 6-digit code you’ll need to activate your account.
+        contain a 6 character code you’ll need to activate your account.
     </p>
     <h2 class="heading-medium">Activate your account</h2>
     <div class="text">
         <p>
-            To activate your account you’ll need to enter the 6-digit code you received
+            To activate your account you’ll need to enter the 6 character code you received
             in your confirmation email.
         </p>
     </div>
@@ -27,7 +27,7 @@
     @Html.FormTextFor(m => m.ActivationCode, controlHtmlAttributes: new { @class = "form-control-2-3", @maxlength = "6" })
 
     <div class="form-group">
-        <button class="button" id="activate-button">Activate and continue</button>
+        <button class="button" id="activate-button">Activate</button>
     </div>
     
     @Html.HiddenFor(m => m.EmailAddress)

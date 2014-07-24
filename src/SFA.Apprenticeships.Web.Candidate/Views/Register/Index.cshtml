@@ -14,7 +14,7 @@
     <fieldset class="fieldset-with-border">
         <legend class="heading-large">Your details</legend>
         @Html.FormTextFor(m => m.Firstname, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { type = "text", autocapitalize = "words", autocorrect = "off" })
-        @Html.FormTextFor(m => m.Lastname, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { type = "text", autocapitalize = "words", autocorrect = "off" })
+        @Html.FormTextFor(m => m.Lastname, controlHtmlAttributes: new { type = "text", autocapitalize = "words", autocorrect = "off" })
         @Html.EditorFor(r => r.DateOfBirth)
     </fieldset>
 
@@ -36,6 +36,7 @@
         <div class="form-group">
             <p class="form-label">Username is your email address</p>
             <span class="form-prepopped hidden linked-input-slave"></span>
+            <input type="hidden" class="form-prepopped hidden linked-input-slave" name="username">
             <a class="inl-block inpage-focus" href="#@Html.IdFor(m => m.EmailAddress)">Edit your email</a>
         </div>
         <div class="form-group">
@@ -53,7 +54,7 @@
     <fieldset>
         <details class="text">
             <summary role="button">Read our terms &amp; conditions</summary>
-            <div class="max-height-15 scrolling-panel copy-16">
+            <div class="detail-content max-height-15 scrolling-panel copy-16">
                 <div class="terms-and-conditions">
                     <h2 class="heading-small">Skills Funding Agency&#8217;s terms and conditions for the apprenticeship vacancies system</h2>
                     <p>[Page last updated on DD/MM/YYYY]</p>

@@ -139,21 +139,10 @@
             return View();
         }
 
-        public JsonResult CheckUsername(CheckUsernameViewModel model)
+        public JsonResult CheckUsername(string username)
         {
-            if (!ModelState.IsValid)
-            {
-                return Json(new { Result = false }, JsonRequestBehavior.AllowGet);
-            }
-
-            var usernameIsAvailable = IsUsernameAvailable(model.Email);
-
-            return Json(
-                new
-                {
-                    Result = usernameIsAvailable
-                },
-                JsonRequestBehavior.AllowGet);
+            var usernameIsAvailable = IsUsernameAvailable(username);
+            return Json(new{ usernameIsAvailable }, JsonRequestBehavior.AllowGet);
         }
 
         private bool IsUsernameAvailable(string username)

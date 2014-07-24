@@ -13,12 +13,13 @@
     using Application.Interfaces.Vacancies;
     using Application.Location;
     using Application.UserAccount;
+    using Application.UserAccount.Strategies;
     using Application.Vacancy;
     using Domain.Interfaces.Mapping;
     using Mappers;
     using Providers;
     using StructureMap.Configuration.DSL;
-
+    
     public class CandidateWebRegistry : Registry
     {
         public CandidateWebRegistry()
@@ -30,8 +31,22 @@
             For<ICandidateService>().Use<CandidateService>();
             For<IActivateCandidateStrategy>().Use<LegacyActivateCandidateStrategy>();
             For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>();
+            For<IRegisterUserStrategy>().Use<RegisterUserStrategy>();
+            For<IActivateUserStrategy>().Use<ActivateUserStrategy>();
+            For<IResetForgottenPasswordStrategy>().Use<ResetForgottenPasswordStrategy>();
+            For<Application.UserAccount.Strategies.ISendPasswordResetCodeStrategy>().Use<SendPasswordResetCodeStrategy>();
+            For<Application.Communication.Strategies.ISendPasswordResetCodeStrategy>().Use<QueueEmailOnlyPasswordResetCodeStrategy>();
             For<ISubmitApplicationStrategy>().Use<LegacySubmitApplicationStrategy>();
             For<ISendActivationCodeStrategy>().Use<QueueEmailOnlyActivationCodeStrategy>();
+            For<ISendApplicationSubmittedStrategy>().Use<QueueApplicationSubmittedStrategy>();
+            For<ISendPasswordChangedStrategy>().Use<QueueEmailOnlyPasswordChangedStrategy>();
+            For<ISendAccountUnlockCodeStrategy>().Use<QueueEmailOnlyAccountUnlockCodeStrategy>();
+            For<IResendActivationCodeStrategy>().Use<ResendActivationCodeStrategy>();
+            For<IResendAccountUnlockCodeStrategy>().Use<ResendAccountUnlockCodeStrategy>();
+            For<IUnlockAccountStrategy>().Use<UnlockAccountStrategy>();
+            For<ILockAccountStrategy>().Use<LockAccountStrategy>();
+            For<IAuthenticateCandidateStrategy>().Use<AuthenticateCandidateStrategy>();
+            For<ICreateApplicationStrategy>().Use<CreateApplicationStrategy>();
             For<IUserAccountService>().Use<UserAccountService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<IAuthenticationService>().Use<AuthenticationService>();

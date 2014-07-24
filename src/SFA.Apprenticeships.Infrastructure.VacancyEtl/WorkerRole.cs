@@ -40,23 +40,21 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 {
                     var task = _vacancySchedulerConsumer.CheckScheduleQueue();
                     task.Wait();
-                    Thread.Sleep(TimeSpan.FromMinutes(5));
                 }
                 catch (CommunicationException ce)
                 {
                     Logger.Warn("CommunicationException from legacy web services", ce);
-                    return;
                 }
                 catch (TimeoutException te)
                 {
                     Logger.Warn("TimeoutException from legacy web services", te);
-                    return;
                 }
                 catch (Exception ex)
                 {
                     Logger.Error("Exception from VacancySchedulerConsumer", ex);
-                    return;
                 }
+
+                Thread.Sleep(TimeSpan.FromMinutes(5));
             }
         }
 

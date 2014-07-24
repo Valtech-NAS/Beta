@@ -15,10 +15,14 @@
     <!--[if lte IE 8]>@Styles.Render("~/Content/_assets/css/fonts-ie8.css")<![endif]-->
     <!--[if gte IE 9]><!-->@Styles.Render("~/Content/_assets/css/fonts.css")<!--<![endif]-->
     <link rel="shortcut icon" href="@Url.Content("~/Content/_assets/img/favicon.ico")" type="image/x-icon">
-    
+    @Styles.Render("~/Content/_assets/css/font-awesome/css/font-awesome.min.css")
     <script>
         var html = document.documentElement;
         html.className += " js-enabled";
+
+        if (!('open' in document.createElement('details'))) {
+            document.documentElement.className += ' no-details';
+        }
     </script>
     @Scripts.Render("~/Content/_assets/js/vendor/modernizr-custom.js")
     

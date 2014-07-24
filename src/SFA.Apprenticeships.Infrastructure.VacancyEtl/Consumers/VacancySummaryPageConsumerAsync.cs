@@ -5,9 +5,11 @@
     using EasyNetQ.AutoSubscribe;
     using Application.VacancyEtl;
     using Application.VacancyEtl.Entities;
+    using NLog;
 
     public class VacancySummaryPageConsumerAsync : IConsumeAsync<VacancySummaryPage>
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IMessageBus _bus;
         private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
 
@@ -25,7 +27,9 @@
 
         private void ConsumeTask(VacancySummaryPage vacancySummaryPage)
         {
+            Logger.Debug("Queueing Vacancy Etl Index Page {0} of {1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
             _vacancySummaryProcessor.QueueVacancySummaries(vacancySummaryPage);
+            Logger.Debug("Queued Vacancy Etl Index Page {0} of {1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
 
             if (vacancySummaryPage.PageNumber == vacancySummaryPage.TotalPages)
             {
