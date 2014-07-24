@@ -33,9 +33,12 @@
         public Candidate RegisterCandidate(Candidate newCandidate, string password)
         {
             var username = newCandidate.RegistrationDetails.EmailAddress;
+            var user = _userReadRepository.Get(username, false);
 
-            //todo: check if username is already in use
-            var user = _userReadRepository.Get(username);
+            if (user != null && user.ActivateCodeExpiry.HasValue && user.ActivateCodeExpiry < DateTime.Today)
+            {
+                //user activation has expired - this is just to get existing code working
+            }
 
             // todo: if username in use and pending and not expired activation code then need to reuse the existing user
             // todo: if username in use and pending and expired activation code then need to overwrite the existing one (incl p/w in AD)
