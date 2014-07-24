@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using Attributes;
+    using Common.Attributes;
     using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
@@ -139,6 +140,7 @@
             return View();
         }
 
+        [AllowCrossSiteJson]
         public JsonResult CheckUsername(string username)
         {
             var usernameIsAvailable = IsUsernameAvailable(username);
