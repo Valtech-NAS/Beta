@@ -34,6 +34,17 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="Version" nillable="true" type="xs:string" />
+      <xs:element xmlns:q5="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" name="ApplicationsStatus" nillable="true" type="q5:ApplicationsStatus" />
+      <xs:element name="CandidateId" type="xs:int" />
+      <xs:element name="GetCandidateInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q6="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="CandidateApplications" nillable="true" type="q6:CandidateApplications" />
+            <xs:element xmlns:q7="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="ValidationErrors" nillable="true" type="q7:ValidationErrors" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
     </xs:schema>
     <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="anyType" nillable="true" type="xs:anyType" />
@@ -167,6 +178,37 @@
         </xs:sequence>
       </xs:complexType>
       <xs:element name="Candidate" nillable="true" type="tns:Candidate" />
+      <xs:complexType name="ApplicationsStatus">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ApplicationStatus" nillable="true" type="tns:ApplicationStatus" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ApplicationsStatus" nillable="true" type="tns:ApplicationsStatus" />
+      <xs:complexType name="ApplicationStatus">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ApplicationId" type="xs:int" />
+          <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ApplicationStatus" nillable="true" type="tns:ApplicationStatus" />
+      <xs:complexType name="CandidateApplications">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CandidateApplication" nillable="true" type="tns:CandidateApplication" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CandidateApplications" nillable="true" type="tns:CandidateApplications" />
+      <xs:complexType name="CandidateApplication">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ApplicationId" type="xs:int" />
+          <xs:element minOccurs="0" name="ApplicationStatus" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyId" type="xs:int" />
+          <xs:element minOccurs="0" name="VacancyStatus" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ClosingDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="WithdrawnOrDeclinedReason" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UnsuccessfulReason" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CandidateApplication" nillable="true" type="tns:CandidateApplication" />
     </xs:schema>
   </wsdl:types>
   <wsdl:message name="CreateApplicationRequest">
@@ -181,6 +223,20 @@
   <wsdl:message name="CreateCandidateResponse">
     <wsdl:part name="parameters" element="tns:CreateCandidateResponse" />
   </wsdl:message>
+  <wsdl:message name="GatewayServiceContract_GetServiceStatus_InputMessage" />
+  <wsdl:message name="GetServiceStatusResponse">
+    <wsdl:part name="Version" element="tns:Version" />
+  </wsdl:message>
+  <wsdl:message name="GatewayServiceContract_GetApplicationsStatus_InputMessage" />
+  <wsdl:message name="GetApplicationsStatusResponse">
+    <wsdl:part name="ApplicationsStatus" element="tns:ApplicationsStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetCandidateInfoRequest">
+    <wsdl:part name="CandidateId" element="tns:CandidateId" />
+  </wsdl:message>
+  <wsdl:message name="GetCandidateInfoResponse">
+    <wsdl:part name="parameters" element="tns:GetCandidateInfoResponse" />
+  </wsdl:message>
   <wsdl:portType name="GatewayServiceContract">
     <wsdl:operation name="CreateApplication">
       <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/CreateApplication" name="CreateApplicationRequest" message="tns:CreateApplicationRequest" />
@@ -189,6 +245,18 @@
     <wsdl:operation name="CreateCandidate">
       <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/CreateCandidate" name="CreateCandidateRequest" message="tns:CreateCandidateRequest" />
       <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/CreateCandidateResponse" name="CreateCandidateResponse" message="tns:CreateCandidateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServiceStatus">
+      <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetServiceStatus" message="tns:GatewayServiceContract_GetServiceStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetServiceStatusResponse" name="GetServiceStatusResponse" message="tns:GetServiceStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetApplicationsStatus">
+      <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetApplicationsStatus" message="tns:GatewayServiceContract_GetApplicationsStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetApplicationsStatusResponse" name="GetApplicationsStatusResponse" message="tns:GetApplicationsStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCandidateInfo">
+      <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetCandidateInfo" name="GetCandidateInfoRequest" message="tns:GetCandidateInfoRequest" />
+      <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetCandidateInfoResponse" name="GetCandidateInfoResponse" message="tns:GetCandidateInfoResponse" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="DefaultEndpoint" type="tns:GatewayServiceContract">
@@ -208,6 +276,33 @@
         <soap:body use="literal" />
       </wsdl:input>
       <wsdl:output name="CreateCandidateResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServiceStatus">
+      <soap:operation soapAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetServiceStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetServiceStatusResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetApplicationsStatus">
+      <soap:operation soapAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetApplicationsStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetApplicationsStatusResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCandidateInfo">
+      <soap:operation soapAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetCandidateInfo" style="document" />
+      <wsdl:input name="GetCandidateInfoRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetCandidateInfoResponse">
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

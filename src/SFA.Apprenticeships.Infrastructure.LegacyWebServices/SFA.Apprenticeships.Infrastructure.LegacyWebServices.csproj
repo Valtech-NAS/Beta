@@ -104,13 +104,28 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Service References\GatewayServiceProxy\GatewayService.wsdl" />
+    <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ApplicationStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.CreateApplicationResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.CreateCandidateResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ValidationErrors.datasource">
+    <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetApplicationsStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetCandidateInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetCandidateInfoResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetServiceStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ValidationError.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ReferenceDataProxy\ReferenceDataService.wsdl" />

@@ -48,7 +48,7 @@
             {
                 if (response != null)
                 {
-                    Logger.Error("Legacy CreateCandidate reported {0} validation errors", response.ValidationErrors.Count);
+                    Logger.Error("Legacy CreateCandidate reported {0} validation errors", response.ValidationErrors.Count());
                 }
                 else
                 {
