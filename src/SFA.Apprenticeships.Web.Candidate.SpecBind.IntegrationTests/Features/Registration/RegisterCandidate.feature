@@ -21,13 +21,13 @@ Scenario: As a candidate I am on the registration page and all required fields a
         | Field                  | Rule   | Value |
         | ValidationSummaryCount | Equals | 9     |
 	And I am on ValidationSummaryItems list item matching criteria
-		| Field | Rule   | Value                        |
-		| Text  | Equals | 'Firstname' must be supplied |
-		| Href  | Equals | #firstname                   |
+		| Field | Rule   | Value                         |
+		| Text  | Equals | 'First name' must be supplied |
+		| Href  | Equals | #firstname                    |
 	And I am on the RegisterCandidatePage page
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                       |
-		| Text  | Equals | 'Lastname' must be supplied |
+		| Text  | Equals | 'Last name' must be supplied |
 		| Href  | Equals | #lastname                   |
 
 Scenario: As a candidate on the registration page I want to be able to pick my address from a list returned from the postcode search

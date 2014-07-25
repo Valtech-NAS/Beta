@@ -7,11 +7,8 @@
     [PageAlias("LoginCandidatePage")]
     public class LoginCandidatePage : BaseValidationPage
     {
-        private readonly ISearchContext _context;
-
-        public LoginCandidatePage(ISearchContext context)
+        public LoginCandidatePage(ISearchContext context) : base(context)
         {
-            _context = context;
         }
 
         [ElementLocator(Id = "EmailAddress")]

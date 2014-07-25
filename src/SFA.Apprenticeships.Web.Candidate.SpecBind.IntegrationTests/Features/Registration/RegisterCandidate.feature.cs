@@ -119,7 +119,7 @@ this.ScenarioSetup(scenarioInfo);
             table2.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "\'Firstname\' must be supplied"});
+                        "\'First name\' must be supplied"});
             table2.AddRow(new string[] {
                         "Href",
                         "Equals",
@@ -136,7 +136,7 @@ this.ScenarioSetup(scenarioInfo);
             table3.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "\'Lastname\' must be supplied"});
+                        "\'Last name\' must be supplied"});
             table3.AddRow(new string[] {
                         "Href",
                         "Equals",
