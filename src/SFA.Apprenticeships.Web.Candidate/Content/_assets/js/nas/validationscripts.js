@@ -45,15 +45,12 @@
         }
     }
 
-    $('.date-input').on('blur', '.form-control', function () {
-        checkForDateError();
-    });
-
-    $('.date-input').on('keyup', '.form-control', function () {
+    $('.date-input').on('blur keyup', '.form-control', function () {
         setTimeout(function () {
             checkForDateError();
         }, 100);
     });
+
 });
 
 /*
