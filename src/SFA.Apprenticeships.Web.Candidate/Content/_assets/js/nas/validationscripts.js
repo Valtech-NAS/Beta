@@ -36,6 +36,24 @@
             $(".validation-summary-errors > div.panel-body > ul").html(errorSummary);
         };
     });
+
+    function checkForDateError() {
+        if ($('.date-input > .input-validation-error').length > 0) {
+            $('.date-input').addClass('input-validation-error');
+        } else {
+            $('.date-input').removeClass('input-validation-error');
+        }
+    }
+
+    $('.date-input').on('blur', '.form-control', function () {
+        checkForDateError();
+    });
+
+    $('.date-input').on('keyup', '.form-control', function () {
+        setTimeout(function () {
+            checkForDateError();
+        }, 100);
+    });
 });
 
 /*
