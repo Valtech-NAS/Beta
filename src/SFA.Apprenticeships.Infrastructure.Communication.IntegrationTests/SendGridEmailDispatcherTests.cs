@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using Application.Interfaces.Messaging;
     using Common.IoC;
     using Domain.Interfaces.Configuration;
