@@ -14,6 +14,14 @@
             user.ActivationCode = activationCode;
         }
 
+        public static void SetStatePasswordResetCode(this User user, string passwordResetCode, DateTime expiry)
+        {
+            ClearUserAttributes(user);
+
+            user.PasswordResetCode = passwordResetCode;
+            user.PasswordResetCodeExpiry = expiry;
+        }
+
         public static void SetStateLocked(this User user, string accountUnlockCode)
         {
             ClearUserAttributes(user);

@@ -25,6 +25,12 @@
     {
         public static void AddCommonRules(this AbstractValidator<PasswordResetViewModel> validator)
         {
+            validator.RuleFor(x => x.PasswordResetCode)
+              .NotEmpty()
+              .WithMessage(PasswordResetViewModelMessages.PasswordResetCode.RequiredErrorText)
+              .Length(6, 6)
+              .WithMessage(PasswordResetViewModelMessages.PasswordResetCode.LengthErrorText);
+
             validator.RuleFor(x => x.Password)
                 .Length(8, 127)
                 .WithMessage(PasswordResetViewModelMessages.PasswordMessages.LengthErrorText)

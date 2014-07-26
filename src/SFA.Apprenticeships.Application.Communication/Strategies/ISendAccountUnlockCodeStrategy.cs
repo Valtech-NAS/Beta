@@ -1,10 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Application.Communication.Strategies
 {
-    using System;
+    using System.Collections.Generic;
     using Domain.Entities.Candidates;
+    using Interfaces.Messaging;
 
     public interface ISendAccountUnlockCodeStrategy
     {
-        void Send(string templateName, Candidate candidate, string accountUnlockCode);
+        void Send(Candidate candidate, CandidateMessageTypes messageType,
+            IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens);
     }
 }

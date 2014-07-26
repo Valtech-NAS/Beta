@@ -10,6 +10,10 @@
     {
         public string EmailAddress { get; set; }
 
+        [Display(Name = PasswordResetViewModelMessages.PasswordResetCode.LabelText,
+          Description = PasswordResetViewModelMessages.PasswordResetCode.HintText)]
+        public string PasswordResetCode { get; set; }
+
         [Display(Name = PasswordResetViewModelMessages.PasswordMessages.LabelText,
             Description = PasswordResetViewModelMessages.PasswordMessages.HintText)]
         public string Password { get; set; }

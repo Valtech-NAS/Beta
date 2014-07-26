@@ -3,28 +3,26 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using Common.Constants;
-    using Common.Providers;
-    using Domain.Entities.Users;
-    using ViewModels.Login;
-    using ViewModels.Register;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Users;
+    using Common.Constants;
+    using Common.Providers;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Mapping;
+    using NLog;
+    using ViewModels.Login;
+    using ViewModels.Register;
 
     public class CandidateServiceProvider : ICandidateServiceProvider
     {
-        private static class SessionKeys
-        {
-            public const string LastViewedVacancyId = "LastViewedVacancyId";
-        }
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly ISessionStateProvider _session;
-        private readonly IUserAccountService _registrationService;
         private readonly ICandidateService _candidateService;
-        private readonly IUserServiceProvider _userServiceProvider;
         private readonly IMapper _mapper;
+        private readonly IUserAccountService _registrationService;
+        private readonly ISessionStateProvider _session;
+        private readonly IUserServiceProvider _userServiceProvider;
 
         public CandidateServiceProvider(
             ISessionStateProvider session,
@@ -44,7 +42,7 @@
         {
             try
             {
-                var candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
+                Candidate candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
                 _candidateService.Register(candidate, model.Password);
 
                 return candidate;
@@ -80,9 +78,9 @@
             {
                 return _candidateService.Authenticate(model.EmailAddress, model.Password);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: LOGGING: do not like consuming exception here (and elsewhere in this class).
+                LogError("Candidate authentication failed for {0}", model.EmailAddress, ex);
                 return null;
             }
         }
@@ -108,6 +106,32 @@
             }
 
             return claims.ToArray();
+        }
+
+        public void RequestForgottenPasswordReset(ForgottenPasswordViewModel model)
+        {
+            try
+            {
+                _registrationService.SendPasswordResetCode(model.EmailAddress);
+            }
+            catch (Exception ex)
+            {
+                LogError("Send password reset code failed for {0}", model.EmailAddress, ex);
+            }
+        }
+
+        public bool VerifyPasswordReset(PasswordResetViewModel model)
+        {
+            try
+            {
+                _registrationService.ResetForgottenPassword(model.EmailAddress, model.PasswordResetCode, model.Password);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                LogError("Reset forgotten password failed for {0}", model.EmailAddress, ex);
+                return false;
+            }
         }
 
         public int? LastViewedVacancyId
@@ -139,11 +163,26 @@
                     return;
                 }
 
-                var stringValue = value.Value.ToString(CultureInfo.InvariantCulture);
+                string stringValue = value.Value.ToString(CultureInfo.InvariantCulture);
 
                 _session.Store(
                     SessionKeys.LastViewedVacancyId, stringValue);
             }
         }
+
+        #region Helpers
+
+        private static void LogError(string formatString, string formatValue, Exception ex)
+        {
+            var message = string.Format(formatString, formatValue);
+            Logger.ErrorException(message, ex);
+        }
+
+        private static class SessionKeys
+        {
+            public const string LastViewedVacancyId = "LastViewedVacancyId";
+        }
+
+        #endregion
     }
 }

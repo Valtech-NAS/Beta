@@ -9,14 +9,14 @@
 
     public class UserAccountService : IUserAccountService
     {
-        private readonly IUserReadRepository _userReadRepository;
-        private readonly IRegisterUserStrategy _registerUserStrategy;
         private readonly IActivateUserStrategy _activateUserStrategy;
+        private readonly IRegisterUserStrategy _registerUserStrategy;
+        private readonly IResendAccountUnlockCodeStrategy _resendAccountUnlockCodeStrategy;
+        private readonly IResendActivationCodeStrategy _resendActivationCodeStrategy;
         private readonly IResetForgottenPasswordStrategy _resetForgottenPasswordStrategy;
         private readonly ISendPasswordResetCodeStrategy _sendPasswordCodeStrategy;
-        private readonly IResendActivationCodeStrategy _resendActivationCodeStrategy;
-        private readonly IResendAccountUnlockCodeStrategy _resendAccountUnlockCodeStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
+        private readonly IUserReadRepository _userReadRepository;
 
         public UserAccountService(IUserReadRepository userReadRepository,
             IRegisterUserStrategy registerUserStrategy,
@@ -39,8 +39,9 @@
 
         public bool IsUsernameAvailable(string username)
         {
-            // TODO: NOTIMPL: check status of user (unactivated account should also be considered "available")
-            return _userReadRepository.Get(username, false) == null;
+            // check status of user (unactivated account should also be considered "available")
+            User user = _userReadRepository.Get(username, false);
+            return user == null || user.Status == UserStatuses.PendingActivation;
         }
 
         public void Register(string username, Guid userId, string activationCode, UserRoles roles)
@@ -101,7 +102,7 @@
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
-            var user = _userReadRepository.Get(username);
+            User user = _userReadRepository.Get(username);
 
             return user.Status;
         }

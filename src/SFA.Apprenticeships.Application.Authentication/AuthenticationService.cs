@@ -23,6 +23,13 @@
             CheckAndThrowFailureError(succeeded, "User creation failed");
         }
 
+        public void ResetUserPassword(Guid id, string password)
+        {
+            var succeeded = _userDirectoryProvider.ResetPassword(id.ToString(), password);
+
+            CheckAndThrowFailureError(succeeded, "Reset user password failed");
+        }
+
         public void ChangePassword(Guid id, string oldPassword, string newPassword)
         {
             var succeeded = _userDirectoryProvider.ChangePassword(id.ToString(), oldPassword, newPassword);

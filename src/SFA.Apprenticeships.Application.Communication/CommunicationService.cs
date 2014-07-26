@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using Strategies;
@@ -10,45 +11,40 @@
     public class CommunicationService : ICommunicationService
     {
         private readonly ICandidateReadRepository _candidateReadRepository;
-        private readonly IUserReadRepository _userReadRepository;
-        private readonly ISendActivationCodeStrategy _sendActivationCodeStrategy;
-        private readonly ISendPasswordResetCodeStrategy _sendPasswordResetCodeStrategy;
         private readonly ISendAccountUnlockCodeStrategy _sendAccountUnlockCodeStrategy;
+        private readonly ISendActivationCodeStrategy _sendActivationCodeStrategy;
         private readonly ISendApplicationSubmittedStrategy _sendApplicationSubmittedStrategy;
         private readonly ISendPasswordChangedStrategy _sendPasswordChangedStrategy;
+        private readonly ISendPasswordResetCodeStrategy _sendPasswordResetCodeStrategy;
 
-        public CommunicationService(ICandidateReadRepository candidateReadRepository,
-            IUserReadRepository userReadRepository, ISendActivationCodeStrategy sendActivationCodeStrategy,
-            ISendPasswordResetCodeStrategy sendPasswordResetCodeStrategy, ISendApplicationSubmittedStrategy sendApplicationSubmittedStrategy,
-            ISendPasswordChangedStrategy sendPasswordChangedStrategy, ISendAccountUnlockCodeStrategy sendAccountUnlockCodeStrategy)
+        public CommunicationService(ISendActivationCodeStrategy sendActivationCodeStrategy,
+            ISendPasswordResetCodeStrategy sendPasswordResetCodeStrategy,
+            ISendApplicationSubmittedStrategy sendApplicationSubmittedStrategy,
+            ISendPasswordChangedStrategy sendPasswordChangedStrategy,
+            ISendAccountUnlockCodeStrategy sendAccountUnlockCodeStrategy,
+            ICandidateReadRepository candidateReadRepository)
         {
-            _candidateReadRepository = candidateReadRepository;
-            _userReadRepository = userReadRepository;
             _sendActivationCodeStrategy = sendActivationCodeStrategy;
             _sendPasswordResetCodeStrategy = sendPasswordResetCodeStrategy;
             _sendApplicationSubmittedStrategy = sendApplicationSubmittedStrategy;
             _sendPasswordChangedStrategy = sendPasswordChangedStrategy;
             _sendAccountUnlockCodeStrategy = sendAccountUnlockCodeStrategy;
+            _candidateReadRepository = candidateReadRepository;
         }
 
-        public void SendMessageToCandidate(Guid candidateId, CandidateMessageTypes messageType, IList<KeyValuePair<CommunicationTokens, string>> tokens)
+        public void SendMessageToCandidate(Guid candidateId, CandidateMessageTypes messageType,
+            IList<KeyValuePair<CommunicationTokens, string>> tokens)
         {
-            var templateName = GetTemplateName(messageType);
-
+            Candidate candidate = _candidateReadRepository.Get(candidateId);
+      
             switch (messageType)
             {
                 case CandidateMessageTypes.SendActivationCode:
-                    var candidate = _candidateReadRepository.Get(candidateId);
-                    var user = _userReadRepository.Get(candidate.RegistrationDetails.EmailAddress);
-                    var activationCode = user.ActivationCode;
-
-                    _sendActivationCodeStrategy.Send(templateName, candidate, activationCode);
+                    _sendActivationCodeStrategy.Send(candidate, messageType, tokens);
                     break;
 
                 case CandidateMessageTypes.SendPasswordResetCode:
-                    // TODO: NOTIMPL: get candidate, invoke strategy to send forgotten password / reset code email to candidate
-                    //var passwordResetCode = user.PasswordResetCode;
-                    //_sendPasswordResetCodeStrategy.Send();
+                    _sendPasswordResetCodeStrategy.Send(candidate, messageType, tokens);
                     break;
 
                 case CandidateMessageTypes.SendAccountUnlockCode:
@@ -63,22 +59,12 @@
                     break;
 
                 case CandidateMessageTypes.PasswordChanged:
-                    // TODO: NOTIMPL: get candidate, invoke strategy to send password changed email to candidate
-                    //_sendPasswordChangedStrategy.Send();
+                    _sendPasswordChangedStrategy.Send(candidate, messageType, tokens);
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException("messageType");
             }
         }
-
-        #region Helpers
-        private static string GetTemplateName(Enum messageType)
-        {
-            var enumType = messageType.GetType();
-
-            return string.Format("{0}.{1}", enumType.Name, Enum.GetName(enumType, messageType));
-        }
-        #endregion
     }
 }

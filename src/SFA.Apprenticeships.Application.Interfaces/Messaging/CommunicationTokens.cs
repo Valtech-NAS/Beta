@@ -6,6 +6,7 @@
     {
         CandidateFirstName,
         CandidateLastName,
+        Username,
         ActivationCode,
         ActivationCodeExpiryDays,
         PasswordResetCode,
