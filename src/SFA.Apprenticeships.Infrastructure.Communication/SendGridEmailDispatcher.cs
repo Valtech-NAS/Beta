@@ -29,7 +29,7 @@
 
         public void SendEmail(EmailRequest request)
         {
-            SendGridMessage message = ComposeMessage(request);
+            var message = ComposeMessage(request);
             DispatchMessage(message);
         }
 
@@ -48,7 +48,7 @@
             const string emptyHtml = "<span></span>";
             const string emptyText = "";
 
-            string subject = DefaultSubject(request);
+            var subject = DefaultSubject(request);
 
             // NOTE: https://github.com/sendgrid/sendgrid-csharp.
             var message = new SendGridMessage
@@ -77,7 +77,7 @@
             // NOTE: https://sendgrid.com/docs/API_Reference/SMTP_API/substitution_tags.html.
             foreach (var token in request.Tokens)
             {
-                string sendgridtoken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(token.Key);
+                var sendgridtoken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(token.Key);
                 message.AddSubstitution(
                     sendgridtoken,
                     new List<string>
@@ -89,23 +89,20 @@
 
         private void AttachTemplate(EmailRequest request, SendGridMessage message)
         {
-            string templateName = GetTemplateName(request.MessageType);
-
-            SendGridTemplateConfiguration template = GetTemplateConfiguration(templateName);
-            string fromEmail = DefaultFromEmail(request, template);
+            var templateName = GetTemplateName(request.MessageType);
+            var template = GetTemplateConfiguration(templateName);
+            var fromEmail = DefaultFromEmail(request, template);
 
             message.From = new MailAddress(fromEmail);
             message.EnableTemplateEngine(template.Id);
         }
 
-     
-
-        //move to sendgrid
         private static string GetTemplateName(Enum messageType)
         {
-            Type enumType = messageType.GetType();
-
-            return string.Format("{0}.{1}", enumType.Name, Enum.GetName(enumType, messageType));
+            var enumType = messageType.GetType();
+            var templateName = string.Format("{0}.{1}", enumType.Name, Enum.GetName(enumType, messageType));
+            Logger.Debug("EnumType={0} Name={1} TemplateName={2} MessageType={3}", enumType, enumType.Name, templateName, messageType);
+            return templateName;
         }
 
 
@@ -116,18 +113,18 @@
 
         private SendGridTemplateConfiguration GetTemplateConfiguration(string templateName)
         {
-            SendGridTemplateConfiguration template = _templates.FirstOrDefault(each => each.Name == templateName);
+            var template = _templates.FirstOrDefault(each => each.Name == templateName);
 
             if (template != null)
             {
                 return template;
             }
 
-            string erroeMessage = string.Format("GetTemplateConfiguration : Invalid email template name: {0}",
+            var errorMessage = string.Format("GetTemplateConfiguration : Invalid email template name: {0}",
                 templateName);
-            Logger.Error(erroeMessage);
+            Logger.Error(errorMessage);
 
-            throw new ConfigurationErrorsException(erroeMessage);
+            throw new ConfigurationErrorsException(errorMessage);
         }
 
         private void DispatchMessage(SendGridMessage message)
@@ -151,7 +148,7 @@
 
         private static string LogSendGridMessage(SendGridMessage message)
         {
-            string messageLog = string.Format("From:{0}, ", message.From.Address);
+            var messageLog = string.Format("From:{0}, ", message.From.Address);
             message.To.ToList().ForEach(t => messageLog += string.Format("To:{0},", t.Address));
             messageLog += string.Format("Subject:{0}", message.Subject);
             return messageLog;
