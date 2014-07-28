@@ -7,19 +7,26 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
     public class RegisterUserStrategy : IRegisterUserStrategy
     {
-        private readonly IUserWriteRepository _userWriteRepository;
         private readonly int _activationCodeExpiryDays;
+        private readonly IUserReadRepository _userReadRepository;
+        private readonly IUserWriteRepository _userWriteRepository;
 
-        public RegisterUserStrategy(IUserWriteRepository userWriteRepository, IConfigurationManager configurationManager)
+        public RegisterUserStrategy(IUserWriteRepository userWriteRepository, IConfigurationManager configurationManager,
+            IUserReadRepository userReadRepository)
         {
             _userWriteRepository = userWriteRepository;
+            _userReadRepository = userReadRepository;
             _activationCodeExpiryDays = configurationManager.GetAppSetting<int>("ActivationCodeExpiryDays");
         }
 
         public void Register(string username, Guid userId, string activationCode, UserRoles roles)
         {
-            // todo: check username not "already in use and in a not pending state". if so, throw ex
-            //var user = _userReadRepository ...
+            User user = _userReadRepository.Get(username, false);
+
+            if (user != null && user.Status != UserStatuses.PendingActivation)
+            {
+                throw new Exception("Username already in use and is not in pending activation status");
+            }
 
             var newUser = new User
             {
@@ -29,7 +36,6 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             };
 
             newUser.SetStatePendingActivation(activationCode, DateTime.Now.AddDays(_activationCodeExpiryDays));
-
             _userWriteRepository.Save(newUser);
         }
     }

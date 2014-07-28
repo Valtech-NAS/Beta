@@ -95,11 +95,13 @@
             var registrationDetails = candidate.RegistrationDetails;
             var roles = _candidateServiceProvider.GetRoles(registrationDetails.EmailAddress);
 
+            string fullName = registrationDetails.FirstName + " " + registrationDetails.LastName;
+
             UserServiceProvider.SetAuthenticationCookie(
                 HttpContext, candidate.EntityId.ToString(), roles);
 
             UserServiceProvider.SetUserContextCookie(
-                HttpContext, registrationDetails.EmailAddress, registrationDetails.FullName);
+                HttpContext, registrationDetails.EmailAddress, fullName);
         }
     }
 }

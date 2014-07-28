@@ -35,7 +35,7 @@
             var candidateViewModel = new CandidateViewModel
             {
                 Id = candidateId,
-                FullName = candidate.RegistrationDetails.FullName,
+                FullName = candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
                 EmailAddress = candidate.RegistrationDetails.EmailAddress,
                 DateOfBirth = candidate.RegistrationDetails.DateOfBirth,
                 PhoneNumber = candidate.RegistrationDetails.PhoneNumber,

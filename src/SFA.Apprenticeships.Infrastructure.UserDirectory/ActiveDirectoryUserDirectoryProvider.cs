@@ -73,6 +73,35 @@
             }
         }
 
+        public bool ResetPassword(string username, string newpassword)
+        {
+            Logger.Debug("Resetting password for username={0}", username);
+
+            using (var context = _server.Context)
+            {
+                var user = UserPrincipal.FindByIdentity(context, username);
+
+                if (user == null)
+                {
+                    Logger.Error("No active directory account found for username={0}", username);
+                    throw new Exception("User does not exist"); // TODO: EXCEPTION: should use an application exception type
+                }
+
+                try
+                {
+                    user.SetPassword(newpassword);
+                    return true;
+                }
+                catch (PasswordException exception)
+                {
+                    var message = string.Format("SetPassword failed for {0}", username);
+                    Logger.ErrorException(message, exception);
+                    throw;
+                }
+              
+            }
+        }
+
         private bool SetUserPassword(string username, string oldPassword, string newPassword)
         {
             if (!_server.Bind()) return false;

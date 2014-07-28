@@ -7,11 +7,12 @@
 
     public class BaseValidationPage
     {
+        //TODO: Maybe push this and webdriver into a further BasePage class that we can use for all pages.
+        protected readonly ISearchContext _context;
+
         public BaseValidationPage(ISearchContext context)
         {
-        }
-        public BaseValidationPage()
-        {
+            _context = context;
         }
 
         [ElementLocator(Class = "validation-summary-errors")]

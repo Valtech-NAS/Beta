@@ -6,19 +6,19 @@
     using System.Linq;
     using System.Net;
     using System.Net.Mail;
-    using NLog;
-    using SendGrid;
     using Application.Interfaces.Messaging;
     using Configuration;
+    using NLog;
+    using SendGrid;
 
     public class SendGridEmailDispatcher : IEmailDispatcher
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly string _userName;
         private readonly string _password;
 
         private readonly SendGridTemplateConfiguration[] _templates;
+        private readonly string _userName;
 
         public SendGridEmailDispatcher(SendGridConfiguration configuration)
         {
@@ -29,13 +29,13 @@
 
         public void SendEmail(EmailRequest request)
         {
-            var message = ComposeMessage(request);
+            SendGridMessage message = ComposeMessage(request);
             DispatchMessage(message);
         }
 
         private SendGridMessage ComposeMessage(EmailRequest request)
         {
-            var message = CreateMessage(request);
+            SendGridMessage message = CreateMessage(request);
 
             AttachTemplate(request, message);
             PopulateTemplate(request, message);
@@ -48,7 +48,7 @@
             const string emptyHtml = "<span></span>";
             const string emptyText = "";
 
-            var subject = DefaultSubject(request);
+            string subject = DefaultSubject(request);
 
             // NOTE: https://github.com/sendgrid/sendgrid-csharp.
             var message = new SendGridMessage
@@ -77,8 +77,9 @@
             // NOTE: https://sendgrid.com/docs/API_Reference/SMTP_API/substitution_tags.html.
             foreach (var token in request.Tokens)
             {
+                string sendgridtoken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(token.Key);
                 message.AddSubstitution(
-                    DelimitToken(token.Key),
+                    sendgridtoken,
                     new List<string>
                     {
                         token.Value
@@ -86,21 +87,27 @@
             }
         }
 
-        private static string DelimitToken(string key)
-        {
-            const string templateTokenDelimiter = "-";
-
-            return string.Format("{0}{1}{0}", templateTokenDelimiter, key);
-        }
-
         private void AttachTemplate(EmailRequest request, SendGridMessage message)
         {
-            var template = GetTemplateConfiguration(request.TemplateName);
-            var fromEmail = DefaultFromEmail(request, template);
+            string templateName = GetTemplateName(request.MessageType);
+
+            SendGridTemplateConfiguration template = GetTemplateConfiguration(templateName);
+            string fromEmail = DefaultFromEmail(request, template);
 
             message.From = new MailAddress(fromEmail);
             message.EnableTemplateEngine(template.Id);
         }
+
+     
+
+        //move to sendgrid
+        private static string GetTemplateName(Enum messageType)
+        {
+            Type enumType = messageType.GetType();
+
+            return string.Format("{0}.{1}", enumType.Name, Enum.GetName(enumType, messageType));
+        }
+
 
         private static string DefaultFromEmail(EmailRequest request, SendGridTemplateConfiguration template)
         {
@@ -109,11 +116,15 @@
 
         private SendGridTemplateConfiguration GetTemplateConfiguration(string templateName)
         {
-            var template = _templates.FirstOrDefault(each => each.Name == templateName);
+            SendGridTemplateConfiguration template = _templates.FirstOrDefault(each => each.Name == templateName);
 
-            if (template != null) { return template; }
+            if (template != null)
+            {
+                return template;
+            }
 
-            var erroeMessage = string.Format("GetTemplateConfiguration : Invalid email template name: {0}", templateName);
+            string erroeMessage = string.Format("GetTemplateConfiguration : Invalid email template name: {0}",
+                templateName);
             Logger.Error(erroeMessage);
 
             throw new ConfigurationErrorsException(erroeMessage);
@@ -140,7 +151,7 @@
 
         private static string LogSendGridMessage(SendGridMessage message)
         {
-            var messageLog = string.Format("From:{0}, ", message.From.Address);
+            string messageLog = string.Format("From:{0}, ", message.From.Address);
             message.To.ToList().ForEach(t => messageLog += string.Format("To:{0},", t.Address));
             messageLog += string.Format("Subject:{0}", message.Subject);
             return messageLog;

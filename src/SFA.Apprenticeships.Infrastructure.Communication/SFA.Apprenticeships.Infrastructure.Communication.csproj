@@ -61,6 +61,7 @@
     <Compile Include="Configuration\SendGridConfiguration.cs" />
     <Compile Include="Configuration\SendGridTemplateConfiguration.cs" />
     <Compile Include="Configuration\SendGridTemplateConfigurationCollection.cs" />
+    <Compile Include="SendGridTokenManager.cs" />
     <Compile Include="TwilioSmsDispatcher.cs" />
     <Compile Include="SendGridEmailDispatcher.cs" />
     <Compile Include="IoC\CommunicationRegistry.cs" />

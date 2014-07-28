@@ -26,6 +26,8 @@
             _legacyCandidateProvider = ObjectFactory.GetInstance<ILegacyCandidateProvider>();
         }
 
+        //TODO: Rea-dd test once CAP respond.
+        [Ignore("Legacy service not responding as expected - re-add once fixed CAP end")]
         [Test]
         public void ShouldCreateCandidateUsingLegacyCandidateProvider()
         {
