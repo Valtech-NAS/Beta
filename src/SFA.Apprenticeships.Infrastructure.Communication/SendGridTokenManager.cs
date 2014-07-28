@@ -41,6 +41,9 @@ namespace SFA.Apprenticeships.Infrastructure.Communication
                 case CommunicationTokens.ApplicationVacancyReference:
                     emailTemplateToken = "Candidate.ApplicationVacancyReference";
                     break;
+                case CommunicationTokens.ApplicationId:
+                    emailTemplateToken = "Candidate.ApplicationId";
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("key");
             }
