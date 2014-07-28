@@ -100,21 +100,21 @@
             _unlockAccountStrategy.UnlockAccount(username, accountUnlockCode);
         }
 
-        public UserStatuses GetStatus(string username)
+        public User GetUser(string username)
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
             User user = _userReadRepository.Get(username);
 
-            return user.Status;
+            return user;
         }
 
-        public string[] GetRoleNames(string username)
+        public string[] GetRoleNames(User user)
         {
             var claims = new List<string>();
 
             // Add 'roles' for user status.
-            switch (GetStatus(username))
+            switch (user.Status)
             {
                 case UserStatuses.Active:
                     claims.Add(UserRoleNames.Activated);

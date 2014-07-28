@@ -9,7 +9,6 @@
     using Constants.ViewModels;
     using Domain.Entities.Candidates;
     using FluentValidation.Mvc;
-    using FluentValidation.Results;
     using NLog;
     using Providers;
     using Validators;
@@ -19,11 +18,11 @@
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
         private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
+        private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
 
         public RegisterController(
             ISessionStateProvider session,
@@ -52,7 +51,7 @@
         {
             model.IsUsernameAvailable = IsUsernameAvailable(model.EmailAddress);
 
-            ValidationResult validationResult = _registerViewModelServerValidator.Validate(model);
+            var validationResult = _registerViewModelServerValidator.Validate(model);
 
             if (!validationResult.IsValid)
             {
@@ -62,9 +61,9 @@
                 return View(model);
             }
 
-            Candidate candidate = _candidateServiceProvider.Register(model);
+            var registered = _candidateServiceProvider.Register(model);
 
-            if (candidate == null)
+            if (!registered)
             {
                 // TODO: Registration failed.
                 ModelState.Clear();
@@ -74,8 +73,6 @@
 
                 return View(model);
             }
-
-            SetCookies(candidate);
 
             return RedirectToAction("Activation");
         }
@@ -91,7 +88,7 @@
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                UserServiceProvider.SetAuthenticationReturnUrlCookie(HttpContext, returnUrl);
+                UserServiceProvider.SetReturnUrlCookie(HttpContext, returnUrl);
             }
 
             return View(model);
@@ -100,7 +97,7 @@
         [HttpPost]
         public ActionResult Activate(ActivationViewModel model)
         {
-            model.IsActivated = _candidateServiceProvider.Activate(model);
+            model.IsActivated = _candidateServiceProvider.Activate(model, User.Identity.Name);
 
             ValidationResult activatedResult = _activationViewModelServerValidator.Validate(model);
 
@@ -192,16 +189,17 @@
             // TODO Consider doing this everywhere
         }
 
+
         private void SetCookies(Candidate candidate)
         {
             RegistrationDetails registrationDetails = candidate.RegistrationDetails;
             string fullName = registrationDetails.FirstName + " " + registrationDetails.LastName;
-
             UserServiceProvider.SetAuthenticationCookie(
                 HttpContext, candidate.EntityId.ToString(), UserRoleNames.Unactivated);
 
             UserServiceProvider.SetUserContextCookie(
                 HttpContext, registrationDetails.EmailAddress, fullName);
+                
         }
 
         private ActionResult SetAuthenticationCookieAndRedirectToAction()

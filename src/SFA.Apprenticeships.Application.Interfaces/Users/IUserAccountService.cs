@@ -26,8 +26,8 @@
 
         void UnlockAccount(string username, string accountUnlockCode);
 
-        UserStatuses GetStatus(string username);
+        User GetUser(string username);
 
-        string[] GetRoleNames(string username);
+        string[] GetRoleNames(User user);
     }
 }

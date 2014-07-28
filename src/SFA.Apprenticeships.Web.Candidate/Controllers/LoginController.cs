@@ -32,7 +32,7 @@
         {
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                UserServiceProvider.SetAuthenticationReturnUrlCookie(HttpContext, returnUrl);
+                UserServiceProvider.SetReturnUrlCookie(HttpContext, returnUrl);
             }
 
             return View();
@@ -55,9 +55,9 @@
             // Attempt to authenticate candidate.
             UserStatuses userStatus;
 
-            var candidate = _candidateServiceProvider.Authenticate(model, out userStatus);
+            var authenticated = _candidateServiceProvider.Authenticate(model, out userStatus);
 
-            if (candidate == null)
+            if (!authenticated)
             {
                 // Authentication failed.
                 ModelState.Clear();
@@ -68,6 +68,11 @@
                 return View(model);
             }
 
+            if (userStatus == UserStatuses.PendingActivation)
+            {
+                return RedirectToAction("Activation", "Register");
+            }
+
             // Redirect to last viewed vacancy (if any).
             var lastViewedVacancyId = _candidateServiceProvider.LastViewedVacancyId;
 
@@ -75,15 +80,19 @@
             {
                 _candidateServiceProvider.LastViewedVacancyId = null;
 
-                return RedirectToAction("Details", "VacancySearch", new { id = lastViewedVacancyId.Value });
+                return RedirectToAction(
+                    "Details", "VacancySearch", new
+                    {
+                        id = lastViewedVacancyId.Value
+                    });
             }
 
             // Redirect to return URL (if any).
-            var returnUrl = UserServiceProvider.GetAuthenticationReturnUrl(HttpContext);
+            var returnUrl = UserServiceProvider.GetReturnUrl(HttpContext);
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                UserServiceProvider.DeleteAuthenticationReturnUrlCookie(HttpContext);
+                UserServiceProvider.DeleteReturnUrlCookie(HttpContext);
 
                 return Redirect(returnUrl);
             }

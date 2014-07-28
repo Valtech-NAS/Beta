@@ -12,6 +12,7 @@
     public class RegisterCandidateStrategy : IRegisterCandidateStrategy
     {
         private readonly int _activationCodeExpiryDays;
+        private readonly IUserAccountService _userAccountService;
         private readonly IAuthenticationService _authenticationService;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly ICodeGenerator _codeGenerator;
@@ -27,7 +28,7 @@
             ICodeGenerator codeGenerator,
             IUserReadRepository userReadRepository)
         {
-            _registrationService = registrationService;
+            _userAccountService = userAccountService;
             _authenticationService = authenticationService;
             _candidateWriteRepository = candidateWriteRepository;
             _communicationService = communicationService;

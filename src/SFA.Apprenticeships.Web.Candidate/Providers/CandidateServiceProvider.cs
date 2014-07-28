@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using Application.Interfaces.Candidates;
     using System.Web;
@@ -40,26 +39,19 @@
             _mapper = mapper;
         }
 
-        public Candidate Register(RegisterViewModel model)
+        public bool IsUsernameAvailable(string username)
+        {
+            return _userAccountService.IsUsernameAvailable(username);
+        }
+
+        public bool Register(RegisterViewModel model)
         {
             try
             {
                 Candidate candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
+                
                 _candidateService.Register(candidate, model.Password);
-
-                return candidate;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public bool Activate(ActivationViewModel model)
-        {
-            try
-            {
-                _candidateService.Activate(model.EmailAddress, model.ActivationCode);
+                SetRegisteredCookies(candidate);
 
                 return true;
             }
@@ -69,14 +61,24 @@
             }
         }
 
-        public bool IsUsernameAvailable(string username)
+        public bool Activate(ActivationViewModel model, string candidateId)
         {
-            return _userAccountService.IsUsernameAvailable(username);
+            try
+            {
+                _candidateService.Activate(model.EmailAddress, model.ActivationCode);
+                SetActivatedCookies(candidateId);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public Candidate Authenticate(LoginViewModel model, out UserStatuses userStatus)
+        public bool Authenticate(LoginViewModel model, out UserStatuses userStatus)
         {
-            // Set out parameter.
+            // Default out parameter.
             userStatus = UserStatuses.Unknown;
 
             try
@@ -86,20 +88,20 @@
                 if (candidate == null)
                 {
                     // Incorrect user name or password.
-                
-                    return null;
+                    return false;
                 }
 
-                userStatus = _userAccountService.GetStatus(model.EmailAddress);
+                var user = _userAccountService.GetUser(model.EmailAddress);
 
-                SetAuthenticationCookies(candidate);
+                SetLoggedInCookies(candidate, user);
+                userStatus = user.Status;
 
-                return candidate;
+                return true;
             }
             catch (Exception ex)
             {
                 LogError("Candidate authentication failed for {0}", model.EmailAddress, ex);
-                return null;
+                return false;
             }
         }
 
@@ -164,18 +166,42 @@
             }
         }
 
-        private void SetAuthenticationCookies(Candidate candidate)
+        // TODO: AG: consolidate cookie setting.
+        private void SetLoggedInCookies(Candidate candidate, User user)
         {
             var registrationDetails = candidate.RegistrationDetails;
-            var roles = _userAccountService.GetRoleNames(registrationDetails.EmailAddress);
+            var candidateId = candidate.EntityId.ToString();
+            var roles = _userAccountService.GetRoleNames(user);
 
             var httpContext = new HttpContextWrapper(HttpContext.Current);
 
             _userServiceProvider.SetAuthenticationCookie(
-                httpContext, candidate.EntityId.ToString(), roles);
+                httpContext, candidateId, roles);
 
             _userServiceProvider.SetUserContextCookie(
                 httpContext, registrationDetails.EmailAddress, registrationDetails.FullName);
+        }
+
+        private void SetRegisteredCookies(Candidate candidate)
+        {
+            var registrationDetails = candidate.RegistrationDetails;
+            var candidateId = candidate.EntityId.ToString();
+
+            var httpContext = new HttpContextWrapper(HttpContext.Current);
+
+            _userServiceProvider.SetAuthenticationCookie(
+                httpContext, candidateId, UserRoleNames.Unactivated);
+
+            _userServiceProvider.SetUserContextCookie(
+                httpContext, registrationDetails.EmailAddress, registrationDetails.FullName);
+        }
+
+        private void SetActivatedCookies(string candidateId)
+        {
+            var httpContext = new HttpContextWrapper(HttpContext.Current);
+
+            _userServiceProvider.SetAuthenticationCookie(
+                httpContext, candidateId, UserRoleNames.Activated);
         }
 
         #region Helpers
