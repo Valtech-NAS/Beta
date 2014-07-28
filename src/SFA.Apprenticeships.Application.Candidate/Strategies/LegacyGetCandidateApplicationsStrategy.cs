@@ -2,18 +2,38 @@
 {
     using System;
     using System.Collections.Generic;
+    using ApplicationUpdate;
     using Domain.Entities.Applications;
+    using Domain.Interfaces.Repositories;
 
     public class LegacyGetCandidateApplicationsStrategy : IGetCandidateApplicationsStrategy
     {
+        private readonly ICandidateReadRepository _candidateReadRepository;
+        private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
+        private readonly IApplicationStatusUpdater _applicationStatusUpdater;
+        private readonly IApplicationReadRepository _applicationReadRepository;
+
+        public LegacyGetCandidateApplicationsStrategy(ICandidateReadRepository candidateReadRepository, ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider, IApplicationStatusUpdater applicationStatusUpdater, IApplicationReadRepository applicationReadRepository)
+        {
+            _candidateReadRepository = candidateReadRepository;
+            _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
+            _applicationStatusUpdater = applicationStatusUpdater;
+            _applicationReadRepository = applicationReadRepository;
+        }
+
         public IList<ApplicationSummary> GetApplications(Guid candidateId)
         {
-            //todo: need to get latest status of apps for the specified candidate from legacy (assuming low latency so can do this synchronously)
-            // (1) call ILegacyCandidateApplicationsProvider.GetCandidateApplicationStatuses
-            // (2) call ApplicationUpdate process with results from (1)
-            // (3) read updated from Apps repo
+            // need to get latest status of apps for the specified candidate from legacy (assuming low latency so can do this synchronously)
+            var candidate = _candidateReadRepository.Get(candidateId); 
 
-            throw new NotImplementedException();
+            // (1) call ILegacyApplicationsProvider.GetCandidateApplicationStatuses
+            var applicationStatuses = _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate);
+
+            // (2) call ApplicationUpdate process with results from (1)
+            _applicationStatusUpdater.Update(candidate, applicationStatuses);
+
+            // (3) read updated from Apps repo
+            return _applicationReadRepository.GetForCandidate(candidateId);
         }
     }
 }

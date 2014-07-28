@@ -5,7 +5,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
 
-    public interface ILegacyCandidateApplicationStatusesProvider
+    public interface ILegacyApplicationStatusesProvider
     {
         IEnumerable<ApplicationStatusSummary> GetCandidateApplicationStatuses(Candidate candidate);
 

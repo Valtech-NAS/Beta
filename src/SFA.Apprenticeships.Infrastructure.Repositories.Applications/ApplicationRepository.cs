@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq.Expressions;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
@@ -52,7 +53,14 @@
 
         public IList<ApplicationSummary> GetForCandidate(Guid candidateId)
         {
-            //todo: retrieve vacancies for the specified candidate, should exclude any that are archived
+            //todo: retrieve applications for the specified candidate, should exclude any that are archived
+            throw new NotImplementedException();
+        }
+
+        public ApplicationDetail GetForCandidate(Guid candidateId, Expression<Func<ApplicationDetail, bool>> filter)
+        {
+            //todo: return the first application for the candidate that matches the filter
+            // .FirstOrDefault()
             throw new NotImplementedException();
         }
     }

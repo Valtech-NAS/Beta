@@ -2,11 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq.Expressions;
     using Entities.Applications;
 
     public interface IApplicationReadRepository : IReadRepository<ApplicationDetail>
     {
         IList<ApplicationSummary> GetForCandidate(Guid candidateId);
+        ApplicationDetail GetForCandidate(Guid candidateId, Expression<Func<ApplicationDetail, bool>> filter);
     }
 
     public interface IApplicationWriteRepository : IWriteRepository<ApplicationDetail> { }

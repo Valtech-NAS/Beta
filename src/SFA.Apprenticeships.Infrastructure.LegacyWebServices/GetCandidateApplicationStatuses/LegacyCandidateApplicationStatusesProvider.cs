@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GetCandidateApplications
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GetCandidateApplicationStatuses
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@
     using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
 
-    public class LegacyCandidateApplicationStatusesProvider : ILegacyCandidateApplicationStatusesProvider
+    public class LegacyCandidateApplicationStatusesProvider : ILegacyApplicationStatusesProvider
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IWcfService<GatewayServiceContract> _service;

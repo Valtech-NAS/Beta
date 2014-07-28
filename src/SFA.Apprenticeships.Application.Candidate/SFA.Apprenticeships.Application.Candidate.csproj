@@ -50,7 +50,7 @@
     <Compile Include="Strategies\CreateApplicationStrategy.cs" />
     <Compile Include="Strategies\IAuthenticateCandidateStrategy.cs" />
     <Compile Include="Strategies\ICreateApplicationStrategy.cs" />
-    <Compile Include="Strategies\ILegacyCandidateApplicationStatusesProvider.cs" />
+    <Compile Include="Strategies\ILegacyApplicationStatusesProvider.cs" />
     <Compile Include="Strategies\ILegacyCandidateProvider.cs" />
     <Compile Include="Strategies\IRegisterCandidateStrategy.cs" />
     <Compile Include="Strategies\IActivateCandidateStrategy.cs" />
@@ -61,6 +61,10 @@
     <Compile Include="Strategies\RegisterCandidateStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.ApplicationUpdate\SFA.Apprenticeships.Application.ApplicationUpdate.csproj">
+      <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
+      <Name>SFA.Apprenticeships.Application.ApplicationUpdate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>

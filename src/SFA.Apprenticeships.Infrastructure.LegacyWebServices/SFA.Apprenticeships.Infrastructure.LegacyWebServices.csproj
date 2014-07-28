@@ -64,7 +64,7 @@
     <Compile Include="Configuration\ILegacyServicesConfiguration.cs" />
     <Compile Include="Configuration\LegacyServicesConfiguration.cs" />
     <Compile Include="CreateApplication\LegacyApplicationProvider.cs" />
-    <Compile Include="GetCandidateApplications\LegacyCandidateApplicationStatusesProvider.cs" />
+    <Compile Include="GetCandidateApplicationStatuses\LegacyCandidateApplicationStatusesProvider.cs" />
     <Compile Include="CreateCandidate\LegacyCandidateProvider.cs" />
     <Compile Include="IoC\LegacyWebServicesRegistry.cs" />
     <Compile Include="Mappers\VacancyDetailAddressResolver.cs" />
