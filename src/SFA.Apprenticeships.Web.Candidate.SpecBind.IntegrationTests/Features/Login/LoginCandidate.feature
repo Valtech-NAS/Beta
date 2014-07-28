@@ -34,6 +34,7 @@ Scenario: As a candidate I must provide an email address and password
 		| Field                  | Rule   | Value |
 		| ValidationSummaryCount | Equals | 2     |
 
+@ignore
 Scenario: As a candidate I cannot login with an invalid password
 	Given I navigated to the LoginCandidatePage page
 	When I am on the LoginCandidatePage page
