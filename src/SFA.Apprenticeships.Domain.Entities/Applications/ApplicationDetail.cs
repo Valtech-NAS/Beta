@@ -8,6 +8,7 @@
     {
         public ApplicationDetail()
         {
+            Vacancy = new VacancySummary();
             CandidateDetails = new RegistrationDetails();
             CandidateInformation = new ApplicationTemplate();
             Status = ApplicationStatuses.Unknown;

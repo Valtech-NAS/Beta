@@ -52,7 +52,7 @@
 
            var result = _legacyCandidateProvider.CreateCandidate(candidate);
 
-            result.Should().BeGreaterThan(0);
+           result.Should().BeGreaterThan(0);
         }
     }
 }

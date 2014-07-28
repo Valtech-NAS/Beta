@@ -2,7 +2,6 @@
 {
     using System;
     using System.Configuration;
-    using System.Runtime.InteropServices;
     using System.ServiceModel;
     using System.ServiceModel.Configuration;
     using Domain.Interfaces.Configuration;

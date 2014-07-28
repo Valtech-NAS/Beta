@@ -11,7 +11,6 @@
 
     public class CandidateService : ICandidateService
     {
-        private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly IApplicationWriteRepository _applicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
@@ -20,14 +19,16 @@
         private readonly ISubmitApplicationStrategy _submitApplicationStrategy;
         private readonly IRegisterCandidateStrategy _registerCandidateStrategy;
         private readonly ICreateApplicationStrategy _createApplicationStrategy;
+        private readonly IGetCandidateApplicationsStrategy _getCandidateApplicationsStrategy;
 
-        public CandidateService(IApplicationReadRepository applicationReadRepository, 
-            IApplicationWriteRepository applicationWriteRepository, ICandidateReadRepository candidateReadRepository, 
-            ICandidateWriteRepository candidateWriteRepository, IActivateCandidateStrategy activateCandidateStrategy, 
-            IAuthenticateCandidateStrategy authenticateCandidateStrategy, ISubmitApplicationStrategy submitApplicationStrategy, 
-            IRegisterCandidateStrategy registerCandidateStrategy, ICreateApplicationStrategy createApplicationStrategy)
+        public CandidateService(IApplicationWriteRepository applicationWriteRepository,
+            ICandidateReadRepository candidateReadRepository,
+            ICandidateWriteRepository candidateWriteRepository, IActivateCandidateStrategy activateCandidateStrategy,
+            IAuthenticateCandidateStrategy authenticateCandidateStrategy,
+            ISubmitApplicationStrategy submitApplicationStrategy,
+            IRegisterCandidateStrategy registerCandidateStrategy, ICreateApplicationStrategy createApplicationStrategy,
+            IGetCandidateApplicationsStrategy getCandidateApplicationsStrategy)
         {
-            _applicationReadRepository = applicationReadRepository;
             _applicationWriteRepository = applicationWriteRepository;
             _candidateReadRepository = candidateReadRepository;
             _candidateWriteRepository = candidateWriteRepository;
@@ -36,6 +37,7 @@
             _submitApplicationStrategy = submitApplicationStrategy;
             _registerCandidateStrategy = registerCandidateStrategy;
             _createApplicationStrategy = createApplicationStrategy;
+            _getCandidateApplicationsStrategy = getCandidateApplicationsStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -90,7 +92,7 @@
 
         public IList<ApplicationSummary> GetApplications(Guid candidateId)
         {
-            return _applicationReadRepository.GetForCandidate(candidateId);
+            return _getCandidateApplicationsStrategy.GetApplications(candidateId);
         }
 
         public void SubmitApplication(ApplicationDetail application)
