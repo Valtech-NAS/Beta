@@ -40,7 +40,6 @@
         }
 
         [TestCase(0, "donotreply@example.com")]
-        [TestCase(1, "doreply@another.com")]
         public void ShouldGetFromEmailConfiguration(int index, string expectedFromEmail)
         {
             var template = SendGridConfiguration.Instance.Templates.ElementAt(index);

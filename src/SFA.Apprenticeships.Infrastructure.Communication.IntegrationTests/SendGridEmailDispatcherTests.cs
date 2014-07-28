@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using Application.Interfaces.Messaging;
     using Common.IoC;
     using Domain.Interfaces.Configuration;
@@ -125,25 +124,6 @@
             dispatcher.SendEmail(request);
 
             // Assert: we do not expect an exception.
-        }
-
-        [Test]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
-        public void ShouldThrowIfTemplateNameIsInvalid()
-        {
-            // Arrange.
-            var dispatcher = ObjectFactory.GetInstance<IEmailDispatcher>();
-
-            var request = new EmailRequest
-            {
-                Subject = "Hello, World at " + DateTime.Now.ToLongTimeString(),
-                FromEmail = TestFromEmail,
-                ToEmail = TestToEmail,
-                Tokens = CreateTokens(),
-            };
-
-            // Act.
-            dispatcher.SendEmail(request);
         }
     }
 }

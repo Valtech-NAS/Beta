@@ -35,7 +35,7 @@
         public void SendMessageToCandidate(Guid candidateId, CandidateMessageTypes messageType,
             IList<KeyValuePair<CommunicationTokens, string>> tokens)
         {
-            Candidate candidate = _candidateReadRepository.Get(candidateId);
+            var candidate = _candidateReadRepository.Get(candidateId);
       
             switch (messageType)
             {

@@ -13,6 +13,7 @@
         PasswordResetCodeExpiryDays,
         AccountUnlockCode,
         ApplicationVacancyTitle,
-        ApplicationVacancyReference
+        ApplicationVacancyReference,
+        ApplicationId
     }
 }
