@@ -168,7 +168,6 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("As a candidate I cannot login with an invalid password")]
-        [NUnit.Framework.IgnoreAttribute()]
         public virtual void AsACandidateICannotLoginWithAnInvalidPassword()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I cannot login with an invalid password", new string[] {
@@ -227,11 +226,11 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("As a candidate I can login with a registered but unactivated account and am redir" +
-            "ected to my last viewed vacancy")]
-        public virtual void AsACandidateICanLoginWithARegisteredButUnactivatedAccountAndAmRedirectedToMyLastViewedVacancy()
+            "ected to the activation page")]
+        public virtual void AsACandidateICanLoginWithARegisteredButUnactivatedAccountAndAmRedirectedToTheActivationPage()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I can login with a registered but unactivated account and am redir" +
-                    "ected to my last viewed vacancy", ((string[])(null)));
+                    "ected to the activation page", ((string[])(null)));
 #line 56
 this.ScenarioSetup(scenarioInfo);
 #line 58
@@ -272,21 +271,8 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("As a candidate I can login with a registered but unactivated account and am redir" +
-            "ected to my last viewed page")]
-        public virtual void AsACandidateICanLoginWithARegisteredButUnactivatedAccountAndAmRedirectedToMyLastViewedPage()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I can login with a registered but unactivated account and am redir" +
-                    "ected to my last viewed page", ((string[])(null)));
-#line 73
 this.ScenarioSetup(scenarioInfo);
 #line 75
- testRunner.Given("I registered an account but did not activate it", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-            this.ScenarioCleanup();
-        }
     }
 }
 #pragma warning restore

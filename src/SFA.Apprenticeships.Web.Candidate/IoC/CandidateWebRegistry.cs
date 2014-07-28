@@ -58,6 +58,10 @@
             For<ILegacyApplicationStatusesProvider>().Use<LegacyCandidateApplicationStatusesProvider>();
             For<IApplicationStatusUpdater>().Use<ApplicationStatusUpdater>();
 
+            For<IGetCandidateApplicationsStrategy>().Use<LegacyGetCandidateApplicationsStrategy>();
+            For<ILegacyApplicationStatusesProvider>().Use<LegacyCandidateApplicationStatusesProvider>();
+            For<IApplicationStatusUpdater>().Use<ApplicationStatusUpdater>();
+
             // providers (web)
             For<IMapper>().Singleton().Use<CandidateWebMappers>().Name = "CandidateWebMappers";
             For<ISearchProvider>().Use<SearchProvider>().Ctor<IMapper>().Named("CandidateWebMappers");
