@@ -38,26 +38,22 @@
 
         public Candidate RegisterCandidate(Candidate newCandidate, string password)
         {
-            string username = newCandidate.RegistrationDetails.EmailAddress;
-            string activationCode = _codeGenerator.Generate();
-            User user = _userReadRepository.Get(username, false);
-
+            var username = newCandidate.RegistrationDetails.EmailAddress;
+            var activationCode = _codeGenerator.Generate();
+            var user = _userReadRepository.Get(username, false);
 
             if (user == null)
             {
                 // Process registration for brand new username
-                Guid newCandidateId = Guid.NewGuid();
+                var newCandidateId = Guid.NewGuid();
 
                 _authenticationService.CreateUser(newCandidateId, password);
                 _userAccountService.Register(username, newCandidateId, activationCode, UserRoles.Candidate);
+
                 return SaveAndNotifyCandidate(newCandidateId, newCandidate, activationCode);
             }
 
-            if (user.Status != UserStatuses.PendingActivation)
-            {
-                throw new Exception("Username registered and not in pending activation state");
-                //TODO Customer exception
-            }
+            user.AssertState("Username registered and not in pending activation state", UserStatuses.PendingActivation);
 
             if (user.ActivateCodeExpiry > DateTime.Now)
             {
@@ -68,16 +64,18 @@
             // Process existing username in an expired pending activation status
             _authenticationService.ResetUserPassword(user.EntityId, password);
             _userAccountService.Register(username, user.EntityId, user.ActivationCode, UserRoles.Candidate);
+
             return SaveAndNotifyCandidate(user.EntityId, newCandidate, activationCode);
         }
 
         #region Helpers
-
         private Candidate SaveAndNotifyCandidate(Guid candidateId, Candidate newCandidate, string activationCode)
         {
             newCandidate.EntityId = candidateId;
-            Candidate candidate = _candidateWriteRepository.Save(newCandidate);
+            var candidate = _candidateWriteRepository.Save(newCandidate);
+
             SendActivationCode(candidate, activationCode);
+
             return candidate;
         }
 
@@ -88,9 +86,9 @@
                 return;
             }
 
-            string emailAddress = candidate.RegistrationDetails.EmailAddress;
-            string expiry = string.Format("{0}", _activationCodeExpiryDays);
-            string firstName = candidate.RegistrationDetails.FirstName;
+            var emailAddress = candidate.RegistrationDetails.EmailAddress;
+            var expiry = string.Format("{0}", _activationCodeExpiryDays);
+            var firstName = candidate.RegistrationDetails.FirstName;
 
             _communicationService.SendMessageToCandidate(candidate.EntityId, CandidateMessageTypes.SendActivationCode,
                 new[]
@@ -101,7 +99,6 @@
                     new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, emailAddress)
                 });
         }
-
         #endregion
     }
 }

@@ -30,6 +30,7 @@
 
                 if (application != null)
                 {
+                    //todo: need to check vacancy status too or will app status reflect this already? check with legacy team
                     if (application.Status != status.ApplicationStatus)
                     {
                         _applicationWriteRepository.Save(application);
