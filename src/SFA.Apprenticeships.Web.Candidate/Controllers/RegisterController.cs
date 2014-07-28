@@ -140,7 +140,7 @@
                 return View(model);
             }
 
-            //Logger.Debug("{0} requested password reset code", model.EmailAddress);
+            Logger.Debug("{0} requested password reset code", model.EmailAddress);
 
            _candidateServiceProvider.RequestForgottenPasswordReset(model);
 

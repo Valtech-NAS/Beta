@@ -87,7 +87,7 @@
             }
 
             var emailAddress = candidate.RegistrationDetails.EmailAddress;
-            var expiry = string.Format("{0}", _activationCodeExpiryDays);
+            var expiry = FormatActivationCodeExpiryDays();
             var firstName = candidate.RegistrationDetails.FirstName;
 
             _communicationService.SendMessageToCandidate(candidate.EntityId, CandidateMessageTypes.SendActivationCode,
@@ -99,6 +99,12 @@
                     new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, emailAddress)
                 });
         }
+
+        private string FormatActivationCodeExpiryDays()
+        {
+            return string.Format(_activationCodeExpiryDays == 1 ? "{0} day" : "{0} days", _activationCodeExpiryDays);
+        }
+
         #endregion
     }
 }
