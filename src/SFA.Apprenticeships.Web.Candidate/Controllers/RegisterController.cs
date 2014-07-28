@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -113,8 +114,6 @@
             return View("Activation", model);
         }
 
-      
-
         public ActionResult Complete()
         {
             ViewBag.Message = UserContext.UserName;
@@ -141,7 +140,7 @@
                 return View(model);
             }
 
-            Logger.Debug("{0} requested password reset code", model.EmailAddress);
+            //Logger.Debug("{0} requested password reset code", model.EmailAddress);
 
            _candidateServiceProvider.RequestForgottenPasswordReset(model);
 
@@ -162,7 +161,17 @@
         [HttpPost]
         public ActionResult ResetPassword(PasswordResetViewModel model)
         {
-            model.IsPasswordResetSuccessful = _candidateServiceProvider.VerifyPasswordReset(model);
+            try
+            {
+                _candidateServiceProvider.VerifyPasswordReset(model);
+                model.IsPasswordResetSuccessful = true;
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
             ValidationResult validationResult = _passwordResetViewModelServerValidator.Validate(model);
 
             if (validationResult.IsValid)

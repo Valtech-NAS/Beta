@@ -123,10 +123,15 @@
                 _userAccountService.ResetForgottenPassword(model.EmailAddress, model.PasswordResetCode, model.Password);
                 return true;
             }
+            catch (InvalidOperationException ioException)
+            {
+                LogError("Reset forgotten password failed for {0}", model.EmailAddress, ioException);
+                throw;
+            }
             catch (Exception ex)
             {
                 LogError("Reset forgotten password failed for {0}", model.EmailAddress, ex);
-                return false;
+                throw ;
             }
         }
 

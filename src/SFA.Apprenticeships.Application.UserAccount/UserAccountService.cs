@@ -19,6 +19,7 @@
         private readonly ISendPasswordResetCodeStrategy _sendPasswordCodeStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IUserReadRepository _userReadRepository;
+        private readonly IAuthenticationService _authenticationService;
 
         public UserAccountService(IUserReadRepository userReadRepository,
             IRegisterUserStrategy registerUserStrategy,

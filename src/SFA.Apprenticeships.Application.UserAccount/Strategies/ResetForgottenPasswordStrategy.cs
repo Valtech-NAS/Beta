@@ -1,50 +1,116 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
     using System;
+    using System.Collections.Generic;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Configuration;
+    using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
+    using Interfaces.Users;
 
     public class ResetForgottenPasswordStrategy : IResetForgottenPasswordStrategy
     {
+        private readonly ICandidateReadRepository _candidateReadRepository;
+        private readonly IUserReadRepository _userReadRepository;
+        private readonly IUserWriteRepository _userWriteRepository;
         private readonly ICommunicationService _communicationService;
         private readonly ILockAccountStrategy _lockAccountStrategy;
+        private readonly IAuthenticationService _authenticationService;
+        private readonly int _maximumPasswordAttemptsAllowed;
 
-        public ResetForgottenPasswordStrategy(ICommunicationService communicationService, ILockAccountStrategy lockAccountStrategy)
+        public ResetForgottenPasswordStrategy(ICommunicationService communicationService, 
+            ILockAccountStrategy lockAccountStrategy, 
+            ICandidateReadRepository candidateReadRepository, 
+            IUserReadRepository userReadRepository, 
+            IAuthenticationService authenticationService,
+            IConfigurationManager configurationManager, 
+            IUserWriteRepository userWriteRepository)
         {
             _communicationService = communicationService;
             _lockAccountStrategy = lockAccountStrategy;
+            _candidateReadRepository = candidateReadRepository;
+            _userReadRepository = userReadRepository;
+            _authenticationService = authenticationService;
+            _userWriteRepository = userWriteRepository;
+            _maximumPasswordAttemptsAllowed = configurationManager.GetAppSetting<int>("MaximumPasswordAttemptsAllowed");
         }
 
         public void ResetForgottenPassword(string username, string passwordCode, string newPassword)
         {
-            //var user = _userReadRepository.Get(username);
-            // TODO: NOTIMPL: check status of user (only allowed to change p/w if active or locked)
+            var user = _userReadRepository.Get(username);
 
-            // TODO: check if code is correct and not expired
+            if (user == null)
+            {
+                throw new Exception("Unknown user name");
+            }
 
-            // TODO: if incorrect then increase counter. if too many fails (based on config setting) then lock account (using strategy) and throw ex
-            //RegisterFailedPasswordReset(user);
+            var candidate = _candidateReadRepository.Get(user.EntityId);
 
-            // TODO: if correct then set new p/w in AD, clear code and counter on user, also unlock if locked, send email
-            //_communicationService.SendMessageToCandidate(); PasswordChanged
+            if (candidate == null)
+            {
+                throw new Exception("Unknown candidate");
+            }
 
-            throw new NotImplementedException();
+            var allowedUserStatuses = new[] {UserStatuses.Active, UserStatuses.Locked};
+
+            try
+            {
+                user.AssertState("Change password is only allowed for User in Active or Locked state",
+                    allowedUserStatuses);
+            }
+            catch (InvalidOperationException exception)
+            {
+                throw;
+            }
+
+            if (user.PasswordResetCode != null && user.PasswordResetCode.Equals(passwordCode, StringComparison.CurrentCultureIgnoreCase))
+            {
+                if (user.PasswordResetCodeExpiry != null && DateTime.Now > user.PasswordResetCodeExpiry)
+                {
+                    throw new Exception("Password reset code has expired."); //TODO Use Custom Exception
+                }
+
+                _authenticationService.ResetUserPassword(user.EntityId, newPassword);
+                user.SetStateActive();
+                _userWriteRepository.Save(user);
+               SendPasswordResetConfirmationViaCommunicationService(candidate);
+            }
+            else
+            {
+                RegisterFailedPasswordReset(user);
+            }
         }
 
         #region Helpers
         private void RegisterFailedPasswordReset(User user)
         {
-            //todo: if too many fails then lock the account
-            if (user.PasswordResetIncorrectAttempts == 3) //todo: from config
+            if (user.PasswordResetIncorrectAttempts == _maximumPasswordAttemptsAllowed) 
             {
                 _lockAccountStrategy.LockAccount(user);
+                throw new Exception("Maximum password attempts allowed reached, account is now locked."); //TODO Use Custom Exception
             }
-            else
+
+            user.PasswordResetIncorrectAttempts++;
+            _userWriteRepository.Save(user);
+        }
+
+        private void SendPasswordResetConfirmationViaCommunicationService(Candidate candidate)
+        {
+            if (candidate == null)
             {
-                //todo: decrement counter and save user
-                user.PasswordResetIncorrectAttempts++;
-                //_userWriteRepository.Save(user);
+                return;
             }
+
+            var firstName = candidate.RegistrationDetails.FirstName;
+            var emailAddress = candidate.RegistrationDetails.EmailAddress;
+
+            _communicationService.SendMessageToCandidate(candidate.EntityId, CandidateMessageTypes.PasswordChanged,
+                new[]
+                {
+                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, firstName),
+                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, emailAddress)
+                });
         }
         #endregion
     }

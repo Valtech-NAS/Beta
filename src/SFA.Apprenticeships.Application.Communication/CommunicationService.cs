@@ -36,7 +36,7 @@
             IList<KeyValuePair<CommunicationTokens, string>> tokens)
         {
             var candidate = _candidateReadRepository.Get(candidateId);
-      
+
             switch (messageType)
             {
                 case CandidateMessageTypes.SendActivationCode:
@@ -48,9 +48,7 @@
                     break;
 
                 case CandidateMessageTypes.SendAccountUnlockCode:
-                    // TODO: NOTIMPL: get candidate, invoke strategy to send locked account / unlock code email to candidate
-                    //var accountUnlockCode = user.AccountUnlockCode;
-                    //_sendAccountUnlockCodeStrategy.Send();
+                    _sendAccountUnlockCodeStrategy.Send(candidate, messageType, tokens);
                     break;
 
                 case CandidateMessageTypes.ApplicationSubmitted:

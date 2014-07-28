@@ -33,22 +33,22 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
         public void SendPasswordResetCode(string username)
         {
-            User user = _userReadRepository.Get(username);
+            var user = _userReadRepository.Get(username, false);
 
             if (user == null)
             {
                 throw new Exception("Unknown user name");
             }
 
-            Candidate candidate = _candidateReadRepository.Get(user.EntityId);
+            var candidate = _candidateReadRepository.Get(user.EntityId);
 
             if (candidate == null)
             {
                 throw new Exception("Unknown candidate");
             }
 
-            DateTime currentDateTime = DateTime.Now;
-            DateTime expiry = currentDateTime.AddDays(_passwordResetCodeExpiryDays);
+            var currentDateTime = DateTime.Now;
+            var expiry = currentDateTime.AddDays(_passwordResetCodeExpiryDays);
 
             if (!string.IsNullOrEmpty(user.PasswordResetCode) && (user.PasswordResetCodeExpiry > currentDateTime))
             {
@@ -58,7 +58,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             else
             {
                 // generate new code and send
-                string passwordResetCode = _codeGenerator.Generate();
+                var passwordResetCode = _codeGenerator.Generate();
                 user.SetStatePasswordResetCode(passwordResetCode, expiry);
             }
 
@@ -75,9 +75,9 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
                 return;
             }
 
-            string firstName = candidate.RegistrationDetails.FirstName;
-            string emailAddress = candidate.RegistrationDetails.EmailAddress;
-            string expiry = string.Format("{0}", _passwordResetCodeExpiryDays);
+            var firstName = candidate.RegistrationDetails.FirstName;
+            var emailAddress = candidate.RegistrationDetails.EmailAddress;
+            var expiry = string.Format(_passwordResetCodeExpiryDays == 1 ? "{0} day" : "{0} days", _passwordResetCodeExpiryDays);
 
             _communicationService.SendMessageToCandidate(candidate.EntityId, CandidateMessageTypes.SendPasswordResetCode,
                 new[]

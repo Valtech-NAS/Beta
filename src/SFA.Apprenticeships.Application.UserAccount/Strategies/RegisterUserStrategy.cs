@@ -11,7 +11,8 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
 
-        public RegisterUserStrategy(IUserWriteRepository userWriteRepository, IConfigurationManager configurationManager,
+        public RegisterUserStrategy(IUserWriteRepository userWriteRepository, 
+            IConfigurationManager configurationManager,
             IUserReadRepository userReadRepository)
         {
             _userWriteRepository = userWriteRepository;
