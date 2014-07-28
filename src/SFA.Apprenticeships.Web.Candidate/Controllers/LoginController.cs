@@ -99,7 +99,5 @@
 
             return RedirectToAction("Index", "VacancySearch");
         }
-            string fullName = registrationDetails.FirstName + " " + registrationDetails.LastName;
-
     }
 }

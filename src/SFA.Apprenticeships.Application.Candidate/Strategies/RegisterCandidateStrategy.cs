@@ -17,11 +17,10 @@
         private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly ICodeGenerator _codeGenerator;
         private readonly ICommunicationService _communicationService;
-        private readonly IUserAccountService _registrationService;
         private readonly IUserReadRepository _userReadRepository;
 
         public RegisterCandidateStrategy(IConfigurationManager configurationManager,
-            IUserAccountService registrationService,
+            IUserAccountService userAccountService,
             IAuthenticationService authenticationService,
             ICandidateWriteRepository candidateWriteRepository,
             ICommunicationService communicationService,
@@ -48,8 +47,9 @@
             {
                 // Process registration for brand new username
                 Guid newCandidateId = Guid.NewGuid();
+
                 _authenticationService.CreateUser(newCandidateId, password);
-                _registrationService.Register(username, newCandidateId, activationCode, UserRoles.Candidate);
+                _userAccountService.Register(username, newCandidateId, activationCode, UserRoles.Candidate);
                 return SaveAndNotifyCandidate(newCandidateId, newCandidate, activationCode);
             }
 
@@ -67,7 +67,7 @@
 
             // Process existing username in an expired pending activation status
             _authenticationService.ResetUserPassword(user.EntityId, password);
-            _registrationService.Register(username, user.EntityId, user.ActivationCode, UserRoles.Candidate);
+            _userAccountService.Register(username, user.EntityId, user.ActivationCode, UserRoles.Candidate);
             return SaveAndNotifyCandidate(user.EntityId, newCandidate, activationCode);
         }
 

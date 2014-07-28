@@ -9,6 +9,7 @@
     using Constants.ViewModels;
     using Domain.Entities.Candidates;
     using FluentValidation.Mvc;
+    using FluentValidation.Results;
     using NLog;
     using Providers;
     using Validators;
@@ -218,14 +219,14 @@
             }
 
             // Redirect to return URL (if any).
-            var returnUrl = UserServiceProvider.GetAuthenticationReturnUrl(HttpContext);
+            var returnUrl = UserServiceProvider.GetReturnUrl(HttpContext);
 
             if (string.IsNullOrWhiteSpace(returnUrl))
             {
                 return RedirectToAction("Index", "VacancySearch");
             }
 
-            UserServiceProvider.DeleteAuthenticationReturnUrlCookie(HttpContext);
+            UserServiceProvider.DeleteReturnUrlCookie(HttpContext);
             return Redirect(returnUrl);
         }
 

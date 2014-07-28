@@ -21,7 +21,6 @@
         private readonly IUserAccountService _userAccountService;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
-        private readonly IUserAccountService _registrationService;
         private readonly ISessionStateProvider _session;
         private readonly IUserServiceProvider _userServiceProvider;
 
@@ -109,7 +108,7 @@
         {
             try
             {
-                _registrationService.SendPasswordResetCode(model.EmailAddress);
+                _userAccountService.SendPasswordResetCode(model.EmailAddress);
             }
             catch (Exception ex)
             {
@@ -121,7 +120,7 @@
         {
             try
             {
-                _registrationService.ResetForgottenPassword(model.EmailAddress, model.PasswordResetCode, model.Password);
+                _userAccountService.ResetForgottenPassword(model.EmailAddress, model.PasswordResetCode, model.Password);
                 return true;
             }
             catch (Exception ex)
@@ -166,6 +165,8 @@
             }
         }
 
+        #region Helpers
+
         // TODO: AG: consolidate cookie setting.
         private void SetLoggedInCookies(Candidate candidate, User user)
         {
@@ -179,7 +180,8 @@
                 httpContext, candidateId, roles);
 
             _userServiceProvider.SetUserContextCookie(
-                httpContext, registrationDetails.EmailAddress, registrationDetails.FullName);
+                httpContext, registrationDetails.EmailAddress,
+                registrationDetails.FirstName + " " + registrationDetails.LastName);
         }
 
         private void SetRegisteredCookies(Candidate candidate)
@@ -193,7 +195,8 @@
                 httpContext, candidateId, UserRoleNames.Unactivated);
 
             _userServiceProvider.SetUserContextCookie(
-                httpContext, registrationDetails.EmailAddress, registrationDetails.FullName);
+                httpContext, registrationDetails.EmailAddress,
+                registrationDetails.FirstName + " " + registrationDetails.LastName);
         }
 
         private void SetActivatedCookies(string candidateId)
@@ -203,8 +206,6 @@
             _userServiceProvider.SetAuthenticationCookie(
                 httpContext, candidateId, UserRoleNames.Activated);
         }
-
-        #region Helpers
 
         private static void LogError(string formatString, string formatValue, Exception ex)
         {
