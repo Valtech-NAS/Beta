@@ -1,5 +1,4 @@
-﻿@ignore
-@US415
+﻿@US415
 @US458
 Feature: Login Candidate
 	As a candidate,
@@ -35,7 +34,6 @@ Scenario: As a candidate I must provide an email address and password
 		| Field                  | Rule   | Value |
 		| ValidationSummaryCount | Equals | 2     |
 
-@ignore
 Scenario: As a candidate I cannot login with an invalid password
 	Given I registered an account and activated it
 	And I navigated to the LoginCandidatePage page
