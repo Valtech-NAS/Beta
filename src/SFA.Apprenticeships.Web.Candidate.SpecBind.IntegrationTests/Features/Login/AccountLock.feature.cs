@@ -76,8 +76,7 @@ namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features.L
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 8
- testRunner.Given("I registered an account and activated it and made two unsuccessful login attempts" +
-                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I made two unsuccessful login attempts", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
  testRunner.And("I navigated to the LoginCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10

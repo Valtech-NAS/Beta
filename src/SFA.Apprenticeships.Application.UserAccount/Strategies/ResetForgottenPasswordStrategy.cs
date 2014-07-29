@@ -20,12 +20,12 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         private readonly IAuthenticationService _authenticationService;
         private readonly int _maximumPasswordAttemptsAllowed;
 
-        public ResetForgottenPasswordStrategy(ICommunicationService communicationService, 
-            ILockAccountStrategy lockAccountStrategy, 
-            ICandidateReadRepository candidateReadRepository, 
-            IUserReadRepository userReadRepository, 
+        public ResetForgottenPasswordStrategy(ICommunicationService communicationService,
+            ILockAccountStrategy lockAccountStrategy,
+            ICandidateReadRepository candidateReadRepository,
+            IUserReadRepository userReadRepository,
             IAuthenticationService authenticationService,
-            IConfigurationManager configurationManager, 
+            IConfigurationManager configurationManager,
             IUserWriteRepository userWriteRepository)
         {
             _communicationService = communicationService;
@@ -43,7 +43,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             if (user == null)
             {
-                throw new CustomException("Unknown user name",  ErrorCodes.UnknownUserError);
+                throw new CustomException("Unknown user name", ErrorCodes.UnknownUserError);
             }
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
@@ -53,17 +53,9 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
                 throw new CustomException("Unknown candidate", ErrorCodes.UnknownCandidateError);
             }
 
-            var allowedUserStatuses = new[] {UserStatuses.Active, UserStatuses.Locked};
+            var allowedUserStatuses = new[] { UserStatuses.Active, UserStatuses.Locked };
 
-            try
-            {
-                user.AssertState("Change password is only allowed for User in Active or Locked state",
-                    allowedUserStatuses);
-            }
-            catch (InvalidOperationException exception)
-            {
-                throw new CustomException("Change password is only allowed for User in Active or Locked state", ErrorCodes.UserInIncorrectStateError);
-            }
+            user.AssertState("Change password is only allowed for User in Active or Locked state", allowedUserStatuses);
 
             if (user.PasswordResetCode != null && user.PasswordResetCode.Equals(passwordCode, StringComparison.CurrentCultureIgnoreCase))
             {
@@ -75,7 +67,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
                 _authenticationService.ResetUserPassword(user.EntityId, newPassword);
                 user.SetStateActive();
                 _userWriteRepository.Save(user);
-               SendPasswordResetConfirmationViaCommunicationService(candidate);
+                SendPasswordResetConfirmationViaCommunicationService(candidate);
             }
             else
             {
@@ -87,10 +79,10 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         #region Helpers
         private void RegisterFailedPasswordReset(User user)
         {
-            if (user.PasswordResetIncorrectAttempts == _maximumPasswordAttemptsAllowed) 
+            if (user.PasswordResetIncorrectAttempts == _maximumPasswordAttemptsAllowed)
             {
                 _lockAccountStrategy.LockAccount(user);
-                throw new CustomException("Maximum password attempts allowed reached, account is now locked.", ErrorCodes.UserAccountLockedError); 
+                throw new CustomException("Maximum password attempts allowed reached, account is now locked.", ErrorCodes.UserAccountLockedError);
             }
 
             user.PasswordResetIncorrectAttempts++;

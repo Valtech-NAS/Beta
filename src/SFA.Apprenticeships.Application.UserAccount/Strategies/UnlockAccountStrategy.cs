@@ -8,12 +8,12 @@
     {
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
-        private IResendAccountUnlockCodeStrategy _resendAccountUnlockCodeStrategy;
+        private ISendAccountUnlockCodeStrategy _resendAccountUnlockCodeStrategy;
 
         public UnlockAccountStrategy(
             IUserReadRepository userReadRepository,
             IUserWriteRepository userWriteRepository,
-            IResendAccountUnlockCodeStrategy resendAccountUnlockCodeStrategy)
+            ISendAccountUnlockCodeStrategy resendAccountUnlockCodeStrategy)
         {
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
@@ -35,7 +35,7 @@
             if (user.ActivateCodeExpiry < DateTime.Now)
             {
                 // TODO: AG: US444: EXCEPTION: should use an application exception type
-                _resendAccountUnlockCodeStrategy.ResendAccountUnlockCode(username);
+                _resendAccountUnlockCodeStrategy.SendAccountUnlockCode(username);
 
                 throw new Exception("Account unlock code has expired, new account unlock code has been sent.");
             }

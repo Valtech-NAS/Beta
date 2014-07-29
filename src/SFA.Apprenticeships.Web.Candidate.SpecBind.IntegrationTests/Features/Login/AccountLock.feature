@@ -5,7 +5,7 @@ Feature: Account Lock
 	so that I can be assured that the candidate is legitimate.
 
 Scenario: Account is locked after three unsuccesful login attempts
-	Given I registered an account and activated it and made two unsuccessful login attempts
+	Given I made two unsuccessful login attempts
 	And I navigated to the LoginCandidatePage page
 	When I am on the LoginCandidatePage page
 	And I enter data

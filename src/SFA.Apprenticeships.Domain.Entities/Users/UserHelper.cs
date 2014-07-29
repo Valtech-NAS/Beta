@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Exceptions;
 
     public static class UserHelper
     {
@@ -42,7 +43,7 @@
         {
             if (!allowedUserStatuses.Contains(user.Status))
             {
-                throw new InvalidOperationException(errorMessage);
+                throw new CustomException(errorMessage, ErrorCodes.UserInIncorrectStateError);
             }
         }
 

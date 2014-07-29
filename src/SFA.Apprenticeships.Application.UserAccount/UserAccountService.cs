@@ -13,7 +13,7 @@
     {
         private readonly IActivateUserStrategy _activateUserStrategy;
         private readonly IRegisterUserStrategy _registerUserStrategy;
-        private readonly IResendAccountUnlockCodeStrategy _resendAccountUnlockCodeStrategy;
+        private readonly ISendAccountUnlockCodeStrategy _resendAccountUnlockCodeStrategy;
         private readonly IResendActivationCodeStrategy _resendActivationCodeStrategy;
         private readonly IResetForgottenPasswordStrategy _resetForgottenPasswordStrategy;
         private readonly ISendPasswordResetCodeStrategy _sendPasswordCodeStrategy;
@@ -27,7 +27,7 @@
             IResetForgottenPasswordStrategy resetForgottenPasswordStrategy,
             ISendPasswordResetCodeStrategy sendPasswordCodeStrategy,
             IResendActivationCodeStrategy resendActivationCodeStrategy,
-            IResendAccountUnlockCodeStrategy resendAccountUnlockCodeStrategy,
+            ISendAccountUnlockCodeStrategy resendAccountUnlockCodeStrategy,
             IUnlockAccountStrategy unlockAccountStrategy)
         {
             _userReadRepository = userReadRepository;
@@ -90,7 +90,7 @@
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
-            _resendAccountUnlockCodeStrategy.ResendAccountUnlockCode(username);
+            _resendAccountUnlockCodeStrategy.SendAccountUnlockCode(username);
         }
 
         public void UnlockAccount(string username, string accountUnlockCode)
