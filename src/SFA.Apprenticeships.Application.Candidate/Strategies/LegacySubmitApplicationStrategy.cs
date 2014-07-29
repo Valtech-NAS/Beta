@@ -9,10 +9,10 @@
 
         public void SubmitApplication(ApplicationDetail application)
         {
+            // TODO: NOTIMPL: status check - should be in "draft" state
             // TODO: NOTIMPL: queue application for submission to legacy
-            // TODO: NOTIMPL: if successful then update application status
+            // TODO: NOTIMPL: if successful then update application status to "submitting"
             // TODO: NOTIMPL: then send email acknowledgement to candidate via ICommunicationService.SendMessageToCandidate()
-            // TODO: NOTIMPL: ensure candidate has not already applied for the vacancy
 
             throw new NotImplementedException();
         }
