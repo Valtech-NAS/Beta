@@ -21,7 +21,8 @@
     using Mappers;
     using Providers;
     using StructureMap.Configuration.DSL;
-    
+    using ISendPasswordResetCodeStrategy = Application.UserAccount.Strategies.ISendPasswordResetCodeStrategy;
+
     public class CandidateWebRegistry : Registry
     {
         public CandidateWebRegistry()
@@ -35,9 +36,20 @@
             For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>();
             For<IRegisterUserStrategy>().Use<RegisterUserStrategy>();
             For<IActivateUserStrategy>().Use<ActivateUserStrategy>();
-            For<IResetForgottenPasswordStrategy>().Use<ResetForgottenPasswordStrategy>();
-            For<Application.UserAccount.Strategies.ISendPasswordResetCodeStrategy>().Use<SendPasswordResetCodeStrategy>();
-            For<Application.Communication.Strategies.ISendPasswordResetCodeStrategy>().Use<QueueEmailOnlyPasswordResetCodeStrategy>();
+
+            For<IResetForgottenPasswordStrategy>()
+                .Use<ResetForgottenPasswordStrategy>()
+                .Name = "ResetForgottenPasswordStrategy";
+
+            For<IResetForgottenPasswordStrategy>()
+                .Use<LegacyResetForgottenPasswordStrategy>()
+                .Ctor<IResetForgottenPasswordStrategy>()
+                .Named("ResetForgottenPasswordStrategy")
+                .Name = "LegacyResetForgottenPasswordStrategy";
+
+            For<ISendPasswordResetCodeStrategy>().Use<SendPasswordResetCodeStrategy>();
+            For<Application.Communication.Strategies.ISendPasswordResetCodeStrategy>()
+                .Use<QueueEmailOnlyPasswordResetCodeStrategy>();
             For<ISubmitApplicationStrategy>().Use<LegacySubmitApplicationStrategy>();
             For<ISendActivationCodeStrategy>().Use<QueueEmailOnlyActivationCodeStrategy>();
             For<ISendApplicationSubmittedStrategy>().Use<QueueApplicationSubmittedStrategy>();
@@ -45,7 +57,17 @@
             For<Application.Communication.Strategies.ISendAccountUnlockCodeStrategy>().Use<QueueEmailOnlyAccountUnlockCodeStrategy>();
             For<IResendActivationCodeStrategy>().Use<ResendActivationCodeStrategy>();
             For<Application.UserAccount.Strategies.ISendAccountUnlockCodeStrategy>().Use<SendAccountUnlockCodeStrategy>();
-            For<IUnlockAccountStrategy>().Use<UnlockAccountStrategy>();
+
+            For<IUnlockAccountStrategy>()
+                .Use<UnlockAccountStrategy>()
+                .Name = "UnlockAccountStrategy";
+
+            For<IUnlockAccountStrategy>()
+               .Use<LegacyUnlockAccountStrategy>()
+               .Ctor<IUnlockAccountStrategy>()
+               .Named("UnlockAccountStrategy")
+               .Name = "LegacyUnlockAccountStrategy";
+
             For<ILockAccountStrategy>().Use<LockAccountStrategy>();
             For<IAuthenticateCandidateStrategy>().Use<AuthenticateCandidateStrategy>();
             For<ICreateApplicationStrategy>().Use<LegacyCreateApplicationStrategy>();
@@ -67,7 +89,10 @@
             For<ISearchProvider>().Use<SearchProvider>().Ctor<IMapper>().Named("CandidateWebMappers");
             For<IVacancyDetailProvider>().Use<VacancyDetailProvider>().Ctor<IMapper>().Named("CandidateWebMappers");
             For<IApplicationProvider>().Use<ApplicationProvider>();
-            For<ICandidateServiceProvider>().Use<CandidateServiceProvider>().Ctor<IMapper>().Named("CandidateWebMappers");
+            For<ICandidateServiceProvider>()
+                .Use<CandidateServiceProvider>()
+                .Ctor<IMapper>()
+                .Named("CandidateWebMappers");
         }
     }
 }

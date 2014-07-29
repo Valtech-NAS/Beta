@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
     using System;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
 
@@ -19,13 +20,14 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         {
             var user = _userReadRepository.Get(username);
 
-            // TODO: NOTIMPL: check status of user (only allowed if pending activation)
+            var allowedUserStatus = new[] { UserStatuses.PendingActivation };
+            user.AssertState("Only users in a Pending Activation state can activate this account",
+                   allowedUserStatus);
 
             if (!user.ActivationCode.Equals(activationCode, StringComparison.InvariantCultureIgnoreCase))
-                throw new Exception("Invalid activation code"); // TODO: EXCEPTION: should use an application exception type
+                throw new CustomException("Invalid activation code", ErrorCodes.UserActivationCodeError); 
 
             user.SetStateActive();
-
             _userWriteRepository.Save(user);
         }
     }

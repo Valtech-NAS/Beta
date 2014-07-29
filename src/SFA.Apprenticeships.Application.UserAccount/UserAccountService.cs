@@ -19,7 +19,6 @@
         private readonly ISendPasswordResetCodeStrategy _sendPasswordCodeStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IUserReadRepository _userReadRepository;
-        private readonly IAuthenticationService _authenticationService;
 
         public UserAccountService(IUserReadRepository userReadRepository,
             IRegisterUserStrategy registerUserStrategy,
@@ -43,7 +42,7 @@
         public bool IsUsernameAvailable(string username)
         {
             // check status of user (unactivated account should also be considered "available")
-            User user = _userReadRepository.Get(username, false);
+            var user = _userReadRepository.Get(username, false);
             return user == null || user.Status == UserStatuses.PendingActivation;
         }
 

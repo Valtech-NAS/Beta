@@ -210,6 +210,32 @@
             return View(model);
         }
 
+        public ActionResult ResendPasswordResetCode(string emailAddress)
+        {
+            var model = new ForgottenPasswordViewModel
+            {
+                EmailAddress = emailAddress
+            };
+
+            Logger.Debug("{0} requested password reset code", model.EmailAddress);
+
+            _candidateServiceProvider.RequestForgottenPasswordReset(model);
+
+            TempData["EmailAddress"] = model.EmailAddress;
+
+            return RedirectToAction("ResetPassword");
+        }
+
+        public ActionResult ResendActivationCode(string emailAddress)
+        {
+
+            Logger.Debug("{0} requested activation code to be resent", emailAddress);
+
+            _candidateServiceProvider.ResendActivationCode(emailAddress);
+
+            return RedirectToAction("Activation");
+        }
+
         #region Helpers
         [AllowCrossSiteJson]
         public JsonResult CheckUsername(string username)
@@ -221,9 +247,7 @@
         private bool IsUsernameAvailable(string username)
         {
             return _candidateServiceProvider.IsUsernameAvailable(username.Trim());
-            // TODO Consider doing this everywhere
         }
-
 
         private void SetCookies(Candidate candidate)
         {
@@ -265,21 +289,5 @@
         }
 
         #endregion
-
-        public ActionResult  ResendPasswordResetCode(string emailAddress)
-        {
-            var model = new ForgottenPasswordViewModel
-            {
-                EmailAddress = emailAddress
-            };
-
-            Logger.Debug("{0} requested password reset code", model.EmailAddress);
-
-            _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
-
-            TempData["EmailAddress"] = model.EmailAddress;
-
-            return RedirectToAction("ResetPassword");
-        }
     }
 }

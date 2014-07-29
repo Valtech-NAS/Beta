@@ -55,7 +55,7 @@
 
             user.AssertState("Username registered and not in pending activation state", UserStatuses.PendingActivation);
 
-            if (user.ActivateCodeExpiry > DateTime.Now)
+            if (user.ActivateCodeExpiry != null && user.ActivateCodeExpiry > DateTime.Now)
             {
                 // Process existing username in unexpired pending activation status
                 return SaveAndNotifyCandidate(user.EntityId, newCandidate, user.ActivationCode);
@@ -63,7 +63,7 @@
 
             // Process existing username in an expired pending activation status
             _authenticationService.ResetUserPassword(user.EntityId, password);
-            _userAccountService.Register(username, user.EntityId, user.ActivationCode, UserRoles.Candidate);
+            _userAccountService.Register(username, user.EntityId, activationCode, UserRoles.Candidate);
 
             return SaveAndNotifyCandidate(user.EntityId, newCandidate, activationCode);
         }

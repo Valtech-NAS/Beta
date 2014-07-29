@@ -39,7 +39,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
         public void ResetForgottenPassword(string username, string passwordCode, string newPassword)
         {
-            var user = _userReadRepository.Get(username);
+            var user = _userReadRepository.Get(username, false);
 
             if (user == null)
             {
@@ -52,10 +52,6 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             {
                 throw new CustomException("Unknown candidate", ErrorCodes.UnknownCandidateError);
             }
-
-            var allowedUserStatuses = new[] { UserStatuses.Active, UserStatuses.Locked };
-
-            user.AssertState("Change password is only allowed for User in Active or Locked state", allowedUserStatuses);
 
             if (user.PasswordResetCode != null && user.PasswordResetCode.Equals(passwordCode, StringComparison.CurrentCultureIgnoreCase))
             {

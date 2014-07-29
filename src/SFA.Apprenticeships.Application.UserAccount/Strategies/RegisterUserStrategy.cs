@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
     using System;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
@@ -22,11 +23,11 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
         public void Register(string username, Guid userId, string activationCode, UserRoles roles)
         {
-            User user = _userReadRepository.Get(username, false);
+            var user = _userReadRepository.Get(username, false);
 
             if (user != null && user.Status != UserStatuses.PendingActivation)
             {
-                throw new Exception("Username already in use and is not in pending activation status");
+                throw new CustomException("Username already in use and is not in pending activation status", ErrorCodes.UserInIncorrectStateError);
             }
 
             var newUser = new User

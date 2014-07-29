@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
-    using System;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
@@ -24,17 +24,34 @@
 
         public void ActivateCandidate(string username, string activationCode)
         {
-            var user = _userReadRepository.Get(username);
+            var user = _userReadRepository.Get(username, false);
+
+            if (user == null)
+            {
+                throw new CustomException("Unknown username", ErrorCodes.UnknownUserError);
+            }
+
             var candidate = _candidateReadRepository.Get(user.EntityId);
 
+            if (candidate == null)
+            {
+                throw new CustomException("Unknown Candidate", ErrorCodes.UnknownCandidateError);
+            }
+
             user.AssertState("User is in invalid state for activation", UserStatuses.PendingActivation);
-            
-            var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
-            candidate.LegacyCandidateId = legacyCandidateId;
 
-            _registrationService.Activate(username, activationCode); // Todo create user on Legacy before activation
-
-            _candidateWriteRepository.Save(candidate);
+            if (candidate.LegacyCandidateId > 0)
+            {
+                _registrationService.Activate(username, activationCode);
+            }
+            else
+            {
+                // Create candidate on legacy system before activating
+                var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
+                candidate.LegacyCandidateId = legacyCandidateId;
+                _candidateWriteRepository.Save(candidate);
+                _registrationService.Activate(username, activationCode);
+            }
         }
     }
 }

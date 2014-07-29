@@ -8,6 +8,7 @@
     using Common.Constants;
     using Common.Providers;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Mapping;
     using NLog;
@@ -133,12 +134,7 @@
                 _userAccountService.ResetForgottenPassword(model.EmailAddress, model.PasswordResetCode, model.Password);
                 return true;
             }
-            catch (InvalidOperationException ioException)
-            {
-                LogError("Reset forgotten password failed for {0}", model.EmailAddress, ioException);
-                throw;
-            }
-            catch (Exception ex)
+            catch (CustomException ex)
             {
                 LogError("Reset forgotten password failed for {0}", model.EmailAddress, ex);
                 throw ;
@@ -156,6 +152,20 @@
             {
                 LogError("Account unlock failed for {0}.", model.EmailAddress, ex);
                 return false;
+            }
+        }
+
+        public bool ResendActivationCode(string username)
+        {
+            try
+            {
+                _userAccountService.ResendActivationCode(username);
+                return true;
+            }
+            catch (CustomException ex)
+            {
+                LogError("Reset forgotten password failed for {0}", username, ex);
+                throw;
             }
         }
 

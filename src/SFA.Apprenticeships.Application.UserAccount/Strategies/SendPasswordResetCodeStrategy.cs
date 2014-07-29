@@ -3,6 +3,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using System;
     using System.Collections.Generic;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
@@ -37,31 +38,33 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             if (user == null)
             {
-                throw new Exception("Unknown user name");
+                throw new CustomException("Unknown user name", ErrorCodes.UnknownUserError);
             }
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
 
             if (candidate == null)
             {
-                throw new Exception("Unknown candidate");
+                throw new CustomException("Unknown candidate", ErrorCodes.UnknownCandidateError);
             }
 
             var currentDateTime = DateTime.Now;
             var expiry = currentDateTime.AddDays(_passwordResetCodeExpiryDays);
 
+            string passwordResetCode;
+
             if (!string.IsNullOrEmpty(user.PasswordResetCode) && (user.PasswordResetCodeExpiry > currentDateTime))
             {
                 // Reuse existing token and set new expiry date
-                user.PasswordResetCodeExpiry = expiry;
+                passwordResetCode = user.PasswordResetCode;
             }
             else
             {
                 // generate new code and send
-                var passwordResetCode = _codeGenerator.Generate();
-                user.SetStatePasswordResetCode(passwordResetCode, expiry);
+                passwordResetCode = _codeGenerator.Generate();
             }
 
+            user.SetStatePasswordResetCode(passwordResetCode, expiry);
             _userWriteRepository.Save(user);
 
             // Send Password Reset Code

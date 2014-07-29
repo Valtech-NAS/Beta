@@ -17,5 +17,6 @@
         void RequestAccountUnlockCode(AccountUnlockViewModel model);
         bool VerifyPasswordReset(PasswordResetViewModel model);
         bool VerifyAccountUnlockCode(AccountUnlockViewModel model);
+        bool ResendActivationCode(string username);
     }
 }
