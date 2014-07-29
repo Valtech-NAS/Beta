@@ -67,7 +67,7 @@
 
             if (userStatus == UserStatuses.Locked)
             {
-                return RedirectOnAccountLocked(model);
+                return RedirectOnAccountLocked(model.EmailAddress);
             }
 
             // Authentication failed.
@@ -82,7 +82,17 @@
         [HttpGet]
         public ActionResult AccountUnlock()
         {
-            return View();
+            var emailAddress = TempData["EmailAddress"] as string;
+
+            if (string.IsNullOrWhiteSpace(emailAddress))
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(new AccountUnlockViewModel
+            {
+                EmailAddress = emailAddress
+            });
         }
 
         [HttpPost]
@@ -161,17 +171,16 @@
             return Redirect(returnUrl);
         }
 
-        private RedirectToRouteResult RedirectOnPendingActivation()
+        private ActionResult RedirectOnPendingActivation()
         {
             return RedirectToAction("Activation", "Register");
         }
 
-        private ViewResult RedirectOnAccountLocked(LoginViewModel model)
+        private ActionResult RedirectOnAccountLocked(string emailAddress)
         {
-            return View("AccountUnlock", new AccountUnlockViewModel
-            {
-                EmailAddress = model.EmailAddress
-            });
+            TempData["EmailAddress"] = emailAddress;
+
+            return RedirectToAction("AccountUnlock");
         }
 
         #endregion

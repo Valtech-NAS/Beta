@@ -34,7 +34,9 @@ namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features.L
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Account Unlock", "", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Account Unlock", "As the SFA I want to be able to lock a candidates account\r\nwhere they have made m" +
+                    "ultiple attempts with an incorrect username/password combination\r\nso that I can " +
+                    "be assured that the candidate is legitimate.", ProgrammingLanguage.CSharp, new string[] {
                         "Ignore",
                         "US444"});
             testRunner.OnFeatureStart(featureInfo);
@@ -73,8 +75,103 @@ namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features.L
         public virtual void AccountIsLockedAfter3UnsuccesfulAttempts()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Account is locked after 3 unsuccesful attempts", ((string[])(null)));
-#line 5
+#line 8
 this.ScenarioSetup(scenarioInfo);
+#line 9
+ testRunner.Given("I registered an account and activated it", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 10
+ testRunner.And("I navigated to the LoginCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 11
+ testRunner.When("I am on the LoginCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table1.AddRow(new string[] {
+                        "EmailAddress",
+                        "{EmailAddressToken}"});
+            table1.AddRow(new string[] {
+                        "Password",
+                        "{InvalidPasswordToken}"});
+#line 12
+ testRunner.And("I enter data", ((string)(null)), table1, "And ");
+#line 16
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
+ testRunner.And("I am on the LoginCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 18
+ testRunner.And("I wait to see ValidationSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table2.AddRow(new string[] {
+                        "ValidationSummaryCount",
+                        "Equals",
+                        "1"});
+#line 19
+ testRunner.And("I see", ((string)(null)), table2, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table3.AddRow(new string[] {
+                        "EmailAddress",
+                        "{EmailAddressToken}"});
+            table3.AddRow(new string[] {
+                        "Password",
+                        "{InvalidPasswordToken}"});
+#line 22
+ testRunner.And("I enter data", ((string)(null)), table3, "And ");
+#line 26
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 27
+ testRunner.And("I am on the LoginCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 28
+ testRunner.And("I wait to see ValidationSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table4.AddRow(new string[] {
+                        "ValidationSummaryCount",
+                        "Equals",
+                        "1"});
+#line 29
+ testRunner.And("I see", ((string)(null)), table4, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table5.AddRow(new string[] {
+                        "EmailAddress",
+                        "{EmailAddressToken}"});
+            table5.AddRow(new string[] {
+                        "Password",
+                        "{InvalidPasswordToken}"});
+#line 32
+ testRunner.And("I enter data", ((string)(null)), table5, "And ");
+#line 36
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 37
+ testRunner.And("I am on the LoginCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 38
+ testRunner.And("I wait to see ValidationSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table6.AddRow(new string[] {
+                        "ValidationSummaryCount",
+                        "Equals",
+                        "1"});
+#line 39
+ testRunner.And("I see", ((string)(null)), table6, "And ");
+#line 42
+ testRunner.Then("I am on the AccountUnlockPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -84,7 +181,7 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void AccountCanBeUnlockedWithAValidNon_ExpiredAccountUnlockCode()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Account can be unlocked with a valid, non-expired account unlock code", ((string[])(null)));
-#line 7
+#line 44
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
@@ -97,7 +194,7 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Account can be unlocked and user is taken back to the page they originally reques" +
                     "ted", ((string[])(null)));
-#line 9
+#line 46
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
@@ -108,7 +205,7 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void AccountUnlockCodeCanBeResent()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Account unlock code can be resent", ((string[])(null)));
-#line 11
+#line 48
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
@@ -119,7 +216,7 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void AccountUnlockCodeIsResentIfItIsExpired()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Account unlock code is resent if it is expired", ((string[])(null)));
-#line 13
+#line 50
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();

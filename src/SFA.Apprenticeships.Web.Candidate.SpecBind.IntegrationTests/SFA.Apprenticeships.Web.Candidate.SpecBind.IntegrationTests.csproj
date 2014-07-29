@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="IoC\WebTestRegistry.cs" />
     <Compile Include="Pages\BaseValidationPage.cs" />
+    <Compile Include="Pages\Login\AccountUnlockPage.cs" />
     <Compile Include="Pages\Login\LoginCandidatePage.cs" />
     <Compile Include="Pages\Registration\ActivationPage.cs" />
     <Compile Include="Pages\Registration\RegisterCandidatePage.cs" />
