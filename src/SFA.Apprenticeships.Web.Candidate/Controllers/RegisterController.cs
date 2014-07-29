@@ -265,5 +265,21 @@
         }
 
         #endregion
+
+        public ActionResult  ResendPasswordResetCode(string emailAddress)
+        {
+            var model = new ForgottenPasswordViewModel
+            {
+                EmailAddress = emailAddress
+            };
+
+            Logger.Debug("{0} requested password reset code", model.EmailAddress);
+
+            _candidateServiceProvider.RequestForgottenPasswordReset(model);
+
+            TempData["ForgottenPasswordEmailAddress"] = model.EmailAddress;
+
+            return RedirectToAction("ResetPassword");
+        }
     }
 }
