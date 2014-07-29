@@ -102,7 +102,7 @@
             }
         }
 
-        public void RequestForgottenPasswordReset(ForgottenPasswordViewModel model)
+        public void RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model)
         {
             try
             {
@@ -111,6 +111,18 @@
             catch (Exception ex)
             {
                 LogError("Send password reset code failed for {0}", model.EmailAddress, ex);
+            }
+        }
+
+        public void RequestAccountUnlockCode(AccountUnlockViewModel model)
+        {
+            try
+            {
+                _userAccountService.ResendAccountUnlockCode(model.EmailAddress);
+            }
+            catch (Exception ex)
+            {
+                LogError("Send account unlock code failed for {0}", model.EmailAddress, ex);
             }
         }
 

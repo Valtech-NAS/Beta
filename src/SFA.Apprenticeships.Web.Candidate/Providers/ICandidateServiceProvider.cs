@@ -13,7 +13,8 @@
         bool IsUsernameAvailable(string username);
         UserStatuses GetUserStatus(string username);
         bool Authenticate(LoginViewModel model);
-        void RequestForgottenPasswordReset(ForgottenPasswordViewModel model);
+        void RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model);
+        void RequestAccountUnlockCode(AccountUnlockViewModel model);
         bool VerifyPasswordReset(PasswordResetViewModel model);
         bool VerifyAccountUnlockCode(AccountUnlockViewModel model);
     }

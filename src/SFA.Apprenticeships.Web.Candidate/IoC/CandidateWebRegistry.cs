@@ -42,9 +42,9 @@
             For<ISendActivationCodeStrategy>().Use<QueueEmailOnlyActivationCodeStrategy>();
             For<ISendApplicationSubmittedStrategy>().Use<QueueApplicationSubmittedStrategy>();
             For<ISendPasswordChangedStrategy>().Use<QueueEmailOnlyPasswordChangedStrategy>();
-            For<ISendAccountUnlockCodeStrategy>().Use<QueueEmailOnlyAccountUnlockCodeStrategy>();
+            For<Application.Communication.Strategies.ISendAccountUnlockCodeStrategy>().Use<QueueEmailOnlyAccountUnlockCodeStrategy>();
             For<IResendActivationCodeStrategy>().Use<ResendActivationCodeStrategy>();
-            For<IResendAccountUnlockCodeStrategy>().Use<ResendAccountUnlockCodeStrategy>();
+            For<Application.UserAccount.Strategies.ISendAccountUnlockCodeStrategy>().Use<SendAccountUnlockCodeStrategy>();
             For<IUnlockAccountStrategy>().Use<UnlockAccountStrategy>();
             For<ILockAccountStrategy>().Use<LockAccountStrategy>();
             For<IAuthenticateCandidateStrategy>().Use<AuthenticateCandidateStrategy>();

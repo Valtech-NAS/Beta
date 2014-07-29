@@ -6,6 +6,7 @@
     using Constants.ViewModels;
     using Domain.Entities.Users;
     using FluentValidation.Mvc;
+    using NLog;
     using Providers;
     using Validators;
     using ViewModels.Login;
@@ -14,6 +15,8 @@
 
     public class LoginController : SfaControllerBase
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly AccountUnlockViewModelServerValidator _accountUnlockViewModelServerValidator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly LoginViewModelServerValidator _loginViewModelServerValidator;
@@ -125,6 +128,22 @@
                 AccountUnlockViewModelMessages.AccountUnlockCodeMessages.WrongAccountUnlockCodeErrorText);
 
             return View(model);
+        }
+
+        public ActionResult ResendAccountUnlockCode(string emailAddress)
+        {
+            var model = new AccountUnlockViewModel
+            {
+                EmailAddress = emailAddress
+            };
+
+            Logger.Debug("{0} requested account unlock code", model.EmailAddress);
+
+            _candidateServiceProvider.RequestAccountUnlockCode(model);
+
+            TempData["EmailAddress"] = model.EmailAddress;
+
+            return RedirectToAction("AccountUnlock");
         }
 
         #region Helpers

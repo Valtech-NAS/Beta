@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Communication.Strategies
 {
-    using System;
     using System.Collections.Generic;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Messaging;
