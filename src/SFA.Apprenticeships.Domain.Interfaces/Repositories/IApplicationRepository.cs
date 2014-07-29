@@ -7,7 +7,10 @@
 
     public interface IApplicationReadRepository : IReadRepository<ApplicationDetail>
     {
+        ApplicationDetail Get(Expression<Func<ApplicationDetail, bool>> filter);
+
         IList<ApplicationSummary> GetForCandidate(Guid candidateId);
+
         ApplicationDetail GetForCandidate(Guid candidateId, Expression<Func<ApplicationDetail, bool>> filter);
     }
 

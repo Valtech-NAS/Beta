@@ -36,6 +36,9 @@
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="SFA.Apprenticeships.Application.Candidate">
+      <HintPath>..\SFA.Apprenticeships.Web.Candidate\Bin\SFA.Apprenticeships.Application.Candidate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -43,9 +46,14 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ApplicationStatusProcessor.cs" />
     <Compile Include="ApplicationStatusUpdater.cs" />
+    <Compile Include="Entities\StorageQueueMessage.cs" />
+    <Compile Include="IApplicationStatusProcessor.cs" />
     <Compile Include="IApplicationStatusUpdater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategies\ApplicationStatusUpdateStrategy.cs" />
+    <Compile Include="Strategies\IApplicationStatusUpdateStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

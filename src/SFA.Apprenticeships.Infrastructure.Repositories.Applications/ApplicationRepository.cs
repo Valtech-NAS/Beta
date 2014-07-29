@@ -51,6 +51,13 @@
             throw new NotImplementedException();
         }
 
+        public ApplicationDetail Get(Expression<Func<ApplicationDetail, bool>> filter)
+        {
+            //todo: return the first application that matches the filter
+            // .FirstOrDefault()
+            throw new NotImplementedException();
+        }
+
         public IList<ApplicationSummary> GetForCandidate(Guid candidateId)
         {
             //todo: retrieve applications for the specified candidate, should exclude any that are archived

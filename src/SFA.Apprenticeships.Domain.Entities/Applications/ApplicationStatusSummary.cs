@@ -5,7 +5,7 @@
 
     public class ApplicationStatusSummary
     {
-        public Guid ApplicationId { get; set; }
+        public Guid? ApplicationId { get; set; }
 
         public int LegacyApplicationId { get; set; }
 
