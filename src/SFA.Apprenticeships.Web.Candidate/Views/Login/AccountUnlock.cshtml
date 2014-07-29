@@ -6,6 +6,12 @@
 }
 
 <h1 id="account-unlock-h1" class="heading-large">Unlock account</h1>
+
+@if (TempData["ResentAccountUnlockCode"] != null)
+{
+    <p id="Preamble">Hello, @Model.EmailAddress.</p>
+}
+
 <p class="text">Enter your 6-digit code to unlock your account</p>
 
 @using (Html.BeginForm("AccountUnlock", "Login", FormMethod.Post, new { @id = "account-unlock-form" }))
@@ -24,7 +30,11 @@
     </div>
 
     <div class="form-group">
-        @Html.ActionLink("Resend code", "ResendAccountUnlockCode", new { @emailAddress = Model.EmailAddress }, null)
+        @Html.ActionLink(
+        linkText: "Resend code",
+        actionName: "ResendAccountUnlockCode",
+        routeValues: new { @emailAddress = Model.EmailAddress },
+        htmlAttributes: new { @id = "ResendAccountUnlockCodeLink" })
     </div>
 
     @Html.HiddenFor(m => m.EmailAddress)
