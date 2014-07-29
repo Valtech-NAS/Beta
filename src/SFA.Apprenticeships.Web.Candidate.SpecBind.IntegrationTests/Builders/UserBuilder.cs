@@ -41,6 +41,8 @@
 
         public UserBuilder WithLoginIncorrectAttempts(int loginIncorrectAttempts)
         {
+            User.LoginIncorrectAttempts = loginIncorrectAttempts;
+
             return this;
         }
 
@@ -62,10 +64,17 @@
             
             return this;
         }
-        public UserBuilder WithAccountUnlockCode(DateTime passwordResetCodeExpiry)
+        public UserBuilder WithAccountUnlockCode(string accountUnlockCode)
         {
-            User.PasswordResetCodeExpiry = passwordResetCodeExpiry;
+            User.AccountUnlockCode = accountUnlockCode;
             
+            return this;
+        }
+
+        public UserBuilder WithAccountUnlockCodeExpiry(DateTime accountUnlockCodeExpiry)
+        {
+            User.AccountUnlockCodeExpiry = accountUnlockCodeExpiry;
+
             return this;
         }
 

@@ -12,7 +12,7 @@
 {
     <div class="form-group">
         <p class="form-label">Email address</p>
-        <span class="form-prepopped">@Html.DisplayFor(m => m.EmailAddress)</span>
+        <span id="EmailAddressText" class="form-prepopped">@Html.DisplayFor(m => m.EmailAddress)</span>
     </div>
 
     @Html.Partial("ValidationSummary", ViewData.ModelState)

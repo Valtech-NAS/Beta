@@ -3,7 +3,7 @@
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
 
-    [PageNavigation("/login")]
+    [PageNavigation("/login/accountunlock")]
     [PageAlias("AccountUnlockPage")]
     public class AccountUnlockPage : BaseValidationPage
     {
@@ -11,6 +11,9 @@
             : base(context)
         {
         }
+
+        [ElementLocator(Id = "EmailAddressText")]
+        public IWebElement EmailAddressText { get; set; }
 
         [ElementLocator(Id = "EmailAddress")]
         public IWebElement EmailAddress { get; set; }

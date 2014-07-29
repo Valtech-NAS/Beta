@@ -45,7 +45,6 @@
 
             if (authenticated)
             {
-                // TODO: AG: US458: user.ClearPasswordResetAttributes();
                 var candidate = _candidateReadRepository.Get(user.EntityId);
 
                 //_auditLog.Info(AuditEvents.SuccessfulLogon, username); // TODO: audit successful logon (named logger)
@@ -56,7 +55,6 @@
             RegisterFailedLogin(user);
             // either way, throw an exception to indicate failed auth
 
-            // TODO: AG: US458: let's start creating some of these (or use AuthenticateResult).
             throw new Exception("Authentication failed"); // TODO: EXCEPTION: should use an application exception type
         }
 
@@ -67,13 +65,14 @@
             // TODO: AG: need class for application setting names.
             var maximumPasswordAttemptsAllowed = _configManager.GetAppSetting<int>("MaximumPasswordAttemptsAllowed");
 
-            if (user.LoginIncorrectAttempts == maximumPasswordAttemptsAllowed)
+            user.LoginIncorrectAttempts++;
+
+            if (user.LoginIncorrectAttempts >= maximumPasswordAttemptsAllowed)
             {
                 _lockAccountStrategy.LockAccount(user);
             }
             else
             {
-                user.LoginIncorrectAttempts++;
                 _userWriteRepository.Save(user);
             }
         }

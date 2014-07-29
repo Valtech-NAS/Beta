@@ -89,10 +89,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HomePage.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Login\AccountUnlock.feature.cs">
+    <Compile Include="Features\Login\AccountLock.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AccountUnlock.feature</DependentUpon>
+      <DependentUpon>AccountLock.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Login\LoginCandidate.feature.cs">
       <AutoGen>True</AutoGen>
@@ -142,9 +142,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>HomePage.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Login\AccountUnlock.feature">
+    <None Include="Features\Login\AccountLock.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>AccountUnlock.feature.cs</LastGenOutput>
+      <LastGenOutput>AccountLock.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Login\LoginCandidate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
