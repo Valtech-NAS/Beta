@@ -48,7 +48,7 @@
             For<IUnlockAccountStrategy>().Use<UnlockAccountStrategy>();
             For<ILockAccountStrategy>().Use<LockAccountStrategy>();
             For<IAuthenticateCandidateStrategy>().Use<AuthenticateCandidateStrategy>();
-            For<ICreateApplicationStrategy>().Use<CreateApplicationStrategy>();
+            For<ICreateApplicationStrategy>().Use<LegacyCreateApplicationStrategy>();
             For<IUserAccountService>().Use<UserAccountService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<IAuthenticationService>().Use<AuthenticationService>();

@@ -47,7 +47,7 @@
     <Compile Include="Strategies\IGetCandidateApplicationsStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\AuthenticateCandidateStrategy.cs" />
-    <Compile Include="Strategies\CreateApplicationStrategy.cs" />
+    <Compile Include="Strategies\LegacyCreateApplicationStrategy.cs" />
     <Compile Include="Strategies\IAuthenticateCandidateStrategy.cs" />
     <Compile Include="Strategies\ICreateApplicationStrategy.cs" />
     <Compile Include="Strategies\ILegacyApplicationStatusesProvider.cs" />
