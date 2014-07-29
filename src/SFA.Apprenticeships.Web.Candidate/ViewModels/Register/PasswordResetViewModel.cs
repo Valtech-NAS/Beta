@@ -19,5 +19,6 @@
         public string Password { get; set; }
 
         public bool IsPasswordResetSuccessful { get; set; }
+        public bool IsPasswordResetCodeInvalid { get; set; }
     }
 }

@@ -45,6 +45,16 @@
             validator.RuleFor(x => x.Password)
                 .Must(IsPasswordResetSuccessful)
                 .WithMessage(PasswordResetViewModelMessages.PasswordMessages.FailedPasswordResetErrorText);
+
+            validator.RuleFor(x => x.PasswordResetCode)
+                .Must(IsPasswordResetCodeInvalid)
+                .WithName(PasswordResetViewModelMessages.PasswordResetCode.CodeErrorText);
+        }
+
+        private static bool IsPasswordResetCodeInvalid(PasswordResetViewModel model, string passwordResetCode)
+        {
+            return passwordResetCode != null &&
+                   (!string.IsNullOrEmpty(passwordResetCode) && model.IsPasswordResetCodeInvalid);
         }
 
         private static bool IsPasswordResetSuccessful(PasswordResetViewModel model, string password)

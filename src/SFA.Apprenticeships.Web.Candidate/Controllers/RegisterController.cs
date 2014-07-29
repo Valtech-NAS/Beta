@@ -9,6 +9,7 @@
     using Common.Providers;
     using Constants.ViewModels;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
     using FluentValidation.Mvc;
     using FluentValidation.Results;
     using NLog;
@@ -142,7 +143,7 @@
 
             Logger.Debug("{0} requested password reset code", model.EmailAddress);
 
-           _candidateServiceProvider.RequestForgottenPasswordReset(model);
+            _candidateServiceProvider.RequestForgottenPasswordReset(model);
 
             TempData["ForgottenPasswordEmailAddress"] = model.EmailAddress;
 
@@ -165,13 +166,37 @@
             {
                 _candidateServiceProvider.VerifyPasswordReset(model);
                 model.IsPasswordResetSuccessful = true;
+                model.IsPasswordResetCodeInvalid = true;
             }
-            catch (Exception)
+            catch (CustomException exception)
             {
-                
-                throw;
+                switch (exception.Code)
+                {
+                    case ErrorCodes.UnknownUserError:
+                        model.IsPasswordResetSuccessful = false;
+                        model.IsPasswordResetCodeInvalid = false;
+                        break;
+                    case ErrorCodes.UserAccountLockedError:
+                        TempData["EmailAddress"] = model.EmailAddress;
+                        return RedirectToAction("AccountUnlock", "Login");
+                    case ErrorCodes.UserInIncorrectStateError:
+                        model.IsPasswordResetCodeInvalid = false;
+                        model.IsPasswordResetSuccessful = false;
+                        break;
+                    case ErrorCodes.UserPasswordResetCodeExpiredError:
+                        model.IsPasswordResetCodeInvalid = false;
+                        break;
+                    case ErrorCodes.UserPasswordResetCodeIsInvalid:
+                        model.IsPasswordResetCodeInvalid = false;
+                        model.IsPasswordResetSuccessful = false;
+                        break;
+                    default:
+                        model.IsPasswordResetSuccessful = false;
+                        model.IsPasswordResetCodeInvalid = false;
+                        break;
+                }
             }
-            
+
             ValidationResult validationResult = _passwordResetViewModelServerValidator.Validate(model);
 
             if (validationResult.IsValid)
@@ -186,11 +211,11 @@
         }
 
         #region Helpers
-	[AllowCrossSiteJson]
+        [AllowCrossSiteJson]
         public JsonResult CheckUsername(string username)
         {
             bool usernameIsAvailable = IsUsernameAvailable(username);
-            return Json(new {usernameIsAvailable}, JsonRequestBehavior.AllowGet);
+            return Json(new { usernameIsAvailable }, JsonRequestBehavior.AllowGet);
         }
 
         private bool IsUsernameAvailable(string username)
@@ -209,7 +234,7 @@
 
             UserServiceProvider.SetUserContextCookie(
                 HttpContext, registrationDetails.EmailAddress, fullName);
-                
+
         }
 
         private ActionResult SetAuthenticationCookieAndRedirectToAction()
