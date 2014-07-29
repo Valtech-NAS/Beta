@@ -26,11 +26,11 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
         public override void Run()
         {
-            Logger.Debug("Vanancy Etl Process Run Called");
+            Logger.Debug("Vacancy Etl Process Run Called");
 
             if (!Initialise())
             {
-                Logger.Fatal("Vanancy Etl Process failed to initialise");
+                Logger.Fatal("Vacancy Etl Process failed to initialise");
                 return;
             }
 
@@ -73,7 +73,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                     x.AddRegistry<ElasticsearchCommonRegistry>();
                 });
 
-                Logger.Debug("Vanancy Etl Process IoC initialized");
+                Logger.Debug("Vacancy Etl Process IoC initialized");
 
                 var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
                 subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(VacancySummaryConsumerAsync)), "VacancyEtl");
@@ -81,19 +81,19 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
                 _vacancySchedulerConsumer = ObjectFactory.GetInstance<VacancySchedulerConsumer>();
 
-                Logger.Debug("Vanancy Etl Process setup complete");
+                Logger.Debug("Vacancy Etl Process setup complete");
                 return true;
             }
             catch (Exception ex)
             {
-                Logger.Error("Vanancy Etl Process failed to initialise", ex);
+                Logger.Error("Vacancy Etl Process failed to initialise", ex);
                 return false;
             }
         }
 
         public override bool OnStart()
         {
-            Logger.Debug("Vanancy Etl Process OnStart called");
+            Logger.Debug("Vacancy Etl Process OnStart called");
 
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
@@ -106,7 +106,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
         public override void OnStop()
         {
-            Logger.Debug("Vanancy Etl Process OnStop called");
+            Logger.Debug("Vacancy Etl Process OnStop called");
 
             // Kill the bus which will kill any subscriptions
             ObjectFactory.GetInstance<IBus>().Advanced.Dispose();
