@@ -37,12 +37,13 @@ Scenario: As a candidate I must provide an email address and password
 
 @ignore
 Scenario: As a candidate I cannot login with an invalid password
-	Given I navigated to the LoginCandidatePage page
+	Given I registered an account and activated it
+	And I navigated to the LoginCandidatePage page
 	When I am on the LoginCandidatePage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {InvalidPassword}   |
+		| Field        | Value                  |
+		| EmailAddress | {EmailAddressToken}    |
+		| Password     | {InvalidPasswordToken} |
 	And I choose SignInButton
 	And I wait to see ValidationSummary
 	Then I see

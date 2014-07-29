@@ -46,6 +46,13 @@
             }
         }
 
+        public static void ClearPasswordResetAttributes(User user)
+        {
+            user.PasswordResetCode = null;
+            user.PasswordResetCodeExpiry = null;
+            user.PasswordResetIncorrectAttempts = 0;
+        }
+
         private static void ClearUserAttributes(User user)
         {
             user.AccountUnlockCode = null;
@@ -56,9 +63,7 @@
             user.ActivationCode = null;
             user.ActivateCodeExpiry = null;
 
-            user.PasswordResetCode = null;
-            user.PasswordResetCodeExpiry = null;
-            user.PasswordResetIncorrectAttempts = 0;
+            ClearPasswordResetAttributes(user);
         }
     }
 }

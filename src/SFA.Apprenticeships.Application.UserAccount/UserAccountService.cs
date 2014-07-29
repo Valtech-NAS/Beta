@@ -101,21 +101,28 @@
             _unlockAccountStrategy.UnlockAccount(username, accountUnlockCode);
         }
 
-        public User GetUser(string username)
+        public UserStatuses GetUserStatus(string username)
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
-            User user = _userReadRepository.Get(username);
+            var user = _userReadRepository.Get(username, false);
 
-            return user;
+            if (user == null)
+            {
+                // TODO: AG: US444: UserStatuses.NotFound?
+                return UserStatuses.Unknown;
+            }
+
+            return user.Status;
         }
 
-        public string[] GetRoleNames(User user)
+        public string[] GetRoleNames(string username)
         {
             var claims = new List<string>();
+            var userStatus = GetUserStatus(username);
 
             // Add 'roles' for user status.
-            switch (user.Status)
+            switch (userStatus)
             {
                 case UserStatuses.Active:
                     claims.Add(UserRoleNames.Activated);

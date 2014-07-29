@@ -299,6 +299,7 @@
     </Content>
     <Content Include="Views\Register\ForgottenPassword.cshtml" />
     <Content Include="Views\Register\ResetPassword.cshtml" />
+    <Content Include="Views\Login\AccountUnlock.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -379,6 +380,7 @@
     <Compile Include="Constants\ViewModels\ActivationCodeMessages.cs" />
     <Compile Include="Constants\ViewModels\ForgottenPasswordViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\LoginViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\AccountUnlockViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\PasswordResetViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\RegisterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EducationMessages.cs" />
@@ -416,6 +418,7 @@
     <Compile Include="Validators\DateOfBirthViewModelValidator.cs" />
     <Compile Include="Validators\ForgottenPasswordViewModelValidator.cs" />
     <Compile Include="Validators\LoginViewModelValidator.cs" />
+    <Compile Include="Validators\AccountUnlockViewModelValidator.cs" />
     <Compile Include="Validators\PasswordResetViewModelValidator.cs" />
     <Compile Include="Validators\RegisterViewModelValidator.cs" />
     <Compile Include="Validators\EducationViewModelValidator.cs" />
@@ -433,6 +436,7 @@
     <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
+    <Compile Include="ViewModels\Login\AccountUnlockViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenPasswordViewModel.cs" />
     <Compile Include="ViewModels\Login\LoginViewModel.cs" />
     <Compile Include="ViewModels\Register\ActivationViewModel.cs" />

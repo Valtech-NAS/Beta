@@ -43,6 +43,11 @@
             return _userAccountService.IsUsernameAvailable(username);
         }
 
+        public UserStatuses GetUserStatus(string username)
+        {
+            return _userAccountService.GetUserStatus(username);
+        }
+
         public bool Register(RegisterViewModel model)
         {
             try
@@ -75,11 +80,8 @@
             }
         }
 
-        public bool Authenticate(LoginViewModel model, out UserStatuses userStatus)
+        public bool Authenticate(LoginViewModel model)
         {
-            // Default out parameter.
-            userStatus = UserStatuses.Unknown;
-
             try
             {
                 var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
@@ -90,11 +92,7 @@
                     return false;
                 }
 
-                var user = _userAccountService.GetUser(model.EmailAddress);
-
-                SetLoggedInCookies(candidate, user);
-                userStatus = user.Status;
-
+                SetLoggedInCookies(candidate);
                 return true;
             }
             catch (Exception ex)
@@ -132,6 +130,20 @@
             {
                 LogError("Reset forgotten password failed for {0}", model.EmailAddress, ex);
                 throw ;
+            }
+        }
+
+        public bool VerifyAccountUnlockCode(AccountUnlockViewModel model)
+        {
+            try
+            {
+                _userAccountService.UnlockAccount(model.EmailAddress, model.AccountUnlockCode);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                LogError("Account unlock failed for {0}.", model.EmailAddress, ex);
+                return false;
             }
         }
 
@@ -173,11 +185,11 @@
         #region Helpers
 
         // TODO: AG: consolidate cookie setting.
-        private void SetLoggedInCookies(Candidate candidate, User user)
+        private void SetLoggedInCookies(Candidate candidate)
         {
             var registrationDetails = candidate.RegistrationDetails;
             var candidateId = candidate.EntityId.ToString();
-            var roles = _userAccountService.GetRoleNames(user);
+            var roles = _userAccountService.GetRoleNames(registrationDetails.EmailAddress);
 
             var httpContext = new HttpContextWrapper(HttpContext.Current);
 
@@ -215,6 +227,7 @@
         private static void LogError(string formatString, string formatValue, Exception ex)
         {
             var message = string.Format(formatString, formatValue);
+
             Logger.ErrorException(message, ex);
         }
 

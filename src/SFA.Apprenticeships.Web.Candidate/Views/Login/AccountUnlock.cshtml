@@ -1,0 +1,27 @@
+﻿@model AccountUnlockViewModel
+
+@{
+    ViewBag.Title = "SFA Apprenticeships - Account Unlock";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 id="account-unlock-h1" class="heading-large">Unlock account</h1>
+<p class="text">Enter your 6-digit code to unlock your account</p>
+
+@using (Html.BeginForm("AccountUnlock", "Login", FormMethod.Post, new { @id = "account-unlock-form" }))
+{
+    <div class="form-group">
+        <p class="form-label">Email address</p>
+        <span class="form-prepopped">@Html.DisplayFor(m => m.EmailAddress)</span>
+    </div>
+
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    @Html.FormTextFor(m => m.AccountUnlockCode, controlHtmlAttributes: new { @class = "form-control-2-3", @maxlength = "6" })
+
+    <div class="form-group">
+        <button class="button" id="verify-code-button">Verify code</button>
+    </div>
+
+    @Html.HiddenFor(m => m.EmailAddress)
+}

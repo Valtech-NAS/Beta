@@ -89,6 +89,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HomePage.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Login\AccountUnlock.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountUnlock.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Login\LoginCandidate.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -135,6 +140,10 @@
     <None Include="Features\HomePage.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>HomePage.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Login\AccountUnlock.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>AccountUnlock.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Login\LoginCandidate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

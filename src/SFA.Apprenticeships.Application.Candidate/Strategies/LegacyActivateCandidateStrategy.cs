@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using System;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
 
@@ -26,8 +27,7 @@
             var user = _userReadRepository.Get(username);
             var candidate = _candidateReadRepository.Get(user.EntityId);
 
-            //todo: use a helper here to assert state == pending (no need to cover all other specific states)
-            //user.AssertState(UserStatuses.PendingActivation, "User is in invalid state for activation");
+            user.AssertState("User is in invalid state for activation", UserStatuses.PendingActivation);
             
             var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
             candidate.LegacyCandidateId = legacyCandidateId;

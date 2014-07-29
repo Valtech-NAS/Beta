@@ -11,10 +11,10 @@
         int? LastViewedVacancyId { get; set; }
         bool Activate(ActivationViewModel model, string candidateId);
         bool IsUsernameAvailable(string username);
-        bool Authenticate(LoginViewModel model, out UserStatuses userStatus);
-
+        UserStatuses GetUserStatus(string username);
+        bool Authenticate(LoginViewModel model);
         void RequestForgottenPasswordReset(ForgottenPasswordViewModel model);
-
         bool VerifyPasswordReset(PasswordResetViewModel model);
+        bool VerifyAccountUnlockCode(AccountUnlockViewModel model);
     }
 }
