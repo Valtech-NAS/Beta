@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Services
 {
     using System;
+    using System.Linq;
     using System.Web;
     using System.Web.Security;
     using NLog;
@@ -42,20 +43,19 @@
 
         public FormsAuthenticationTicket GetTicket(HttpCookieCollection cookies)
         {
-            var cookie = cookies.Get(CookieName);
-
-            if (cookie == null || string.IsNullOrWhiteSpace(cookie.Value))
+            if (!TicketExists(cookies))
             {
                 return null;
             }
+
+            var cookie = cookies[CookieName];
 
             return FormsAuthentication.Decrypt(cookie.Value);
         }
 
         public void DeleteTicket(HttpCookieCollection cookies)
         {
-
-            if (cookies.Get(CookieName) == null)
+            if (!TicketExists(cookies))
             {
                 return;
             }
@@ -79,20 +79,27 @@
             // Is the expiration within the update window?
             var expiring = timeToExpiry < CookieUpdateWindow;
 
-            if (expiring)
+            if (!expiring)
             {
-                var newTicket = CreateTicket(ticket.Name, ArrayifyClaims(ticket));
-
-                AddTicket(cookies, newTicket);
-
-                Logger.Debug("Ticket issued for {0} because it only had {1}s to expire and the update window is {2}s",
-                    ticket.Name, timeToExpiry, CookieUpdateWindow);
+                return;
             }
+
+            var newTicket = CreateTicket(ticket.Name, ArrayifyClaims(ticket));
+
+            AddTicket(cookies, newTicket);
+
+            Logger.Debug("Ticket issued for {0} because it only had {1}s to expire and the update window is {2}s",
+                ticket.Name, timeToExpiry, CookieUpdateWindow);
         }
 
         public string[] GetClaims(FormsAuthenticationTicket ticket)
         {
             return ArrayifyClaims(ticket);
+        }
+
+        private static bool TicketExists(HttpCookieCollection cookies)
+        {
+            return cookies.AllKeys.Contains(CookieName);
         }
 
         private static HttpCookie CreateExpiredCookie()

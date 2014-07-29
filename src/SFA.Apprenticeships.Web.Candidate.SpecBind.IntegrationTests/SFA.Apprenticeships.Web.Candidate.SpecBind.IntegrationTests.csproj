@@ -82,16 +82,24 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Bindings\DataGeneratorBinding.cs" />
+    <Compile Include="Builders\CandidateBuilder.cs" />
+    <Compile Include="Builders\UserBuilder.cs" />
     <Compile Include="Features\HomePage.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>HomePage.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Login\AccountLock.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountLock.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Login\LoginCandidate.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LoginCandidate.feature</DependentUpon>
     </Compile>
+    <Compile Include="Bindings\Login\LoginCandidateDataBinding.cs" />
     <Compile Include="Features\Registration\RegisterCandidate.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,10 +110,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>VacancySearch.feature</DependentUpon>
     </Compile>
+    <Compile Include="IoC\WebTestRegistry.cs" />
     <Compile Include="Pages\BaseValidationPage.cs" />
+    <Compile Include="Pages\Login\AccountUnlockPage.cs" />
     <Compile Include="Pages\Login\LoginCandidatePage.cs" />
     <Compile Include="Pages\Registration\ActivationPage.cs" />
     <Compile Include="Pages\Registration\RegisterCandidatePage.cs" />
+    <Compile Include="Pages\VacancySearch\DetailsPage.cs" />
     <Compile Include="Pages\VacancySearch\VacancySearchResultPage.cs" />
     <Compile Include="Pages\VacancySearch\VacancySearchPage.cs" />
     <Compile Include="Pages\HomePage.cs" />
@@ -131,6 +142,10 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>HomePage.feature.cs</LastGenOutput>
     </None>
+    <None Include="Features\Login\AccountLock.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>AccountLock.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\Login\LoginCandidate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>LoginCandidate.feature.cs</LastGenOutput>
@@ -149,6 +164,22 @@
     <None Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Authentication\SFA.Apprenticeships.Application.Authentication.csproj">
+      <Project>{2752E3B6-358D-4C06-A31F-867304CAC53D}</Project>
+      <Name>SFA.Apprenticeships.Application.Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
+      <Project>{984F8CD2-61B3-48A4-B0CC-5D05E235983D}</Project>
+      <Name>SFA.Apprenticeships.Application.Candidate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
+      <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>
+      <Name>SFA.Apprenticeships.Application.UserAccount</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
@@ -161,9 +192,21 @@
       <Project>{78b1f2a1-dcc3-4ed3-8ce0-16e0781b59fa}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Mongo.Common\SFA.Apprenticeships.Infrastructure.Mongo.Common.csproj">
+      <Project>{CE62BDE8-C127-4808-95F8-5F5E24485830}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Mongo.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Candidates\SFA.Apprenticeships.Infrastructure.Repositories.Candidates.csproj">
+      <Project>{AA87BD85-5A33-46B8-B26F-C6B680876486}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">
       <Project>{4696d786-2f3c-4a12-bd6b-38e2981d6df1}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Users</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.UserDirectory\SFA.Apprenticeships.Infrastructure.UserDirectory.csproj">
+      <Project>{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.UserDirectory</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

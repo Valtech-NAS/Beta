@@ -17,10 +17,10 @@
 
         void SetUserContextCookie(HttpContextBase httpContext, string userName, string fullName);
 
-        void SetAuthenticationReturnUrlCookie(HttpContextBase httpContext, string returnUrl);
+        void SetReturnUrlCookie(HttpContextBase httpContext, string returnUrl);
 
-        string GetAuthenticationReturnUrl(HttpContextBase httpContext);
+        string GetReturnUrl(HttpContextBase httpContext);
 
-        void DeleteAuthenticationReturnUrlCookie(HttpContextBase httpContext);
+        void DeleteReturnUrlCookie(HttpContextBase httpContext);
     }
 }

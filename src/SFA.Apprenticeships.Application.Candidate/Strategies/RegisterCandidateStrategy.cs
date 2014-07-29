@@ -12,22 +12,22 @@
     public class RegisterCandidateStrategy : IRegisterCandidateStrategy
     {
         private readonly int _activationCodeExpiryDays;
+        private readonly IUserAccountService _userAccountService;
         private readonly IAuthenticationService _authenticationService;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly ICodeGenerator _codeGenerator;
         private readonly ICommunicationService _communicationService;
-        private readonly IUserAccountService _registrationService;
         private readonly IUserReadRepository _userReadRepository;
 
         public RegisterCandidateStrategy(IConfigurationManager configurationManager,
-            IUserAccountService registrationService,
+            IUserAccountService userAccountService,
             IAuthenticationService authenticationService,
             ICandidateWriteRepository candidateWriteRepository,
             ICommunicationService communicationService,
             ICodeGenerator codeGenerator,
             IUserReadRepository userReadRepository)
         {
-            _registrationService = registrationService;
+            _userAccountService = userAccountService;
             _authenticationService = authenticationService;
             _candidateWriteRepository = candidateWriteRepository;
             _communicationService = communicationService;
@@ -46,8 +46,9 @@
             {
                 // Process registration for brand new username
                 var newCandidateId = Guid.NewGuid();
+
                 _authenticationService.CreateUser(newCandidateId, password);
-                _registrationService.Register(username, newCandidateId, activationCode, UserRoles.Candidate);
+                _userAccountService.Register(username, newCandidateId, activationCode, UserRoles.Candidate);
 
                 return SaveAndNotifyCandidate(newCandidateId, newCandidate, activationCode);
             }
@@ -62,7 +63,7 @@
 
             // Process existing username in an expired pending activation status
             _authenticationService.ResetUserPassword(user.EntityId, password);
-            _registrationService.Register(username, user.EntityId, user.ActivationCode, UserRoles.Candidate);
+            _userAccountService.Register(username, user.EntityId, user.ActivationCode, UserRoles.Candidate);
 
             return SaveAndNotifyCandidate(user.EntityId, newCandidate, activationCode);
         }
@@ -86,7 +87,7 @@
             }
 
             var emailAddress = candidate.RegistrationDetails.EmailAddress;
-            var expiry = string.Format("{0}", _activationCodeExpiryDays);
+            var expiry = FormatActivationCodeExpiryDays();
             var firstName = candidate.RegistrationDetails.FirstName;
 
             _communicationService.SendMessageToCandidate(candidate.EntityId, CandidateMessageTypes.SendActivationCode,
@@ -98,6 +99,12 @@
                     new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, emailAddress)
                 });
         }
+
+        private string FormatActivationCodeExpiryDays()
+        {
+            return string.Format(_activationCodeExpiryDays == 1 ? "{0} day" : "{0} days", _activationCodeExpiryDays);
+        }
+
         #endregion
     }
 }

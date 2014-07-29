@@ -89,7 +89,7 @@
 
                 try
                 {
-                    user.SetPassword(newpassword);
+                    SetUserPassword(username, null, newpassword);
                     return true;
                 }
                 catch (PasswordException exception)

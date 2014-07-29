@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Pages.VacancySearch
 {
+    using System;
+    using System.Linq;
     using global::SpecBind.Pages;
     using global::SpecBind.Selenium;
     using OpenQA.Selenium;
@@ -29,6 +31,13 @@
 
         [ElementLocator(Class = "search-results")]
         public IElementList<IWebElement, SearchResultItem> SearchResultItems { get; set; }
+
+        public Tuple<IWebElement, SearchResultItem> FirstSearchResultItem()
+        {
+            var item = SearchResultItems.First();
+
+            return new Tuple<IWebElement, SearchResultItem>(item.WrappedElement, item);
+        }
     }
 
     [ElementLocator(Class = "search-results__item")]

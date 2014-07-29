@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
     using Application.Address;
+    using Application.ApplicationUpdate;
     using Application.Authentication;
     using Application.Candidate;
     using Application.Candidate.Strategies;
@@ -16,6 +17,7 @@
     using Application.UserAccount.Strategies;
     using Application.Vacancy;
     using Domain.Interfaces.Mapping;
+    using Infrastructure.LegacyWebServices.GetCandidateApplicationStatuses;
     using Mappers;
     using Providers;
     using StructureMap.Configuration.DSL;
@@ -52,6 +54,13 @@
             For<IAuthenticationService>().Use<AuthenticationService>();
             For<ICommunicationService>().Use<CommunicationService>();
             For<ICodeGenerator>().Use<CodeGenerator>();
+            For<IGetCandidateApplicationsStrategy>().Use<LegacyGetCandidateApplicationsStrategy>();
+            For<ILegacyApplicationStatusesProvider>().Use<LegacyCandidateApplicationStatusesProvider>();
+            For<IApplicationStatusUpdater>().Use<ApplicationStatusUpdater>();
+
+            For<IGetCandidateApplicationsStrategy>().Use<LegacyGetCandidateApplicationsStrategy>();
+            For<ILegacyApplicationStatusesProvider>().Use<LegacyCandidateApplicationStatusesProvider>();
+            For<IApplicationStatusUpdater>().Use<ApplicationStatusUpdater>();
 
             // providers (web)
             For<IMapper>().Singleton().Use<CandidateWebMappers>().Name = "CandidateWebMappers";

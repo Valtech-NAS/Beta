@@ -30,6 +30,7 @@
                     MiddleName = candidate.RegistrationDetails.MiddleNames,
                     Surname = candidate.RegistrationDetails.LastName,
                     DateOfBirth = candidate.RegistrationDetails.DateOfBirth.Date,
+                    DateOfBirthSpecified = true, // TODO: HACK: remove this flag when WSDL changes (should see a compiler error).
                     AddressLine1 = candidate.RegistrationDetails.Address.AddressLine1,
                     AddressLine2 = candidate.RegistrationDetails.Address.AddressLine2,
                     AddressLine3 = candidate.RegistrationDetails.Address.AddressLine3,

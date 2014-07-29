@@ -17,7 +17,7 @@
         [ElementLocator(Id = "Password")]
         public IWebElement Password { get; set; }
 
-        [ElementLocator(Id = "signInButton")]
+        [ElementLocator(Id = "sign-in-button")]
         public IWebElement SignInButton { get; set; }
     }
 }

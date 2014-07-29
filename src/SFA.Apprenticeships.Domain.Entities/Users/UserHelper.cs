@@ -22,12 +22,13 @@
             user.PasswordResetCodeExpiry = expiry;
         }
 
-        public static void SetStateLocked(this User user, string accountUnlockCode)
+        public static void SetStateLocked(this User user, string accountUnlockCode, DateTime expiry)
         {
             ClearUserAttributes(user);
 
             user.Status = UserStatuses.Locked;
             user.AccountUnlockCode = accountUnlockCode;
+            user.AccountUnlockCodeExpiry = expiry;
         }
 
         public static void SetStateActive(this User user)
@@ -45,17 +46,24 @@
             }
         }
 
+        public static void ClearPasswordResetAttributes(User user)
+        {
+            user.PasswordResetCode = null;
+            user.PasswordResetCodeExpiry = null;
+            user.PasswordResetIncorrectAttempts = 0;
+        }
+
         private static void ClearUserAttributes(User user)
         {
             user.AccountUnlockCode = null;
+            user.AccountUnlockCodeExpiry = null;
+
             user.LoginIncorrectAttempts = 0;
 
             user.ActivationCode = null;
             user.ActivateCodeExpiry = null;
 
-            user.PasswordResetCode = null;
-            user.PasswordResetCodeExpiry = null;
-            user.PasswordResetIncorrectAttempts = 0;
+            ClearPasswordResetAttributes(user);
         }
     }
 }

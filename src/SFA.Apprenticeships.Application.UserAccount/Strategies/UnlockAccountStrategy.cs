@@ -1,19 +1,48 @@
 ﻿namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
     using System;
+    using Domain.Entities.Users;
+    using Domain.Interfaces.Repositories;
 
     public class UnlockAccountStrategy : IUnlockAccountStrategy
     {
+        private readonly IUserReadRepository _userReadRepository;
+        private readonly IUserWriteRepository _userWriteRepository;
+        private IResendAccountUnlockCodeStrategy _resendAccountUnlockCodeStrategy;
+
+        public UnlockAccountStrategy(
+            IUserReadRepository userReadRepository,
+            IUserWriteRepository userWriteRepository,
+            IResendAccountUnlockCodeStrategy resendAccountUnlockCodeStrategy)
+        {
+            _userReadRepository = userReadRepository;
+            _userWriteRepository = userWriteRepository;
+            _resendAccountUnlockCodeStrategy = resendAccountUnlockCodeStrategy;
+        }
+
         public void UnlockAccount(string username, string accountUnlockCode)
         {
-            //var user = _userReadRepository.Get(username);
-            // TODO: NOTIMPL: check status of user (only allowed if locked)
+            var user = _userReadRepository.Get(username);
 
-            // TODO: check if code is correct and not expired
+            user.AssertState("Cannot unlock an account that is not locked.", UserStatuses.Locked);
 
-            // TODO: if correct then update user account status and clear user properties related to locking
+            if (!user.AccountUnlockCode.Equals(accountUnlockCode, StringComparison.InvariantCultureIgnoreCase))
+            {
+                // TODO: AG: US444: EXCEPTION: should use an application exception type
+                throw new Exception("Invalid account unlock code.");
+            }
 
-            throw new NotImplementedException();
+            if (user.ActivateCodeExpiry < DateTime.Now)
+            {
+                // TODO: AG: US444: EXCEPTION: should use an application exception type
+                _resendAccountUnlockCodeStrategy.ResendAccountUnlockCode(username);
+
+                throw new Exception("Account unlock code has expired, new account unlock code has been sent.");
+            }
+
+            user.SetStateActive();
+
+            _userWriteRepository.Save(user);
         }
     }
 }

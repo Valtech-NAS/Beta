@@ -23,5 +23,7 @@
         public int PasswordResetIncorrectAttempts { get; set; }
 
         public string AccountUnlockCode { get; set; }
+
+        public DateTime? AccountUnlockCodeExpiry { get; set; }
     }
 }

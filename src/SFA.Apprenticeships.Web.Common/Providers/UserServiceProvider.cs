@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Providers
 {
     using System;
+    using System.Linq;
     using System.Web;
     using Domain.Entities.Users;
     using Services;
@@ -28,7 +29,12 @@
 
         public UserContext GetUserContext(HttpContextBase httpContext)
         {
-            var cookie = httpContext.Request.Cookies.Get(CookieNames.UserContext);
+            if (!CookieExists(httpContext.Request.Cookies, CookieNames.UserContext))
+            {
+                return null;
+            }
+
+            var cookie = httpContext.Request.Cookies[CookieNames.UserContext];
 
             if (cookie == null)
             {
@@ -44,15 +50,9 @@
 
         public string[] GetUserClaims(HttpContextBase httpContext)
         {
-            var ticket =
-                _authenticationTicketService.GetTicket(httpContext.Request.Cookies);
+            var ticket = _authenticationTicketService.GetTicket(httpContext.Request.Cookies);
 
-            if (ticket == null)
-            {
-                return new string[] { };
-            }
-
-            return _authenticationTicketService.GetClaims(ticket);
+            return ticket == null ? new string[] { } : _authenticationTicketService.GetClaims(ticket);
         }
 
         public void SetAuthenticationCookie(HttpContextBase httpContext, string userName, params string[] claims)
@@ -82,9 +82,9 @@
             httpContext.Response.Cookies.Add(cookie);
         }
 
-        public void SetAuthenticationReturnUrlCookie(HttpContextBase httpContext, string returnUrl)
+        public void SetReturnUrlCookie(HttpContextBase httpContext, string returnUrl)
         {
-            string currentReturnUrl = GetAuthenticationReturnUrl(httpContext);
+            var currentReturnUrl = GetReturnUrl(httpContext);
 
             if (!String.IsNullOrWhiteSpace(currentReturnUrl))
             {
@@ -97,19 +97,19 @@
             httpContext.Response.Cookies.Add(cookie);
         }
 
-        public string GetAuthenticationReturnUrl(HttpContextBase httpContext)
+        public string GetReturnUrl(HttpContextBase httpContext)
         {
-            var cookie = httpContext.Request.Cookies.Get(CookieNames.UserAuthReturnUrl);
-
-            if (cookie == null)
+            if (!CookieExists(httpContext.Request.Cookies, CookieNames.UserAuthReturnUrl))
             {
-                return null;
+                return null;    
             }
 
-            return cookie.Value;
+            var cookie = httpContext.Request.Cookies[CookieNames.UserAuthReturnUrl];
+
+            return cookie == null ? null : cookie.Value;
         }
 
-        public void DeleteAuthenticationReturnUrlCookie(HttpContextBase httpContext)
+        public void DeleteReturnUrlCookie(HttpContextBase httpContext)
         {
             if (httpContext.Request.Cookies.Get(CookieNames.UserAuthReturnUrl) == null)
             {
@@ -127,6 +127,11 @@
             };
 
             return cookie;
+        }
+
+        private static bool CookieExists(HttpCookieCollection cookies, string name)
+        {
+            return cookies.AllKeys.Contains(name);
         }
     }
 }

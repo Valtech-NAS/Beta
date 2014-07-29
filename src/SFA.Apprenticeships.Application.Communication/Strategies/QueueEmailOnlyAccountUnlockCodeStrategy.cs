@@ -3,13 +3,29 @@
     using System;
     using System.Collections.Generic;
     using Domain.Entities.Candidates;
+    using Domain.Interfaces.Messaging;
     using Interfaces.Messaging;
 
     public class QueueEmailOnlyAccountUnlockCodeStrategy : ISendAccountUnlockCodeStrategy
     {
+        private readonly IMessageBus _bus;
+
+        public QueueEmailOnlyAccountUnlockCodeStrategy(IMessageBus bus)
+        {
+            _bus = bus;
+        }
+
         public void Send(Candidate candidate, CandidateMessageTypes messageType, IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
         {
-            throw new NotImplementedException();
+            var request = new EmailRequest
+            {
+                ToEmail = candidate.RegistrationDetails.EmailAddress,
+                MessageType = messageType,
+                Tokens = tokens,
+            };
+
+            _bus.PublishMessage(request);
         }
     }
 }
+

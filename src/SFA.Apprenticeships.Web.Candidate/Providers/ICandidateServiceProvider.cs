@@ -7,16 +7,14 @@
 
     public interface ICandidateServiceProvider
     {
+        bool Register(RegisterViewModel model);
         int? LastViewedVacancyId { get; set; }
-        Candidate Register(RegisterViewModel model);
-        bool Activate(ActivationViewModel model);
+        bool Activate(ActivationViewModel model, string candidateId);
         bool IsUsernameAvailable(string username);
-        Candidate Authenticate(LoginViewModel model);
         UserStatuses GetUserStatus(string username);
-        string[] GetRoles(string username);
-
+        bool Authenticate(LoginViewModel model);
         void RequestForgottenPasswordReset(ForgottenPasswordViewModel model);
-
         bool VerifyPasswordReset(PasswordResetViewModel model);
+        bool VerifyAccountUnlockCode(AccountUnlockViewModel model);
     }
 }

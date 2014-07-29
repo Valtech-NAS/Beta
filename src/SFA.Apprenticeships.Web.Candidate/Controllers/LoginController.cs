@@ -4,14 +4,17 @@
     using Common.Controllers;
     using Common.Providers;
     using Constants.ViewModels;
-    using Domain.Entities.Candidates;
+    using Domain.Entities.Users;
     using FluentValidation.Mvc;
     using Providers;
     using Validators;
     using ViewModels.Login;
 
+    // TODO: AG: US444: need to implement resend account unlock code somewhere.
+
     public class LoginController : SfaControllerBase
     {
+        private readonly AccountUnlockViewModelServerValidator _accountUnlockViewModelServerValidator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly LoginViewModelServerValidator _loginViewModelServerValidator;
 
@@ -19,10 +22,12 @@
             ISessionStateProvider session,
             IUserServiceProvider userServiceProvider,
             LoginViewModelServerValidator loginViewModelServerValidator,
+            AccountUnlockViewModelServerValidator accountUnlockViewModelServerValidator,
             ICandidateServiceProvider candidateServiceProvider)
             : base(session, userServiceProvider)
         {
             _loginViewModelServerValidator = loginViewModelServerValidator;
+            _accountUnlockViewModelServerValidator = accountUnlockViewModelServerValidator;
             _candidateServiceProvider = candidateServiceProvider;
         }
 
@@ -31,7 +36,7 @@
         {
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                UserServiceProvider.SetAuthenticationReturnUrlCookie(HttpContext, returnUrl);
+                UserServiceProvider.SetReturnUrlCookie(HttpContext, returnUrl);
             }
 
             return View();
@@ -51,57 +56,135 @@
                 return View(model);
             }
 
-            // Attempt to authenticate candidate.
-            var candidate = _candidateServiceProvider.Authenticate(model);
+            // Authenticate candidate.
+            var authenticated = _candidateServiceProvider.Authenticate(model);
+            var userStatus = _candidateServiceProvider.GetUserStatus(model.EmailAddress);
 
-            if (candidate == null)
+            if (authenticated)
             {
-                // Authentication failed.
+                return RedirectOnAuthenticated(userStatus);
+            }
+
+            if (userStatus == UserStatuses.Locked)
+            {
+                return RedirectOnAccountLocked(model.EmailAddress);
+            }
+
+            // Authentication failed.
+            ModelState.Clear();
+            ModelState.AddModelError(
+                "EmailAddress",
+                LoginViewModelMessages.AuthenticationMessages.AuthenticationFailedErrorText);
+
+            return View(model);
+        }
+
+        // TODO: AG: US444: consider renaming to Unlock.
+
+        [HttpGet]
+        public ActionResult AccountUnlock()
+        {
+            var emailAddress = TempData["EmailAddress"] as string;
+
+            if (string.IsNullOrWhiteSpace(emailAddress))
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(new AccountUnlockViewModel
+            {
+                EmailAddress = emailAddress
+            });
+        }
+
+        [HttpPost]
+        public ActionResult AccountUnlock(AccountUnlockViewModel model)
+        {
+            // Validate view model.
+            var validationResult = _accountUnlockViewModelServerValidator.Validate(model);
+
+            if (!validationResult.IsValid)
+            {
                 ModelState.Clear();
-                ModelState.AddModelError(
-                    "EmailAddress",
-                    LoginViewModelMessages.AuthenticationMessages.AuthenticationFailedErrorText);
+                validationResult.AddToModelState(ModelState, string.Empty);
 
                 return View(model);
             }
 
-            SetCookies(candidate);
+            var verified = _candidateServiceProvider.VerifyAccountUnlockCode(model);
+
+            if (verified)
+            {
+                return RedirectOnAuthenticated(UserStatuses.Active);
+            }
+
+            // Verification failed.
+            ModelState.Clear();
+            ModelState.AddModelError(
+                "AccountUnlockCode",
+                AccountUnlockViewModelMessages.AccountUnlockCodeMessages.WrongAccountUnlockCodeErrorText);
+
+            return View(model);
+        }
+
+        #region Helpers
+
+        private ActionResult RedirectOnAuthenticated(UserStatuses userStatus)
+        {
+            if (userStatus == UserStatuses.PendingActivation)
+            {
+                return RedirectOnPendingActivation();
+            }
 
             // Redirect to last viewed vacancy (if any).
-            var lastViewedVacancyId = _candidateServiceProvider.LastViewedVacancyId;
-
-            if (lastViewedVacancyId.HasValue)
+            if (_candidateServiceProvider.LastViewedVacancyId.HasValue)
             {
-                _candidateServiceProvider.LastViewedVacancyId = null;
-
-                return RedirectToAction("Details", "VacancySearch", new { id = lastViewedVacancyId.Value });
+                return RedirectToLastViewedVacancy(_candidateServiceProvider.LastViewedVacancyId.Value);
             }
 
             // Redirect to return URL (if any).
-            var returnUrl = UserServiceProvider.GetAuthenticationReturnUrl(HttpContext);
+            var returnUrl = UserServiceProvider.GetReturnUrl(HttpContext);
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                UserServiceProvider.DeleteAuthenticationReturnUrlCookie(HttpContext);
-
-                return Redirect(returnUrl);
+                return RedirectToReturnUrl(returnUrl);
             }
 
+            // TODO: redirect to candidate 'home' page.
             return RedirectToAction("Index", "VacancySearch");
         }
 
-        private void SetCookies(Candidate candidate)
+        private ActionResult RedirectToLastViewedVacancy(int lastViewedVacancyId)
         {
-            var registrationDetails = candidate.RegistrationDetails;
-            var roles = _candidateServiceProvider.GetRoles(registrationDetails.EmailAddress);
+            // Clear last viewed vacancy.
+            _candidateServiceProvider.LastViewedVacancyId = null;
 
-            string fullName = registrationDetails.FirstName + " " + registrationDetails.LastName;
-
-            UserServiceProvider.SetAuthenticationCookie(
-                HttpContext, candidate.EntityId.ToString(), roles);
-
-            UserServiceProvider.SetUserContextCookie(
-                HttpContext, registrationDetails.EmailAddress, fullName);
+            return RedirectToAction(
+                "Details", "VacancySearch", new
+                {
+                    id = lastViewedVacancyId
+                });
         }
+
+        private ActionResult RedirectToReturnUrl(string returnUrl)
+        {
+            UserServiceProvider.DeleteReturnUrlCookie(HttpContext);
+
+            return Redirect(returnUrl);
+        }
+
+        private ActionResult RedirectOnPendingActivation()
+        {
+            return RedirectToAction("Activation", "Register");
+        }
+
+        private ActionResult RedirectOnAccountLocked(string emailAddress)
+        {
+            TempData["EmailAddress"] = emailAddress;
+
+            return RedirectToAction("AccountUnlock");
+        }
+
+        #endregion
     }
 }
