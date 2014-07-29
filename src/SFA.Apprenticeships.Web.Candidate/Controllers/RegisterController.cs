@@ -145,7 +145,7 @@
 
             _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
 
-            TempData["ForgottenPasswordEmailAddress"] = model.EmailAddress;
+            TempData["EmailAddress"] = model.EmailAddress;
 
             return RedirectToAction("ResetPassword");
         }
@@ -154,7 +154,7 @@
         {
             var model = new PasswordResetViewModel
             {
-                EmailAddress = TempData["ForgottenPasswordEmailAddress"].ToString()
+                EmailAddress = TempData["EmailAddress"].ToString()
             };
             return View(model);
         }
@@ -277,7 +277,7 @@
 
             _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
 
-            TempData["ForgottenPasswordEmailAddress"] = model.EmailAddress;
+            TempData["EmailAddress"] = model.EmailAddress;
 
             return RedirectToAction("ResetPassword");
         }
