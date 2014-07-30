@@ -2,13 +2,13 @@
 {
     <div class="account-info sign-out" id="bannerSignedIn">
         <div>
-            <i class="fa fa-sign-out"></i>@Html.ActionLink("Sign Out", "SignOut", "Login", null, new {id = "logoutLink"})
+            <a href="@Url.Action("SignOut", "Login")" id="logoutLink" title="Sign out"><i class="fa fa-sign-out"></i>Sign out</a>
         </div>
     </div>
 }
 else
 {
-    <ul class="account-info sign-in" id="bannerSignedOut">
-        <li><i class="fa fa-sign-in"></i>@Html.ActionLink("Sign In", "Index", "Login", null, new {id = "loginLink"})</li>
-    </ul>
+    <div class="account-info sign-in" id="bannerSignedOut">
+        <a href="@Url.Action("Index", "Login")" id="loginLink" title="Sign in"><i class="fa fa-sign-in"></i>Sign in</a>
+    </div>
 }
