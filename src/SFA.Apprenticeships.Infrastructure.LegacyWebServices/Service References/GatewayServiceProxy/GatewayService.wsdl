@@ -91,8 +91,8 @@
       <xs:import namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" />
       <xs:complexType name="Application">
         <xs:sequence>
-          <xs:element minOccurs="0" name="CandidateId" type="xs:int" />
-          <xs:element minOccurs="0" name="VacancyId" type="xs:int" />
+          <xs:element name="CandidateId" type="xs:int" />
+          <xs:element name="VacancyId" type="xs:int" />
           <xs:element minOccurs="0" name="VacancyRef" nillable="true" type="xs:string" />
           <xs:element xmlns:q1="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="School" nillable="true" type="q1:School" />
           <xs:element xmlns:q2="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="EducationResults" nillable="true" type="q2:EducationResults" />
@@ -108,8 +108,8 @@
         <xs:sequence>
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Town" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="AttendedFrom" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="AttendedTo" type="xs:dateTime" />
+          <xs:element name="AttendedFrom" type="xs:dateTime" />
+          <xs:element name="AttendedTo" type="xs:dateTime" />
         </xs:sequence>
       </xs:complexType>
       <xs:element name="School" nillable="true" type="tns:School" />
@@ -124,7 +124,7 @@
           <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Level" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Grade" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="DateAchieved" type="xs:dateTime" />
+          <xs:element name="DateAchieved" type="xs:dateTime" />
         </xs:sequence>
       </xs:complexType>
       <xs:element name="EducationResult" nillable="true" type="tns:EducationResult" />
@@ -137,11 +137,11 @@
       <xs:complexType name="WorkExperience">
         <xs:sequence>
           <xs:element minOccurs="0" name="Employer" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="ToDate" type="xs:dateTime" />
+          <xs:element name="FromDate" type="xs:dateTime" />
+          <xs:element name="ToDate" type="xs:dateTime" />
           <xs:element minOccurs="0" name="TypeOfWork" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="PartialCompletion" type="xs:boolean" />
-          <xs:element minOccurs="0" name="Voluntary" type="xs:boolean" />
+          <xs:element name="PartialCompletion" type="xs:boolean" />
+          <xs:element name="Voluntary" type="xs:boolean" />
         </xs:sequence>
       </xs:complexType>
       <xs:element name="WorkExperience" nillable="true" type="tns:WorkExperience" />
@@ -165,7 +165,7 @@
           <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="MiddleName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="DateOfBirth" type="xs:dateTime" />
+          <xs:element name="DateOfBirth" type="xs:dateTime" />
           <xs:element minOccurs="0" name="AddressLine1" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="AddressLine2" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="AddressLine3" nillable="true" type="xs:string" />
