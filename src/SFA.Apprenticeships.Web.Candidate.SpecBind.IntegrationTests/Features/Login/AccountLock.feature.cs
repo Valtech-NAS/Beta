@@ -269,18 +269,16 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Account unlock code is renewed before being resent if it has expired")]
-        [NUnit.Framework.IgnoreAttribute()]
         public virtual void AccountUnlockCodeIsRenewedBeforeBeingResentIfItHasExpired()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Account unlock code is renewed before being resent if it has expired", new string[] {
-                        "Ignore"});
-#line 75
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Account unlock code is renewed before being resent if it has expired", ((string[])(null)));
+#line 74
 this.ScenarioSetup(scenarioInfo);
-#line 76
+#line 75
  testRunner.Given("I locked my account and my account unlock code has expired", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 77
+#line 76
  testRunner.And("I navigated to the LoginCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 78
+#line 77
  testRunner.When("I am on the LoginCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
@@ -292,15 +290,15 @@ this.ScenarioSetup(scenarioInfo);
             table10.AddRow(new string[] {
                         "Password",
                         "S3cret!"});
-#line 79
+#line 78
  testRunner.And("I enter data", ((string)(null)), table10, "And ");
-#line 83
+#line 82
  testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 84
+#line 83
  testRunner.And("I am on the AccountUnlockPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 85
+#line 84
  testRunner.And("I choose ResendAccountUnlockCodeLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 86
+#line 85
  testRunner.Then("I am on the AccountUnlockPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
@@ -311,9 +309,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Preamble",
                         "Exists",
                         ""});
-#line 87
+#line 86
  testRunner.And("I see", ((string)(null)), table11, "And ");
-#line 90
+#line 89
  testRunner.And("my account unlock code has been renewed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

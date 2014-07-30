@@ -71,7 +71,6 @@ Scenario: Account unlock code is renewed if it has expired
 	Then I am on the AccountUnlockPage page
 	And my account unlock code has been renewed
 
-@Ignore
 Scenario: Account unlock code is renewed before being resent if it has expired
 	Given I locked my account and my account unlock code has expired
 	And I navigated to the LoginCandidatePage page

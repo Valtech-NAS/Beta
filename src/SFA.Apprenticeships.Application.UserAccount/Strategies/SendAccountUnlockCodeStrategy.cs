@@ -1,5 +1,6 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
+    using System;
     using System.Collections.Generic;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
@@ -12,17 +13,20 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         private readonly IUserReadRepository _userReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICommunicationService _communicationService;
+        private readonly ILockAccountStrategy _lockAccountStrategy;
 
         public SendAccountUnlockCodeStrategy(
             IConfigurationManager configurationManager,
             IUserReadRepository userReadRepository,
             ICandidateReadRepository candidateReadRepository,
-            ICommunicationService communicationService)
+            ICommunicationService communicationService,
+            ILockAccountStrategy lockAccountStrategy)
         {
             _configurationManager = configurationManager;
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
             _communicationService = communicationService;
+            _lockAccountStrategy = lockAccountStrategy;
         }
 
         public void SendAccountUnlockCode(string username)
@@ -38,6 +42,13 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             {
                 // TODO: AG: do not like to silently consume issues like 'candidate not found'.
                 return;
+            }
+
+            if (user.ActivateCodeExpiry < DateTime.Now)
+            {
+                // NOTE: renewing the lock will also call this strategy to send the account unlock code.
+                // _lockAccountStrategy.LockAccount(user);
+                // return;
             }
 
             var unlockCodeExpiryDays = _configurationManager.GetAppSetting<int>("UnlockCodeExpiryDays");
