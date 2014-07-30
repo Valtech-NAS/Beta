@@ -22,6 +22,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
 
             var applicationTokens = new[]
             {
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName), 
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyTitle,
                     applicationDetail.Vacancy.Title),
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference, reference)
