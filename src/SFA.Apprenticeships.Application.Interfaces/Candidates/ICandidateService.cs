@@ -26,7 +26,7 @@
 
         IList<ApplicationSummary> GetApplications(Guid candidateId);
  
-        void SubmitApplication(ApplicationDetail application);
+        void SubmitApplication(Guid applicationId);
 
         void UnlockAccount(string username, string accountUnlockCode);
 

@@ -39,6 +39,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Applications\ApplicationHelper.cs" />
+    <Compile Include="Context\EntityContext.cs" />
     <Compile Include="Applications\ApplicationStatusSummary.cs" />
     <Compile Include="Applications\ApplicationSummary.cs" />
     <Compile Include="Applications\ApplicationDetail.cs" />

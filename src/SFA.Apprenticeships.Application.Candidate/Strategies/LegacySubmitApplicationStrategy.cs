@@ -1,20 +1,84 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using System;
+    using System.Collections.Generic;
     using Domain.Entities.Applications;
+    using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
+    using Domain.Interfaces.Messaging;
+    using Domain.Interfaces.Repositories;
+    using Interfaces.Messaging;
 
     public class LegacySubmitApplicationStrategy : ISubmitApplicationStrategy
     {
-        // TODO: NOTIMPL: private readonly IApplicationSubmissionQueue _applicationSubmissionQueue;
+        private readonly IApplicationReadRepository _applicationReadRepository;
+        private readonly IApplicationWriteRepository _applicationWriteRepository;
+        private readonly IMessageBus _bus;
+        private readonly ICandidateReadRepository _candidateReadRepository;
+        private readonly ICommunicationService _communicationService;
 
-        public void SubmitApplication(ApplicationDetail application)
+        public LegacySubmitApplicationStrategy(IMessageBus bus, IApplicationReadRepository applicationReadRepository,
+            IApplicationWriteRepository applicationWriteRepository, ICommunicationService communicationService,
+            ICandidateReadRepository candidateReadRepository)
         {
-            // TODO: NOTIMPL: status check - should be in "draft" state
-            // TODO: NOTIMPL: queue application for submission to legacy
-            // TODO: NOTIMPL: if successful then update application status to "submitting"
-            // TODO: NOTIMPL: then send email acknowledgement to candidate via ICommunicationService.SendMessageToCandidate()
+            _bus = bus;
+            _applicationReadRepository = applicationReadRepository;
+            _applicationWriteRepository = applicationWriteRepository;
+            _communicationService = communicationService;
+            _candidateReadRepository = candidateReadRepository;
+        }
 
-            throw new NotImplementedException();
+        public void SubmitApplication(Guid applicationId)
+        {
+            var application = _applicationReadRepository.Get(applicationId);
+
+            if (application == null)
+            {
+                throw new CustomException("Application detail was not found", ErrorCodes.ApplicationNotFoundError);
+            }
+
+            // status check - should be in "draft" state
+            application.AssertState("Application is not in the correct state to be submitted", ApplicationStatuses.Draft);
+
+            var candidate = _candidateReadRepository.Get(application.CandidateId);
+
+            if (candidate == null)
+            {
+                throw new CustomException("Unknown candidate", ErrorCodes.UnknownCandidateError);
+            }
+
+            try
+            {
+                // queue application for submission to legacy
+                var message = new SubmitApplicationRequest
+                {
+                    ApplicationId = application.EntityId.ToString()
+                };
+
+                _bus.PublishMessage(message);
+
+                // update application status to "submitting"
+                application.Status = ApplicationStatuses.Submitting;
+                application.DateApplied = DateTime.UtcNow;
+                _applicationWriteRepository.Save(application);
+
+                // send email acknowledgement to candidate
+                NotifyCandidate(candidate.EntityId, application.EntityId.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new CustomException("SubmitApplicationRequest could not be queued", ex,
+                    ErrorCodes.ApplicationQueuingError);
+            }
+        }
+
+        private void NotifyCandidate(Guid candidateId, string applicationId)
+        {
+            _communicationService.SendMessageToCandidate(candidateId, CandidateMessageTypes.ApplicationSubmitted,
+                new[]
+                {
+                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationId, applicationId)
+                });
         }
     }
 }

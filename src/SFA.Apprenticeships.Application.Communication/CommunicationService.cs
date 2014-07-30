@@ -2,7 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using Strategies;
@@ -10,6 +13,7 @@
     //TODO: MG: design breaks OCP - may refactor
     public class CommunicationService : ICommunicationService
     {
+        private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ISendAccountUnlockCodeStrategy _sendAccountUnlockCodeStrategy;
         private readonly ISendActivationCodeStrategy _sendActivationCodeStrategy;
@@ -22,7 +26,8 @@
             ISendApplicationSubmittedStrategy sendApplicationSubmittedStrategy,
             ISendPasswordChangedStrategy sendPasswordChangedStrategy,
             ISendAccountUnlockCodeStrategy sendAccountUnlockCodeStrategy,
-            ICandidateReadRepository candidateReadRepository)
+            ICandidateReadRepository candidateReadRepository, 
+            IApplicationReadRepository applicationReadRepository)
         {
             _sendActivationCodeStrategy = sendActivationCodeStrategy;
             _sendPasswordResetCodeStrategy = sendPasswordResetCodeStrategy;
@@ -30,6 +35,7 @@
             _sendPasswordChangedStrategy = sendPasswordChangedStrategy;
             _sendAccountUnlockCodeStrategy = sendAccountUnlockCodeStrategy;
             _candidateReadRepository = candidateReadRepository;
+            _applicationReadRepository = applicationReadRepository;
         }
 
         public void SendMessageToCandidate(Guid candidateId, CandidateMessageTypes messageType,
@@ -42,18 +48,21 @@
                 case CandidateMessageTypes.SendActivationCode:
                     _sendActivationCodeStrategy.Send(candidate, messageType, tokens);
                     break;
-
                 case CandidateMessageTypes.SendPasswordResetCode:
                     _sendPasswordResetCodeStrategy.Send(candidate, messageType, tokens);
                     break;
-
                 case CandidateMessageTypes.SendAccountUnlockCode:
                     _sendAccountUnlockCodeStrategy.Send(candidate, messageType, tokens);
                     break;
-
                 case CandidateMessageTypes.ApplicationSubmitted:
-                    // TODO: NOTIMPL: get candidate and application, invoke strategy to send application acknowledgement email to candidate
-                    //_sendApplicationSubmittedStrategy.Send();
+                    var application = GetApplicationDetail(tokens);
+                    
+                    if (application == null)
+                    {
+                        throw new CustomException("Application details not found", ErrorCodes.ApplicationNotFoundError);
+                    }
+
+                    _sendApplicationSubmittedStrategy.Send(candidate,application, messageType, tokens);
                     break;
 
                 case CandidateMessageTypes.PasswordChanged:
@@ -63,6 +72,12 @@
                 default:
                     throw new ArgumentOutOfRangeException("messageType");
             }
+        }
+
+        private ApplicationDetail GetApplicationDetail(IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
+        {
+            var applicationId = Guid.Parse(tokens.First(m =>m.Key == CommunicationTokens.ApplicationId).Value) ;
+            return _applicationReadRepository.Get(applicationId);
         }
     }
 }

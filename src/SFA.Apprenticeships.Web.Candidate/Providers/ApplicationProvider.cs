@@ -2,26 +2,37 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Web;
     using Application.Interfaces.Candidates;
+    using Common.Providers;
+    using Domain.Entities.Candidates;
+    using Domain.Interfaces.Mapping;
     using ViewModels.Applications;
     using ViewModels.Candidate;
     using ViewModels.Locations;
+    using ViewModels.VacancySearch;
 
     internal class ApplicationProvider : IApplicationProvider
     {
-        private readonly IVacancyDetailProvider _vacancyDetailProvider;
         private readonly ICandidateService _candidateService;
+        private readonly IMapper _mapper;
+        private readonly IUserServiceProvider _userServiceProvider;
+        private readonly IVacancyDetailProvider _vacancyDetailProvider;
+        private const string ApplicationContextName = "Application.Context";
 
         public ApplicationProvider(
             IVacancyDetailProvider vacancyDetailProvider,
-            ICandidateService candidateService)
+            ICandidateService candidateService, IMapper mapper, IUserServiceProvider userServiceProvider)
         {
             _candidateService = candidateService;
+            _mapper = mapper;
+            _userServiceProvider = userServiceProvider;
             _vacancyDetailProvider = vacancyDetailProvider;
         }
 
         public ApplicationViewModel GetApplicationViewModel(int vacancyId, Guid candidateId)
         {
+            //TODO Push EntityId for the application into context and use a random guid for ViewModelId
             var vacancyViewModel = _vacancyDetailProvider.GetVacancyDetailViewModel(vacancyId);
 
             if (vacancyViewModel == null)
@@ -35,7 +46,8 @@
             var candidateViewModel = new CandidateViewModel
             {
                 Id = candidateId,
-                FullName = candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
+                FirstName = candidate.RegistrationDetails.FirstName,
+                LastName = candidate.RegistrationDetails.LastName,
                 EmailAddress = candidate.RegistrationDetails.EmailAddress,
                 DateOfBirth = candidate.RegistrationDetails.DateOfBirth,
                 PhoneNumber = candidate.RegistrationDetails.PhoneNumber,
@@ -66,13 +78,15 @@
             return applicationViewModel;
         }
 
-        public ApplicationViewModel MergeApplicationViewModel(int vacancyId, Guid candidateId, ApplicationViewModel applicationViewModel)
+        public ApplicationViewModel MergeApplicationViewModel(int vacancyId, Guid candidateId,
+            ApplicationViewModel applicationViewModel)
         {
             var existingApplicationViewModel = GetApplicationViewModel(vacancyId, candidateId);
 
             applicationViewModel.VacancyDetail = existingApplicationViewModel.VacancyDetail;
             applicationViewModel.Candidate.Id = existingApplicationViewModel.Candidate.Id;
-            applicationViewModel.Candidate.FullName = existingApplicationViewModel.Candidate.FullName;
+            applicationViewModel.Candidate.FirstName = existingApplicationViewModel.Candidate.FirstName;
+            applicationViewModel.Candidate.LastName = existingApplicationViewModel.Candidate.LastName;
             applicationViewModel.Candidate.EmailAddress = existingApplicationViewModel.Candidate.EmailAddress;
             applicationViewModel.Candidate.DateOfBirth = existingApplicationViewModel.Candidate.DateOfBirth;
             applicationViewModel.Candidate.Address = existingApplicationViewModel.Candidate.Address;
@@ -80,8 +94,10 @@
             if (!string.IsNullOrWhiteSpace(existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1) ||
                 !string.IsNullOrWhiteSpace(existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2))
             {
-                applicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 = existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1;
-                applicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2;    
+                applicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 =
+                    existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1;
+                applicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 =
+                    existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2;
             }
 
             return applicationViewModel;
@@ -89,7 +105,15 @@
 
         public void SaveApplication(ApplicationViewModel applicationViewModel)
         {
+            //var application = _mapper.Map<ApplicationViewModel, ApplicationDetail>(applicationViewModel);
             throw new NotImplementedException();
+        }
+
+        public void SubmitApplication(Guid applicationViewId)
+        {
+            var httpContext = new HttpContextWrapper(HttpContext.Current);
+            var applicationContext = _userServiceProvider.GetEntityContextCookie(httpContext, ApplicationContextName);
+            _candidateService.SubmitApplication(applicationContext.EntityId);
         }
     }
 }

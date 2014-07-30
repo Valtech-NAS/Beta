@@ -10,5 +10,7 @@
         ApplicationViewModel MergeApplicationViewModel(int vacancyId, Guid candidateId, ApplicationViewModel userApplicationViewModel);
 
         void SaveApplication(ApplicationViewModel applicationViewModel);
+
+        void SubmitApplication(Guid applicationId);
     }
 }

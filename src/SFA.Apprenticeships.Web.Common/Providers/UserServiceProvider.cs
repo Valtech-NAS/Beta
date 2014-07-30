@@ -3,6 +3,8 @@
     using System;
     using System.Linq;
     using System.Web;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Context;
     using Domain.Entities.Users;
     using Services;
 
@@ -18,6 +20,8 @@
         {
             public const string UserName = "UserName";
             public const string FullName = "FullName";
+            public const string ViewModelId = "ViewModelId";
+            public const string EntityId = "EntityId";
         }
 
         private readonly IAuthenticationTicketService _authenticationTicketService;
@@ -123,6 +127,36 @@
         {
             httpContext.Response.Cookies.Add(CreateExpiredCookie(CookieNames.UserContext));
             DeleteAuthenticationCookie(httpContext);
+        }
+
+        public void SetEntityContextCookie(HttpContextBase httpContext, Guid entityId, Guid viewModelId, string contextName)
+        {
+            var cookie = new HttpCookie(contextName);
+
+            cookie.Values.Add(CookieValueNames.ViewModelId, viewModelId.ToString());
+            cookie.Values.Add(CookieValueNames.EntityId, entityId.ToString());
+            httpContext.Response.Cookies.Add(cookie);
+        }
+
+        public EntityContext GetEntityContextCookie(HttpContextBase httpContext, string contextName)
+        {
+            if (!CookieExists(httpContext.Request.Cookies, contextName))
+            {
+                return null;
+            }
+
+            var cookie = httpContext.Request.Cookies[contextName];
+
+            if (cookie == null)
+            {
+                return null;
+            }
+
+            return new EntityContext
+            {
+                EntityId = Guid.Parse(cookie.Values[CookieValueNames.EntityId]),
+                ViewModelId = Guid.Parse(cookie.Values[CookieValueNames.ViewModelId])
+            };
         }
 
         private static HttpCookie CreateExpiredCookie(string name)

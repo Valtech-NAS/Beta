@@ -104,11 +104,11 @@
             return _getCandidateApplicationsStrategy.GetApplications(candidateId);
         }
 
-        public void SubmitApplication(ApplicationDetail application)
+        public void SubmitApplication(Guid applicationId)
         {
-            Condition.Requires(application);
+            Condition.Requires(applicationId);
 
-            _submitApplicationStrategy.SubmitApplication(application);
+            _submitApplicationStrategy.SubmitApplication(applicationId);
         }
 
         public void UnlockAccount(string username, string accountUnlockCode)

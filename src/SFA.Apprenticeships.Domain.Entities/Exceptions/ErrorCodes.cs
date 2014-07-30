@@ -11,5 +11,10 @@
         public const string UserPasswordResetCodeIsInvalid = "User006";
         // Candidate Exception Codes
         public const string UnknownCandidateError = "Candidate001";
+
+        // Application Exception Codes
+        public const string ApplicationNotFoundError = "Application001";
+        public const string ApplicationInIncorrectStateError = "Application002";
+        public const string ApplicationQueuingError = "Application003";
     }
 }

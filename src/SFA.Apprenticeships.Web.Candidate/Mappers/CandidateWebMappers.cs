@@ -2,11 +2,13 @@
 {
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
+    using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
     using Infrastructure.Common.Mappers;
     using Resolvers;
+    using ViewModels.Applications;
     using ViewModels.Locations;
     using ViewModels.Register;
     using ViewModels.VacancySearch;
@@ -32,6 +34,12 @@
 
             Mapper.CreateMap<RegisterViewModel, Candidate>()
                 .ConvertUsing<CandidateResolver>();
+
+            Mapper.CreateMap<ApplicationViewModel, ApplicationDetail>()
+                .ConvertUsing<ApplicationViewModelToApplicationDetailResolver>();
+
+            Mapper.CreateMap<ApplicationDetail, ApplicationViewModel>()
+                .ConvertUsing<ApplicationDetailToApplicationViewModelResolver>();
         }
     }
 }

@@ -397,6 +397,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="IoC\CandidateWebRegistry.cs" />
+    <Compile Include="Mappers\Resolvers\ApplicationDetailToApplicationViewModelResolver.cs" />
+    <Compile Include="Mappers\Resolvers\ApplicationViewModelToApplicationDetailResolver.cs" />
     <Compile Include="Mappers\Resolvers\CandidateResolver.cs" />
     <Compile Include="Mappers\CandidateWebMappers.cs" />
     <Compile Include="Constants\ViewModels\AboutYouMessages.cs" />

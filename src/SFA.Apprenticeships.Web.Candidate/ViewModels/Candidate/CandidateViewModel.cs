@@ -7,9 +7,24 @@
     [Serializable]
     public class CandidateViewModel
     {
+      
         public Guid Id { get; set; }
 
-        public string FullName { get; set; }
+        public string FullName
+        {
+            get
+            {
+                if (FirstName == null || LastName == null)
+                {
+                    return null;
+                }
+
+                return FirstName + " " + LastName;
+            }
+        } 
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string MiddleName { get; set; } //TODO CHECK do we need this here
 
         public DateTime DateOfBirth { get; set; }
 
