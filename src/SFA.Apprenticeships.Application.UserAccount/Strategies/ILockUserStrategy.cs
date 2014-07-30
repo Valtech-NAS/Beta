@@ -2,8 +2,8 @@
 {
     using Domain.Entities.Users;
 
-    public interface ILockAccountStrategy
+    public interface ILockUserStrategy
     {
-        void LockAccount(User user);
+        void LockUser(User user);
     }
 }

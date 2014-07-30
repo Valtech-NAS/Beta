@@ -13,8 +13,6 @@
     using Validators;
     using ViewModels.Login;
 
-    // TODO: AG: US444: need to implement resend account unlock code somewhere.
-
     public class LoginController : SfaControllerBase
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -85,8 +83,7 @@
         }
 
         [HttpGet]
-        // TODO: AG: US444: consider renaming to Unlock.
-        public ActionResult AccountUnlock()
+        public ActionResult Unlock()
         {
             var emailAddress = TempData["EmailAddress"] as string;
 
@@ -102,7 +99,7 @@
         }
 
         [HttpPost]
-        public ActionResult AccountUnlock(AccountUnlockViewModel model)
+        public ActionResult Unlock(AccountUnlockViewModel model)
         {
             // Validate view model.
             var validationResult = _accountUnlockViewModelServerValidator.Validate(model);
@@ -119,7 +116,10 @@
 
             if (verified)
             {
-                return RedirectOnAuthenticated(UserStatuses.Active);
+                TempData["LoginMessage"] =
+                    AccountUnlockViewModelMessages.AccountUnlockCodeMessages.AccountUnlockedText;
+
+                return RedirectToAction("Index");
             }
 
             // Verification failed.
@@ -145,7 +145,7 @@
             TempData["EmailAddress"] = model.EmailAddress;
             TempData["ResentAccountUnlockCode"] = true;
 
-            return RedirectToAction("AccountUnlock");
+            return RedirectToAction("Unlock");
         }
 
         #region Helpers
@@ -203,7 +203,7 @@
         {
             TempData["EmailAddress"] = emailAddress;
 
-            return RedirectToAction("AccountUnlock");
+            return RedirectToAction("Unlock");
         }
 
         #endregion

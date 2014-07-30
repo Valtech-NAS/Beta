@@ -12,21 +12,21 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         private readonly IConfigurationManager _configurationManager;
         private readonly IUserReadRepository _userReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
+        private readonly ILockUserStrategy _lockUserStrategy;
         private readonly ICommunicationService _communicationService;
-        private readonly ILockAccountStrategy _lockAccountStrategy;
 
         public SendAccountUnlockCodeStrategy(
             IConfigurationManager configurationManager,
             IUserReadRepository userReadRepository,
             ICandidateReadRepository candidateReadRepository,
-            ICommunicationService communicationService,
-            ILockAccountStrategy lockAccountStrategy)
+            ILockUserStrategy lockUserStrategy,
+            ICommunicationService communicationService)
         {
             _configurationManager = configurationManager;
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
+            _lockUserStrategy = lockUserStrategy;
             _communicationService = communicationService;
-            _lockAccountStrategy = lockAccountStrategy;
         }
 
         public void SendAccountUnlockCode(string username)
@@ -44,11 +44,10 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
                 return;
             }
 
-            if (user.ActivateCodeExpiry < DateTime.Now)
+            if (user.AccountUnlockCodeExpiry < DateTime.Now)
             {
-                // NOTE: renewing the lock will also call this strategy to send the account unlock code.
-                // _lockAccountStrategy.LockAccount(user);
-                // return;
+                // Account unlock code has expired, renew it.
+                _lockUserStrategy.LockUser(user);
             }
 
             var unlockCodeExpiryDays = _configurationManager.GetAppSetting<int>("UnlockCodeExpiryDays");

@@ -3,9 +3,16 @@
 @{
     ViewBag.Title = "SFA Apprenticeships - Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var loginMessage = TempData["LoginMessage"];
 }
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+@if (loginMessage != null)
+{
+    <p id="LoginMessageText">@loginMessage</p>
+}
 
 <div class="grid-wrapper">
     <div class="grid grid-1-2">

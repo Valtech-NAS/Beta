@@ -45,6 +45,7 @@
     </Compile>
     <Compile Include="CodeGenerator.cs" />
     <Compile Include="Strategies\ILockAccountStrategy.cs" />
+    <Compile Include="Strategies\ILockUserStrategy.cs" />
     <Compile Include="Strategies\ISendAccountUnlockCodeStrategy.cs" />
     <Compile Include="Strategies\IUnlockAccountStrategy.cs" />
     <Compile Include="Strategies\ActivateUserStrategy.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Strategies\IRegisterUserStrategy.cs" />
     <Compile Include="Strategies\IResendActivationCodeStrategy.cs" />
     <Compile Include="Strategies\ISendPasswordResetCodeStrategy.cs" />
+    <Compile Include="Strategies\LockUserStrategy.cs" />
     <Compile Include="UserAccountService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\LockAccountStrategy.cs" />

@@ -178,7 +178,7 @@
                         break;
                     case ErrorCodes.UserAccountLockedError:
                         TempData["EmailAddress"] = model.EmailAddress;
-                        return RedirectToAction("AccountUnlock", "Login");
+                        return RedirectToAction("Unlock", "Login");
                     case ErrorCodes.UserInIncorrectStateError:
                         model.IsPasswordResetCodeInvalid = false;
                         model.IsPasswordResetSuccessful = false;

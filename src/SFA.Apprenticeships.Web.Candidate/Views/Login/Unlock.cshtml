@@ -9,12 +9,12 @@
 
 @if (TempData["ResentAccountUnlockCode"] != null)
 {
-    <p id="Preamble">Hello, @Model.EmailAddress.</p>
+    <p id="ResentAccountUnlockCodeText">TODO: Account unlock code sent to @Model.EmailAddress.</p>
 }
 
 <p class="text">Enter your 6-digit code to unlock your account</p>
 
-@using (Html.BeginForm("AccountUnlock", "Login", FormMethod.Post, new { @id = "account-unlock-form" }))
+@using (Html.BeginForm("Unlock", "Login", FormMethod.Post, new { @id = "account-unlock-form" }))
 {
     <div class="form-group">
         <p class="form-label">Email address</p>

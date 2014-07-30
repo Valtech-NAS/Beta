@@ -3,11 +3,11 @@
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
 
-    [PageNavigation("/login/accountunlock")]
-    [PageAlias("AccountUnlockPage")]
-    public class AccountUnlockPage : BaseValidationPage
+    [PageNavigation("/login/unlock")]
+    [PageAlias("UnlockPage")]
+    public class UnlockPage : BaseValidationPage
     {
-        public AccountUnlockPage(ISearchContext context)
+        public UnlockPage(ISearchContext context)
             : base(context)
         {
         }
@@ -27,7 +27,7 @@
         [ElementLocator(Id = "ResendAccountUnlockCodeLink")]
         public IWebElement ResendAccountUnlockCodeLink { get; set; }
 
-        [ElementLocator(Id = "Preamble")]
-        public IWebElement Preamble { get; set; }
+        [ElementLocator(Id = "ResentAccountUnlockCodeText")]
+        public IWebElement ResentAccountUnlockCodeText { get; set; }
     }
 }

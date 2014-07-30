@@ -8,16 +8,16 @@
     {
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
-        private readonly ILockAccountStrategy _lockAccountStrategy;
+        private readonly ISendAccountUnlockCodeStrategy _sendAccountUnlockCodeStrategy;
 
         public UnlockAccountStrategy(
             IUserReadRepository userReadRepository,
             IUserWriteRepository userWriteRepository,
-            ILockAccountStrategy lockAccountStrategy)
+            ISendAccountUnlockCodeStrategy sendAccountUnlockCodeStrategy)
         {
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
-            _lockAccountStrategy = lockAccountStrategy;
+            _sendAccountUnlockCodeStrategy = sendAccountUnlockCodeStrategy;
         }
 
         public void UnlockAccount(string username, string accountUnlockCode)
@@ -28,22 +28,18 @@
 
             if (user.AccountUnlockCodeExpiry < DateTime.Now)
             {
-                // NOTE: re-locking the account generates a new code with a new expiry date
-                // and sends an email.
-                _lockAccountStrategy.LockAccount(user);
-
-                // TODO: AG: US444: EXCEPTION: should use an application exception type
+                // NOTE: account unlock code has expired, send a new one.
+                _sendAccountUnlockCodeStrategy.SendAccountUnlockCode(username);
                 throw new Exception("Account unlock code has expired, new account unlock code has been sent.");
             }
 
             if (!user.AccountUnlockCode.Equals(accountUnlockCode, StringComparison.InvariantCultureIgnoreCase))
             {
-                // TODO: AG: US444: EXCEPTION: should use an application exception type
                 throw new Exception("Invalid account unlock code.");
             }
 
+            // 
             user.SetStateActive();
-
             _userWriteRepository.Save(user);
         }
     }

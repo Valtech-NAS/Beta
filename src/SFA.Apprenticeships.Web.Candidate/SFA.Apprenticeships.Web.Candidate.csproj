@@ -299,7 +299,7 @@
     </Content>
     <Content Include="Views\Register\ForgottenPassword.cshtml" />
     <Content Include="Views\Register\ResetPassword.cshtml" />
-    <Content Include="Views\Login\AccountUnlock.cshtml" />
+    <Content Include="Views\Login\Unlock.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

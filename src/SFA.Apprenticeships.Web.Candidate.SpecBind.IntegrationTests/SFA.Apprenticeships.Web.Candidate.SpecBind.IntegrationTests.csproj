@@ -89,10 +89,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HomePage.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Login\AccountLock.feature.cs">
+    <Compile Include="Features\Login\AccountUnlock.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AccountLock.feature</DependentUpon>
+      <DependentUpon>AccountUnlock.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Login\LoginCandidate.feature.cs">
       <AutoGen>True</AutoGen>
@@ -112,8 +112,8 @@
     </Compile>
     <Compile Include="IoC\WebTestRegistry.cs" />
     <Compile Include="Pages\BaseValidationPage.cs" />
-    <Compile Include="Pages\Login\AccountUnlockPage.cs" />
-    <Compile Include="Pages\Login\LoginCandidatePage.cs" />
+    <Compile Include="Pages\Login\UnlockPage.cs" />
+    <Compile Include="Pages\Login\LoginPage.cs" />
     <Compile Include="Pages\Registration\ActivationPage.cs" />
     <Compile Include="Pages\Registration\RegisterCandidatePage.cs" />
     <Compile Include="Pages\VacancySearch\DetailsPage.cs" />
@@ -142,9 +142,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>HomePage.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Login\AccountLock.feature">
+    <None Include="Features\Login\AccountUnlock.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>AccountLock.feature.cs</LastGenOutput>
+      <LastGenOutput>AccountUnlock.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Login\LoginCandidate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

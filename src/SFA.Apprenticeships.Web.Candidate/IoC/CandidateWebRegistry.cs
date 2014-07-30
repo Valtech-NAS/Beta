@@ -69,6 +69,7 @@
                .Name = "LegacyUnlockAccountStrategy";
 
             For<ILockAccountStrategy>().Use<LockAccountStrategy>();
+            For<ILockUserStrategy>().Use<LockUserStrategy>();
             For<IAuthenticateCandidateStrategy>().Use<AuthenticateCandidateStrategy>();
             For<ICreateApplicationStrategy>().Use<LegacyCreateApplicationStrategy>();
             For<IUserAccountService>().Use<UserAccountService>();

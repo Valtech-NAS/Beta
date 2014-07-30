@@ -4,10 +4,10 @@
     using OpenQA.Selenium;
 
     [PageNavigation("/login")]
-    [PageAlias("LoginCandidatePage")]
-    public class LoginCandidatePage : BaseValidationPage
+    [PageAlias("LoginPage")]
+    public class LoginPage : BaseValidationPage
     {
-        public LoginCandidatePage(ISearchContext context) : base(context)
+        public LoginPage(ISearchContext context) : base(context)
         {
         }
 
@@ -16,6 +16,9 @@
 
         [ElementLocator(Id = "Password")]
         public IWebElement Password { get; set; }
+
+        [ElementLocator(Id = "LoginMessageText")]
+        public IWebElement LoginMessageText { get; set; }
 
         [ElementLocator(Id = "sign-in-button")]
         public IWebElement SignInButton { get; set; }

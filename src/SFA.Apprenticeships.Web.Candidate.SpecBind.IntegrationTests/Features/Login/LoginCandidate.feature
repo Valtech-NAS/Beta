@@ -6,8 +6,8 @@ Feature: Login Candidate
 	apply for apprenticeships etc.
 
 Scenario: As a candidate all required fields are present
-	Given I navigated to the LoginCandidatePage page
-	When I am on the LoginCandidatePage page
+	Given I navigated to the LoginPage page
+	When I am on the LoginPage page
 	Then I wait to see EmailAddress
 	And I wait to see Password
 	And I see
@@ -16,8 +16,8 @@ Scenario: As a candidate all required fields are present
 
 Scenario: As a candidate I can login with a registered and activated email address and password
 	Given I registered an account and activated it
-	And I navigated to the LoginCandidatePage page
-	When I am on the LoginCandidatePage page
+	And I navigated to the LoginPage page
+	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value               |
 		| EmailAddress | {EmailAddressToken} |
@@ -26,18 +26,18 @@ Scenario: As a candidate I can login with a registered and activated email addre
 	Then I am on the VacancySearchPage page
 
 Scenario: As a candidate I must provide an email address and password
-	Given I navigated to the LoginCandidatePage page
-	When I am on the LoginCandidatePage page
+	Given I navigated to the LoginPage page
+	When I am on the LoginPage page
 	And I choose SignInButton
-	And I am on the LoginCandidatePage page
+	And I am on the LoginPage page
 	Then I see
 		| Field                  | Rule   | Value |
 		| ValidationSummaryCount | Equals | 2     |
 
 Scenario: As a candidate I cannot login with an invalid password
 	Given I registered an account and activated it
-	And I navigated to the LoginCandidatePage page
-	When I am on the LoginCandidatePage page
+	And I navigated to the LoginPage page
+	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value                  |
 		| EmailAddress | {EmailAddressToken}    |
@@ -54,8 +54,8 @@ Scenario: As a candidate I cannot login with an invalid password
 
 Scenario: As a candidate I can login with a registered but unactivated account and am redirected to the activation page
 	Given I registered an account but did not activate it
-	And I navigated to the LoginCandidatePage page
-	When I am on the LoginCandidatePage page
+	And I navigated to the LoginPage page
+	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value               |
 		| EmailAddress | {EmailAddressToken} |
