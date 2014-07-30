@@ -101,8 +101,10 @@
                 url: apiurl,
                 type: 'GET',
                 data: { username: username },
-                success: function(response) {
-                    $('#email-available-message').html('<p> Username is available: ' + response.usernameIsAvailable + '</p>');
+                success: function (response) {
+                    if (response.usernameIsAvailable == false) {
+                        $('#email-available-message').html('<p>Username already in use, try again</p>');
+                    }
                 },
                 error: function (error) {
                     //Ignore, could be proxy issues so will work as 
