@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Candidate.Strategies;
+    using Application.ApplicationUpdate;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;

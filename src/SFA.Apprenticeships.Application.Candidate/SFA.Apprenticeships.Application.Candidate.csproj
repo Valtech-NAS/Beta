@@ -50,7 +50,6 @@
     <Compile Include="Strategies\LegacyCreateApplicationStrategy.cs" />
     <Compile Include="Strategies\IAuthenticateCandidateStrategy.cs" />
     <Compile Include="Strategies\ICreateApplicationStrategy.cs" />
-    <Compile Include="Strategies\ILegacyApplicationStatusesProvider.cs" />
     <Compile Include="Strategies\ILegacyCandidateProvider.cs" />
     <Compile Include="Strategies\IRegisterCandidateStrategy.cs" />
     <Compile Include="Strategies\IActivateCandidateStrategy.cs" />

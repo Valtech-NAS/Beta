@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.ApplicationUpdate
 {
     using System;
-    using Candidate.Strategies;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
     using Entities;
