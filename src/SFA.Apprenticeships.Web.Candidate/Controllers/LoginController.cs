@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System.Web.Mvc;
+    using System.Web.Security;
     using Attributes;
     using Common.Controllers;
     using Common.Providers;
@@ -206,5 +207,12 @@
         }
 
         #endregion
+
+        public ActionResult SignOut()
+        {
+            UserServiceProvider.DeleteAllCookies(HttpContext);
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -119,6 +119,12 @@
             httpContext.Response.Cookies.Add(CreateExpiredCookie(CookieNames.UserAuthReturnUrl));
         }
 
+        public void DeleteAllCookies(HttpContextBase httpContext)
+        {
+            httpContext.Response.Cookies.Add(CreateExpiredCookie(CookieNames.UserContext));
+            DeleteAuthenticationCookie(httpContext);
+        }
+
         private static HttpCookie CreateExpiredCookie(string name)
         {
             var cookie = new HttpCookie(name)

@@ -22,5 +22,7 @@
         string GetReturnUrl(HttpContextBase httpContext);
 
         void DeleteReturnUrlCookie(HttpContextBase httpContext);
+
+        void DeleteAllCookies(HttpContextBase httpContext);
     }
 }
