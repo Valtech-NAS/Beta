@@ -221,7 +221,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Rule",
                         "Value"});
             table8.AddRow(new string[] {
-                        "ResentAccountUnlockCodeText",
+                        "ResentCodeText",
                         "Exists",
                         ""});
 #line 56
@@ -317,7 +317,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Rule",
                         "Value"});
             table12.AddRow(new string[] {
-                        "ResentAccountUnlockCodeText",
+                        "ResentCodeText",
                         "Exists",
                         ""});
 #line 89

@@ -27,7 +27,7 @@
         [ElementLocator(Id = "ResendAccountUnlockCodeLink")]
         public IWebElement ResendAccountUnlockCodeLink { get; set; }
 
-        [ElementLocator(Id = "ResentAccountUnlockCodeText")]
-        public IWebElement ResentAccountUnlockCodeText { get; set; }
+        [ElementLocator(Id = "ResentCodeText")]
+        public IWebElement ResentCodeText { get; set; }
     }
 }

@@ -55,7 +55,7 @@ Scenario: Account unlock code can be resent
 	Then I am on the UnlockPage page
 	And I see
          | Field                       | Rule   | Value |
-         | ResentAccountUnlockCodeText | Exists |       |
+         | ResentCodeText | Exists |       |
 
 Scenario: Account unlock code is renewed if it has expired
 	Given I locked my account and my account unlock code has expired
@@ -88,5 +88,5 @@ Scenario: Account unlock code is renewed before being resent if it has expired
 	Then I am on the UnlockPage page
 	And I see
          | Field                       | Rule   | Value |
-         | ResentAccountUnlockCodeText | Exists |       |
+         | ResentCodeText | Exists |       |
 	And my account unlock code has been renewed

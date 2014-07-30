@@ -222,13 +222,13 @@
             _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
 
             TempData["EmailAddress"] = model.EmailAddress;
+            TempData["ResentCode"] = true;
 
             return RedirectToAction("ResetPassword");
         }
 
         public ActionResult ResendActivationCode(string emailAddress)
         {
-
             Logger.Debug("{0} requested activation code to be resent", emailAddress);
 
             _candidateServiceProvider.ResendActivationCode(emailAddress);

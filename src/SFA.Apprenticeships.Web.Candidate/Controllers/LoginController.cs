@@ -143,7 +143,7 @@
             _candidateServiceProvider.RequestAccountUnlockCode(model);
 
             TempData["EmailAddress"] = model.EmailAddress;
-            TempData["ResentAccountUnlockCode"] = true;
+            TempData["ResentCode"] = true;
 
             return RedirectToAction("Unlock");
         }

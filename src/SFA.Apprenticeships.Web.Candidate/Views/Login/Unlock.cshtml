@@ -7,9 +7,9 @@
 
 <h1 id="account-unlock-h1" class="heading-large">Unlock account</h1>
 
-@if (TempData["ResentAccountUnlockCode"] != null)
+@if (TempData["ResentCode"] != null)
 {
-    <p id="ResentAccountUnlockCodeText">TODO: Account unlock code sent to @Model.EmailAddress.</p>
+    <p id="ResentCodeText">TODO: Account unlock code sent to @Model.EmailAddress.</p>
 }
 
 <p class="text">Enter your 6-digit code to unlock your account</p>
