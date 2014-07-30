@@ -23,5 +23,11 @@
 
         [ElementLocator(Id = "verify-code-button")]
         public IWebElement VerifyCodeButton { get; set; }
+
+        [ElementLocator(Id = "ResendAccountUnlockCodeLink")]
+        public IWebElement ResendAccountUnlockCodeLink { get; set; }
+
+        [ElementLocator(Id = "Preamble")]
+        public IWebElement Preamble { get; set; }
     }
 }

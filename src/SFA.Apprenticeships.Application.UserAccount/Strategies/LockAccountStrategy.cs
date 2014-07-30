@@ -28,7 +28,7 @@
         {
             if (user == null)
             {
-                // TODO: AG: do not like to silently consume issues like 'candidate not found'.
+                // TODO: AG: do not like to silently consume issues like 'user not found'.
                 return;
             }
 

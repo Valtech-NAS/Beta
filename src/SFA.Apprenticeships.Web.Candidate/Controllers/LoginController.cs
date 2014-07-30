@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System.Web.Mvc;
+    using Attributes;
     using Common.Controllers;
     using Common.Providers;
     using Constants.ViewModels;
@@ -82,9 +83,8 @@
             return View(model);
         }
 
-        // TODO: AG: US444: consider renaming to Unlock.
-
         [HttpGet]
+        // TODO: AG: US444: consider renaming to Unlock.
         public ActionResult AccountUnlock()
         {
             var emailAddress = TempData["EmailAddress"] as string;
@@ -142,6 +142,7 @@
             _candidateServiceProvider.RequestAccountUnlockCode(model);
 
             TempData["EmailAddress"] = model.EmailAddress;
+            TempData["ResentAccountUnlockCode"] = true;
 
             return RedirectToAction("AccountUnlock");
         }

@@ -5,8 +5,11 @@
     using Builders;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Repositories;
     using global::SpecBind.Helpers;
+    using StructureMap;
     using TechTalk.SpecFlow;
+    using NUnit.Framework;
 
     [Binding]
     public class LoginCandidateDataBinding
@@ -28,12 +31,16 @@
         private static readonly Random Random = new Random();
 
         private readonly ITokenManager _tokenManager;
+        private readonly IUserReadRepository _userReadRepository;
+
         private readonly string _emailAddress;
 
         public LoginCandidateDataBinding(ITokenManager tokenManager)
         {
             _tokenManager = tokenManager;
             _emailAddress = GenerateEmailAddress();
+            _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
+
         }
 
         [Given("I registered an account but did not activate it")]
@@ -71,7 +78,7 @@
                 .WithLoginIncorrectAttempts(2)
                 .Build();
 
-            SetTokens(candidate, user);  
+            SetTokens(candidate, user);
         }
 
         [Given("I locked my account")]
@@ -86,6 +93,36 @@
                 .Build();
 
             SetTokens(candidate, user);
+        }
+
+
+        [Given("I locked my account and my account unlock code has expired")]
+        public void GivenILockedMyAccountAndMyAccountUnlockCodeHasExpired()
+        {
+            var candidate = new CandidateBuilder(Id, _emailAddress)
+                .Build();
+
+            var user = new UserBuilder(Id, _emailAddress, UserStatuses.Locked)
+                .WithAccountUnlockCodeExpiry(DateTime.Now.AddDays(-7))
+                .WithAccountUnlockCode(AccountUnlockCode)
+                .Build();
+
+            SetTokens(candidate, user);
+        }
+
+        [Then]
+        public void ThenMyAccountUnlockCodeHasBeenRenewed()
+        {
+            var user = _userReadRepository.Get(_emailAddress);
+            var accountUnlockCode = _tokenManager.GetTokenByKey(AccountUnlockCodeTokenName);
+
+            // Ensure account unlock code has changed.
+            Assert.IsNotNull(accountUnlockCode);
+            Assert.IsNotNull(user.AccountUnlockCode);
+            Assert.AreNotEqual(accountUnlockCode, user.AccountUnlockCode);
+
+            // Ensure account unlock code has been renewed.
+            Assert.IsTrue(user.AccountUnlockCodeExpiry > DateTime.Now);
         }
 
         #region Helpers
