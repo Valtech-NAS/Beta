@@ -9,12 +9,10 @@
     [PageAlias("RegisterCandidatePage")]
     public class RegisterCandidatePage : BaseValidationPage
     {
-        private readonly ISearchContext _context;
         private IElementList<IWebElement, AddressDropdownItem> _addressDropdown;
 
         public RegisterCandidatePage(ISearchContext context) : base(context)
         {
-            _context = context;
         }
 
         [ElementLocator(Id = "Firstname")]

@@ -8,6 +8,7 @@
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
     using Strategies;
+    using UserAccount.Strategies;
 
     public class CandidateService : ICandidateService
     {
@@ -20,14 +21,20 @@
         private readonly IRegisterCandidateStrategy _registerCandidateStrategy;
         private readonly ICreateApplicationStrategy _createApplicationStrategy;
         private readonly IGetCandidateApplicationsStrategy _getCandidateApplicationsStrategy;
+        private readonly IResetForgottenPasswordStrategy _resetForgottenPasswordStrategy;
+        private readonly IUnlockAccountStrategy _unlockAccountStrategy;
 
         public CandidateService(IApplicationWriteRepository applicationWriteRepository,
             ICandidateReadRepository candidateReadRepository,
-            ICandidateWriteRepository candidateWriteRepository, IActivateCandidateStrategy activateCandidateStrategy,
+            ICandidateWriteRepository candidateWriteRepository, 
+            IActivateCandidateStrategy activateCandidateStrategy,
             IAuthenticateCandidateStrategy authenticateCandidateStrategy,
             ISubmitApplicationStrategy submitApplicationStrategy,
-            IRegisterCandidateStrategy registerCandidateStrategy, ICreateApplicationStrategy createApplicationStrategy,
-            IGetCandidateApplicationsStrategy getCandidateApplicationsStrategy)
+            IRegisterCandidateStrategy registerCandidateStrategy, 
+            ICreateApplicationStrategy createApplicationStrategy,
+            IGetCandidateApplicationsStrategy getCandidateApplicationsStrategy, 
+            IResetForgottenPasswordStrategy resetForgottenPasswordStrategy, 
+            IUnlockAccountStrategy unlockAccountStrategy)
         {
             _applicationWriteRepository = applicationWriteRepository;
             _candidateReadRepository = candidateReadRepository;
@@ -38,6 +45,8 @@
             _registerCandidateStrategy = registerCandidateStrategy;
             _createApplicationStrategy = createApplicationStrategy;
             _getCandidateApplicationsStrategy = getCandidateApplicationsStrategy;
+            _resetForgottenPasswordStrategy = resetForgottenPasswordStrategy;
+            _unlockAccountStrategy = unlockAccountStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -100,6 +109,23 @@
             Condition.Requires(application);
 
             _submitApplicationStrategy.SubmitApplication(application);
+        }
+
+        public void UnlockAccount(string username, string accountUnlockCode)
+        {
+            Condition.Requires(username).IsNotNullOrEmpty();
+            Condition.Requires(accountUnlockCode).IsNotNullOrEmpty();
+
+            _unlockAccountStrategy.UnlockAccount(username, accountUnlockCode);
+        }
+
+        public void ResetForgottenPassword(string username, string passwordCode, string newPassword)
+        {
+            Condition.Requires(username).IsNotNullOrEmpty();
+            Condition.Requires(passwordCode).IsNotNullOrEmpty();
+            Condition.Requires(newPassword).IsNotNullOrEmpty();
+
+            _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
     public class WorkerRole : RoleEntryPoint
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private ApplicationSchedulerConsumer _applicationSchedulerConsumer;
+        //todo notimpl  private ApplicationSchedulerConsumer _applicationSchedulerConsumer;
 
         public override void Run()
         {

@@ -131,7 +131,7 @@
         {
             try
             {
-                _userAccountService.ResetForgottenPassword(model.EmailAddress, model.PasswordResetCode, model.Password);
+                _candidateService.ResetForgottenPassword(model.EmailAddress, model.PasswordResetCode, model.Password);
                 return true;
             }
             catch (CustomException ex)
@@ -145,7 +145,7 @@
         {
             try
             {
-                _userAccountService.UnlockAccount(model.EmailAddress, model.AccountUnlockCode);
+                _candidateService.UnlockAccount(model.EmailAddress, model.AccountUnlockCode);
                 return true;
             }
             catch (Exception ex)

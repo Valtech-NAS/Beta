@@ -1,32 +1,31 @@
-﻿namespace SFA.Apprenticeships.Application.UserAccount.Strategies
+﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
-    using Candidate.Strategies;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using UserAccount.Strategies;
 
-    public class LegacyUnlockAccountStrategy : IUnlockAccountStrategy
+    public class LegacyResetForgottenPasswordStrategy : IResetForgottenPasswordStrategy
     {
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly ILegacyCandidateProvider _legacyCandidateProvider;
-        private readonly IUnlockAccountStrategy _unlockAccountStrategy;
+        private readonly IResetForgottenPasswordStrategy _resetForgottenPasswordStrategy;
         private readonly IUserReadRepository _userReadRepository;
 
-        public LegacyUnlockAccountStrategy(IUnlockAccountStrategy unlockAccountStrategy,
+        public LegacyResetForgottenPasswordStrategy(IResetForgottenPasswordStrategy resetForgottenPasswordStrategy,
             ICandidateReadRepository candidateReadRepository,
             ICandidateWriteRepository candidateWriteRepository,
             ILegacyCandidateProvider legacyCandidateProvider,
             IUserReadRepository userReadRepository)
         {
-            _unlockAccountStrategy = unlockAccountStrategy;
+            _resetForgottenPasswordStrategy = resetForgottenPasswordStrategy;
             _candidateReadRepository = candidateReadRepository;
             _candidateWriteRepository = candidateWriteRepository;
             _legacyCandidateProvider = legacyCandidateProvider;
             _userReadRepository = userReadRepository;
         }
 
-        public void UnlockAccount(string username, string accountUnlockCode)
+        public void ResetForgottenPassword(string username, string passwordCode, string newPassword)
         {
             var user = _userReadRepository.Get(username, false);
 
@@ -42,19 +41,17 @@
                 throw new CustomException("Unknown Candidate", ErrorCodes.UnknownCandidateError);
             }
 
-            user.AssertState("User should be a locked state", UserStatuses.Locked);
-
             if (candidate.LegacyCandidateId > 0)
             {
-                _unlockAccountStrategy.UnlockAccount(username, accountUnlockCode);
+                _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
             }
             else
             {
-                // Create candidate on legacy system and unlock account
+                // Create candidate on legacy system and reset forgotten password
                 var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
                 candidate.LegacyCandidateId = legacyCandidateId;
                 _candidateWriteRepository.Save(candidate);
-                _unlockAccountStrategy.UnlockAccount(username, accountUnlockCode);
+                _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
             }
         }
     }

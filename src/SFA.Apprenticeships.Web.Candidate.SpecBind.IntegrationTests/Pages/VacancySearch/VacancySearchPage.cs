@@ -7,11 +7,8 @@
     [PageAlias("VacancySearchPage")]
     public class VacancySearchPage : BaseValidationPage
     {
-        private readonly ISearchContext _context;
-
         public VacancySearchPage(ISearchContext context) : base(context)
         {
-            _context = context;
         }
 
         [ElementLocator(Id = "Keywords")]
