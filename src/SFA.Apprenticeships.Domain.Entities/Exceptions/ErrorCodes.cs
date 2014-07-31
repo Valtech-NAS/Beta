@@ -9,6 +9,7 @@
         public const string UserAccountLockedError = "User004";
         public const string UserActivationCodeError = "User005";
         public const string UserPasswordResetCodeIsInvalid = "User006";
+
         // Candidate Exception Codes
         public const string UnknownCandidateError = "Candidate001";
 

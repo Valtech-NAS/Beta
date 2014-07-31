@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Users
+﻿namespace SFA.Apprenticeships.Web.Common.Providers
 {
     public class UserContext
     {

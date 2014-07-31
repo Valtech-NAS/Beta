@@ -3,9 +3,6 @@
     using System;
     using System.Linq;
     using System.Web;
-    using Domain.Entities.Applications;
-    using Domain.Entities.Context;
-    using Domain.Entities.Users;
     using Services;
 
     internal class UserServiceProvider : IUserServiceProvider

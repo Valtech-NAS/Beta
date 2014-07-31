@@ -2,9 +2,6 @@
 {
     using System;
     using System.Web;
-    using Domain.Entities.Applications;
-    using Domain.Entities.Context;
-    using Domain.Entities.Users;
 
     public interface IUserServiceProvider
     {

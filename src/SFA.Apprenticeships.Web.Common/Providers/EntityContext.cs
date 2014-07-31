@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Context
+﻿namespace SFA.Apprenticeships.Web.Common.Providers
 {
     using System;
 
