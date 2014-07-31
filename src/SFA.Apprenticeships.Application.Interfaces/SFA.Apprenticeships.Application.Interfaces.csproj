@@ -39,6 +39,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Locations\IAddressSearchProvider.cs" />
+    <Compile Include="Messaging\SubmitApplicationRequest.cs" />
     <Compile Include="Messaging\CandidateMessageTypes.cs" />
     <Compile Include="Messaging\CommunicationTokens.cs" />
     <Compile Include="Messaging\EmailRequest.cs" />
@@ -46,7 +47,6 @@
     <Compile Include="Messaging\IEmailDispatcher.cs" />
     <Compile Include="Messaging\ISmsDispatcher.cs" />
     <Compile Include="Messaging\SmsRequest.cs" />
-    <Compile Include="Messaging\SubmitApplicationRequest.cs" />
     <Compile Include="Users\ICodeGenerator.cs" />
     <Compile Include="Users\IUserAccountService.cs" />
     <Compile Include="Candidates\ICandidateService.cs" />

@@ -6,6 +6,7 @@
     using Application.ReferenceData;
     using Application.VacancyEtl;
     using Configuration;
+    using CreateApplication;
     using CreateCandidate;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
@@ -30,10 +31,12 @@
             For<IWcfService<IVacancyDetails>>().Use<WcfService<IVacancyDetails>>();
             For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
             For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
+
             For<IVacancyIndexDataProvider>()
                 .Use<LegacyVacancyIndexDataProvider>()
                 .Ctor<IMapper>()
                 .Named("LegacyWebServices.VacancySummaryMapper");
+
             For<IVacancyDataProvider>()
                 .Use<LegacyVacancyDataProvider>()
                 .Ctor<IMapper>()
@@ -55,6 +58,7 @@
                 .Named("CachedLegacyReferenceDataProvider");
 
             For<ILegacyCandidateProvider>().Use<LegacyCandidateProvider>();
+            For<ILegacyApplicationProvider>().Use<LegacyApplicationProvider>();
         }
     }
 }

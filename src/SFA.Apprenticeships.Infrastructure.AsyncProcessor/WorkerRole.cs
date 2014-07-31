@@ -81,7 +81,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
 
             Logger.Debug("RabbitMQ initialising");
 
-            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof (EmailConsumerAsync)), asyncProcessorSubscriptionId);
+            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof (EmailRequestConsumerAsync)), asyncProcessorSubscriptionId);
 
             Logger.Debug("RabbitMQ initialised");
         }

@@ -59,6 +59,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="LegacyReferenceDataProviderIntegrationTests.cs" />
+    <Compile Include="LegacyWebServiceLegacyApplicationProviderIntegrationTests.cs" />
     <Compile Include="LegacyWebServiceLegacyCandidateProviderIntegrationTests.cs" />
     <Compile Include="SetUp.cs" />
     <Compile Include="VacancyServiceTests.cs" />

@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.IoC
 {
-    using System;
     using Consumers;
     using StructureMap.Configuration.DSL;
 
@@ -8,7 +7,8 @@
     {
         public AsyncProcessorRegistry()
         {
-            For<EmailConsumerAsync>().Use<EmailConsumerAsync>();
+            For<EmailRequestConsumerAsync>().Use<EmailRequestConsumerAsync>();
+            For<SubmitApplicationRequestConsumerAsync>().Use<SubmitApplicationRequestConsumerAsync>();
         }
     }
 }
