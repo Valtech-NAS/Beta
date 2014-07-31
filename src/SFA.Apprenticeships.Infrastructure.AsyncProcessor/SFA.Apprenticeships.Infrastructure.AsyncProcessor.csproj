@@ -93,7 +93,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Consumers\EmailConsumerAsync.cs" />
+    <Compile Include="Consumers\SubmitApplicationRequestConsumerAsync.cs" />
+    <Compile Include="Consumers\EmailRequestConsumerAsync.cs" />
     <Compile Include="IoC\AsyncProcessorRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />
@@ -113,7 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
-      <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.Common\SFA.Apprenticeships.Infrastructure.Azure.Common.csproj">

@@ -5,17 +5,17 @@
     using EasyNetQ.AutoSubscribe;
     using NLog;
 
-    public class EmailConsumerAsync : IConsumeAsync<EmailRequest>
+    public class EmailRequestConsumerAsync : IConsumeAsync<EmailRequest>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IEmailDispatcher _dispatcher;
 
-        public EmailConsumerAsync(IEmailDispatcher dispatcher)
+        public EmailRequestConsumerAsync(IEmailDispatcher dispatcher)
         {
             _dispatcher = dispatcher;
         }
 
-        [AutoSubscriberConsumer(SubscriptionId = "EmailConsumerAsync")]
+        [AutoSubscriberConsumer(SubscriptionId = "EmailRequestConsumerAsync")]
         public Task Consume(EmailRequest request)
         {
             Logger.Debug("Email request recieved from message bus, From:{0}, To:{1}, Subject:{2}", request.FromEmail, request.ToEmail, request.Subject);

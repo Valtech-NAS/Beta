@@ -39,6 +39,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Locations\IAddressSearchProvider.cs" />
+    <Compile Include="Messaging\ISubmitApplicationRequestDispatcher.cs" />
+    <Compile Include="Messaging\SubmitApplicationRequest.cs" />
     <Compile Include="Messaging\CandidateMessageTypes.cs" />
     <Compile Include="Messaging\CommunicationTokens.cs" />
     <Compile Include="Messaging\EmailRequest.cs" />

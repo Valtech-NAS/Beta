@@ -44,6 +44,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CandidateService.cs" />
+    <Compile Include="ILegacyApplicationProvider.cs" />
     <Compile Include="Strategies\IGetCandidateApplicationsStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\AuthenticateCandidateStrategy.cs" />
