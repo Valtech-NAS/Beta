@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Messaging
 {
+    using System;
+
     public class SubmitApplicationRequest
     {
-        public string ApplicationId { get; set; }
+        public Guid ApplicationId { get; set; }
     }
 }

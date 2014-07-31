@@ -30,7 +30,7 @@
         {
             var message = new SubmitApplicationRequest
             {
-                ApplicationId = Guid.NewGuid().ToString()
+                ApplicationId = Guid.NewGuid()
             };
 
             _bus.PublishMessage(message);

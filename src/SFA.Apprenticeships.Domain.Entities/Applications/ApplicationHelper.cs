@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Applications
 {
+    using System;
     using Exceptions;
     using System.Linq;
 
@@ -11,6 +12,17 @@
             {
                 throw new CustomException(errorMessage, ErrorCodes.ApplicationInIncorrectStateError);
             }
+        }
+
+        public static void SetStateSubmitting(this ApplicationDetail applicationDetail)
+        {
+            applicationDetail.Status = ApplicationStatuses.Submitting;
+            applicationDetail.DateApplied = DateTime.UtcNow;
+        }
+
+        public static void SetStateSubmitted(this ApplicationDetail applicationDetail)
+        {
+            applicationDetail.Status = ApplicationStatuses.Submitted;
         }
     }
 }

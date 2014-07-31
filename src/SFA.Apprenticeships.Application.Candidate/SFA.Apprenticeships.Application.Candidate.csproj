@@ -36,6 +36,10 @@
     <Reference Include="CuttingEdge.Conditions">
       <HintPath>..\packages\CuttingEdge.Conditions.1.2.0.0\lib\NET35\CuttingEdge.Conditions.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -44,11 +48,11 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CandidateService.cs" />
-    <Compile Include="ILegacyApplicationProvider.cs" />
+    <Compile Include="Strategies\ILegacyApplicationProvider.cs" />
+    <Compile Include="Strategies\CreateApplicationStrategy.cs" />
     <Compile Include="Strategies\IGetCandidateApplicationsStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\AuthenticateCandidateStrategy.cs" />
-    <Compile Include="Strategies\LegacyCreateApplicationStrategy.cs" />
     <Compile Include="Strategies\IAuthenticateCandidateStrategy.cs" />
     <Compile Include="Strategies\ICreateApplicationStrategy.cs" />
     <Compile Include="Strategies\ILegacyCandidateProvider.cs" />
@@ -85,6 +89,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
