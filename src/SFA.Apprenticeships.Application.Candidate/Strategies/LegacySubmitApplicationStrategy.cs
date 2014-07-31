@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Domain.Entities.Applications;
-    using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;

@@ -43,110 +43,17 @@
             get { return _configManager.GetAppSetting("Email.Test.From"); }
         }
 
-        [Test]
-        public void ShoudConstructSendGridEmailDispatcher()
-        {
-            Assert.IsNotNull(_dispatcher);
-            Assert.IsInstanceOf<SendGridEmailDispatcher>(_dispatcher);
-        }
-
-        [Test]
-        public void ShoudSendEmail()
-        {
-            var request = new EmailRequest
-            {
-                Subject = "Hello, World at " + DateTime.Now.ToLongTimeString(),
-                FromEmail = TestFromEmail,
-                ToEmail = TestToEmail,
-                Tokens = CreateTokens(),
-                MessageType = CandidateMessageTypes.SendActivationCode
-            };
-
-            _dispatcher.SendEmail(request);
-        }
-
-        [Test]
-        public void ShoudSendEmailWithFromEmailInTemplateConfiguration()
-        {
-            // NOTE: FromEmail is not set and is defined in SendGrid email template.
-            var request = new EmailRequest
-            {
-                Subject = "Hello, World at " + DateTime.Now.ToLongTimeString(),
-                ToEmail = TestToEmail,
-                Tokens = CreateTokens(),
-                MessageType = CandidateMessageTypes.SendActivationCode
-            };
-
-            _dispatcher.SendEmail(request);
-        }
-
-        [Test]
-        public void ShoudSendEmailWithSubjectInTemplate()
-        {
-            // NOTE: Subject is not set and is defined in SendGrid email template.
-            var request = new EmailRequest
-            {
-                FromEmail = TestFromEmail,
-                ToEmail = TestToEmail,
-                Tokens = CreateTokens(),
-                MessageType = CandidateMessageTypes.SendActivationCode
-            };
-
-            _dispatcher.SendEmail(request);
-        }
-
-        [Test]
-        public void ShouldSendPasswordResetCodeEmail()
-        {
-            var request = new EmailRequest
-            {
-                FromEmail = TestFromEmail,
-                ToEmail = TestToEmail,
-                Tokens = CreatePasswordResetTokens(),
-                MessageType = CandidateMessageTypes.SendPasswordResetCode
-            };
-
-            _dispatcher.SendEmail(request);
-        }
-
-        [Test]
-        public void ShouldSendPasswordResetConfirmationEmail()
-        {
-            var request = new EmailRequest
-            {
-                FromEmail = TestFromEmail,
-                ToEmail = TestToEmail,
-                Tokens = CreatePasswordResetConfirmationTokens(),
-                MessageType = CandidateMessageTypes.PasswordChanged
-            };
-
-            _dispatcher.SendEmail(request);
-        }
-
-        [Test]
-        public void ShouldSendAccountUnlockCode()
-        {
-            var request = new EmailRequest
-            {
-                FromEmail = TestFromEmail,
-                ToEmail = TestToEmail,
-                Tokens = CreateAccountUnlockCodeTokens(),
-                MessageType = CandidateMessageTypes.SendAccountUnlockCode
-            };
-
-            _dispatcher.SendEmail(request);
-        }
-
-        #region Helpers
-
-        private IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateTokens()
+        private IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateActivationEmailTokens()
         {
             return new[]
             {
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
                 new KeyValuePair<CommunicationTokens, string>(
                     CommunicationTokens.ActivationCode, TestActivationCode),
                 new KeyValuePair<CommunicationTokens, string>(
-                    CommunicationTokens.Username, TestToEmail)
+                    CommunicationTokens.Username, TestToEmail),
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ActivationCodeExpiryDays,
+                    " 30 days")
             };
         }
 
@@ -182,6 +89,124 @@
             };
         }
 
-        #endregion
+        private static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateApplicationSubmittedTokens()
+        {
+            return new[]
+            {
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyTitle,
+                    "Application Vacancy Title"),
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference,
+                    "Application Vacancy Reference")
+            };
+        }
+
+        [Test]
+        public void ShoudConstructSendGridEmailDispatcher()
+        {
+            Assert.IsNotNull(_dispatcher);
+            Assert.IsInstanceOf<SendGridEmailDispatcher>(_dispatcher);
+        }
+
+        [Test]
+        public void ShoudSendEmail()
+        {
+            var request = new EmailRequest
+            {
+                Subject = "Hello, World at " + DateTime.Now.ToLongTimeString(),
+                FromEmail = TestFromEmail,
+                ToEmail = TestToEmail,
+                Tokens = CreateActivationEmailTokens(),
+                MessageType = CandidateMessageTypes.SendActivationCode
+            };
+
+            _dispatcher.SendEmail(request);
+        }
+
+        [Test]
+        public void ShoudSendEmailWithFromEmailInTemplateConfiguration()
+        {
+            // NOTE: FromEmail is not set and is defined in SendGrid email template.
+            var request = new EmailRequest
+            {
+                Subject = "Hello, World at " + DateTime.Now.ToLongTimeString(),
+                ToEmail = TestToEmail,
+                Tokens = CreateActivationEmailTokens(),
+                MessageType = CandidateMessageTypes.SendActivationCode
+            };
+
+            _dispatcher.SendEmail(request);
+        }
+
+        [Test]
+        public void ShoudSendEmailWithSubjectInTemplate()
+        {
+            // NOTE: Subject is not set and is defined in SendGrid email template.
+            var request = new EmailRequest
+            {
+                FromEmail = TestFromEmail,
+                ToEmail = TestToEmail,
+                Tokens = CreateActivationEmailTokens(),
+                MessageType = CandidateMessageTypes.SendActivationCode
+            };
+
+            _dispatcher.SendEmail(request);
+        }
+
+        [Test]
+        public void ShouldSendAccountUnlockCode()
+        {
+            var request = new EmailRequest
+            {
+                FromEmail = TestFromEmail,
+                ToEmail = TestToEmail,
+                Tokens = CreateAccountUnlockCodeTokens(),
+                MessageType = CandidateMessageTypes.SendAccountUnlockCode
+            };
+
+            _dispatcher.SendEmail(request);
+        }
+
+        [Test]
+        public void ShouldSendApplicationSubmittedEmail()
+        {
+            var request = new EmailRequest
+            {
+                FromEmail = TestFromEmail,
+                ToEmail = TestToEmail,
+                Tokens = CreateApplicationSubmittedTokens(),
+                MessageType = CandidateMessageTypes.ApplicationSubmitted
+            };
+
+            _dispatcher.SendEmail(request);
+        }
+
+        [Test]
+        public void ShouldSendPasswordResetCodeEmail()
+        {
+            var request = new EmailRequest
+            {
+                FromEmail = TestFromEmail,
+                ToEmail = TestToEmail,
+                Tokens = CreatePasswordResetTokens(),
+                MessageType = CandidateMessageTypes.SendPasswordResetCode
+            };
+
+            _dispatcher.SendEmail(request);
+        }
+
+        [Test]
+        public void ShouldSendPasswordResetConfirmationEmail()
+        {
+            var request = new EmailRequest
+            {
+                FromEmail = TestFromEmail,
+                ToEmail = TestToEmail,
+                Tokens = CreatePasswordResetConfirmationTokens(),
+                MessageType = CandidateMessageTypes.PasswordChanged
+            };
+
+            _dispatcher.SendEmail(request);
+        }
     }
 }
