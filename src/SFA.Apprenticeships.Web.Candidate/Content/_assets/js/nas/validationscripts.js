@@ -40,6 +40,7 @@
     $('.inline-fixed').on('blur keyup', '.form-control', function () {
         var $this = $(this),
             $thisParent = $this.closest('.inline-fixed');
+
         setTimeout(function () {    
             if ($thisParent.find('.field-validation-error').length > 0) {
                 $thisParent.addClass('input-validation-error');
