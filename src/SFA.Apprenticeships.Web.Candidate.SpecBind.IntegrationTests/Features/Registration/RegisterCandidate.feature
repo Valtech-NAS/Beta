@@ -71,11 +71,9 @@ Scenario: As a candidate I want to be told quickly that my email/username is ava
 		| EmailAddress | {EmailToken} |
 	And I choose Phonenumber
 	And I am on the RegisterCandidatePage page
-	And I wait to see EmailAddressAvailableMessage
-	And I am on the RegisterCandidatePage page
 	Then I see 
-		| Field                        | Rule   | Value                       |
-		| EmailAddressAvailableMessage | Equals | Username is available: true |
+		| Field                        | Rule           | Value |
+		| EmailAddressAvailableMessage | Does Not Exist |       |
 		
 
 Scenario: As a candidate I want to be told quickly that my email/username is not available if I have already registered
@@ -89,11 +87,9 @@ Scenario: As a candidate I want to be told quickly that my email/username is not
 	And I wait to see EmailAddressAvailableMessage
 	And I am on the RegisterCandidatePage page
 	Then I see 
-		| Field                        | Rule   | Value                        |
-		| EmailAddressAvailableMessage | Equals | Username is available: false |
+		| Field                        | Rule   | Value                              |
+		| EmailAddressAvailableMessage | Equals | Username already in use, try again |
 
-@ignore
-# Failing because legacy system is not fixed
 Scenario: As a candidate I want to be submit my registration details so that I can apply for vacancies 
 	Given I navigated to the RegisterCandidatePage page
 	And I have created a new email address
