@@ -85,7 +85,7 @@
             RouteValueDictionary labelAttributes = MergeAttributes("form-label", labelHtmlAttributes);
             RouteValueDictionary hintAttributes = MergeAttributes("form-hint", hintHtmlAttributes);
 
-            var validator = helper.ValidationMessageFor(expression, null, new { @class = "hidden" });
+            var validator = helper.ValidationMessageFor(expression, null);
 
             return FormText(
                 helper.LabelFor(expression, labelText, labelAttributes),
@@ -149,7 +149,7 @@
             //RouteValueDictionary hintAttributes = MergeAttributes("form-hint", hintHtmlAttributes);
             
             var validationError = HasValidationError(helper, expression);
-            var validator = helper.ValidationMessageFor(expression, null, new { @class = "hidden" });
+            var validator = helper.ValidationMessageFor(expression, null);
             var anchorTag = AnchorFor(helper, expression);
 
             container.MergeAttributes(containerAttributes);

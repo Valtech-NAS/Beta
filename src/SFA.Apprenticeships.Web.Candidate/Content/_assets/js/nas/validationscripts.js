@@ -37,18 +37,22 @@
         };
     });
 
-    function checkForDateError() {
-        if ($('.date-input > .input-validation-error').length > 0) {
-            $('.date-input').addClass('input-validation-error');
-        } else {
-            $('.date-input').removeClass('input-validation-error');
-        }
-    }
+    $('.inline-fixed').on('blur keyup', '.form-control', function () {
+        var $this = $(this),
+            $thisParent = $this.closest('.inline-fixed');
+        setTimeout(function () {    
+            if ($thisParent.find('.field-validation-error').length > 0) {
+                $thisParent.addClass('input-validation-error');
+            } else {
+                $thisParent.removeClass('input-validation-error');
+            }
+        }, 10);
+    });
 
-    $('.date-input').on('blur keyup', '.form-control', function () {
-        setTimeout(function () {
-            checkForDateError();
-        }, 100);
+    $('.inline-fixed').find('[data-valmsg-for]').each(function () {
+        var $this = $(this);
+
+        $this.appendTo($this.closest('.inline-fixed'));
     });
 
 });
