@@ -2,7 +2,6 @@
 {
     using System.Web.Mvc;
     using Attributes;
-    using Domain.Entities.Users;
     using Providers;
 
     [AuthenticateUser]
@@ -16,9 +15,9 @@
 
         protected new ISessionStateProvider Session { get; private set; }
 
-        public IUserServiceProvider UserServiceProvider { get; private set; }
+        protected IUserServiceProvider UserServiceProvider { get; private set; }
 
-        protected UserContext UserContext { get; set; }
+        protected UserContext UserContext { get; private set; }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
