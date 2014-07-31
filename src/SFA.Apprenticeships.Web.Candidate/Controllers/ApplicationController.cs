@@ -74,8 +74,9 @@
         {
             try
             {
-                var applicationId = Guid.Parse(applicationDetailViewModelId);
-                _applicationProvider.SubmitApplication(applicationId);
+                var applicationViewId = Guid.Parse(applicationDetailViewModelId);
+                _applicationProvider.SubmitApplication(applicationViewId);
+
                 return RedirectToAction("Index", "Home"); //TODO redirect to the Done page - What happens next
             }
             catch (Exception)

@@ -5,12 +5,10 @@
     using System.Web;
     using Application.Interfaces.Candidates;
     using Common.Providers;
-    using Domain.Entities.Candidates;
     using Domain.Interfaces.Mapping;
     using ViewModels.Applications;
     using ViewModels.Candidate;
     using ViewModels.Locations;
-    using ViewModels.VacancySearch;
 
     internal class ApplicationProvider : IApplicationProvider
     {
@@ -113,6 +111,7 @@
         {
             var httpContext = new HttpContextWrapper(HttpContext.Current);
             var applicationContext = _userServiceProvider.GetEntityContextCookie(httpContext, ApplicationContextName);
+
             _candidateService.SubmitApplication(applicationContext.EntityId);
         }
     }
