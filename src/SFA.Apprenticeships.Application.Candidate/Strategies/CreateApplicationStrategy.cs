@@ -2,13 +2,23 @@
 {
     using System;
     using Domain.Entities.Applications;
+    using Interfaces.Vacancies;
 
     public class CreateApplicationStrategy : ICreateApplicationStrategy
     {
+        private readonly IVacancyDataProvider _vacancyDataProvider;
+
+        public CreateApplicationStrategy(
+            IVacancyDataProvider vacancyDataProvider)
+        {
+            _vacancyDataProvider = vacancyDataProvider;
+        }
+
         public ApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
         {
             // TODO: get vacancy so can check current status and include some snapshot detail in the application (VacancySummary)
             // IVacancyDataProvider.GetVacancyDetails(legacyVacancyId)
+            var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
             // TODO: existing application
             // if exists and status = submitting/submitted (or any other "post submission" state) then cannot create new one
