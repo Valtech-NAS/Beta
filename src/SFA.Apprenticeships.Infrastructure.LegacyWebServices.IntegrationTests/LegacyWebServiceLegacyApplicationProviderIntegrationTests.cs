@@ -34,7 +34,7 @@
         }
 
         [Test]
-        public void ShouldCreateCandidateUsingLegacyCandidateProvider()
+        public void ShouldCreateApplication()
         {
             var applicationDetail = new ApplicationDetail
             {

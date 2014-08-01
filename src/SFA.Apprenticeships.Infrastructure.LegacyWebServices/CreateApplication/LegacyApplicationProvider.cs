@@ -35,7 +35,6 @@
      *    Other
      */
 
-    // TODO: US352: AG: review logging.
     public class LegacyApplicationProvider : ILegacyApplicationProvider
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -64,7 +63,7 @@
             {
                 if (response != null)
                 {
-                    // TODO: AG: US352: log actual validation errors (same for email).
+                    // TODO: log actual validation errors (same for email).
                     Logger.Error(
                         "Legacy CreateApplication reported {0} validation error(s).",
                         response.ValidationErrors.Count());
@@ -90,8 +89,8 @@
                 Application = new Application
                 {
                     VacancyId = applicationDetail.Vacancy.Id,
-                    VacancyRef = null, // TODO: US352: AG: applicationDetail.Vacancy.?
-                    CandidateId = 201, // TODO: US352: STUBIMPL: candidate.LegacyCandidateId,
+                    VacancyRef = null, // not required if VacancyId is supplied.
+                    CandidateId = candidate.LegacyCandidateId,
                     School = MapSchool(applicationDetail),
                     EducationResults = MapQualifications(applicationDetail.CandidateInformation.Qualifications),
                     WorkExperiences = MapWorkExperience(applicationDetail.CandidateInformation.WorkExperience),
@@ -121,12 +120,13 @@
 
         private static EducationResult[] MapQualifications(IEnumerable<Qualification> qualifications)
         {
-            // TODO: US352: each.IsPredicted is not mapped.
+            const int maxLevelLength = 100;
+
             return qualifications.Select(each => new EducationResult
             {
                 Subject = each.Subject,
                 DateAchieved = MapYearToDate(each.Year),
-                Level = each.QualificationType, // TODO: US352: should map to Other.
+                Level = each.QualificationType.Substring(0, Math.Min(each.QualificationType.Length, maxLevelLength)),
                 Grade = each.Grade
             }).ToArray();
         }
@@ -134,16 +134,16 @@
         private static GatewayServiceProxy.WorkExperience[] MapWorkExperience(
             IEnumerable<Domain.Entities.Candidates.WorkExperience> workExperience)
         {
-            // TODO: US352: each.JobTitle from new application is not mapped.
+            const int maxTypeOfWorkLength = 200;
 
             return workExperience.Select(each => new GatewayServiceProxy.WorkExperience
             {
                 Employer = each.Employer,
                 FromDate = MapYearToDate(each.FromYear),
                 ToDate = MapYearToDate(each.ToYear),
-                TypeOfWork = each.Description, // TODO: US352: AG: correct mapping?
-                PartialCompletion = false, // TODO: US352: AG: correct mapping?
-                Voluntary = false // TODO: US352: AG: correct mapping?
+                TypeOfWork = each.Description.Substring(0, Math.Min(each.Description.Length, maxTypeOfWorkLength)),
+                PartialCompletion = false, // no mapping available.
+                Voluntary = false // no mapping available.
             }).ToArray();
         }
 
