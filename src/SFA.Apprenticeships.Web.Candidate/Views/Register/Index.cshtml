@@ -45,9 +45,9 @@
             <div class="password-wrapper">
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                 <span class="pw-masktoggle button-link">Show</span>
-                @Html.ValidationMessageFor(m => m.Password, null, new { @class = "hidden" })
             </div>
             <p class="form-hint strength-indicator">Password strength: <span id="pass_meter" class=""></span></p>
+            @Html.ValidationMessageFor(m => m.Password, null, new { @class="text" })
         </div>
     </fieldset>
 
