@@ -52,6 +52,8 @@
                     Qualifications = ApplicationConverter.GetQualifications(model.Candidate.Qualifications),
                     WorkExperience = ApplicationConverter.GetWorkExperiences(model.Candidate.WorkExperience),
                 },
+                AdditionalQuestion1Answer = model.Candidate.EmployerQuestionAnswers.CandidateAnswer1,
+                AdditionalQuestion2Answer = model.Candidate.EmployerQuestionAnswers.CandidateAnswer2
             };
 
             return application;

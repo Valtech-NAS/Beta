@@ -32,7 +32,11 @@
                         ApplicationConverter.GetQualificationsViewModels(application.CandidateInformation.Qualifications),
                     WorkExperience =
                         ApplicationConverter.GetWorkExperiencesViewModels(application.CandidateInformation.WorkExperience),
-                    EmployerQuestionAnswers = new EmployerQuestionAnswersViewModel()
+                    EmployerQuestionAnswers = new EmployerQuestionAnswersViewModel
+                    {
+                        CandidateAnswer1 = application.AdditionalQuestion1Answer,
+                        CandidateAnswer2 = application.AdditionalQuestion2Answer
+                    }
                 }
             };
 

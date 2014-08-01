@@ -112,26 +112,7 @@
             };
 
             _candidateService.SaveCandidate(candidate);
-            //var existingApplicationViewModel = GetApplicationViewModel(vacancyId, candidateId);
-
-            //applicationViewModel.VacancyDetail = existingApplicationViewModel.VacancyDetail;
-            //applicationViewModel.Candidate.Id = existingApplicationViewModel.Candidate.Id;
-            //applicationViewModel.Candidate.FirstName = existingApplicationViewModel.Candidate.FirstName;
-            //applicationViewModel.Candidate.LastName = existingApplicationViewModel.Candidate.LastName;
-            //applicationViewModel.Candidate.EmailAddress = existingApplicationViewModel.Candidate.EmailAddress;
-            //applicationViewModel.Candidate.DateOfBirth = existingApplicationViewModel.Candidate.DateOfBirth;
-            //applicationViewModel.Candidate.Address = existingApplicationViewModel.Candidate.Address;
-
-            //if (!string.IsNullOrWhiteSpace(existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1) ||
-            //    !string.IsNullOrWhiteSpace(existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2))
-            //{
-            //    applicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 =
-            //        existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1;
-            //    applicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 =
-            //        existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2;
-            //}
-
-
+          
             return applicationViewModel;
         }
 

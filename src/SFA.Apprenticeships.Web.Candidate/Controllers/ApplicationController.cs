@@ -47,9 +47,6 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Apply(int id, ApplicationViewModel applicationViewModel)
         {
-            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
-            applicationViewModel = _applicationProvider.MergeApplicationViewModel(id, candidateId, applicationViewModel);
-            
             var result = _validator.Validate(applicationViewModel);
 
             if (!result.IsValid)
@@ -60,11 +57,12 @@
                 return View(applicationViewModel);
             }
 
-            Session.Store(TempAppFormSessionId, applicationViewModel);
-            return RedirectToAction("Preview", new { id = applicationViewModel.VacancyDetail.Id });
+            _applicationProvider.SaveApplication(applicationViewModel);
+
+            return RedirectToAction("Preview", new { applicationDetailViewModelId = applicationViewModel.ApplicationViewId });
         }
 
-        public ActionResult Preview(int id)
+        public ActionResult Preview(string applicationDetailViewModelId)
         {
             var appForm = Session.Get<ApplicationViewModel>(TempAppFormSessionId);
 
