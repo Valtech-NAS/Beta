@@ -52,52 +52,10 @@
 
         public ApplicationDetail Get(Guid id)
         {
-            Logger.Debug("Called Mongodb to get ApplicationDetail EntityId={0}", id);
+            Logger.Debug("Called Mongodb to get ApplicationDetail with Id={0}", id);
 
-            // TODO: US352: STUBIMPL
-            return new ApplicationDetail
-            {
-                EntityId = Guid.NewGuid(),
-                Status = ApplicationStatuses.Submitting,
-                CandidateId = Guid.NewGuid(),
-                LegacyApplicationId = 12345,
-                Vacancy = new VacancySummary
-                {
-                    Id = 12345 // legacy vacancy id  
-                },
-                CandidateDetails =
-                {
-                    FirstName = "Johnny",
-                    LastName = "Candidate",
-                    DateOfBirth = DateTime.Now.AddYears(-30),
-                    EmailAddress = "email@server.com",
-                    PhoneNumber = "07777111222",
-                    Address =
-                    {
-                        AddressLine1 = "Address line 1",
-                        AddressLine2 = "Address line 2",
-                        AddressLine3 = "Address line 3",
-                        AddressLine4 = "Address line 4",
-                        Postcode = "CV1 2WT"
-                    }
-                },
-                CandidateInformation =
-                {
-                    EducationHistory = new Education
-                    {
-                        Institution  = "Bash Street School",
-                        FromYear = 2009,
-                        ToYear = 2012
-                    },
-                    AboutYou =
-                    {
-                        HobbiesAndInterests = "Hobbies and interests",
-                        Improvements = "Improvements are not needed",
-                        Strengths = "My strengths are many",
-                        Support = "Third line"
-                    }
-                }
-            };
+            var mongoEntity = Collection.FindOneById(id);
+            return mongoEntity == null ? null : _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
         }
 
         public ApplicationDetail Get(Expression<Func<ApplicationDetail, bool>> filter)
