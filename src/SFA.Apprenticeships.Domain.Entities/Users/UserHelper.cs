@@ -8,7 +8,7 @@
     {
         public static void SetStatePendingActivation(this User user, string activationCode, DateTime expiry)
         {
-            ClearUserAttributes(user);
+            ClearUserStateAttributes(user);
 
             user.Status = UserStatuses.PendingActivation;
             user.ActivateCodeExpiry = expiry;
@@ -17,7 +17,7 @@
 
         public static void SetStatePasswordResetCode(this User user, string passwordResetCode, DateTime expiry)
         {
-            ClearUserAttributes(user);
+            ClearUserStateAttributes(user);
 
             user.PasswordResetCode = passwordResetCode;
             user.PasswordResetCodeExpiry = expiry;
@@ -25,7 +25,7 @@
 
         public static void SetStateLocked(this User user, string accountUnlockCode, DateTime expiry)
         {
-            ClearUserAttributes(user);
+            ClearUserStateAttributes(user);
 
             user.Status = UserStatuses.Locked;
             user.AccountUnlockCode = accountUnlockCode;
@@ -34,7 +34,7 @@
 
         public static void SetStateActive(this User user)
         {
-            ClearUserAttributes(user);
+            ClearUserStateAttributes(user);
 
             user.Status = UserStatuses.Active;
         }
@@ -54,7 +54,7 @@
             user.PasswordResetIncorrectAttempts = 0;
         }
 
-        private static void ClearUserAttributes(User user)
+        private static void ClearUserStateAttributes(User user)
         {
             user.AccountUnlockCode = null;
             user.AccountUnlockCodeExpiry = null;

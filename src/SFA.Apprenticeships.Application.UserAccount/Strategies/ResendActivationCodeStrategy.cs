@@ -40,9 +40,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
                 throw new CustomException("Unknown username", ErrorCodes.UnknownUserError);
             }
 
-            var allowedUserStatus = new[] { UserStatuses.PendingActivation };
-            user.AssertState("Username already in use and is not in pending activation status",
-                   allowedUserStatus);
+            user.AssertState("Username already in use and is not in pending activation status", UserStatuses.PendingActivation);
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
 

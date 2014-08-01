@@ -11,7 +11,7 @@
     using Domain.Interfaces.Mapping;
     using Wcf;
 
-    public class LegacyVacancyIndexDataProvider : IVacancyIndexDataProvider
+    public class LegacyVacancyIndexDataProvider : IVacancyIndexDataProvider //todo: replace once new NAS Gateway operation available
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IWcfService<IVacancySummary> _service;

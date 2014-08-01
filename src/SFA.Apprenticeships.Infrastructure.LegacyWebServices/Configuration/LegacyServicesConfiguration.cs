@@ -4,6 +4,7 @@
     using System.Configuration;
     using Common.Configuration;
 
+    //todo: replace once new NAS Gateway operations available
     public class LegacyServicesConfiguration : SecureConfigurationSection<LegacyServicesConfiguration>, ILegacyServicesConfiguration
     {
         private const string SystemIdConst = "SystemId";

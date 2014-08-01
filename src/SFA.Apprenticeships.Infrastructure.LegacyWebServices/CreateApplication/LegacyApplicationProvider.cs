@@ -95,8 +95,8 @@
                     School = MapSchool(applicationDetail),
                     EducationResults = MapQualifications(applicationDetail.CandidateInformation.Qualifications),
                     WorkExperiences = MapWorkExperience(applicationDetail.CandidateInformation.WorkExperience),
-                    AdditionalQuestion1Answer = null, // TODO: US352: AG: applicationDetail.?
-                    AdditionalQuestion2Answer = null // TODO: US352: AG: applicationDetail.?
+                    AdditionalQuestion1Answer = applicationDetail.AdditionalQuestion1Answer ?? string.Empty,
+                    AdditionalQuestion2Answer = applicationDetail.AdditionalQuestion2Answer ?? string.Empty
                 }
             };
         }

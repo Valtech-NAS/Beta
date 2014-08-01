@@ -17,8 +17,8 @@
 
         public DateTime ClosingDate { get; set; }
 
-        public string WithdrawnOrDeclinedReason { get; set; } //todo: this relates to the candidate withdrawing or declining
+        public string WithdrawnOrDeclinedReason { get; set; } // note: this relates to the candidate withdrawing or declining
 
-        public string UnsuccessfulReason { get; set; } //todo: this relates to the vacancy manager rejecting a candidate's application
+        public string UnsuccessfulReason { get; set; } // note: this relates to the vacancy manager rejecting a candidate's application
     }
 }

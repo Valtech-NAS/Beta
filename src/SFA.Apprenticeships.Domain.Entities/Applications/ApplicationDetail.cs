@@ -29,7 +29,9 @@
         public RegistrationDetails CandidateDetails { get; set; }
 
         public ApplicationTemplate CandidateInformation { get; set; }
-       
-        // TODO: US352: AG: add additional question properties.
+
+        public string AdditionalQuestion1Answer { get; set; }
+
+        public string AdditionalQuestion2Answer { get; set; }
     }
 }

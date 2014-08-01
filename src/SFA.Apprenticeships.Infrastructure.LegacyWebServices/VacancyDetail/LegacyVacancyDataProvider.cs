@@ -10,7 +10,7 @@
     using VacancyDetailProxy;
     using Wcf;
 
-    public class LegacyVacancyDataProvider : IVacancyDataProvider
+    public class LegacyVacancyDataProvider : IVacancyDataProvider //todo: replace once new NAS Gateway operation available
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IWcfService<IVacancyDetails> _service;

@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Applications;
-    using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
@@ -26,7 +25,7 @@
             ISendApplicationSubmittedStrategy sendApplicationSubmittedStrategy,
             ISendPasswordChangedStrategy sendPasswordChangedStrategy,
             ISendAccountUnlockCodeStrategy sendAccountUnlockCodeStrategy,
-            ICandidateReadRepository candidateReadRepository, 
+            ICandidateReadRepository candidateReadRepository,
             IApplicationReadRepository applicationReadRepository)
         {
             _sendActivationCodeStrategy = sendActivationCodeStrategy;
@@ -56,13 +55,13 @@
                     break;
                 case CandidateMessageTypes.ApplicationSubmitted:
                     var application = GetApplicationDetail(tokens);
-                    
+
                     if (application == null)
                     {
                         throw new CustomException("Application details not found", ErrorCodes.ApplicationNotFoundError);
                     }
 
-                    _sendApplicationSubmittedStrategy.Send(candidate,application, messageType, tokens);
+                    _sendApplicationSubmittedStrategy.Send(candidate, application, messageType, tokens);
                     break;
 
                 case CandidateMessageTypes.PasswordChanged:
@@ -76,7 +75,7 @@
 
         private ApplicationDetail GetApplicationDetail(IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
         {
-            var applicationId = Guid.Parse(tokens.First(m =>m.Key == CommunicationTokens.ApplicationId).Value) ;
+            var applicationId = Guid.Parse(tokens.First(m => m.Key == CommunicationTokens.ApplicationId).Value);
             return _applicationReadRepository.Get(applicationId);
         }
     }

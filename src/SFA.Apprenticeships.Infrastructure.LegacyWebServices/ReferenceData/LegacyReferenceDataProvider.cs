@@ -11,7 +11,7 @@
     using ReferenceDataProxy;
     using Wcf;
 
-    public class LegacyReferenceDataProvider : IReferenceDataProvider
+    public class LegacyReferenceDataProvider : IReferenceDataProvider //todo: may be redundant TBC (if so, remove service ref)
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IWcfService<IReferenceData> _service;

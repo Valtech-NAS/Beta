@@ -7,7 +7,7 @@
     using Domain.Interfaces.Caching;
     using NLog;
 
-    public class CachedLegacyReferenceDataProvider : IReferenceDataProvider
+    public class CachedLegacyReferenceDataProvider : IReferenceDataProvider //todo: may be redundant TBC
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private static readonly BaseCacheKey CacheKey = new ReferenceDataServiceCacheKeyEntry();
