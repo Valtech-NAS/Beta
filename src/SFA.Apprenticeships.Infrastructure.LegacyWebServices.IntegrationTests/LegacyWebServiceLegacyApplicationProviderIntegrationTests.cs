@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
+    using System.Security.Cryptography.X509Certificates;
     using Common.IoC;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -57,6 +59,34 @@
             result.Should().BeGreaterThan(0);
         }
 
+        [Test]
+        public void ShouldCreateApplicationForCandidateWithNoInformation()
+        {
+            var applicationDetail = new ApplicationDetail
+            {
+                EntityId = Guid.NewGuid(),
+                Vacancy = new VacancySummary
+                {
+                    Id = 12345 // legacy vacancy id
+                },
+                CandidateInformation = new ApplicationTemplate
+                {
+                    AboutYou = null,
+                    EducationHistory = null,
+                    Qualifications = new Qualification[]
+                    {
+                    },
+                    WorkExperience = new WorkExperience[]
+                    {
+                    }
+                }
+            };
+
+            var result = _legacyApplicationProviderProvider.CreateApplication(applicationDetail);
+
+            result.Should().BeGreaterThan(0);
+        }
+
         private int CreateLegacyCandidateId()
         {
             var candidate = new Candidate
@@ -85,7 +115,13 @@
 
         private static AboutYou CreateFakeAboutYou()
         {
-            return null;
+            return new AboutYou
+            {
+                Strengths = "Strengths",
+                Improvements = "Improvements",
+                HobbiesAndInterests =  "HobbiesAndInterests",
+                Support = "Support"
+            };
         }
 
         private static Education CreateFakeEducationHistory()
