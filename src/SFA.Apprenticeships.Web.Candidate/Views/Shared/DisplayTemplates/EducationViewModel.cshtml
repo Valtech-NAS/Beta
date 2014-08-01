@@ -1,7 +1,15 @@
 ﻿@model EducationViewModel
 
 <fieldset class="fieldset-with-border" id="applyEducation">
-    <legend class="heading-large">Education</legend>
+    <legend class="heading-large">
+        Education
+        @if (ViewBag.ApplicationId != null)
+        {
+            <a class="icon-with-text" href="~/application/apply/@ViewBag.ApplicationId#applyEducation">
+                <i class="the-icon fa fa-pencil"></i><span class="the-text">Amend details</span>
+            </a>
+        }
+    </legend>
     <div class="form-group">
         <label for="school-name" class="form-label">Name of most recent school/college</label>
         @Html.DisplayTextFor(m => m.NameOfMostRecentSchoolCollege)

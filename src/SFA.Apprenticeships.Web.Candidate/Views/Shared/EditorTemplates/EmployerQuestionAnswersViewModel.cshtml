@@ -2,7 +2,7 @@
 
 @if (Model != null && (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1) || !string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1)))
 {
-    <fieldset class="fieldset-with-border">
+    <fieldset id="applyEmployerQuestionAnswers" class="fieldset-with-border">
         <legend class="heading-large">Employer questions</legend>
         <div class="form-group text">
             <details>
@@ -13,16 +13,16 @@
                 </p>
             </details>
         </div>
-        
+
         @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1))
         {
             @Html.FormTextAreaFor(m => m.CandidateAnswer1, labelText: Model.SupplementaryQuestion1)
         }
-        
+
         @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion2))
         {
             @Html.FormTextAreaFor(m => m.CandidateAnswer2, labelText: Model.SupplementaryQuestion2)
         }
-        
+
     </fieldset>
 }

@@ -1,7 +1,15 @@
 ﻿@model AboutYouViewModel
 
 <fieldset class="fieldset-with-border">
-    <legend class="heading-large">About you</legend>
+    <legend class="heading-large">
+        About you
+        @if (ViewBag.ApplicationId != null)
+        {
+            <a class="icon-with-text" href="~/application/apply/@ViewBag.ApplicationId#applyAboutYou">
+                <i class="the-icon fa fa-pencil"></i><span class="the-text">Amend details</span>
+            </a>
+        }
+    </legend>
     @*<div class="form-group text">
             <details>
                 <summary role="button">Help with this section</summary>

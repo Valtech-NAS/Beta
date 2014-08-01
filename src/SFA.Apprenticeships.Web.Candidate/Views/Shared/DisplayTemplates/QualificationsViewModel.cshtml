@@ -1,7 +1,15 @@
 ﻿@model QualificationsViewModel
 
 <fieldset class="fieldset-with-border">
-    <legend class="heading-large">Qualifications</legend>
+    <legend class="heading-large">
+        Qualifications
+        @if (ViewBag.ApplicationId != null)
+        {
+            <a class="icon-with-text" href="~/application/apply/@ViewBag.ApplicationId#applyQualifications">
+                <i class="the-icon fa fa-pencil"></i><span class="the-text">Amend details</span>
+            </a>
+        }
+    </legend>
     <div class="enter-qualification clearfix">
         <div class="inline-fixed">
             <div class="form-group">

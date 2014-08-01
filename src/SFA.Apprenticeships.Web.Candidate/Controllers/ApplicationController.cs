@@ -67,6 +67,9 @@
         public ActionResult Preview(int id)
         {
             var appForm = Session.Get<ApplicationViewModel>(TempAppFormSessionId);
+
+            ViewBag.ApplicationId = id;
+
             return View(appForm);
         }
 

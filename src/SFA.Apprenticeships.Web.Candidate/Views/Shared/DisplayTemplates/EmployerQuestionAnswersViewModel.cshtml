@@ -3,7 +3,15 @@
 @if (Model != null && (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1) || !string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1)))
 {
     <fieldset class="fieldset-with-border">
-        <legend class="heading-large">Employer questions</legend>
+        <legend class="heading-large">
+            Employer questions
+            @if (ViewBag.ApplicationId != null)
+            {
+                <a class="icon-with-text" href="~/application/apply/@ViewBag.ApplicationId#applyEmployerQuestionAnswers">
+                    <i class="the-icon fa fa-pencil"></i><span class="the-text">Amend details</span>
+                </a>
+            }
+        </legend>
         @*<div class="form-group text">
             <details>
                 <summary role="button">Help with this section</summary>
