@@ -51,6 +51,13 @@
 
             application.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(application);
 
+            //todo: handle duplicate application
+            // if the call to legacy fails because of a duplicate request, a particular fault/code will be returned 
+            // from the legacy service and the provider should return 0 to indicate this or throw a custom exception 
+            // which is caught here. 
+            // in this case, call ILegacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate) to 
+            // retrieve the candidate's apps then match on the vacancy ID to find the app ID to store in our repo
+
             Log("Created", request);
 
             Log("Updating", request);
