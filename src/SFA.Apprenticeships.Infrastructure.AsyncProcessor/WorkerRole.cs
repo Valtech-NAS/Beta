@@ -4,13 +4,18 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
     using System.Net;
     using System.Reflection;
     using System.Threading;
+    using Common.IoC;
     using Communication.IoC;
     using Consumers;
     using EasyNetQ;
+    using IoC;
+    using LegacyWebServices.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
     using RabbitMq.Interfaces;
     using RabbitMq.IoC;
+    using Repositories.Applications.IoC;
+    using Repositories.Candidates.IoC;
     using StructureMap;
 
     public class WorkerRole : RoleEntryPoint
@@ -81,7 +86,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
 
             Logger.Debug("RabbitMQ initialising");
 
-            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof (EmailRequestConsumerAsync)), asyncProcessorSubscriptionId);
+            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(EmailRequestConsumerAsync)), asyncProcessorSubscriptionId);
 
             Logger.Debug("RabbitMQ initialised");
         }
@@ -92,8 +97,13 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
 
             ObjectFactory.Initialize(x =>
             {
+                x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<CommunicationRegistry>();
+                x.AddRegistry<CandidateRepositoryRegistry>();
+                x.AddRegistry<ApplicationRepositoryRegistry>();
+                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry<AsyncProcessorRegistry>();
             });
 
             Logger.Debug("IoC container initialised");

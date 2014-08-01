@@ -17,5 +17,8 @@
         public const string ApplicationNotFoundError = "Application001";
         public const string ApplicationInIncorrectStateError = "Application002";
         public const string ApplicationQueuingError = "Application003";
+
+        // Vacancy Exception Codes
+        public const string VacancyNotFoundError = "Vacancy001";
     }
 }

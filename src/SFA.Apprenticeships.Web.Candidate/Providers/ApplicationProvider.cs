@@ -12,25 +12,36 @@
 
     internal class ApplicationProvider : IApplicationProvider
     {
-        private readonly ICandidateService _candidateService;
-        private readonly IMapper _mapper;
-        private readonly IUserServiceProvider _userServiceProvider;
-        private readonly IVacancyDetailProvider _vacancyDetailProvider;
         private const string ApplicationContextName = "Application.Context";
+
+        private readonly IVacancyDetailProvider _vacancyDetailProvider;
+        private readonly ICandidateService _candidateService;
+        private readonly IUserServiceProvider _userServiceProvider;
+        private readonly IMapper _mapper;
 
         public ApplicationProvider(
             IVacancyDetailProvider vacancyDetailProvider,
-            ICandidateService candidateService, IMapper mapper, IUserServiceProvider userServiceProvider)
+            ICandidateService candidateService,
+            IUserServiceProvider userServiceProvider,
+            IMapper mapper)
         {
-            _candidateService = candidateService;
-            _mapper = mapper;
-            _userServiceProvider = userServiceProvider;
             _vacancyDetailProvider = vacancyDetailProvider;
+            _candidateService = candidateService;
+            _userServiceProvider = userServiceProvider;
+            _mapper = mapper;
         }
 
         public ApplicationViewModel GetApplicationViewModel(int vacancyId, Guid candidateId)
         {
-            //TODO Push EntityId for the application into context and use a random guid for ViewModelId
+            var applicationDetails = _candidateService.CreateApplication(candidateId, vacancyId);
+
+            // TODO: US354: AG: set entity cookie, refactor into separate function.
+            var viewModelId = Guid.NewGuid();
+            var httpContext = new HttpContextWrapper(HttpContext.Current);
+            
+            _userServiceProvider.SetEntityContextCookie(
+                httpContext, applicationDetails.EntityId, viewModelId, ApplicationContextName);
+
             var vacancyViewModel = _vacancyDetailProvider.GetVacancyDetailViewModel(vacancyId);
 
             if (vacancyViewModel == null)

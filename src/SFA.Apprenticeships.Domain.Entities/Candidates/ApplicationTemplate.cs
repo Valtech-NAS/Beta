@@ -7,7 +7,7 @@
     {
         public ApplicationTemplate()
         {
-            EducationHistory = new Education();
+            // TODO: might become a collection, for now allow to be null: EducationHistory = new Education();
             Qualifications = new List<Qualification>();
             WorkExperience = new List<WorkExperience>();
             AboutYou = new AboutYou();

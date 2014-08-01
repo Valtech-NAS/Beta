@@ -11,7 +11,7 @@
 
         IList<ApplicationSummary> GetForCandidate(Guid candidateId);
 
-        ApplicationDetail GetForCandidate(Guid candidateId, Expression<Func<ApplicationDetail, bool>> filter);
+        ApplicationDetail GetForCandidate(Guid candidateId, Func<ApplicationDetail, bool> filter);
     }
 
     public interface IApplicationWriteRepository : IWriteRepository<ApplicationDetail> { }

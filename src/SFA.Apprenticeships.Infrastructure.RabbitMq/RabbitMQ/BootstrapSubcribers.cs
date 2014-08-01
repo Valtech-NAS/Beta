@@ -2,6 +2,7 @@
 {
     using System;
     using System.Reflection;
+    using Application.Interfaces.Messaging;
     using EasyNetQ;
     using EasyNetQ.AutoSubscribe;
     using StructureMap;
