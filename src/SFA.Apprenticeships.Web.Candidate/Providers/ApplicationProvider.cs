@@ -5,7 +5,11 @@
     using System.Web;
     using Application.Interfaces.Candidates;
     using Common.Providers;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
+    using Mappers.Helpers;
     using ViewModels.Applications;
     using ViewModels.Candidate;
     using ViewModels.Locations;
@@ -90,40 +94,73 @@
         public ApplicationViewModel MergeApplicationViewModel(int vacancyId, Guid candidateId,
             ApplicationViewModel applicationViewModel)
         {
-            var existingApplicationViewModel = GetApplicationViewModel(vacancyId, candidateId);
+            var candidate = _candidateService.GetCandidate(candidateId);
 
-            applicationViewModel.VacancyDetail = existingApplicationViewModel.VacancyDetail;
-            applicationViewModel.Candidate.Id = existingApplicationViewModel.Candidate.Id;
-            applicationViewModel.Candidate.FirstName = existingApplicationViewModel.Candidate.FirstName;
-            applicationViewModel.Candidate.LastName = existingApplicationViewModel.Candidate.LastName;
-            applicationViewModel.Candidate.EmailAddress = existingApplicationViewModel.Candidate.EmailAddress;
-            applicationViewModel.Candidate.DateOfBirth = existingApplicationViewModel.Candidate.DateOfBirth;
-            applicationViewModel.Candidate.Address = existingApplicationViewModel.Candidate.Address;
-
-            if (!string.IsNullOrWhiteSpace(existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1) ||
-                !string.IsNullOrWhiteSpace(existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2))
+            if (candidate == null)
             {
-                applicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 =
-                    existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1;
-                applicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 =
-                    existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2;
+                throw new CustomException("Candidate not found", ErrorCodes.UnknownCandidateError);
             }
+
+            SaveApplication(applicationViewModel);
+
+            candidate.ApplicationTemplate = new ApplicationTemplate
+            {
+                AboutYou = ApplicationConverter.GetAboutYou(applicationViewModel.Candidate.AboutYou),
+                EducationHistory = ApplicationConverter.GetEducation(applicationViewModel.Candidate.Education),
+                Qualifications = ApplicationConverter.GetQualifications(applicationViewModel.Candidate.Qualifications),
+                WorkExperience = ApplicationConverter.GetWorkExperiences(applicationViewModel.Candidate.WorkExperience),
+            };
+
+            _candidateService.SaveCandidate(candidate);
+            //var existingApplicationViewModel = GetApplicationViewModel(vacancyId, candidateId);
+
+            //applicationViewModel.VacancyDetail = existingApplicationViewModel.VacancyDetail;
+            //applicationViewModel.Candidate.Id = existingApplicationViewModel.Candidate.Id;
+            //applicationViewModel.Candidate.FirstName = existingApplicationViewModel.Candidate.FirstName;
+            //applicationViewModel.Candidate.LastName = existingApplicationViewModel.Candidate.LastName;
+            //applicationViewModel.Candidate.EmailAddress = existingApplicationViewModel.Candidate.EmailAddress;
+            //applicationViewModel.Candidate.DateOfBirth = existingApplicationViewModel.Candidate.DateOfBirth;
+            //applicationViewModel.Candidate.Address = existingApplicationViewModel.Candidate.Address;
+
+            //if (!string.IsNullOrWhiteSpace(existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1) ||
+            //    !string.IsNullOrWhiteSpace(existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2))
+            //{
+            //    applicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 =
+            //        existingApplicationViewModel.VacancyDetail.SupplementaryQuestion1;
+            //    applicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 =
+            //        existingApplicationViewModel.VacancyDetail.SupplementaryQuestion2;
+            //}
+
 
             return applicationViewModel;
         }
 
         public void SaveApplication(ApplicationViewModel applicationViewModel)
         {
-            //var application = _mapper.Map<ApplicationViewModel, ApplicationDetail>(applicationViewModel);
-            throw new NotImplementedException();
+            var applicationEntityId = GetApplicationEntityIdFromContext(applicationViewModel.ApplicationViewId);
+            var application = _mapper.Map<ApplicationViewModel, ApplicationDetail>(applicationViewModel);
+            application.EntityId = applicationEntityId;
+
+            _candidateService.SaveApplication(application);
         }
 
         public void SubmitApplication(Guid applicationViewId)
         {
+            var applicationEntityId = GetApplicationEntityIdFromContext(applicationViewId);
+            _candidateService.SubmitApplication(applicationEntityId);
+        }
+
+        private Guid GetApplicationEntityIdFromContext(Guid applicationViewId)
+        {
             var httpContext = new HttpContextWrapper(HttpContext.Current);
             var applicationContext = _userServiceProvider.GetEntityContextCookie(httpContext, ApplicationContextName);
 
-            _candidateService.SubmitApplication(applicationContext.EntityId);
+            if (applicationContext != null && applicationContext.ViewModelId == applicationViewId)
+            {
+                return applicationContext.EntityId;
+            }
+
+            throw new CustomException("ApplicationViewId is not in context", ErrorCodes.ApplicationViewIdNotFound);
         }
     }
 }

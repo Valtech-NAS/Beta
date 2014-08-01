@@ -7,6 +7,7 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
+    using Helpers;
     using ViewModels.Applications;
     using ViewModels.Candidate;
     using ViewModels.Locations;
@@ -37,7 +38,7 @@
                 CandidateDetails = new RegistrationDetails
                 {
                     EmailAddress = model.Candidate.EmailAddress,
-                    Address = GetAddress(model.Candidate.Address),
+                    Address = ApplicationConverter.GetAddress(model.Candidate.Address),
                     DateOfBirth = model.Candidate.DateOfBirth,
                     PhoneNumber = model.Candidate.PhoneNumber,
                     FirstName = model.Candidate.FirstName,
@@ -46,88 +47,14 @@
                 },
                 CandidateInformation = new ApplicationTemplate
                 {
-                    AboutYou = GetAboutYou(model.Candidate.AboutYou),
-                    EducationHistory = GetEducationHistory(model.Candidate.Education),
-                    Qualifications = GetQualifications(model.Candidate.Qualifications),
-                    WorkExperience = GetWorkExperience(model.Candidate.WorkExperience),
+                    AboutYou = ApplicationConverter.GetAboutYou(model.Candidate.AboutYou),
+                    EducationHistory = ApplicationConverter.GetEducation(model.Candidate.Education),
+                    Qualifications = ApplicationConverter.GetQualifications(model.Candidate.Qualifications),
+                    WorkExperience = ApplicationConverter.GetWorkExperiences(model.Candidate.WorkExperience),
                 },
             };
 
             return application;
         }
-
-        #region Helpers
-     
-        private static Address GetAddress(AddressViewModel model)
-        {
-            return new Address
-            {
-                AddressLine1 = model.AddressLine1,
-                AddressLine2 = model.AddressLine2,
-                AddressLine3 = model.AddressLine3,
-                AddressLine4 = model.AddressLine4,
-                GeoPoint = new GeoPoint
-                {
-                    Longitude = model.GeoPoint.Longitude,
-                    Latitude = model.GeoPoint.Latitude
-                },
-                Postcode = model.Postcode,
-                Uprn = model.Uprn
-            };
-        }
-
-        private static AboutYou GetAboutYou(AboutYouViewModel model)
-        {
-            return new AboutYou
-            {
-                HobbiesAndInterests = model.WhatAreYourHobbiesInterests,
-                Improvements = model.WhatDoYouFeelYouCouldImprove,
-                Strengths = model.WhatAreYourStrengths,
-                Support = model.AnythingWeCanDoToSupportYourInterview
-            };
-        }
-
-        private static Education GetEducationHistory(EducationViewModel model)
-        {
-            return new Education
-            {
-                FromYear = GetIntValue(model.FromYear),
-                Institution = model.NameOfMostRecentSchoolCollege,
-                ToYear = GetIntValue(model.ToYear)
-            };
-        }
-
-        private static IList<WorkExperience> GetWorkExperience(IEnumerable<WorkExperienceViewModel> workExperienceViewModels)
-        {
-            return workExperienceViewModels.Select(model => new WorkExperience
-            {
-                Description = model.Description,
-                Employer = model.Employer,
-                JobTitle = model.JobTitle,
-                FromYear = model.FromYear,
-                ToYear = model.ToYear
-            }).ToList();
-        }
-
-        private static IList<Qualification> GetQualifications(IEnumerable<QualificationsViewModel> qualifications)
-        {
-            return qualifications.Select(model => new Qualification
-            {
-                Grade = model.Grade,
-                IsPredicted = model.IsPredicted,
-                QualificationType = model.QualificationType,
-                Subject = model.Subject,
-                Year = model.Year
-            }).ToList();
-        }
-
-        private static int GetIntValue(string stringYear)
-        {
-            int year;
-            int.TryParse(stringYear, out year);
-            return year;
-        }
-
-        #endregion
     }
 }

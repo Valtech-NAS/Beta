@@ -301,6 +301,7 @@
     <Content Include="Views\Register\ResetPassword.cshtml" />
     <Content Include="Views\Login\Unlock.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Application\WhatHappensNext.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -397,6 +398,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="IoC\CandidateWebRegistry.cs" />
+    <Compile Include="Mappers\Helpers\ApplicationConverter.cs" />
     <Compile Include="Mappers\Resolvers\ApplicationDetailToApplicationViewModelResolver.cs" />
     <Compile Include="Mappers\Resolvers\ApplicationViewModelToApplicationDetailResolver.cs" />
     <Compile Include="Mappers\Resolvers\CandidateResolver.cs" />

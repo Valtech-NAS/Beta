@@ -60,6 +60,7 @@
 
         public ApplicationDetail Get(Expression<Func<ApplicationDetail, bool>> filter)
         {
+            //var item = Collection.AsQueryable().Where(filter);
             //todo: return the first application that matches the filter
             // .FirstOrDefault()
             throw new NotImplementedException();

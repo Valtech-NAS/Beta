@@ -37,7 +37,7 @@
                     @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-3-4" })
                     @Html.ValidationMessageFor(m => m.Password, null, new { @class = "hidden" })
                    
-                    <a class="form-hint" href=" @Url.Action("ForgottenPassword", "Register") ">Forgotten password?</a>
+                    <a class="form-hint" href='@Url.Action("ForgottenPassword", "Register")'>Forgotten password?</a>
                    
                 </div>
 

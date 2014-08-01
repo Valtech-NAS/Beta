@@ -80,12 +80,17 @@
                 var applicationViewId = Guid.Parse(applicationDetailViewModelId);
                 _applicationProvider.SubmitApplication(applicationViewId);
 
-                return RedirectToAction("Index", "Home"); //TODO redirect to the Done page - What happens next
+                return RedirectToAction("WhatHappensNext"); 
             }
             catch (Exception)
             {
                 return RedirectToAction("Preview", new { id = applicationDetailViewModelId }); //TODO change Preview action to accept ViewModelId from Context
             }
+        }
+
+        public ActionResult WhatHappensNext()
+        {
+            return View();
         }
     }
 }
