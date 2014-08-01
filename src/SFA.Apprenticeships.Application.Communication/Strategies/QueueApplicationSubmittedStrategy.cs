@@ -8,11 +8,11 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
 
     public class QueueApplicationSubmittedStrategy : ISendApplicationSubmittedStrategy
     {
-        private readonly IMessageBus _bus;
+        private readonly IMessageBus _messageBus;
 
-        public QueueApplicationSubmittedStrategy(IMessageBus bus)
+        public QueueApplicationSubmittedStrategy(IMessageBus messageBus)
         {
-            _bus = bus;
+            _messageBus = messageBus;
         }
 
         public void Send(Candidate candidate, ApplicationDetail applicationDetail, CandidateMessageTypes messageType,
@@ -35,7 +35,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
                 Tokens = applicationTokens,
             };
 
-            _bus.PublishMessage(request);
+            _messageBus.PublishMessage(request);
         }
     }
 }

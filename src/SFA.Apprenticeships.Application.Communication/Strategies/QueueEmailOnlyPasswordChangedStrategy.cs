@@ -8,11 +8,11 @@
 
     public class QueueEmailOnlyPasswordChangedStrategy : ISendPasswordChangedStrategy
     {
-        private readonly IMessageBus _bus;
+        private readonly IMessageBus _messageBus;
 
-        public QueueEmailOnlyPasswordChangedStrategy(IMessageBus bus)
+        public QueueEmailOnlyPasswordChangedStrategy(IMessageBus messageBus)
         {
-            _bus = bus;
+            _messageBus = messageBus;
         }
 
         public void Send(Candidate candidate, CandidateMessageTypes messageType,
@@ -25,7 +25,7 @@
                 Tokens = tokens,
             };
 
-            _bus.PublishMessage(request);
+            _messageBus.PublishMessage(request);
         }
     }
 }

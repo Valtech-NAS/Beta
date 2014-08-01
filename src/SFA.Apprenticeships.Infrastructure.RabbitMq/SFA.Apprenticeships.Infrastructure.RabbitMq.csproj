@@ -69,7 +69,7 @@
     <Compile Include="Interfaces\IBootstrapSubcribers.cs" />
     <Compile Include="Interfaces\IRabbitMqServiceProvider.cs" />
     <Compile Include="IoC\RabbitMqRegistry.cs" />
-    <Compile Include="MessageBus.cs" />
+    <Compile Include="RabbitMessageBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabbitMQ\BootstrapSubcribers.cs" />
     <Compile Include="RabbitMQ\BusFactory.cs" />

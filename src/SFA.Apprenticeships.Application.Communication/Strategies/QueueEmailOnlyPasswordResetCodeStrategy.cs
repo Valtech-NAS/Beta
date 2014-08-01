@@ -7,11 +7,11 @@
 
     public class QueueEmailOnlyPasswordResetCodeStrategy : ISendPasswordResetCodeStrategy
     {
-        private readonly IMessageBus _bus;
+        private readonly IMessageBus _messageBus;
 
-        public QueueEmailOnlyPasswordResetCodeStrategy(IMessageBus bus)
+        public QueueEmailOnlyPasswordResetCodeStrategy(IMessageBus messageBus)
         {
-            _bus = bus;
+            _messageBus = messageBus;
         }
 
         public void Send(Candidate candidate, CandidateMessageTypes messageType,
@@ -24,7 +24,7 @@
                 Tokens = tokens,
             };
 
-            _bus.PublishMessage(request);
+            _messageBus.PublishMessage(request);
         }
     }
 }

@@ -12,15 +12,15 @@
     {
         private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly IApplicationWriteRepository _applicationWriteRepository;
-        private readonly IMessageBus _bus;
+        private readonly IMessageBus _messageBus;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICommunicationService _communicationService;
 
-        public LegacySubmitApplicationStrategy(IMessageBus bus, IApplicationReadRepository applicationReadRepository,
+        public LegacySubmitApplicationStrategy(IMessageBus messageBus, IApplicationReadRepository applicationReadRepository,
             IApplicationWriteRepository applicationWriteRepository, ICommunicationService communicationService,
             ICandidateReadRepository candidateReadRepository)
         {
-            _bus = bus;
+            _messageBus = messageBus;
             _applicationReadRepository = applicationReadRepository;
             _applicationWriteRepository = applicationWriteRepository;
             _communicationService = communicationService;
@@ -54,7 +54,7 @@
                     ApplicationId = applicationDetail.EntityId
                 };
 
-                _bus.PublishMessage(message);
+                _messageBus.PublishMessage(message);
 
                 // update application status to "submitting"
                 applicationDetail.SetStateSubmitting();

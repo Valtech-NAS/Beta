@@ -10,12 +10,12 @@
     public class VacancySummaryPageConsumerAsync : IConsumeAsync<VacancySummaryPage>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IMessageBus _bus;
+        private readonly IMessageBus _messageBus;
         private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
 
-        public VacancySummaryPageConsumerAsync(IMessageBus bus, IVacancySummaryProcessor vacancySummaryProcessor)
+        public VacancySummaryPageConsumerAsync(IMessageBus messageBus, IVacancySummaryProcessor vacancySummaryProcessor)
         {
-            _bus = bus;
+            _messageBus = messageBus;
             _vacancySummaryProcessor = vacancySummaryProcessor;
         }
 
@@ -33,11 +33,11 @@
 
             if (vacancySummaryPage.PageNumber == vacancySummaryPage.TotalPages)
             {
-                var vsuc = new VacancySummaryUpdateComplete()
+                var vsuc = new VacancySummaryUpdateComplete
                 {
                     ScheduledRefreshDateTime = vacancySummaryPage.ScheduledRefreshDateTime
                 };
-                _bus.PublishMessage(vsuc);
+                _messageBus.PublishMessage(vsuc);
             }
         }
     }

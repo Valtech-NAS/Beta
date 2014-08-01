@@ -14,17 +14,17 @@
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly IMessageBus _bus;
+        private readonly IMessageBus _messageBus;
         private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
         private readonly IMapper _mapper;
         private readonly IProcessControlQueue<StorageQueueMessage> _processControlQueue;
 
-        public VacancySummaryProcessor(IMessageBus bus, 
+        public VacancySummaryProcessor(IMessageBus messageBus, 
                                        IVacancyIndexDataProvider vacancyIndexDataProvider, 
                                        IMapper mapper,
                                        IProcessControlQueue<StorageQueueMessage> processControlQueue)
         {
-            _bus = bus;
+            _messageBus = messageBus;
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
             _mapper = mapper;
             _processControlQueue = processControlQueue;
@@ -40,7 +40,7 @@
             var nonNationalCount = _vacancyIndexDataProvider.GetVacancyPageCount(VacancyLocationType.NonNational);
             Logger.Debug("Loaded non-national vacancy count of: {0}", nationalCount);
 
-            var vacancySumaries = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, nationalCount, nonNationalCount);
+            var vacancySumaries = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, nationalCount, nonNationalCount).ToList();
 
             // Only delete from queue once we have all vacancies from the service without error.
             _processControlQueue.DeleteMessage(scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
@@ -48,7 +48,7 @@
             Parallel.ForEach(
                 vacancySumaries,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
-                vacancySummaryPage => _bus.PublishMessage(vacancySummaryPage));
+                vacancySummaryPage => _messageBus.PublishMessage(vacancySummaryPage));
 
             Logger.Debug("Posted {0} vacancy summary pages to queue", vacancySumaries.Count());
         }
@@ -102,7 +102,7 @@
                 vacancySummaryExtended =>
                 {
                     vacancySummaryExtended.ScheduledRefreshDateTime = vacancySummaryPage.ScheduledRefreshDateTime;
-                    _bus.PublishMessage(vacancySummaryExtended);
+                    _messageBus.PublishMessage(vacancySummaryExtended);
                 });
         }
     }

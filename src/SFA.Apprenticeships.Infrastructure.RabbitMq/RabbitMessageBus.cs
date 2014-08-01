@@ -3,11 +3,11 @@
     using Domain.Interfaces.Messaging;
     using EasyNetQ;
 
-    public class MessageBus : IMessageBus
+    public class RabbitMessageBus : IMessageBus
     {
         private readonly IBus _bus;
 
-        public MessageBus(IBus bus)
+        public RabbitMessageBus(IBus bus)
         {
             _bus = bus;
         }

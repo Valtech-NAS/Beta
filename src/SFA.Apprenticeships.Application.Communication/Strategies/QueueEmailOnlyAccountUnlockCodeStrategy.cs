@@ -7,11 +7,11 @@
 
     public class QueueEmailOnlyAccountUnlockCodeStrategy : ISendAccountUnlockCodeStrategy
     {
-        private readonly IMessageBus _bus;
+        private readonly IMessageBus _messageBus;
 
-        public QueueEmailOnlyAccountUnlockCodeStrategy(IMessageBus bus)
+        public QueueEmailOnlyAccountUnlockCodeStrategy(IMessageBus messageBus)
         {
-            _bus = bus;
+            _messageBus = messageBus;
         }
 
         public void Send(Candidate candidate, CandidateMessageTypes messageType, IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
@@ -23,7 +23,7 @@
                 Tokens = tokens,
             };
 
-            _bus.PublishMessage(request);
+            _messageBus.PublishMessage(request);
         }
     }
 }
