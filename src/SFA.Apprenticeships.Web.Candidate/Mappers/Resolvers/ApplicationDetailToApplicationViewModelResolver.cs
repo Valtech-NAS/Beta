@@ -88,6 +88,11 @@
 
         private static EducationViewModel GetEducation(Education educationHistory)
         {
+            if (educationHistory == null)
+            {
+                return null;
+            }
+
             return new EducationViewModel
             {
                 FromYear = educationHistory.FromYear.ToString(CultureInfo.InvariantCulture),

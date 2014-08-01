@@ -1,35 +1,112 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using System;
+    using AutoMapper;
     using Domain.Entities.Applications;
+    using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
+    using Domain.Entities.Vacancies;
+    using Domain.Interfaces.Repositories;
     using Interfaces.Vacancies;
 
     public class CreateApplicationStrategy : ICreateApplicationStrategy
     {
         private readonly IVacancyDataProvider _vacancyDataProvider;
+        private readonly IApplicationReadRepository _applicationReadRepository;
+        private readonly IApplicationWriteRepository _applicationWriteRepository;
+        private readonly ICandidateReadRepository _candidateReadRepository;
 
         public CreateApplicationStrategy(
-            IVacancyDataProvider vacancyDataProvider)
+            IVacancyDataProvider vacancyDataProvider,
+            IApplicationReadRepository applicationReadRepository,
+            IApplicationWriteRepository applicationWriteRepository,
+            ICandidateReadRepository candidateReadRepository)
         {
             _vacancyDataProvider = vacancyDataProvider;
+            _applicationWriteRepository = applicationWriteRepository;
+            _applicationReadRepository = applicationReadRepository;
+            _candidateReadRepository = candidateReadRepository;
         }
 
         public ApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
         {
-            // TODO: get vacancy so can check current status and include some snapshot detail in the application (VacancySummary)
-            // IVacancyDataProvider.GetVacancyDetails(legacyVacancyId)
+            var applicationDetail = _applicationReadRepository.GetForCandidate(
+                candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
+
+            if (applicationDetail == null)
+            {
+                // New application.
+                applicationDetail = CreateNewApplication(candidateId, vacancyId);
+                _applicationWriteRepository.Save(applicationDetail);
+            }
+
+            return applicationDetail;
+        }
+
+        private ApplicationDetail CreateNewApplication(Guid candidateId, int vacancyId)
+        {
+            var candidate = GetCandidate(candidateId);
+            var vacancyDetails = GetVacancyDetails(vacancyId);
+
+            var applicationDetail = new ApplicationDetail
+            {
+                Status = ApplicationStatuses.Draft,
+                DateCreated = DateTime.Now,
+                CandidateId = candidateId,
+                // TODO: US354: AG: better way to clone? http://stackoverflow.com/questions/5713556/copy-object-to-object-with-automapper
+                CandidateDetails = Mapper.Map<RegistrationDetails, RegistrationDetails>(candidate.RegistrationDetails),
+                Vacancy = new VacancySummary
+                {
+                    Id = vacancyDetails.Id,
+                    Title = vacancyDetails.Title,
+                    EmployerName = vacancyDetails.EmployerName,
+                    ClosingDate = vacancyDetails.ClosingDate,
+                    Description = vacancyDetails.Description,
+                    Location = null, // NOTE: no equivalent in legacy vacancy details.
+                    VacancyLocationType = vacancyDetails.VacancyLocationType
+                },
+                // Populate application template with candidate's most recent information.
+                CandidateInformation = new ApplicationTemplate
+                {
+                    EducationHistory = candidate.ApplicationTemplate.EducationHistory,
+                    Qualifications = candidate.ApplicationTemplate.Qualifications,
+                    WorkExperience = candidate.ApplicationTemplate.WorkExperience,
+                    AboutYou = candidate.ApplicationTemplate.AboutYou
+                },
+            };
+
+            // TODO: US354: AG: Existing application tests.
+            // TODO: US354: AG: if exists and status = submitting/submitted (or any other "post submission" state) then cannot create new one
+            // TODO: US354: AG: if exists and vacancy has expired then return it so user can view it
+            // TODO: US354: AG: if exists and status = draft then return it so user can continue with the application form
+
+            return applicationDetail;
+        }
+
+        private Candidate GetCandidate(Guid candidateId)
+        {
+            var candidate = _candidateReadRepository.Get(candidateId);
+
+            if (candidate == null)
+            {
+                throw new CustomException(
+                    "Candidate not found with ID {0}.", ErrorCodes.UnknownCandidateError, candidateId);
+            }
+
+            return candidate;
+        }
+
+        private VacancyDetail GetVacancyDetails(int vacancyId)
+        {
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
-            // TODO: existing application
-            // if exists and status = submitting/submitted (or any other "post submission" state) then cannot create new one
-            // if exists and vacancy has expired then return it so user can view it
-            // if exists and status = draft then return it so user can continue with the application form
+            if (vacancyDetails == null)
+            {
+                throw new CustomException(
+                    "Vacancy not found with ID {0}.", ErrorCodes.VacancyNotFoundError, vacancyId);
+            }
 
-            // TODO: new application
-            // if vacancy has expired then throw ex as candidate cannot apply for it
-            // create a new application entity, get template info, set vacancy summary info, save to app repo as "draft", return it
-
-            throw new NotImplementedException();
+            return vacancyDetails;
         }
     }
 }

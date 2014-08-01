@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Linq.Expressions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -12,6 +13,7 @@
     using Entities;
     using Mongo.Common;
     using MongoDB.Driver.Builders;
+    using MongoDB.Driver.Linq;
     using NLog;
 
     public class ApplicationRepository : GenericMongoClient<MongoApplicationDetail>, IApplicationReadRepository,
@@ -111,11 +113,19 @@
             throw new NotImplementedException();
         }
 
-        public ApplicationDetail GetForCandidate(Guid candidateId, Expression<Func<ApplicationDetail, bool>> filter)
+        public ApplicationDetail GetForCandidate(Guid candidateId, Func<ApplicationDetail, bool> filter)
         {
-            //todo: return the first application for the candidate that matches the filter
-            // .FirstOrDefault()
-            throw new NotImplementedException();
+            var mongoApplicationDetailsList = Collection
+                .AsQueryable()
+                .Where(each => each.CandidateId == candidateId)
+                .ToArray();
+
+            var applicationDetailsList = _mapper.Map<MongoApplicationDetail[], IEnumerable<ApplicationDetail>>(
+                mongoApplicationDetailsList);
+
+            return applicationDetailsList
+                .Where(filter)
+                .SingleOrDefault(); // we expect zero or 1
         }
     }
 }

@@ -105,6 +105,11 @@
         {
             var educationHistory = applicationDetail.CandidateInformation.EducationHistory;
 
+            if (educationHistory == null)
+            {
+                return null;
+            }
+
             return new School
             {
                 Name = educationHistory.Institution,
