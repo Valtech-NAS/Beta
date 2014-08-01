@@ -104,10 +104,10 @@
     <None Include="Configs\settings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="NLog.config">
+    <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
-    </None>
+    </Content>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -133,9 +133,17 @@
       <Project>{4fe5e4be-91df-49c6-b6cd-9b69fcd0c0fe}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Communication\SFA.Apprenticeships.Infrastructure.Communication.csproj">
       <Project>{d34d27d3-79a9-407e-86ef-af3ac0ea024b}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
+      <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{a2d82061-bcbd-4030-9eb4-5148aee79241}</Project>
@@ -144,6 +152,14 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.RabbitMq\SFA.Apprenticeships.Infrastructure.RabbitMq.csproj">
       <Project>{480622e1-7624-449c-904f-af7fd3590bef}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.RabbitMq</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
+      <Project>{91822365-711D-4976-AD7F-069063D8B487}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Applications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Candidates\SFA.Apprenticeships.Infrastructure.Repositories.Candidates.csproj">
+      <Project>{AA87BD85-5A33-46B8-B26F-C6B680876486}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

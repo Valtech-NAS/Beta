@@ -2,6 +2,7 @@
 {
     using System;
     using System.Reflection;
+    using Application.Interfaces.Messaging;
     using EasyNetQ;
     using EasyNetQ.AutoSubscribe;
     using StructureMap;
@@ -14,6 +15,14 @@
         public BootstrapSubcribers(IBus bus)
         {
             _bus = bus;
+
+            // TODO: US352: TEMPCODE: remove.
+            var message = new SubmitApplicationRequest
+            {
+                ApplicationId = Guid.NewGuid()
+            };
+
+            _bus.Publish(message);
         }
 
         public void LoadSubscribers(Assembly assembly, string subscriptionId)

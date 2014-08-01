@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq.Expressions;
     using Domain.Entities.Applications;
+    using Domain.Entities.Candidates;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
@@ -12,7 +14,7 @@
     using MongoDB.Driver.Builders;
     using NLog;
 
-    public class ApplicationRepository : GenericMongoClient<MongoApplicationDetail>, IApplicationReadRepository, 
+    public class ApplicationRepository : GenericMongoClient<MongoApplicationDetail>, IApplicationReadRepository,
         IApplicationWriteRepository
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -34,7 +36,7 @@
         public ApplicationDetail Save(ApplicationDetail entity)
         {
             Logger.Debug("Called Mongodb to save ApplicationDetail EntityId={0}, Status={1}", entity.EntityId, entity.Status);
-            
+
             var mongoEntity = _mapper.Map<ApplicationDetail, MongoApplicationDetail>(entity);
 
             UpdateEntityTimestamps(mongoEntity);
@@ -48,7 +50,52 @@
 
         public ApplicationDetail Get(Guid id)
         {
-            throw new NotImplementedException();
+            Logger.Debug("Called Mongodb to get ApplicationDetail EntityId={0}", id);
+
+            // TODO: US352: STUBIMPL
+            return new ApplicationDetail
+            {
+                EntityId = Guid.NewGuid(),
+                Status = ApplicationStatuses.Submitting,
+                CandidateId = Guid.NewGuid(),
+                LegacyApplicationId = 12345,
+                Vacancy = new VacancySummary
+                {
+                    Id = 12345 // legacy vacancy id  
+                },
+                CandidateDetails =
+                {
+                    FirstName = "Johnny",
+                    LastName = "Candidate",
+                    DateOfBirth = DateTime.Now.AddYears(-30),
+                    EmailAddress = "email@server.com",
+                    PhoneNumber = "07777111222",
+                    Address =
+                    {
+                        AddressLine1 = "Address line 1",
+                        AddressLine2 = "Address line 2",
+                        AddressLine3 = "Address line 3",
+                        AddressLine4 = "Address line 4",
+                        Postcode = "CV1 2WT"
+                    }
+                },
+                CandidateInformation =
+                {
+                    EducationHistory = new Education
+                    {
+                        Institution  = "Bash Street School",
+                        FromYear = 2009,
+                        ToYear = 2012
+                    },
+                    AboutYou =
+                    {
+                        HobbiesAndInterests = "Hobbies and interests",
+                        Improvements = "Improvements are not needed",
+                        Strengths = "My strengths are many",
+                        Support = "Third line"
+                    }
+                }
+            };
         }
 
         public ApplicationDetail Get(Expression<Func<ApplicationDetail, bool>> filter)

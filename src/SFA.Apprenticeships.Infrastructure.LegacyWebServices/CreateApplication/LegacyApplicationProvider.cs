@@ -81,7 +81,7 @@
             return response.ApplicationId;
         }
 
-        private CreateApplicationRequest MapApplicationToLegacyRequest(
+        private static CreateApplicationRequest MapApplicationToLegacyRequest(
             ApplicationDetail applicationDetail,
             Domain.Entities.Candidates.Candidate candidate)
         {
@@ -91,7 +91,7 @@
                 {
                     VacancyId = applicationDetail.Vacancy.Id,
                     VacancyRef = null, // TODO: US352: AG: applicationDetail.Vacancy.?
-                    CandidateId = candidate.LegacyCandidateId,
+                    CandidateId = 201, // TODO: US352: STUBIMPL: candidate.LegacyCandidateId,
                     School = MapSchool(applicationDetail),
                     EducationResults = MapQualifications(applicationDetail.CandidateInformation.Qualifications),
                     WorkExperiences = MapWorkExperience(applicationDetail.CandidateInformation.WorkExperience),
