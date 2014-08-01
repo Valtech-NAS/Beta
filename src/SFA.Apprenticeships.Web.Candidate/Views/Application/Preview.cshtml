@@ -15,9 +15,13 @@
         <p>@Model.VacancyDetail.Description</p>
     </div>
 </section>
-    
+
 @Html.DisplayFor(m => m.Candidate)
 @Html.DisplayFor(m => m.Candidate.Education)
 @Html.DisplayFor(m => m.Candidate.Qualifications)
 @Html.DisplayFor(m => m.Candidate.AboutYou)
 @Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers)
+
+<div class="form-group">
+    @Html.ActionLink("Submit application", "SubmitApplication", new { @applicationId = Model.ApplicationViewId }, new { @class = "button" })
+</div>

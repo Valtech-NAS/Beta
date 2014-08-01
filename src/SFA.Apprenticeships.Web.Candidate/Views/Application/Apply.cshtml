@@ -29,6 +29,7 @@
     @Html.EditorFor(m => m.Candidate.AboutYou)
     @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)
 
+    @Html.HiddenFor(m => m.ApplicationViewId)
     <fieldset>
         <legend class="heading-large">Before you apply</legend>
         <p>Check you've completed the form properly</p>

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Helpers
 {
     using System.Collections.Generic;
+    using System.Data;
     using System.Globalization;
     using System.Linq;
     using Domain.Entities.Candidates;
@@ -57,6 +58,11 @@
 
         public static EducationViewModel GetEducationViewModel(Education educationHistory)
         {
+            if (educationHistory == null)
+            {
+                return null;
+            }
+
             return new EducationViewModel
             {
                 FromYear = educationHistory.FromYear.ToString(CultureInfo.InvariantCulture),
@@ -111,6 +117,11 @@
 
         public static Education GetEducation(EducationViewModel model)
         {
+            if (model == null)
+            {
+                return null;
+            }
+
             return new Education
             {
                 FromYear = ConvertYearStringToInt(model.FromYear),

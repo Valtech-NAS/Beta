@@ -5,12 +5,11 @@
 
     public interface IApplicationProvider
     {
+        ApplicationViewModel GetApplication(Guid applicationId);
         ApplicationViewModel GetApplicationViewModel(int vacancyId, Guid candidateId);
-
-        ApplicationViewModel MergeApplicationViewModel(int vacancyId, Guid candidateId, ApplicationViewModel userApplicationViewModel);
-
         void SaveApplication(ApplicationViewModel applicationViewModel);
-
         void SubmitApplication(Guid applicationId);
+
+        WhatHappensNextViewModel GetSubmittedApplicationVacancySummary(Guid applicationId);
     }
 }

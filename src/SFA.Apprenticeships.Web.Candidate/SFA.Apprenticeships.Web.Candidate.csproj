@@ -432,6 +432,7 @@
     <Compile Include="Validators\AboutYouViewModelValidator.cs" />
     <Compile Include="Validators\VacancySearchViewModelValidator.cs" />
     <Compile Include="ViewModels\Applications\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Applications\WhatHappensNextViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EducationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EmployerQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Candidate\AboutYouViewModel.cs" />

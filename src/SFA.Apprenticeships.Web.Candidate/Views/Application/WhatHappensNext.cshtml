@@ -1,4 +1,4 @@
-﻿
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.WhatHappensNextViewModel
 @{
     ViewBag.Title = "SFA Apprenticeships - What Happens Next";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,7 +8,7 @@
     <h1 class="heading-large"><i class="fa fa-check"></i>Vacancy application submitted</h1>
     <div>
         You have applied for:
-        <h2 class="heading-medium">Mechnical Engineer VAC000409315</h2>
+        <h2 class="heading-medium">@Html.DisplayFor(m => m.VacancyTitle) - @Html.DisplayFor(m =>m.VacancyReference)</h2>
     </div>
 </div>
 <section class="section-border">

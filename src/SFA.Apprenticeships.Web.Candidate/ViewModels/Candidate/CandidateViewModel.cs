@@ -23,8 +23,8 @@
             }
         } 
         public string FirstName { get; set; }
+
         public string LastName { get; set; }
-        public string MiddleName { get; set; } //TODO CHECK do we need this here
 
         public DateTime DateOfBirth { get; set; }
 

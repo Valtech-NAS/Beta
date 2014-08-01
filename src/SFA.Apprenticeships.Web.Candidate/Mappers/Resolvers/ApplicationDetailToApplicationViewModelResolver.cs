@@ -5,6 +5,7 @@
     using Helpers;
     using ViewModels.Applications;
     using ViewModels.Candidate;
+    using ViewModels.VacancySearch;
 
     public class ApplicationDetailToApplicationViewModelResolver :
         ITypeConverter<ApplicationDetail, ApplicationViewModel>
@@ -20,7 +21,6 @@
                     Id = application.CandidateId,
                     EmailAddress = application.CandidateDetails.EmailAddress,
                     FirstName = application.CandidateDetails.FirstName,
-                    MiddleName = application.CandidateDetails.MiddleNames,
                     LastName = application.CandidateDetails.LastName,
                     DateOfBirth = application.CandidateDetails.DateOfBirth,
                     PhoneNumber = application.CandidateDetails.PhoneNumber,
@@ -42,10 +42,5 @@
 
             return model;
         }
-            if (educationHistory == null)
-            {
-                return null;
-            }
-
     }
 }

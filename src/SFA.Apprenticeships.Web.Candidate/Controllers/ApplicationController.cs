@@ -13,8 +13,6 @@
 
     public class ApplicationController : SfaControllerBase
     {
-        private const string TempAppFormSessionId = "TempAppForm"; // TODO: TEMP: will not be using session
-
         private readonly IApplicationProvider _applicationProvider;
         private readonly ApplicationViewModelServerValidator _validator;
 
@@ -59,36 +57,44 @@
 
             _applicationProvider.SaveApplication(applicationViewModel);
 
-            return RedirectToAction("Preview", new { applicationDetailViewModelId = applicationViewModel.ApplicationViewId });
+            return RedirectToAction("Preview", new { applicationId = applicationViewModel.ApplicationViewId });
         }
 
-        public ActionResult Preview(string applicationDetailViewModelId)
-        {
-            var appForm = Session.Get<ApplicationViewModel>(TempAppFormSessionId);
-
-            ViewBag.ApplicationId = id;
-
-            return View(appForm);
-        }
-
-        public ActionResult SubmitApplication(string applicationDetailViewModelId)
+        public ActionResult Preview(string applicationId)
         {
             try
             {
-                var applicationViewId = Guid.Parse(applicationDetailViewModelId);
-                _applicationProvider.SubmitApplication(applicationViewId);
-
-                return RedirectToAction("WhatHappensNext"); 
+                var applicationViewId = Guid.Parse(applicationId);
+                var model = _applicationProvider.GetApplication(applicationViewId);
+                return View(model);
             }
             catch (Exception)
             {
-                return RedirectToAction("Preview", new { id = applicationDetailViewModelId }); //TODO change Preview action to accept ViewModelId from Context
+                Response.StatusCode = 404;
+                return View("VacancyNotFound");
             }
         }
 
-        public ActionResult WhatHappensNext()
+        public ActionResult SubmitApplication(string applicationId)
         {
-            return View();
+            try
+            {
+                var applicationViewId = Guid.Parse(applicationId);
+                _applicationProvider.SubmitApplication(applicationViewId);
+
+                return RedirectToAction("WhatHappensNext", new { applicationId });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Preview", new { applicationId });
+            }
+        }
+
+        public ActionResult WhatHappensNext(string applicationId)
+        {
+            var applicationViewId = Guid.Parse(applicationId);
+            var model = _applicationProvider.GetSubmittedApplicationVacancySummary(applicationViewId);
+            return View(model);
         }
     }
 }

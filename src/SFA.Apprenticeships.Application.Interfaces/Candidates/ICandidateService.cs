@@ -22,7 +22,9 @@
 
         ApplicationDetail CreateApplication(Guid candidateId, int vacancyId); // note: only an int due to legacy - will be a Guid
 
-        ApplicationDetail SaveApplication(ApplicationDetail application);
+        ApplicationDetail GetApplication(Guid applicationId);
+
+        ApplicationDetail SaveApplication(ApplicationDetail application); //TODO Make void???
 
         IList<ApplicationSummary> GetApplications(Guid candidateId);
  

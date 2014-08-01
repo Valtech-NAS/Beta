@@ -12,29 +12,32 @@
 
     public class CandidateService : ICandidateService
     {
+        private readonly IActivateCandidateStrategy _activateCandidateStrategy;
+        private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly IApplicationWriteRepository _applicationWriteRepository;
+        private readonly IAuthenticateCandidateStrategy _authenticateCandidateStrategy;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
-        private readonly IActivateCandidateStrategy _activateCandidateStrategy;
-        private readonly IAuthenticateCandidateStrategy _authenticateCandidateStrategy;
-        private readonly ISubmitApplicationStrategy _submitApplicationStrategy;
-        private readonly IRegisterCandidateStrategy _registerCandidateStrategy;
         private readonly ICreateApplicationStrategy _createApplicationStrategy;
         private readonly IGetCandidateApplicationsStrategy _getCandidateApplicationsStrategy;
+        private readonly IRegisterCandidateStrategy _registerCandidateStrategy;
         private readonly IResetForgottenPasswordStrategy _resetForgottenPasswordStrategy;
+        private readonly ISaveApplicationStrategy _saveApplicationStrategy;
+        private readonly ISubmitApplicationStrategy _submitApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
 
         public CandidateService(IApplicationWriteRepository applicationWriteRepository,
             ICandidateReadRepository candidateReadRepository,
-            ICandidateWriteRepository candidateWriteRepository, 
+            ICandidateWriteRepository candidateWriteRepository,
             IActivateCandidateStrategy activateCandidateStrategy,
             IAuthenticateCandidateStrategy authenticateCandidateStrategy,
             ISubmitApplicationStrategy submitApplicationStrategy,
-            IRegisterCandidateStrategy registerCandidateStrategy, 
+            IRegisterCandidateStrategy registerCandidateStrategy,
             ICreateApplicationStrategy createApplicationStrategy,
-            IGetCandidateApplicationsStrategy getCandidateApplicationsStrategy, 
-            IResetForgottenPasswordStrategy resetForgottenPasswordStrategy, 
-            IUnlockAccountStrategy unlockAccountStrategy)
+            IGetCandidateApplicationsStrategy getCandidateApplicationsStrategy,
+            IResetForgottenPasswordStrategy resetForgottenPasswordStrategy,
+            IUnlockAccountStrategy unlockAccountStrategy, IApplicationReadRepository applicationReadRepository,
+            ISaveApplicationStrategy saveApplicationStrategy)
         {
             _applicationWriteRepository = applicationWriteRepository;
             _candidateReadRepository = candidateReadRepository;
@@ -47,6 +50,8 @@
             _getCandidateApplicationsStrategy = getCandidateApplicationsStrategy;
             _resetForgottenPasswordStrategy = resetForgottenPasswordStrategy;
             _unlockAccountStrategy = unlockAccountStrategy;
+            _applicationReadRepository = applicationReadRepository;
+            _saveApplicationStrategy = saveApplicationStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -89,18 +94,29 @@
 
         public ApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
         {
+            Condition.Requires(candidateId);
+
             return _createApplicationStrategy.CreateApplication(candidateId, vacancyId);
+        }
+
+        public ApplicationDetail GetApplication(Guid applicationId)
+        {
+            Condition.Requires(applicationId);
+
+            return _applicationReadRepository.Get(applicationId);
         }
 
         public ApplicationDetail SaveApplication(ApplicationDetail application)
         {
             Condition.Requires(application);
 
-            return _applicationWriteRepository.Save(application);
+            return _saveApplicationStrategy.SaveApplication(application);
         }
 
         public IList<ApplicationSummary> GetApplications(Guid candidateId)
         {
+            Condition.Requires(candidateId);
+
             return _getCandidateApplicationsStrategy.GetApplications(candidateId);
         }
 
