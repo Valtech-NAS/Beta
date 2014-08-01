@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer.Services
 {
     using System;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
+    using Application.VacancyEtl.Entities;
 
     public interface IVacancyIndexerService
     {

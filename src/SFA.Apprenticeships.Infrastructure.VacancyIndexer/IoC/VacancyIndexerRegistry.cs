@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer.IoC
 {
-    using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-    using SFA.Apprenticeships.Infrastructure.VacancyIndexer.Mappers;
-    using SFA.Apprenticeships.Infrastructure.VacancyIndexer.Services;
+    using Domain.Interfaces.Mapping;
+    using Mappers;
+    using Services;
     using StructureMap.Configuration.DSL;
 
     public class VacancyIndexerRegistry : Registry
