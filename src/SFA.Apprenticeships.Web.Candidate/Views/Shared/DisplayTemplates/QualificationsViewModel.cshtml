@@ -3,10 +3,11 @@
 <fieldset class="fieldset-with-border">
     <legend class="heading-large">
         Qualifications
-        @if (ViewBag.ApplicationId != null)
+        @if (ViewBag.ApplicationViewId != null)
         {
-            <a class="icon-with-text" href="~/application/apply/@ViewBag.ApplicationId#applyQualifications">
-                <i class="the-icon fa fa-pencil"></i><span class="the-text">Amend details</span>
+            <a class="icon-with-text" href="/application/apply/@(ViewBag.ApplicationViewId)#applyQualifications">
+                <i class="the-icon fa fa-pencil"></i>
+                <span class="the-text">Amend details</span>
             </a>
         }
     </legend>

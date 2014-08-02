@@ -5,10 +5,11 @@
     <fieldset class="fieldset-with-border">
         <legend class="heading-large">
             Employer questions
-            @if (ViewBag.ApplicationId != null)
+            @if (ViewBag.ApplicationViewId != null)
             {
-                <a class="icon-with-text" href="~/application/apply/@ViewBag.ApplicationId#applyEmployerQuestionAnswers">
-                    <i class="the-icon fa fa-pencil"></i><span class="the-text">Amend details</span>
+                <a class="icon-with-text" href="/application/apply/@(ViewBag.ApplicationViewId)#applyEmployerQuestionAnswers">
+                    <i class="the-icon fa fa-pencil"></i>
+                    <span class="the-text">Amend details</span>
                 </a>
             }
         </legend>
