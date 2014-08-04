@@ -15,9 +15,8 @@
 
         public void Update(ApplicationStatusSummary applicationStatus)
         {
-            //todo: update status of application in app repo.
-            // note, will be extended to include a call to outbound communication later
-            // log any changes
+            //todo: update status of the updated application in the app repo.
+            // note, this flow will be extended to include a call to outbound communication later (when we do notifications)
 
             throw new NotImplementedException();
         }
