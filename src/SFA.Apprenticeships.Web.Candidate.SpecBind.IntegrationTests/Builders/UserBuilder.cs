@@ -64,6 +64,7 @@
             
             return this;
         }
+
         public UserBuilder WithAccountUnlockCode(string accountUnlockCode)
         {
             User.AccountUnlockCode = accountUnlockCode;

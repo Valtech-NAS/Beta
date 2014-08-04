@@ -5,14 +5,10 @@
     using global::SpecBind.Selenium;
     using OpenQA.Selenium;
 
-    public class BaseValidationPage
+    public class BaseValidationPage : BasePage
     {
-        //TODO: Maybe push this and webdriver into a further BasePage class that we can use for all pages.
-        protected readonly ISearchContext Context;
-
-        public BaseValidationPage(ISearchContext context)
+        public BaseValidationPage(ISearchContext context) : base(context)
         {
-            Context = context;
         }
 
         [ElementLocator(Class = "validation-summary-errors")]
