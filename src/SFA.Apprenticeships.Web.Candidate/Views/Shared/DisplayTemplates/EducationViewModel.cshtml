@@ -3,9 +3,9 @@
 <fieldset id="applyEducation" class="fieldset-with-border">
     <legend class="heading-large">
         Education
-        @if (ViewBag.ApplicationViewId != null)
+        @if (ViewBag.VacancyId != null)
         {
-            <a class="icon-with-text" href="/application/apply/@(ViewBag.ApplicationViewId)#applyEducation">
+            <a class="icon-with-text" href="/application/apply/@(ViewBag.VacancyId)#applyEducation">
                 <i class="the-icon fa fa-pencil"></i>
                 <span class="the-text">Amend details</span>
             </a>

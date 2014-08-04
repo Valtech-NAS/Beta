@@ -67,8 +67,8 @@
                 var applicationViewId = Guid.Parse(applicationId);
                 var model = _applicationProvider.GetApplication(applicationViewId);
 
-                // ViewBag.ApplicationViewId is used to provide 'Amend Details' backlinks to the Apply view.
-                ViewBag.ApplicationViewId = applicationId;
+                // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
+                ViewBag.VacancyId = model.VacancyDetail.Id;
 
                 return View(model);
             }
