@@ -3,22 +3,26 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
     using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
     using Interfaces.Messaging;
+    using Interfaces.Vacancies;
 
-    public class QueueApplicationSubmittedStrategy : ISendApplicationSubmittedStrategy
+    public class LegacyQueueApplicationSubmittedStrategy : ISendApplicationSubmittedStrategy
     {
         private readonly IMessageBus _messageBus;
+        private readonly IVacancyDataProvider _vacancyDataProvider;
 
-        public QueueApplicationSubmittedStrategy(IMessageBus messageBus)
+        public LegacyQueueApplicationSubmittedStrategy(IMessageBus messageBus, IVacancyDataProvider vacancyDataProvider)
         {
             _messageBus = messageBus;
+            _vacancyDataProvider = vacancyDataProvider;
         }
 
         public void Send(Candidate candidate, ApplicationDetail applicationDetail, CandidateMessageTypes messageType,
             IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
         {
-            var reference = string.Format("Vacancy Id {0}", applicationDetail.Vacancy.Id); //TODO Determine what the vacancy reference is
+            var reference = GetVacancyReference(applicationDetail.Vacancy.Id);
 
             var applicationTokens = new[]
             {
@@ -36,6 +40,19 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
             };
 
             _messageBus.PublishMessage(request);
+        }
+
+        private string GetVacancyReference(int id)
+        {
+            var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(id);
+
+            if (vacancyDetails == null)
+            {
+                throw new CustomException(
+                    "Vacancy not found with ID {0}.", ErrorCodes.VacancyNotFoundError, id);
+            }
+
+            return "VAC" + vacancyDetails.Id.ToString("D9");
         }
     }
 }

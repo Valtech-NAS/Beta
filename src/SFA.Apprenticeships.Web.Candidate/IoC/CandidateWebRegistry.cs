@@ -52,7 +52,7 @@
                 .Use<QueueEmailOnlyPasswordResetCodeStrategy>();
             For<ISubmitApplicationStrategy>().Use<LegacySubmitApplicationStrategy>();
             For<ISendActivationCodeStrategy>().Use<QueueEmailOnlyActivationCodeStrategy>();
-            For<ISendApplicationSubmittedStrategy>().Use<QueueApplicationSubmittedStrategy>();
+            For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApplicationSubmittedStrategy>();
             For<ISendPasswordChangedStrategy>().Use<QueueEmailOnlyPasswordChangedStrategy>();
             For<Application.Communication.Strategies.ISendAccountUnlockCodeStrategy>().Use<QueueEmailOnlyAccountUnlockCodeStrategy>();
             For<IResendActivationCodeStrategy>().Use<ResendActivationCodeStrategy>();
