@@ -1,0 +1,340 @@
+﻿@{
+    ViewBag.Title = "SFA Apprenticeships - Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid-wrapper">
+    <div class="grid grid-1-2">
+        <div class="hgroup">
+            <h1 class="heading-xlarge">Your dashboard</h1>
+            <span class="subtitle">Manage your applications</span>
+        </div>
+    </div>
+    <div class="grid grid-1-2">
+        <a href="search-index.html" class="page-link">Find an apprenticeship</a>
+        <!--  <details>
+          <summary>View your saved searches</summary>
+          <div class="detail-content">
+            <section class="clearfix">
+              <table class="vert-middle">
+                <colgroup>
+                  <col class="t50">
+                  <col class="t25">
+                  <col class="t25">
+                  <col>
+                </colgroup>
+                <tr>
+                  <td>Hair</td>
+                  <td class="ta-center"><a href="#"><i class="fa fa-search"></i>Search</a></td>
+                  <td class="ta-center"><a href="#"><i class="fa fa-times"></i>Delete</a></td>
+                </tr>
+                <tr>
+                  <td>Carpenter</td>
+                  <td class="ta-center"><a href="#"><i class="fa fa-search"></i>Search</a></td>
+                  <td class="ta-center"><a href="#"><i class="fa fa-times"></i>Delete</a></td>
+                </tr>
+                <tr>
+                  <td>Admin</td>
+                  <td class="ta-center"><a href="#"><i class="fa fa-search"></i>Search</a></td>
+                  <td class="ta-center"><a href="#"><i class="fa fa-times"></i>Delete</a></td>
+                </tr>
+              </table>
+            </section>
+          </div>
+        </details> -->
+    </div>
+</div>
+<ul class="list-nav">
+    <li>
+        <span class="bold-medium">5</span>  <a class="" href="#dashInProgress">In progress</a>
+    </li>
+    <li>
+        <span class="bold-medium">10</span>  <a class="" href="#dashSubmitted">Submitted</a>
+    </li>
+    <li>
+        <span class="bold-medium">2</span>  <a class="" href="#dashUnsuccessful">Unsuccessful</a>
+    </li>
+    <li>
+        <span class="bold-medium">6</span>  <a class="" href="#dashDrafts">Drafts</a>
+    </li>
+    <li>
+        <span class="bold-medium">3</span>  <a class="" href="#dashSavedVacancies">Saved vacancies</a>
+    </li>
+</ul>
+<div class="grid-wrapper">
+    <div class="grid grid-1-2">
+        <div class="inner-block-padr">
+            <section class="clearfix">
+                <h2 class="heading-medium" id="dashInProgress">Application status</h2>
+                <table class="vert-middle">
+                    <colgroup>
+                        <col class="t50">
+                        <col class="t25">
+                        <col class="t25">
+                        <col>
+                    </colgroup>
+                    <tbody class="tbody-3rows">
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet, consectetur.</td>
+                            <td>In progress</td>
+                            <td class="ta-center">12 Jul 14</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet.</td>
+                            <td>In progress</td>
+                            <td class="ta-center">10 Jul 14</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                            <td>In progress</td>
+                            <td class="ta-center">10 Jul 14</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                            <td>In progress</td>
+                            <td class="ta-center">9 Jul 14</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
+                            <td>In progress</td>
+                            <td class="ta-center">7 Jul 14</td>
+                        </tr>
+                    </tbody>
+                    <tbody class="tbody-expandrows">
+                        <tr class="no-btm-border">
+                            <td colspan="2"></td>
+                            <td class="no-wrap ta-center">
+                                <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>View more</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="vert-middle" id="dashSubmitted">
+                    <colgroup>
+                        <col class="t50">
+                        <col class="t25">
+                        <col class="t25">
+                        <col>
+                    </colgroup>
+                    <tbody class="tbody-3rows">
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet, consectetur.</td>
+                            <td class="">Submitted</td>
+                            <td class="ta-center">10 Jul 14</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet.</td>
+                            <td class="">Submitted</td>
+                            <td class="ta-center">4 Jul 14</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet.</td>
+                            <td class="">Submitted</td>
+                            <td class="ta-center">4 Jul 14</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet.</td>
+                            <td class="">Submitted</td>
+                            <td class="ta-center">3 Jul 14</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet.</td>
+                            <td class="">Submitted</td>
+                            <td class="ta-center">1 Jul 14</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet.</td>
+                            <td class="">Submitted</td>
+                            <td class="ta-center">29 Jun 14</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet.</td>
+                            <td class="">Submitted</td>
+                            <td class="ta-center">29 Jun 14</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet.</td>
+                            <td class="">Submitted</td>
+                            <td class="ta-center">26 Jun 14</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet.</td>
+                            <td class="">Submitted</td>
+                            <td class="ta-center">24 Jun 14</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet.</td>
+                            <td class="">Submitted</td>
+                            <td class="ta-center">22 Jun 14</td>
+                        </tr>
+                    </tbody>
+                    <tbody class="tbody-expandrows">
+                        <tr class="no-btm-border">
+                            <td colspan="2"></td>
+                            <td class="no-wrap ta-center">
+                                <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>View more</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="vert-middle" id="dashUnsuccessful">
+                    <colgroup>
+                        <col class="t50">
+                        <col class="t25">
+                        <col class="t25">
+                        <col>
+                    </colgroup>
+                    <tbody class="tbody-3rows">
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet, consectetur.</td>
+                            <td>Unsuccessful</td>
+                            <td class="ta-center">
+                                <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum dolor sit amet, consectetur.</td>
+                            <td>Unsuccessful</td>
+                            <td class="ta-center">
+                                <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody class="tbody-expandrows">
+                        <tr class="no-btm-border">
+                            <td colspan="2"></td>
+                            <td class="no-wrap ta-center">
+                                <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>View more</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+    <div class="grid grid-1-2">
+        <section class="clearfix">
+            <h2 class="heading-medium" id="dashDrafts">Drafts</h2>
+            <table class="vert-middle">
+                <colgroup>
+                    <col class="t50">
+                    <col class="t25">
+                    <col class="t25">
+                    <col>
+                </colgroup>
+                <tbody class="tbody-3rows">
+                    <tr>
+                        <td>Lorem ipsum dolor sit amet, consectetur.</td>
+                        <td class="ta-center">
+                            <a href="apply-index.html">Resume</a>
+                        </td>
+                        <td class="ta-center">
+                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td class="ta-center">
+                            <a href="apply-index.html">Resume</a>
+                        </td>
+                        <td class="ta-center">
+                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Lorem ipsum dolor sit amet, consectetur.</td>
+                        <td class="ta-center">
+                            <a href="apply-index.html">Resume</a>
+                        </td>
+                        <td class="ta-center">
+                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Lorem ipsum dolor sit amet, consectetur.</td>
+                        <td class="ta-center">
+                            <a href="apply-index.html">Resume</a>
+                        </td>
+                        <td class="ta-center">
+                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td class="ta-center">
+                            <a href="apply-index.html">Resume</a>
+                        </td>
+                        <td class="ta-center">
+                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Lorem ipsum dolor sit amet, consectetur.</td>
+                        <td class="ta-center">
+                            <a href="apply-index.html">Resume</a>
+                        </td>
+                        <td class="ta-center">
+                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody class="tbody-expandrows">
+                    <tr class="no-btm-border">
+                        <td colspan="2"></td>
+                        <td class="no-wrap ta-center">
+                            <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>View more</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section class="clearfix">
+            <h2 class="heading-medium" id="dashSavedVacancies">Saved vacancies</h2>
+            <table class="vert-middle">
+                <colgroup>
+                    <col class="t50">
+                    <col class="t25">
+                    <col class="t25">
+                    <col>
+                </colgroup>
+                <tbody class="tbody-3rows">
+                    <tr>
+                        <td>Lorem ipsum dolor sit amet, consectetur.</td>
+                        <td class="ta-center">
+                            <a href="apply-index.html">Apply</a>
+                        </td>
+                        <td class="ta-center">
+                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td class="ta-center">
+                            <a href="apply-index.html">Apply</a>
+                        </td>
+                        <td class="ta-center">
+                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Lorem ipsum dolor sit amet, consectetur.</td>
+                        <td class="ta-center">
+                            <a href="apply-index.html">Apply</a>
+                        </td>
+                        <td class="ta-center">
+                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody class="tbody-expandrows">
+                    <tr class="no-btm-border">
+                        <td colspan="2"></td>
+                        <td class="no-wrap ta-center">
+                            <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>View more</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
