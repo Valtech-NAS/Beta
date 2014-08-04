@@ -22,7 +22,6 @@
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             UserContext = UserServiceProvider.GetUserContext(filterContext.HttpContext);
-
             base.OnActionExecuting(filterContext);
         }
     }

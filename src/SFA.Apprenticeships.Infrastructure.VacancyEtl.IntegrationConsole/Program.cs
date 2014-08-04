@@ -36,21 +36,28 @@
                 x.AddRegistry<VacancyEtlRegistry>();
             });
 
-            var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
-            subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(VacancySummaryConsumerAsync)), "VacancyEtl");
-
-            var vacancySchedulerConsumer = ObjectFactory.GetInstance<VacancySchedulerConsumer>();
-
-            Console.WriteLine("Enter any key to quit");
-            Console.WriteLine("---------------------------------------------------------------");
-
             if (args != null && args.Length > 0)
             {
                 //Any args means 
                 var azureClient = ObjectFactory.GetInstance<IAzureCloudClient>();
                 var queueItems = GetAzureScheduledMessagesQueue(1);
                 azureClient.AddMessage("vacancysearchdatacontrol", queueItems.Dequeue());
+                Console.WriteLine("Vacancy indexer control message added to queue");
             }
+
+            Console.WriteLine("Enter any key to start processing the queues");
+
+            while (!Console.KeyAvailable)
+            {
+                Thread.Sleep(1000);
+            }
+
+            Console.WriteLine("Enter any key to quit");
+            Console.WriteLine("---------------------------------------------------------------");
+
+            var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
+            subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(VacancySummaryConsumerAsync)), "VacancyEtl");
+            var vacancySchedulerConsumer = ObjectFactory.GetInstance<VacancySchedulerConsumer>();
 
             while (!Console.KeyAvailable)
             {
