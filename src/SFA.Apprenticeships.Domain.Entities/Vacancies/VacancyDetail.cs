@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
     using System;
+    using Applications;
     using Locations;
 
     public class VacancyDetail

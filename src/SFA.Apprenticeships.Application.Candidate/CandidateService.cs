@@ -99,6 +99,14 @@
             return _createApplicationStrategy.CreateApplication(candidateId, vacancyId);
         }
 
+        public ApplicationDetail GetApplication(Guid candidateId, int vacancyId)
+        {
+            var applicationDetail = _applicationReadRepository.GetForCandidate(
+                candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
+
+            return applicationDetail;
+        }
+
         public ApplicationDetail GetApplication(Guid applicationId)
         {
             Condition.Requires(applicationId);

@@ -38,7 +38,8 @@
             var model = _mapper.Map<ApplicationDetail, ApplicationViewModel>(applicationDetail);
             model.ApplicationViewId = applicationId;
 
-            return PatchWithVacancyDetail(model, applicationDetail.Vacancy.Id);
+            return PatchWithVacancyDetail(
+                model, applicationDetail.CandidateId, applicationDetail.Vacancy.Id);
         }
 
         public ApplicationViewModel GetApplicationViewModel(int vacancyId, Guid candidateId)
@@ -48,7 +49,8 @@
             var applicationViewModel = _mapper.Map<ApplicationDetail, ApplicationViewModel>(applicationDetails);
             applicationViewModel.ApplicationViewId = viewModelId;
 
-            return PatchWithVacancyDetail(applicationViewModel, vacancyId);
+            return PatchWithVacancyDetail(
+                applicationViewModel, candidateId, vacancyId);
         }
 
         public void SaveApplication(ApplicationViewModel applicationViewModel)
@@ -113,9 +115,10 @@
             return viewModelId;
         }
 
-        private ApplicationViewModel PatchWithVacancyDetail(ApplicationViewModel applicationViewModel, int vacancyId)
+        private ApplicationViewModel PatchWithVacancyDetail(
+            ApplicationViewModel applicationViewModel, Guid candidateId, int vacancyId)
         {
-            var vacancyDetailViewModel = _vacancyDetailProvider.GetVacancyDetailViewModel(vacancyId);
+            var vacancyDetailViewModel = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null)
             {

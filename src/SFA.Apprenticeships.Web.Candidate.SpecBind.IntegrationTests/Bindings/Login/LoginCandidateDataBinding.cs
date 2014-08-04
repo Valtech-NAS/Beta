@@ -110,6 +110,12 @@
             SetTokens(candidate, user);
         }
 
+        [Given("I am signed out")]
+        public void IAmSignedOut()
+        {
+
+        }
+
         [Then]
         public void ThenMyAccountUnlockCodeHasBeenRenewed()
         {

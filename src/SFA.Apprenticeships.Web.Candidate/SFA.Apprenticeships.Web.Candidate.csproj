@@ -303,6 +303,7 @@
     <Content Include="Views\Login\Unlock.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Application\WhatHappensNext.cshtml" />
+    <Content Include="Views\VacancySearch\_Apply.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

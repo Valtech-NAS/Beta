@@ -46,7 +46,7 @@
             PopulateDistances();
             PopulateSortType();
 
-            return View(new VacancySearchViewModel {WithinDistance = 2});
+            return View(new VacancySearchViewModel { WithinDistance = 2 });
         }
 
         [HttpGet]
@@ -126,13 +126,20 @@
         public ActionResult DetailsWithDistance(int id, string distance)
         {
             TempData["distance"] = distance;
-            return RedirectToAction("Details", new {id});
+            return RedirectToAction("Details", new { id });
         }
 
         [HttpGet]
         public ActionResult Details(int id)
         {
-            var vacancy = _vacancyDetailProvider.GetVacancyDetailViewModel(id);
+            Guid? candidateId = null;
+
+            if (Request.IsAuthenticated)
+            {
+                candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
+            }
+
+            var vacancy = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
 
             if (vacancy == null)
             {

@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using Domain.Entities.Applications;
     using Locations;
 
     [Serializable]
@@ -75,6 +76,12 @@
         public string SkillsRequired { get; set; }
         
         public string FutureProspects { get; set; }
+
+        public ApplicationStatuses? CandidateApplicationStatus { get; set; }
+
+        [UIHint("Date")]
+        [DataType(DataType.DateTime)]
+        public DateTime? DateApplied { get; set; }
 
         #endregion        
     }

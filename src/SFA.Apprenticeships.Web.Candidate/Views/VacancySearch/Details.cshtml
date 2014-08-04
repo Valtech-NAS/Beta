@@ -23,8 +23,7 @@
             </div>
         </div>
         <div class="grid grid-1-3">
-            <a href="@Url.Action("Apply", "Application", new { @id = Model.Id })" id="apply-button" title="Apply for vacancy" class="button button-with-hint">Apply for vacancy</a>
-            <p class="copy-16">Closing date: <span id="vacancy-closing-date">@Html.DisplayFor(m => m.ClosingDate, "Date")</span></p>
+            @Html.Partial("_Apply", Model)
         </div>
     </section>
     <section class="section-border grid-wrapper" id="vacancy-info">
@@ -187,8 +186,7 @@
             </ul>
         </div>
         <div class="form-group">
-            <a class="button button-with-hint" title="Apply for vacancy" href="@Url.Action("Apply", "Application", new { @id = Model.Id })">Apply for vacancy</a>
-            <p class="copy-16">Closing date: @Html.DisplayFor(m => m.ClosingDate, "Date")</p>
+            @Html.Partial("_Apply", Model)
         </div>
     </section>
 </div>
