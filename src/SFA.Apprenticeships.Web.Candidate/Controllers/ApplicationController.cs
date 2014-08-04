@@ -98,6 +98,7 @@
         {
             var applicationViewId = Guid.Parse(applicationId);
             var model = _applicationProvider.GetSubmittedApplicationVacancySummary(applicationViewId);
+
             return View(model);
         }
     }

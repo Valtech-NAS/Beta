@@ -16,7 +16,7 @@
             case ApplicationStatuses.InProgress:
             case ApplicationStatuses.Successful:
             case ApplicationStatuses.Unsuccessful:
-                <p>You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
+                <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
                 <a href='@Url.Action("Index", "Dashboard")'>View status on dashboard</a>    
                 break;
         }
