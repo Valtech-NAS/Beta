@@ -24,8 +24,8 @@
                 Vacancy = GetVacancy(model.VacancyDetail),
                 CandidateDetails = GetCandidateDetails(model.Candidate),
                 CandidateInformation = GetCandidateInformation(model.Candidate),
-                AdditionalQuestion1Answer = model.Candidate.EmployerQuestionAnswers.CandidateAnswer1,
-                AdditionalQuestion2Answer = model.Candidate.EmployerQuestionAnswers.CandidateAnswer2
+                AdditionalQuestion1Answer = model.Candidate.EmployerQuestionAnswers != null ? model.Candidate.EmployerQuestionAnswers.CandidateAnswer1 : string.Empty,
+                AdditionalQuestion2Answer = model.Candidate.EmployerQuestionAnswers != null ? model.Candidate.EmployerQuestionAnswers.CandidateAnswer2 : string.Empty
             };
 
             return application;
