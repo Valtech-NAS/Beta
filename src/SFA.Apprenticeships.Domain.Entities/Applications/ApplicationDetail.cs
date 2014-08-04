@@ -2,6 +2,7 @@
 {
     using System;
     using Candidates;
+    using Users;
     using Vacancies;
 
     public class ApplicationDetail : BaseEntity

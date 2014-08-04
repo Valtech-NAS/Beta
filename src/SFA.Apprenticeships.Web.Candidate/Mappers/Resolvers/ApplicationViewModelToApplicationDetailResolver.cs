@@ -4,6 +4,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
+    using Domain.Entities.Users;
     using Domain.Entities.Vacancies;
     using Helpers;
     using ViewModels.Applications;

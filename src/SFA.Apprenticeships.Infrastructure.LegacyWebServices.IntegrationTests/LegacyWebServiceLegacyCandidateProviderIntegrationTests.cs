@@ -4,6 +4,7 @@
     using Common.IoC;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
+    using Domain.Entities.Users;
     using FluentAssertions;
     using IoC;
     using NUnit.Framework;

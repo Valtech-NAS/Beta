@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
@@ -41,6 +42,8 @@
 
         public bool IsUsernameAvailable(string username)
         {
+            Condition.Requires(username).IsNotNullOrEmpty();
+
             // check status of user (unactivated account should also be considered "available")
             var user = _userReadRepository.Get(username, false);
             return user == null || user.Status == UserStatuses.PendingActivation;
@@ -117,6 +120,8 @@
 
         public string[] GetRoleNames(string username)
         {
+            Condition.Requires(username).IsNotNullOrEmpty();
+
             var claims = new List<string>();
             var userStatus = GetUserStatus(username);
 
@@ -135,6 +140,16 @@
             // TODO: Add actual user roles.
 
             return claims.ToArray();
+        }
+
+        public void UpdateUserProfile(string username, RegistrationDetails profileDetails)
+        {
+            Condition.Requires(username).IsNotNullOrEmpty();
+            Condition.Requires(profileDetails);
+
+            //todo: allow update of name, DOB, address, contact number (not email address)
+
+            throw new NotImplementedException();
         }
     }
 }

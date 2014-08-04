@@ -10,6 +10,7 @@
     using Constants.ViewModels;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Users;
     using FluentValidation.Mvc;
     using FluentValidation.Results;
     using NLog;

@@ -4,6 +4,7 @@
     using AutoMapper;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
+    using Domain.Entities.Users;
     using ViewModels.Register;
     internal class CandidateResolver : ITypeConverter<RegisterViewModel, Candidate>
     {

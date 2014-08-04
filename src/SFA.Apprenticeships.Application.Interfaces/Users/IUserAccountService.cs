@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Users
 {
     using System;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Users;
 
     /// <summary>
@@ -29,5 +30,7 @@
         UserStatuses GetUserStatus(string username);
 
         string[] GetRoleNames(string username);
+
+        void UpdateUserProfile(string username, RegistrationDetails profileDetails);
     }
 }

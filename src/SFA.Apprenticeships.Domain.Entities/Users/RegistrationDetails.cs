@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Candidates
+﻿namespace SFA.Apprenticeships.Domain.Entities.Users
 {
     using System;
     using Locations;

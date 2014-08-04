@@ -5,6 +5,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Users;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
     using Interfaces.Vacancies;
