@@ -1,0 +1,35 @@
+﻿@using SFA.Apprenticeships.Domain.Entities.Applications
+@model SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.VacancyDetailViewModel
+
+@if (Request.IsAuthenticated)
+{
+    if (Model.CandidateApplicationStatus.HasValue)
+    {
+        switch (Model.CandidateApplicationStatus.Value)
+        {
+            case ApplicationStatuses.Draft:
+                <a class="button button-with-hint" title="Resume application" href="@Url.Action("Apply", "Application", new { @id = Model.Id })">Resume application</a>
+                break;
+
+            case ApplicationStatuses.Submitting:
+            case ApplicationStatuses.Submitted:
+            case ApplicationStatuses.InProgress:
+            case ApplicationStatuses.Successful:
+            case ApplicationStatuses.Unsuccessful:
+                <p>You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
+                <a href='@Url.Action("Index", "Dashboard")'>View status on dashboard</a>    
+                break;
+        }
+    }
+    else
+    {
+        // Candidate has not applied for this vacancy.
+        <a class="button button-with-hint" title="Apply for vacancy" href="@Url.Action("Apply", "Application", new { @id = Model.Id })">Apply for vacancy</a>
+    }
+}
+else
+{
+    // Vacancy is not being viewed by a signed-in candidate.
+    <a class="button button-with-hint" title="Sign in to apply" href="@Url.Action("Index", "Login")">Sign in to apply</a>
+}
+<p class="copy-16">Closing date: @Html.DisplayFor(m => m.ClosingDate, "Date")</p>
