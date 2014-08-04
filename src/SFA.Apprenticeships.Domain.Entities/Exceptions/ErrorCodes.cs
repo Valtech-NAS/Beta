@@ -21,5 +21,6 @@
 
         // Vacancy Exception Codes
         public const string VacancyNotFoundError = "Vacancy001";
+        public const string VacancyExpired = "Vacancy002";
     }
 }

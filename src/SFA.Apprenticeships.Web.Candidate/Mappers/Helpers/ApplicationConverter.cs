@@ -133,6 +133,11 @@
         public static IList<WorkExperience> GetWorkExperiences(
             IEnumerable<WorkExperienceViewModel> workExperienceViewModels)
         {
+            if (workExperienceViewModels == null)
+            {
+                return new List<WorkExperience>();
+            }
+
             return workExperienceViewModels.Select(model => new WorkExperience
             {
                 Description = model.Description,
@@ -146,6 +151,11 @@
         public static IList<Qualification> GetQualifications(
             IEnumerable<QualificationsViewModel> qualifications)
         {
+            if (qualifications == null)
+            {
+                return  new List<Qualification>();
+            }
+
             return qualifications.Select(model => new Qualification
             {
                 Grade = model.Grade,

@@ -53,9 +53,7 @@
 
         public void SaveApplication(ApplicationViewModel applicationViewModel)
         {
-            var applicationEntityId = GetApplicationEntityIdFromContext(applicationViewModel.ApplicationViewId);
-
-            var model = GetApplication(applicationEntityId);
+            var model = GetApplication(applicationViewModel.ApplicationViewId);
 
             model.Candidate.AboutYou = applicationViewModel.Candidate.AboutYou;
             model.Candidate.Education = applicationViewModel.Candidate.Education;
@@ -64,7 +62,7 @@
             model.Candidate.EmployerQuestionAnswers = applicationViewModel.Candidate.EmployerQuestionAnswers;
            
             var application = _mapper.Map<ApplicationViewModel, ApplicationDetail>(model);
-            application.EntityId = applicationEntityId;
+            application.EntityId = GetApplicationEntityIdFromContext(applicationViewModel.ApplicationViewId);
 
             _candidateService.SaveApplication(application);
         }

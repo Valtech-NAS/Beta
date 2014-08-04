@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using System;
+    using System.Collections.Generic;
     using AutoMapper;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -12,10 +13,10 @@
 
     public class CreateApplicationStrategy : ICreateApplicationStrategy
     {
-        private readonly IVacancyDataProvider _vacancyDataProvider;
         private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly IApplicationWriteRepository _applicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
+        private readonly IVacancyDataProvider _vacancyDataProvider;
 
         public CreateApplicationStrategy(
             IVacancyDataProvider vacancyDataProvider,
@@ -37,20 +38,45 @@
             if (applicationDetail == null)
             {
                 // New application.
-                applicationDetail = CreateNewApplication(candidateId, vacancyId);
-                _applicationWriteRepository.Save(applicationDetail);
+                return CreateNewApplication(candidateId, vacancyId);
             }
 
-            return applicationDetail;
+            applicationDetail.AssertState("Application should be in draft", ApplicationStatuses.Draft);
+
+            if (applicationDetail.CandidateInformation.Qualifications.Count == 0)
+            {
+                //TODO remove stubbed data
+                applicationDetail.CandidateInformation.Qualifications = GetStubbedQualifications();
+            }
+
+            if (applicationDetail.CandidateInformation.WorkExperience.Count == 0)
+            {
+                //TODO remove stubbed data
+                applicationDetail.CandidateInformation.WorkExperience = GetStubbedWorkExperiences();
+            }
+
+            if (DateTime.Now <= applicationDetail.Vacancy.ClosingDate)
+            {
+                return applicationDetail;
+            }
+
+            throw new CustomException("Vacancy has expired", ErrorCodes.VacancyExpired);
         }
 
         private ApplicationDetail CreateNewApplication(Guid candidateId, int vacancyId)
         {
-            var candidate = GetCandidate(candidateId);
             var vacancyDetails = GetVacancyDetails(vacancyId);
+
+            if (DateTime.Now > vacancyDetails.ClosingDate)
+            {
+                throw new CustomException("Vacancy has expired can't create a new application", ErrorCodes.VacancyExpired);
+            }
+
+            var candidate = GetCandidate(candidateId);
 
             var applicationDetail = new ApplicationDetail
             {
+                EntityId = Guid.NewGuid(),
                 Status = ApplicationStatuses.Draft,
                 DateCreated = DateTime.Now,
                 CandidateId = candidateId,
@@ -67,21 +93,89 @@
                     VacancyLocationType = vacancyDetails.VacancyLocationType
                 },
                 // Populate application template with candidate's most recent information.
+                //TODO remove stubbed data
                 CandidateInformation = new ApplicationTemplate
                 {
                     EducationHistory = candidate.ApplicationTemplate.EducationHistory,
-                    Qualifications = candidate.ApplicationTemplate.Qualifications,
-                    WorkExperience = candidate.ApplicationTemplate.WorkExperience,
+                    Qualifications = GetStubbedQualifications(), //candidate.ApplicationTemplate.Qualifications,
+                    WorkExperience = GetStubbedWorkExperiences(), //candidate.ApplicationTemplate.WorkExperience,
                     AboutYou = candidate.ApplicationTemplate.AboutYou
                 },
             };
 
-            // TODO: US354: AG: Existing application tests.
-            // TODO: US354: AG: if exists and status = submitting/submitted (or any other "post submission" state) then cannot create new one
-            // TODO: US354: AG: if exists and vacancy has expired then return it so user can view it
-            // TODO: US354: AG: if exists and status = draft then return it so user can continue with the application form
+            _applicationWriteRepository.Save(applicationDetail);
 
             return applicationDetail;
+        }
+
+        private List<Qualification> GetStubbedQualifications()
+        {
+            return new List<Qualification>
+            {
+                new Qualification
+                {
+                    QualificationType = "GCSE",
+                    Subject = "Maths",
+                    Grade = "A",
+                    Year = 2000,
+                    IsPredicted = false
+                },
+                new Qualification
+                {
+                    QualificationType = "GCSE",
+                    Subject = "English",
+                    Grade = "A",
+                    Year = 2000,
+                    IsPredicted = false
+                },
+                new Qualification
+                {
+                    QualificationType = "GCSE",
+                    Subject = "Physics",
+                    Grade = "A",
+                    Year = 2000,
+                    IsPredicted = false
+                },
+                new Qualification
+                {
+                    QualificationType = "GCSE",
+                    Subject = "Chemistry",
+                    Grade = "A",
+                    Year = 2000,
+                    IsPredicted = false
+                },
+                new Qualification
+                {
+                    QualificationType = "GCSE",
+                    Subject = "Music",
+                    Grade = "A",
+                    Year = 2000,
+                    IsPredicted = false
+                }
+            };
+        }
+
+        private List<WorkExperience> GetStubbedWorkExperiences()
+        {
+            return new List<WorkExperience>
+            {
+                new WorkExperience
+                {
+                    Employer = "Some employer",
+                    JobTitle = "Beer Tester",
+                    Description = "Tested beer at the brewery",
+                    FromYear = 2000,
+                    ToYear = 2001
+                },
+                new WorkExperience
+                {
+                    Employer = "Another employer",
+                    JobTitle = "Barman",
+                    Description = "Served drinks and swept up behind the bar",
+                    FromYear = 2002,
+                    ToYear = 2002
+                }
+            };
         }
 
         private Candidate GetCandidate(Guid candidateId)

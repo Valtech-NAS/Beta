@@ -1,10 +1,11 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Locations;
-
-namespace SFA.Apprenticeships.Infrastructure.VacancySearch.IntegrationTests
+﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch.IntegrationTests
 {
-    using NUnit.Framework;
+    using Application.Interfaces.Vacancies;
     using Domain.Entities.Locations;
     using Elastic.Common.IoC;
+    using FluentAssertions;
+    using IoC;
+    using NUnit.Framework;
     using StructureMap;
 
     public class VacancySearchProviderTests
@@ -14,6 +15,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancySearch.IntegrationTests
         {
             ObjectFactory.Initialize(x =>
             {
+                x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
             });
         }
@@ -22,18 +24,21 @@ namespace SFA.Apprenticeships.Infrastructure.VacancySearch.IntegrationTests
         [Test]
         public void ShouldReturnPopulatedVacancySummaries()
         {
-            var vsp = ObjectFactory.GetInstance<VacancySearchProvider>();
-            var location = new Location()
+            var vsp = ObjectFactory.GetInstance<IVacancySearchProvider>();
+            var location = new Location
             {
                 Name = "SFA",
-                GeoPoint = new GeoPoint()
+                GeoPoint = new GeoPoint
                 {
-                    Latitude = 52.4009991288043,
-                    Longitude = -1.50812239495425
+                    Latitude = 51.7715114421813,
+                    Longitude = -0.453494192734934
                 }
             };
 
-            //var vacs = vsp.FindVacancies(location, 10);
+            //Stubbed to get CI Green
+            // See TODO above
+            var vacs = vsp.FindVacancies("Chef",location, 1, 5, 30, VacancySortType.Distance);
+            vacs.Should().NotBeNull();
         }
 
 
