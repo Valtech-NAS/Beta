@@ -2,6 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
+    using Domain.Interfaces.Messaging;
     using NLog;
     using Application.VacancyEtl;
     using Application.VacancyEtl.Entities;

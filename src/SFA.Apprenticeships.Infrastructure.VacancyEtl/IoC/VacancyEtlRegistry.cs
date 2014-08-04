@@ -4,6 +4,7 @@
     using Application.VacancyEtl.Entities;
     using Domain.Interfaces.Mapping;
     using Consumers;
+    using Domain.Interfaces.Messaging;
     using Messaging;
     using Mappers;
     using StructureMap.Configuration.DSL;

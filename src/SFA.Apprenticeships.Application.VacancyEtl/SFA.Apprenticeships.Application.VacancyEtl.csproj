@@ -47,7 +47,6 @@
     <Compile Include="Entities\VacancySummaryPage.cs" />
     <Compile Include="Entities\VacancySummaryPageComplete.cs" />
     <Compile Include="Entities\VacancySummaryUpdate.cs" />
-    <Compile Include="IProcessControlQueue.cs" />
     <Compile Include="IVacancyIndexDataProvider.cs" />
     <Compile Include="IVacancySummaryProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

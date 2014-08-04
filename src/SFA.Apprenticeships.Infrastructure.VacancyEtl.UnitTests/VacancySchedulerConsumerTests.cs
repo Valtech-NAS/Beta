@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
+    using Domain.Interfaces.Messaging;
     using Moq;
     using NUnit.Framework;
     using Application.VacancyEtl;
@@ -51,7 +53,7 @@
                 {
                     ClientRequestId = Guid.NewGuid(),
                     ExpectedExecutionTime = DateTime.Today,
-                    SchedulerJobId = i.ToString()
+                    SchedulerJobId = i.ToString(CultureInfo.InvariantCulture)
                 };
 
                 queue.Enqueue(storageScheduleMessage);

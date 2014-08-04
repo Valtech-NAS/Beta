@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.VacancyEtl
+﻿namespace SFA.Apprenticeships.Domain.Interfaces.Messaging
 {
     public interface IProcessControlQueue<T>
     {
@@ -6,6 +6,6 @@
 
         void DeleteMessage(string id, string popReceipt);
 
-        void AddMessage(T queueMessage); // TODO: DONTKNOW: only used in test harness
+        void AddMessage(T queueMessage);
     }
 }

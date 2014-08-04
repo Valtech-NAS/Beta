@@ -13,7 +13,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
     public class WorkerRole : RoleEntryPoint
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        //todo notimpl  private ApplicationSchedulerConsumer _applicationSchedulerConsumer;
+        private ApplicationSchedulerConsumer _applicationSchedulerConsumer;
 
         public override void Run()
         {
@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
             {
                 try
                 {
-                    /* TODO: implement work role
+                    /* TODO: implement worker role
                     var task = _applicationSchedulerConsumer.CheckScheduleQueue();
                     task.Wait();
                     */
@@ -55,7 +55,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
         {
             try
             {
-                /* TODO: implement work role
+                /* TODO: implement worker role
                 ObjectFactory.Initialize(x =>
                 {
                     x.AddRegistry<CommonRegistry>();
@@ -70,11 +70,12 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                 var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
                 subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(ApplicationSummaryConsumerAsync)), "ApplicationEtl");
                 Logger.Debug("Rabbit subscriptions setup");
+                */
 
                 _applicationSchedulerConsumer = ObjectFactory.GetInstance<ApplicationSchedulerConsumer>();
 
                 Logger.Debug("Application Etl Process setup complete");
-                */
+
                 return true;
             }
             catch (Exception ex)
