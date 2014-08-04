@@ -29,10 +29,10 @@
             // (1) call ILegacyApplicationsProvider.GetCandidateApplicationStatuses
             var applicationStatuses = _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate);
 
-            // (2) call ApplicationUpdate process with results from (1)
+            // (2) update the candidate's application with statuses from (1)
             _applicationStatusUpdater.Update(candidate, applicationStatuses);
 
-            // (3) read updated from Apps repo
+            // (3) read updated app from Apps repo
             return _applicationReadRepository.GetForCandidate(candidateId);
         }
     }
