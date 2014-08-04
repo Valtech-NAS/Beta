@@ -21,7 +21,6 @@
             });
         }
 
-        //todo: why are these commented out?
         [Test]
         public void ShouldCreateUpdateAndRemoveCandidate()
         {
@@ -32,16 +31,16 @@
 
             // act, assert
             var savedCandidate = writer.Save(candidate);
-            //Assert.AreEqual(candidate.PersonalDetails.FirstName, savedCandidate.PersonalDetails.FirstName);
+            Assert.AreEqual(candidate.RegistrationDetails.FirstName, savedCandidate.RegistrationDetails.FirstName);
 
             //// act, assert
-            //savedCandidate.PersonalDetails.FirstName = "Lois";
-            //savedCandidate = writer.Save(savedCandidate);
-            //Assert.AreEqual("Lois", savedCandidate.PersonalDetails.FirstName);
+            savedCandidate.RegistrationDetails.FirstName = "Lois";
+            savedCandidate = writer.Save(savedCandidate);
+            Assert.AreEqual("Lois", savedCandidate.RegistrationDetails.FirstName);
 
             //// act, assert
-            //writer.Delete(savedCandidate.EntityId);
-            //Assert.IsNull(reader.Get(savedCandidate.EntityId));
+            writer.Delete(savedCandidate.EntityId);
+            Assert.IsNull(reader.Get(savedCandidate.EntityId));
         }
 
         //todo: assert update of create and update timestamps for create, update, save of entity
@@ -79,7 +78,7 @@
                         Strengths = "Sense of humour",
                         Support = "Sturdy chair"
                     },
-                    EducationHistory =
+                    EducationHistory = new Education
                     {
                         FromYear = 1987, ToYear = 1997, Institution = "Some school"
                     },
