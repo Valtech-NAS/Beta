@@ -15,20 +15,26 @@
 
         public static AddressViewModel GetAddressViewModel(Address address)
         {
-            return new AddressViewModel
+            var addressViewModel = new AddressViewModel
             {
                 AddressLine1 = address.AddressLine1,
                 AddressLine2 = address.AddressLine2,
                 AddressLine3 = address.AddressLine3,
                 AddressLine4 = address.AddressLine4,
                 Postcode = address.Postcode,
-                GeoPoint = new GeoPointViewModel
+                Uprn = address.Uprn
+            };
+
+            if (address.GeoPoint != null)
+            {
+                addressViewModel.GeoPoint = new GeoPointViewModel
                 {
                     Longitude = address.GeoPoint.Longitude,
                     Latitude = address.GeoPoint.Latitude
-                },
-                Uprn = address.Uprn
-            };
+                };
+            }
+
+            return addressViewModel;
         }
 
         public static IEnumerable<QualificationsViewModel> GetQualificationsViewModels(IEnumerable<Qualification> qualifications)
