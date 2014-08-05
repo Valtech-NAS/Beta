@@ -2,6 +2,7 @@
 {
     using System;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
@@ -27,6 +28,22 @@
             Logger.Debug("Called Mongodb to get candidate with Id={0}", id);
 
             var mongoEntity = Collection.FindOneById(id);
+
+            return mongoEntity == null ? null : _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
+        }
+
+        public Candidate Get(string username, bool errorIfNotFound = true)
+        {
+            Logger.Debug("Called Mongodb to get candidate with username={0}", username);
+
+            var mongoEntity = Collection.FindOne(Query<MongoCandidate>.EQ(o => o.RegistrationDetails.EmailAddress, username));
+
+            if (mongoEntity == null && errorIfNotFound)
+            {
+                Logger.Debug("Unknown candidate with EmailAddress={0}", username);
+
+                throw new CustomException("Unknown candidate", ErrorCodes.UnknownCandidateError); 
+            }
 
             return mongoEntity == null ? null : _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
         }

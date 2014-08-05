@@ -2,13 +2,13 @@
 {
     using System;
     using System.Linq;
-    using FluentAssertions;
-    using NUnit.Framework;
     using Application.VacancyEtl;
     using Configuration;
-    using VacancySummaryProxy;
     using Domain.Entities.Vacancies;
+    using FluentAssertions;
+    using NUnit.Framework;
     using StructureMap;
+    using VacancySummaryProxy;
     using Wcf;
 
     [TestFixture]

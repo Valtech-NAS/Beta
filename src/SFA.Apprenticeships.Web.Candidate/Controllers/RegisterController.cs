@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -10,7 +9,6 @@
     using Constants.ViewModels;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Users;
     using FluentValidation.Mvc;
     using FluentValidation.Results;
     using NLog;
@@ -21,12 +19,12 @@
     public class RegisterController : SfaControllerBase
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
 
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
         private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
-        private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
 
         public RegisterController(
             ISessionStateProvider session,
@@ -103,11 +101,13 @@
         {
             model.IsActivated = _candidateServiceProvider.Activate(model, User.Identity.Name);
 
-            ValidationResult activatedResult = _activationViewModelServerValidator.Validate(model);
+            var activatedResult = _activationViewModelServerValidator.Validate(model);
 
             if (activatedResult.IsValid)
             {
-                return SetAuthenticationCookieAndRedirectToAction();
+                var username = !string.IsNullOrEmpty(User.Identity.Name) ? User.Identity.Name : model.EmailAddress;
+                var candidate = _candidateServiceProvider.GetCandidate(username);
+                return SetAuthenticationCookieAndRedirectToAction(candidate);
             }
 
             ModelState.Clear();
@@ -198,11 +198,12 @@
                 }
             }
 
-            ValidationResult validationResult = _passwordResetViewModelServerValidator.Validate(model);
+            var validationResult = _passwordResetViewModelServerValidator.Validate(model);
 
             if (validationResult.IsValid)
             {
-                return SetAuthenticationCookieAndRedirectToAction();
+                var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
+                return SetAuthenticationCookieAndRedirectToAction(candidate);
             }
 
             ModelState.Clear();
@@ -238,11 +239,12 @@
         }
 
         #region Helpers
+
         [AllowCrossSiteJson]
         public JsonResult CheckUsername(string username)
         {
-            bool usernameIsAvailable = IsUsernameAvailable(username);
-            return Json(new { usernameIsAvailable }, JsonRequestBehavior.AllowGet);
+            var usernameIsAvailable = IsUsernameAvailable(username);
+            return Json(new {usernameIsAvailable}, JsonRequestBehavior.AllowGet);
         }
 
         private bool IsUsernameAvailable(string username)
@@ -250,22 +252,10 @@
             return _candidateServiceProvider.IsUsernameAvailable(username.Trim());
         }
 
-        private void SetCookies(Candidate candidate)
-        {
-            RegistrationDetails registrationDetails = candidate.RegistrationDetails;
-            string fullName = registrationDetails.FirstName + " " + registrationDetails.LastName;
-            UserServiceProvider.SetAuthenticationCookie(
-                HttpContext, candidate.EntityId.ToString(), UserRoleNames.Unactivated);
-
-            UserServiceProvider.SetUserContextCookie(
-                HttpContext, registrationDetails.EmailAddress, fullName);
-
-        }
-
-        private ActionResult SetAuthenticationCookieAndRedirectToAction()
+        private ActionResult SetAuthenticationCookieAndRedirectToAction(Candidate candidate)
         {
             UserServiceProvider.SetAuthenticationCookie(
-                HttpContext, User.Identity.Name, UserRoleNames.Activated);
+                HttpContext, candidate.EntityId.ToString(), UserRoleNames.Activated);
 
             // Redirect to last viewed vacancy (if any).
             var lastViewedVacancyId = _candidateServiceProvider.LastViewedVacancyId;
@@ -274,7 +264,7 @@
             {
                 _candidateServiceProvider.LastViewedVacancyId = null;
 
-                return RedirectToAction("Details", "VacancySearch", new { id = lastViewedVacancyId.Value });
+                return RedirectToAction("Details", "VacancySearch", new {id = lastViewedVacancyId.Value});
             }
 
             // Redirect to return URL (if any).

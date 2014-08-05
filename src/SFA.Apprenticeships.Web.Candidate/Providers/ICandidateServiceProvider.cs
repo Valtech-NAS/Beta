@@ -3,6 +3,7 @@
     using System;
     using Domain.Entities.Applications;
     using Domain.Entities.Users;
+    using Domain.Entities.Candidates;
     using ViewModels.Login;
     using ViewModels.Register;
 
@@ -14,11 +15,12 @@
         bool IsUsernameAvailable(string username);
         UserStatuses GetUserStatus(string username);
         ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId);
-        Domain.Entities.Candidates.Candidate Authenticate(LoginViewModel model);
+        Candidate Authenticate(LoginViewModel model);
         void RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model);
         void RequestAccountUnlockCode(AccountUnlockViewModel model);
         bool VerifyPasswordReset(PasswordResetViewModel model);
         bool VerifyAccountUnlockCode(AccountUnlockViewModel model);
         bool ResendActivationCode(string username);
+        Candidate GetCandidate(string username);
     }
 }

@@ -183,6 +183,11 @@
             }
         }
 
+        public Candidate GetCandidate(string username)
+        {
+           return _candidateService.GetCandidate(username);
+        }
+
         /// <summary>
         /// Gets or sets the candidate's last viewed vacancy ID. Currently this value is written to session.
         ///  </summary>

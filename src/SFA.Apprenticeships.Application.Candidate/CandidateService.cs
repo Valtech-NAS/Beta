@@ -5,6 +5,7 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
     using Strategies;
@@ -82,7 +83,16 @@
 
         public Candidate GetCandidate(Guid id)
         {
+            Condition.Requires(id);
+
             return _candidateReadRepository.Get(id);
+        }
+
+        public Candidate GetCandidate(string username)
+        {
+            Condition.Requires(username).IsNotNullOrEmpty();
+
+            return _candidateReadRepository.Get(username);
         }
 
         public Candidate SaveCandidate(Candidate candidate)
@@ -101,6 +111,8 @@
 
         public ApplicationDetail GetApplication(Guid candidateId, int vacancyId)
         {
+            Condition.Requires(candidateId);
+
             var applicationDetail = _applicationReadRepository.GetForCandidate(
                 candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
 
