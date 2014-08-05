@@ -45,7 +45,7 @@
         [Given("I registered an account but did not activate it")]
         public void GivenIRegisteredAnAccountButDidNotActivateIt()
         {
-            var candidate = new CandidateBuilder(Id, _emailAddress)
+            var candidate = new CandidateBuilder(_emailAddress)
                 .Build();
 
             var user = new UserBuilder(Id, _emailAddress, UserStatuses.PendingActivation)
@@ -59,7 +59,7 @@
         [Given("I registered an account and activated it")]
         public void GivenIRegisteredAnAccountAndActivatedIt()
         {
-            var candidate = new CandidateBuilder(Id, _emailAddress)
+            var candidate = new CandidateBuilder(_emailAddress)
                 .Build();
 
             var user = new UserBuilder(Id, _emailAddress)
@@ -71,7 +71,7 @@
         [Given("I made two unsuccessful login attempts")]
         public void GivenIMadeTwoUnsuccessfulLoginAttempts()
         {
-            var candidate = new CandidateBuilder(Id, _emailAddress)
+            var candidate = new CandidateBuilder(_emailAddress)
                 .Build();
 
             var user = new UserBuilder(Id, _emailAddress)
@@ -84,7 +84,7 @@
         [Given("I locked my account")]
         public void GivenILockedMyAccount()
         {
-            var candidate = new CandidateBuilder(Id, _emailAddress)
+            var candidate = new CandidateBuilder(_emailAddress)
                 .Build();
 
             var user = new UserBuilder(Id, _emailAddress, UserStatuses.Locked)
@@ -99,7 +99,7 @@
         [Given("I locked my account and my account unlock code has expired")]
         public void GivenILockedMyAccountAndMyAccountUnlockCodeHasExpired()
         {
-            var candidate = new CandidateBuilder(Id, _emailAddress)
+            var candidate = new CandidateBuilder(_emailAddress)
                 .Build();
 
             var user = new UserBuilder(Id, _emailAddress, UserStatuses.Locked)
