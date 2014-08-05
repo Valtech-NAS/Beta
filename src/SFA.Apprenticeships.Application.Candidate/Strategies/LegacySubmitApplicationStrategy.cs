@@ -7,9 +7,11 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
+    using NLog;
 
     public class LegacySubmitApplicationStrategy : ISubmitApplicationStrategy
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly IApplicationWriteRepository _applicationWriteRepository;
         private readonly IMessageBus _messageBus;
@@ -33,6 +35,7 @@
 
             if (applicationDetail == null)
             {
+                Logger.Debug("Application detail was not found for {0}", applicationId);
                 throw new CustomException("Application detail was not found", ErrorCodes.ApplicationNotFoundError);
             }
 
@@ -61,6 +64,7 @@
             }
             catch (Exception ex)
             {
+                Logger.Debug("SubmitApplicationRequest could not be queued for ApplicationId={0}", applicationId);
                 throw new CustomException("SubmitApplicationRequest could not be queued", ex,
                     ErrorCodes.ApplicationQueuingError);
             }

@@ -95,6 +95,7 @@
             }
             catch (Exception)
             {
+                TempData["SubmissionFailed"] = true;
                 return RedirectToAction("Preview", new { applicationId });
             }
         }
