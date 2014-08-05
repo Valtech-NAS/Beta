@@ -24,8 +24,7 @@
                 <legend class="heading-large">Sign in</legend>
                 <p>
                     Sign in or
-                    @Html.ActionLink("create an account", controllerName: "Register", actionName: "Index")
-                    to get started.
+                    @Html.ActionLink("create an account", controllerName: "Register", actionName: "Index").
                 </p>
 
                 @Html.FormTextFor(
@@ -51,10 +50,9 @@
     <div class="grid grid-1-2">
         <h2 class="heading-large">Create an account</h2>
         <p class="text">
-            If you create an account with GOV.UK you can save and track your applications,
-            set up vacancy alerts and manage your profile.
+            If you create an account you can save and track your applications and manage your account settings.
         </p>
 
-        @Html.ActionLink("Create account", controllerName: "Register", actionName: "Index")
+        @Html.ActionLink("Create an account", controllerName: "Register", actionName: "Index")
     </div>
 </div>
