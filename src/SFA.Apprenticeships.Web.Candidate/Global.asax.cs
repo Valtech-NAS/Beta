@@ -1,21 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate
 {
     using System;
-    using System.Security.Principal;
-    using System.Web.Http;
     using System.Web;
-    using System.Web.Optimization;
-    using System.Web.Security;
-    using Application.Interfaces.Candidates;
-    using Application.Interfaces.Users;
-    using Common.Validations;
-    using Domain.Entities.Users;
-    using FluentValidation.Mvc;
-    using Common.Framework;
+    using System.Web.Http;
     using System.Web.Mvc;
+    using System.Web.Optimization;
     using System.Web.Routing;
+    using Common.Framework;
+    using Common.Validations;
+    using Controllers;
+    using FluentValidation.Mvc;
     using FluentValidation.Validators;
-    using StructureMap;
+    using Infrastructure.RabbitMq.IoC;
 
     public class MvcApplication : HttpApplication
     {
@@ -37,13 +33,21 @@
             FluentValidationModelValidatorProvider.Configure(provider =>
             {
                 provider.AddImplicitRequiredValidator = false;
-                provider.Add(typeof(EqualValidator), (metadata, context, description, validator) => new EqualToValueFluentValidationPropertyValidator(metadata, context, description, validator));
+                provider.Add(typeof (EqualValidator),
+                    (metadata, context, description, validator) =>
+                        new EqualToValueFluentValidationPropertyValidator(metadata, context, description, validator));
             });
         }
 
         protected void Application_Error(object sender, EventArgs e)
         {
             //Server.HandleError<ErrorController>(((MvcApplication)sender).Context);
+        }
+
+        public override void Dispose()
+        {
+            RabbitMqRegistry.DisposeResources();
+            base.Dispose();
         }
     }
 }

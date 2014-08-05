@@ -4,6 +4,7 @@
     using Application.Interfaces.Messaging;
     using Common.IoC;
     using Domain.Interfaces.Messaging;
+    using EasyNetQ;
     using IoC;
     using NUnit.Framework;
     using StructureMap;
@@ -23,6 +24,14 @@
             });
 
             _bus = ObjectFactory.GetInstance<IMessageBus>();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            // This is needed or the build hangs
+            var busToTidy = ObjectFactory.GetInstance<IBus>();
+            busToTidy.Advanced.Dispose();
         }
 
         [Test]
