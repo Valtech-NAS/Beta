@@ -25,16 +25,12 @@
 
     @Html.DisplayFor(m => m.Candidate)
     @Html.EditorFor(m => m.Candidate.Education)
-    @*@Html.EditorFor(m => m.Candidate.Qualifications)*@
 
     <fieldset id="applyQualifications" class="fieldset-with-border">
         <legend class="heading-large">Qualifications</legend>
         <div class="qualifications-wrapper">
             <div class="qualification-table" id="gcse">
-                <div class="hgroup-small">
-                    <h3 class="heading-small heading-qualType">GCSE</h3>
-                    <span class="subtitle subtitle-qualWhere">St Bernards School</span>
-                </div>
+               
                 <table class="grid-3-4">
                     <colgroup>
                         <col class="t40">

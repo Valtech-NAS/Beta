@@ -24,7 +24,7 @@
         Qualifications
         @if (ViewBag.VacancyId != null)
         {
-            <a class="icon-with-text" href="/application/apply/@(ViewBag.VacancyId)#applyQualifications">
+            <a class="icon-with-text" href="@Url.Action("Apply", "Application", new {id = ViewBag.VacancyId})#applyQualifications">
                 <i class="the-icon fa fa-pencil"></i>
                 <span class="the-text">Amend details</span>
             </a>
@@ -81,10 +81,11 @@
         Work experience
         @if (ViewBag.VacancyId != null)
         {
-            <a class="icon-with-text" href="/application/apply/@(ViewBag.VacancyId)#applyWorkExperience">
+            <a class="icon-with-text" href="@Url.Action("Apply", "Application", new {id = ViewBag.VacancyId})#applyWorkExperience">
                 <i class="the-icon fa fa-pencil"></i>
                 <span class="the-text">Amend details</span>
             </a>
+          
         }
     </legend>
     @foreach (var experience in Model.Candidate.WorkExperience)
@@ -172,5 +173,5 @@
 @Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers)
 
 <div class="form-group">
-    @Html.ActionLink("Submit application", "SubmitApplication", new { @applicationId = Model.ApplicationViewId }, new { @class = "button" })
+    @Html.ActionLink("Submit application", "SubmitApplication", new {@applicationId = Model.ApplicationViewId}, new {@class = "button"})
 </div>
