@@ -22,5 +22,6 @@
         bool VerifyAccountUnlockCode(AccountUnlockViewModel model);
         bool ResendActivationCode(string username);
         Candidate GetCandidate(string username);
+        Candidate GetCandidate(Guid candidateId);
     }
 }

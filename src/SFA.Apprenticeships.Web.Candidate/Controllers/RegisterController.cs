@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -105,8 +106,20 @@
 
             if (activatedResult.IsValid)
             {
-                var username = !string.IsNullOrEmpty(User.Identity.Name) ? User.Identity.Name : model.EmailAddress;
-                var candidate = _candidateServiceProvider.GetCandidate(username);
+                // TODO: AG: need to review logic here, why email address vs candidateId?
+                Candidate candidate;
+
+                if (string.IsNullOrEmpty(User.Identity.Name))
+                {    
+                    candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
+                }
+                else
+                {
+                    var candidateId = new Guid(User.Identity.Name);
+
+                    candidate = _candidateServiceProvider.GetCandidate(candidateId);
+                }
+
                 return SetAuthenticationCookieAndRedirectToAction(candidate);
             }
 
@@ -244,7 +257,7 @@
         public JsonResult CheckUsername(string username)
         {
             var usernameIsAvailable = IsUsernameAvailable(username);
-            return Json(new {usernameIsAvailable}, JsonRequestBehavior.AllowGet);
+            return Json(new { usernameIsAvailable }, JsonRequestBehavior.AllowGet);
         }
 
         private bool IsUsernameAvailable(string username)
@@ -264,7 +277,7 @@
             {
                 _candidateServiceProvider.LastViewedVacancyId = null;
 
-                return RedirectToAction("Details", "VacancySearch", new {id = lastViewedVacancyId.Value});
+                return RedirectToAction("Details", "VacancySearch", new { id = lastViewedVacancyId.Value });
             }
 
             // Redirect to return URL (if any).
