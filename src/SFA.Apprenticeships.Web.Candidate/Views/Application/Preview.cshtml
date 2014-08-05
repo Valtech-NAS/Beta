@@ -31,7 +31,11 @@
         }
     </legend>
     <div class="qualifications-wrapper">
-        <div class="qualification-table" id="gcse">           
+
+        <div class="qualification-table">
+            <div class="hgroup-small">
+                <h3 class="heading-small heading-qualType">@Model.Candidate.Qualifications.First().QualificationType</h3>
+            </div>
             <table class="grid-3-4">
                 <colgroup>
                     <col class="t40">
@@ -64,17 +68,19 @@
                             </td>
                             <td class="td-qualcell">
                                 <input class="form-control qual-input-edit form-prepopped" type="text" value="@qualification.Year" readonly>
-                            </td>                          
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
+
+
     </div>
 
 </fieldset>
 
-<fieldset class="fieldset-with-border">    
+<fieldset class="fieldset-with-border">
     <legend class="heading-large">
         Work experience
         @if (ViewBag.VacancyId != null)
@@ -83,14 +89,14 @@
                 <i class="the-icon fa fa-pencil"></i>
                 <span class="the-text">Amend details</span>
             </a>
-          
+
         }
     </legend>
     @foreach (var experience in Model.Candidate.WorkExperience)
     {
         <div class="work-history-wrapper grid-3-4">
             <div class="grid-wrapper work-history-item">
-               
+
                 <div class="grid grid-1-2">
                     <table class="table-no-btm-border table-compound">
                         <colgroup>
@@ -107,12 +113,10 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="text" class="form-prepopped cell-span editable-work"
-                                           value="@experience.Employer">
                                     <span class="cell-span editable-work">@experience.Employer</span>
-                                    <span class="form-prepopped cell-span work-hyphen">-</span>                                   
+                                    <span class="form-prepopped cell-span work-hyphen">-</span>
                                     <span class="form-prepopped cell-span editable-work">@experience.JobTitle</span>
-                                    <div></div>                                 
+                                    <div></div>
                                     <span class="form-prepopped cell-span editable-work">@experience.Description</span>
                                 </td>
                             </tr>
@@ -142,10 +146,10 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>                                
+                                <td>
                                     <span class="form-prepopped cell-span editable-work">@experience.FromYear</span>
                                 </td>
-                                <td>                                   
+                                <td>
                                     <span class="form-prepopped cell-span editable-work">@experience.ToYear</span>
                                 </td>
                                 <td></td>
@@ -166,5 +170,5 @@
 @Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers)
 
 <div class="form-group">
-    @Html.ActionLink("Submit application", "SubmitApplication", new {@applicationId = Model.ApplicationViewId}, new {@class = "button"})
+    @Html.ActionLink("Submit application", "SubmitApplication", new { @applicationId = Model.ApplicationViewId }, new { @class = "button" })
 </div>
