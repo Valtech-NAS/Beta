@@ -11,7 +11,9 @@
 
 @if (loginMessage != null)
 {
-    <p id="LoginMessageText">@loginMessage</p>
+    <div class="panel-success">
+        <p id="LoginMessageText" class="text"><i class="fa fa-check"></i>@loginMessage</p>
+    </div>
 }
 
 <div class="grid-wrapper">
@@ -36,7 +38,7 @@
                     @Html.LabelFor(m => m.Password, new { @class = "form-label" })
                     @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-3-4" })
                     @Html.ValidationMessageFor(m => m.Password, null, new { @class = "hidden" })
-                   
+
                     <a class="form-hint" href='@Url.Action("ForgottenPassword", "Register")'>Forgotten password?</a>
                 </div>
 

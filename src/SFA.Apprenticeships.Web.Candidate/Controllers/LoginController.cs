@@ -120,8 +120,7 @@
 
             if (verified)
             {
-                TempData["LoginMessage"] =
-                    AccountUnlockViewModelMessages.AccountUnlockCodeMessages.AccountUnlockedText;
+                TempData["LoginMessage"] = AccountUnlockViewModelMessages.AccountUnlockCodeMessages.AccountUnlockedText;
 
                 return RedirectToAction("Index");
             }
