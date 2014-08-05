@@ -126,6 +126,11 @@
             DeleteAuthenticationCookie(httpContext);
         }
 
+        public void DeleteCookie(HttpContextBase httpContext, string cookieName)
+        {
+            httpContext.Response.Cookies.Add(CreateExpiredCookie(cookieName));
+        }     
+
         public void SetEntityContextCookie(HttpContextBase httpContext, Guid entityId, Guid viewModelId, string contextName)
         {
             var cookie = new HttpCookie(contextName);

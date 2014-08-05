@@ -226,6 +226,9 @@
         public ActionResult SignOut()
         {
             UserServiceProvider.DeleteAllCookies(HttpContext);
+            UserServiceProvider.DeleteCookie(HttpContext, "Application.Context");
+            UserServiceProvider.DeleteCookie(HttpContext, "ASP.NET_SessionId");
+            Session.Clear();          
             FormsAuthentication.SignOut();
             return RedirectToAction("Index");
         }
