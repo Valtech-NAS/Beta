@@ -16,17 +16,6 @@ Examples:
 	|                 |
 	| admin           |
 
-Scenario Outline: Search for apprenticeships - clear my criteria
-	Given I am a candidate with preferences
-	| Location | Distance |
-	| Warwick  | 10 miles |
-	When I clear my search criteria
-	Then I expect to see the search page
-	And all search fields are reset
-Examples: 
-	| search_keywords          |
-	| admin and other keywords |
-
 Scenario: Search for apprenticeships - unspecified location
 	Given I am a candidate with preferences
 	| Location | Distance |
