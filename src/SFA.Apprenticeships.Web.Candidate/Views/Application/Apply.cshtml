@@ -9,10 +9,10 @@
 <section class="section-border">
     <div class="text">
         <div class="hgroup-medium">
-            <h3 class="heading-medium">@Model.VacancyDetail.Title</h3>
-            <span class="subtitle">@Model.VacancyDetail.EmployerName</span>
+            <h3 class="heading-medium" id="vacancy-title">@Model.VacancyDetail.Title</h3>
+            <span class="subtitle" id="vacancy-employer">@Model.VacancyDetail.EmployerName</span>
         </div>
-        <p>@Model.VacancyDetail.Description</p>
+        <p id="vacancy-summary">@Model.VacancyDetail.Description</p>
         <p>
             <a href="@Url.Action("Details", "VacancySearch", new { @id = Model.VacancyDetail.Id })">Back to vacancy</a>
         </p>
@@ -176,7 +176,7 @@
         <legend class="heading-large">Before you apply</legend>
         <p>Check you've completed the form properly</p>
         <div class="form-group">
-            <button class="button">Preview application</button>
+            <button id="apply-button" class="button">Preview application</button>
             <p>
                 <a href="@Url.Action("Details", "VacancySearch", new { @id = Model.VacancyDetail.Id })" class="button-link">Back</a>
             </p>

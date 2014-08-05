@@ -40,7 +40,6 @@
             _tokenManager = tokenManager;
             _emailAddress = GenerateEmailAddress();
             _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
-
         }
 
         [Given("I registered an account but did not activate it")]
@@ -56,6 +55,7 @@
             SetTokens(candidate, user);
         }
 
+        //todo: create a mechanism where we won't need to login - just get the webdriver and set the auth cookie directly or similar
         [Given("I registered an account and activated it")]
         public void GivenIRegisteredAnAccountAndActivatedIt()
         {
@@ -151,7 +151,7 @@
         {
             const string format = "valtechnas+{0}@gmail.com";
 
-            return string.Format(format, Random.Next(0, 100000));
+            return string.Format(format, DateTime.Now.Ticks);
         }
 
         #endregion
