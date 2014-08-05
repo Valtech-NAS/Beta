@@ -30,11 +30,11 @@
             </a>
         }
     </legend>
-    <div class="qualifications-wrapper">
-
-        <div class="qualification-table">
+   
+        @foreach (var group in Model.Candidate.Qualifications.GroupBy(item => item.QualificationType))
+        {
             <div class="hgroup-small">
-                <h3 class="heading-small heading-qualType">@Model.Candidate.Qualifications.First().QualificationType</h3>
+                <h3 class="heading-small">@Html.Encode(group.Key)</h3>
             </div>
             <table class="grid-3-4">
                 <colgroup>
@@ -45,38 +45,35 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th class="th-qualSubject">
+                        <th>
                             <span class="heading-span">Subject</span>
                         </th>
-                        <th class="th-qualGrade">
+                        <th>
                             <span class="heading-span">Grade</span>
                         </th>
-                        <th class="th-qualYear">
+                        <th>
                             <span class="heading-span">Year</span>
                         </th>
                     </tr>
                 </thead>
-                <tbody class="tbody-qual">
-                    @foreach (var qualification in Model.Candidate.Qualifications)
+                <tbody>
+                    @foreach (var item in group)
                     {
-                        <tr class="tr-qualRow">
-                            <td class="td-qualcell">
-                                <input class="form-control qual-input-edit form-prepopped" type="text" value="@qualification.Subject" readonly>
+                        <tr>
+                            <td>
+                                <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Subject" readonly>
                             </td>
-                            <td class="td-qualcell">
-                                <input class="form-control qual-input-edit form-prepopped" type="text" value="@qualification.Grade" readonly>
+                            <td>
+                                <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Grade" readonly>
                             </td>
-                            <td class="td-qualcell">
-                                <input class="form-control qual-input-edit form-prepopped" type="text" value="@qualification.Year" readonly>
+                            <td>
+                                <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Year" readonly>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
-        </div>
-
-
-    </div>
+        }
 
 </fieldset>
 
@@ -89,18 +86,17 @@
                 <i class="the-icon fa fa-pencil"></i>
                 <span class="the-text">Amend details</span>
             </a>
-
         }
     </legend>
     @foreach (var experience in Model.Candidate.WorkExperience)
     {
-        <div class="work-history-wrapper grid-3-4">
+        <div class="grid-3-4">
             <div class="grid-wrapper work-history-item">
 
                 <div class="grid grid-1-2">
                     <table class="table-no-btm-border table-compound">
                         <colgroup>
-                            <col class="t100">
+                            <col>
                             <col>
                         </colgroup>
                         <thead>
@@ -113,11 +109,11 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <span class="cell-span editable-work">@experience.Employer</span>
+                                    <span class="cell-span">@experience.Employer</span>
                                     <span class="form-prepopped cell-span work-hyphen">-</span>
-                                    <span class="form-prepopped cell-span editable-work">@experience.JobTitle</span>
+                                    <span class="form-prepopped cell-span">@experience.JobTitle</span>
                                     <div></div>
-                                    <span class="form-prepopped cell-span editable-work">@experience.Description</span>
+                                    <span class="form-prepopped cell-span">@experience.Description</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -147,10 +143,10 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <span class="form-prepopped cell-span editable-work">@experience.FromYear</span>
+                                    <span class="form-prepopped cell-span">@experience.FromYear</span>
                                 </td>
                                 <td>
-                                    <span class="form-prepopped cell-span editable-work">@experience.ToYear</span>
+                                    <span class="form-prepopped cell-span">@experience.ToYear</span>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -170,5 +166,5 @@
 @Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers)
 
 <div class="form-group">
-    @Html.ActionLink("Submit application", "SubmitApplication", new { @applicationId = Model.ApplicationViewId }, new { @class = "button" })
+    @Html.ActionLink("Submit application", "SubmitApplication", new {@applicationId = Model.ApplicationViewId}, new {@class = "button"})
 </div>
