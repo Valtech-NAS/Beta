@@ -1,4 +1,5 @@
 ﻿@US447
+@Ignore
 Feature: Vacancy Details pre and post sign-in behaviour
 	As a candidate I want to be taken to correct place and
 	be notified depending on various scenarios to be defined

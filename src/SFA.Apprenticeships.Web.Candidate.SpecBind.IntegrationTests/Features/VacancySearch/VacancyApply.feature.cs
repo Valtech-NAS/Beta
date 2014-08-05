@@ -20,6 +20,7 @@ namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features.V
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("Vacancy Details pre and post sign-in behaviour")]
+    [NUnit.Framework.IgnoreAttribute()]
     [NUnit.Framework.CategoryAttribute("US447")]
     public partial class VacancyDetailsPreAndPostSign_InBehaviourFeature
     {
@@ -33,9 +34,10 @@ namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features.V
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Vacancy Details pre and post sign-in behaviour", "As a candidate I want to be taken to correct place and\nbe notified depending on v" +
-                    "arious scenarios to be defined", ProgrammingLanguage.CSharp, new string[] {
-                        "US447"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Vacancy Details pre and post sign-in behaviour", "As a candidate I want to be taken to correct place and\r\nbe notified depending on " +
+                    "various scenarios to be defined", ProgrammingLanguage.CSharp, new string[] {
+                        "US447",
+                        "Ignore"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -72,13 +74,13 @@ namespace SFA.Apprenticeships.Web.Candidate.SpecBind.IntegrationTests.Features.V
         public virtual void CandidateIsNotSigned_In()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Candidate is not signed-in", ((string[])(null)));
-#line 6
-this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Given("I am signed out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 8
- testRunner.And("I am on the VacancyDetailsPage page for a vacancy that is live", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("I am signed out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
+ testRunner.And("I am on the VacancyDetailsPage page for a vacancy that is live", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 10
  testRunner.Then("I must sign-in to apply for the vacancy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
