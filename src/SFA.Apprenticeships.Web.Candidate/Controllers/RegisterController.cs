@@ -82,6 +82,7 @@
 
         [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult Activation(string returnUrl)
         {
             var model = new ActivationViewModel

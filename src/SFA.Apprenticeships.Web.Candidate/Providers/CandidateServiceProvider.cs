@@ -2,7 +2,6 @@
 {
     using System;
     using System.Globalization;
-    using Antlr.Runtime.Tree;
     using Application.Interfaces.Candidates;
     using System.Web;
     using Application.Interfaces.Users;
@@ -68,14 +67,15 @@
             try
             {
                 var candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
-                
+
                 _candidateService.Register(candidate, model.Password);
                 SetRegisteredCookies(candidate);
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                LogError("Candidate registration failed for {0}", model.EmailAddress, ex);
                 return false;
             }
         }
@@ -89,8 +89,9 @@
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                LogError("Candidate activation failed for {0}", model.EmailAddress, ex);
                 return false;
             }
         }
@@ -125,6 +126,7 @@
             }
             catch (Exception ex)
             {
+                // TODO: fails silently, why not throw?
                 LogError("Send password reset code failed for {0}", model.EmailAddress, ex);
             }
         }
@@ -138,6 +140,7 @@
             catch (Exception ex)
             {
                 LogError("Send account unlock code failed for {0}", model.EmailAddress, ex);
+                // TODO: fails silently, why not throw?
             }
         }
 
@@ -151,7 +154,7 @@
             catch (CustomException ex)
             {
                 LogError("Reset forgotten password failed for {0}", model.EmailAddress, ex);
-                throw ;
+                throw;
             }
         }
 
@@ -185,7 +188,7 @@
 
         public Candidate GetCandidate(string username)
         {
-           return _candidateService.GetCandidate(username);
+            return _candidateService.GetCandidate(username);
         }
 
         public Candidate GetCandidate(Guid candidateId)
