@@ -48,11 +48,6 @@
         {
             var candidate = _candidateReadRepository.Get(applicationDetail.CandidateId);
 
-            if (candidate == null)
-            {
-                throw new CustomException("Candidate not found", ErrorCodes.UnknownCandidateError);
-            }
-
             candidate.ApplicationTemplate = new ApplicationTemplate
             {
                 AboutYou = applicationDetail.CandidateInformation.AboutYou,

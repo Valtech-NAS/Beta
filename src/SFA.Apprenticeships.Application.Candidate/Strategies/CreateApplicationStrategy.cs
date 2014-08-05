@@ -72,7 +72,7 @@
                 throw new CustomException("Vacancy has expired can't create a new application", ErrorCodes.VacancyExpired);
             }
 
-            var candidate = GetCandidate(candidateId);
+            var candidate = _candidateReadRepository.Get(candidateId);
 
             var applicationDetail = new ApplicationDetail
             {
@@ -178,25 +178,13 @@
             };
         }
 
-        private Candidate GetCandidate(Guid candidateId)
-        {
-            var candidate = _candidateReadRepository.Get(candidateId);
-
-            if (candidate == null)
-            {
-                throw new CustomException(
-                    "Candidate not found with ID {0}.", ErrorCodes.UnknownCandidateError, candidateId);
-            }
-
-            return candidate;
-        }
-
         private VacancyDetail GetVacancyDetails(int vacancyId)
         {
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
             if (vacancyDetails == null)
             {
+                // TODO: move null check to data provider (same as User and Candidate repositories).
                 throw new CustomException(
                     "Vacancy not found with ID {0}.", ErrorCodes.VacancyNotFoundError, vacancyId);
             }

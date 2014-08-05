@@ -35,14 +35,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             user.AssertState("Cannot send unlock code if user is not locked.", UserStatuses.Locked);
 
-            // TODO: AG: possible enhancement to have _candidateReadRepository.Get() throw on not found, as per _userReadRepository.
             var candidate = _candidateReadRepository.Get(user.EntityId);
-
-            if (candidate == null)
-            {
-                // TODO: AG: do not like to silently consume issues like 'candidate not found'.
-                return;
-            }
 
             if (user.AccountUnlockCodeExpiry < DateTime.Now)
             {

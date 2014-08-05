@@ -41,11 +41,6 @@
 
             var candidate = _candidateReadRepository.Get(applicationDetail.CandidateId);
 
-            if (candidate == null)
-            {
-                throw new CustomException("Unknown candidate", ErrorCodes.UnknownCandidateError);
-            }
-
             try
             {
                 // queue application for submission to legacy

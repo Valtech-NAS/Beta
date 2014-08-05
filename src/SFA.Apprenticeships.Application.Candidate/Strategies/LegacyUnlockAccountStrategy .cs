@@ -32,15 +32,11 @@
 
             if (user == null)
             {
+                // TODO: why not just allow _userReadRepository to throw?
                 throw new CustomException("Unknown username", ErrorCodes.UnknownUserError);
             }
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
-
-            if (candidate == null)
-            {
-                throw new CustomException("Unknown Candidate", ErrorCodes.UnknownCandidateError);
-            }
 
             user.AssertState("User should be a locked state", UserStatuses.Locked);
 

@@ -36,11 +36,6 @@
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
 
-            if (candidate == null)
-            {
-                throw new CustomException("Unknown Candidate", ErrorCodes.UnknownCandidateError);
-            }
-
             if (candidate.LegacyCandidateId > 0)
             {
                 _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
