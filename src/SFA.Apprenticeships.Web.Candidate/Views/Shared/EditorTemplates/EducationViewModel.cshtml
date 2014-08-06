@@ -2,7 +2,7 @@
 
 <fieldset id="applyEducation" class="fieldset-with-border">
     <legend class="heading-large">Education</legend>
-    @Html.FormTextFor(m => m.NameOfMostRecentSchoolCollege, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { autocapitalize = "words" })
+    @Html.FormTextFor(m => m.NameOfMostRecentSchoolCollege, controlHtmlAttributes: new { autocapitalize = "words" })
     <div class="form-group inline-fixed">
         <p class="form-label">Years attended</p>
         @Html.FormTextFor(m => m.FromYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class="form-group-compound" })
