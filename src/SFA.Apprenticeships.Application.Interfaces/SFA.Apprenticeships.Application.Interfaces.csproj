@@ -62,8 +62,6 @@
     <Compile Include="Search\SearchResults.cs" />
     <Compile Include="Users\IAuthenticationService.cs" />
     <Compile Include="Vacancies\VacancySortType.cs" />
-    <Compile Include="Vacancies\IVacancyDataProvider.cs" />
-    <Compile Include="Vacancies\IVacancySearchProvider.cs" />
     <Compile Include="Vacancies\IVacancyDataService.cs" />
     <Compile Include="Vacancies\IVacancySearchService.cs" />
     <Compile Include="Vacancies\VacancySummaryResponse.cs" />

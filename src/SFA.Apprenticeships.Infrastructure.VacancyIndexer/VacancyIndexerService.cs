@@ -1,11 +1,11 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer.Services
+﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer
 {
     using System;
-    using Nest;
     using Application.VacancyEtl.Entities;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
+    using Nest;
     using NLog;
 
     public class VacancyIndexerService : IVacancyIndexerService

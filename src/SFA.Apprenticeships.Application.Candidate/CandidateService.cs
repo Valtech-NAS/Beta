@@ -14,7 +14,6 @@
     {
         private readonly IActivateCandidateStrategy _activateCandidateStrategy;
         private readonly IApplicationReadRepository _applicationReadRepository;
-        private readonly IApplicationWriteRepository _applicationWriteRepository;
         private readonly IAuthenticateCandidateStrategy _authenticateCandidateStrategy;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
@@ -26,7 +25,7 @@
         private readonly ISubmitApplicationStrategy _submitApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
 
-        public CandidateService(IApplicationWriteRepository applicationWriteRepository,
+        public CandidateService(
             ICandidateReadRepository candidateReadRepository,
             ICandidateWriteRepository candidateWriteRepository,
             IActivateCandidateStrategy activateCandidateStrategy,
@@ -39,7 +38,6 @@
             IUnlockAccountStrategy unlockAccountStrategy, IApplicationReadRepository applicationReadRepository,
             ISaveApplicationStrategy saveApplicationStrategy)
         {
-            _applicationWriteRepository = applicationWriteRepository;
             _candidateReadRepository = candidateReadRepository;
             _candidateWriteRepository = candidateWriteRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -101,6 +99,7 @@
 
         public ApplicationDetail GetApplication(Guid candidateId, int vacancyId)
         {
+            //todo: may remove in sprint 16 in favour of .GetApplications() as this will also incorporate the vacancy status
             var applicationDetail = _applicationReadRepository.GetForCandidate(
                 candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
 

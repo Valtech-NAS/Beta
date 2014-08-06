@@ -9,7 +9,7 @@
     using Application.VacancyEtl;
     using Application.VacancyEtl.Entities;
     using Consumers;
-    using VacancyIndexer.Services;
+    using VacancyIndexer;
 
     [TestFixture]
     public class VacancySchedulerConsumerTests

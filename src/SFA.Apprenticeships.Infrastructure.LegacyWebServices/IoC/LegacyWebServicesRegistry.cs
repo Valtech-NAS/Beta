@@ -4,6 +4,7 @@
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
     using Application.ReferenceData;
+    using Application.Vacancy;
     using Application.VacancyEtl;
     using Configuration;
     using CreateApplication;

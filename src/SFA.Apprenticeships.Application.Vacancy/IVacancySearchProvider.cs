@@ -1,8 +1,9 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
+﻿namespace SFA.Apprenticeships.Application.Vacancy
 {
     using System;
-    using Search;
     using Domain.Entities.Locations;
+    using Interfaces.Search;
+    using Interfaces.Vacancies;
 
     public interface IVacancySearchProvider
     {

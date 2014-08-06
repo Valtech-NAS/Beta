@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
+﻿namespace SFA.Apprenticeships.Application.Vacancy
 {
     using System;
     using Domain.Entities.Vacancies;
