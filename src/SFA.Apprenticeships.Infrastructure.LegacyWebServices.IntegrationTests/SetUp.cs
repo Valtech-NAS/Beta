@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
-    using NUnit.Framework;
     using Caching.Memory.IoC;
     using Common.IoC;
     using IoC;
+    using NUnit.Framework;
     using StructureMap;
 
     [SetUpFixture]

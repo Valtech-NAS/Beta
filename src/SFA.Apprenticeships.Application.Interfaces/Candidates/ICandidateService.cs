@@ -18,6 +18,8 @@
 
         Candidate GetCandidate(Guid id);
 
+        Candidate GetCandidate(string username);
+
         Candidate SaveCandidate(Candidate candidate);
 
         ApplicationDetail CreateApplication(Guid candidateId, int vacancyId); // note: only an int due to legacy - will be a Guid

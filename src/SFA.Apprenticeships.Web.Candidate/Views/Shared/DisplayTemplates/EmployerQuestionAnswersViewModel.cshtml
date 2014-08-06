@@ -7,11 +7,11 @@
             Employer questions
             @if (ViewBag.VacancyId != null)
             {
-                <a class="icon-with-text" href="/application/apply/@(ViewBag.VacancyId)#applyEmployerQuestionAnswers">
+                <a class="icon-with-text" href="@Url.Action("Apply", "Application", new {id = ViewBag.VacancyId})#applyEmployerQuestionAnswers">
                     <i class="the-icon fa fa-pencil"></i>
                     <span class="the-text">Amend details</span>
                 </a>
-            }
+            }           
         </legend>
         @*<div class="form-group text">
             <details>

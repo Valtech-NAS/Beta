@@ -37,17 +37,13 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             if (user == null)
             {
+                // TODO: why not just allow _userReadRepository to throw?
                 throw new CustomException("Unknown username", ErrorCodes.UnknownUserError);
             }
 
             user.AssertState("Username already in use and is not in pending activation status", UserStatuses.PendingActivation);
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
-
-            if (candidate == null)
-            {
-                throw new CustomException("Unknown candidate", ErrorCodes.UnknownCandidateError);
-            }
 
             var currentDateTime = DateTime.Now;
             var expiry = currentDateTime.AddDays(_activationCodeExpiryDays);
@@ -71,11 +67,6 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
         private void SendActivationCode(Candidate candidate, string activationCode)
         {
-            if (candidate == null)
-            {
-                return;
-            }
-
             var emailAddress = candidate.RegistrationDetails.EmailAddress;
             var expiry = FormatActivationCodeExpiryDays();
             var firstName = candidate.RegistrationDetails.FirstName;

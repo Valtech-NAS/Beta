@@ -28,19 +28,9 @@
 
         public void UnlockAccount(string username, string accountUnlockCode)
         {
-            var user = _userReadRepository.Get(username, false);
-
-            if (user == null)
-            {
-                throw new CustomException("Unknown username", ErrorCodes.UnknownUserError);
-            }
+            var user = _userReadRepository.Get(username);         
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
-
-            if (candidate == null)
-            {
-                throw new CustomException("Unknown Candidate", ErrorCodes.UnknownCandidateError);
-            }
 
             user.AssertState("User should be a locked state", UserStatuses.Locked);
 

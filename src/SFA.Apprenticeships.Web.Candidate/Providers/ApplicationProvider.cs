@@ -59,8 +59,9 @@
 
             model.Candidate.AboutYou = applicationViewModel.Candidate.AboutYou;
             model.Candidate.Education = applicationViewModel.Candidate.Education;
-            model.Candidate.Qualifications = applicationViewModel.Candidate.Qualifications;
-            model.Candidate.WorkExperience = applicationViewModel.Candidate.WorkExperience;
+            //TODO uncomment after qualification and work experience is done
+            //model.Candidate.Qualifications = applicationViewModel.Candidate.Qualifications;
+            //model.Candidate.WorkExperience = applicationViewModel.Candidate.WorkExperience;
             model.Candidate.EmployerQuestionAnswers = applicationViewModel.Candidate.EmployerQuestionAnswers;
            
             var application = _mapper.Map<ApplicationViewModel, ApplicationDetail>(model);

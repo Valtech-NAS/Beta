@@ -32,11 +32,22 @@
         [ElementLocator(Class = "search-results")]
         public IElementList<IWebElement, SearchResultItem> SearchResultItems { get; set; }
 
-        public Tuple<IWebElement, SearchResultItem> FirstSearchResultItem()
+        public IWebElement FirstVacancyLink
         {
-            var item = SearchResultItems.First();
+            get
+            {
+                var item = SearchResultItems.First();
+                return item.VacancyLink;
+            }
+        }
 
-            return new Tuple<IWebElement, SearchResultItem>(item.WrappedElement, item);
+        public string FirstVacancyId
+        {
+            get
+            {
+                var item = SearchResultItems.First();
+                return item.VacancyId;
+            }
         }
     }
 
@@ -46,6 +57,14 @@
         public SearchResultItem(ISearchContext parent) : base(parent)
         {
         }
+
+        public string VacancyId
+        {
+            get { return VacancyLink.GetAttribute("data-vacancy-id"); }
+        }
+
+        [ElementLocator(Class = "vacancy-link")]
+        public IWebElement VacancyLink { get; set; }
 
         [ElementLocator(Class = "vacancy-title-link")]
         public IWebElement Title { get; set; }

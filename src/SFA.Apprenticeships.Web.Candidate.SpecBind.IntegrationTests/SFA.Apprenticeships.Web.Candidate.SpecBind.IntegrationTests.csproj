@@ -81,9 +81,17 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Bindings\Application\ApplicationPageBinding.cs" />
     <Compile Include="Bindings\DataGeneratorBinding.cs" />
+    <Compile Include="Builders\ApplicationBuilder.cs" />
     <Compile Include="Builders\CandidateBuilder.cs" />
+    <Compile Include="Builders\RegistrationBuilder.cs" />
     <Compile Include="Builders\UserBuilder.cs" />
+    <Compile Include="Features\Application\Apply.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Apply.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\HomePage.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -115,7 +123,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>VacancySearch.feature</DependentUpon>
     </Compile>
+    <Compile Include="Hooks\BeforeAllScenarios.cs" />
     <Compile Include="IoC\WebTestRegistry.cs" />
+    <Compile Include="Pages\Application\ApplicaitonPreviewPage.cs" />
+    <Compile Include="Pages\Application\ApplicaitonPage.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\BaseValidationPage.cs" />
     <Compile Include="Pages\Login\UnlockPage.cs" />
@@ -143,6 +154,10 @@
     <None Include="App.Release.config">
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="Features\Application\Apply.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Apply.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\HomePage.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

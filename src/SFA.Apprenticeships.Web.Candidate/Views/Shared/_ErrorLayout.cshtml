@@ -1,5 +1,22 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>@ViewBag.Title</h1>
-@RenderBody()
+<h1 class="heading-xlarge">@ViewBag.Title</h1>
+<div class="grid-wrapper">
+    <div class="grid grid-2-3">
+        <div class="inner-block-padr">
+            <div class="text">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <aside class="grid grid-1-3">
+        <div class="inner-block">
+            <div class="gov-border">
+                <h2 class="heading-medium">Elsewhere on GOV.UK</h2>
+                <p><a href="#">About Apprenticeships</a></p>
+                <p><a href="@Url.Action("Index", "VacancySearch")">Find an Apprenticeship</a></p>
+            </div>
+        </div>
+    </aside>
+</div>

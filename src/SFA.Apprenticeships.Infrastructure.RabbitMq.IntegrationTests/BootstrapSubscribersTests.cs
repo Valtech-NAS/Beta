@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.IntegrationTests
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Threading;
@@ -33,7 +32,7 @@
         [TestFixtureSetUp]
         public void BeforeAllTests()
         {
-            IRabbitMqHostConfiguration rabitConfig = RabbitMqHostsConfiguration.Instance.RabbitHosts["Test"];
+            var rabitConfig = RabbitMqHostsConfiguration.Instance.RabbitHosts["Test"];
             _managementClient = new ManagementClient(string.Format("http://{0}", rabitConfig.HostName),
                 rabitConfig.UserName, rabitConfig.Password);
 
@@ -51,19 +50,19 @@
         [TestFixtureTearDown]
         public void AfterAllTests()
         {
-            Queue notAsyncQueue = GetQueue(QueueNameSync);
+            var notAsyncQueue = GetQueue(QueueNameSync);
             if (notAsyncQueue != null)
             {
                 _managementClient.DeleteQueue(notAsyncQueue);
             }
 
-            Queue asyncQueue = GetQueue(QueueNameAsync);
+            var asyncQueue = GetQueue(QueueNameAsync);
             if (asyncQueue != null)
             {
                 _managementClient.DeleteQueue(asyncQueue);
             }
 
-            Exchange exchange = GetExchange(ExchangeName);
+            var exchange = GetExchange(ExchangeName);
             if (exchange != null)
             {
                 _managementClient.DeleteExchange(exchange);
@@ -76,47 +75,47 @@
 
         protected Queue GetQueue(string queueName)
         {
-            IEnumerable<Queue> queues = _managementClient.GetQueues();
-            Queue queue = queues.SingleOrDefault(q => q.Name == queueName);
+            var queues = _managementClient.GetQueues();
+            var queue = queues.SingleOrDefault(q => q.Name == queueName);
             return queue;
         }
 
         protected Exchange GetExchange(string exchangeName)
         {
-            IEnumerable<Exchange> exchanges = _managementClient.GetExchanges();
-            Exchange exchange = exchanges.SingleOrDefault(q => q.Name == exchangeName);
+            var exchanges = _managementClient.GetExchanges();
+            var exchange = exchanges.SingleOrDefault(q => q.Name == exchangeName);
             return exchange;
         }
 
         [TestCase]
         public void AutoBindsSubscriptions()
         {
-            Exchange exchange = GetExchange(ExchangeName);
+            var exchange = GetExchange(ExchangeName);
             exchange.Should().NotBeNull();
             exchange.Durable.Should().Be(true);
 
-            Queue syncQueue = GetQueue(QueueNameSync);
+            var syncQueue = GetQueue(QueueNameSync);
             syncQueue.Should().NotBeNull();
             syncQueue.Durable.Should().Be(true);
             syncQueue.AutoDelete.Should().Be(false);
 
-            IEnumerable<Binding> syncBindings = _managementClient.GetBindingsForQueue(syncQueue);
+            var syncBindings = _managementClient.GetBindingsForQueue(syncQueue);
             syncBindings.Count().Should().Be(2);
-            Binding syncBindingToSelf = syncBindings.SingleOrDefault(b => b.RoutingKey == QueueNameSync);
+            var syncBindingToSelf = syncBindings.SingleOrDefault(b => b.RoutingKey == QueueNameSync);
             syncBindingToSelf.Should().NotBeNull();
-            Binding syncBindingToExchange = syncBindings.SingleOrDefault(b => b.RoutingKey == "#");
+            var syncBindingToExchange = syncBindings.SingleOrDefault(b => b.RoutingKey == "#");
             syncBindingToExchange.Should().NotBeNull();
 
-            Queue asyncQueue = GetQueue(QueueNameAsync);
+            var asyncQueue = GetQueue(QueueNameAsync);
             asyncQueue.Should().NotBeNull();
             asyncQueue.Durable.Should().Be(true);
             asyncQueue.AutoDelete.Should().Be(false);
 
-            IEnumerable<Binding> asyncBindings = _managementClient.GetBindingsForQueue(asyncQueue);
+            var asyncBindings = _managementClient.GetBindingsForQueue(asyncQueue);
             asyncBindings.Count().Should().Be(2);
-            Binding asyncBindingToSelf = asyncBindings.SingleOrDefault(b => b.RoutingKey == QueueNameAsync);
+            var asyncBindingToSelf = asyncBindings.SingleOrDefault(b => b.RoutingKey == QueueNameAsync);
             asyncBindingToSelf.Should().NotBeNull();
-            Binding asyncBindingToExchange = asyncBindings.SingleOrDefault(b => b.RoutingKey == "#");
+            var asyncBindingToExchange = asyncBindings.SingleOrDefault(b => b.RoutingKey == "#");
             asyncBindingToExchange.Should().NotBeNull();
         }
 

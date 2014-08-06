@@ -18,7 +18,7 @@
         {
             <li class="search-results__item section-border">
                 <div class="hgroup-medium">
-                    <h3 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString })</h3>
+                    <h3 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id })</h3>
                     <h4 class="subtitle">@vacancy.EmployerName</h4>
                 </div>
                 <p class="search-shortdesc">@vacancy.Description</p>

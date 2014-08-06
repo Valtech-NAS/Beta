@@ -7,6 +7,7 @@
 
     public interface IApplicationReadRepository : IReadRepository<ApplicationDetail>
     {
+        ApplicationDetail Get(Guid id, bool errerrorIfNotFound);
         ApplicationDetail Get(Expression<Func<ApplicationDetail, bool>> filter);
 
         IList<ApplicationSummary> GetForCandidate(Guid candidateId);

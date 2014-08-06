@@ -1,11 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
+    using System.Net;
     using System.Web.Mvc;
     using System.Web.Security;
     using Attributes;
     using Common.Controllers;
     using Common.Providers;
     using Constants.ViewModels;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using FluentValidation.Mvc;
     using NLog;
@@ -60,12 +64,12 @@
             }
 
             // Authenticate candidate.
-            var authenticated = _candidateServiceProvider.Authenticate(model);
+            var candidate = _candidateServiceProvider.Authenticate(model);
             var userStatus = _candidateServiceProvider.GetUserStatus(model.EmailAddress);
 
-            if (authenticated)
+            if (candidate != null)
             {
-                return RedirectOnAuthenticated(userStatus);
+                return RedirectOnAuthenticated(candidate, userStatus);
             }
 
             if (userStatus == UserStatuses.Locked)
@@ -116,8 +120,7 @@
 
             if (verified)
             {
-                TempData["LoginMessage"] =
-                    AccountUnlockViewModelMessages.AccountUnlockCodeMessages.AccountUnlockedText;
+                TempData["LoginMessage"] = AccountUnlockViewModelMessages.AccountUnlockCodeMessages.AccountUnlockedText;
 
                 return RedirectToAction("Index");
             }
@@ -150,7 +153,7 @@
 
         #region Helpers
 
-        private ActionResult RedirectOnAuthenticated(UserStatuses userStatus)
+        private ActionResult RedirectOnAuthenticated(Candidate candidate, UserStatuses userStatus)
         {
             if (userStatus == UserStatuses.PendingActivation)
             {
@@ -160,7 +163,8 @@
             // Redirect to last viewed vacancy (if any).
             if (_candidateServiceProvider.LastViewedVacancyId.HasValue)
             {
-                return RedirectToLastViewedVacancy(_candidateServiceProvider.LastViewedVacancyId.Value);
+                return RedirectToLastViewedVacancy(
+                    candidate, _candidateServiceProvider.LastViewedVacancyId.Value);
             }
 
             // Redirect to return URL (if any).
@@ -175,10 +179,21 @@
             return RedirectToAction("Index", "VacancySearch");
         }
 
-        private ActionResult RedirectToLastViewedVacancy(int lastViewedVacancyId)
+        private ActionResult RedirectToLastViewedVacancy(Candidate candidate, int lastViewedVacancyId)
         {
-            // Clear last viewed vacancy.
+            // Always clear last viewed vacancy.
             _candidateServiceProvider.LastViewedVacancyId = null;
+
+            var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId, lastViewedVacancyId);
+
+            if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
+            {
+                return RedirectToAction(
+                    "Apply", "Application", new
+                    {
+                        id = lastViewedVacancyId
+                    });
+            }
 
             return RedirectToAction(
                 "Details", "VacancySearch", new
@@ -211,6 +226,9 @@
         public ActionResult SignOut()
         {
             UserServiceProvider.DeleteAllCookies(HttpContext);
+            UserServiceProvider.DeleteCookie(HttpContext, "Application.Context");
+            UserServiceProvider.DeleteCookie(HttpContext, "ASP.NET_SessionId");
+            Session.Clear();          
             FormsAuthentication.SignOut();
             return RedirectToAction("Index");
         }

@@ -43,15 +43,11 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             if (user == null)
             {
+                // TODO: why not just allow _userReadRepository to throw?
                 throw new CustomException("Unknown user name", ErrorCodes.UnknownUserError);
             }
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
-
-            if (candidate == null)
-            {
-                throw new CustomException("Unknown candidate", ErrorCodes.UnknownCandidateError);
-            }
 
             if (user.PasswordResetCode != null && user.PasswordResetCode.Equals(passwordCode, StringComparison.CurrentCultureIgnoreCase))
             {
@@ -87,11 +83,6 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
         private void SendPasswordResetConfirmationViaCommunicationService(Candidate candidate)
         {
-            if (candidate == null)
-            {
-                return;
-            }
-
             var firstName = candidate.RegistrationDetails.FirstName;
             var emailAddress = candidate.RegistrationDetails.EmailAddress;
 

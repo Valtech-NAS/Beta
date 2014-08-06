@@ -5,7 +5,7 @@
         public static class KeywordMessages
         {
             public const string LabelText = "Keywords (optional)";
-            public const string HintText = "eg mechanical engineer, retail, customer service";
+            public const string HintText = "For example, retail, customer service";
             public const string WhiteList = Whitelists.NameWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'Keywords' " + Whitelists.NameWhitelist.ErrorText;
         }
