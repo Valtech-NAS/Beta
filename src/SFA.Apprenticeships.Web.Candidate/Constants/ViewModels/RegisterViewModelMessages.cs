@@ -23,7 +23,7 @@
         public static class EmailAddressMessages
         {
             public const string LabelText = "Enter email address";
-            public const string HintText = "This will be the main way we contact you. The address you choose will be your username and can be seen by employers.";
+            public const string HintText = "You'll need this to sign in to your account. The address you choose will be seen by employers.";
             public const string RequiredErrorText = "'Email address' must be supplied";
             public const string TooLongErrorText = "'Email address' must not exceed 100 characters";
             public const string WhiteListRegularExpression = Whitelists.EmailAddressWhitelist.RegularExpression;

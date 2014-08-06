@@ -17,22 +17,17 @@
             case ApplicationStatuses.Successful:
             case ApplicationStatuses.Unsuccessful:
                 <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
-<<<<<<< Updated upstream
-                <a href='@Url.Action("Index", "Dashboard")'>View status on dashboard</a>
-=======
+
                 <a href='@Url.Action("Index", "Dashboard")'>Track application status</a>    
->>>>>>> Stashed changes
+
                 break;
         }
     }
     else
     {
         // Candidate has not applied for this vacancy.
-<<<<<<< Updated upstream
-        <a class="button button-with-hint" id="apply-button" title="Apply for vacancy" href="@Url.Action("Apply", "Application", new { @id = Model.Id })">Apply for vacancy</a>
-=======
+
         <a class="button button-with-hint" title="Apply for apprenticeship" href="@Url.Action("Apply", "Application", new { @id = Model.Id })">Apply for apprenticeship</a>
->>>>>>> Stashed changes
     }
 }
 else
