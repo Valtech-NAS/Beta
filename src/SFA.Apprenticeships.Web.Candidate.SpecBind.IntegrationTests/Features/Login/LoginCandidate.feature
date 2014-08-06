@@ -52,6 +52,7 @@ Scenario: As a candidate I cannot login with an invalid password
 		| Text  | Equals | 'Email address' or 'password' is invalid |
 		| Href  | Equals | #emailaddress                            |
 
+@ignore
 Scenario: As a candidate I can login with a registered but unactivated account and am redirected to the activation page
 	Given I registered an account but did not activate it
 	And I navigated to the LoginPage page
