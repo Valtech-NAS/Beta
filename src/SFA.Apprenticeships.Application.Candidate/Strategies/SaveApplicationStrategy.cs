@@ -24,20 +24,15 @@
 
         public ApplicationDetail SaveApplication(ApplicationDetail application)
         {
-            var entity = _applicationReadRepository.Get(application.EntityId);
+            var applicationDetail = _applicationReadRepository.Get(application.EntityId, true);
 
-            if (entity == null)
-            {
-                throw new CustomException("Application was not found", ErrorCodes.ApplicationNotFoundError);
-            }
+            applicationDetail.AssertState("Application should not be submitted", ApplicationStatuses.Draft);
 
-            entity.AssertState("Application should not be submitted", ApplicationStatuses.Draft);
+            applicationDetail.CandidateInformation = application.CandidateInformation;
+            applicationDetail.AdditionalQuestion1Answer = application.AdditionalQuestion1Answer;
+            applicationDetail.AdditionalQuestion2Answer = application.AdditionalQuestion2Answer;
 
-            entity.CandidateInformation = application.CandidateInformation;
-            entity.AdditionalQuestion1Answer = application.AdditionalQuestion1Answer;
-            entity.AdditionalQuestion2Answer = application.AdditionalQuestion2Answer;
-
-            var savedApplication = _applicationWriteRepository.Save(entity);
+            var savedApplication = _applicationWriteRepository.Save(applicationDetail);
 
             SyncToCandidatesApplicationTemplate(savedApplication);
 

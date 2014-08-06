@@ -31,13 +31,7 @@
 
         public void SubmitApplication(Guid applicationId)
         {
-            var applicationDetail = _applicationReadRepository.Get(applicationId);
-
-            if (applicationDetail == null)
-            {
-                Logger.Debug("Application detail was not found for {0}", applicationId);
-                throw new CustomException("Application detail was not found", ErrorCodes.ApplicationNotFoundError);
-            }
+            var applicationDetail = _applicationReadRepository.Get(applicationId, true);
 
             // status check - should be in "draft" state
             applicationDetail.AssertState("Application is not in the correct state to be submitted", ApplicationStatuses.Draft);

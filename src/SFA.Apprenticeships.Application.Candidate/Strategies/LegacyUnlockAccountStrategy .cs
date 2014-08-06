@@ -28,13 +28,7 @@
 
         public void UnlockAccount(string username, string accountUnlockCode)
         {
-            var user = _userReadRepository.Get(username, false);
-
-            if (user == null)
-            {
-                // TODO: why not just allow _userReadRepository to throw?
-                throw new CustomException("Unknown username", ErrorCodes.UnknownUserError);
-            }
+            var user = _userReadRepository.Get(username);         
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
 

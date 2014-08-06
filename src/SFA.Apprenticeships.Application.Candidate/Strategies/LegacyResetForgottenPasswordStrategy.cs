@@ -27,12 +27,7 @@
 
         public void ResetForgottenPassword(string username, string passwordCode, string newPassword)
         {
-            var user = _userReadRepository.Get(username, false);
-
-            if (user == null)
-            {
-                throw new CustomException("Unknown username", ErrorCodes.UnknownUserError);
-            }
+            var user = _userReadRepository.Get(username);        
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
 

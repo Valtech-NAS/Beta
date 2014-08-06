@@ -30,6 +30,11 @@
             return candidate;
         }
 
+        public Candidate Get(Guid id, bool errorIfNotFound)
+        {
+            throw new NotImplementedException();
+        }
+
         public Candidate Get(string username, bool errorIfNotFound = true)
         {
             throw new NotImplementedException();

@@ -28,6 +28,21 @@
             Logger.Debug("Called Mongodb to get candidate with Id={0}", id);
 
             var mongoEntity = Collection.FindOneById(id);
+            return mongoEntity == null ? null : _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
+        }
+
+        public Candidate Get(Guid id, bool errorIfNotFound)
+        {
+            Logger.Debug("Called Mongodb to get candidate with Id={0}", id);
+
+            var mongoEntity = Collection.FindOneById(id);
+
+            if (mongoEntity == null && errorIfNotFound)
+            {
+                Logger.Debug("Unknown candidate with Id={0}", id);
+
+                throw new CustomException("Unknown candidate", ErrorCodes.UnknownCandidateError);
+            }
 
             return mongoEntity == null ? null : _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
         }
@@ -68,6 +83,6 @@
             Logger.Debug("Saved candidate to Mongodb with Id={0}", entity.EntityId);
 
             return _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
-        }
+        }    
     }
 }

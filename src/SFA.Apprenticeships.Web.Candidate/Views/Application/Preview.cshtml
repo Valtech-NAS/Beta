@@ -9,8 +9,8 @@
 
 @if (TempData["SubmissionFailed"] != null)
 {
-    <div class="panel-success">
-        <span id="PreviewFailedText" class="text"><i class="fa fa-check"></i> TODO: Oops! Something went wrong during the submission, try again</span>
+    <div class="panel panel-danger validation-summary-errors">
+        <span id="PreviewFailedText" class="text"><i class="fa fa-warning"></i> TODO: Oops! Something went wrong during the submission, try again</span>
     </div>
 }
 
