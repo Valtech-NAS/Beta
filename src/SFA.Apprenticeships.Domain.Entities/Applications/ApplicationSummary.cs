@@ -6,6 +6,8 @@
     {
         public Guid ApplicationId { get; set; }
 
+        public int LegacyVacancyId { get; set; }
+
         public string Title { get; set; }
 
         public ApplicationStatuses Status { get; set; }

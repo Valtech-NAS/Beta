@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using System.Linq;
     using Application.Interfaces.Vacancies;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
@@ -47,7 +48,7 @@
             return vacancyDetailViewModel;
         }
 
-        private ApplicationDetail GetCandidateApplication(Guid? candidateId, int id)
+        private ApplicationSummary GetCandidateApplication(Guid? candidateId, int vacancyId)
         {
             if (candidateId == null)
             {
@@ -55,7 +56,9 @@
                 return null;
             }
 
-            return _candidateService.GetApplication(candidateId.Value, id);
+            return _candidateService
+                .GetApplications(candidateId.Value)
+                .SingleOrDefault(a => a.LegacyVacancyId == vacancyId);
         }
     }
 }

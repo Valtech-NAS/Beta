@@ -97,15 +97,6 @@
             return _createApplicationStrategy.CreateApplication(candidateId, vacancyId);
         }
 
-        public ApplicationDetail GetApplication(Guid candidateId, int vacancyId)
-        {
-            //todo: may remove in sprint 16 in favour of .GetApplications() as this will also incorporate the vacancy status
-            var applicationDetail = _applicationReadRepository.GetForCandidate(
-                candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
-
-            return applicationDetail;
-        }
-
         public ApplicationDetail GetApplication(Guid applicationId)
         {
             Condition.Requires(applicationId);
@@ -113,11 +104,18 @@
             return _applicationReadRepository.Get(applicationId);
         }
 
-        public ApplicationDetail SaveApplication(ApplicationDetail application)
+        public void ArchiveApplication(Guid applicationId)
+        {
+            Condition.Requires(applicationId);
+
+            throw new NotImplementedException();
+        }
+
+        public void SaveApplication(ApplicationDetail application)
         {
             Condition.Requires(application);
 
-            return _saveApplicationStrategy.SaveApplication(application);
+            _saveApplicationStrategy.SaveApplication(application);
         }
 
         public IList<ApplicationSummary> GetApplications(Guid candidateId)
