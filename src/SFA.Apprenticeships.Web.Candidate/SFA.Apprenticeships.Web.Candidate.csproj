@@ -211,7 +211,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\Error\404.html" />
-    <Content Include="Content\Error\500 - Copy.html" />
     <Content Include="Content\Error\500.html" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.ttf" />
