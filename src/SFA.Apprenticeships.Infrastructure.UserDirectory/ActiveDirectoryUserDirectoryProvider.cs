@@ -3,16 +3,19 @@
     using System;
     using System.DirectoryServices.AccountManagement;
     using System.DirectoryServices.Protocols;
-    using Application.Authentication;
     using ActiveDirectory;
+    using Application.Authentication;
+    using Domain.Entities.Exceptions;
     using NLog;
 
     public class ActiveDirectoryUserDirectoryProvider : IUserDirectoryProvider
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly ActiveDirectoryServer _server;
         private readonly ActiveDirectoryChangePassword _changePassword;
-        public ActiveDirectoryUserDirectoryProvider(ActiveDirectoryServer server, ActiveDirectoryChangePassword changePassword)
+        private readonly ActiveDirectoryServer _server;
+
+        public ActiveDirectoryUserDirectoryProvider(ActiveDirectoryServer server,
+            ActiveDirectoryChangePassword changePassword)
         {
             _server = server;
             _changePassword = changePassword;
@@ -41,7 +44,8 @@
                 if (user != null)
                 {
                     Logger.Error("Active directory account for username={0} already exist", username);
-                    throw new Exception("User already exist"); // TODO: EXCEPTION: should use an application exception type
+                    throw new Exception("User already exist");
+                    // TODO: EXCEPTION: should use an application exception type
                 }
 
                 // Create the new UserPrincipal object
@@ -61,7 +65,10 @@
                 userPrincipal.Save();
 
                 // set initial password
-                if (!SetUserPassword(username, null, password)) return false;
+                if (!SetUserPassword(username, null, password))
+                {
+                    return false;
+                }
 
                 userPrincipal.Enabled = true;
 
@@ -79,27 +86,40 @@
 
             using (var context = _server.Context)
             {
-                var user = UserPrincipal.FindByIdentity(context, username);
+                using (var user = UserPrincipal.FindByIdentity(context, IdentityType.UserPrincipalName, username))
+                {
+                    if (user == null)
+                    {
+                        Logger.Error("No active directory account found for username={0}", username);
+                        throw new CustomException("User does not exist", ErrorCodes.UnknownUserError);
+                    }
 
-                if (user == null)
-                {
-                    Logger.Error("No active directory account found for username={0}", username);
-                    throw new Exception("User does not exist"); // TODO: EXCEPTION: should use an application exception type
-                }
+                    try
+                    {
+                        if (!SetUserPassword(username, null, newpassword))
+                        {
+                            return false;
+                        }
+                        user.Enabled = true;
+                        user.Save();
 
-                try
-                {
-                    SetUserPassword(username, null, newpassword);
-                    return true;
+                        return true;
+                    }
+                    catch (PasswordException exception)
+                    {
+                        var message = string.Format("SetPassword failed for {0}", username);
+                        Logger.ErrorException(message, exception);
+                        throw;
+                    }
                 }
-                catch (PasswordException exception)
-                {
-                    var message = string.Format("SetPassword failed for {0}", username);
-                    Logger.ErrorException(message, exception);
-                    throw;
-                }
-              
             }
+        }
+
+        public bool ChangePassword(string username, string oldPassword, string newPassword)
+        {
+            Logger.Debug("Change password for active directory account username={0}", username);
+
+            return AuthenticateUser(username, oldPassword) && SetUserPassword(username, null, newPassword);
         }
 
         private bool SetUserPassword(string username, string oldPassword, string newPassword)
@@ -110,13 +130,6 @@
 
             var rs = _changePassword.Change(username, oldPassword, newPassword);
             return (rs.ResultCode == ResultCode.Success);
-        }
-
-        public bool ChangePassword(string username, string oldPassword, string newPassword)
-        {
-            Logger.Debug("Change password for active directory account username={0}", username);
-
-            return AuthenticateUser(username, oldPassword) && SetUserPassword(username, null, newPassword);
         }
     }
 }

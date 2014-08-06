@@ -83,6 +83,13 @@
             return _candidateReadRepository.Get(id);
         }
 
+        public Candidate GetCandidate(string username)
+        {
+            Condition.Requires(username).IsNotNullOrEmpty();
+
+            throw new NotImplementedException();
+        }
+
         public Candidate SaveCandidate(Candidate candidate)
         {
             Condition.Requires(candidate);

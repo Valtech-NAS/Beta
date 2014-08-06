@@ -24,19 +24,9 @@
 
         public void ActivateCandidate(string username, string activationCode)
         {
-            var user = _userReadRepository.Get(username, false);
-
-            if (user == null)
-            {
-                throw new CustomException("Unknown username", ErrorCodes.UnknownUserError);
-            }
+            var user = _userReadRepository.Get(username);
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
-
-            if (candidate == null)
-            {
-                throw new CustomException("Unknown Candidate", ErrorCodes.UnknownCandidateError);
-            }
 
             user.AssertState("User is in invalid state for activation", UserStatuses.PendingActivation);
 

@@ -54,7 +54,7 @@ Scenario: Account unlock code can be resent
 	And I choose ResendAccountUnlockCodeLink
 	Then I am on the UnlockPage page
 	And I see
-         | Field                       | Rule   | Value |
+         | Field          | Rule   | Value |
          | ResentCodeText | Exists |       |
 
 Scenario: Account unlock code is renewed if it has expired

@@ -7,7 +7,6 @@
     using FluentAssertions;
     using IoC;
     using NUnit.Framework;
-    using ReferenceData;
     using StructureMap;
 
     [TestFixture]

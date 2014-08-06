@@ -1,11 +1,19 @@
 ﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApplicationViewModel
 
 @{
-    ViewBag.Title = "SFA Apprenticeships - Apply for Vacancy";
+    ViewBag.Title = "SFA Apprenticeships - Preview Vacancy Application";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1 class="heading-xlarge">Previewing vacancy</h1>
+
+@if (TempData["SubmissionFailed"] != null)
+{
+    <div class="panel panel-danger validation-summary-errors">
+        <span id="PreviewFailedText" class="text"><i class="fa fa-warning"></i> TODO: Oops! Something went wrong during the submission, try again</span>
+    </div>
+}
+
 <section class="section-border">
     <div class="text">
         <div class="hgroup-medium">
@@ -24,68 +32,65 @@
         Qualifications
         @if (ViewBag.VacancyId != null)
         {
-            <a class="icon-with-text" href="/application/apply/@(ViewBag.VacancyId)#applyQualifications">
+            <a class="icon-with-text" href="@Url.Action("Apply", "Application", new {id = ViewBag.VacancyId})#applyQualifications">
                 <i class="the-icon fa fa-pencil"></i>
                 <span class="the-text">Amend details</span>
             </a>
         }
     </legend>
-    <div class="qualifications-wrapper">
-        <div class="qualification-table" id="gcse">
-            <div class="hgroup-small">
-                <h3 class="heading-small heading-qualType">GCSE</h3>
-                <span class="subtitle subtitle-qualWhere">St Bernards School</span>
-            </div>
-            <table class="grid-3-4">
-                <colgroup>
-                    <col class="t40">
-                    <col class="t25">
-                    <col class="t15">
-                    <col class="t10">
-                    <col class="t10">
-                    <col>
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th class="th-qualSubject">
-                            <span class="heading-span">Subject</span>
-                        </th>
-                        <th class="th-qualGrade">
-                            <span class="heading-span">Grade</span>
-                        </th>
-                        <th class="th-qualYear">
-                            <span class="heading-span">Year</span>
-                        </th>                     
-                    </tr>
-                </thead>
-                <tbody class="tbody-qual">
-                    @foreach (var qualification in Model.Candidate.Qualifications)
-                    {
-                        <tr class="tr-qualRow">
-                            <td class="td-qualcell">
-                                <input class="form-control qual-input-edit" type="text" value="@qualification.Subject" readonly>
-                            </td>
-                            <td class="td-qualcell">
-                                <input class="form-control qual-input-edit" type="text" value="@qualification.Grade" readonly>
-                            </td>
-                            <td class="td-qualcell">
-                                <input class="form-control qual-input-edit" type="text" value="@qualification.Year" readonly>
-                            </td>                          
-                        </tr>
-                    }
-                </tbody>
-            </table>
+   
+    @foreach (var group in Model.Candidate.Qualifications.GroupBy(item => item.QualificationType))
+    {
+        <div class="hgroup-small">
+            <h3 class="heading-small">@Html.Encode(group.Key)</h3>
         </div>
-    </div>
+        <table class="grid-3-4">
+            <colgroup>
+                <col class="t40">
+                <col class="t25">
+                <col class="t15">
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>
+                        <span class="heading-span">Subject</span>
+                    </th>
+                    <th>
+                        <span class="heading-span">Grade</span>
+                    </th>
+                    <th>
+                        <span class="heading-span">Year</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in group)
+                {
+                    <tr>
+                        <td>
+                            <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Subject" readonly>
+                        </td>
+                        <td>
+                            <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Grade" readonly>
+                        </td>
+                        <td>
+                            <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Year" readonly>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 
 </fieldset>
 
-<fieldset class="fieldset-with-border">    
+<fieldset class="fieldset-with-border">
     <legend class="heading-large">
         Work experience
         @if (ViewBag.VacancyId != null)
         {
-            <a class="icon-with-text" href="/application/apply/@(ViewBag.VacancyId)#applyWorkExperience">
+            <a class="icon-with-text" href="@Url.Action("Apply", "Application", new {id = ViewBag.VacancyId})#applyWorkExperience">
                 <i class="the-icon fa fa-pencil"></i>
                 <span class="the-text">Amend details</span>
             </a>
@@ -93,13 +98,13 @@
     </legend>
     @foreach (var experience in Model.Candidate.WorkExperience)
     {
-        <div class="work-history-wrapper grid-3-4">
+        <div class="grid-3-4">
             <div class="grid-wrapper work-history-item">
-               
+
                 <div class="grid grid-1-2">
                     <table class="table-no-btm-border table-compound">
                         <colgroup>
-                            <col class="t100">
+                            <col>
                             <col>
                         </colgroup>
                         <thead>
@@ -112,16 +117,11 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control toggle-content inline width-all-49 editable-work-input"
-                                           value="@experience.Employer">
-                                    <span class="cell-span editable-work">@experience.Employer</span>
-                                    <span class="cell-span work-hyphen">-</span>
-                                    <input type="text" class="form-control toggle-content inline width-all-49 editable-work-input no-right-margin"
-                                           value="@experience.JobTitle">
-                                    <span class="cell-span editable-work">@experience.JobTitle</span>
+                                    <span class="cell-span">@experience.Employer</span>
+                                    <span class="form-prepopped cell-span work-hyphen">-</span>
+                                    <span class="form-prepopped cell-span">@experience.JobTitle</span>
                                     <div></div>
-                                    <textarea class="form-control toggle-content editable-work-input">@experience.Description</textarea>
-                                    <span class="cell-span editable-work">@experience.Description</span>
+                                    <span class="form-prepopped cell-span">@experience.Description</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -151,12 +151,10 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control toggle-content editable-work-input" value="@experience.FromYear">
-                                    <span class="cell-span editable-work">@experience.FromYear</span>
+                                    <span class="form-prepopped cell-span">@experience.FromYear</span>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control toggle-content editable-work-input" value="@experience.ToYear">
-                                    <span class="cell-span editable-work">@experience.ToYear</span>
+                                    <span class="form-prepopped cell-span">@experience.ToYear</span>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -176,5 +174,5 @@
 @Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers)
 
 <div class="form-group">
-    @Html.ActionLink("Submit application", "SubmitApplication", new { @applicationId = Model.ApplicationViewId }, new { @class = "button" })
+    @Html.ActionLink("Submit application", "SubmitApplication", new {@applicationId = Model.ApplicationViewId}, new {@class = "button"})
 </div>

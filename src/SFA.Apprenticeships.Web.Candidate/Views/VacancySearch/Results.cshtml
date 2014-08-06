@@ -9,15 +9,15 @@
 
     if (Model.TotalHits == 0)
     {
-        resultMessage = "There are <b class=\"bold-medium\">no</b> Apprenticeships that match your search";
+        resultMessage = "";
     }
     else if (Model.TotalHits == 1)
     {
-        resultMessage = "There is <b class=\"bold-medium\">1</b> Apprenticeship that closely matches your search";
+        resultMessage = "There is <b class=\"bold-medium\">1</b> apprenticeship that closely matches your search";
     }
     else
     {
-        resultMessage = string.Format("There are <b class=\"bold-medium\">{0}</b> Apprenticeships that closely match your search", Model.TotalHits);
+        resultMessage = string.Format("There are <b class=\"bold-medium\">{0}</b> apprenticeships that closely match your search", Model.TotalHits);
     }
 }
 
@@ -34,7 +34,7 @@
                 
                 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-                <legend class="heading-medium mob-collpanel-trigger">Filter results</legend>
+                <legend class="heading-medium mob-collpanel-trigger">Edit search</legend>
                 <div class="mob-collpanel toggle-content--mob">
 
                     @Html.FormTextFor(m => m.VacancySearch.Keywords, hintText: "")
@@ -71,9 +71,25 @@
         
         </section>
         <section class="grid grid-2-3">
-            <div id="pagedList">
-                @{ Html.RenderPartial("_searchResults", Model); }
-            </div>
+            @{
+                if (Model.TotalHits == 0)
+                {
+                    <p id="search-no-results-title">There are currently no apprenticeships that match your search.</p>
+                    <p>Try editing your search:</p>
+                    <ul>
+                        <li>using different keywords</li>
+                        <li>expanding your search location</li>
+                        <li>making sure all words are spelled correctly</li>
+                    </ul>
+                }
+                else
+                {
+                    <div id="pagedList">
+                        @{ Html.RenderPartial("_searchResults", Model); }
+                    </div>
+                }
+            }
+            
         </section>
     }
 </div>

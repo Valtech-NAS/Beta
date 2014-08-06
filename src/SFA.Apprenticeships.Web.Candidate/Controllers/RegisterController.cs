@@ -10,7 +10,6 @@
     using Constants.ViewModels;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Users;
     using FluentValidation.Mvc;
     using FluentValidation.Results;
     using NLog;
@@ -21,12 +20,12 @@
     public class RegisterController : SfaControllerBase
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
 
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
         private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
-        private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
 
         public RegisterController(
             ISessionStateProvider session,
@@ -83,6 +82,7 @@
 
         [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult Activation(string returnUrl)
         {
             var model = new ActivationViewModel
@@ -103,11 +103,25 @@
         {
             model.IsActivated = _candidateServiceProvider.Activate(model, User.Identity.Name);
 
-            ValidationResult activatedResult = _activationViewModelServerValidator.Validate(model);
+            var activatedResult = _activationViewModelServerValidator.Validate(model);
 
             if (activatedResult.IsValid)
             {
-                return SetAuthenticationCookieAndRedirectToAction();
+                // TODO: AG: need to review logic here, why email address vs candidateId?
+                Candidate candidate;
+
+                if (string.IsNullOrEmpty(User.Identity.Name))
+                {    
+                    candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
+                }
+                else
+                {
+                    var candidateId = new Guid(User.Identity.Name);
+
+                    candidate = _candidateServiceProvider.GetCandidate(candidateId);
+                }
+
+                return SetAuthenticationCookieAndRedirectToAction(candidate);
             }
 
             ModelState.Clear();
@@ -198,11 +212,12 @@
                 }
             }
 
-            ValidationResult validationResult = _passwordResetViewModelServerValidator.Validate(model);
+            var validationResult = _passwordResetViewModelServerValidator.Validate(model);
 
             if (validationResult.IsValid)
             {
-                return SetAuthenticationCookieAndRedirectToAction();
+                var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
+                return SetAuthenticationCookieAndRedirectToAction(candidate);
             }
 
             ModelState.Clear();
@@ -238,10 +253,11 @@
         }
 
         #region Helpers
+
         [AllowCrossSiteJson]
         public JsonResult CheckUsername(string username)
         {
-            bool usernameIsAvailable = IsUsernameAvailable(username);
+            var usernameIsAvailable = IsUsernameAvailable(username);
             return Json(new { usernameIsAvailable }, JsonRequestBehavior.AllowGet);
         }
 
@@ -250,22 +266,10 @@
             return _candidateServiceProvider.IsUsernameAvailable(username.Trim());
         }
 
-        private void SetCookies(Candidate candidate)
-        {
-            RegistrationDetails registrationDetails = candidate.RegistrationDetails;
-            string fullName = registrationDetails.FirstName + " " + registrationDetails.LastName;
-            UserServiceProvider.SetAuthenticationCookie(
-                HttpContext, candidate.EntityId.ToString(), UserRoleNames.Unactivated);
-
-            UserServiceProvider.SetUserContextCookie(
-                HttpContext, registrationDetails.EmailAddress, fullName);
-
-        }
-
-        private ActionResult SetAuthenticationCookieAndRedirectToAction()
+        private ActionResult SetAuthenticationCookieAndRedirectToAction(Candidate candidate)
         {
             UserServiceProvider.SetAuthenticationCookie(
-                HttpContext, User.Identity.Name, UserRoleNames.Activated);
+                HttpContext, candidate.EntityId.ToString(), UserRoleNames.Activated);
 
             // Redirect to last viewed vacancy (if any).
             var lastViewedVacancyId = _candidateServiceProvider.LastViewedVacancyId;

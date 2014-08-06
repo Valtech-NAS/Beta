@@ -40,13 +40,12 @@
             _tokenManager = tokenManager;
             _emailAddress = GenerateEmailAddress();
             _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
-
         }
 
         [Given("I registered an account but did not activate it")]
         public void GivenIRegisteredAnAccountButDidNotActivateIt()
         {
-            var candidate = new CandidateBuilder(Id, _emailAddress)
+            var candidate = new CandidateBuilder(_emailAddress)
                 .Build();
 
             var user = new UserBuilder(Id, _emailAddress, UserStatuses.PendingActivation)
@@ -56,10 +55,11 @@
             SetTokens(candidate, user);
         }
 
+        //todo: create a mechanism where we won't need to login - just get the webdriver and set the auth cookie directly or similar
         [Given("I registered an account and activated it")]
         public void GivenIRegisteredAnAccountAndActivatedIt()
         {
-            var candidate = new CandidateBuilder(Id, _emailAddress)
+            var candidate = new CandidateBuilder(_emailAddress)
                 .Build();
 
             var user = new UserBuilder(Id, _emailAddress)
@@ -71,7 +71,7 @@
         [Given("I made two unsuccessful login attempts")]
         public void GivenIMadeTwoUnsuccessfulLoginAttempts()
         {
-            var candidate = new CandidateBuilder(Id, _emailAddress)
+            var candidate = new CandidateBuilder(_emailAddress)
                 .Build();
 
             var user = new UserBuilder(Id, _emailAddress)
@@ -84,7 +84,7 @@
         [Given("I locked my account")]
         public void GivenILockedMyAccount()
         {
-            var candidate = new CandidateBuilder(Id, _emailAddress)
+            var candidate = new CandidateBuilder(_emailAddress)
                 .Build();
 
             var user = new UserBuilder(Id, _emailAddress, UserStatuses.Locked)
@@ -99,7 +99,7 @@
         [Given("I locked my account and my account unlock code has expired")]
         public void GivenILockedMyAccountAndMyAccountUnlockCodeHasExpired()
         {
-            var candidate = new CandidateBuilder(Id, _emailAddress)
+            var candidate = new CandidateBuilder(_emailAddress)
                 .Build();
 
             var user = new UserBuilder(Id, _emailAddress, UserStatuses.Locked)
@@ -151,7 +151,7 @@
         {
             const string format = "valtechnas+{0}@gmail.com";
 
-            return string.Format(format, Random.Next(0, 100000));
+            return string.Format(format, DateTime.Now.Ticks);
         }
 
         #endregion

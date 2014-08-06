@@ -66,6 +66,10 @@
       <Project>{2752E3B6-358D-4C06-A31F-867304CAC53D}</Project>
       <Name>SFA.Apprenticeships.Application.Authentication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
+      <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Application.Candidate.Strategies;
     using Common.IoC;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -12,13 +13,32 @@
     using FluentAssertions;
     using IoC;
     using NUnit.Framework;
-    using Application.Candidate.Strategies;
     using StructureMap;
 
     public class LegacyWebServiceLegacyApplicationProviderIntegrationTests : ICandidateReadRepository
     {
         private ILegacyApplicationProvider _legacyApplicationProviderProvider;
         private ILegacyCandidateProvider _legacyCandidateProvider;
+
+        public Candidate Get(Guid id)
+        {
+            var candidate = new Candidate
+            {
+                LegacyCandidateId = CreateLegacyCandidateId()
+            };
+
+            return candidate;
+        }
+
+        public Candidate Get(Guid id, bool errorIfNotFound)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Candidate Get(string username, bool errorIfNotFound = true)
+        {
+            throw new NotImplementedException();
+        }
 
         [SetUp]
         public void SetUp()
@@ -118,7 +138,7 @@
             {
                 Strengths = "Strengths",
                 Improvements = "Improvements",
-                HobbiesAndInterests =  "HobbiesAndInterests",
+                HobbiesAndInterests = "HobbiesAndInterests",
                 Support = "Support"
             };
         }
@@ -143,7 +163,8 @@
                     FromYear = 2011,
                     ToYear = 2012,
                     Description = "Barista"
-                }, new WorkExperience
+                },
+                new WorkExperience
                 {
                     Employer = "Nether Products",
                     FromYear = 2011,
@@ -174,16 +195,6 @@
                     QualificationType = "A Level"
                 }
             };
-        }
-
-        public Candidate Get(Guid id)
-        {
-            var candidate = new Candidate
-            {
-                LegacyCandidateId = CreateLegacyCandidateId()
-            };
-
-            return candidate;
         }
     }
 }

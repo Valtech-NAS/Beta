@@ -15,13 +15,16 @@
     {
         private readonly IApplicationProvider _applicationProvider;
         private readonly ApplicationViewModelServerValidator _validator;
+        private readonly ICandidateServiceProvider _candidateServiceProvider;
 
         public ApplicationController(ISessionStateProvider sessionState,
             IUserServiceProvider userServiceProvider,
             IApplicationProvider applicationProvider,
+            ICandidateServiceProvider candidateServiceProvider,
             ApplicationViewModelServerValidator validator)
             : base(sessionState, userServiceProvider)
         {
+            _candidateServiceProvider = candidateServiceProvider;
             _applicationProvider = applicationProvider;
             _validator = validator;
         }
@@ -37,6 +40,8 @@
                 Response.StatusCode = 404;
                 return View("VacancyNotFound");
             }
+
+            _candidateServiceProvider.LastViewedVacancyId = id;
 
             return View(model);
         }
@@ -90,6 +95,7 @@
             }
             catch (Exception)
             {
+                TempData["SubmissionFailed"] = true;
                 return RedirectToAction("Preview", new { applicationId });
             }
         }

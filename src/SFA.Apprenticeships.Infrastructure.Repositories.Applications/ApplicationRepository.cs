@@ -6,6 +6,7 @@
     using System.Linq.Expressions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
@@ -50,11 +51,19 @@
             return _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
         }
 
-        public ApplicationDetail Get(Guid id)
+        public ApplicationDetail Get(Guid id, bool errorIfNotFound)
         {
             Logger.Debug("Called Mongodb to get ApplicationDetail with Id={0}", id);
 
             var mongoEntity = Collection.FindOneById(id);
+
+            if (mongoEntity == null && errorIfNotFound)
+            {
+                Logger.Debug("Unknown ApplicationDetail with Id={0}", id);
+
+                throw new CustomException("Unknown ApplicationDetail", ErrorCodes.ApplicationNotFoundError);
+            }
+
             return mongoEntity == null ? null : _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
         }
 
@@ -85,6 +94,13 @@
             return applicationDetailsList
                 .Where(filter)
                 .SingleOrDefault(); // we expect zero or 1
+        }
+
+        public ApplicationDetail Get(Guid id)
+        {
+            Logger.Debug("Called Mongodb to get ApplicationDetail with Id={0}", id);
+            var mongoEntity = Collection.FindOneById(id);
+            return mongoEntity == null ? null : _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
         }
     }
 }

@@ -40,6 +40,7 @@
         {
             var username = newCandidate.RegistrationDetails.EmailAddress;
             var activationCode = _codeGenerator.Generate();
+            
             var user = _userReadRepository.Get(username, false);
 
             if (user == null)
@@ -81,11 +82,6 @@
 
         private void SendActivationCode(Candidate candidate, string activationCode)
         {
-            if (candidate == null)
-            {
-                return;
-            }
-
             var emailAddress = candidate.RegistrationDetails.EmailAddress;
             var expiry = FormatActivationCodeExpiryDays();
             var firstName = candidate.RegistrationDetails.FirstName;

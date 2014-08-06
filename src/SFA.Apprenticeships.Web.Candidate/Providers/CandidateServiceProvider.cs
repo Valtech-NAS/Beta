@@ -2,11 +2,13 @@
 {
     using System;
     using System.Globalization;
+    using System.Linq;
     using Application.Interfaces.Candidates;
     using System.Web;
     using Application.Interfaces.Users;
     using Common.Constants;
     using Common.Providers;
+    using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
@@ -49,19 +51,33 @@
             return _userAccountService.GetUserStatus(username);
         }
 
+        public ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId)
+        {
+            var application = _candidateService.GetApplications(candidateId)
+                .SingleOrDefault(a => a.LegacyVacancyId == vacancyId);
+
+            if (application == null)
+            {
+                return null;
+            }
+
+            return application.Status;
+        }
+
         public bool Register(RegisterViewModel model)
         {
             try
             {
-                Candidate candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
-                
+                var candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
+
                 _candidateService.Register(candidate, model.Password);
                 SetRegisteredCookies(candidate);
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                LogError("Candidate registration failed for {0}", model.EmailAddress, ex);
                 return false;
             }
         }
@@ -75,13 +91,14 @@
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                LogError("Candidate activation failed for {0}", model.EmailAddress, ex);
                 return false;
             }
         }
 
-        public bool Authenticate(LoginViewModel model)
+        public Candidate Authenticate(LoginViewModel model)
         {
             try
             {
@@ -90,16 +107,16 @@
                 if (candidate == null)
                 {
                     // Incorrect user name or password.
-                    return false;
+                    return null;
                 }
 
                 SetLoggedInCookies(candidate);
-                return true;
+                return candidate;
             }
             catch (Exception ex)
             {
                 LogError("Candidate authentication failed for {0}", model.EmailAddress, ex);
-                return false;
+                return null;
             }
         }
 
@@ -111,6 +128,7 @@
             }
             catch (Exception ex)
             {
+                // TODO: fails silently, why not throw?
                 LogError("Send password reset code failed for {0}", model.EmailAddress, ex);
             }
         }
@@ -124,6 +142,7 @@
             catch (Exception ex)
             {
                 LogError("Send account unlock code failed for {0}", model.EmailAddress, ex);
+                // TODO: fails silently, why not throw?
             }
         }
 
@@ -137,7 +156,7 @@
             catch (CustomException ex)
             {
                 LogError("Reset forgotten password failed for {0}", model.EmailAddress, ex);
-                throw ;
+                throw;
             }
         }
 
@@ -169,6 +188,23 @@
             }
         }
 
+        public Candidate GetCandidate(string username)
+        {
+            return _candidateService.GetCandidate(username);
+        }
+
+        public Candidate GetCandidate(Guid candidateId)
+        {
+            return _candidateService.GetCandidate(candidateId);
+        }
+
+        /// <summary>
+        /// Gets or sets the candidate's last viewed vacancy ID. Currently this value is written to session.
+        ///  </summary>
+        /// <remarks>
+        /// The last viewed vacancy ID is used to determine the candidate's initial page redirection
+        /// following successful registration, login etc.
+        /// </remarks>
         public int? LastViewedVacancyId
         {
             get

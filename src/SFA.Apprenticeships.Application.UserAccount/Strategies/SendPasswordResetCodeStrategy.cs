@@ -43,11 +43,6 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
 
-            if (candidate == null)
-            {
-                throw new CustomException("Unknown candidate", ErrorCodes.UnknownCandidateError);
-            }
-
             var currentDateTime = DateTime.Now;
             var expiry = currentDateTime.AddDays(_passwordResetCodeExpiryDays);
 
@@ -73,11 +68,6 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
         private void SendPasswordResetCodeViaCommunicationService(Candidate candidate, string passwordResetCode)
         {
-            if (candidate == null)
-            {
-                return;
-            }
-
             var firstName = candidate.RegistrationDetails.FirstName;
             var emailAddress = candidate.RegistrationDetails.EmailAddress;
             var expiry = string.Format(_passwordResetCodeExpiryDays == 1 ? "{0} day" : "{0} days", _passwordResetCodeExpiryDays);

@@ -1,11 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.SpecFlow.Steps.Vacancies
 {
-    using System.Linq;
     using Common;
     using FluentAssertions;
     using FluentAutomation;
     using Pages;
-    using Specflow.FluentAutomation.Ext;
     using TechTalk.SpecFlow;
 
     [Binding]
@@ -76,8 +74,7 @@
 
         public void EnterCandidateCriteria(string location, string range)
         {
-            I
-                .Enter(location).In("#Location")
+            I.Enter(location).In("#Location")
                 .Wait(10)
                 .Click("ul.ui-autocomplete li.ui-menu-item:first")
                 .Select(range).From("#loc-within");
@@ -86,7 +83,7 @@
         [Then(@"I expect no search results to be returned")]
         public void ThenIExpectNoSearchResultsToBeReturned()
         {
-            I.Assert.Text("There are no Apprenticeships that match your search").In("#vacancy-result-summary");
+            I.Assert.Text("There are currently no apprenticeships that match your search.").In("#search-no-results-title");
         }
 
         [Then(@"I expect the sort dropdown to be removed")]

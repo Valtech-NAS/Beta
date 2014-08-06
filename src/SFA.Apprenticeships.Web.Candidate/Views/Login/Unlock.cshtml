@@ -5,13 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 id="account-unlock-h1" class="heading-large">Unlock account</h1>
-
 @if (TempData["ResentCode"] != null)
 {
-    <p id="ResentCodeText">TODO: Account unlock code sent to @Model.EmailAddress.</p>
+    <div class="panel-success">
+        <p id="ResentCodeText" class="text"><i class="fa fa-check"></i>An account unlock code was sent to @Model.EmailAddress</p>
+    </div>
 }
 
+<h1 id="account-unlock-h1" class="heading-large">Unlock account</h1>
 <p class="text">Enter your 6 character code to unlock your account</p>
 
 @using (Html.BeginForm("Unlock", "Login", FormMethod.Post, new { @id = "account-unlock-form" }))

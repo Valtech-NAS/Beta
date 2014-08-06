@@ -164,8 +164,7 @@
                     new {WithinDistance = 15, Name = "15 miles"},
                     new {WithinDistance = 20, Name = "20 miles"},
                     new {WithinDistance = 30, Name = "30 miles"},
-                    new {WithinDistance = 40, Name = "40 miles"},
-                    new {WithinDistance = 0, Name = "Nationwide"}
+                    new {WithinDistance = 40, Name = "40 miles"}
                 },
                 "WithinDistance",
                 "Name",
