@@ -26,14 +26,14 @@
         {
             <div class="form-group">
                 @Html.Label("CandidateAnswer1", Model.SupplementaryQuestion1, new {@class = "form-label"})
-                @Html.Display("CandidateAnswer1", Model.CandidateAnswer1, new {@class = "form-control"})
+                <span class="form-prepopped">@Html.Display("CandidateAnswer1", Model.CandidateAnswer1)</span>
             </div>
         }
         @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion2))
         {
             <div class="form-group">
                 @Html.Label("CandidateAnswer2", Model.SupplementaryQuestion2, new {@class = "form-label"})
-                @Html.Display("CandidateAnswer2", Model.CandidateAnswer2, new {@class = "form-control"})
+                <span class="form-prepopped">@Html.Display("CandidateAnswer2", Model.CandidateAnswer2)</span>
             </div>
         }
     </fieldset>

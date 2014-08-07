@@ -13,8 +13,8 @@
         </details>
     </div>
 
-    @Html.FormTextAreaFor(m => m.WhatAreYourStrengths)
-    @Html.FormTextAreaFor(m => m.WhatDoYouFeelYouCouldImprove)
-    @Html.FormTextAreaFor(m => m.WhatAreYourHobbiesInterests)
-    @Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview)
+    @Html.FormTextAreaFor(m => m.WhatAreYourStrengths, hintHtmlAttributes: new { @class = "text" })
+    @Html.FormTextAreaFor(m => m.WhatDoYouFeelYouCouldImprove, hintHtmlAttributes: new { @class = "text" })
+    @Html.FormTextAreaFor(m => m.WhatAreYourHobbiesInterests, hintHtmlAttributes: new { @class = "text" })
+    @Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview, hintHtmlAttributes: new { @class = "text" })
 </fieldset>
