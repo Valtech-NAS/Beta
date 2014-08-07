@@ -13,12 +13,18 @@
             JsonSettings.Initialize();
 
             return svc => svc.Register(OverrideConsumerErrorStrategy)
-                             .Register(OverrideSerializer);
+                             .Register(OverrideSerializer)
+                             .Register(OverrideLogger);
         }
 
         private static ISerializer OverrideSerializer(EasyNetQ.IServiceProvider provider)
         {
             return new Serializers.JsonSerializer(provider.Resolve<ITypeNameSerializer>());
+        }
+
+        private static IEasyNetQLogger OverrideLogger(EasyNetQ.IServiceProvider provider)
+        {
+            return new EasyNetQLogger();
         }
 
         private static IConsumerErrorStrategy OverrideConsumerErrorStrategy(EasyNetQ.IServiceProvider provider)

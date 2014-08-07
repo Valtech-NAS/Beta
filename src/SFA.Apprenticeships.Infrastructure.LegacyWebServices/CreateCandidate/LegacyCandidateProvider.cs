@@ -7,6 +7,7 @@
     using NLog;
     using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
+    using Newtonsoft.Json;
 
     public class LegacyCandidateProvider : ILegacyCandidateProvider
     {
@@ -48,7 +49,11 @@
             {
                 if (response != null)
                 {
-                    Logger.Error("Legacy CreateCandidate reported {0} validation errors", response.ValidationErrors.Count());
+                    var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
+
+                    Logger.Error(
+                        "Legacy CreateCandidate reported {0} validation error(s): {1}",
+                        response.ValidationErrors.Count(), responseAsJson);
                 }
                 else
                 {

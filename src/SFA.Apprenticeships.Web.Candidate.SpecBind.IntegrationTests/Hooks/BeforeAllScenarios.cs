@@ -8,9 +8,10 @@
     [Binding]
     public class BeforeAllScenarios
     {
-        private readonly IBrowser _browser;
-        private readonly IObjectContainer _objectContainer;
-        private readonly IWebDriver _driver;
+        // TODO: DEADCODE?
+        //private readonly IBrowser _browser;
+        //private readonly IObjectContainer _objectContainer;
+        //private readonly IWebDriver _driver;
 
         public BeforeAllScenarios()
         {
@@ -19,6 +20,7 @@
         [BeforeScenario]
         public void Before()
         {
+            // TODO: DEADCODE?
             //_driver.Manage().Cookies.DeleteAllCookies();
         }
 
