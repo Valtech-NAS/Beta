@@ -6,7 +6,7 @@
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            //filters.Add(new HandleErrorAttribute()); // not needed as handling errors at web server level not MVC
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿<% Response.StatusCode = 500; %>
+<!DOCTYPE html>
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
 <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
 <!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
@@ -8,14 +9,14 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Apprenticeships - 404</title>
+    <title>Apprenticeships - 500</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--[if gt IE 8]><!--><link href="../_assets/css/main.css" rel="stylesheet" /><!--<![endif]-->
-    <!--[if lte IE 8]><link href="../_assets/css/main-ie8.css" rel="stylesheet" /><![endif]-->
-    <!--[if lte IE 8]><link href="../_assets/css/fonts-ie8.css" rel="stylesheet" /><![endif]-->
-    <!--[if gte IE 9]><!--><link href="../_assets/css/fonts.css" rel="stylesheet" /><!--<![endif]-->
-    <link rel="shortcut icon" href="../_assets/img/favicon.ico" type="image/x-icon">
-    <link href="../_assets/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!--[if gt IE 8]><!--><link href="/Content/_assets/css/main.css" rel="stylesheet" /><!--<![endif]-->
+    <!--[if lte IE 8]><link href="/Content/_assets/css/main-ie8.css" rel="stylesheet" /><![endif]-->
+    <!--[if lte IE 8]><link href="/Content/_assets/css/fonts-ie8.css" rel="stylesheet" /><![endif]-->
+    <!--[if gte IE 9]><!--><link href="/Content/_assets/css/fonts.css" rel="stylesheet" /><!--<![endif]-->
+    <link rel="shortcut icon" href="/Content/_assets/img/favicon.ico" type="image/x-icon">
+    <link href="/Content/_assets/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="skiplink-container">
@@ -27,8 +28,8 @@
         <div class="global-header__wrapper">
             <div class="global-header__logo">
                 <a href="http://gov.uk" title="Go to the GOV.UK homepage" class="govuk-logo">
-                <img src="../_assets/img/gov.uk_logotype_crown.png" alt="Crown">
-                GOV.UK
+                    <img src="/Content/_assets/img/gov.uk_logotype_crown.png" alt="Crown">
+                    GOV.UK
                 </a>
             </div>
             <div class="global-header__nav">
@@ -43,9 +44,9 @@
             </div>
         </div>
         <main role="main" id="main">
-            <h1 class="heading-xlarge">Page not found</h1>
+            <h1 class="heading-xlarge">Service unavailable</h1>
             <div class="text">
-                <p>The page you were looking for couldn't be found. Make sure the URL is correct before you try again. </p>
+                <p>Sorry, there appears to be an error with this page. Please refresh your browser or try signing in again. </p>
             </div>
         </main>
     </div>
@@ -60,7 +61,7 @@
                     <li class="footer__ogl"><a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2" class="ir ogl-logo">OGL</a>All content is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2">Open Government Licence v2.0</a>, except where otherwise stated</li>
                 </ul>
                 <a class="footer__copyright" href="http://www.nationalarchives.gov.uk/information-management/our-services/crown-copyright.htm" target="_blank">
-                    <img src="../_assets/img/logos/govuk-crest@2x.png" width="125" height="102" alt="Crown copyright logo">
+                    <img src="/Content/_assets/img/logos/govuk-crest@2x.png" width="125" height="102" alt="Crown copyright logo">
                     <p>&copy; Crown copyright</p>
                 </a>
             </div>
