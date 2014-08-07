@@ -10,16 +10,17 @@
         {
             switch (source)
             {
-                case "Sent": //todo: confirm value from w/s - awaiting response from John @ Capgemini
+                case "Sent":
                     return ApplicationStatuses.Submitted;
-                case "InProgress": //todo: confirm value from w/s - awaiting response from John @ Capgemini
+                case "InProgress":
                     return ApplicationStatuses.InProgress;
-                case "Successful": //todo: confirm value from w/s - awaiting response from John @ Capgemini
+                case "Successful":
                     return ApplicationStatuses.Successful;
-                case "Unsuccessful": //todo: confirm value from w/s - awaiting response from John @ Capgemini
+                case "Unsuccessful":
                     return ApplicationStatuses.Unsuccessful;
-                case "PastApplication": //todo: confirm value from w/s - awaiting response from John @ Capgemini
-                    return ApplicationStatuses.Expired;
+                case "PastApplication":
+                case "Withdrawn":
+                    return ApplicationStatuses.ExpiredOrWithdrawn;
                 default:
                     return ApplicationStatuses.Unknown;
             }

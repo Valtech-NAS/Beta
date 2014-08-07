@@ -74,6 +74,7 @@
     <Compile Include="Strategies\LegacyResetForgottenPasswordStrategy.cs" />
     <Compile Include="Strategies\LegacySubmitApplicationStrategy.cs" />
     <Compile Include="Strategies\LegacyUnlockAccountStrategy .cs" />
+    <Compile Include="Strategies\LegacyVacancyStatusProvider.cs" />
     <Compile Include="Strategies\RegisterCandidateStrategy.cs" />
     <Compile Include="Strategies\SaveApplicationStrategy.cs" />
   </ItemGroup>

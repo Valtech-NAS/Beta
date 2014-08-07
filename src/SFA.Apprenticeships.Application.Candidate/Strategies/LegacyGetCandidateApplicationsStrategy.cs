@@ -43,7 +43,7 @@
                 // (1) call ILegacyApplicationsProvider.GetCandidateApplicationStatuses
                 var applicationStatuses = _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate).ToList();
 
-                // (2) update the candidate's application with statuses from (1)
+                // (2) update the candidate's applications with statuses from (1)
                 _applicationStatusUpdater.Update(candidate, applicationStatuses);
 
                 // (3) for any draft applications, update status based on current vacancy status
@@ -68,7 +68,7 @@
             }
             catch (Exception ex)
             {
-                // if fails just return apps in their current status
+                // if fails just return apps with their current status
                 Logger.Warn("Failed to update candidate's application statuses from legacy", ex);
             }
 
