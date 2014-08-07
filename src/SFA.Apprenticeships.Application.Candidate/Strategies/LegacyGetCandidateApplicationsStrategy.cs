@@ -40,6 +40,7 @@
             {
                 var candidate = _candidateReadRepository.Get(candidateId);
 
+                //todo: may skip 1+2 below... TBC
                 // (1) call ILegacyApplicationsProvider.GetCandidateApplicationStatuses
                 var applicationStatuses = _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate).ToList();
 
