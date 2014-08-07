@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.RabbitMQ
 {
-    using System;
     using System.Reflection;
-    using Application.Interfaces.Messaging;
     using EasyNetQ;
     using EasyNetQ.AutoSubscribe;
     using StructureMap;
@@ -22,7 +20,7 @@
             var autosubscriber = new AutoSubscriber(_bus, subscriptionId)
             {
                 AutoSubscriberMessageDispatcher = new StructureMapMessageDispatcher(ObjectFactory.Container),
-                GenerateSubscriptionId = c => c.ConcreteType.Name
+                GenerateSubscriptionId = c => string.Format("{0}_{1}", c.ConcreteType.Name, subscriptionId)
             };
 
             autosubscriber.Subscribe(assembly);
