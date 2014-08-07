@@ -248,6 +248,7 @@
             Logger.Debug("{0} requested activation code to be resent", emailAddress);
 
             _candidateServiceProvider.ResendActivationCode(emailAddress);
+            TempData["ResentCode"] = true;
 
             return RedirectToAction("Activation");
         }
