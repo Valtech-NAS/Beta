@@ -4,11 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="hgroup">
-    <h1 class="heading-xlarge">Vacancy Not Found</h1>
-    <h2 class="subtitle"></h2>
+<div class="text">
+    <h1 class="heading-xlarge">Apprenticeship no longer available</h1>
 </div>
 
-<p>The vacancy you are looking cannot be found or is no longer available.</p>
+<div class="text">
+    <p>The apprenticeship you’re applying for is no longer available. This could be because it’s already been filled or was removed by the employer.</p>
+</div>
 
-<p><a href="javascript:history.back()">Back</a></p>
+<p><a href="@Url.Action("Index", "VacancySearch")">Find an apprenticeship</a></p>
