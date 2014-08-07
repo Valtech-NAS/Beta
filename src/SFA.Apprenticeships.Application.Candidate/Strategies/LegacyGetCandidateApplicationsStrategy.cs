@@ -40,32 +40,31 @@
             {
                 var candidate = _candidateReadRepository.Get(candidateId);
 
-                //todo: may skip 1+2 below... TBC
-                // (1) call ILegacyApplicationsProvider.GetCandidateApplicationStatuses
-                var applicationStatuses = _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate).ToList();
+                //todo: may optionally skip 1+2 below if recently retrieved... TBC later
+                // (1) get the current application statuses for submitted applications from legacy
+                var submittedApplicationStatuses = _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate).ToList();
 
-                // (2) update the candidate's applications with statuses from (1)
-                _applicationStatusUpdater.Update(candidate, applicationStatuses);
+                // (2) update the candidate's applications in the repo with statuses from (1)
+                _applicationStatusUpdater.Update(candidate, submittedApplicationStatuses);
 
                 // (3) for any draft applications, update status based on current vacancy status
-                //var candidateApplications = _applicationReadRepository.GetForCandidate(candidateId);
-                //var candidateDraftApplicationIds = candidateApplications
-                //    .Where(a => a.Status == ApplicationStatuses.Draft)
-                //    .Select(a => a.ApplicationId);
+                var candidateApplications = _applicationReadRepository.GetForCandidate(candidateId);
+                var draftApplicationIds = candidateApplications
+                    .Where(a => a.Status == ApplicationStatuses.Draft)
+                    .Select(a => a.ApplicationId);
 
-                //foreach (var applicationId in candidateDraftApplicationIds) //todo: parallel?
-                //{
-                //    var application = _applicationReadRepository.Get(applicationId);
-                //    var vacancyId = application.LegacyApplicationId;
-                //    var vacancyStatus = _vacancyStatusProvider.GetVacancyStatus(vacancyId);
+                foreach (var applicationId in draftApplicationIds) //todo: parallel?
+                {
+                    var application = _applicationReadRepository.Get(applicationId);
+                    var vacancyStatus = _vacancyStatusProvider.GetVacancyStatus(application.LegacyApplicationId);
 
-                //    //todo: update each application status for any that are NOT VacancyStatuses.Live
-                //    if (blah)
-                //    {
-                //        application.Status = ApplicationStatuses.Expired;
-                //        _applicationWriteRepository.Save(application);
-                //    }
-                //}
+                    //todo: update each application status for any that are NOT VacancyStatuses.Live
+                    //if (blah)
+                    //{
+                    //    application.Status = ApplicationStatuses.Expired;
+                    //    _applicationWriteRepository.Save(application);
+                    //}
+                }
             }
             catch (Exception ex)
             {

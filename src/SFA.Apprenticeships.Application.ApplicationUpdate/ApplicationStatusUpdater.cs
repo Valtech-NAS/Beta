@@ -30,7 +30,9 @@
 
                 if (application != null)
                 {
-                    //todo: need to check vacancy status too or will app status reflect this already? check with legacy team
+                    //todo: do we need to check vacancy status too and then derive application status? 
+                    // ...or does the the app status already reflect the vacancy status? (e.g. if withdrawn, etc)
+                    // check with legacy team
                     if (application.Status != status.ApplicationStatus)
                     {
                         _applicationWriteRepository.Save(application);
