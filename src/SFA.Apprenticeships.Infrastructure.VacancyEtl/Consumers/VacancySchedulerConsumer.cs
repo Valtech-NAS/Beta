@@ -6,7 +6,7 @@
     using NLog;
     using Application.VacancyEtl;
     using Application.VacancyEtl.Entities;
-    using VacancyIndexer.Services;
+    using VacancyIndexer;
 
     public class VacancySchedulerConsumer
     {

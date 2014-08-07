@@ -6,7 +6,6 @@
     using NUnit.Framework;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
-    using Services;
     using StructureMap;
 
     [TestFixture]

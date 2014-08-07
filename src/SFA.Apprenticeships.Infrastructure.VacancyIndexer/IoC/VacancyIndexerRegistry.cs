@@ -2,7 +2,6 @@
 {
     using Domain.Interfaces.Mapping;
     using Mappers;
-    using Services;
     using StructureMap.Configuration.DSL;
 
     public class VacancyIndexerRegistry : Registry

@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using EasyNetQ.AutoSubscribe;
     using Application.VacancyEtl.Entities;
-    using VacancyIndexer.Services;
+    using VacancyIndexer;
 
     public class VacancySummaryConsumerAsync : IConsumeAsync<VacancySummaryUpdate>
     {

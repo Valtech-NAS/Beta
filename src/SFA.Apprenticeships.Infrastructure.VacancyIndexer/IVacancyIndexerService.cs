@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer.Services
+﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer
 {
     using System;
     using Application.VacancyEtl.Entities;

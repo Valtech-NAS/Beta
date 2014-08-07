@@ -5,6 +5,7 @@
     using System.Linq;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
+    using Application.Vacancy;
     using Domain.Entities.Locations;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;

@@ -68,6 +68,7 @@
     <Compile Include="Strategies\IActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\ISaveApplicationStrategy.cs" />
     <Compile Include="Strategies\ISubmitApplicationStrategy.cs" />
+    <Compile Include="Strategies\IVacancyStatusProvider.cs" />
     <Compile Include="Strategies\LegacyActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\LegacyGetCandidateApplicationsStrategy.cs" />
     <Compile Include="Strategies\LegacyResetForgottenPasswordStrategy.cs" />
@@ -88,6 +89,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>
       <Name>SFA.Apprenticeships.Application.UserAccount</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
+      <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancy</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>

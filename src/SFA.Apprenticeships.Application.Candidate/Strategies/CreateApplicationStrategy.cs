@@ -9,7 +9,7 @@
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Vacancies;
+    using Vacancy;
 
     public class CreateApplicationStrategy : ICreateApplicationStrategy
     {

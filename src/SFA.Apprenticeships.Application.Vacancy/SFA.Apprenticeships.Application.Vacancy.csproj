@@ -45,6 +45,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="IVacancyDataProvider.cs" />
+    <Compile Include="IVacancySearchProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VacancySearchService.cs" />
     <Compile Include="VacancyDataService.cs" />

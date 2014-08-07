@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch.IoC
 {
+    using Application.Vacancy;
     using StructureMap.Configuration.DSL;
-    using Application.Interfaces.Vacancies;
 
     public class VacancySearchRegistry : Registry
     {

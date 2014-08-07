@@ -5,7 +5,6 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
-    using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
     using Strategies;
@@ -15,7 +14,6 @@
     {
         private readonly IActivateCandidateStrategy _activateCandidateStrategy;
         private readonly IApplicationReadRepository _applicationReadRepository;
-        private readonly IApplicationWriteRepository _applicationWriteRepository;
         private readonly IAuthenticateCandidateStrategy _authenticateCandidateStrategy;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
@@ -27,7 +25,7 @@
         private readonly ISubmitApplicationStrategy _submitApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
 
-        public CandidateService(IApplicationWriteRepository applicationWriteRepository,
+        public CandidateService(
             ICandidateReadRepository candidateReadRepository,
             ICandidateWriteRepository candidateWriteRepository,
             IActivateCandidateStrategy activateCandidateStrategy,
@@ -40,7 +38,6 @@
             IUnlockAccountStrategy unlockAccountStrategy, IApplicationReadRepository applicationReadRepository,
             ISaveApplicationStrategy saveApplicationStrategy)
         {
-            _applicationWriteRepository = applicationWriteRepository;
             _candidateReadRepository = candidateReadRepository;
             _candidateWriteRepository = candidateWriteRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -83,8 +80,6 @@
 
         public Candidate GetCandidate(Guid id)
         {
-            Condition.Requires(id);
-
             return _candidateReadRepository.Get(id);
         }
 
@@ -92,7 +87,7 @@
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
-            return _candidateReadRepository.Get(username);
+            throw new NotImplementedException();
         }
 
         public Candidate SaveCandidate(Candidate candidate)
@@ -109,16 +104,6 @@
             return _createApplicationStrategy.CreateApplication(candidateId, vacancyId);
         }
 
-        public ApplicationDetail GetApplication(Guid candidateId, int vacancyId)
-        {
-            Condition.Requires(candidateId);
-
-            var applicationDetail = _applicationReadRepository.GetForCandidate(
-                candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
-
-            return applicationDetail;
-        }
-
         public ApplicationDetail GetApplication(Guid applicationId)
         {
             Condition.Requires(applicationId);
@@ -126,11 +111,18 @@
             return _applicationReadRepository.Get(applicationId);
         }
 
-        public ApplicationDetail SaveApplication(ApplicationDetail application)
+        public void ArchiveApplication(Guid applicationId)
+        {
+            Condition.Requires(applicationId);
+
+            throw new NotImplementedException();
+        }
+
+        public void SaveApplication(ApplicationDetail application)
         {
             Condition.Requires(application);
 
-            return _saveApplicationStrategy.SaveApplication(application);
+            _saveApplicationStrategy.SaveApplication(application);
         }
 
         public IList<ApplicationSummary> GetApplications(Guid candidateId)

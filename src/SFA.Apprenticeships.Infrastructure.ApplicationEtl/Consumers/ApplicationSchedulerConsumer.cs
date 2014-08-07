@@ -8,5 +8,6 @@
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         //todo: implement ApplicationSchedulerConsumer - similar purpose to VacancySchedulerConsumer
+        // call IApplicationStatusProcessor.QueueApplicationStatuses
     }
 }

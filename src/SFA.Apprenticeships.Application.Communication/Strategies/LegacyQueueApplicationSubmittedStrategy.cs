@@ -6,7 +6,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
     using Interfaces.Messaging;
-    using Interfaces.Vacancies;
+    using Vacancy;
 
     public class LegacyQueueApplicationSubmittedStrategy : ISendApplicationSubmittedStrategy
     {

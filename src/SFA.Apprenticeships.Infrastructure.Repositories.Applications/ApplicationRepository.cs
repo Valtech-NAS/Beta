@@ -77,7 +77,7 @@
 
         public IList<ApplicationSummary> GetForCandidate(Guid candidateId)
         {
-            //todo: retrieve applications for the specified candidate, should exclude any that are archived
+            //todo: project application summaries for the specified candidate, exclude any that are archived
             throw new NotImplementedException();
         }
 

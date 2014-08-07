@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    using Application.Interfaces.Vacancies;
+    using Application.Vacancy;
     using Configuration;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Mapping;

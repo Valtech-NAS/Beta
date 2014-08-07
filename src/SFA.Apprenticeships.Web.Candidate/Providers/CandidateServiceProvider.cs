@@ -2,6 +2,7 @@
 {
     using System;
     using System.Globalization;
+    using System.Linq;
     using Application.Interfaces.Candidates;
     using System.Web;
     using Application.Interfaces.Users;
@@ -52,7 +53,8 @@
 
         public ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId)
         {
-            var application = _candidateService.GetApplication(candidateId, vacancyId);
+            var application = _candidateService.GetApplications(candidateId)
+                .SingleOrDefault(a => a.LegacyVacancyId == vacancyId);
 
             if (application == null)
             {
