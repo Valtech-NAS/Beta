@@ -26,57 +26,128 @@
     @Html.DisplayFor(m => m.Candidate)
     @Html.EditorFor(m => m.Candidate.Education)
 
-    <fieldset id="applyQualifications" class="fieldset-with-border">
-        <legend class="heading-large">Qualifications</legend>
-        <table class="grid-3-4">
-            <colgroup>
-                <col class="t40">
-                <col class="t25">
-                <col class="t15">
-                <col class="t10">
-                <col class="t10">
-                <col>
-            </colgroup>
-            <thead>
-                <tr>
-                    <th class="th-qualSubject">
-                        <span class="heading-span">Subject</span>
-                    </th>
-                    <th class="th-qualGrade">
-                        <span class="heading-span">Grade</span>
-                    </th>
-                    <th class="th-qualYear">
-                        <span class="heading-span">Year</span>
-                    </th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody class="tbody-qual">
-                @foreach (var qualification in Model.Candidate.Qualifications)
-                {
-                    <tr class="tr-qualRow">
-                        <td class="td-qualcell">
-                            <input class="form-control qual-input-edit" type="text" value="@qualification.Subject" readonly>
-                        </td>
-                        <td class="td-qualcell">
-                            <input class="form-control qual-input-edit" type="text" value="@qualification.Grade" readonly>
-                        </td>
-                        <td class="td-qualcell">
-                            <input class="form-control qual-input-edit" type="text" value="@qualification.Year" readonly>
-                        </td>
-                        <td class="td-qualEdit ta-center">
-                            <span class="fake-link cell-span">Edit</span>
-                        </td>
-                        <td class="qualRemove ta-center">
-                            <i class="cell-span"><i class="ir icon-remove">Remove</i></i>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-       
-    </fieldset>
+    <div data-bind="visible: selectedSection() === 'applyQualifications', stopBinding:true">
+
+        <fieldset class="fieldset-with-border" id="applyQualifications">
+            <legend class="heading-large">Qualifications</legend>
+            <p class="form-label">Do you have any qualifications?</p>
+            <div class="form-group form-group-compound inline clearfix">
+                <label data-target="qualifications-panel" for="qualifications-yes" class="block-label">
+                    <input name="quals" type="radio" id="qualifications-yes" value="yes" data-bind="checked: hasQualifications">Yes
+                </label>
+                <label for="qualifications-no" class="block-label">
+                    <input name="quals" type="radio" id="qualifications-no" value="no" data-bind="checked: hasQualifications">No
+                </label>
+            </div>
+            <div id="qualifications-panel" class="toggle-content">
+                <div class="clearfix">
+                    <div class="inline-fixed">
+                        <div class="form-group">
+                            <label for="qual-type" class="form-label">Type of qualification</label>
+                            <select id="qual-type" data-bind="value: selectedQualification">
+                                <option value="">Select from list</option>
+                                <option value="GCSE">GCSE</option>
+                                <option value="AS Level">AS Level</option>
+                                <option value="A Level">A Level</option>
+                                <option value="BTEC">BTEC</option>
+                                <option value="NVQ or SVQ Level 1">NVQ or SVQ Level 1</option>
+                                <option value="NVQ or SVQ Level 2">NVQ or SVQ Level 2</option>
+                                <option value="NVQ or SVQ Level 3">NVQ or SVQ Level 3</option>
+                                <option id="otherQualOption" value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject-year" class="form-label">Year</label>
+                            <input maxlength="4" type="tel" class="form-control form-control-small" pattern="[0-9]*"
+                                   id="subject-year" data-bind="value: year">
+                        </div>
+                    </div>
+                    <div class="form-group toggle-content">
+                        <label for="other-qual" class="form-label">Name of other qualification</label>
+                        <input type="text" class="form-control" id="other-qual" data-bind="value: otherQualification">
+                    </div>
+                    <div class="form-group form-group-compound">
+                        <label for="subject-name" class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="subject-name" data-bind="value: subject">
+                    </div>
+                    <div class="inline-fixed">
+                        <div class="form-group">
+                            <label for="subject-grade" class="form-label">Grade</label>
+                            <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind="value: grade">
+                        </div>
+                        <div class="form-group">
+                            <input id="qual-predicted" type="checkbox" data-bind="checked: predicted">
+                            <label for="qual-predicted">Predicted?</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="button" id="saveQualification" data-bind="click: addQualification">Add qualification</button>
+                    </div>
+                </div>
+                <div>
+                    <div class="hgroup-small">
+                        <h3 class="heading-small"></h3>
+                    </div>
+                    <table class="grid-3-4">
+                        <colgroup>
+                            <col class="t40">
+                            <col class="t25">
+                            <col class="t15">
+                            <col class="t10">
+                            <col class="t10">
+                            <col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span class="heading-span">Subject</span>
+                                </th>
+                                <th>
+                                    <span class="heading-span">Grade</span>
+                                </th>
+                                <th>
+                                    <span class="heading-span">Year</span>
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: qualifications">
+                            <tr>
+                                <td>
+                                    <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationSubject, enable: editMode">
+                                </td>
+                                <td>
+                                    <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationGrade, enable: editMode">
+                                </td>
+                                <td>
+                                    <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationYear, enable: editMode">
+                                </td>
+                                <td class="ta-center">
+                                    <span class="fake-link cell-span" data-bind='click: $root.editQualification'>Edit</span>
+                                </td>
+                                <td class="ta-center">
+                                    <i class="cell-span"><i class="ir icon-remove" data-bind='click: $root.removeQualification'>Remove</i></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group text">
+                <details>
+                    <summary role="button">Yet to sit your exams?</summary>
+                    <p class="panel-indent">
+                        If you haven’t taken your exams yet, or are still awaiting for your
+                        results, enter the grades you're predicted to get. If you’re unsure
+                        where to find these, contact your school or college.
+                    </p>
+                </details>
+            </div>
+        </fieldset>
+
+
+    </div>
 
     <fieldset id="applyWorkExperience" class="fieldset-with-border">
         <legend class="heading-large">Work experience</legend>
@@ -187,3 +258,90 @@
     
 }
 
+@section scripts{
+    
+    <script type="text/javascript">
+
+        var QualificationItemModel = function(qualType,qualOtherType, qualYear, qualSubject, qualGrade, qualPredicted) {
+
+            var self = this;
+
+            self.qualificationType = ko.observable(qualType).extend({ required: true });
+            self.otherQualificationType = ko.observable(qualOtherType);
+            self.qualificationYear = ko.observable(qualYear).extend({ required: true, min: 1914 });
+            self.qualificationSubject = ko.observable(qualSubject).extend({ required: true });
+            self.qualificationGrade = ko.observable(qualGrade).extend({ required: true });
+            self.qualificationPredicted = ko.observable(qualPredicted);
+            self.editMode = ko.observable(false);
+        };
+
+        var QualificationModel = function() {
+
+            var self = this;
+
+            self.hasQualifications = ko.observable("no");
+            self.selectedQualification = ko.observable("").extend({ required: true });
+            self.otherQualification = ko.observable("");
+            self.year = ko.observable(0).extend({ required: true, min: 1914 });
+            self.subject = ko.observable("").extend({ required: true });
+            self.grade = ko.observable("").extend({ required: true });
+            self.predicted = ko.observable(false);
+
+            self.qualifications = ko.observableArray();
+
+            self.errors = ko.validation.group(self);
+
+        };
+
+        QualificationModel.prototype = {
+
+            addQualification: function() {
+
+                var self = this;
+
+                if (self.errors().length == 0) {
+                    var qual = new QualificationItemModel(self.selectedQualification(),self.otherQualification(), self.year(), self.subject(), self.grade(), self.predicted());
+                    self.qualifications.push(qual);
+                }
+            },
+            removeQualification: function(qualification) {
+
+                var self = this;
+
+                self.qualifications.remove(qualification);
+
+            },
+            editQualification: function (qualification) {
+                qualification.editMode(true);
+            },
+            getqualifications:function(data) {
+
+                alert(JSON.stringify(data));
+                var self = this;
+
+                $(data).each(function(index, item) {
+
+                    var mappedQual = new QualificationItemModel(item.QualificationType, "", item.Year,item.Subject, item.Grade, item.IsPredicted); 
+                    self.qualifications.push(mappedQual);
+                });
+
+            }
+        };
+
+        var qualificationData = null;
+
+        $(function() {
+            qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
+
+            var qualModel = new QualificationModel();
+            qualModel.getqualifications(qualificationData);
+            ko.applyBindings(qualModel, document.getElementById('applyQualifications'));
+
+        });
+
+    </script>
+
+    @*<script src="~/Content/_assets/js/vendor/knockout-3.1.0.js"></script>
+    <script src="~/Content/_assets/js/vendor/knockout.validation.js"></script>*@
+    @*<script src="~/Content/_assets/js/nas/applicationform.js"></script>*@
+}
