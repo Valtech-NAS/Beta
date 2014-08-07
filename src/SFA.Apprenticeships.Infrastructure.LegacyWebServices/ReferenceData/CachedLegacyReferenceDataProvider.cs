@@ -22,11 +22,11 @@
 
         public IEnumerable<ReferenceDataItem> GetReferenceData(string type)
         {
-            Logger.Info("GetReferenceData called for CacheKey={0}, Type={1}", CacheKey.Key(), type);
+            Logger.Debug("GetReferenceData called for CacheKey={0}, Type={1}", CacheKey.Key(), type);
 
             var items = _cache.Get(CacheKey, _referenceDataProvider.GetReferenceData, type);
 
-            Logger.Info("Successfully returned items for {0}", type);
+            Logger.Debug("Successfully returned items for {0}", type);
 
             return items;
         }
