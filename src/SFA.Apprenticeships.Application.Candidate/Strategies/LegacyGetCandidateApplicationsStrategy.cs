@@ -47,24 +47,25 @@
                 // (2) update the candidate's applications in the repo with statuses from (1)
                 _applicationStatusUpdater.Update(candidate, submittedApplicationStatuses);
 
+                //todo: not doing 3 below for now... TBC later
                 // (3) for any draft applications, update status based on current vacancy status
-                var candidateApplications = _applicationReadRepository.GetForCandidate(candidateId);
-                var draftApplicationIds = candidateApplications
-                    .Where(a => a.Status == ApplicationStatuses.Draft)
-                    .Select(a => a.ApplicationId);
+                //var candidateApplications = _applicationReadRepository.GetForCandidate(candidateId);
+                //var draftApplicationIds = candidateApplications
+                //    .Where(a => a.Status == ApplicationStatuses.Draft)
+                //    .Select(a => a.ApplicationId);
 
-                foreach (var applicationId in draftApplicationIds) //todo: parallel?
-                {
-                    var application = _applicationReadRepository.Get(applicationId);
-                    var vacancyStatus = _vacancyStatusProvider.GetVacancyStatus(application.LegacyApplicationId);
+                //foreach (var applicationId in draftApplicationIds) //todo: parallel?
+                //{
+                //    var application = _applicationReadRepository.Get(applicationId);
+                //    var vacancyStatus = _vacancyStatusProvider.GetVacancyStatus(application.LegacyApplicationId);
 
-                    //todo: update each application status for any that are NOT VacancyStatuses.Live
-                    //if (blah)
-                    //{
-                    //    application.Status = ApplicationStatuses.Expired;
-                    //    _applicationWriteRepository.Save(application);
-                    //}
-                }
+                //    //todo: update each application status for any that are NOT VacancyStatuses.Live
+                //    //if (blah)
+                //    //{
+                //    //    application.Status = ApplicationStatuses.Expired;
+                //    //    _applicationWriteRepository.Save(application);
+                //    //}
+                //}
             }
             catch (Exception ex)
             {
