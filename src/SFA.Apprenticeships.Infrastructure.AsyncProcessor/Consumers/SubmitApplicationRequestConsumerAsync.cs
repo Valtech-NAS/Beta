@@ -43,7 +43,7 @@
 
         public void CreateApplication(SubmitApplicationRequest request)
         {
-            var application = _applicationReadRepository.Get(request.ApplicationId);
+            var application = _applicationReadRepository.Get(request.ApplicationId, true);
 
             EnsureApplicationCanBeCreated(application);
 

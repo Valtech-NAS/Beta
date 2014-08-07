@@ -54,7 +54,7 @@
         private static User CreateUser()
         {
             var rnd = new Random();
-            var emailSuffix = rnd.Next(10000, 99999);
+            var emailSuffix = rnd.Next();
             var email = string.Format("specflowtest{0}@test.test", emailSuffix).ToLower();
 
             return new User

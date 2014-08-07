@@ -111,7 +111,6 @@
 
             if (user == null)
             {
-                // TODO: AG: US444: UserStatuses.NotFound?
                 return UserStatuses.Unknown;
             }
 

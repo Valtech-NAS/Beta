@@ -13,7 +13,7 @@
 }
 
 <h1 id="account-unlock-h1" class="heading-large">Unlock account</h1>
-<p class="text">Enter your 6 character code to unlock your account</p>
+<p class="text">Enter your 6-character code to unlock your account</p>
 
 @using (Html.BeginForm("Unlock", "Login", FormMethod.Post, new { @id = "account-unlock-form" }))
 {
@@ -24,18 +24,21 @@
 
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    @Html.FormTextFor(m => m.AccountUnlockCode, controlHtmlAttributes: new { @class = "form-control-2-3", @maxlength = "6" })
+    @Html.FormTextFor(m => m.AccountUnlockCode, controlHtmlAttributes: new { @maxlength = "6" }, containerHtmlAttributes: new { @class = "form-group-withlink" })
 
     <div class="form-group">
-        <button class="button" id="verify-code-button">Verify code</button>
+        <p>
+            @Html.ActionLink(
+                linkText: "Resend code",
+                actionName: "ResendAccountUnlockCode",
+                routeValues: new { @emailAddress = Model.EmailAddress },
+                htmlAttributes: new { @id = "ResendAccountUnlockCodeLink" })
+        </p>
+        
     </div>
 
     <div class="form-group">
-        @Html.ActionLink(
-        linkText: "Resend code",
-        actionName: "ResendAccountUnlockCode",
-        routeValues: new { @emailAddress = Model.EmailAddress },
-        htmlAttributes: new { @id = "ResendAccountUnlockCodeLink" })
+        <button class="button" id="verify-code-button">Verify code</button>
     </div>
 
     @Html.HiddenFor(m => m.EmailAddress)

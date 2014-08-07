@@ -27,7 +27,7 @@
         </div>
     </section>
     <section class="section-border grid-wrapper" id="vacancy-info">
-        <h2 class="heading-large">Vacancy summary</h2>
+        <h2 class="heading-large">Apprenticeship summary</h2>
         <div class="grid grid-1-3">
             <div class="inner-block-padr">
                 <ul class="list-text">
@@ -59,7 +59,7 @@
                 }
                 <ul class="list-text">
                     <li>
-                        <h3 class="bold-small">Vacancy type</h3>
+                        <h3 class="bold-small">Apprenticeship type</h3>
                     </li>
                     <li id="vacancy-type" itemprop="employmentType">@Model.VacancyType</li>
                 </ul>
@@ -135,7 +135,7 @@
         </div>
     </section>
     <section class="section-border grid-wrapper" id="provider-info">
-        <h2 class="heading-large">Learning provider</h2>
+        <h2 class="heading-large">Training provider</h2>
         <div class="grid grid-2-3">
             <div class="inner-block-padr">
                 <div class="text">
@@ -147,7 +147,7 @@
                     <p id="vacancy-framework">@Html.Raw(Model.Framework)</p>
                     @if (Model.ProviderSectorPassRate.HasValue)
                     {
-                        <p>The Learning Provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprencticeship training.</p>
+                        <p>The training provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprencticeship training.</p>
                     }
                 </div>
             </div>
@@ -155,7 +155,7 @@
         <div class="grid grid-1-3">
             <ul class="list-text">
                 <li>
-                    <h3 class="bold-small">Learning provider</h3>
+                    <h3 class="bold-small">Training provider</h3>
                 </li>
                 <li id="vacancy-provider-name">@Model.ProviderName</li>
             </ul>
@@ -178,12 +178,7 @@
     <section id="before-apply">
         <h2 class="heading-large">Before you apply</h2>
         <div class="text">
-            <p>You will need to:</p>
-            <ul>
-                <li>complete an application form</li>
-                <li>write a personal statement</li>
-                <li>provide details of your qualifications</li>
-            </ul>
+            <p>Before you apply for an apprenticeship you must first create an account. If you already have an account you'll need to sign in.</p>
         </div>
         <div class="form-group">
             @Html.Partial("_Apply", Model)

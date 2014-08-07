@@ -2,7 +2,6 @@
 {
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
-    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
 
     public class SaveApplicationStrategy : ISaveApplicationStrategy
