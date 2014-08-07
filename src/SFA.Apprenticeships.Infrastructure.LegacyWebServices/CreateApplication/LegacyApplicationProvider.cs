@@ -8,6 +8,7 @@
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
     using GatewayServiceProxy;
+    using Newtonsoft.Json;
     using NLog;
     using Wcf;
 
@@ -63,10 +64,11 @@
             {
                 if (response != null)
                 {
-                    // TODO: log actual validation errors (same for email).
+                    var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
+
                     Logger.Error(
-                        "Legacy CreateApplication reported {0} validation error(s).",
-                        response.ValidationErrors.Count());
+                        "Legacy CreateApplication reported {0} validation error(s): {1}",
+                        response.ValidationErrors.Count(), responseAsJson);
                 }
                 else
                 {
@@ -74,7 +76,7 @@
                 }
 
                 // TODO: EXCEPTION: should use an application exception type
-                throw new Exception("Failed to create candidate in legacy system");
+                throw new Exception("Failed to create application in legacy system");
             }
 
             return response.ApplicationId;

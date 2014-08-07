@@ -7,6 +7,7 @@
     using Domain.Entities.Applications;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
+    using Newtonsoft.Json;
     using NLog;
     using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
@@ -38,7 +39,12 @@
             {
                 if (response != null)
                 {
-                    Logger.Error("Legacy GetCandidateApplications reported {0} validation errors", response.ValidationErrors.Count());
+                    var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
+
+                    Logger.Error(
+                        "Legacy GetCandidateApplications reported {0} validation error(s): {1}",
+                        response.ValidationErrors.Count(), responseAsJson);
+
                 }
                 else
                 {
