@@ -23,7 +23,11 @@
 
     public class LegacyWebServicesRegistry : Registry
     {
-        public LegacyWebServicesRegistry()
+        public LegacyWebServicesRegistry() : this(false)
+        {
+        }
+
+        public LegacyWebServicesRegistry(bool useCache)
         {
             For<IMapper>().Use<VacancySummaryMapper>().Name = "LegacyWebServices.VacancySummaryMapper";
             For<IMapper>().Use<VacancyDetailMapper>().Name = "LegacyWebServices.VacancyDetailMapper";
@@ -38,25 +42,51 @@
                 .Ctor<IMapper>()
                 .Named("LegacyWebServices.VacancySummaryMapper");
 
+            #region Vacacny Data Service And Providers
+
             For<IVacancyDataProvider>()
                 .Use<LegacyVacancyDataProvider>()
                 .Ctor<IMapper>()
-                .Named("LegacyWebServices.VacancyDetailMapper");
+                .Named("LegacyWebServices.VacancyDetailMapper")
+                .Name = "LegacyVacancyDataProvider";
+
+            if (useCache)
+            {
+                For<IVacancyDataProvider>()
+                    .Use<CachedLegacyVacancyDataProvider>()
+                    .Ctor<IVacancyDataProvider>()
+                    .IsTheDefault()
+                    .Ctor<IVacancyDataProvider>()
+                    .Named("LegacyVacancyDataProvider");
+            }
+
+            For<IVacancyDataService>()
+                .Use<VacancyDataService>()
+                .Ctor<IVacancyDataProvider>();
+
+            #endregion
+
+            #region Reference Data Service And Providers
 
             For<IReferenceDataProvider>()
                 .Use<LegacyReferenceDataProvider>()
                 .Name = "LegacyReferenceDataProvider";
 
-            For<IReferenceDataProvider>()
-                .Use<CachedLegacyReferenceDataProvider>()
-                .Ctor<IReferenceDataProvider>()
-                .Named("LegacyReferenceDataProvider")
-                .Name = "CachedLegacyReferenceDataProvider";
+            if (useCache)
+            {
+                For<IReferenceDataProvider>()
+                    .Use<CachedLegacyReferenceDataProvider>()
+                    .Ctor<IReferenceDataProvider>()
+                    .IsTheDefault()
+                    .Ctor<IReferenceDataProvider>()
+                    .Named("LegacyReferenceDataProvider");
+            }
 
             For<IReferenceDataService>()
                 .Use<ReferenceDataService>()
-                .Ctor<IReferenceDataProvider>()
-                .Named("CachedLegacyReferenceDataProvider");
+                .Ctor<IReferenceDataProvider>();
+
+            #endregion
 
             For<ILegacyCandidateProvider>().Use<LegacyCandidateProvider>();
             For<ILegacyApplicationProvider>().Use<LegacyApplicationProvider>();

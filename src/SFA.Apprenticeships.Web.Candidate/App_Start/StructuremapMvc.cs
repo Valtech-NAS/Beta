@@ -6,8 +6,11 @@ using WebActivatorEx;
 namespace SFA.Apprenticeships.Web.Candidate
 {
     using Common.IoC;
+    using Domain.Interfaces.Configuration;
     using Infrastructure.Address.IoC;
     using Infrastructure.Azure.Session.IoC;
+    using Infrastructure.Caching.Azure.IoC;
+    using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Elastic.Common.IoC;
     using Infrastructure.LegacyWebServices.IoC;
@@ -29,15 +32,23 @@ namespace SFA.Apprenticeships.Web.Candidate
     {
         public static void Start()
         {
+            var config = new ConfigurationManager();
+            string useCacheSetting = config.TryGetAppSetting("UseCaching");
+            bool useCache;
+            bool.TryParse(useCacheSetting, out useCache);
+
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<SessionRegistry>();
 
                 // service layer
+                x.AddRegistry<AzureCacheRegistry>();
+                //x.AddRegistry<MemoryCacheRegistry>();
+
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(useCache));
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();

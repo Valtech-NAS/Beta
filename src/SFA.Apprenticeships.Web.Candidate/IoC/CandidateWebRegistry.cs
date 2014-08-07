@@ -30,7 +30,7 @@
             // services (app)
             For<ILocationSearchService>().Use<LocationSearchService>();
             For<IVacancySearchService>().Use<VacancySearchService>();
-            For<IVacancyDataService>().Use<VacancyDataService>();
+
             For<ICandidateService>().Use<CandidateService>();
             For<IActivateCandidateStrategy>().Use<LegacyActivateCandidateStrategy>();
             For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>();

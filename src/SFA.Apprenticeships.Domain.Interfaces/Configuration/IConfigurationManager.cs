@@ -10,5 +10,7 @@
         string GetAppSetting(string key);
 
         T GetAppSetting<T>(string key);
+
+        string TryGetAppSetting(string key);
     }
 }
