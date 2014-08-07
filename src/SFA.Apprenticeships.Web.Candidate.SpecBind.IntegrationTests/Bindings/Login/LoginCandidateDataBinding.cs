@@ -28,8 +28,6 @@
         private const string AccountUnlockCodeTokenName = "AccountUnlockCodeToken";
         private const string AccountUnlockCode = "UNLCK1";
 
-        private static readonly Random Random = new Random();
-
         private readonly ITokenManager _tokenManager;
         private readonly IUserReadRepository _userReadRepository;
 
@@ -55,7 +53,7 @@
             SetTokens(candidate, user);
         }
 
-        //todo: create a mechanism where we won't need to login - just get the webdriver and set the auth cookie directly or similar
+        //TODO: create a mechanism where we won't need to login - just get the webdriver and set the auth cookie directly or similar
         [Given("I registered an account and activated it")]
         public void GivenIRegisteredAnAccountAndActivatedIt()
         {
