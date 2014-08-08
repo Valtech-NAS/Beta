@@ -13,16 +13,5 @@
         {
             return View("InternalServerError");
         }
-
-        public ActionResult AccessDenied()
-        {
-            Response.StatusCode = 401;
-            return View("AccessDenied");
-        }
-
-        public ActionResult SessionExpired()
-        {
-            return View("SessionExpired");
-        }
     }
 }

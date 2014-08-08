@@ -277,8 +277,6 @@
     <Content Include="Views\VacancySearch\Details.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
-    <Content Include="Views\Error\SessionExpired.cshtml" />
-    <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\Application\Apply.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CandidateViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\QualificationsViewModel.cshtml" />
