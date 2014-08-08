@@ -3,7 +3,6 @@
     using System;
     using Candidate;
     using Domain.Entities.Applications;
-    using Domain.Entities.Vacancies;
     using VacancySearch;
 
     [Serializable]

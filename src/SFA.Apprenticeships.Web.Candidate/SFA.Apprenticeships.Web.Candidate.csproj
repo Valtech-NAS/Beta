@@ -308,7 +308,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Application\WhatHappensNext.cshtml" />
     <Content Include="Views\VacancySearch\_Apply.cshtml" />
-    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\MyApplications\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -395,7 +395,7 @@
     <Compile Include="Constants\ViewModels\EducationMessages.cs" />
     <Compile Include="Constants\Whitelists.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
-    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\MyApplicationsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
@@ -440,6 +440,8 @@
     <Compile Include="Validators\AboutYouViewModelValidator.cs" />
     <Compile Include="Validators\VacancySearchViewModelValidator.cs" />
     <Compile Include="ViewModels\Applications\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\MyApplications\MyApplicationsViewModel.cs" />
+    <Compile Include="ViewModels\MyApplications\MyApplicationViewModel.cs" />
     <Compile Include="ViewModels\Applications\WhatHappensNextViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EducationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EmployerQuestionAnswersViewModel.cs" />
