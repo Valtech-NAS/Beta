@@ -14,27 +14,197 @@
     </div>
 </div>
 <ul class="list-nav">
-    <li>
-        <span class="bold-medium">2</span>  <a class="" href="#dashInProgress">Successful</a>
-    </li>
-    <li>
-        <span class="bold-medium">3</span>  <a class="" href="#dashUnsuccessful">Unsuccessful</a>
-    </li>
-    <li>
-        <span class="bold-medium">10</span>  <a class="" href="#dashSubmitted">Submitted</a>
-    </li>
-    <li>
-        <span class="bold-medium">6</span>  <a class="" href="#dashDrafts">Drafts</a>
-    </li>
-    <li>
-        <span class="bold-medium">3</span>  <a class="" href="#dashSavedVacancies">Saved apprenticeships</a>
-    </li>
+    @if (Model.InProgressApplications.Any())
+    {
+        <li>
+            <span class="bold-medium">@Model.InProgressApplications.Count()</span>  <a class="" href="#dashInProgress">In progress</a>
+        </li>
+    }
+    @if (Model.SuccessfulApplications.Any())
+    {
+        <li>
+            <span class="bold-medium">@Model.SuccessfulApplications.Count()</span>  <a class="" href="#dashSuccessful">Successful</a>
+        </li>
+    }
+    @if (Model.UnsuccessfulApplications.Any())
+    {
+        <li>
+            <span class="bold-medium">@Model.UnsuccessfulApplications.Count()</span>  <a class="" href="#dashUnsuccessful">Unsuccessful</a>
+        </li>
+    }
+    @if (Model.SubmittedApplications.Any())
+    {
+        <li>
+            <span class="bold-medium">@Model.SubmittedApplications.Count()</span>  <a class="" href="#dashSubmitted">Submitted</a>
+        </li>
+    }
+    @if (Model.DraftApplications.Any())
+    {
+        <li>
+            <span class="bold-medium">@Model.DraftApplications.Count()</span>  <a class="" href="#dashDrafts">Drafts</a>
+        </li>
+    }
 </ul>
 <div class="grid-wrapper proto-dashboard">
-    <div class="grid grid-1-2">
-        <div class="inner-block-padr">
+    @if (
+        Model.InProgressApplications.Any() ||
+        Model.SuccessfulApplications.Any() ||
+        Model.UnsuccessfulApplications.Any() ||
+        Model.SubmittedApplications.Any())
+    {
+        <div class="grid grid-1-2">
+            <div class="inner-block-padr">
+                <section class="clearfix">
+                    @if (Model.InProgressApplications.Any())
+                    {
+                        <h2 class="heading-medium" id="dashInProgress">In progress</h2>
+                        <table class="vert-middle">
+                            <colgroup>
+                                <col class="t50">
+                                <col class="t25">
+                                <col class="t25">
+                                <col>
+                            </colgroup>
+                            <tbody class="tbody-3rows">
+                                @foreach (var application in @Model.InProgressApplications)
+                                {
+                                    <tr>
+                                        <td>@application.Title</td>
+                                        <td class="ta-center">In progress</td>
+                                        <td class="ta-center">
+                                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tbody class="tbody-expandrows">
+                                <tr class="no-btm-border">
+                                    <td colspan="2"></td>
+                                    <td class="no-wrap ta-center">
+                                        <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+
+                    @if (Model.SuccessfulApplications.Any())
+                    {
+                        <h2 class="heading-medium" id="dashSuccessful">Successful</h2>
+                        <table class="vert-middle" id="">
+                            <colgroup>
+                                <col class="t50">
+                                <col class="t25">
+                                <col class="t25">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                @foreach (var application in @Model.SuccessfulApplications)
+                                {
+                                    <tr>
+                                        <td>@application.Title</td>
+                                        <td class="ta-center">Successful</td>
+                                        <td class="ta-center">
+                                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tbody class="tbody-expandrows">
+                                <tr class="no-btm-border">
+                                    <td colspan="2"></td>
+                                    <td class="no-wrap ta-center">
+                                        <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+
+                    @if (Model.UnsuccessfulApplications.Any())
+                    {
+                        <h2 class="heading-medium" id="dashUnsuccessful">Unsuccessful</h2>
+                        <table class="vert-middle" id="">
+                            <colgroup>
+                                <col class="t50">
+                                <col class="t25">
+                                <col class="t25">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                @foreach (var application in @Model.UnsuccessfulApplications)
+                                {
+                                    <tr>
+                                        <td>@application.Title</td>
+                                        <td class="ta-center">Unsuccessful</td>
+                                        <td class="ta-center">
+                                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                        </td>
+                                    </tr>
+
+                                    if (string.IsNullOrWhiteSpace(application.UnsuccessfulReason))
+                                    {
+                                        continue;
+                                    }
+                                    
+                                    <tr>
+                                        <td colspan="3">
+                                            <b>Reason:</b>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tbody class="tbody-expandrows">
+                                <tr class="no-btm-border">
+                                    <td colspan="2"></td>
+                                    <td class="no-wrap ta-center">
+                                        <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+
+                    @if (Model.SubmittedApplications.Any())
+                    {
+                        <h2 class="heading-medium" id="dashSubmitted">Submitted</h2>
+                        <table class="vert-middle" id="">
+                            <colgroup>
+                                <col class="t50">
+                                <col class="t25">
+                                <col class="t25">
+                                <col>
+                            </colgroup>
+                            <tbody class="tbody-3rows">
+                                @foreach (var application in @Model.SubmittedApplications)
+                                {
+                                    <tr>
+                                        <td>@application.Title</td>
+                                        <td class="ta-center">Submitted</td>
+                                        <td class="ta-center">@Html.DisplayFor(m => application.DateApplied)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tbody class="tbody-expandrows">
+                                <tr class="no-btm-border">
+                                    <td colspan="2"></td>
+                                    <td class="no-wrap ta-center">
+                                        <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                </section>
+            </div>
+        </div>
+    }
+
+    @if (Model.DraftApplications.Any())
+    {
+        <div class="grid grid-1-2">
             <section class="clearfix">
-                <h2 class="heading-medium" id="dashInProgress">Successful</h2>
+                <h2 class="heading-medium" id="dashDrafts">Drafts</h2>
                 <table class="vert-middle">
                     <colgroup>
                         <col class="t50">
@@ -43,144 +213,18 @@
                         <col>
                     </colgroup>
                     <tbody class="tbody-3rows">
-                        <tr>
-                            <td>
-                                Apprentice Toolmaker/Precision Machinist with Accura Geometric
-                                Ltd
-                            </td>
-                            <td class="ta-center">Successful</td>
-                            <td class="ta-center">
-                                <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Apprentice Engineering with Universal Boltforgers Ltd</td>
-                            <td class="ta-center">Successful</td>
-                            <td class="ta-center">
-                                <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tbody class="tbody-expandrows">
-                        <tr class="no-btm-border">
-                            <td colspan="2"></td>
-                            <td class="no-wrap ta-center">
-                                <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h2 class="heading-medium" id="dashSubmitted">Submitted</h2>
-                <table class="vert-middle" id="">
-                    <colgroup>
-                        <col class="t50">
-                        <col class="t25">
-                        <col class="t25">
-                        <col>
-                    </colgroup>
-                    <tbody class="tbody-3rows">
-                        <tr>
-                            <td>Apprentice Service Technician with Global Plant Sales Limited</td>
-                            <td class="ta-center">Submitted</td>
-                            <td class="ta-center">10 Jul 14</td>
-                        </tr>
-                        <tr>
-                            <td>Engineering Apprentice with Exova</td>
-                            <td class="ta-center">Submitted</td>
-                            <td class="ta-center">4 Jul 14</td>
-                        </tr>
-                        <tr>
-                            <td>Engineering Apprentice with Whiston Industries Ltd</td>
-                            <td class="ta-center">Submitted</td>
-                            <td class="ta-center">4 Jul 14</td>
-                        </tr>
-                        <tr>
-                            <td>Apprentice Mechanical Labourer with University of Warwick</td>
-                            <td class="ta-center">Submitted</td>
-                            <td class="ta-center">3 Jul 14</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Apprentice Machine Operator/ Engineer with A &amp; B Richardson
-                                Engineering Ltd
-                            </td>
-                            <td class="ta-center">Submitted</td>
-                            <td class="ta-center">1 Jul 14</td>
-                        </tr>
-                        <tr>
-                            <td>Engineering Apprentice with Zero Cases Ltd</td>
-                            <td class="ta-center">Submitted</td>
-                            <td class="ta-center">29 Jun 14</td>
-                        </tr>
-                        <tr>
-                            <td>Apprentice Engineer with Fastener Solutions Ltd</td>
-                            <td class="ta-center">Submitted</td>
-                            <td class="ta-center">29 Jun 14</td>
-                        </tr>
-                        <tr>
-                            <td>Engineering Machine Apprentice with Jag Precision Engineering</td>
-                            <td class="ta-center">Submitted</td>
-                            <td class="ta-center">26 Jun 14</td>
-                        </tr>
-                        <tr>
-                            <td>Apprentice Mechanical Engineer with Kingspan Offsite Ltd</td>
-                            <td class="ta-center">Submitted</td>
-                            <td class="ta-center">24 Jun 14</td>
-                        </tr>
-                        <tr>
-                            <td>Civil Engineering Apprentice with Ove Arup &amp; Partners</td>
-                            <td class="ta-center">Submitted</td>
-                            <td class="ta-center">22 Jun 14</td>
-                        </tr>
-                    </tbody>
-                    <tbody class="tbody-expandrows">
-                        <tr class="no-btm-border">
-                            <td colspan="2"></td>
-                            <td class="no-wrap ta-center">
-                                <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h2 class="heading-medium" id="dashUnsuccessful">Unsuccessful</h2>
-                <table class="vert-middle" id="">
-                    <colgroup>
-                        <col class="t50">
-                        <col class="t25">
-                        <col class="t25">
-                        <col>
-                    </colgroup>
-                    <tbody>
-                        <tr>
-                            <td>Manufacturing Apprenticeship with A S H Plastics Ltd</td>
-                            <td class="ta-center">Apprenticeship withdrawn</td>
-                            <td class="ta-center">
-                                <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                            </td>
-                        </tr>
-                        <tr class="no-btm-border">
-                            <td>
-                                Apprentice Maintenance Engineer with Cargill Meats Europe
-                                TA Sun Valley Ltd
-                            </td>
-                            <td class="ta-center">Unsuccessful</td>
-                            <td class="ta-center">
-                                <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <b>Reason:</b> You meet the criteria for this role but have
-                                not been successful this time
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Engineering Apprentice with Taskmaster Doors Ltd</td>
-                            <td class="ta-center">Application withdrawn</td>
-                            <td class="ta-center">
-                                <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                            </td>
-                        </tr>
+                        @foreach (var application in @Model.DraftApplications)
+                        {
+                            <tr>
+                                <td>@application.Title</td>
+                                <td class="ta-center">
+                                    <a href="apply-index.html">Resume</a>
+                                </td>
+                                <td class="ta-center">
+                                    <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                     <tbody class="tbody-expandrows">
                         <tr class="no-btm-border">
@@ -193,138 +237,5 @@
                 </table>
             </section>
         </div>
-    </div>
-    <div class="grid grid-1-2">
-        <section class="clearfix">
-            <h2 class="heading-medium" id="dashDrafts">Drafts</h2>
-            <table class="vert-middle">
-                <colgroup>
-                    <col class="t50">
-                    <col class="t25">
-                    <col class="t25">
-                    <col>
-                </colgroup>
-                <tbody class="tbody-3rows">
-                    <tr>
-                        <td>
-                            Apprentice Mechanical Engineer – Precision Toolmaker with R
-                            G Engineering
-                        </td>
-                        <td class="ta-center">
-                            <a href="apply-index.html">Resume</a>
-                        </td>
-                        <td class="ta-center">
-                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Glass Processor Apprentice with Mi Glass Ltd</td>
-                        <td class="ta-center">
-                            <a href="apply-index.html">Resume</a>
-                        </td>
-                        <td class="ta-center">
-                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Structural Steel Engineering Apprentice with Structural Steelwork
-                            Ltd
-                        </td>
-                        <td class="ta-center">Apprenticeship withdrawn</td>
-                        <td class="ta-center">
-                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Apprentice Project / Process Engineer with Rem Power</td>
-                        <td class="ta-center">
-                            <a href="apply-index.html">Resume</a>
-                        </td>
-                        <td class="ta-center">
-                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Engineering Apprentice with Whiton Tools Ltd</td>
-                        <td class="ta-center">
-                            <a href="apply-index.html">Resume</a>
-                        </td>
-                        <td class="ta-center">
-                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Manufacturing Systems/ Electrical Engineering Apprentice with
-                            Hydraforce Hydraulics Ltd
-                        </td>
-                        <td class="ta-center">
-                            <a href="apply-index.html">Resume</a>
-                        </td>
-                        <td class="ta-center">
-                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody class="tbody-expandrows">
-                    <tr class="no-btm-border">
-                        <td colspan="2"></td>
-                        <td class="no-wrap ta-center">
-                            <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <h2 class="heading-medium" id="dashSavedVacancies">Saved apprenticeships</h2>
-            <table class="vert-middle">
-                <colgroup>
-                    <col class="t50">
-                    <col class="t25">
-                    <col class="t25">
-                    <col>
-                </colgroup>
-                <tbody class="tbody-3rows">
-                    <tr>
-                        <td>Engineering Machine Apprentice with Hub Engineering Co Limited</td>
-                        <td class="ta-center">
-                            <a href="apply-index.html">Apply</a>
-                        </td>
-                        <td class="ta-center">
-                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Apprentice Engineering Machinist with J Marklew Engineering
-                            Ltd
-                        </td>
-                        <td class="ta-center">
-                            <a href="apply-index.html">Apply</a>
-                        </td>
-                        <td class="ta-center">
-                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Building Services Technician Apprentice with Ove Arup & Partners</td>
-                        <td class="ta-center">
-                            <a href="apply-index.html">Apply</a>
-                        </td>
-                        <td class="ta-center">
-                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody class="tbody-expandrows">
-                    <tr class="no-btm-border">
-                        <td colspan="2"></td>
-                        <td class="no-wrap ta-center">
-                            <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-    </div>
+    }
 </div>
