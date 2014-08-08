@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Applications.Mappers
 {
-    using System;
     using Common.Mappers;
     using Domain.Entities.Applications;
     using Entities;
@@ -11,6 +10,7 @@
         {
             Mapper.CreateMap<ApplicationDetail, MongoApplicationDetail>();
             Mapper.CreateMap<MongoApplicationDetail, ApplicationDetail>();
+            Mapper.CreateMap<MongoApplicationDetail, ApplicationSummary>();
         }
     }
 }

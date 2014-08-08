@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.ApplicationUpdate
 {
-    using System;
     using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -14,7 +13,9 @@
         private readonly IApplicationWriteRepository _applicationWriteRepository;
         private readonly IApplicationReadRepository _applicationReadRepository;
 
-        public ApplicationStatusUpdater(IApplicationWriteRepository applicationWriteRepository, IApplicationReadRepository applicationReadRepository)
+        public ApplicationStatusUpdater(
+            IApplicationWriteRepository applicationWriteRepository,
+            IApplicationReadRepository applicationReadRepository)
         {
             _applicationWriteRepository = applicationWriteRepository;
             _applicationReadRepository = applicationReadRepository;
@@ -22,26 +23,30 @@
 
         public void Update(Candidate candidate, IEnumerable<ApplicationStatusSummary> applicationStatuses)
         {
-            // for the candidate, update the application repo for any of the status updates passed in (if they're different)
+            // For the specified candidate, update the application repo for any of the status updates
+            // passed in (if they're different).
             foreach (var applicationStatus in applicationStatuses)
             {
                 var status = applicationStatus;
-                var application = _applicationReadRepository.GetForCandidate(candidate.EntityId, a => a.LegacyApplicationId == status.LegacyApplicationId);
 
-                if (application != null)
+                var applicationDetail = _applicationReadRepository.GetForCandidate(
+                    candidate.EntityId, each => each.LegacyApplicationId == status.LegacyApplicationId);
+
+                if (applicationDetail != null)
                 {
-                    //todo: do we need to check vacancy status too and then derive application status? 
+                    // TODO: US154: do we need to check vacancy status too and then derive application status? 
                     // ...or does the the app status already reflect the vacancy status? (e.g. if withdrawn, etc)
-                    // check with legacy team
-                    if (application.Status != status.ApplicationStatus)
+                    // check with legacy team.
+                    if (applicationDetail.Status != status.ApplicationStatus)
                     {
-                        _applicationWriteRepository.Save(application);
+                        applicationDetail.Status = status.ApplicationStatus;
+                        _applicationWriteRepository.Save(applicationDetail);
                     }
                 }
                 else
                 {
                     // log warning as we need to update an application that isn't in the repo
-                    Logger.Warn("Unable to find/update application with legacy ID '{0}'", status.LegacyApplicationId);
+                    Logger.Warn("Unable to find/update application with legacy ID \"{0}\".", status.LegacyApplicationId);
                 }
             }
         }

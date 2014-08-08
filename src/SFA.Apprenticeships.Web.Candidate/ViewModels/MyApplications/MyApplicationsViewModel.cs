@@ -6,7 +6,12 @@
 
     public class MyApplicationsViewModel
     {
-        public IEnumerable<MyApplicationViewModel> AllApplications { get; set; }
+        public MyApplicationsViewModel(IEnumerable<MyApplicationViewModel> applications)
+        {
+            this.AllApplications = applications;
+        }
+
+        public IEnumerable<MyApplicationViewModel> AllApplications { get; private set; }
 
         public IEnumerable<MyApplicationViewModel> InProgressApplications
         {

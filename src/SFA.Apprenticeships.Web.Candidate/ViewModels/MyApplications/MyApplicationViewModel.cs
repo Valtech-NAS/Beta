@@ -8,7 +8,7 @@
     {
         public int VacancyId { get; set; }
 
-        public string VacancyDescription { get; set; }
+        public string Title { get; set; }
 
         public ApplicationStatuses ApplicationStatus { get; set; }
 

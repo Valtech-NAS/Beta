@@ -8,9 +8,11 @@
     {
         protected override ApplicationStatuses ResolveCore(string source)
         {
+            // TODO: AG: US154: review "New" mapping to Submitted status.
             switch (source)
             {
                 case "Sent":
+                case "New":
                     return ApplicationStatuses.Submitted;
                 case "InProgress":
                     return ApplicationStatuses.InProgress;

@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Web;
     using Application.Interfaces.Candidates;
     using Common.Providers;
@@ -8,6 +10,7 @@
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
     using ViewModels.Applications;
+    using ViewModels.MyApplications;
 
     internal class ApplicationProvider : IApplicationProvider
     {
@@ -90,6 +93,24 @@
                 VacancyReference = model.VacancyDetail.FullVacancyReferenceId,
                 VacancyTitle = model.VacancyDetail.Title
             };
+        }
+
+        public MyApplicationsViewModel GetMyApplications(Guid candidateId)
+        {
+            var applicationSummaries = _candidateService.GetApplications(candidateId);
+            var applications = applicationSummaries
+                .Select(each => new MyApplicationViewModel
+                {
+                    VacancyId = each.LegacyVacancyId,
+                    Title = each.Title,
+                    UnsuccessfulReason = null, // TODO: US154: does not exist in ApplicationSummary.
+                    WithdrawnOrDeclinedReason = null, // TODO: US154: does not exist in ApplicationSummary.
+                    ApplicationStatus = each.Status,
+                    DateApplied = each.DateApplied
+
+                });
+
+            return new MyApplicationsViewModel(applications);
         }
 
         #region Helpers

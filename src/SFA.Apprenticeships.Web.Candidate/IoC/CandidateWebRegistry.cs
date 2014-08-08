@@ -79,7 +79,6 @@
             For<ICommunicationService>().Use<CommunicationService>();
             For<ICodeGenerator>().Use<CodeGenerator>();
             For<IGetCandidateApplicationsStrategy>().Use<LegacyGetCandidateApplicationsStrategy>();
-            For<ILegacyApplicationStatusesProvider>().Use<LegacyCandidateApplicationStatusesProvider>();
             For<IApplicationStatusUpdater>().Use<ApplicationStatusUpdater>();
 
             // providers (web)

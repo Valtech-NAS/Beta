@@ -58,9 +58,12 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Helpers\TestApplicationHelper.cs" />
+    <Compile Include="Helpers\TestCandidateHelper.cs" />
     <Compile Include="LegacyReferenceDataProviderIntegrationTests.cs" />
-    <Compile Include="LegacyWebServiceLegacyApplicationProviderIntegrationTests.cs" />
-    <Compile Include="LegacyWebServiceLegacyCandidateProviderIntegrationTests.cs" />
+    <Compile Include="LegacyApplicationProviderIntegrationTests.cs" />
+    <Compile Include="LegacyApplicationStatusesProviderIntegrationTests.cs" />
+    <Compile Include="LegacyCandidateProviderIntegrationTests.cs" />
     <Compile Include="SetUp.cs" />
     <Compile Include="VacancyServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +77,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.ApplicationUpdate\SFA.Apprenticeships.Application.ApplicationUpdate.csproj">
+      <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
+      <Name>SFA.Apprenticeships.Application.ApplicationUpdate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
       <Project>{984F8CD2-61B3-48A4-B0CC-5D05E235983D}</Project>
       <Name>SFA.Apprenticeships.Application.Candidate</Name>
@@ -113,6 +120,14 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
       <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
+      <Project>{91822365-711D-4976-AD7F-069063D8B487}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Applications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Candidates\SFA.Apprenticeships.Infrastructure.Repositories.Candidates.csproj">
+      <Project>{AA87BD85-5A33-46B8-B26F-C6B680876486}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

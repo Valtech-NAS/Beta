@@ -19,9 +19,11 @@
         private readonly IApplicationWriteRepository _applicationWriteRepository;
         private readonly IVacancyStatusProvider _vacancyStatusProvider;
 
-        public LegacyGetCandidateApplicationsStrategy(ICandidateReadRepository candidateReadRepository,
+        public LegacyGetCandidateApplicationsStrategy(
+            ICandidateReadRepository candidateReadRepository,
             ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider,
-            IApplicationStatusUpdater applicationStatusUpdater, IApplicationReadRepository applicationReadRepository,
+            IApplicationStatusUpdater applicationStatusUpdater,
+            IApplicationReadRepository applicationReadRepository,
             IApplicationWriteRepository applicationWriteRepository,
             IVacancyStatusProvider vacancyStatusProvider)
         {

@@ -51,6 +51,7 @@
             return _userAccountService.GetUserStatus(username);
         }
 
+        // TODO: US463: AG: consider moving to ApplicationProvider.
         public ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId)
         {
             var application = _candidateService.GetApplications(candidateId)

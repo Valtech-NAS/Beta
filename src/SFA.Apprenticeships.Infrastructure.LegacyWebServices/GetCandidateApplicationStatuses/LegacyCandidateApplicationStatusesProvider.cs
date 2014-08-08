@@ -18,7 +18,8 @@
         private readonly IWcfService<GatewayServiceContract> _service;
         private readonly IMapper _mapper;
 
-        public LegacyCandidateApplicationStatusesProvider(IWcfService<GatewayServiceContract> service, IMapper mapper)
+        public LegacyCandidateApplicationStatusesProvider
+            (IWcfService<GatewayServiceContract> service, IMapper mapper)
         {
             _service = service;
             _mapper = mapper;
@@ -27,12 +28,14 @@
         public IEnumerable<ApplicationStatusSummary> GetCandidateApplicationStatuses(Candidate candidate)
         {
             Logger.Info("GetCandidateApplications handled for EntityId={0}, EmailAddress={1}", candidate.EntityId, candidate.RegistrationDetails.EmailAddress);
+
             var request = new GetCandidateInfoRequest
             {
                 CandidateId = candidate.LegacyCandidateId
             };
 
             var response = default(GetCandidateInfoResponse);
+
             _service.Use(client => response = client.GetCandidateInfo(request).GetCandidateInfoResponse);
 
             if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
@@ -42,14 +45,14 @@
                     var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
                     Logger.Error(
-                        "Legacy GetCandidateApplications reported {0} validation error(s): {1}",
+                        "Legacy GetCandidateInfo reported {0} validation error(s): {1}",
                         response.ValidationErrors.Count(), responseAsJson);
-
                 }
                 else
                 {
-                    Logger.Error("Legacy GetCandidateApplications did not respond");
+                    Logger.Error("Legacy GetCandidateInfo did not respond");
                 }
+
                 // TODO: EXCEPTION: should use an application exception type
                 throw new Exception("Failed to retrieve candidate applications in legacy system");
             }

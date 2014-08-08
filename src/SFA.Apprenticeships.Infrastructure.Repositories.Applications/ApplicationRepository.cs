@@ -77,8 +77,17 @@
 
         public IList<ApplicationSummary> GetForCandidate(Guid candidateId)
         {
-            //todo: project application summaries for the specified candidate, exclude any that are archived
-            throw new NotImplementedException();
+            // Get application summaries for the specified candidate, excluding any that are archived.
+            var mongoApplicationDetailsList = Collection
+                .AsQueryable()
+                .Where(each => each.CandidateId == candidateId && !each.IsArchived)
+                .ToArray();
+
+            var applicationDetailsList = _mapper
+                .Map<MongoApplicationDetail[], IEnumerable<ApplicationSummary>>(mongoApplicationDetailsList)
+                .ToList();
+
+            return applicationDetailsList;
         }
 
         public ApplicationDetail GetForCandidate(Guid candidateId, Func<ApplicationDetail, bool> filter)

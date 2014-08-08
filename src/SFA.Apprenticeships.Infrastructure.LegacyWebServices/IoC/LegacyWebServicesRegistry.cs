@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
 {
+    using Application.ApplicationUpdate;
     using Application.Candidate.Strategies;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
@@ -11,6 +12,7 @@
     using CreateCandidate;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
+    using GetCandidateApplicationStatuses;
     using Mappers;
     using ReferenceData;
     using ReferenceDataProxy;
@@ -42,7 +44,7 @@
                 .Ctor<IMapper>()
                 .Named("LegacyWebServices.VacancySummaryMapper");
 
-            #region Vacacny Data Service And Providers
+            #region Vacancy Data Service And Providers
 
             For<IVacancyDataProvider>()
                 .Use<LegacyVacancyDataProvider>()
@@ -63,6 +65,8 @@
             For<IVacancyDataService>()
                 .Use<VacancyDataService>()
                 .Ctor<IVacancyDataProvider>();
+
+            For<IVacancyStatusProvider>().Use<LegacyVacancyStatusProvider>();
 
             #endregion
 
@@ -88,8 +92,22 @@
 
             #endregion
 
+            #region Candidate and Application Providers
+
             For<ILegacyCandidateProvider>().Use<LegacyCandidateProvider>();
+
             For<ILegacyApplicationProvider>().Use<LegacyApplicationProvider>();
+
+            For<IMapper>().Use<ApplicationStatusSummaryMapper>()
+                .Name = "LegacyWebServices.ApplicationStatusSummaryMapper";
+
+            For<ILegacyApplicationStatusesProvider>()
+                .Use<LegacyCandidateApplicationStatusesProvider>()
+                .Ctor<IMapper>()
+                .Named("LegacyWebServices.ApplicationStatusSummaryMapper")
+                .Name = "LegacyCandidateApplicationStatusesProvider";
+
+            #endregion
         }
     }
 }

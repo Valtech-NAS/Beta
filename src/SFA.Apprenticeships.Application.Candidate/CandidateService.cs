@@ -28,6 +28,7 @@
         public CandidateService(
             ICandidateReadRepository candidateReadRepository,
             ICandidateWriteRepository candidateWriteRepository,
+            IApplicationReadRepository applicationReadRepository,
             IActivateCandidateStrategy activateCandidateStrategy,
             IAuthenticateCandidateStrategy authenticateCandidateStrategy,
             ISubmitApplicationStrategy submitApplicationStrategy,
@@ -35,7 +36,7 @@
             ICreateApplicationStrategy createApplicationStrategy,
             IGetCandidateApplicationsStrategy getCandidateApplicationsStrategy,
             IResetForgottenPasswordStrategy resetForgottenPasswordStrategy,
-            IUnlockAccountStrategy unlockAccountStrategy, IApplicationReadRepository applicationReadRepository,
+            IUnlockAccountStrategy unlockAccountStrategy,
             ISaveApplicationStrategy saveApplicationStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
