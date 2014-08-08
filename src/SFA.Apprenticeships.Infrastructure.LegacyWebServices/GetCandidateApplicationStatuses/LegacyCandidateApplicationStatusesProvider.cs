@@ -62,6 +62,7 @@
         public IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses()
         {
             //todo: retrieve application statuses for ALL candidates (used in ETL process)
+            //todo: the WSDL contract for this is going to change to match the above signature - awaiting update from John for when this will be done
             throw new NotImplementedException();
         }
     }
