@@ -43,11 +43,5 @@
         {
             Server.HandleError<ErrorController>(((MvcApplication)sender).Context);
         }
-
-        public override void Dispose()
-        {
-            RabbitMqRegistry.DisposeResources();
-            base.Dispose();
-        }
     }
 }
