@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Domain.Interfaces.Caching
 {
     public enum CacheDuration
     {
+        Midnight = 0,
         OneMinute = 1,
         FiveMinutes = 5,
         FifteenMinutes = 15,

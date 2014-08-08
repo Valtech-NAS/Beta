@@ -12,7 +12,6 @@
         [SetUp]
         public void SetUpTests()
         {
-            var test = new LegacyWebServicesRegistry();
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();

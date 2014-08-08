@@ -1,8 +1,6 @@
-﻿using SFA.Apprenticeships.Domain.Interfaces.Caching;
-
-namespace SFA.Apprenticeships.Application.ReferenceData
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceData
 {
-    using System;
+    using Domain.Interfaces.Caching;
 
     public class ReferenceDataServiceCacheKeyEntry : BaseCacheKey
     {

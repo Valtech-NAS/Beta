@@ -5,7 +5,7 @@
     using Domain.Interfaces.Configuration;
     using StructureMap.Configuration.DSL;
 
-    //todo: remove this? should be setting up configuration IoC in particular infra projects
+    //TODO: remove this? should be setting up configuration IoC in particular infra projects
     public class CommonRegistry : Registry
     {
         public CommonRegistry()

@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using Application.Interfaces.ReferenceData;
-    using Application.ReferenceData;
     using Domain.Entities.ReferenceData;
     using Domain.Interfaces.Caching;
     using NLog;

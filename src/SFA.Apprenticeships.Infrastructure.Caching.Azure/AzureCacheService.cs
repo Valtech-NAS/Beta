@@ -3,9 +3,15 @@
     using System;
     using Microsoft.ApplicationServer.Caching;
     using Domain.Interfaces.Caching;
+    using NLog;
 
     public class AzureCacheService : ICacheService
     {
+        private const string GettingItemFromCacheFormat = "Getting item with key: {0} from cache";
+        private const string ItemReturnedFromCacheFormat = "Item with key: {0} returned from cache";
+        private const string ItemNotInCacheFormat = "Item with key: {0} not in cache";
+
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly DataCache _cache;
 
         public AzureCacheService()
@@ -16,30 +22,58 @@
 
         private void Store(string key, object value, CacheDuration cacheDuration)
         {
+            Logger.Debug("Storing item with key: {0} in cache with duration: {1}", key, cacheDuration);
+
             if (value == null)
             {
                 return;
             }
 
-            var timespan = TimeSpan.FromMinutes((int)cacheDuration);
-            _cache.Add(key, value, timespan);
+            TimeSpan cacheTimeSpan;
+
+            if (cacheDuration == CacheDuration.Midnight)
+            {
+                var midnight = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+                cacheTimeSpan = new TimeSpan(midnight.Ticks - DateTime.Now.Ticks);
+            }
+            else
+            {
+                cacheTimeSpan = TimeSpan.FromMinutes((int)cacheDuration);    
+            }
+
+            _cache.Add(key, value, cacheTimeSpan);
+
+            Logger.Debug("Stored item with key: {0} in cache with timespan: {1}", key, cacheTimeSpan);
         }
 
         public T Get<T>(string key) where T : class
         {
+            Logger.Debug(GettingItemFromCacheFormat, key);
+
             var result = _cache[key] as T;
+
+            if (result == null)
+            {
+                Logger.Debug(ItemNotInCacheFormat, key);
+            }
 
             return result;
         }
 
         private void Remove(string key)
         {
+            Logger.Debug("Removing item with key: {0} from cache", key);
+
             _cache.Remove(key);
         }
 
         public void FlushAll()
         {
+            Logger.Debug("Flushing cache");
+
             _cache.Clear();
+
+            Logger.Debug("Flushed cache");
         }
 
         #region Get
@@ -50,13 +84,19 @@
         {
             var cacheKey = cacheEntry.Key();
 
+            Logger.Debug(GettingItemFromCacheFormat, cacheKey);
+
             var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
+                Logger.Debug(ItemNotInCacheFormat, cacheKey);
+
                 result = dataFunc();
                 Store(cacheKey, result, cacheEntry.Duration);
                 return result;
             }
+
+            Logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
 
             return result;
         }
@@ -67,13 +107,19 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1);
 
+            Logger.Debug(GettingItemFromCacheFormat, cacheKey);
+
             var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
+                Logger.Debug(ItemNotInCacheFormat, cacheKey);
+
                 result = dataFunc(funcParam1);
                 Store(cacheKey, result, cacheEntry.Duration);
                 return result;
             }
+
+            Logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
 
             return result;
         }
@@ -84,13 +130,19 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2);
 
+            Logger.Debug(GettingItemFromCacheFormat, cacheKey);
+
             var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
+                Logger.Debug(ItemNotInCacheFormat, cacheKey);
+
                 result = dataFunc(funcParam1, funcParam2);
                 Store(cacheKey, result, cacheEntry.Duration);
                 return result;
             }
+
+            Logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
 
             return result;
         }
@@ -101,13 +153,19 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2, funcParam3);
 
+            Logger.Debug(GettingItemFromCacheFormat, cacheKey);
+
             var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
+                Logger.Debug(ItemNotInCacheFormat, cacheKey);
+
                 result = dataFunc(funcParam1, funcParam2, funcParam3);
                 Store(cacheKey, result, cacheEntry.Duration);
                 return result;
             }
+
+            Logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
 
             return result;
         }
@@ -117,14 +175,20 @@
             where TResult : class
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2, funcParam3, funcParam4);
+            
+            Logger.Debug(GettingItemFromCacheFormat, cacheKey);
 
             var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
+                Logger.Debug(ItemNotInCacheFormat, cacheKey);
+
                 result = dataFunc(funcParam1, funcParam2, funcParam3, funcParam4);
                 Store(cacheKey, result, cacheEntry.Duration);
                 return result;
             }
+
+            Logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
 
             return result;
         }
@@ -135,13 +199,19 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2, funcParam3, funcParam4, funcParam5);
 
+            Logger.Debug(GettingItemFromCacheFormat, cacheKey);
+
             var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
+                Logger.Debug(ItemNotInCacheFormat, cacheKey);
+
                 result = dataFunc(funcParam1, funcParam2, funcParam3, funcParam4, funcParam5);
                 Store(cacheKey, result, cacheEntry.Duration);
                 return result;
             }
+
+            Logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
 
             return result;
         }
@@ -152,13 +222,19 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1, funcParam2, funcParam3, funcParam4, funcParam5, funcParam6);
 
+            Logger.Debug(GettingItemFromCacheFormat, cacheKey);
+
             var result = _cache[cacheKey] as TResult;
             if (result == null || result.Equals(default(TResult)))
             {
+                Logger.Debug(ItemNotInCacheFormat, cacheKey);
+
                 result = dataFunc(funcParam1, funcParam2, funcParam3, funcParam4, funcParam5, funcParam6);
                 Store(cacheKey, result, cacheEntry.Duration);
                 return result;
             }
+
+            Logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
 
             return result;
         }
