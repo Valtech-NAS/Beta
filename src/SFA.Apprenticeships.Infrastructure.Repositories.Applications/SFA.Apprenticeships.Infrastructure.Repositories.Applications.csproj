@@ -69,7 +69,7 @@
     <Compile Include="ApplicationRepository.cs" />
     <Compile Include="Entities\MongoApplicationDetail.cs" />
     <Compile Include="IoC\ApplicationRepositoryRegistry.cs" />
-    <Compile Include="Mappers\ApplicationDetailMappers.cs" />
+    <Compile Include="Mappers\ApplicationMappers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

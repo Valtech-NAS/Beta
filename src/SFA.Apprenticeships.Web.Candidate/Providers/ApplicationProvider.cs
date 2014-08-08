@@ -100,6 +100,7 @@
             var applicationSummaries = _candidateService.GetApplications(candidateId);
 
             var applications = applicationSummaries
+                .OrderByDescending(each => each.DateUpdated)
                 .Select(each => new MyApplicationViewModel
                 {
                     VacancyId = each.LegacyVacancyId,

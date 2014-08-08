@@ -9,8 +9,7 @@
         public MyApplicationsViewModel(IEnumerable<MyApplicationViewModel> applications)
         {
             // TODO: US154: AG: see "Note 1" attached to user story. Need to take DateUpdated into account.
-            this.AllApplications = applications
-                .OrderBy(each => each.DateApplied);
+            this.AllApplications = applications;
         }
 
         public IEnumerable<MyApplicationViewModel> AllApplications { get; private set; }
