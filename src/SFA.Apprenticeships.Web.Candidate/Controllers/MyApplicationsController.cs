@@ -7,6 +7,7 @@
     using Common.Controllers;
     using Common.Providers;
     using Providers;
+    using ViewModels.MyApplications;
 
     public class MyApplicationsController : SfaControllerBase
     {
@@ -25,10 +26,26 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Index()
         {
-            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
+            return View(GetMyApplicationsViewModel());
+        }
+
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public ActionResult Resume(int vacancyId)
+        {
+            // TODO: US154: AG: resume draft application.
+            throw new NotImplementedException();
+        }
+
+        #region Helpers
+
+        private MyApplicationsViewModel GetMyApplicationsViewModel()
+        {
+            var candidateId = new Guid(User.Identity.Name);
             var model = _applicationProvider.GetMyApplications(candidateId);
 
-            return View(model);
+            return model;
         }
+
+        #endregion
     }
 }

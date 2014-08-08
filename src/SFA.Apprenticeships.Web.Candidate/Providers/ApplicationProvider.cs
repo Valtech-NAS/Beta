@@ -105,8 +105,8 @@
                 {
                     VacancyId = each.LegacyVacancyId,
                     Title = each.Title,
-                    UnsuccessfulReason = null, // TODO: US154: does not exist in ApplicationSummary.
-                    WithdrawnOrDeclinedReason = null, // TODO: US154: does not exist in ApplicationSummary.
+                    UnsuccessfulReason = null, // TODO: US154: AG: does not exist in ApplicationSummary.
+                    WithdrawnOrDeclinedReason = null, // TODO: US154: AG: does not exist in ApplicationSummary.
                     ApplicationStatus = each.Status,
                     DateApplied = each.DateApplied
 
