@@ -23,6 +23,14 @@
         }
     }
 
+    public class EmployerQuestionAnswersViewModelSaveValidator : AbstractValidator<EmployerQuestionAnswersViewModel>
+    {
+        public EmployerQuestionAnswersViewModelSaveValidator()
+        {
+            this.AddCommonRules();
+        }
+    }
+
     internal static class EmployerQuestionValidaitonRules
     {
         internal static void AddCommonRules(this AbstractValidator<EmployerQuestionAnswersViewModel> validator)

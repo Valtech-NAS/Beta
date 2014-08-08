@@ -6,8 +6,9 @@
 
     public interface IApplicationProvider
     {
-        ApplicationViewModel GetApplication(Guid applicationId);
+        ApplicationViewModel GetApplicationViewModel(Guid applicationViewId);
         ApplicationViewModel GetApplicationViewModel(int vacancyId, Guid candidateId);
+        ApplicationViewModel GetApplicationViewModel(ApplicationViewModel submittedApplicationViewModel);
         void SaveApplication(ApplicationViewModel applicationViewModel);
         void SubmitApplication(Guid applicationId);
         WhatHappensNextViewModel GetSubmittedApplicationVacancySummary(Guid applicationId);

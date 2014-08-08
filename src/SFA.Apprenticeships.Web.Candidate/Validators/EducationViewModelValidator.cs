@@ -22,6 +22,14 @@
         }
     }
 
+    public class EducationViewModelSaveValidator : AbstractValidator<EducationViewModel>
+    {
+        public EducationViewModelSaveValidator()
+        {
+            this.AddSaveRules();
+        }
+    }
+
     internal static class EducationValidaitonRules
     {
         internal static void AddCommonRules(this AbstractValidator<EducationViewModel> validator)
@@ -56,7 +64,23 @@
             validator.RuleFor(x => x.FromYear)
                 .Must(BeNowOrInThePast)
                 .WithMessage(EducationMessages.FromYearMessages.NotInFutureErrorText);
-                
+        }
+
+        internal static void AddSaveRules(this AbstractValidator<EducationViewModel> validator)
+        {
+            validator.RuleFor(x => x.NameOfMostRecentSchoolCollege)
+                .Length(0, 120)
+                .WithMessage(EducationMessages.NameOfMostRecentSchoolCollegeMessages.TooLongErrorText)
+                .Matches(EducationMessages.NameOfMostRecentSchoolCollegeMessages.WhiteListRegularExpression)
+                .WithMessage(EducationMessages.NameOfMostRecentSchoolCollegeMessages.WhiteListErrorText);
+
+            validator.RuleFor(x => x.FromYear)
+                .Matches(EducationMessages.FromYearMessages.WhiteListRegularExpression)
+                .WithMessage(EducationMessages.FromYearMessages.WhiteListErrorText);
+
+            validator.RuleFor(x => x.ToYear)
+                .Matches(EducationMessages.FromYearMessages.WhiteListRegularExpression)
+                .WithMessage(EducationMessages.FromYearMessages.WhiteListErrorText);
         }
 
         private static bool BeBeforeOrEqual(EducationViewModel instance, string toYear)

@@ -33,16 +33,15 @@
             _mapper = mapper;
         }
 
-        public ApplicationViewModel GetApplication(Guid applicationId)
+        public ApplicationViewModel GetApplicationViewModel(Guid applicationViewId)
         {
-            var applicationEntityId = GetApplicationEntityIdFromContext(applicationId);
+            var applicationEntityId = GetApplicationEntityIdFromContext(applicationViewId);
             var applicationDetail = _candidateService.GetApplication(applicationEntityId);
 
             var model = _mapper.Map<ApplicationDetail, ApplicationViewModel>(applicationDetail);
-            model.ApplicationViewId = applicationId;
+            model.ApplicationViewId = applicationViewId;
 
-            return PatchWithVacancyDetail(
-                model, applicationDetail.CandidateId, applicationDetail.Vacancy.Id);
+            return PatchWithVacancyDetail(model, applicationDetail.CandidateId, applicationDetail.Vacancy.Id);
         }
 
         public ApplicationViewModel GetApplicationViewModel(int vacancyId, Guid candidateId)
@@ -52,13 +51,26 @@
             var applicationViewModel = _mapper.Map<ApplicationDetail, ApplicationViewModel>(applicationDetails);
             applicationViewModel.ApplicationViewId = viewModelId;
 
-            return PatchWithVacancyDetail(
-                applicationViewModel, candidateId, vacancyId);
+            return PatchWithVacancyDetail(applicationViewModel, candidateId, vacancyId);
+        }
+
+        public ApplicationViewModel GetApplicationViewModel(ApplicationViewModel submittedApplicationViewModel)
+        {
+            var applicationReloadedModel = GetApplicationViewModel(submittedApplicationViewModel.ApplicationViewId);
+
+            applicationReloadedModel.Candidate.Education = submittedApplicationViewModel.Candidate.Education;
+            //TODO uncomment after qualification and work experience is done
+            //applicationReloadedModel.Candidate.Qualifications = submittedApplicationViewModel.Candidate.Qualifications;
+            //applicationReloadedModel.Candidate.WorkExperience = submittedApplicationViewModel.Candidate.WorkExperience;
+            applicationReloadedModel.Candidate.AboutYou = submittedApplicationViewModel.Candidate.AboutYou;
+            applicationReloadedModel.Candidate.EmployerQuestionAnswers = submittedApplicationViewModel.Candidate.EmployerQuestionAnswers;
+
+            return applicationReloadedModel;
         }
 
         public void SaveApplication(ApplicationViewModel applicationViewModel)
         {
-            var model = GetApplication(applicationViewModel.ApplicationViewId);
+            var model = GetApplicationViewModel(applicationViewModel.ApplicationViewId);
 
             model.Candidate.AboutYou = applicationViewModel.Candidate.AboutYou;
             model.Candidate.Education = applicationViewModel.Candidate.Education;
@@ -73,6 +85,7 @@
             _candidateService.SaveApplication(application);
         }
 
+
         public void SubmitApplication(Guid applicationId)
         {
             var applicationEntityId = GetApplicationEntityIdFromContext(applicationId);
@@ -81,7 +94,7 @@
 
         public WhatHappensNextViewModel GetSubmittedApplicationVacancySummary(Guid applicationId)
         {
-            var model = GetApplication(applicationId);
+            var model = GetApplicationViewModel(applicationId);
 
             if (model == null)
             {
@@ -134,13 +147,11 @@
         {
             var viewModelId = Guid.NewGuid();
             var httpContext = new HttpContextWrapper(HttpContext.Current);
-            _userServiceProvider
-                .SetEntityContextCookie(httpContext, applicationEntityId, viewModelId, ApplicationContextName);
+            _userServiceProvider.SetEntityContextCookie(httpContext, applicationEntityId, viewModelId, ApplicationContextName);
             return viewModelId;
         }
 
-        private ApplicationViewModel PatchWithVacancyDetail(
-            ApplicationViewModel applicationViewModel, Guid candidateId, int vacancyId)
+        private ApplicationViewModel PatchWithVacancyDetail(ApplicationViewModel applicationViewModel, Guid candidateId, int vacancyId)
         {
             var vacancyDetailViewModel = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 

@@ -11,7 +11,6 @@
     using Controllers;
     using FluentValidation.Mvc;
     using FluentValidation.Validators;
-    using Infrastructure.RabbitMq.IoC;
 
     public class MvcApplication : HttpApplication
     {

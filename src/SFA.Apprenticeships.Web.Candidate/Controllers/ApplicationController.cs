@@ -3,10 +3,12 @@
     using System;
     using System.Web.Mvc;
     using Attributes;
+    using Common.Attributes;
     using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
     using FluentValidation.Mvc;
+    using FluentValidation.Results;
     using Providers;
     using Validators;
     using ViewModels.Applications;
@@ -14,19 +16,22 @@
     public class ApplicationController : SfaControllerBase
     {
         private readonly IApplicationProvider _applicationProvider;
-        private readonly ApplicationViewModelServerValidator _validator;
+        private readonly ApplicationViewModelServerValidator _applicationViewModelFullValidator;
+        private readonly ApplicationViewModelSaveValidator _applicationViewModelSaveValidator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
 
         public ApplicationController(ISessionStateProvider sessionState,
             IUserServiceProvider userServiceProvider,
             IApplicationProvider applicationProvider,
             ICandidateServiceProvider candidateServiceProvider,
-            ApplicationViewModelServerValidator validator)
+            ApplicationViewModelServerValidator applicationViewModelFullValidator,
+            ApplicationViewModelSaveValidator applicationViewModelSaveValidator)
             : base(sessionState, userServiceProvider)
         {
             _candidateServiceProvider = candidateServiceProvider;
             _applicationProvider = applicationProvider;
-            _validator = validator;
+            _applicationViewModelFullValidator = applicationViewModelFullValidator;
+            _applicationViewModelSaveValidator = applicationViewModelSaveValidator;
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
@@ -50,27 +55,36 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Apply(int id, ApplicationViewModel applicationViewModel)
         {
-            var result = _validator.Validate(applicationViewModel);
+            ModelState.Clear();
+            ValidationResult result = applicationViewModel.ApplicationAction == ApplicationAction.Preview
+                ? _applicationViewModelFullValidator.Validate(applicationViewModel)
+                : _applicationViewModelSaveValidator.Validate(applicationViewModel);
 
             if (!result.IsValid)
             {
-                ModelState.Clear();
                 result.AddToModelState(ModelState, string.Empty);
-
-                return View(applicationViewModel);
+                applicationViewModel = _applicationProvider.GetApplicationViewModel(applicationViewModel);
+                return View("Apply", applicationViewModel);
             }
 
             _applicationProvider.SaveApplication(applicationViewModel);
 
-            return RedirectToAction("Preview", new { applicationId = applicationViewModel.ApplicationViewId });
+            if (applicationViewModel.ApplicationAction == ApplicationAction.Preview)
+            {
+                return RedirectToAction("Preview", new {applicationId = applicationViewModel.ApplicationViewId});
+            }
+            
+            applicationViewModel = _applicationProvider.GetApplicationViewModel(applicationViewModel.ApplicationViewId);
+            return View("Apply", applicationViewModel);
         }
 
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Preview(string applicationId)
         {
             try
             {
                 var applicationViewId = Guid.Parse(applicationId);
-                var model = _applicationProvider.GetApplication(applicationViewId);
+                var model = _applicationProvider.GetApplicationViewModel(applicationViewId);
 
                 // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
                 ViewBag.VacancyId = model.VacancyDetail.Id;
@@ -84,6 +98,7 @@
             }
         }
 
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult SubmitApplication(string applicationId)
         {
             try
@@ -100,6 +115,7 @@
             }
         }
 
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult WhatHappensNext(string applicationId)
         {
             var applicationViewId = Guid.Parse(applicationId);

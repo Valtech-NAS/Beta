@@ -5,7 +5,6 @@
     using Helpers;
     using ViewModels.Applications;
     using ViewModels.Candidate;
-    using ViewModels.VacancySearch;
 
     public class ApplicationDetailToApplicationViewModelResolver :
         ITypeConverter<ApplicationDetail, ApplicationViewModel>
@@ -37,7 +36,8 @@
                         CandidateAnswer1 = application.AdditionalQuestion1Answer,
                         CandidateAnswer2 = application.AdditionalQuestion2Answer
                     }
-                }
+                },
+                DateUpdated = application.DateUpdated
             };
 
             return model;

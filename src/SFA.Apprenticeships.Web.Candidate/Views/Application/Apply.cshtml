@@ -172,15 +172,18 @@
     @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)
 
     @Html.HiddenFor(m => m.ApplicationViewId)
-    <fieldset>
-        <legend class="heading-large">Before you apply</legend>
-        <p>Check you've completed the form properly</p>
-        <div class="form-group">
-            <button id="apply-button" class="button">Preview application</button>
-            <p>
-                <a href="@Url.Action("Details", "VacancySearch", new { @id = Model.VacancyDetail.Id })" class="button-link">Back</a>
-            </p>
-        </div>
-    </fieldset>
+    
+    <div class="form-group">
+        @*The buttons below need the values so the controller knows what action to perform if restyling*@
+        <button id="apply-button" type="submit" name="ApplicationAction" class="button" value="Preview">Preview application</button>
+        <p id="saveApplication">
+            <button id="save-button" type="submit" name="ApplicationAction" class="button cancel" value="Save">Save draft</button>
+        </p>
+        @if (Model.DateUpdated.HasValue)
+        {
+            <p id="applicationSaved">Saved at @Html.DisplayFor(m => Model.DateUpdated) to <a href="/">my applications</a></p>
+        }
+    </div>    
+    
 }
 

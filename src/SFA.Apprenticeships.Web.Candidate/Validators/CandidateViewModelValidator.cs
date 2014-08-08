@@ -23,4 +23,14 @@
             RuleFor(x => x.EmployerQuestionAnswers).SetValidator(new EmployerQuestionAnswersViewModelServerValidator());
         }
     }
+
+    public class CandidateViewModelSaveValidator : AbstractValidator<CandidateViewModel>
+    {
+        public CandidateViewModelSaveValidator()
+        {
+            RuleFor(x => x.AboutYou).SetValidator(new AboutYouViewModelSaveValidator());
+            RuleFor(x => x.Education).SetValidator(new EducationViewModelSaveValidator());
+            RuleFor(x => x.EmployerQuestionAnswers).SetValidator(new EmployerQuestionAnswersViewModelSaveValidator());
+        }
+    }
 }

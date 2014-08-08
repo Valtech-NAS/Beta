@@ -18,4 +18,12 @@
             RuleFor(x => x.Candidate).SetValidator(new CandidateViewModelServerValidator());
         }
     }
+
+    public class ApplicationViewModelSaveValidator : AbstractValidator<ApplicationViewModel>
+    {
+        public ApplicationViewModelSaveValidator()
+        {
+            RuleFor(x => x.Candidate).SetValidator(new CandidateViewModelSaveValidator());
+        }
+    }
 }
