@@ -98,6 +98,7 @@
         public MyApplicationsViewModel GetMyApplications(Guid candidateId)
         {
             var applicationSummaries = _candidateService.GetApplications(candidateId);
+
             var applications = applicationSummaries
                 .Select(each => new MyApplicationViewModel
                 {
