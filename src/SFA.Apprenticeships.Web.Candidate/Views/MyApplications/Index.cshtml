@@ -1,0 +1,178 @@
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications.MyApplicationsViewModel
+
+@{
+    ViewBag.Title = "SFA Apprenticeships - Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid-wrapper">
+    <div class="grid grid-1-2">
+        <div class="hgroup">
+            <h1 class="heading-xlarge">Your dashboard</h1>
+            <span class="subtitle">Manage your applications</span>
+        </div>
+    </div>
+    <div class="grid grid-1-2">
+        <a href="search-index.html" class="page-link">Find an apprenticeship</a>
+    </div>
+</div>
+<ul class="list-nav">
+    @if (Model.InProgressApplications.Any())
+    {
+        <li>
+            <span class="bold-medium">@Model.InProgressApplications.Count()</span><a class="" href="#dashInProgress">In progress</a>
+        </li>
+    }
+    @if (Model.SubmittedApplications.Any())
+    {
+        <li>
+            <span class="bold-medium">@Model.SubmittedApplications.Count()</span><a class="" href="#dashSubmitted">Submitted</a>
+        </li>
+    }
+    @if (Model.UnsuccessfulApplications.Any())
+    {
+        <li>
+            <span class="bold-medium">@Model.UnsuccessfulApplications.Count()</span><a class="" href="#dashUnsuccessful">Unsuccessful</a>
+        </li>
+    }
+    @if (Model.DraftApplications.Any())
+    {
+        <li>
+            <span class="bold-medium">@Model.DraftApplications.Count()</span><a class="" href="#dashDrafts">Drafts</a>
+        </li>
+    }
+</ul>
+<div class="grid-wrapper">
+    @if (
+        Model.SubmittedApplications.Any() ||
+        Model.InProgressApplications.Any() ||
+        Model.SuccessfulApplications.Any() ||
+        Model.UnsuccessfulApplications.Any())
+    {
+        <div class="grid grid-1-2">
+            <div class="inner-block-padr">
+                <section class="clearfix">
+                    <h2 class="heading-medium" id="dashInProgress">Application status</h2>
+                    <table class="vert-middle">
+                        <colgroup>
+                            <col class="t50">
+                            <col class="t25">
+                            <col class="t25">
+                            <col>
+                        </colgroup>
+                        <tbody class="tbody-3rows">
+                            @foreach (var application in @Model.InProgressApplications)
+                            {
+                                <tr>
+                                    <td>@application.VacancyDescription</td>
+                                    <td>In progress</td>
+                                    <td class="ta-center">application.DateApplied</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tbody class="tbody-expandrows">
+                            <tr class="no-btm-border">
+                                <td colspan="2"></td>
+                                <td class="no-wrap ta-center">
+                                    <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>View more</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="vert-middle" id="dashSubmitted">
+                        <colgroup>
+                            <col class="t50">
+                            <col class="t25">
+                            <col class="t25">
+                            <col>
+                        </colgroup>
+                        <tbody class="tbody-3rows">
+                            @foreach (var application in @Model.SubmittedApplications)
+                            {
+                                <tr>
+                                    <td>@application.VacancyDescription</td>
+                                    <td>Submitted</td>
+                                    <td class="ta-center">4 Jul 14</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tbody class="tbody-expandrows">
+                            <tr class="no-btm-border">
+                                <td colspan="2"></td>
+                                <td class="no-wrap ta-center">
+                                    <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>View more</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="vert-middle" id="dashUnsuccessful">
+                        <colgroup>
+                            <col class="t50">
+                            <col class="t25">
+                            <col class="t25">
+                            <col>
+                        </colgroup>
+                        <tbody class="tbody-3rows">
+                            @foreach (var application in @Model.UnsuccessfulApplications)
+                            {
+                                <tr>
+                                    <td>@application.VacancyDescription</td>
+                                    <td>Unsuccessful</td>
+                                    <td class="ta-center">
+                                        <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tbody class="tbody-expandrows">
+                            <tr class="no-btm-border">
+                                <td colspan="2"></td>
+                                <td class="no-wrap ta-center">
+                                    <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>View more</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+    }
+    @if (Model.DraftApplications.Any())
+    {
+        <div class="grid grid-1-2">
+            <section class="clearfix">
+                <h2 class="heading-medium" id="dashDrafts">Drafts</h2>
+                <table class="vert-middle">
+                    <colgroup>
+                        <col class="t50">
+                        <col class="t25">
+                        <col class="t25">
+                        <col>
+                    </colgroup>
+                    <tbody class="tbody-3rows">
+                        @foreach (var application in @Model.DraftApplications)
+                        {
+                            <tr>
+                                <td>@application.VacancyDescription</td>
+                                <td class="ta-center">
+                                    <a href="apply-index.html">Resume</a>
+                                </td>
+                                <td class="ta-center">
+                                    <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tbody class="tbody-expandrows">
+                        <tr class="no-btm-border">
+                            <td colspan="2"></td>
+                            <td class="no-wrap ta-center">
+                                <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>View more</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    }
+</div>
