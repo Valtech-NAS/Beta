@@ -408,6 +408,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PreviewExtensions.cs" />
     <Compile Include="IoC\CandidateWebRegistry.cs" />
     <Compile Include="Mappers\Helpers\ApplicationConverter.cs" />
     <Compile Include="Mappers\Resolvers\ApplicationDetailToApplicationViewModelResolver.cs" />

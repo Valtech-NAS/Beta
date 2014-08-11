@@ -1,4 +1,5 @@
-﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApplicationViewModel
+﻿@using SFA.Apprenticeships.Web.Candidate.Helpers
+@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApplicationViewModel
 
 @{
     ViewBag.Title = "SFA Apprenticeships - Preview Vacancy Application";
@@ -149,10 +150,10 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <span class="form-prepopped cell-span">@experience.FromYear</span>
+                                    <span class="form-prepopped cell-span">@Html.GetMonthYearLabel(experience.FromMonth, experience.FromYear)  </span>
                                 </td>
                                 <td>
-                                    <span class="form-prepopped cell-span">@experience.ToYear</span>
+                                    <span class="form-prepopped cell-span">@Html.GetMonthYearLabel(experience.ToMonth, experience.ToYear)</span>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -183,3 +184,22 @@
 <div class="form-group">
     @Html.ActionLink("Submit application", "SubmitApplication", new {@applicationId = Model.ApplicationViewId}, new {@class = "button"})
 </div>
+
+@section scripts{
+    
+    <script>
+        function getMonthLabel(index) {
+            //alert(index);
+            var month = "";
+
+            if (index === 0) {
+
+            } else {
+                var mths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+                month = mths[index - 1];
+            }
+
+            return month;
+        }
+    </script>
+}
