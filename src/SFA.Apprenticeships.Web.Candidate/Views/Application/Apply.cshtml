@@ -115,13 +115,15 @@
                             <tbody data-bind="foreach: groupItems">
                                 <tr>
                                     <td>
-                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationSubject, attr:{readonly:readOnly() }">
+                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationSubject, attr:{name:'Candidate.Qualifications[' + $index() +'].Subject', readonly:readOnly() }">
                                     </td>
                                     <td>
-                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationGrade, attr:{readonly:readOnly() }">
+                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationGrade, attr:{name:'Candidate.Qualifications[' + $index() +'].Grade',readonly:readOnly() }">
                                     </td>
                                     <td>
-                                        <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit" type="text" data-bind="value: qualificationYear, attr:{readonly:readOnly() }">
+                                        <input type="hidden" data-bind="value: qualificationType, attr:{name:'Candidate.Qualifications[' + $index() +'].QualificationType'}" />
+                                        <input type="hidden" data-bind="value: qualificationPredicted, attr:{name:'Candidate.Qualifications[' + $index() +'].IsPredicted'}" />
+                                        <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit" type="text" data-bind="value: qualificationYear, attr:{name:'Candidate.Qualifications[' + $index() +'].Year',readonly:readOnly() }">
                                     </td>
                                     <td class="ta-center">
                                         <span class="fake-link cell-span" data-bind='if: showEditButton, click: $root.editQualification'>Edit</span>
@@ -168,7 +170,7 @@
                         <input name="workexp" type="radio" id="workexp-no" data-bind="attr:{checked: hasNoWorkExperience() }">No
                     </label>
                 </div>
-                <div id="workexperience-panel" class="toggle-content">
+                <div id="workexperience-panel" class="toggle-content" data-bind="style: {display:workExperienceStatus() ? 'block' :'none' }">
                     <div class="clearfix">
                         <div class="form-group form-group-compound">
                             <label for="work-employer" class="form-label">Employer</label>
@@ -203,13 +205,13 @@
                                 <div class="form-group form-group-compound">
                                     <span class="form-hint">Month</span>
 
-                                    <select id="work-to" data-bind='options: months, optionsText: "monthName", optionsValue: "monthNumber",value: toMonth'></select>
+                                    <select id="work-to" data-bind='options: months, optionsText: "monthName", optionsValue: "monthNumber",value: toMonth,attr:{disabled:toDateReadonly() }'></select>
 
                                 </div>
                                 <div class="form-group form-group-compound">
                                     <span class="form-hint">Year</span>
                                     <input type="tel" class="form-control form-control-small" pattern="[0-9]*" maxlength="4"
-                                           id="work-to-year" data-bind="value: toYear">
+                                           id="work-to-year" data-bind="value: toYear,attr:{disabled:toDateReadonly() }">
                                 </div>
                                 <div class="form-group form-group-compound">
                                     <input id="work-current" type="checkbox" data-bind="checked: isCurrentEmployment">
@@ -227,13 +229,13 @@
                             <div class="grid-wrapper work-history-item">
                                 <div class="work-controls">
                                     <div class="work-edit ta-center">
-                                      
-                                        <span class="fake-link cell-span" data-bind='if: showEditButton, click: $root.editWorkExperience'>Edit</span>
-                                        <span class="fake-link cell-span" data-bind='ifnot: showEditButton,click: $root.saveWorkExperience'>Save</span>
+
+                                        <span class="fake-link cell-span" data-bind='if: showEditButton, click: $parent.editWorkExperience'>Edit</span>
+                                        <span class="fake-link cell-span" data-bind='ifnot: showEditButton,click: $parent.saveWorkExperience'>Save</span>
                                     </div>
                                     <div class="work-delete ta-center">
                                         <span class="cell-span">
-                                            <i class="ir icon-remove" data-bind='click: $root.removeWorkExperience'>Remove</i>
+                                            <i class="ir icon-remove" data-bind='click: $parent.removeWorkExperience'>Remove</i>
                                         </span>
                                     </div>
                                 </div>
@@ -253,15 +255,18 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <input type="text" class="form-control toggle-content inline width-all-49" data-bind="ifnot: showEditButton, value: employer">
-                                                    <span class="cell-span" data-bind="if: showEditButton, text: employer"></span>
+                                                    <input type="hidden" data-bind="value: itemEmployer, attr:{name:'Candidate.WorkExperience[' + $index() +'].Employer'}" />
+                                                    <input type="hidden" data-bind="value: itemJobTitle, attr:{name:'Candidate.WorkExperience[' + $index() +'].JobTitle'}" />
+                                                    <input type="hidden" data-bind="value: itemMainDuties, attr:{name:'Candidate.WorkExperience[' + $index() +'].Description'}" />
+                                                    <input type="text" class="form-control inline width-all-49" data-bind="value: itemEmployer, visible: !showEditButton()">
+                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemEmployer"></span>
                                                     <span class="cell-span work-hyphen">-</span>
-                                                    <input type="text" class="form-control toggle-content inline width-all-49 no-right-margin"
-                                                           data-bind="ifnot: showEditButton, value: jobTitle">
-                                                    <span class="cell-span" data-bind="if: showEditButton, text: jobTitle"></span>
+                                                    <input type="text" class="form-control  inline width-all-49 no-right-margin"
+                                                           data-bind="value: itemJobTitle, visible: !showEditButton()">
+                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemJobTitle"></span>
                                                     <div></div>
-                                                    <textarea class="form-control toggle-content" data-bind="ifnot: showEditButton, value: mainDuties"></textarea>
-                                                    <span class="cell-span" data-bind="if: showEditButton, text: mainDuties"></span>
+                                                    <textarea class="form-control" data-bind="value: itemMainDuties, visible: !showEditButton()"></textarea>
+                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemMainDuties"></span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -291,18 +296,34 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <select id="work-from" data-bind='ifnot: showEditButton, options: months, optionsText: "monthName", optionsValue: "monthNumber",value: fromMonth'></select>
-
-                                                    <input type="text" class="form-control toggle-content" data-bind="ifnot: showEditButton, value: fromYear">
-                                                    <span class="cell-span" data-bind="if: showEditButton, text: fromMonth"></span>
-                                                    <span class="cell-span" data-bind="if: showEditButton, text: fromYear"></span>
+                                                    <div class="form-group form-group-compound">
+                                                        <select data-bind='options: $parent.months, optionsText: "monthName", optionsValue: "monthNumber",value: itemFromMonth, visible: !showEditButton() '></select>
+                                                        <input type="hidden" data-bind="value: itemFromMonth, attr:{name:'Candidate.WorkExperience[' + $index() +'].FromMonth'}" />
+                                                    </div>
+                                                    <div class="form-group form-group-compound">
+                                                        <input type="text" class="form-control" data-bind=" value: itemFromYear, visible: !showEditButton()">
+                                                        <input type="hidden" data-bind="value: itemFromYear, attr:{name:'Candidate.WorkExperience[' + $index() +'].FromYear'}" />
+                                                    </div>
+                                                                                                      
+                                                    <span class="cell-span" data-bind="visible: showEditButton, text: getMonthLabel(itemFromMonth())"></span>
+                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemFromYear"></span>
                                                 </td>
                                                 <td>
-                                                    <select id="work-from" data-bind='ifnot: showEditButton, options: months, optionsText: "monthName", optionsValue: "monthNumber",value: toMonth'></select>
-
-                                                    <input type="text" class="form-control toggle-content" data-bind="ifnot: showEditButton, value: toYear">
-                                                    <span class="cell-span" data-bind="if: showEditButton, text: toMonth"></span>
-                                                    <span class="cell-span" data-bind="if: showEditButton, text: toYear"></span>
+                                                    <div class="form-group form-group-compound">
+                                                        <select data-bind=' options: $parent.months, optionsText: "monthName", optionsValue: "monthNumber",value: itemToMonth, visible: !showEditButton(),attr:{disabled:toItemDateReadonly() }'></select>
+                                                        <input type="hidden" data-bind="value: itemToMonth, attr:{name:'Candidate.WorkExperience[' + $index() +'].ToMonth'}" />
+                                                    </div>
+                                                    <div class="form-group form-group-compound">
+                                                        <input type="text" class="form-control" data-bind="value: itemToYear, visible: !showEditButton(),attr:{disabled:toItemDateReadonly() }">
+                                                        <input type="hidden" data-bind="value: itemToYear, attr:{name:'Candidate.WorkExperience[' + $index() +'].ToYear'}" />
+                                                    </div>
+                                                    <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
+                                                        <label>
+                                                            <input type="checkbox" data-bind="checked: itemIsCurrentEmployment" /> Current
+                                                        </label>
+                                                    </div>                                                 
+                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() === 0 ? '' : getMonthLabel(itemToMonth())"></span>
+                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() === 0 ? '' : itemToYear"></span>
                                                 </td>
                                                 <td></td>
                                                 <td></td>
@@ -359,6 +380,8 @@
             qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
             workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
 
+            //alert(JSON.stringify(workExperienceData));
+
             ko.validation.rules.pattern.message = 'Invalid.';
             ko.validation.configure({
                 registerExtenders: true,
@@ -375,6 +398,20 @@
 
         function getWorkExperienceData() {
             return workExperienceData;
+        }
+
+        function getMonthLabel(index) {
+            //alert(index);
+            var month = "";
+
+            if (index === 0) {
+               
+            } else {
+                var mths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+                month = mths[index - 1];
+            }
+
+            return month;
         }
 
     </script>

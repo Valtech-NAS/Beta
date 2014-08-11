@@ -158,6 +158,7 @@
 
                 self.displayErrors(false);
             } else {
+                self.errors.showAllMessages();
                 self.displayErrors(true);
             }
         };
@@ -201,30 +202,58 @@
         self.monthNumber = monthNo;
     };
 
+    ko.validation.rules['mustBeGreaterThanOrEqual'] = {
+        validator: function (val, otherVal) {          
+            return val === otherVal || val > otherVal ;
+        },
+        message: 'To Year must be greater than or equal to From Year'
+    };
+    ko.validation.registerExtenders();
+
     var workExperienceItemModel = function (itemEmployer, itemJobTitle, itemDuties, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemIsCurrentEmployment) {
 
         var self = this;
 
-        self.employer = ko.observable(itemEmployer).extend({ required: { message: "Employer is required" } });
-        self.jobTitle = ko.observable(itemJobTitle).extend({ required: { message: "Job Title is required" } });
-        self.mainDuties = ko.observable(itemDuties).extend({ required: { message: "Enter some of your main duties" } });
-        self.fromMonth = ko.observable(itemFromMonth).extend({ required: { message: "From month is required" } });
-        self.fromYear = ko.observable(itemFromYear).extend({ required: { message: "From year is required" } });
-        self.toMonth = ko.observable(itemToMonth).extend({
+        self.itemEmployer = ko.observable(itemEmployer).extend({ required: { message: "Employer is required" } });
+        self.itemJobTitle = ko.observable(itemJobTitle).extend({ required: { message: "Job Title is required" } });
+        self.itemMainDuties = ko.observable(itemDuties).extend({ required: { message: "Enter some of your main duties" } });
+
+        self.itemIsCurrentEmployment = ko.observable(itemIsCurrentEmployment);
+
+        self.itemFromMonth = ko.observable(itemFromMonth).extend({ required: { message: "From month is required" } });
+        self.itemFromYear = ko.observable(itemFromYear).extend({ required: { message: "From year is required" } });
+
+        self.itemToMonth = ko.observable(itemToMonth).extend({
             required: {
                 message: "To month is required",
-                onlyIf: function () { return (self.isCurrentEmployment() === false); }
+                onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
             }
         });
-        self.toYear = ko.observable(itemToYear).extend({
+        self.itemToYear = ko.observable(itemToYear).extend({
             required: {
                 message: "To year is required",
-                onlyIf: function () { return (self.isCurrentEmployment() === false); }
+                onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
+            },
+            min: {
+                params: self.itemFromYear()
             }
         });
-        self.isCurrentEmployment = ko.observable(itemIsCurrentEmployment);
+
         self.readOnly = ko.observable("readonly");
         self.showEditButton = ko.observable(true);
+
+        self.toItemDateReadonly = ko.observable("disabled");
+
+        self.itemIsCurrentEmployment.subscribe(function (selectedValue) {
+            if (selectedValue === true) {
+                self.itemToYear(null);
+                self.toItemDateReadonly("disabled");
+            } else {
+                self.toItemDateReadonly(undefined);
+            }
+        });
+
+        self.errors = ko.validation.group(self);
     }
 
     var workExperienceViewModel = function() {
@@ -249,14 +278,19 @@
         self.employer = ko.observable().extend({ required: { message: "Employer is required" } });
         self.jobTitle = ko.observable().extend({ required: { message: "Job Title is required" } });
         self.mainDuties = ko.observable().extend({ required: { message: "Enter some of your main duties" } });
+
+        self.isCurrentEmployment = ko.observable(false);
+
         self.fromMonth = ko.observable().extend({ required: { message: "From month is required" } });
         self.fromYear = ko.observable().extend({ required: { message: "From year is required" }, number: true });
+
         self.toMonth = ko.observable().extend({
             required: {
                 message: "To month is required",
                 onlyIf: function () { return (self.isCurrentEmployment() === false); }
             }
         });
+
         self.toYear = ko.observable().extend({
             required: {
                 message: "To year is required",
@@ -265,22 +299,42 @@
             }
         });
 
-        self.isCurrentEmployment = ko.observable(false);
+        self.toYear.extend({mustBeGreaterThanOrEqual : self.fromYear});
 
+        self.toDateReadonly = ko.observable(undefined);
+
+        self.isCurrentEmployment.subscribe(function (selectedValue) {
+            if (selectedValue === true) {
+                self.toYear(null);
+                self.toDateReadonly("disabled");
+            } else {
+                self.toDateReadonly(undefined);
+            }
+        });
+     
         self.workExperiences = ko.observableArray();
 
-        self.errors = ko.validation.group(self);
+        self.errors = ko.validation.group(self);            
 
         self.addWorkExperience = function() {
 
             if (self.errors().length == 0) {
 
-                var experience = new workExperienceItemModel(self.employer(), self.jobTitle(), self.mainDuties(), self.fromMonth(), self.fromYear(), self.toMonth(), self.toYear(), self.isCurrentEmployment());
+                var toMonth = self.toMonth();
+                var toYear = self.toYear();
+
+                if (self.isCurrentEmployment() === true) {
+                    //alert(self.isCurrentEmployment());
+                    toMonth = 0;
+                    toYear = 0;
+                }
+
+                var experience = new workExperienceItemModel(self.employer(), self.jobTitle(), self.mainDuties(), self.fromMonth(), self.fromYear(), toMonth, toYear, self.isCurrentEmployment());
 
                 self.workExperiences.push(experience);
 
             } else {
-                
+                self.errors.showAllMessages();
             }
 
         };
@@ -302,16 +356,26 @@
         self.getWorkExperiences = function(data) {
 
             $(data).each(function (index, item) {
+                //alert(JSON.stringify(item));
+                var currentEmployer = false;
 
-                var experienceItemModel = new workExperienceItemModel(item.Employer, item.JobTitle, item.Description, item.FromMonth, item.FromYear, item.ToMonth, item.ToYear, item.IsCurrentEmployer);
+                if (isNaN(item.ToYear) && item.toYear > 0) {
+                    currentEmployer = true;
+                }
+
+                var experienceItemModel = new workExperienceItemModel(item.Employer, item.JobTitle, item.Description, item.FromMonth, item.FromYear, item.ToMonth, item.ToYear, currentEmployer);
                 self.workExperiences.push(experienceItemModel);
             });
 
+            //alert(JSON.stringify(self.workExperiences()));
+
             if (self.workExperiences().length > 0) {
+                //alert(self.workExperiences().length);
                 self.showWorkExperience(true);
                 self.hasWorkExperience("checked");
                 self.hasNoWorkExperience(undefined);
             } else {
+                //alert(self.workExperiences().length);
                 self.showWorkExperience(false);
                 self.hasWorkExperience(undefined);
                 self.hasNoWorkExperience("checked");
@@ -320,6 +384,28 @@
         };
 
     };
+
+    //var educationViewModel = function() {
+    //    var self = this;
+
+    //    self.collegeName = ko.observable().extend({ required: { message: "School or College is required" } });
+    //    self.fromYear = ko.observable().extend({ required: { message: "From year is required" } });
+    //    self.toYear = ko.observable().extend({ required: { message: "To year is required" } });
+
+    //    self.errors = ko.validation.group(self);
+    //};
+
+    //var aboutYouViewModel = function() {
+    //    var self = this;
+
+    //    self.strengths = ko.observable().extend({ required: { message: "Please enter some of your strengths" } });
+    //    self.improvements = ko.observable().extend({ required: { message: "Please enter some area you want to improve" } });
+    //    self.hobbiesandInterests = ko.observable().extend({ required: { message: "Please enter hobbies and interests" } });
+    //    self.supportrequired = ko.observable().extend({ required: { message: "Do you require any support" } });
+
+    //    self.errors = ko.validation.group(self);
+    //};
+
 
     $(function() {
 
@@ -338,6 +424,7 @@
         }
 
         ko.applyBindings(experienceModel, document.getElementById('applyWorkExperience'));
-    });
+
+    });   
 
 }());

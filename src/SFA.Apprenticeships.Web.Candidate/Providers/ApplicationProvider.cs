@@ -58,9 +58,8 @@
             var applicationReloadedModel = GetApplicationViewModel(submittedApplicationViewModel.ApplicationViewId);
 
             applicationReloadedModel.Candidate.Education = submittedApplicationViewModel.Candidate.Education;
-            //TODO uncomment after qualification and work experience is done
-            //applicationReloadedModel.Candidate.Qualifications = submittedApplicationViewModel.Candidate.Qualifications;
-            //applicationReloadedModel.Candidate.WorkExperience = submittedApplicationViewModel.Candidate.WorkExperience;
+            applicationReloadedModel.Candidate.Qualifications = submittedApplicationViewModel.Candidate.Qualifications;
+            applicationReloadedModel.Candidate.WorkExperience = submittedApplicationViewModel.Candidate.WorkExperience;
             applicationReloadedModel.Candidate.AboutYou = submittedApplicationViewModel.Candidate.AboutYou;
             applicationReloadedModel.Candidate.EmployerQuestionAnswers = submittedApplicationViewModel.Candidate.EmployerQuestionAnswers;
 
@@ -72,10 +71,9 @@
             var model = GetApplicationViewModel(applicationViewModel.ApplicationViewId);
 
             model.Candidate.AboutYou = applicationViewModel.Candidate.AboutYou;
-            model.Candidate.Education = applicationViewModel.Candidate.Education;
-            //TODO uncomment after qualification and work experience is done
-            //model.Candidate.Qualifications = applicationViewModel.Candidate.Qualifications;
-            //model.Candidate.WorkExperience = applicationViewModel.Candidate.WorkExperience;
+            model.Candidate.Education = applicationViewModel.Candidate.Education;         
+            model.Candidate.Qualifications = applicationViewModel.Candidate.Qualifications;
+            model.Candidate.WorkExperience = applicationViewModel.Candidate.WorkExperience;
             model.Candidate.EmployerQuestionAnswers = applicationViewModel.Candidate.EmployerQuestionAnswers;
            
             var application = _mapper.Map<ApplicationViewModel, ApplicationDetail>(model);
