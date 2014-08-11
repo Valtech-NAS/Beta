@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Web;
     using Application.Interfaces.Candidates;
@@ -118,8 +117,9 @@
                 {
                     VacancyId = each.LegacyVacancyId,
                     Title = each.Title,
-                    UnsuccessfulReason = null, // TODO: US154: AG: does not exist in ApplicationSummary.
-                    WithdrawnOrDeclinedReason = null, // TODO: US154: AG: does not exist in ApplicationSummary.
+                    EmployerName = each.EmployerName,
+                    UnsuccessfulReason = each.UnsuccessfulReason,
+                    WithdrawnOrDeclinedReason = each.WithdrawnOrDeclinedReason,
                     ApplicationStatus = each.Status,
                     DateApplied = each.DateApplied
 

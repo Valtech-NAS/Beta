@@ -24,6 +24,7 @@
                 .ForMember(x => x.ApplicationId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(x => x.LegacyVacancyId, opt => opt.MapFrom(src => src.LegacyApplicationId))
                 .ForMember(x => x.Title, opt => opt.MapFrom(src => src.Vacancy.Title))
+                .ForMember(x => x.EmployerName, opt => opt.MapFrom(src => src.Vacancy.EmployerName))
                 .ForMember(x => x.Status, opt => opt.MapFrom(src => src.Status))
                 .ForMember(x => x.DateUpdated, opt => opt.MapFrom(src => src.DateUpdated))
                 .ForMember(x => x.DateApplied, opt => opt.MapFrom(src => src.DateApplied));

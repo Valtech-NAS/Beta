@@ -10,10 +10,16 @@
 
         public string Title { get; set; }
 
+        public string EmployerName { get; set; }
+
         public ApplicationStatuses Status { get; set; }
 
         public DateTime DateUpdated { get; set; }
 
         public DateTime? DateApplied { get; set; }
+
+        public string WithdrawnOrDeclinedReason { get; set; }
+
+        public string UnsuccessfulReason { get; set; }
     }
 }

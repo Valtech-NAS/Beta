@@ -17,9 +17,13 @@
 
         public ApplicationStatuses Status { get; set; }
 
+        public bool IsArchived { get; set; }
+
         public DateTime? DateApplied { get; set; }
 
-        public bool IsArchived { get; set; }
+        public string WithdrawnOrDeclinedReason { get; set; }
+
+        public string UnsuccessfulReason { get; set; }
 
         public Guid CandidateId { get; set; }
 
