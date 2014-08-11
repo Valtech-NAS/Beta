@@ -8,8 +8,7 @@
     {
         public MyApplicationsViewModel(IEnumerable<MyApplicationViewModel> applications)
         {
-            // TODO: US154: AG: see "Note 1" attached to user story. Need to take DateUpdated into account.
-            this.AllApplications = applications;
+            AllApplications = applications.OrderByDescending(a => a.DateUpdated);
         }
 
         public IEnumerable<MyApplicationViewModel> AllApplications { get; private set; }
@@ -25,7 +24,7 @@
             {
                 return AllApplications.Where(each =>
                     each.ApplicationStatus == ApplicationStatuses.Submitting ||
-                    each.ApplicationStatus == ApplicationStatuses.Submitted);
+                    each.ApplicationStatus == ApplicationStatuses.Submitted); 
             }
         }
 

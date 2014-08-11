@@ -18,6 +18,8 @@
         [DataType(DataType.DateTime)]
         public DateTime? DateApplied { get; set; }
 
+        public DateTime? DateUpdated { get; set; }
+
         public string WithdrawnOrDeclinedReason { get; set; }
 
         public string UnsuccessfulReason { get; set; }

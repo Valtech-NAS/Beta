@@ -112,7 +112,6 @@
             var applicationSummaries = _candidateService.GetApplications(candidateId);
 
             var applications = applicationSummaries
-                .OrderByDescending(each => each.DateUpdated)
                 .Select(each => new MyApplicationViewModel
                 {
                     VacancyId = each.LegacyVacancyId,
@@ -121,8 +120,8 @@
                     UnsuccessfulReason = each.UnsuccessfulReason,
                     WithdrawnOrDeclinedReason = each.WithdrawnOrDeclinedReason,
                     ApplicationStatus = each.Status,
-                    DateApplied = each.DateApplied
-
+                    DateApplied = each.DateApplied,
+                    DateUpdated = each.DateUpdated
                 });
 
             return new MyApplicationsViewModel(applications);
