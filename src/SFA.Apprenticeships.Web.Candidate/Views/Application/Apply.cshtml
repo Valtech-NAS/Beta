@@ -14,7 +14,7 @@
         </div>
         <p id="vacancy-summary">@Model.VacancyDetail.Description</p>
         <p>
-            <a href="@Url.Action("Details", "VacancySearch", new { @id = Model.VacancyDetail.Id })">Back to vacancy</a>
+            <a href="@Url.Action("Details", "VacancySearch", new { @id = Model.VacancyDetail.Id })">View apprenticeship</a>
         </p>
     </div>
 </section>
@@ -177,7 +177,7 @@
         @*The buttons below need the values so the controller knows what action to perform if restyling*@
         <button id="apply-button" type="submit" name="ApplicationAction" class="button" value="Preview">Preview application</button>
         <p id="saveApplication">
-            <button id="save-button" type="submit" name="ApplicationAction" class="button cancel" value="Save">Save draft</button>
+            <button id="save-button" type="submit" name="ApplicationAction" class="button-link cancel" value="Save">Save draft</button>
         </p>
         @if (Model.DateUpdated.HasValue)
         {

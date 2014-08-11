@@ -33,8 +33,7 @@
         @if (ViewBag.VacancyId != null)
         {
             <a class="icon-with-text" href="@Url.Action("Apply", "Application", new {id = ViewBag.VacancyId})#applyQualifications">
-                <i class="the-icon fa fa-pencil"></i>
-                <span class="the-text">Amend details</span>
+                <i class="the-icon fa fa-pencil"></i><span class="the-text">Amend details</span>
             </a>
         }
     </legend>
@@ -91,8 +90,7 @@
         @if (ViewBag.VacancyId != null)
         {
             <a class="icon-with-text" href="@Url.Action("Apply", "Application", new {id = ViewBag.VacancyId})#applyWorkExperience">
-                <i class="the-icon fa fa-pencil"></i>
-                <span class="the-text">Amend details</span>
+                <i class="the-icon fa fa-pencil"></i><span class="the-text">Amend details</span>
             </a>
         }
     </legend>
@@ -173,6 +171,15 @@
 @Html.DisplayFor(m => m.Candidate.AboutYou)
 @Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers)
 
+<h3 class="heading-large">Submit your application</h3>
+<div class="form-group">
+    <p>Before you submit your application make sure you’ve:</p>
+    <ul>
+        <li>asked someone to check your application for mistakes</li>
+        <li>checked your answers are relevant to the apprenticeship</li>
+        <li>checked the apprenticeship location</li>
+    </ul>
+</div>
 <div class="form-group">
     @Html.ActionLink("Submit application", "SubmitApplication", new {@applicationId = Model.ApplicationViewId}, new {@class = "button"})
 </div>

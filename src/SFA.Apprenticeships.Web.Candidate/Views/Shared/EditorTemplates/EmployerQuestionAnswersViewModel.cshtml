@@ -16,12 +16,12 @@
 
         @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1))
         {
-            @Html.FormTextAreaFor(m => m.CandidateAnswer1, labelText: Model.SupplementaryQuestion1)
+            @Html.FormTextAreaFor(m => m.CandidateAnswer1, labelText: Model.SupplementaryQuestion1, hintHtmlAttributes: new { @class = "text" })
         }
 
         @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion2))
         {
-            @Html.FormTextAreaFor(m => m.CandidateAnswer2, labelText: Model.SupplementaryQuestion2)
+            @Html.FormTextAreaFor(m => m.CandidateAnswer2, labelText: Model.SupplementaryQuestion2, hintHtmlAttributes: new { @class = "text" })
         }
 
     </fieldset>

@@ -128,6 +128,7 @@
             </div>
             <div class="grid grid-1-2">
                 <div class="ad-details__map">
+                    <div class="map-overlay" onclick="style.pointerEvents='none'"></div>
                     <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                     <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                 </div>

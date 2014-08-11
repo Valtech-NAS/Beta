@@ -4,8 +4,8 @@
     {
         public static class WhatAreYourStrengthsMessages
         {
-            public const string LabelText = "What are your strengths?";
-            public const string HintText = "For example, team working, organising";
+            public const string LabelText = "Give examples of your strengths that are relevant to the apprenticeship";
+            public const string HintText = "Don't just list your strengths. Whatever examples you give, you’ll need to provide details of when you’ve shown these.";
             public const string RequiredErrorText = "'What are your strengths' must be supplied";
             public const string TooLongErrorText = "'What are your strengths' must not exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
@@ -14,8 +14,8 @@
 
         public static class WhatDoYouFeelYouCouldImproveMessages
         {
-            public const string LabelText = "Where do you feel you could improve?";
-            public const string HintText = "For example, time managing, confidence";
+            public const string LabelText = "What skills would you like to improve during this apprenticeship?";
+            public const string HintText = "Try and think of what your duties will be and the industry the employer works in.";
             public const string RequiredErrorText = "'What do you feel you could improve' must be supplied";
             public const string TooLongErrorText = "'What do you feel you could improve' must not exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
@@ -24,8 +24,8 @@
 
         public static class WhatAreYourHobbiesInterestsMessages
         {
-            public const string LabelText = "What are your hobbies/interests?";
-            public const string HintText = "These can include any personal achievements";
+            public const string LabelText = "What are your hobbies and interests?";
+            public const string HintText = "Think of the skills you’ve gained from your hobbies and interests that might be relevant. Include any personal achievements.";
             public const string RequiredErrorText = "'What are your hobbies/interests' must be supplied";
             public const string TooLongErrorText = "'What are your hobbies/interests' must not exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;

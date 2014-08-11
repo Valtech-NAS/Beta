@@ -6,36 +6,27 @@
         @if (ViewBag.VacancyId != null)
         {
             <a class="icon-with-text" href='@Url.Action("Apply", "Application", new {id = ViewBag.VacancyId})#applyAboutYou'>
-                <i class="the-icon fa fa-pencil"></i>
-                <span class="the-text">Amend details</span>
+                <i class="the-icon fa fa-pencil"></i><span class="the-text">Amend details</span>
             </a>
 
         }       
     </legend>
-    @*<div class="form-group text">
-            <details>
-                <summary role="button">Help with this section</summary>
-                <p class="panel-indent">
-                    Think carefully about how you answer these questions. Where possible,
-                    keep the vacancy that you're applying for in mind, and tailor your
-                    answers to match the role.
-                </p>
-            </details>
-        </div>*@
+
     <div class="form-group">
         @Html.LabelFor(m => m.WhatAreYourStrengths, new { @class = "form-label" })
-        @Html.DisplayFor(m => m.WhatAreYourStrengths, new { @class = "form-control" })
+
+        <span class="form-prepopped">@Html.DisplayFor(m => m.WhatAreYourStrengths)</span>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.WhatDoYouFeelYouCouldImprove, new { @class = "form-label" })
-        @Html.DisplayFor(m => m.WhatDoYouFeelYouCouldImprove, new { @class = "form-control" })
+        <span class="form-prepopped">@Html.DisplayFor(m => m.WhatDoYouFeelYouCouldImprove)</span>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.WhatAreYourHobbiesInterests, new { @class = "form-label" })
-        @Html.DisplayFor(m => m.WhatAreYourHobbiesInterests, new { @class = "form-control" })
+        <span class="form-prepopped">@Html.DisplayFor(m => m.WhatAreYourHobbiesInterests)</span>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.AnythingWeCanDoToSupportYourInterview, new { @class = "form-label" })
-        @Html.DisplayFor(m => m.AnythingWeCanDoToSupportYourInterview, new { @class = "form-control" })
+        <span class="form-prepopped">@Html.DisplayFor(m => m.AnythingWeCanDoToSupportYourInterview)</span>
     </div>
 </fieldset>
