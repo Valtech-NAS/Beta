@@ -19,7 +19,7 @@
     </div>
 </section>
 
-@using (Html.BeginForm("Apply", "Application", new { id = Model.VacancyDetail.Id }, FormMethod.Post))
+@using (Html.BeginForm("Apply", "Application", new {id = Model.VacancyDetail.Id}, FormMethod.Post))
 {
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
@@ -32,48 +32,43 @@
             <legend class="heading-large">Qualifications</legend>
             <p class="form-label">Do you have any qualifications?</p>
             <div class="form-group form-group-compound inline clearfix">
-                <label data-target="qualifications-panel" for="qualifications-yes" class="block-label">
-                    <input name="quals" type="radio" id="qualifications-yes" value="yes" data-bind="checked: hasQualifications">Yes
+                <label data-target="qualifications-panel" for="qualifications-yes" class="block-label" data-bind="css: {selected:showQualifications() }">
+                    <input name="quals" type="radio" id="qualifications-yes" data-bind="attr:{checked: yesHasQualifications() }">Yes
                 </label>
-                <label for="qualifications-no" class="block-label">
-                    <input name="quals" type="radio" id="qualifications-no" value="no" data-bind="checked: hasQualifications">No
+                <label for="qualifications-no" class="block-label" data-bind="css: {selected: !showQualifications() }">
+                    <input name="quals" type="radio" id="qualifications-no" data-bind="attr:{checked: noHasQualifications() }">No
                 </label>
             </div>
-            <div id="qualifications-panel" class="toggle-content">
+            <div id="qualifications-panel" class="toggle-content" data-bind="style: {display:showQualifications() ? 'block' :'none' }">
                 <div class="clearfix">
                     <div class="inline-fixed">
                         <div class="form-group">
                             <label for="qual-type" class="form-label">Type of qualification</label>
-                            <select id="qual-type" data-bind="value: selectedQualification">
-                                <option value="">Select from list</option>
-                                <option value="GCSE">GCSE</option>
-                                <option value="AS Level">AS Level</option>
-                                <option value="A Level">A Level</option>
-                                <option value="BTEC">BTEC</option>
-                                <option value="NVQ or SVQ Level 1">NVQ or SVQ Level 1</option>
-                                <option value="NVQ or SVQ Level 2">NVQ or SVQ Level 2</option>
-                                <option value="NVQ or SVQ Level 3">NVQ or SVQ Level 3</option>
-                                <option id="otherQualOption" value="Other">Other</option>
-                            </select>
+                            <select id="qual-type" data-bind='options: qualificationTypes, optionsCaption: "Select from list", optionsText: "qualificationTypeName", optionsValue: "qualificationTypeName",value: selectedQualification'></select>
+                            
                         </div>
                         <div class="form-group">
                             <label for="subject-year" class="form-label">Year</label>
                             <input maxlength="4" type="tel" class="form-control form-control-small" pattern="[0-9]*"
                                    id="subject-year" data-bind="value: year">
+                           
                         </div>
                     </div>
-                    <div class="form-group toggle-content">
+                    <div class="form-group" data-bind="visible: showOtherQualification">
                         <label for="other-qual" class="form-label">Name of other qualification</label>
                         <input type="text" class="form-control" id="other-qual" data-bind="value: otherQualification">
+                        
                     </div>
                     <div class="form-group form-group-compound">
                         <label for="subject-name" class="form-label">Subject</label>
                         <input type="text" class="form-control" id="subject-name" data-bind="value: subject">
+                      
                     </div>
                     <div class="inline-fixed">
                         <div class="form-group">
                             <label for="subject-grade" class="form-label">Grade</label>
                             <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind="value: grade">
+                           
                         </div>
                         <div class="form-group">
                             <input id="qual-predicted" type="checkbox" data-bind="checked: predicted">
@@ -83,55 +78,62 @@
                     <div class="form-group">
                         <button class="button" id="saveQualification" data-bind="click: addQualification">Add qualification</button>
                     </div>
-                </div>
-                <div>
-                    <div class="hgroup-small">
-                        <h3 class="heading-small"></h3>
+                    <div class="form-group" data-bind="visible: displayErrors">
+                        <p class="field-validation-error">TODO: Please complete all fields displayed!</p>
                     </div>
-                    <table class="grid-3-4">
-                        <colgroup>
-                            <col class="t40">
-                            <col class="t25">
-                            <col class="t15">
-                            <col class="t10">
-                            <col class="t10">
-                            <col>
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>
-                                    <span class="heading-span">Subject</span>
-                                </th>
-                                <th>
-                                    <span class="heading-span">Grade</span>
-                                </th>
-                                <th>
-                                    <span class="heading-span">Year</span>
-                                </th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="foreach: qualifications">
-                            <tr>
-                                <td>
-                                    <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationSubject, enable: editMode">
-                                </td>
-                                <td>
-                                    <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationGrade, enable: editMode">
-                                </td>
-                                <td>
-                                    <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationYear, enable: editMode">
-                                </td>
-                                <td class="ta-center">
-                                    <span class="fake-link cell-span" data-bind='click: $root.editQualification'>Edit</span>
-                                </td>
-                                <td class="ta-center">
-                                    <i class="cell-span"><i class="ir icon-remove" data-bind='click: $root.removeQualification'>Remove</i></i>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                </div>
+                <div data-bind="foreach: qualifications">
+                    <div data-bind="visible: groupItems().length > 0 ">
+                        <div class="hgroup-small">
+                            <h3 class="heading-small" data-bind="text: groupKey"></h3>
+                        </div>
+                        <table class="grid-3-4">
+                            <colgroup>
+                                <col class="t40">
+                                <col class="t25">
+                                <col class="t15">
+                                <col class="t10">
+                                <col class="t10">
+                                <col>
+                            </colgroup>
+
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="heading-span">Subject</span>
+                                    </th>
+                                    <th>
+                                        <span class="heading-span">Grade</span>
+                                    </th>
+                                    <th>
+                                        <span class="heading-span">Year</span>
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: groupItems">
+                                <tr>
+                                    <td>
+                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationSubject, attr:{readonly:readOnly() }">
+                                    </td>
+                                    <td>
+                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationGrade, attr:{readonly:readOnly() }">
+                                    </td>
+                                    <td>
+                                        <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit" type="text" data-bind="value: qualificationYear, attr:{readonly:readOnly() }">
+                                    </td>
+                                    <td class="ta-center">
+                                        <span class="fake-link cell-span" data-bind='if: showEditButton, click: $root.editQualification'>Edit</span>
+                                        <span class="fake-link cell-span" data-bind='ifnot: showEditButton,click: $root.saveQualificationItem'>Save</span>
+                                    </td>
+                                    <td class="ta-center">
+                                        <i class="cell-span"><i class="ir icon-remove" data-bind='click: $root.removeQualification'>Remove</i></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>                    
                 </div>
             </div>
             <div class="form-group text">
@@ -146,98 +148,179 @@
             </div>
         </fieldset>
 
-
     </div>
 
-    <fieldset id="applyWorkExperience" class="fieldset-with-border">
-        <legend class="heading-large">Work experience</legend>
-        @foreach (var experience in Model.Candidate.WorkExperience)
-        {
-            <div class="work-history-wrapper grid-3-4">
-                <div class="grid-wrapper work-history-item">
-                    <div class="work-controls">
-                        <div class="work-edit ta-center">
-                            <span class="cell-span fake-link">Edit</span>
+    <div data-bind="visible: selectedSection() === 'applyWorkExperience', stopBinding: true">
+        
+        <fieldset id="applyWorkExperience" class="fieldset-with-border">
+            <legend class="heading-large">Work experience</legend>
+            <p class="hide-nojs form-label text">Do you have any work experience?</p>
+            <p class="form-hint text">
+                Use skills you've gained at work (whether paid or unpaid) that relate to the apprenticeship
+                you’re applying for.
+            </p>
+            <div class="hide-nojs">
+                <div class="form-group inline clearfix">
+                    <label data-target="workexperience-panel" for="workexp-yes" class="block-label" data-bind="css: {selected: showWorkExperience()}">
+                        <input name="workexp" type="radio" id="workexp-yes" data-bind="attr:{checked: hasWorkExperience() }">Yes
+                    </label>
+                    <label for="workexp-no" class="block-label" data-bind="css: {selected: !showWorkExperience()}">
+                        <input name="workexp" type="radio" id="workexp-no" data-bind="attr:{checked: hasNoWorkExperience() }">No
+                    </label>
+                </div>
+                <div id="workexperience-panel" class="toggle-content">
+                    <div class="clearfix">
+                        <div class="form-group form-group-compound">
+                            <label for="work-employer" class="form-label">Employer</label>
+                            <input type="text" class="form-control" id="work-employer" data-bind="value: employer">
                         </div>
-                        <div class="work-delete ta-center">
-                            <span class="cell-span">
-                                <i class="ir icon-remove">Remove</i>
-                            </span>
+                        <div class="form-group form-group">
+                            <label for="work-title" class="form-label">Job title</label>
+                            <input type="text" class="form-control" id="work-title" data-bind="value: jobTitle">
+                        </div>
+                        <div class="form-group form-group-compound">
+                            <label for="work-role" class="form-label">Main duties</label>
+                            <textarea rows="3" class="form-control" id="work-role" data-val-length-max="200" data-bind="value: mainDuties"></textarea>
+                            <span class="form-hint maxchar-count">200</span>
+                        </div>
+                        <div class="inline-fixed">
+                            <div class="form-group form-group-compound">
+                                <label for="work-from" class="form-label">From</label>
+                                <div class="form-group form-group-compound">
+                                    <span class="form-hint">Month</span>
+
+                                    <select id="work-from" data-bind='options: months, optionsText: "monthName", optionsValue: "monthNumber",value: fromMonth'></select>
+
+                                </div>
+                                <div class="form-group form-group-compound">
+                                    <span class="form-hint">Year</span>
+                                    <input type="tel" class="form-control form-control-small" pattern="[0-9]*" maxlength="4"
+                                           id="work-from-year" data-bind="value: fromYear">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="work-to" class="form-label">To</label>
+                                <div class="form-group form-group-compound">
+                                    <span class="form-hint">Month</span>
+
+                                    <select id="work-to" data-bind='options: months, optionsText: "monthName", optionsValue: "monthNumber",value: toMonth'></select>
+
+                                </div>
+                                <div class="form-group form-group-compound">
+                                    <span class="form-hint">Year</span>
+                                    <input type="tel" class="form-control form-control-small" pattern="[0-9]*" maxlength="4"
+                                           id="work-to-year" data-bind="value: toYear">
+                                </div>
+                                <div class="form-group form-group-compound">
+                                    <input id="work-current" type="checkbox" data-bind="checked: isCurrentEmployment">
+                                    <label for="work-current">Current</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="button" id="addWorkBtn" data-bind="click: addWorkExperience">Add work</button>
                         </div>
                     </div>
-                    <div class="grid grid-1-2">
-                        <table class="table-no-btm-border table-compound">
-                            <colgroup>
-                                <col class="t100">
-                                <col>
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <span class="heading-span">Work experience</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="text" class="form-control toggle-content inline width-all-49 editable-work-input"
-                                               value="@experience.Employer">
-                                        <span class="cell-span editable-work">@experience.Employer</span>
-                                        <span class="cell-span work-hyphen">-</span>
-                                        <input type="text" class="form-control toggle-content inline width-all-49 editable-work-input no-right-margin"
-                                               value="@experience.JobTitle">
-                                        <span class="cell-span editable-work">@experience.JobTitle</span>
-                                        <div></div>
-                                        <textarea class="form-control toggle-content editable-work-input">@experience.Description</textarea>
-                                        <span class="cell-span editable-work">@experience.Description</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+                    <div data-bind="foreach: workExperiences">
+                        <div class="grid-3-4">
+                            <div class="grid-wrapper work-history-item">
+                                <div class="work-controls">
+                                    <div class="work-edit ta-center">
+                                      
+                                        <span class="fake-link cell-span" data-bind='if: showEditButton, click: $root.editWorkExperience'>Edit</span>
+                                        <span class="fake-link cell-span" data-bind='ifnot: showEditButton,click: $root.saveWorkExperience'>Save</span>
+                                    </div>
+                                    <div class="work-delete ta-center">
+                                        <span class="cell-span">
+                                            <i class="ir icon-remove" data-bind='click: $root.removeWorkExperience'>Remove</i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="grid grid-1-2">
+                                    <table class="table-no-btm-border table-compound">
+                                        <colgroup>
+                                            <col class="t100">
+                                            <col>
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <span class="heading-span">Work experience</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <input type="text" class="form-control toggle-content inline width-all-49" data-bind="ifnot: showEditButton, value: employer">
+                                                    <span class="cell-span" data-bind="if: showEditButton, text: employer"></span>
+                                                    <span class="cell-span work-hyphen">-</span>
+                                                    <input type="text" class="form-control toggle-content inline width-all-49 no-right-margin"
+                                                           data-bind="ifnot: showEditButton, value: jobTitle">
+                                                    <span class="cell-span" data-bind="if: showEditButton, text: jobTitle"></span>
+                                                    <div></div>
+                                                    <textarea class="form-control toggle-content" data-bind="ifnot: showEditButton, value: mainDuties"></textarea>
+                                                    <span class="cell-span" data-bind="if: showEditButton, text: mainDuties"></span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="grid grid-1-2">
+                                    <table class="table-no-btm-border table-compound">
+                                        <colgroup>
+                                            <col class="t30">
+                                            <col class="t30">
+                                            <col class="t25">
+                                            <col class="t15">
+                                            <col>
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <span class="heading-span">From</span>
+                                                </th>
+                                                <th>
+                                                    <span class="heading-span">To</span>
+                                                </th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <select id="work-from" data-bind='ifnot: showEditButton, options: months, optionsText: "monthName", optionsValue: "monthNumber",value: fromMonth'></select>
+
+                                                    <input type="text" class="form-control toggle-content" data-bind="ifnot: showEditButton, value: fromYear">
+                                                    <span class="cell-span" data-bind="if: showEditButton, text: fromMonth"></span>
+                                                    <span class="cell-span" data-bind="if: showEditButton, text: fromYear"></span>
+                                                </td>
+                                                <td>
+                                                    <select id="work-from" data-bind='ifnot: showEditButton, options: months, optionsText: "monthName", optionsValue: "monthNumber",value: toMonth'></select>
+
+                                                    <input type="text" class="form-control toggle-content" data-bind="ifnot: showEditButton, value: toYear">
+                                                    <span class="cell-span" data-bind="if: showEditButton, text: toMonth"></span>
+                                                    <span class="cell-span" data-bind="if: showEditButton, text: toYear"></span>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="grid grid-1-2">
-                        <table class="table-no-btm-border table-compound">
-                            <colgroup>
-                                <col class="t30">
-                                <col class="t30">
-                                <col class="t25">
-                                <col class="t15">
-                                <col>
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <span class="heading-span">From</span>
-                                    </th>
-                                    <th>
-                                        <span class="heading-span">To</span>
-                                    </th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="text" class="form-control toggle-content editable-work-input" value="@experience.FromYear">
-                                        <span class="cell-span editable-work">@experience.FromYear</span>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control toggle-content editable-work-input" value="@experience.ToYear">
-                                        <span class="cell-span editable-work">@experience.ToYear</span>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+
                 </div>
             </div>
-        }
 
-    </fieldset>
+        </fieldset>
+
+    </div>
+   
 
     @Html.EditorFor(m => m.Candidate.AboutYou)
     @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)
@@ -259,89 +342,44 @@
 }
 
 @section scripts{
-    
+
+    <script id="errorMessage" type="text/html">
+        <span class="field-validation-error" data-bind='visible: !field.isValid()'>
+            <span data-bind="validationMessage: field"></span>
+        </span>
+    </script>   
+
     <script type="text/javascript">
 
-        var QualificationItemModel = function(qualType,qualOtherType, qualYear, qualSubject, qualGrade, qualPredicted) {
-
-            var self = this;
-
-            self.qualificationType = ko.observable(qualType).extend({ required: true });
-            self.otherQualificationType = ko.observable(qualOtherType);
-            self.qualificationYear = ko.observable(qualYear).extend({ required: true, min: 1914 });
-            self.qualificationSubject = ko.observable(qualSubject).extend({ required: true });
-            self.qualificationGrade = ko.observable(qualGrade).extend({ required: true });
-            self.qualificationPredicted = ko.observable(qualPredicted);
-            self.editMode = ko.observable(false);
-        };
-
-        var QualificationModel = function() {
-
-            var self = this;
-
-            self.hasQualifications = ko.observable("no");
-            self.selectedQualification = ko.observable("").extend({ required: true });
-            self.otherQualification = ko.observable("");
-            self.year = ko.observable(0).extend({ required: true, min: 1914 });
-            self.subject = ko.observable("").extend({ required: true });
-            self.grade = ko.observable("").extend({ required: true });
-            self.predicted = ko.observable(false);
-
-            self.qualifications = ko.observableArray();
-
-            self.errors = ko.validation.group(self);
-
-        };
-
-        QualificationModel.prototype = {
-
-            addQualification: function() {
-
-                var self = this;
-
-                if (self.errors().length == 0) {
-                    var qual = new QualificationItemModel(self.selectedQualification(),self.otherQualification(), self.year(), self.subject(), self.grade(), self.predicted());
-                    self.qualifications.push(qual);
-                }
-            },
-            removeQualification: function(qualification) {
-
-                var self = this;
-
-                self.qualifications.remove(qualification);
-
-            },
-            editQualification: function (qualification) {
-                qualification.editMode(true);
-            },
-            getqualifications:function(data) {
-
-                alert(JSON.stringify(data));
-                var self = this;
-
-                $(data).each(function(index, item) {
-
-                    var mappedQual = new QualificationItemModel(item.QualificationType, "", item.Year,item.Subject, item.Grade, item.IsPredicted); 
-                    self.qualifications.push(mappedQual);
-                });
-
-            }
-        };
-
         var qualificationData = null;
+        var workExperienceData = null;
 
         $(function() {
+            
             qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
+            workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
 
-            var qualModel = new QualificationModel();
-            qualModel.getqualifications(qualificationData);
-            ko.applyBindings(qualModel, document.getElementById('applyQualifications'));
-
+            ko.validation.rules.pattern.message = 'Invalid.';
+            ko.validation.configure({
+                registerExtenders: true,
+                messagesOnModified: true,
+                insertMessages: true,
+                parseInputAttributes: true,
+                messageTemplate: 'errorMessage'
+            });
         });
+
+        function getQualificationData() {
+            return qualificationData;
+        }
+
+        function getWorkExperienceData() {
+            return workExperienceData;
+        }
 
     </script>
 
     @*<script src="~/Content/_assets/js/vendor/knockout-3.1.0.js"></script>
-    <script src="~/Content/_assets/js/vendor/knockout.validation.js"></script>*@
-    @*<script src="~/Content/_assets/js/nas/applicationform.js"></script>*@
+        <script src="~/Content/_assets/js/vendor/knockout.validation.js"></script>*@
+    <script src="~/Content/_assets/js/nas/applicationform.js"></script>
 }
