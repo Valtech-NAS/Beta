@@ -22,7 +22,7 @@
         {
             Mapper.CreateMap<MongoApplicationDetail, ApplicationSummary>()
                 .ForMember(x => x.ApplicationId, opt => opt.MapFrom(src => src.Id))
-                .ForMember(x => x.LegacyVacancyId, opt => opt.MapFrom(src => src.LegacyApplicationId))
+                .ForMember(x => x.LegacyVacancyId, opt => opt.MapFrom(src => src.Vacancy.Id))
                 .ForMember(x => x.Title, opt => opt.MapFrom(src => src.Vacancy.Title))
                 .ForMember(x => x.EmployerName, opt => opt.MapFrom(src => src.Vacancy.EmployerName))
                 .ForMember(x => x.Status, opt => opt.MapFrom(src => src.Status))
