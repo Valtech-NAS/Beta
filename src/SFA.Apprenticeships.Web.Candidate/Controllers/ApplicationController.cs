@@ -3,7 +3,6 @@
     using System;
     using System.Web.Mvc;
     using Attributes;
-    using Common.Attributes;
     using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
@@ -32,6 +31,16 @@
             _applicationProvider = applicationProvider;
             _applicationViewModelFullValidator = applicationViewModelFullValidator;
             _applicationViewModelSaveValidator = applicationViewModelSaveValidator;
+        }
+
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public ActionResult Index()
+        {
+            // my application / dashboard
+            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
+            var model = _applicationProvider.GetMyApplications(candidateId);
+
+            return View(model);
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]

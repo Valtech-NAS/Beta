@@ -181,7 +181,7 @@
         </p>
         @if (Model.DateUpdated.HasValue)
         {
-            <p id="applicationSaved">Saved at @Html.DisplayFor(m => Model.DateUpdated) to <a href="@Url.Action("Index", "MyApplications")" title="My Applications">my applications</a></p>
+            <p id="applicationSaved">Saved at @Html.DisplayFor(m => Model.DateUpdated) to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
         }
     </div>    
     
