@@ -75,6 +75,7 @@
 
         var self = this;
 
+        self.numberOfItems = ko.observable(0);
         self.yesHasQualifications = ko.observable(undefined);
         self.noHasQualifications = ko.observable(undefined);
         self.showQualifications = ko.observable(false);
@@ -83,6 +84,7 @@
             return self.showQualifications() ? "block" : "none";
         }, qualificationViewModel);
 
+        //TODO get values from config.
         self.qualificationTypes = ko.observableArray([
             new qualificationTypeModel("GCSE"),
             new qualificationTypeModel("AS Level"),
@@ -134,6 +136,7 @@
             if (match) {
                 //alert("matched");
                 match.removeItem(qualification);
+                self.numberOfItems(self.numberOfItems() - 1);
             }
         };
 
@@ -152,6 +155,7 @@
 
                 var result = addQualification(self.qualifications(), typeSelected, typeOther, year, subject, grade, predicted);
                 self.qualifications(result);
+                self.numberOfItems(self.numberOfItems() + 1);
                 self.subject("");
                 self.grade("");
                 self.predicted(false);
@@ -178,9 +182,8 @@
 
             $(data).each(function (index, item) {
                 var result = addQualification(self.qualifications(), item.QualificationType, "", item.Year, item.Subject, item.Grade, item.IsPredicted);
-
                 self.qualifications(result);
-               
+                self.numberOfItems(self.numberOfItems() + 1);
             });
 
             if (self.qualifications().length > 0) {
@@ -259,7 +262,7 @@
     var workExperienceViewModel = function() {
 
         var self = this;
-
+        //TODO get this from config too
         self.months = ko.observableArray([
             new monthOfTheYear('Jan', 1), new monthOfTheYear('Feb', 2), new monthOfTheYear('Apr', 3),
             new monthOfTheYear('Mar', 4), new monthOfTheYear('May', 5), new monthOfTheYear('June', 6),
