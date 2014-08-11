@@ -141,8 +141,8 @@
             return workExperience.Select(each => new GatewayServiceProxy.WorkExperience
             {
                 Employer = each.Employer,
-                FromDate = MapYearToDate(each.FromYear),
-                ToDate = MapYearToDate(each.ToYear),
+                FromDate = each.FromDate,
+                ToDate = each.ToDate,
                 TypeOfWork = each.Description.Substring(0, Math.Min(each.Description.Length, maxTypeOfWorkLength)),
                 PartialCompletion = false, // no mapping available.
                 Voluntary = false // no mapping available.

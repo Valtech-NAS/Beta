@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Helpers
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Globalization;
@@ -57,8 +58,8 @@
                 Description = m.Description,
                 Employer = m.Employer,
                 JobTitle = m.JobTitle,
-                FromYear = m.FromYear,
-                ToYear = m.ToYear
+                FromYear = m.FromDate.Year, //todo: split to month / year for UI view model
+                ToYear = m.ToDate.Year //todo: split to month / year for UI view model
             }).AsEnumerable();
         }
 
@@ -149,8 +150,8 @@
                 Description = model.Description,
                 Employer = model.Employer,
                 JobTitle = model.JobTitle,
-                FromYear = model.FromYear,
-                ToYear = model.ToYear
+                FromDate = new DateTime(model.FromYear, 1, 1), //todo: split to month / year for UI view model
+                ToDate = new DateTime(model.ToYear, 1, 1) //todo: split to month / year for UI view model
             }).ToList();
         }
 

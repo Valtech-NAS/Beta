@@ -79,15 +79,15 @@
                 new WorkExperience
                 {
                     Employer = "Acme Corp",
-                    FromYear = 2011,
-                    ToYear = 2012,
+                    FromDate = new DateTime(2011, 1, 1),
+                    ToDate = new DateTime(2012, 1, 1),
                     Description = "Barista"
                 },
                 new WorkExperience
                 {
                     Employer = "Nether Products",
-                    FromYear = 2011,
-                    ToYear = 2012,
+                    FromDate = new DateTime(2011, 1, 1),
+                    ToDate = new DateTime(2012, 1, 1),
                     Description = "Cashier"
                 }
             };

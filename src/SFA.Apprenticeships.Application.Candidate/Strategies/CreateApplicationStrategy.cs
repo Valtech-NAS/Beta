@@ -164,16 +164,16 @@
                     Employer = "Some employer",
                     JobTitle = "Beer Tester",
                     Description = "Tested beer at the brewery",
-                    FromYear = 2000,
-                    ToYear = 2001
+                    FromDate = new DateTime(2000, 1, 1),
+                    ToDate = new DateTime(2001, 1, 1)
                 },
                 new WorkExperience
                 {
                     Employer = "Another employer",
                     JobTitle = "Barman",
                     Description = "Served drinks and swept up behind the bar",
-                    FromYear = 2002,
-                    ToYear = 2002
+                    FromDate = new DateTime(2002, 1, 1),
+                    ToDate = new DateTime(2002, 1, 1)
                 }
             };
         }
