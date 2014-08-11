@@ -29,18 +29,11 @@
             return View(GetMyApplicationsViewModel());
         }
 
-        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult Resume(int vacancyId)
-        {
-            // TODO: US154: AG: resume draft application.
-            throw new NotImplementedException();
-        }
-
         #region Helpers
 
         private MyApplicationsViewModel GetMyApplicationsViewModel()
         {
-            var candidateId = new Guid(User.Identity.Name);
+            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
             var model = _applicationProvider.GetMyApplications(candidateId);
 
             return model;
