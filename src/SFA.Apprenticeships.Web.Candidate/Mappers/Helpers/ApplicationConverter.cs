@@ -58,8 +58,10 @@
                 Description = m.Description,
                 Employer = m.Employer,
                 JobTitle = m.JobTitle,
-                FromYear = m.FromDate.Year, //todo: split to month / year for UI view model
-                ToYear = m.ToDate.Year //todo: split to month / year for UI view model
+                FromMonth = m.FromDate.Month,
+                FromYear = m.FromDate.Year, 
+                ToMonth = m.ToDate.Month,
+                ToYear = m.ToDate.Year 
             }).AsEnumerable();
         }
 
@@ -150,8 +152,8 @@
                 Description = model.Description,
                 Employer = model.Employer,
                 JobTitle = model.JobTitle,
-                FromDate = new DateTime(model.FromYear, 1, 1), //todo: split to month / year for UI view model
-                ToDate = new DateTime(model.ToYear, 1, 1) //todo: split to month / year for UI view model
+                FromDate = new DateTime(model.FromYear, model.FromMonth, 1), 
+                ToDate = new DateTime(model.ToYear, model.ToMonth, 1) 
             }).ToList();
         }
 
