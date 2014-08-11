@@ -116,7 +116,7 @@
                 }
                 else
                 {
-                    var candidateId = new Guid(User.Identity.Name);
+                    var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
 
                     candidate = _candidateServiceProvider.GetCandidate(candidateId);
                 }
