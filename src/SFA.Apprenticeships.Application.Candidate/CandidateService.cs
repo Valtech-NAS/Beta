@@ -88,7 +88,7 @@
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
-            throw new NotImplementedException();
+            return _candidateReadRepository.Get(username);
         }
 
         public Candidate SaveCandidate(Candidate candidate)

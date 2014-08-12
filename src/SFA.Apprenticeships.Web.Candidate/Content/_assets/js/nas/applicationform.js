@@ -28,6 +28,7 @@
 
         var self = this;
 
+        self.itemIndex = ko.observable(0);
         self.qualificationType = ko.observable(itemType).extend({ required: { message: "Select qualification type" } });
         self.otherQualificationType = ko.observable(itemOtherType);
         self.qualificationYear = ko.observable(itemYear).extend({ required: { message: "Year is required" }, number: true });
@@ -43,7 +44,11 @@
         var qualificationArrays = qualifications;
 
         if (predicted === true) {
-            grade += " (Predicted)";
+            if (grade.indexOf("Predicted") > -1) {
+
+            } else {
+                grade += " (Predicted)";
+            }           
         }
 
         if (typeSelected === "Other") {
@@ -75,9 +80,8 @@
 
         var self = this;
 
-        self.numberOfItems = ko.observable(0);
-        self.yesHasQualifications = ko.observable(undefined);
-        self.noHasQualifications = ko.observable(undefined);
+        self.hasQualifications = ko.observable(undefined);
+        self.hasNoQualifications = ko.observable(undefined);
         self.showQualifications = ko.observable(false);
 
         self.qualificationStatus = ko.computed(function() {
@@ -126,23 +130,19 @@
         });
 
         self.removeQualification = function (qualification) {
- 
-            //alert("Removing " + qualification.qualificationType() + " array length " + self.qualifications().length);
-            var match = ko.utils.arrayFirst(self.qualifications(), function (item) {
-                //alert("Item Key " + item.groupKey() + " Item to remove " + qualification.qualificationType());
+           
+            var match = ko.utils.arrayFirst(self.qualifications(), function (item) {               
                 return item.groupKey() === qualification.qualificationType();
             });
 
             if (match) {
-                //alert("matched");
-                match.removeItem(qualification);
-                //self.numberOfItems(self.numberOfItems() - 1);
+              
+                match.removeItem(qualification);               
+                self.reIndexQualifications(); //re-index qualifications
             }
         };
 
         self.addQualification = function () {
-
-            // var self = this;
 
             if (self.errors().length == 0) {
 
@@ -155,7 +155,9 @@
 
                 var result = addQualification(self.qualifications(), typeSelected, typeOther, year, subject, grade, predicted);
                 self.qualifications(result);
-                //self.numberOfItems(self.numberOfItems() + 1);
+                
+                self.reIndexQualifications(); //re-index qualifications
+
                 self.subject("");
                 self.grade("");
                 self.predicted(false);
@@ -178,24 +180,40 @@
         };
 
         self.getqualifications = function (data) {
-            //var self = this;
-
+           
             $(data).each(function (index, item) {
                 var result = addQualification(self.qualifications(), item.QualificationType, "", item.Year, item.Subject, item.Grade, item.IsPredicted);
-                self.qualifications(result);
-                //self.numberOfItems(self.numberOfItems() + 1);
+                self.qualifications(result);               
             });
 
             if (self.qualifications().length > 0) {
+                self.reIndexQualifications(); //re-index qualifications
                 self.showQualifications(true);
-                self.yesHasQualifications("checked");
-                self.noHasQualifications(undefined);
+                self.hasQualifications("checked");
+                self.hasNoQualifications(undefined);
             } else {
                 self.showQualifications(false);
-                self.yesHasQualifications(undefined);
-                self.noHasQualifications("checked");
+                self.hasQualifications(undefined);
+                self.hasNoQualifications("checked");
             }
         };
+
+        self.reIndexQualifications = ko.computed(function() {
+
+            var index = 0;
+
+            ko.utils.arrayForEach(self.qualifications(), function(qualification) {
+              
+                ko.utils.arrayForEach(qualification.groupItems(), function(item) {
+                    item.itemIndex(index);
+                    index++;
+                  
+                });
+            });
+
+            return index;
+
+        }, self);
     };
 
     var monthOfTheYear = function(monthName, monthNo) {
@@ -326,8 +344,7 @@
                 var toMonth = self.toMonth();
                 var toYear = self.toYear();
 
-                if (self.isCurrentEmployment() === true) {
-                    //alert(self.isCurrentEmployment());
+                if (self.isCurrentEmployment() === true) {                  
                     toMonth = 0;
                     toYear = 0;
                 }
@@ -359,7 +376,7 @@
         self.getWorkExperiences = function(data) {
 
             $(data).each(function (index, item) {
-                //alert(JSON.stringify(item));
+              
                 var currentEmployer = false;
 
                 if (isNaN(item.ToYear) && item.toYear > 0) {
@@ -369,16 +386,12 @@
                 var experienceItemModel = new workExperienceItemModel(item.Employer, item.JobTitle, item.Description, item.FromMonth, item.FromYear, item.ToMonth, item.ToYear, currentEmployer);
                 self.workExperiences.push(experienceItemModel);
             });
-
-            //alert(JSON.stringify(self.workExperiences()));
-
-            if (self.workExperiences().length > 0) {
-                //alert(self.workExperiences().length);
+        
+            if (self.workExperiences().length > 0) {               
                 self.showWorkExperience(true);
                 self.hasWorkExperience("checked");
                 self.hasNoWorkExperience(undefined);
-            } else {
-                //alert(self.workExperiences().length);
+            } else {            
                 self.showWorkExperience(false);
                 self.hasWorkExperience(undefined);
                 self.hasNoWorkExperience("checked");
@@ -387,29 +400,7 @@
         };
 
     };
-
-    //var educationViewModel = function() {
-    //    var self = this;
-
-    //    self.collegeName = ko.observable().extend({ required: { message: "School or College is required" } });
-    //    self.fromYear = ko.observable().extend({ required: { message: "From year is required" } });
-    //    self.toYear = ko.observable().extend({ required: { message: "To year is required" } });
-
-    //    self.errors = ko.validation.group(self);
-    //};
-
-    //var aboutYouViewModel = function() {
-    //    var self = this;
-
-    //    self.strengths = ko.observable().extend({ required: { message: "Please enter some of your strengths" } });
-    //    self.improvements = ko.observable().extend({ required: { message: "Please enter some area you want to improve" } });
-    //    self.hobbiesandInterests = ko.observable().extend({ required: { message: "Please enter hobbies and interests" } });
-    //    self.supportrequired = ko.observable().extend({ required: { message: "Do you require any support" } });
-
-    //    self.errors = ko.validation.group(self);
-    //};
-
-
+   
     $(function() {
 
         var model = new qualificationViewModel();
