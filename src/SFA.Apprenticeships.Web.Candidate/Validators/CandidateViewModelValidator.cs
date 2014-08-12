@@ -21,6 +21,12 @@
             RuleFor(x => x.AboutYou).SetValidator(new AboutYouViewModelValidator());
             RuleFor(x => x.Education).SetValidator(new EducationViewModelServerValidator());
             RuleFor(x => x.EmployerQuestionAnswers).SetValidator(new EmployerQuestionAnswersViewModelServerValidator());
+            RuleFor(x => x.Qualifications)
+               .SetCollectionValidator(new QualificationViewModelValidator())
+               .When(x => x.HasQualifications);
+            RuleFor(x => x.WorkExperience)
+                .SetCollectionValidator(new WorkExperienceViewModelValidator())
+                .When(x => x.HasWorkExperience);
         }
     }
 
@@ -31,6 +37,12 @@
             RuleFor(x => x.AboutYou).SetValidator(new AboutYouViewModelSaveValidator());
             RuleFor(x => x.Education).SetValidator(new EducationViewModelSaveValidator());
             RuleFor(x => x.EmployerQuestionAnswers).SetValidator(new EmployerQuestionAnswersViewModelSaveValidator());
+            RuleFor(x => x.Qualifications)
+                .SetCollectionValidator(new QualificationViewModelValidator())
+                .When(x => x.HasQualifications);
+            RuleFor(x => x.WorkExperience)
+                .SetCollectionValidator(new WorkExperienceViewModelValidator())
+                .When(x => x.HasWorkExperience);
         }
     }
 }

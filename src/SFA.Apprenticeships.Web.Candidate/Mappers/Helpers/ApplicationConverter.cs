@@ -85,6 +85,7 @@
             return new AboutYouViewModel
             {
                 AnythingWeCanDoToSupportYourInterview = aboutYou.Support,
+                RequiresSupportForInterview = !string.IsNullOrEmpty(aboutYou.Support),
                 WhatAreYourHobbiesInterests = aboutYou.HobbiesAndInterests,
                 WhatAreYourStrengths = aboutYou.Strengths,
                 WhatDoYouFeelYouCouldImprove = aboutYou.Improvements
@@ -120,7 +121,7 @@
                 HobbiesAndInterests = model.WhatAreYourHobbiesInterests,
                 Improvements = model.WhatDoYouFeelYouCouldImprove,
                 Strengths = model.WhatAreYourStrengths,
-                Support = model.AnythingWeCanDoToSupportYourInterview
+                Support = model.RequiresSupportForInterview ? model.AnythingWeCanDoToSupportYourInterview : string.Empty
             };
         }
 

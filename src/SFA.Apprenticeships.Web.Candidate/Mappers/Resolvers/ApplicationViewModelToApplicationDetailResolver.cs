@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
 {
+    using System.Collections.Generic;
     using AutoMapper;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -37,8 +38,8 @@
             {
                 AboutYou = ApplicationConverter.GetAboutYou(model.AboutYou),
                 EducationHistory = ApplicationConverter.GetEducation(model.Education),
-                Qualifications = ApplicationConverter.GetQualifications(model.Qualifications),
-                WorkExperience = ApplicationConverter.GetWorkExperiences(model.WorkExperience),
+                Qualifications = model.HasQualifications ? ApplicationConverter.GetQualifications(model.Qualifications) : new List<Qualification>(),
+                WorkExperience = model.HasWorkExperience ? ApplicationConverter.GetWorkExperiences(model.WorkExperience) : new List<WorkExperience>(),
             };
         }
 

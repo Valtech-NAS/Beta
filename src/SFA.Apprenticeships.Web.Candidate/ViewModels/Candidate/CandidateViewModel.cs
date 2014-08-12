@@ -36,7 +36,11 @@
 
         public EducationViewModel Education { get; set; }
 
+        public bool HasQualifications { get; set; }
+
         public IEnumerable<QualificationsViewModel> Qualifications { get; set; }
+
+        public bool HasWorkExperience { get; set; }
 
         public IEnumerable<WorkExperienceViewModel> WorkExperience { get; set; }
 

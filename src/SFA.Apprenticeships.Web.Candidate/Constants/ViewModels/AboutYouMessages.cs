@@ -35,7 +35,7 @@
         public static class AnythingWeCanDoToSupportYourInterviewMessages
         {
             public const string LabelText = "Is there anything we can do to support your interview?";
-            public const string HintText = "For example, do you need a signer, information in braille";
+            public const string HintText = "Give examples below";
             public const string RequiredErrorText = "'Is there anything we can do to support your interview' must be supplied";
             public const string TooLongErrorText = "'Is there anything we can do to support your interview' must not exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;

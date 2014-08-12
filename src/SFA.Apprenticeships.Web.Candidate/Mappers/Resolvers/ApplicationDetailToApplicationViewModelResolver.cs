@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
 {
+    using System.Linq;
     using AutoMapper;
     using Domain.Entities.Applications;
     using Helpers;
@@ -29,8 +30,15 @@
                         ApplicationConverter.GetEducationViewModel(application.CandidateInformation.EducationHistory),
                     Qualifications =
                         ApplicationConverter.GetQualificationsViewModels(application.CandidateInformation.Qualifications),
+                    HasQualifications =
+                        ApplicationConverter.GetQualificationsViewModels(
+                            application.CandidateInformation.Qualifications).Any(),
                     WorkExperience =
-                        ApplicationConverter.GetWorkExperiencesViewModels(application.CandidateInformation.WorkExperience),
+                        ApplicationConverter.GetWorkExperiencesViewModels(
+                            application.CandidateInformation.WorkExperience),
+                    HasWorkExperience =
+                        ApplicationConverter.GetWorkExperiencesViewModels(
+                            application.CandidateInformation.WorkExperience).Any(),
                     EmployerQuestionAnswers = new EmployerQuestionAnswersViewModel
                     {
                         CandidateAnswer1 = application.AdditionalQuestion1Answer,
