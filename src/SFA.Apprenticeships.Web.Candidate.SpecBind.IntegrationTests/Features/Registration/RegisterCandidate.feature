@@ -75,7 +75,7 @@ Scenario: As a candidate I want to be told quickly that my email/username is ava
 		| Field                        | Rule           | Value |
 		| EmailAddressAvailableMessage | Does Not Exist |       |
 		
-
+@ignore
 Scenario: As a candidate I want to be told quickly that my email/username is not available if I have already registered
 	Given I navigated to the RegisterCandidatePage page
 	When I am on the RegisterCandidatePage page

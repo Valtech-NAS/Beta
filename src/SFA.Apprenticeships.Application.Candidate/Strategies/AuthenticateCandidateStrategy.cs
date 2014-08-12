@@ -39,7 +39,7 @@
 
             user.AssertState(
                 string.Format("Cannot authenticate user in state: {0}.", user.Status),
-                UserStatuses.Active, UserStatuses.PendingActivation);
+                UserStatuses.Active, UserStatuses.PendingActivation, UserStatuses.Locked);
 
             var authenticated = _authenticationService.AuthenticateUser(user.EntityId, password);
 

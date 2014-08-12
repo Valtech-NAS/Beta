@@ -82,7 +82,7 @@
         [Given("I locked my account")]
         public void GivenILockedMyAccount()
         {
-            var candidate = new CandidateBuilder(_emailAddress)
+            var candidate = new CandidateBuilder(_emailAddress, Id)
                 .Build();
 
             var user = new UserBuilder(Id, _emailAddress, UserStatuses.Locked)
