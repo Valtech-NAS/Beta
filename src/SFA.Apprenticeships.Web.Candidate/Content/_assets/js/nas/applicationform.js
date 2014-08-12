@@ -136,7 +136,7 @@
             if (match) {
                 //alert("matched");
                 match.removeItem(qualification);
-                self.numberOfItems(self.numberOfItems() - 1);
+                //self.numberOfItems(self.numberOfItems() - 1);
             }
         };
 
@@ -155,7 +155,7 @@
 
                 var result = addQualification(self.qualifications(), typeSelected, typeOther, year, subject, grade, predicted);
                 self.qualifications(result);
-                self.numberOfItems(self.numberOfItems() + 1);
+                //self.numberOfItems(self.numberOfItems() + 1);
                 self.subject("");
                 self.grade("");
                 self.predicted(false);
@@ -183,7 +183,7 @@
             $(data).each(function (index, item) {
                 var result = addQualification(self.qualifications(), item.QualificationType, "", item.Year, item.Subject, item.Grade, item.IsPredicted);
                 self.qualifications(result);
-                self.numberOfItems(self.numberOfItems() + 1);
+                //self.numberOfItems(self.numberOfItems() + 1);
             });
 
             if (self.qualifications().length > 0) {
