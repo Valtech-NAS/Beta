@@ -14,6 +14,8 @@
 
         public ApplicationStatuses Status { get; set; }
 
+        public bool IsArchived { get; set; }
+
         public DateTime DateUpdated { get; set; }
 
         public DateTime? DateApplied { get; set; }

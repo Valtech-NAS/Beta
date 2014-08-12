@@ -6,6 +6,7 @@
     using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
+    using Constants.Pages;
     using FluentValidation.Mvc;
     using FluentValidation.Results;
     using Providers;
@@ -58,6 +59,21 @@
             _candidateServiceProvider.LastViewedVacancyId = id;
 
             return View(model);
+        }
+
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public ActionResult Resume(int id)
+        {
+            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
+            var model = _applicationProvider.GetApplicationViewModel(id, candidateId);
+
+            if (model == null)
+            {
+                TempData["MyApplicationsMessage"] = MyApplicationsPageMessages.DraftExpired;
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Apply", new { id });
         }
 
         [HttpPost]

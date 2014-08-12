@@ -37,11 +37,8 @@
 
             if (applicationDetail == null)
             {
-                // New application.
                 return CreateNewApplication(candidateId, vacancyId);
             }
-
-            applicationDetail.AssertState("Application should be in draft", ApplicationStatuses.Draft);
 
             if (applicationDetail.CandidateInformation.Qualifications.Count == 0)
             {
@@ -55,12 +52,17 @@
                 applicationDetail.CandidateInformation.WorkExperience = GetStubbedWorkExperiences();
             }
 
-            if (DateTime.Now <= applicationDetail.Vacancy.ClosingDate)
+            if (DateTime.Now > applicationDetail.Vacancy.ClosingDate)
             {
-                return applicationDetail;
+                applicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;
+                _applicationWriteRepository.Save(applicationDetail);
+
+                throw new CustomException("Vacancy has expired", ErrorCodes.VacancyExpired);
             }
 
-            throw new CustomException("Vacancy has expired", ErrorCodes.VacancyExpired);
+            applicationDetail.AssertState("Application should be in draft", ApplicationStatuses.Draft);
+
+            return applicationDetail;
         }
 
         private ApplicationDetail CreateNewApplication(Guid candidateId, int vacancyId)

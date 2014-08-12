@@ -1,8 +1,18 @@
-﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications.MyApplicationsViewModel
+﻿@using SFA.Apprenticeships.Domain.Entities.Applications
+@model SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications.MyApplicationsViewModel
 
 @{
     ViewBag.Title = "SFA Apprenticeships - Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var myApplicationsMessage = TempData["MyApplicationsMessage"];
+}
+
+@if (myApplicationsMessage != null)
+{
+    <div class="panel-success">
+        <p id="MyApplicationsMessageText" class="text"><i class="fa fa-check"></i>@myApplicationsMessage</p>
+    </div>
 }
 
 <div class="grid-wrapper">
@@ -225,7 +235,14 @@
                             <tr>
                                 <td>@application.Title with @application.EmployerName</td>
                                 <td class="ta-center">
-                                    @Html.ActionLink("Resume", "Apply", "Application", new { id = application.VacancyId }, null)
+                                    @if (application.ApplicationStatus == ApplicationStatuses.Draft)
+                                    {
+                                        @Html.ActionLink("Resume", "Resume", "Application", new {id = application.VacancyId}, null)
+                                    }
+                                    else
+                                    {
+                                        @:Apprenticeship withdrawn
+                                    }
                                 </td>
                                 <td class="ta-center">
                                     <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
