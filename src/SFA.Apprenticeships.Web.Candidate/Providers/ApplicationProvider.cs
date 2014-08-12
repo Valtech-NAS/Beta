@@ -45,12 +45,21 @@
 
         public ApplicationViewModel GetApplicationViewModel(int vacancyId, Guid candidateId)
         {
-            var applicationDetails = _candidateService.CreateApplication(candidateId, vacancyId);
-            var viewModelId = PutApplicationIntoContext(applicationDetails.EntityId);
-            var applicationViewModel = _mapper.Map<ApplicationDetail, ApplicationViewModel>(applicationDetails);
-            applicationViewModel.ApplicationViewId = viewModelId;
+            try
+            {
+                var applicationDetails = _candidateService.CreateApplication(candidateId, vacancyId);
+                var viewModelId = PutApplicationIntoContext(applicationDetails.EntityId);
+                var applicationViewModel = _mapper.Map<ApplicationDetail, ApplicationViewModel>(applicationDetails);
+                applicationViewModel.ApplicationViewId = viewModelId;
 
-            return PatchWithVacancyDetail(applicationViewModel, candidateId, vacancyId);
+                return PatchWithVacancyDetail(applicationViewModel, candidateId, vacancyId);
+            }
+            catch (CustomException ex)
+            {
+                if (ex.Code == ErrorCodes.VacancyExpired) return null;
+
+                throw;
+            }
         }
 
         public ApplicationViewModel GetApplicationViewModel(ApplicationViewModel submittedApplicationViewModel)
@@ -118,6 +127,7 @@
                     UnsuccessfulReason = each.UnsuccessfulReason,
                     WithdrawnOrDeclinedReason = each.WithdrawnOrDeclinedReason,
                     ApplicationStatus = each.Status,
+                    IsArchived = each.IsArchived,
                     DateApplied = each.DateApplied,
                     DateUpdated = each.DateUpdated
                 });

@@ -391,6 +391,7 @@
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ActivationCodeMessages.cs" />
     <Compile Include="Constants\ViewModels\ForgottenPasswordViewModelMessages.cs" />
+    <Compile Include="Constants\Pages\MyApplicationsPageMessages.cs" />
     <Compile Include="Constants\ViewModels\LoginViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\AccountUnlockViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\PasswordResetViewModelMessages.cs" />
@@ -468,7 +469,6 @@
     <Compile Include="ViewModels\VacancySearch\VacancySummaryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Constants\Pages\" />
     <Folder Include="Services\" />
     <Folder Include="Views\Location\" />
   </ItemGroup>

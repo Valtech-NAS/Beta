@@ -8,7 +8,9 @@
     {
         public MyApplicationsViewModel(IEnumerable<MyApplicationViewModel> applications)
         {
-            AllApplications = applications.OrderByDescending(a => a.DateUpdated);
+            AllApplications = applications
+                .Where(a => !a.IsArchived)
+                .OrderByDescending(a => a.DateUpdated);
         }
 
         public IEnumerable<MyApplicationViewModel> AllApplications { get; private set; }
@@ -40,7 +42,14 @@
 
         public IEnumerable<MyApplicationViewModel> DraftApplications
         {
-            get { return AllApplications.Where(each => each.ApplicationStatus == ApplicationStatuses.Draft); }
+            get
+            {
+                // return draft or expired draft applications
+                return AllApplications
+                    .Where(each =>
+                        each.ApplicationStatus == ApplicationStatuses.Draft ||
+                        each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && each.DateApplied == null);
+            }
         }
     }
 }

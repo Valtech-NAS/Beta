@@ -14,6 +14,8 @@
 
         public ApplicationStatuses ApplicationStatus { get; set; }
 
+        public bool IsArchived { get; set; }
+
         [UIHint("Date")]
         [DataType(DataType.DateTime)]
         public DateTime? DateApplied { get; set; }
