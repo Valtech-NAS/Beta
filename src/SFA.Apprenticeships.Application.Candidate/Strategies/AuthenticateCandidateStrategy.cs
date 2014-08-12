@@ -47,6 +47,12 @@
             {
                 var candidate = _candidateReadRepository.Get(user.EntityId);
 
+                if (user.Status == UserStatuses.Locked)
+                {
+                    user.SetStateActive();
+                    _userWriteRepository.Save(user);
+                }
+
                 //_auditLog.Info(AuditEvents.SuccessfulLogon, username); // TODO: audit successful logon (named logger)
 
                 return candidate;
