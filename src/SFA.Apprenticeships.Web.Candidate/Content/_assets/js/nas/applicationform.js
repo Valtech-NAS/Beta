@@ -198,6 +198,7 @@
                 self.showQualifications(true);
                 self.hasQualifications("checked");
                 self.hasNoQualifications(undefined);
+                self.errors.showAllMessages(false);
             } else {
                 self.showQualifications(false);
                 self.hasQualifications(undefined);
@@ -249,7 +250,7 @@
         self.itemIsCurrentEmployment = ko.observable(itemIsCurrentEmployment);
 
         self.itemFromMonth = ko.observable(itemFromMonth).extend({ required: { message: "From month is required" } });
-        self.itemFromYear = ko.observable(itemFromYear).extend({ required: { message: "From year is required" } });
+        self.itemFromYear = ko.observable(itemFromYear).extend({ required: { message: "From year is required" }, number:true });
 
         self.itemToMonth = ko.observable(itemToMonth).extend({
             required: {
@@ -263,19 +264,27 @@
                 onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
             },
             min: {
+                message:"'To Year' should be after 'From Year'",
                 params: self.itemFromYear()
+            },
+            number: { message: "'To Year' should be a number" },
+            minLength: {
+                message: "'To Year' must be 4 digits",
+                onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
             }
         });
 
         self.readOnly = ko.observable("readonly");
         self.showEditButton = ko.observable(true);
 
-        self.toItemDateReadonly = ko.observable("disabled");
+        self.toItemDateReadonly = ko.observable(undefined);
 
         self.itemIsCurrentEmployment.subscribe(function (selectedValue) {
+            //alert(selectedValue);
             if (selectedValue === true) {
                 self.itemToYear(null);
                 self.toItemDateReadonly("disabled");
+                self.errors.showAllMessages(false);
             } else {
                 self.toItemDateReadonly(undefined);
             }
@@ -357,8 +366,15 @@
                 }
 
                 var experience = new workExperienceItemModel(self.employer(), self.jobTitle(), self.mainDuties(), self.fromMonth(), self.fromYear(), toMonth, toYear, self.isCurrentEmployment());
-
                 self.workExperiences.push(experience);
+
+                self.employer("");
+                self.jobTitle("");
+                self.mainDuties("");
+                self.fromYear(null);
+                self.toYear(null);
+
+                self.errors.showAllMessages(false);
 
             } else {
                 self.errors.showAllMessages();
@@ -371,9 +387,13 @@
             workExperience.showEditButton(false);
         };
 
-        self.saveWorkExperience = function(workExperience) {
-            workExperience.readOnly('readonly');
-            workExperience.showEditButton(true);
+        self.saveWorkExperience = function (workExperience) {
+            if (workExperience.errors().length == 0) {
+                workExperience.readOnly('readonly');
+                workExperience.showEditButton(true);
+            } else {
+                workExperience.errors.showAllMessages();
+            }           
         };
 
         self.removeWorkExperience = function(workExperience) {
@@ -398,6 +418,7 @@
                 self.showWorkExperience(true);
                 self.hasWorkExperience("checked");
                 self.hasNoWorkExperience(undefined);
+             
             } else {            
                 self.showWorkExperience(false);
                 self.hasWorkExperience(undefined);
@@ -415,7 +436,7 @@
         if (window.getQualificationData()) {
             model.getqualifications(window.getQualificationData());
         }
-       
+            
         ko.applyBindings(model, document.getElementById('applyQualifications'));
 
         var experienceModel = new workExperienceViewModel();
