@@ -82,7 +82,7 @@
                                         <td>@application.Title with @application.EmployerName</td>
                                         <td class="ta-center">In progress</td>
                                         <td class="ta-center">
-                                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                            <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                         </td>
                                     </tr>
                                 }
@@ -115,7 +115,7 @@
                                         <td>@application.Title with @application.EmployerName</td>
                                         <td class="ta-center">Successful</td>
                                         <td class="ta-center">
-                                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                            <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                         </td>
                                     </tr>
                                 }
@@ -148,7 +148,7 @@
                                         <td>@application.Title with @application.EmployerName</td>
                                         <td class="ta-center">Unsuccessful</td>
                                         <td class="ta-center">
-                                            <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                            <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                         </td>
                                     </tr>
 
@@ -245,7 +245,7 @@
                                     }
                                 </td>
                                 <td class="ta-center">
-                                    <a class="icon-black" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                    <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                 </td>
                             </tr>
                         }

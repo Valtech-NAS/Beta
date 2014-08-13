@@ -22,6 +22,7 @@
         private readonly IRegisterCandidateStrategy _registerCandidateStrategy;
         private readonly IResetForgottenPasswordStrategy _resetForgottenPasswordStrategy;
         private readonly ISaveApplicationStrategy _saveApplicationStrategy;
+        private readonly IArchiveApplicationStrategy _archiveApplicationStrategy;
         private readonly ISubmitApplicationStrategy _submitApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
 
@@ -37,7 +38,8 @@
             IGetCandidateApplicationsStrategy getCandidateApplicationsStrategy,
             IResetForgottenPasswordStrategy resetForgottenPasswordStrategy,
             IUnlockAccountStrategy unlockAccountStrategy,
-            ISaveApplicationStrategy saveApplicationStrategy)
+            ISaveApplicationStrategy saveApplicationStrategy,
+            IArchiveApplicationStrategy archiveApplicationStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _candidateWriteRepository = candidateWriteRepository;
@@ -51,6 +53,7 @@
             _unlockAccountStrategy = unlockAccountStrategy;
             _applicationReadRepository = applicationReadRepository;
             _saveApplicationStrategy = saveApplicationStrategy;
+            _archiveApplicationStrategy = archiveApplicationStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -102,6 +105,8 @@
         {
             Condition.Requires(candidateId);
 
+            //todo: add authorisation checks to match candidate with application
+
             return _createApplicationStrategy.CreateApplication(candidateId, vacancyId);
         }
 
@@ -109,14 +114,18 @@
         {
             Condition.Requires(applicationId);
 
+            //todo: add authorisation checks to match candidate with application
+
             return _applicationReadRepository.Get(applicationId);
         }
 
-        public void ArchiveApplication(Guid applicationId)
+        public void ArchiveApplication(Guid candidateId, int vacancyId)
         {
-            Condition.Requires(applicationId);
+            Condition.Requires(candidateId);
 
-            throw new NotImplementedException();
+            //todo: add authorisation checks to match candidate with application
+
+            _archiveApplicationStrategy.ArchiveApplication(candidateId, vacancyId);
         }
 
         public void SaveApplication(ApplicationDetail application)
@@ -136,6 +145,8 @@
         public void SubmitApplication(Guid applicationId)
         {
             Condition.Requires(applicationId);
+
+            //todo: add authorisation checks to match candidate with application
 
             _submitApplicationStrategy.SubmitApplication(applicationId);
         }

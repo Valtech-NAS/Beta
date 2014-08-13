@@ -70,7 +70,8 @@
             applicationReloadedModel.Candidate.Qualifications = submittedApplicationViewModel.Candidate.Qualifications;
             applicationReloadedModel.Candidate.WorkExperience = submittedApplicationViewModel.Candidate.WorkExperience;
             applicationReloadedModel.Candidate.AboutYou = submittedApplicationViewModel.Candidate.AboutYou;
-            applicationReloadedModel.Candidate.EmployerQuestionAnswers = submittedApplicationViewModel.Candidate.EmployerQuestionAnswers;
+            applicationReloadedModel.Candidate.EmployerQuestionAnswers =
+                submittedApplicationViewModel.Candidate.EmployerQuestionAnswers;
 
             return applicationReloadedModel;
         }
@@ -80,11 +81,11 @@
             var model = GetApplicationViewModel(applicationViewModel.ApplicationViewId);
 
             model.Candidate.AboutYou = applicationViewModel.Candidate.AboutYou;
-            model.Candidate.Education = applicationViewModel.Candidate.Education;         
+            model.Candidate.Education = applicationViewModel.Candidate.Education;
             model.Candidate.Qualifications = applicationViewModel.Candidate.Qualifications;
             model.Candidate.WorkExperience = applicationViewModel.Candidate.WorkExperience;
             model.Candidate.EmployerQuestionAnswers = applicationViewModel.Candidate.EmployerQuestionAnswers;
-           
+
             var application = _mapper.Map<ApplicationViewModel, ApplicationDetail>(model);
             application.EntityId = GetApplicationEntityIdFromContext(applicationViewModel.ApplicationViewId);
 
@@ -104,7 +105,7 @@
 
             if (model == null)
             {
-                throw  new CustomException("Application not found", ErrorCodes.ApplicationNotFoundError);
+                throw new CustomException("Application not found", ErrorCodes.ApplicationNotFoundError);
             }
 
             return new WhatHappensNextViewModel
@@ -112,6 +113,11 @@
                 VacancyReference = model.VacancyDetail.FullVacancyReferenceId,
                 VacancyTitle = model.VacancyDetail.Title
             };
+        }
+
+        public void ArchiveApplication(int vacancyId, Guid candidateId)
+        {
+            _candidateService.ArchiveApplication(candidateId, vacancyId);
         }
 
         public MyApplicationsViewModel GetMyApplications(Guid candidateId)
@@ -136,7 +142,6 @@
         }
 
         #region Helpers
-
         private Guid GetApplicationEntityIdFromContext(Guid applicationViewId)
         {
             var httpContext = new HttpContextWrapper(HttpContext.Current);
@@ -154,11 +159,13 @@
         {
             var viewModelId = Guid.NewGuid();
             var httpContext = new HttpContextWrapper(HttpContext.Current);
-            _userServiceProvider.SetEntityContextCookie(httpContext, applicationEntityId, viewModelId, ApplicationContextName);
+            _userServiceProvider.SetEntityContextCookie(httpContext, applicationEntityId, viewModelId,
+                ApplicationContextName);
             return viewModelId;
         }
 
-        private ApplicationViewModel PatchWithVacancyDetail(ApplicationViewModel applicationViewModel, Guid candidateId, int vacancyId)
+        private ApplicationViewModel PatchWithVacancyDetail(ApplicationViewModel applicationViewModel, Guid candidateId,
+            int vacancyId)
         {
             var vacancyDetailViewModel = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
@@ -175,7 +182,6 @@
 
             return applicationViewModel;
         }
-
         #endregion
     }
 }

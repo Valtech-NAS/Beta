@@ -17,7 +17,6 @@
     using Application.UserAccount.Strategies;
     using Application.Vacancy;
     using Domain.Interfaces.Mapping;
-    using Infrastructure.LegacyWebServices.GetCandidateApplicationStatuses;
     using Mappers;
     using Providers;
     using StructureMap.Configuration.DSL;
@@ -72,6 +71,7 @@
             For<ILockUserStrategy>().Use<LockUserStrategy>();
             For<ICreateApplicationStrategy>().Use<CreateApplicationStrategy>();
             For<ISaveApplicationStrategy>().Use<SaveApplicationStrategy>();
+            For<IArchiveApplicationStrategy>().Use<ArchiveApplicationStrategy>();
             For<IAuthenticateCandidateStrategy>().Use<AuthenticateCandidateStrategy>();
             For<IUserAccountService>().Use<UserAccountService>();
             For<IAddressSearchService>().Use<AddressSearchService>();

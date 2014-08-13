@@ -56,6 +56,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CandidateService.cs" />
+    <Compile Include="Strategies\ArchiveApplicationStrategy.cs" />
+    <Compile Include="Strategies\IArchiveApplicationStrategy.cs" />
     <Compile Include="Strategies\ILegacyApplicationProvider.cs" />
     <Compile Include="Strategies\CreateApplicationStrategy.cs" />
     <Compile Include="Strategies\IGetCandidateApplicationsStrategy.cs" />

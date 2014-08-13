@@ -19,5 +19,7 @@
         void SubmitApplication(Guid applicationId);
 
         WhatHappensNextViewModel GetSubmittedApplicationVacancySummary(Guid applicationId);
+
+        void ArchiveApplication(int vacancyId, Guid candidateId);
     }
 }

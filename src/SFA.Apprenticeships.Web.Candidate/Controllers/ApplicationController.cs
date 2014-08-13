@@ -76,6 +76,17 @@
             return RedirectToAction("Apply", new { id });
         }
 
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public ActionResult Archive(int id)
+        {
+            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
+            _applicationProvider.ArchiveApplication(id, candidateId);
+
+            TempData["MyApplicationsMessage"] = MyApplicationsPageMessages.ApplicationArchived;
+
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Apply(int id, ApplicationViewModel applicationViewModel)
