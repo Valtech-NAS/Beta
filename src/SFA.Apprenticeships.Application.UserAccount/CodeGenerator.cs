@@ -8,8 +8,8 @@
     {
         public const int CodeLength = 6;
 
-        // Letters O and I are omitted to avoid confusion with numbers 0 and 1.
-        public const string Alphanumerics = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+        // all vowels are omitted to avoid confusion with numbers (e.g. O and I) and to avoid profanities
+        public const string Alphanumerics = "0123456789BCDFGHJKLMNPQRSTVWXYZ";
 
         public string Generate()
         {
