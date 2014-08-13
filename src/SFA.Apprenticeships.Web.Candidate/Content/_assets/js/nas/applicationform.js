@@ -331,9 +331,9 @@
         self.toYear = ko.observable().extend({
             required: {
                 message: "To year is required",
-                onlyIf: function () { return (self.isCurrentEmployment() === false); },
-                number: true 
-            }
+                onlyIf: function () { return (self.isCurrentEmployment() === false); }               
+            },
+            number: { message: "'To Year' must be a number" }
         });
 
         self.toYear.extend({mustBeGreaterThanOrEqual : self.fromYear});
@@ -427,6 +427,18 @@
 
         };
 
+    };
+
+    ko.bindingHandlers.parentvalElement = {
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            var valueIsValid = valueAccessor().isValid();
+            if (!valueIsValid && viewModel.isAnyMessageShown()) {
+                $(element).addClass("input-validation-error");
+            }
+            else {
+                $(element).removeClass("input-validation-error");
+            }
+        }
     };
    
     $(function() {
