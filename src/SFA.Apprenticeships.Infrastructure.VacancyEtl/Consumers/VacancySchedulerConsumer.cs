@@ -68,7 +68,7 @@
                 queueMessage = nextQueueMessage;
             }
 
-            Logger.Warn("New Vacancy Etl control message, start full re-index of vacancy data");
+            Logger.Info("New Vacancy Etl control message, start full re-index of vacancy data");
             return queueMessage;
         }
     }
