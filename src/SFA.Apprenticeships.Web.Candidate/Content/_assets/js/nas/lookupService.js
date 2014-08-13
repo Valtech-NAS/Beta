@@ -104,6 +104,8 @@
                 success: function (response) {
                     if (response.usernameIsAvailable == false) {
                         $('#email-available-message').html('<p>Username already in use, try again</p>');
+                    } else {
+                        $('#email-available-message').html('');
                     }
                 },
                 error: function (error) {

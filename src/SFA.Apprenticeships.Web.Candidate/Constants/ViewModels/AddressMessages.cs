@@ -37,10 +37,10 @@
 
         public static class Postcode
         {
-            public const string LabelText = "Post code";
-            public const string RequiredErrorText = "'Post code' must be supplied";
+            public const string LabelText = "Postcode";
+            public const string RequiredErrorText = "'Postcode' must be supplied";
             public const string WhiteListRegularExpression = Whitelists.PostcodeWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "'Post code' " + Whitelists.PostcodeWhitelist.ErrorText;
+            public const string WhiteListErrorText = "'Postcode' " + Whitelists.PostcodeWhitelist.ErrorText;
         }
     }
 }
