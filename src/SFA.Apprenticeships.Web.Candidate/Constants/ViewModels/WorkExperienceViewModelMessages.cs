@@ -32,5 +32,13 @@
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'Job Title' " + Whitelists.FreetextWhitelist.ErrorText;
         }
+
+        public static class ToYearMessages
+        {
+            public const string RequiredErrorText = "'To Year' must be supplied";
+            public const string MustBeNumericText = "'To Year' must be a number";
+            public const string BeforeOrEqualErrorText = "'To Year' must not be in the future";
+            public const string MustBeFourDigitNumberErrorText = "'To Year' must be a 4 digit number";
+        }
     }
 }

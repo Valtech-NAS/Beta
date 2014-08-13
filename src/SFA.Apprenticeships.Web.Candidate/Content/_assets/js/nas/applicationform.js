@@ -37,6 +37,8 @@
         self.qualificationPredicted = ko.observable(itemPredicted);
         self.readOnly = ko.observable("readonly");
         self.showEditButton = ko.observable(true);
+
+        self.itemErrors = ko.validation.group(self);
     };
 
     function addQualification(qualifications, typeSelected, typeOther, year, subject, grade, predicted) {
@@ -163,6 +165,7 @@
                 self.predicted(false);
 
                 self.displayErrors(false);
+                self.errors.showAllMessages(false);
             } else {
                 self.errors.showAllMessages();
                 self.displayErrors(true);
@@ -175,8 +178,12 @@
         };
 
         self.saveQualificationItem = function (qualification) {
-            qualification.readOnly('readonly');
-            qualification.showEditButton(true);
+            if (qualification.itemErrors().length == 0) {
+                qualification.readOnly('readonly');
+                qualification.showEditButton(true);
+            } else {
+                qualification.itemErrors.showAllMessages();
+            }          
         };
 
         self.getqualifications = function (data) {

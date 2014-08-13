@@ -38,14 +38,22 @@
                 .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.RequiredErrorText)
                 .GreaterThanOrEqualTo(0)
                 .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.MustBeNumericText)
-                .Must(BeBeforeOrEqual)
+                .InclusiveBetween(DateTime.Now.Year - 100, DateTime.Now.Year)
                 .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.BeforeOrEqualErrorText);
+
+            RuleFor(x => x.ToYear)
+                .GreaterThanOrEqualTo(0)
+                .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.MustBeNumericText)
+                .LessThanOrEqualTo(DateTime.Now.Year)
+                .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.BeforeOrEqualErrorText)
+                .Must(MustBeZeroOrFourDigitNumber)
+                .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.MustBeFourDigitNumberErrorText);
         }
 
-        private bool BeBeforeOrEqual(int year)
+        private bool MustBeZeroOrFourDigitNumber(int year)
         {
             var dateTimeNow = DateTime.Now;
-            return year <= dateTimeNow.Year;
+            return year == 0 || year > dateTimeNow.Year - 100;
         }
     }
 }

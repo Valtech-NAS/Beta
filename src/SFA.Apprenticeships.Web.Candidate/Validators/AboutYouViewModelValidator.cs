@@ -34,11 +34,11 @@
 
             RuleFor(x => x.AnythingWeCanDoToSupportYourInterview)
                 .Length(0, 4000)
-                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.TooLongErrorText)
-                .NotEmpty()
-                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.RequiredErrorText)
+                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.TooLongErrorText)               
                 .Matches(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListErrorText);            
+                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListErrorText)
+                .NotEmpty()
+                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.RequiredErrorText);            
         }
     }
 
