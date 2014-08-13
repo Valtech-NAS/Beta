@@ -5,7 +5,7 @@
 
     public class VacancyDetailsPage : PageObject<VacancyDetailsPage>, ISfaPage
     {
-        public const string PageTitle = "Find an Apprenticeship";
+        public const string PageTitle = "Apprenticeships";
         public const string Heading = "Search results";
 
         public VacancyDetailsPage(FluentTest test)

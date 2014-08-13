@@ -1,8 +1,14 @@
 ﻿@{
-    ViewBag.Title = "Page not found";
-    ViewBag.ErrorCode = 404;
-    Layout = "~/Views/Shared/_ErrorLayout.cshtml";
+    ViewBag.Title = "Apprenticeship no longer available";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<p>
-    The page you were looking for couldn't be found. Make sure the URL is correct before you try again.
-</p>
+
+<div class="text">
+    <h1 class="heading-xlarge">Apprenticeship no longer available</h1>
+</div>
+
+<div class="text">
+    <p>The apprenticeship you’re applying for is no longer available. This could be because it’s already been filled or was removed by the employer.</p>
+</div>
+
+<p><a href="@Url.Action("Index", "VacancySearch")">Find an apprenticeship</a></p>

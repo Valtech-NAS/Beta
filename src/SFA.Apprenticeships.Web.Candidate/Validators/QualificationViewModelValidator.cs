@@ -37,20 +37,13 @@
             RuleFor(x => x.Year)
                 .NotEmpty()
                 .WithMessage(QualificationViewModelMessages.YearMessages.RequiredErrorText)
-                .GreaterThanOrEqualTo(0)
+                .InclusiveBetween(DateTime.Now.Year - 100, DateTime.Now.Year + 1)               
                 .WithMessage(QualificationViewModelMessages.YearMessages.MustBeNumericText);
 
             RuleFor(x => x.Year)
-                .Must(BeBeforeOrEqual)
+                .InclusiveBetween(DateTime.Now.Year - 100, DateTime.Now.Year)   
                 .WithMessage(QualificationViewModelMessages.YearMessages.BeforeOrEqualErrorText)
                 .When(x => !x.IsPredicted);
         }
-
-        private bool BeBeforeOrEqual(int year)
-        {
-            var dateTimeNow = DateTime.Now;
-            return year <= dateTimeNow.Year;
-        }
-
     }
 }

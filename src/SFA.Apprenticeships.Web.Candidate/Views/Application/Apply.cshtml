@@ -53,24 +53,24 @@
                         <div class="form-group">
                             <label for="subject-year" class="form-label">Year</label>
                             <input maxlength="4" type="tel" class="form-control form-control-small" pattern="[0-9]*"
-                                   id="subject-year" data-bind="value: year">
+                                   id="subject-year" data-bind='value: year,valueUpdate: [" input", "afterkeydown" ]'>
                            
                         </div>
                     </div>
                     <div class="form-group" data-bind="visible: showOtherQualification">
                         <label for="other-qual" class="form-label">Name of other qualification</label>
-                        <input type="text" class="form-control" id="other-qual" data-bind="value: otherQualification">
+                        <input type="text" class="form-control" id="other-qual" data-bind='value: otherQualification,valueUpdate: [" input", "afterkeydown" ]'>
                         
                     </div>
                     <div class="form-group form-group-compound">
                         <label for="subject-name" class="form-label">Subject</label>
-                        <input type="text" class="form-control" id="subject-name" data-bind="value: subject">
+                        <input type="text" class="form-control" id="subject-name" data-bind='value: subject,valueUpdate: [" input", "afterkeydown" ]'>
                       
                     </div>
                     <div class="inline-fixed">
                         <div class="form-group">
                             <label for="subject-grade" class="form-label">Grade</label>
-                            <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind="value: grade">
+                            <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind='value: grade,valueUpdate: [" input", "afterkeydown" ]'>
                            
                         </div>
                         <div class="form-group">
@@ -171,11 +171,11 @@
                         Yes
                     </label>
                     <label for="workexp-no" class="block-label" data-bind="css: {selected: !showWorkExperience()}">
-                        @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, true, true, new { id="workexp-no", data_bind = "attr:{checked: hasNoWorkExperience() }" })
+                        @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, false, false, new { id="workexp-no", data_bind = "attr:{checked: hasNoWorkExperience() }" })
                         No
                     </label>
                 </div>
-                <div id="workexperience-panel" class="toggle-content" data-bind="style: {display:workExperienceStatus() ? 'block' :'none' }">
+                <div id="workexperience-panel" class="toggle-content" data-bind="style: {display: workExperienceStatus() }">
                     <div class="clearfix">
                         <div class="form-group form-group-compound">
                             <label for="work-employer" class="form-label">Employer</label>
@@ -216,7 +216,7 @@
                                 <div class="form-group form-group-compound">
                                     <span class="form-hint">Year</span>
                                     <input type="tel" class="form-control form-control-small" pattern="[0-9]*" maxlength="4"
-                                           id="work-to-year" data-bind="value: toYear,attr:{disabled:toDateReadonly() }">
+                                           id="work-to-year" data-bind="value: toYear, attr:{disabled:toDateReadonly() }">
                                 </div>
                                 <div class="form-group form-group-compound">
                                     <input id="work-current" type="checkbox" data-bind="checked: isCurrentEmployment">
@@ -306,7 +306,7 @@
                                                         <input type="hidden" data-bind="value: itemFromMonth, attr:{name:'Candidate.WorkExperience[' + $index() +'].FromMonth'}" />
                                                     </div>
                                                     <div class="form-group form-group-compound">
-                                                        <input type="text" class="form-control" data-bind=" value: itemFromYear, visible: !showEditButton()">
+                                                        <input type="text" class="form-control" data-bind=" value: itemFromYear, visible: !showEditButton()" pattern="[0-9]*" maxlength="4">
                                                         <input type="hidden" data-bind="value: itemFromYear, attr:{name:'Candidate.WorkExperience[' + $index() +'].FromYear'}" />
                                                     </div>
                                                                                                       
@@ -319,7 +319,7 @@
                                                         <input type="hidden" data-bind="value: itemToMonth, attr:{name:'Candidate.WorkExperience[' + $index() +'].ToMonth'}" />
                                                     </div>
                                                     <div class="form-group form-group-compound">
-                                                        <input type="text" class="form-control" data-bind="value: itemToYear, visible: !showEditButton(),attr:{disabled:toItemDateReadonly() }">
+                                                        <input type="text" class="form-control" data-bind="value: itemToYear, visible: !showEditButton(),attr:{disabled:toItemDateReadonly() }" pattern="[0-9]*" maxlength="4">
                                                         <input type="hidden" data-bind="value: itemToYear, attr:{name:'Candidate.WorkExperience[' + $index() +'].ToYear'}" />
                                                     </div>
                                                     <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
@@ -327,8 +327,8 @@
                                                             <input type="checkbox" data-bind="checked: itemIsCurrentEmployment" /> Current
                                                         </label>
                                                     </div>                                                 
-                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() === 0 ? '' : getMonthLabel(itemToMonth())"></span>
-                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() === 0 ? '' : itemToYear"></span>
+                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() === null ? 'Current' : getMonthLabel(itemToMonth())"></span>
+                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() === null ? '' : itemToYear"></span>
                                                 </td>
                                                 <td></td>
                                                 <td></td>
@@ -370,7 +370,7 @@
 @section scripts{
 
     <script id="errorMessage" type="text/html">
-        <span class="field-validation-error" data-bind='visible: !field.isValid()'>
+        <span data-bind="visible: !field.isValid(), attr:{class:!field.isValid()? 'field-validation-error' : 'field-validation-valid'}">
             <span data-bind="validationMessage: field"></span>
         </span>
     </script>   
@@ -381,11 +381,9 @@
         var workExperienceData = null;
 
         $(function() {
-            
+
             qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
             workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
-
-            //alert(JSON.stringify(workExperienceData));
 
             ko.validation.rules.pattern.message = 'Invalid.';
             ko.validation.configure({
@@ -406,11 +404,11 @@
         }
 
         function getMonthLabel(index) {
-            //alert(index);
+
             var month = "";
 
             if (index === 0) {
-               
+
             } else {
                 var mths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
                 month = mths[index - 1];
