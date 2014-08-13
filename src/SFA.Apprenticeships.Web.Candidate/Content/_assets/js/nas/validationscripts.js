@@ -121,4 +121,4 @@ $(document).ready(function () {
             $('.pw-masktoggle').text('Show');
         }
     }
-})(jQuery);
+});
