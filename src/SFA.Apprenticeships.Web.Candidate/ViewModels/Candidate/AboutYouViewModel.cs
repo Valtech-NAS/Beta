@@ -19,7 +19,9 @@
         [Display(Name = AboutYouMessages.WhatAreYourHobbiesInterestsMessages.LabelText, Description = AboutYouMessages.WhatAreYourHobbiesInterestsMessages.HintText)]
         public string WhatAreYourHobbiesInterests { get; set; }
 
-        [Display(Name = AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.LabelText, Description = AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.HintText)]
+        public bool RequiresSupportForInterview { get; set; }
+
+        [Display(Name ="", Description = AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.HintText)]
         public string AnythingWeCanDoToSupportYourInterview { get; set; }
     }
 }

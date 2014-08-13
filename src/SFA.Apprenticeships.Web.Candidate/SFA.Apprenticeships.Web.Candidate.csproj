@@ -395,8 +395,10 @@
     <Compile Include="Constants\ViewModels\LoginViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\AccountUnlockViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\PasswordResetViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\QualificationViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\RegisterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EducationMessages.cs" />
+    <Compile Include="Constants\ViewModels\WorkExperienceViewModelMessages.cs" />
     <Compile Include="Constants\Whitelists.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -437,12 +439,14 @@
     <Compile Include="Validators\LoginViewModelValidator.cs" />
     <Compile Include="Validators\AccountUnlockViewModelValidator.cs" />
     <Compile Include="Validators\PasswordResetViewModelValidator.cs" />
+    <Compile Include="Validators\QualificationViewModelValidator.cs" />
     <Compile Include="Validators\RegisterViewModelValidator.cs" />
     <Compile Include="Validators\EducationViewModelValidator.cs" />
     <Compile Include="Validators\CandidateViewModelValidator.cs" />
     <Compile Include="Validators\EmployerQuestionAnswersViewModelValidator.cs" />
     <Compile Include="Validators\AboutYouViewModelValidator.cs" />
     <Compile Include="Validators\VacancySearchViewModelValidator.cs" />
+    <Compile Include="Validators\WorkExperienceViewModelValidator.cs" />
     <Compile Include="ViewModels\Applications\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\MyApplications\MyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\MyApplications\MyApplicationViewModel.cs" />

@@ -16,5 +16,22 @@
     @Html.FormTextAreaFor(m => m.WhatAreYourStrengths, hintHtmlAttributes: new { @class = "text" })
     @Html.FormTextAreaFor(m => m.WhatDoYouFeelYouCouldImprove, hintHtmlAttributes: new { @class = "text" })
     @Html.FormTextAreaFor(m => m.WhatAreYourHobbiesInterests, hintHtmlAttributes: new { @class = "text" })
-    @Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview, hintHtmlAttributes: new { @class = "text" })
+    
+    <div class="form-group">
+        <label class="form-label">Is there anything we can do to support your interview?</label>
+        <p class="form-hint">For example, do you need a signer, information in braille.</p>
+        <div class="form-group form-group-compound inline">
+            <label data-target="support-panel" for="support-yes" class="block-label">
+                 @Html.RadioButtonFor(m => m.RequiresSupportForInterview, true, true, new { id = "support-yes" }) Yes
+            </label>
+            <label for="support-no" class="block-label">
+                 @Html.RadioButtonFor(m => m.RequiresSupportForInterview, false, false, new { id = "support-no" }) No
+            </label>
+        </div>
+        <div id="support-panel" class="panel-indent toggle-content">
+            @Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview, hintHtmlAttributes: new { @class = "text" })            
+        </div>
+    </div>
+
+    
 </fieldset>

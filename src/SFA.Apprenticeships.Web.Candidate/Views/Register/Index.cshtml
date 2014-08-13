@@ -1,7 +1,7 @@
 @model RegisterViewModel
 
 @{
-    ViewBag.Title = "SFA Apprenticeships - Register";
+    ViewBag.Title = "Apprenticeships - Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,6 +10,9 @@
 @using (Html.BeginForm("Index", "Register", FormMethod.Post))
 {
     @Html.Partial("ValidationSummary", ViewData.ModelState)
+    
+    //Hidden password input to disable autocomplete
+    <input type="password" class="alwayshidden" />
 
     <fieldset class="fieldset-with-border">
         <legend class="heading-large">Your details</legend>
@@ -43,7 +46,7 @@
             @Html.LabelFor(m => m.Password, new { @class = "form-label" })
             <span class="form-hint text">Must contain letters, numbers, symbols and be at least 8 characters.</span>
             <div class="password-wrapper">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", autocomplete = "off" })
                 <span class="pw-masktoggle button-link">Show</span>
             </div>
             <p class="form-hint strength-indicator">Password strength: <span id="pass_meter" class=""></span></p>
