@@ -98,7 +98,8 @@
 
             if (!result.IsValid)
             {
-                result.AddToModelState(ModelState, string.Empty);               
+                result.AddToModelState(ModelState, string.Empty);
+                applicationViewModel = _applicationProvider.GetApplicationViewModel(applicationViewModel);
                 return View("Apply", applicationViewModel);
             }
 
