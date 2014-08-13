@@ -82,7 +82,9 @@
 
             model.Candidate.AboutYou = applicationViewModel.Candidate.AboutYou;
             model.Candidate.Education = applicationViewModel.Candidate.Education;
+            model.Candidate.HasQualifications = applicationViewModel.Candidate.HasQualifications;
             model.Candidate.Qualifications = applicationViewModel.Candidate.Qualifications;
+            model.Candidate.HasWorkExperience = applicationViewModel.Candidate.HasWorkExperience;
             model.Candidate.WorkExperience = applicationViewModel.Candidate.WorkExperience;
             model.Candidate.EmployerQuestionAnswers = applicationViewModel.Candidate.EmployerQuestionAnswers;
 
