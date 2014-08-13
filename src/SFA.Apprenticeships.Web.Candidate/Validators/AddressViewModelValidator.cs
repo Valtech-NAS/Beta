@@ -25,16 +25,12 @@
             RuleFor(x => x.AddressLine3)
                 .Length(0, 50)
                 .WithMessage(AddressMessages.AddressLine3.TooLongErrorText)
-                .NotEmpty()
-                .WithMessage(AddressMessages.AddressLine3.RequiredErrorText)
                 .Matches(AddressMessages.AddressLine3.WhiteListRegularExpression)
                 .WithMessage(AddressMessages.AddressLine3.WhiteListErrorText);
 
             RuleFor(x => x.AddressLine4)
                 .Length(0, 50)
                 .WithMessage(AddressMessages.AddressLine4.TooLongErrorText)
-                .NotEmpty()
-                .WithMessage(AddressMessages.AddressLine4.RequiredErrorText)
                 .Matches(AddressMessages.AddressLine4.WhiteListRegularExpression)
                 .WithMessage(AddressMessages.AddressLine4.WhiteListErrorText);
 

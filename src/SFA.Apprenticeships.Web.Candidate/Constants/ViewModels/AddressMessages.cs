@@ -4,7 +4,7 @@
     {
         public static class AddressLine1
         {
-            public const string LabelText = "First line of address";
+            public const string LabelText = "Address";
             public const string RequiredErrorText = "'First line of address' must be supplied";
             public const string TooLongErrorText = "'First line of address' must not exceed xxxx characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
@@ -21,8 +21,7 @@
 
         public static class AddressLine3
         {
-            public const string LabelText = "Town or city";
-            public const string RequiredErrorText = "'Town or city' must be supplied";
+            public const string LabelText = "Third line (optional)";
             public const string TooLongErrorText = "'Town or city' must not exceed xxxx characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'Town or city' " + Whitelists.FreetextWhitelist.ErrorText;
@@ -30,8 +29,7 @@
 
         public static class AddressLine4
         {
-            public const string LabelText = "County";
-            public const string RequiredErrorText = "'County' must be supplied";
+            public const string LabelText = "Fourth line (optional)";
             public const string TooLongErrorText = "'County' must not exceed xxxx characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'County' " + Whitelists.FreetextWhitelist.ErrorText;
