@@ -53,24 +53,24 @@
                         <div class="form-group">
                             <label for="subject-year" class="form-label">Year</label>
                             <input maxlength="4" type="tel" class="form-control form-control-small" pattern="[0-9]*"
-                                   id="subject-year" data-bind="value: year">
+                                   id="subject-year" data-bind='value: year,valueUpdate: [" input", "afterkeydown" ]'>
                            
                         </div>
                     </div>
                     <div class="form-group" data-bind="visible: showOtherQualification">
                         <label for="other-qual" class="form-label">Name of other qualification</label>
-                        <input type="text" class="form-control" id="other-qual" data-bind="value: otherQualification">
+                        <input type="text" class="form-control" id="other-qual" data-bind='value: otherQualification,valueUpdate: [" input", "afterkeydown" ]'>
                         
                     </div>
                     <div class="form-group form-group-compound">
                         <label for="subject-name" class="form-label">Subject</label>
-                        <input type="text" class="form-control" id="subject-name" data-bind="value: subject">
+                        <input type="text" class="form-control" id="subject-name" data-bind='value: subject,valueUpdate: [" input", "afterkeydown" ]'>
                       
                     </div>
                     <div class="inline-fixed">
                         <div class="form-group">
                             <label for="subject-grade" class="form-label">Grade</label>
-                            <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind="value: grade">
+                            <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind='value: grade,valueUpdate: [" input", "afterkeydown" ]'>
                            
                         </div>
                         <div class="form-group">
@@ -385,8 +385,6 @@
             qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
             workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
 
-            //alert(JSON.stringify(workExperienceData));
-
             ko.validation.rules.pattern.message = 'Invalid.';
             ko.validation.configure({
                 registerExtenders: true,
@@ -406,7 +404,7 @@
         }
 
         function getMonthLabel(index) {
-            //alert(index);
+
             var month = "";
 
             if (index === 0) {
