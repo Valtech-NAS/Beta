@@ -26,19 +26,18 @@
             }
 
             var exception = server.GetLastError();
+            var httpException = exception as HttpException;
 
-            // TODO: LOGGING: review logging level.
-            Logger.Error(exception.Message, exception);
+            if (httpException != null)
+                Logger.Error(httpException.Message, exception);
 
             var controller = DependencyResolver.Current.GetService<T>();
             var routeData = new RouteData();
             var action = "InternalServerError";
 
-            var httpEx = exception as HttpException;
-
-            if (httpEx != null)
+            if (httpException != null)
             {
-                switch (httpEx.GetHttpCode())
+                switch (httpException.GetHttpCode())
                 {
                     case 404:
                         action = "NotFound";
@@ -52,7 +51,7 @@
 
             httpContext.ClearError();
             httpContext.Response.Clear();
-            httpContext.Response.StatusCode = httpEx != null ? httpEx.GetHttpCode() : 500;
+            httpContext.Response.StatusCode = httpException != null ? httpException.GetHttpCode() : 500;
             httpContext.Response.TrySkipIisCustomErrors = true;
 
             routeData.Values["controller"] = "Error";
