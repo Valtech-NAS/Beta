@@ -78,7 +78,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 8
  testRunner.Given("I navigated to the homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
- testRunner.Then("the screen has the title of \'Candidate Home page\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("the screen has the title of \'Find an apprenticeship\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

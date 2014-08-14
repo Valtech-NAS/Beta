@@ -12,7 +12,7 @@
         {
             I.Open(SiteConfig.WebRoot);
             I.Assert.Exists("#h1header");
-            I.Assert.Text(text => text == "Candidate Home page").In("#h1header");
+            I.Assert.Text(text => text == "Find an apprenticeship").In("#h1header");
         }
     }
 }
