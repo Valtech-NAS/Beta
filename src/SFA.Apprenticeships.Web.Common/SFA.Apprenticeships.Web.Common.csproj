@@ -120,6 +120,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ActionResults\HttpCustomStatusCodeResult.cs" />
     <Compile Include="Attributes\AllowCrossSiteJsonAttribute .cs" />
     <Compile Include="Attributes\AuthenticateUserAttribute.cs" />
     <Compile Include="Attributes\NoCacheAttribute.cs" />

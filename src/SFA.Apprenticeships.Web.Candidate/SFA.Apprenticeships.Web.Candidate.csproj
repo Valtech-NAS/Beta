@@ -205,6 +205,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="VacancyNotFound.html" />
     <Content Include="404.aspx" />
     <Content Include="404.html" />
     <Content Include="500.aspx" />
@@ -287,7 +288,6 @@
     <Content Include="Views\Shared\EditorTemplates\WorkExperienceViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AboutYouViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Date.cshtml" />
-    <Content Include="Views\Shared\VacancyNotFound.cshtml" />
     <Content Include="Views\Application\Preview.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\QualificationsViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\AboutYouViewModel.cshtml" />
@@ -376,6 +376,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ActionResults\VacancyNotFoundResult.cs" />
     <Compile Include="App_Start\BundleConfig.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -475,9 +476,7 @@
     <Compile Include="ViewModels\VacancySearch\VacancySearchViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySummaryViewModel.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Address\SFA.Apprenticeships.Application.Address.csproj">
       <Project>{1B386440-4479-4A2C-93CA-42A98426019F}</Project>

@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Web.Mvc;
+    using ActionResults;
     using Application.Interfaces.Vacancies;
     using Common.Controllers;
     using Common.Providers;
@@ -143,8 +144,7 @@
 
             if (vacancy == null)
             {
-                Response.StatusCode = 404;
-                return View("VacancyNotFound");
+                return new VacancyNotFoundResult();
             }
 
             _candidateServiceProvider.LastViewedVacancyId = id;

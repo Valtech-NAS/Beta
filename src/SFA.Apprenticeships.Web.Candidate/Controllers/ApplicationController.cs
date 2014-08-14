@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web.Mvc;
+    using ActionResults;
     using Attributes;
     using Common.Constants;
     using Common.Controllers;
@@ -52,8 +53,7 @@
 
             if (model == null)
             {
-                Response.StatusCode = 404;
-                return View("VacancyNotFound");
+                return new VacancyNotFoundResult();
             }
 
             _candidateServiceProvider.LastViewedVacancyId = id;
@@ -129,8 +129,7 @@
             }
             catch (Exception)
             {
-                Response.StatusCode = 404;
-                return View("VacancyNotFound");
+                return new VacancyNotFoundResult();
             }
         }
 
