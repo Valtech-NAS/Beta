@@ -228,6 +228,7 @@
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\_assets\img\arrow-left.png" />
     <Content Include="Content\_assets\img\arrow-right.png" />
+    <Content Include="Content\_assets\img\av-screenshot.png" />
     <Content Include="Content\_assets\img\icon-remove-2x.png" />
     <Content Include="Content\_assets\img\icon-remove.png" />
     <Content Include="Content\_assets\img\icon-star-filled-2x.png" />

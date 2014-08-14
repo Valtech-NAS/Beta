@@ -1,9 +1,73 @@
-﻿<h1 id="h1header">Candidate Home page</h1>
+﻿@{
+    ViewBag.Title = "Apprenticeships";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-<p>
-    <ul>
-        <li>@Html.ActionLink("Vacancy Search", "index", "vacancysearch", null, new { id = "vacancysearch" })</li>
-    </ul>
-</p>
-
-
+<h1 class="heading-xlarge">Find an apprenticeship</h1>
+<section class="grid-wrapper section-border">
+    <div class="grid grid-2-3">
+        <div class="inner-block-padr">
+            <h2 class="heading-large">Use the new service </h2>
+            <p>
+                We’ve introduced a new way to find and apply for an apprenticeship
+                in England.
+            </p>
+            <div class="form-group get-started">
+                @Html.ActionLink("Find an apprenticeship", "index", "vacancysearch", null, new { id = "vacancysearch", @class = "button" })
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-1-3">
+        <div class="inner-block">
+            <ul class="list-text">
+                <li>Related links</li>
+                <li>
+                    <a href="#">About the new service</a>
+                </li>
+                <li>
+                    <a href="#">Apprenticeships in England</a>
+                </li>
+                <li>
+                    <a href="#">Careers helpline for teenagers</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<section class="grid-wrapper section-border">
+    <div class="grid grid-2-3">
+        <div class="inner-block-padr">
+            <h2 class="heading-medium">Using the original service</h2>
+            <p class="text">The original service will continue to work for a limited time.</p>
+            <p class="text">
+                If you’ve applied for an apprenticeship before, you’ll only be able
+                to view your application history using the original service.
+            </p>
+            <p>
+                <a href="https://apprenticeshipvacancymatchingservice.lsc.gov.uk/navms/Forms/Candidate/Apprenticeships.aspx" rel="external" target="_blank">Sign in to original service</a>
+            </p>
+        </div>
+    </div>
+    <div class="grid grid-1-3">
+        <div class="inner-block">
+            <p>
+                <a href="https://apprenticeshipvacancymatchingservice.lsc.gov.uk/navms/Forms/Candidate/Apprenticeships.aspx" target="_blank">
+                    <img src="/Content/_assets/img/av-screenshot.png" alt="Old apprenticeships site image" />
+                </a>
+            </p>
+        </div>
+    </div>
+</section>
+<section>
+    <p>
+        You can also search and apply for apprenticeships in other parts of the
+        UK.
+    </p>
+    <p>
+        <a rel="external" href="http://www.nidirect.gov.uk/apprenticeshipsni"
+           title="Apprenticeships in Northern Ireland (nidirect website)">Apprenticeships in Northern Ireland (nidirect website)</a>
+        <br><a rel="external" href="http://www.mappit.org.uk/" title="Apply for an apprenticeship in Scotland (MappIT website)">Apply for an apprenticeship in Scotland (MappIT website)</a>
+        <br><a rel="external" href="https://ams.careerswales.com/Public/Default.aspx?mode=vacancy&amp;timenow=164517"
+               title="Apply for an apprenticeship in Wales (careerswales website)">Apply for an apprenticeship in Wales (careerswales website)</a>
+    </p>
+</section>

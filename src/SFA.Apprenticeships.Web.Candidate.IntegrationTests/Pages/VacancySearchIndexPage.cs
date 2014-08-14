@@ -7,7 +7,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IntegrationTests.Pages
 
     public class VacancySearchIndexPage : PageObject<VacancySearchIndexPage>, ISfaPage
     {
-        public const string PageTitle = "Apprenticeships - Find an apprenticeship";
+        public const string PageTitle = "Apprenticeships";
         public const string Heading = "Find an apprenticeship";
 
         public VacancySearchIndexPage(FluentTest test)
