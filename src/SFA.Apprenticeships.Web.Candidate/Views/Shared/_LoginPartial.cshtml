@@ -1,10 +1,16 @@
 ﻿@if (Request.IsAuthenticated)
 {
+    var fullName = string.Empty;
+    var cookie = Request.Cookies["User.Context"];
+    if (cookie != null)
+    {
+        fullName = cookie["FullName"];
+    }
     <div class="account-info" id="bannerSignedIn">
-        <span class="your-name" id="bannerUserName">Your Name</span>
+        <span class="your-name" id="bannerUserName">@fullName</span>
         <div>
-            <a href='@Url.Action("SignOut", "Login")'>My applications</a>
-            <a href='@Url.Action("SignOut", "Login")'>Settings</a>
+            <a href='@Url.Action("Index", "Application")'>My applications</a>
+            <a href='#'>Settings</a>
             <a href='@Url.Action("SignOut", "Login")' id="btnSignOut"><i class="fa fa-sign-out"></i>Sign out</a>
         </div>
     </div>
