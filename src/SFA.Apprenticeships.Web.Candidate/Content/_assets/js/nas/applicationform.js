@@ -258,20 +258,29 @@
                 onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
             }
         });
+       
         self.itemToYear = ko.observable(itemToYear).extend({
             required: {
                 message: "To year is required",
                 onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
-            },
-            min: {
-                message:"'To Year' should be after 'From Year'",
-                params: self.itemFromYear()
-            },
-            number: { message: "'To Year' should be a number" },
-            minLength: {
-                message: "'To Year' must be 4 digits",
+            }
+        }).extend({
+            number: {
+                message: "'To Year' must be a number",
                 onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
             }
+        }).extend({
+            validation: {
+                validator: function (val, fromYearValue) {
+                    return val >= fromYearValue || val === null;
+                },
+                message: "'To Year' must be greater than or equal to 'From Year'",
+                params: self.itemFromYear,
+                onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
+            }
+        }).extend({
+            minLength: 4,
+            onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
         });
 
         self.readOnly = ko.observable("readonly");
@@ -280,7 +289,7 @@
         self.toItemDateReadonly = ko.observable(undefined);
 
         self.itemIsCurrentEmployment.subscribe(function (selectedValue) {
-            //alert(selectedValue);
+            
             if (selectedValue === true) {
                 self.itemToYear(null);
                 self.toItemDateReadonly("disabled");
@@ -331,21 +340,38 @@
         self.toYear = ko.observable().extend({
             required: {
                 message: "To year is required",
-                onlyIf: function () { return (self.isCurrentEmployment() === false); }               
-            },
-            number: { message: "'To Year' must be a number" }
+                onlyIf: function() { return (self.isCurrentEmployment() === false); }
+            }
+        }).extend({
+            number: {
+                message: "'To Year' must be a number",
+                onlyIf: function() { return (self.isCurrentEmployment() === false); }
+            }
+        }).extend({
+            minLength: 4,
+            onlyIf: function() { return (self.isCurrentEmployment() === false); }
+        }).extend({
+            validation: {
+                validator: function (val, fromYearValue) {
+                    return val >= fromYearValue;
+                },
+                message: "'To Year' must be greater than or equal to 'From Year'",
+                params: self.fromYear,
+                onlyIf: function () {                   
+                    return (self.isCurrentEmployment() === false);
+                }
+            }
         });
-
-        self.toYear.extend({mustBeGreaterThanOrEqual : self.fromYear});
 
         self.toDateReadonly = ko.observable(undefined);
 
         self.isCurrentEmployment.subscribe(function (selectedValue) {
             if (selectedValue === true) {
+              
                 self.toYear(null);
                 self.toDateReadonly("disabled");
             } else {
-                self.toDateReadonly(undefined);
+                self.toDateReadonly(undefined);                            
             }
         });
      
@@ -373,6 +399,8 @@
                 self.mainDuties("");
                 self.fromYear(null);
                 self.toYear(null);
+                self.isCurrentEmployment(false);
+                self.toDateReadonly(undefined);
 
                 self.errors.showAllMessages(false);
 

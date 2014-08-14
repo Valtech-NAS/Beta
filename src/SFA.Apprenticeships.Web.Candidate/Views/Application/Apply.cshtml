@@ -62,18 +62,18 @@
                     </div>
                     <div class="form-group" data-bind="visible: showOtherQualification,parentvalElement:otherQualification">
                         <label for="other-qual" class="form-label">Name of other qualification</label>
-                        <input type="text" class="form-control" id="other-qual" data-bind='value: otherQualification'>
+                        <input type="text" class="form-control" id="other-qual" data-bind='value: otherQualification' maxlength="100">
 
                     </div>
                     <div class="form-group" data-bind="parentvalElement:subject">
                         <label for="subject-name" class="form-label">Subject</label>
-                        <input type="text" class="form-control" id="subject-name" data-bind='value: subject'>
+                        <input type="text" class="form-control" id="subject-name" data-bind='value: subject' maxlength="50">
 
                     </div>
                     <div class="inline-fixed">
                         <div class="form-group" data-bind="parentvalElement:grade">
                             <label for="subject-grade" class="form-label">Grade</label>
-                            <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind='value: grade'>
+                            <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind='value: grade' maxlength="15">
 
                         </div>
                         <div class="form-group">
@@ -121,10 +121,10 @@
                             <tbody data-bind="foreach: groupItems">
                                 <tr>
                                     <td>
-                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationSubject, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].Subject', readonly:readOnly() }">
+                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationSubject, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].Subject', readonly:readOnly() }" maxlength="50" />
                                     </td>
                                     <td>
-                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationGrade, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].Grade',readonly:readOnly() }">
+                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationGrade, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].Grade',readonly:readOnly() }" maxlength="15" />
                                     </td>
                                     <td>
                                         <input type="hidden" data-bind="value: qualificationType, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].QualificationType'}" />
@@ -173,16 +173,16 @@
                     <div class="clearfix">
                         <div class="form-group form-group-compound" data-bind="parentvalElement: employer">
                             <label for="work-employer" class="form-label">Employer</label>
-                            <input type="text" class="form-control" id="work-employer" data-bind="value: employer">
+                            <input type="text" class="form-control" id="work-employer" data-bind="value: employer" maxlength="50">
                         </div>
                         <div class="form-group form-group" data-bind="parentvalElement: jobTitle">
                             <label for="work-title" class="form-label">Job title</label>
-                            <input type="text" class="form-control" id="work-title" data-bind="value: jobTitle">
+                            <input type="text" class="form-control" id="work-title" data-bind="value: jobTitle" maxlength="50">
                         </div>
                         <div class="form-group form-group-compound" data-bind="parentvalElement: mainDuties">
                             <label for="work-role" class="form-label">Main duties</label>
-                            <textarea rows="3" class="form-control" id="work-role" data-val-length-max="200" data-bind="value: mainDuties"></textarea>
-                            <span class="form-hint maxchar-count">200</span>
+                            <textarea rows="3" class="form-control" id="work-role" data-val-length-max="200" data-bind="value: mainDuties" maxlength="200"></textarea>
+                            <span class="form-hint">200</span>
                         </div>
                         <div class="inline-fixed">
                             <div class="form-group form-group-compound">
@@ -210,10 +210,10 @@
                                 <div class="form-group form-group-compound" data-bind="parentvalElement: toYear">
                                     <span class="form-hint">Year</span>
                                     <input type="tel" class="form-control form-control-small" pattern="[0-9]*" maxlength="4"
-                                           id="work-to-year" data-bind="value: toYear, attr:{disabled:toDateReadonly() }">
+                                           id="work-to-year" data-bind="value: toYear, attr:{disabled:toDateReadonly() }" />
                                 </div>
                                 <div class="form-group form-group-compound">
-                                    <input id="work-current" type="checkbox" data-bind="checked: isCurrentEmployment">
+                                    <input id="work-current" type="checkbox" data-bind="checked: isCurrentEmployment"/>
                                     <label for="work-current">Current</label>
                                 </div>
                             </div>
@@ -257,14 +257,14 @@
                                                     <input type="hidden" data-bind="value: itemEmployer, attr:{name:'Candidate.WorkExperience[' + $index() +'].Employer'}" />
                                                     <input type="hidden" data-bind="value: itemJobTitle, attr:{name:'Candidate.WorkExperience[' + $index() +'].JobTitle'}" />
                                                     <input type="hidden" data-bind="value: itemMainDuties, attr:{name:'Candidate.WorkExperience[' + $index() +'].Description'}" />
-                                                    <input type="text" class="form-control inline width-all-49" data-bind="value: itemEmployer, visible: !showEditButton()">
+                                                    <input type="text" class="form-control inline width-all-49" data-bind="value: itemEmployer, visible: !showEditButton()" maxlength="50" />
                                                     <span class="cell-span" data-bind="visible: showEditButton, text: itemEmployer"></span>
                                                     <span class="cell-span work-hyphen">-</span>
                                                     <input type="text" class="form-control  inline width-all-49 no-right-margin"
-                                                           data-bind="value: itemJobTitle, visible: !showEditButton()">
+                                                           data-bind="value: itemJobTitle, visible: !showEditButton()" maxlength="50" />
                                                     <span class="cell-span" data-bind="visible: showEditButton, text: itemJobTitle"></span>
                                                     <div></div>
-                                                    <textarea class="form-control" data-bind="value: itemMainDuties, visible: !showEditButton()"></textarea>
+                                                    <textarea class="form-control" data-bind="value: itemMainDuties, visible: !showEditButton()" maxlength="200"></textarea>
                                                     <span class="cell-span" data-bind="visible: showEditButton, text: itemMainDuties"></span>
                                                 </td>
                                             </tr>
@@ -321,8 +321,8 @@
                                                             <input type="checkbox" data-bind="checked: itemIsCurrentEmployment" /> Current
                                                         </label>
                                                     </div>                                                 
-                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() === null ? 'Current' : getMonthLabel(itemToMonth())"></span>
-                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() === null ? '' : itemToYear"></span>
+                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() === 0 || itemToYear() === null ? 'Current' : getMonthLabel(itemToMonth())"></span>
+                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() === 0 || itemToYear() === null ? '' : itemToYear"></span>
                                                 </td>
                                                 <td></td>
                                                 <td></td>
@@ -383,8 +383,8 @@
             ko.validation.configure({
                 decorateElement: true,
                 registerExtenders: true,
-                //messagesOnModified: false,
-                insertMessages: false,
+                messagesOnModified: true,
+                insertMessages: true,
                 parseInputAttributes: true,
                 errorClass: 'input-validation-error',
                 errorElementClass: 'input-validation-error',

@@ -10,7 +10,7 @@
         public WorkExperienceViewModelValidator()
         {
             RuleFor(x => x.Description)
-                .Length(0, 4000)
+                .Length(0, 200)
                 .WithMessage(WorkExperienceViewModelMessages.DescriptionMessages.TooLongErrorText)
                 .NotEmpty()
                 .WithMessage(WorkExperienceViewModelMessages.DescriptionMessages.RequiredErrorText)
@@ -18,7 +18,7 @@
                 .WithMessage(WorkExperienceViewModelMessages.DescriptionMessages.WhiteListErrorText);
 
             RuleFor(x => x.Employer)
-                .Length(0, 200)
+                .Length(0, 50)
                 .WithMessage(WorkExperienceViewModelMessages.EmployerMessages.TooLongErrorText)
                 .NotEmpty()
                 .WithMessage(WorkExperienceViewModelMessages.EmployerMessages.RequiredErrorText)
@@ -26,7 +26,7 @@
                 .WithMessage(WorkExperienceViewModelMessages.EmployerMessages.WhiteListErrorText);
 
             RuleFor(x => x.JobTitle)
-                .Length(0, 4000)
+                .Length(0, 50)
                 .WithMessage(WorkExperienceViewModelMessages.JobTitleMessages.TooLongErrorText)
                 .NotEmpty()
                 .WithMessage(WorkExperienceViewModelMessages.JobTitleMessages.RequiredErrorText)

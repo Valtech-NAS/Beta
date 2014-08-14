@@ -11,7 +11,7 @@
         public QualificationViewModelValidator()
         {
             RuleFor(x => x.QualificationType)
-                .Length(0, 200)
+                .Length(0, 100)
                 .WithMessage(QualificationViewModelMessages.QualificationTypeMessages.TooLongErrorText)
                 .NotEmpty()
                 .WithMessage(QualificationViewModelMessages.QualificationTypeMessages.RequiredErrorText)
@@ -19,7 +19,7 @@
                 .WithMessage(QualificationViewModelMessages.QualificationTypeMessages.WhiteListErrorText);
 
             RuleFor(x => x.Subject)
-                .Length(0, 200)
+                .Length(0, 50)
                 .WithMessage(QualificationViewModelMessages.SubjectMessages.TooLongErrorText)
                 .NotEmpty()
                 .WithMessage(QualificationViewModelMessages.SubjectMessages.RequiredErrorText)
@@ -27,7 +27,7 @@
                 .WithMessage(QualificationViewModelMessages.SubjectMessages.WhiteListErrorText);
 
             RuleFor(x => x.Grade)
-                .Length(0, 200)
+                .Length(0, 15)
                 .WithMessage(QualificationViewModelMessages.GradeMessages.TooLongErrorText)
                 .NotEmpty()
                 .WithMessage(QualificationViewModelMessages.GradeMessages.RequiredErrorText)
