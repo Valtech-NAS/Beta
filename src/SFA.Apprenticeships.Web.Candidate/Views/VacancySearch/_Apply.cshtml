@@ -33,6 +33,6 @@
 else
 {
     // Vacancy is not being viewed by a signed-in candidate.
-    <a class="button button-with-hint" title="Sign in to apply" href="@Url.Action("Index", "Login")">Sign in to apply</a>
+    <a class="button button-with-hint" title="Sign in to apply" href="@Url.Action("Apply", "Application", new { @id = Model.Id })">Sign in to apply</a>
 }
 <p class="copy-16">Closing date: @Html.DisplayFor(m => m.ClosingDate, "Date")</p>
