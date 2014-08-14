@@ -300,12 +300,12 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <div class="form-group form-group-compound">
-                                                        <select data-bind='options: $parent.months, optionsText: "monthName", optionsValue: "monthNumber",value: itemFromMonth, visible: !showEditButton() '></select>
+                                                    <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
+                                                        <select data-bind='options: $parent.months, optionsText: "monthName", optionsValue: "monthNumber",value: itemFromMonth '></select>
                                                         <input type="hidden" data-bind="value: itemFromMonth, attr:{name:'Candidate.WorkExperience[' + $index() +'].FromMonth'}" />
                                                     </div>
-                                                    <div class="form-group form-group-compound">
-                                                        <input type="text" class="form-control" data-bind=" value: itemFromYear, visible: !showEditButton()" pattern="[0-9]*" maxlength="4">
+                                                    <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
+                                                        <input type="text" class="form-control" data-bind=" value: itemFromYear" pattern="[0-9]*" maxlength="4">
                                                         <input type="hidden" data-bind="value: itemFromYear, attr:{name:'Candidate.WorkExperience[' + $index() +'].FromYear'}" />
                                                     </div>
                                                                                                       
@@ -313,12 +313,12 @@
                                                     <span class="cell-span" data-bind="visible: showEditButton, text: itemFromYear"></span>
                                                 </td>
                                                 <td>
-                                                    <div class="form-group form-group-compound">
-                                                        <select data-bind=' options: $parent.months, optionsText: "monthName", optionsValue: "monthNumber",value: itemToMonth, visible: !showEditButton(),attr:{disabled:toItemDateReadonly() }'></select>
+                                                    <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
+                                                        <select data-bind=' options: $parent.months, optionsText: "monthName", optionsValue: "monthNumber",value: itemToMonth,attr:{disabled:toItemDateReadonly() }'></select>
                                                         <input type="hidden" data-bind="value: itemToMonth, attr:{name:'Candidate.WorkExperience[' + $index() +'].ToMonth'}" />
                                                     </div>
-                                                    <div class="form-group form-group-compound">
-                                                        <input type="text" class="form-control" data-bind="value: itemToYear, visible: !showEditButton(),attr:{disabled:toItemDateReadonly() }" pattern="[0-9]*" maxlength="4">
+                                                    <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
+                                                        <input type="text" class="form-control" data-bind="value: itemToYear,attr:{disabled:toItemDateReadonly() }" pattern="[0-9]*" maxlength="4">
                                                         <input type="hidden" data-bind="value: itemToYear, attr:{name:'Candidate.WorkExperience[' + $index() +'].ToYear'}" />
                                                     </div>
                                                     <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
