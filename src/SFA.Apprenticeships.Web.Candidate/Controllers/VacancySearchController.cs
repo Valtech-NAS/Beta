@@ -77,14 +77,14 @@
             }
 
             searchViewModel.CheckLatLonLocHash();
-            var location = new LocationViewModel(searchViewModel);
+
             if (!searchViewModel.Latitude.HasValue || !searchViewModel.Longitude.HasValue)
             {
                 //Either user not selected item from dropdown or javascript disabled.
                 var locations = _searchProvider.FindLocation(searchViewModel.Location).ToList();
                 if (locations.Any())
                 {
-                    location = locations.First();
+                    var location = locations.First();
                     searchViewModel.Location = location.Name;
                     searchViewModel.Latitude = location.Latitude;
                     searchViewModel.Longitude = location.Longitude;
