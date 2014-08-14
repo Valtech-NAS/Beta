@@ -10,18 +10,18 @@
     [Validator(typeof(AboutYouViewModelValidator))]
     public class AboutYouViewModel
     {
-        [Display(Name = AboutYouMessages.WhatAreYourStrengthsMessages.LabelText, Description = AboutYouMessages.WhatAreYourStrengthsMessages.HintText)]
+        [Display(Name = AboutYouViewModelMessages.WhatAreYourStrengthsMessages.LabelText, Description = AboutYouViewModelMessages.WhatAreYourStrengthsMessages.HintText)]
         public string WhatAreYourStrengths { get; set; }
 
-        [Display(Name = AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.LabelText, Description = AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.HintText)]
+        [Display(Name = AboutYouViewModelMessages.WhatDoYouFeelYouCouldImproveMessages.LabelText, Description = AboutYouViewModelMessages.WhatDoYouFeelYouCouldImproveMessages.HintText)]
         public string WhatDoYouFeelYouCouldImprove { get; set; }
 
-        [Display(Name = AboutYouMessages.WhatAreYourHobbiesInterestsMessages.LabelText, Description = AboutYouMessages.WhatAreYourHobbiesInterestsMessages.HintText)]
+        [Display(Name = AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.LabelText, Description = AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.HintText)]
         public string WhatAreYourHobbiesInterests { get; set; }
 
         public bool RequiresSupportForInterview { get; set; }
 
-        [Display(Name ="", Description = AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.HintText)]
+        [Display(Name ="", Description = AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.HintText)]
         public string AnythingWeCanDoToSupportYourInterview { get; set; }
     }
 }

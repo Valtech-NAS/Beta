@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Constants.ViewModels
 {
-    public static class VacancySearchMessages
+    public static class VacancySearchViewModelMessages
     {
         public static class KeywordMessages
         {

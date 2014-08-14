@@ -26,22 +26,22 @@
         {
             validator.RuleFor(x => x.Location)
                 .NotEmpty()
-                .WithMessage(VacancySearchMessages.LocationMessages.RequiredErrorText)
+                .WithMessage(VacancySearchViewModelMessages.LocationMessages.RequiredErrorText)
                 .Length(3, 99)
-                .WithMessage(VacancySearchMessages.LocationMessages.LengthErrorText)
-                .Matches(VacancySearchMessages.LocationMessages.WhiteList)
-                .WithMessage(VacancySearchMessages.LocationMessages.WhiteListErrorText);
+                .WithMessage(VacancySearchViewModelMessages.LocationMessages.LengthErrorText)
+                .Matches(VacancySearchViewModelMessages.LocationMessages.WhiteList)
+                .WithMessage(VacancySearchViewModelMessages.LocationMessages.WhiteListErrorText);
 
             validator.RuleFor(x => x.Keywords)
-                .Matches(VacancySearchMessages.KeywordMessages.WhiteList)
-                .WithMessage(VacancySearchMessages.KeywordMessages.WhiteListErrorText);
+                .Matches(VacancySearchViewModelMessages.KeywordMessages.WhiteList)
+                .WithMessage(VacancySearchViewModelMessages.KeywordMessages.WhiteListErrorText);
         }
 
         public static void AddLocationRules(this AbstractValidator<VacancySearchViewModel> validator)
         {
             validator.RuleFor(x => x.Location)
                 .Must(HaveLatAndLongPopulated)
-                .WithMessage(VacancySearchMessages.LocationMessages.NoResultsErrorText);
+                .WithMessage(VacancySearchViewModelMessages.LocationMessages.NoResultsErrorText);
         }
 
         private static bool HaveLatAndLongPopulated(VacancySearchViewModel instance, string location)

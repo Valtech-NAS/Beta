@@ -10,35 +10,35 @@
         {
             RuleFor(x => x.WhatAreYourStrengths)
                 .Length(0, 4000)
-                .WithMessage(AboutYouMessages.WhatAreYourStrengthsMessages.TooLongErrorText)
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourStrengthsMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage(AboutYouMessages.WhatAreYourStrengthsMessages.RequiredErrorText)
-                .Matches(AboutYouMessages.WhatAreYourStrengthsMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouMessages.WhatAreYourStrengthsMessages.WhiteListErrorText);
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourStrengthsMessages.RequiredErrorText)
+                .Matches(AboutYouViewModelMessages.WhatAreYourStrengthsMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourStrengthsMessages.WhiteListErrorText);
 
             RuleFor(x => x.WhatDoYouFeelYouCouldImprove)
                 .Length(0, 4000)
-                .WithMessage(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.TooLongErrorText)
+                .WithMessage(AboutYouViewModelMessages.WhatDoYouFeelYouCouldImproveMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.RequiredErrorText)
-                .Matches(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.WhiteListErrorText);
+                .WithMessage(AboutYouViewModelMessages.WhatDoYouFeelYouCouldImproveMessages.RequiredErrorText)
+                .Matches(AboutYouViewModelMessages.WhatDoYouFeelYouCouldImproveMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouViewModelMessages.WhatDoYouFeelYouCouldImproveMessages.WhiteListErrorText);
 
             RuleFor(x => x.WhatAreYourHobbiesInterests)
                 .Length(0, 4000)
-                .WithMessage(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.TooLongErrorText)
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.RequiredErrorText)
-                .Matches(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.WhiteListErrorText);
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.RequiredErrorText)
+                .Matches(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.WhiteListErrorText);
 
             RuleFor(x => x.AnythingWeCanDoToSupportYourInterview)
                 .Length(0, 4000)
-                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.TooLongErrorText)               
-                .Matches(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListErrorText)
+                .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.TooLongErrorText)               
+                .Matches(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListErrorText)
                 .NotEmpty()
-                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.RequiredErrorText);            
+                .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.RequiredErrorText);            
         }
     }
 
@@ -48,27 +48,27 @@
         {
             RuleFor(x => x.WhatAreYourStrengths)
                 .Length(0, 4000)
-                .WithMessage(AboutYouMessages.WhatAreYourStrengthsMessages.TooLongErrorText)
-                .Matches(AboutYouMessages.WhatAreYourStrengthsMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouMessages.WhatAreYourStrengthsMessages.WhiteListErrorText);
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourStrengthsMessages.TooLongErrorText)
+                .Matches(AboutYouViewModelMessages.WhatAreYourStrengthsMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourStrengthsMessages.WhiteListErrorText);
 
             RuleFor(x => x.WhatDoYouFeelYouCouldImprove)
                 .Length(0, 4000)
-                .WithMessage(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.TooLongErrorText)
-                .Matches(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.WhiteListErrorText);
+                .WithMessage(AboutYouViewModelMessages.WhatDoYouFeelYouCouldImproveMessages.TooLongErrorText)
+                .Matches(AboutYouViewModelMessages.WhatDoYouFeelYouCouldImproveMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouViewModelMessages.WhatDoYouFeelYouCouldImproveMessages.WhiteListErrorText);
 
             RuleFor(x => x.WhatAreYourHobbiesInterests)
                 .Length(0, 4000)
-                .WithMessage(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.TooLongErrorText)
-                .Matches(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.WhiteListErrorText);
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.TooLongErrorText)
+                .Matches(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.WhiteListErrorText);
 
             RuleFor(x => x.AnythingWeCanDoToSupportYourInterview)
                 .Length(0, 4000)
-                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.TooLongErrorText)
-                .Matches(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListErrorText)
+                .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.TooLongErrorText)
+                .Matches(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListErrorText)
                 .When(x => x.RequiresSupportForInterview);
         }
     }
@@ -79,35 +79,35 @@
         {
             RuleFor(x => x.WhatAreYourStrengths)
                 .Length(0, 4000)
-                .WithMessage(AboutYouMessages.WhatAreYourStrengthsMessages.TooLongErrorText)
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourStrengthsMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage(AboutYouMessages.WhatAreYourStrengthsMessages.RequiredErrorText)
-                .Matches(AboutYouMessages.WhatAreYourStrengthsMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouMessages.WhatAreYourStrengthsMessages.WhiteListErrorText);
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourStrengthsMessages.RequiredErrorText)
+                .Matches(AboutYouViewModelMessages.WhatAreYourStrengthsMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourStrengthsMessages.WhiteListErrorText);
 
             RuleFor(x => x.WhatDoYouFeelYouCouldImprove)
                 .Length(0, 4000)
-                .WithMessage(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.TooLongErrorText)
+                .WithMessage(AboutYouViewModelMessages.WhatDoYouFeelYouCouldImproveMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.RequiredErrorText)
-                .Matches(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouMessages.WhatDoYouFeelYouCouldImproveMessages.WhiteListErrorText);
+                .WithMessage(AboutYouViewModelMessages.WhatDoYouFeelYouCouldImproveMessages.RequiredErrorText)
+                .Matches(AboutYouViewModelMessages.WhatDoYouFeelYouCouldImproveMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouViewModelMessages.WhatDoYouFeelYouCouldImproveMessages.WhiteListErrorText);
 
             RuleFor(x => x.WhatAreYourHobbiesInterests)
                 .Length(0, 4000)
-                .WithMessage(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.TooLongErrorText)
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.RequiredErrorText)
-                .Matches(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouMessages.WhatAreYourHobbiesInterestsMessages.WhiteListErrorText);
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.RequiredErrorText)
+                .Matches(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.WhiteListErrorText);
 
             RuleFor(x => x.AnythingWeCanDoToSupportYourInterview)
                 .Length(0, 4000)
-                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.TooLongErrorText)
+                .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.RequiredErrorText)
-                .Matches(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListErrorText)
+                .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.RequiredErrorText)
+                .Matches(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListRegularExpression)
+                .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListErrorText)
                 .When(x => x.RequiresSupportForInterview);
         }
     }

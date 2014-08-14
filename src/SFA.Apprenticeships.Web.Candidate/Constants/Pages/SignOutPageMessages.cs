@@ -1,6 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Constants.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Candidate.Constants.Pages
 {
-    public static class SignOutMessages
+    public static class SignOutPageMessages
     {
         public static class SignOutMessageForLoginDisplay
         {

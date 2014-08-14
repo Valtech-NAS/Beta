@@ -27,10 +27,10 @@
             Hash = viewModel.Hash;
         }
 
-        [Display(Name = VacancySearchMessages.KeywordMessages.LabelText, Description = VacancySearchMessages.KeywordMessages.HintText)]
+        [Display(Name = VacancySearchViewModelMessages.KeywordMessages.LabelText, Description = VacancySearchViewModelMessages.KeywordMessages.HintText)]
         public string Keywords { get; set; }
 
-        [Display(Name = VacancySearchMessages.LocationMessages.LabelText, Description = VacancySearchMessages.LocationMessages.HintText)]
+        [Display(Name = VacancySearchViewModelMessages.LocationMessages.LabelText, Description = VacancySearchViewModelMessages.LocationMessages.HintText)]
         public string Location { get; set; }
 
         public double? Longitude { get; set; }

@@ -2,7 +2,7 @@
 {
     public static class PasswordResetViewModelMessages
     {
-        public static class PasswordResetCode
+        public static class PasswordResetCodeMessages
         {
             public const string LabelText = "Enter code";
             public const string HintText = "";

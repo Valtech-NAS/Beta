@@ -10,13 +10,13 @@
     [Validator(typeof(EducationViewModelClientValidator))]
     public class EducationViewModel
     {
-        [Display(Name = EducationMessages.NameOfMostRecentSchoolCollegeMessages.LabelText)]
+        [Display(Name = EducationViewModelMessages.NameOfMostRecentSchoolCollegeMessages.LabelText)]
         public string NameOfMostRecentSchoolCollege { get; set; }
 
-        [Display(Name = EducationMessages.FromYearMessages.LabelText)]
+        [Display(Name = EducationViewModelMessages.FromYearMessages.LabelText)]
         public string FromYear { get; set; }
 
-        [Display(Name = EducationMessages.ToYearMessages.LabelText)]
+        [Display(Name = EducationViewModelMessages.ToYearMessages.LabelText)]
         public string ToYear { get; set; }
     }
 }

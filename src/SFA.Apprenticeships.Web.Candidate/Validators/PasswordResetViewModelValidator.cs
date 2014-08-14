@@ -27,9 +27,9 @@
         {
             validator.RuleFor(x => x.PasswordResetCode)
               .NotEmpty()
-              .WithMessage(PasswordResetViewModelMessages.PasswordResetCode.RequiredErrorText)
+              .WithMessage(PasswordResetViewModelMessages.PasswordResetCodeMessages.RequiredErrorText)
               .Length(6, 6)
-              .WithMessage(PasswordResetViewModelMessages.PasswordResetCode.LengthErrorText);
+              .WithMessage(PasswordResetViewModelMessages.PasswordResetCodeMessages.LengthErrorText);
 
             validator.RuleFor(x => x.Password)
                 .Length(8, 127)
@@ -48,7 +48,7 @@
 
             validator.RuleFor(x => x.PasswordResetCode)
                 .Must(IsPasswordResetCodeInvalid)
-                .WithName(PasswordResetViewModelMessages.PasswordResetCode.CodeErrorText);
+                .WithName(PasswordResetViewModelMessages.PasswordResetCodeMessages.CodeErrorText);
         }
 
         private static bool IsPasswordResetCodeInvalid(PasswordResetViewModel model, string passwordResetCode)

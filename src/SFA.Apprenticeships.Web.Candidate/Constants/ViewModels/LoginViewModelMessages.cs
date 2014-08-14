@@ -13,10 +13,5 @@
             public const string LabelText = "Password";
             public const string RequiredErrorText = "'Password' must be supplied";
         }
-
-        public static class AuthenticationMessages
-        {
-            public const string AuthenticationFailedErrorText = "'Email address' or 'password' is invalid";
-        }
     }
 }

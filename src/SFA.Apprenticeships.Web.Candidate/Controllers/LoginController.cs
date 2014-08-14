@@ -7,6 +7,7 @@
     using System.Web.Security;
     using Common.Controllers;
     using Common.Providers;
+    using Constants.Pages;
     using Constants.ViewModels;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -81,7 +82,7 @@
             ModelState.Clear();
             ModelState.AddModelError(
                 "EmailAddress",
-                LoginViewModelMessages.AuthenticationMessages.AuthenticationFailedErrorText);
+                LoginPageMessages.AuthenticationMessages.AuthenticationFailedErrorText);
 
             return View(model);
         }
@@ -161,7 +162,7 @@
             FormsAuthentication.SignOut();
 
             //TODO - Message not being set because ASP.NET_SessionId is cleared Mark to refactor
-            TempData["LogoutMessage"] = SignOutMessages.SignOutMessageForLoginDisplay.SignOutMessageText;           
+            TempData["LogoutMessage"] = SignOutPageMessages.SignOutMessageForLoginDisplay.SignOutMessageText;           
 
             return RedirectToAction("Index");
         }
