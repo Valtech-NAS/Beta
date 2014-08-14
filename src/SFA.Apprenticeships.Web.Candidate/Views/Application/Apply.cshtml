@@ -132,8 +132,8 @@
                                         <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit" type="text" data-bind="value: qualificationYear, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].Year',readonly:readOnly() }">
                                     </td>
                                     <td class="ta-center">
-                                        <span class="fake-link cell-span" data-bind='if: showEditButton, click: $root.editQualification'>Edit</span>
-                                        <span class="fake-link cell-span" data-bind='ifnot: showEditButton,click: $root.saveQualificationItem'>Save</span>
+                                        <span data-bind='if: showEditButton, click: $root.editQualification'><span class="fake-link cell-span">Edit</span></span>
+                                        <span data-bind='ifnot: showEditButton,click: $root.saveQualificationItem'><span class="fake-link cell-span">Save</span></span>
                                     </td>
                                     <td class="ta-center">
                                         <i class="cell-span"><i class="ir icon-remove" data-bind='click: $root.removeQualification'>Remove</i></i>
