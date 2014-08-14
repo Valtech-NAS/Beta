@@ -2,6 +2,7 @@
 {
     using System;
     using Application.ApplicationUpdate.Entities;
+    using Consumers;
     using Domain.Interfaces.Messaging;
     using Messaging;
     using StructureMap.Configuration.DSL;
@@ -11,8 +12,8 @@
         public ApplicationEtlRegistry()
         {
             For<IProcessControlQueue<StorageQueueMessage>>().Use<AzureScheduleQueue>();
-
-            //todo: ApplicationEtlRegistry - similar to VacancyEtlRegistry
+            For<ApplicationSchedulerConsumer>().Use<ApplicationSchedulerConsumer>();
+            For<ApplicationStatusSummaryConsumerAsync>().Use<ApplicationStatusSummaryConsumerAsync>();
         }
     }
 }
