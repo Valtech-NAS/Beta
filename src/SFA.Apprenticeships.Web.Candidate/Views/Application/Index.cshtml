@@ -23,7 +23,19 @@
         @Html.ActionLink("Find an apprenticeship", "Index", "VacancySearch", null, new { @class = "page-link" })
     </div>
 </div>
-<ul class="list-nav">
+@if (
+        !Model.AllApplications.Any()
+    )
+{
+    <div class="text">
+        <p>Your application history is currently empty. This is because you haven’t submitted or saved any apprenticeship applications yet.</p>
+        <p>Once you start, applications will be recorded and you’ll be able to track your progress</p>
+        <div class="get-started">@Html.ActionLink("Find an apprenticeship", "Index", "VacancySearch", null, new { @class = "button" })</div>
+    </div>
+}
+else
+{
+    <ul class="list-nav">
     @if (Model.InProgressApplications.Any())
     {
         <li>
@@ -54,212 +66,214 @@
             <span class="bold-medium">@Model.DraftApplications.Count()</span>  <a class="" href="#dashDrafts">Drafts</a>
         </li>
     }
-</ul>
-<div class="grid-wrapper proto-dashboard">
-    @if (
-        Model.InProgressApplications.Any() ||
-        Model.SuccessfulApplications.Any() ||
-        Model.UnsuccessfulApplications.Any() ||
-        Model.SubmittedApplications.Any())
-    {
-        <div class="grid grid-1-2">
-            <div class="inner-block-padr">
-                <section class="clearfix">
-                    @if (Model.InProgressApplications.Any())
-                    {
-                        <h2 class="heading-medium" id="dashInProgress">In progress</h2>
-                        <table class="vert-middle">
-                            <colgroup>
-                                <col class="t50">
-                                <col class="t25">
-                                <col class="t25">
-                                <col>
-                            </colgroup>
-                            <tbody class="tbody-3rows">
-                                @foreach (var application in @Model.InProgressApplications)
-                                {
-                                    <tr>
-                                        <td>@application.Title with @application.EmployerName</td>
-                                        <td class="ta-center">In progress</td>
-                                        <td class="ta-center">
-                                            <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                            <tbody class="tbody-expandrows">
-                                <tr class="no-btm-border">
-                                    <td colspan="2"></td>
-                                    <td class="no-wrap ta-center">
-                                        <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    }
-
-                    @if (Model.SuccessfulApplications.Any())
-                    {
-                        <h2 class="heading-medium" id="dashSuccessful">Successful</h2>
-                        <table class="vert-middle" id="">
-                            <colgroup>
-                                <col class="t50">
-                                <col class="t25">
-                                <col class="t25">
-                                <col>
-                            </colgroup>
-                            <tbody>
-                                @foreach (var application in @Model.SuccessfulApplications)
-                                {
-                                    <tr>
-                                        <td>@application.Title with @application.EmployerName</td>
-                                        <td class="ta-center">Successful</td>
-                                        <td class="ta-center">
-                                            <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                            <tbody class="tbody-expandrows">
-                                <tr class="no-btm-border">
-                                    <td colspan="2"></td>
-                                    <td class="no-wrap ta-center">
-                                        <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    }
-
-                    @if (Model.UnsuccessfulApplications.Any())
-                    {
-                        <h2 class="heading-medium" id="dashUnsuccessful">Unsuccessful</h2>
-                        <table class="vert-middle" id="">
-                            <colgroup>
-                                <col class="t50">
-                                <col class="t25">
-                                <col class="t25">
-                                <col>
-                            </colgroup>
-                            <tbody>
-                                @foreach (var application in @Model.UnsuccessfulApplications)
-                                {
-                                    <tr>
-                                        <td>@application.Title with @application.EmployerName</td>
-                                        <td class="ta-center">Unsuccessful</td>
-                                        <td class="ta-center">
-                                            <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                                        </td>
-                                    </tr>
-
-                                    if (!string.IsNullOrWhiteSpace(application.WithdrawnOrDeclinedReason))
-                                    {
-                                        <tr>
-                                            <td colspan="3">
-                                                <b>Reason:</b> @application.WithdrawnOrDeclinedReason
-                                            </td>
-                                        </tr>
-                                    }
-
-                                    if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason))
-                                    {
-                                        <tr>
-                                            <td colspan="3">
-                                                <b>Reason:</b> @application.UnsuccessfulReason
-                                            </td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-                            <tbody class="tbody-expandrows">
-                                <tr class="no-btm-border">
-                                    <td colspan="2"></td>
-                                    <td class="no-wrap ta-center">
-                                        <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    }
-
-                    @if (Model.SubmittedApplications.Any())
-                    {
-                        <h2 class="heading-medium" id="dashSubmitted">Submitted</h2>
-                        <table class="vert-middle" id="">
-                            <colgroup>
-                                <col class="t50">
-                                <col class="t25">
-                                <col class="t25">
-                                <col>
-                            </colgroup>
-                            <tbody class="tbody-3rows">
-                                @foreach (var application in @Model.SubmittedApplications)
-                                {
-                                    <tr>
-                                        <td>@application.Title with @application.EmployerName</td>
-                                        <td class="ta-center">Submitted</td>
-                                        <td class="ta-center">@Html.DisplayFor(m => application.DateApplied)</td>
-                                    </tr>
-                                }
-                            </tbody>
-                            <tbody class="tbody-expandrows">
-                                <tr class="no-btm-border">
-                                    <td colspan="2"></td>
-                                    <td class="no-wrap ta-center">
-                                        <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    }
-                </section>
-            </div>
-        </div>
-    }
-
-    @if (Model.DraftApplications.Any())
-    {
-        <div class="grid grid-1-2">
-            <section class="clearfix">
-                <h2 class="heading-medium" id="dashDrafts">Drafts</h2>
-                <table class="vert-middle">
-                    <colgroup>
-                        <col class="t50">
-                        <col class="t25">
-                        <col class="t25">
-                        <col>
-                    </colgroup>
-                    <tbody class="tbody-3rows">
-                        @foreach (var application in @Model.DraftApplications)
+    </ul>
+    <div class="grid-wrapper proto-dashboard">
+        @if (
+            Model.InProgressApplications.Any() ||
+            Model.SuccessfulApplications.Any() ||
+            Model.UnsuccessfulApplications.Any() ||
+            Model.SubmittedApplications.Any())
+        {
+            <div class="grid grid-1-2">
+                <div class="inner-block-padr">
+                    <section class="clearfix">
+                        @if (Model.InProgressApplications.Any())
                         {
-                            <tr>
-                                <td>@application.Title with @application.EmployerName</td>
-                                <td class="ta-center">
-                                    @if (application.ApplicationStatus == ApplicationStatuses.Draft)
+                            <h2 class="heading-medium" id="dashInProgress">In progress</h2>
+                            <table class="vert-middle">
+                                <colgroup>
+                                    <col class="t50">
+                                    <col class="t25">
+                                    <col class="t25">
+                                    <col>
+                                </colgroup>
+                                <tbody class="tbody-3rows">
+                                    @foreach (var application in @Model.InProgressApplications)
                                     {
-                                        @Html.ActionLink("Resume", "Resume", "Application", new {id = application.VacancyId}, null)
+                                        <tr>
+                                            <td>@application.Title with @application.EmployerName</td>
+                                            <td class="ta-center">In progress</td>
+                                            <td class="ta-center">
+                                                <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                            </td>
+                                        </tr>
                                     }
-                                    else
+                                </tbody>
+                                <tbody class="tbody-expandrows">
+                                    <tr class="no-btm-border">
+                                        <td colspan="2"></td>
+                                        <td class="no-wrap ta-center">
+                                            <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+
+                        @if (Model.SuccessfulApplications.Any())
+                        {
+                            <h2 class="heading-medium" id="dashSuccessful">Successful</h2>
+                            <table class="vert-middle" id="">
+                                <colgroup>
+                                    <col class="t50">
+                                    <col class="t25">
+                                    <col class="t25">
+                                    <col>
+                                </colgroup>
+                                <tbody>
+                                    @foreach (var application in @Model.SuccessfulApplications)
                                     {
-                                        @:Apprenticeship withdrawn
+                                        <tr>
+                                            <td>@application.Title with @application.EmployerName</td>
+                                            <td class="ta-center">Successful</td>
+                                            <td class="ta-center">
+                                                <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                            </td>
+                                        </tr>
                                     }
-                                </td>
-                                <td class="ta-center">
-                                    <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                </tbody>
+                                <tbody class="tbody-expandrows">
+                                    <tr class="no-btm-border">
+                                        <td colspan="2"></td>
+                                        <td class="no-wrap ta-center">
+                                            <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+
+                        @if (Model.UnsuccessfulApplications.Any())
+                        {
+                            <h2 class="heading-medium" id="dashUnsuccessful">Unsuccessful</h2>
+                            <table class="vert-middle" id="">
+                                <colgroup>
+                                    <col class="t50">
+                                    <col class="t25">
+                                    <col class="t25">
+                                    <col>
+                                </colgroup>
+                                <tbody>
+                                    @foreach (var application in @Model.UnsuccessfulApplications)
+                                    {
+                                        <tr>
+                                            <td>@application.Title with @application.EmployerName</td>
+                                            <td class="ta-center">Unsuccessful</td>
+                                            <td class="ta-center">
+                                                <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                            </td>
+                                        </tr>
+
+                                        if (!string.IsNullOrWhiteSpace(application.WithdrawnOrDeclinedReason))
+                                        {
+                                            <tr>
+                                                <td colspan="3">
+                                                    <b>Reason:</b> @application.WithdrawnOrDeclinedReason
+                                                </td>
+                                            </tr>
+                                        }
+
+                                        if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason))
+                                        {
+                                            <tr>
+                                                <td colspan="3">
+                                                    <b>Reason:</b> @application.UnsuccessfulReason
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                                <tbody class="tbody-expandrows">
+                                    <tr class="no-btm-border">
+                                        <td colspan="2"></td>
+                                        <td class="no-wrap ta-center">
+                                            <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+
+                        @if (Model.SubmittedApplications.Any())
+                        {
+                            <h2 class="heading-medium" id="dashSubmitted">Submitted</h2>
+                            <table class="vert-middle" id="">
+                                <colgroup>
+                                    <col class="t50">
+                                    <col class="t25">
+                                    <col class="t25">
+                                    <col>
+                                </colgroup>
+                                <tbody class="tbody-3rows">
+                                    @foreach (var application in @Model.SubmittedApplications)
+                                    {
+                                        <tr>
+                                            <td>@application.Title with @application.EmployerName</td>
+                                            <td class="ta-center">Submitted</td>
+                                            <td class="ta-center">@Html.DisplayFor(m => application.DateApplied)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tbody class="tbody-expandrows">
+                                    <tr class="no-btm-border">
+                                        <td colspan="2"></td>
+                                        <td class="no-wrap ta-center">
+                                            <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    </section>
+                </div>
+            </div>
+        }
+
+        @if (Model.DraftApplications.Any())
+        {
+            <div class="grid grid-1-2">
+                <section class="clearfix">
+                    <h2 class="heading-medium" id="dashDrafts">Drafts</h2>
+                    <table class="vert-middle">
+                        <colgroup>
+                            <col class="t50">
+                            <col class="t25">
+                            <col class="t25">
+                            <col>
+                        </colgroup>
+                        <tbody class="tbody-3rows">
+                            @foreach (var application in @Model.DraftApplications)
+                            {
+                                <tr>
+                                    <td>@application.Title with @application.EmployerName</td>
+                                    <td class="ta-center">
+                                        @if (application.ApplicationStatus == ApplicationStatuses.Draft)
+                                        {
+                                            @Html.ActionLink("Resume", "Resume", "Application", new {id = application.VacancyId}, null)
+                                        }
+                                        else
+                                        {
+                                            @:Apprenticeship withdrawn
+                                        }
+                                    </td>
+                                    <td class="ta-center">
+                                        <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tbody class="tbody-expandrows">
+                            <tr class="no-btm-border">
+                                <td colspan="2"></td>
+                                <td class="no-wrap ta-center">
+                                    <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
                                 </td>
                             </tr>
-                        }
-                    </tbody>
-                    <tbody class="tbody-expandrows">
-                        <tr class="no-btm-border">
-                            <td colspan="2"></td>
-                            <td class="no-wrap ta-center">
-                                <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </div>
-    }
-</div>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        }
+    </div>
+}
+

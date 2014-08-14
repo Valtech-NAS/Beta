@@ -1,11 +1,11 @@
 ﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.WhatHappensNextViewModel
 @{
-    ViewBag.Title = "Apprenticeships - Vacancy application submitted";
+    ViewBag.Title = "Apprenticeships - Apprenticeship application submitted";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="success-banner">
-    <h1 class="heading-large"><i class="fa fa-check"></i>Vacancy application submitted</h1>
+    <h1 class="heading-large"><i class="fa fa-check"></i>Apprenticeship application submitted</h1>
     <div>
         You have applied for:
         <h2 class="heading-medium">@Html.DisplayFor(m => m.VacancyTitle) - @Html.DisplayFor(m =>m.VacancyReference)</h2>
@@ -21,16 +21,14 @@
 <div class="text form-group">
     <p>
         You’ll be contacted if you’ve been shortlisted for an interview. If you
-        haven’t been successful the learning provider will let you know and
+        haven’t been successful the training provider will let you know and
         give you feedback.
     </p>
     <p>
-        You can also track the progress of your application at any time by visiting
-        your <a href="#">dashboard</a>.
-    </p>
+        You can also <a href="@Url.Action("Index", "Application")">track the progress of your application</a> at any time.</p>
     <p>
         If you need to contact us about your application, don’t forget to quote
-        the vacancy reference number.
+        the reference number.
     </p>
 </div>
 <div class="form-group get-started">

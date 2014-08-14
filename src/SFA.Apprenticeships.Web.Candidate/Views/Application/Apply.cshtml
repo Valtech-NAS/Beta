@@ -31,6 +31,9 @@
         <fieldset class="fieldset-with-border" id="applyQualifications">
             <legend class="heading-large">Qualifications</legend>
             <p class="form-label">Do you have any qualifications?</p>
+            <p class="form-hint text">
+                If you don't know your results yet, enter your predicted grades. These are grades your teacher expects you to get.
+            </p>
             <div class="form-group form-group-compound inline clearfix">
                 <label data-target="qualifications-panel" for="qualifications-yes" class="block-label" data-bind="css: {selected:showQualifications() }">
                     @Html.RadioButtonFor(m => m.Candidate.HasQualifications, true, true, new { id = "qualifications-yes", data_bind = "attr:{checked: hasQualifications() }" })
@@ -141,16 +144,7 @@
                     </div>                    
                 </div>
             </div>
-            <div class="form-group text">
-                <details>
-                    <summary role="button">Yet to sit your exams?</summary>
-                    <p class="panel-indent">
-                        If you haven’t taken your exams yet, or are still awaiting for your
-                        results, enter the grades you're predicted to get. If you’re unsure
-                        where to find these, contact your school or college.
-                    </p>
-                </details>
-            </div>
+
         </fieldset>
 
     </div>
