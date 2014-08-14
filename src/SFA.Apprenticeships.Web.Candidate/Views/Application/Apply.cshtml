@@ -321,8 +321,8 @@
                                                             <input type="checkbox" data-bind="checked: itemIsCurrentEmployment" /> Current
                                                         </label>
                                                     </div>                                                 
-                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() === 0 || itemToYear() === null ? 'Current' : getMonthLabel(itemToMonth())"></span>
-                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() === 0 || itemToYear() === null ? '' : itemToYear"></span>
+                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() <= 1 || itemToYear() === null ? 'Current' : getMonthLabel(itemToMonth())"></span>
+                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() <= 1 || itemToYear() === null ? '' : itemToYear"></span>
                                                 </td>
                                                 <td></td>
                                                 <td></td>
