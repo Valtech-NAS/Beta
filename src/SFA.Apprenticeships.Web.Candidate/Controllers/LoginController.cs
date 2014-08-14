@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
-    using System.Net;
+    using System.Web;
     using System.Web.Mvc;
+    using System.Web.Routing;
     using System.Web.Security;
-    using Attributes;
     using Common.Controllers;
     using Common.Providers;
     using Constants.ViewModels;
@@ -44,7 +44,7 @@
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
                 UserServiceProvider.SetReturnUrlCookie(HttpContext, returnUrl);
-            }
+            }        
 
             return View();
         }
@@ -151,6 +151,21 @@
             return RedirectToAction("Unlock");
         }
 
+        public ActionResult SignOut()
+        {
+            UserServiceProvider.DeleteAllCookies(HttpContext);
+            UserServiceProvider.DeleteCookie(HttpContext, "Application.Context");
+            UserServiceProvider.DeleteCookie(HttpContext, "ASP.NET_SessionId");
+            Session.Clear();
+
+            FormsAuthentication.SignOut();
+
+            //TODO - Message not being set because ASP.NET_SessionId is cleared Mark to refactor
+            TempData["LogoutMessage"] = SignOutMessages.SignOutMessageForLoginDisplay.SignOutMessageText;           
+
+            return RedirectToAction("Index");
+        }
+
         #region Helpers
 
         private ActionResult RedirectOnAuthenticated(Candidate candidate, UserStatuses userStatus)
@@ -184,7 +199,8 @@
             // Always clear last viewed vacancy.
             _candidateServiceProvider.LastViewedVacancyId = null;
 
-            var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId, lastViewedVacancyId);
+            var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId,
+                lastViewedVacancyId);
 
             if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
             {
@@ -222,15 +238,5 @@
         }
 
         #endregion
-
-        public ActionResult SignOut()
-        {
-            UserServiceProvider.DeleteAllCookies(HttpContext);
-            UserServiceProvider.DeleteCookie(HttpContext, "Application.Context");
-            UserServiceProvider.DeleteCookie(HttpContext, "ASP.NET_SessionId");
-            Session.Clear();          
-            FormsAuthentication.SignOut();
-            return RedirectToAction("Index");
-        }
     }
 }

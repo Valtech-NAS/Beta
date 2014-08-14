@@ -398,6 +398,7 @@
     <Compile Include="Constants\ViewModels\QualificationViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\RegisterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EducationMessages.cs" />
+    <Compile Include="Constants\ViewModels\SignOutMessages.cs" />
     <Compile Include="Constants\ViewModels\WorkExperienceViewModelMessages.cs" />
     <Compile Include="Constants\Whitelists.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />

@@ -1,14 +1,17 @@
 ﻿@if (Request.IsAuthenticated)
 {
-    <div class="account-info sign-out" id="bannerSignedIn">
+    <div class="account-info" id="bannerSignedIn">
+        <span class="your-name" id="bannerUserName">Your Name</span>
         <div>
-            <a href="@Url.Action("SignOut", "Login")" id="logoutLink" title="Sign out"><i class="fa fa-sign-out"></i>Sign out</a>
+            <a href='@Url.Action("SignOut", "Login")'>My applications</a>
+            <a href='@Url.Action("SignOut", "Login")'>Settings</a>
+            <a href='@Url.Action("SignOut", "Login")' id="btnSignOut"><i class="fa fa-sign-out"></i>Sign out</a>
         </div>
     </div>
 }
 else
 {
-    <div class="account-info sign-in" id="bannerSignedOut">
+    <div class="account-info" id="bannerSignedOut">
         <a href="@Url.Action("Index", "Login")" id="loginLink" title="Sign in"><i class="fa fa-sign-in"></i>Sign in</a>
     </div>
 }
