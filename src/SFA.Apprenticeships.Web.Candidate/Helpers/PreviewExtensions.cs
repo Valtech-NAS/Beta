@@ -7,7 +7,7 @@
     {
         public static string GetMonthYearLabel(this HtmlHelper helper, int month, int year)
         {
-            if ( year == 0 || month == 0 )
+            if ( year <= 1 || month == 0 )
             {
                 return "Current";
             }
