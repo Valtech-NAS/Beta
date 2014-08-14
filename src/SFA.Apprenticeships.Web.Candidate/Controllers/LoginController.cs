@@ -175,20 +175,20 @@
             {
                 return RedirectOnPendingActivation();
             }
-
-            // Redirect to last viewed vacancy (if any).
-            if (_candidateServiceProvider.LastViewedVacancyId.HasValue)
-            {
-                return RedirectToLastViewedVacancy(
-                    candidate, _candidateServiceProvider.LastViewedVacancyId.Value);
-            }
-
+          
             // Redirect to return URL (if any).
             var returnUrl = UserServiceProvider.GetReturnUrl(HttpContext);
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
                 return RedirectToReturnUrl(returnUrl);
+            }
+
+            // Redirect to last viewed vacancy (if any).
+            if (_candidateServiceProvider.LastViewedVacancyId.HasValue)
+            {
+                return RedirectToLastViewedVacancy(
+                    candidate, _candidateServiceProvider.LastViewedVacancyId.Value);
             }
 
             // TODO: redirect to candidate 'home' page.
