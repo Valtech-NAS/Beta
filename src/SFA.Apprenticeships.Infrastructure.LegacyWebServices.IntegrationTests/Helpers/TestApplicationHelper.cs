@@ -89,6 +89,13 @@
                     FromDate = new DateTime(2011, 1, 1),
                     ToDate = new DateTime(2012, 1, 1),
                     Description = "Cashier"
+                },
+                new WorkExperience
+                {
+                    Employer = "Argos",
+                    FromDate = new DateTime(2011, 1, 1),
+                    ToDate = DateTime.MinValue,
+                    Description = "Counter Staff"
                 }
             };
         }

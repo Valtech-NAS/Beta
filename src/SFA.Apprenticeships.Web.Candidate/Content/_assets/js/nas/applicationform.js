@@ -433,12 +433,14 @@
             $(data).each(function (index, item) {
               
                 var currentEmployer = false;
+                var myToYear = item.ToYear;
 
-                if (isNaN(item.ToYear) && item.toYear > 0) {
+                if ( myToYear <= 1) {
                     currentEmployer = true;
+                    myToYear = null;
                 }
 
-                var experienceItemModel = new workExperienceItemModel(item.Employer, item.JobTitle, item.Description, item.FromMonth, item.FromYear, item.ToMonth, item.ToYear, currentEmployer);
+                var experienceItemModel = new workExperienceItemModel(item.Employer, item.JobTitle, item.Description, item.FromMonth, item.FromYear, item.ToMonth, myToYear, currentEmployer);
                 self.workExperiences.push(experienceItemModel);
             });
         

@@ -153,8 +153,8 @@
                 Description = model.Description,
                 Employer = model.Employer,
                 JobTitle = model.JobTitle,
-                FromDate = new DateTime(model.FromYear, model.FromMonth, 1), 
-                ToDate = model.ToYear != 0 ? new DateTime(model.ToYear, model.ToMonth, 1)  : new DateTime()
+                FromDate = new DateTime(model.FromYear, model.FromMonth, 1),
+                ToDate = model.ToYear != 0 ? new DateTime(model.ToYear, model.ToMonth, 1) : DateTime.MinValue
             }).ToList();
         }
 

@@ -53,7 +53,7 @@
         private bool MustBeZeroOrFourDigitNumber(int year)
         {
             var dateTimeNow = DateTime.Now;
-            return year == 0 || year > dateTimeNow.Year - 100;
+            return year <= 1 || year > dateTimeNow.Year - 100;
         }
     }
 }
