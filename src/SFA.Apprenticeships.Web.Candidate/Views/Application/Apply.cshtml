@@ -45,33 +45,33 @@
             <div id="qualifications-panel" class="toggle-content" data-bind="style: {display:showQualifications() ? 'block' :'none' }">
                 <div class="clearfix">
                     <div class="inline-fixed">
-                        <div class="form-group">
+                        <div class="form-group" data-bind="parentvalElement:selectedQualification">
                             <label for="qual-type" class="form-label">Type of qualification</label>
                             <select id="qual-type" data-bind='options: qualificationTypes, optionsCaption: "Select from list", optionsText: "qualificationTypeName", optionsValue: "qualificationTypeName",value: selectedQualification'></select>
-                            
+
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" data-bind="parentvalElement:year">
                             <label for="subject-year" class="form-label">Year</label>
-                            <input maxlength="4" type="tel" class="form-control form-control-small" pattern="[0-9]*"
-                                   id="subject-year" data-bind='value: year,valueUpdate: [" input", "afterkeydown" ]'>
-                           
+                            <input maxlength="4" type="text" class="form-control form-control-small" pattern="[0-9]*"
+                                   id="subject-year" data-bind='value: year' required>
+
                         </div>
                     </div>
-                    <div class="form-group" data-bind="visible: showOtherQualification">
+                    <div class="form-group" data-bind="visible: showOtherQualification,parentvalElement:otherQualification">
                         <label for="other-qual" class="form-label">Name of other qualification</label>
-                        <input type="text" class="form-control" id="other-qual" data-bind='value: otherQualification,valueUpdate: [" input", "afterkeydown" ]'>
-                        
+                        <input type="text" class="form-control" id="other-qual" data-bind='value: otherQualification'>
+
                     </div>
-                    <div class="form-group form-group-compound">
+                    <div class="form-group" data-bind="parentvalElement:subject">
                         <label for="subject-name" class="form-label">Subject</label>
-                        <input type="text" class="form-control" id="subject-name" data-bind='value: subject,valueUpdate: [" input", "afterkeydown" ]'>
-                      
+                        <input type="text" class="form-control" id="subject-name" data-bind='value: subject'>
+
                     </div>
                     <div class="inline-fixed">
-                        <div class="form-group">
+                        <div class="form-group" data-bind="parentvalElement:grade">
                             <label for="subject-grade" class="form-label">Grade</label>
-                            <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind='value: grade,valueUpdate: [" input", "afterkeydown" ]'>
-                           
+                            <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind='value: grade'>
+
                         </div>
                         <div class="form-group">
                             <input id="qual-predicted" type="checkbox" data-bind="checked: predicted">
@@ -177,15 +177,15 @@
                 </div>
                 <div id="workexperience-panel" class="toggle-content" data-bind="style: {display: workExperienceStatus() }">
                     <div class="clearfix">
-                        <div class="form-group form-group-compound">
+                        <div class="form-group form-group-compound" data-bind="parentvalElement: employer">
                             <label for="work-employer" class="form-label">Employer</label>
                             <input type="text" class="form-control" id="work-employer" data-bind="value: employer">
                         </div>
-                        <div class="form-group form-group">
+                        <div class="form-group form-group" data-bind="parentvalElement: jobTitle">
                             <label for="work-title" class="form-label">Job title</label>
                             <input type="text" class="form-control" id="work-title" data-bind="value: jobTitle">
                         </div>
-                        <div class="form-group form-group-compound">
+                        <div class="form-group form-group-compound" data-bind="parentvalElement: mainDuties">
                             <label for="work-role" class="form-label">Main duties</label>
                             <textarea rows="3" class="form-control" id="work-role" data-val-length-max="200" data-bind="value: mainDuties"></textarea>
                             <span class="form-hint maxchar-count">200</span>
@@ -199,7 +199,7 @@
                                     <select id="work-from" data-bind='options: months, optionsText: "monthName", optionsValue: "monthNumber",value: fromMonth'></select>
 
                                 </div>
-                                <div class="form-group form-group-compound">
+                                <div class="form-group form-group-compound" data-bind="parentvalElement: fromYear">
                                     <span class="form-hint">Year</span>
                                     <input type="tel" class="form-control form-control-small" pattern="[0-9]*" maxlength="4"
                                            id="work-from-year" data-bind="value: fromYear">
@@ -213,7 +213,7 @@
                                     <select id="work-to" data-bind='options: months, optionsText: "monthName", optionsValue: "monthNumber",value: toMonth,attr:{disabled:toDateReadonly() }'></select>
 
                                 </div>
-                                <div class="form-group form-group-compound">
+                                <div class="form-group form-group-compound" data-bind="parentvalElement: toYear">
                                     <span class="form-hint">Year</span>
                                     <input type="tel" class="form-control form-control-small" pattern="[0-9]*" maxlength="4"
                                            id="work-to-year" data-bind="value: toYear, attr:{disabled:toDateReadonly() }">
@@ -387,10 +387,13 @@
 
             ko.validation.rules.pattern.message = 'Invalid.';
             ko.validation.configure({
+                decorateElement: true,
                 registerExtenders: true,
-                messagesOnModified: true,
-                insertMessages: true,
+                //messagesOnModified: false,
+                insertMessages: false,
                 parseInputAttributes: true,
+                errorClass: 'input-validation-error',
+                errorElementClass: 'input-validation-error',
                 messageTemplate: 'errorMessage'
             });
         });
