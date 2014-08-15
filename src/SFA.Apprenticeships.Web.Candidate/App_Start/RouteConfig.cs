@@ -13,6 +13,12 @@
             routes.IgnoreRoute("{folder}/{*pathInfo}", new { folder = "Scripts" });
 
             routes.MapRoute(
+                name: RouteNames.SignOut,
+                url: "signout",
+                defaults: new {controller = "Login", action = "SignOut"}
+                );
+
+            routes.MapRoute(
                 name: RouteNames.Settings,
                 url: "settings",
                 defaults: new { controller = "Account", action = "Index" }
