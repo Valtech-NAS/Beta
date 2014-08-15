@@ -12,26 +12,18 @@
                 </a>
             }           
         </legend>
-        @*<div class="form-group text">
-            <details>
-                <summary role="button">Help with this section</summary>
-                <p class="panel-indent">
-                    The following question(s) have been added by the employer
-                    for you to answer (Copy needed)
-                </p>
-            </details>
-        </div>*@
+
         @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1))
         {
             <div class="form-group">
-                @Html.Label("CandidateAnswer1", Model.SupplementaryQuestion1, new {@class = "form-label"})
+                <p class="form-label text">@Html.Display("SupplementaryQuestion1", Model.SupplementaryQuestion1)</p>
                 <span class="form-prepopped">@Html.Display("CandidateAnswer1", Model.CandidateAnswer1)</span>
             </div>
         }
         @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion2))
         {
             <div class="form-group">
-                @Html.Label("CandidateAnswer2", Model.SupplementaryQuestion2, new {@class = "form-label"})
+                <p class="form-label text">@Html.Display("SupplementaryQuestion2", Model.SupplementaryQuestion2)</p>
                 <span class="form-prepopped">@Html.Display("CandidateAnswer2", Model.CandidateAnswer2)</span>
             </div>
         }

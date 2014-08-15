@@ -3,27 +3,18 @@
 @if (Model != null && (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1) || !string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1)))
 {
     <fieldset id="applyEmployerQuestionAnswers" class="fieldset-with-border">
-        <legend class="heading-large">Employer questions</legend>
-        <div class="form-group text">
-            <details>
-                <summary role="button">Help with this section</summary>
-                <p class="panel-indent">
-                    The following question(s) have been added by the employer
-                    for you to answer (Copy/content needed)
-                </p>
-            </details>
-        </div>
+        <legend class="heading-large">Additional questions</legend>
 
         @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1))
         {
             @Html.HiddenFor(m => m.SupplementaryQuestion1)
-            @Html.FormTextAreaFor(m => m.CandidateAnswer1, labelText: Model.SupplementaryQuestion1, hintHtmlAttributes: new { @class = "text" })
+            @Html.FormTextAreaFor(m => m.CandidateAnswer1, labelText: Model.SupplementaryQuestion1, hintHtmlAttributes: new { @class = "text" }, labelHtmlAttributes: new { @class = "text" })
         }
 
         @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion2))
         {
             @Html.HiddenFor(m => m.SupplementaryQuestion2)
-            @Html.FormTextAreaFor(m => m.CandidateAnswer2, labelText: Model.SupplementaryQuestion2, hintHtmlAttributes: new { @class = "text" })
+            @Html.FormTextAreaFor(m => m.CandidateAnswer2, labelText: Model.SupplementaryQuestion2, hintHtmlAttributes: new { @class = "text" }, labelHtmlAttributes: new { @class = "text" })
         }
 
     </fieldset>

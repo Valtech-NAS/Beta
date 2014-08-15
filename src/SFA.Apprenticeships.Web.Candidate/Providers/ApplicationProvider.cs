@@ -67,7 +67,11 @@
             var applicationReloadedModel = GetApplicationViewModel(submittedApplicationViewModel.ApplicationViewId);
 
             applicationReloadedModel.Candidate.Education = submittedApplicationViewModel.Candidate.Education;
+            applicationReloadedModel.Candidate.HasQualifications =
+                submittedApplicationViewModel.Candidate.HasQualifications;
             applicationReloadedModel.Candidate.Qualifications = submittedApplicationViewModel.Candidate.Qualifications;
+            applicationReloadedModel.Candidate.HasWorkExperience =
+                submittedApplicationViewModel.Candidate.HasWorkExperience;
             applicationReloadedModel.Candidate.WorkExperience = submittedApplicationViewModel.Candidate.WorkExperience;
             applicationReloadedModel.Candidate.AboutYou = submittedApplicationViewModel.Candidate.AboutYou;
             applicationReloadedModel.Candidate.EmployerQuestionAnswers =

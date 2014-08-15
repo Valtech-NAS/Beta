@@ -75,7 +75,6 @@ Scenario: As a candidate I want to be told quickly that my email/username is ava
 		| Field                        | Rule           | Value |
 		| EmailAddressAvailableMessage | Does Not Exist |       |
 		
-@ignore
 Scenario: As a candidate I want to be told quickly that my email/username is not available if I have already registered
 	Given I navigated to the RegisterCandidatePage page
 	When I am on the RegisterCandidatePage page
@@ -116,7 +115,7 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 	And I choose HasAcceptedTermsAndConditions
 	And I am on the RegisterCandidatePage page
 	And I choose CreateAccountButton
-	And I wait 70 second for the ActivationPage page
+	And I wait 120 second for the ActivationPage page
 	And I get the token for my newly created account
 	And I am on the ActivationPage page
 	And I wait to see EmailAddress
@@ -126,4 +125,13 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 		| ActivationCode | {ActivationToken} |
 	And I am on the ActivationPage page
 	And I choose ActivateButton
-	Then I am on the VacancySearchPage page
+	And I am on the VacancySearchPage page
+	And I enter data
+		| Field    | Value  |
+		| Location | N7 8LS |
+	And I choose Search
+	And I am on the VacancySearchResultPage page	
+	And I choose FirstVacancyLink
+	And I am on the VacancyDetailsPage page
+	And I choose Apply
+	Then I am on the ApplicationPage page

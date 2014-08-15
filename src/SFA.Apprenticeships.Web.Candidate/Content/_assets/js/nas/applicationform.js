@@ -272,15 +272,14 @@
         }).extend({
             validation: {
                 validator: function (val, fromYearValue) {
-                    return val >= fromYearValue || val === null;
+                    return val >= fromYearValue;
                 },
                 message: "'To Year' must be greater than or equal to 'From Year'",
                 params: self.itemFromYear,
-                onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
+                onlyIf: function () {
+                    return (self.itemIsCurrentEmployment() === false);
+                }
             }
-        }).extend({
-            minLength: 4,
-            onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
         });
 
         self.readOnly = ko.observable("readonly");
@@ -299,7 +298,7 @@
             }
         });
 
-        self.errors = ko.validation.group(self);
+        self.itemErrors = ko.validation.group(self);
     }
 
     var workExperienceViewModel = function() {
@@ -416,11 +415,11 @@
         };
 
         self.saveWorkExperience = function (workExperience) {
-            if (workExperience.errors().length == 0) {
+            if (workExperience.itemErrors().length == 0) {
                 workExperience.readOnly('readonly');
                 workExperience.showEditButton(true);
             } else {
-                workExperience.errors.showAllMessages();
+                workExperience.itemErrors.showAllMessages();
             }           
         };
 
