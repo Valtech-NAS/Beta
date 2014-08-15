@@ -5,19 +5,17 @@
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
-    using Common.Controllers;
     using Common.Providers;
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using FluentValidation.Mvc;
-    using FluentValidation.Results;
     using Providers;
     using Validators;
     using ViewModels.Register;
 
-    public class RegisterController : SfaControllerBase
+    public class RegisterController : CandidateControllerBase
     {
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
@@ -50,7 +48,7 @@
         [HttpPost]
         public ActionResult Index(RegisterViewModel model)
         {
-            model.IsUsernameAvailable = IsUsernameAvailable(model.EmailAddress);
+            model.IsUsernameAvailable = _candidateServiceProvider.IsUsernameAvailable(model.EmailAddress.Trim());
 
             var validationResult = _registerViewModelServerValidator.Validate(model);
 
@@ -87,7 +85,7 @@
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                UserServiceProvider.SetReturnUrlCookie(HttpContext, returnUrl);
+                UserServiceProvider.SetCookie(HttpContext, ContextDataItemNames.ReturnUrl, returnUrl);
             }
 
             return View(model);
@@ -96,7 +94,9 @@
         [HttpPost]
         public ActionResult Activate(ActivationViewModel model)
         {
-            model.IsActivated = _candidateServiceProvider.Activate(model, User.Identity.Name);
+            //todo: refactor - too much going on here
+            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext
+            model.IsActivated = _candidateServiceProvider.Activate(model, candidateId);
 
             var activatedResult = _activationViewModelServerValidator.Validate(model);
 
@@ -105,16 +105,7 @@
                 // TODO: AG: need to review logic here, why email address vs candidateId?
                 Candidate candidate;
 
-                if (string.IsNullOrEmpty(User.Identity.Name)) // TODO: REFACTOR: move to UserContext
-                {    
-                    candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
-                }
-                else
-                {
-                    var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext
-
-                    candidate = _candidateServiceProvider.GetCandidate(candidateId);
-                }
+                candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
 
                 return SetAuthenticationCookieAndRedirectToAction(candidate);
             }
@@ -141,7 +132,7 @@
         [HttpPost]
         public ActionResult ForgottenPassword(ForgottenPasswordViewModel model)
         {
-            ValidationResult validationResult = _forgottenPasswordViewModelServerValidator.Validate(model);
+            var validationResult = _forgottenPasswordViewModelServerValidator.Validate(model);
 
             if (!validationResult.IsValid)
             {
@@ -153,7 +144,7 @@
 
             _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
 
-            PushContextData(ContextDataItemNames.EmailAddress, model.EmailAddress);
+            PushContextData(TempDataItemNames.EmailAddress, model.EmailAddress);
 
             return RedirectToAction("ResetPassword");
         }
@@ -162,7 +153,7 @@
         {
             var model = new PasswordResetViewModel
             {
-                EmailAddress = PopContextData(ContextDataItemNames.EmailAddress)
+                EmailAddress = PopContextData(TempDataItemNames.EmailAddress)
             };
             return View(model);
         }
@@ -185,7 +176,7 @@
                         model.IsPasswordResetCodeInvalid = false;
                         break;
                     case ErrorCodes.UserAccountLockedError:
-                        PushContextData(ContextDataItemNames.EmailAddress, model.EmailAddress);
+                        PushContextData(TempDataItemNames.EmailAddress, model.EmailAddress);
                         return RedirectToAction("Unlock", "Login");
                     case ErrorCodes.UserInIncorrectStateError:
                         model.IsPasswordResetCodeInvalid = false;
@@ -228,7 +219,7 @@
 
             _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
 
-            PushContextData(ContextDataItemNames.EmailAddress, model.EmailAddress);
+            PushContextData(TempDataItemNames.EmailAddress, model.EmailAddress);
 
             SetUserMessage(string.Format(PasswordResetPageMessages.PasswordResetSent, emailAddress));
 
@@ -244,19 +235,15 @@
             return RedirectToAction("Activation");
         }
 
-        #region Helpers
-
         [AllowCrossSiteJson]
         public JsonResult CheckUsername(string username)
         {
-            var usernameIsAvailable = IsUsernameAvailable(username);
-            return Json(new { usernameIsAvailable }, JsonRequestBehavior.AllowGet);
+            var isUsernameAvailable = _candidateServiceProvider.IsUsernameAvailable(username.Trim());
+
+            return Json(new { isUsernameAvailable }, JsonRequestBehavior.AllowGet);
         }
 
-        private bool IsUsernameAvailable(string username)
-        {
-            return _candidateServiceProvider.IsUsernameAvailable(username.Trim());
-        }
+        #region Helpers
 
         private ActionResult SetAuthenticationCookieAndRedirectToAction(Candidate candidate)
         {
@@ -274,14 +261,15 @@
             }
 
             // Redirect to return URL (if any).
-            var returnUrl = UserServiceProvider.GetReturnUrl(HttpContext);
+            var returnUrl = UserServiceProvider.GetCookie(HttpContext, ContextDataItemNames.ReturnUrl);
 
             if (string.IsNullOrWhiteSpace(returnUrl))
             {
                 return RedirectToAction("Index", "VacancySearch");
             }
 
-            UserServiceProvider.DeleteReturnUrlCookie(HttpContext);
+            UserServiceProvider.DeleteCookie(HttpContext, ContextDataItemNames.ReturnUrl);
+
             return Redirect(returnUrl);
         }
 

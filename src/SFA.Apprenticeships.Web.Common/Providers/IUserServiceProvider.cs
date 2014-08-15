@@ -3,7 +3,7 @@
     using System;
     using System.Web;
 
-    public interface IUserServiceProvider //todo: refactor!!
+    public interface IUserServiceProvider //todo: refactor! don't mention cookies!!
     {
         UserContext GetUserContext(HttpContextBase httpContext);
 
@@ -17,13 +17,11 @@
 
         void SetUserContextCookie(HttpContextBase httpContext, string userName, string fullName);
 
-        void SetReturnUrlCookie(HttpContextBase httpContext, string returnUrl);
-
-        string GetReturnUrl(HttpContextBase httpContext);
-
-        void DeleteReturnUrlCookie(HttpContextBase httpContext);
-
         void DeleteAllCookies(HttpContextBase httpContext);
+
+        void SetCookie(HttpContextBase httpContext, string cookieName, string value, bool allowOverwriteExisting = false);
+
+        string GetCookie(HttpContextBase httpContext, string cookieName);
 
         void DeleteCookie(HttpContextBase httpContext, string cookieName);
 

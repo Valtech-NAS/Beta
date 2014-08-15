@@ -105,16 +105,14 @@
         {
             Condition.Requires(candidateId);
 
-            //todo: add authorisation checks to match candidate with application
-
             return _createApplicationStrategy.CreateApplication(candidateId, vacancyId);
         }
 
-        public ApplicationDetail GetApplication(Guid applicationId)
+        public ApplicationDetail GetApplication(Guid candidateId, int vacancyId)
         {
-            Condition.Requires(applicationId);
+            Condition.Requires(candidateId);
 
-            //todo: add authorisation checks to match candidate with application
+            var applicationId = GetApplicationId(candidateId, vacancyId);
 
             return _applicationReadRepository.Get(applicationId);
         }
@@ -123,14 +121,17 @@
         {
             Condition.Requires(candidateId);
 
-            //todo: add authorisation checks to match candidate with application
+            var applicationId = GetApplicationId(candidateId, vacancyId);
 
-            _archiveApplicationStrategy.ArchiveApplication(candidateId, vacancyId);
+            _archiveApplicationStrategy.ArchiveApplication(applicationId);
         }
 
-        public void SaveApplication(ApplicationDetail application)
+        public void SaveApplication(Guid candidateId, int vacancyId, ApplicationDetail application)
         {
             Condition.Requires(application);
+
+            var applicationId = GetApplicationId(candidateId, vacancyId);
+            application.EntityId = applicationId;
 
             _saveApplicationStrategy.SaveApplication(application);
         }
@@ -142,11 +143,11 @@
             return _getCandidateApplicationsStrategy.GetApplications(candidateId);
         }
 
-        public void SubmitApplication(Guid applicationId)
+        public void SubmitApplication(Guid candidateId, int vacancyId)
         {
-            Condition.Requires(applicationId);
+            Condition.Requires(candidateId);
 
-            //todo: add authorisation checks to match candidate with application
+            var applicationId = GetApplicationId(candidateId, vacancyId);
 
             _submitApplicationStrategy.SubmitApplication(applicationId);
         }
@@ -166,6 +167,14 @@
             Condition.Requires(newPassword).IsNotNullOrEmpty();
 
             _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
+        }
+
+        private Guid GetApplicationId(Guid candidateId, int vacancyId)
+        {
+            var applicationDetail = _applicationReadRepository
+                .GetForCandidate(candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
+
+            return applicationDetail.EntityId;
         }
     }
 }

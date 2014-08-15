@@ -26,26 +26,19 @@
                     PhoneNumber = application.CandidateDetails.PhoneNumber,
                     Address = ApplicationConverter.GetAddressViewModel(application.CandidateDetails.Address),
                     AboutYou = ApplicationConverter.GetAboutYouViewModel(application.CandidateInformation.AboutYou),
-                    Education =
-                        ApplicationConverter.GetEducationViewModel(application.CandidateInformation.EducationHistory),
-                    Qualifications =
-                        ApplicationConverter.GetQualificationsViewModels(application.CandidateInformation.Qualifications),
-                    HasQualifications =
-                        ApplicationConverter.GetQualificationsViewModels(
-                            application.CandidateInformation.Qualifications).Any(),
-                    WorkExperience =
-                        ApplicationConverter.GetWorkExperiencesViewModels(
-                            application.CandidateInformation.WorkExperience),
-                    HasWorkExperience =
-                        ApplicationConverter.GetWorkExperiencesViewModels(
-                            application.CandidateInformation.WorkExperience).Any(),
+                    Education = ApplicationConverter.GetEducationViewModel(application.CandidateInformation.EducationHistory),
+                    Qualifications = ApplicationConverter.GetQualificationsViewModels(application.CandidateInformation.Qualifications),
+                    HasQualifications = ApplicationConverter.GetQualificationsViewModels(application.CandidateInformation.Qualifications).Any(),
+                    WorkExperience = ApplicationConverter.GetWorkExperiencesViewModels(application.CandidateInformation.WorkExperience),
+                    HasWorkExperience = ApplicationConverter.GetWorkExperiencesViewModels(application.CandidateInformation.WorkExperience).Any(),
                     EmployerQuestionAnswers = new EmployerQuestionAnswersViewModel
                     {
                         CandidateAnswer1 = application.AdditionalQuestion1Answer,
                         CandidateAnswer2 = application.AdditionalQuestion2Answer
                     }
                 },
-                DateUpdated = application.DateUpdated
+                DateUpdated = application.DateUpdated,
+                VacancyId = application.Vacancy.Id
             };
 
             return model;

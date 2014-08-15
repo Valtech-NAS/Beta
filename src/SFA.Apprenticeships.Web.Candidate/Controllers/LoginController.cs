@@ -3,7 +3,6 @@
     using System;
     using System.Web.Mvc;
     using System.Web.Security;
-    using Common.Controllers;
     using Common.Providers;
     using Constants;
     using Constants.Pages;
@@ -15,7 +14,7 @@
     using Validators;
     using ViewModels.Login;
 
-    public class LoginController : SfaControllerBase
+    public class LoginController : CandidateControllerBase
     {
         private readonly AccountUnlockViewModelServerValidator _accountUnlockViewModelServerValidator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
@@ -38,11 +37,12 @@
         public ActionResult Index(string returnUrl)
         {
             UserServiceProvider.DeleteAllCookies(HttpContext);
-            Session.Clear();
+
+            ClearSession();
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                UserServiceProvider.SetReturnUrlCookie(HttpContext, returnUrl);
+                UserServiceProvider.SetCookie(HttpContext, ContextDataItemNames.ReturnUrl, returnUrl);
             }        
 
             return View();
@@ -85,7 +85,7 @@
         [HttpGet]
         public ActionResult Unlock()
         {
-            var emailAddress = PopContextData(ContextDataItemNames.EmailAddress);
+            var emailAddress = PopContextData(TempDataItemNames.EmailAddress);
 
             if (string.IsNullOrWhiteSpace(emailAddress))
             {
@@ -135,7 +135,7 @@
 
             _candidateServiceProvider.RequestAccountUnlockCode(model);
 
-            PushContextData(ContextDataItemNames.EmailAddress, model.EmailAddress);
+            PushContextData(TempDataItemNames.EmailAddress, model.EmailAddress);
 
             SetUserMessage(string.Format(AccountUnlockPageMessages.AccountUnlockCodeResent, emailAddress));
 
@@ -161,7 +161,7 @@
             }
           
             // Redirect to return URL (if any).
-            var returnUrl = UserServiceProvider.GetReturnUrl(HttpContext);
+            var returnUrl = UserServiceProvider.GetCookie(HttpContext, ContextDataItemNames.ReturnUrl);
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
@@ -204,7 +204,7 @@
 
         private ActionResult RedirectToReturnUrl(string returnUrl)
         {
-            UserServiceProvider.DeleteReturnUrlCookie(HttpContext);
+            UserServiceProvider.DeleteCookie(HttpContext, ContextDataItemNames.ReturnUrl);
 
             return Redirect(returnUrl);
         }
@@ -216,7 +216,7 @@
 
         private ActionResult RedirectOnAccountLocked(string emailAddress)
         {
-            PushContextData(ContextDataItemNames.EmailAddress, emailAddress);
+            PushContextData(TempDataItemNames.EmailAddress, emailAddress);
 
             return RedirectToAction("Unlock");
         }

@@ -392,6 +392,7 @@
     </Compile>
     <Compile Include="Attributes\AuthorizeCandidateAttribute.cs" />
     <Compile Include="Constants\ContextDataItemNames.cs" />
+    <Compile Include="Constants\TempDataItemNames.cs" />
     <Compile Include="Constants\Pages\RegisterPageMessages.cs" />
     <Compile Include="Constants\Pages\PasswordResetPageMessages.cs" />
     <Compile Include="Constants\Pages\ActivationPageMessages.cs" />
@@ -419,6 +420,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\CandidateControllerBase.cs" />
     <Compile Include="Controllers\VacancySearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -438,6 +440,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationProvider.cs" />
     <Compile Include="Providers\CandidateServiceProvider.cs" />
+    <Compile Include="Providers\CandidateUserContext.cs" />
     <Compile Include="Providers\IApplicationProvider.cs" />
     <Compile Include="Providers\ICandidateServiceProvider.cs" />
     <Compile Include="Providers\ISearchProvider.cs" />

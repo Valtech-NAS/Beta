@@ -10,8 +10,8 @@
     public interface ICandidateServiceProvider
     {
         bool Register(RegisterViewModel model);
-        int? LastViewedVacancyId { get; set; }
-        bool Activate(ActivationViewModel model, string candidateId);
+        int? LastViewedVacancyId { get; set; }//todo: remove this!!
+        bool Activate(ActivationViewModel model, Guid candidateId);
         bool IsUsernameAvailable(string username);
         UserStatuses GetUserStatus(string username);
         ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId);

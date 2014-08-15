@@ -1,11 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
-    using Common.Controllers;
     using Common.Providers;
     using System.Web.Mvc;
 
-    public class HomeController : SfaControllerBase
+    public class HomeController : CandidateControllerBase
     {
         public HomeController(ISessionStateProvider session, IUserServiceProvider userServiceProvider)
             : base(session, userServiceProvider) {}

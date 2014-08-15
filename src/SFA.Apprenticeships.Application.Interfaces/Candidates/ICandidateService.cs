@@ -24,15 +24,15 @@
 
         ApplicationDetail CreateApplication(Guid candidateId, int vacancyId); // note: only an int due to legacy - will be a Guid
 
-        ApplicationDetail GetApplication(Guid applicationId); //todo: change to (Guid candidateId, int vacancyId)
+        ApplicationDetail GetApplication(Guid candidateId, int vacancyId);
 
         void ArchiveApplication(Guid candidateId, int vacancyId);
 
-        void SaveApplication(ApplicationDetail application);
+        void SaveApplication(Guid candidateId, int vacancyId, ApplicationDetail application);
 
         IList<ApplicationSummary> GetApplications(Guid candidateId);
 
-        void SubmitApplication(Guid applicationId); //todo: change to (Guid candidateId, int vacancyId)
+        void SubmitApplication(Guid candidateId, int vacancyId);
 
         void UnlockAccount(string username, string accountUnlockCode);
 

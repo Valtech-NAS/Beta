@@ -6,20 +6,18 @@
 
     public interface IApplicationProvider
     {
-        ApplicationViewModel GetApplicationViewModel(Guid applicationViewId);
+        ApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId);
 
-        ApplicationViewModel GetApplicationViewModel(int vacancyId, Guid candidateId);
-
-        ApplicationViewModel GetApplicationViewModel(ApplicationViewModel submittedApplicationViewModel);
+        ApplicationViewModel UpdateApplicationViewModel(Guid candidateId, ApplicationViewModel submittedApplicationViewModel);
 
         MyApplicationsViewModel GetMyApplications(Guid candidateId);
 
-        void SaveApplication(ApplicationViewModel applicationViewModel);
+        void SaveApplication(Guid candidateId, int vacancyId, ApplicationViewModel applicationViewModel);
 
-        void SubmitApplication(Guid applicationId);
+        void SubmitApplication(Guid candidateId, int vacancyId);
 
-        WhatHappensNextViewModel GetSubmittedApplicationVacancySummary(Guid applicationId);
+        WhatHappensNextViewModel GetSubmittedApplicationVacancySummary(Guid candidateId, int vacancyId);
 
-        void ArchiveApplication(int vacancyId, Guid candidateId);
+        void ArchiveApplication(Guid candidateId, int vacancyId);
     }
 }

@@ -4,6 +4,8 @@
 
     public class ContextDataItemNames
     {
-        public const string EmailAddress = "context.email";
+        public const string ReturnUrl = "Context.ReturnUrl";
+
+        public const string LastViewedVacancyId = "Context.LastVacancyID";
     }
 }

@@ -2,10 +2,9 @@
 {
     using System;
     using System.Web.Mvc;
-    using Common.Controllers;
     using Common.Providers;
 
-    public class AccountController : SfaControllerBase
+    public class AccountController : CandidateControllerBase
     {
         public AccountController(ISessionStateProvider session, IUserServiceProvider userServiceProvider)
             : base(session, userServiceProvider) {}

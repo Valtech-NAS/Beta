@@ -10,10 +10,10 @@
         private static class CookieNames
         {
             public const string UserContext = "User.Context";
-            public const string UserAuthReturnUrl = "User.Auth.ReturnUrl";
+            public const string UserAuthReturnUrl = "User.ReturnUrl";
         }
 
-        private static class CookieValueNames
+        private static class CookieKeyNames
         {
             public const string UserName = "UserName";
             public const string FullName = "FullName";
@@ -44,8 +44,8 @@
 
             return new UserContext
             {
-                UserName = cookie.Values[CookieValueNames.UserName],
-                FullName = cookie.Values[CookieValueNames.FullName]
+                UserName = cookie.Values[CookieKeyNames.UserName],
+                FullName = cookie.Values[CookieKeyNames.FullName]
             };
         }
 
@@ -77,47 +77,10 @@
         {
             var cookie = new HttpCookie(CookieNames.UserContext);
 
-            cookie.Values.Add(CookieValueNames.UserName, userName);
-            cookie.Values.Add(CookieValueNames.FullName, fullName);
+            cookie.Values.Add(CookieKeyNames.UserName, userName);
+            cookie.Values.Add(CookieKeyNames.FullName, fullName);
 
             httpContext.Response.Cookies.Add(cookie);
-        }
-
-        public void SetReturnUrlCookie(HttpContextBase httpContext, string returnUrl)
-        {
-            var currentReturnUrl = GetReturnUrl(httpContext);
-
-            if (!String.IsNullOrWhiteSpace(currentReturnUrl))
-            {
-                // Do not overwrite existing authentication return URL.
-                return;
-            }
-
-            var cookie = new HttpCookie(CookieNames.UserAuthReturnUrl, returnUrl);
-
-            httpContext.Response.Cookies.Add(cookie);
-        }
-
-        public string GetReturnUrl(HttpContextBase httpContext)
-        {
-            if (!CookieExists(httpContext.Request.Cookies, CookieNames.UserAuthReturnUrl))
-            {
-                return null;    
-            }
-
-            var cookie = httpContext.Request.Cookies[CookieNames.UserAuthReturnUrl];
-
-            return cookie == null ? null : cookie.Value;
-        }
-
-        public void DeleteReturnUrlCookie(HttpContextBase httpContext)
-        {
-            if (httpContext.Request.Cookies.Get(CookieNames.UserAuthReturnUrl) == null)
-            {
-                return;
-            }
-
-            httpContext.Response.Cookies.Add(CreateExpiredCookie(CookieNames.UserAuthReturnUrl));
         }
 
         public void DeleteAllCookies(HttpContextBase httpContext)
@@ -127,8 +90,42 @@
             DeleteAuthenticationCookie(httpContext);
         }
 
+        public void SetCookie(HttpContextBase httpContext, string cookieName, string value, bool allowOverwriteExisting = false)
+        {
+            if (!allowOverwriteExisting)
+            {
+                var currentCookieValue = GetCookie(httpContext, cookieName);
+
+                if (!string.IsNullOrWhiteSpace(currentCookieValue))
+                {
+                    return; // do not overwrite existing cookie value
+                }
+            }
+
+            var cookie = new HttpCookie(cookieName, value);
+
+            httpContext.Response.Cookies.Add(cookie);
+        }
+
+        public string GetCookie(HttpContextBase httpContext, string cookieName)
+        {
+            if (!CookieExists(httpContext.Request.Cookies, cookieName))
+            {
+                return null;
+            }
+
+            var cookie = httpContext.Request.Cookies[cookieName];
+
+            return cookie == null ? null : cookie.Value;
+        }
+
         public void DeleteCookie(HttpContextBase httpContext, string cookieName)
         {
+            if (httpContext.Request.Cookies.Get(cookieName) == null)
+            {
+                return;
+            }
+
             httpContext.Response.Cookies.Add(CreateExpiredCookie(cookieName));
         }     
 
@@ -136,8 +133,8 @@
         {
             var cookie = new HttpCookie(contextName);
 
-            cookie.Values.Add(CookieValueNames.ViewModelId, viewModelId.ToString());
-            cookie.Values.Add(CookieValueNames.EntityId, entityId.ToString());
+            cookie.Values.Add(CookieKeyNames.ViewModelId, viewModelId.ToString());
+            cookie.Values.Add(CookieKeyNames.EntityId, entityId.ToString());
             httpContext.Response.Cookies.Add(cookie);
         }
 
@@ -157,8 +154,8 @@
 
             return new EntityContext
             {
-                EntityId = Guid.Parse(cookie.Values[CookieValueNames.EntityId]),
-                ViewModelId = Guid.Parse(cookie.Values[CookieValueNames.ViewModelId])
+                EntityId = Guid.Parse(cookie.Values[CookieKeyNames.EntityId]),
+                ViewModelId = Guid.Parse(cookie.Values[CookieKeyNames.ViewModelId])
             };
         }
 

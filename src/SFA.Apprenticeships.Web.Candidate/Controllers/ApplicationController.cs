@@ -5,16 +5,14 @@
     using ActionResults;
     using Attributes;
     using Common.Constants;
-    using Common.Controllers;
     using Common.Providers;
     using Constants.Pages;
     using FluentValidation.Mvc;
-    using FluentValidation.Results;
     using Providers;
     using Validators;
     using ViewModels.Applications;
 
-    public class ApplicationController : SfaControllerBase
+    public class ApplicationController : CandidateControllerBase
     {
         private readonly IApplicationProvider _applicationProvider;
         private readonly ApplicationViewModelServerValidator _applicationViewModelFullValidator;
@@ -38,9 +36,7 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Index()
         {
-            // my application / dashboard
-            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
-            var model = _applicationProvider.GetMyApplications(candidateId);
+            var model = _applicationProvider.GetMyApplications(UserContext.CandidateId);
 
             return View(model);
         }
@@ -48,8 +44,7 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Apply(int id)
         {
-            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
-            var model = _applicationProvider.GetApplicationViewModel(id, candidateId);
+            var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
             if (model == null)
             {
@@ -64,8 +59,7 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Resume(int id)
         {
-            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext
-            var model = _applicationProvider.GetApplicationViewModel(id, candidateId);
+            var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
             if (model == null)
             {
@@ -79,8 +73,7 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Archive(int id)
         {
-            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
-            _applicationProvider.ArchiveApplication(id, candidateId);
+            _applicationProvider.ArchiveApplication(UserContext.CandidateId, id);
 
             SetUserMessage(MyApplicationsPageMessages.ApplicationArchived);
 
@@ -92,38 +85,37 @@
         public ActionResult Apply(int id, ApplicationViewModel applicationViewModel)
         {
             ModelState.Clear();
-            ValidationResult result = applicationViewModel.ApplicationAction == ApplicationAction.Preview
+            var result = applicationViewModel.ApplicationAction == ApplicationAction.Preview
                 ? _applicationViewModelFullValidator.Validate(applicationViewModel)
                 : _applicationViewModelSaveValidator.Validate(applicationViewModel);
 
             if (!result.IsValid)
             {
                 result.AddToModelState(ModelState, string.Empty);
-                applicationViewModel = _applicationProvider.GetApplicationViewModel(applicationViewModel);
+                applicationViewModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
                 return View("Apply", applicationViewModel);
             }
 
-            _applicationProvider.SaveApplication(applicationViewModel);
+            _applicationProvider.SaveApplication(UserContext.CandidateId, id, applicationViewModel);
 
             if (applicationViewModel.ApplicationAction == ApplicationAction.Preview)
             {
-                return RedirectToAction("Preview", new {applicationId = applicationViewModel.ApplicationViewId});
+                return RedirectToAction("Preview", new {id});
             }
-            
-            applicationViewModel = _applicationProvider.GetApplicationViewModel(applicationViewModel.ApplicationViewId);
+
+            applicationViewModel = _applicationProvider.UpdateApplicationViewModel(UserContext.CandidateId, applicationViewModel);
+
             return View("Apply", applicationViewModel);
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult Preview(string applicationId)
+        public ActionResult Preview(int id)
         {
             try
             {
-                var applicationViewId = Guid.Parse(applicationId);
-                var model = _applicationProvider.GetApplicationViewModel(applicationViewId);
+                var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-                // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
-                ViewBag.VacancyId = model.VacancyDetail.Id;
+                ViewBag.VacancyId = id; // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
 
                 return View(model);
             }
@@ -134,28 +126,26 @@
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult SubmitApplication(string applicationId)
+        public ActionResult SubmitApplication(int id)
         {
             try
             {
-                var applicationViewId = Guid.Parse(applicationId);
-                _applicationProvider.SubmitApplication(applicationViewId);
+                _applicationProvider.SubmitApplication(UserContext.CandidateId, id);
 
-                return RedirectToAction("WhatHappensNext", new { applicationId });
+                return RedirectToAction("WhatHappensNext", new { id });
             }
             catch (Exception)
             {
                 SetUserMessage(PreviewPageMessages.SubmissionFailed, UserMessageLevel.Error);
 
-                return RedirectToAction("Preview", new { applicationId });
+                return RedirectToAction("Preview", new { id });
             }
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult WhatHappensNext(string applicationId)
+        public ActionResult WhatHappensNext(int id)
         {
-            var applicationViewId = Guid.Parse(applicationId);
-            var model = _applicationProvider.GetSubmittedApplicationVacancySummary(applicationViewId);
+            var model = _applicationProvider.GetSubmittedApplicationVacancySummary(UserContext.CandidateId, id);
 
             return View(model);
         }

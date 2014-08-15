@@ -82,12 +82,13 @@
             }
         }
 
-        public bool Activate(ActivationViewModel model, string candidateId)
+        public bool Activate(ActivationViewModel model, Guid candidateId)
         {
             try
             {
                 _candidateService.Activate(model.EmailAddress, model.ActivationCode);
-                SetActivatedCookies(candidateId);
+                var httpContext = new HttpContextWrapper(HttpContext.Current);
+                _userServiceProvider.SetAuthenticationCookie(httpContext, candidateId.ToString(), UserRoleNames.Activated);
 
                 return true;
             }
@@ -277,14 +278,6 @@
             _userServiceProvider.SetUserContextCookie(
                 httpContext, registrationDetails.EmailAddress,
                 registrationDetails.FirstName + " " + registrationDetails.LastName);
-        }
-
-        private void SetActivatedCookies(string candidateId)
-        {
-            var httpContext = new HttpContextWrapper(HttpContext.Current);
-
-            _userServiceProvider.SetAuthenticationCookie(
-                httpContext, candidateId, UserRoleNames.Activated);
         }
 
         private static void LogError(string formatString, string formatValue, Exception ex)

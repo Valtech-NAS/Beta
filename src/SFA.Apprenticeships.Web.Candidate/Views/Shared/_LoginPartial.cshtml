@@ -1,12 +1,10 @@
-﻿@if (Request.IsAuthenticated)
+﻿@using SFA.Apprenticeships.Web.Candidate.Controllers
+
+@if (Request.IsAuthenticated)
 {
-    //TODO Mark to refactor with User Context - Ideally have a ViewModel for this
-    var fullName = string.Empty;
-    var cookie = Request.Cookies["User.Context"];
-    if (cookie != null)
-    {
-        fullName = cookie["FullName"];
-    }
+    var controller = ViewContext.Controller as CandidateControllerBase;
+    var fullName = (controller != null && controller.UserContext != null) ? controller.UserContext.FullName : string.Empty;
+
     <div class="account-info" id="bannerSignedIn">
         <span class="your-name" id="bannerUserName">@fullName</span>
         <div>

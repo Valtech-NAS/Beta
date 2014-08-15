@@ -5,7 +5,6 @@
     using System.Web.Mvc;
     using ActionResults;
     using Application.Interfaces.Vacancies;
-    using Common.Controllers;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
@@ -13,7 +12,7 @@
     using Validators;
     using ViewModels.VacancySearch;
 
-    public class VacancySearchController : SfaControllerBase
+    public class VacancySearchController : CandidateControllerBase
     {
         private readonly ISearchProvider _searchProvider;
         private readonly VacancySearchViewModelClientValidator _searchRequestValidator;
@@ -138,7 +137,7 @@
 
             if (Request.IsAuthenticated)
             {
-                candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
+                candidateId = UserContext.CandidateId;
             }
 
             var vacancy = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
