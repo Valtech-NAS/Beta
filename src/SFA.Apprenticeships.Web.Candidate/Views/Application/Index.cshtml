@@ -4,15 +4,6 @@
 @{
     ViewBag.Title = "Apprenticeships - My applications";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    var myApplicationsMessage = TempData["MyApplicationsMessage"];
-}
-
-@if (myApplicationsMessage != null)
-{
-    <div class="panel-success">
-        <p id="MyApplicationsMessageText" class="text"><i class="fa fa-check"></i>@myApplicationsMessage</p>
-    </div>
 }
 
 <div class="grid-wrapper">

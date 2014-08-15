@@ -10,8 +10,8 @@
     <div class="account-info" id="bannerSignedIn">
         <span class="your-name" id="bannerUserName">@fullName</span>
         <div>
-            <a href='@Url.RouteUrl("MyApplications")'>My applications</a>
-            <a href='#'>Settings</a>
+            <a href='@Url.RouteUrl(RouteNames.MyApplications)'>My applications</a>
+            <a href='@Url.RouteUrl(RouteNames.Settings)'>Settings</a>
             <a href='@Url.Action("SignOut", "Login")' id="btnSignOut"><i class="fa fa-sign-out"></i>Sign out</a>
         </div>
     </div>

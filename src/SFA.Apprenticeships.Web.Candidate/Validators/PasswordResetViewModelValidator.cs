@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
+    using Constants.Pages;
     using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.Register;
@@ -44,11 +45,11 @@
         {
             validator.RuleFor(x => x.Password)
                 .Must(IsPasswordResetSuccessful)
-                .WithMessage(PasswordResetViewModelMessages.PasswordMessages.FailedPasswordResetErrorText);
+                .WithMessage(PasswordResetPageMessages.FailedPasswordReset);
 
             validator.RuleFor(x => x.PasswordResetCode)
                 .Must(IsPasswordResetCodeInvalid)
-                .WithName(PasswordResetViewModelMessages.PasswordResetCodeMessages.CodeErrorText);
+                .WithName(PasswordResetPageMessages.InvalidCode);
         }
 
         private static bool IsPasswordResetCodeInvalid(PasswordResetViewModel model, string passwordResetCode)

@@ -5,13 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (TempData["ResentCode"] != null)
-{
-    <div class="panel-success">
-        <p id="ResentCodeText" class="text"><i class="fa fa-check"></i>An account unlock code was sent to @Model.EmailAddress</p>
-    </div>
-}
-
 <h1 id="account-unlock-h1" class="heading-large">Account locked</h1>
 <p class="text">You should receive a 6-character code in your email. Enter the code to unlock your account.</p>
 

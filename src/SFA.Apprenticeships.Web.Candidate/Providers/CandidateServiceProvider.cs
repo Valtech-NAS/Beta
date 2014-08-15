@@ -138,6 +138,7 @@
         {
             try
             {
+                Logger.Debug("{0} requested account unlock code", model.EmailAddress);
                 _userAccountService.ResendAccountUnlockCode(model.EmailAddress);
             }
             catch (Exception ex)

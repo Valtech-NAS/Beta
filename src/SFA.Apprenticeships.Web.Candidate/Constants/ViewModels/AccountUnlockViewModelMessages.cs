@@ -10,8 +10,6 @@
             public const string HintText = "";
             public const string RequiredErrorText = "'Account unlock' must be supplied";
             public const string LengthErrorText = "'Account unlock' must be a 6 character code";
-            public const string WrongAccountUnlockCodeErrorText = "'Unlock code' supplied is incorrect";
-            public const string AccountUnlockedText = "You successfully unlocked your account";
         }
     }
 }

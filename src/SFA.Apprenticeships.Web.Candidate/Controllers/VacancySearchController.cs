@@ -126,7 +126,8 @@
         [HttpGet]
         public ActionResult DetailsWithDistance(int id, string distance)
         {
-            TempData["distance"] = distance;
+            PushContextData("Distance", distance);
+
             return RedirectToAction("Details", new { id });
         }
 
@@ -148,6 +149,8 @@
             }
 
             _candidateServiceProvider.LastViewedVacancyId = id;
+
+            ViewBag.Distance = PopContextData("Distance");
 
             return View(vacancy);
         }

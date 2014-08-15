@@ -122,6 +122,7 @@
 
         public void DeleteAllCookies(HttpContextBase httpContext)
         {
+            //todo: doesn't delete everything!
             httpContext.Response.Cookies.Add(CreateExpiredCookie(CookieNames.UserContext));
             DeleteAuthenticationCookie(httpContext);
         }

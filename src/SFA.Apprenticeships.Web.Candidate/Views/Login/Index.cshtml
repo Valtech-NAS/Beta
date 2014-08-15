@@ -3,26 +3,9 @@
 @{
     ViewBag.Title = "Apprenticeships - Sign in or create an account";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    var loginMessage = TempData["LoginMessage"];    
-    var logoutMessage = TempData["LogoutMessage"];    
 }
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
-
-@if (loginMessage != null)
-{
-    <div class="panel-success">
-        <p id="LoginMessageText" class="text"><i class="fa fa-check"></i>@loginMessage</p>
-    </div>
-}
-
-@if (logoutMessage != null)
-{
-    <div class="panel-success">
-        <p id="SignOutMessageText" class="text"><i class="fa fa-check"></i>@logoutMessage</p>
-    </div>
-}
 
 <div class="grid-wrapper">
     <div class="grid grid-1-2">

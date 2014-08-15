@@ -6,6 +6,8 @@ using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
 
 namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
+    using Constants.Pages;
+
     public class ActivationViewModelClientValidator : AbstractValidator<ActivationViewModel>
     {
         public ActivationViewModelClientValidator()
@@ -38,7 +40,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Validators
         {
             validator.RuleFor(x => x.ActivationCode)
                 .Must(BeTheSameAsCodeHeldOnRecord)
-                .WithMessage(ActivationCodeMessages.ActivationCode.WrongActivationCodeErrorText);
+                .WithMessage(ActivationPageMessages.ActivationFailed);
         }
 
         private static bool BeTheSameAsCodeHeldOnRecord(ActivationViewModel model, string activationCode)

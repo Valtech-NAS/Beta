@@ -13,7 +13,13 @@
             routes.IgnoreRoute("{folder}/{*pathInfo}", new { folder = "Scripts" });
 
             routes.MapRoute(
-                name: "MyApplications",
+                name: RouteNames.Settings,
+                url: "settings",
+                defaults: new { controller = "Account", action = "Index" }
+            );
+
+            routes.MapRoute(
+                name: RouteNames.MyApplications,
                 url: "myapplications",
                 defaults: new { controller = "Application", action = "Index" }
             );

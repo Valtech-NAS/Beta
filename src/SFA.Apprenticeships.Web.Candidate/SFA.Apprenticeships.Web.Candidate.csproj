@@ -313,6 +313,7 @@
     <Content Include="Views\Application\WhatHappensNext.cshtml" />
     <Content Include="Views\VacancySearch\_Apply.cshtml" />
     <Content Include="Views\Application\Index.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -382,6 +383,7 @@
     </Compile>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\RouteNames.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -389,6 +391,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Attributes\AuthorizeCandidateAttribute.cs" />
+    <Compile Include="Constants\ContextDataItemNames.cs" />
+    <Compile Include="Constants\Pages\RegisterPageMessages.cs" />
+    <Compile Include="Constants\Pages\PasswordResetPageMessages.cs" />
+    <Compile Include="Constants\Pages\ActivationPageMessages.cs" />
+    <Compile Include="Constants\Pages\AccountUnlockPageMessages.cs" />
+    <Compile Include="Constants\Pages\PreviewPageMessages.cs" />
     <Compile Include="Constants\Pages\LoginPageMessages.cs" />
     <Compile Include="Constants\ViewModels\AddressMessages.cs" />
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
@@ -409,6 +417,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\VacancySearchController.cs" />
     <Compile Include="Global.asax.cs">

@@ -18,7 +18,7 @@
             case ApplicationStatuses.Unsuccessful:
                 <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
 
-                <a href='@Url.RouteUrl("MyApplications")'>Track application status</a>    
+                <a href='@Url.RouteUrl(RouteNames.MyApplications)'>Track application status</a>    
 
                 break;
         }

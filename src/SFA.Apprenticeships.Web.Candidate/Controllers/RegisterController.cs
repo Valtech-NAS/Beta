@@ -7,7 +7,8 @@
     using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
-    using Constants.ViewModels;
+    using Constants;
+    using Constants.Pages;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using FluentValidation.Mvc;
@@ -20,8 +21,8 @@
     public class RegisterController : SfaControllerBase
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
 
+        private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
         private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;
@@ -68,11 +69,8 @@
 
             if (!registered)
             {
-                // TODO: Registration failed.
                 ModelState.Clear();
-                ModelState.AddModelError(
-                    "EmailAddress",
-                    RegisterViewModelMessages.RegistrationMessages.RegistrationFailedErrorText);
+                ModelState.AddModelError("EmailAddress", RegisterPageMessages.RegistrationFailed);
 
                 return View(model);
             }
@@ -110,13 +108,13 @@
                 // TODO: AG: need to review logic here, why email address vs candidateId?
                 Candidate candidate;
 
-                if (string.IsNullOrEmpty(User.Identity.Name))
+                if (string.IsNullOrEmpty(User.Identity.Name)) // TODO: REFACTOR: move to UserContext
                 {    
                     candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
                 }
                 else
                 {
-                    var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
+                    var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext
 
                     candidate = _candidateServiceProvider.GetCandidate(candidateId);
                 }
@@ -160,7 +158,7 @@
 
             _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
 
-            TempData["EmailAddress"] = model.EmailAddress;
+            PushContextData(ContextDataItemNames.EmailAddress, model.EmailAddress);
 
             return RedirectToAction("ResetPassword");
         }
@@ -169,7 +167,7 @@
         {
             var model = new PasswordResetViewModel
             {
-                EmailAddress = TempData["EmailAddress"].ToString()
+                EmailAddress = PopContextData(ContextDataItemNames.EmailAddress)
             };
             return View(model);
         }
@@ -192,7 +190,7 @@
                         model.IsPasswordResetCodeInvalid = false;
                         break;
                     case ErrorCodes.UserAccountLockedError:
-                        TempData["EmailAddress"] = model.EmailAddress;
+                        PushContextData(ContextDataItemNames.EmailAddress, model.EmailAddress);
                         return RedirectToAction("Unlock", "Login");
                     case ErrorCodes.UserInIncorrectStateError:
                         model.IsPasswordResetCodeInvalid = false;
@@ -237,8 +235,9 @@
 
             _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
 
-            TempData["EmailAddress"] = model.EmailAddress;
-            TempData["ResentCode"] = true;
+            PushContextData(ContextDataItemNames.EmailAddress, model.EmailAddress);
+
+            SetUserMessage(string.Format(PasswordResetPageMessages.PasswordResetSent, emailAddress));
 
             return RedirectToAction("ResetPassword");
         }
@@ -248,7 +247,8 @@
             Logger.Debug("{0} requested activation code to be resent", emailAddress);
 
             _candidateServiceProvider.ResendActivationCode(emailAddress);
-            TempData["ResentCode"] = true;
+
+            SetUserMessage(string.Format(ActivationPageMessages.ActivationCodeSent, emailAddress));
 
             return RedirectToAction("Activation");
         }

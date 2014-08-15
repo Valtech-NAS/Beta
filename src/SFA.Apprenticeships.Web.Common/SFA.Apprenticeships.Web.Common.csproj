@@ -124,6 +124,8 @@
     <Compile Include="Attributes\AllowCrossSiteJsonAttribute .cs" />
     <Compile Include="Attributes\AuthenticateUserAttribute.cs" />
     <Compile Include="Attributes\NoCacheAttribute.cs" />
+    <Compile Include="Constants\UserMessageConstants.cs" />
+    <Compile Include="Constants\UserMessageLevel.cs" />
     <Compile Include="Constants\UserRoleNames.cs" />
     <Compile Include="Controllers\SfaControllerBase.cs" />
     <Compile Include="Framework\RuntimeHelper.cs" />

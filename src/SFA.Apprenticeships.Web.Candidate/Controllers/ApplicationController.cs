@@ -64,12 +64,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Resume(int id)
         {
-            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
+            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext
             var model = _applicationProvider.GetApplicationViewModel(id, candidateId);
 
             if (model == null)
             {
-                TempData["MyApplicationsMessage"] = MyApplicationsPageMessages.DraftExpired;
+                SetUserMessage(MyApplicationsPageMessages.DraftExpired, UserMessageLevel.Warning);
                 return RedirectToAction("Index");
             }
 
@@ -82,7 +82,7 @@
             var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext?
             _applicationProvider.ArchiveApplication(id, candidateId);
 
-            TempData["MyApplicationsMessage"] = MyApplicationsPageMessages.ApplicationArchived;
+            SetUserMessage(MyApplicationsPageMessages.ApplicationArchived);
 
             return RedirectToAction("Index");
         }
@@ -145,7 +145,8 @@
             }
             catch (Exception)
             {
-                TempData["SubmissionFailed"] = true;
+                SetUserMessage(PreviewPageMessages.SubmissionFailed, UserMessageLevel.Error);
+
                 return RedirectToAction("Preview", new { applicationId });
             }
         }

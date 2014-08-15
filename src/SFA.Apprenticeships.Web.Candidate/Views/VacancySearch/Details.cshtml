@@ -57,11 +57,11 @@
                         <li id="vacancy-expected-duration">@Model.ExpectedDuration</li>
                     </ul>
                 }
-                @if (TempData["distance"] != null)
+                @if (ViewBag.Distance != null)
                 {
                     <ul class="list-text">
                         <li class="bold-small">Distance</li>
-                        <li id="vacancy-distance">@TempData["distance"] miles</li>
+                        <li id="vacancy-distance">@ViewBag.Distance miles</li>
                     </ul>
                 }
                 <ul class="list-text">

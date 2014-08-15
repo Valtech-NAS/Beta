@@ -54,6 +54,37 @@
             @Html.Partial("_LoginPartial")
         </div>
         <main role="main" id="main">
+            @{
+                var infoMessage = TempData[UserMessageConstants.InfoMessage]; //todo: refactor to user ViewData
+                var successMessage = TempData[UserMessageConstants.SuccessMessage]; //todo: refactor to user ViewData
+                var warningMessage = TempData[UserMessageConstants.WarningMessage]; //todo: refactor to user ViewData
+                var errorMessage = TempData[UserMessageConstants.ErrorMessage]; //todo: refactor to user ViewData
+
+                if (infoMessage != null)
+                {
+                    <div class="panel-info">
+                        <p id="InfoMessageText" class="text"><i class="fa fa-check"></i>@infoMessage</p>
+                    </div>
+                }
+                if (successMessage != null)
+                {
+                    <div class="panel-success">
+                        <p id="SuccessMessageText" class="text"><i class="fa fa-check"></i>@successMessage</p>
+                    </div>
+                }
+                if (warningMessage != null)
+                {
+                    <div class="panel-warning">
+                        <p id="WarningMessageText" class="text"><i class="fa fa-check"></i>@warningMessage</p>
+                    </div>
+                }
+                if (errorMessage != null)
+                {
+                    <div class="panel-danger">
+                        <p id="ErrorMessageText" class="text"><i class="fa fa-check"></i>@errorMessage</p>
+                    </div>
+                }
+            }
             @RenderBody()
         </main>
     </div>

@@ -1,27 +1,22 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
-    using System.Web;
     using System.Web.Mvc;
-    using System.Web.Routing;
     using System.Web.Security;
     using Common.Controllers;
     using Common.Providers;
+    using Constants;
     using Constants.Pages;
-    using Constants.ViewModels;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using FluentValidation.Mvc;
-    using NLog;
     using Providers;
     using Validators;
     using ViewModels.Login;
 
     public class LoginController : SfaControllerBase
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
         private readonly AccountUnlockViewModelServerValidator _accountUnlockViewModelServerValidator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly LoginViewModelServerValidator _loginViewModelServerValidator;
@@ -42,6 +37,9 @@
         [HttpGet]
         public ActionResult Index(string returnUrl)
         {
+            UserServiceProvider.DeleteAllCookies(HttpContext);
+            Session.Clear();
+
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
                 UserServiceProvider.SetReturnUrlCookie(HttpContext, returnUrl);
@@ -78,11 +76,8 @@
                 return RedirectOnAccountLocked(model.EmailAddress);
             }
 
-            // Authentication failed.
             ModelState.Clear();
-            ModelState.AddModelError(
-                "EmailAddress",
-                LoginPageMessages.AuthenticationMessages.AuthenticationFailedErrorText);
+            ModelState.AddModelError("EmailAddress", LoginPageMessages.AuthenticationFailedErrorText);
 
             return View(model);
         }
@@ -90,7 +85,7 @@
         [HttpGet]
         public ActionResult Unlock()
         {
-            var emailAddress = TempData["EmailAddress"] as string;
+            var emailAddress = PopContextData(ContextDataItemNames.EmailAddress);
 
             if (string.IsNullOrWhiteSpace(emailAddress))
             {
@@ -106,7 +101,6 @@
         [HttpPost]
         public ActionResult Unlock(AccountUnlockViewModel model)
         {
-            // Validate view model.
             var validationResult = _accountUnlockViewModelServerValidator.Validate(model);
 
             if (!validationResult.IsValid)
@@ -121,16 +115,13 @@
 
             if (verified)
             {
-                TempData["LoginMessage"] = AccountUnlockViewModelMessages.AccountUnlockCodeMessages.AccountUnlockedText;
+                SetUserMessage(AccountUnlockPageMessages.AccountUnlockedText);
 
                 return RedirectToAction("Index");
             }
 
-            // Verification failed.
             ModelState.Clear();
-            ModelState.AddModelError(
-                "AccountUnlockCode",
-                AccountUnlockViewModelMessages.AccountUnlockCodeMessages.WrongAccountUnlockCodeErrorText);
+            ModelState.AddModelError("AccountUnlockCode", AccountUnlockPageMessages.WrongAccountUnlockCodeErrorText);
 
             return View(model);
         }
@@ -142,27 +133,20 @@
                 EmailAddress = emailAddress
             };
 
-            Logger.Debug("{0} requested account unlock code", model.EmailAddress);
-
             _candidateServiceProvider.RequestAccountUnlockCode(model);
 
-            TempData["EmailAddress"] = model.EmailAddress;
-            TempData["ResentCode"] = true;
+            PushContextData(ContextDataItemNames.EmailAddress, model.EmailAddress);
+
+            SetUserMessage(string.Format(AccountUnlockPageMessages.AccountUnlockCodeResent, emailAddress));
 
             return RedirectToAction("Unlock");
         }
 
         public ActionResult SignOut()
         {
-            UserServiceProvider.DeleteAllCookies(HttpContext);
-            UserServiceProvider.DeleteCookie(HttpContext, "Application.Context");
-            UserServiceProvider.DeleteCookie(HttpContext, "ASP.NET_SessionId");
-            Session.Clear();
-
             FormsAuthentication.SignOut();
 
-            //TODO - Message not being set because ASP.NET_SessionId is cleared Mark to refactor
-            TempData["LogoutMessage"] = SignOutPageMessages.SignOutMessageForLoginDisplay.SignOutMessageText;           
+            SetUserMessage(SignOutPageMessages.SignOutMessageText);
 
             return RedirectToAction("Index");
         }
@@ -191,8 +175,7 @@
                     candidate, _candidateServiceProvider.LastViewedVacancyId.Value);
             }
 
-            // TODO: redirect to candidate 'home' page.
-            return RedirectToAction("Index", "VacancySearch");
+            return RedirectToRoute(RouteNames.MyApplications);
         }
 
         private ActionResult RedirectToLastViewedVacancy(Candidate candidate, int lastViewedVacancyId)
@@ -233,7 +216,7 @@
 
         private ActionResult RedirectOnAccountLocked(string emailAddress)
         {
-            TempData["EmailAddress"] = emailAddress;
+            PushContextData(ContextDataItemNames.EmailAddress, emailAddress);
 
             return RedirectToAction("Unlock");
         }

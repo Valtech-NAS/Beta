@@ -7,21 +7,6 @@
 
 <h1 id="accountCreated" class="heading-xlarge">Activate your account</h1>
 
-
-@if (TempData["ResentCode"] != null)
-{
-    <div class="panel-success">
-        <p id="ResentCodeText" class="text"><i class="fa fa-check"></i>An activation code was sent to @Model.EmailAddress</p>
-    </div>
-}
-else
-{
-    <div class="panel-success">
-        <p class="text"><i class="fa fa-check"></i>You have successfully created an account.</p>
-    </div>
-}
-
-
 @using (Html.BeginForm("Activate", "Register", FormMethod.Post, new {@id = "activation-form"}))
 {
     <p class="text">

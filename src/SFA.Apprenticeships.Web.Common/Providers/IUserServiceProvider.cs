@@ -3,7 +3,7 @@
     using System;
     using System.Web;
 
-    public interface IUserServiceProvider
+    public interface IUserServiceProvider //todo: refactor!!
     {
         UserContext GetUserContext(HttpContextBase httpContext);
 
@@ -24,6 +24,7 @@
         void DeleteReturnUrlCookie(HttpContextBase httpContext);
 
         void DeleteAllCookies(HttpContextBase httpContext);
+
         void DeleteCookie(HttpContextBase httpContext, string cookieName);
 
         void SetEntityContextCookie(HttpContextBase httpContext, Guid entityId, Guid viewModelId, string contextName);

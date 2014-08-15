@@ -2,9 +2,6 @@
 {
     public static class SignOutPageMessages
     {
-        public static class SignOutMessageForLoginDisplay
-        {
-            public const string SignOutMessageText = "You've successfully signed out of this website";
-        }
+        public const string SignOutMessageText = "TODO: You've successfully signed out of this website";
     }
 }
