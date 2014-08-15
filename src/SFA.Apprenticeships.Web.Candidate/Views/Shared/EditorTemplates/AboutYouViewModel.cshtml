@@ -18,7 +18,7 @@
     @Html.FormTextAreaFor(m => m.WhatAreYourHobbiesInterests, hintHtmlAttributes: new { @class = "text" })
     
     <div class="form-group">
-        <label class="form-label">Is there anything we can do to support your interview?</label>
+        <p class="form-label">Is there anything we can do to support your interview?</p>
         <p class="form-hint">For example, do you need a signer, information in braille.</p>
         <div class="form-group form-group-compound inline">
             <label data-target="support-panel" for="support-yes" class="block-label">
@@ -29,7 +29,7 @@
             </label>
         </div>
         <div id="support-panel" class="panel-indent toggle-content">
-            @Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview, hintHtmlAttributes: new { @class = "text" })            
+            @Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview, labelHtmlAttributes: new { @class = "form-hint text" })            
         </div>
     </div>
 

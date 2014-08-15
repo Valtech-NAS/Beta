@@ -21,7 +21,7 @@
 
         public bool RequiresSupportForInterview { get; set; }
 
-        [Display(Name ="", Description = AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.HintText)]
+        [Display(Name = AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.HintText, Description = "" )]
         public string AnythingWeCanDoToSupportYourInterview { get; set; }
     }
 }
