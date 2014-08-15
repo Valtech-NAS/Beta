@@ -13,15 +13,12 @@
     using Domain.Entities.Exceptions;
     using FluentValidation.Mvc;
     using FluentValidation.Results;
-    using NLog;
     using Providers;
     using Validators;
     using ViewModels.Register;
 
     public class RegisterController : SfaControllerBase
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
@@ -154,8 +151,6 @@
                 return View(model);
             }
 
-            Logger.Debug("{0} requested password reset code", model.EmailAddress);
-
             _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
 
             PushContextData(ContextDataItemNames.EmailAddress, model.EmailAddress);
@@ -231,8 +226,6 @@
                 EmailAddress = emailAddress
             };
 
-            Logger.Debug("{0} requested password reset code", model.EmailAddress);
-
             _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
 
             PushContextData(ContextDataItemNames.EmailAddress, model.EmailAddress);
@@ -244,8 +237,6 @@
 
         public ActionResult ResendActivationCode(string emailAddress)
         {
-            Logger.Debug("{0} requested activation code to be resent", emailAddress);
-
             _candidateServiceProvider.ResendActivationCode(emailAddress);
 
             SetUserMessage(string.Format(ActivationPageMessages.ActivationCodeSent, emailAddress));

@@ -51,7 +51,6 @@
             return _userAccountService.GetUserStatus(username);
         }
 
-        // TODO: US463: AG: consider moving to ApplicationProvider.
         public ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId)
         {
             var application = _candidateService.GetApplications(candidateId)
@@ -107,7 +106,6 @@
 
                 if (candidate == null)
                 {
-                    // Incorrect user name or password.
                     return null;
                 }
 
@@ -116,6 +114,7 @@
             }
             catch (Exception ex)
             {
+                //todo: catch more specific errors here not just assume incorrect credentials
                 LogError("Candidate authentication failed for {0}", model.EmailAddress, ex);
                 return null;
             }
@@ -125,12 +124,14 @@
         {
             try
             {
+                Logger.Debug("{0} requested password reset code", model.EmailAddress);
+
                 _userAccountService.SendPasswordResetCode(model.EmailAddress);
             }
             catch (Exception ex)
             {
-                // TODO: fails silently, why not throw?
                 LogError("Send password reset code failed for {0}", model.EmailAddress, ex);
+                // TODO: fails silently, should return boolean to indicate success
             }
         }
 
@@ -144,7 +145,7 @@
             catch (Exception ex)
             {
                 LogError("Send account unlock code failed for {0}", model.EmailAddress, ex);
-                // TODO: fails silently, why not throw?
+                // TODO: fails silently, should return boolean to indicate success
             }
         }
 
@@ -158,7 +159,7 @@
             catch (CustomException ex)
             {
                 LogError("Reset forgotten password failed for {0}", model.EmailAddress, ex);
-                throw;
+                return false;
             }
         }
 
@@ -171,7 +172,7 @@
             }
             catch (Exception ex)
             {
-                LogError("Account unlock failed for {0}.", model.EmailAddress, ex);
+                LogError("Account unlock failed for {0}", model.EmailAddress, ex);
                 return false;
             }
         }
@@ -180,13 +181,15 @@
         {
             try
             {
+                Logger.Debug("{0} requested activation code to be resent", username);
+
                 _userAccountService.ResendActivationCode(username);
                 return true;
             }
             catch (CustomException ex)
             {
                 LogError("Reset forgotten password failed for {0}", username, ex);
-                throw;
+                return false;
             }
         }
 
