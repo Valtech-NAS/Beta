@@ -3,7 +3,7 @@
     using System;
     using System.Web;
 
-    public interface IUserServiceProvider //todo: refactor! don't mention cookies!!
+    public interface IUserServiceProvider //todo: refactor! don't mention cookies!! remove unused stuff!!!
     {
         UserContext GetUserContext(HttpContextBase httpContext);
 

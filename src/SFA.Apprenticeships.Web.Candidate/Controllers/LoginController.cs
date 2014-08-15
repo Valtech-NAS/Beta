@@ -51,6 +51,7 @@
         [HttpPost]
         public ActionResult Index(LoginViewModel model)
         {
+            // todo: refactor - too much going on here ILoginServiceProvider
             // Validate view model.
             var validationResult = _loginViewModelServerValidator.Validate(model);
 
@@ -73,7 +74,9 @@
 
             if (userStatus == UserStatuses.Locked)
             {
-                return RedirectOnAccountLocked(model.EmailAddress);
+                PushContextData(TempDataItemNames.EmailAddress, model.EmailAddress);
+
+                return RedirectToAction("Unlock");
             }
 
             ModelState.Clear();
@@ -85,7 +88,7 @@
         [HttpGet]
         public ActionResult Unlock()
         {
-            var emailAddress = PopContextData(TempDataItemNames.EmailAddress);
+            var emailAddress = PopContextData<string>(TempDataItemNames.EmailAddress);
 
             if (string.IsNullOrWhiteSpace(emailAddress))
             {
@@ -101,6 +104,7 @@
         [HttpPost]
         public ActionResult Unlock(AccountUnlockViewModel model)
         {
+            // todo: refactor - too much going on here ILoginServiceProvider
             var validationResult = _accountUnlockViewModelServerValidator.Validate(model);
 
             if (!validationResult.IsValid)
@@ -155,9 +159,10 @@
 
         private ActionResult RedirectOnAuthenticated(Candidate candidate, UserStatuses userStatus)
         {
+            // todo: refactor - too much going on here ILoginServiceProvider
             if (userStatus == UserStatuses.PendingActivation)
             {
-                return RedirectOnPendingActivation();
+                return RedirectToAction("Activation", "Register");
             }
           
             // Redirect to return URL (if any).
@@ -165,60 +170,27 @@
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                return RedirectToReturnUrl(returnUrl);
+                UserServiceProvider.DeleteCookie(HttpContext, ContextDataItemNames.ReturnUrl);
+
+                return Redirect(returnUrl);
             }
 
             // Redirect to last viewed vacancy (if any).
-            if (_candidateServiceProvider.LastViewedVacancyId.HasValue)
+            var lastViewedVacancyId = PopContextData<int?>(ContextDataItemNames.LastViewedVacancyId);
+
+            if (lastViewedVacancyId.HasValue)
             {
-                return RedirectToLastViewedVacancy(
-                    candidate, _candidateServiceProvider.LastViewedVacancyId.Value);
+                var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId, lastViewedVacancyId.Value);
+
+                if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
+                {
+                    return RedirectToAction("Apply", "Application", new { id = lastViewedVacancyId });
+                }
+
+                return RedirectToAction("Details", "VacancySearch", new { id = lastViewedVacancyId });
             }
 
             return RedirectToRoute(RouteNames.MyApplications);
-        }
-
-        private ActionResult RedirectToLastViewedVacancy(Candidate candidate, int lastViewedVacancyId)
-        {
-            // Always clear last viewed vacancy.
-            _candidateServiceProvider.LastViewedVacancyId = null;
-
-            var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId,
-                lastViewedVacancyId);
-
-            if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
-            {
-                return RedirectToAction(
-                    "Apply", "Application", new
-                    {
-                        id = lastViewedVacancyId
-                    });
-            }
-
-            return RedirectToAction(
-                "Details", "VacancySearch", new
-                {
-                    id = lastViewedVacancyId
-                });
-        }
-
-        private ActionResult RedirectToReturnUrl(string returnUrl)
-        {
-            UserServiceProvider.DeleteCookie(HttpContext, ContextDataItemNames.ReturnUrl);
-
-            return Redirect(returnUrl);
-        }
-
-        private ActionResult RedirectOnPendingActivation()
-        {
-            return RedirectToAction("Activation", "Register");
-        }
-
-        private ActionResult RedirectOnAccountLocked(string emailAddress)
-        {
-            PushContextData(TempDataItemNames.EmailAddress, emailAddress);
-
-            return RedirectToAction("Unlock");
         }
 
         #endregion

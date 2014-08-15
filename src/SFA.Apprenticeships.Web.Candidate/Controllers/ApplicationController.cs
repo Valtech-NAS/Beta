@@ -51,8 +51,6 @@
                 return new VacancyNotFoundResult();
             }
 
-            _candidateServiceProvider.LastViewedVacancyId = id;
-
             return View(model);
         }
 

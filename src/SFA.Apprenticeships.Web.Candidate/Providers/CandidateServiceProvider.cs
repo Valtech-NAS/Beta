@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
-    using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Candidates;
     using System.Web;
@@ -24,17 +23,14 @@
         private readonly IUserAccountService _userAccountService;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
-        private readonly ISessionStateProvider _session;
         private readonly IUserServiceProvider _userServiceProvider;
 
         public CandidateServiceProvider(
-            ISessionStateProvider session,
             ICandidateService candidateService,
             IUserAccountService userAccountService,
             IUserServiceProvider userServiceProvider,
             IMapper mapper)
         {
-            _session = session;
             _candidateService = candidateService;
             _userAccountService = userAccountService;
             _userServiceProvider = userServiceProvider;
@@ -71,13 +67,14 @@
                 var candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
 
                 _candidateService.Register(candidate, model.Password);
-                SetRegisteredCookies(candidate);
+
+                SetUserCookies(candidate, UserRoleNames.Unactivated);
 
                 return true;
             }
             catch (Exception ex)
             {
-                LogError("Candidate registration failed for {0}", model.EmailAddress, ex);
+                Logger.Error("Candidate registration failed for " + model.EmailAddress, ex);
                 return false;
             }
         }
@@ -94,7 +91,7 @@
             }
             catch (Exception ex)
             {
-                LogError("Candidate activation failed for {0}", model.EmailAddress, ex);
+                Logger.Error("Candidate activation failed for " + model.EmailAddress, ex);
                 return false;
             }
         }
@@ -110,13 +107,16 @@
                     return null;
                 }
 
-                SetLoggedInCookies(candidate);
+                var roles = _userAccountService.GetRoleNames(model.EmailAddress);
+
+                SetUserCookies(candidate, roles);
+
                 return candidate;
             }
             catch (Exception ex)
             {
                 //todo: catch more specific errors here not just assume incorrect credentials
-                LogError("Candidate authentication failed for {0}", model.EmailAddress, ex);
+                Logger.Error("Candidate authentication failed for " + model.EmailAddress, ex);
                 return null;
             }
         }
@@ -131,7 +131,7 @@
             }
             catch (Exception ex)
             {
-                LogError("Send password reset code failed for {0}", model.EmailAddress, ex);
+                Logger.Error("Send password reset code failed for " + model.EmailAddress, ex);
                 // TODO: fails silently, should return boolean to indicate success
             }
         }
@@ -145,7 +145,7 @@
             }
             catch (Exception ex)
             {
-                LogError("Send account unlock code failed for {0}", model.EmailAddress, ex);
+                Logger.Error("Send account unlock code failed for " + model.EmailAddress, ex);
                 // TODO: fails silently, should return boolean to indicate success
             }
         }
@@ -159,7 +159,7 @@
             }
             catch (CustomException ex)
             {
-                LogError("Reset forgotten password failed for {0}", model.EmailAddress, ex);
+                Logger.Error("Reset forgotten password failed for " + model.EmailAddress, ex);
                 return false;
             }
         }
@@ -173,7 +173,7 @@
             }
             catch (Exception ex)
             {
-                LogError("Account unlock failed for {0}", model.EmailAddress, ex);
+                Logger.Error("Account unlock failed for " + model.EmailAddress, ex);
                 return false;
             }
         }
@@ -189,7 +189,7 @@
             }
             catch (CustomException ex)
             {
-                LogError("Reset forgotten password failed for {0}", username, ex);
+                Logger.Error("Reset forgotten password failed for " + username, ex);
                 return false;
             }
         }
@@ -204,56 +204,10 @@
             return _candidateService.GetCandidate(candidateId);
         }
 
-        /// <summary>
-        /// Gets or sets the candidate's last viewed vacancy ID. Currently this value is written to session.
-        ///  </summary>
-        /// <remarks>
-        /// The last viewed vacancy ID is used to determine the candidate's initial page redirection
-        /// following successful registration, login etc.
-        /// </remarks>
-        public int? LastViewedVacancyId
-        {
-            get
-            {
-                var stringValue = _session.Get<string>(SessionKeys.LastViewedVacancyId);
-
-                if (string.IsNullOrWhiteSpace(stringValue))
-                {
-                    return null;
-                }
-
-                int intValue;
-
-                if (!Int32.TryParse(stringValue, out intValue))
-                {
-                    return null;
-                }
-
-                return intValue;
-            }
-
-            set
-            {
-                if (value == null)
-                {
-                    _session.Delete(SessionKeys.LastViewedVacancyId);
-                    return;
-                }
-
-                string stringValue = value.Value.ToString(CultureInfo.InvariantCulture);
-
-                _session.Store(SessionKeys.LastViewedVacancyId, stringValue);
-            }
-        }
-
-        #region Helpers
-
-        // TODO: AG: consolidate cookie setting.
-        private void SetLoggedInCookies(Candidate candidate)
+        private void SetUserCookies(Candidate candidate, params string[] roles)
         {
             var registrationDetails = candidate.RegistrationDetails;
             var candidateId = candidate.EntityId.ToString();
-            var roles = _userAccountService.GetRoleNames(registrationDetails.EmailAddress);
 
             var httpContext = new HttpContextWrapper(HttpContext.Current);
 
@@ -264,34 +218,5 @@
                 httpContext, registrationDetails.EmailAddress,
                 registrationDetails.FirstName + " " + registrationDetails.LastName);
         }
-
-        private void SetRegisteredCookies(Candidate candidate)
-        {
-            var registrationDetails = candidate.RegistrationDetails;
-            var candidateId = candidate.EntityId.ToString();
-
-            var httpContext = new HttpContextWrapper(HttpContext.Current);
-
-            _userServiceProvider.SetAuthenticationCookie(
-                httpContext, candidateId, UserRoleNames.Unactivated);
-
-            _userServiceProvider.SetUserContextCookie(
-                httpContext, registrationDetails.EmailAddress,
-                registrationDetails.FirstName + " " + registrationDetails.LastName);
-        }
-
-        private static void LogError(string formatString, string formatValue, Exception ex)
-        {
-            var message = string.Format(formatString, formatValue);
-
-            Logger.ErrorException(message, ex);
-        }
-
-        private static class SessionKeys
-        {
-            public const string LastViewedVacancyId = "LastViewedVacancyId";
-        }
-
-        #endregion
     }
 }

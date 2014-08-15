@@ -1,11 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
+    using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
     using ActionResults;
     using Application.Interfaces.Vacancies;
     using Common.Providers;
+    using Constants;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Providers;
@@ -18,7 +20,6 @@
         private readonly VacancySearchViewModelClientValidator _searchRequestValidator;
         private readonly VacancySearchViewModelLocationValidator _searchLocationValidator;
         private readonly IVacancyDetailProvider _vacancyDetailProvider;
-        private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly int _vacancyResultsPerPage;
 
         public VacancySearchController(
@@ -28,11 +29,9 @@
             ISearchProvider searchProvider,
             VacancySearchViewModelClientValidator searchRequestValidator,
             VacancySearchViewModelLocationValidator searchLocationValidator,
-            IVacancyDetailProvider vacancyDetailProvider,
-            ICandidateServiceProvider candidateServiceProvider)
+            IVacancyDetailProvider vacancyDetailProvider)
             : base(session, userServiceProvider)
         {
-            _candidateServiceProvider = candidateServiceProvider;
             _searchProvider = searchProvider;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
@@ -125,7 +124,7 @@
         [HttpGet]
         public ActionResult DetailsWithDistance(int id, string distance)
         {
-            PushContextData("Distance", distance);
+            PushContextData("Distance", distance.ToString(CultureInfo.InvariantCulture));
 
             return RedirectToAction("Details", new { id });
         }
@@ -147,9 +146,9 @@
                 return new VacancyNotFoundResult();
             }
 
-            _candidateServiceProvider.LastViewedVacancyId = id;
+            PushContextData(ContextDataItemNames.LastViewedVacancyId, id);
 
-            ViewBag.Distance = PopContextData("Distance");
+            ViewBag.Distance = PopContextData<string>("Distance");
 
             return View(vacancy);
         }

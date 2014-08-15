@@ -149,8 +149,9 @@
         {
             var model = new PasswordResetViewModel
             {
-                EmailAddress = PopContextData(TempDataItemNames.EmailAddress)
+                EmailAddress = PopContextData<string>(TempDataItemNames.EmailAddress)
             };
+
             return View(model);
         }
 
@@ -247,13 +248,11 @@
                 HttpContext, candidate.EntityId.ToString(), UserRoleNames.Activated);
 
             // Redirect to last viewed vacancy (if any).
-            var lastViewedVacancyId = _candidateServiceProvider.LastViewedVacancyId;
+            var lastViewedVacancyId = PopContextData<int?>(ContextDataItemNames.LastViewedVacancyId);
 
             if (lastViewedVacancyId.HasValue)
             {
-                _candidateServiceProvider.LastViewedVacancyId = null;
-
-                return RedirectToAction("Details", "VacancySearch", new { id = lastViewedVacancyId.Value });
+                return RedirectToAction("Details", "VacancySearch", new {id = lastViewedVacancyId.Value});
             }
 
             // Redirect to return URL (if any).

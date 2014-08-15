@@ -24,16 +24,18 @@
         }
 
         #region Contextual helpers - may move these
-        protected void PushContextData(string key, string value)
+        protected void PushContextData<T>(string key, T value)
         {
             //todo: refactor (don't use tempdata! push into context instead or use a non-session store?)
             TempData[key] = value;
         }
 
-        protected string PopContextData(string key)
+        protected T PopContextData<T>(string key)
         {
             //todo: refactor (don't use tempdata! push into context instead or use a non-session store?)
-            return TempData[key] as string;
+            var value = TempData[key];
+            if (value is T) return (T)value;
+            return default(T);
         }
 
         protected void SetUserMessage(string message, UserMessageLevel level = UserMessageLevel.Success)
