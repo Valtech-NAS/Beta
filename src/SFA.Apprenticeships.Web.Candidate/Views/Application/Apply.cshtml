@@ -254,21 +254,20 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    
-                                                    <input type="text" class="form-control inline width-all-49" data-bind="value: itemEmployer, visible: !showEditButton(), attr:{name:'Candidate.WorkExperience[' + $index() +'].Employer'}" maxlength="50" />
-                                                        <label for="" class="visuallyhidden">Employer</label>
-                                                        <input type="text" class="form-control" data-bind="value: itemEmployer" maxlength="50">
+                                                    <div class="form-group form-group-compound inline-float width-all-49" data-bind="visible: !showEditButton()">
+                                                       <label for="" class="visuallyhidden">Employer</label>
+                                                        <input type="text" class="form-control" data-bind="value: itemEmployer, attr:{name:'Candidate.WorkExperience[' + $index() +'].Employer'}" maxlength="50" />
                                                     </div> 
                                                     <span class="cell-span" data-bind="visible: showEditButton, text: itemEmployer"></span>
                                                     <span class="cell-span work-hyphen" data-bind="visible: showEditButton">-</span>
                                                     <div class="form-group form-group-compound inline-float width-all-49 no-right-margin" data-bind="visible: !showEditButton()">
                                                         <label for="" class="visuallyhidden">Job title</label>
                                                            
-                                                        <input type="text" class="form-control" data-bind="value: itemJobTitle, visible: !showEditButton(),attr:{name:'Candidate.WorkExperience[' + $index() +'].JobTitle'}" maxlength="50" />
+                                                        <input type="text" class="form-control" data-bind="value: itemJobTitle, attr:{name:'Candidate.WorkExperience[' + $index() +'].JobTitle'}" maxlength="50" />
                                                     </div> 
                                                     <span class="cell-span" data-bind="visible: showEditButton, text: itemJobTitle"></span>
                                                     <div></div>
-                                                    <textarea class="form-control" row="3" data-bind="value: itemMainDuties, visible: !showEditButton(),attr:{name:'Candidate.WorkExperience[' + $index() +'].Description'}" maxlength="200"></textarea>
+                                                    <textarea class="form-control" rows="3" data-bind="value: itemMainDuties, visible: !showEditButton(),attr:{name:'Candidate.WorkExperience[' + $index() +'].Description'}" maxlength="200"></textarea>
                                                     <span class="cell-span" data-bind="visible: showEditButton, text: itemMainDuties"></span>
                                                 </td>
                                             </tr>
@@ -300,11 +299,11 @@
                                             <tr>
                                                 <td>
                                                     <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                        <select data-bind='options: $parent.months, optionsText: "monthName", optionsValue: "monthNumber",value: itemFromMonth, visible: !showEditButton(), attr:{name:"Candidate.WorkExperience[" + $index() +"].FromMonth" } '></select>
+                                                        <select data-bind='options: $parent.months, optionsText: "monthName", optionsValue: "monthNumber",value: itemFromMonth, attr:{name:"Candidate.WorkExperience[" + $index() +"].FromMonth" } '></select>
                                                         
                                                     </div>
                                                     <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                        <input type="text" class="form-control" data-bind="value: itemFromYear, visible: !showEditButton(), attr:{name:'Candidate.WorkExperience[' + $index() +'].FromYear'}" pattern="[0-9]*" maxlength="4">
+                                                        <input type="text" class="form-control" data-bind="value: itemFromYear, attr:{name:'Candidate.WorkExperience[' + $index() +'].FromYear'}" pattern="[0-9]*" maxlength="4">
                                                        
                                                     </div>
                                                                                                       
@@ -313,11 +312,11 @@
                                                 </td>
                                                 <td>
                                                     <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                        <select data-bind=' options: $parent.months, optionsText: "monthName", optionsValue: "monthNumber",value: itemToMonth, visible: !showEditButton(),attr:{disabled:toItemDateReadonly(),name:"Candidate.WorkExperience[" + $index() +"].ToMonth"}'></select>
+                                                        <select data-bind=' options: $parent.months, optionsText: "monthName", optionsValue: "monthNumber",value: itemToMonth, attr:{disabled:toItemDateReadonly(),name:"Candidate.WorkExperience[" + $index() +"].ToMonth"}'></select>
                                                         
                                                     </div>
                                                     <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                        <input type="text" class="form-control" data-bind="value: itemToYear, visible: !showEditButton(),attr:{disabled:toItemDateReadonly(), name:'Candidate.WorkExperience[' + $index() +'].ToYear'}" pattern="[0-9]*" maxlength="4">
+                                                        <input type="text" class="form-control" data-bind="value: itemToYear, attr:{disabled:toItemDateReadonly(), name:'Candidate.WorkExperience[' + $index() +'].ToYear'}" pattern="[0-9]*" maxlength="4">
                                                        
                                                     </div>
                                                     <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">

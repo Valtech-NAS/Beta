@@ -270,9 +270,6 @@
                 onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
             }
         }).extend({
-            minLength: 4,
-            onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
-        }).extend({
             validation: {
                 validator: function (val, fromYearValue) {
                     return val >= fromYearValue;
