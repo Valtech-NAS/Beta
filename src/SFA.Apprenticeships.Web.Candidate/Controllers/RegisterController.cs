@@ -95,17 +95,13 @@
         public ActionResult Activate(ActivationViewModel model)
         {
             //todo: refactor - too much going on here
-            var candidateId = new Guid(User.Identity.Name); // TODO: REFACTOR: move to UserContext
-            model.IsActivated = _candidateServiceProvider.Activate(model, candidateId);
+            model.IsActivated = _candidateServiceProvider.Activate(model, UserContext.CandidateId);
 
             var activatedResult = _activationViewModelServerValidator.Validate(model);
 
             if (activatedResult.IsValid)
             {
-                // TODO: AG: need to review logic here, why email address vs candidateId?
-                Candidate candidate;
-
-                candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
+                var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
 
                 return SetAuthenticationCookieAndRedirectToAction(candidate);
             }
