@@ -357,7 +357,7 @@
         </p>
         @if (Model.DateUpdated.HasValue)
         {
-            <p id="applicationSaved">Saved at @Model.DateUpdated.Value.ToString("h:mm:ss tt") on @Model.DateUpdated.Value.ToString("d/M/yyyy") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
+            <p id="applicationSaved">Saved at @Model.DateUpdated.Value.ToLocalTime().ToString("h:mm:ss tt") on @Model.DateUpdated.Value.ToString("d/M/yyyy") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
         }
     </div>    
     
