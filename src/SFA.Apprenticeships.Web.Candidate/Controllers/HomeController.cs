@@ -6,8 +6,7 @@
 
     public class HomeController : CandidateControllerBase
     {
-        public HomeController(ISessionStateProvider session, IUserServiceProvider userServiceProvider)
-            : base(session, userServiceProvider) {}
+        public HomeController(ISessionStateProvider session) : base(session) {}
 
         public ActionResult Index()
         {

@@ -8,13 +8,14 @@
 
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
-        protected CandidateControllerBase(ISessionStateProvider session, IUserServiceProvider userServiceProvider)
-            : base(session)
-        {
-            UserServiceProvider = userServiceProvider;            
-        }
+        private IUserDataProvider _userData;
 
-        protected IUserServiceProvider UserServiceProvider { get; private set; }
+        protected CandidateControllerBase(ISessionStateProvider session) : base(session) { }
+
+        protected IUserDataProvider UserData
+        {
+            get { return _userData ?? (_userData = new CookieUserDataProvider(HttpContext)); }
+        }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -22,7 +23,7 @@
 
             if (!string.IsNullOrWhiteSpace(User.Identity.Name))
             {
-                var context = UserServiceProvider.GetUserContext(HttpContext);
+                var context = UserData.GetUserContext();
 
                 if (context != null)
                 {

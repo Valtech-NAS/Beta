@@ -6,8 +6,7 @@
 
     public class AccountController : CandidateControllerBase
     {
-        public AccountController(ISessionStateProvider session, IUserServiceProvider userServiceProvider)
-            : base(session, userServiceProvider) {}
+        public AccountController(ISessionStateProvider session) : base(session) {}
 
         public ActionResult Index()
         {

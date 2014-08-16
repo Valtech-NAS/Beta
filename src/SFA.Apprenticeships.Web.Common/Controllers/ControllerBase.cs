@@ -11,33 +11,19 @@
     {
         protected ControllerBase(ISessionStateProvider session)
         {
-            Session = session;
+            Session = session; //todo: remove
         }
 
-        public TContextType UserContext { get; protected set; }
+        public TContextType UserContext { get; protected set; } ///todo: may move... stay here only if used in common
 
-        private new ISessionStateProvider Session { get; set; }
+        private new ISessionStateProvider Session { get; set; } //todo: remove and throw ex if try to use Session!
 
         protected void ClearSession()
         {
-            Session.Clear();
+            Session.Clear(); //todo: base.Session.Clear();
         }
 
         #region Contextual helpers - may move these
-        protected void PushContextData<T>(string key, T value)
-        {
-            //todo: refactor (don't use tempdata! push into context instead or use a non-session store?)
-            TempData[key] = value;
-        }
-
-        protected T PopContextData<T>(string key)
-        {
-            //todo: refactor (don't use tempdata! push into context instead or use a non-session store?)
-            var value = TempData[key];
-            if (value is T) return (T)value;
-            return default(T);
-        }
-
         protected void SetUserMessage(string message, UserMessageLevel level = UserMessageLevel.Success)
         {
             //todo: refactor (don't use tempdata! push into context instead or use a non-session store?)

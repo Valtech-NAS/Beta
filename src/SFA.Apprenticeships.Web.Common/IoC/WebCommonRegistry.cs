@@ -14,7 +14,6 @@
         public WebCommonRegistry()
         {
             For<IAuthenticationTicketService>().Use<AuthenticationTicketService>();
-            For<IUserServiceProvider>().Use<UserServiceProvider>();
         }
 
         public static void Configure(IContainer container)

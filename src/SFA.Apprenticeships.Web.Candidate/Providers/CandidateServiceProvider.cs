@@ -6,7 +6,7 @@
     using System.Web;
     using Application.Interfaces.Users;
     using Common.Constants;
-    using Common.Providers;
+    using Common.Services;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
@@ -23,17 +23,17 @@
         private readonly IUserAccountService _userAccountService;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
-        private readonly IUserServiceProvider _userServiceProvider;
+        private readonly IAuthenticationTicketService _authenticationTicketService;
 
         public CandidateServiceProvider(
             ICandidateService candidateService,
             IUserAccountService userAccountService,
-            IUserServiceProvider userServiceProvider,
+            IAuthenticationTicketService authenticationTicketService,
             IMapper mapper)
         {
             _candidateService = candidateService;
             _userAccountService = userAccountService;
-            _userServiceProvider = userServiceProvider;
+            _authenticationTicketService = authenticationTicketService;
             _mapper = mapper;
         }
 
@@ -83,9 +83,9 @@
         {
             try
             {
-                _candidateService.Activate(model.EmailAddress, model.ActivationCode);
                 var httpContext = new HttpContextWrapper(HttpContext.Current);
-                _userServiceProvider.SetAuthenticationCookie(httpContext, candidateId.ToString(), UserRoleNames.Activated);
+                _candidateService.Activate(model.EmailAddress, model.ActivationCode);
+                _authenticationTicketService.SetAuthenticationCookie(httpContext.Response.Cookies, candidateId.ToString(), UserRoleNames.Activated);
 
                 return true;
             }
@@ -206,17 +206,11 @@
 
         private void SetUserCookies(Candidate candidate, params string[] roles)
         {
-            var registrationDetails = candidate.RegistrationDetails;
-            var candidateId = candidate.EntityId.ToString();
-
             var httpContext = new HttpContextWrapper(HttpContext.Current);
 
-            _userServiceProvider.SetAuthenticationCookie(
-                httpContext, candidateId, roles);
-
-            _userServiceProvider.SetUserContextCookie(
-                httpContext, registrationDetails.EmailAddress,
-                registrationDetails.FirstName + " " + registrationDetails.LastName);
+            _authenticationTicketService.SetAuthenticationCookie(httpContext.Response.Cookies,
+                candidate.EntityId.ToString(), 
+                roles);
         }
     }
 }

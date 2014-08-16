@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Attributes
 {
     using System.Security.Principal;
-    using System.Web;
     using System.Web.Mvc;
     using System.Web.Mvc.Filters;
     using System.Web.Security;
@@ -15,7 +14,7 @@
 
         public void OnAuthentication(AuthenticationContext filterContext)
         {
-            HttpContextBase httpContext = filterContext.RequestContext.HttpContext;
+            var httpContext = filterContext.RequestContext.HttpContext;
 
             var service = new AuthenticationTicketService();
             var ticket = service.GetTicket(httpContext.Request.Cookies);

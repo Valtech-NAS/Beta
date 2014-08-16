@@ -6,6 +6,7 @@
     using Common.Attributes;
     using Common.Constants;
     using Common.Providers;
+    using Common.Services;
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Candidates;
@@ -21,23 +22,25 @@
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
         private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;
+        private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
 
         public RegisterController(
             ISessionStateProvider session,
-            IUserServiceProvider userServiceProvider,
             ICandidateServiceProvider candidateServiceProvider,
             RegisterViewModelServerValidator registerViewModelServerValidator,
             ActivationViewModelServerValidator activationViewModelServerValidator,
             ForgottenPasswordViewModelServerValidator forgottenPasswordViewModelServerValidator,
-            PasswordResetViewModelServerValidator passwordResetViewModelServerValidator)
-            : base(session, userServiceProvider)
+            PasswordResetViewModelServerValidator passwordResetViewModelServerValidator,
+            IAuthenticationTicketService authenticationTicketService)
+            : base(session)
         {
             _candidateServiceProvider = candidateServiceProvider;
             _registerViewModelServerValidator = registerViewModelServerValidator;
             _activationViewModelServerValidator = activationViewModelServerValidator;
             _forgottenPasswordViewModelServerValidator = forgottenPasswordViewModelServerValidator;
             _passwordResetViewModelServerValidator = passwordResetViewModelServerValidator;
+            _authenticationTicketService = authenticationTicketService;
         }
 
         public ActionResult Index()
@@ -70,6 +73,8 @@
                 return View(model);
             }
 
+            UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname);
+
             return RedirectToAction("Activation");
         }
 
@@ -85,7 +90,7 @@
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                UserServiceProvider.SetCookie(HttpContext, ContextDataItemNames.ReturnUrl, returnUrl);
+                UserData.Push(UserDataItemNames.ReturnUrl, returnUrl);
             }
 
             return View(model);
@@ -140,16 +145,24 @@
 
             _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
 
-            PushContextData(TempDataItemNames.EmailAddress, model.EmailAddress);
+            UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
 
             return RedirectToAction("ResetPassword");
         }
 
+        [HttpGet]
         public ActionResult ResetPassword()
         {
+            var emailAddress = UserData.Get(UserDataItemNames.EmailAddress);
+
+            if (string.IsNullOrWhiteSpace(emailAddress))
+            {
+                return RedirectToAction("ForgottenPassword");
+            }
+
             var model = new PasswordResetViewModel
             {
-                EmailAddress = PopContextData<string>(TempDataItemNames.EmailAddress)
+                EmailAddress = emailAddress
             };
 
             return View(model);
@@ -173,7 +186,7 @@
                         model.IsPasswordResetCodeInvalid = false;
                         break;
                     case ErrorCodes.UserAccountLockedError:
-                        PushContextData(TempDataItemNames.EmailAddress, model.EmailAddress);
+                        UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
                         return RedirectToAction("Unlock", "Login");
                     case ErrorCodes.UserInIncorrectStateError:
                         model.IsPasswordResetCodeInvalid = false;
@@ -198,6 +211,7 @@
             if (validationResult.IsValid)
             {
                 var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
+
                 return SetAuthenticationCookieAndRedirectToAction(candidate);
             }
 
@@ -207,6 +221,7 @@
             return View(model);
         }
 
+        [HttpGet]
         public ActionResult ResendPasswordResetCode(string emailAddress)
         {
             var model = new ForgottenPasswordViewModel
@@ -216,7 +231,7 @@
 
             _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
 
-            PushContextData(TempDataItemNames.EmailAddress, model.EmailAddress);
+            UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
 
             SetUserMessage(string.Format(PasswordResetPageMessages.PasswordResetSent, emailAddress));
 
@@ -244,26 +259,26 @@
 
         private ActionResult SetAuthenticationCookieAndRedirectToAction(Candidate candidate)
         {
-            UserServiceProvider.SetAuthenticationCookie(
-                HttpContext, candidate.EntityId.ToString(), UserRoleNames.Activated);
+            //todo: refactor - similar to stuff in login controller... move to ILoginServiceProvider
+            //todo: test this
+            _authenticationTicketService.SetAuthenticationCookie(HttpContext.Response.Cookies, candidate.EntityId.ToString(), UserRoleNames.Activated);
+            UserData.SetUserContext(candidate.RegistrationDetails.EmailAddress, candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName);
 
             // Redirect to last viewed vacancy (if any).
-            var lastViewedVacancyId = PopContextData<int?>(ContextDataItemNames.LastViewedVacancyId);
+            var lastViewedVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
 
-            if (lastViewedVacancyId.HasValue)
+            if (lastViewedVacancyId != null)
             {
-                return RedirectToAction("Details", "VacancySearch", new {id = lastViewedVacancyId.Value});
+                return RedirectToAction("Details", "VacancySearch", new {id = int.Parse(lastViewedVacancyId)});
             }
 
             // Redirect to return URL (if any).
-            var returnUrl = UserServiceProvider.GetCookie(HttpContext, ContextDataItemNames.ReturnUrl);
+            var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
 
             if (string.IsNullOrWhiteSpace(returnUrl))
             {
                 return RedirectToAction("Index", "VacancySearch");
             }
-
-            UserServiceProvider.DeleteCookie(HttpContext, ContextDataItemNames.ReturnUrl);
 
             return Redirect(returnUrl);
         }

@@ -52,12 +52,6 @@
             I.Enter(keywords).In("#Keywords");
         }
 
-        [When(@"I clear my search criteria")]
-        public void WhenIClearMySearchCriteria()
-        {
-            ClickLink("Clear");
-        }
-
         [Then(@"I expect to see the search page")]
         public void ThenIExpectToSeeTheSearchPage()
         {

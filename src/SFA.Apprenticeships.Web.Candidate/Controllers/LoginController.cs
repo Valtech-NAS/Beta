@@ -4,6 +4,7 @@
     using System.Web.Mvc;
     using System.Web.Security;
     using Common.Providers;
+    using Common.Services;
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
@@ -18,31 +19,33 @@
     {
         private readonly AccountUnlockViewModelServerValidator _accountUnlockViewModelServerValidator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
+        private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly LoginViewModelServerValidator _loginViewModelServerValidator;
 
         public LoginController(
             ISessionStateProvider session,
-            IUserServiceProvider userServiceProvider,
             LoginViewModelServerValidator loginViewModelServerValidator,
             AccountUnlockViewModelServerValidator accountUnlockViewModelServerValidator,
-            ICandidateServiceProvider candidateServiceProvider)
-            : base(session, userServiceProvider)
+            ICandidateServiceProvider candidateServiceProvider,
+            IAuthenticationTicketService authenticationTicketService)
+            : base(session)
         {
             _loginViewModelServerValidator = loginViewModelServerValidator;
             _accountUnlockViewModelServerValidator = accountUnlockViewModelServerValidator;
             _candidateServiceProvider = candidateServiceProvider;
+            _authenticationTicketService = authenticationTicketService;
         }
 
         [HttpGet]
         public ActionResult Index(string returnUrl)
         {
-            UserServiceProvider.DeleteAllCookies(HttpContext);
-
+            _authenticationTicketService.Clear(HttpContext.Request.Cookies); //todo: yuk
+            UserData.Clear();
             ClearSession();
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                UserServiceProvider.SetCookie(HttpContext, ContextDataItemNames.ReturnUrl, returnUrl);
+                UserData.Push(UserDataItemNames.ReturnUrl, returnUrl);
             }        
 
             return View();
@@ -69,12 +72,16 @@
 
             if (candidate != null)
             {
+                UserData.SetUserContext(
+                    candidate.RegistrationDetails.EmailAddress,
+                    candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName);
+
                 return RedirectOnAuthenticated(candidate, userStatus);
             }
 
             if (userStatus == UserStatuses.Locked)
             {
-                PushContextData(TempDataItemNames.EmailAddress, model.EmailAddress);
+                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
 
                 return RedirectToAction("Unlock");
             }
@@ -88,7 +95,7 @@
         [HttpGet]
         public ActionResult Unlock()
         {
-            var emailAddress = PopContextData<string>(TempDataItemNames.EmailAddress);
+            var emailAddress = UserData.Pop(UserDataItemNames.EmailAddress);
 
             if (string.IsNullOrWhiteSpace(emailAddress))
             {
@@ -139,7 +146,7 @@
 
             _candidateServiceProvider.RequestAccountUnlockCode(model);
 
-            PushContextData(TempDataItemNames.EmailAddress, model.EmailAddress);
+            UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
 
             SetUserMessage(string.Format(AccountUnlockPageMessages.AccountUnlockCodeResent, emailAddress));
 
@@ -166,21 +173,19 @@
             }
           
             // Redirect to return URL (if any).
-            var returnUrl = UserServiceProvider.GetCookie(HttpContext, ContextDataItemNames.ReturnUrl);
+            var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                UserServiceProvider.DeleteCookie(HttpContext, ContextDataItemNames.ReturnUrl);
-
                 return Redirect(returnUrl);
             }
 
             // Redirect to last viewed vacancy (if any).
-            var lastViewedVacancyId = PopContextData<int?>(ContextDataItemNames.LastViewedVacancyId);
+            var lastViewedVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
 
-            if (lastViewedVacancyId.HasValue)
+            if (lastViewedVacancyId != null)
             {
-                var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId, lastViewedVacancyId.Value);
+                var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId, int.Parse(lastViewedVacancyId));
 
                 if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
                 {

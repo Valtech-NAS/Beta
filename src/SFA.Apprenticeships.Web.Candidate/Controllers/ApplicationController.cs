@@ -17,17 +17,13 @@
         private readonly IApplicationProvider _applicationProvider;
         private readonly ApplicationViewModelServerValidator _applicationViewModelFullValidator;
         private readonly ApplicationViewModelSaveValidator _applicationViewModelSaveValidator;
-        private readonly ICandidateServiceProvider _candidateServiceProvider;
 
         public ApplicationController(ISessionStateProvider sessionState,
-            IUserServiceProvider userServiceProvider,
             IApplicationProvider applicationProvider,
-            ICandidateServiceProvider candidateServiceProvider,
             ApplicationViewModelServerValidator applicationViewModelFullValidator,
             ApplicationViewModelSaveValidator applicationViewModelSaveValidator)
-            : base(sessionState, userServiceProvider)
+            : base(sessionState)
         {
-            _candidateServiceProvider = candidateServiceProvider;
             _applicationProvider = applicationProvider;
             _applicationViewModelFullValidator = applicationViewModelFullValidator;
             _applicationViewModelSaveValidator = applicationViewModelSaveValidator;

@@ -5,11 +5,14 @@
 
     public interface IAuthenticationTicketService
     {
-        FormsAuthenticationTicket CreateTicket(string userName, params string[] claims);
-        void AddTicket(HttpCookieCollection cookies, FormsAuthenticationTicket ticket);
         FormsAuthenticationTicket GetTicket(HttpCookieCollection cookies);
-        void DeleteTicket(HttpCookieCollection cookies);
+
         void RefreshTicket(HttpCookieCollection cookies);
+
         string[] GetClaims(FormsAuthenticationTicket ticket);
+
+        void Clear(HttpCookieCollection cookies);
+
+        void SetAuthenticationCookie(HttpCookieCollection cookies, string userName, params string[] claims);
     }
 }

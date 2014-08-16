@@ -10,11 +10,12 @@
     using Constants;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
+    using Microsoft.Ajax.Utilities;
     using Providers;
     using Validators;
     using ViewModels.VacancySearch;
 
-    public class VacancySearchController : CandidateControllerBase
+    public class VacancySearchController : CandidateControllerBase //todo: rename
     {
         private readonly ISearchProvider _searchProvider;
         private readonly VacancySearchViewModelClientValidator _searchRequestValidator;
@@ -24,13 +25,12 @@
 
         public VacancySearchController(
             ISessionStateProvider session,
-            IUserServiceProvider userServiceProvider,
             IConfigurationManager configManager,
             ISearchProvider searchProvider,
             VacancySearchViewModelClientValidator searchRequestValidator,
             VacancySearchViewModelLocationValidator searchLocationValidator,
             IVacancyDetailProvider vacancyDetailProvider)
-            : base(session, userServiceProvider)
+            : base(session)
         {
             _searchProvider = searchProvider;
             _searchRequestValidator = searchRequestValidator;
@@ -49,12 +49,6 @@
         }
 
         [HttpGet]
-        public ActionResult Clear()
-        {
-            return RedirectToAction("index");
-        }
-
-        [HttpGet]
         public ActionResult Search(VacancySearchResponseViewModel searchViewModel)
         {
             return RedirectToAction("results", searchViewModel.VacancySearch);
@@ -63,6 +57,8 @@
         [HttpGet]
         public ActionResult Results(VacancySearchViewModel searchViewModel)
         {
+            UserData.Pop(UserDataItemNames.VacancyDistance);
+
             PopulateDistances(searchViewModel.WithinDistance);
             PopulateSortType(searchViewModel.SortType);
 
@@ -124,7 +120,7 @@
         [HttpGet]
         public ActionResult DetailsWithDistance(int id, string distance)
         {
-            PushContextData("Distance", distance.ToString(CultureInfo.InvariantCulture));
+            UserData.Push(UserDataItemNames.VacancyDistance, distance.ToString(CultureInfo.InvariantCulture));
 
             return RedirectToAction("Details", new { id });
         }
@@ -146,9 +142,15 @@
                 return new VacancyNotFoundResult();
             }
 
-            PushContextData(ContextDataItemNames.LastViewedVacancyId, id);
+            var distance = UserData.Get(UserDataItemNames.VacancyDistance);
 
-            ViewBag.Distance = PopContextData<string>("Distance");
+            if (!string.IsNullOrWhiteSpace(distance))
+            {
+                ViewBag.Distance = distance;
+                UserData.Push(UserDataItemNames.VacancyDistance, distance); // looks odd but needed
+            }
+
+            UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToStringInvariant());
 
             return View(vacancy);
         }
