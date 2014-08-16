@@ -5,7 +5,6 @@
     using ActionResults;
     using Attributes;
     using Common.Constants;
-    using Common.Providers;
     using Constants.Pages;
     using FluentValidation.Mvc;
     using Providers;
@@ -18,11 +17,10 @@
         private readonly ApplicationViewModelServerValidator _applicationViewModelFullValidator;
         private readonly ApplicationViewModelSaveValidator _applicationViewModelSaveValidator;
 
-        public ApplicationController(ISessionStateProvider sessionState,
+        public ApplicationController(
             IApplicationProvider applicationProvider,
             ApplicationViewModelServerValidator applicationViewModelFullValidator,
             ApplicationViewModelSaveValidator applicationViewModelSaveValidator)
-            : base(sessionState)
         {
             _applicationProvider = applicationProvider;
             _applicationViewModelFullValidator = applicationViewModelFullValidator;

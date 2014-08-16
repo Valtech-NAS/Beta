@@ -3,7 +3,6 @@
     using System;
     using System.Web.Mvc;
     using System.Web.Security;
-    using Common.Providers;
     using Common.Services;
     using Constants;
     using Constants.Pages;
@@ -22,13 +21,10 @@
         private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly LoginViewModelServerValidator _loginViewModelServerValidator;
 
-        public LoginController(
-            ISessionStateProvider session,
-            LoginViewModelServerValidator loginViewModelServerValidator,
+        public LoginController(LoginViewModelServerValidator loginViewModelServerValidator,
             AccountUnlockViewModelServerValidator accountUnlockViewModelServerValidator,
             ICandidateServiceProvider candidateServiceProvider,
             IAuthenticationTicketService authenticationTicketService)
-            : base(session)
         {
             _loginViewModelServerValidator = loginViewModelServerValidator;
             _accountUnlockViewModelServerValidator = accountUnlockViewModelServerValidator;

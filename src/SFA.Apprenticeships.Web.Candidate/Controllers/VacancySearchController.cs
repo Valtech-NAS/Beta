@@ -6,7 +6,6 @@
     using System.Web.Mvc;
     using ActionResults;
     using Application.Interfaces.Vacancies;
-    using Common.Providers;
     using Constants;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
@@ -23,14 +22,11 @@
         private readonly IVacancyDetailProvider _vacancyDetailProvider;
         private readonly int _vacancyResultsPerPage;
 
-        public VacancySearchController(
-            ISessionStateProvider session,
-            IConfigurationManager configManager,
+        public VacancySearchController(IConfigurationManager configManager,
             ISearchProvider searchProvider,
             VacancySearchViewModelClientValidator searchRequestValidator,
             VacancySearchViewModelLocationValidator searchLocationValidator,
             IVacancyDetailProvider vacancyDetailProvider)
-            : base(session)
         {
             _searchProvider = searchProvider;
             _searchRequestValidator = searchRequestValidator;

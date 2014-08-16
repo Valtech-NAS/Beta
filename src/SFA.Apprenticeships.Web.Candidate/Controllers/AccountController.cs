@@ -2,12 +2,12 @@
 {
     using System;
     using System.Web.Mvc;
-    using Common.Providers;
+    using Attributes;
+    using Common.Constants;
 
     public class AccountController : CandidateControllerBase
     {
-        public AccountController(ISessionStateProvider session) : base(session) {}
-
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Index()
         {
             return View();

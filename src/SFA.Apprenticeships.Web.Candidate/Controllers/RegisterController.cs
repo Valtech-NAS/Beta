@@ -5,7 +5,6 @@
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
-    using Common.Providers;
     using Common.Services;
     using Constants;
     using Constants.Pages;
@@ -25,15 +24,12 @@
         private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
 
-        public RegisterController(
-            ISessionStateProvider session,
-            ICandidateServiceProvider candidateServiceProvider,
+        public RegisterController(ICandidateServiceProvider candidateServiceProvider,
             RegisterViewModelServerValidator registerViewModelServerValidator,
             ActivationViewModelServerValidator activationViewModelServerValidator,
             ForgottenPasswordViewModelServerValidator forgottenPasswordViewModelServerValidator,
             PasswordResetViewModelServerValidator passwordResetViewModelServerValidator,
             IAuthenticationTicketService authenticationTicketService)
-            : base(session)
         {
             _candidateServiceProvider = candidateServiceProvider;
             _registerViewModelServerValidator = registerViewModelServerValidator;

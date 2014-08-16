@@ -4,9 +4,9 @@
 
     public static class UserMessageConstants
     {
-        public const string InfoMessage = "message.info";
-        public const string SuccessMessage = "message.success";
-        public const string WarningMessage = "message.warning";
-        public const string ErrorMessage = "message.error";
+        public const string InfoMessage = "Message.Info";
+        public const string SuccessMessage = "Message.Success";
+        public const string WarningMessage = "Message.Warning";
+        public const string ErrorMessage = "Message.Error";
     }
 }
