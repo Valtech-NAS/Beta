@@ -4,7 +4,6 @@
     using Domain.Entities.Locations;
     using Search;
 
-    // TODO: NOTIMPL: Flush out API. need to understand valid combinations of location name, postcode, distance, keyword, etc. (include national)
     public interface IVacancySearchService
     {
         /// <summary>

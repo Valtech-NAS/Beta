@@ -8,7 +8,6 @@
         Candidate = 1,
         Employer = 2,
         VacancyManager = 4,
-        Provider = 8,
-        // TODO: NOTIMPL: add all user roles
+        Provider = 8
     }
 }

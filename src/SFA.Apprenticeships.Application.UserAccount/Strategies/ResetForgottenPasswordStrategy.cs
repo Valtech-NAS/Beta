@@ -43,7 +43,6 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             if (user == null)
             {
-                // TODO: why not just allow _userReadRepository to throw?
                 throw new CustomException("Unknown user name", ErrorCodes.UnknownUserError);
             }
 

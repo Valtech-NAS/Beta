@@ -20,6 +20,7 @@
             if (user == null)
             {
                 // TODO: AG: do not like to silently consume issues like 'user not found'.
+                // TODO: MG: log as warning
                 return;
             }
 
