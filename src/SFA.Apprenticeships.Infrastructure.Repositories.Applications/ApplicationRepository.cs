@@ -102,7 +102,7 @@
 
             return applicationDetailsList
                 .Where(filter)
-                .SingleOrDefault(); // we expect zero or 1
+                .FirstOrDefault(); // we expect zero or 1
         }
 
         public ApplicationDetail Get(Guid id)
