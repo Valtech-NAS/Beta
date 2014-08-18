@@ -46,11 +46,15 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="SpecBind">
-      <HintPath>..\packages\SpecBind.1.3.0.109\lib\net45\SpecBind.dll</HintPath>
+    <Reference Include="SpecBind, Version=1.3.0.116, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SpecBind.1.3.0.116\lib\net45\SpecBind.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="SpecBind.Selenium">
-      <HintPath>..\packages\SpecBind.Selenium.1.3.0.109\lib\net45\SpecBind.Selenium.dll</HintPath>
+    <Reference Include="SpecBind.Selenium, Version=1.3.0.116, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SpecBind.Selenium.1.3.0.116\lib\net45\SpecBind.Selenium.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.dll</HintPath>
