@@ -29,7 +29,7 @@
             _loginViewModelServerValidator = loginViewModelServerValidator;
             _accountUnlockViewModelServerValidator = accountUnlockViewModelServerValidator;
             _candidateServiceProvider = candidateServiceProvider;
-            _authenticationTicketService = authenticationTicketService;
+            _authenticationTicketService = authenticationTicketService; //todo: shouldn't be in here, move to Provider layer
         }
 
         [HttpGet]
@@ -50,7 +50,7 @@
         [HttpPost]
         public ActionResult Index(LoginViewModel model)
         {
-            // todo: refactor - too much going on here ILoginServiceProvider
+            // todo: refactor - too much going on here Provider layer
             // Validate view model.
             var validationResult = _loginViewModelServerValidator.Validate(model);
 
@@ -107,7 +107,7 @@
         [HttpPost]
         public ActionResult Unlock(AccountUnlockViewModel model)
         {
-            // todo: refactor - too much going on here ILoginServiceProvider
+            // todo: refactor - too much going on here Provider layer
             var validationResult = _accountUnlockViewModelServerValidator.Validate(model);
 
             if (!validationResult.IsValid)
@@ -162,7 +162,7 @@
 
         private ActionResult RedirectOnAuthenticated(Candidate candidate, UserStatuses userStatus)
         {
-            // todo: refactor - too much going on here ILoginServiceProvider
+            // todo: refactor - too much going on here Provider layer
             if (userStatus == UserStatuses.PendingActivation)
             {
                 return RedirectToAction("Activation", "Register");
