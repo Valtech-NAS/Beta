@@ -23,7 +23,7 @@ Scenario: As a candidate I can login with a registered and activated email addre
 		| EmailAddress | {EmailAddressToken} |
 		| Password     | {PasswordToken}     |
 	And I choose SignInButton
-	Then I am on the VacancySearchPage page
+	Then I am on the MyApplicationsPage page
 
 Scenario: As a candidate I must provide an email address and password
 	Given I navigated to the LoginPage page

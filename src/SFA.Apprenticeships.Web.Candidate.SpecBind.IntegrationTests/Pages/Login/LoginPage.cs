@@ -17,7 +17,7 @@
         [ElementLocator(Id = "Password")]
         public IWebElement Password { get; set; }
 
-        [ElementLocator(Id = "LoginMessageText")]
+        [ElementLocator(Id = "SuccessMessageText")]
         public IWebElement LoginMessageText { get; set; }
 
         [ElementLocator(Id = "sign-in-button")]
