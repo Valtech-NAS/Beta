@@ -9,8 +9,8 @@
     {
         public EducationViewModelClientValidator()
         {
-            this.AddSaveRules();
             this.AddMandatoryRules();
+            this.AddSaveRules();
         }
     }
 
@@ -18,9 +18,8 @@
     {
         public EducationViewModelServerValidator()
         {
-            this.AddSaveRules();
             this.AddMandatoryRules();
-            this.AddServerRules();
+            this.AddSaveRules();
         }
     }
 
@@ -49,17 +48,6 @@
                 .WithMessage(EducationViewModelMessages.ToYearMessages.RequiredErrorText);
         }
 
-        internal static void AddServerRules(this AbstractValidator<EducationViewModel> validator)
-        {
-            validator.RuleFor(x => x.ToYear)
-                .Must(BeBeforeOrEqual)
-                .WithMessage(EducationViewModelMessages.ToYearMessages.BeforeOrEqualErrorText);
-
-            validator.RuleFor(x => x.FromYear)
-                .Must(BeNowOrInThePast)
-                .WithMessage(EducationViewModelMessages.FromYearMessages.NotInFutureErrorText);
-        }
-
         internal static void AddSaveRules(this AbstractValidator<EducationViewModel> validator)
         {
             validator.RuleFor(x => x.NameOfMostRecentSchoolCollege)
@@ -70,11 +58,15 @@
 
             validator.RuleFor(x => x.FromYear)
                 .Matches(EducationViewModelMessages.FromYearMessages.WhiteListRegularExpression)
-                .WithMessage(EducationViewModelMessages.FromYearMessages.WhiteListErrorText);
+                .WithMessage(EducationViewModelMessages.FromYearMessages.WhiteListErrorText)
+                .Must(BeNowOrInThePast)
+                .WithMessage(EducationViewModelMessages.FromYearMessages.NotInFutureErrorText);
 
             validator.RuleFor(x => x.ToYear)
                 .Matches(EducationViewModelMessages.FromYearMessages.WhiteListRegularExpression)
-                .WithMessage(EducationViewModelMessages.FromYearMessages.WhiteListErrorText);
+                .WithMessage(EducationViewModelMessages.FromYearMessages.WhiteListErrorText)
+                .Must(BeBeforeOrEqual)
+                .WithMessage(EducationViewModelMessages.ToYearMessages.BeforeOrEqualErrorText);
         }
 
         private static bool BeBeforeOrEqual(EducationViewModel instance, string toYear)

@@ -8,14 +8,12 @@
     [TestFixture]
     public class AboutYouViewModelValidatorTests
     {
-        private AboutYouViewModelClientValidator _viewModelClientValidator;
         private AboutYouViewModelServerValidator _viewModelServerValidator;
         private AboutYouViewModelSaveValidator _viewModelSaveValidator;
 
         [SetUp]
         public void Setup()
         {
-            _viewModelClientValidator = new AboutYouViewModelClientValidator();
             _viewModelSaveValidator = new AboutYouViewModelSaveValidator();
             _viewModelServerValidator = new AboutYouViewModelServerValidator();
         }
