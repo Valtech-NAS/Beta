@@ -21,6 +21,12 @@
 
 @using (Html.BeginForm("Apply", "Application", new {id = Model.VacancyId}, FormMethod.Post))
 {
+    <div class="form-group">
+        @if (Model.DateUpdated.HasValue)
+        {
+            <p id="applicationSavedTopMessage">Saved at @Model.DateUpdated.Value.ToLocalTime().ToString("h:mm:ss tt") on @Model.DateUpdated.Value.ToString("d/M/yyyy") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
+        }
+    </div>
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.DisplayFor(m => m.Candidate)
@@ -182,7 +188,7 @@
                         </div>
                         <div class="form-group form-group-compound" data-bind="parentvalElement: mainDuties">
                             <label for="work-role" class="form-label">Main duties</label>
-                            <textarea rows="3" class="form-control" id="work-role" data-val-length-max="200" data-bind="value: mainDuties" maxlength="200"></textarea>
+                            <textarea rows="3" class="form-control" id="work-role" data-val-length-max="200" data-bind="value: mainDuties"></textarea>
                             <span class="form-hint maxchar-count">200</span>
                         </div>
                         <div class="inline-fixed">
@@ -268,7 +274,7 @@
                                                     </div> 
                                                     <span class="cell-span" data-bind="visible: showEditButton, text: itemJobTitle"></span>
                                                     <div></div>
-                                                    <textarea class="form-control" rows="3" data-bind="value: itemMainDuties, visible: !showEditButton(),attr:{name:'Candidate.WorkExperience[' + $index() +'].Description'}" maxlength="200"></textarea>
+                                                    <textarea class="form-control" rows="3" data-bind="value: itemMainDuties, visible: !showEditButton(),attr:{name:'Candidate.WorkExperience[' + $index() +'].Description'}" ></textarea>
                                                     <span class="cell-span" data-bind="visible: showEditButton, text: itemMainDuties"></span>
                                                 </td>
                                             </tr>
