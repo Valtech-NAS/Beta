@@ -239,7 +239,7 @@
     };
     ko.validation.registerExtenders();
 
-    var workExperienceItemModel = function (itemEmployer, itemJobTitle, itemDuties, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemIsCurrentEmployment) {
+    var workExperienceItemModel = function (itemEmployer, itemJobTitle, itemDuties, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemIsCurrentEmployment, itemCurrentYear) {
 
         var self = this;
 
@@ -255,9 +255,17 @@
         });
 
         self.itemIsCurrentEmployment = ko.observable(itemIsCurrentEmployment);
+        self.itemCurrentYear = ko.observable(itemCurrentYear);
 
         self.itemFromMonth = ko.observable(itemFromMonth).extend({ required: { message: "From month is required" } });
-        self.itemFromYear = ko.observable(itemFromYear).extend({ required: { message: "From year is required" }, number:true });
+        self.itemFromYear = ko.observable(itemFromYear).extend({
+             required: { message: "From year is required" }, number:true
+        }).extend({
+            max: {
+                message: "'From Year' must not be in the future",
+                params: self.itemCurrentYear
+            }
+        });
 
         self.itemToMonth = ko.observable(itemToMonth).extend({
             required: {
@@ -283,6 +291,14 @@
                 },
                 message: "'To Year' must be greater than or equal to 'From Year'",
                 params: self.itemFromYear,
+                onlyIf: function () {
+                    return (self.itemIsCurrentEmployment() === false);
+                }
+            }
+        }).extend({
+            max: {
+                message: "'To Year' must not be in the future",
+                params: self.itemCurrentYear,
                 onlyIf: function () {
                     return (self.itemIsCurrentEmployment() === false);
                 }
@@ -355,9 +371,17 @@
         });
 
         self.isCurrentEmployment = ko.observable(false);
+        self.currentYear = ko.observable();
 
         self.fromMonth = ko.observable().extend({ required: { message: "From month is required" } });
-        self.fromYear = ko.observable().extend({ required: { message: "From year is required" }, number: true });
+        self.fromYear = ko.observable().extend({
+             required: { message: "From year is required" }, number: true
+        }).extend({
+            max: {
+                message: "'From Year' must not be in the future",
+                params: self.currentYear               
+            }
+        });
 
         self.toMonth = ko.observable().extend({
             required: {
@@ -390,7 +414,15 @@
                     return (self.isCurrentEmployment() === false);
                 }
             }
-        });
+        }).extend({
+            max: {
+                message: "'To Year' must not be in the future",
+                params: self.currentYear,
+                onlyIf: function () {
+                    return (self.isCurrentEmployment() === false);
+                }
+            }
+        });;
 
         self.toDateReadonly = ko.observable(undefined);
 
@@ -420,7 +452,7 @@
                     toYear = 0;
                 }
 
-                var experience = new workExperienceItemModel(self.employer(), self.jobTitle(), self.mainDuties(), self.fromMonth(), self.fromYear(), toMonth, toYear, self.isCurrentEmployment());
+                var experience = new workExperienceItemModel(self.employer(), self.jobTitle(), self.mainDuties(), self.fromMonth(), self.fromYear(), toMonth, toYear, self.isCurrentEmployment(), self.currentYear());
                 self.workExperiences.push(experience);
 
                 self.employer("");
@@ -469,7 +501,7 @@
                     myToYear = null;
                 }
 
-                var experienceItemModel = new workExperienceItemModel(item.Employer, item.JobTitle, item.Description, item.FromMonth, item.FromYear, item.ToMonth, myToYear, currentEmployer);
+                var experienceItemModel = new workExperienceItemModel(item.Employer, item.JobTitle, item.Description, item.FromMonth, item.FromYear, item.ToMonth, myToYear, currentEmployer, self.currentYear());
                 self.workExperiences.push(experienceItemModel);
             });
         
@@ -503,7 +535,7 @@
     $(function() {
 
         var model = new qualificationViewModel();
-
+       
         if (window.getQualificationData()) {
             model.getqualifications(window.getQualificationData());
         }
@@ -511,6 +543,10 @@
         ko.applyBindings(model, document.getElementById('applyQualifications'));
 
         var experienceModel = new workExperienceViewModel();
+
+        if (window.getCurrentYear()) {
+            experienceModel.currentYear(window.getCurrentYear());
+        }
 
         if (window.getWorkExperienceData()) {
             experienceModel.getWorkExperiences(window.getWorkExperienceData());

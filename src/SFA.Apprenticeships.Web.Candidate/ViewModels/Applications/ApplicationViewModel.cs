@@ -21,5 +21,7 @@
         public DateTime? DateUpdated { get; set; }
         public ApplicationAction ApplicationAction { get; set; }
         public int VacancyId { get; set; }
+
+        public int CurrentYear = DateTime.Now.Year;
     }
 }

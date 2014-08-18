@@ -46,6 +46,11 @@
         {
             var model = GetApplicationViewModel(candidateId, submittedApplicationViewModel.VacancyId);
 
+            if (!submittedApplicationViewModel.Candidate.AboutYou.RequiresSupportForInterview)
+            {
+                submittedApplicationViewModel.Candidate.AboutYou.AnythingWeCanDoToSupportYourInterview = string.Empty;
+            }
+
             model.Candidate.AboutYou = submittedApplicationViewModel.Candidate.AboutYou;
             model.Candidate.Education = submittedApplicationViewModel.Candidate.Education;
             model.Candidate.HasQualifications = submittedApplicationViewModel.Candidate.HasQualifications;
