@@ -248,7 +248,7 @@
         self.itemMainDuties = ko.observable(itemDuties).extend({
              required: { message: "Enter some of your main duties" }
         }).extend({
-            max: {
+            maxLength: {
                 message: "Main duties must not exceed 200 characters",
                 params: 200
             }
@@ -330,7 +330,7 @@
         self.employer = ko.observable().extend({
              required: { message: "Employer is required" }
         }).extend({
-            max: {
+            maxLength: {
                 message: "'Employer' must not exceed 50 characters",
                 params: 50
             }
@@ -339,7 +339,7 @@
         self.jobTitle = ko.observable().extend({
              required: { message: "Job Title is required" }
         }).extend({
-            max: {
+            maxLength: {
                 message: "'Job Title' must not exceed 50 characters",
                 params:50
             }
@@ -348,7 +348,7 @@
         self.mainDuties = ko.observable().extend({
              required: { message: "Enter some of your main duties" }
         }).extend({
-            max: {
+            maxLength: {
                 message: "'Main duties' must not exceed 200 characters",
                 params: 200
             }
