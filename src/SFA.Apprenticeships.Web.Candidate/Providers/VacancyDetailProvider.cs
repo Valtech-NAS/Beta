@@ -29,8 +29,9 @@
         {
             var vacancyDetail = _vacancyDataService.GetVacancyDetails(vacancyId);
 
-            if (vacancyDetail == null)
+            if (vacancyDetail == null || vacancyDetail.ClosingDate < DateTime.Today)
             {
+                // Vacancy not found or expired.
                 return null;
             }
 

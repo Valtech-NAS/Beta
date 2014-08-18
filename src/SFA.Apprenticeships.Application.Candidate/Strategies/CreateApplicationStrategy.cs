@@ -56,9 +56,10 @@
         {
             var vacancyDetails = GetVacancyDetails(vacancyId);
 
-            if (DateTime.Now > vacancyDetails.ClosingDate)
+            if (vacancyDetails.ClosingDate < DateTime.Today)
             {
-                throw new CustomException("Vacancy has expired can't create a new application",
+                throw new CustomException(
+                    "Vacancy has expired, cannot create a new application.",
                     ErrorCodes.VacancyExpired);
             }
 

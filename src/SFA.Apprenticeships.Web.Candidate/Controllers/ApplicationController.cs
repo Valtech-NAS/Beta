@@ -40,7 +40,7 @@
         {
             var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-            if (model == null || model.VacancyDetail.ClosingDate < DateTime.Today)
+            if (model == null)
             {
                 return new VacancyNotFoundResult();
             }
