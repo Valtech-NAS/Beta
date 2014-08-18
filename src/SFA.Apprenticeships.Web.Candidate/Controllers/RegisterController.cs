@@ -207,7 +207,7 @@
             if (validationResult.IsValid)
             {
                 var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
-                SetUserMessage(AccountUnlockPageMessages.AccountUnlockedText);
+                SetUserMessage(PasswordResetPageMessages.SuccessPasswordReset);
                 return SetAuthenticationCookieAndRedirectToAction(candidate);
             }
 
