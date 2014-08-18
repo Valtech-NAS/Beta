@@ -72,6 +72,18 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
             "andidateInfo", ReplyAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetC" +
             "andidateInfoResponse")]
         System.Threading.Tasks.Task<SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetCandidateInfoResponse1> GetCandidateInfoAsync(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetCandidateInfoRequest request);
+        
+        // CODEGEN: Generating message contract since the operation GetVacancyDetails is neither RPC nor document wrapped.
+        [System.ServiceModel.OperationContractAttribute(Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetV" +
+            "acancyDetails", ReplyAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetV" +
+            "acancyDetailsResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsResponse1 GetVacancyDetails(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetV" +
+            "acancyDetails", ReplyAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetV" +
+            "acancyDetailsResponse")]
+        System.Threading.Tasks.Task<SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsResponse1> GetVacancyDetailsAsync(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsRequest request);
     }
     
     /// <remarks/>
@@ -267,6 +279,2573 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
             set {
                 this.attendedToField = value;
                 this.RaisePropertyChanged("AttendedTo");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes")]
+    public partial class LocalAuthority : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string codeNameField;
+        
+        private int localAuthorityIdField;
+        
+        private bool localAuthorityIdFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public string CodeName {
+            get {
+                return this.codeNameField;
+            }
+            set {
+                this.codeNameField = value;
+                this.RaisePropertyChanged("CodeName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int LocalAuthorityId {
+            get {
+                return this.localAuthorityIdField;
+            }
+            set {
+                this.localAuthorityIdField = value;
+                this.RaisePropertyChanged("LocalAuthorityId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LocalAuthorityIdSpecified {
+            get {
+                return this.localAuthorityIdFieldSpecified;
+            }
+            set {
+                this.localAuthorityIdFieldSpecified = value;
+                this.RaisePropertyChanged("LocalAuthorityIdSpecified");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes")]
+    public partial class GeographicRegion : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string codeNameField;
+        
+        private string fullNameField;
+        
+        private int geographicRegionIdField;
+        
+        private bool geographicRegionIdFieldSpecified;
+        
+        private string shortNameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public string CodeName {
+            get {
+                return this.codeNameField;
+            }
+            set {
+                this.codeNameField = value;
+                this.RaisePropertyChanged("CodeName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=1)]
+        public string FullName {
+            get {
+                return this.fullNameField;
+            }
+            set {
+                this.fullNameField = value;
+                this.RaisePropertyChanged("FullName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int GeographicRegionId {
+            get {
+                return this.geographicRegionIdField;
+            }
+            set {
+                this.geographicRegionIdField = value;
+                this.RaisePropertyChanged("GeographicRegionId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool GeographicRegionIdSpecified {
+            get {
+                return this.geographicRegionIdFieldSpecified;
+            }
+            set {
+                this.geographicRegionIdFieldSpecified = value;
+                this.RaisePropertyChanged("GeographicRegionIdSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
+        public string ShortName {
+            get {
+                return this.shortNameField;
+            }
+            set {
+                this.shortNameField = value;
+                this.RaisePropertyChanged("ShortName");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes")]
+    public partial class AddressDetails : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string addressLine1Field;
+        
+        private string addressLine2Field;
+        
+        private string addressLine3Field;
+        
+        private string addressLine4Field;
+        
+        private string addressLine5Field;
+        
+        private string countyField;
+        
+        private string countyNameField;
+        
+        private GeographicRegion geographicRegionDetailsField;
+        
+        private int gridEastMField;
+        
+        private bool gridEastMFieldSpecified;
+        
+        private int gridNorthMField;
+        
+        private bool gridNorthMFieldSpecified;
+        
+        private decimal latitudeField;
+        
+        private bool latitudeFieldSpecified;
+        
+        private LocalAuthority localAuthorityDetailField;
+        
+        private decimal longitudeField;
+        
+        private bool longitudeFieldSpecified;
+        
+        private string pafAddressIdField;
+        
+        private string postCodeField;
+        
+        private string townField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public string AddressLine1 {
+            get {
+                return this.addressLine1Field;
+            }
+            set {
+                this.addressLine1Field = value;
+                this.RaisePropertyChanged("AddressLine1");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=1)]
+        public string AddressLine2 {
+            get {
+                return this.addressLine2Field;
+            }
+            set {
+                this.addressLine2Field = value;
+                this.RaisePropertyChanged("AddressLine2");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=2)]
+        public string AddressLine3 {
+            get {
+                return this.addressLine3Field;
+            }
+            set {
+                this.addressLine3Field = value;
+                this.RaisePropertyChanged("AddressLine3");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
+        public string AddressLine4 {
+            get {
+                return this.addressLine4Field;
+            }
+            set {
+                this.addressLine4Field = value;
+                this.RaisePropertyChanged("AddressLine4");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
+        public string AddressLine5 {
+            get {
+                return this.addressLine5Field;
+            }
+            set {
+                this.addressLine5Field = value;
+                this.RaisePropertyChanged("AddressLine5");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
+        public string County {
+            get {
+                return this.countyField;
+            }
+            set {
+                this.countyField = value;
+                this.RaisePropertyChanged("County");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
+        public string CountyName {
+            get {
+                return this.countyNameField;
+            }
+            set {
+                this.countyNameField = value;
+                this.RaisePropertyChanged("CountyName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
+        public GeographicRegion GeographicRegionDetails {
+            get {
+                return this.geographicRegionDetailsField;
+            }
+            set {
+                this.geographicRegionDetailsField = value;
+                this.RaisePropertyChanged("GeographicRegionDetails");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public int GridEastM {
+            get {
+                return this.gridEastMField;
+            }
+            set {
+                this.gridEastMField = value;
+                this.RaisePropertyChanged("GridEastM");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool GridEastMSpecified {
+            get {
+                return this.gridEastMFieldSpecified;
+            }
+            set {
+                this.gridEastMFieldSpecified = value;
+                this.RaisePropertyChanged("GridEastMSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public int GridNorthM {
+            get {
+                return this.gridNorthMField;
+            }
+            set {
+                this.gridNorthMField = value;
+                this.RaisePropertyChanged("GridNorthM");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool GridNorthMSpecified {
+            get {
+                return this.gridNorthMFieldSpecified;
+            }
+            set {
+                this.gridNorthMFieldSpecified = value;
+                this.RaisePropertyChanged("GridNorthMSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public decimal Latitude {
+            get {
+                return this.latitudeField;
+            }
+            set {
+                this.latitudeField = value;
+                this.RaisePropertyChanged("Latitude");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LatitudeSpecified {
+            get {
+                return this.latitudeFieldSpecified;
+            }
+            set {
+                this.latitudeFieldSpecified = value;
+                this.RaisePropertyChanged("LatitudeSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=11)]
+        public LocalAuthority LocalAuthorityDetail {
+            get {
+                return this.localAuthorityDetailField;
+            }
+            set {
+                this.localAuthorityDetailField = value;
+                this.RaisePropertyChanged("LocalAuthorityDetail");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public decimal Longitude {
+            get {
+                return this.longitudeField;
+            }
+            set {
+                this.longitudeField = value;
+                this.RaisePropertyChanged("Longitude");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LongitudeSpecified {
+            get {
+                return this.longitudeFieldSpecified;
+            }
+            set {
+                this.longitudeFieldSpecified = value;
+                this.RaisePropertyChanged("LongitudeSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=13)]
+        public string PafAddressId {
+            get {
+                return this.pafAddressIdField;
+            }
+            set {
+                this.pafAddressIdField = value;
+                this.RaisePropertyChanged("PafAddressId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=14)]
+        public string PostCode {
+            get {
+                return this.postCodeField;
+            }
+            set {
+                this.postCodeField = value;
+                this.RaisePropertyChanged("PostCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=15)]
+        public string Town {
+            get {
+                return this.townField;
+            }
+            set {
+                this.townField = value;
+                this.RaisePropertyChanged("Town");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes")]
+    public partial class ApprenticeshipOccupation : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int apprenticeshipOccupationIdField;
+        
+        private bool apprenticeshipOccupationIdFieldSpecified;
+        
+        private System.DateTime closedDateField;
+        
+        private bool closedDateFieldSpecified;
+        
+        private string descriptionField;
+        
+        private bool isCeasableField;
+        
+        private bool isCeasableFieldSpecified;
+        
+        private bool isDeletableField;
+        
+        private bool isDeletableFieldSpecified;
+        
+        private string shortNameField;
+        
+        private string statusTypeField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int ApprenticeshipOccupationId {
+            get {
+                return this.apprenticeshipOccupationIdField;
+            }
+            set {
+                this.apprenticeshipOccupationIdField = value;
+                this.RaisePropertyChanged("ApprenticeshipOccupationId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ApprenticeshipOccupationIdSpecified {
+            get {
+                return this.apprenticeshipOccupationIdFieldSpecified;
+            }
+            set {
+                this.apprenticeshipOccupationIdFieldSpecified = value;
+                this.RaisePropertyChanged("ApprenticeshipOccupationIdSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public System.DateTime ClosedDate {
+            get {
+                return this.closedDateField;
+            }
+            set {
+                this.closedDateField = value;
+                this.RaisePropertyChanged("ClosedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ClosedDateSpecified {
+            get {
+                return this.closedDateFieldSpecified;
+            }
+            set {
+                this.closedDateFieldSpecified = value;
+                this.RaisePropertyChanged("ClosedDateSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=2)]
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+                this.RaisePropertyChanged("Description");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public bool IsCeasable {
+            get {
+                return this.isCeasableField;
+            }
+            set {
+                this.isCeasableField = value;
+                this.RaisePropertyChanged("IsCeasable");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsCeasableSpecified {
+            get {
+                return this.isCeasableFieldSpecified;
+            }
+            set {
+                this.isCeasableFieldSpecified = value;
+                this.RaisePropertyChanged("IsCeasableSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public bool IsDeletable {
+            get {
+                return this.isDeletableField;
+            }
+            set {
+                this.isDeletableField = value;
+                this.RaisePropertyChanged("IsDeletable");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsDeletableSpecified {
+            get {
+                return this.isDeletableFieldSpecified;
+            }
+            set {
+                this.isDeletableFieldSpecified = value;
+                this.RaisePropertyChanged("IsDeletableSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
+        public string ShortName {
+            get {
+                return this.shortNameField;
+            }
+            set {
+                this.shortNameField = value;
+                this.RaisePropertyChanged("ShortName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
+        public string StatusType {
+            get {
+                return this.statusTypeField;
+            }
+            set {
+                this.statusTypeField = value;
+                this.RaisePropertyChanged("StatusType");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes")]
+    public partial class ApprenticeshipFramework : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int apprenticeshipFrameworkIdField;
+        
+        private bool apprenticeshipFrameworkIdFieldSpecified;
+        
+        private int apprenticeshipOccupationIdField;
+        
+        private bool apprenticeshipOccupationIdFieldSpecified;
+        
+        private System.DateTime closedDateField;
+        
+        private bool closedDateFieldSpecified;
+        
+        private string descriptionField;
+        
+        private bool isCeasableField;
+        
+        private bool isCeasableFieldSpecified;
+        
+        private bool isDeletableField;
+        
+        private bool isDeletableFieldSpecified;
+        
+        private bool isPendingClosableField;
+        
+        private bool isPendingClosableFieldSpecified;
+        
+        private int newApprenticeshipOccupationIdField;
+        
+        private bool newApprenticeshipOccupationIdFieldSpecified;
+        
+        private int previousApprenticeshipOccupationIdField;
+        
+        private bool previousApprenticeshipOccupationIdFieldSpecified;
+        
+        private string shortNameField;
+        
+        private string statusField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int ApprenticeshipFrameworkId {
+            get {
+                return this.apprenticeshipFrameworkIdField;
+            }
+            set {
+                this.apprenticeshipFrameworkIdField = value;
+                this.RaisePropertyChanged("ApprenticeshipFrameworkId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ApprenticeshipFrameworkIdSpecified {
+            get {
+                return this.apprenticeshipFrameworkIdFieldSpecified;
+            }
+            set {
+                this.apprenticeshipFrameworkIdFieldSpecified = value;
+                this.RaisePropertyChanged("ApprenticeshipFrameworkIdSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int ApprenticeshipOccupationId {
+            get {
+                return this.apprenticeshipOccupationIdField;
+            }
+            set {
+                this.apprenticeshipOccupationIdField = value;
+                this.RaisePropertyChanged("ApprenticeshipOccupationId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ApprenticeshipOccupationIdSpecified {
+            get {
+                return this.apprenticeshipOccupationIdFieldSpecified;
+            }
+            set {
+                this.apprenticeshipOccupationIdFieldSpecified = value;
+                this.RaisePropertyChanged("ApprenticeshipOccupationIdSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public System.DateTime ClosedDate {
+            get {
+                return this.closedDateField;
+            }
+            set {
+                this.closedDateField = value;
+                this.RaisePropertyChanged("ClosedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ClosedDateSpecified {
+            get {
+                return this.closedDateFieldSpecified;
+            }
+            set {
+                this.closedDateFieldSpecified = value;
+                this.RaisePropertyChanged("ClosedDateSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+                this.RaisePropertyChanged("Description");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public bool IsCeasable {
+            get {
+                return this.isCeasableField;
+            }
+            set {
+                this.isCeasableField = value;
+                this.RaisePropertyChanged("IsCeasable");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsCeasableSpecified {
+            get {
+                return this.isCeasableFieldSpecified;
+            }
+            set {
+                this.isCeasableFieldSpecified = value;
+                this.RaisePropertyChanged("IsCeasableSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public bool IsDeletable {
+            get {
+                return this.isDeletableField;
+            }
+            set {
+                this.isDeletableField = value;
+                this.RaisePropertyChanged("IsDeletable");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsDeletableSpecified {
+            get {
+                return this.isDeletableFieldSpecified;
+            }
+            set {
+                this.isDeletableFieldSpecified = value;
+                this.RaisePropertyChanged("IsDeletableSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public bool IsPendingClosable {
+            get {
+                return this.isPendingClosableField;
+            }
+            set {
+                this.isPendingClosableField = value;
+                this.RaisePropertyChanged("IsPendingClosable");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsPendingClosableSpecified {
+            get {
+                return this.isPendingClosableFieldSpecified;
+            }
+            set {
+                this.isPendingClosableFieldSpecified = value;
+                this.RaisePropertyChanged("IsPendingClosableSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public int NewApprenticeshipOccupationId {
+            get {
+                return this.newApprenticeshipOccupationIdField;
+            }
+            set {
+                this.newApprenticeshipOccupationIdField = value;
+                this.RaisePropertyChanged("NewApprenticeshipOccupationId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool NewApprenticeshipOccupationIdSpecified {
+            get {
+                return this.newApprenticeshipOccupationIdFieldSpecified;
+            }
+            set {
+                this.newApprenticeshipOccupationIdFieldSpecified = value;
+                this.RaisePropertyChanged("NewApprenticeshipOccupationIdSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public int PreviousApprenticeshipOccupationId {
+            get {
+                return this.previousApprenticeshipOccupationIdField;
+            }
+            set {
+                this.previousApprenticeshipOccupationIdField = value;
+                this.RaisePropertyChanged("PreviousApprenticeshipOccupationId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PreviousApprenticeshipOccupationIdSpecified {
+            get {
+                return this.previousApprenticeshipOccupationIdFieldSpecified;
+            }
+            set {
+                this.previousApprenticeshipOccupationIdFieldSpecified = value;
+                this.RaisePropertyChanged("PreviousApprenticeshipOccupationIdSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=9)]
+        public string ShortName {
+            get {
+                return this.shortNameField;
+            }
+            set {
+                this.shortNameField = value;
+                this.RaisePropertyChanged("ShortName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
+        public string Status {
+            get {
+                return this.statusField;
+            }
+            set {
+                this.statusField = value;
+                this.RaisePropertyChanged("Status");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes")]
+    public partial class ApplicationLock : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string lockedByUserField;
+        
+        private System.DateTime lockExpiryDateTimeField;
+        
+        private bool lockExpiryDateTimeFieldSpecified;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public string LockedByUser {
+            get {
+                return this.lockedByUserField;
+            }
+            set {
+                this.lockedByUserField = value;
+                this.RaisePropertyChanged("LockedByUser");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public System.DateTime LockExpiryDateTime {
+            get {
+                return this.lockExpiryDateTimeField;
+            }
+            set {
+                this.lockExpiryDateTimeField = value;
+                this.RaisePropertyChanged("LockExpiryDateTime");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LockExpiryDateTimeSpecified {
+            get {
+                return this.lockExpiryDateTimeFieldSpecified;
+            }
+            set {
+                this.lockExpiryDateTimeFieldSpecified = value;
+                this.RaisePropertyChanged("LockExpiryDateTimeSpecified");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes")]
+    public partial class Vacancy : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string applicationInstructionsField;
+        
+        private ApplicationLock applicationLockField;
+        
+        private bool applyViaEmployerWebsiteField;
+        
+        private bool applyViaEmployerWebsiteFieldSpecified;
+        
+        private string apprenticeshipDurationField;
+        
+        private ApprenticeshipFramework apprenticeshipFrameworkField;
+        
+        private ApprenticeshipOccupation apprenticeshipOccupationField;
+        
+        private bool apprFrameworkNewSectorField;
+        
+        private bool apprFrameworkNewSectorFieldSpecified;
+        
+        private int apprFrameworkSuccessRateField;
+        
+        private bool apprFrameworkSuccessRateFieldSpecified;
+        
+        private int attachedImageIdField;
+        
+        private bool attachedImageIdFieldSpecified;
+        
+        private string beingSupportByField;
+        
+        private System.DateTime closingDateField;
+        
+        private bool closingDateFieldSpecified;
+        
+        private string contactForCandidateField;
+        
+        private string contactPersonField;
+        
+        private string contractedProviderNameField;
+        
+        private string contractOwnerField;
+        
+        private string deliveredByField;
+        
+        private string deliveryOrganisationField;
+        
+        private bool employerAnonymousField;
+        
+        private bool employerAnonymousFieldSpecified;
+        
+        private string employerAnonymousDescriptionField;
+        
+        private string employerDescriptionField;
+        
+        private int employerIdField;
+        
+        private bool employerIdFieldSpecified;
+        
+        private string employerNameField;
+        
+        private string employerRecuitmentWebsiteField;
+        
+        private string employerWebsiteField;
+        
+        private string expectedDurationField;
+        
+        private string fullDescriptionField;
+        
+        private string futureProspectsField;
+        
+        private string importantOtherInfoField;
+        
+        private System.DateTime interviewFromDateField;
+        
+        private bool interviewFromDateFieldSpecified;
+        
+        private bool isDisableAllowedField;
+        
+        private bool isDisableAllowedFieldSpecified;
+        
+        private bool isNasProviderField;
+        
+        private bool isNasProviderFieldSpecified;
+        
+        private bool isProviderInfoUpToDateField;
+        
+        private bool isProviderInfoUpToDateFieldSpecified;
+        
+        private bool isRecruitmentAgncyAnonymousField;
+        
+        private bool isRecruitmentAgncyAnonymousFieldSpecified;
+        
+        private bool isSmallEmployerWageIncentiveField;
+        
+        private bool isSmallEmployerWageIncentiveFieldSpecified;
+        
+        private bool isTrackingAllowedField;
+        
+        private bool isTrackingAllowedFieldSpecified;
+        
+        private string lastUpdatedByField;
+        
+        private string learningDeliverySiteContactDetailsForCandidateField;
+        
+        private string learningDeliverySiteDescriptionField;
+        
+        private string learningDeliverySiteNameField;
+        
+        private int learningDeliverySiteStatusField;
+        
+        private bool learningDeliverySiteStatusFieldSpecified;
+        
+        private int learningProviderSectorPassRateField;
+        
+        private bool learningProviderSectorPassRateFieldSpecified;
+        
+        private System.DateTime lockedForSupportUntilField;
+        
+        private bool lockedForSupportUntilFieldSpecified;
+        
+        private int masterVacancyIdField;
+        
+        private bool masterVacancyIdFieldSpecified;
+        
+        private System.Nullable<int> noOfOfflineApplicantsField;
+        
+        private bool noOfOfflineApplicantsFieldSpecified;
+        
+        private System.Nullable<int> noOfOfflineSystemApplicationsField;
+        
+        private bool noOfOfflineSystemApplicationsFieldSpecified;
+        
+        private bool notifyCandidatesField;
+        
+        private bool notifyCandidatesFieldSpecified;
+        
+        private int numberOfPositionsField;
+        
+        private bool numberOfPositionsFieldSpecified;
+        
+        private bool onlineUsingEmployeesField;
+        
+        private bool onlineUsingEmployeesFieldSpecified;
+        
+        private bool onlineUsingNavmsField;
+        
+        private bool onlineUsingNavmsFieldSpecified;
+        
+        private string personalQualitiesField;
+        
+        private System.DateTime possibleStartDateField;
+        
+        private bool possibleStartDateFieldSpecified;
+        
+        private string qualificationRequiredField;
+        
+        private string realityCheckField;
+        
+        private ArrayOfKeyValueOfstringstringKeyValueOfstringstring[] reviewCommentsField;
+        
+        private string shortDescriptionField;
+        
+        private string skillsRequiredField;
+        
+        private string statusField;
+        
+        private string supplementaryQuestion1Field;
+        
+        private string supplementaryQuestion2Field;
+        
+        private string tradingNameField;
+        
+        private string trainingProviderDescField;
+        
+        private int trainingProviderIdField;
+        
+        private bool trainingProviderIdFieldSpecified;
+        
+        private string trainingProviderNameField;
+        
+        private string trainingRequiredField;
+        
+        private AddressDetails vacancyAddressField;
+        
+        private int vacancyIdField;
+        
+        private bool vacancyIdFieldSpecified;
+        
+        private string vacancyLocationTypeField;
+        
+        private string vacancyManagerField;
+        
+        private string vacancyManagerTradingNameField;
+        
+        private string vacancyOwnerField;
+        
+        private System.DateTime vacancyPostedDateField;
+        
+        private bool vacancyPostedDateFieldSpecified;
+        
+        private int vacancyReferenceField;
+        
+        private bool vacancyReferenceFieldSpecified;
+        
+        private string vacancyTitleField;
+        
+        private string vacancyTypeField;
+        
+        private string vacancyUrlField;
+        
+        private string wageTextField;
+        
+        private string websiteAddressField;
+        
+        private decimal weeklyWageField;
+        
+        private bool weeklyWageFieldSpecified;
+        
+        private string workingWeekField;
+        
+        private string wageTypeField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public string ApplicationInstructions {
+            get {
+                return this.applicationInstructionsField;
+            }
+            set {
+                this.applicationInstructionsField = value;
+                this.RaisePropertyChanged("ApplicationInstructions");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=1)]
+        public ApplicationLock ApplicationLock {
+            get {
+                return this.applicationLockField;
+            }
+            set {
+                this.applicationLockField = value;
+                this.RaisePropertyChanged("ApplicationLock");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public bool ApplyViaEmployerWebsite {
+            get {
+                return this.applyViaEmployerWebsiteField;
+            }
+            set {
+                this.applyViaEmployerWebsiteField = value;
+                this.RaisePropertyChanged("ApplyViaEmployerWebsite");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ApplyViaEmployerWebsiteSpecified {
+            get {
+                return this.applyViaEmployerWebsiteFieldSpecified;
+            }
+            set {
+                this.applyViaEmployerWebsiteFieldSpecified = value;
+                this.RaisePropertyChanged("ApplyViaEmployerWebsiteSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
+        public string ApprenticeshipDuration {
+            get {
+                return this.apprenticeshipDurationField;
+            }
+            set {
+                this.apprenticeshipDurationField = value;
+                this.RaisePropertyChanged("ApprenticeshipDuration");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
+        public ApprenticeshipFramework ApprenticeshipFramework {
+            get {
+                return this.apprenticeshipFrameworkField;
+            }
+            set {
+                this.apprenticeshipFrameworkField = value;
+                this.RaisePropertyChanged("ApprenticeshipFramework");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
+        public ApprenticeshipOccupation ApprenticeshipOccupation {
+            get {
+                return this.apprenticeshipOccupationField;
+            }
+            set {
+                this.apprenticeshipOccupationField = value;
+                this.RaisePropertyChanged("ApprenticeshipOccupation");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public bool ApprFrameworkNewSector {
+            get {
+                return this.apprFrameworkNewSectorField;
+            }
+            set {
+                this.apprFrameworkNewSectorField = value;
+                this.RaisePropertyChanged("ApprFrameworkNewSector");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ApprFrameworkNewSectorSpecified {
+            get {
+                return this.apprFrameworkNewSectorFieldSpecified;
+            }
+            set {
+                this.apprFrameworkNewSectorFieldSpecified = value;
+                this.RaisePropertyChanged("ApprFrameworkNewSectorSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public int ApprFrameworkSuccessRate {
+            get {
+                return this.apprFrameworkSuccessRateField;
+            }
+            set {
+                this.apprFrameworkSuccessRateField = value;
+                this.RaisePropertyChanged("ApprFrameworkSuccessRate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ApprFrameworkSuccessRateSpecified {
+            get {
+                return this.apprFrameworkSuccessRateFieldSpecified;
+            }
+            set {
+                this.apprFrameworkSuccessRateFieldSpecified = value;
+                this.RaisePropertyChanged("ApprFrameworkSuccessRateSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public int AttachedImageId {
+            get {
+                return this.attachedImageIdField;
+            }
+            set {
+                this.attachedImageIdField = value;
+                this.RaisePropertyChanged("AttachedImageId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool AttachedImageIdSpecified {
+            get {
+                return this.attachedImageIdFieldSpecified;
+            }
+            set {
+                this.attachedImageIdFieldSpecified = value;
+                this.RaisePropertyChanged("AttachedImageIdSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=9)]
+        public string BeingSupportBy {
+            get {
+                return this.beingSupportByField;
+            }
+            set {
+                this.beingSupportByField = value;
+                this.RaisePropertyChanged("BeingSupportBy");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public System.DateTime ClosingDate {
+            get {
+                return this.closingDateField;
+            }
+            set {
+                this.closingDateField = value;
+                this.RaisePropertyChanged("ClosingDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ClosingDateSpecified {
+            get {
+                return this.closingDateFieldSpecified;
+            }
+            set {
+                this.closingDateFieldSpecified = value;
+                this.RaisePropertyChanged("ClosingDateSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=11)]
+        public string ContactForCandidate {
+            get {
+                return this.contactForCandidateField;
+            }
+            set {
+                this.contactForCandidateField = value;
+                this.RaisePropertyChanged("ContactForCandidate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=12)]
+        public string ContactPerson {
+            get {
+                return this.contactPersonField;
+            }
+            set {
+                this.contactPersonField = value;
+                this.RaisePropertyChanged("ContactPerson");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=13)]
+        public string ContractedProviderName {
+            get {
+                return this.contractedProviderNameField;
+            }
+            set {
+                this.contractedProviderNameField = value;
+                this.RaisePropertyChanged("ContractedProviderName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=14)]
+        public string ContractOwner {
+            get {
+                return this.contractOwnerField;
+            }
+            set {
+                this.contractOwnerField = value;
+                this.RaisePropertyChanged("ContractOwner");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=15)]
+        public string DeliveredBy {
+            get {
+                return this.deliveredByField;
+            }
+            set {
+                this.deliveredByField = value;
+                this.RaisePropertyChanged("DeliveredBy");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=16)]
+        public string DeliveryOrganisation {
+            get {
+                return this.deliveryOrganisationField;
+            }
+            set {
+                this.deliveryOrganisationField = value;
+                this.RaisePropertyChanged("DeliveryOrganisation");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
+        public bool EmployerAnonymous {
+            get {
+                return this.employerAnonymousField;
+            }
+            set {
+                this.employerAnonymousField = value;
+                this.RaisePropertyChanged("EmployerAnonymous");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool EmployerAnonymousSpecified {
+            get {
+                return this.employerAnonymousFieldSpecified;
+            }
+            set {
+                this.employerAnonymousFieldSpecified = value;
+                this.RaisePropertyChanged("EmployerAnonymousSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=18)]
+        public string EmployerAnonymousDescription {
+            get {
+                return this.employerAnonymousDescriptionField;
+            }
+            set {
+                this.employerAnonymousDescriptionField = value;
+                this.RaisePropertyChanged("EmployerAnonymousDescription");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=19)]
+        public string EmployerDescription {
+            get {
+                return this.employerDescriptionField;
+            }
+            set {
+                this.employerDescriptionField = value;
+                this.RaisePropertyChanged("EmployerDescription");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        public int EmployerId {
+            get {
+                return this.employerIdField;
+            }
+            set {
+                this.employerIdField = value;
+                this.RaisePropertyChanged("EmployerId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool EmployerIdSpecified {
+            get {
+                return this.employerIdFieldSpecified;
+            }
+            set {
+                this.employerIdFieldSpecified = value;
+                this.RaisePropertyChanged("EmployerIdSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=21)]
+        public string EmployerName {
+            get {
+                return this.employerNameField;
+            }
+            set {
+                this.employerNameField = value;
+                this.RaisePropertyChanged("EmployerName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=22)]
+        public string EmployerRecuitmentWebsite {
+            get {
+                return this.employerRecuitmentWebsiteField;
+            }
+            set {
+                this.employerRecuitmentWebsiteField = value;
+                this.RaisePropertyChanged("EmployerRecuitmentWebsite");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=23)]
+        public string EmployerWebsite {
+            get {
+                return this.employerWebsiteField;
+            }
+            set {
+                this.employerWebsiteField = value;
+                this.RaisePropertyChanged("EmployerWebsite");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=24)]
+        public string ExpectedDuration {
+            get {
+                return this.expectedDurationField;
+            }
+            set {
+                this.expectedDurationField = value;
+                this.RaisePropertyChanged("ExpectedDuration");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=25)]
+        public string FullDescription {
+            get {
+                return this.fullDescriptionField;
+            }
+            set {
+                this.fullDescriptionField = value;
+                this.RaisePropertyChanged("FullDescription");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=26)]
+        public string FutureProspects {
+            get {
+                return this.futureProspectsField;
+            }
+            set {
+                this.futureProspectsField = value;
+                this.RaisePropertyChanged("FutureProspects");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=27)]
+        public string ImportantOtherInfo {
+            get {
+                return this.importantOtherInfoField;
+            }
+            set {
+                this.importantOtherInfoField = value;
+                this.RaisePropertyChanged("ImportantOtherInfo");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
+        public System.DateTime InterviewFromDate {
+            get {
+                return this.interviewFromDateField;
+            }
+            set {
+                this.interviewFromDateField = value;
+                this.RaisePropertyChanged("InterviewFromDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool InterviewFromDateSpecified {
+            get {
+                return this.interviewFromDateFieldSpecified;
+            }
+            set {
+                this.interviewFromDateFieldSpecified = value;
+                this.RaisePropertyChanged("InterviewFromDateSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=29)]
+        public bool IsDisableAllowed {
+            get {
+                return this.isDisableAllowedField;
+            }
+            set {
+                this.isDisableAllowedField = value;
+                this.RaisePropertyChanged("IsDisableAllowed");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsDisableAllowedSpecified {
+            get {
+                return this.isDisableAllowedFieldSpecified;
+            }
+            set {
+                this.isDisableAllowedFieldSpecified = value;
+                this.RaisePropertyChanged("IsDisableAllowedSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
+        public bool IsNasProvider {
+            get {
+                return this.isNasProviderField;
+            }
+            set {
+                this.isNasProviderField = value;
+                this.RaisePropertyChanged("IsNasProvider");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsNasProviderSpecified {
+            get {
+                return this.isNasProviderFieldSpecified;
+            }
+            set {
+                this.isNasProviderFieldSpecified = value;
+                this.RaisePropertyChanged("IsNasProviderSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=31)]
+        public bool IsProviderInfoUpToDate {
+            get {
+                return this.isProviderInfoUpToDateField;
+            }
+            set {
+                this.isProviderInfoUpToDateField = value;
+                this.RaisePropertyChanged("IsProviderInfoUpToDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsProviderInfoUpToDateSpecified {
+            get {
+                return this.isProviderInfoUpToDateFieldSpecified;
+            }
+            set {
+                this.isProviderInfoUpToDateFieldSpecified = value;
+                this.RaisePropertyChanged("IsProviderInfoUpToDateSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=32)]
+        public bool IsRecruitmentAgncyAnonymous {
+            get {
+                return this.isRecruitmentAgncyAnonymousField;
+            }
+            set {
+                this.isRecruitmentAgncyAnonymousField = value;
+                this.RaisePropertyChanged("IsRecruitmentAgncyAnonymous");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsRecruitmentAgncyAnonymousSpecified {
+            get {
+                return this.isRecruitmentAgncyAnonymousFieldSpecified;
+            }
+            set {
+                this.isRecruitmentAgncyAnonymousFieldSpecified = value;
+                this.RaisePropertyChanged("IsRecruitmentAgncyAnonymousSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=33)]
+        public bool IsSmallEmployerWageIncentive {
+            get {
+                return this.isSmallEmployerWageIncentiveField;
+            }
+            set {
+                this.isSmallEmployerWageIncentiveField = value;
+                this.RaisePropertyChanged("IsSmallEmployerWageIncentive");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsSmallEmployerWageIncentiveSpecified {
+            get {
+                return this.isSmallEmployerWageIncentiveFieldSpecified;
+            }
+            set {
+                this.isSmallEmployerWageIncentiveFieldSpecified = value;
+                this.RaisePropertyChanged("IsSmallEmployerWageIncentiveSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=34)]
+        public bool IsTrackingAllowed {
+            get {
+                return this.isTrackingAllowedField;
+            }
+            set {
+                this.isTrackingAllowedField = value;
+                this.RaisePropertyChanged("IsTrackingAllowed");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsTrackingAllowedSpecified {
+            get {
+                return this.isTrackingAllowedFieldSpecified;
+            }
+            set {
+                this.isTrackingAllowedFieldSpecified = value;
+                this.RaisePropertyChanged("IsTrackingAllowedSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=35)]
+        public string LastUpdatedBy {
+            get {
+                return this.lastUpdatedByField;
+            }
+            set {
+                this.lastUpdatedByField = value;
+                this.RaisePropertyChanged("LastUpdatedBy");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=36)]
+        public string LearningDeliverySiteContactDetailsForCandidate {
+            get {
+                return this.learningDeliverySiteContactDetailsForCandidateField;
+            }
+            set {
+                this.learningDeliverySiteContactDetailsForCandidateField = value;
+                this.RaisePropertyChanged("LearningDeliverySiteContactDetailsForCandidate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=37)]
+        public string LearningDeliverySiteDescription {
+            get {
+                return this.learningDeliverySiteDescriptionField;
+            }
+            set {
+                this.learningDeliverySiteDescriptionField = value;
+                this.RaisePropertyChanged("LearningDeliverySiteDescription");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=38)]
+        public string LearningDeliverySiteName {
+            get {
+                return this.learningDeliverySiteNameField;
+            }
+            set {
+                this.learningDeliverySiteNameField = value;
+                this.RaisePropertyChanged("LearningDeliverySiteName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=39)]
+        public int LearningDeliverySiteStatus {
+            get {
+                return this.learningDeliverySiteStatusField;
+            }
+            set {
+                this.learningDeliverySiteStatusField = value;
+                this.RaisePropertyChanged("LearningDeliverySiteStatus");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LearningDeliverySiteStatusSpecified {
+            get {
+                return this.learningDeliverySiteStatusFieldSpecified;
+            }
+            set {
+                this.learningDeliverySiteStatusFieldSpecified = value;
+                this.RaisePropertyChanged("LearningDeliverySiteStatusSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=40)]
+        public int LearningProviderSectorPassRate {
+            get {
+                return this.learningProviderSectorPassRateField;
+            }
+            set {
+                this.learningProviderSectorPassRateField = value;
+                this.RaisePropertyChanged("LearningProviderSectorPassRate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LearningProviderSectorPassRateSpecified {
+            get {
+                return this.learningProviderSectorPassRateFieldSpecified;
+            }
+            set {
+                this.learningProviderSectorPassRateFieldSpecified = value;
+                this.RaisePropertyChanged("LearningProviderSectorPassRateSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=41)]
+        public System.DateTime LockedForSupportUntil {
+            get {
+                return this.lockedForSupportUntilField;
+            }
+            set {
+                this.lockedForSupportUntilField = value;
+                this.RaisePropertyChanged("LockedForSupportUntil");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LockedForSupportUntilSpecified {
+            get {
+                return this.lockedForSupportUntilFieldSpecified;
+            }
+            set {
+                this.lockedForSupportUntilFieldSpecified = value;
+                this.RaisePropertyChanged("LockedForSupportUntilSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=42)]
+        public int MasterVacancyId {
+            get {
+                return this.masterVacancyIdField;
+            }
+            set {
+                this.masterVacancyIdField = value;
+                this.RaisePropertyChanged("MasterVacancyId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool MasterVacancyIdSpecified {
+            get {
+                return this.masterVacancyIdFieldSpecified;
+            }
+            set {
+                this.masterVacancyIdFieldSpecified = value;
+                this.RaisePropertyChanged("MasterVacancyIdSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=43)]
+        public System.Nullable<int> NoOfOfflineApplicants {
+            get {
+                return this.noOfOfflineApplicantsField;
+            }
+            set {
+                this.noOfOfflineApplicantsField = value;
+                this.RaisePropertyChanged("NoOfOfflineApplicants");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool NoOfOfflineApplicantsSpecified {
+            get {
+                return this.noOfOfflineApplicantsFieldSpecified;
+            }
+            set {
+                this.noOfOfflineApplicantsFieldSpecified = value;
+                this.RaisePropertyChanged("NoOfOfflineApplicantsSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=44)]
+        public System.Nullable<int> NoOfOfflineSystemApplications {
+            get {
+                return this.noOfOfflineSystemApplicationsField;
+            }
+            set {
+                this.noOfOfflineSystemApplicationsField = value;
+                this.RaisePropertyChanged("NoOfOfflineSystemApplications");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool NoOfOfflineSystemApplicationsSpecified {
+            get {
+                return this.noOfOfflineSystemApplicationsFieldSpecified;
+            }
+            set {
+                this.noOfOfflineSystemApplicationsFieldSpecified = value;
+                this.RaisePropertyChanged("NoOfOfflineSystemApplicationsSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=45)]
+        public bool NotifyCandidates {
+            get {
+                return this.notifyCandidatesField;
+            }
+            set {
+                this.notifyCandidatesField = value;
+                this.RaisePropertyChanged("NotifyCandidates");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool NotifyCandidatesSpecified {
+            get {
+                return this.notifyCandidatesFieldSpecified;
+            }
+            set {
+                this.notifyCandidatesFieldSpecified = value;
+                this.RaisePropertyChanged("NotifyCandidatesSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=46)]
+        public int NumberOfPositions {
+            get {
+                return this.numberOfPositionsField;
+            }
+            set {
+                this.numberOfPositionsField = value;
+                this.RaisePropertyChanged("NumberOfPositions");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool NumberOfPositionsSpecified {
+            get {
+                return this.numberOfPositionsFieldSpecified;
+            }
+            set {
+                this.numberOfPositionsFieldSpecified = value;
+                this.RaisePropertyChanged("NumberOfPositionsSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=47)]
+        public bool OnlineUsingEmployees {
+            get {
+                return this.onlineUsingEmployeesField;
+            }
+            set {
+                this.onlineUsingEmployeesField = value;
+                this.RaisePropertyChanged("OnlineUsingEmployees");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool OnlineUsingEmployeesSpecified {
+            get {
+                return this.onlineUsingEmployeesFieldSpecified;
+            }
+            set {
+                this.onlineUsingEmployeesFieldSpecified = value;
+                this.RaisePropertyChanged("OnlineUsingEmployeesSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=48)]
+        public bool OnlineUsingNavms {
+            get {
+                return this.onlineUsingNavmsField;
+            }
+            set {
+                this.onlineUsingNavmsField = value;
+                this.RaisePropertyChanged("OnlineUsingNavms");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool OnlineUsingNavmsSpecified {
+            get {
+                return this.onlineUsingNavmsFieldSpecified;
+            }
+            set {
+                this.onlineUsingNavmsFieldSpecified = value;
+                this.RaisePropertyChanged("OnlineUsingNavmsSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=49)]
+        public string PersonalQualities {
+            get {
+                return this.personalQualitiesField;
+            }
+            set {
+                this.personalQualitiesField = value;
+                this.RaisePropertyChanged("PersonalQualities");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=50)]
+        public System.DateTime PossibleStartDate {
+            get {
+                return this.possibleStartDateField;
+            }
+            set {
+                this.possibleStartDateField = value;
+                this.RaisePropertyChanged("PossibleStartDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PossibleStartDateSpecified {
+            get {
+                return this.possibleStartDateFieldSpecified;
+            }
+            set {
+                this.possibleStartDateFieldSpecified = value;
+                this.RaisePropertyChanged("PossibleStartDateSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=51)]
+        public string QualificationRequired {
+            get {
+                return this.qualificationRequiredField;
+            }
+            set {
+                this.qualificationRequiredField = value;
+                this.RaisePropertyChanged("QualificationRequired");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=52)]
+        public string RealityCheck {
+            get {
+                return this.realityCheckField;
+            }
+            set {
+                this.realityCheckField = value;
+                this.RaisePropertyChanged("RealityCheck");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(IsNullable=true, Order=53)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("KeyValueOfstringstring", Namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays", IsNullable=false)]
+        public ArrayOfKeyValueOfstringstringKeyValueOfstringstring[] ReviewComments {
+            get {
+                return this.reviewCommentsField;
+            }
+            set {
+                this.reviewCommentsField = value;
+                this.RaisePropertyChanged("ReviewComments");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=54)]
+        public string ShortDescription {
+            get {
+                return this.shortDescriptionField;
+            }
+            set {
+                this.shortDescriptionField = value;
+                this.RaisePropertyChanged("ShortDescription");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=55)]
+        public string SkillsRequired {
+            get {
+                return this.skillsRequiredField;
+            }
+            set {
+                this.skillsRequiredField = value;
+                this.RaisePropertyChanged("SkillsRequired");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=56)]
+        public string Status {
+            get {
+                return this.statusField;
+            }
+            set {
+                this.statusField = value;
+                this.RaisePropertyChanged("Status");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=57)]
+        public string SupplementaryQuestion1 {
+            get {
+                return this.supplementaryQuestion1Field;
+            }
+            set {
+                this.supplementaryQuestion1Field = value;
+                this.RaisePropertyChanged("SupplementaryQuestion1");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=58)]
+        public string SupplementaryQuestion2 {
+            get {
+                return this.supplementaryQuestion2Field;
+            }
+            set {
+                this.supplementaryQuestion2Field = value;
+                this.RaisePropertyChanged("SupplementaryQuestion2");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=59)]
+        public string TradingName {
+            get {
+                return this.tradingNameField;
+            }
+            set {
+                this.tradingNameField = value;
+                this.RaisePropertyChanged("TradingName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=60)]
+        public string TrainingProviderDesc {
+            get {
+                return this.trainingProviderDescField;
+            }
+            set {
+                this.trainingProviderDescField = value;
+                this.RaisePropertyChanged("TrainingProviderDesc");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=61)]
+        public int TrainingProviderId {
+            get {
+                return this.trainingProviderIdField;
+            }
+            set {
+                this.trainingProviderIdField = value;
+                this.RaisePropertyChanged("TrainingProviderId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool TrainingProviderIdSpecified {
+            get {
+                return this.trainingProviderIdFieldSpecified;
+            }
+            set {
+                this.trainingProviderIdFieldSpecified = value;
+                this.RaisePropertyChanged("TrainingProviderIdSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=62)]
+        public string TrainingProviderName {
+            get {
+                return this.trainingProviderNameField;
+            }
+            set {
+                this.trainingProviderNameField = value;
+                this.RaisePropertyChanged("TrainingProviderName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=63)]
+        public string TrainingRequired {
+            get {
+                return this.trainingRequiredField;
+            }
+            set {
+                this.trainingRequiredField = value;
+                this.RaisePropertyChanged("TrainingRequired");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=64)]
+        public AddressDetails VacancyAddress {
+            get {
+                return this.vacancyAddressField;
+            }
+            set {
+                this.vacancyAddressField = value;
+                this.RaisePropertyChanged("VacancyAddress");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=65)]
+        public int VacancyId {
+            get {
+                return this.vacancyIdField;
+            }
+            set {
+                this.vacancyIdField = value;
+                this.RaisePropertyChanged("VacancyId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool VacancyIdSpecified {
+            get {
+                return this.vacancyIdFieldSpecified;
+            }
+            set {
+                this.vacancyIdFieldSpecified = value;
+                this.RaisePropertyChanged("VacancyIdSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=66)]
+        public string VacancyLocationType {
+            get {
+                return this.vacancyLocationTypeField;
+            }
+            set {
+                this.vacancyLocationTypeField = value;
+                this.RaisePropertyChanged("VacancyLocationType");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=67)]
+        public string VacancyManager {
+            get {
+                return this.vacancyManagerField;
+            }
+            set {
+                this.vacancyManagerField = value;
+                this.RaisePropertyChanged("VacancyManager");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=68)]
+        public string VacancyManagerTradingName {
+            get {
+                return this.vacancyManagerTradingNameField;
+            }
+            set {
+                this.vacancyManagerTradingNameField = value;
+                this.RaisePropertyChanged("VacancyManagerTradingName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=69)]
+        public string VacancyOwner {
+            get {
+                return this.vacancyOwnerField;
+            }
+            set {
+                this.vacancyOwnerField = value;
+                this.RaisePropertyChanged("VacancyOwner");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=70)]
+        public System.DateTime VacancyPostedDate {
+            get {
+                return this.vacancyPostedDateField;
+            }
+            set {
+                this.vacancyPostedDateField = value;
+                this.RaisePropertyChanged("VacancyPostedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool VacancyPostedDateSpecified {
+            get {
+                return this.vacancyPostedDateFieldSpecified;
+            }
+            set {
+                this.vacancyPostedDateFieldSpecified = value;
+                this.RaisePropertyChanged("VacancyPostedDateSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=71)]
+        public int VacancyReference {
+            get {
+                return this.vacancyReferenceField;
+            }
+            set {
+                this.vacancyReferenceField = value;
+                this.RaisePropertyChanged("VacancyReference");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool VacancyReferenceSpecified {
+            get {
+                return this.vacancyReferenceFieldSpecified;
+            }
+            set {
+                this.vacancyReferenceFieldSpecified = value;
+                this.RaisePropertyChanged("VacancyReferenceSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=72)]
+        public string VacancyTitle {
+            get {
+                return this.vacancyTitleField;
+            }
+            set {
+                this.vacancyTitleField = value;
+                this.RaisePropertyChanged("VacancyTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=73)]
+        public string VacancyType {
+            get {
+                return this.vacancyTypeField;
+            }
+            set {
+                this.vacancyTypeField = value;
+                this.RaisePropertyChanged("VacancyType");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=74)]
+        public string VacancyUrl {
+            get {
+                return this.vacancyUrlField;
+            }
+            set {
+                this.vacancyUrlField = value;
+                this.RaisePropertyChanged("VacancyUrl");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=75)]
+        public string WageText {
+            get {
+                return this.wageTextField;
+            }
+            set {
+                this.wageTextField = value;
+                this.RaisePropertyChanged("WageText");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=76)]
+        public string WebsiteAddress {
+            get {
+                return this.websiteAddressField;
+            }
+            set {
+                this.websiteAddressField = value;
+                this.RaisePropertyChanged("WebsiteAddress");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=77)]
+        public decimal WeeklyWage {
+            get {
+                return this.weeklyWageField;
+            }
+            set {
+                this.weeklyWageField = value;
+                this.RaisePropertyChanged("WeeklyWage");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool WeeklyWageSpecified {
+            get {
+                return this.weeklyWageFieldSpecified;
+            }
+            set {
+                this.weeklyWageFieldSpecified = value;
+                this.RaisePropertyChanged("WeeklyWageSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=78)]
+        public string WorkingWeek {
+            get {
+                return this.workingWeekField;
+            }
+            set {
+                this.workingWeekField = value;
+                this.RaisePropertyChanged("WorkingWeek");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=79)]
+        public string WageType {
+            get {
+                return this.wageTypeField;
+            }
+            set {
+                this.wageTypeField = value;
+                this.RaisePropertyChanged("WageType");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays")]
+    public partial class ArrayOfKeyValueOfstringstringKeyValueOfstringstring : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string keyField;
+        
+        private string valueField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public string Key {
+            get {
+                return this.keyField;
+            }
+            set {
+                this.keyField = value;
+                this.RaisePropertyChanged("Key");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=1)]
+        public string Value {
+            get {
+                return this.valueField;
+            }
+            set {
+                this.valueField = value;
+                this.RaisePropertyChanged("Value");
             }
         }
         
@@ -1165,6 +3744,87 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
         }
     }
     
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1")]
+    public partial class GetVacancyDetailsResponse : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private Vacancy vacancyField;
+        
+        private ValidationError[] validationErrorsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public Vacancy Vacancy {
+            get {
+                return this.vacancyField;
+            }
+            set {
+                this.vacancyField = value;
+                this.RaisePropertyChanged("Vacancy");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(IsNullable=true, Order=1)]
+        [System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes")]
+        public ValidationError[] ValidationErrors {
+            get {
+                return this.validationErrorsField;
+            }
+            set {
+                this.validationErrorsField = value;
+                this.RaisePropertyChanged("ValidationErrors");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetVacancyDetailsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1", Order=0)]
+        public int VacancyId;
+        
+        public GetVacancyDetailsRequest() {
+        }
+        
+        public GetVacancyDetailsRequest(int VacancyId) {
+            this.VacancyId = VacancyId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetVacancyDetailsResponse1 {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1", Order=0)]
+        public SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsResponse GetVacancyDetailsResponse;
+        
+        public GetVacancyDetailsResponse1() {
+        }
+        
+        public GetVacancyDetailsResponse1(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsResponse GetVacancyDetailsResponse) {
+            this.GetVacancyDetailsResponse = GetVacancyDetailsResponse;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface GatewayServiceContractChannel : SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract, System.ServiceModel.IClientChannel {
     }
@@ -1289,6 +3949,29 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
             SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetCandidateInfoRequest inValue = new SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetCandidateInfoRequest();
             inValue.CandidateId = CandidateId;
             return ((SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract)(this)).GetCandidateInfoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsResponse1 SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract.GetVacancyDetails(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsRequest request) {
+            return base.Channel.GetVacancyDetails(request);
+        }
+        
+        public SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsResponse GetVacancyDetails(int VacancyId) {
+            SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsRequest inValue = new SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsRequest();
+            inValue.VacancyId = VacancyId;
+            SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsResponse1 retVal = ((SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract)(this)).GetVacancyDetails(inValue);
+            return retVal.GetVacancyDetailsResponse;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsResponse1> SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract.GetVacancyDetailsAsync(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsRequest request) {
+            return base.Channel.GetVacancyDetailsAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsResponse1> GetVacancyDetailsAsync(int VacancyId) {
+            SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsRequest inValue = new SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsRequest();
+            inValue.VacancyId = VacancyId;
+            return ((SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract)(this)).GetVacancyDetailsAsync(inValue);
         }
     }
 }
