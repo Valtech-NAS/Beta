@@ -21,6 +21,11 @@
             </a>
         }
     </legend>
+    
+    @if (!Model.Candidate.Qualifications.Any())
+    {
+        <p>I do not have any qualification</p>
+    }
    
     @foreach (var group in Model.Candidate.Qualifications.GroupBy(item => item.QualificationType))
     {
@@ -78,6 +83,12 @@
             </a>
         }
     </legend>
+    
+    @if (!Model.Candidate.WorkExperience.Any())
+    {
+        <p>I do not have any work experience</p>
+    }
+
     @foreach (var experience in Model.Candidate.WorkExperience)
     {
         <div class="grid-3-4">
