@@ -245,7 +245,14 @@
 
         self.itemEmployer = ko.observable(itemEmployer).extend({ required: { message: "Employer is required" } });
         self.itemJobTitle = ko.observable(itemJobTitle).extend({ required: { message: "Job Title is required" } });
-        self.itemMainDuties = ko.observable(itemDuties).extend({ required: { message: "Enter some of your main duties" } });
+        self.itemMainDuties = ko.observable(itemDuties).extend({
+             required: { message: "Enter some of your main duties" }
+        }).extend({
+            max: {
+                message: "Main duties must not exceed 200 characters",
+                params: 200
+            }
+        });
 
         self.itemIsCurrentEmployment = ko.observable(itemIsCurrentEmployment);
 
@@ -320,9 +327,32 @@
             return self.showWorkExperience() ? "block" : "none";
         }, self);
 
-        self.employer = ko.observable().extend({ required: { message: "Employer is required" } });
-        self.jobTitle = ko.observable().extend({ required: { message: "Job Title is required" } });
-        self.mainDuties = ko.observable().extend({ required: { message: "Enter some of your main duties" } });
+        self.employer = ko.observable().extend({
+             required: { message: "Employer is required" }
+        }).extend({
+            max: {
+                message: "'Employer' must not exceed 50 characters",
+                params: 50
+            }
+        });
+
+        self.jobTitle = ko.observable().extend({
+             required: { message: "Job Title is required" }
+        }).extend({
+            max: {
+                message: "'Job Title' must not exceed 50 characters",
+                params:50
+            }
+        });
+
+        self.mainDuties = ko.observable().extend({
+             required: { message: "Enter some of your main duties" }
+        }).extend({
+            max: {
+                message: "'Main duties' must not exceed 200 characters",
+                params: 200
+            }
+        });
 
         self.isCurrentEmployment = ko.observable(false);
 

@@ -84,7 +84,7 @@
             if (!result.IsValid)
             {
                 result.AddToModelState(ModelState, string.Empty);
-                applicationViewModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                applicationViewModel = _applicationProvider.UpdateApplicationViewModel(UserContext.CandidateId, applicationViewModel);
                 return View("Apply", applicationViewModel);
             }
 
