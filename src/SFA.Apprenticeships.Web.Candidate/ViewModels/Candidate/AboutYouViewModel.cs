@@ -7,7 +7,7 @@
     using Validators;
 
     [Serializable]
-    [Validator(typeof(AboutYouViewModelValidator))]
+    [Validator(typeof(AboutYouViewModelClientValidator))]
     public class AboutYouViewModel
     {
         [Display(Name = AboutYouViewModelMessages.WhatAreYourStrengthsMessages.LabelText, Description = AboutYouViewModelMessages.WhatAreYourStrengthsMessages.HintText)]

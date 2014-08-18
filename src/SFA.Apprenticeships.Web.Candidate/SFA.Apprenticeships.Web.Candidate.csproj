@@ -458,7 +458,7 @@
     <Compile Include="Validators\EducationViewModelValidator.cs" />
     <Compile Include="Validators\CandidateViewModelValidator.cs" />
     <Compile Include="Validators\EmployerQuestionAnswersViewModelValidator.cs" />
-    <Compile Include="Validators\AboutYouViewModelValidator.cs" />
+    <Compile Include="Validators\AboutYouViewModelClientValidator.cs" />
     <Compile Include="Validators\VacancySearchViewModelValidator.cs" />
     <Compile Include="Validators\WorkExperienceViewModelValidator.cs" />
     <Compile Include="ViewModels\Applications\ApplicationViewModel.cs" />

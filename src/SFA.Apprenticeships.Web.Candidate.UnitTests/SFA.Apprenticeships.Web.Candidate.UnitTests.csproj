@@ -96,6 +96,7 @@
     <Compile Include="Mocks\HttpContextFactory.cs" />
     <Compile Include="Providers\SearchProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\AboutYouViewModelValidatorTests.cs" />
     <Compile Include="Validators\RegisterViewModelValidatorTests.cs" />
     <Compile Include="Validators\VacancySearchValidatorTests.cs" />
     <Compile Include="ViewModels\VacancySearchResponseViewModelTests.cs" />

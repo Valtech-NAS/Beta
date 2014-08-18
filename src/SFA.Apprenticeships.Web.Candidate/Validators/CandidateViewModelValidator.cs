@@ -7,7 +7,7 @@
     {
         public CandidateViewModelClientValidator()
         {
-            RuleFor(x => x.AboutYou).SetValidator(new AboutYouViewModelValidator());
+            RuleFor(x => x.AboutYou).SetValidator(new AboutYouViewModelClientValidator());
             RuleFor(x => x.Education).SetValidator(new EducationViewModelClientValidator());
             RuleFor(x => x.EmployerQuestionAnswers).SetValidator(new EmployerQuestionAnswersViewModelClientValidator());
 

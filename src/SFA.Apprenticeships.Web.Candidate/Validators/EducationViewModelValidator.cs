@@ -9,7 +9,8 @@
     {
         public EducationViewModelClientValidator()
         {
-            this.AddCommonRules();
+            this.AddSaveRules();
+            this.AddMandatoryRules();
         }
     }
 
@@ -17,7 +18,8 @@
     {
         public EducationViewModelServerValidator()
         {
-            this.AddCommonRules();
+            this.AddSaveRules();
+            this.AddMandatoryRules();
             this.AddServerRules();
         }
     }
@@ -32,27 +34,19 @@
 
     internal static class EducationValidaitonRules
     {
-        internal static void AddCommonRules(this AbstractValidator<EducationViewModel> validator)
+        internal static void AddMandatoryRules(this AbstractValidator<EducationViewModel> validator)
         {
             validator.RuleFor(x => x.NameOfMostRecentSchoolCollege)
-                .Length(0, 120)
-                .WithMessage(EducationViewModelMessages.NameOfMostRecentSchoolCollegeMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage(EducationViewModelMessages.NameOfMostRecentSchoolCollegeMessages.RequiredErrorText)
-                .Matches(EducationViewModelMessages.NameOfMostRecentSchoolCollegeMessages.WhiteListRegularExpression)
-                .WithMessage(EducationViewModelMessages.NameOfMostRecentSchoolCollegeMessages.WhiteListErrorText);
+                .WithMessage(EducationViewModelMessages.NameOfMostRecentSchoolCollegeMessages.RequiredErrorText);
 
             validator.RuleFor(x => x.FromYear)
                 .NotEmpty()
-                .WithMessage(EducationViewModelMessages.FromYearMessages.RequiredErrorText)
-                .Matches(EducationViewModelMessages.FromYearMessages.WhiteListRegularExpression)
-                .WithMessage(EducationViewModelMessages.FromYearMessages.WhiteListErrorText);
+                .WithMessage(EducationViewModelMessages.FromYearMessages.RequiredErrorText);
 
             validator.RuleFor(x => x.ToYear)
                 .NotEmpty()
-                .WithMessage(EducationViewModelMessages.ToYearMessages.RequiredErrorText)
-                .Matches(EducationViewModelMessages.FromYearMessages.WhiteListRegularExpression)
-                .WithMessage(EducationViewModelMessages.FromYearMessages.WhiteListErrorText);
+                .WithMessage(EducationViewModelMessages.ToYearMessages.RequiredErrorText);
         }
 
         internal static void AddServerRules(this AbstractValidator<EducationViewModel> validator)
