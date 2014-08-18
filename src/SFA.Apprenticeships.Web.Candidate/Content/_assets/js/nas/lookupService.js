@@ -102,7 +102,7 @@
                 type: 'GET',
                 data: { username: username },
                 success: function (response) {
-                    if (response.usernameIsAvailable == false) {
+                    if (response.isUsernameAvailable === false) {
                         $('#email-available-message').html('<p>Username already in use, try again</p>');
                     } else {
                         $('#email-available-message').html('');
