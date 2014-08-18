@@ -133,5 +133,5 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 	And I am on the VacancySearchResultPage page	
 	And I choose FirstVacancyLink
 	And I am on the VacancyDetailsPage page
-	And I choose Apply
+	And I choose ApplyButton
 	Then I am on the ApplicationPage page
