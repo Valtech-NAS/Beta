@@ -32,6 +32,11 @@
         [ElementLocator(Class = "search-results")]
         public IElementList<IWebElement, SearchResultItem> SearchResultItems { get; set; }
 
+        public string SearchResultItemsCount
+        {
+            get { return SearchResultItems.Count().ToString(); }
+        }
+
         public IWebElement FirstVacancyLink
         {
             get
