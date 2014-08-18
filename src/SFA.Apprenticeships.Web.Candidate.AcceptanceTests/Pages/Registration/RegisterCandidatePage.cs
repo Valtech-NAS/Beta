@@ -5,7 +5,7 @@
     using OpenQA.Selenium;
     using Templates.EditorFor;
 
-    [PageNavigation("/register/index")]
+    [PageNavigation("/register")]
     [PageAlias("RegisterCandidatePage")]
     public class RegisterCandidatePage : BaseValidationPage
     {

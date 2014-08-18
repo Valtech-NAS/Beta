@@ -24,6 +24,7 @@
         }
 
         [Given("I have created a new email address")]
+        [When("I have created a new email address")]
         public void GivenICreateANewUserEmailAddress()
         {
             _email = GenerateRandomEmailAddress();
