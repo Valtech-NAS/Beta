@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Constants.ViewModels
 {
+    using Common.Constants;
+
     public static class EmployerQuestionAnswersViewModelMessages
     {
         public static class CandidateAnswer1Messages
