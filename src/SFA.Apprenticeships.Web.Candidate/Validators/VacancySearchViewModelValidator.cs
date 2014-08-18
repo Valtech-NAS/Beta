@@ -39,9 +39,9 @@
 
         public static void AddLocationRules(this AbstractValidator<VacancySearchViewModel> validator)
         {
+            // NOTE: no message here, 'no results' help text provides suggestions to user.
             validator.RuleFor(x => x.Location)
-                .Must(HaveLatAndLongPopulated)
-                .WithMessage(VacancySearchViewModelMessages.LocationMessages.NoResultsErrorText);
+                .Must(HaveLatAndLongPopulated);
         }
 
         private static bool HaveLatAndLongPopulated(VacancySearchViewModel instance, string location)

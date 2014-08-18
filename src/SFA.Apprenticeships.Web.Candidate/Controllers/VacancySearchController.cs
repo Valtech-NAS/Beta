@@ -102,10 +102,10 @@
             }
 
             var locationResult = _searchLocationValidator.Validate(searchViewModel);
+
             if (!locationResult.IsValid)
             {
                 ModelState.Clear();
-                locationResult.AddToModelState(ModelState, string.Empty);
                 return View("results", new VacancySearchResponseViewModel { VacancySearch = searchViewModel });
             }
 
