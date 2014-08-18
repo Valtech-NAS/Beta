@@ -2,6 +2,7 @@
 {
     using System;
     using Candidate;
+    using Common.Constants;
     using Domain.Entities.Applications;
     using VacancySearch;
 
@@ -22,6 +23,8 @@
         public ApplicationAction ApplicationAction { get; set; }
         public int VacancyId { get; set; }
 
+        //Used for validating Qualification and Work Experience
         public int CurrentYear = DateTime.Now.Year;
+        public string WhiteListRegex = Whitelists.FreetextWhitelist.RegularExpression;
     }
 }

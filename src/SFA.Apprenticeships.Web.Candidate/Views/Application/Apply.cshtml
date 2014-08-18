@@ -382,12 +382,14 @@
         var qualificationData = null;
         var workExperienceData = null;
         var currentYear = null;
+        var whitelistregex = null;
 
         $(function() {
 
             qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
             workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
             currentYear = @Html.Raw(Model.CurrentYear);
+            whitelistregex = @Html.Raw(Json.Encode(Model.WhiteListRegex));            
 
             ko.validation.rules.pattern.message = 'Invalid.';
             ko.validation.configure({
@@ -428,6 +430,9 @@
             return month;
         }
 
+        function getWhiteListRegex() {
+            return whitelistregex;
+        }
     </script>
 
     @*<script src="~/Content/_assets/js/vendor/knockout-3.1.0.js"></script>
