@@ -18,6 +18,10 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 ## Infrastructure layer ##
 
 - change to entity repos (re. Mark)
+- integrate revised vacancy summary service
+- integrate revised vacancy detail service
+- integrate application update service
+- integrate gateway certificates
 
 ## Cross cutting ##
 
