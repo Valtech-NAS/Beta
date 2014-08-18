@@ -9,6 +9,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - controller actions should provide caching hints
 - qualification types reference data should be read from configuration / provided by a configuration service
 - some website URLs need to be reviewed to be more "friendly"
+- validation summary links need to be clicked twice
 
 ## Service layer ##
 
