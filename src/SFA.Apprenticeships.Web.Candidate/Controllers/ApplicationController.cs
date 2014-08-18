@@ -40,7 +40,7 @@
         {
             var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-            if (model == null)
+            if (model == null || model.VacancyDetail.ClosingDate < DateTime.Today)
             {
                 return new VacancyNotFoundResult();
             }
@@ -77,6 +77,7 @@
         public ActionResult Apply(int id, ApplicationViewModel applicationViewModel)
         {
             ModelState.Clear();
+
             var result = applicationViewModel.ApplicationAction == ApplicationAction.Preview
                 ? _applicationViewModelFullValidator.Validate(applicationViewModel)
                 : _applicationViewModelSaveValidator.Validate(applicationViewModel);
@@ -85,6 +86,7 @@
             {
                 result.AddToModelState(ModelState, string.Empty);
                 applicationViewModel = _applicationProvider.UpdateApplicationViewModel(UserContext.CandidateId, applicationViewModel);
+
                 return View("Apply", applicationViewModel);
             }
 

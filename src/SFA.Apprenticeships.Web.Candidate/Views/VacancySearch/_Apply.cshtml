@@ -5,6 +5,7 @@
 {
     if (Model.CandidateApplicationStatus.HasValue)
     {
+        // Candidate has applied for this vacancy.
         switch (Model.CandidateApplicationStatus.Value)
         {
             case ApplicationStatuses.Draft:
@@ -24,7 +25,6 @@
     else
     {
         // Candidate has not applied for this vacancy.
-
         <a id="apply-button" class="button button-with-hint" title="Apply for apprenticeship" href="@Url.Action("Apply", "Application", new { @id = Model.Id })">Apply for apprenticeship</a>
     }
 }

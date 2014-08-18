@@ -133,7 +133,7 @@
 
             var vacancy = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
 
-            if (vacancy == null)
+            if (vacancy == null || vacancy.ClosingDate < DateTime.Today)
             {
                 return new VacancyNotFoundResult();
             }
