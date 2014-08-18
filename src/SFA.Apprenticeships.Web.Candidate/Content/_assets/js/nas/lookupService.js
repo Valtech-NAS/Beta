@@ -11,8 +11,6 @@
             $("#Address_Uprn").val(option.val());
             $("#Address_GeoPoint_Latitude").val(selected.attr("data-lat"));
             $("#Address_GeoPoint_Longitude").val(selected.attr("data-lon"));
-            $("#address-details").removeClass("toggle-content");
-            $("#address-manual").addClass("hidden");
         }
     });
 
@@ -22,10 +20,6 @@
         $("#Address_GeoPoint_Longitude").val("");
     });
 
-    $("#address-manual-btn").click(function (e) {
-        e.preventDefault();
-        $("#address-details").show();
-    });
 });
 
 // provides the matching addresses from postcode
@@ -37,9 +31,6 @@
 
         self.click(function (e) {
             e.preventDefault();
-            $("#address-manual").removeClass("hidden");
-            $("#address-list").addClass("toggle-content");
-            $("#address-details").addClass("toggle-content");
             getAddresses($("#postcode-search").val());
         });
 

@@ -14,17 +14,17 @@
         <select id="address-select">
         </select>
     </div>
-    <div id="address-manual" class="form-group">
-        <a href="#" id="address-manual-btn" class="address-manual-btn">I want to enter my address manually</a>
+    <div id="address-manual" class="form-group form-group-compound">
+        <span class="form-hint">Or enter address manually</span>
     </div>
 </div>
 
-<div id="address-details" class="address-manual-input panel-indent toggle-content">
+<div id="address-details" class="address-manual-input">
     @Html.FormTextFor(m => m.AddressLine1, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
     @Html.FormTextFor(m => m.AddressLine2, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" })
     @Html.FormTextFor(m => m.AddressLine3, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" })
     @Html.FormTextFor(m => m.AddressLine4, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" })
-    @Html.FormTextFor(m => m.Postcode, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { @class = "form-control-large", type = "text", autocapitalize = "characters", autocorrect = "off" })
+    @Html.FormTextFor(m => m.Postcode, containerHtmlAttributes: new { @class = "address-item" }, controlHtmlAttributes: new { @class = "form-control-large", type = "text", autocapitalize = "characters", autocorrect = "off" })
     @Html.HiddenFor(m => m.Uprn)
     @Html.HiddenFor(m => m.GeoPoint.Latitude)
     @Html.HiddenFor(m => m.GeoPoint.Longitude)
