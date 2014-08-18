@@ -42,7 +42,7 @@
                 .InclusiveBetween(DateTime.Now.Year - 100, DateTime.Now.Year)
                 .WithMessage(string.Format(DateViewModelMessages.YearMessages.RangeErrorText, DateTime.Now.Year - 100, DateTime.Now.Year))
                 .NotEmpty()
-                .WithMessage(DateViewModelMessages.YearMessages.RequiredErrorText);
+                .WithMessage(string.Format(DateViewModelMessages.YearMessages.RequiredErrorText, DateTime.Now.Year - 100, DateTime.Now.Year));
         }
 
         internal static void AddServerRules(this AbstractValidator<DateViewModel> validator)
