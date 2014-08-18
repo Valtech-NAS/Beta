@@ -21,7 +21,7 @@ Scenario: As a candidate I would like to apply for a vacancy
 	#And I set token VacancyId with the value of FirstVacancyId
 	And I chose FirstVacancyLink
 	And I was on the VacancyDetailsPage page
-	And I chose Apply
+	And I chose ApplyButton
 	And I was on the ApplicationPage page
 	When I enter data
 		| Field                   | Value                         |

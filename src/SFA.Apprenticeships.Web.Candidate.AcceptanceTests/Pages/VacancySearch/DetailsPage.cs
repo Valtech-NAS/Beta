@@ -8,6 +8,6 @@
     public class DetailsPage
     {
         [ElementLocator(Id = "apply-button")]
-        public IWebElement Apply { get; set; }
+        public IWebElement ApplyButton { get; set; }
     }
 }

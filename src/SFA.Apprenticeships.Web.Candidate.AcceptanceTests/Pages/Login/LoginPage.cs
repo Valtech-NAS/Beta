@@ -22,5 +22,8 @@
 
         [ElementLocator(Id = "sign-in-button")]
         public IWebElement SignInButton { get; set; }
+
+        [ElementLocator(Id = "create-account-link")]
+        public IWebElement CreateAccountLink { get; set; }
     }
 }
