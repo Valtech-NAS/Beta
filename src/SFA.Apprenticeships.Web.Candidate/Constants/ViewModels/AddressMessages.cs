@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Constants.ViewModels
 {
+    using Common.Constants;
+
     public static class AddressMessages
     {
         public static class AddressLine1

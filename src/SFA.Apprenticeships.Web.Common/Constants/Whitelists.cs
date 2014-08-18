@@ -1,7 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Constants
+﻿namespace SFA.Apprenticeships.Web.Common.Constants
 {
-    using System.IO;
-
     public static class Whitelists
     {
         public static class NameWhitelist
@@ -12,8 +10,14 @@
 
         public static class EmailAddressWhitelist
         {
-            //From https://www.owasp.org/index.php/OWASP_Validation_Regex_Repository
-            public const string RegularExpression = @"^[a-zA-Z0-9+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$";
+            // Note: The following OWASP email regular expression is wrong and doesn't allow simple emails with underscores in the 
+            // name section https://www.owasp.org/index.php/OWASP_Validation_Regex_Repository
+            // public const string RegularExpression = @"^[a-zA-Z0-9+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$";
+
+            // Used this one instead as appears more robust, may be worth checking periodically for updates from OWASP
+            // http://www.regxlib.com/REDetails.aspx?regexp_id=167
+            // And modified to allow longer domain roots and the addional chars listed in the OWASP version
+            public const string RegularExpression = @"^([a-zA-Z0-9+&*_\-\.]+)@([a-zA-Z0-9\-\.]+)\.([a-zA-Z]{2,7})$";
             public const string ErrorText = @"must be a valid email address";
         }
 
