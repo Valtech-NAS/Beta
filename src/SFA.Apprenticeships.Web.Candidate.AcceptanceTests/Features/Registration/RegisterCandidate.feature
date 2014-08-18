@@ -19,7 +19,7 @@ Scenario: As a candidate I am on the registration page and all required fields a
 	And I wait to see ValidationSummary
 	Then I see
         | Field                  | Rule   | Value |
-        | ValidationSummaryCount | Equals | 9     |
+        | ValidationSummaryCount | Equals | 11    |
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                         |
 		| Text  | Equals | 'First name' must be supplied |

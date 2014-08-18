@@ -108,7 +108,7 @@ this.ScenarioSetup(scenarioInfo);
             table1.AddRow(new string[] {
                         "ValidationSummaryCount",
                         "Equals",
-                        "9"});
+                        "11"});
 #line 20
  testRunner.Then("I see", ((string)(null)), table1, "Then ");
 #line hidden
