@@ -71,7 +71,7 @@
             if (!searchViewModel.Latitude.HasValue || !searchViewModel.Longitude.HasValue)
             {
                 //Either user not selected item from dropdown or javascript disabled.
-                var locations = _searchProvider.FindLocation(searchViewModel.Location).ToList();
+                var locations = _searchProvider.FindLocation(searchViewModel.Location.Trim()).ToList();
                 if (locations.Any())
                 {
                     var location = locations.First();
