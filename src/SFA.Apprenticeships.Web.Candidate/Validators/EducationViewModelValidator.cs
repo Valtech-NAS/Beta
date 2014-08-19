@@ -31,7 +31,7 @@
         }
     }
 
-    internal static class EducationValidaitonRules
+    internal static class EducationValidationRules
     {
         internal static void AddMandatoryRules(this AbstractValidator<EducationViewModel> validator)
         {
