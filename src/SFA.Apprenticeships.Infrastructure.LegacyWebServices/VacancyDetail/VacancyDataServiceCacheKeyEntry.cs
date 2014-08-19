@@ -13,7 +13,7 @@
 
         public override CacheDuration Duration
         {
-            get { return CacheDuration.Midnight; }
+            get { return CacheDuration.OneHour; }
         }
     }
 }

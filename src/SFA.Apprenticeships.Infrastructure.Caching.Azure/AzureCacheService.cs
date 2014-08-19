@@ -29,19 +29,17 @@
                 return;
             }
 
-            TimeSpan cacheTimeSpan;
+            TimeSpan cacheTimeSpan = TimeSpan.FromMinutes((int)cacheDuration);    
 
-            if (cacheDuration == CacheDuration.Midnight)
+            try
             {
-                var midnight = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
-                cacheTimeSpan = new TimeSpan(midnight.Ticks - DateTime.Now.Ticks);
+                _cache.Add(key, value, cacheTimeSpan);
             }
-            else
+            catch (Exception cacheException)
             {
-                cacheTimeSpan = TimeSpan.FromMinutes((int)cacheDuration);    
+                Logger.Warn("Attempt to store item in cache with key: {0} and timespan: {1} raised the exception: {2}", key, cacheTimeSpan, cacheException.Message);
+                return;
             }
-
-            _cache.Add(key, value, cacheTimeSpan);
 
             Logger.Debug("Stored item with key: {0} in cache with timespan: {1}", key, cacheTimeSpan);
         }
@@ -49,8 +47,18 @@
         public T Get<T>(string key) where T : class
         {
             Logger.Debug(GettingItemFromCacheFormat, key);
+            T result;
+            
+            try
+            {
 
-            var result = _cache[key] as T;
+                result = _cache[key] as T;
+            }
+            catch (Exception cacheException)
+            {
+                Logger.Warn("Attempt to retreive item from cache with key: {0} raised the exception: {1}", key, cacheException.Message);
+                return null;
+            }
 
             if (result == null)
             {
@@ -64,14 +72,29 @@
         {
             Logger.Debug("Removing item with key: {0} from cache", key);
 
-            _cache.Remove(key);
+            try
+            {
+                _cache.Remove(key);
+            }
+            catch (Exception cacheException)
+            {
+                Logger.Warn("Attempt to remove item from cache with key: {0} raised the exception: {1}", key, cacheException.Message);
+            }
         }
 
         public void FlushAll()
         {
             Logger.Debug("Flushing cache");
 
-            _cache.Clear();
+            try
+            {
+                _cache.Clear();
+            }
+            catch (Exception cacheException)
+            {
+                Logger.Warn("Attempt to clear cache raised the exception: {0}", cacheException.Message);
+                return;
+            }
 
             Logger.Debug("Flushed cache");
         }
@@ -86,7 +109,7 @@
 
             Logger.Debug(GettingItemFromCacheFormat, cacheKey);
 
-            var result = _cache[cacheKey] as TResult;
+            var result = Get<TResult>(cacheKey);
             if (result == null || result.Equals(default(TResult)))
             {
                 Logger.Debug(ItemNotInCacheFormat, cacheKey);
@@ -109,7 +132,7 @@
 
             Logger.Debug(GettingItemFromCacheFormat, cacheKey);
 
-            var result = _cache[cacheKey] as TResult;
+            var result = Get<TResult>(cacheKey);
             if (result == null || result.Equals(default(TResult)))
             {
                 Logger.Debug(ItemNotInCacheFormat, cacheKey);
@@ -132,7 +155,7 @@
 
             Logger.Debug(GettingItemFromCacheFormat, cacheKey);
 
-            var result = _cache[cacheKey] as TResult;
+            var result = Get<TResult>(cacheKey);
             if (result == null || result.Equals(default(TResult)))
             {
                 Logger.Debug(ItemNotInCacheFormat, cacheKey);
@@ -155,7 +178,7 @@
 
             Logger.Debug(GettingItemFromCacheFormat, cacheKey);
 
-            var result = _cache[cacheKey] as TResult;
+            var result = Get<TResult>(cacheKey);
             if (result == null || result.Equals(default(TResult)))
             {
                 Logger.Debug(ItemNotInCacheFormat, cacheKey);
@@ -178,7 +201,7 @@
             
             Logger.Debug(GettingItemFromCacheFormat, cacheKey);
 
-            var result = _cache[cacheKey] as TResult;
+            var result = Get<TResult>(cacheKey);
             if (result == null || result.Equals(default(TResult)))
             {
                 Logger.Debug(ItemNotInCacheFormat, cacheKey);
@@ -201,7 +224,7 @@
 
             Logger.Debug(GettingItemFromCacheFormat, cacheKey);
 
-            var result = _cache[cacheKey] as TResult;
+            var result = Get<TResult>(cacheKey);
             if (result == null || result.Equals(default(TResult)))
             {
                 Logger.Debug(ItemNotInCacheFormat, cacheKey);
@@ -224,7 +247,7 @@
 
             Logger.Debug(GettingItemFromCacheFormat, cacheKey);
 
-            var result = _cache[cacheKey] as TResult;
+            var result = Get<TResult>(cacheKey);
             if (result == null || result.Equals(default(TResult)))
             {
                 Logger.Debug(ItemNotInCacheFormat, cacheKey);
