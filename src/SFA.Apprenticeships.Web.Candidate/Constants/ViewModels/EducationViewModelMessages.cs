@@ -25,8 +25,8 @@
         public static class ToYearMessages
         {
             public const string LabelText = "To";
-            public const string RequiredErrorText = "'From' must be supplied";
-            public const string BeforeOrEqualErrorText = "'From' can't be greater than 'To'";
+            public const string RequiredErrorText = "'To' must be supplied";
+            public const string BeforeOrEqualErrorText = "'To' can't be greater than 'To'";
             public const string WhiteListRegularExpression = Whitelists.YearWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'To' " + Whitelists.YearWhitelist.ErrorText;
         }
