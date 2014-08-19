@@ -11,10 +11,12 @@
         private const string FullNameCookieName = "User.FullName";
 
         private readonly HttpContextBase _httpContext;
+        private readonly HttpCookie _httpDataCookie;
 
         public CookieUserDataProvider(HttpContextBase httpContext)
         {
             _httpContext = httpContext;
+            _httpDataCookie = GetOrCreateDataCookie();
         }
 
         public UserContext GetUserContext()
@@ -48,42 +50,58 @@
 
         public void Push(string key, string value)
         {
-            var dataCookies = GetOrCreateDataCookie(_httpContext.Response.Cookies);
-
-            dataCookies.Values.Add(key, value);
+            _httpDataCookie.Values.Remove(key);
+            _httpDataCookie.Values.Add(key, value);
         }
 
         public string Get(string key)
         {
-            var dataCookies = GetOrCreateDataCookie(_httpContext.Request.Cookies);
-
-            if (dataCookies.Values[key] == null)
+            if (_httpDataCookie == null || _httpDataCookie.Values[key] == null)
             {
                 return null;
             }
 
-            return dataCookies.Values[key];
+            return _httpDataCookie.Values[key];
         }
 
         public string Pop(string key)
         {
             var value = Get(key);
 
-            var dataCookies = GetOrCreateDataCookie(_httpContext.Response.Cookies);
+            if (value == null)
+            {
+                return null;
+            }
 
-            dataCookies.Values.Remove(key);
+            _httpDataCookie.Values.Remove(key);
 
             return value;
         }
 
-        private static HttpCookie GetOrCreateDataCookie(HttpCookieCollection cookies)
+        private HttpCookie GetOrCreateDataCookie()
         {
-            var dataCookie = cookies.Get(UserDataCookieName);
+            var requestDataCookie = _httpContext.Request.Cookies.Get(UserDataCookieName);
+            var responseDataCookie = _httpContext.Response.Cookies.Get(UserDataCookieName);
 
-            if (dataCookie == null)
+            var dataCookie = new HttpCookie(UserDataCookieName);
+
+            if (requestDataCookie != null && requestDataCookie.Values.HasKeys() 
+                && (responseDataCookie == null || !responseDataCookie.Values.HasKeys()))
             {
-                dataCookie = new HttpCookie(UserDataCookieName);
-                cookies.Add(dataCookie);
+                foreach (var key in requestDataCookie.Values.AllKeys)
+                {
+                    dataCookie.Values.Add(key, requestDataCookie.Values[key]);
+                }
+            }
+
+            if (responseDataCookie == null)
+            {
+                _httpContext.Response.Cookies.Add(dataCookie);
+            }
+            else
+            {
+                dataCookie = responseDataCookie.Values.HasKeys() ? responseDataCookie : dataCookie;
+                _httpContext.Response.Cookies.Set(dataCookie);
             }
 
             return dataCookie;
