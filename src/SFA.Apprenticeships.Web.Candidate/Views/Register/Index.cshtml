@@ -44,7 +44,7 @@
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Password, new { @class = "form-label" })
-            <span class="form-hint text">Requires upper and lowercase letters, a number at least 8 characters</span>
+            <span class="form-hint text">Requires upper and lowercase letters, a number and at least 8 characters</span>
             <div class="password-wrapper">
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control", autocomplete = "off" })
                 <span class="pw-masktoggle button-link">Show</span>
