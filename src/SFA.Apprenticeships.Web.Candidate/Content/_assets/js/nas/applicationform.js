@@ -1,5 +1,5 @@
 ﻿(function() {
-
+   
     var qualificationTypeModel = function (name) {
         var self = this;
 
@@ -24,34 +24,63 @@
         }
     }
 
-    var listItemModel = function (itemType, itemOtherType, itemYear, itemSubject, itemGrade, itemPredicted) {
+    var listItemModel = function (itemType, itemOtherType, itemYear, itemSubject, itemGrade, itemPredicted, itemRegexPattern) {
 
         var self = this;
 
         self.itemIndex = ko.observable(0);
-        self.qualificationType = ko.observable(itemType).extend({ required: { message: "Select qualification type" } });
-        self.otherQualificationType = ko.observable(itemOtherType);
-        self.qualificationYear = ko.observable(itemYear).extend({ required: { message: "Year is required" }, number: true });
-        self.qualificationSubject = ko.observable(itemSubject).extend({ required: { message: "Subject is required" } });
-        self.qualificationGrade = ko.observable(itemGrade).extend({ required: { message: "Grade is required" } });
+        self.itemRegexPattern = ko.observable(itemRegexPattern);
+
+        self.qualificationType = ko.observable(itemType).extend({
+             required: { message: "Select qualification type" }
+        });
+        self.otherQualificationType = ko.observable(itemOtherType).extend({
+            pattern: {
+                message: "'Other qualification type' contains some invalid characters",
+                params: self.itemRegexPattern
+            }
+        });
+        self.qualificationYear = ko.observable(itemYear).extend({
+             required: { message: "Year is required" }, number: true
+        });
+        self.qualificationSubject = ko.observable(itemSubject).extend({
+             required: { message: "Subject is required" }
+        }).extend({
+            pattern: {
+                message: "'Subject' contains some invalid characters",
+                params: self.itemRegexPattern
+            }
+        });
+        self.qualificationGrade = ko.observable(itemGrade).extend({
+             required: { message: "Grade is required" }
+        }).extend({
+            pattern: {
+                message: "'Grade' contains some invalid characters",
+                params: self.itemRegexPattern
+            }
+        });
         self.qualificationPredicted = ko.observable(itemPredicted);
         self.readOnly = ko.observable("readonly");
         self.showEditButton = ko.observable(true);
 
         self.itemErrors = ko.validation.group(self);
+
+        self.gradeDisplay = ko.computed(function() {
+            return self.qualificationPredicted() ? self.qualificationGrade() + " (Predicted)" : self.qualificationGrade();
+        }, self);
     };
 
-    function addQualification(qualifications, typeSelected, typeOther, year, subject, grade, predicted) {
+    function addQualification(qualifications, typeSelected, typeOther, year, subject, grade, predicted, regex) {
 
         var qualificationArrays = qualifications;
 
-        if (predicted === true) {
-            if (grade.indexOf("Predicted") > -1) {
+        //if (predicted === true) {
+        //    if (grade.indexOf("Predicted") > -1) {
 
-            } else {
-                grade += " (Predicted)";
-            }           
-        }
+        //    } else {
+        //        grade += " (Predicted)";
+        //    }           
+        //}
 
         if (typeSelected === "Other") {
             if (!typeOther || 0 === typeOther.length) {
@@ -61,7 +90,7 @@
             }
         }
 
-        var qualificationItemModel = new listItemModel(typeSelected, typeOther, year, subject, grade, predicted);
+        var qualificationItemModel = new listItemModel(typeSelected, typeOther, year, subject, grade, predicted, regex);
 
         var match = ko.utils.arrayFirst(qualificationArrays, function (item) {
             return item.groupKey() === typeSelected;
@@ -89,6 +118,7 @@
         self.qualificationStatus = ko.computed(function() {
             return self.showQualifications() ? "block" : "none";
         }, qualificationViewModel);
+        self.regexPattern = ko.observable();
 
         //TODO get values from config.
         self.qualificationTypes = ko.observableArray([
@@ -108,14 +138,37 @@
                 message: "Other qualification is required",
                 onlyIf: function () { return (self.selectedQualification() === "Other"); }
             }
+        }).extend({
+            pattern: {
+                message: "'Other qualification' contains some invalid characters",
+                params: self.regexPattern,
+                onlyIf: function () { return (self.selectedQualification() === "Other"); }
+            }
         });
+
         self.showOtherQualification = ko.observable(false);
 
-        self.year = ko.observable().extend({ required: { message: "Year is required" }, number: true });
-        self.subject = ko.observable().extend({ required: { message: "Subject is required" } });
-        self.grade = ko.observable().extend({ required: { message: "Grade is required" } });
+        self.year = ko.observable().extend({
+             required: { message: "Year is required" }, number: true
+        });
+        self.subject = ko.observable().extend({
+             required: { message: "Subject is required" }
+        }).extend({
+            pattern: {
+                message: "'Subject' contains some invalid characters",
+                params: self.regexPattern
+            }
+        });
+        self.grade = ko.observable().extend({
+             required: { message: "Grade is required" }
+        }).extend({
+            pattern: {
+                message: "'Grade' contains some invalid characters",
+                params: self.regexPattern
+            }
+        });
         self.predicted = ko.observable(false);
-
+     
         self.qualifications = ko.observableArray();
 
         self.errors = ko.validation.group(self);
@@ -155,7 +208,7 @@
                 var grade = self.grade();
                 var predicted = self.predicted();
 
-                var result = addQualification(self.qualifications(), typeSelected, typeOther, year, subject, grade, predicted);
+                var result = addQualification(self.qualifications(), typeSelected, typeOther, year, subject, grade, predicted, self.regexPattern());
                 self.qualifications(result);
                 
                 self.reIndexQualifications(); //re-index qualifications
@@ -189,7 +242,7 @@
         self.getqualifications = function (data) {
            
             $(data).each(function (index, item) {
-                var result = addQualification(self.qualifications(), item.QualificationType, "", item.Year, item.Subject, item.Grade, item.IsPredicted);
+                var result = addQualification(self.qualifications(), item.QualificationType, "", item.Year, item.Subject, item.Grade, item.IsPredicted, self.regexPattern());
                 self.qualifications(result);               
             });
 
@@ -239,18 +292,41 @@
     };
     ko.validation.registerExtenders();
 
-    var workExperienceItemModel = function (itemEmployer, itemJobTitle, itemDuties, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemIsCurrentEmployment, itemCurrentYear) {
+    var workExperienceItemModel = function (itemEmployer, itemJobTitle, itemDuties, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemIsCurrentEmployment, itemCurrentYear, itemRegex) {
 
         var self = this;
 
-        self.itemEmployer = ko.observable(itemEmployer).extend({ required: { message: "Employer is required" } });
-        self.itemJobTitle = ko.observable(itemJobTitle).extend({ required: { message: "Job Title is required" } });
+        self.itemRegexPattern = ko.observable(itemRegex);
+
+        self.itemEmployer = ko.observable(itemEmployer).extend({
+             required: { message: "Employer is required" }
+        }).extend({
+            pattern: {
+                message: "'Employer' contains some invalid characters",
+                params: self.itemRegexPattern
+            }
+        });
+
+        self.itemJobTitle = ko.observable(itemJobTitle).extend({
+             required: { message: "Job Title is required" }
+        }).extend({
+            pattern: {
+                message: "'Job Title' contains some invalid characters",
+                params: self.itemRegexPattern
+            }
+        });
+
         self.itemMainDuties = ko.observable(itemDuties).extend({
-             required: { message: "Enter some of your main duties" }
+            required: { message: "'Main duties' required" }
         }).extend({
             maxLength: {
                 message: "Main duties must not exceed 200 characters",
                 params: 200
+            }
+        }).extend({
+            pattern: {
+                message: "'Main duties' contains some invalid characters",
+                params: self.itemRegexPattern
             }
         });
 
@@ -259,20 +335,25 @@
 
         self.itemFromMonth = ko.observable(itemFromMonth).extend({ required: { message: "From month is required" } });
         self.itemFromYear = ko.observable(itemFromYear).extend({
-             required: { message: "From year is required" }, number:true
+             required: { message: "From year is required" }
+        }).extend({
+            number: {
+                message: "'From Year' must be a number"              
+            }
         }).extend({
             max: {
                 message: "'From Year' must not be in the future",
                 params: self.itemCurrentYear
             }
-        });
-
-        self.itemToMonth = ko.observable(itemToMonth).extend({
-            required: {
-                message: "To month is required",
-                onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
+        }).extend({
+            validation: {
+                validator: function (val, fromYearValue) {
+                    return val >= (fromYearValue - 100);
+                },
+                message: "'From Year' must not be less than 100 years ago",
+                params: self.itemCurrentYear,
             }
-        });
+        });       
        
         self.itemToYear = ko.observable(itemToYear).extend({
             required: {
@@ -301,6 +382,24 @@
                 params: self.itemCurrentYear,
                 onlyIf: function () {
                     return (self.itemIsCurrentEmployment() === false);
+                }
+            }
+        });
+
+        self.itemToMonth = ko.observable(itemToMonth).extend({
+            required: {
+                message: "To month is required",
+                onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
+            }
+        }).extend({
+            validation: {
+                validator: function (val, fromMonthValue) {
+                    return val >= fromMonthValue;
+                },
+                message: "'To Month and Year' must be after 'From Month and Year'",
+                params: self.itemFromMonth,
+                onlyIf: function () {
+                    return (self.itemFromYear() === self.itemToYear());
                 }
             }
         });
@@ -343,12 +442,19 @@
             return self.showWorkExperience() ? "block" : "none";
         }, self);
 
+        self.regexPattern = ko.observable();
+
         self.employer = ko.observable().extend({
              required: { message: "Employer is required" }
         }).extend({
             maxLength: {
                 message: "'Employer' must not exceed 50 characters",
                 params: 50
+            }
+        }).extend({
+            pattern: {
+                message: "'Employer' contains some invalid characters",
+                params: self.regexPattern
             }
         });
 
@@ -359,27 +465,42 @@
                 message: "'Job Title' must not exceed 50 characters",
                 params:50
             }
+        }).extend({
+            pattern: {
+                message: "'Job Title' contains some invalid characters",
+                params: self.regexPattern
+            }
         });
 
         self.mainDuties = ko.observable().extend({
-             required: { message: "Enter some of your main duties" }
+            required: { message: "'Main duties' required" }
         }).extend({
             maxLength: {
                 message: "'Main duties' must not exceed 200 characters",
                 params: 200
+            }
+        }).extend({
+            pattern: {
+                message: "'Main duties' contains some invalid characters",
+                params: self.regexPattern
             }
         });
 
         self.isCurrentEmployment = ko.observable(false);
         self.currentYear = ko.observable();
 
-        self.fromMonth = ko.observable().extend({ required: { message: "From month is required" } });
+        self.fromMonth = ko.observable().extend({ required: { message: "'From Month' is required" } });
         self.fromYear = ko.observable().extend({
-             required: { message: "From year is required" }, number: true
+            required: { message: "'From Year' is required" }, number: true
         }).extend({
             max: {
                 message: "'From Year' must not be in the future",
                 params: self.currentYear               
+            }
+        }).extend({
+            minLength: {
+                message: "'From Year' must be 4 digits",
+                params: 4
             }
         });
 
@@ -387,6 +508,17 @@
             required: {
                 message: "To month is required",
                 onlyIf: function () { return (self.isCurrentEmployment() === false); }
+            }
+        }).extend({
+            validation: {
+                validator: function (val, fromMonthValue) {
+                    return val >= fromMonthValue;
+                },
+                message: "'To Month and Year' must be after 'From Month and Year'",
+                params: self.fromMonth,
+                onlyIf: function () {
+                    return (self.fromYear() === self.toYear());
+                }
             }
         });
 
@@ -452,7 +584,7 @@
                     toYear = 0;
                 }
 
-                var experience = new workExperienceItemModel(self.employer(), self.jobTitle(), self.mainDuties(), self.fromMonth(), self.fromYear(), toMonth, toYear, self.isCurrentEmployment(), self.currentYear());
+                var experience = new workExperienceItemModel(self.employer(), self.jobTitle(), self.mainDuties(), self.fromMonth(), self.fromYear(), toMonth, toYear, self.isCurrentEmployment(), self.currentYear(), self.regexPattern());
                 self.workExperiences.push(experience);
 
                 self.employer("");
@@ -501,7 +633,7 @@
                     myToYear = null;
                 }
 
-                var experienceItemModel = new workExperienceItemModel(item.Employer, item.JobTitle, item.Description, item.FromMonth, item.FromYear, item.ToMonth, myToYear, currentEmployer, self.currentYear());
+                var experienceItemModel = new workExperienceItemModel(item.Employer, item.JobTitle, item.Description, item.FromMonth, item.FromYear, item.ToMonth, myToYear, currentEmployer, self.currentYear(), self.regexPattern());
                 self.workExperiences.push(experienceItemModel);
             });
         
@@ -533,19 +665,27 @@
     };
    
     $(function() {
-
-        var model = new qualificationViewModel();
        
+        var model = new qualificationViewModel();
+      
+        if (window.getWhiteListRegex()) {
+            model.regexPattern(window.getWhiteListRegex());
+        }            
+
         if (window.getQualificationData()) {
             model.getqualifications(window.getQualificationData());
         }
-            
+
         ko.applyBindings(model, document.getElementById('applyQualifications'));
 
         var experienceModel = new workExperienceViewModel();
 
         if (window.getCurrentYear()) {
             experienceModel.currentYear(window.getCurrentYear());
+        }
+
+        if (window.getWhiteListRegex()) {
+            experienceModel.regexPattern(window.getWhiteListRegex());
         }
 
         if (window.getWorkExperienceData()) {

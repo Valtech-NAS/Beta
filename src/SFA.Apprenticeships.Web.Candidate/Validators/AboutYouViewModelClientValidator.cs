@@ -48,7 +48,8 @@
 
             validator.RuleFor(x => x.AnythingWeCanDoToSupportYourInterview)
                 .NotEmpty()
-                .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.RequiredErrorText); 
+                .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.RequiredErrorText)
+                .When(x => x.RequiresSupportForInterview); 
         }
 
         internal static void AddSaveRules(this AbstractValidator<AboutYouViewModel> validator)

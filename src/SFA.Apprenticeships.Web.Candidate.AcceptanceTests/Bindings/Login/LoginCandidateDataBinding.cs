@@ -6,6 +6,7 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using Generators;
     using global::SpecBind.Helpers;
     using NUnit.Framework;
     using StructureMap;
@@ -36,7 +37,7 @@
         public LoginCandidateDataBinding(ITokenManager tokenManager)
         {
             _tokenManager = tokenManager;
-            _emailAddress = GenerateEmailAddress();
+            _emailAddress = EmailGenerator.GenerateEmailAddress();
             _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
         }
 
@@ -144,14 +145,7 @@
             _tokenManager.SetToken(ActivationCodeTokenName, ActivationCode);
             _tokenManager.SetToken(AccountUnlockCodeTokenName, AccountUnlockCode);
         }
-
-        private static string GenerateEmailAddress()
-        {
-            const string format = "valtechnas+{0}@gmail.com";
-
-            return string.Format(format, DateTime.Now.Ticks);
-        }
-
+      
         #endregion
     }
 }

@@ -10,9 +10,14 @@
     <div class="grid grid-1-2">
         <h1 class="heading-xlarge">My applications</h1>
     </div>
-    <div class="grid grid-1-2">
-        @Html.ActionLink("Find an apprenticeship", "Index", "VacancySearch", null, new { @class = "page-link" })
-    </div>
+    @if (
+            Model.AllApplications.Any()
+        )
+    {
+        <div class="grid grid-1-2">
+            @Html.ActionLink("Find an apprenticeship", "Index", "VacancySearch", null, new { @class = "page-link" })
+        </div>
+    }
 </div>
 @if (
         !Model.AllApplications.Any()

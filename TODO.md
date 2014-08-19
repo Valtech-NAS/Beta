@@ -10,6 +10,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - qualification types reference data should be read from configuration / provided by a configuration service
 - some website URLs need to be reviewed to be more "friendly"
 - validation summary links need to be clicked twice
+- validation messages should be parameterised where possible (e.g. max length). See AddressMessages.cs for an example.
 
 ## Service layer ##
 

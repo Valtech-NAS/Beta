@@ -74,6 +74,7 @@
 
         [HttpPost]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ValidateInput(false)]
         public ActionResult Apply(int id, ApplicationViewModel applicationViewModel)
         {
             ModelState.Clear();

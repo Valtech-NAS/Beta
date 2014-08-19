@@ -141,6 +141,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>VacancySearch.feature</DependentUpon>
     </Compile>
+    <Compile Include="Generators\EmailGenerator.cs" />
     <Compile Include="Hooks\BeforeAllScenarios.cs" />
     <Compile Include="IoC\WebTestRegistry.cs" />
     <Compile Include="Pages\Application\ApplicaitonPreviewPage.cs" />

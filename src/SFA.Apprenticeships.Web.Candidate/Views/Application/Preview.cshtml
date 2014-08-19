@@ -24,7 +24,7 @@
     
     @if (!Model.Candidate.Qualifications.Any())
     {
-        <p>I do not have any qualification</p>
+        <p>I don't have any qualifications</p>
     }
    
     @foreach (var group in Model.Candidate.Qualifications.GroupBy(item => item.QualificationType))
@@ -86,7 +86,7 @@
     
     @if (!Model.Candidate.WorkExperience.Any())
     {
-        <p>I do not have any work experience</p>
+        <p>I don't have any work experience</p>
     }
 
     @foreach (var experience in Model.Candidate.WorkExperience)

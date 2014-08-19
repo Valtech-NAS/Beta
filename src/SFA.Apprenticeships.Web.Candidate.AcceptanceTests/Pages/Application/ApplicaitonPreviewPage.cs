@@ -3,7 +3,7 @@
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
 
-    [PageNavigation("/application/preview/{VacancyId}")]
+    [PageNavigation("/application/preview/[0-9]+")]
     [PageAlias("ApplicationPreviewPage")]
     public class ApplicationPreviewPage : BaseValidationPage
     {

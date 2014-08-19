@@ -131,7 +131,11 @@
                                         <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationSubject, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].Subject', readonly:readOnly() }" maxlength="50" />
                                     </td>
                                     <td>
-                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationGrade, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].Grade',readonly:readOnly() }" maxlength="15" />
+                                        <input class="form-control qual-input-edit" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].Grade',readonly:readOnly() }" maxlength="15" />
+                                        <label for="item-qual-predicted" data-bind="ifnot: showEditButton">
+                                            <input id="item-qual-predicted" type="checkbox" data-bind="checked: qualificationPredicted" />
+                                            Predicted
+                                        </label>
                                     </td>
                                     <td>
                                         <input type="hidden" data-bind="value: qualificationType, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].QualificationType'}" />
@@ -382,12 +386,14 @@
         var qualificationData = null;
         var workExperienceData = null;
         var currentYear = null;
+        var whitelistregex = null;
 
         $(function() {
 
             qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
             workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
             currentYear = @Html.Raw(Model.CurrentYear);
+            whitelistregex = @Html.Raw(Json.Encode(Model.WhiteListRegex));            
 
             ko.validation.rules.pattern.message = 'Invalid.';
             ko.validation.configure({
@@ -428,6 +434,9 @@
             return month;
         }
 
+        function getWhiteListRegex() {
+            return whitelistregex;
+        }
     </script>
 
     @*<script src="~/Content/_assets/js/vendor/knockout-3.1.0.js"></script>
