@@ -313,7 +313,7 @@
         });
 
         self.itemMainDuties = ko.observable(itemDuties).extend({
-             required: { message: "Enter some of your main duties" }
+            required: { message: "'Main duties' required" }
         }).extend({
             maxLength: {
                 message: "Main duties must not exceed 200 characters",
@@ -331,16 +331,23 @@
 
         self.itemFromMonth = ko.observable(itemFromMonth).extend({ required: { message: "From month is required" } });
         self.itemFromYear = ko.observable(itemFromYear).extend({
-             required: { message: "From year is required" }, number:true
+             required: { message: "From year is required" }
+        }).extend({
+            number: {
+                message: "'From Year' must be a number"              
+            }
         }).extend({
             max: {
                 message: "'From Year' must not be in the future",
                 params: self.itemCurrentYear
             }
         }).extend({
-            minLength: {
-                message: "'From Year' must be 4 digits",
-                params: 4
+            validation: {
+                validator: function (val, fromYearValue) {
+                    return val >= (fromYearValue - 100);
+                },
+                message: "'From Year' must not be less than 100 years ago",
+                params: self.itemCurrentYear,
             }
         });       
        
