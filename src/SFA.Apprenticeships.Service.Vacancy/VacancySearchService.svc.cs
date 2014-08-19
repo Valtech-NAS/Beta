@@ -7,7 +7,11 @@
     {
         public SearchResponse Search(SearchRequest request)
         {
-            //todo: invoke search, map results and return...
+            //todo: 
+            // 1. map request parameter values to search request
+            // 2. invoke search using parameters
+            // 3. map search results to DTOs
+            // 4. return with original request
 
             return new SearchResponse
             {
