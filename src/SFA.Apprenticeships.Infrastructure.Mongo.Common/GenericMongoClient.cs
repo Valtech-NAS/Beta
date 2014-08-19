@@ -26,12 +26,12 @@
             // determine whether this is a "new" entity being saved for the first time
             if (entity.DateCreated == DateTime.MinValue)
             {
-                entity.DateCreated = DateTime.Now;
+                entity.DateCreated = DateTime.UtcNow;
                 entity.DateUpdated = null;
             }
             else
             {
-                entity.DateUpdated = DateTime.Now;
+                entity.DateUpdated = DateTime.UtcNow;
             }
         }
     }

@@ -64,7 +64,7 @@
                 return string.Empty;
             }
 
-            return urlReferrer.ToString();
+            return urlReferrer.PathAndQuery;
         }
     }
 }

@@ -150,17 +150,16 @@
             }
         }
 
-        public bool VerifyPasswordReset(PasswordResetViewModel model)
+        public void VerifyPasswordReset(PasswordResetViewModel model)
         {
             try
             {
                 _candidateService.ResetForgottenPassword(model.EmailAddress, model.PasswordResetCode, model.Password);
-                return true;
             }
             catch (CustomException ex)
             {
                 Logger.Error("Reset forgotten password failed for " + model.EmailAddress, ex);
-                return false;
+                throw;
             }
         }
 
@@ -209,7 +208,7 @@
             var httpContext = new HttpContextWrapper(HttpContext.Current);
 
             _authenticationTicketService.SetAuthenticationCookie(httpContext.Response.Cookies,
-                candidate.EntityId.ToString(), 
+                candidate.EntityId.ToString(),
                 roles);
         }
     }

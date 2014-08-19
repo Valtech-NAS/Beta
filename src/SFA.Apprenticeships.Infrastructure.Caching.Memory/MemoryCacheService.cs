@@ -28,17 +28,7 @@
                 return;
             }
 
-            TimeSpan cacheTimeSpan;
-
-            if (cacheDuration == CacheDuration.Midnight)
-            {
-                var midnight = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
-                cacheTimeSpan = new TimeSpan(midnight.Ticks - DateTime.Now.Ticks);
-            }
-            else
-            {
-                cacheTimeSpan = TimeSpan.FromMinutes((int)cacheDuration);
-            }
+            TimeSpan cacheTimeSpan = TimeSpan.FromMinutes((int)cacheDuration);
 
             var policy = new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.Add(cacheTimeSpan) };
             _cache.Set(key, value, policy);

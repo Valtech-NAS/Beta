@@ -73,7 +73,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
 
             test[0].Id.Should().Be(1);
             test[0].EmployerName.Should().Be("EmpName");
-            test[0].ClosingDate.Should().Be(DateTime.Today);
+            test[0].ClosingDate.Should().Be(DateTime.Today.ToUniversalTime());
             test[0].Description.Should().Be("ShortDesc");
             test[0].EmployerName.Should().Be("EmpName");
             test[0].Location.Latitude.Should().Be(12.9);

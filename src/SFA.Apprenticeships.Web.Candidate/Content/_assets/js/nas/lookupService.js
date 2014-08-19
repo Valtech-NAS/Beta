@@ -12,6 +12,7 @@
             $("#Address_GeoPoint_Latitude").val(selected.attr("data-lat"));
             $("#Address_GeoPoint_Longitude").val(selected.attr("data-lon"));
         }
+        $(option.closest('form')[0]).valid();
     });
 
     $(".address-item").change(function() {

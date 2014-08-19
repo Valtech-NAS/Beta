@@ -44,6 +44,6 @@
             If you create an account you can save and track your applications and manage your account settings.
         </p>
         
-        <a href="@Url.Action("Index", "Register")" id="create-account-link">Create an account</a>
+        @Html.ActionLink("Create an account", "Index", "Register", null, new { id = "create-account-link" })
     </div>
 </div>

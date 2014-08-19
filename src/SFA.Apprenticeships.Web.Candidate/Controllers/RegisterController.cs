@@ -103,7 +103,7 @@
             if (activatedResult.IsValid)
             {
                 var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
-
+                SetUserMessage(ActivationPageMessages.AccountActivated);
                 return SetAuthenticationCookieAndRedirectToAction(candidate);
             }
 
@@ -260,23 +260,24 @@
             _authenticationTicketService.SetAuthenticationCookie(HttpContext.Response.Cookies, candidate.EntityId.ToString(), UserRoleNames.Activated);
             UserData.SetUserContext(candidate.RegistrationDetails.EmailAddress, candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName);
 
-            // Redirect to last viewed vacancy (if any).
+            // ReturnUrl takes precedence over last view vacnacy id.
+            var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
+
+            // Clear last viewed vacancy and distance (if any).
             var lastViewedVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
+            UserData.Pop(UserDataItemNames.VacancyDistance);
+
+            if (!string.IsNullOrWhiteSpace(returnUrl))
+            {
+                return Redirect(returnUrl);    
+            }
 
             if (lastViewedVacancyId != null)
             {
-                return RedirectToAction("Details", "VacancySearch", new {id = int.Parse(lastViewedVacancyId)});
+                return RedirectToAction("Details", "VacancySearch", new { id = int.Parse(lastViewedVacancyId) });
             }
 
-            // Redirect to return URL (if any).
-            var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
-
-            if (string.IsNullOrWhiteSpace(returnUrl))
-            {
-                return RedirectToAction("Index", "VacancySearch");
-            }
-
-            return Redirect(returnUrl);
+            return RedirectToAction("Index", "VacancySearch");
         }
 
         #endregion

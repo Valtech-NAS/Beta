@@ -8,7 +8,7 @@
     {
         ApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId);
 
-        ApplicationViewModel UpdateApplicationViewModel(Guid candidateId, ApplicationViewModel submittedApplicationViewModel);
+        ApplicationViewModel PatchApplicationViewModel(Guid candidateId, ApplicationViewModel savedApplicationViewModel, ApplicationViewModel submittedApplicationViewModel);
 
         MyApplicationsViewModel GetMyApplications(Guid candidateId);
 

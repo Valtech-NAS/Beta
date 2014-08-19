@@ -9,8 +9,7 @@
     public class RegisterViewModelValidatorTests
     {
         private RegisterViewModelClientValidator _viewModelClientValidator;
-        private VacancySearchViewModelLocationValidator _viewModelLocationValidator;
-
+      
         [SetUp]
         public void Setup()
         {

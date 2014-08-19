@@ -64,7 +64,7 @@
             set { this[DurableConst] = value; }
         }
 
-        [ConfigurationProperty(HeartBeatSecondsConst, IsRequired = false, IsKey = false, DefaultValue = (ushort)3)]
+        [ConfigurationProperty(HeartBeatSecondsConst, IsRequired = false, IsKey = false, DefaultValue = (ushort)580)]
         public ushort HeartBeatSeconds
         {
             get { return (ushort)this[HeartBeatSecondsConst]; }

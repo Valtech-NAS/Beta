@@ -36,8 +36,6 @@
         public ActionResult Index(string returnUrl)
         {
             _authenticationTicketService.Clear(HttpContext.Request.Cookies); //todo: yuk
-            UserData.Clear();
-            ClearSession();
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
@@ -152,6 +150,8 @@
         public ActionResult SignOut()
         {
             FormsAuthentication.SignOut();
+            UserData.Clear();
+            ClearSession();
 
             SetUserMessage(SignOutPageMessages.SignOutMessageText);
 
