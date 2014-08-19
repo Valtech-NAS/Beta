@@ -36,37 +36,37 @@
             }
             catch (CustomException ex)
             {
-                if (ex.Code == ErrorCodes.VacancyExpired) return null;
+                if (ex.Code == ErrorCodes.VacancyExpired)
+                {
+                    return null;
+                }
 
                 throw;
             }
         }
 
-        public ApplicationViewModel UpdateApplicationViewModel(Guid candidateId, ApplicationViewModel submittedApplicationViewModel)
+        public ApplicationViewModel PatchApplicationViewModel(Guid candidateId, ApplicationViewModel savedApplicationViewModel, ApplicationViewModel submittedApplicationViewModel)
         {
-            var model = GetApplicationViewModel(candidateId, submittedApplicationViewModel.VacancyId);
-
             if (!submittedApplicationViewModel.Candidate.AboutYou.RequiresSupportForInterview)
             {
                 submittedApplicationViewModel.Candidate.AboutYou.AnythingWeCanDoToSupportYourInterview = string.Empty;
             }
 
-            model.Candidate.AboutYou = submittedApplicationViewModel.Candidate.AboutYou;
-            model.Candidate.Education = submittedApplicationViewModel.Candidate.Education;
-            model.Candidate.HasQualifications = submittedApplicationViewModel.Candidate.HasQualifications;
-            model.Candidate.Qualifications = submittedApplicationViewModel.Candidate.Qualifications;
-            model.Candidate.HasWorkExperience = submittedApplicationViewModel.Candidate.HasWorkExperience;
-            model.Candidate.WorkExperience = submittedApplicationViewModel.Candidate.WorkExperience;
-            model.Candidate.EmployerQuestionAnswers = submittedApplicationViewModel.Candidate.EmployerQuestionAnswers;
+            savedApplicationViewModel.Candidate.AboutYou = submittedApplicationViewModel.Candidate.AboutYou;
+            savedApplicationViewModel.Candidate.Education = submittedApplicationViewModel.Candidate.Education;
+            savedApplicationViewModel.Candidate.HasQualifications = submittedApplicationViewModel.Candidate.HasQualifications;
+            savedApplicationViewModel.Candidate.Qualifications = submittedApplicationViewModel.Candidate.Qualifications;
+            savedApplicationViewModel.Candidate.HasWorkExperience = submittedApplicationViewModel.Candidate.HasWorkExperience;
+            savedApplicationViewModel.Candidate.WorkExperience = submittedApplicationViewModel.Candidate.WorkExperience;
+            savedApplicationViewModel.Candidate.EmployerQuestionAnswers = submittedApplicationViewModel.Candidate.EmployerQuestionAnswers;
+            savedApplicationViewModel.ApplicationAction = submittedApplicationViewModel.ApplicationAction;
 
-            return model;
+            return savedApplicationViewModel;
         }
 
         public void SaveApplication(Guid candidateId, int vacancyId, ApplicationViewModel applicationViewModel)
         {
-            var model = UpdateApplicationViewModel(candidateId, applicationViewModel);
-
-            var application = _mapper.Map<ApplicationViewModel, ApplicationDetail>(model);
+            var application = _mapper.Map<ApplicationViewModel, ApplicationDetail>(applicationViewModel);
 
             _candidateService.SaveApplication(candidateId, vacancyId, application);
         }

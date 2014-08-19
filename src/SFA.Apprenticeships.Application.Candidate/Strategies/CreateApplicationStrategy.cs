@@ -39,8 +39,9 @@
                 return CreateNewApplication(candidateId, vacancyId);
             }
 
-            if (DateTime.Now > applicationDetail.Vacancy.ClosingDate)
+            if (applicationDetail.Vacancy.ClosingDate < DateTime.Today.ToUniversalTime())
             {
+                // Vacancy has expired, closing date is before today.
                 applicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;
                 _applicationWriteRepository.Save(applicationDetail);
 
@@ -56,7 +57,7 @@
         {
             var vacancyDetails = GetVacancyDetails(vacancyId);
 
-            if (vacancyDetails.ClosingDate < DateTime.Today)
+            if (vacancyDetails.ClosingDate < DateTime.Today.ToUniversalTime())
             {
                 throw new CustomException(
                     "Vacancy has expired, cannot create a new application.",

@@ -11,8 +11,8 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
             Mapper.CreateMap<VacancyFullData, Domain.Entities.Vacancies.VacancyDetail>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(src => src.VacancyReference))
                 .ForMember(d => d.LocalAuthority, opt => opt.MapFrom(src => src.VacancyAddress.LocalAuthority))
-                .ForMember(d => d.Created, opt => opt.MapFrom(src => src.CreatedDateTime))
-                .ForMember(d => d.StartDate, opt => opt.MapFrom(src => src.PossibleStartDate))
+                .ForMember(d => d.Created, opt => opt.MapFrom(src => src.CreatedDateTime.ToUniversalTime()))
+                .ForMember(d => d.StartDate, opt => opt.MapFrom(src => src.PossibleStartDate.ToUniversalTime()))
                 .ForMember(d => d.Description, opt => opt.MapFrom(src => src.ShortDescription))
                 .ForMember(d => d.Framework, opt => opt.MapFrom(src => src.ApprenticeshipFramework))
                 .ForMember(d => d.VacancyAddress, opt => opt.ResolveUsing<VacancyDetailAddressResolver>().FromMember(src => src.VacancyAddress))
@@ -24,7 +24,14 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
                 .ForMember(d => d.OtherInformation, opt => opt.MapFrom(src => src.OtherImportantInformation))
                 .ForMember(d => d.ProviderDescription, opt => opt.MapFrom(src => src.LearningProviderDesc))
                 .ForMember(d => d.Contact, opt => opt.MapFrom(src => src.ContactPerson))
-                .ForMember(d => d.ProviderSectorPassRate, opt => opt.MapFrom(src => src.LearningProviderSectorPassRate));
+                .ForMember(d => d.ProviderSectorPassRate, opt => opt.MapFrom(src => src.LearningProviderSectorPassRate))
+                .ForMember(d => d.InterviewFromDate, opt => opt.MapFrom(src => src.InterviewFromDate.ToUniversalTime()))
+                .ForMember(d => d.ClosingDate, opt => opt.MapFrom(src => ToUniversalTime(src.ClosingDate)));
+        }
+
+        private DateTime ToUniversalTime(DateTime closingDate)
+        {
+            return closingDate.ToUniversalTime();
         }
     }
 }

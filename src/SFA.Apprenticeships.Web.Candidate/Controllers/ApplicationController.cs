@@ -36,19 +36,6 @@
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult Apply(int id)
-        {
-            var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
-            if (model == null)
-            {
-                return new VacancyNotFoundResult();
-            }
-
-            return View(model);
-        }
-
-        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Resume(int id)
         {
             var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
@@ -72,21 +59,43 @@
             return RedirectToAction("Index");
         }
 
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public ActionResult Apply(int id)
+        {
+            var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+
+            if (model == null)
+            {
+                return new VacancyNotFoundResult();
+            }
+
+            return View(model);
+        }
+
         [HttpPost]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ValidateInput(false)]
         public ActionResult Apply(int id, ApplicationViewModel applicationViewModel)
         {
+            var savedApplicationViewModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+
+            if (savedApplicationViewModel == null)
+            {
+                return new VacancyNotFoundResult();
+            }
+
             ModelState.Clear();
 
             var result = applicationViewModel.ApplicationAction == ApplicationAction.Preview
                 ? _applicationViewModelFullValidator.Validate(applicationViewModel)
                 : _applicationViewModelSaveValidator.Validate(applicationViewModel);
 
+            applicationViewModel = _applicationProvider.PatchApplicationViewModel(
+                UserContext.CandidateId, savedApplicationViewModel, applicationViewModel);
+
             if (!result.IsValid)
             {
                 result.AddToModelState(ModelState, string.Empty);
-                applicationViewModel = _applicationProvider.UpdateApplicationViewModel(UserContext.CandidateId, applicationViewModel);
 
                 return View("Apply", applicationViewModel);
             }
@@ -98,7 +107,7 @@
                 return RedirectToAction("Preview", new {id});
             }
 
-            applicationViewModel = _applicationProvider.UpdateApplicationViewModel(UserContext.CandidateId, applicationViewModel);
+            applicationViewModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
             return View("Apply", applicationViewModel);
         }
