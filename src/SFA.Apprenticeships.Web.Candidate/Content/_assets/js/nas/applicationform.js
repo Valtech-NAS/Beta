@@ -64,19 +64,23 @@
         self.showEditButton = ko.observable(true);
 
         self.itemErrors = ko.validation.group(self);
+
+        self.gradeDisplay = ko.computed(function() {
+            return self.qualificationPredicted() ? self.qualificationGrade() + " (Predicted)" : self.qualificationGrade();
+        }, self);
     };
 
     function addQualification(qualifications, typeSelected, typeOther, year, subject, grade, predicted, regex) {
 
         var qualificationArrays = qualifications;
 
-        if (predicted === true) {
-            if (grade.indexOf("Predicted") > -1) {
+        //if (predicted === true) {
+        //    if (grade.indexOf("Predicted") > -1) {
 
-            } else {
-                grade += " (Predicted)";
-            }           
-        }
+        //    } else {
+        //        grade += " (Predicted)";
+        //    }           
+        //}
 
         if (typeSelected === "Other") {
             if (!typeOther || 0 === typeOther.length) {
