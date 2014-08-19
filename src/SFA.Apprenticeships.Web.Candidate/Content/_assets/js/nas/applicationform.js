@@ -342,25 +342,7 @@
                 message: "'From Year' must be 4 digits",
                 params: 4
             }
-        });
-
-        self.itemToMonth = ko.observable(itemToMonth).extend({
-            required: {
-                message: "To month is required",
-                onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
-            }
-        }).extend({
-            validation: {
-                validator: function(val, fromMonthValue) {
-                    return val >= fromMonthValue;
-                },
-                message: "'To Month and Year' must be after 'From Month and Year'",
-                params: self.itemFromMonth,
-                onlyIf: function() {
-                    return (self.itemFromYear() === self.itemToYear());
-                }
-            }
-        });
+        });       
        
         self.itemToYear = ko.observable(itemToYear).extend({
             required: {
@@ -389,6 +371,24 @@
                 params: self.itemCurrentYear,
                 onlyIf: function () {
                     return (self.itemIsCurrentEmployment() === false);
+                }
+            }
+        });
+
+        self.itemToMonth = ko.observable(itemToMonth).extend({
+            required: {
+                message: "To month is required",
+                onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
+            }
+        }).extend({
+            validation: {
+                validator: function (val, fromMonthValue) {
+                    return val >= fromMonthValue;
+                },
+                message: "'To Month and Year' must be after 'From Month and Year'",
+                params: self.itemFromMonth,
+                onlyIf: function () {
+                    return (self.itemFromYear() === self.itemToYear());
                 }
             }
         });
