@@ -105,11 +105,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Apply.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Application\ApplyAndSubmitApplication.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ApplyAndSubmitApplication.feature</DependentUpon>
-    </Compile>
     <Compile Include="Features\EpicHappyPath.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -183,10 +178,6 @@
     <None Include="Features\Application\Apply.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Apply.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\Application\ApplyAndSubmitApplication.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ApplyAndSubmitApplication.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\EpicHappyPath.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
