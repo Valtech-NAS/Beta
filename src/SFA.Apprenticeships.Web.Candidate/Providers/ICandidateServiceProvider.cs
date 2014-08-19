@@ -17,7 +17,7 @@
         Candidate Authenticate(LoginViewModel model);
         void RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model);
         void RequestAccountUnlockCode(AccountUnlockViewModel model);
-        bool VerifyPasswordReset(PasswordResetViewModel model);
+        void VerifyPasswordReset(PasswordResetViewModel model);
         bool VerifyAccountUnlockCode(AccountUnlockViewModel model);
         bool ResendActivationCode(string username);
         Candidate GetCandidate(string username);
