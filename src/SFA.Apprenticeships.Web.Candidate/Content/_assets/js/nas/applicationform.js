@@ -473,7 +473,7 @@
         });
 
         self.mainDuties = ko.observable().extend({
-             required: { message: "Enter some of your main duties" }
+            required: { message: "'Main duties' required" }
         }).extend({
             maxLength: {
                 message: "'Main duties' must not exceed 200 characters",
@@ -489,9 +489,9 @@
         self.isCurrentEmployment = ko.observable(false);
         self.currentYear = ko.observable();
 
-        self.fromMonth = ko.observable().extend({ required: { message: "From month is required" } });
+        self.fromMonth = ko.observable().extend({ required: { message: "'From Month' is required" } });
         self.fromYear = ko.observable().extend({
-             required: { message: "From year is required" }, number: true
+            required: { message: "'From Year' is required" }, number: true
         }).extend({
             max: {
                 message: "'From Year' must not be in the future",
