@@ -46,7 +46,7 @@
             //Modified to http://stackoverflow.com/questions/5859632/regular-expression-for-password-validation
 
             public const string RegularExpression = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,127}$";
-            public const string ErrorText = @" requires upper and lowercase letters, a number at least 8 characters
+            public const string ErrorText = @" requires upper and lowercase letters, a number at least 8 characters";
         }
 
         public static class PostcodeWhitelist
