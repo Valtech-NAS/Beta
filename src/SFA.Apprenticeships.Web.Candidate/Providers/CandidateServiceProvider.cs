@@ -91,6 +91,7 @@
             }
             catch (Exception ex)
             {
+                //todo: catch more specific custom errors first
                 Logger.Error("Candidate activation failed for " + model.EmailAddress, ex);
                 return false;
             }
@@ -158,6 +159,7 @@
             }
             catch (CustomException ex)
             {
+                //todo: catch more specific custom errors first
                 Logger.Error("Reset forgotten password failed for " + model.EmailAddress, ex);
                 throw;
             }
