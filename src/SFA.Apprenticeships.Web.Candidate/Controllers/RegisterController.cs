@@ -17,26 +17,27 @@
 
     public class RegisterController : CandidateControllerBase
     {
-        private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
-        private readonly ICandidateServiceProvider _candidateServiceProvider;
-        private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
-        private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;
         private readonly IAuthenticationTicketService _authenticationTicketService;
+        private readonly ICandidateServiceProvider _candidateServiceProvider;
+
+        private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
+        private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
+        private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;        
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
 
         public RegisterController(ICandidateServiceProvider candidateServiceProvider,
+            IAuthenticationTicketService authenticationTicketService,
             RegisterViewModelServerValidator registerViewModelServerValidator,
             ActivationViewModelServerValidator activationViewModelServerValidator,
             ForgottenPasswordViewModelServerValidator forgottenPasswordViewModelServerValidator,
-            PasswordResetViewModelServerValidator passwordResetViewModelServerValidator,
-            IAuthenticationTicketService authenticationTicketService)
+            PasswordResetViewModelServerValidator passwordResetViewModelServerValidator)
         {
+            _authenticationTicketService = authenticationTicketService;
             _candidateServiceProvider = candidateServiceProvider;
             _registerViewModelServerValidator = registerViewModelServerValidator;
             _activationViewModelServerValidator = activationViewModelServerValidator;
             _forgottenPasswordViewModelServerValidator = forgottenPasswordViewModelServerValidator;
             _passwordResetViewModelServerValidator = passwordResetViewModelServerValidator;
-            _authenticationTicketService = authenticationTicketService;
         }
 
         public ActionResult Index()

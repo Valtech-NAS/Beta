@@ -40,13 +40,26 @@ Scenario: Epic happy path
 	And I choose CreateAccountButton
 	Then I wait 120 second for the ActivationPage page
 	When I get the token for my newly created account
-	And I wait to see EmailAddress
 	And I enter data
 		| Field          | Value             |
 		| ActivationCode | {ActivationToken} |
 	And I choose ActivateButton
-	#We end up on the vacancy search page here - did this not take you to the vacnacy you were viewing when you clicked register?
-	Then I am on the VacancyDetailsPage page
+	Then I am on the ApplicationPage page
+	When I enter data
+		| Field                   | Value                         |
+		| EducationNameOfSchool   | SchoolName                    |
+		| EducationFromYear       | 2010                          |
+		| EducationToYear         | 2012                          |
+		| WhatAreYourStrengths    | My strengths                  |
+		| WhatCanYouImprove       | What can I improve            |
+		| HobbiesAndInterests     | Hobbies and interests         |
+		| WhatCanWeDoToSupportYou | What can we do to support you |
+	And I enter employer question data if present
+		| Field                                              | Value |
+		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
+		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
+	And I choose ApplyButton
+	Then I am on the ApplicationPreviewPage page
 
 
 
