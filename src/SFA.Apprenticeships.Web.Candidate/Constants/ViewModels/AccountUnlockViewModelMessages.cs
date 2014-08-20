@@ -8,8 +8,8 @@
         {
             public const string LabelText = "Enter code";
             public const string HintText = "";
-            public const string RequiredErrorText = "'Account unlock' must be supplied";
-            public const string LengthErrorText = "'Account unlock' must be a 6 character code";
+            public const string RequiredErrorText = "Please enter your unlock code";
+            public const string LengthErrorText = "Unlock code must be 6 characters";
         }
     }
 }

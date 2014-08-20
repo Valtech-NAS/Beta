@@ -6,8 +6,8 @@
         {
             public const string LabelText = "Activation code";
             public const string HintText = "";
-            public const string RequiredErrorText = "'Activation code' must be supplied";
-            public const string LengthErrorText = "'Activation code' must be a 6-character code";
+            public const string RequiredErrorText = "Please enter an activation code";
+            public const string LengthErrorText = "Activation code must be 6 characters";
         }
     }
 }
