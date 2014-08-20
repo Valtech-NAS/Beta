@@ -4,7 +4,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 ## Web layer ##
 
-- controllers should use providers and to avoid containing orchestration logic
+- controllers should use providers to avoid containing orchestration logic
 - controller actions should use async where possible
 - controller actions should provide caching hints
 - qualification types reference data should be read from configuration / provided by a configuration service
