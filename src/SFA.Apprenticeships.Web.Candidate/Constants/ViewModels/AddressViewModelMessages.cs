@@ -2,7 +2,7 @@
 {
     using Common.Constants;
 
-    public static class AddressMessages
+    public static class AddressViewModelMessages
     {
         public static class AddressLine1
         {

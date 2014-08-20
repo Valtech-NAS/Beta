@@ -398,7 +398,7 @@
     <Compile Include="Constants\Pages\AccountUnlockPageMessages.cs" />
     <Compile Include="Constants\Pages\PreviewPageMessages.cs" />
     <Compile Include="Constants\Pages\LoginPageMessages.cs" />
-    <Compile Include="Constants\ViewModels\AddressMessages.cs" />
+    <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ActivationCodeMessages.cs" />
     <Compile Include="Constants\ViewModels\ForgottenPasswordViewModelMessages.cs" />

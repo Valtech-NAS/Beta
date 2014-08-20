@@ -10,35 +10,35 @@
         {
             RuleFor(x => x.AddressLine1)
                 .Length(0, 50)
-                .WithMessage(AddressMessages.AddressLine1.TooLongErrorText)
+                .WithMessage(AddressViewModelMessages.AddressLine1.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage(AddressMessages.AddressLine1.RequiredErrorText)
-                .Matches(AddressMessages.AddressLine1.WhiteListRegularExpression)
-                .WithMessage(AddressMessages.AddressLine1.WhiteListErrorText);
+                .WithMessage(AddressViewModelMessages.AddressLine1.RequiredErrorText)
+                .Matches(AddressViewModelMessages.AddressLine1.WhiteListRegularExpression)
+                .WithMessage(AddressViewModelMessages.AddressLine1.WhiteListErrorText);
 
             RuleFor(x => x.AddressLine2)
                 .Length(0, 50)
-                .WithMessage(AddressMessages.AddressLine2.TooLongErrorText)
-                .Matches(AddressMessages.AddressLine2.WhiteListRegularExpression)
-                .WithMessage(AddressMessages.AddressLine2.WhiteListErrorText);
+                .WithMessage(AddressViewModelMessages.AddressLine2.TooLongErrorText)
+                .Matches(AddressViewModelMessages.AddressLine2.WhiteListRegularExpression)
+                .WithMessage(AddressViewModelMessages.AddressLine2.WhiteListErrorText);
 
             RuleFor(x => x.AddressLine3)
                 .Length(0, 50)
-                .WithMessage(AddressMessages.AddressLine3.TooLongErrorText)
-                .Matches(AddressMessages.AddressLine3.WhiteListRegularExpression)
-                .WithMessage(AddressMessages.AddressLine3.WhiteListErrorText);
+                .WithMessage(AddressViewModelMessages.AddressLine3.TooLongErrorText)
+                .Matches(AddressViewModelMessages.AddressLine3.WhiteListRegularExpression)
+                .WithMessage(AddressViewModelMessages.AddressLine3.WhiteListErrorText);
 
             RuleFor(x => x.AddressLine4)
                 .Length(0, 50)
-                .WithMessage(AddressMessages.AddressLine4.TooLongErrorText)
-                .Matches(AddressMessages.AddressLine4.WhiteListRegularExpression)
-                .WithMessage(AddressMessages.AddressLine4.WhiteListErrorText);
+                .WithMessage(AddressViewModelMessages.AddressLine4.TooLongErrorText)
+                .Matches(AddressViewModelMessages.AddressLine4.WhiteListRegularExpression)
+                .WithMessage(AddressViewModelMessages.AddressLine4.WhiteListErrorText);
 
             RuleFor(x => x.Postcode)
                 .NotEmpty()
-                .WithMessage(AddressMessages.Postcode.RequiredErrorText)
-                .Matches(AddressMessages.Postcode.WhiteListRegularExpression)
-                .WithMessage(AddressMessages.Postcode.WhiteListErrorText);
+                .WithMessage(AddressViewModelMessages.Postcode.RequiredErrorText)
+                .Matches(AddressViewModelMessages.Postcode.WhiteListRegularExpression)
+                .WithMessage(AddressViewModelMessages.Postcode.WhiteListErrorText);
         }
     }
 }
