@@ -80,7 +80,7 @@
             // Get application summaries for the specified candidate, excluding any that are archived.
             var mongoApplicationDetailsList = Collection
                 .AsQueryable()
-                .Where(each => each.CandidateId == candidateId && !each.IsArchived)
+                .Where(each => each.CandidateId == candidateId)
                 .ToArray();
 
             var applicationDetailsList = _mapper

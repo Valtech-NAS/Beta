@@ -50,7 +50,20 @@
 
             applicationDetail.AssertState("Application should be in draft", ApplicationStatuses.Draft);
 
+            if (applicationDetail.IsArchived)
+            {
+                applicationDetail = UnarchiveApplication(applicationDetail);
+            }
+
             return applicationDetail;
+        }
+
+        private ApplicationDetail UnarchiveApplication(ApplicationDetail applicationDetail)
+        {
+            applicationDetail.IsArchived = false;
+            _applicationWriteRepository.Save(applicationDetail);
+
+            return _applicationReadRepository.Get(applicationDetail.EntityId);
         }
 
         private ApplicationDetail CreateNewApplication(Guid candidateId, int vacancyId)
