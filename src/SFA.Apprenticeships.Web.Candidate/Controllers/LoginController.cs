@@ -81,7 +81,7 @@
             }
 
             ModelState.Clear();
-            ModelState.AddModelError("EmailAddress", LoginPageMessages.AuthenticationFailedErrorText);
+            ModelState.AddModelError(string.Empty, LoginPageMessages.AuthenticationFailedErrorText);
 
             return View(model);
         }
