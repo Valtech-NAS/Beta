@@ -45,7 +45,7 @@
         public void Clear()
         {
             _httpContext.Response.Cookies.Add(CreateExpiredCookie(UserContextCookieName));
-            _httpContext.Response.Cookies.Add(CreateExpiredCookie(UserDataCookieName));
+            _httpDataCookie.Values.Clear();
         }
 
         public void Push(string key, string value)
