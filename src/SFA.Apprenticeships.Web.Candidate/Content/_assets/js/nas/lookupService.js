@@ -12,7 +12,10 @@
             $("#Address_GeoPoint_Latitude").val(selected.attr("data-lat"));
             $("#Address_GeoPoint_Longitude").val(selected.attr("data-lon"));
         }
-        $(option.closest('form')[0]).valid();
+        //TODO: if needing validation groups this should be refactored too
+        $("#Address_AddressLine1").focus();
+        $("#Address_Postcode").focus();
+        $("#EmailAddress").focus();
     });
 
     $(".address-item").change(function() {
