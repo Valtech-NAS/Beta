@@ -11,7 +11,7 @@
             public const string RequiredErrorText = "Please provide examples of your strengths";
             public const string TooLongErrorText = "Examples of your strengths mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "'What are your strengths' " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "Examples of your strengths " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class WhatDoYouFeelYouCouldImproveMessages
@@ -21,7 +21,7 @@
             public const string RequiredErrorText = "Please provide examples of where you could improve";
             public const string TooLongErrorText = "Examples of where you could improve mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "'What do you feel you could improve' " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "Examples of where you could improve " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class WhatAreYourHobbiesInterestsMessages
@@ -31,7 +31,7 @@
             public const string RequiredErrorText = "Please provide examples of your hobbies/interests";
             public const string TooLongErrorText = "Examples of your hobbies/interests mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "'What are your hobbies/interests' " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "Examples of your hobbies/interests " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class AnythingWeCanDoToSupportYourInterviewMessages
@@ -41,7 +41,7 @@
             public const string RequiredErrorText = "Please provide details of interview support needed";
             public const string TooLongErrorText = "Interview support details mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "'Is there anything we can do to support your interview' " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "Interview support details " + Whitelists.FreetextWhitelist.ErrorText;
         }
     }
 }

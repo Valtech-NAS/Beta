@@ -2,6 +2,6 @@
 {
     public class LoginPageMessages
     {
-        public const string AuthenticationFailedErrorText = "'Email address' or 'password' is invalid";
+        public const string AuthenticationFailedErrorText = "Please enter a valid email address or password";
     }
 }

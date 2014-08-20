@@ -2,27 +2,27 @@
 {
     public static class DateViewModelMessages
     {
-        public const string MustBeValidDate = "You must enter a valid date";
+        public const string MustBeValidDate = "Please enter a valid date";
 
         public static class DayMessages
         {
             public const string LabelText = "Day";
-            public const string RequiredErrorText = "'Day' must be supplied and be between 1 and 31";
-            public const string RangeErrorText = "'Day' must be between 1 and 31";
+            public const string RequiredErrorText = "Please enter the day";
+            public const string RangeErrorText = "Please enter a number between 1 and 31";
         }
 
         public static class MonthMessages
         {
             public const string LabelText = "Month";
-            public const string RequiredErrorText = "'Month' must be supplied and be between 1 and 12";
-            public const string RangeErrorText = "'Month' must be between 1 and 12";
+            public const string RequiredErrorText = "Please enter the month";
+            public const string RangeErrorText = "Please enter a number between 1 and 12";
         }
 
         public static class YearMessages
         {
             public const string LabelText = "Year";
-            public const string RequiredErrorText = "'Year' must be supplied and be between {0} and {1}";
-            public const string RangeErrorText = "'Year' must be between {0} and {1}";
+            public const string RequiredErrorText = "Please enter the year";
+            public const string RangeErrorText = "Year must be 4 digits, between {0} and {1}";
         }
     }
 }
