@@ -138,12 +138,15 @@
                 return new VacancyNotFoundResult();
             }
 
-            var distance = UserData.Get(UserDataItemNames.VacancyDistance);
+            var distance = UserData.Pop(UserDataItemNames.VacancyDistance);
+            var lastVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
 
-            if (!string.IsNullOrWhiteSpace(distance))
+            if (!string.IsNullOrWhiteSpace(distance) 
+                    && !string.IsNullOrWhiteSpace(lastVacancyId) 
+                    && int.Parse(lastVacancyId) == id)
             {
                 ViewBag.Distance = distance;
-                UserData.Push(UserDataItemNames.VacancyDistance, distance); // looks odd but needed
+                UserData.Push(UserDataItemNames.VacancyDistance, distance);
             }
 
             UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToStringInvariant());
