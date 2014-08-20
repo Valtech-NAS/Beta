@@ -24,8 +24,11 @@
         @Html.LabelFor(m => m.WhatAreYourHobbiesInterests, new { @class = "form-label text" })
         <span class="form-prepopped">@Html.DisplayFor(m => m.WhatAreYourHobbiesInterests)</span>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.AnythingWeCanDoToSupportYourInterview, new { @class = "form-label text" })
-        <span class="form-prepopped">@Html.DisplayFor(m => m.AnythingWeCanDoToSupportYourInterview)</span>
-    </div>
+    @if (Model.RequiresSupportForInterview)
+    {
+        <div class="form-group">
+            <p class="form-label">Is there anything we can do to support your interview?</p>
+            <span class="form-prepopped">@Html.DisplayFor(m => m.AnythingWeCanDoToSupportYourInterview)</span>
+        </div>
+    }   
 </fieldset>
