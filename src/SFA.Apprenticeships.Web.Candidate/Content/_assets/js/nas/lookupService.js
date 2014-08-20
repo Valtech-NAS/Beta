@@ -98,7 +98,7 @@
                 data: { username: username },
                 success: function (response) {
                     if (response.isUsernameAvailable === false) {
-                        $('#email-available-message').html('<p>Username already in use, try again</p>');
+                        $('#email-available-message').html('<p class="text">Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it.</p>');
                     } else {
                         $('#email-available-message').html('');
                     }
