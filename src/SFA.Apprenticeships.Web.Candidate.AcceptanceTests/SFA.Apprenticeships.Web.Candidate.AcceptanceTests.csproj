@@ -96,7 +96,6 @@
   <ItemGroup>
     <Compile Include="Bindings\Application\ApplicationPageBinding.cs" />
     <Compile Include="Bindings\DataGeneratorBinding.cs" />
-    <Compile Include="Bindings\RegisterAccount.cs" />
     <Compile Include="Bindings\Registration\ForgottenPasswordDataBinding.cs" />
     <Compile Include="Builders\ApplicationBuilder.cs" />
     <Compile Include="Builders\CandidateBuilder.cs" />
