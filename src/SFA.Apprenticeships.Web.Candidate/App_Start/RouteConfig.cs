@@ -37,6 +37,12 @@
             );
 
             routes.MapRoute(
+               name: RouteNames.Cookies,
+               url: "cookies",
+               defaults: new { controller = "Home", action = "Cookies" }
+           );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

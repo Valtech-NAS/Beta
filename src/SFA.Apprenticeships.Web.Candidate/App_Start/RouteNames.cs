@@ -8,5 +8,6 @@
         public const string Settings = "Settings";
         public const string SignOut = "SignOut";
         public const string Privacy = "Privacy";
+        public const string Cookies = "Cookies";
     }
 }

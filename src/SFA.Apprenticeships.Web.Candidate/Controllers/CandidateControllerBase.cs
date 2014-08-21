@@ -11,6 +11,7 @@
     {     
         private IUserDataProvider _userData;
         private IEuCookieDirectiveProvider _euCookieDirectiveProvider;
+        private ICookieDetectionProvider _cookieDetectionProvider;
 
         public IUserDataProvider UserData
         {
@@ -22,9 +23,21 @@
             get { return _euCookieDirectiveProvider ?? (_euCookieDirectiveProvider = new EuCookieDirectiveProvider()); }
         }
 
+        private ICookieDetectionProvider CookieDetectionProvider
+        {
+            get { return _cookieDetectionProvider ?? (_cookieDetectionProvider = new CookieDetectionProvider()); }
+        }
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {           
             filterContext.Controller.ViewBag.ShowEuCookieDirective = EuCookieDirectiveProvider.ShowEuCookieDirective(filterContext.HttpContext);
+            
+            CookieDetectionProvider.SetCookie(filterContext.HttpContext);
+
+            if (!CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext))
+            {
+                Response.RedirectToRoute(RouteNames.Cookies);
+            }
 
             UserContext = null;
 
