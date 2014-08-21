@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
+    using System.Drawing.Imaging;
     using System.Web.Mvc;
     using System.Web.Security;
     using Common.Services;
@@ -39,7 +40,7 @@
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                UserData.Push(UserDataItemNames.ReturnUrl, returnUrl);
+                UserData.Push(UserDataItemNames.ReturnUrl, Server.UrlEncode(returnUrl));
             }        
 
             return View();
@@ -173,7 +174,7 @@
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                return Redirect(returnUrl);
+                return Redirect(Server.UrlDecode(returnUrl));
             }
 
             // Redirect to last viewed vacancy (if any).

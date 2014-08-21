@@ -17,6 +17,13 @@
 else
 {
     <div class="account-info" id="bannerSignedOut">
-        <a href="@Url.Action("Index", "Login")" id="loginLink" title="Sign in"><i class="fa fa-sign-in"></i>Sign in</a>
+        @if (!Request.Url.AbsolutePath.StartsWith("/login", StringComparison.InvariantCultureIgnoreCase))
+        {
+            <a href="@Url.Action("Index", "Login", new {ReturnUrl = Request.Url.PathAndQuery})" id="loginLink" title="Sign in"><i class="fa fa-sign-in"></i>Sign in</a>
+        }
+        else
+        {
+            <a href="@Url.Action("Index", "Login")" id="loginLink" title="Sign in"><i class="fa fa-sign-in"></i>Sign in</a>
+        }
     </div>
 }
