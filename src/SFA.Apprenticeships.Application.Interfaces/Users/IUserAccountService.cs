@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Users
 {
     using System;
-    using Domain.Entities.Candidates;
     using Domain.Entities.Users;
 
     /// <summary>

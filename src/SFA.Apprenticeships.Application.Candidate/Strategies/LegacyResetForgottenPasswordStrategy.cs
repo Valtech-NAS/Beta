@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
-    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
     using UserAccount.Strategies;
 

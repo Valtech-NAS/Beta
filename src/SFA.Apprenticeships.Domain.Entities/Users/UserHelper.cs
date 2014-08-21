@@ -17,8 +17,6 @@
 
         public static void SetStatePasswordResetCode(this User user, string passwordResetCode, DateTime expiry)
         {
-            ClearUserStateAttributes(user);
-
             user.PasswordResetCode = passwordResetCode;
             user.PasswordResetCodeExpiry = expiry;
         }
@@ -47,13 +45,6 @@
             }
         }
 
-        public static void ClearPasswordResetAttributes(User user)
-        {
-            user.PasswordResetCode = null;
-            user.PasswordResetCodeExpiry = null;
-            user.PasswordResetIncorrectAttempts = 0;
-        }
-
         private static void ClearUserStateAttributes(User user)
         {
             user.AccountUnlockCode = null;
@@ -64,7 +55,9 @@
             user.ActivationCode = null;
             user.ActivateCodeExpiry = null;
 
-            ClearPasswordResetAttributes(user);
+            user.PasswordResetCode = null;
+            user.PasswordResetCodeExpiry = null;
+            user.PasswordResetIncorrectAttempts = 0;
         }
     }
 }

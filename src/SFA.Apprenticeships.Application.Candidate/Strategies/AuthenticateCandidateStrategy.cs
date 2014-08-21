@@ -16,6 +16,7 @@
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ILockAccountStrategy _lockAccountStrategy;
         private readonly IConfigurationManager _configManager;
+        private readonly int _maximumPasswordAttemptsAllowed;
 
         public AuthenticateCandidateStrategy(
             IConfigurationManager configManager,
@@ -31,6 +32,7 @@
             _userReadRepository = userReadRepository;
             _candidateReadRepository = candidateReadRepository;
             _lockAccountStrategy = lockAccountStrategy;
+            _maximumPasswordAttemptsAllowed = _configManager.GetAppSetting<int>("MaximumPasswordAttemptsAllowed");
         }
 
         public Candidate AuthenticateCandidate(string username, string password)
@@ -68,18 +70,15 @@
 
         private void RegisterFailedLogin(User user)
         {
-            // TODO: AG: need class for application setting names.
-            var maximumPasswordAttemptsAllowed = _configManager.GetAppSetting<int>("MaximumPasswordAttemptsAllowed");
-
             user.LoginIncorrectAttempts++;
 
-            if (user.LoginIncorrectAttempts >= maximumPasswordAttemptsAllowed)
+            if (user.LoginIncorrectAttempts < _maximumPasswordAttemptsAllowed)
             {
-                _lockAccountStrategy.LockAccount(user);
+                _userWriteRepository.Save(user);
             }
             else
             {
-                _userWriteRepository.Save(user);
+                _lockAccountStrategy.LockAccount(user);
             }
         }
 
