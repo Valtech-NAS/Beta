@@ -91,6 +91,8 @@
     <Content Include="VacancySearchService.svc" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SearchProvider.cs" />
+    <Compile Include="Types\SearchParameters.cs" />
     <Compile Include="Types\SearchRequest.cs" />
     <Compile Include="Types\SearchResponse.cs" />
     <Compile Include="VacancySearchService.svc.cs">
@@ -101,9 +103,7 @@
     <Compile Include="Types\VacancySummary.cs" />
     <Compile Include="WebRole.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

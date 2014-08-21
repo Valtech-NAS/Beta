@@ -5,7 +5,9 @@ namespace SFA.Apprenticeships.Service.Vacancy.Types
 
     public class SearchRequest
     {
-        public string Id { get; set; }
+        public string TestRunId { get; set; }
+
+        public string JobTitle { get; set; }
 
         public string Keywords { get; set; }
 
