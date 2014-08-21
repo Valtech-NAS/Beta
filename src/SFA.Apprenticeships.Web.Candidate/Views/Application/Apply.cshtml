@@ -104,9 +104,9 @@
                             <colgroup>
                                 <col class="t40">
                                 <col class="t25">
-                                <col class="t15">
+                                <col class="t20">
                                 <col class="t10">
-                                <col class="t10">
+                                <col class="t5">
                                 <col>
                             </colgroup>
 
@@ -131,10 +131,11 @@
                                         <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationSubject, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].Subject', readonly:readOnly() }" maxlength="50" />
                                     </td>
                                     <td>
-                                        <input class="form-control qual-input-edit" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].Grade',readonly:readOnly() }" maxlength="15" />
+                                        <div class="small-btm-margin">
+                                            <input class="form-control qual-input-edit" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].Grade',readonly:readOnly() }" maxlength="15" />
+                                        </div>
                                         <label for="item-qual-predicted" data-bind="ifnot: showEditButton">
-                                            <input id="item-qual-predicted" type="checkbox" data-bind="checked: qualificationPredicted" />
-                                            Predicted
+                                            <input id="item-qual-predicted" type="checkbox" data-bind="checked: qualificationPredicted" /> Predicted
                                         </label>
                                     </td>
                                     <td>
