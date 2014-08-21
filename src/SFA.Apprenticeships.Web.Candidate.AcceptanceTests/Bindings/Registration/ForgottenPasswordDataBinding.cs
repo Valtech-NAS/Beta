@@ -12,6 +12,7 @@
     [Binding]
     public class ForgottenPasswordDataBinding
     {
+        private const string UserEmailAddress = "valtechnas+acceptancetests@gmail.com";
         private const string NewPasswordTokenName = "NewPasswordToken";
         private const string NewPassword = "?Password02!";
 
@@ -60,8 +61,7 @@
         [Then(@"I don't receive an email with the token to reset the password")]
         public void ThenIDonTReceiveAnEmailWithTheTokenToResetThePassword()
         {
-            var email = _tokenManager.GetTokenByKey(EmailTokenName);
-            var user = _userReadRepository.Get(email);
+            var user = _userReadRepository.Get(UserEmailAddress);
 
             user.PasswordResetCode.Should().BeNullOrEmpty();
         }
