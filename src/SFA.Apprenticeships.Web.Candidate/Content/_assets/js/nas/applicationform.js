@@ -417,6 +417,12 @@
             }
         });
 
+        self.disableToDateIfCurrent = function() {           
+            if (self.itemIsCurrentEmployment()) {              
+                self.toItemDateReadonly("disabled");
+            }
+        };
+
         self.itemErrors = ko.validation.group(self);
     }
 
@@ -582,6 +588,7 @@
                 }
 
                 var experience = new workExperienceItemModel(self.employer(), self.jobTitle(), self.mainDuties(), self.fromMonth(), self.fromYear(), toMonth, toYear, self.isCurrentEmployment(), self.currentYear(), self.regexPattern());
+                experience.disableToDateIfCurrent();
                 self.workExperiences.push(experience);
 
                 self.employer("");
@@ -631,6 +638,7 @@
                 }
 
                 var experienceItemModel = new workExperienceItemModel(item.Employer, item.JobTitle, item.Description, item.FromMonth, item.FromYear, item.ToMonth, myToYear, currentEmployer, self.currentYear(), self.regexPattern());
+                experienceItemModel.disableToDateIfCurrent();
                 self.workExperiences.push(experienceItemModel);
             });
 

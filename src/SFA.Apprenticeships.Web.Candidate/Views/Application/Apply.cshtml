@@ -42,43 +42,43 @@
             </p>
             <div class="form-group inline clearfix">
                 <label data-target="qualifications-panel" for="qualifications-yes" class="block-label" data-bind="css: {selected:showQualifications() }">
-                    @Html.RadioButtonFor(m => m.Candidate.HasQualifications, true, true, new { id = "qualifications-yes", data_bind = "attr:{checked: hasQualifications() }" })
+                    @Html.RadioButtonFor(m => m.Candidate.HasQualifications, true, true, new { id = "qualifications-yes", data_bind = "attr:{'checked': hasQualifications() }" })
                     Yes
 
                 </label>
                 <label for="qualifications-no" class="block-label" data-bind="css: {selected: !showQualifications() }">
-                    @Html.RadioButtonFor(m => m.Candidate.HasQualifications, false, false, new { id = "qualifications-no", data_bind = "attr:{checked: hasNoQualifications() }" })
+                    @Html.RadioButtonFor(m => m.Candidate.HasQualifications, false, false, new { id = "qualifications-no", data_bind = "attr:{'checked': hasNoQualifications() }" })
                    No
                 </label>
             </div>
-            <div id="qualifications-panel" class="toggle-content" data-bind="style: {display:showQualifications() ? 'block' :'none' }">
+            <div id="qualifications-panel" class="toggle-content" data-bind="style: {'display':showQualifications() ? 'block' :'none' }">
                 <div class="clearfix">
                     <div class="inline-fixed">
                         <div class="form-group vert-align-top" data-bind="parentvalElement:selectedQualification">
                             <label for="qual-type" class="form-label">Type of qualification</label>
-                            <select id="qual-type" data-bind='options: qualificationTypes, optionsCaption: "Select from list", optionsText: "qualificationTypeName", optionsValue: "qualificationTypeName",value: selectedQualification'></select>
+                            <select id="qual-type" data-bind="options: qualificationTypes, optionsCaption: 'Select from list', optionsText: 'qualificationTypeName', optionsValue: 'qualificationTypeName',value: selectedQualification"></select>
 
                         </div>
                         <div class="form-group vert-align-top" data-bind="parentvalElement:year">
                             <label for="subject-year" class="form-label">Year</label>
-                            <input maxlength="4" type="text" class="form-control form-control-small" pattern="[0-9]*" id="subject-year" data-bind='value: year'>
-
+                            <input maxlength="4" type="text" class="form-control form-control-small" pattern="[0-9]*" 
+                                   id="subject-year" data-bind="value: year">
                         </div>
                     </div>
                     <div class="form-group" data-bind="visible: showOtherQualification,parentvalElement:otherQualification">
                         <label for="other-qual" class="form-label">Name of other qualification</label>
-                        <input type="text" class="form-control" id="other-qual" data-bind='value: otherQualification' maxlength="100">
+                        <input type="text" class="form-control" id="other-qual" data-bind="value: otherQualification" maxlength="100">
 
                     </div>
                     <div class="form-group" data-bind="parentvalElement:subject">
                         <label for="subject-name" class="form-label">Subject</label>
-                        <input type="text" class="form-control" id="subject-name" data-bind='value: subject' maxlength="50">
+                        <input type="text" class="form-control" id="subject-name" data-bind="value: subject" maxlength="50">
 
                     </div>
                     <div class="inline-fixed">
                         <div class="form-group" data-bind="parentvalElement:grade">
                             <label for="subject-grade" class="form-label">Grade</label>
-                            <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind='value: grade' maxlength="15">
+                            <input type="text" class="form-control form-control-medium" id="subject-grade" data-bind="value: grade" maxlength="15">
 
                         </div>
                         <div class="form-group">
@@ -126,27 +126,27 @@
                             <tbody data-bind="foreach: groupItems">
                                 <tr>
                                     <td>
-                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationSubject, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].Subject', readonly:readOnly() }" maxlength="50" />
+                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationSubject, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Subject', 'readonly':readOnly() }" maxlength="50" />
                                     </td>
                                     <td>
                                         <div class="small-btm-margin">
-                                            <input class="form-control qual-input-edit" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].Grade',readonly:readOnly() }" maxlength="15" />
+                                            <input class="form-control qual-input-edit" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Grade','readonly':readOnly() }" maxlength="15" />
                                         </div>
                                         <label for="item-qual-predicted" data-bind="ifnot: showEditButton">
                                             <input id="item-qual-predicted" type="checkbox" data-bind="checked: qualificationPredicted" /> Predicted
                                         </label>
                                     </td>
                                     <td>
-                                        <input type="hidden" data-bind="value: qualificationType, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].QualificationType'}" />
-                                        <input type="hidden" data-bind="value: qualificationPredicted, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].IsPredicted'}" />
-                                        <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit" type="text" data-bind="value: qualificationYear, attr:{name:'Candidate.Qualifications[' + itemIndex() +'].Year',readonly:readOnly() }">
+                                        <input type="hidden" data-bind="value: qualificationType, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].QualificationType'}" />
+                                        <input type="hidden" data-bind="value: qualificationPredicted, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].IsPredicted'}" />
+                                        <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit" type="text" data-bind="value: qualificationYear, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Year','readonly':readOnly() }">
                                     </td>
                                     <td class="ta-center">
-                                        <span data-bind='if: showEditButton, click: $root.editQualification'><span class="fake-link cell-span">Edit</span></span>
-                                        <span data-bind='ifnot: showEditButton,click: $root.saveQualificationItem'><span class="fake-link cell-span">Save</span></span>
+                                        <span data-bind="if: showEditButton, click: $root.editQualification"><span class="fake-link cell-span">Edit</span></span>
+                                        <span data-bind="ifnot: showEditButton,click: $root.saveQualificationItem"><span class="fake-link cell-span">Save</span></span>
                                     </td>
                                     <td class="ta-center">
-                                        <i class="cell-span"><i class="ir icon-remove" data-bind='click: $root.removeQualification'>Remove</i></i>
+                                        <i class="cell-span"><i class="ir icon-remove" data-bind="click: $root.removeQualification">Remove</i></i>
                                     </td>
                                 </tr>
                             </tbody>
@@ -171,15 +171,15 @@
             <div class="hide-nojs">
                 <div class="form-group inline clearfix">
                     <label data-target="workexperience-panel" for="workexp-yes" class="block-label" data-bind="css: {selected: showWorkExperience()}">
-                        @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, true, true, new {id="workexp-yes", data_bind = "attr:{checked: hasWorkExperience() }" })
+                        @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, true, true, new {id="workexp-yes", data_bind = "attr:{'checked': hasWorkExperience() }" })
                         Yes
                     </label>
                     <label for="workexp-no" class="block-label" data-bind="css: {selected: !showWorkExperience()}">
-                        @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, false, false, new { id="workexp-no", data_bind = "attr:{checked: hasNoWorkExperience() }" })
+                        @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, false, false, new { id="workexp-no", data_bind = "attr:{'checked': hasNoWorkExperience() }" })
                         No
                     </label>
                 </div>
-                <div id="workexperience-panel" class="toggle-content" data-bind="style: {display: workExperienceStatus() }">
+                <div id="workexperience-panel" class="toggle-content" data-bind="style: {'display': workExperienceStatus() }">
                     <div class="clearfix">
                         <div class="form-group form-group-compound" data-bind="parentvalElement: employer">
                             <label for="work-employer" class="form-label">Employer</label>
@@ -200,7 +200,7 @@
                                 <div class="form-group form-group-compound">
                                     <span class="form-hint">Month</span>
 
-                                    <select id="work-from" data-bind='options: months, optionsText: "monthName", optionsValue: "monthNumber",value: fromMonth'></select>
+                                    <select id="work-from" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: fromMonth"></select>
 
                                 </div>
                                 <div class="form-group form-group-compound" data-bind="parentvalElement: fromYear">
@@ -214,13 +214,13 @@
                                 <div class="form-group form-group-compound">
                                     <span class="form-hint">Month</span>
 
-                                    <select id="work-to" data-bind='options: months, optionsText: "monthName", optionsValue: "monthNumber",value: toMonth,attr:{disabled:toDateReadonly() }'></select>
+                                    <select id="work-to" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: toMonth,attr:{'disabled':toDateReadonly() }"></select>
 
                                 </div>
                                 <div class="form-group form-group-compound" data-bind="parentvalElement: toYear">
                                     <label for="work-to-year" class="form-hint">Year</label>
                                     <input type="tel" class="form-control form-control-small" pattern="[0-9]*" maxlength="4"
-                                           id="work-to-year" data-bind="value: toYear, attr:{disabled:toDateReadonly() }" />
+                                           id="work-to-year" data-bind="value: toYear, attr:{'disabled':toDateReadonly() }" />
                                 </div>
                                 <div class="form-group form-group-compound">
                                     <input id="work-current" type="checkbox" data-bind="checked: isCurrentEmployment" />
@@ -239,12 +239,12 @@
                                 <div class="work-controls">
                                     <div class="work-edit ta-center">
 
-                                        <span class="fake-link cell-span" data-bind='if: showEditButton, click: $parent.editWorkExperience'>Edit</span>
-                                        <span class="fake-link cell-span" data-bind='ifnot: showEditButton,click: $parent.saveWorkExperience'>Save</span>
+                                        <span class="fake-link cell-span" data-bind="if: showEditButton, click: $parent.editWorkExperience">Edit</span>
+                                        <span class="fake-link cell-span" data-bind="ifnot: showEditButton,click: $parent.saveWorkExperience">Save</span>
                                     </div>
                                     <div class="work-delete ta-center">
                                         <span class="cell-span">
-                                            <i class="ir icon-remove" data-bind='click: $parent.removeWorkExperience'>Remove</i>
+                                            <i class="ir icon-remove" data-bind="click: $parent.removeWorkExperience">Remove</i>
                                         </span>
                                     </div>
                                 </div>
@@ -266,18 +266,18 @@
                                                 <td>
                                                     <div class="form-group form-group-compound inline-float width-all-49" data-bind="visible: !showEditButton()">
                                                        <label for="" class="visuallyhidden">Employer</label>
-                                                        <input type="text" class="form-control" data-bind="value: itemEmployer, attr:{name:'Candidate.WorkExperience[' + $index() +'].Employer'}" maxlength="50" />
+                                                        <input type="text" class="form-control" data-bind="value: itemEmployer, attr:{'name':'Candidate.WorkExperience[' + $index() +'].Employer'}" maxlength="50" />
                                                     </div> 
                                                     <span class="cell-span" data-bind="visible: showEditButton, text: itemEmployer"></span>
                                                     <span class="cell-span work-hyphen" data-bind="visible: showEditButton">-</span>
                                                     <div class="form-group form-group-compound inline-float width-all-49 no-right-margin" data-bind="visible: !showEditButton()">
                                                         <label for="" class="visuallyhidden">Job title</label>
                                                            
-                                                        <input type="text" class="form-control" data-bind="value: itemJobTitle, attr:{name:'Candidate.WorkExperience[' + $index() +'].JobTitle'}" maxlength="50" />
+                                                        <input type="text" class="form-control" data-bind="value: itemJobTitle, attr:{'name':'Candidate.WorkExperience[' + $index() +'].JobTitle'}" maxlength="50" />
                                                     </div> 
                                                     <span class="cell-span" data-bind="visible: showEditButton, text: itemJobTitle"></span>
                                                     <div></div>
-                                                    <textarea class="form-control" rows="3" data-bind="value: itemMainDuties, visible: !showEditButton(),attr:{name:'Candidate.WorkExperience[' + $index() +'].Description'}" ></textarea>
+                                                    <textarea class="form-control" rows="3" data-bind="value: itemMainDuties, visible: !showEditButton(),attr:{'name':'Candidate.WorkExperience[' + $index() +'].Description'}" ></textarea>
                                                     <span class="cell-span" data-bind="visible: showEditButton, text: itemMainDuties"></span>
                                                 </td>
                                             </tr>
@@ -309,11 +309,11 @@
                                             <tr>
                                                 <td>
                                                     <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                        <select data-bind='options: $parent.months, optionsText: "monthName", optionsValue: "monthNumber",value: itemFromMonth, attr:{name:"Candidate.WorkExperience[" + $index() +"].FromMonth" } '></select>
+                                                        <select data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemFromMonth, attr:{'name':'Candidate.WorkExperience[' + $index() +'].FromMonth' } "></select>
                                                         
                                                     </div>
                                                     <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                        <input type="text" class="form-control" data-bind="value: itemFromYear, attr:{name:'Candidate.WorkExperience[' + $index() +'].FromYear'}" pattern="[0-9]*" maxlength="4">
+                                                        <input type="text" class="form-control" data-bind="value: itemFromYear, attr:{'name':'Candidate.WorkExperience[' + $index() +'].FromYear'}" pattern="[0-9]*" maxlength="4">
                                                        
                                                     </div>
                                                                                                       
@@ -322,11 +322,11 @@
                                                 </td>
                                                 <td>
                                                     <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                        <select data-bind=' options: $parent.months, optionsText: "monthName", optionsValue: "monthNumber",value: itemToMonth, attr:{disabled:toItemDateReadonly(),name:"Candidate.WorkExperience[" + $index() +"].ToMonth"}'></select>
+                                                        <select data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemToMonth, attr:{'disabled': toItemDateReadonly,'name':'Candidate.WorkExperience[' + $index() +'].ToMonth'}"></select>
                                                         
                                                     </div>
                                                     <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                        <input type="text" class="form-control" data-bind="value: itemToYear, attr:{disabled:toItemDateReadonly(), name:'Candidate.WorkExperience[' + $index() +'].ToYear'}" pattern="[0-9]*" maxlength="4">
+                                                        <input type="text" class="form-control" data-bind="value: itemToYear, attr:{'disabled': toItemDateReadonly, 'name':'Candidate.WorkExperience[' + $index() +'].ToYear'}" pattern="[0-9]*" maxlength="4">
                                                        
                                                     </div>
                                                     <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
@@ -375,7 +375,7 @@
 @section scripts{
 
     <script id="errorMessage" type="text/html">
-        <span data-bind="visible: !field.isValid(), attr:{class:!field.isValid()? 'field-validation-error' : 'field-validation-valid'}">
+        <span data-bind="visible: !field.isValid(), attr:{'class':!field.isValid()? 'field-validation-error' : 'field-validation-valid'}">
             <span data-bind="validationMessage: field"></span>
         </span>
     </script>   
