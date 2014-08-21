@@ -37,8 +37,28 @@ Scenario: Reset password with an invalid email
 	And I navigated to the ForgottenPasswordPage page
 	When I am on the ForgottenPasswordPage page
 	And I enter data
-		| Field        | Value             |
-		| EmailAddress | invalid@gmail.com |
+		| Field        | Value               |
+		| EmailAddress | {InvalidEmailToken} |
 	And I choose SendCodeButton
 	Then I am on the ResetPasswordPage page
 	And I don't receive an email with the token to reset the password
+
+Scenario: Reset password in an unactivated account
+	Given I registered an account but did not activate it
+	And I navigated to the ForgottenPasswordPage page
+	When I am on the ForgottenPasswordPage page
+	And I enter data
+		| Field        | Value               |
+		| EmailAddress | {EmailAddressToken} |
+	And I choose SendCodeButton
+	Then I am on the ResetPasswordPage page
+	And I get the token to reset the password
+	When I enter data
+		| Field             | Value                    |
+		| PasswordResetCode | {PasswordResetCodeToken} |
+		| Password          | {NewPasswordToken}       |
+	And I choose ResetPasswordButton
+	Then I am on the VacancySearchPage page
+	And I see
+		| Field              | Rule   | Value                                   |
+		| SuccessMessageText | Equals | You've successfully reset your password |

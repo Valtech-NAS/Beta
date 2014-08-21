@@ -6,6 +6,7 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using FluentAssertions;
     using Generators;
     using global::SpecBind.Helpers;
     using NUnit.Framework;
@@ -17,6 +18,8 @@
     {
         private const string Id = "00000000-0000-0000-0000-000000000001"; // CRITICAL: must match an AD user name.
         private const string EmailAddressTokenName = "EmailAddressToken";
+        private const string InvalidEmailTokenName = "InvalidEmailToken";
+        private const string InvalidEmail = "invalid@gmail.com";
         private const string PasswordTokenName = "PasswordToken";
         private const string Password = "?Password01!";
         private const string InvalidPasswordTokenName = "InvalidPasswordToken";
@@ -119,12 +122,12 @@
             var accountUnlockCode = _tokenManager.GetTokenByKey(AccountUnlockCodeTokenName);
 
             // Ensure account unlock code has changed.
-            Assert.IsNotNull(accountUnlockCode);
-            Assert.IsNotNull(user.AccountUnlockCode);
-            Assert.AreNotEqual(accountUnlockCode, user.AccountUnlockCode);
+            accountUnlockCode.Should().NotBeNull();
+            user.AccountUnlockCode.Should().NotBeNull();
+            accountUnlockCode.Should().NotBe(user.AccountUnlockCode);
 
             // Ensure account unlock code has been renewed.
-            Assert.IsTrue(user.AccountUnlockCodeExpiry > DateTime.Now);
+            user.AccountUnlockCodeExpiry.Should().BeAfter(DateTime.Now);
         }
 
         #region Helpers
@@ -141,6 +144,7 @@
             // Activation, unlock codes etc.
             _tokenManager.SetToken(ActivationCodeTokenName, ActivationCode);
             _tokenManager.SetToken(AccountUnlockCodeTokenName, AccountUnlockCode);
+            _tokenManager.SetToken(InvalidEmailTokenName, InvalidEmail);
         }
 
         #endregion
