@@ -75,72 +75,143 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Registratio
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 8
- testRunner.Given("I registered an account and activated it", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I navigated to the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
- testRunner.And("I navigated to the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 10
- testRunner.When("I am on the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I have created a new email address", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Value"});
             table1.AddRow(new string[] {
+                        "Firstname",
+                        "FirstnameTest"});
+            table1.AddRow(new string[] {
+                        "Lastname",
+                        "LastnameTest"});
+            table1.AddRow(new string[] {
+                        "Phonenumber",
+                        "07970523193"});
+            table1.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
-#line 11
+                        "{EmailToken}"});
+            table1.AddRow(new string[] {
+                        "PostcodeSearch",
+                        "N7 8LS"});
+            table1.AddRow(new string[] {
+                        "Day",
+                        "01"});
+            table1.AddRow(new string[] {
+                        "Month",
+                        "01"});
+            table1.AddRow(new string[] {
+                        "Year",
+                        "2000"});
+            table1.AddRow(new string[] {
+                        "Password",
+                        "?Password01!"});
+#line 10
  testRunner.And("I enter data", ((string)(null)), table1, "And ");
-#line 14
- testRunner.And("I choose SendCodeButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 15
- testRunner.Then("I am on the ResetPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 16
- testRunner.When("I get the token to reset the password", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 17
- testRunner.And("I navigate to the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 18
- testRunner.When("I am on the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 21
+ testRunner.And("I choose HasAcceptedTermsAndConditions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 22
+ testRunner.And("I choose FindAddresses", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
+                        "Rule",
                         "Value"});
             table2.AddRow(new string[] {
-                        "EmailAddress",
-                        "{EmailAddressToken}"});
-#line 19
- testRunner.And("I enter data", ((string)(null)), table2, "And ");
-#line 22
- testRunner.And("I choose SendCodeButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+                        "Text",
+                        "Equals",
+                        "Flat A, 6 Furlong Road"});
 #line 23
- testRunner.Then("I am on the ResetPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 24
- testRunner.And("I get the same token to reset the password", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I am on AddressDropdown list item matching criteria", ((string)(null)), table2, "And ");
+#line 26
+ testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 27
+ testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 28
+ testRunner.And("I choose CreateAccountButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 29
+ testRunner.Then("I wait 180 second for the ActivationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 30
+ testRunner.When("I get the token for my newly created account", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Value"});
             table3.AddRow(new string[] {
-                        "PasswordResetCode",
-                        "{PasswordResetCodeToken}"});
-            table3.AddRow(new string[] {
-                        "Password",
-                        "{NewPasswordToken}"});
-#line 25
- testRunner.When("I enter data", ((string)(null)), table3, "When ");
-#line 29
- testRunner.And("I choose ResetPasswordButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 30
- testRunner.Then("I am on the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                        "ActivationCode",
+                        "{ActivationToken}"});
+#line 31
+ testRunner.And("I enter data", ((string)(null)), table3, "And ");
+#line 34
+ testRunner.And("I choose ActivateButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 35
+ testRunner.And("I navigate to the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 36
+ testRunner.When("I am on the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
-                        "Rule",
                         "Value"});
             table4.AddRow(new string[] {
+                        "EmailAddress",
+                        "{EmailToken}"});
+#line 37
+ testRunner.And("I enter data", ((string)(null)), table4, "And ");
+#line 40
+ testRunner.And("I choose SendCodeButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 41
+ testRunner.Then("I am on the ResetPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 42
+ testRunner.When("I get the token to reset the password", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 43
+ testRunner.And("I navigate to the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 44
+ testRunner.When("I am on the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table5.AddRow(new string[] {
+                        "EmailAddress",
+                        "{EmailToken}"});
+#line 45
+ testRunner.And("I enter data", ((string)(null)), table5, "And ");
+#line 48
+ testRunner.And("I choose SendCodeButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 49
+ testRunner.Then("I am on the ResetPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 50
+ testRunner.And("I get the same token to reset the password", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table6.AddRow(new string[] {
+                        "PasswordResetCode",
+                        "{PasswordResetCodeToken}"});
+            table6.AddRow(new string[] {
+                        "Password",
+                        "{NewPasswordToken}"});
+#line 51
+ testRunner.When("I enter data", ((string)(null)), table6, "When ");
+#line 55
+ testRunner.And("I choose ResetPasswordButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 56
+ testRunner.Then("I am on the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table7.AddRow(new string[] {
                         "SuccessMessageText",
                         "Equals",
                         "You\'ve successfully reset your password"});
-#line 31
- testRunner.And("I see", ((string)(null)), table4, "And ");
+#line 57
+ testRunner.And("I see", ((string)(null)), table7, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -150,28 +221,28 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void ResetPasswordWithAnInvalidEmail()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Reset password with an invalid email", ((string[])(null)));
-#line 35
+#line 61
 this.ScenarioSetup(scenarioInfo);
-#line 36
+#line 62
  testRunner.Given("I registered an account and activated it", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 37
+#line 63
  testRunner.And("I navigated to the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 38
+#line 64
  testRunner.When("I am on the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Value"});
-            table5.AddRow(new string[] {
+            table8.AddRow(new string[] {
                         "EmailAddress",
                         "{InvalidEmailToken}"});
-#line 39
- testRunner.And("I enter data", ((string)(null)), table5, "And ");
-#line 42
+#line 65
+ testRunner.And("I enter data", ((string)(null)), table8, "And ");
+#line 68
  testRunner.And("I choose SendCodeButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 43
+#line 69
  testRunner.Then("I am on the ResetPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 44
+#line 70
  testRunner.And("I don\'t receive an email with the token to reset the password", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -182,56 +253,114 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void ResetPasswordInAnUnactivatedAccount()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Reset password in an unactivated account", ((string[])(null)));
-#line 46
+#line 72
 this.ScenarioSetup(scenarioInfo);
-#line 47
- testRunner.Given("I registered an account but did not activate it", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 48
- testRunner.And("I navigated to the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 49
- testRunner.When("I am on the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 73
+ testRunner.Given("I navigated to the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 74
+ testRunner.When("I have created a new email address", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Value"});
-            table6.AddRow(new string[] {
+            table9.AddRow(new string[] {
+                        "Firstname",
+                        "FirstnameTest"});
+            table9.AddRow(new string[] {
+                        "Lastname",
+                        "LastnameTest"});
+            table9.AddRow(new string[] {
+                        "Phonenumber",
+                        "07970523193"});
+            table9.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
-#line 50
- testRunner.And("I enter data", ((string)(null)), table6, "And ");
-#line 53
- testRunner.And("I choose SendCodeButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 54
- testRunner.Then("I am on the ResetPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 55
- testRunner.And("I get the token to reset the password", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
-                        "Value"});
-            table7.AddRow(new string[] {
-                        "PasswordResetCode",
-                        "{PasswordResetCodeToken}"});
-            table7.AddRow(new string[] {
+                        "{EmailToken}"});
+            table9.AddRow(new string[] {
+                        "PostcodeSearch",
+                        "N7 8LS"});
+            table9.AddRow(new string[] {
+                        "Day",
+                        "01"});
+            table9.AddRow(new string[] {
+                        "Month",
+                        "01"});
+            table9.AddRow(new string[] {
+                        "Year",
+                        "2000"});
+            table9.AddRow(new string[] {
                         "Password",
-                        "{NewPasswordToken}"});
-#line 56
- testRunner.When("I enter data", ((string)(null)), table7, "When ");
-#line 60
- testRunner.And("I choose ResetPasswordButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 61
- testRunner.Then("I am on the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                        "?Password01!"});
+#line 75
+ testRunner.And("I enter data", ((string)(null)), table9, "And ");
+#line 86
+ testRunner.And("I choose HasAcceptedTermsAndConditions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 87
+ testRunner.And("I choose FindAddresses", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
-            table8.AddRow(new string[] {
+            table10.AddRow(new string[] {
+                        "Text",
+                        "Equals",
+                        "Flat A, 6 Furlong Road"});
+#line 88
+ testRunner.And("I am on AddressDropdown list item matching criteria", ((string)(null)), table10, "And ");
+#line 91
+ testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 92
+ testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 93
+ testRunner.And("I choose CreateAccountButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 94
+ testRunner.Then("I wait 120 second for the ActivationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 95
+ testRunner.When("I navigate to the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 96
+ testRunner.And("I am on the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table11.AddRow(new string[] {
+                        "EmailAddress",
+                        "{EmailToken}"});
+#line 97
+ testRunner.And("I enter data", ((string)(null)), table11, "And ");
+#line 100
+ testRunner.And("I choose SendCodeButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 101
+ testRunner.Then("I am on the ResetPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 102
+ testRunner.And("I get the token to reset the password", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table12.AddRow(new string[] {
+                        "PasswordResetCode",
+                        "{PasswordResetCodeToken}"});
+            table12.AddRow(new string[] {
+                        "Password",
+                        "{NewPasswordToken}"});
+#line 103
+ testRunner.When("I enter data", ((string)(null)), table12, "When ");
+#line 107
+ testRunner.And("I choose ResetPasswordButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 108
+ testRunner.Then("I am on the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table13.AddRow(new string[] {
                         "SuccessMessageText",
                         "Equals",
                         "You\'ve successfully reset your password"});
-#line 62
- testRunner.And("I see", ((string)(null)), table8, "And ");
+#line 109
+ testRunner.And("I see", ((string)(null)), table13, "And ");
 #line hidden
             this.ScenarioCleanup();
         }

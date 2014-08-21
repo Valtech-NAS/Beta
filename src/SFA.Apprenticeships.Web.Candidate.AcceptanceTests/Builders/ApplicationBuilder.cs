@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
 {
     using System;
+    using System.Linq;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
@@ -32,6 +33,14 @@
             repo.Save(ApplicationDetail);
 
             return ApplicationDetail;
+        }
+
+        public void DeleleApplications(Guid userCandidateId)
+        {
+            var writerepo = ObjectFactory.GetInstance<IApplicationWriteRepository>();
+            var readrepo = ObjectFactory.GetInstance<IApplicationReadRepository>();
+            var candidateApplications = readrepo.GetForCandidate(UserBuilder.UserAndCandidateId);
+            candidateApplications.ToList().ForEach(a => writerepo.Delete(a.ApplicationId));
         }
     }
 }

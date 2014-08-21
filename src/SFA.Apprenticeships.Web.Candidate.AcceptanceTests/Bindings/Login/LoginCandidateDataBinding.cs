@@ -16,7 +16,7 @@
     [Binding]
     public class LoginCandidateDataBinding
     {
-        private const string Id = "00000000-0000-0000-0000-000000000001"; // CRITICAL: must match an AD user name.
+        private const string UserEmailAddress = "valtechnas+acceptancetests@gmail.com";
         private const string EmailAddressTokenName = "EmailAddressToken";
         private const string InvalidEmailTokenName = "InvalidEmailToken";
         private const string InvalidEmail = "invalid@gmail.com";
@@ -27,9 +27,6 @@
         private const string ActivationCode = "ACTIV1";
         private const string AccountUnlockCodeTokenName = "AccountUnlockCodeToken";
         private const string AccountUnlockCode = "UNLCK1";
-
-        private readonly string _emailAddress;
-
         private readonly ITokenManager _tokenManager;
 
         private readonly IUserReadRepository _userReadRepository;
@@ -37,7 +34,6 @@
         public LoginCandidateDataBinding(ITokenManager tokenManager)
         {
             _tokenManager = tokenManager;
-            _emailAddress = EmailGenerator.GenerateEmailAddress();
             _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
         }
 
@@ -45,10 +41,10 @@
         [Given("I registered an account and activated it")]
         public void GivenIRegisteredAnAccountAndActivatedIt()
         {
-            var candidate = new CandidateBuilder(_emailAddress)
+            var candidate = new CandidateBuilder(UserEmailAddress)
                 .Build();
 
-            var user = new UserBuilder(Id, _emailAddress)
+            var user = new UserBuilder(UserEmailAddress)
                 .Build();
 
             SetTokens(candidate, user);
@@ -57,10 +53,10 @@
         [Given("I registered an account but did not activate it")]
         public void GivenIRegisteredAnAccountButDidNotActivateIt()
         {
-            var candidate = new CandidateBuilder(_emailAddress)
+            var candidate = new CandidateBuilder(UserEmailAddress)
                 .Build();
 
-            var user = new UserBuilder(Id, _emailAddress, UserStatuses.PendingActivation)
+            var user = new UserBuilder(UserEmailAddress, UserStatuses.PendingActivation)
                 .WithActivationCode(ActivationCode)
                 .Build();
 
@@ -70,10 +66,10 @@
         [Given("I made two unsuccessful login attempts")]
         public void GivenIMadeTwoUnsuccessfulLoginAttempts()
         {
-            var candidate = new CandidateBuilder(_emailAddress)
+            var candidate = new CandidateBuilder(UserEmailAddress)
                 .Build();
 
-            var user = new UserBuilder(Id, _emailAddress)
+            var user = new UserBuilder(UserEmailAddress)
                 .WithLoginIncorrectAttempts(2)
                 .Build();
 
@@ -83,10 +79,10 @@
         [Given("I locked my account")]
         public void GivenILockedMyAccount()
         {
-            var candidate = new CandidateBuilder(_emailAddress, Id)
+            var candidate = new CandidateBuilder(UserEmailAddress)
                 .Build();
 
-            var user = new UserBuilder(Id, _emailAddress, UserStatuses.Locked)
+            var user = new UserBuilder(UserEmailAddress, UserStatuses.Locked)
                 .WithAccountUnlockCodeExpiry(DateTime.Now.AddDays(1))
                 .WithAccountUnlockCode(AccountUnlockCode)
                 .Build();
@@ -98,10 +94,10 @@
         [Given("I locked my account and my account unlock code has expired")]
         public void GivenILockedMyAccountAndMyAccountUnlockCodeHasExpired()
         {
-            var candidate = new CandidateBuilder(_emailAddress)
+            var candidate = new CandidateBuilder(UserEmailAddress)
                 .Build();
 
-            var user = new UserBuilder(Id, _emailAddress, UserStatuses.Locked)
+            var user = new UserBuilder(UserEmailAddress, UserStatuses.Locked)
                 .WithAccountUnlockCodeExpiry(DateTime.Now.AddDays(-7))
                 .WithAccountUnlockCode(AccountUnlockCode)
                 .Build();
@@ -118,7 +114,7 @@
         [Then]
         public void ThenMyAccountUnlockCodeHasBeenRenewed()
         {
-            var user = _userReadRepository.Get(_emailAddress);
+            var user = _userReadRepository.Get(UserEmailAddress);
             var accountUnlockCode = _tokenManager.GetTokenByKey(AccountUnlockCodeTokenName);
 
             // Ensure account unlock code has changed.

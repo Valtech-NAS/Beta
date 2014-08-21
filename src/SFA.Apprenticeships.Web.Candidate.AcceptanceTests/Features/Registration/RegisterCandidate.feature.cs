@@ -262,10 +262,10 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("As a candidate I want to be told quickly that my email/username is available")]
+        [NUnit.Framework.DescriptionAttribute("As a candidate I want to be told quickly that my email/userId is available")]
         public virtual void AsACandidateIWantToBeToldQuicklyThatMyEmailUsernameIsAvailable()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to be told quickly that my email/username is available", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to be told quickly that my email/userId is available", ((string[])(null)));
 #line 65
 this.ScenarioSetup(scenarioInfo);
 #line 66
@@ -303,11 +303,11 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("As a candidate I want to be told quickly that my email/username is not available " +
+        [NUnit.Framework.DescriptionAttribute("As a candidate I want to be told quickly that my email/userId is not available " +
             "if I have already registered")]
         public virtual void AsACandidateIWantToBeToldQuicklyThatMyEmailUsernameIsNotAvailableIfIHaveAlreadyRegistered()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to be told quickly that my email/username is not available " +
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to be told quickly that my email/userId is not available " +
                     "if I have already registered", ((string[])(null)));
 #line 78
 this.ScenarioSetup(scenarioInfo);

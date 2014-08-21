@@ -2,9 +2,9 @@
 {
     public interface IUserDirectoryProvider
     {
-        bool AuthenticateUser(string username, string password);
-        bool CreateUser(string username, string password);
-        bool ResetPassword(string username, string newpassword);
-        bool ChangePassword(string username, string oldPassword, string newPassword);
+        bool AuthenticateUser(string userId, string password);
+        bool CreateUser(string userId, string password);
+        bool ResetPassword(string userId, string newpassword);
+        bool ChangePassword(string userId, string oldPassword, string newPassword);
     }
 }

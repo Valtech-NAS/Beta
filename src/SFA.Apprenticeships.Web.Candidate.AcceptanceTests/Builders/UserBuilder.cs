@@ -7,11 +7,13 @@
 
     public class UserBuilder
     {
-        public UserBuilder(string userId, string username, UserStatuses status = UserStatuses.Active)
+        internal static Guid UserAndCandidateId = new Guid("00000000-0000-0000-0000-000000000001");
+
+        public UserBuilder(string username, UserStatuses status = UserStatuses.Active)
         {
             User = new User
             {
-                EntityId = new Guid(userId),
+                EntityId = UserAndCandidateId,
                 Username = username,
                 Status = status
             };

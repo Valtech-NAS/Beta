@@ -23,7 +23,7 @@
         [Test]
         public void ShouldCreateActiveDirectoryUser()
         {
-            string username = CreateUsername();
+            string username = CreateUseId();
             bool succeeded = _service.CreateUser(username, Password);
             succeeded.Should().BeTrue();
         }
@@ -53,7 +53,7 @@
             authenticationSucceeded.Should().BeTrue();
         }
 
-        private static string CreateUsername()
+        private static string CreateUseId()
         {
             return Guid.NewGuid().ToString();
         }

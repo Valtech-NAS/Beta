@@ -21,29 +21,29 @@
             _changePassword = changePassword;
         }
 
-        public bool AuthenticateUser(string username, string password)
+        public bool AuthenticateUser(string userId, string password)
         {
-            Logger.Debug("Authenticating active directory account for username={0}", username);
+            Logger.Debug("Authenticating active directory account for userId={0}", userId);
 
             using (var context = _server.Context)
             {
-                var user = UserPrincipal.FindByIdentity(context, username);
+                var user = UserPrincipal.FindByIdentity(context, userId);
 
                 return user != null && context.ValidateCredentials(user.UserPrincipalName, password);
             }
         }
 
-        public bool CreateUser(string username, string password)
+        public bool CreateUser(string userId, string password)
         {
-            Logger.Debug("Creating active directory account for username={0}", username);
+            Logger.Debug("Creating active directory account for userId={0}", userId);
 
             using (var context = _server.Context)
             {
-                var user = UserPrincipal.FindByIdentity(context, username);
+                var user = UserPrincipal.FindByIdentity(context, userId);
 
                 if (user != null)
                 {
-                    Logger.Error("Active directory account for username={0} already exist", username);
+                    Logger.Error("Active directory account for userId={0} already exist", userId);
                     throw new Exception("User already exist");
                     // TODO: EXCEPTION: should use an application exception type
                 }
@@ -54,10 +54,10 @@
                     PasswordNeverExpires = true,
                     PasswordNotRequired = false,
                     UserCannotChangePassword = false,
-                    Surname = username,
-                    GivenName = username,
-                    Name = username,
-                    UserPrincipalName = username,
+                    Surname = userId,
+                    GivenName = userId,
+                    Name = userId,
+                    UserPrincipalName = userId,
                     Enabled = false,
                 };
 
@@ -65,7 +65,7 @@
                 userPrincipal.Save();
 
                 // set initial password
-                if (!SetUserPassword(username, null, password))
+                if (!SetUserPassword(userId, null, password))
                 {
                     return false;
                 }
@@ -74,29 +74,29 @@
 
                 userPrincipal.Save();
 
-                Logger.Debug("Active directory account for username={0} has been successfully created", username);
+                Logger.Debug("Active directory account for userId={0} has been successfully created", userId);
 
                 return true;
             }
         }
 
-        public bool ResetPassword(string username, string newpassword)
+        public bool ResetPassword(string userId, string newpassword)
         {
-            Logger.Debug("Resetting password for username={0}", username);
+            Logger.Debug("Resetting password for userId={0}", userId);
 
             using (var context = _server.Context)
             {
-                using (var user = UserPrincipal.FindByIdentity(context, IdentityType.UserPrincipalName, username))
+                using (var user = UserPrincipal.FindByIdentity(context, IdentityType.UserPrincipalName, userId))
                 {
                     if (user == null)
                     {
-                        Logger.Error("No active directory account found for username={0}", username);
+                        Logger.Error("No active directory account found for userId={0}", userId);
                         throw new CustomException("User does not exist", ErrorCodes.UnknownUserError);
                     }
 
                     try
                     {
-                        if (!SetUserPassword(username, null, newpassword))
+                        if (!SetUserPassword(userId, null, newpassword))
                         {
                             return false;
                         }
@@ -107,7 +107,7 @@
                     }
                     catch (PasswordException exception)
                     {
-                        var message = string.Format("SetPassword failed for {0}", username);
+                        var message = string.Format("SetPassword failed for {0}", userId);
                         Logger.ErrorException(message, exception);
                         throw;
                     }
@@ -115,20 +115,20 @@
             }
         }
 
-        public bool ChangePassword(string username, string oldPassword, string newPassword)
+        public bool ChangePassword(string userId, string oldPassword, string newPassword)
         {
-            Logger.Debug("Change password for active directory account username={0}", username);
+            Logger.Debug("Change password for active directory account userId={0}", userId);
 
-            return AuthenticateUser(username, oldPassword) && SetUserPassword(username, null, newPassword);
+            return AuthenticateUser(userId, oldPassword) && SetUserPassword(userId, null, newPassword);
         }
 
-        private bool SetUserPassword(string username, string oldPassword, string newPassword)
+        private bool SetUserPassword(string userId, string oldPassword, string newPassword)
         {
             if (!_server.Bind()) return false;
 
-            Logger.Debug("Set user password for active directory account username={0}", username);
+            Logger.Debug("Set user password for active directory account userId={0}", userId);
 
-            var rs = _changePassword.Change(username, oldPassword, newPassword);
+            var rs = _changePassword.Change(userId, oldPassword, newPassword);
             return (rs.ResultCode == ResultCode.Success);
         }
     }

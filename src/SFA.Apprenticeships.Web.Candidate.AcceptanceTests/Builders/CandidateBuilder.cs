@@ -7,13 +7,13 @@
 
     public class CandidateBuilder
     {
-        public CandidateBuilder(string emailAddress, string id = null)
+        public CandidateBuilder(string emailAddress)
         {
             RegistrationBuilder = new RegistrationBuilder(emailAddress);
 
             Candidate = new Candidate
             {
-                EntityId = id == null ? Guid.NewGuid() : new Guid(id),
+                EntityId = UserBuilder.UserAndCandidateId,
                 DateCreated = DateTime.Now
             };
         }

@@ -117,7 +117,7 @@
 
         public string VacancyId
         {
-            get { return VacancyLink.GetAttribute("data-vacancy-id"); }
+            get { return VacancyLink.GetAttribute("data-vacancy-userId"); }
         }
 
         [ElementLocator(Class = "vacancy-link")]

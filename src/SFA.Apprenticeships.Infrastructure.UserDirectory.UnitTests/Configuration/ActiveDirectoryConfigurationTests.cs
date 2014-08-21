@@ -14,7 +14,7 @@
 
             test.DistinguishedName.Should().Be("distinguishedname");
             test.Server.Should().Be("server");
-            test.Username.Should().Be("username");
+            test.Username.Should().Be("userId");
             test.Password.Should().Be("password");
             test.SecureMode.Should().BeTrue();
         }

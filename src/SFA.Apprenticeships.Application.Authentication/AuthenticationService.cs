@@ -6,33 +6,34 @@
     public class AuthenticationService : IAuthenticationService
     {
         private readonly IUserDirectoryProvider _userDirectoryProvider;
+
         public AuthenticationService(IUserDirectoryProvider userDirectoryProvider)
         {
             _userDirectoryProvider = userDirectoryProvider;
         }
 
-        public bool AuthenticateUser(Guid id, string password)
+        public bool AuthenticateUser(Guid userId, string password)
         {
-            return _userDirectoryProvider.AuthenticateUser(id.ToString(), password);
+            return _userDirectoryProvider.AuthenticateUser(userId.ToString(), password);
         }
 
-        public void CreateUser(Guid id, string password)
+        public void CreateUser(Guid userId, string password)
         {
-            var succeeded = _userDirectoryProvider.CreateUser(id.ToString(), password);
+            var succeeded = _userDirectoryProvider.CreateUser(userId.ToString(), password);
 
             CheckAndThrowFailureError(succeeded, "User creation failed");
         }
 
-        public void ResetUserPassword(Guid id, string password)
+        public void ResetUserPassword(Guid userId, string password)
         {
-            var succeeded = _userDirectoryProvider.ResetPassword(id.ToString(), password);
+            var succeeded = _userDirectoryProvider.ResetPassword(userId.ToString(), password);
 
             CheckAndThrowFailureError(succeeded, "Reset user password failed");
         }
 
-        public void ChangePassword(Guid id, string oldPassword, string newPassword)
+        public void ChangePassword(Guid userId, string oldPassword, string newPassword)
         {
-            var succeeded = _userDirectoryProvider.ChangePassword(id.ToString(), oldPassword, newPassword);
+            var succeeded = _userDirectoryProvider.ChangePassword(userId.ToString(), oldPassword, newPassword);
 
             CheckAndThrowFailureError(succeeded, "Change password failed");
         }

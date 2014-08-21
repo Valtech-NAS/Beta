@@ -7,12 +7,12 @@
     /// </summary>
     public interface IAuthenticationService
     {
-        bool AuthenticateUser(Guid id, string password);
+        bool AuthenticateUser(Guid userId, string password);
 
-        void CreateUser(Guid id, string password);
+        void CreateUser(Guid userId, string password);
 
-        void ResetUserPassword(Guid id, string password);
+        void ResetUserPassword(Guid userId, string password);
 
-        void ChangePassword(Guid id, string oldPassword, string newPassword);
+        void ChangePassword(Guid userId, string oldPassword, string newPassword);
     }
 }

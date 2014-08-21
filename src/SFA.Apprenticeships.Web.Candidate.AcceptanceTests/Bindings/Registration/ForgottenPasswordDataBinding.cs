@@ -16,6 +16,7 @@
         private const string NewPassword = "?Password02!";
 
         private const string EmailAddressTokenName = "EmailAddressToken";
+        private const string EmailTokenName = "EmailToken";
         private const string PasswordResetCodeTokenName = "PasswordResetCodeToken";
         private const string PasswordResetCode = "RESET1";
 
@@ -34,7 +35,7 @@
         [Then("I get the token to reset the password")]
         public void WhenIGetTokenToResetPassword()
         {
-            var email = _tokenManager.GetTokenByKey(EmailAddressTokenName);
+            var email = _tokenManager.GetTokenByKey(EmailTokenName);
             var user = _userReadRepository.Get(email);
 
             if (user != null)
@@ -46,7 +47,7 @@
         [Then("I get the same token to reset the password")]
         public void ThenIGetTheSameTokenToResetThePassword()
         {
-            var email = _tokenManager.GetTokenByKey(EmailAddressTokenName);
+            var email = _tokenManager.GetTokenByKey(EmailTokenName);
             var user = _userReadRepository.Get(email);
             var resetPasswordCode = _tokenManager.GetTokenByKey(PasswordResetCodeTokenName);
 
@@ -59,7 +60,7 @@
         [Then(@"I don't receive an email with the token to reset the password")]
         public void ThenIDonTReceiveAnEmailWithTheTokenToResetThePassword()
         {
-            var email = _tokenManager.GetTokenByKey(EmailAddressTokenName);
+            var email = _tokenManager.GetTokenByKey(EmailTokenName);
             var user = _userReadRepository.Get(email);
 
             user.PasswordResetCode.Should().BeNullOrEmpty();

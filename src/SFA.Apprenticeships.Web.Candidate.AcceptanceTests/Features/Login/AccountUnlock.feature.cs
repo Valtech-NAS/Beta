@@ -35,7 +35,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Login
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Account Lock", "As the SFA I want to be able to lock a candidates account\r\nwhere they have made m" +
-                    "ultiple attempts with an incorrect username/password combination\r\nso that I can " +
+                    "ultiple attempts with an incorrect userId/password combination\r\nso that I can " +
                     "be assured that the candidate is legitimate.", ProgrammingLanguage.CSharp, new string[] {
                         "US444",
                         "US276"});
