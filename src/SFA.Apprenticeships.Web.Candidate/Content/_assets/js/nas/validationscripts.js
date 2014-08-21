@@ -37,7 +37,7 @@
         };
     });
 
-    $('.inline-fixed').on('blur keyup', '.form-control', function () {
+    $('.inline-fixed').not('#qualifications-panel .inline-fixed, #workexperience-panel .inline-fixed').on('blur keyup', '.form-control', function () {
         var $this = $(this),
             $thisParent = $this.closest('.inline-fixed');
 
@@ -55,6 +55,14 @@
 
         $this.appendTo($this.closest('.inline-fixed'));
     });
+
+    setTimeout(function () {
+        $('#workexperience-panel .inline-fixed').find('.field-validation-error, .field-validation-valid').each(function () {
+            var $this = $(this);
+
+            $this.appendTo($this.closest('.error-wrapper'));
+        });
+    }, 1000);
 
 });
 

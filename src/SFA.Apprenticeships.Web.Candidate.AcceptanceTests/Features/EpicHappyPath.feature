@@ -45,6 +45,7 @@ Scenario: Epic happy path
 		| ActivationCode | {ActivationToken} |
 	And I choose ActivateButton
 	Then I am on the ApplicationPage page
+	When I choose SupportMeYes
 	When I enter data
 		| Field                   | Value                         |
 		| EducationNameOfSchool   | SchoolName                    |

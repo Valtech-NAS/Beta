@@ -31,9 +31,7 @@
         [DataType(DataType.DateTime)]
         public DateTime ClosingDate { get; set; }
 
-        public double Wage { get; set; }
-
-        public string WageDescription { get; set; }
+        public string Wage { get; set; }
 
         public string WorkingWeek { get; set; }
 

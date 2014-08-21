@@ -1,16 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Locations;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
+    using Candidate.Mappers;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.Locations;
     using FluentAssertions;
-    using Mappers;
     using Moq;
     using NUnit.Framework;
 

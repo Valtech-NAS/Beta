@@ -21,14 +21,14 @@ Scenario: As a candidate I am on the registration page and all required fields a
         | Field                  | Rule   | Value |
         | ValidationSummaryCount | Equals | 11    |
 	And I am on ValidationSummaryItems list item matching criteria
-		| Field | Rule   | Value                         |
-		| Text  | Equals | 'First name' must be supplied |
-		| Href  | Equals | #firstname                    |
+		| Field | Rule   | Value                   |
+		| Text  | Equals | Please enter first name |
+		| Href  | Equals | #firstname              |
 	And I am on the RegisterCandidatePage page
 	And I am on ValidationSummaryItems list item matching criteria
-		| Field | Rule   | Value                       |
-		| Text  | Equals | 'Last name' must be supplied |
-		| Href  | Equals | #lastname                   |
+		| Field | Rule   | Value                  |
+		| Text  | Equals | Please enter last name |
+		| Href  | Equals | #lastname              |
 
 Scenario: As a candidate on the registration page I want to be able to pick my address from a list returned from the postcode search
 	Given I navigated to the RegisterCandidatePage page
@@ -86,8 +86,8 @@ Scenario: As a candidate I want to be told quickly that my email/username is not
 	And I wait to see EmailAddressAvailableMessage
 	And I am on the RegisterCandidatePage page
 	Then I see 
-		| Field                        | Rule   | Value                              |
-		| EmailAddressAvailableMessage | Equals | Username already in use, try again |
+		| Field                        | Rule   | Value                                                                                                                           |
+		| EmailAddressAvailableMessage | Equals | Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it. |
 
 Scenario: As a candidate I want to be submit my registration details so that I can apply for vacancies 
 	Given I navigated to the RegisterCandidatePage page

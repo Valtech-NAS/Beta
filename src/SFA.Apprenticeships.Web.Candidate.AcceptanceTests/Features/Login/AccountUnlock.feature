@@ -1,4 +1,4 @@
-﻿@US444
+﻿@US444 @US276
 Feature: Account Lock
 	As the SFA I want to be able to lock a candidates account
 	where they have made multiple attempts with an incorrect username/password combination
@@ -35,8 +35,8 @@ Scenario: Account can be unlocked with a valid, non-expired account unlock code
 	And I choose VerifyCodeButton
 	Then I am on the LoginPage page
 	And I see
-         | Field            | Rule   | Value |
-         | LoginMessageText | Exists |       |
+         | Field              | Rule   | Value |
+         | SuccessMessageText | Exists |       |
 
 Scenario: Account unlock code can be resent
 	Given I locked my account

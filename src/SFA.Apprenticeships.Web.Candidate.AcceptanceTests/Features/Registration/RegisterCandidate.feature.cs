@@ -119,7 +119,7 @@ this.ScenarioSetup(scenarioInfo);
             table2.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "\'First name\' must be supplied"});
+                        "Please enter first name"});
             table2.AddRow(new string[] {
                         "Href",
                         "Equals",
@@ -136,7 +136,7 @@ this.ScenarioSetup(scenarioInfo);
             table3.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "\'Last name\' must be supplied"});
+                        "Please enter last name"});
             table3.AddRow(new string[] {
                         "Href",
                         "Equals",
@@ -340,7 +340,8 @@ this.ScenarioSetup(scenarioInfo);
             table10.AddRow(new string[] {
                         "EmailAddressAvailableMessage",
                         "Equals",
-                        "Username already in use, try again"});
+                        "Your email address has already been activated. Please try signing in again. If yo" +
+                            "u’ve forgotten your password you can reset it."});
 #line 88
  testRunner.Then("I see", ((string)(null)), table10, "Then ");
 #line hidden

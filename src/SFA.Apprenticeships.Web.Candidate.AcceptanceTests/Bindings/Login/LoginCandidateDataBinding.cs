@@ -6,6 +6,7 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using FluentAssertions;
     using Generators;
     using global::SpecBind.Helpers;
     using NUnit.Framework;
@@ -16,42 +17,28 @@
     public class LoginCandidateDataBinding
     {
         private const string Id = "00000000-0000-0000-0000-000000000001"; // CRITICAL: must match an AD user name.
-
         private const string EmailAddressTokenName = "EmailAddressToken";
-
+        private const string InvalidEmailTokenName = "InvalidEmailToken";
+        private const string InvalidEmail = "invalid@gmail.com";
         private const string PasswordTokenName = "PasswordToken";
         private const string Password = "?Password01!";
         private const string InvalidPasswordTokenName = "InvalidPasswordToken";
-
         private const string ActivationCodeTokenName = "ActivationCodeToken";
         private const string ActivationCode = "ACTIV1";
-
         private const string AccountUnlockCodeTokenName = "AccountUnlockCodeToken";
         private const string AccountUnlockCode = "UNLCK1";
 
-        private readonly ITokenManager _tokenManager;
-        private readonly IUserReadRepository _userReadRepository;
-
         private readonly string _emailAddress;
+
+        private readonly ITokenManager _tokenManager;
+
+        private readonly IUserReadRepository _userReadRepository;
 
         public LoginCandidateDataBinding(ITokenManager tokenManager)
         {
             _tokenManager = tokenManager;
             _emailAddress = EmailGenerator.GenerateEmailAddress();
             _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
-        }
-
-        [Given("I registered an account but did not activate it")]
-        public void GivenIRegisteredAnAccountButDidNotActivateIt()
-        {
-            var candidate = new CandidateBuilder(_emailAddress)
-                .Build();
-
-            var user = new UserBuilder(Id, _emailAddress, UserStatuses.PendingActivation)
-                .WithActivationCode(ActivationCode)
-                .Build();
-
-            SetTokens(candidate, user);
         }
 
         //TODO: create a mechanism where we won't need to login - just get the webdriver and set the auth cookie directly or similar
@@ -62,6 +49,19 @@
                 .Build();
 
             var user = new UserBuilder(Id, _emailAddress)
+                .Build();
+
+            SetTokens(candidate, user);
+        }
+
+        [Given("I registered an account but did not activate it")]
+        public void GivenIRegisteredAnAccountButDidNotActivateIt()
+        {
+            var candidate = new CandidateBuilder(_emailAddress)
+                .Build();
+
+            var user = new UserBuilder(Id, _emailAddress, UserStatuses.PendingActivation)
+                .WithActivationCode(ActivationCode)
                 .Build();
 
             SetTokens(candidate, user);
@@ -112,7 +112,7 @@
         [Given("I am signed out")]
         public void IAmSignedOut()
         {
-
+            
         }
 
         [Then]
@@ -122,12 +122,12 @@
             var accountUnlockCode = _tokenManager.GetTokenByKey(AccountUnlockCodeTokenName);
 
             // Ensure account unlock code has changed.
-            Assert.IsNotNull(accountUnlockCode);
-            Assert.IsNotNull(user.AccountUnlockCode);
-            Assert.AreNotEqual(accountUnlockCode, user.AccountUnlockCode);
+            accountUnlockCode.Should().NotBeNull();
+            user.AccountUnlockCode.Should().NotBeNull();
+            accountUnlockCode.Should().NotBe(user.AccountUnlockCode);
 
             // Ensure account unlock code has been renewed.
-            Assert.IsTrue(user.AccountUnlockCodeExpiry > DateTime.Now);
+            user.AccountUnlockCodeExpiry.Should().BeAfter(DateTime.Now);
         }
 
         #region Helpers
@@ -144,8 +144,9 @@
             // Activation, unlock codes etc.
             _tokenManager.SetToken(ActivationCodeTokenName, ActivationCode);
             _tokenManager.SetToken(AccountUnlockCodeTokenName, AccountUnlockCode);
+            _tokenManager.SetToken(InvalidEmailTokenName, InvalidEmail);
         }
-      
+
         #endregion
     }
 }

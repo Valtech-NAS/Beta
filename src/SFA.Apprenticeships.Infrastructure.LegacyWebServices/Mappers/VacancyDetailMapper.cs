@@ -26,12 +26,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
                 .ForMember(d => d.Contact, opt => opt.MapFrom(src => src.ContactPerson))
                 .ForMember(d => d.ProviderSectorPassRate, opt => opt.MapFrom(src => src.LearningProviderSectorPassRate))
                 .ForMember(d => d.InterviewFromDate, opt => opt.MapFrom(src => src.InterviewFromDate.ToUniversalTime()))
-                .ForMember(d => d.ClosingDate, opt => opt.MapFrom(src => ToUniversalTime(src.ClosingDate)));
-        }
-
-        private DateTime ToUniversalTime(DateTime closingDate)
-        {
-            return closingDate.ToUniversalTime();
+                .ForMember(d => d.ClosingDate, opt => opt.MapFrom(src => src.ClosingDate.ToUniversalTime()));
         }
     }
 }

@@ -21,6 +21,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Login
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("Account Lock")]
     [NUnit.Framework.CategoryAttribute("US444")]
+    [NUnit.Framework.CategoryAttribute("US276")]
     public partial class AccountLockFeature
     {
         
@@ -36,7 +37,8 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Login
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Account Lock", "As the SFA I want to be able to lock a candidates account\r\nwhere they have made m" +
                     "ultiple attempts with an incorrect username/password combination\r\nso that I can " +
                     "be assured that the candidate is legitimate.", ProgrammingLanguage.CSharp, new string[] {
-                        "US444"});
+                        "US444",
+                        "US276"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -164,7 +166,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Rule",
                         "Value"});
             table5.AddRow(new string[] {
-                        "LoginMessageText",
+                        "SuccessMessageText",
                         "Exists",
                         ""});
 #line 37

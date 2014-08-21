@@ -139,6 +139,8 @@
     <Compile Include="Models\Common\ReferenceDataViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\EntityContext.cs" />
+    <Compile Include="Providers\EuCookieDirectiveProvider.cs" />
+    <Compile Include="Providers\IEuCookieDirectiveProvider.cs" />
     <Compile Include="Providers\IUserDataProvider.cs" />
     <Compile Include="Providers\UserContext.cs" />
     <Compile Include="Providers\CookieUserDataProvider.cs" />

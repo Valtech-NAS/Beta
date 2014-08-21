@@ -96,6 +96,7 @@
   <ItemGroup>
     <Compile Include="Bindings\Application\ApplicationPageBinding.cs" />
     <Compile Include="Bindings\DataGeneratorBinding.cs" />
+    <Compile Include="Bindings\Registration\ForgottenPasswordDataBinding.cs" />
     <Compile Include="Builders\ApplicationBuilder.cs" />
     <Compile Include="Builders\CandidateBuilder.cs" />
     <Compile Include="Builders\RegistrationBuilder.cs" />
@@ -126,6 +127,11 @@
       <DependentUpon>LoginCandidate.feature</DependentUpon>
     </Compile>
     <Compile Include="Bindings\Login\LoginCandidateDataBinding.cs" />
+    <Compile Include="Features\Registration\ForgottenPassword.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ForgottenPassword.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Registration\RegisterCandidate.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -149,6 +155,8 @@
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\BaseValidationPage.cs" />
     <Compile Include="Pages\Dashboard\MyApplicationsPage.cs" />
+    <Compile Include="Pages\Registration\ResetPasswordPage.cs" />
+    <Compile Include="Pages\Registration\ForgottenPasswordPage.cs" />
     <Compile Include="Pages\Login\UnlockPage.cs" />
     <Compile Include="Pages\Login\LoginPage.cs" />
     <Compile Include="Pages\Registration\ActivationPage.cs" />
@@ -194,6 +202,10 @@
     <None Include="Features\Login\LoginCandidate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>LoginCandidate.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Registration\ForgottenPassword.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ForgottenPassword.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Registration\RegisterCandidate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

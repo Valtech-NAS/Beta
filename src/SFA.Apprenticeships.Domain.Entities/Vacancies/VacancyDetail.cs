@@ -57,9 +57,13 @@
 
         public string EmployerName { get; set; }
 
+        public string AnonymousEmployerName { get; set; }
+
         public string EmployerDescription { get; set; }
 
         public string EmployerWebsite { get; set; }
+
+        public bool IsEmployerAnonymous { get; set; }
 
         public string ExpectedDuration { get; set; }
 

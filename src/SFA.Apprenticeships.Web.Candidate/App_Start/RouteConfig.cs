@@ -31,6 +31,12 @@
             );
 
             routes.MapRoute(
+                name: RouteNames.Privacy,
+                url: "privacy",
+                defaults: new { controller = "Home", action = "Privacy" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
