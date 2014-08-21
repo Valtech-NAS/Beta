@@ -3,7 +3,7 @@
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
 
-    [PageNavigation("/application/apply/[0-9]+")]
+    [PageNavigation("/myapplications")]
     [PageAlias("ApplicationPage")]
     public class ApplicationPage : BaseValidationPage
     {
