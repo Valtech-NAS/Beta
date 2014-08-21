@@ -8,16 +8,24 @@
     using Providers;
 
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
-    {
+    {     
         private IUserDataProvider _userData;
+        private IEuCookieDirectiveProvider _euCookieDirectiveProvider;
 
         public IUserDataProvider UserData
         {
             get { return _userData ?? (_userData = new CookieUserDataProvider(HttpContext)); }
         }
 
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        private IEuCookieDirectiveProvider EuCookieDirectiveProvider
         {
+            get { return _euCookieDirectiveProvider ?? (_euCookieDirectiveProvider = new EuCookieDirectiveProvider()); }
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {           
+            filterContext.Controller.ViewBag.ShowEuCookieDirective = EuCookieDirectiveProvider.ShowEuCookieDirective(filterContext.HttpContext);
+
             UserContext = null;
 
             if (!string.IsNullOrWhiteSpace(User.Identity.Name))
