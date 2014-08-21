@@ -41,7 +41,7 @@
             <p class="form-hint text">
                 If you don't know your results yet, enter your predicted grades. These are grades your teacher expects you to get.
             </p>
-            <div class="form-group form-group-compound inline clearfix">
+            <div class="form-group inline clearfix">
                 <label data-target="qualifications-panel" for="qualifications-yes" class="block-label" data-bind="css: {selected:showQualifications() }">
                     @Html.RadioButtonFor(m => m.Candidate.HasQualifications, true, true, new { id = "qualifications-yes", data_bind = "attr:{checked: hasQualifications() }" })
                     Yes
