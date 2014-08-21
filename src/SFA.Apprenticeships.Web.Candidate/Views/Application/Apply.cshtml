@@ -54,12 +54,12 @@
             <div id="qualifications-panel" class="toggle-content" data-bind="style: {display:showQualifications() ? 'block' :'none' }">
                 <div class="clearfix">
                     <div class="inline-fixed">
-                        <div class="form-group" data-bind="parentvalElement:selectedQualification">
+                        <div class="form-group vert-align-top" data-bind="parentvalElement:selectedQualification">
                             <label for="qual-type" class="form-label">Type of qualification</label>
                             <select id="qual-type" data-bind='options: qualificationTypes, optionsCaption: "Select from list", optionsText: "qualificationTypeName", optionsValue: "qualificationTypeName",value: selectedQualification'></select>
 
                         </div>
-                        <div class="form-group" data-bind="parentvalElement:year">
+                        <div class="form-group vert-align-top" data-bind="parentvalElement:year">
                             <label for="subject-year" class="form-label">Year</label>
                             <input maxlength="4" type="text" class="form-control form-control-small" pattern="[0-9]*" id="subject-year" data-bind='value: year'>
 
@@ -195,7 +195,7 @@
                             <span class="form-hint maxchar-count">200</span>
                         </div>
                         <div class="form-group form-group-compound inline-fixed">
-                            <div class="form-group form-group-compound">
+                            <div class="form-group form-group-compound error-wrapper vert-align-top">
                                 <label for="work-from" class="form-label">From</label>
                                 <div class="form-group form-group-compound">
                                     <span class="form-hint">Month</span>
@@ -209,7 +209,7 @@
                                            id="work-from-year" data-bind="value: fromYear">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group error-wrapper vert-align-top">
                                 <label for="work-to" class="form-label">To</label>
                                 <div class="form-group form-group-compound">
                                     <span class="form-hint">Month</span>
@@ -223,7 +223,7 @@
                                            id="work-to-year" data-bind="value: toYear, attr:{disabled:toDateReadonly() }" />
                                 </div>
                                 <div class="form-group form-group-compound">
-                                    <input id="work-current" type="checkbox" data-bind="checked: isCurrentEmployment"/>
+                                    <input id="work-current" type="checkbox" data-bind="checked: isCurrentEmployment" />
                                     <label for="work-current">Current</label>
                                 </div>
                             </div>
