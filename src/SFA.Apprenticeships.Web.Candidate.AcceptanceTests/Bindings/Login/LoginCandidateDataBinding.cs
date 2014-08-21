@@ -129,7 +129,7 @@
 
         #region Helpers
 
-        protected void SetTokens(Candidate candidate, User user)
+        private void SetTokens(Candidate candidate, User user)
         {
             // Email.
             _tokenManager.SetToken(EmailAddressTokenName, candidate.RegistrationDetails.EmailAddress);

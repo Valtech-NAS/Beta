@@ -25,9 +25,20 @@ Scenario: Password successful reset
 	When I enter data
 		| Field             | Value                    |
 		| PasswordResetCode | {PasswordResetCodeToken} |
-		| Password      | {NewPasswordToken}                       |
+		| Password          | {NewPasswordToken}       |
 	And I choose ResetPasswordButton
 	Then I am on the VacancySearchPage page
 	And I see
 		| Field              | Rule   | Value                                   |
 		| SuccessMessageText | Equals | You've successfully reset your password |
+
+Scenario: Reset password with an invalid email
+	Given I registered an account and activated it
+	And I navigated to the ForgottenPasswordPage page
+	When I am on the ForgottenPasswordPage page
+	And I enter data
+		| Field        | Value             |
+		| EmailAddress | invalid@gmail.com |
+	And I choose SendCodeButton
+	Then I am on the ResetPasswordPage page
+	And I don't receive an email with the token to reset the password
