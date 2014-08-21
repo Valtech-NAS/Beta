@@ -27,7 +27,10 @@
                 .ForMember(d => d.Latitude, opt => opt.MapFrom(s => s.GeoPoint.Latitude))
                 .ForMember(d => d.Longitude, opt => opt.MapFrom(s => s.GeoPoint.Longitude));
 
-            Mapper.CreateMap<VacancyDetail, VacancyDetailViewModel>();
+            Mapper.CreateMap<VacancyDetail, VacancyDetailViewModel>()
+                .ForMember(d => d.EmployerName, opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
+                .ForMember(d => d.Wage, opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.WageResolver>());
+
             Mapper.CreateMap<VacancySummaryResponse, VacancySummaryViewModel>();
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();

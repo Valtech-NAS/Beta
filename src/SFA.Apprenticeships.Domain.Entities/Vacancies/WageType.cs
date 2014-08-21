@@ -2,6 +2,8 @@
 {
     public enum WageType
     {
+        Unknown = 0,
         Weekly,
+        Text
     }
 }
