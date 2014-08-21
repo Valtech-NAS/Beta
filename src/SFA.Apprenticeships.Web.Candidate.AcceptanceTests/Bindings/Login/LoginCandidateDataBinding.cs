@@ -16,42 +16,26 @@
     public class LoginCandidateDataBinding
     {
         private const string Id = "00000000-0000-0000-0000-000000000001"; // CRITICAL: must match an AD user name.
-
         private const string EmailAddressTokenName = "EmailAddressToken";
-
         private const string PasswordTokenName = "PasswordToken";
         private const string Password = "?Password01!";
         private const string InvalidPasswordTokenName = "InvalidPasswordToken";
-
         private const string ActivationCodeTokenName = "ActivationCodeToken";
         private const string ActivationCode = "ACTIV1";
-
         private const string AccountUnlockCodeTokenName = "AccountUnlockCodeToken";
         private const string AccountUnlockCode = "UNLCK1";
 
-        private readonly ITokenManager _tokenManager;
-        private readonly IUserReadRepository _userReadRepository;
-
         private readonly string _emailAddress;
+
+        private readonly ITokenManager _tokenManager;
+
+        private readonly IUserReadRepository _userReadRepository;
 
         public LoginCandidateDataBinding(ITokenManager tokenManager)
         {
             _tokenManager = tokenManager;
             _emailAddress = EmailGenerator.GenerateEmailAddress();
             _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
-        }
-
-        [Given("I registered an account but did not activate it")]
-        public void GivenIRegisteredAnAccountButDidNotActivateIt()
-        {
-            var candidate = new CandidateBuilder(_emailAddress)
-                .Build();
-
-            var user = new UserBuilder(Id, _emailAddress, UserStatuses.PendingActivation)
-                .WithActivationCode(ActivationCode)
-                .Build();
-
-            SetTokens(candidate, user);
         }
 
         //TODO: create a mechanism where we won't need to login - just get the webdriver and set the auth cookie directly or similar
@@ -62,6 +46,19 @@
                 .Build();
 
             var user = new UserBuilder(Id, _emailAddress)
+                .Build();
+
+            SetTokens(candidate, user);
+        }
+
+        [Given("I registered an account but did not activate it")]
+        public void GivenIRegisteredAnAccountButDidNotActivateIt()
+        {
+            var candidate = new CandidateBuilder(_emailAddress)
+                .Build();
+
+            var user = new UserBuilder(Id, _emailAddress, UserStatuses.PendingActivation)
+                .WithActivationCode(ActivationCode)
                 .Build();
 
             SetTokens(candidate, user);
@@ -112,7 +109,7 @@
         [Given("I am signed out")]
         public void IAmSignedOut()
         {
-
+            
         }
 
         [Then]
@@ -132,7 +129,7 @@
 
         #region Helpers
 
-        private void SetTokens(Candidate candidate, User user)
+        protected void SetTokens(Candidate candidate, User user)
         {
             // Email.
             _tokenManager.SetToken(EmailAddressTokenName, candidate.RegistrationDetails.EmailAddress);
@@ -145,7 +142,7 @@
             _tokenManager.SetToken(ActivationCodeTokenName, ActivationCode);
             _tokenManager.SetToken(AccountUnlockCodeTokenName, AccountUnlockCode);
         }
-      
+
         #endregion
     }
 }

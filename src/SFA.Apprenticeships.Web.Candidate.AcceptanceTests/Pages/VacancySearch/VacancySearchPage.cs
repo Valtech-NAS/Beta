@@ -22,5 +22,9 @@
 
         [ElementLocator(Id = "search-button")]
         public IWebElement Search { get; set; }
+
+        //TODO: refactor to base class
+        [ElementLocator(Id = "SuccessMessageText")]
+        public IWebElement SuccessMessageText { get; set; }
     }
 }
