@@ -26,7 +26,10 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
                 .ForMember(d => d.Contact, opt => opt.MapFrom(src => src.ContactPerson))
                 .ForMember(d => d.ProviderSectorPassRate, opt => opt.MapFrom(src => src.LearningProviderSectorPassRate))
                 .ForMember(d => d.InterviewFromDate, opt => opt.MapFrom(src => src.InterviewFromDate.ToUniversalTime()))
-                .ForMember(d => d.ClosingDate, opt => opt.MapFrom(src => src.ClosingDate.ToUniversalTime()));
+                .ForMember(d => d.ClosingDate, opt => opt.MapFrom(src => src.ClosingDate.ToUniversalTime()))
+                // TODO: US484: need to map when field is available in NAS Gateway interface.
+                .ForMember(d => d.IsEmployerAnonymous, opt => opt.MapFrom(src => false))
+                .ForMember(d => d.AnonymousEmployerName, opt => opt.MapFrom(src => src.EmployerDescription));
         }
     }
 }

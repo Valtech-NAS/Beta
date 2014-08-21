@@ -78,20 +78,29 @@
             }
 
             var candidate = _candidateReadRepository.Get(candidateId);
+            var applicationDetail = CreateApplicationDetail(candidate, vacancyDetails);
 
-            var applicationDetail = new ApplicationDetail
+            _applicationWriteRepository.Save(applicationDetail);
+
+            return applicationDetail;
+        }
+
+        private static ApplicationDetail CreateApplicationDetail(Candidate candidate, VacancyDetail vacancyDetails)
+        {
+            return new ApplicationDetail
             {
                 EntityId = Guid.NewGuid(),
                 Status = ApplicationStatuses.Draft,
                 DateCreated = DateTime.Now,
-                CandidateId = candidateId,
+                CandidateId = candidate.EntityId,
                 // TODO: US354: AG: better way to clone? http://stackoverflow.com/questions/5713556/copy-object-to-object-with-automapper
                 CandidateDetails = Mapper.Map<RegistrationDetails, RegistrationDetails>(candidate.RegistrationDetails),
                 Vacancy = new VacancySummary
                 {
                     Id = vacancyDetails.Id,
                     Title = vacancyDetails.Title,
-                    EmployerName = vacancyDetails.EmployerName,
+                    EmployerName = vacancyDetails.IsEmployerAnonymous ?
+                        vacancyDetails.AnonymousEmployerName : vacancyDetails.EmployerName,
                     ClosingDate = vacancyDetails.ClosingDate,
                     Description = vacancyDetails.Description,
                     Location = null, // NOTE: no equivalent in legacy vacancy details.
@@ -106,10 +115,6 @@
                     AboutYou = candidate.ApplicationTemplate.AboutYou
                 },
             };
-
-            _applicationWriteRepository.Save(applicationDetail);
-
-            return applicationDetail;
         }
 
         private VacancyDetail GetVacancyDetails(int vacancyId)
