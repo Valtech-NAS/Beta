@@ -37,7 +37,7 @@
         };
     });
 
-    $('.inline-fixed').on('blur keyup', '.form-control', function () {
+    $('.inline-fixed').not('#qualifications-panel .inline-fixed, #workexperience-panel .inline-fixed').on('blur keyup', '.form-control', function () {
         var $this = $(this),
             $thisParent = $this.closest('.inline-fixed');
 
