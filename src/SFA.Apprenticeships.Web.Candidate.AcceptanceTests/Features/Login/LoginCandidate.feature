@@ -33,6 +33,21 @@ Scenario: As a candidate I must provide an email address and password
 	Then I see
 		| Field                  | Rule   | Value |
 		| ValidationSummaryCount | Equals | 2     |
+
+#TODO remove ignore attribute when registration works as expected
+@ignore
+Scenario: As a candidate I want to be redirected to the previous page when I login
+	Given I registered an account and activated it
+	And I navigated to the RegisterCandidatePage page
+	When I choose SignInLink
+	And I am on the LoginPage page
+	And I enter data
+		| Field        | Value               |
+		| EmailAddress | {EmailAddressToken} |
+		| Password     | {PasswordToken}     |
+	And I choose SignInButton
+	Then I am on the RegisterCandidatePage page
+
 @ignore
 Scenario: As a candidate I cannot login with an invalid password
 	Given I registered an account and activated it
