@@ -4,6 +4,11 @@ Feature: EpicHappyPath
 	As a candidate
 	I want to be able to search, view, register, login, save, apply, view, resume and dismiss applications
 
+#TODO Refine background step to support cookie detection
+Background: 
+	Given I navigated to the HomePage page
+	When I am on the HomePage page
+
 Scenario: Epic happy path
 	Given I navigated to the VacancySearchPage page
 	When I enter data

@@ -4,6 +4,11 @@ Feature: Apply for a vacancy
 	I want to submit applications 
 	so that it can be reviewed by a Vacancy Manager
 
+#TODO Refine background step to support cookie detection
+Background: 
+	Given I navigated to the HomePage page
+	When I am on the HomePage page
+
 Scenario: As a candidate I would like to apply for a vacancy
 	Given I registered an account and activated it
 	And I navigated to the LoginPage page

@@ -4,6 +4,11 @@ Feature: Account Lock
 	where they have made multiple attempts with an incorrect username/password combination
 	so that I can be assured that the candidate is legitimate.
 
+#TODO Refine background step to support cookie detection
+Background: 
+	Given I navigated to the HomePage page
+	When I am on the HomePage page
+
 Scenario: Account is locked after three unsuccesful login attempts
 	Given I made two unsuccessful login attempts
 	And I navigated to the LoginPage page

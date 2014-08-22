@@ -6,26 +6,26 @@
     using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
-    using Domain.Interfaces.Configuration;
     using Common.Services;
     using Constants;
+    using Domain.Interfaces.Configuration;
     using Providers;
     using StructureMap;
 
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
-    {       
+    {
         private static bool _isCookieDetectionStarted;
 
         protected CandidateControllerBase()
         {
             //TODO: Think about "new"ing this up instead - Mark doesn't like this. Doesn't need to be lazy, is used everywhere
             UserData = ObjectFactory.GetInstance<IUserDataProvider>();
-            
+
             //TODO: Think about switching these to an action filter set on base controller
             EuCookieDirectiveProvider = ObjectFactory.GetInstance<IEuCookieDirectiveProvider>();
             CookieDetectionProvider = ObjectFactory.GetInstance<ICookieDetectionProvider>();
             AuthenticationTicketService = ObjectFactory.GetInstance<IAuthenticationTicketService>();
-            
+
             var configurationManager = ObjectFactory.GetInstance<IConfigurationManager>();
             FeedbackUrl = configurationManager.TryGetAppSetting("FeedbackUrl") ?? "#";
         }
@@ -42,30 +42,25 @@
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            filterContext.Controller.ViewBag.ShowEuCookieDirective = EuCookieDirectiveProvider.ShowEuCookieDirective(filterContext.HttpContext);           
+            filterContext.Controller.ViewBag.ShowEuCookieDirective =
+                EuCookieDirectiveProvider.ShowEuCookieDirective(filterContext.HttpContext);
 
             filterContext.Controller.ViewBag.FeedbackUrl = FeedbackUrl;
-            if (_isCookieDetectionStarted && !CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext) && !filterContext.ActionDescriptor.ActionName.Equals(RouteNames.Cookies, StringComparison.CurrentCultureIgnoreCase))
+
+            if (!CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext))
             {
                 CookieDetectionProvider.SetCookie(filterContext.HttpContext);
 
-                filterContext.Result = RedirectToRoute(RouteNames.Cookies);
-                return;
-            }
+                if (_isCookieDetectionStarted &&
+                    !filterContext.ActionDescriptor.ActionName.Equals(RouteNames.Cookies,
+                        StringComparison.CurrentCultureIgnoreCase))
+                {
+                    filterContext.Result = RedirectToRoute(RouteNames.Cookies);
+                    return;
+                }
 
-            if (!_isCookieDetectionStarted && !CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext))
-            {
-                CookieDetectionProvider.SetCookie(filterContext.HttpContext);
                 _isCookieDetectionStarted = true;
-            }
-
-            if (CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext) &&
-                filterContext.ActionDescriptor.ActionName.Equals(RouteNames.Cookies,
-                    StringComparison.CurrentCultureIgnoreCase))
-            {
-                filterContext.Result = RedirectToAction("Index", "VacancySearch");
-                return;
-            }
+            }           
 
             UserContext = null;
 
@@ -93,8 +88,8 @@
         {
             var controllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
 
-            if (!controllerName.Equals("Login", StringComparison.InvariantCultureIgnoreCase)){
-                
+            if (!controllerName.Equals("Login", StringComparison.InvariantCultureIgnoreCase))
+            {
                 UserData.Pop(UserDataItemNames.SessionReturnUrl);
                 var userContext = UserData.GetUserContext();
 
@@ -104,16 +99,17 @@
                 }
             }
 
-            AuthenticationTicketService.RefreshTicket(filterContext.Controller.ControllerContext.HttpContext.Response.Cookies);
+            AuthenticationTicketService.RefreshTicket(
+                filterContext.Controller.ControllerContext.HttpContext.Response.Cookies);
             base.OnActionExecuted(filterContext);
         }
 
         private void AddMetaRefreshTimeout()
         {
             var returnUrl = Request != null && Request.Url != null ? Request.Url.PathAndQuery : "/";
-            var sessionTimeoutUrl = Url.Action("SessionTimeout", "Login", new { ReturnUrl = returnUrl });
+            var sessionTimeoutUrl = Url.Action("SessionTimeout", "Login", new {ReturnUrl = returnUrl});
             Response.AppendHeader("Refresh", FormsAuthentication.Timeout.TotalSeconds + ";url=" + sessionTimeoutUrl);
-        }      
+        }
 
         protected void SetUserMessage(string message, UserMessageLevel level = UserMessageLevel.Success)
         {

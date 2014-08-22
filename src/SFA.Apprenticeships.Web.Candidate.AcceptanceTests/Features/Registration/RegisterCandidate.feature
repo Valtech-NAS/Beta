@@ -4,6 +4,11 @@ Feature: Register Candidate
 	As an apprentice
 	I want to be able to register for the service
 
+#TODO Refine background step to support cookie detection
+Background: 
+	Given I navigated to the HomePage page
+	When I am on the HomePage page
+
 Scenario: As a candidate I am on the registration page and all required fields are present and all validators show
 	Given I navigated to the RegisterCandidatePage page
 	When I am on the RegisterCandidatePage page

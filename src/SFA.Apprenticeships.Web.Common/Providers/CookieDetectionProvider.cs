@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Providers
 {
+    using System;
     using System.Web;
 
     public class CookieDetectionProvider : ICookieDetectionProvider
@@ -15,7 +16,10 @@
                 return;
             }
 
-            var cookie = new HttpCookie(CookieDetection);
+            var cookie = new HttpCookie(CookieDetection)
+            {
+                Expires = DateTime.Now.AddYears(5)
+            };
             httpContext.Response.Cookies.Add(cookie);
         }
 

@@ -4,6 +4,11 @@ Feature: ResetPassword
 	I want to request to reset my password
 	so that I can sign in to my account
 
+#TODO Refine background step to support cookie detection
+Background: 
+	Given I navigated to the HomePage page
+	When I am on the HomePage page
+
 Scenario: Password successful reset
 	Given I navigated to the RegisterCandidatePage page
 	When I have created a new email address

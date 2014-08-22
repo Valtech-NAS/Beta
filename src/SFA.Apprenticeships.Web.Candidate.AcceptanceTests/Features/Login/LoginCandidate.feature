@@ -5,6 +5,11 @@ Feature: Login Candidate
 	I want to sign in so that I can access my profile,
 	apply for apprenticeships etc.
 
+#TODO Refine background step to support cookie detection
+Background: 
+	Given I navigated to the HomePage page
+	When I am on the HomePage page
+
 Scenario: As a candidate all required fields are present
 	Given I navigated to the LoginPage page
 	When I am on the LoginPage page
