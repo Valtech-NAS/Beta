@@ -46,7 +46,6 @@ Scenario: As a candidate I want to be redirected to the previous page when I log
 	And I choose SignInButton
 	Then I am on the RegisterCandidatePage page
 
-@ignore
 Scenario: As a candidate I cannot login with an invalid password
 	Given I registered an account and activated it
 	And I navigated to the LoginPage page
@@ -61,11 +60,10 @@ Scenario: As a candidate I cannot login with an invalid password
 		| Field                  | Rule   | Value |
 		| ValidationSummaryCount | Equals | 1     |
 	And I am on ValidationSummaryItems list item matching criteria
-		| Field | Rule   | Value                                    |
-		| Text  | Equals | 'Email address' or 'password' is invalid |
-		| Href  | Equals | #emailaddress                            |
+		| Field | Rule   | Value                                          |
+		| Text  | Equals | Please enter a valid email address or password |
+		| Href  | Equals | #                                              |
 
-@ignore
 Scenario: As a candidate I can login with a registered but unactivated account and am redirected to the activation page
 	Given I registered an account but did not activate it
 	And I navigated to the LoginPage page
