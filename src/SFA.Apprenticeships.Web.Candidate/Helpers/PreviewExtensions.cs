@@ -15,8 +15,6 @@
             var date = new DateTime(year, month, 1);
 
             return date.ToString("MMM yyyy");
-        }
-
-        
+        }   
     }
 }

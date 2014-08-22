@@ -2,27 +2,28 @@
 {
     using System;
     using System.Web.Mvc;
+    using System.Web.Routing;
+    using System.Web.Security;
     using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
+    using Common.Services;
+    using Constants;
     using Providers;
     using StructureMap;
 
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
-        private IUserDataProvider _userData;
-        private IEuCookieDirectiveProvider _euCookieDirectiveProvider;
+        protected CandidateControllerBase()
         private ICookieDetectionProvider _cookieDetectionProvider;
-
-        public IUserDataProvider UserData
         {
-            get { return _userData ?? (_userData = new CookieUserDataProvider(HttpContext)); }
-        }
-
-        private IEuCookieDirectiveProvider EuCookieDirectiveProvider
-        {
-            get { return _euCookieDirectiveProvider ?? (_euCookieDirectiveProvider = new EuCookieDirectiveProvider()); }
+            //TODO: Think about "new"ing this up instead - Mark doesn't like this. Doesn't need to be lazy, is used everywhere
+            UserData = ObjectFactory.GetInstance<IUserDataProvider>();
+            
+            //TODO: Think about switching these to an action filter set on base controller
+            EuCookieDirectiveProvider = ObjectFactory.GetInstance<IEuCookieDirectiveProvider>();
+            AuthenticationTicketService = ObjectFactory.GetInstance<IAuthenticationTicketService>();
         }
         
         private ICookieDetectionProvider CookieDetectionProvider
@@ -31,6 +32,12 @@
         }
 
         private string FeedbackUrl
+        public IUserDataProvider UserData { get; set; }
+
+        private IEuCookieDirectiveProvider EuCookieDirectiveProvider { get; set; }
+
+        private IAuthenticationTicketService AuthenticationTicketService { get; set; }
+
         {
             get
             {
@@ -80,6 +87,32 @@
             }
 
             base.OnActionExecuting(filterContext);
+        }
+
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            var controllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
+
+            if (!controllerName.Equals("Login", StringComparison.InvariantCultureIgnoreCase)){
+                
+                UserData.Pop(UserDataItemNames.SessionReturnUrl);
+                var userContext = UserData.GetUserContext();
+
+                if (userContext != null)
+                {
+                    AddMetaRefreshTimeout();
+                }
+            }
+
+            AuthenticationTicketService.RefreshTicket(filterContext.Controller.ControllerContext.HttpContext.Response.Cookies);
+            base.OnActionExecuted(filterContext);
+        }
+
+        private void AddMetaRefreshTimeout()
+        {
+            var returnUrl = Request != null && Request.Url != null ? Request.Url.PathAndQuery : "/";
+            var sessionTimeoutUrl = Url.Action("SessionTimeout", "Login", new { ReturnUrl = returnUrl });
+            Response.AppendHeader("Refresh", FormsAuthentication.Timeout.TotalSeconds + ";url=" + sessionTimeoutUrl);
         }
 
         protected void SetUserMessage(string message, UserMessageLevel level = UserMessageLevel.Success)

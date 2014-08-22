@@ -152,9 +152,23 @@
         {
             FormsAuthentication.SignOut();
             UserData.Clear();
-            ClearSession();
 
             SetUserMessage(SignOutPageMessages.SignOutMessageText);
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult SessionTimeout(string returnUrl)
+        {
+            FormsAuthentication.SignOut();
+            UserData.Clear();
+
+            SetUserMessage(SignOutPageMessages.SessionTimeoutMessageText);
+
+            if (!string.IsNullOrWhiteSpace(returnUrl))
+            {
+                UserData.Push(UserDataItemNames.SessionReturnUrl, Server.UrlEncode(returnUrl));
+            } 
 
             return RedirectToAction("Index");
         }
@@ -168,7 +182,15 @@
             {
                 return RedirectToAction("Activation", "Register");
             }
-          
+
+            // Redirect to session return URL (if any).
+            var sessionReturnUrl = UserData.Pop(UserDataItemNames.SessionReturnUrl);
+
+            if (!string.IsNullOrWhiteSpace(sessionReturnUrl))
+            {
+                return Redirect(Server.UrlDecode(sessionReturnUrl));
+            }
+
             // Redirect to return URL (if any).
             var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
 

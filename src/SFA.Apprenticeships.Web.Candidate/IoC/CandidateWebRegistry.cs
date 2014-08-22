@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
+    using System.Web;
     using Application.Address;
     using Application.ApplicationUpdate;
     using Application.Authentication;
@@ -16,6 +17,8 @@
     using Application.UserAccount;
     using Application.UserAccount.Strategies;
     using Application.Vacancy;
+    using Common.Providers;
+    using Controllers;
     using Domain.Interfaces.Mapping;
     using Mappers;
     using Providers;
@@ -90,6 +93,14 @@
                 .Use<CandidateServiceProvider>()
                 .Ctor<IMapper>()
                 .Named("CandidateWebMappers");
+
+            For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
+            For<IUserDataProvider>().Use<CookieUserDataProvider>();
+            For<IEuCookieDirectiveProvider>().Use<EuCookieDirectiveProvider>();
+
+            // Would be good if we could do this for the base class CandidateControllerBase rather than each controller
+            ForConcreteType<HomeController>().Configure.Setter<IUserDataProvider>();
+            ForConcreteType<HomeController>().Configure.Setter<IEuCookieDirectiveProvider>();
         }
     }
 }

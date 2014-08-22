@@ -24,12 +24,11 @@
 
             var cookie = cookies[CookieName];
 
-            return cookie != null ? FormsAuthentication.Decrypt(cookie.Value) : null;
+            return cookie != null && !string.IsNullOrWhiteSpace(cookie.Value) ? FormsAuthentication.Decrypt(cookie.Value) : null;
         }
 
         public void RefreshTicket(HttpCookieCollection cookies)
         {
-            //todo: not called? should be to keep user's session alive. call from base controller
             var ticket = GetTicket(cookies);
 
             if (ticket == null)

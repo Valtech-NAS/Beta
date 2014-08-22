@@ -87,7 +87,7 @@
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                UserData.Push(UserDataItemNames.ReturnUrl, returnUrl);
+                UserData.Push(UserDataItemNames.ReturnUrl, Server.UrlEncode(returnUrl));
             }
 
             return View(model);
@@ -270,7 +270,7 @@
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                return Redirect(returnUrl);    
+                return Redirect(Server.UrlDecode(returnUrl));    
             }
 
             if (lastViewedVacancyId != null)
