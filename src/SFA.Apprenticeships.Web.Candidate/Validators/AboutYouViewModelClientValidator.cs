@@ -18,6 +18,7 @@
         public AboutYouViewModelSaveValidator()
         {
             this.AddSaveRules();
+            this.AddConditionalRules();
         }
     }
 
@@ -27,6 +28,7 @@
         {
             this.AddMandatoryRules();
             this.AddSaveRules();
+            this.AddConditionalRules();
         }
     }
 
@@ -45,11 +47,6 @@
             validator.RuleFor(x => x.WhatAreYourHobbiesInterests)
                 .NotEmpty()
                 .WithMessage(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.RequiredErrorText);
-
-            validator.RuleFor(x => x.AnythingWeCanDoToSupportYourInterview)
-                .NotEmpty()
-                .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.RequiredErrorText)
-                .When(x => x.RequiresSupportForInterview); 
         }
 
         internal static void AddSaveRules(this AbstractValidator<AboutYouViewModel> validator)
@@ -70,14 +67,20 @@
                 .Length(0, 4000)
                 .WithMessage(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.TooLongErrorText)
                 .Matches(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.WhiteListErrorText);
+                .WithMessage(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.WhiteListErrorText);          
+        }
 
+        internal static void AddConditionalRules(this AbstractValidator<AboutYouViewModel> validator)
+        {
             validator.RuleFor(x => x.AnythingWeCanDoToSupportYourInterview)
-                .Length(0, 4000)
-                .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.TooLongErrorText)
-                .Matches(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListRegularExpression)
-                .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListErrorText)
-                .When(x => x.RequiresSupportForInterview);
+               .NotEmpty()
+               .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.RequiredErrorText)
+               .Length(0, 4000)
+               .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.TooLongErrorText)
+               .Matches(
+                   AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListRegularExpression)
+               .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListErrorText)
+               .When(x => x.RequiresSupportForInterview);
         }
     }
 }

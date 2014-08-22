@@ -21,7 +21,6 @@
 
         public bool RequiresSupportForInterview { get; set; }
 
-        [StringLength(4000)]
         [Display(Name = AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.HintText, Description = "" )]
         public string AnythingWeCanDoToSupportYourInterview { get; set; }
     }
