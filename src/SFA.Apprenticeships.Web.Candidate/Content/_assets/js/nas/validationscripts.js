@@ -26,9 +26,13 @@
             }
 
             var errorSummary = "";
-            $.each(errors, function(index, error) {
-                var li = "<li><a href='#" + $(error).attr("for").toLowerCase()  + "'>" + $(error).html() + "</a></li>";
-                errorSummary += li;
+            _.each(errors, function (error) {
+                var html = $(error).html();
+                if (html.length > 0) {
+                    var li = "<li><a href='#" + $(error).attr("for") + "'>" + $(error).html() + "</a></li>";
+                    errorSummary += li;
+                }
+
             });
             
             $(".validation-summary-valid").addClass("validation-summary-errors").removeClass("validation-summary-valid");
