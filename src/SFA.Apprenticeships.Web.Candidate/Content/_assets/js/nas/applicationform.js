@@ -41,8 +41,14 @@
             }
         });
         self.qualificationYear = ko.observable(itemYear).extend({
-            required: { message: "Year is required" }, number: true
+            required: { message: "Qualification Year is required" }, number: true
+        }).extend({
+            minLength: {
+                message: "'Qualification Year' must be 4 digits",
+                params: 4
+            }
         });
+
         self.qualificationSubject = ko.observable(itemSubject).extend({
             required: { message: "Subject is required" }
         }).extend({
@@ -146,8 +152,14 @@
         self.showOtherQualification = ko.observable(false);
 
         self.year = ko.observable().extend({
-            required: { message: "Year is required" }, number: true
+            required: { message: "'Qualification Year' is required" }, number: true
+        }).extend({
+            minLength: {
+                message: "'Qualification Year' must be 4 digits",
+                params: 4
+            }
         });
+
         self.subject = ko.observable().extend({
             required: { message: "Subject is required" }
         }).extend({
