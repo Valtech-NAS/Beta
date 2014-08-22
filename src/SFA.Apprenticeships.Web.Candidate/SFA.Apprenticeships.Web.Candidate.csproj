@@ -393,6 +393,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Attributes\AuthorizeCandidateAttribute.cs" />
+    <Compile Include="Constants\Pages\AccountPageMessages.cs" />
     <Compile Include="Constants\UserDataItemNames.cs" />
     <Compile Include="Constants\Pages\RegisterPageMessages.cs" />
     <Compile Include="Constants\Pages\PasswordResetPageMessages.cs" />
@@ -412,6 +413,7 @@
     <Compile Include="Constants\ViewModels\RegisterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EducationViewModelMessages.cs" />
     <Compile Include="Constants\Pages\SignOutPageMessages.cs" />
+    <Compile Include="Constants\ViewModels\SettingsViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\WorkExperienceViewModelMessages.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -437,11 +439,14 @@
     <Compile Include="Constants\ViewModels\VacancySearchViewModelMessages.cs" />
     <Compile Include="Mappers\Resolvers\LocationResolver.cs" />
     <Compile Include="Mappers\Resolvers\SearchResultsResolver.cs" />
+    <Compile Include="Mappers\Resolvers\SettingsViewModelResolvers.cs" />
     <Compile Include="Mappers\Resolvers\VacancyDetailViewModelResolvers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\AccountProvider.cs" />
     <Compile Include="Providers\ApplicationProvider.cs" />
     <Compile Include="Providers\CandidateServiceProvider.cs" />
     <Compile Include="Providers\CandidateUserContext.cs" />
+    <Compile Include="Providers\IAccountProvider.cs" />
     <Compile Include="Providers\IApplicationProvider.cs" />
     <Compile Include="Providers\ICandidateServiceProvider.cs" />
     <Compile Include="Providers\ISearchProvider.cs" />
@@ -462,8 +467,10 @@
     <Compile Include="Validators\CandidateViewModelValidator.cs" />
     <Compile Include="Validators\EmployerQuestionAnswersViewModelValidator.cs" />
     <Compile Include="Validators\AboutYouViewModelClientValidator.cs" />
+    <Compile Include="Validators\SettingsViewModelValidator.cs" />
     <Compile Include="Validators\VacancySearchViewModelValidator.cs" />
     <Compile Include="Validators\WorkExperienceViewModelValidator.cs" />
+    <Compile Include="ViewModels\Account\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Applications\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\MyApplications\MyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\MyApplications\MyApplicationViewModel.cs" />

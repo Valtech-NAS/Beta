@@ -5,9 +5,11 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
+    using Domain.Entities.Users;
     using Domain.Entities.Vacancies;
     using Infrastructure.Common.Mappers;
     using Resolvers;
+    using ViewModels.Account;
     using ViewModels.Applications;
     using ViewModels.Locations;
     using ViewModels.Register;
@@ -32,8 +34,12 @@
                 .ForMember(d => d.Wage, opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.WageResolver>());
 
             Mapper.CreateMap<VacancySummaryResponse, VacancySummaryViewModel>();
+            
             Mapper.CreateMap<Address, AddressViewModel>();
+            Mapper.CreateMap<AddressViewModel, Address>();
+
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
+            Mapper.CreateMap<GeoPointViewModel, GeoPoint>();
 
             Mapper.CreateMap<RegisterViewModel, Candidate>()
                 .ConvertUsing<CandidateResolver>();
@@ -43,6 +49,9 @@
 
             Mapper.CreateMap<ApplicationDetail, ApplicationViewModel>()
                 .ConvertUsing<ApplicationDetailToApplicationViewModelResolver>();
+
+            Mapper.CreateMap<RegistrationDetails, SettingsViewModel>()
+                .ConvertUsing<SettingsViewModelResolvers.RegistrationDetailsToSettingsViewModelResolver>();
         }
     }
 }

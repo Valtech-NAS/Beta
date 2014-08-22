@@ -1,10 +1,41 @@
-﻿@{
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Account.SettingsViewModel
+
+@{
     ViewBag.Title = "Apprenticeships - My settings";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="grid-wrapper">
-    <div class="grid grid-1-2">
-        <h1 class="heading-xlarge">TODO: My settings</h1>
+<h1 class="heading-xlarge">Settings</h1>
+
+@using (Html.BeginForm("Index", "Account", FormMethod.Post))
+{
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <fieldset>
+        <legend class="heading-large">Personal details</legend>
+        @Html.FormTextFor(m => m.Firstname, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { type = "text", autocapitalize = "words", autocorrect = "off" })
+        @Html.FormTextFor(m => m.Lastname, controlHtmlAttributes: new { type = "text", autocapitalize = "words", autocorrect = "off" })
+        @Html.EditorFor(r => r.DateOfBirth)
+        @Html.EditorFor(a => a.Address)
+        @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { @class = "form-control-1-3", type = "tel" })
+    </fieldset>
+
+    <div class="form-group">
+        <button id="update-details-button" class="button">Update details</button>
     </div>
-</div>
+}
+
+@section scripts
+{
+    <script src="@Url.Content("~/Content/_assets/js/nas/lookupService.js")"></script>
+
+    <script>
+        $(function () {
+
+            $("#find-addresses").addressLookup({
+                url: '@Url.Action("Addresses", "Location")',
+                selectlist: '#address-select'
+            });
+        });
+    </script>
+}
