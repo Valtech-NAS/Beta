@@ -80,3 +80,119 @@ Scenario: As a candidate I can login with a registered but unactivated account a
 	And I choose ActivateButton
 	Then I am on the VacancySearchPage page
 
+@ignore
+Scenario: Reset password after locking an account does not have to unlock the account
+	Given I navigated to the RegisterCandidatePage page
+	When I have created a new email address
+	And I enter data
+		| Field          | Value         |
+		| Firstname      | FirstnameTest |
+		| Lastname       | LastnameTest  |
+		| Phonenumber    | 07970523193   |
+		| EmailAddress   | {EmailToken}  |
+		| PostcodeSearch | N7 8LS        |
+		| Day            | 01            |
+		| Month          | 01            |
+		| Year           | 2000          |
+		| Password       | ?Password01!  | 
+	And I choose HasAcceptedTermsAndConditions
+	And I choose FindAddresses
+	And I am on AddressDropdown list item matching criteria
+		| Field        | Rule   | Value                  |
+		| Text         | Equals | Flat A, 6 Furlong Road |
+	And I choose WrappedElement
+	And I am on the RegisterCandidatePage page
+	And I choose CreateAccountButton
+	Then I wait 240 second for the ActivationPage page
+	When I get the token for my newly created account
+	And I enter data
+		| Field          | Value             |
+		| ActivationCode | {ActivationToken} |
+	And I choose ActivateButton
+	Then I am on the VacancySearchPage page
+	When I navigate to the LoginPage page
+	Then I am on the LoginPage page
+	When I enter data
+		| Field        | Value                  |
+		| EmailAddress | {EmailToken}           |
+		| Password     | {InvalidPasswordToken} |
+	And I choose SignInButton
+	And I wait to see ValidationSummary
+	Then I see
+		| Field                  | Rule   | Value |
+		| ValidationSummaryCount | Equals | 1     |
+	And I am on ValidationSummaryItems list item matching criteria
+		| Field | Rule   | Value                                          |
+		| Text  | Equals | Please enter a valid email address or password |
+		| Href  | Equals | #                                              |
+	And I am on the LoginPage page
+	When I enter data
+		| Field        | Value                  |
+		| Password     | {InvalidPasswordToken} |
+	#email is already in the form. We don't have to enter it another time
+	And I choose SignInButton
+	And I wait to see ValidationSummary
+	Then I see
+		| Field                  | Rule   | Value |
+		| ValidationSummaryCount | Equals | 1     |
+	And I am on ValidationSummaryItems list item matching criteria
+		| Field | Rule   | Value                                          |
+		| Text  | Equals | Please enter a valid email address or password |
+		| Href  | Equals | #                                              |
+	And I am on the LoginPage page
+	When I enter data
+		| Field        | Value                  |
+		| Password     | {InvalidPasswordToken} |
+	#email is already in the form. We don't have to enter it another time
+	When I choose SignInButton
+	Then I am on the UnlockPage page
+	And I see
+         | Field             | Rule   | Value        |
+         | EmailAddressText  | Equals | {EmailToken} |
+         | AccountUnlockCode | Exists |              |
+	And the user login incorrect attempts should be three
+	When I navigate to the ForgottenPasswordPage page
+	Then I am on the ForgottenPasswordPage page
+	And I enter data
+		| Field        | Value               |
+		| EmailAddress | {EmailToken} |
+	When I choose SendCodeButton
+	Then I am on the ResetPasswordPage page
+	And the user login incorrect attempts should be three
+	And the account unlock code and date should be set
+	And the password reset code and date should be set
+	When I navigate to the LoginPage page
+	Then I am on the LoginPage page
+	When I enter data
+		| Field        | Value        |
+		| EmailAddress | {EmailToken} |
+		| Password     | ?Password01! |
+	And I choose SignInButton
+	Then I am on the UnlockPage page
+	When I navigate to the LoginPage page
+	Then I am on the LoginPage page
+	When I enter data
+		| Field        | Value                  |
+		| EmailAddress | {EmailToken}           |
+		| Password     | {InvalidPasswordToken} |
+	And I choose SignInButton
+	Then I am on the UnlockPage page
+	And the account unlock code and date should be set
+	And the password reset code and date should be set 
+	When I choose ResendAccountUnlockCodeLink
+	Then I get the account unlock code
+	And I wait to see ValidationSummary
+	Then I see
+		| Field                  | Rule   | Value |
+		| ValidationSummaryCount | Equals | 1     |
+	And I am on ValidationSummaryItems list item matching criteria
+		| Field | Rule   | Value                                          |
+		| Text  | Equals | Please enter a valid email address or password |
+		| Href  | Equals | #                                              |
+	And I am on the LoginPage page
+	When I enter data
+		| Field        | Value        |
+		| EmailAddress | {EmailToken} |
+		| Password     | ?Password01! |
+	And I choose SignInButton
+	Then I am on the UnlockPage page

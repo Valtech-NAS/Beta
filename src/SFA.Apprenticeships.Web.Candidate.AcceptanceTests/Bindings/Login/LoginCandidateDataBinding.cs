@@ -19,6 +19,7 @@
         private const string UserEmailAddress = "valtechnas+acceptancetests@gmail.com";
         private const string EmailAddressTokenName = "EmailAddressToken";
         private const string InvalidEmailTokenName = "InvalidEmailToken";
+        private const string EmailTokenName = "EmailToken";
         private const string InvalidEmail = "invalid@gmail.com";
         private const string PasswordTokenName = "PasswordToken";
         private const string Password = "?Password01!";
@@ -125,6 +126,50 @@
             // Ensure account unlock code has been renewed.
             user.AccountUnlockCodeExpiry.Should().BeAfter(DateTime.Now);
         }
+
+        [Then(@"the user login incorrect attempts should be three")]
+        public void ThenTheUserLoginIncorrectAttemptsShouldBeThree()
+        {
+            var email = _tokenManager.GetTokenByKey(EmailTokenName);
+            var user = _userReadRepository.Get(email);
+
+            user.LoginIncorrectAttempts.Should().Be(3);
+        }
+
+        [Then(@"the account unlock code and date should be set")]
+        public void ThenTheAccountUnlockCodeAndDateShouldBeSet()
+        {
+            var email = _tokenManager.GetTokenByKey(EmailTokenName);
+            var user = _userReadRepository.Get(email);
+
+            user.AccountUnlockCode.Should().NotBeNullOrWhiteSpace();
+            user.AccountUnlockCodeExpiry.Should().HaveValue();
+        }
+
+        [Then(@"the password reset code and date should be set")]
+        public void ThenThePasswordResetCodeAndDateShouldBeSet()
+        {
+            var email = _tokenManager.GetTokenByKey(EmailTokenName);
+            var user = _userReadRepository.Get(email);
+
+            user.PasswordResetCode.Should().NotBeNullOrWhiteSpace();
+            user.PasswordResetCodeExpiry.Should().HaveValue();
+        }
+
+        [Then(@"I get the account unlock code")]
+        public void ThenIGetTheAccountUnlockCode()
+        {
+            var email = _tokenManager.GetTokenByKey(EmailTokenName);
+            var user = _userReadRepository.Get(email);
+            var accountUnlockCode = _tokenManager.GetTokenByKey(AccountUnlockCodeTokenName);
+
+            // Ensure account unlock code has changed.
+            accountUnlockCode.Should().NotBeNull();
+            user.AccountUnlockCode.Should().NotBeNull();
+            accountUnlockCode.Should().Be(user.AccountUnlockCode);
+        }
+
+
 
         #region Helpers
 

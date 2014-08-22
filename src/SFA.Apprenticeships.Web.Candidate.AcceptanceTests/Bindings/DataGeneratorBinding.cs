@@ -4,6 +4,7 @@
     using Generators;
     using global::SpecBind.Helpers;
     using StructureMap;
+    using System.Linq;
     using TechTalk.SpecFlow;
 
     [Binding]
@@ -11,6 +12,8 @@
     {
         private const string EmailTokenId = "EmailToken";
         private const string ActivationTokenId = "ActivationToken";
+        private const string InvalidPasswordTokenName = "InvalidPasswordToken";
+        private const string Password = "?Password01!"; //TODO: remove duplication?
         private readonly ITokenManager _tokenManager;
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
@@ -29,6 +32,7 @@
         {
             _email = EmailGenerator.GenerateEmailAddress();
             _tokenManager.SetToken(EmailTokenId, _email);
+            _tokenManager.SetToken(InvalidPasswordTokenName, new string(Password.Reverse().ToArray()));
         }
 
         [When("I get the token for my newly created account")]
