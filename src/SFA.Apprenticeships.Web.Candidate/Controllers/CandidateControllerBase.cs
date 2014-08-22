@@ -13,11 +13,10 @@
     using StructureMap;
 
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
-    {
-        protected CandidateControllerBase()
+    {       
         private static bool _isCookieDetectionStarted;
 
-        public IUserDataProvider UserData
+        protected CandidateControllerBase()
         {
             //TODO: Think about "new"ing this up instead - Mark doesn't like this. Doesn't need to be lazy, is used everywhere
             UserData = ObjectFactory.GetInstance<IUserDataProvider>();
