@@ -11,9 +11,6 @@
         {
         }
 
-        [ElementLocator(Id = "myapplications-link")]
-        public IWebElement MyApplicationsLink { get; set; }
-
         [ElementLocator(Id = "vacancy-title")]
         public IWebElement VacancyTitle { get; set; }
 

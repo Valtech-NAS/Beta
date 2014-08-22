@@ -15,6 +15,9 @@
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
         protected CandidateControllerBase()
+        private static bool _isCookieDetectionStarted;
+
+        public IUserDataProvider UserData
         {
             //TODO: Think about "new"ing this up instead - Mark doesn't like this. Doesn't need to be lazy, is used everywhere
             UserData = ObjectFactory.GetInstance<IUserDataProvider>();
@@ -40,13 +43,29 @@
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            filterContext.Controller.ViewBag.ShowEuCookieDirective = EuCookieDirectiveProvider.ShowEuCookieDirective(filterContext.HttpContext);
-            filterContext.Controller.ViewBag.FeedbackUrl = FeedbackUrl;
-            CookieDetectionProvider.SetCookie(filterContext.HttpContext);
+            filterContext.Controller.ViewBag.ShowEuCookieDirective = EuCookieDirectiveProvider.ShowEuCookieDirective(filterContext.HttpContext);           
 
-            if (!CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext))
+            filterContext.Controller.ViewBag.FeedbackUrl = FeedbackUrl;
+            if (_isCookieDetectionStarted && !CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext) && !filterContext.ActionDescriptor.ActionName.Equals(RouteNames.Cookies, StringComparison.CurrentCultureIgnoreCase))
             {
-                Response.RedirectToRoute(RouteNames.Cookies);
+                CookieDetectionProvider.SetCookie(filterContext.HttpContext);
+
+                filterContext.Result = RedirectToRoute(RouteNames.Cookies);
+                return;
+            }
+
+            if (!_isCookieDetectionStarted && !CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext))
+            {
+                CookieDetectionProvider.SetCookie(filterContext.HttpContext);
+                _isCookieDetectionStarted = true;
+            }
+
+            if (CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext) &&
+                filterContext.ActionDescriptor.ActionName.Equals(RouteNames.Cookies,
+                    StringComparison.CurrentCultureIgnoreCase))
+            {
+                filterContext.Result = RedirectToRoute(RouteNames.VacancySearch);
+                return;
             }
 
             UserContext = null;
@@ -95,7 +114,7 @@
             var returnUrl = Request != null && Request.Url != null ? Request.Url.PathAndQuery : "/";
             var sessionTimeoutUrl = Url.Action("SessionTimeout", "Login", new { ReturnUrl = returnUrl });
             Response.AppendHeader("Refresh", FormsAuthentication.Timeout.TotalSeconds + ";url=" + sessionTimeoutUrl);
-        }
+        }      
 
         protected void SetUserMessage(string message, UserMessageLevel level = UserMessageLevel.Success)
         {
