@@ -40,7 +40,7 @@
 
             var mongoEntity =
                 Collection.AsQueryable()
-                    .FirstOrDefault(x => x.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase));
+                    .FirstOrDefault(x => x.Username.ToLower() == username.ToLower());
                 //Query.EQ("Username", username)
 
             if (mongoEntity == null && errorIfNotFound)
