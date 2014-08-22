@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Users
 {
     using System;
+    using System.Linq;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
@@ -8,6 +9,7 @@
     using Entities;
     using Mongo.Common;
     using MongoDB.Driver.Builders;
+    using MongoDB.Driver.Linq;
     using NLog;
 
     public class UserRepository : GenericMongoClient<MongoUser>, IUserReadRepository, IUserWriteRepository
@@ -36,7 +38,10 @@
         {
             Logger.Debug("Called Mongodb to get user with username={0}", username);
 
-            var mongoEntity = Collection.FindOne(Query.EQ("Username", username));
+            var mongoEntity =
+                Collection.AsQueryable()
+                    .FirstOrDefault(x => x.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase));
+                //Query.EQ("Username", username)
 
             if (mongoEntity == null && errorIfNotFound)
             {

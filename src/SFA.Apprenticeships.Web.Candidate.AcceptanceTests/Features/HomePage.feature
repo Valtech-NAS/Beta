@@ -6,6 +6,7 @@
 Background: 
 	Given I navigated to the HomePage page
 	When I am on the HomePage page
+	And I am on the HomePage page
 
 @pageload
 Scenario: Home Page Test Scenario
