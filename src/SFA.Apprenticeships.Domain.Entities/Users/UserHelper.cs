@@ -23,7 +23,7 @@
 
         public static void SetStateLocked(this User user, string accountUnlockCode, DateTime expiry)
         {
-            ClearUserStateAttributes(user);
+            ClearNonRelatedToLockStateUserStateAttributes(user);
 
             user.Status = UserStatuses.Locked;
             user.AccountUnlockCode = accountUnlockCode;
@@ -45,19 +45,23 @@
             }
         }
 
-        private static void ClearUserStateAttributes(User user)
+        private static void ClearNonRelatedToLockStateUserStateAttributes(User user)
         {
-            user.AccountUnlockCode = null;
-            user.AccountUnlockCodeExpiry = null;
-
-            user.LoginIncorrectAttempts = 0;
-
             user.ActivationCode = null;
             user.ActivateCodeExpiry = null;
 
             user.PasswordResetCode = null;
             user.PasswordResetCodeExpiry = null;
             user.PasswordResetIncorrectAttempts = 0;
+        }
+
+        private static void ClearUserStateAttributes(User user)
+        {
+            ClearNonRelatedToLockStateUserStateAttributes(user);
+
+            user.LoginIncorrectAttempts = 0;
+            user.AccountUnlockCode = null;
+            user.AccountUnlockCodeExpiry = null;
         }
     }
 }

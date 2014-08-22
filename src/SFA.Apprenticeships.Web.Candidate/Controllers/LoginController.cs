@@ -61,9 +61,17 @@
                 return View(model);
             }
 
+            var userStatus = _candidateServiceProvider.GetUserStatus(model.EmailAddress);
+            if (userStatus == UserStatuses.Locked)
+            {
+                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
+
+                return RedirectToAction("Unlock");
+            }
+
             // Authenticate candidate.
             var candidate = _candidateServiceProvider.Authenticate(model);
-            var userStatus = _candidateServiceProvider.GetUserStatus(model.EmailAddress);
+            
 
             if (candidate != null)
             {
@@ -74,6 +82,7 @@
                 return RedirectOnAuthenticated(candidate, userStatus);
             }
 
+            userStatus = _candidateServiceProvider.GetUserStatus(model.EmailAddress);
             if (userStatus == UserStatuses.Locked)
             {
                 UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
