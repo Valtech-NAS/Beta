@@ -40,13 +40,7 @@
                name: RouteNames.Cookies,
                url: "cookies",
                defaults: new { controller = "Home", action = "Cookies" }
-           );  
-            
-            routes.MapRoute(
-               name: RouteNames.VacancySearch,
-               url: "vacancysearch",
-               defaults: new { controller = "VacancySearch", action = "Index" }
-           );
+           );           
 
             routes.MapRoute(
                 name: "Default",

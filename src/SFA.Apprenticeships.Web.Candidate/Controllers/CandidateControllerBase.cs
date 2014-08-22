@@ -63,7 +63,7 @@
                 filterContext.ActionDescriptor.ActionName.Equals(RouteNames.Cookies,
                     StringComparison.CurrentCultureIgnoreCase))
             {
-                filterContext.Result = RedirectToRoute(RouteNames.VacancySearch);
+                filterContext.Result = RedirectToAction("Index", "VacancySearch");
                 return;
             }
 
