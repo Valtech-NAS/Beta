@@ -95,12 +95,10 @@
                 .Named("CandidateWebMappers");
 
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
-            For<IUserDataProvider>().Use<CookieUserDataProvider>();
-            For<IEuCookieDirectiveProvider>().Use<EuCookieDirectiveProvider>();
 
             // Would be good if we could do this for the base class CandidateControllerBase rather than each controller
-            ForConcreteType<HomeController>().Configure.Setter<IUserDataProvider>();
-            ForConcreteType<HomeController>().Configure.Setter<IEuCookieDirectiveProvider>();
+            //ForConcreteType<HomeController>().Configure.Setter<IUserDataProvider>();
+            //ForConcreteType<HomeController>().Configure.Setter<IEuCookieDirectiveProvider>();
         }
     }
 }

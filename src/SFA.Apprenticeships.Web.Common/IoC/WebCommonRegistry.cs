@@ -26,6 +26,9 @@
             {
                 x.For<IContainer>().Use(container);
                 x.For<IServiceLocator>().Use(resolver);
+                x.For<IUserDataProvider>().Use<CookieUserDataProvider>();
+                x.For<IEuCookieDirectiveProvider>().Use<EuCookieDirectiveProvider>();
+                x.For<ICookieDetectionProvider>().Use<CookieDetectionProvider>();
             });
 
             // Set the MVC/WebApi dependency resolver.

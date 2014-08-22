@@ -2,7 +2,6 @@
 {
     using System;
     using System.Web.Mvc;
-    using System.Web.Routing;
     using System.Web.Security;
     using Common.Constants;
     using Common.Controllers;
@@ -16,45 +15,28 @@
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
         protected CandidateControllerBase()
-        private ICookieDetectionProvider _cookieDetectionProvider;
         {
             //TODO: Think about "new"ing this up instead - Mark doesn't like this. Doesn't need to be lazy, is used everywhere
             UserData = ObjectFactory.GetInstance<IUserDataProvider>();
             
             //TODO: Think about switching these to an action filter set on base controller
             EuCookieDirectiveProvider = ObjectFactory.GetInstance<IEuCookieDirectiveProvider>();
+            CookieDetectionProvider = ObjectFactory.GetInstance<ICookieDetectionProvider>();
             AuthenticationTicketService = ObjectFactory.GetInstance<IAuthenticationTicketService>();
-        }
-        
-        private ICookieDetectionProvider CookieDetectionProvider
-        {
-            get { return _cookieDetectionProvider ?? (_cookieDetectionProvider = new CookieDetectionProvider()); }
+            
+            var configurationManager = ObjectFactory.GetInstance<IConfigurationManager>();
+            FeedbackUrl = configurationManager.TryGetAppSetting("FeedbackUrl") ?? "#";
         }
 
-        private string FeedbackUrl
         public IUserDataProvider UserData { get; set; }
+
+        private ICookieDetectionProvider CookieDetectionProvider { get; set; }
 
         private IEuCookieDirectiveProvider EuCookieDirectiveProvider { get; set; }
 
         private IAuthenticationTicketService AuthenticationTicketService { get; set; }
 
-        {
-            get
-            {
-                // TODO: AG: US475: consider making this 'best efforts' by putting inside a try/catch.
-                try
-                {
-                    var configurationManager = ObjectFactory.GetInstance<IConfigurationManager>();
-
-                    return configurationManager.GetAppSetting<string>("FeedbackUrl");
-                }
-                catch
-                {
-                    // CRITICAL: this is best efforts.
-                    return "#";
-                }
-            }
-        }
+        private string FeedbackUrl { get; set; }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
