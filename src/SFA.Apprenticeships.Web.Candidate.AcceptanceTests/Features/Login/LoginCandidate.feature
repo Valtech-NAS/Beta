@@ -85,7 +85,6 @@ Scenario: As a candidate I can login with a registered but unactivated account a
 	And I choose ActivateButton
 	Then I am on the VacancySearchPage page
 
-@ignore
 Scenario: Reset password after locking an account does not have to unlock the account
 	Given I navigated to the RegisterCandidatePage page
 	When I have created a new email address
@@ -151,6 +150,7 @@ Scenario: Reset password after locking an account does not have to unlock the ac
 	#email is already in the form. We don't have to enter it another time
 	When I choose SignInButton
 	Then I am on the UnlockPage page
+	And I get the account unlock code
 	And I see
          | Field             | Rule   | Value        |
          | EmailAddressText  | Equals | {EmailToken} |
@@ -159,7 +159,7 @@ Scenario: Reset password after locking an account does not have to unlock the ac
 	When I navigate to the ForgottenPasswordPage page
 	Then I am on the ForgottenPasswordPage page
 	And I enter data
-		| Field        | Value               |
+		| Field        | Value        |
 		| EmailAddress | {EmailToken} |
 	When I choose SendCodeButton
 	Then I am on the ResetPasswordPage page
@@ -185,16 +185,9 @@ Scenario: Reset password after locking an account does not have to unlock the ac
 	And the account unlock code and date should be set
 	And the password reset code and date should be set 
 	When I choose ResendAccountUnlockCodeLink
-	Then I get the account unlock code
-	And I wait to see ValidationSummary
-	Then I see
-		| Field                  | Rule   | Value |
-		| ValidationSummaryCount | Equals | 1     |
-	And I am on ValidationSummaryItems list item matching criteria
-		| Field | Rule   | Value                                          |
-		| Text  | Equals | Please enter a valid email address or password |
-		| Href  | Equals | #                                              |
-	And I am on the LoginPage page
+	Then I get the same account unlock code
+	When I navigate to the LoginPage page
+	Then I am on the LoginPage page
 	When I enter data
 		| Field        | Value        |
 		| EmailAddress | {EmailToken} |

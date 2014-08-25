@@ -159,6 +159,19 @@
         [Then(@"I get the account unlock code")]
         public void ThenIGetTheAccountUnlockCode()
         {
+            //_tokenManager.SetToken(AccountUnlockCodeTokenName, AccountUnlockCode);
+            var email = _tokenManager.GetTokenByKey(EmailTokenName);
+            var user = _userReadRepository.Get(email);
+
+            if (user != null)
+            {
+                _tokenManager.SetToken(AccountUnlockCodeTokenName, user.AccountUnlockCode);
+            }
+        }
+
+        [Then(@"I get the same account unlock code")]
+        public void ThenIGetTheSameAccountUnlockCode()
+        {
             var email = _tokenManager.GetTokenByKey(EmailTokenName);
             var user = _userReadRepository.Get(email);
             var accountUnlockCode = _tokenManager.GetTokenByKey(AccountUnlockCodeTokenName);
