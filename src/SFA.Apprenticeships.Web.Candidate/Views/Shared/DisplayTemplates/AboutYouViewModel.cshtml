@@ -14,21 +14,21 @@
 
     <div class="form-group">
         @Html.LabelFor(m => m.WhatAreYourStrengths, new { @class = "form-label text" })
-        <span class="form-prepopped">@Html.DisplayFor(m => m.WhatAreYourStrengths)</span>
+        <span id="@Html.IdFor(m => m.WhatAreYourStrengths)" class="form-prepopped">@Html.DisplayFor(m => m.WhatAreYourStrengths)</span>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.WhatDoYouFeelYouCouldImprove, new { @class = "form-label text" })
-        <span class="form-prepopped">@Html.DisplayFor(m => m.WhatDoYouFeelYouCouldImprove)</span>
+        <span id="@Html.IdFor(m => m.WhatDoYouFeelYouCouldImprove)" class="form-prepopped">@Html.DisplayFor(m => m.WhatDoYouFeelYouCouldImprove)</span>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.WhatAreYourHobbiesInterests, new { @class = "form-label text" })
-        <span class="form-prepopped">@Html.DisplayFor(m => m.WhatAreYourHobbiesInterests)</span>
+        <span id="@Html.IdFor(m => m.WhatAreYourHobbiesInterests)" class="form-prepopped">@Html.DisplayFor(m => m.WhatAreYourHobbiesInterests)</span>
     </div>
     @if (Model.RequiresSupportForInterview)
     {
         <div class="form-group">
             <p class="form-label">Is there anything we can do to support your interview?</p>
-            <span class="form-prepopped">@Html.DisplayFor(m => m.AnythingWeCanDoToSupportYourInterview)</span>
+            <span id="@Html.IdFor(m => m.AnythingWeCanDoToSupportYourInterview)" class="form-prepopped">@Html.DisplayFor(m => m.AnythingWeCanDoToSupportYourInterview)</span>
         </div>
     }   
 </fieldset>

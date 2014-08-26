@@ -66,7 +66,19 @@ Scenario: Epic happy path
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
 	And I choose ApplyButton
 	Then I am on the ApplicationPreviewPage page
-
-
-
-
+	And I see
+		| Field                   | Value                         |
+		| Fullnam                 | FirstnameTest LastnameTest    |
+		| Phonenumber             | 07970523193                   |
+		| EmailAddress            | {EmailToken}                  |
+		| Postcode                | N7 8LS                        |
+		| DateOfBirth             | 01 January 2000               |
+		| EducationNameOfSchool   | SchoolName                    |
+		| EducationFromYear       | 2010                          |
+		| EducationToYear         | 2012                          |
+		| WhatAreYourStrengths    | My strengths                  |
+		| WhatCanYouImprove       | What can I improve            |
+		| HobbiesAndInterests     | Hobbies and interests         |
+		| WhatCanWeDoToSupportYou | What can we do to support you |
+	When I choose SubmitApplication
+	Then I am on the ApplicationCompletePage page

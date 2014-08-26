@@ -13,17 +13,17 @@
     </legend>
     <div class="form-group">
         <p class="form-label">Name of most recent school/college</p>
-        <span class="form-prepopped">@Html.DisplayTextFor(m => m.NameOfMostRecentSchoolCollege)</span>
+        <span id="@Html.IdFor(m => m.NameOfMostRecentSchoolCollege)" class="form-prepopped">@Html.DisplayTextFor(m => m.NameOfMostRecentSchoolCollege)</span>
     </div>
     <div class="inline-fixed">
         <p class="form-label">Years attended</p>
         <div class="form-group">
             <p class="form-hint">From</p>
-            <span class="form-prepopped">@Html.DisplayTextFor(m => m.FromYear)</span>
+            <span id="@Html.IdFor(m => m.FromYear)" class="form-prepopped">@Html.DisplayTextFor(m => m.FromYear)</span>
         </div>
         <div class="form-group">
             <p class="form-hint">To</p>
-            <span class="form-prepopped">@Html.DisplayTextFor(m => m.ToYear)</span>
+            <span id="@Html.IdFor(m => m.ToYear)" class="form-prepopped">@Html.DisplayTextFor(m => m.ToYear)</span>
         </div>
     </div>
 </fieldset>

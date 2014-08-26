@@ -38,6 +38,8 @@
         [ElementLocator(Id = "Address")]
         public IWebElement Address { get; set; }
 
+        #region Education
+
         [ElementLocator(Id = "Candidate_Education_NameOfMostRecentSchoolCollege")]
         public IWebElement EducationNameOfSchool { get; set; }
 
@@ -47,6 +49,7 @@
         [ElementLocator(Id = "Candidate_Education_ToYear")]
         public IWebElement EducationToYear { get; set; }
 
+        #endregion
 
         #region Qualifications
 
@@ -72,6 +75,8 @@
 
         #endregion
 
+        #region About You
+
         [ElementLocator(Id = "Candidate_AboutYou_WhatAreYourStrengths")]
         public IWebElement WhatAreYourStrengths { get; set; }
 
@@ -91,6 +96,8 @@
 
         [ElementLocator(Id = "Candidate_AboutYou_AnythingWeCanDoToSupportYourInterview")]
         public IWebElement WhatCanWeDoToSupportYou { get; set; }
+
+        #endregion
 
         #endregion
 
