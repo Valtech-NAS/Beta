@@ -19,8 +19,6 @@
         {
             //TODO: Think about "new"ing this up instead - Mark doesn't like this. Doesn't need to be lazy, is used everywhere
             UserData = ObjectFactory.GetInstance<IUserDataProvider>();
-
-            //TODO: Think about switching these to an action filter set on base controller
             AuthenticationTicketService = ObjectFactory.GetInstance<IAuthenticationTicketService>();
 
             var configurationManager = ObjectFactory.GetInstance<IConfigurationManager>();

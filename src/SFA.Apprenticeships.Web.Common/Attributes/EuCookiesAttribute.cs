@@ -5,6 +5,7 @@
     using Constants;
     using Providers;
     using StructureMap;
+    using StructureMap.Attributes;
 
     public class EuCookiesAttribute : ActionFilterAttribute
     {
@@ -12,13 +13,13 @@
 
         public EuCookiesAttribute()
         {
-            CookieDetectionProvider = ObjectFactory.GetInstance<ICookieDetectionProvider>();
-            EuCookieDirectiveProvider = ObjectFactory.GetInstance<IEuCookieDirectiveProvider>();
         }
 
-        private ICookieDetectionProvider CookieDetectionProvider { get; set; }
+        [SetterProperty]
+        public ICookieDetectionProvider CookieDetectionProvider { get; set; }
 
-        private IEuCookieDirectiveProvider EuCookieDirectiveProvider { get; set; }
+        [SetterProperty]
+        public IEuCookieDirectiveProvider EuCookieDirectiveProvider { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
