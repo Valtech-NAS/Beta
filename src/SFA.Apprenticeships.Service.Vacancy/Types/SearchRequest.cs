@@ -7,9 +7,9 @@ namespace SFA.Apprenticeships.Service.Vacancy.Types
     {
         public string TestRunId { get; set; }
 
-        public string JobTitle { get; set; }
+        public string JobTitleTerms { get; set; }
 
-        public string Keywords { get; set; }
+        public string KeywordTerms { get; set; }
 
         public KeyValuePair<string, string>[] Parameters { get; set; }
     }
