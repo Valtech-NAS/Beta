@@ -101,6 +101,11 @@
     <Compile Include="Builders\CandidateBuilder.cs" />
     <Compile Include="Builders\RegistrationBuilder.cs" />
     <Compile Include="Builders\UserBuilder.cs" />
+    <Compile Include="Features\Account\AccountSettings.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountSettings.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Application\Apply.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -150,6 +155,7 @@
     <Compile Include="Generators\EmailGenerator.cs" />
     <Compile Include="Hooks\BeforeAllScenarios.cs" />
     <Compile Include="IoC\WebTestRegistry.cs" />
+    <Compile Include="Pages\Account\SettingsPage.cs" />
     <Compile Include="Pages\Application\ApplicaitonPreviewPage.cs" />
     <Compile Include="Pages\Application\ApplicaitonPage.cs" />
     <Compile Include="Pages\BasePage.cs" />
@@ -182,6 +188,10 @@
     <None Include="App.Release.config">
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="Features\Account\AccountSettings.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>AccountSettings.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Application\Apply.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
