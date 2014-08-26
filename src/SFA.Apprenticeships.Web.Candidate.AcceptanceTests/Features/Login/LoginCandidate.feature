@@ -86,34 +86,7 @@ Scenario: As a candidate I can login with a registered but unactivated account a
 	Then I am on the VacancySearchPage page
 
 Scenario: Reset password after locking an account does not have to unlock the account
-	Given I navigated to the RegisterCandidatePage page
-	When I have created a new email address
-	And I enter data
-		| Field          | Value         |
-		| Firstname      | FirstnameTest |
-		| Lastname       | LastnameTest  |
-		| Phonenumber    | 07970523193   |
-		| EmailAddress   | {EmailToken}  |
-		| PostcodeSearch | N7 8LS        |
-		| Day            | 01            |
-		| Month          | 01            |
-		| Year           | 2000          |
-		| Password       | ?Password01!  | 
-	And I choose HasAcceptedTermsAndConditions
-	And I choose FindAddresses
-	And I am on AddressDropdown list item matching criteria
-		| Field        | Rule   | Value                  |
-		| Text         | Equals | Flat A, 6 Furlong Road |
-	And I choose WrappedElement
-	And I am on the RegisterCandidatePage page
-	And I choose CreateAccountButton
-	Then I wait 240 second for the ActivationPage page
-	When I get the token for my newly created account
-	And I enter data
-		| Field          | Value             |
-		| ActivationCode | {ActivationToken} |
-	And I choose ActivateButton
-	Then I am on the VacancySearchPage page
+	Given I registered a new candidate
 	When I navigate to the LoginPage page
 	Then I am on the LoginPage page
 	When I enter data

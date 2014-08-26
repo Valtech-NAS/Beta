@@ -10,36 +10,10 @@ Background:
 	When I am on the HomePage page
 
 Scenario: Password successful reset
-	Given I navigated to the RegisterCandidatePage page
-	When I have created a new email address
-	And I enter data
-		| Field          | Value         |
-		| Firstname      | FirstnameTest |
-		| Lastname       | LastnameTest  |
-		| Phonenumber    | 07970523193   |
-		| EmailAddress   | {EmailToken}  |
-		| PostcodeSearch | N7 8LS        |
-		| Day            | 01            |
-		| Month          | 01            |
-		| Year           | 2000          |
-		| Password       | ?Password01!  | 
-	And I choose HasAcceptedTermsAndConditions
-	And I choose FindAddresses
-	And I am on AddressDropdown list item matching criteria
-		| Field        | Rule   | Value                  |
-		| Text         | Equals | Flat A, 6 Furlong Road |
-	And I choose WrappedElement
-	And I am on the RegisterCandidatePage page
-	And I choose CreateAccountButton
-	Then I wait 180 second for the ActivationPage page
-	When I get the token for my newly created account
-	And I enter data
-		| Field          | Value             |
-		| ActivationCode | {ActivationToken} |
-	And I choose ActivateButton
-	And I navigate to the ForgottenPasswordPage page
-	When I am on the ForgottenPasswordPage page
-	And I enter data
+	Given I registered a new candidate
+	When I navigate to the ForgottenPasswordPage page
+	Then I am on the ForgottenPasswordPage page
+	When I enter data
 		| Field        | Value               |
 		| EmailAddress | {EmailToken} |
 	And I choose SendCodeButton
