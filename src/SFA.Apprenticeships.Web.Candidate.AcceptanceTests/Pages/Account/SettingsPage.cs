@@ -14,6 +14,26 @@
         {
         }
 
+        public string ClearAllSettings
+        {
+            get
+            {
+                Firstname.Clear();
+                Lastname.Clear();
+                Day.Clear();
+                Month.Clear();
+                Year.Clear();
+                Phonenumber.Clear();
+                AddressLine1.Clear();
+                AddressLine2.Clear();
+                AddressLine3.Clear();
+                AddressLine4.Clear();
+                Postcode.Clear();
+
+                return "Done";
+            }
+        }
+
         [ElementLocator(Id = "Firstname")]
         public IWebElement Firstname { get; set; }
 
