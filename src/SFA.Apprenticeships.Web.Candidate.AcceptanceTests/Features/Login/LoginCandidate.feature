@@ -121,7 +121,7 @@ Scenario: Reset password after locking an account does not have to unlock the ac
 		| EmailAddress | {EmailToken}           |
 		| Password     | {InvalidPasswordToken} |
 	And I choose SignInButton
-	And I wait to see ValidationSummary
+	And I wait for 180 seconds to see ValidationSummary
 	Then I see
 		| Field                  | Rule   | Value |
 		| ValidationSummaryCount | Equals | 1     |
@@ -135,7 +135,7 @@ Scenario: Reset password after locking an account does not have to unlock the ac
 		| Password     | {InvalidPasswordToken} |
 	#email is already in the form. We don't have to enter it another time
 	And I choose SignInButton
-	And I wait to see ValidationSummary
+	And I wait for 180 seconds to see ValidationSummary
 	Then I see
 		| Field                  | Rule   | Value |
 		| ValidationSummaryCount | Equals | 1     |
@@ -149,7 +149,7 @@ Scenario: Reset password after locking an account does not have to unlock the ac
 		| Password     | {InvalidPasswordToken} |
 	#email is already in the form. We don't have to enter it another time
 	When I choose SignInButton
-	Then I am on the UnlockPage page
+	Then I wait 180 second for the UnlockPage page
 	And I get the account unlock code
 	And I see
          | Field             | Rule   | Value        |
