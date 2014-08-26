@@ -32,13 +32,18 @@
     ///                     If True then will match if ALL search terms are present
     ///                     If False then will match if ANY search terms are present
     /// 
-    /// PhraseProximity     How close each of the search terms need to be in order to match
-    ///                     see http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/phrase-matching.html
+    /// PhraseProximity      How important is the order of the search terms (slop)
     /// 
-    /// PhraseOrdering      How important is the order of the search terms
-    ///                     see http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/slop.html
-    ///                     see http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_closer_is_better.html
+    /// MinimumMatch        Minimum % terms match required (minimum_should_match)
     /// 
+    /// -----------------------------------------------------------------------------------------------------
+    /// 
+    /// Links:
+    /// 
+    ///   http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/phrase-matching.html
+    ///   http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/slop.html
+    ///   http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/proximity-relevance.html
+    ///   http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_closer_is_better.html
     /// </summary>
     public enum SearchParameters
     {
