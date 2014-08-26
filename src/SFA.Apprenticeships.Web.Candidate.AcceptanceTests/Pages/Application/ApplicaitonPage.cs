@@ -11,6 +11,9 @@
         {
         }
 
+        [ElementLocator(Id = "applicationSavedTopMessage")]
+        public IWebElement ApplicationSavedMessage { get; set; }
+
         [ElementLocator(Id = "vacancy-title")]
         public IWebElement VacancyTitle { get; set; }
 
@@ -93,5 +96,8 @@
 
         [ElementLocator(Id = "apply-button")]
         public IWebElement ApplyButton { get; set; }
+
+        [ElementLocator(Id = "save-button")]
+        public IWebElement SaveButton { get; set; }
     }
 }

@@ -10,5 +10,11 @@
         public MyApplicationsPage(ISearchContext context) : base(context)
         {
         }
+
+        [ElementLocator(Id = "draft-applications-count")]
+        public IWebElement DraftApplicationsCount { get; set; }
+
+        [ElementLocator(Id = "resume-link")]
+        public IWebElement ResumeLink { get; set; }
     }
 }

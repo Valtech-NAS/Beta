@@ -59,7 +59,7 @@ else
     @if (Model.DraftApplications.Any())
     {
         <li>
-            <span class="bold-medium">@Model.DraftApplications.Count()</span>  <a class="" href="#dashDrafts">Drafts</a>
+            <span id="draft-applications-count" class="bold-medium">@Model.DraftApplications.Count()</span>  <a class="" href="#dashDrafts">Drafts</a>
         </li>
     }
     </ul>
@@ -245,7 +245,7 @@ else
                                     <td class="ta-center">
                                         @if (application.ApplicationStatus == ApplicationStatuses.Draft)
                                         {
-                                            @Html.ActionLink("Resume", "Resume", "Application", new {id = application.VacancyId}, null)
+                                            @Html.ActionLink("Resume", "Resume", "Application", new { id = application.VacancyId }, new { id = "resume-link" })
                                         }
                                         else
                                         {
