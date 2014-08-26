@@ -10,7 +10,7 @@ Background:
 	When I am on the HomePage page
 
 Scenario: Password successful reset
-	Given I registered a new candidate
+	Given I have registered a new candidate
 	When I navigate to the ForgottenPasswordPage page
 	Then I am on the ForgottenPasswordPage page
 	When I enter data

@@ -11,7 +11,7 @@ Background:
 
 @ignore
 Scenario: As a candidate I would like to apply for a vacancy
-	Given I registered a new candidate
+	Given I have registered a new candidate
 	When I enter data
 		| Field    | Value  |
 		| Location | N7 8LS |
