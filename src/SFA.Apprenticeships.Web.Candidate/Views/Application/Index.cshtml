@@ -24,7 +24,7 @@
     )
 {
     <div class="text">
-        <p>Your application history is currently empty. This is because you haven’t submitted or saved any apprenticeship applications yet.</p>
+        <p id="empty-application-history-text">Your application history is currently empty. This is because you haven’t submitted or saved any apprenticeship applications yet.</p>
         <p>Once you start, applications will be recorded and you’ll be able to track your progress</p>
         <div class="get-started">@Html.ActionLink("Find an apprenticeship", "Index", "VacancySearch", null, new { @class = "button" })</div>
     </div>
@@ -253,7 +253,7 @@ else
                                         }
                                     </td>
                                     <td class="ta-center">
-                                        <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                        <a id="delete-link" class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                     </td>
                                 </tr>
                             }

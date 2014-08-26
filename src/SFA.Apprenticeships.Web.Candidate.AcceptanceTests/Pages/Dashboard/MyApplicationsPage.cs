@@ -16,5 +16,11 @@
 
         [ElementLocator(Id = "resume-link")]
         public IWebElement ResumeLink { get; set; }
+
+        [ElementLocator(Id = "delete-link")]
+        public IWebElement DeleteLink { get; set; }
+
+        [ElementLocator(Id = "empty-application-history-text")]
+        public IWebElement EmptyApplicationHistoryText { get; set; }
     }
 }

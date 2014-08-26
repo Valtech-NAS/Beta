@@ -64,8 +64,7 @@ Scenario: As a candidate I would like to apply for a vacancy
 	And I choose ApplyButton
 	Then I am on the ApplicationPreviewPage page
 
-@ignore
-Scenario: Saving an application
+Scenario: As a candidate I want to save my application as a draft an be able to resume or delete it later
 	Given I navigated to the RegisterCandidatePage page
 	When I have created a new email address
 	And I enter data
@@ -99,7 +98,6 @@ Scenario: Saving an application
 		| Location | N7 8LS |
 	And I choose Search
 	Then I am on the VacancySearchResultPage page
-	#And I set token VacancyId with the value of FirstVacancyId
 	When I choose FirstVacancyLink
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
@@ -133,3 +131,11 @@ Scenario: Saving an application
 		| WhatAreYourStrengths    | Equals    | My strengths          |
 		| WhatCanYouImprove       | Equals    | What can I improve    |
 		| HobbiesAndInterests     | Equals    | Hobbies and interests |
+	When I choose MyApplicationsLink
+	Then I am on the MyApplicationsPage page
+	When I choose DeleteLink
+	Then I wait to see SuccessMessageText
+	And I see
+	| Field                       | Rule        | Value                                         |
+	| SuccessMessageText          | Equals      | Application has been removed from your drafts |
+	| EmptyApplicationHistoryText | Starts With | Your application history is currently empty   |
