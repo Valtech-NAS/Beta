@@ -4,10 +4,17 @@
     using System.Web.Mvc;
     using Constants;
     using Providers;
+    using StructureMap;
 
     public class EuCookiesAttribute : ActionFilterAttribute
     {
         private static bool _isCookieDetectionStarted;
+
+        public EuCookiesAttribute()
+        {
+            CookieDetectionProvider = ObjectFactory.GetInstance<ICookieDetectionProvider>();
+            EuCookieDirectiveProvider = ObjectFactory.GetInstance<IEuCookieDirectiveProvider>();
+        }
 
         private ICookieDetectionProvider CookieDetectionProvider { get; set; }
 
