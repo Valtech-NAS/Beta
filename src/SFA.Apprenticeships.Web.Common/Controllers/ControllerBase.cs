@@ -4,10 +4,15 @@
     using System.Web.Mvc;
     using Attributes;
     using Providers;
+    using Services;
 
     [AuthenticateUser]
-    public abstract class ControllerBase<TContextType> : Controller where TContextType : UserContext
+    public abstract class ControllerBase<TContextType> : Controller, IUserContoller<TContextType> where TContextType : UserContext
     {
-        public TContextType UserContext { get; protected set; } //todo: may move...
+        public TContextType UserContext { get; protected set; }
+
+        public IUserDataProvider UserData { get; protected set; }
+
+        public IAuthenticationTicketService AuthenticationTicketService  { get; protected set; }
     }
 }

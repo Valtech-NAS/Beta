@@ -385,7 +385,6 @@
     </Compile>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\RouteNames.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -393,8 +392,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Attributes\AuthorizeCandidateAttribute.cs" />
+    <Compile Include="Constants\CandidateRouteNames.cs" />
     <Compile Include="Constants\Pages\AccountPageMessages.cs" />
-    <Compile Include="Constants\UserDataItemNames.cs" />
     <Compile Include="Constants\Pages\RegisterPageMessages.cs" />
     <Compile Include="Constants\Pages\PasswordResetPageMessages.cs" />
     <Compile Include="Constants\Pages\ActivationPageMessages.cs" />

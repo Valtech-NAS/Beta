@@ -2,6 +2,8 @@
 {
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Common.Constants;
+    using Constants;
 
     public class RouteConfig
     {
@@ -25,7 +27,7 @@
             );
 
             routes.MapRoute(
-                name: RouteNames.MyApplications,
+                name: CandidateRouteNames.MyApplications,
                 url: "myapplications",
                 defaults: new { controller = "Application", action = "Index" }
             );

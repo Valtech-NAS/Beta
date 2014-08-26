@@ -1,7 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Constants
+﻿namespace SFA.Apprenticeships.Web.Common.Constants
 {
-    using System;
-
     public class UserDataItemNames
     {
         public const string ReturnUrl = "Data.ReturnUrl";

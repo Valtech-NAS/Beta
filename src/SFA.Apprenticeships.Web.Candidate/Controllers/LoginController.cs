@@ -4,6 +4,7 @@
     using System.Drawing.Imaging;
     using System.Web.Mvc;
     using System.Web.Security;
+    using Common.Constants;
     using Common.Services;
     using Constants;
     using Constants.Pages;
@@ -223,7 +224,7 @@
                 return RedirectToAction("Details", "VacancySearch", new { id = lastViewedVacancyId });
             }
 
-            return RedirectToRoute(RouteNames.MyApplications);
+            return RedirectToRoute(CandidateRouteNames.MyApplications);
         }
 
         #endregion

@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using ActionResults;
     using Application.Interfaces.Vacancies;
+    using Common.Constants;
     using Constants;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;

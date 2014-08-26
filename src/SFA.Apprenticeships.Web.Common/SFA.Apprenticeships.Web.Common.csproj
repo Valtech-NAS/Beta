@@ -123,12 +123,17 @@
     <Compile Include="ActionResults\HttpCustomStatusCodeResult.cs" />
     <Compile Include="Attributes\AllowCrossSiteJsonAttribute .cs" />
     <Compile Include="Attributes\AuthenticateUserAttribute.cs" />
+    <Compile Include="Attributes\EuCookiesAttribute.cs" />
     <Compile Include="Attributes\NoCacheAttribute.cs" />
+    <Compile Include="Attributes\SessionTimeoutAttribute.cs" />
+    <Compile Include="Constants\RouteNames.cs" />
+    <Compile Include="Constants\UserDataItemNames.cs" />
     <Compile Include="Constants\UserMessageConstants.cs" />
     <Compile Include="Constants\UserMessageLevel.cs" />
     <Compile Include="Constants\UserRoleNames.cs" />
     <Compile Include="Constants\Whitelists.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\IUserContoller.cs" />
     <Compile Include="Framework\RuntimeHelper.cs" />
     <Compile Include="Framework\HttpServerUtilityExtensions.cs" />
     <Compile Include="Framework\HtmlExtensions.cs" />

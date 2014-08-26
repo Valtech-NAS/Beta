@@ -3,65 +3,35 @@
     using System;
     using System.Web.Mvc;
     using System.Web.Security;
+    using Common.Attributes;
     using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
     using Common.Services;
-    using Constants;
     using Domain.Interfaces.Configuration;
     using Providers;
     using StructureMap;
 
+    [SessionTimeout, EuCookies]
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
-        private static bool _isCookieDetectionStarted;
-
         protected CandidateControllerBase()
         {
             //TODO: Think about "new"ing this up instead - Mark doesn't like this. Doesn't need to be lazy, is used everywhere
             UserData = ObjectFactory.GetInstance<IUserDataProvider>();
 
             //TODO: Think about switching these to an action filter set on base controller
-            EuCookieDirectiveProvider = ObjectFactory.GetInstance<IEuCookieDirectiveProvider>();
-            CookieDetectionProvider = ObjectFactory.GetInstance<ICookieDetectionProvider>();
             AuthenticationTicketService = ObjectFactory.GetInstance<IAuthenticationTicketService>();
 
             var configurationManager = ObjectFactory.GetInstance<IConfigurationManager>();
             FeedbackUrl = configurationManager.TryGetAppSetting("FeedbackUrl") ?? "#";
         }
 
-        public IUserDataProvider UserData { get; set; }
-
-        private ICookieDetectionProvider CookieDetectionProvider { get; set; }
-
-        private IEuCookieDirectiveProvider EuCookieDirectiveProvider { get; set; }
-
-        private IAuthenticationTicketService AuthenticationTicketService { get; set; }
-
         private string FeedbackUrl { get; set; }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            filterContext.Controller.ViewBag.ShowEuCookieDirective =
-                EuCookieDirectiveProvider.ShowEuCookieDirective(filterContext.HttpContext);
-
             filterContext.Controller.ViewBag.FeedbackUrl = FeedbackUrl;
-
-            if (!CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext))
-            {
-                CookieDetectionProvider.SetCookie(filterContext.HttpContext);
-
-                if (_isCookieDetectionStarted &&
-                    !filterContext.ActionDescriptor.ActionName.Equals(RouteNames.Cookies,
-                        StringComparison.CurrentCultureIgnoreCase))
-                {
-                    filterContext.Result = RedirectToRoute(RouteNames.Cookies);
-                    return;
-                }
-
-                _isCookieDetectionStarted = true;
-            }           
-
             UserContext = null;
 
             if (!string.IsNullOrWhiteSpace(User.Identity.Name))
@@ -82,33 +52,6 @@
             }
 
             base.OnActionExecuting(filterContext);
-        }
-
-        protected override void OnActionExecuted(ActionExecutedContext filterContext)
-        {
-            var controllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
-
-            if (!controllerName.Equals("Login", StringComparison.InvariantCultureIgnoreCase))
-            {
-                UserData.Pop(UserDataItemNames.SessionReturnUrl);
-                var userContext = UserData.GetUserContext();
-
-                if (userContext != null)
-                {
-                    AddMetaRefreshTimeout();
-                }
-            }
-
-            AuthenticationTicketService.RefreshTicket(
-                filterContext.Controller.ControllerContext.HttpContext.Response.Cookies);
-            base.OnActionExecuted(filterContext);
-        }
-
-        private void AddMetaRefreshTimeout()
-        {
-            var returnUrl = Request != null && Request.Url != null ? Request.Url.PathAndQuery : "/";
-            var sessionTimeoutUrl = Url.Action("SessionTimeout", "Login", new {ReturnUrl = returnUrl});
-            Response.AppendHeader("Refresh", FormsAuthentication.Timeout.TotalSeconds + ";url=" + sessionTimeoutUrl);
         }
 
         protected void SetUserMessage(string message, UserMessageLevel level = UserMessageLevel.Success)
