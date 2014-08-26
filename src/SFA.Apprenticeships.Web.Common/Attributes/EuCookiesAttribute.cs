@@ -11,10 +11,6 @@
     {
         private static bool _isCookieDetectionStarted;
 
-        public EuCookiesAttribute()
-        {
-        }
-
         [SetterProperty]
         public ICookieDetectionProvider CookieDetectionProvider { get; set; }
 
