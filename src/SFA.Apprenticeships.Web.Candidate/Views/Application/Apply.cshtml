@@ -126,11 +126,11 @@
                             <tbody data-bind="foreach: groupItems">
                                 <tr>
                                     <td>
-                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationSubject, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Subject', 'readonly':readOnly() }" maxlength="50" />
+                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationSubject, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Subject', 'id':'candidate_qualifications_'+ itemIndex() + '__subject', 'readonly':readOnly() }" maxlength="50" />
                                     </td>
                                     <td>
                                         <div class="small-btm-margin">
-                                            <input class="form-control qual-input-edit" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Grade','readonly':readOnly() }" maxlength="15" />
+                                            <input class="form-control qual-input-edit" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Grade', 'id':'candidate_qualifications_'+ itemIndex() + '__grade','readonly':readOnly() }" maxlength="15" />
                                         </div>
                                         <label for="item-qual-predicted" data-bind="ifnot: showEditButton">
                                             <input id="item-qual-predicted" type="checkbox" data-bind="checked: qualificationPredicted" /> Predicted
@@ -139,7 +139,7 @@
                                     <td>
                                         <input type="hidden" data-bind="value: qualificationType, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].QualificationType'}" />
                                         <input type="hidden" data-bind="value: qualificationPredicted, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].IsPredicted'}" />
-                                        <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit" type="text" data-bind="value: qualificationYear, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Year','readonly':readOnly() }">
+                                        <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit" type="text" data-bind="value: qualificationYear, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Year', 'id':'candidate_qualifications_'+ itemIndex() + '__year','readonly':readOnly() }">
                                     </td>
                                     <td class="ta-center">
                                         <span data-bind="if: showEditButton, click: $root.editQualification"><span class="fake-link cell-span">Edit</span></span>
@@ -441,4 +441,30 @@
     @*<script src="~/Content/_assets/js/vendor/knockout-3.1.0.js"></script>
         <script src="~/Content/_assets/js/vendor/knockout.validation.js"></script>*@
     <script src="~/Content/_assets/js/nas/applicationform.js"></script>
+    
+    <script type="text/javascript">
+        
+        //$.validator.addMethod('extMaxLength', function (value, element, maxlen){
+        //    if (maxlen > 0) {
+        //        var remaining = (maxlen - (parseInt($(element).val().replace(/(\r\n|\n|\r)/gm, '\n').length, 10)));
+        //        if (remaining < 0) {
+        //            return false;
+        //        }
+        //    }
+        //    return true;
+        //});
+
+        //$.validator.addMethod('rangelength', function (value, element) {
+        //    var maxlen = parseInt($(element).attr('data-val-length-max'));
+        //    if (maxlen > 0) {
+        //        var remaining = (maxlen - (parseInt($(element).val().replace(/(\r\n|\n|\r)/gm, '\r\n').length)));
+        //        if (remaining < 0) {
+        //            return false;
+        //        }
+        //    }
+
+        //    return true;
+        //});
+
+    </script>
 }
