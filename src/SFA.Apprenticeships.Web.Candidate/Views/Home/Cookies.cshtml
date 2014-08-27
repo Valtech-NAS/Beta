@@ -1,5 +1,8 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Apprenticeships";
+    ViewBag.ShowEuCookieDirective = false;
+    
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -7,4 +10,4 @@
 
 <p>Please follow the instructions below to enable cookies on your browser and click the button below to re-check your cookie settings</p>
 
-<a href='@Url.Action("Index", "VacancySearch")' class="button">Re-check My Settings</a>
+<a href='@ViewBag.ReturnUrl' class="button">Re-check My Settings</a>

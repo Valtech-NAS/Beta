@@ -40,8 +40,8 @@
 
             routes.MapRoute(
                name: RouteNames.Cookies,
-               url: "cookies",
-               defaults: new { controller = "Home", action = "Cookies" }
+               url: "cookies/{returnUrl}",
+               defaults: new { controller = "Home", action = "Cookies", returnUrl = UrlParameter.Optional }
            );           
 
             routes.MapRoute(

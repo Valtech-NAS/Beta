@@ -11,7 +11,7 @@
     using Providers;
     using StructureMap;
 
-    [SessionTimeout, EuCookies]
+    [SessionTimeout,CookiesEnabled]
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
         protected CandidateControllerBase()

@@ -14,8 +14,9 @@
             return View();
         }
 
-        public ActionResult Cookies()
+        public ActionResult Cookies(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
     }
