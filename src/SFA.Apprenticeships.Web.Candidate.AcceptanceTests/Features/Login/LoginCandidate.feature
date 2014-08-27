@@ -10,6 +10,7 @@ Background:
 	Given I navigated to the HomePage page
 	When I am on the HomePage page
 
+@US415
 Scenario: As a candidate all required fields are present
 	Given I navigated to the LoginPage page
 	When I am on the LoginPage page
@@ -19,6 +20,7 @@ Scenario: As a candidate all required fields are present
 		| Field             | Rule           | Value |
 		| ValidationSummary | Does Not Exist |       |
 
+@US415
 Scenario: As a candidate I can login with a registered and activated email address and password
 	Given I registered an account and activated it
 	And I navigated to the LoginPage page
@@ -30,6 +32,7 @@ Scenario: As a candidate I can login with a registered and activated email addre
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 
+@US415
 Scenario: As a candidate I must provide an email address and password
 	Given I navigated to the LoginPage page
 	When I am on the LoginPage page
@@ -38,7 +41,7 @@ Scenario: As a candidate I must provide an email address and password
 	Then I see
 		| Field                  | Rule   | Value |
 		| ValidationSummaryCount | Equals | 2     |
-
+@US415
 Scenario: As a candidate I want to be redirected to the previous page when I login
 	Given I registered an account and activated it
 	And I navigated to the RegisterCandidatePage page
@@ -51,6 +54,7 @@ Scenario: As a candidate I want to be redirected to the previous page when I log
 	And I choose SignInButton
 	Then I am on the RegisterCandidatePage page
 
+@US415
 Scenario: As a candidate I cannot login with an invalid password
 	Given I registered an account and activated it
 	And I navigated to the LoginPage page
@@ -69,6 +73,7 @@ Scenario: As a candidate I cannot login with an invalid password
 		| Text  | Equals | Please enter a valid email address or password |
 		| Href  | Equals | #                                              |
 
+@US458 @US444 @US456
 Scenario: As a candidate I can login with a registered but unactivated account and am redirected to the activation page
 	Given I registered an account but did not activate it
 	And I navigated to the LoginPage page
@@ -85,6 +90,7 @@ Scenario: As a candidate I can login with a registered but unactivated account a
 	And I choose ActivateButton
 	Then I am on the VacancySearchPage page
 
+@US458 @US457
 Scenario: Reset password after locking an account does not have to unlock the account
 	Given I have registered a new candidate
 	When I navigate to the LoginPage page

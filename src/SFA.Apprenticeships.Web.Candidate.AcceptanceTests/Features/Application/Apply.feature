@@ -9,6 +9,7 @@ Background:
 	Given I navigated to the HomePage page
 	When I am on the HomePage page
 
+@US486 @US458 @US354
 Scenario: As a candidate I would like to apply for a vacancy
 	Given I have registered a new candidate
 	When I enter data
@@ -20,7 +21,8 @@ Scenario: As a candidate I would like to apply for a vacancy
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
-	When I enter data
+	When I choose SupportMeYes
+	And I enter data
 		| Field                   | Value                         |
 		| EducationNameOfSchool   | SchoolName                    |
 		| EducationFromYear       | 2010                          |
@@ -28,6 +30,7 @@ Scenario: As a candidate I would like to apply for a vacancy
 		| WhatAreYourStrengths    | My strengths                  |
 		| WhatCanYouImprove       | What can I improve            |
 		| HobbiesAndInterests     | Hobbies and interests         |
+		| WhatCanWeDoToSupportYou | What can we do to support you |
 	And I enter employer question data if present
 		| Field                                              | Value |
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
@@ -42,6 +45,7 @@ Scenario: As a candidate I would like to apply for a vacancy
 		| Field                      | Rule   | Value |
 		| SubmittedApplicationsCount | Equals | 1     |
 
+@US461 @US154 @US458 @US464
 Scenario: As a candidate I want to save my application as a draft and be able to resume or delete it later
 	Given I have registered a new candidate
 	When I enter data
@@ -91,6 +95,7 @@ Scenario: As a candidate I want to save my application as a draft and be able to
 	| SuccessMessageText          | Equals      | Application has been removed from your drafts |
 	| EmptyApplicationHistoryText | Starts With | Your application history is currently empty   |
 
+@US461 @US362 @US365 @US154 @US463 @US352 @US354
 Scenario: As a candidate I want to enter my qualifications and work experience
 	Given I have registered a new candidate
 	When I enter data
