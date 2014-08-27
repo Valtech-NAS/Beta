@@ -205,6 +205,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\_assets\img\performance-icon-2x.png" />
+    <Content Include="Content\_assets\img\performance-icon.png" />
     <Content Include="VacancyNotFound.html" />
     <Content Include="404.aspx" />
     <Content Include="404.html" />
@@ -258,7 +260,6 @@
     <Content Include="Content\_assets\fonts\NTATabularNumbers-Bold.woff" />
     <Content Include="Content\_assets\fonts\NTATabularNumbers-Light.eot" />
     <Content Include="Content\_assets\fonts\NTATabularNumbers-Light.woff" />
-    <Content Include="Content\_assets\img\PostVacancyAuthenticateUser.hbs" />
     <None Include="Content\_assets\js\vendor\jquery.validate-vsdoc.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.min.js" />
     <Content Include="robots.txt" />
