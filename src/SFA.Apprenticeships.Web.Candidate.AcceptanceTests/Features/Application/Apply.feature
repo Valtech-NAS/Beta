@@ -9,7 +9,6 @@ Background:
 	Given I navigated to the HomePage page
 	When I am on the HomePage page
 
-@ignore
 Scenario: As a candidate I would like to apply for a vacancy
 	Given I have registered a new candidate
 	When I enter data
@@ -17,7 +16,6 @@ Scenario: As a candidate I would like to apply for a vacancy
 		| Location | N7 8LS |
 	And I choose Search
 	Then I am on the VacancySearchResultPage page
-	#And I set token VacancyId with the value of FirstVacancyId
 	When I choose FirstVacancyLink
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
@@ -36,7 +34,13 @@ Scenario: As a candidate I would like to apply for a vacancy
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
 	And I choose ApplyButton
 	Then I am on the ApplicationPreviewPage page
-#choose apply and see the application as submited
+	When I choose SubmitApplication
+	Then I am on the ApplicationCompletePage page
+	When I choose MyApplicationsLink
+	Then I am on the MyApplicationsPage page
+	And I see
+		| Field                      | Rule   | Value |
+		| SubmittedApplicationsCount | Equals | 1     |
 
 Scenario: As a candidate I want to save my application as a draft and be able to resume or delete it later
 	Given I have registered a new candidate
