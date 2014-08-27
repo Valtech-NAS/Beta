@@ -48,6 +48,9 @@
         [ElementLocator(Id = "Candidate_AboutYou_WhatAreYourHobbiesInterests")]
         public IWebElement HobbiesAndInterests { get; set; }
 
+        [ElementLocator(Id = "Candidate_AboutYou_AnythingWeCanDoToSupportYourInterview")]
+        public IWebElement WhatCanWeDoToSupportYou { get; set; }
+
         #endregion
 
         #region Education
