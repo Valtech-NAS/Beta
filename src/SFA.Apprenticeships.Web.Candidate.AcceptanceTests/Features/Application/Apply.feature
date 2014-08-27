@@ -36,8 +36,9 @@ Scenario: As a candidate I would like to apply for a vacancy
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
 	And I choose ApplyButton
 	Then I am on the ApplicationPreviewPage page
+#choose apply and see the application as submited
 
-Scenario: As a candidate I want to save my application as a draft an be able to resume or delete it later
+Scenario: As a candidate I want to save my application as a draft and be able to resume or delete it later
 	Given I have registered a new candidate
 	When I enter data
 		| Field    | Value  |
@@ -86,7 +87,7 @@ Scenario: As a candidate I want to save my application as a draft an be able to 
 	| SuccessMessageText          | Equals      | Application has been removed from your drafts |
 	| EmptyApplicationHistoryText | Starts With | Your application history is currently empty   |
 
-Scenario: As a candidate I want to enter my qualifications
+Scenario: As a candidate I want to enter my qualifications and work experience
 	Given I have registered a new candidate
 	When I enter data
 		| Field    | Value  |
@@ -123,9 +124,11 @@ Scenario: As a candidate I want to enter my qualifications
 		| Subject | Equals | SubjectName  |
 		| Year    | Equals | 2012         |
 		| Grade   | Equals | SubjectGrade |
-	When I am on the ApplicationPage page
-	And I choose RemoveQualificationLink
-#TODO: check there is no qualifications summary
+	When I choose RemoveQualificationLink
+	And I am on the ApplicationPage page
+	Then I see
+        | Field                      | Rule   | Value |
+        | QualificationsSummaryCount | Equals | 0     |
 	When I choose WorkExperienceYes
 	And I choose SaveWorkExperience
 #TODO: check for validation errors
@@ -145,7 +148,61 @@ Scenario: As a candidate I want to enter my qualifications
         | Field                | Rule   | Value |
         | WorkExperiencesCount | Equals | 1     |
 	And I am on WorkExperienceSummaryItems list item matching criteria
-		| Field        | Rule   | Value        |
-		| WorkEmployer | Equals | WorkEmployer |
-		| WorkTitle    | Equals | WorkTitle    |
-		| WorkRole     | Equals | WorkRole     |
+		| Field      | Rule   | Value        |
+		| Employer   | Equals | WorkEmployer |
+		| JobTitle   | Equals | WorkTitle    |
+		| MainDuties | Equals | WorkRole     |
+	When I choose RemoveLink
+	And I am on the ApplicationPage page
+	Then I see
+        | Field                | Rule   | Value |
+        | WorkExperiencesCount | Equals | 0     |
+#Enter data to save
+	When I enter data
+		| Field                   | Value                         |
+		| EducationNameOfSchool   | SchoolName                    |
+		| EducationFromYear       | 2010                          |
+		| EducationToYear         | 2012                          |
+		| WhatAreYourStrengths    | My strengths                  |
+		| WhatCanYouImprove       | What can I improve            |
+		| HobbiesAndInterests     | Hobbies and interests         |
+	And I enter employer question data if present
+		| Field                                              | Value |
+		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
+		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
+#	And I choose QualificationsYes
+#	And I am on QualificationTypeDropdown list item matching criteria
+#		| Field | Rule   | Value |
+#		| Text  | Equals | GCSE  |
+#	And I choose WrappedElement
+#	And I am on the ApplicationPage page
+#	And I enter data
+#		| Field        | Value        |
+#		| SubjectYear  | 2012         |
+#		| SubjectName  | SubjectName  |
+#		| SubjectGrade | SubjectGrade |
+#	And I choose SaveQualification
+#	When I choose WorkExperienceYes
+#	And I enter data
+#		| Field        | Value        |
+#		| WorkEmployer | WorkEmployer |
+#		| WorkTitle    | WorkTitle    |
+#		| WorkRole     | WorkRole     |
+#		| WorkFromYear | 2011         |
+#		| WorkToYear   | 2012         |
+#	And I choose SaveWorkExperience
+#	And I choose SaveButton
+#	Then I wait to see ApplicationSavedMessage
+#	And I see
+#		| Field                   | Rule      | Value           |
+#		| ApplicationSavedMessage | Ends With | my applications |
+#	When I choose MyApplicationsLink
+#	Then I am on the MyApplicationsPage page
+#	And I see
+#		| Field                  | Rule   | Value |
+#		| DraftApplicationsCount | Equals | 1     |
+#	When I choose ResumeLink
+#	Then I am on the ApplicationPage page
+#	And I see
+#		| Field                   | Rule      | Value                 |
+#retrieve work experience and qualification fields		

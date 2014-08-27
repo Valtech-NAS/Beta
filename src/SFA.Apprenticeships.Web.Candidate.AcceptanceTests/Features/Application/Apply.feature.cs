@@ -156,17 +156,17 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("As a candidate I want to save my application as a draft an be able to resume or d" +
-            "elete it later")]
-        public virtual void AsACandidateIWantToSaveMyApplicationAsADraftAnBeAbleToResumeOrDeleteItLater()
+        [NUnit.Framework.DescriptionAttribute("As a candidate I want to save my application as a draft and be able to resume or " +
+            "delete it later")]
+        public virtual void AsACandidateIWantToSaveMyApplicationAsADraftAndBeAbleToResumeOrDeleteItLater()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to save my application as a draft an be able to resume or d" +
-                    "elete it later", ((string[])(null)));
-#line 40
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to save my application as a draft and be able to resume or " +
+                    "delete it later", ((string[])(null)));
+#line 41
 this.ScenarioSetup(scenarioInfo);
 #line 8
 this.FeatureBackground();
-#line 41
+#line 42
  testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -175,19 +175,19 @@ this.FeatureBackground();
             table4.AddRow(new string[] {
                         "Location",
                         "N7 8LS"});
-#line 42
+#line 43
  testRunner.When("I enter data", ((string)(null)), table4, "When ");
-#line 45
- testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 46
- testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 47
- testRunner.When("I choose FirstVacancyLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 48
- testRunner.Then("I am on the VacancyDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("I choose FirstVacancyLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 49
- testRunner.When("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Then("I am on the VacancyDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 50
+ testRunner.When("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 51
  testRunner.Then("I am on the ApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -211,11 +211,11 @@ this.FeatureBackground();
             table5.AddRow(new string[] {
                         "HobbiesAndInterests",
                         "Hobbies and interests"});
-#line 51
+#line 52
  testRunner.When("I enter data", ((string)(null)), table5, "When ");
-#line 59
- testRunner.And("I choose SaveButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 60
+ testRunner.And("I choose SaveButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 61
  testRunner.Then("I wait to see ApplicationSavedMessage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
@@ -226,11 +226,11 @@ this.FeatureBackground();
                         "ApplicationSavedMessage",
                         "Ends With",
                         "my applications"});
-#line 61
+#line 62
  testRunner.And("I see", ((string)(null)), table6, "And ");
-#line 64
- testRunner.When("I choose MyApplicationsLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 65
+ testRunner.When("I choose MyApplicationsLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 66
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
@@ -241,11 +241,11 @@ this.FeatureBackground();
                         "DraftApplicationsCount",
                         "Equals",
                         "1"});
-#line 66
+#line 67
  testRunner.And("I see", ((string)(null)), table7, "And ");
-#line 69
- testRunner.When("I choose ResumeLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 70
+ testRunner.When("I choose ResumeLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 71
  testRunner.Then("I am on the ApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
@@ -280,15 +280,15 @@ this.FeatureBackground();
                         "HobbiesAndInterests",
                         "Equals",
                         "Hobbies and interests"});
-#line 71
+#line 72
  testRunner.And("I see", ((string)(null)), table8, "And ");
-#line 80
- testRunner.When("I choose MyApplicationsLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 81
- testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("I choose MyApplicationsLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 82
- testRunner.When("I choose DeleteLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 83
+ testRunner.When("I choose DeleteLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 84
  testRunner.Then("I wait to see SuccessMessageText", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
@@ -303,22 +303,22 @@ this.FeatureBackground();
                         "EmptyApplicationHistoryText",
                         "Starts With",
                         "Your application history is currently empty"});
-#line 84
+#line 85
  testRunner.And("I see", ((string)(null)), table9, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("As a candidate I want to enter my qualifications")]
-        public virtual void AsACandidateIWantToEnterMyQualifications()
+        [NUnit.Framework.DescriptionAttribute("As a candidate I want to enter my qualifications and work experience")]
+        public virtual void AsACandidateIWantToEnterMyQualificationsAndWorkExperience()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to enter my qualifications", ((string[])(null)));
-#line 89
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to enter my qualifications and work experience", ((string[])(null)));
+#line 90
 this.ScenarioSetup(scenarioInfo);
 #line 8
 this.FeatureBackground();
-#line 90
+#line 91
  testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
@@ -327,25 +327,25 @@ this.FeatureBackground();
             table10.AddRow(new string[] {
                         "Location",
                         "N7 8LS"});
-#line 91
+#line 92
  testRunner.When("I enter data", ((string)(null)), table10, "When ");
-#line 94
- testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 95
- testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 96
- testRunner.When("I choose FirstVacancyLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 97
- testRunner.Then("I am on the VacancyDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("I choose FirstVacancyLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 98
- testRunner.When("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Then("I am on the VacancyDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 99
- testRunner.Then("I am on the ApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 100
- testRunner.When("I choose QualificationsYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Then("I am on the ApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 101
- testRunner.And("I choose SaveQualification", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I choose QualificationsYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 102
+ testRunner.And("I choose SaveQualification", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 103
  testRunner.Then("I wait to see QualificationValidationSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
@@ -356,7 +356,7 @@ this.FeatureBackground();
                         "QualificationValidationSummary",
                         "Contains",
                         "Please complete all fields displayed"});
-#line 103
+#line 104
  testRunner.And("I see", ((string)(null)), table11, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
@@ -367,11 +367,11 @@ this.FeatureBackground();
                         "Text",
                         "Equals",
                         "GCSE"});
-#line 106
+#line 107
  testRunner.When("I am on QualificationTypeDropdown list item matching criteria", ((string)(null)), table12, "When ");
-#line 109
- testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 110
+ testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 111
  testRunner.And("I am on the ApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
@@ -386,11 +386,11 @@ this.FeatureBackground();
             table13.AddRow(new string[] {
                         "SubjectGrade",
                         "SubjectGrade"});
-#line 111
+#line 112
  testRunner.When("I enter data", ((string)(null)), table13, "When ");
-#line 116
- testRunner.And("I choose SaveQualification", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 117
+ testRunner.And("I choose SaveQualification", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 118
  testRunner.Then("I wait to see QualificationsSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
@@ -401,7 +401,7 @@ this.FeatureBackground();
                         "QualificationsSummaryCount",
                         "Equals",
                         "1"});
-#line 118
+#line 119
  testRunner.Then("I see", ((string)(null)), table14, "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
@@ -420,71 +420,133 @@ this.FeatureBackground();
                         "Grade",
                         "Equals",
                         "SubjectGrade"});
-#line 121
+#line 122
  testRunner.And("I am on QualificationsSummaryItems list item matching criteria", ((string)(null)), table15, "And ");
-#line 126
- testRunner.When("I am on the ApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 127
- testRunner.And("I choose RemoveQualificationLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 129
- testRunner.When("I choose WorkExperienceYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 130
- testRunner.And("I choose SaveWorkExperience", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I choose RemoveQualificationLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 128
+ testRunner.And("I am on the ApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
+                        "Rule",
                         "Value"});
             table16.AddRow(new string[] {
-                        "WorkEmployer",
-                        "WorkEmployer"});
-            table16.AddRow(new string[] {
-                        "WorkTitle",
-                        "WorkTitle"});
-            table16.AddRow(new string[] {
-                        "WorkRole",
-                        "WorkRole"});
-            table16.AddRow(new string[] {
-                        "WorkFromYear",
-                        "2011"});
-            table16.AddRow(new string[] {
-                        "WorkToYear",
-                        "2012"});
-#line 135
- testRunner.When("I enter data", ((string)(null)), table16, "When ");
-#line 142
+                        "QualificationsSummaryCount",
+                        "Equals",
+                        "0"});
+#line 129
+ testRunner.Then("I see", ((string)(null)), table16, "Then ");
+#line 132
+ testRunner.When("I choose WorkExperienceYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 133
  testRunner.And("I choose SaveWorkExperience", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 143
- testRunner.Then("I wait to see WorkExperienceSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
-                        "Rule",
                         "Value"});
             table17.AddRow(new string[] {
-                        "WorkExperiencesCount",
-                        "Equals",
-                        "1"});
-#line 144
- testRunner.Then("I see", ((string)(null)), table17, "Then ");
+                        "WorkEmployer",
+                        "WorkEmployer"});
+            table17.AddRow(new string[] {
+                        "WorkTitle",
+                        "WorkTitle"});
+            table17.AddRow(new string[] {
+                        "WorkRole",
+                        "WorkRole"});
+            table17.AddRow(new string[] {
+                        "WorkFromYear",
+                        "2011"});
+            table17.AddRow(new string[] {
+                        "WorkToYear",
+                        "2012"});
+#line 138
+ testRunner.When("I enter data", ((string)(null)), table17, "When ");
+#line 145
+ testRunner.And("I choose SaveWorkExperience", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 146
+ testRunner.Then("I wait to see WorkExperienceSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
             table18.AddRow(new string[] {
-                        "WorkEmployer",
+                        "WorkExperiencesCount",
+                        "Equals",
+                        "1"});
+#line 147
+ testRunner.Then("I see", ((string)(null)), table18, "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table19.AddRow(new string[] {
+                        "Employer",
                         "Equals",
                         "WorkEmployer"});
-            table18.AddRow(new string[] {
-                        "WorkTitle",
+            table19.AddRow(new string[] {
+                        "JobTitle",
                         "Equals",
                         "WorkTitle"});
-            table18.AddRow(new string[] {
-                        "WorkRole",
+            table19.AddRow(new string[] {
+                        "MainDuties",
                         "Equals",
                         "WorkRole"});
-#line 147
- testRunner.And("I am on WorkExperienceSummaryItems list item matching criteria", ((string)(null)), table18, "And ");
+#line 150
+ testRunner.And("I am on WorkExperienceSummaryItems list item matching criteria", ((string)(null)), table19, "And ");
+#line 155
+ testRunner.When("I choose RemoveLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 156
+ testRunner.And("I am on the ApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table20.AddRow(new string[] {
+                        "WorkExperiencesCount",
+                        "Equals",
+                        "0"});
+#line 157
+ testRunner.Then("I see", ((string)(null)), table20, "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table21.AddRow(new string[] {
+                        "EducationNameOfSchool",
+                        "SchoolName"});
+            table21.AddRow(new string[] {
+                        "EducationFromYear",
+                        "2010"});
+            table21.AddRow(new string[] {
+                        "EducationToYear",
+                        "2012"});
+            table21.AddRow(new string[] {
+                        "WhatAreYourStrengths",
+                        "My strengths"});
+            table21.AddRow(new string[] {
+                        "WhatCanYouImprove",
+                        "What can I improve"});
+            table21.AddRow(new string[] {
+                        "HobbiesAndInterests",
+                        "Hobbies and interests"});
+#line 161
+ testRunner.When("I enter data", ((string)(null)), table21, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table22.AddRow(new string[] {
+                        "Candidate_EmployerQuestionAnswers_CandidateAnswer1",
+                        "Emp 1"});
+            table22.AddRow(new string[] {
+                        "Candidate_EmployerQuestionAnswers_CandidateAnswer2",
+                        "Emp 2"});
+#line 169
+ testRunner.And("I enter employer question data if present", ((string)(null)), table22, "And ");
 #line hidden
             this.ScenarioCleanup();
         }

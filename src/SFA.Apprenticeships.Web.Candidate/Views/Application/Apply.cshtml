@@ -126,27 +126,27 @@
                             <tbody id="qualifications-summary" data-bind="foreach: groupItems">
                                 <tr>
                                     <td>
-                                        <input class="form-control qual-input-edit" type="text" data-bind="value: qualificationSubject, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Subject', 'id':'candidate_qualifications_'+ itemIndex() + '__subject', 'readonly':readOnly() }" maxlength="50" />
+                                        <input class="form-control qual-input-edit qual-subject" type="text" data-bind="value: qualificationSubject, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Subject', 'id':'candidate_qualifications_'+ itemIndex() + '__subject', 'readonly':readOnly() }" maxlength="50" />
                                     </td>
                                     <td>
                                         <div class="small-btm-margin">
-                                            <input class="form-control qual-input-edit" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Grade', 'id':'candidate_qualifications_'+ itemIndex() + '__grade','readonly':readOnly() }" maxlength="15" />
+                                            <input class="form-control qual-input-edit qual-grade" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Grade', 'id':'candidate_qualifications_'+ itemIndex() + '__grade','readonly':readOnly() }" maxlength="15" />
                                         </div>
                                         <label for="item-qual-predicted" data-bind="ifnot: showEditButton">
-                                            <input id="item-qual-predicted" type="checkbox" data-bind="checked: qualificationPredicted" /> Predicted
+                                            <input id="item-qual-predicted" type="checkbox" class="qual-predicted" data-bind="checked: qualificationPredicted" /> Predicted
                                         </label>
                                     </td>
                                     <td>
                                         <input type="hidden" data-bind="value: qualificationType, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].QualificationType'}" />
                                         <input type="hidden" data-bind="value: qualificationPredicted, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].IsPredicted'}" />
-                                        <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit" type="text" data-bind="value: qualificationYear, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Year', 'id':'candidate_qualifications_'+ itemIndex() + '__year','readonly':readOnly() }">
+                                        <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit qual-year" type="text" data-bind="value: qualificationYear, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Year', 'id':'candidate_qualifications_'+ itemIndex() + '__year','readonly':readOnly() }">
                                     </td>
                                     <td class="ta-center">
-                                        <span id="edit-qualification-link" data-bind="if: showEditButton, click: $root.editQualification"><span class="fake-link cell-span">Edit</span></span>
-                                        <span id="save-qualification-link" data-bind="ifnot: showEditButton,click: $root.saveQualificationItem"><span class="fake-link cell-span">Save</span></span>
+                                        <span data-bind="if: showEditButton, click: $root.editQualification"><span class="fake-link cell-span edit-qualification-link">Edit</span></span>
+                                        <span data-bind="ifnot: showEditButton,click: $root.saveQualificationItem"><span class="fake-link cell-span save-qualification-link">Save</span></span>
                                     </td>
                                     <td class="ta-center">
-                                        <i class="cell-span"><i class="ir icon-remove" data-bind="click: $root.removeQualification">Remove</i></i>
+                                        <i class="cell-span"><i class="ir icon-remove remove-qualification-link" data-bind="click: $root.removeQualification">Remove</i></i>
                                     </td>
                                 </tr>
                             </tbody>
@@ -244,7 +244,7 @@
                                     </div>
                                     <div class="work-delete ta-center">
                                         <span class="cell-span">
-                                            <i class="ir icon-remove" data-bind="click: $parent.removeWorkExperience">Remove</i>
+                                            <i class="ir icon-remove remove-work-experience-link" data-bind="click: $parent.removeWorkExperience">Remove</i>
                                         </span>
                                     </div>
                                 </div>
@@ -268,17 +268,17 @@
                                                         <label for="" class="visuallyhidden">Employer</label>
                                                         <input type="text" class="form-control" data-bind="value: itemEmployer, attr:{'name':'Candidate.WorkExperience[' + $index() +'].Employer'}" maxlength="50" />
                                                     </div>
-                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemEmployer"></span>
+                                                    <span class="cell-span employer-name-span" data-bind="visible: showEditButton, text: itemEmployer"></span>
                                                     <span class="cell-span work-hyphen" data-bind="visible: showEditButton">-</span>
                                                     <div class="form-group form-group-compound inline-float width-all-49 no-right-margin" data-bind="visible: !showEditButton()">
                                                         <label for="" class="visuallyhidden">Job title</label>
 
                                                         <input type="text" class="form-control" data-bind="value: itemJobTitle, attr:{'name':'Candidate.WorkExperience[' + $index() +'].JobTitle'}" maxlength="50" />
                                                     </div>
-                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemJobTitle"></span>
+                                                    <span class="cell-span job-title-span" data-bind="visible: showEditButton, text: itemJobTitle"></span>
                                                     <div></div>
                                                     <textarea class="form-control" rows="3" data-bind="value: itemMainDuties, visible: !showEditButton(),attr:{'name':'Candidate.WorkExperience[' + $index() +'].Description'}"></textarea>
-                                                    <span class="cell-span" data-bind="visible: showEditButton, text: itemMainDuties"></span>
+                                                    <span class="cell-span main-duties-span" data-bind="visible: showEditButton, text: itemMainDuties"></span>
                                                 </td>
                                             </tr>
                                         </tbody>

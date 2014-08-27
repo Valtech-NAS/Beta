@@ -5,6 +5,7 @@
     using SpecBind.Selenium;
     using System.Linq;
     using System.Collections.Generic;
+    using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application.SummaryItems;
 
     [PageNavigation("/application/apply/[0-9]+")]
     [PageAlias("ApplicationPage")]
@@ -16,8 +17,18 @@
         {
         }
 
+        #region Save and apply
         [ElementLocator(Id = "applicationSavedTopMessage")]
         public IWebElement ApplicationSavedMessage { get; set; }
+
+        [ElementLocator(Id = "apply-button")]
+        public IWebElement ApplyButton { get; set; }
+
+        [ElementLocator(Id = "save-button")]
+        public IWebElement SaveButton { get; set; }
+        #endregion
+
+        #region General information
 
         [ElementLocator(Id = "vacancy-title")]
         public IWebElement VacancyTitle { get; set; }
@@ -51,7 +62,7 @@
 
         [ElementLocator(Id = "Candidate_Education_ToYear")]
         public IWebElement EducationToYear { get; set; }
-
+        #endregion
 
         #region Qualifications
 
@@ -96,12 +107,6 @@
             }
         }
 
-        [ElementLocator(Id = "edit-qualification-link")]
-        public IWebElement EditQualificationLink { get; set; }
-
-        [ElementLocator(Class = "icon-remove")]
-        public IWebElement RemoveQualificationLink { get; set; }
-
         [ElementLocator(Class="field-validation-error")]
         public IWebElement FieldValidationError { get; set; }
 
@@ -122,7 +127,10 @@
         {
             get
             {
-                return Context.FindElements(By.ClassName("field-validation-error")).Where(e => e.GetCssValue("color").ToLower() == "rgba(223, 48, 52, 1)".ToLower()).Count().ToString();
+                var count = Context.FindElements(By.ClassName("field-validation-error"))
+                    .Where(e => e.FindElement(By.TagName("span")).Displayed).Count().ToString();
+                return count;
+                //GetCssValue("color").ToLower() == "rgba(223, 48, 52, 1)".ToLower()).Count().ToString();
             }
         }
 
@@ -157,6 +165,7 @@
 
         #endregion
 
+        #region About you
         [ElementLocator(Id = "Candidate_AboutYou_WhatAreYourStrengths")]
         public IWebElement WhatAreYourStrengths { get; set; }
 
@@ -165,6 +174,7 @@
 
         [ElementLocator(Id = "Candidate_AboutYou_WhatAreYourHobbiesInterests")]
         public IWebElement HobbiesAndInterests { get; set; }
+        #endregion
 
         #region WhatCanWeDoToSupportYou
 
@@ -178,12 +188,6 @@
         public IWebElement WhatCanWeDoToSupportYou { get; set; }
 
         #endregion
-
-        [ElementLocator(Id = "apply-button")]
-        public IWebElement ApplyButton { get; set; }
-
-        [ElementLocator(Id = "save-button")]
-        public IWebElement SaveButton { get; set; }
     }
 
     [ElementLocator(TagName = "option")]
@@ -193,108 +197,5 @@
             : base(parent)
         {
         }
-    }
-
-    [ElementLocator(TagName = "tr")]
-    public class QualificationSummaryItem : WebElement
-    {
-        public QualificationSummaryItem(ISearchContext parent)
-            : base(parent)
-        {
-        }
-
-        public string Subject
-        {
-            get { return GetCandidateQualificationInputValue("subject"); }
-        }
-
-        public string Year
-        {
-            get
-            {
-                return GetCandidateQualificationInputValue("year");
-            }
-        }
-
-        public string Grade
-        {
-            get { return GetCandidateQualificationInputValue("grade"); }
-        }
-
-        private string GetCandidateQualificationInputValue(string key)
-        {
-            return FindElements(By.TagName("input")).Where(e => e.GetAttribute("id").StartsWith("candidate_qualifications_"))
-                .Where(e => e.GetAttribute("id").Contains(key)).First()
-                .GetAttribute("value"); ;
-        }
-    }
-
-    [ElementLocator(Id = "work-history-item")]
-    public class WorkExperienceSummaryItem : WebElement
-    {
-        public WorkExperienceSummaryItem(ISearchContext parent)
-            : base(parent)
-        {
-        }
-
-        public string WorkEmployer
-        {
-            get
-            {
-                var workEmployer = FindElement(By.TagName("table")).FindElement(By.TagName("tbody"))
-                    .Text.Split(new char[]{'-'})[0].Trim();
-                		//Text	"WorkEmployer -\r\nWorkTitle\r\nWorkRole"	string
-
-                return workEmployer;
-            }
-        }
-
-        public string WorkTitle
-        {
-            get
-            {
-                var workTitleRole = FindElement(By.TagName("table")).FindElement(By.TagName("tbody"))
-                    .Text.Split(new char[] { '-' })[1];
-
-                var workTitle = workTitleRole.Split(new string[]{"\r\n"}, System.StringSplitOptions.RemoveEmptyEntries)[0];
-
-                return workTitle;
-            }
-        }
-
-        public string WorkRole
-        {
-            get
-            {
-                var workTitleRole = FindElement(By.TagName("table")).FindElement(By.TagName("tbody"))
-                    .Text.Split(new char[] { '-' })[1];
-
-                var workRole = workTitleRole.Split(new string[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries)[0];
-
-                return workRole;
-            }
-        }
-
-
-
-        //public string Year
-        //{
-        //    get
-        //    {
-        //        return GetCandidateQualificationInputValue("year");
-        //    }
-        //}
-
-        //public string Grade
-        //{
-        //    get { return GetCandidateQualificationInputValue("grade"); }
-        //}
-
-        //private string GetCandidateQualificationInputValue(string key)
-        //{
-        //    return FindElements(By.TagName("input")).Where(e => e.GetAttribute("id").StartsWith("candidate_qualifications_"))
-        //        .Where(e => e.GetAttribute("id").Contains(key)).First()
-        //        .GetAttribute("value"); ;
-        //}
-    }
+    }   
 }
