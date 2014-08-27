@@ -118,6 +118,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| SubjectYear  | 2012         |
 		| SubjectName  | SubjectName  |
 		| SubjectGrade | SubjectGrade |
+	And I am on the ApplicationPage page
 	And I choose SaveQualification
 	Then I wait to see QualificationsSummary
 	Then I see
