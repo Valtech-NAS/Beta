@@ -107,7 +107,7 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName)\*.config $(ProjectDir)Configs
+    <PreBuildEvent>xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\SearchVacancyTestApps\*.config $(ProjectDir)Configs
 </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
