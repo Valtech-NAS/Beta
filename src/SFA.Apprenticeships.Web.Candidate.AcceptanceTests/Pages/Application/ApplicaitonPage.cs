@@ -126,17 +126,6 @@
         [ElementLocator(Id = "addWorkBtn")]
         public IWebElement SaveWorkExperience { get; set; }
 
-        public string WorkExperienceValidationErrorsCount
-        {
-            get
-            {
-                var count = Context.FindElements(By.ClassName("field-validation-error"))
-                    .Where(e => e.FindElement(By.TagName("span")).Displayed).Count().ToString();
-                return count;
-                //GetCssValue("color").ToLower() == "rgba(223, 48, 52, 1)".ToLower()).Count().ToString();
-            }
-        }
-
         [ElementLocator(Id = "work-employer")]
         public IWebElement WorkEmployer { get; set; }
 
@@ -163,6 +152,17 @@
             get
             {
                 return WorkExperienceSummaryItems.Count().ToString();
+            }
+        }
+
+        [ElementLocator(Id = "workexperience-panel")]
+        public WorkExperiencePanel WorkExperiencePanel { get; set; }
+
+        public string ValidationErrorsCount
+        {
+            get
+            {
+                return WorkExperiencePanel.WorkExperienceValidationErrorsCount;
             }
         }
 
@@ -201,5 +201,23 @@
             : base(parent)
         {
         }
-    }   
+    }
+
+    
+    public class WorkExperiencePanel : WebElement
+    {
+        public WorkExperiencePanel(ISearchContext parent) : base(parent)
+        {
+        }
+    
+        public string WorkExperienceValidationErrorsCount
+        {
+            get
+            {
+                var count = this.FindElements(By.ClassName("field-validation-error")).Count().ToString();
+                return count;
+                //GetCssValue("color").ToLower() == "rgba(223, 48, 52, 1)".ToLower()).Count().ToString();
+            }
+        }
+    }
 }

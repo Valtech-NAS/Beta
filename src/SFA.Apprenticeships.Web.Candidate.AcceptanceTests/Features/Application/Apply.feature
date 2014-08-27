@@ -132,9 +132,9 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 	When I choose WorkExperienceYes
 	And I choose SaveWorkExperience
 #TODO: check for validation errors
-#	Then I see
-#		| Field                               | Rule   | Value |
-#		| WorkExperienceValidationErrorsCount | Equals | 5     |
+	Then I see
+		| Field                 | Rule   | Value |
+		| ValidationErrorsCount | Equals | 5     |
 	When I enter data
 		| Field        | Value        |
 		| WorkEmployer | WorkEmployer |
