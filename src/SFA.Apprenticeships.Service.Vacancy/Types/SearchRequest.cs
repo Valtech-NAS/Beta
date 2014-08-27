@@ -11,6 +11,6 @@ namespace SFA.Apprenticeships.Service.Vacancy.Types
 
         public string KeywordTerms { get; set; }
 
-        public KeyValuePair<string, string>[] Parameters { get; set; }
+        public KeyValuePair<SearchParameters, string>[] Parameters { get; set; }
     }
 }
