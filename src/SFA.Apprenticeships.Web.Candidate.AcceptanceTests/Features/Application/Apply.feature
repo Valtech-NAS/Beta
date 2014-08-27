@@ -219,3 +219,26 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| Employer   | Equals | WorkEmployer |
 		| JobTitle   | Equals | WorkTitle    |
 		| MainDuties | Equals | WorkRole     |
+	When I am on the ApplicationPage page
+	And I choose ApplyButton
+	Then I am on the ApplicationPreviewPage page
+	And I see
+		| Field                 | Rule   | Value                 |
+		| Fullname              | Equals | Firstname Lastname    |
+		| Phonenumber           | Equals | 07970523193           |
+		| EmailAddress          | Equals | {EmailToken}          |
+		| Postcode              | Equals | N7 8LS                |
+		| DateOfBirth           | Equals | 01 January 2000       |
+		| EducationNameOfSchool | Equals | SchoolName            |
+		| EducationFromYear     | Equals | 2010                  |
+		| EducationToYear       | Equals | 2012                  |
+		| WhatAreYourStrengths  | Equals | My strengths          |
+		| WhatCanYouImprove     | Equals | What can I improve    |
+		| HobbiesAndInterests   | Equals | Hobbies and interests |
+	When I choose SubmitApplication
+	Then I am on the ApplicationCompletePage page
+	When I choose MyApplicationsLink
+	Then I am on the MyApplicationsPage page
+	And I see
+		| Field                      | Rule   | Value |
+		| SubmittedApplicationsCount | Equals | 1     |

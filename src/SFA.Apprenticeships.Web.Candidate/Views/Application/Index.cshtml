@@ -53,7 +53,7 @@ else
     @if (Model.SubmittedApplications.Any())
     {
         <li>
-            <span class="bold-medium">@Model.SubmittedApplications.Count()</span>  <a class="" href="#dashSubmitted">Submitted</a>
+            <span id="submitted-applications-count" class="bold-medium">@Model.SubmittedApplications.Count()</span>  <a class="" href="#dashSubmitted">Submitted</a>
         </li>
     }
     @if (Model.DraftApplications.Any())

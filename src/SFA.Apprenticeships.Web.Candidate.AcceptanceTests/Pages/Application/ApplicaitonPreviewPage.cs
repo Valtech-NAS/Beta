@@ -38,6 +38,18 @@
         [ElementLocator(Id = "candidate-address-postcode")]
         public IWebElement Postcode { get; set; }
 
+        #region About You
+        [ElementLocator(Id = "Candidate_AboutYou_WhatAreYourStrengths")]
+        public IWebElement WhatAreYourStrengths { get; set; }
+
+        [ElementLocator(Id = "Candidate_AboutYou_WhatDoYouFeelYouCouldImprove")]
+        public IWebElement WhatCanYouImprove { get; set; }
+
+        [ElementLocator(Id = "Candidate_AboutYou_WhatAreYourHobbiesInterests")]
+        public IWebElement HobbiesAndInterests { get; set; }
+
+        #endregion
+
         #region Education
 
         [ElementLocator(Id = "Candidate_Education_NameOfMostRecentSchoolCollege")]
