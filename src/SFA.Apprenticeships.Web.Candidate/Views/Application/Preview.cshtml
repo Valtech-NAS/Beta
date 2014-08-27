@@ -24,7 +24,7 @@
     
     @if (!Model.Candidate.Qualifications.Any())
     {
-        <p>I don't have any qualifications</p>
+        <p id="no-qualifications">I don't have any qualifications</p>
     }
    
     @foreach (var group in Model.Candidate.Qualifications.GroupBy(item => item.QualificationType))
@@ -86,7 +86,7 @@
     
     @if (!Model.Candidate.WorkExperience.Any())
     {
-        <p>I don't have any work experience</p>
+        <p id="no-work-experience">I don't have any work experience</p>
     }
 
     @foreach (var experience in Model.Candidate.WorkExperience)
@@ -176,7 +176,7 @@
     </ul>
 </div>
 <div class="form-group">
-    @Html.ActionLink("Submit application", "SubmitApplication", new {id = Model.VacancyId}, new {@class = "button"})
+    @Html.ActionLink("Submit application", "SubmitApplication", new {id = "submit-application"}, new {@class = "button"})
 </div>
 
 @section scripts{

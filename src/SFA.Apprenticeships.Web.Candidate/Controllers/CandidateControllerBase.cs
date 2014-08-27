@@ -2,7 +2,6 @@
 {
     using System;
     using System.Web.Mvc;
-    using System.Web.Security;
     using Common.Attributes;
     using Common.Constants;
     using Common.Controllers;

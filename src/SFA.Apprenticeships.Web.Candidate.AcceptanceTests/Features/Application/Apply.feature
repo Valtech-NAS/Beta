@@ -170,39 +170,53 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| Field                                              | Value |
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
-#	And I choose QualificationsYes
-#	And I am on QualificationTypeDropdown list item matching criteria
-#		| Field | Rule   | Value |
-#		| Text  | Equals | GCSE  |
-#	And I choose WrappedElement
-#	And I am on the ApplicationPage page
-#	And I enter data
-#		| Field        | Value        |
-#		| SubjectYear  | 2012         |
-#		| SubjectName  | SubjectName  |
-#		| SubjectGrade | SubjectGrade |
-#	And I choose SaveQualification
-#	When I choose WorkExperienceYes
-#	And I enter data
-#		| Field        | Value        |
-#		| WorkEmployer | WorkEmployer |
-#		| WorkTitle    | WorkTitle    |
-#		| WorkRole     | WorkRole     |
-#		| WorkFromYear | 2011         |
-#		| WorkToYear   | 2012         |
-#	And I choose SaveWorkExperience
-#	And I choose SaveButton
-#	Then I wait to see ApplicationSavedMessage
-#	And I see
-#		| Field                   | Rule      | Value           |
-#		| ApplicationSavedMessage | Ends With | my applications |
-#	When I choose MyApplicationsLink
-#	Then I am on the MyApplicationsPage page
-#	And I see
-#		| Field                  | Rule   | Value |
-#		| DraftApplicationsCount | Equals | 1     |
-#	When I choose ResumeLink
-#	Then I am on the ApplicationPage page
-#	And I see
-#		| Field                   | Rule      | Value                 |
-#retrieve work experience and qualification fields		
+	And I choose QualificationsYes
+	And I am on QualificationTypeDropdown list item matching criteria
+		| Field | Rule   | Value |
+		| Text  | Equals | GCSE  |
+	And I choose WrappedElement
+	And I am on the ApplicationPage page
+	And I enter data
+		| Field        | Value        |
+		| SubjectYear  | 2012         |
+		| SubjectName  | SubjectName  |
+		| SubjectGrade | SubjectGrade |
+	And I choose SaveQualification
+	When I choose WorkExperienceYes
+	And I enter data
+		| Field        | Value        |
+		| WorkEmployer | WorkEmployer |
+		| WorkTitle    | WorkTitle    |
+		| WorkRole     | WorkRole     |
+		| WorkFromYear | 2011         |
+		| WorkToYear   | 2012         |
+	And I choose SaveWorkExperience
+	And I choose SaveButton
+	Then I wait to see ApplicationSavedMessage
+	And I see
+		| Field                   | Rule      | Value           |
+		| ApplicationSavedMessage | Ends With | my applications |
+	When I choose MyApplicationsLink
+	Then I am on the MyApplicationsPage page
+	And I see
+		| Field                  | Rule   | Value |
+		| DraftApplicationsCount | Equals | 1     |
+	When I choose ResumeLink
+	Then I am on the ApplicationPage page
+	And I see
+        | Field                      | Rule   | Value |
+        | QualificationsSummaryCount | Equals | 1     |
+	And I am on QualificationsSummaryItems list item matching criteria
+		| Field   | Rule   | Value        |
+		| Subject | Equals | SubjectName  |
+		| Year    | Equals | 2012         |
+		| Grade   | Equals | SubjectGrade |
+	And I am on the ApplicationPage page
+	And I see
+        | Field                | Rule   | Value |
+        | WorkExperiencesCount | Equals | 1     |
+	And I am on WorkExperienceSummaryItems list item matching criteria
+		| Field      | Rule   | Value        |
+		| Employer   | Equals | WorkEmployer |
+		| JobTitle   | Equals | WorkTitle    |
+		| MainDuties | Equals | WorkRole     |
