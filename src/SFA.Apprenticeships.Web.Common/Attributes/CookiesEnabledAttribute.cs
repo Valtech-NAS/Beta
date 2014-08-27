@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Attributes
 {
     using System;
+    using System.Net;
     using System.Web;
     using System.Web.Mvc;
+    using System.Web.Routing;
     using Constants;
     using Providers;
     using StructureMap.Attributes;
@@ -23,9 +25,13 @@
             {
                 CookieDetectionProvider.SetCookie(filterContext.HttpContext);
 
-                filterContext.Result =
-                    new RedirectResult(RouteNames.Cookies + "?returnUrl=" +
-                                       HttpUtility.UrlEncode(filterContext.HttpContext.Request.Path));
+                var request = filterContext.RequestContext.HttpContext.Request;
+                var returnUrl = request != null && request.Url != null ? request.Url.PathAndQuery : "/";
+                var helper = new UrlHelper(filterContext.RequestContext);
+                var url = helper.Action("Cookies", "Home", new { ReturnUrl = returnUrl });
+
+                filterContext.Result = new RedirectResult(url);
+               
                 return;
             }
 
