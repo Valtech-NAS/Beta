@@ -65,6 +65,40 @@
             {
                 s.Index(_indexName);
                 s.Type(_documentTypeName);
+                s.Take(1000);
+
+                if (searchRequestExtended.UseJobTitleTerms && !string.IsNullOrWhiteSpace(searchRequestExtended.JobTitleTerms))
+                {
+                    //if (searchRequestExtended.JobTitleFactors.MatchAllKeywords)
+                    //{
+
+                    //}
+                    //else
+                    //{
+                        //s.Query(q =>
+                        //    q.Bool(fz => fz
+                        //        .Should(s => s
+                        //            .Match(mp => mp
+                        //                .OnField(f => f.Title)
+                        //                .PrefixLength(searchRequestExtended.JobTitleFactors.FuzzinessPrefix)
+                        //                .Boost(searchRequestExtended.JobTitleFactors.Boost)
+                        //                .QueryString(searchRequestExtended.JobTitleTerms)),
+                        //                        descriptor => descriptor 
+                        //                 .);
+
+                        s.Query(q =>
+                            q.Fuzzy(fz => fz
+                                .OnField(f => f.Title)
+                                .PrefixLength(searchRequestExtended.JobTitleFactors.FuzzinessPrefix)
+                                .Boost(searchRequestExtended.JobTitleFactors.Boost)
+                                .Value(searchRequestExtended.JobTitleTerms)));
+                    //}
+                }
+
+                if (searchRequestExtended.UseJobTitleTerms)
+                {
+                }
+
                 return s;
             });
 

@@ -37,6 +37,9 @@
 
             _logger.Debug("Loading Csv file: {0}", args[0]);
 
+            var indexer = ObjectFactory.GetInstance<IVacancyIndexerService>();
+            var indexDate = DateTime.Today;
+
             using (TextReader reader = File.OpenText(args[0]))
             {
                 _logger.Debug("Loaded Csv file: {0}", args[0]);
@@ -49,10 +52,6 @@
                 _logger.Debug("Loading Csv Rows");
                 var allCsvRows = csv.GetRecords<VacancySummaryUpdate>().ToList();
                 _logger.Debug("Loaded '{0}' Csv Rows", allCsvRows.Count);
-
-                var indexer = ObjectFactory.GetInstance<IVacancyIndexerService>();
-
-                var indexDate = DateTime.Today;
 
                 _logger.Debug("Creating index for date: ", indexDate);
                 indexer.CreateScheduledIndex(indexDate);

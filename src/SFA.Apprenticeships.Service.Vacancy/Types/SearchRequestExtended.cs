@@ -68,12 +68,12 @@ namespace SFA.Apprenticeships.Service.Vacancy.Types
             PhraseOrdering = parameters.ContainsKey(phaseOrdering) ? int.Parse(parameters[phaseOrdering]) : 0;
         }
 
-        double Boost { get; set; }
-        int Fuzziness { get; set; }
-        int FuzzinessPrefix { get; set; }
-        bool MatchAllKeywords { get; set; }
-        int PhraseProximity { get; set; }
-        int PhraseOrdering { get; set; }
+        public double Boost { get; set; }
+        public int Fuzziness { get; set; }
+        public int FuzzinessPrefix { get; set; }
+        public bool MatchAllKeywords { get; set; }
+        public int PhraseProximity { get; set; }
+        public int PhraseOrdering { get; set; }
     }
 
 }
