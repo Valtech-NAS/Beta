@@ -6,8 +6,8 @@
     {
         public static class WhatAreYourStrengthsMessages
         {
-            public const string LabelText = "Give examples of your strengths that are relevant to the apprenticeship";
-            public const string HintText = "Don't just list your strengths. Whatever examples you give, you’ll need to provide details of when you’ve shown these.";
+            public const string LabelText = "What are your main strengths?";
+            public const string HintText = "Please provide examples of when you've demonstrated your strengths.";
             public const string RequiredErrorText = "Please provide examples of your strengths";
             public const string TooLongErrorText = "Examples of your strengths mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
@@ -27,7 +27,7 @@
         public static class WhatAreYourHobbiesInterestsMessages
         {
             public const string LabelText = "What are your hobbies and interests?";
-            public const string HintText = "Think of the skills you’ve gained from your hobbies and interests that might be relevant. Include any personal achievements.";
+            public const string HintText = "Remember to include any personal achievements.";
             public const string RequiredErrorText = "Please provide examples of your hobbies/interests";
             public const string TooLongErrorText = "Examples of your hobbies/interests mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
