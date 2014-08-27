@@ -131,7 +131,6 @@ Scenario: As a candidate I want to enter my qualifications and work experience
         | QualificationsSummaryCount | Equals | 0     |
 	When I choose WorkExperienceYes
 	And I choose SaveWorkExperience
-#TODO: check for validation errors
 	Then I see
 		| Field                 | Rule   | Value |
 		| ValidationErrorsCount | Equals | 5     |
