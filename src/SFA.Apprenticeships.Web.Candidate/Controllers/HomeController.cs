@@ -19,5 +19,10 @@
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
+
+        public ActionResult Helpdesk()
+        {
+            return View();
+        }
     }
 }

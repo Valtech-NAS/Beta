@@ -316,6 +316,7 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Home\Privacy.cshtml" />
     <Content Include="Views\Home\Cookies.cshtml" />
+    <Content Include="Views\Home\Helpdesk.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
