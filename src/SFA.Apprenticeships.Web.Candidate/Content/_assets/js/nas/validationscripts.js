@@ -134,7 +134,16 @@ $(document).ready(function () {
         }
     }
 
-    //$('button, input[type="submit"]').on('click', function () {
-    //    $(this).text('Loading').addClass('disabled');
-    //});
+    $('button, input[type="submit"], a.button').on('click', function () {
+        var $this     = $(this),
+            $thisText = $this.text();
+
+        $this.text('Loading').addClass('disabled');
+
+        setTimeout(function () {
+            if($('.form-group.input-validation-error').length > 0) {
+                $this.text($thisText).removeClass('disabled');
+            }
+        }, 50);
+    });
 });
