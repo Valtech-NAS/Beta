@@ -72,6 +72,7 @@
                         });
 
                         $("#address-list").removeClass("toggle-content");
+                        $('#find-addresses').removeClass('disabled').text('Find address');
                     }
                 },
                 error: function (error) {

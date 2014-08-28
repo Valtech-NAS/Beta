@@ -6,7 +6,9 @@
 }
 
 <h1 class="heading-xlarge">Settings</h1>
-
+<div class="panel-indent">
+    <p class="text">Any changes made will only be reflected on new applications and not on existing draft applications</p>
+</div>
 @using (Html.BeginForm("Index", "Account", FormMethod.Post))
 {
     @Html.Partial("ValidationSummary", ViewData.ModelState)
