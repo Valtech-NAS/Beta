@@ -133,4 +133,8 @@ $(document).ready(function () {
             $('.pw-masktoggle').text('Show');
         }
     }
+
+    //$('button, input[type="submit"]').on('click', function () {
+    //    $(this).text('Loading').addClass('disabled');
+    //});
 });

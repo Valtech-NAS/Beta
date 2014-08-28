@@ -7,7 +7,7 @@
 @if (Model.DateUpdated.HasValue)
 {
     <div class="panel-info">
-        <p id="applicationSavedTopMessage">Saved at @Model.DateUpdated.Value.ToLocalTime().ToString("h:mm:ss tt") on @Model.DateUpdated.Value.ToString("d/M/yyyy") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
+        <p id="applicationSavedTopMessage">Last saved at @Model.DateUpdated.Value.ToLocalTime().ToString("h:mm:ss tt") on @Model.DateUpdated.Value.ToString("d/M/yyyy") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
     </div>
 }
 <h1 class="heading-xlarge">Application form</h1>
@@ -365,7 +365,7 @@
         </p>
         @if (Model.DateUpdated.HasValue)
         {
-            <p id="applicationSaved">Saved at @Model.DateUpdated.Value.ToLocalTime().ToString("h:mm:ss tt") on @Model.DateUpdated.Value.ToString("d/M/yyyy") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
+            <p id="applicationSaved">Last saved at @Model.DateUpdated.Value.ToLocalTime().ToString("h:mm:ss tt") on @Model.DateUpdated.Value.ToString("d/M/yyyy") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
         }
     </div>    
     
