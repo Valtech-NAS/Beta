@@ -28,19 +28,19 @@
 
             Logger.Debug("Calling find location for Term={0} on IndexName={1}", term, indexName);
 
-            IQueryResponse<LocationLookup> exactMatchResults = client.Search<LocationLookup>(s => s
+            ISearchResponse<LocationLookup> exactMatchResults = client.Search<LocationLookup>(s => s
                 .Index(indexName)
                 .Query(q => q
-                    .Match(m => m.OnField(f => f.Name).QueryString(term))
+                    .Match(m => m.OnField(f => f.Name).Query(term))
                 )
                 .From(0)
                 .Size(maxResults));
 
-            IQueryResponse<LocationLookup> fuzzyMatchResults = client.Search<LocationLookup>(s => s
+            ISearchResponse<LocationLookup> fuzzyMatchResults = client.Search<LocationLookup>(s => s
                 .Index(indexName)
                 .Query(q =>
-                    q.Fuzzy(f => f.MinSimilarity(5).PrefixLength(1).OnField(n => n.Name).Value(term).Boost(2.0)) ||
-                    q.Fuzzy(f => f.MinSimilarity(0.5).PrefixLength(1).OnField(n => n.County).Value(term).Boost(1.0))
+                    q.Fuzzy(f => f.PrefixLength(1).OnField(n => n.Name).Value(term).Boost(2.0)) ||
+                    q.Fuzzy(f => f.PrefixLength(1).OnField(n => n.County).Value(term).Boost(1.0))
                 )
                 .From(0)
                 .Size(maxResults));

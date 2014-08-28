@@ -49,7 +49,7 @@
                         s.SortGeoDistance(g =>
                         {
                             g.PinTo(location.GeoPoint.Latitude, location.GeoPoint.Longitude)
-                                .Unit(GeoUnit.mi).OnField(f => f.Location);
+                                .Unit(GeoUnit.Miles).OnField(f => f.Location);
                             return g;
                         });
                         break;
@@ -61,7 +61,7 @@
                         s.SortGeoDistance(g =>
                         {
                             g.PinTo(location.GeoPoint.Latitude, location.GeoPoint.Longitude)
-                                .Unit(GeoUnit.mi).OnField(f => f.Location);
+                                .Unit(GeoUnit.Miles).OnField(f => f.Location);
                             return g;
                         });
                         break;
@@ -83,7 +83,7 @@
                 {
                     s.Filter(f => f.GeoDistance(vs => vs.Location, descriptor => descriptor
                         .Location(location.GeoPoint.Latitude, location.GeoPoint.Longitude)
-                        .Distance(searchRadius, GeoUnit.mi)));
+                        .Distance(searchRadius, GeoUnit.Miles)));
                 }
 
                 if (!string.IsNullOrEmpty(keywords))
@@ -106,7 +106,7 @@
             if (sortType != VacancySortType.Relevancy)
             {
                 responses.ForEach(r => r.Distance =
-                    double.Parse(search.Hits.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture))
+                    double.Parse(search.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture))
                         .Sorts.Skip(distanceSortItemIndex).First()
                         .ToString()));
             }

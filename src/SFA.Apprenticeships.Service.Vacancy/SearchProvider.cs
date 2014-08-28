@@ -1,7 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Service.Vacancy
 {
-    using System;
+    using System.Globalization;
     using System.Linq;
+    using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Infrastructure.Common.IoC;
     using Infrastructure.Elastic.Common.Configuration;
@@ -31,78 +32,119 @@
             _documentTypeName = elasticsearchClientFactory.GetDocumentNameForType(typeof(VacancySummary));
         }
 
-        public VacancySummaryResponse[] Search(SearchRequest request)
+        public SearchResults<VacancySummaryResponse> Search(Types.SearchRequest request)
         {
-            //todo: 
-            // 1. map request parameter values to search request
-            //    will be passed as string... map to enum and parse values (bool, double, etc.)
-            //    if any fail, return "bad request" fault with name of failed parameters
-            //
-            // 2. invoke search component (using NEST) passing in the parsed parameters and values
-            //    map search results to DTOs (incl. score)
-            //
-            // 3. return DTOs along with original request (for correlation in test tool)
+            var searchRequestExtended = new SearchRequestExtended(request);
 
-            var searchExtended = new SearchRequestExtended(request);
-            return SearchExtended(searchExtended);
-
-            //var results = Enumerable.Range(1, 10).Select(i => new VacancySummaryResponse
-            //{
-            //    Id = i,
-            //    Title = "Title #" + i,
-            //    Description = "Vacancy description #" + i,
-            //    EmployerName = "Employer name #" + i,
-            //    ClosingDate = DateTime.UtcNow.AddDays(i),
-            //    Score = 1.0
-            //});
-
-            //return results.ToArray();
-        }
-
-        private VacancySummaryResponse[] SearchExtended(SearchRequestExtended searchRequestExtended)
-        {
             var search = _client.Search<VacancySummaryResponse>(s =>
             {
                 s.Index(_indexName);
                 s.Type(_documentTypeName);
                 s.Take(1000);
 
-                if (searchRequestExtended.UseJobTitleTerms && !string.IsNullOrWhiteSpace(searchRequestExtended.JobTitleTerms))
+                s.Query(q =>
                 {
-                    //if (searchRequestExtended.JobTitleFactors.MatchAllKeywords)
-                    //{
+                    QueryContainer query = null;
 
-                    //}
-                    //else
-                    //{
-                        //s.Query(q =>
-                        //    q.Bool(fz => fz
-                        //        .Should(s => s
-                        //            .Match(mp => mp
-                        //                .OnField(f => f.Title)
-                        //                .PrefixLength(searchRequestExtended.JobTitleFactors.FuzzinessPrefix)
-                        //                .Boost(searchRequestExtended.JobTitleFactors.Boost)
-                        //                .QueryString(searchRequestExtended.JobTitleTerms)),
-                        //                        descriptor => descriptor 
-                        //                 .);
+                    if (searchRequestExtended.UseJobTitleTerms && !string.IsNullOrWhiteSpace(searchRequestExtended.JobTitleTerms))
+                    {
+                        var queryClause = q.Match(m =>
+                        {
+                            m.OnField(f => f.Title).Query(searchRequestExtended.JobTitleTerms);
+                            BuildFieldQuery(m, searchRequestExtended.JobTitleFactors);
+                        });
 
-                        s.Query(q =>
-                            q.Fuzzy(fz => fz
-                                .OnField(f => f.Title)
-                                .PrefixLength(searchRequestExtended.JobTitleFactors.FuzzinessPrefix)
-                                .Boost(searchRequestExtended.JobTitleFactors.Boost)
-                                .Value(searchRequestExtended.JobTitleTerms)));
-                    //}
-                }
+                        query = BuildContainer(null, queryClause);
+                    }
+                    else
+                    {
+                        var queryClause = q.Match(m =>
+                        {
+                            m.OnField(f => f.Title).Query(searchRequestExtended.KeywordTerms);
+                            BuildFieldQuery(m, searchRequestExtended.JobTitleFactors);
+                        });
 
-                if (searchRequestExtended.UseJobTitleTerms)
-                {
-                }
+                        query = BuildContainer(null, queryClause);
+                    }
+
+                    if (searchRequestExtended.SearchDescriptionField && !string.IsNullOrWhiteSpace(searchRequestExtended.KeywordTerms))
+                    {
+                        var queryClause = q.Match(m =>
+                        {
+                            m.OnField(f => f.Description).Query(searchRequestExtended.KeywordTerms);
+                            BuildFieldQuery(m, searchRequestExtended.DescriptionFactors);
+                        });
+                        query = BuildContainer(query, queryClause);
+                    }
+
+                    if (searchRequestExtended.SearchEmployerNameField && !string.IsNullOrWhiteSpace(searchRequestExtended.KeywordTerms))
+                    {
+                        var queryClause = q.Match(m =>
+                        {
+                            m.OnField(f => f.EmployerName).Query(searchRequestExtended.KeywordTerms);
+                            BuildFieldQuery(m, searchRequestExtended.EmployerFactors);
+                        });
+                        query = BuildContainer(query, queryClause);
+                    }
+
+                    return query;
+                });
 
                 return s;
             });
 
-            return search.Documents.ToArray();
+            var results = search.Documents.ToList();
+            results.ForEach(r => r.Score = search.HitsMetaData.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture)).Score);
+            var searchResults = new SearchResults<VacancySummaryResponse>(search.Total, 1, results);
+
+            return searchResults;
+        }
+
+        private QueryContainer BuildContainer(QueryContainer queryContainer, QueryContainer queryClause)
+        {
+            if (queryContainer == null)
+            {
+                queryContainer = queryClause;
+            }
+            else
+            {
+                queryContainer |= queryClause;
+            }
+
+            return queryContainer;
+        }
+
+        private void BuildFieldQuery(MatchQueryDescriptor<VacancySummaryResponse> queryDescriptor, KeywordFactors searchFactors)
+        {
+            if (searchFactors.Boost.HasValue)
+            {
+                queryDescriptor.Boost(searchFactors.Boost.Value);
+            }
+
+            if (searchFactors.Fuzziness.HasValue)
+            {
+                queryDescriptor.Fuzziness(searchFactors.Fuzziness.Value);
+            }
+
+            if (searchFactors.FuzzinessPrefix.HasValue)
+            {
+                queryDescriptor.PrefixLength(searchFactors.FuzzinessPrefix.Value);
+            }
+
+            if (searchFactors.MatchAllKeywords)
+            {
+                queryDescriptor.Operator(Operator.And);
+            }
+
+            if (searchFactors.MinimumMatch.HasValue)
+            {
+                queryDescriptor.MinimumShouldMatch(searchFactors.MinimumMatch.Value + "%");
+            }
+
+            if (searchFactors.PhraseProximity.HasValue)
+            {
+                queryDescriptor.Slop(searchFactors.PhraseProximity.Value);
+            }   
         }
     }
 }

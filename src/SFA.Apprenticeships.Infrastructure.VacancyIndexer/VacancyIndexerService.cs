@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Application.VacancyEtl.Entities;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
@@ -33,7 +35,7 @@
             Logger.Debug("Indexing vacancy item to index: {0}", newIndexName);
 
             var client = _elasticsearchClientFactory.GetElasticClient();
-            client.Index(vacancySummaryElastic, newIndexName);
+            client.Index(vacancySummaryElastic, f => f.Index(newIndexName));
 
             Logger.Debug("Indexed vacancy item");
         }
@@ -46,12 +48,11 @@
             var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
             var client = _elasticsearchClientFactory.GetElasticClient();
 
-            var indexExistsResponse = client.IndexExists(newIndexName);
+            var indexExistsResponse = client.IndexExists(i => i.Index(newIndexName));
             if (!indexExistsResponse.Exists)
             {
-                var indexSettings = new IndexSettings();
-                client.CreateIndex(newIndexName, indexSettings);
-                client.MapFromAttributes(typeof (VacancySummary), newIndexName);
+                var indexCreationResp = client.CreateIndex(i => i.Index(newIndexName));
+                var mapResp = client.Map<VacancySummary>(p => p.Index(newIndexName));
 
                 Logger.Debug("Created new vacancy search index named: {0}", newIndexName);
             }
@@ -74,7 +75,15 @@
             Logger.Debug("Swapping vacancy search index alias to new index: {0}", newIndexName);
 
             var existingIndexesOnAlias = client.GetIndicesPointingToAlias(indexAlias);
-            client.Swap(indexAlias, existingIndexesOnAlias, new[] {newIndexName});
+            var aliasRequest = new AliasRequest {Actions = new List<IAliasAction>()};
+            
+            foreach (var existingIndexOnAlias in existingIndexesOnAlias)
+            {
+                aliasRequest.Actions.Add(new AliasRemoveAction { Remove = new AliasRemoveOperation { Alias = indexAlias, Index = existingIndexOnAlias } });    
+            }
+            
+            aliasRequest.Actions.Add(new AliasAddAction { Add = new AliasAddOperation { Alias = indexAlias, Index = newIndexName } });
+            var aliasResp = client.Alias(aliasRequest);
 
             Logger.Debug("Swapped vacancy search index alias to new index: {0}", newIndexName);
         }

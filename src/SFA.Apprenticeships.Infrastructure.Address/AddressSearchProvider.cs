@@ -31,7 +31,7 @@
                 s.Index(indexName);
                 s.Type(documentTypeName);
                 s.Size(100);
-                s.Query(q => q.MatchPhrase(mpqd => mpqd.OnField(a => a.Postcode).QueryString(postcode)));
+                s.Query(q => q.MatchPhrase(mpqd => mpqd.OnField(a => a.Postcode).Query(postcode)));
                 return s;
             });
 

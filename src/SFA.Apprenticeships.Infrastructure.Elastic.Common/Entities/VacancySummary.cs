@@ -6,25 +6,25 @@
     [ElasticType(Name = "vacancy")]
     public class VacancySummary
     {
-        [ElasticProperty(Index = FieldIndexOption.not_analyzed)]
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public int Id { get; set; }
 
-        [ElasticProperty(Index = FieldIndexOption.analyzed)]
+        [ElasticProperty(Index = FieldIndexOption.Analyzed)]
         public string Title { get; set; }
 
-        [ElasticProperty(Index = FieldIndexOption.not_analyzed)]
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public DateTime ClosingDate { get; set; }
 
-        [ElasticProperty(Index = FieldIndexOption.analyzed)]
+        [ElasticProperty(Index = FieldIndexOption.Analyzed)]
         public string EmployerName { get; set; }
 
-        [ElasticProperty(Index = FieldIndexOption.analyzed)]
+        [ElasticProperty(Index = FieldIndexOption.Analyzed)]
         public string Description { get; set; }
 
-        [ElasticProperty(Index = FieldIndexOption.analyzed)]
+        [ElasticProperty(Index = FieldIndexOption.Analyzed)]
         public VacancyLocationType VacancyLocationType { get; set; }
 
-        [ElasticProperty(Type = FieldType.geo_point, Index = FieldIndexOption.analyzed)]
+        [ElasticProperty(Type = FieldType.GeoPoint, Index = FieldIndexOption.Analyzed)]
         public GeoPoint Location { get; set; }
     }
 }
