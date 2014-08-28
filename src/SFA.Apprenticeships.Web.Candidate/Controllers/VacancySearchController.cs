@@ -1,13 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Web.Mvc;
     using ActionResults;
     using Application.Interfaces.Vacancies;
     using Common.Constants;
-    using Constants;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Microsoft.Ajax.Utilities;
@@ -56,49 +57,33 @@
         {
             UserData.Pop(UserDataItemNames.VacancyDistance);
 
-            PopulateDistances(searchViewModel.WithinDistance);
-            PopulateSortType(searchViewModel.SortType);
+            PopulateLookups(searchViewModel);
 
             var clientResult = _searchRequestValidator.Validate(searchViewModel);
+
             if (!clientResult.IsValid)
             {
                 ModelState.Clear();
                 clientResult.AddToModelState(ModelState, string.Empty);
+
                 return View("results", new VacancySearchResponseViewModel { VacancySearch = searchViewModel });
             }
 
             searchViewModel.CheckLatLonLocHash();
 
-            if (!searchViewModel.Latitude.HasValue || !searchViewModel.Longitude.HasValue)
+            if (!HasGeoPoint(searchViewModel))
             {
-                //Either user not selected item from dropdown or javascript disabled.
-                var locations = _searchProvider.FindLocation(searchViewModel.Location.Trim()).ToList();
-                if (locations.Any())
+                // Either user not selected item from dropdown or javascript disabled.
+                if (IsPartialPostcode(searchViewModel))
                 {
-                    var location = locations.First();
-                    searchViewModel.Location = location.Name;
-                    searchViewModel.Latitude = location.Latitude;
-                    searchViewModel.Longitude = location.Longitude;
+                    return View("results", new VacancySearchResponseViewModel { VacancySearch = searchViewModel });
+                }
 
-                    if (locations.Count() > 1)
-                    {
-                        ViewBag.LocationSearches = locations.Skip(1).Select(l =>
-                        {
-                            var vsvm = new VacancySearchViewModel
-                            {
-                                Keywords = searchViewModel.Keywords,
-                                Location = l.Name,
-                                Latitude = l.Latitude,
-                                Longitude = l.Longitude,
-                                PageNumber = searchViewModel.PageNumber,
-                                SortType = searchViewModel.SortType,
-                                WithinDistance = searchViewModel.WithinDistance
-                            };
-                            vsvm.Hash = vsvm.LatLonLocHash();
+                var suggestedLocations = FindSuggestedLocations(searchViewModel);
 
-                            return vsvm;
-                        }).ToArray();
-                    }
+                if (suggestedLocations != null)
+                {
+                    ViewBag.LocationSearches = suggestedLocations;
                 }
             }
 
@@ -111,6 +96,7 @@
             }
 
             var results = _searchProvider.FindVacancies(searchViewModel, _vacancyResultsPerPage);
+
             return View("results", results);
         }
 
@@ -142,8 +128,8 @@
             var distance = UserData.Pop(UserDataItemNames.VacancyDistance);
             var lastVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
 
-            if (!string.IsNullOrWhiteSpace(distance) 
-                    && !string.IsNullOrWhiteSpace(lastVacancyId) 
+            if (!string.IsNullOrWhiteSpace(distance)
+                    && !string.IsNullOrWhiteSpace(lastVacancyId)
                     && int.Parse(lastVacancyId) == id)
             {
                 ViewBag.Distance = distance;
@@ -155,7 +141,58 @@
             return View(vacancy);
         }
 
-        #region Dropdown View Bag Helpers
+        #region Helpers
+
+        private static bool IsPartialPostcode(VacancySearchViewModel searchViewModel)
+        {
+            return Regex.IsMatch(searchViewModel.Location, @"\d+");
+        }
+
+        private static bool HasGeoPoint(VacancySearchViewModel searchViewModel)
+        {
+            return searchViewModel.Latitude.HasValue && searchViewModel.Longitude.HasValue;
+        }
+
+        private void PopulateLookups(VacancySearchViewModel searchViewModel)
+        {
+            PopulateDistances(searchViewModel.WithinDistance);
+            PopulateSortType(searchViewModel.SortType);
+        }
+
+        private VacancySearchViewModel[] FindSuggestedLocations(VacancySearchViewModel searchViewModel)
+        {
+            var locations = _searchProvider.FindLocation(searchViewModel.Location.Trim()).ToList();
+
+            if (!locations.Any())
+            {
+                return null;
+            }
+
+            var location = locations.First();
+
+            searchViewModel.Location = location.Name;
+            searchViewModel.Latitude = location.Latitude;
+            searchViewModel.Longitude = location.Longitude;
+
+            return locations.Skip(1).Select(l =>
+            {
+                var vsvm = new VacancySearchViewModel
+                {
+                    Keywords = searchViewModel.Keywords,
+                    Location = l.Name,
+                    Latitude = l.Latitude,
+                    Longitude = l.Longitude,
+                    PageNumber = searchViewModel.PageNumber,
+                    SortType = searchViewModel.SortType,
+                    WithinDistance = searchViewModel.WithinDistance
+                };
+
+                vsvm.Hash = vsvm.LatLonLocHash();
+
+                return vsvm;
+            }).ToArray();
+        }
+
         private void PopulateDistances(int selectedValue = 2)
         {
             var distances = new SelectList(
@@ -193,6 +230,7 @@
 
             ViewBag.SortTypes = sortTypes;
         }
+
         #endregion
     }
 }
