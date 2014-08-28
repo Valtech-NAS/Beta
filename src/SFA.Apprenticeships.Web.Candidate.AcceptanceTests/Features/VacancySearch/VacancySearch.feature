@@ -1,4 +1,5 @@
-﻿Feature: Vacancy Search
+﻿@US496
+Feature: Vacancy Search
 	In order to find a vacancy apprenticeship quickly
 	As a candidate
 	I want to find a vacancy apprenticeship by location or keywords
