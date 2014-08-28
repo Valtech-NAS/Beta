@@ -15,7 +15,15 @@
         this.autocomplete({
             delay: settings.delay,
             minLength: settings.minLength,
-            source: function(request, response) {
+            source: function (request, response) {
+                var digits = /[0-9]+/;
+
+                if (request.term.match(digits)) {
+                    // Search term looks like a postcode.
+                    this.close();
+                    return;
+                }
+
                 getLocationResults(response, request.term);
             },
             select: function(event, ui) {
