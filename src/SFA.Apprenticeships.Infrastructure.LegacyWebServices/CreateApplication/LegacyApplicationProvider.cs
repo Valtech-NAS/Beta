@@ -129,8 +129,13 @@
                 Subject = each.Subject,
                 DateAchieved = MapYearToDate(each.Year),
                 Level = each.QualificationType.Substring(0, Math.Min(each.QualificationType.Length, maxLevelLength)),
-                Grade = each.Grade
+                Grade = MapGrade(each.Grade, each.IsPredicted) 
             }).ToArray();
+        }
+
+        private static string MapGrade(string grade, bool isPredicted)
+        {
+            return isPredicted ? string.Format("{0}-Pred", grade) : grade;
         }
 
         private static GatewayServiceProxy.WorkExperience[] MapWorkExperience(

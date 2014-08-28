@@ -43,9 +43,9 @@
         self.qualificationYear = ko.observable(itemYear).extend({
             required: { message: "Qualification Year is required" }, number: true
         }).extend({
-            minLength: {
+            min: {
                 message: "'Qualification Year' must be 4 digits",
-                params: 4
+                params: 1914
             }
         });
 
@@ -155,7 +155,7 @@
             required: { message: "'Qualification Year' is required" }, number: true
         }).extend({
             minLength: {
-                message: "'Qualification Year' must be 4 digits",
+                message: "'Qualification Year' must be 4 digits and less than 100 years old",
                 params: 4
             }
         });
@@ -240,6 +240,7 @@
         };
 
         self.saveQualificationItem = function (qualification) {
+            
             if (qualification.itemErrors().length == 0) {
                 qualification.readOnly('readonly');
                 qualification.showEditButton(true);

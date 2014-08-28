@@ -129,8 +129,9 @@
                                         <input class="form-control qual-input-edit qual-subject" type="text" data-bind="value: qualificationSubject, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Subject', 'id':'candidate_qualifications_'+ itemIndex() + '__subject', 'readonly':readOnly() }" maxlength="50" />
                                     </td>
                                     <td>
-                                        <div class="small-btm-margin">
-                                            <input class="form-control qual-input-edit qual-grade" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Grade', 'id':'candidate_qualifications_'+ itemIndex() + '__grade','readonly':readOnly() }" maxlength="15" />
+                                        <div class="small-btm-margin">                                            
+                                            <input class="form-control qual-input-edit qual-grade" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{'id':'candidate_qualifications_'+ itemIndex() + '__grade','readonly':readOnly() }" maxlength="15" />
+                                            <input type="hidden" data-bind="value: qualificationGrade, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Grade'}" />
                                         </div>
                                         <label for="item-qual-predicted" data-bind="ifnot: showEditButton">
                                             <input id="item-qual-predicted" type="checkbox" class="qual-predicted" data-bind="checked: qualificationPredicted" /> Predicted
