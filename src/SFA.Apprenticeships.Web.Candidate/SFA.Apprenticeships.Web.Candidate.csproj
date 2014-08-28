@@ -318,6 +318,7 @@
     <Content Include="Views\Home\Privacy.cshtml" />
     <Content Include="Views\Home\Cookies.cshtml" />
     <Content Include="Views\Home\Helpdesk.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DateTimeSaved.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
