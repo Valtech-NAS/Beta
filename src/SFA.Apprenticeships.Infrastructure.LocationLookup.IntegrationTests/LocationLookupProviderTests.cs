@@ -49,35 +49,5 @@
             Assert.AreEqual(1, results.Count);
             Assert.AreEqual("Cheylesmore", results.First().Name);
         }
-
-        [Test]
-        public void ShouldMatchFuzzyCountyName()
-        {
-            // arrange
-            var service = ObjectFactory.GetInstance<ILocationLookupProvider>();
-            const string term = "Warrickshire";
-
-            // act
-            var results = service.FindLocation(term, 250).ToList();
-
-            // assert
-            Assert.AreEqual(236, results.Count);
-            Assert.AreEqual("Warwickshire", results.First().Name);
-        }
-
-        [Test]
-        public void ShouldMatchExactCountyNameAndReturnAllPlacesInCounty()
-        {
-            // arrange
-            var service = ObjectFactory.GetInstance<ILocationLookupProvider>();
-            const string term = "Warwickshire";
-
-            // act
-            var results = service.FindLocation(term, 250).ToList();
-
-            // assert
-            Assert.AreEqual(236, results.Count);
-            Assert.AreEqual("Warwickshire", results.First().Name);
-        }
     }
 }
