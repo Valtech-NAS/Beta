@@ -24,7 +24,7 @@
     </div>
 </section>
 
-@using (Html.BeginForm("Apply", "Application", new {id = Model.VacancyId}, FormMethod.Post))
+@using (Html.BeginForm("Apply", "Application", new { id = Model.VacancyId }, FormMethod.Post))
 {
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
@@ -48,7 +48,7 @@
                 </label>
                 <label for="qualifications-no" class="block-label" data-bind="css: {selected: !showQualifications() }">
                     @Html.RadioButtonFor(m => m.Candidate.HasQualifications, false, false, new { id = "qualifications-no", data_bind = "attr:{'checked': hasNoQualifications() }" })
-                   No
+                    No
                 </label>
             </div>
             <div id="qualifications-panel" class="toggle-content" data-bind="style: {'display':showQualifications() ? 'block' :'none' }">
@@ -61,7 +61,7 @@
                         </div>
                         <div class="form-group vert-align-top" data-bind="parentvalElement:year">
                             <label for="subject-year" class="form-label">Year</label>
-                            <input maxlength="4" type="text" class="form-control form-control-small" pattern="[0-9]*" 
+                            <input maxlength="4" type="text" class="form-control form-control-small" pattern="[0-9]*"
                                    id="subject-year" data-bind="value: year">
                         </div>
                     </div>
@@ -88,10 +88,7 @@
                     </div>
                     <div class="form-group">
                         <a href="#" class="button" id="saveQualification" data-bind="click: addQualification">Add qualification</a>
-                    </div>
-                    <div class="form-group" data-bind="visible: displayErrors">
-                        <p id="qualification-validation-summary" class="field-validation-error">TODO: Please complete all fields displayed!</p>
-                    </div>
+                    </div>                    
                 </div>
                 <div data-bind="foreach: qualifications">
                     <div data-bind="visible: groupItems().length > 0 ">
@@ -129,8 +126,8 @@
                                         <input class="form-control qual-input-edit qual-subject" type="text" data-bind="value: qualificationSubject, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Subject', 'id':'candidate_qualifications_'+ itemIndex() + '__subject', 'readonly':readOnly() }" maxlength="50" />
                                     </td>
                                     <td>
-                                        <div class="small-btm-margin">                                            
-                                            <input class="form-control qual-input-edit qual-grade" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{'id':'candidate_qualifications_'+ itemIndex() + '__grade','readonly':readOnly() }" maxlength="15" />
+                                        <div class="small-btm-margin">
+                                            <input class="form-control qual-input-edit qual-grade" type="text" data-bind="value: showEditButton()? gradeDisplay : qualificationGrade, attr:{'id':'candidate_qualifications_'+ itemIndex() + '__grade','readonly':readOnly() }" />
                                             <input type="hidden" data-bind="value: qualificationGrade, attr:{'name':'Candidate.Qualifications[' + itemIndex() +'].Grade'}" />
                                         </div>
                                         <label for="item-qual-predicted" data-bind="ifnot: showEditButton">
@@ -152,7 +149,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>                    
+                    </div>
                 </div>
             </div>
 
@@ -161,7 +158,7 @@
     </div>
 
     <div data-bind="visible: selectedSection() === 'applyWorkExperience', stopBinding: true">
-        
+
         <fieldset id="applyWorkExperience" class="fieldset-with-border">
             <legend class="heading-large">Work experience</legend>
             <p class="hide-nojs form-label text">Do you have any work experience?</p>
@@ -171,11 +168,11 @@
             <div class="hide-nojs">
                 <div class="form-group inline clearfix">
                     <label data-target="workexperience-panel" for="workexp-yes" class="block-label" data-bind="css: {selected: showWorkExperience()}">
-                        @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, true, true, new {id="workexp-yes", data_bind = "attr:{'checked': hasWorkExperience() }" })
+                        @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, true, true, new { id = "workexp-yes", data_bind = "attr:{'checked': hasWorkExperience() }" })
                         Yes
                     </label>
                     <label for="workexp-no" class="block-label" data-bind="css: {selected: !showWorkExperience()}">
-                        @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, false, false, new { id="workexp-no", data_bind = "attr:{'checked': hasNoWorkExperience() }" })
+                        @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, false, false, new { id = "workexp-no", data_bind = "attr:{'checked': hasNoWorkExperience() }" })
                         No
                     </label>
                 </div>
@@ -185,7 +182,7 @@
                             <label for="work-employer" class="form-label">Employer</label>
                             <input type="text" class="form-control" id="work-employer" data-bind="value: employer" maxlength="50">
                         </div>
-                        <div class="form-group form-group" data-bind="parentvalElement: jobTitle">
+                        <div class="form-group form-group-compound" data-bind="parentvalElement: jobTitle">
                             <label for="work-title" class="form-label">Job title</label>
                             <input type="text" class="form-control" id="work-title" data-bind="value: jobTitle" maxlength="50">
                         </div>
@@ -353,11 +350,11 @@
         </fieldset>
 
     </div>
-   
+
 
     @Html.EditorFor(m => m.Candidate.AboutYou)
     @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)
-    
+
     <div class="form-group">
         @*The buttons below need the values so the controller knows what action to perform if restyling*@
         <button id="apply-button" type="submit" name="ApplicationAction" class="button" value="Preview">Preview application</button>
@@ -368,17 +365,14 @@
         {
             <p id="applicationSaved">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
         }
-    </div>    
-    
+    </div>
+
 }
 
 @section scripts{
 
-    <script id="errorMessage" type="text/html">
-        <span data-bind="visible: !field.isValid(), attr:{'class':!field.isValid()? 'field-validation-error' : 'field-validation-valid'}">
-            <span data-bind="validationMessage: field"></span>
-        </span>
-    </script>   
+    <script src="~/Content/_assets/js/vendor/knockout-3.1.0.js"></script>
+    <script src="~/Content/_assets/js/vendor/knockout.validation.js"></script>
 
     <script type="text/javascript">
 
@@ -392,19 +386,7 @@
             qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
             workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
             currentYear = @Html.Raw(Model.CurrentYear);
-            whitelistregex = @Html.Raw(Json.Encode(Model.WhiteListRegex));            
-
-            ko.validation.rules.pattern.message = 'Invalid.';
-            ko.validation.configure({
-                decorateElement: true,
-                registerExtenders: true,
-                messagesOnModified: true,
-                insertMessages: true,
-                parseInputAttributes: true,
-                errorClass: 'input-validation-error',
-                errorElementClass: 'input-validation-error',
-                messageTemplate: 'errorMessage'
-            });
+            whitelistregex = @Html.Raw(Json.Encode(Model.WhiteListRegex));
         });
 
         function getCurrentYear() {
@@ -437,34 +419,11 @@
             return whitelistregex;
         }
     </script>
-
-    @*<script src="~/Content/_assets/js/vendor/knockout-3.1.0.js"></script>
-        <script src="~/Content/_assets/js/vendor/knockout.validation.js"></script>*@
+    @*<script id="errorMessage" type="text/html">
+        <span data-bind="visible: !field.isValid(), attr:{'class':!field.isValid()? 'field-validation-error' : 'field-validation-valid'}">
+            <span data-bind="validationMessage: field"></span>
+        </span>
+    </script>*@
     <script src="~/Content/_assets/js/nas/applicationform.js"></script>
-    
-    <script type="text/javascript">
-        
-        //$.validator.addMethod('extMaxLength', function (value, element, maxlen){
-        //    if (maxlen > 0) {
-        //        var remaining = (maxlen - (parseInt($(element).val().replace(/(\r\n|\n|\r)/gm, '\n').length, 10)));
-        //        if (remaining < 0) {
-        //            return false;
-        //        }
-        //    }
-        //    return true;
-        //});
 
-        //$.validator.addMethod('rangelength', function (value, element) {
-        //    var maxlen = parseInt($(element).attr('data-val-length-max'));
-        //    if (maxlen > 0) {
-        //        var remaining = (maxlen - (parseInt($(element).val().replace(/(\r\n|\n|\r)/gm, '\r\n').length)));
-        //        if (remaining < 0) {
-        //            return false;
-        //        }
-        //    }
-
-        //    return true;
-        //});
-
-    </script>
 }

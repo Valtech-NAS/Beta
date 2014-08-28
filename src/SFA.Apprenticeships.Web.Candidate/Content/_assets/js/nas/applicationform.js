@@ -182,8 +182,6 @@
 
         self.errors = ko.validation.group(self);
 
-        self.displayErrors = ko.observable(false);
-
         self.selectedQualification.subscribe(function (selectedValue) {
             if (selectedValue === "Other") {
                 self.showOtherQualification(true);
@@ -226,11 +224,9 @@
                 self.grade("");
                 self.predicted(false);
 
-                self.displayErrors(false);
                 self.errors.showAllMessages(false);
             } else {
                 self.errors.showAllMessages();
-                self.displayErrors(true);
             }
         };
 
@@ -669,20 +665,53 @@
         };
 
     };
-
+    //Change this to modify where the vertical bar is placed
     ko.bindingHandlers.parentvalElement = {
         update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var valueIsValid = valueAccessor().isValid();
             if (!valueIsValid && viewModel.isAnyMessageShown()) {
+                //adds the vertical bar to the input element when it is invalid
                 $(element).addClass("input-validation-error");
             }
             else {
+                //removes the vertical bar when valid
                 $(element).removeClass("input-validation-error");
             }
         }
     };
 
     $(function () {
+        //override default knockout validation - insert validation message
+        ko.validation.insertValidationMessage = function (element) {
+
+            var span = document.createElement('span');
+
+            span.className = "field-validation-error";
+
+            var inputFormControls = $(element).closest(".form-control");
+
+            if (inputFormControls.length > 0) {
+
+                $(span).insertAfter(inputFormControls);
+
+            } else {
+                element.parentNode.insertBefore(span, element.nextSibling);
+            }
+            return span;
+        };
+
+        ko.validation.rules.pattern.message = 'Invalid.';
+        ko.validation.configure({
+            decorateElement: true,
+            registerExtenders: true,
+            messagesOnModified: true,
+            insertMessages: true,
+            parseInputAttributes: true,
+            errorClass: 'input-validation-error',
+            errorElementClass: 'input-validation-error'//,
+            //messageTemplate: 'errorMessage',
+            //grouping: { deep: true, observable: false }
+        });
 
         var model = new qualificationViewModel();
 
