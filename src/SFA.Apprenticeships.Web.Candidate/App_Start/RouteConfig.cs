@@ -39,12 +39,12 @@
             );
 
             routes.MapRoute(
-
-            routes.MapRoute(
                 name: RouteNames.Helpdesk,
                 url: "helpdesk",
                 defaults: new { controller = "Home", action = "Helpdesk" }
             );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
