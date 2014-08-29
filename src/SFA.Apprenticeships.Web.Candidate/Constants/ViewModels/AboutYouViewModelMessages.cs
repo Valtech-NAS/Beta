@@ -17,7 +17,7 @@
         public static class WhatDoYouFeelYouCouldImproveMessages
         {
             public const string LabelText = "What skills would you like to improve during this apprenticeship?";
-            public const string HintText = "Think of what your main duties will be and whether there are skills you'd like to develop";
+            public const string HintText = "Think of what your main duties would be and whether there are skills you'd like to develop";
             public const string RequiredErrorText = "Please provide examples of where you could improve";
             public const string TooLongErrorText = "Examples of where you could improve mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
@@ -37,8 +37,8 @@
         public static class AnythingWeCanDoToSupportYourInterviewMessages
         {
             public const string LabelText = "Is there anything we can do to support your interview?";
-            public const string HintText = "Provide examples below";
-            public const string RequiredErrorText = "Please provide details of interview support needed";
+            public const string HintText = "Provide details of interview support";
+            public const string RequiredErrorText = "Please provide details of interview support";
             public const string TooLongErrorText = "Interview support details mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Interview support details " + Whitelists.FreetextWhitelist.ErrorText;

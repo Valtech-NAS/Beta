@@ -15,11 +15,6 @@
 
         public IEnumerable<MyApplicationViewModel> AllApplications { get; private set; }
 
-        public IEnumerable<MyApplicationViewModel> InProgressApplications
-        {
-            get { return AllApplications.Where(each => each.ApplicationStatus == ApplicationStatuses.InProgress); }
-        }
-
         public IEnumerable<MyApplicationViewModel> SubmittedApplications
         {
             get

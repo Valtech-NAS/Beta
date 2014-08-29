@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Net;
     using System.Web.Mvc;
     using Common.Attributes;
     using Domain.Interfaces.Configuration;
@@ -37,6 +38,11 @@
         [AllowCrossSiteJson]
         public ActionResult Addresses(string postcode)
         {
+            if (!_searchProvider.IsValidPostcode(postcode))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid postcode.");
+            }
+
             var matches = _searchProvider.FindAddresses(postcode);
 
             if (Request.IsAjaxRequest())

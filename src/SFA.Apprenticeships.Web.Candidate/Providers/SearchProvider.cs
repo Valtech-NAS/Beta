@@ -55,6 +55,11 @@
             return vacancySearchResponseViewModel;
         }
 
+        public bool IsValidPostcode(string postcode)
+        {
+            return LocationHelper.IsPostcode(postcode);
+        }
+
         public IEnumerable<AddressViewModel> FindAddresses(string postcode)
         {
             var addresses = _addressSearchService.FindAddress(postcode);
