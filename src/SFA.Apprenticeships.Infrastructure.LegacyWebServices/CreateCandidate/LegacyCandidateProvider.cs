@@ -21,7 +21,7 @@
 
         public int CreateCandidate(Candidate candidate)
         {
-            Logger.Info("CreateCandidate handled for EntityId={0}, EmailAddress={1}", candidate.EntityId, candidate.RegistrationDetails.EmailAddress);
+            Logger.Debug("CreateCandidate handled for EntityId={0}, EmailAddress={1}", candidate.EntityId, candidate.RegistrationDetails.EmailAddress);
             var request = new CreateCandidateRequest
             {
                 Candidate = new GatewayServiceProxy.Candidate
@@ -51,9 +51,7 @@
                 {
                     var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
-                    Logger.Error(
-                        "Legacy CreateCandidate reported {0} validation error(s): {1}",
-                        response.ValidationErrors.Count(), responseAsJson);
+                    Logger.Error("Legacy CreateCandidate reported {0} validation error(s): {1}", response.ValidationErrors.Count(), responseAsJson);
                 }
                 else
                 {
@@ -65,7 +63,7 @@
 
             var legacyCandidateId = response.CandidateId;
 
-            Logger.Info("Candidate was successfully created on Legacy web service. LegacyCandidateId={0} ", legacyCandidateId);
+            Logger.Debug("Candidate was successfully created on Legacy web service. LegacyCandidateId={0} ", legacyCandidateId);
 
             return legacyCandidateId;
         }

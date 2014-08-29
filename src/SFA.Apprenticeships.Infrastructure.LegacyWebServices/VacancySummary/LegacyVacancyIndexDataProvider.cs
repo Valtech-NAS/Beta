@@ -39,18 +39,18 @@
                 }
             };
 
-            Logger.Info("Calling Legacy webservice for VacancyPageCount MessageId={0}", vacancySummaryRequest.MessageId);
+            Logger.Debug("Calling Legacy webservice for VacancyPageCount MessageId={0}", vacancySummaryRequest.MessageId);
 
             var rs = default(VacancySummaryResponse);
             _service.Use(client => rs = client.Get(vacancySummaryRequest));
 
             if (rs == null || rs.ResponseData == null)
             {
-                Logger.Info("No pages returned from Legacy webservice for VacancyPageCount MessageId={0}", vacancySummaryRequest.MessageId);
+                Logger.Debug("No pages returned from Legacy webservice for VacancyPageCount MessageId={0}", vacancySummaryRequest.MessageId);
                 return 0;
             }
 
-            Logger.Info("{0} pages returned from Legacy webservice for VacancyPageCount MessageId={1}", rs.ResponseData.TotalPages, vacancySummaryRequest.MessageId);
+            Logger.Debug("{0} pages returned from Legacy webservice for VacancyPageCount MessageId={1}", rs.ResponseData.TotalPages, vacancySummaryRequest.MessageId);
 
             return rs.ResponseData.TotalPages;
         }
@@ -69,7 +69,7 @@
                 }
             };
 
-            Logger.Info("Calling Legacy webservice for VacancySummaries MessageId={0}", vacancySummaryRequest.MessageId);
+            Logger.Debug("Calling Legacy webservice for VacancySummaries MessageId={0}", vacancySummaryRequest.MessageId);
 
             var rs = default(VacancySummaryResponse);
             _service.Use(client => rs = client.Get(vacancySummaryRequest));
@@ -79,11 +79,11 @@
                 rs.ResponseData.SearchResults == null ||
                 rs.ResponseData.SearchResults.Length == 0)
             {
-                Logger.Info("No results returned from Legacy webservice for VacancySummaries");
+                Logger.Debug("No results returned from Legacy webservice for VacancySummaries");
                 return Enumerable.Empty<VacancySummary>();
             }
 
-            Logger.Info("{0} results returned from Legacy webservice for VacancySummaries", rs.ResponseData.SearchResults.Count());
+            Logger.Debug("{0} results returned from Legacy webservice for VacancySummaries", rs.ResponseData.SearchResults.Count());
 
             return _mapper.Map<VacancySummaryData[], IEnumerable<VacancySummary>>(rs.ResponseData.SearchResults);
         }

@@ -48,11 +48,11 @@
                 rs.SearchResults.SearchResults == null ||
                 rs.SearchResults.SearchResults.Length == 0)
             {
-                Logger.Info("No results returned from Legacy Vacancy Data Provider for VacancyId={0}", vacancyId);
+                Logger.Debug("No results returned from Legacy Vacancy Data Provider for VacancyId={0}", vacancyId);
                 return default(VacancyDetail);
             }
 
-            Logger.Info("{0} results returned from Legacy Vacancy Data Provider for VacancyId={1}", rs.SearchResults.SearchResults.Count(), vacancyId);
+            Logger.Debug("{0} results returned from Legacy Vacancy Data Provider for VacancyId={1}", rs.SearchResults.SearchResults.Count(), vacancyId);
             return _mapper.Map<VacancyFullData, VacancyDetail>(rs.SearchResults.SearchResults.First());
         }
     }

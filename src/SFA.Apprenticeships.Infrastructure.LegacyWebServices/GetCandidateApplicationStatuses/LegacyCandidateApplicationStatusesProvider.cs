@@ -27,7 +27,7 @@
 
         public IEnumerable<ApplicationStatusSummary> GetCandidateApplicationStatuses(Candidate candidate)
         {
-            Logger.Info("GetCandidateApplications handled for EntityId={0}, EmailAddress={1}", candidate.EntityId, candidate.RegistrationDetails.EmailAddress);
+            Logger.Debug("GetCandidateApplications handled for EntityId={0}, EmailAddress={1}", candidate.EntityId, candidate.RegistrationDetails.EmailAddress);
 
             var request = new GetCandidateInfoRequest
             {
@@ -57,7 +57,7 @@
                 throw new Exception("Failed to retrieve candidate applications in legacy system");
             }
 
-            Logger.Info("Candidate applications were successfully retrieved from Legacy web service ({0})", response.CandidateApplications.Count());
+            Logger.Debug("Candidate applications were successfully retrieved from Legacy web service ({0})", response.CandidateApplications.Count());
 
             return _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications);
         }

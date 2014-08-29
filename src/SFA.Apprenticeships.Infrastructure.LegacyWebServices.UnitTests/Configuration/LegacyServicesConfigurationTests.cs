@@ -3,7 +3,7 @@
     using System;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Configuration;
+    using LegacyWebServices.Configuration;
 
     [TestFixture]
     public class LegacyServicesConfigurationTests
