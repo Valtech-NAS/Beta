@@ -60,7 +60,6 @@
     </Compile>
     <Compile Include="Helpers\TestApplicationHelper.cs" />
     <Compile Include="Helpers\TestCandidateHelper.cs" />
-    <Compile Include="LegacyReferenceDataProviderIntegrationTests.cs" />
     <Compile Include="LegacyApplicationProviderIntegrationTests.cs" />
     <Compile Include="LegacyApplicationStatusesProviderIntegrationTests.cs" />
     <Compile Include="LegacyCandidateProviderIntegrationTests.cs" />
