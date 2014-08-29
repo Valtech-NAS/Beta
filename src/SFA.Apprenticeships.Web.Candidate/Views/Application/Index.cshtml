@@ -32,28 +32,22 @@
 else
 {
     <ul class="list-nav">
-    @if (Model.InProgressApplications.Any())
-    {
-        <li>
-            <span class="bold-medium">@Model.InProgressApplications.Count()</span>  <a class="" href="#dashInProgress">In progress</a>
-        </li>
-    }
     @if (Model.SuccessfulApplications.Any())
     {
         <li>
             <span class="bold-medium">@Model.SuccessfulApplications.Count()</span>  <a class="" href="#dashSuccessful">Successful</a>
         </li>
     }
-    @if (Model.UnsuccessfulApplications.Any())
-    {
-        <li>
-            <span class="bold-medium">@Model.UnsuccessfulApplications.Count()</span>  <a class="" href="#dashUnsuccessful">Unsuccessful</a>
-        </li>
-    }
     @if (Model.SubmittedApplications.Any())
     {
         <li>
             <span id="submitted-applications-count" class="bold-medium">@Model.SubmittedApplications.Count()</span>  <a class="" href="#dashSubmitted">Submitted</a>
+        </li>
+    }
+    @if (Model.UnsuccessfulApplications.Any())
+    {
+        <li>
+            <span class="bold-medium">@Model.UnsuccessfulApplications.Count()</span>  <a class="" href="#dashUnsuccessful">Unsuccessful</a>
         </li>
     }
     @if (Model.DraftApplications.Any())
@@ -65,7 +59,6 @@ else
     </ul>
     <div class="grid-wrapper proto-dashboard">
         @if (
-            Model.InProgressApplications.Any() ||
             Model.SuccessfulApplications.Any() ||
             Model.UnsuccessfulApplications.Any() ||
             Model.SubmittedApplications.Any())
@@ -73,39 +66,6 @@ else
             <div class="grid grid-1-2">
                 <div class="inner-block-padr">
                     <section class="clearfix">
-                        @if (Model.InProgressApplications.Any())
-                        {
-                            <h2 class="heading-medium" id="dashInProgress">In progress</h2>
-                            <table class="vert-middle">
-                                <colgroup>
-                                    <col class="t50">
-                                    <col class="t25">
-                                    <col class="t25">
-                                    <col>
-                                </colgroup>
-                                <tbody class="tbody-3rows">
-                                    @foreach (var application in @Model.InProgressApplications)
-                                    {
-                                        <tr>
-                                            <td>@application.Title with @application.EmployerName</td>
-                                            <td class="ta-center">In progress</td>
-                                            <td class="ta-center">
-                                                <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                                <tbody class="tbody-expandrows">
-                                    <tr class="no-btm-border">
-                                        <td colspan="2"></td>
-                                        <td class="no-wrap ta-center">
-                                            <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        }
-
                         @if (Model.SuccessfulApplications.Any())
                         {
                             <h2 class="heading-medium" id="dashSuccessful">Successful</h2>
@@ -116,7 +76,7 @@ else
                                     <col class="t25">
                                     <col>
                                 </colgroup>
-                                <tbody>
+                                <tbody class="tbody-3rows">
                                     @foreach (var application in @Model.SuccessfulApplications)
                                     {
                                         <tr>
@@ -138,49 +98,7 @@ else
                                 </tbody>
                             </table>
                         }
-
-                        @if (Model.UnsuccessfulApplications.Any())
-                        {
-                            <h2 class="heading-medium" id="dashUnsuccessful">Unsuccessful</h2>
-                            <table class="vert-middle" id="">
-                                <colgroup>
-                                    <col class="t50">
-                                    <col class="t25">
-                                    <col class="t25">
-                                    <col>
-                                </colgroup>
-                                <tbody>
-                                    @foreach (var application in @Model.UnsuccessfulApplications)
-                                    {
-                                        <tr>
-                                            <td>@application.Title with @application.EmployerName</td>
-                                            <td class="ta-center">Unsuccessful</td>
-                                            <td class="ta-center">
-                                                <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                                            </td>
-                                        </tr>
-
-                                        if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason))
-                                        {
-                                            <tr>
-                                                <td colspan="3">
-                                                    <b>Reason:</b> @application.UnsuccessfulReason
-                                                </td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                                <tbody class="tbody-expandrows">
-                                    <tr class="no-btm-border">
-                                        <td colspan="2"></td>
-                                        <td class="no-wrap ta-center">
-                                            <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        }
-
+                        
                         @if (Model.SubmittedApplications.Any())
                         {
                             <h2 class="heading-medium" id="dashSubmitted">Submitted</h2>
@@ -199,6 +117,48 @@ else
                                             <td class="ta-center">Submitted</td>
                                             <td class="ta-center">@Html.DisplayFor(m => application.DateApplied)</td>
                                         </tr>
+                                    }
+                                </tbody>
+                                <tbody class="tbody-expandrows">
+                                    <tr class="no-btm-border">
+                                        <td colspan="2"></td>
+                                        <td class="no-wrap ta-center">
+                                            <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                        
+                        @if (Model.UnsuccessfulApplications.Any())
+                        {
+                            <h2 class="heading-medium" id="dashUnsuccessful">Unsuccessful</h2>
+                            <table class="vert-middle" id="">
+                                <colgroup>
+                                    <col class="t50">
+                                    <col class="t25">
+                                    <col class="t25">
+                                    <col>
+                                </colgroup>
+                                <tbody class="tbody-3rows">
+                                    @foreach (var application in @Model.UnsuccessfulApplications)
+                                    {
+                                        <tr>
+                                            <td>@application.Title with @application.EmployerName</td>
+                                            <td class="ta-center">Unsuccessful</td>
+                                            <td class="ta-center">
+                                                <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                            </td>
+                                        </tr>
+
+                                        if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason))
+                                        {
+                                            <tr>
+                                                <td colspan="3">
+                                                    <b>Reason:</b> @application.UnsuccessfulReason
+                                                </td>
+                                            </tr>
+                                        }
                                     }
                                 </tbody>
                                 <tbody class="tbody-expandrows">
