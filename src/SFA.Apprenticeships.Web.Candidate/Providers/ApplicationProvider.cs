@@ -111,7 +111,6 @@
                     Title = each.Title,
                     EmployerName = each.EmployerName,
                     UnsuccessfulReason = each.UnsuccessfulReason,
-                    WithdrawnOrDeclinedReason = each.WithdrawnOrDeclinedReason,
                     ApplicationStatus = each.Status,
                     IsArchived = each.IsArchived,
                     DateApplied = each.DateApplied,
