@@ -99,8 +99,10 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="VacancyDetail\CachedLegacyVacancyDataProvider.cs" />
+    <Compile Include="VacancyDetail\GatewayVacancyDataProvider.cs" />
     <Compile Include="VacancyDetail\LegacyVacancyDataProvider.cs" />
     <Compile Include="VacancyDetail\VacancyDataServiceCacheKeyEntry.cs" />
+    <Compile Include="VacancySummary\GatewayVacancyIndexDataProvider.cs" />
     <Compile Include="VacancySummary\LegacyVacancyIndexDataProvider.cs" />
     <Compile Include="Wcf\IWcfService.cs" />
     <Compile Include="Wcf\WcfService.cs" />
