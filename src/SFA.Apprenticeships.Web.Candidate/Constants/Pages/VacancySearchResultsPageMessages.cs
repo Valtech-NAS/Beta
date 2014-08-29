@@ -4,5 +4,6 @@
     {
         public const string PostcodeLookupFailed = "TODO: 'Postcode' lookup failed - retry";
         public const string LocationLookupFailed = "TODO: 'Location' lookup failed - retry";
+        public static string VacanciesSearchFailed = "TODO: 'Vacancies' search failed - retry";
     }
 }

@@ -2,6 +2,6 @@
 {
     public static class ErrorCodes
     {
-        public const string LocationLookupFailed = "LocationSearch.Failed";
+        public static string VacanciesSearchFailed = "VacanciesSearch.Failed";
     }
 }

@@ -35,7 +35,7 @@
             catch (Exception e)
             {
                 throw new Domain.Entities.Exceptions.CustomException(
-                    "Vacancy search failed.", e, ErrorCodes.LocationLookupFailed);
+                    "Vacancy search failed.", e, ErrorCodes.VacanciesSearchFailed);
             }
         }
     }

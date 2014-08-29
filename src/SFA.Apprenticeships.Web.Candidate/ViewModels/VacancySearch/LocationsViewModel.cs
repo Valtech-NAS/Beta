@@ -3,26 +3,20 @@
     using System.Collections.Generic;
     using Constants.ViewModels;
 
-    public class LocationsViewModel
+    public class LocationsViewModel : ViewModelBase
     {
         public LocationsViewModel()
             : this(new LocationViewModel[] { })
         {
         }
 
+        public LocationsViewModel(string message) : base(message) { }
+
         public LocationsViewModel(IEnumerable<LocationViewModel> locations)
         {
             Locations = locations;
         }
-        
-        public LocationsViewModel(string message)
-        {
-            ViewModelMessage = message;
-        }
 
         public IEnumerable<LocationViewModel> Locations { get; private set; }
-
-        // TODO: AG: US333: refactor into an object on new ViewModelBase class.
-        public string ViewModelMessage { get; private set; }
     }
 }

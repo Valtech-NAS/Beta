@@ -70,16 +70,23 @@ namespace SFA.Apprenticeships.Web.Candidate.Providers
         {
             var searchLocation = _mapper.Map<VacancySearchViewModel, Location>(search);
 
-            var searchResponse = _vacancySearchService.Search(search.Keywords, searchLocation, search.PageNumber,
-                pageSize, search.WithinDistance, search.SortType);
+            try
+            {
+                var searchResponse = _vacancySearchService.Search(search.Keywords, searchLocation, search.PageNumber,
+                    pageSize, search.WithinDistance, search.SortType);
 
-            var vacancySearchResponseViewModel =
-                _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(searchResponse);
+                var vacancySearchResponseViewModel =
+                    _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(searchResponse);
 
-            vacancySearchResponseViewModel.PageSize = pageSize;
-            vacancySearchResponseViewModel.VacancySearch = search;
+                vacancySearchResponseViewModel.PageSize = pageSize;
+                vacancySearchResponseViewModel.VacancySearch = search;
 
-            return vacancySearchResponseViewModel;
+                return vacancySearchResponseViewModel;
+            }
+            catch (CustomException)
+            {
+                return new VacancySearchResponseViewModel(VacancySearchResultsPageMessages.VacanciesSearchFailed);
+            }
         }
 
         public bool IsValidPostcode(string postcode)

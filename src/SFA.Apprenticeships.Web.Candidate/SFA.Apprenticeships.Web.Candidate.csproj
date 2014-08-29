@@ -501,6 +501,7 @@
     <Compile Include="ViewModels\VacancySearch\VacancySearchResponseViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySummaryViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
