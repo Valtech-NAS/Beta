@@ -2,9 +2,7 @@
 {
     using Application.ApplicationUpdate;
     using Application.Candidate.Strategies;
-    using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
-    using Application.ReferenceData;
     using Application.Vacancy;
     using Application.VacancyEtl;
     using Configuration;
@@ -14,8 +12,6 @@
     using GatewayServiceProxy;
     using GetCandidateApplicationStatuses;
     using Mappers;
-    using ReferenceData;
-    using ReferenceDataProxy;
     using StructureMap.Configuration.DSL;
     using VacancyDetail;
     using VacancyDetailProxy;
@@ -36,7 +32,6 @@
             For<ILegacyServicesConfiguration>().Singleton().Use(LegacyServicesConfiguration.Instance);
             For<IWcfService<IVacancySummary>>().Use<WcfService<IVacancySummary>>();
             For<IWcfService<IVacancyDetails>>().Use<WcfService<IVacancyDetails>>();
-            For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
             For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
 
             For<IVacancyIndexDataProvider>()
@@ -67,28 +62,6 @@
                 .Ctor<IVacancyDataProvider>();
 
             For<IVacancyStatusProvider>().Use<LegacyVacancyStatusProvider>();
-
-            #endregion
-
-            #region Reference Data Service And Providers
-
-            For<IReferenceDataProvider>()
-                .Use<LegacyReferenceDataProvider>()
-                .Name = "LegacyReferenceDataProvider";
-
-            if (useCache)
-            {
-                For<IReferenceDataProvider>()
-                    .Use<CachedLegacyReferenceDataProvider>()
-                    .Ctor<IReferenceDataProvider>()
-                    .IsTheDefault()
-                    .Ctor<IReferenceDataProvider>()
-                    .Named("LegacyReferenceDataProvider");
-            }
-
-            For<IReferenceDataService>()
-                .Use<ReferenceDataService>()
-                .Ctor<IReferenceDataProvider>();
 
             #endregion
 
