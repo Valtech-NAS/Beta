@@ -24,11 +24,11 @@
         [AllowCrossSiteJson]
         public ActionResult Location(string term)
         {
-            var matches = _searchProvider.FindLocation(term);
+            var result = _searchProvider.FindLocation(term);
 
             if (Request.IsAjaxRequest())
             {
-                return Json(matches.Take(_locationResultLimit), JsonRequestBehavior.AllowGet);
+                return Json(result.Locations.Take(_locationResultLimit), JsonRequestBehavior.AllowGet);
             }
 
             throw new NotImplementedException("Non-js not yet implemented!");

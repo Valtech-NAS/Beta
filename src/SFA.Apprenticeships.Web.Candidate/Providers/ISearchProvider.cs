@@ -6,7 +6,7 @@
 
     public interface ISearchProvider
     {
-        IEnumerable<LocationViewModel> FindLocation(string placeNameOrPostcode);
+        LocationsViewModel FindLocation(string placeNameOrPostcode);
 
         IEnumerable<AddressViewModel> FindAddresses(string postcode);
 

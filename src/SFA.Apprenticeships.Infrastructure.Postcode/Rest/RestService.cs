@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
+    using Domain.Entities.Exceptions;
     using RestSharp;
     using RestSharp.Deserializers;
 
@@ -68,35 +69,43 @@
             return Create(Method.GET, url, string.Empty, segments);
         }
 
-        public virtual IRestResponse Execute(IRestRequest request)
-        {
-            var response = Client.Execute(request);
-
-            if (response.ErrorException != null)
-            {
-                throw new ApplicationException(
-                    "Error retrieving response. Check inner details for more info.",
-                    response.ErrorException);
-            }
-
-            return response;
-        }
-
         public virtual IRestResponse<T> Execute<T>(IRestRequest request) where T : new()
         {
             var response = Client.Execute<T>(request);
 
             /* Restsharp deserializer doesn't appear to handle property names that differ from response */
-            // var result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(response.Content);
+            // TODO: DEADCODE: var result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(response.Content);
+
+            if (response.ResponseStatus != ResponseStatus.Completed)
+            {
+                ThrowIncompleteResponseException(response);
+            }
 
             if (response.ErrorException != null)
             {
-                throw new ApplicationException(
-                    "Error retrieving response. Check inner details for more info.",
-                    response.ErrorException);
+                ThrowErrorException(response);
             }
 
             return response;
         }
+
+        private static void ThrowIncompleteResponseException<T>(IRestResponse<T> response)
+        {
+            string message = string.Format(
+                "REST service failed to complete: \"{0}\", response status: {1}, HTTP status code: {2}.",
+                response.ErrorMessage, response.ResponseStatus, response.StatusCode);
+
+            throw new ApplicationException(message);
+        }
+
+        #region Helpers
+
+        private static void ThrowErrorException(IRestResponse response)
+        {
+            throw new ApplicationException("Error retrieving response. Check inner details for more info.", 
+                response.ErrorException);
+        }
+
+        #endregion
     }
 }

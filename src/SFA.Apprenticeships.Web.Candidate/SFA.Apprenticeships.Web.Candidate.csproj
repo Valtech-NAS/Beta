@@ -403,11 +403,13 @@
     <Compile Include="Constants\Pages\AccountUnlockPageMessages.cs" />
     <Compile Include="Constants\Pages\PreviewPageMessages.cs" />
     <Compile Include="Constants\Pages\LoginPageMessages.cs" />
+    <Compile Include="Constants\Pages\VacancySearchResultsPageMessages.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ActivationCodeMessages.cs" />
     <Compile Include="Constants\ViewModels\ForgottenPasswordViewModelMessages.cs" />
     <Compile Include="Constants\Pages\MyApplicationsPageMessages.cs" />
+    <Compile Include="Constants\ViewModels\LocationsViewModelStates.cs" />
     <Compile Include="Constants\ViewModels\LoginViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\AccountUnlockViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\PasswordResetViewModelMessages.cs" />
@@ -416,6 +418,7 @@
     <Compile Include="Constants\ViewModels\EducationViewModelMessages.cs" />
     <Compile Include="Constants\Pages\SignOutPageMessages.cs" />
     <Compile Include="Constants\ViewModels\SettingsViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\ViewModelStates.cs" />
     <Compile Include="Constants\ViewModels\WorkExperienceViewModelMessages.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -492,6 +495,7 @@
     <Compile Include="ViewModels\Register\ActivationViewModel.cs" />
     <Compile Include="ViewModels\Register\PasswordResetViewModel.cs" />
     <Compile Include="ViewModels\Register\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\LocationsViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancyDetailViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchResponseViewModel.cs" />

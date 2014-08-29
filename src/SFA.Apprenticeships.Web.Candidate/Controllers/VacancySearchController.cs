@@ -1,14 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using System.Text.RegularExpressions;
     using System.Web.Mvc;
     using ActionResults;
     using Application.Interfaces.Vacancies;
     using Common.Constants;
+    using Constants.Pages;
+    using Constants.ViewModels;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Microsoft.Ajax.Utilities;
@@ -53,44 +53,74 @@
         }
 
         [HttpGet]
-        public ActionResult Results(VacancySearchViewModel searchViewModel)
+        public ActionResult Results(VacancySearchViewModel model)
         {
             UserData.Pop(UserDataItemNames.VacancyDistance);
 
-            PopulateLookups(searchViewModel);
+            PopulateLookups(model);
 
-            var clientResult = _searchRequestValidator.Validate(searchViewModel);
+            var clientResult = _searchRequestValidator.Validate(model);
 
             if (!clientResult.IsValid)
             {
                 ModelState.Clear();
                 clientResult.AddToModelState(ModelState, string.Empty);
 
-                return View("results", new VacancySearchResponseViewModel { VacancySearch = searchViewModel });
+                return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
             }
 
-            searchViewModel.CheckLatLonLocHash();
+            model.CheckLatLonLocHash();
 
-            if (!HasGeoPoint(searchViewModel))
+            if (!HasGeoPoint(model))
             {
                 // Either user not selected item from dropdown or javascript disabled.
-                var suggestedLocations = FindSuggestedLocations(searchViewModel);
+                var suggestedLocations = _searchProvider.FindLocation(model.Location.Trim());
 
-                if (suggestedLocations != null)
+                if (suggestedLocations.ViewModelMessage != null)
                 {
-                    ViewBag.LocationSearches = suggestedLocations;
+                        ModelState.Clear();
+                        SetUserMessage(suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
+
+                        return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
+                }
+
+                if (suggestedLocations.Locations.Any())
+                {
+                    var location = suggestedLocations.Locations.First();
+
+                    model.Location = location.Name;
+                    model.Latitude = location.Latitude;
+                    model.Longitude = location.Longitude;
+
+                    ViewBag.LocationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
+                    {
+                        var vsvm = new VacancySearchViewModel
+                        {
+                            Keywords = model.Keywords,
+                            Location = each.Name,
+                            Latitude = each.Latitude,
+                            Longitude = each.Longitude,
+                            PageNumber = model.PageNumber,
+                            SortType = model.SortType,
+                            WithinDistance = model.WithinDistance
+                        };
+
+                        vsvm.Hash = vsvm.LatLonLocHash();
+
+                        return vsvm;
+                    }).ToArray();
                 }
             }
 
-            var locationResult = _searchLocationValidator.Validate(searchViewModel);
+            var locationResult = _searchLocationValidator.Validate(model);
 
             if (!locationResult.IsValid)
             {
                 ModelState.Clear();
-                return View("results", new VacancySearchResponseViewModel { VacancySearch = searchViewModel });
+                return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
             }
 
-            var results = _searchProvider.FindVacancies(searchViewModel, _vacancyResultsPerPage);
+            var results = _searchProvider.FindVacancies(model, _vacancyResultsPerPage);
 
             return View("results", results);
         }
@@ -151,36 +181,7 @@
 
         private VacancySearchViewModel[] FindSuggestedLocations(VacancySearchViewModel searchViewModel)
         {
-            var locations = _searchProvider.FindLocation(searchViewModel.Location.Trim()).ToList();
-
-            if (!locations.Any())
-            {
-                return null;
-            }
-
-            var location = locations.First();
-
-            searchViewModel.Location = location.Name;
-            searchViewModel.Latitude = location.Latitude;
-            searchViewModel.Longitude = location.Longitude;
-
-            return locations.Skip(1).Select(l =>
-            {
-                var vsvm = new VacancySearchViewModel
-                {
-                    Keywords = searchViewModel.Keywords,
-                    Location = l.Name,
-                    Latitude = l.Latitude,
-                    Longitude = l.Longitude,
-                    PageNumber = searchViewModel.PageNumber,
-                    SortType = searchViewModel.SortType,
-                    WithinDistance = searchViewModel.WithinDistance
-                };
-
-                vsvm.Hash = vsvm.LatLonLocHash();
-
-                return vsvm;
-            }).ToArray();
+            return null;
         }
 
         private void PopulateDistances(int selectedValue = 2)

@@ -42,8 +42,8 @@
             _locationSearchService.Setup(x => x.FindLocation("Location1")).Returns(locations);
 
             var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object, _addressSearchService.Object, _mapper);
-            var test = searchProvider.FindLocation("Location1");
-            var result = test.First();
+            var results = searchProvider.FindLocation("Location1");
+            var result = results.Locations.First();
 
             result.Should().NotBeNull();
             result.Latitude.Should().Be(0.1d);
@@ -57,9 +57,9 @@
                 .Returns(default(IEnumerable<Location>));
 
             var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object, _addressSearchService.Object, _mapper);
-            var test = searchProvider.FindLocation(string.Empty);
+            var results = searchProvider.FindLocation(string.Empty);
 
-            test.Should().BeEmpty();
+            results.Locations.Should().BeEmpty();
         }
 
         [TestCase]

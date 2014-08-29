@@ -40,6 +40,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Locations\ErrorCodes.cs" />
     <Compile Include="Locations\IAddressSearchProvider.cs" />
     <Compile Include="Messaging\SubmitApplicationRequest.cs" />
     <Compile Include="Messaging\CandidateMessageTypes.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="ReferenceData\IReferenceDataService.cs" />
     <Compile Include="Search\SearchResults.cs" />
     <Compile Include="Users\IAuthenticationService.cs" />
+    <Compile Include="Vacancies\ErrorCodes.cs" />
     <Compile Include="Vacancies\VacancySortType.cs" />
     <Compile Include="Vacancies\IVacancyDataService.cs" />
     <Compile Include="Vacancies\IVacancySearchService.cs" />

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Location
 {
+    using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
@@ -22,7 +23,17 @@
 
             if (LocationHelper.IsPostcode(placeNameOrPostcode))
             {
-                var location = _postcodeLookupProvider.GetLocation(placeNameOrPostcode);
+                Location location;
+
+                try
+                {
+                    location = _postcodeLookupProvider.GetLocation(placeNameOrPostcode);
+                }
+                catch (Exception e)
+                {
+                    throw new Domain.Entities.Exceptions.CustomException(
+                        "Postcode lookup failed.", e, ErrorCodes.PostcodeLookupFailed);
+                }
 
                 if (location == null) return null; // no match
 
@@ -36,7 +47,15 @@
                 };
             }
 
-            return _locationLookupProvider.FindLocation(placeNameOrPostcode);
+            try
+            {
+                return _locationLookupProvider.FindLocation(placeNameOrPostcode);
+            }
+            catch (Exception e)
+            {
+                throw new Domain.Entities.Exceptions.CustomException(
+                    "Location lookup failed.", e, ErrorCodes.LocationLookupFailed);
+            }
         }
     }
 }
