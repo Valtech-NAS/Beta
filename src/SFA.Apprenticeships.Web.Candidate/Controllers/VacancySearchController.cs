@@ -74,11 +74,6 @@
             if (!HasGeoPoint(searchViewModel))
             {
                 // Either user not selected item from dropdown or javascript disabled.
-                if (IsPartialPostcode(searchViewModel))
-                {
-                    return View("results", new VacancySearchResponseViewModel { VacancySearch = searchViewModel });
-                }
-
                 var suggestedLocations = FindSuggestedLocations(searchViewModel);
 
                 if (suggestedLocations != null)
@@ -142,11 +137,6 @@
         }
 
         #region Helpers
-
-        private static bool IsPartialPostcode(VacancySearchViewModel searchViewModel)
-        {
-            return Regex.IsMatch(searchViewModel.Location, @"\d+");
-        }
 
         private static bool HasGeoPoint(VacancySearchViewModel searchViewModel)
         {
