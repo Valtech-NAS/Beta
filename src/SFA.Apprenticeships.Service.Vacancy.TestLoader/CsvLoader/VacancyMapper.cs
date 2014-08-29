@@ -7,7 +7,7 @@
     {
         public VacancyMapper()
         {
-            Map(m => m.Id).Name("Vacancy Ref");
+            Map(m => m.Id).Name("Test ID");
             Map(m => m.Title).Name("Title");
             Map(m => m.Description).Name("Description");
             Map(m => m.EmployerName).Name("Employer");

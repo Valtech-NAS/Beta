@@ -183,8 +183,8 @@
                 new[]
                 {
                     new {SortType = VacancySortType.Distance, Name = "Distance"},
-                    new {SortType = VacancySortType.ClosingDate, Name = "Closing Date"}
-                    //new { SortType = VacancySortType.Relevancy, Name = "Best Match" }
+                    new {SortType = VacancySortType.ClosingDate, Name = "Closing Date"},
+                    new { SortType = VacancySortType.Relevancy, Name = "Best Match" }
                 },
                 "SortType",
                 "Name",

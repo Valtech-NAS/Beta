@@ -25,6 +25,10 @@
                 <p>@Html.ActionLink("Read more", "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString })</p>
                 <div class="inl-block-wrapper">
                     <ul class="list-text btm-align width-all-2-3">
+                        @if (vacancy.Score != 0)
+                        {
+                            <li><b>Match Score:</b> <span class="distance-value">@vacancy.Score</span></li>
+                        }
                         <li><b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles</li>
                         <li><b>Closing date:</b> <span class="closing-date-value">@Html.DisplayFor(m => vacancy.ClosingDate, "Date")</span></li>
                     </ul>
