@@ -46,25 +46,28 @@
                 {
                     QueryContainer query = null;
 
-                    if (searchRequestExtended.UseJobTitleTerms && !string.IsNullOrWhiteSpace(searchRequestExtended.JobTitleTerms))
+                    if (searchRequestExtended.SearchJobTitleField)
                     {
-                        var queryClause = q.Match(m =>
+                        if (searchRequestExtended.UseJobTitleTerms && !string.IsNullOrWhiteSpace(searchRequestExtended.JobTitleTerms))
                         {
-                            m.OnField(f => f.Title).Query(searchRequestExtended.JobTitleTerms);
-                            BuildFieldQuery(m, searchRequestExtended.JobTitleFactors);
-                        });
+                            var queryClause = q.Match(m =>
+                            {
+                                m.OnField(f => f.Title).Query(searchRequestExtended.JobTitleTerms);
+                                BuildFieldQuery(m, searchRequestExtended.JobTitleFactors);
+                            });
 
-                        query = BuildContainer(null, queryClause);
-                    }
-                    else
-                    {
-                        var queryClause = q.Match(m =>
+                            query = BuildContainer(null, queryClause);
+                        }
+                        else
                         {
-                            m.OnField(f => f.Title).Query(searchRequestExtended.KeywordTerms);
-                            BuildFieldQuery(m, searchRequestExtended.JobTitleFactors);
-                        });
+                            var queryClause = q.Match(m =>
+                            {
+                                m.OnField(f => f.Title).Query(searchRequestExtended.KeywordTerms);
+                                BuildFieldQuery(m, searchRequestExtended.JobTitleFactors);
+                            });
 
-                        query = BuildContainer(null, queryClause);
+                            query = BuildContainer(null, queryClause);
+                        }
                     }
 
                     if (searchRequestExtended.SearchDescriptionField && !string.IsNullOrWhiteSpace(searchRequestExtended.KeywordTerms))
@@ -114,7 +117,7 @@
             return queryContainer;
         }
 
-        private void BuildFieldQuery(MatchQueryDescriptor<VacancySummaryResponse> queryDescriptor, KeywordFactors searchFactors)
+        private static void BuildFieldQuery(MatchQueryDescriptor<VacancySummaryResponse> queryDescriptor, KeywordFactors searchFactors)
         {
             if (searchFactors.Boost.HasValue)
             {
