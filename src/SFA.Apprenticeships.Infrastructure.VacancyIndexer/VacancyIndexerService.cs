@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Application.VacancyEtl.Entities;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
@@ -49,11 +48,27 @@
             var client = _elasticsearchClientFactory.GetElasticClient();
 
             var indexExistsResponse = client.IndexExists(i => i.Index(newIndexName));
+
+            if (indexExistsResponse.Exists)
+            {
+                // If it already exists and is empty, let's delete it and recreate it.
+                var totalResults = client.Count<VacancySummary>(c =>
+                {
+                    c.Index(newIndexName);
+                    return c;
+                });
+
+                if (totalResults.Count == 0)
+                {
+                    client.DeleteIndex(i => i.Index(newIndexName));
+                    indexExistsResponse = client.IndexExists(i => i.Index(newIndexName));
+                }
+            }
+
             if (!indexExistsResponse.Exists)
             {
                 var indexCreationResp = client.CreateIndex(i => i.Index(newIndexName));
                 var mapResp = client.Map<VacancySummary>(p => p.Index(newIndexName));
-
                 Logger.Debug("Created new vacancy search index named: {0}", newIndexName);
             }
             else
