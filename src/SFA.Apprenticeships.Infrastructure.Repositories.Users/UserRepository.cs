@@ -22,6 +22,7 @@
         {
             _mapper = mapper;
 
+            // TODO: AG: US333: creating an index in the constructor creates a point of failure here. Can we avoid this? 
             Collection.CreateIndex(new IndexKeysBuilder().Ascending("Username"), IndexOptions.SetUnique(true));
         }
 

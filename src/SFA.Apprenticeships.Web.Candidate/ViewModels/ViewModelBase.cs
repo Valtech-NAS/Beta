@@ -1,13 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     public class ViewModelBase
     {
-        public ViewModelBase() { }
+        public ViewModelBase()
+        {
+        }
 
         public ViewModelBase(string message)
         {
