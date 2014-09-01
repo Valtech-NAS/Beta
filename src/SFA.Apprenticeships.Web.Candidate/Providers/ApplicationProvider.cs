@@ -39,7 +39,7 @@
             }
             catch (CustomException e)
             {
-                if (ex.Code == exceptions.ErrorCodes.VacancyExpired)
+                if (e.Code == exceptions.ErrorCodes.VacancyExpired)
                 {
                     return new ApplicationViewModel(MyApplicationsPageMessages.DraftExpired);
                 }
