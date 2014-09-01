@@ -260,6 +260,17 @@ this.FeatureBackground();
 #line 71
  testRunner.And("I see", ((string)(null)), table5, "And ");
 #line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table6.AddRow(new string[] {
+                        "SuccessMessageText",
+                        "Equals",
+                        "TODO: settings updated"});
+#line 86
+ testRunner.And("I see", ((string)(null)), table6, "And ");
+#line hidden
             this.ScenarioCleanup();
         }
         
@@ -268,60 +279,43 @@ this.FeatureBackground();
         public virtual void AsACandidateICannotSaveInvalidPersonalSettings()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I cannot save invalid personal settings", ((string[])(null)));
-#line 86
+#line 90
 this.ScenarioSetup(scenarioInfo);
 #line 8
 this.FeatureBackground();
-#line 88
+#line 92
  testRunner.Given("I navigated to the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 89
- testRunner.When("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 91
- testRunner.And("I wait to see UpdateDetailsButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
-                        "Rule",
-                        "Value"});
-            table6.AddRow(new string[] {
-                        "ClearAllSettings",
-                        "Equals",
-                        "Done"});
 #line 93
- testRunner.Then("I see", ((string)(null)), table6, "Then ");
-#line 97
- testRunner.When("I choose UpdateDetailsButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 98
- testRunner.Then("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 95
+ testRunner.And("I wait to see UpdateDetailsButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
             table7.AddRow(new string[] {
-                        "ValidationSummaryCount",
+                        "ClearAllSettings",
                         "Equals",
-                        "8"});
-#line 100
- testRunner.And("I see", ((string)(null)), table7, "And ");
-#line 104
- testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+                        "Done"});
+#line 97
+ testRunner.Then("I see", ((string)(null)), table7, "Then ");
+#line 101
+ testRunner.When("I choose UpdateDetailsButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 102
+ testRunner.Then("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
             table8.AddRow(new string[] {
-                        "Text",
+                        "ValidationSummaryCount",
                         "Equals",
-                        "Please enter first name"});
-            table8.AddRow(new string[] {
-                        "Href",
-                        "Equals",
-                        "#FirstName"});
-#line 105
- testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table8, "And ");
-#line 110
+                        "8"});
+#line 104
+ testRunner.And("I see", ((string)(null)), table8, "And ");
+#line 108
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
@@ -331,14 +325,14 @@ this.FeatureBackground();
             table9.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter last name"});
+                        "Please enter first name"});
             table9.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#LastName"});
-#line 111
+                        "#FirstName"});
+#line 109
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table9, "And ");
-#line 116
+#line 114
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
@@ -348,14 +342,14 @@ this.FeatureBackground();
             table10.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter the day"});
+                        "Please enter last name"});
             table10.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#DateOfBirth_Day"});
-#line 117
+                        "#LastName"});
+#line 115
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table10, "And ");
-#line 122
+#line 120
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
@@ -365,14 +359,14 @@ this.FeatureBackground();
             table11.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter the month"});
+                        "Please enter the day"});
             table11.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#DateOfBirth_Month"});
-#line 123
+                        "#DateOfBirth_Day"});
+#line 121
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table11, "And ");
-#line 128
+#line 126
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
@@ -382,14 +376,14 @@ this.FeatureBackground();
             table12.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter the year"});
+                        "Please enter the month"});
             table12.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#DateOfBirth_Year"});
-#line 129
+                        "#DateOfBirth_Month"});
+#line 127
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table12, "And ");
-#line 134
+#line 132
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
@@ -399,14 +393,14 @@ this.FeatureBackground();
             table13.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter your first line of address"});
+                        "Please enter the year"});
             table13.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#Address_AddressLine1"});
-#line 135
+                        "#DateOfBirth_Year"});
+#line 133
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table13, "And ");
-#line 140
+#line 138
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
@@ -416,14 +410,14 @@ this.FeatureBackground();
             table14.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter your postcode"});
+                        "Please enter your first line of address"});
             table14.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#Address_Postcode"});
-#line 141
+                        "#Address_AddressLine1"});
+#line 139
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table14, "And ");
-#line 146
+#line 144
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
@@ -433,13 +427,30 @@ this.FeatureBackground();
             table15.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter phone number"});
+                        "Please enter your postcode"});
             table15.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#PhoneNumber"});
-#line 147
+                        "#Address_Postcode"});
+#line 145
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table15, "And ");
+#line 150
+ testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table16.AddRow(new string[] {
+                        "Text",
+                        "Equals",
+                        "Please enter phone number"});
+            table16.AddRow(new string[] {
+                        "Href",
+                        "Equals",
+                        "#PhoneNumber"});
+#line 151
+ testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table16, "And ");
 #line hidden
             this.ScenarioCleanup();
         }

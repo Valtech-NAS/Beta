@@ -4,7 +4,7 @@ Feature: Account Settings - Personal Details
 	I want to be able to make amendments to my first name, last name, date of birth, address and mobile phone number
 	so that I can manage my personal details and make sure they are correct
 
-# TODO Refine background step to support cookie detection
+# TODO: Refine background step to support cookie detection.
 Background: 
 	Given I navigated to the HomePage page
 	When I am on the HomePage page
@@ -82,6 +82,10 @@ Scenario: As a candidate I can change my personal settings
 	| AddressLine4   | Equals | England             |
 	| Postcode       | Equals | SW1A 2AA            |
 	| BannerUserName | Equals | Jane Dovedale       |
+
+	And I see
+	| Field              | Rule   | Value                  |
+	| SuccessMessageText | Equals | TODO: settings updated |
 
 Scenario: As a candidate I cannot save invalid personal settings
 

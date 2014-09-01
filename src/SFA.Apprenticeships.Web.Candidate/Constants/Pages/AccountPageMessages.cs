@@ -2,6 +2,7 @@
 {
     public class AccountPageMessages
     {
-        public const string UpdateFailed = "Update failed";
+        public const string SettingsUpdateFailed = "TODO: settings update failed - retry";
+        public const string SettingsUpdated = "TODO: settings updated";
     }
 }
