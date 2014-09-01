@@ -478,6 +478,7 @@
     <Compile Include="Validators\WorkExperienceViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Applications\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Login\LoginResultViewModel.cs" />
     <Compile Include="ViewModels\MyApplications\MyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\MyApplications\MyApplicationViewModel.cs" />
     <Compile Include="ViewModels\Applications\WhatHappensNextViewModel.cs" />

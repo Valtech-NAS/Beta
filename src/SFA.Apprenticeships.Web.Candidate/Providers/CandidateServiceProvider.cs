@@ -7,6 +7,7 @@
     using Application.Interfaces.Users;
     using Common.Constants;
     using Common.Services;
+    using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
@@ -97,28 +98,64 @@
             }
         }
 
-        public Candidate Authenticate(LoginViewModel model)
+        public LoginResultViewModel Login(LoginViewModel model)
         {
             try
             {
-                var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
+                var userStatus = GetUserStatus(model.EmailAddress);
 
-                if (candidate == null)
+                if (userStatus == UserStatuses.Locked)
                 {
-                    return null;
+                    return new LoginResultViewModel
+                    {
+                        EmailAddress = model.EmailAddress,
+                        UserStatus = userStatus
+                    };
                 }
 
-                var roles = _userAccountService.GetRoleNames(model.EmailAddress);
+                var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
 
-                SetUserCookies(candidate, roles);
+                if (candidate != null)
+                {
+                    // User is authentic.
+                    SetUserCookies(candidate, _userAccountService.GetRoleNames(model.EmailAddress));
 
-                return candidate;
+                    return new LoginResultViewModel
+                    {
+                        EmailAddress = candidate.RegistrationDetails.EmailAddress,
+                        FullName = candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
+                        UserStatus = userStatus,
+                        IsAuthenticated = true
+                    };
+                }
+
+                userStatus = GetUserStatus(model.EmailAddress);
+
+                if (userStatus == UserStatuses.Locked)
+                {
+                    // Authentication failed, user just locked their account.
+                    return new LoginResultViewModel
+                    {
+                        EmailAddress = model.EmailAddress,
+                        UserStatus = userStatus
+                    };
+                }
+
+                // Authentication failed, user's account is not locked yet.
+                return new LoginResultViewModel(LoginPageMessages.InvalidUsernameOrPasswordErrorText)
+                {
+                    EmailAddress = model.EmailAddress,
+                    UserStatus = userStatus
+                };
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                //todo: catch more specific errors here not just assume incorrect credentials
-                Logger.ErrorException("Candidate authentication failed for " + model.EmailAddress, ex);
-                return null;
+                Logger.ErrorException("Candidate login failed for " + model.EmailAddress, e);
+
+                return new LoginResultViewModel(LoginPageMessages.LoginFailedErrorText)
+                {
+                    EmailAddress = model.EmailAddress
+                };
             }
         }
 
@@ -205,6 +242,8 @@
             return _candidateService.GetCandidate(candidateId);
         }
 
+        #region Helpers
+
         private void SetUserCookies(Candidate candidate, params string[] roles)
         {
             var httpContext = new HttpContextWrapper(HttpContext.Current);
@@ -213,5 +252,7 @@
                 candidate.EntityId.ToString(),
                 roles);
         }
+
+        #endregion
     }
 }
