@@ -237,6 +237,7 @@
 
         public ActionResult ResendActivationCode(string emailAddress)
         {
+            // TODO: vga: conditionally show a message of failure and remain in the same page
             _candidateServiceProvider.ResendActivationCode(emailAddress);
 
             SetUserMessage(string.Format(ActivationPageMessages.ActivationCodeSent, emailAddress));

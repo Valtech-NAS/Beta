@@ -6,6 +6,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
+    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
 
@@ -38,10 +39,12 @@
             {
                 if (ex.Code == ErrorCodes.VacancyExpired)
                 {
-                    return null;
+                    return new ApplicationViewModel(MyApplicationsPageMessages.DraftExpired);
                 }
-
-                throw;
+                else
+                {
+                    return new ApplicationViewModel(MyApplicationsPageMessages.RetrieveApplicationFailed);
+                }
             }
         }
 
@@ -129,6 +132,11 @@
             if (vacancyDetailViewModel == null)
             {
                 return null;
+            }
+
+            if (vacancyDetailViewModel.HasError())
+            {
+                throw new CustomException( "VacancyDetail.Error", vacancyDetailViewModel.ViewModelMessage);
             }
 
             applicationViewModel.VacancyDetail = vacancyDetailViewModel;

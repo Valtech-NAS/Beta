@@ -4,5 +4,6 @@
     {
         public const string DraftExpired = "This apprenticeship is no longer available";
         public const string ApplicationArchived = "Application has been removed from your drafts";
+        public const string RetrieveApplicationFailed = "TODO: retrieve application details failed. Retry.";
     }
 }

@@ -40,9 +40,9 @@
         {
             var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-            if (model == null)
+            if (model == null || model.HasError())
             {
-                SetUserMessage(MyApplicationsPageMessages.DraftExpired, UserMessageLevel.Warning);
+                SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
                 return RedirectToAction("Index");
             }
 

@@ -14,8 +14,13 @@
     }
 
     [Serializable]
-    public class ApplicationViewModel
+    public class ApplicationViewModel : ViewModelBase
     {
+
+        public ApplicationViewModel(string message) : base(message) { }
+
+        public ApplicationViewModel() : base() { }
+
         public VacancyDetailViewModel VacancyDetail { get; set; } //TODO Make this the summary info as don't need all details
         public CandidateViewModel Candidate { get; set; }
         public ApplicationStatuses Status { get; set; }
