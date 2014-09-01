@@ -80,43 +80,6 @@
             ModelState.AddModelError(string.Empty, result.ViewModelMessage);
 
             return View(model);
-
-            /*
-            var userStatus = _candidateServiceProvider.GetUserStatus(model.EmailAddress);
-
-            if (userStatus == UserStatuses.Locked)
-            {
-                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
-
-                return RedirectToAction("Unlock");
-            }
-
-            // Authenticate candidate.
-            var candidate = _candidateServiceProvider.Authenticate(model);
-            
-            if (candidate != null)
-            {
-                UserData.SetUserContext(
-                    candidate.RegistrationDetails.EmailAddress,
-                    candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName);
-
-                return RedirectOnAuthenticated(candidate, userStatus);
-            }
-
-            userStatus = _candidateServiceProvider.GetUserStatus(model.EmailAddress);
-
-            if (userStatus == UserStatuses.Locked)
-            {
-                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
-
-                return RedirectToAction("Unlock");
-            }
-
-            ModelState.Clear();
-            ModelState.AddModelError(string.Empty, LoginPageMessages.AuthenticationFailedErrorText);
-
-            return View(model);
-            */
         }
 
         [HttpGet]
