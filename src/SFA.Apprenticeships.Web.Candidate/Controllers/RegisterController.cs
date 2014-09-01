@@ -11,6 +11,7 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using FluentValidation.Mvc;
+    using FluentValidation.Results;
     using Providers;
     using Validators;
     using ViewModels.Register;
@@ -98,15 +99,25 @@
         {
             //todo: refactor - too much going on here
             model.IsActivated = _candidateServiceProvider.Activate(model, UserContext.CandidateId);
+            ValidationResult activatedResult = new ValidationResult();
 
-            var activatedResult = _activationViewModelServerValidator.Validate(model);
-
-            if (activatedResult.IsValid)
+            //todo: vga: treat all errors in a boolean?
+            if (!model.IsActivated)
             {
-                var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
-                SetUserMessage(ActivationPageMessages.AccountActivated);
-                return SetAuthenticationCookieAndRedirectToAction(candidate);
+                SetUserMessage(ActivationPageMessages.ActivationFailed, UserMessageLevel.Warning);
             }
+            else 
+            { 
+                activatedResult = _activationViewModelServerValidator.Validate(model);
+
+                if (activatedResult.IsValid)
+                {
+                    var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
+                    SetUserMessage(ActivationPageMessages.AccountActivated);
+                    return SetAuthenticationCookieAndRedirectToAction(candidate);
+                }
+            }
+
 
             ModelState.Clear();
             activatedResult.AddToModelState(ModelState, string.Empty);

@@ -7,18 +7,37 @@
 
     public class GenericMongoClient<T> where T : BaseEntity
     {
-        protected readonly MongoCollection<T> Collection;
+        private MongoCollection<T> _collection;
+
+        private static bool _initialised;
+        private MongoDatabase _database;
+        private readonly string _mongoCollectionName;
+
+        protected MongoCollection<T> Collection
+        {
+            get
+            {
+                if (!_initialised)
+                {
+                    _initialised = true;
+                    
+                    Initialise();
+                }
+
+                return _collection ?? (_collection = _database.GetCollection<T>(_mongoCollectionName));
+            }
+        }
 
         protected GenericMongoClient(IConfigurationManager configurationManager, string mongoConnectionSettingName,
             string mongoCollectionName)
         {
+            _mongoCollectionName = mongoCollectionName;
             var mongoConnectionString = configurationManager.GetAppSetting(mongoConnectionSettingName);
             var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
 
-            Collection = new MongoClient(mongoConnectionString)
+            _database = new MongoClient(mongoConnectionString)
                 .GetServer()
-                .GetDatabase(mongoDbName)
-                .GetCollection<T>(mongoCollectionName);
+                .GetDatabase(mongoDbName);
         }
 
         protected void UpdateEntityTimestamps(T entity)
@@ -34,5 +53,7 @@
                 entity.DateUpdated = DateTime.UtcNow;
             }
         }
+
+        protected virtual void Initialise(){}
     }
 }

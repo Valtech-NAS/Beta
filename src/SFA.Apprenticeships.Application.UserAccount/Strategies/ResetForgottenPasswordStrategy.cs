@@ -9,6 +9,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using Interfaces.Users;
+    using exceptions = SFA.Apprenticeships.Domain.Entities.Exceptions;
 
     public class ResetForgottenPasswordStrategy : IResetForgottenPasswordStrategy
     {
@@ -43,7 +44,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             if (user == null)
             {
-                throw new CustomException("Unknown user name", ErrorCodes.UnknownUserError);
+                throw new CustomException("Unknown user name", exceptions.ErrorCodes.UnknownUserError);
             }
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
@@ -52,7 +53,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             {
                 if (user.PasswordResetCodeExpiry != null && DateTime.Now > user.PasswordResetCodeExpiry)
                 {
-                    throw new CustomException("Password reset code has expired.", ErrorCodes.UserPasswordResetCodeExpiredError);
+                    throw new CustomException("Password reset code has expired.", exceptions.ErrorCodes.UserPasswordResetCodeExpiredError);
                 }
 
                 _authenticationService.ResetUserPassword(user.EntityId, newPassword);
@@ -63,7 +64,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             else
             {
                 RegisterFailedPasswordReset(user);
-                throw new CustomException("Password reset code is invalid", ErrorCodes.UserPasswordResetCodeIsInvalid);
+                throw new CustomException("Password reset code is invalid", exceptions.ErrorCodes.UserPasswordResetCodeIsInvalid);
             }
         }
 
@@ -73,7 +74,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             if (user.PasswordResetIncorrectAttempts == _maximumPasswordAttemptsAllowed)
             {
                 _lockAccountStrategy.LockAccount(user);
-                throw new CustomException("Maximum password attempts allowed reached, account is now locked.", ErrorCodes.UserAccountLockedError);
+                throw new CustomException("Maximum password attempts allowed reached, account is now locked.", exceptions.ErrorCodes.UserAccountLockedError);
             }
 
             user.PasswordResetIncorrectAttempts++;

@@ -10,6 +10,7 @@
     using Constants.Pages;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
+    using exceptions = Domain.Entities.Exceptions;
 
     internal class ApplicationProvider : IApplicationProvider
     {
@@ -38,7 +39,7 @@
             }
             catch (CustomException e)
             {
-                if (e.Code == ErrorCodes.VacancyExpired)
+                if (ex.Code == exceptions.ErrorCodes.VacancyExpired)
                 {
                     return new ApplicationViewModel(MyApplicationsPageMessages.DraftExpired);
                 }
@@ -90,7 +91,7 @@
 
             if (applicationModel == null)
             {
-                throw new CustomException("Application not found", ErrorCodes.ApplicationNotFoundError);
+                throw new CustomException("Application not found", exceptions.ErrorCodes.ApplicationNotFoundError);
             }
 
             var patchedApplicationModel = PatchWithVacancyDetail(candidateId, vacancyId, applicationModel);
