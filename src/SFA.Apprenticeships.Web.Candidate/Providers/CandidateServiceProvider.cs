@@ -227,7 +227,7 @@
             }
             catch (CustomException ex)
             {
-                Logger.ErrorException("Reset forgotten password failed for " + username, ex);
+                Logger.ErrorException("Reset activation code failed for " + username, ex);
                 return false;
             }
         }

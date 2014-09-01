@@ -237,12 +237,17 @@
 
         public ActionResult ResendActivationCode(string emailAddress)
         {
-            // TODO: vga: conditionally show a message of failure and remain in the same page
-            _candidateServiceProvider.ResendActivationCode(emailAddress);
+            if (_candidateServiceProvider.ResendActivationCode(emailAddress))
+            {
+                SetUserMessage(string.Format(ActivationPageMessages.ActivationCodeSent, emailAddress));
 
-            SetUserMessage(string.Format(ActivationPageMessages.ActivationCodeSent, emailAddress));
-
-            return RedirectToAction("Activation");
+                return RedirectToAction("Activation");
+            }
+            else
+            {
+                SetUserMessage(ActivationPageMessages.ActivationCodeSendingFailure, UserMessageLevel.Warning);
+                return RedirectToAction("Activation");
+            }
         }
 
         [AllowCrossSiteJson]
