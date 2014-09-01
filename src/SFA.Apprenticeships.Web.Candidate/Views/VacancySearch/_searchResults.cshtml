@@ -7,6 +7,7 @@
             <div class="form-group form-group-compound">
                 <label for="sort-results" class="heading-medium inline">Sort results</label>
                 @Html.DropDownListFor(m => m.VacancySearch.SortType, (SelectList)ViewBag.SortTypes, new { @id = "sort-results", @name = "sortType", @onchange = "this.form.submit();" })
+                <button class="show-nojs">Sort</button>
             </div>
         </div>
     </fieldset>
