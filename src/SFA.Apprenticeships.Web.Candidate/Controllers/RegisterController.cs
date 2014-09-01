@@ -23,7 +23,7 @@
 
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
-        private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;        
+        private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
 
         public RegisterController(ICandidateServiceProvider candidateServiceProvider,
@@ -97,30 +97,24 @@
         [HttpPost]
         public ActionResult Activate(ActivationViewModel model)
         {
-            //todo: refactor - too much going on here
-            model.IsActivated = _candidateServiceProvider.Activate(model, UserContext.CandidateId);
+            model = _candidateServiceProvider.Activate(model, UserContext.CandidateId);
             ValidationResult activatedResult = new ValidationResult();
 
-            //todo: vga: treat all errors in a boolean?
-            if (!model.IsActivated)
+            switch (model.State)
             {
-                SetUserMessage(ActivationPageMessages.ActivationFailed, UserMessageLevel.Warning);
-            }
-            else 
-            { 
-                activatedResult = _activationViewModelServerValidator.Validate(model);
-
-                if (activatedResult.IsValid)
-                {
+                case ActivateUserState.Activated:
                     var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
                     SetUserMessage(ActivationPageMessages.AccountActivated);
                     return SetAuthenticationCookieAndRedirectToAction(candidate);
-                }
+                case ActivateUserState.Error:
+                    SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
+                    break;
+                case ActivateUserState.InvalidCode:
+                    activatedResult = _activationViewModelServerValidator.Validate(model);
+                    ModelState.Clear();
+                    activatedResult.AddToModelState(ModelState, string.Empty);
+                    break;
             }
-
-
-            ModelState.Clear();
-            activatedResult.AddToModelState(ModelState, string.Empty);
 
             return View("Activation", model);
         }
@@ -287,7 +281,7 @@
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                return Redirect(Server.UrlDecode(returnUrl));    
+                return Redirect(Server.UrlDecode(returnUrl));
             }
 
             if (lastViewedVacancyId != null)
