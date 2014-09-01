@@ -67,8 +67,10 @@
 
             if (!indexExistsResponse.Exists)
             {
-                var indexCreationResp = client.CreateIndex(i => i.Index(newIndexName));
-                var mapResp = client.Map<VacancySummary>(p => p.Index(newIndexName));
+                var indexSettings = new IndexSettings();
+                indexSettings.Analysis.Analyzers.Add("snowball", new SnowballAnalyzer { Language = "English" });
+                var indexCreationResp = client.CreateIndex(i => i.Index(newIndexName).InitializeUsing(indexSettings));
+                var mapResp = client.Map<VacancySummary>(p => p.Index(newIndexName).MapFromAttributes());
                 Logger.Debug("Created new vacancy search index named: {0}", newIndexName);
             }
             else
