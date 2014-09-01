@@ -3,10 +3,11 @@
     using System;
     using System.Linq;
     using Application.Interfaces.Candidates;
+    using Common.Validations;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
-    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
+    using Constants.Pages;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
 
@@ -35,16 +36,14 @@
 
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
-            catch (CustomException ex)
+            catch (CustomException e)
             {
-                if (ex.Code == ErrorCodes.VacancyExpired)
+                if (e.Code == ErrorCodes.VacancyExpired)
                 {
                     return new ApplicationViewModel(MyApplicationsPageMessages.DraftExpired);
                 }
-                else
-                {
-                    return new ApplicationViewModel(MyApplicationsPageMessages.RetrieveApplicationFailed);
-                }
+
+                return new ApplicationViewModel(MyApplicationsPageMessages.RetrieveApplicationFailed);
             }
         }
 
@@ -117,10 +116,19 @@
                     ApplicationStatus = each.Status,
                     IsArchived = each.IsArchived,
                     DateApplied = each.DateApplied,
+                    ClosingDate = GetVacancyClosingDate(candidateId, each.LegacyVacancyId),
                     DateUpdated = each.DateUpdated
-                });
+                })
+                .ToList();
 
             return new MyApplicationsViewModel(applications);
+        }
+
+        private DateTime? GetVacancyClosingDate(Guid candidateId, int vacancyId)
+        {
+            var vacancyDetail = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+
+            return vacancyDetail == null ? default(DateTime?) : vacancyDetail.ClosingDate;
         }
 
         #region Helpers
@@ -136,7 +144,7 @@
 
             if (vacancyDetailViewModel.HasError())
             {
-                throw new CustomException( "VacancyDetail.Error", vacancyDetailViewModel.ViewModelMessage);
+                throw new CustomException("VacancyDetail.Error", vacancyDetailViewModel.ViewModelMessage);
             }
 
             applicationViewModel.VacancyDetail = vacancyDetailViewModel;

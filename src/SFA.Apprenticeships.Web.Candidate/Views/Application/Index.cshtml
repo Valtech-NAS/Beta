@@ -192,7 +192,14 @@ else
                             @foreach (var application in @Model.DraftApplications)
                             {
                                 <tr>
-                                    <td>@application.Title with @application.EmployerName</td>
+                                    <td>
+                                        @application.Title with @application.EmployerName
+                                        @if (application.ClosingDate.HasValue)
+                                        {
+                                            <br/>
+                                            <strong>Closing Date:</strong> @Html.DisplayFor(m => application.ClosingDate)
+                                        }
+                                    </td>
                                     <td class="ta-center">
                                         @if (application.ApplicationStatus == ApplicationStatuses.Draft)
                                         {
@@ -202,9 +209,6 @@ else
                                         {
                                             @:Apprenticeship withdrawn
                                         }
-                                    </td>
-                                    <td class="ta-center">
-                                        <a id="delete-link" class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                     </td>
                                 </tr>
                             }

@@ -20,6 +20,10 @@
         [DataType(DataType.DateTime)]
         public DateTime? DateApplied { get; set; }
 
+        [UIHint("Date")]
+        [DataType(DataType.DateTime)]
+        public DateTime? ClosingDate { get; set; }
+
         public DateTime? DateUpdated { get; set; }
 
         public string UnsuccessfulReason { get; set; }
