@@ -319,6 +319,7 @@
     <Content Include="Views\Home\Cookies.cshtml" />
     <Content Include="Views\Home\Helpdesk.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTimeSaved.cshtml" />
+    <Content Include="Views\VacancySearch\_searchUpdate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

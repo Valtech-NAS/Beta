@@ -1,13 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
+    using System.Collections;
     using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
     using ActionResults;
     using Application.Interfaces.Vacancies;
     using Common.Constants;
-    using Constants;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Microsoft.Ajax.Utilities;
@@ -46,18 +46,15 @@
         }
 
         [HttpGet]
-        public ActionResult Search(VacancySearchResponseViewModel searchViewModel)
-        {
-            return RedirectToAction("results", searchViewModel.VacancySearch);
-        }
-
-        [HttpGet]
         public ActionResult Results(VacancySearchViewModel searchViewModel)
         {
             UserData.Pop(UserDataItemNames.VacancyDistance);
 
-            PopulateDistances(searchViewModel.WithinDistance);
-            PopulateSortType(searchViewModel.SortType);
+            if (searchViewModel.SortType == VacancySortType.Relevancy && string.IsNullOrWhiteSpace(searchViewModel.Keywords))
+            {
+                searchViewModel.SortType = VacancySortType.Distance;
+                return RedirectToAction("results", searchViewModel);
+            }
 
             var clientResult = _searchRequestValidator.Validate(searchViewModel);
             if (!clientResult.IsValid)
@@ -110,6 +107,9 @@
                 return View("results", new VacancySearchResponseViewModel { VacancySearch = searchViewModel });
             }
 
+            PopulateDistances(searchViewModel.WithinDistance);
+            PopulateSortType(searchViewModel.SortType, searchViewModel.Keywords);
+
             var results = _searchProvider.FindVacancies(searchViewModel, _vacancyResultsPerPage);
             return View("results", results);
         }
@@ -118,6 +118,7 @@
         public ActionResult DetailsWithDistance(int id, string distance)
         {
             UserData.Push(UserDataItemNames.VacancyDistance, distance.ToString(CultureInfo.InvariantCulture));
+            UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToString(CultureInfo.InvariantCulture));
 
             return RedirectToAction("Details", new { id });
         }
@@ -177,15 +178,21 @@
             ViewBag.Distances = distances;
         }
 
-        private void PopulateSortType(VacancySortType selectedSortType = VacancySortType.Distance)
+        private void PopulateSortType(VacancySortType selectedSortType = VacancySortType.Distance, string keywords = null)
         {
+            var sortTypeOptions = new ArrayList
+            {
+                new {SortType = VacancySortType.Distance, Name = "Distance"},
+                new {SortType = VacancySortType.ClosingDate, Name = "Closing Date"}
+            };
+
+            if (!string.IsNullOrWhiteSpace(keywords))
+            {
+                sortTypeOptions.Add(new {SortType = VacancySortType.Relevancy, Name = "Best Match"});
+            }
+            
             var sortTypes = new SelectList(
-                new[]
-                {
-                    new {SortType = VacancySortType.Distance, Name = "Distance"},
-                    new {SortType = VacancySortType.ClosingDate, Name = "Closing Date"},
-                    new { SortType = VacancySortType.Relevancy, Name = "Best Match" }
-                },
+                sortTypeOptions,
                 "SortType",
                 "Name",
                 selectedSortType

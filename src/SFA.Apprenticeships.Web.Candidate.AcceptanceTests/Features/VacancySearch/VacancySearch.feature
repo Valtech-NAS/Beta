@@ -1,4 +1,4 @@
-﻿@US496
+﻿@US496 @US449
 Feature: Vacancy Search
 	In order to find a vacancy apprenticeship quickly
 	As a candidate
@@ -20,7 +20,7 @@ Scenario: Show validation error message when no location entered
         | Field                  | Rule   | Value |
         | ValidationSummaryCount | Equals | 1     |
 
-Scenario: Find apprenticeships and test ordering
+Scenario: Find apprenticeships and test ordering without keywords
 	Given I navigated to the VacancySearchPage page
 	When I enter data
 		 | Field          | Value    |
@@ -29,17 +29,47 @@ Scenario: Find apprenticeships and test ordering
 	And I choose Search
 	And I am on the VacancySearchResultPage page
 	Then I see
-        | Field                     | Rule   | Value |
-        | SearchResultItemsCount    | Equals | 5     |
-        | ResultsAreInDistanceOrder | Equals | True  |
+        | Field                           | Rule   | Value |
+        | SearchResultItemsCount          | Equals | 5     |
+        | ResultsAreInDistanceOrder       | Equals | True  |
+        | ResultsAreInClosingDateOrder    | Equals | False |
+        | ResultsAreInBestMatchScoreOrder | Equals | False |
 	And I enter data
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing Date |
 	And I am on the VacancySearchResultPage page
 	And I see
-        | Field                        | Rule   | Value |
-        | SearchResultItemsCount       | Equals | 5     |
-        | ResultsAreInClosingDateOrder | Equals | True  |
+        | Field                           | Rule   | Value |
+        | SearchResultItemsCount          | Equals | 5     |
+        | ResultsAreInDistanceOrder       | Equals | False |
+        | ResultsAreInClosingDateOrder    | Equals | True  |
+        | ResultsAreInBestMatchScoreOrder | Equals | False |
+
+Scenario: Find apprenticeships and test ordering with keywords
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value    |
+		 | Keywords       | Admin    |
+		 | Location       | Coventry |
+		 | WithInDistance | 40 miles |
+	And I choose Search
+	And I am on the VacancySearchResultPage page
+	Then I see
+        | Field                           | Rule   | Value |
+        | SearchResultItemsCount          | Equals | 5     |
+        | ResultsAreInDistanceOrder       | Equals | False |
+        | ResultsAreInClosingDateOrder    | Equals | False |
+        | ResultsAreInBestMatchScoreOrder | Equals | True  |
+	And I enter data
+		| Field                | Value        |
+		| SortOrderingDropDown | Closing Date |
+	And I am on the VacancySearchResultPage page
+	And I see
+        | Field                           | Rule   | Value |
+        | SearchResultItemsCount          | Equals | 5     |
+        | ResultsAreInDistanceOrder       | Equals | False |
+        | ResultsAreInClosingDateOrder    | Equals | True  |
+        | ResultsAreInBestMatchScoreOrder | Equals | False |
 
 Scenario: Find apprenticeships and test paging
 	Given I navigated to the VacancySearchPage page
