@@ -74,7 +74,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Error("Candidate registration failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Candidate registration failed for " + model.EmailAddress, ex);
                 return false;
             }
         }
@@ -92,7 +92,7 @@
             catch (Exception ex)
             {
                 //todo: catch more specific custom errors first
-                Logger.Error("Candidate activation failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, ex);
                 return false;
             }
         }
@@ -117,7 +117,7 @@
             catch (Exception ex)
             {
                 //todo: catch more specific errors here not just assume incorrect credentials
-                Logger.Error("Candidate authentication failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Candidate authentication failed for " + model.EmailAddress, ex);
                 return null;
             }
         }
@@ -132,7 +132,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Error("Send password reset code failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Send password reset code failed for " + model.EmailAddress, ex);
                 // TODO: fails silently, should return boolean to indicate success
             }
         }
@@ -146,7 +146,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Error("Send account unlock code failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Send account unlock code failed for " + model.EmailAddress, ex);
                 // TODO: fails silently, should return boolean to indicate success
             }
         }
@@ -160,7 +160,7 @@
             catch (CustomException ex)
             {
                 //todo: catch more specific custom errors first
-                Logger.Error("Reset forgotten password failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Reset forgotten password failed for " + model.EmailAddress, ex);
                 throw;
             }
         }
@@ -174,7 +174,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Error("Account unlock failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Account unlock failed for " + model.EmailAddress, ex);
                 return false;
             }
         }
@@ -190,7 +190,7 @@
             }
             catch (CustomException ex)
             {
-                Logger.Error("Reset forgotten password failed for " + username, ex);
+                Logger.ErrorException("Reset forgotten password failed for " + username, ex);
                 return false;
             }
         }

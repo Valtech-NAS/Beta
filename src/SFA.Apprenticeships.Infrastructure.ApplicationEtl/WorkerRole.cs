@@ -36,15 +36,15 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                 }
                 catch (CommunicationException ce)
                 {
-                    Logger.Warn("CommunicationException from ApplicationSchedulerConsumer", ce);
+                    Logger.WarnException("CommunicationException from ApplicationSchedulerConsumer", ce);
                 }
                 catch (TimeoutException te)
                 {
-                    Logger.Warn("TimeoutException from ApplicationSchedulerConsumer", te);
+                    Logger.WarnException("TimeoutException from ApplicationSchedulerConsumer", te);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("Exception from ApplicationSchedulerConsumer", ex);
+                    Logger.ErrorException("Exception from ApplicationSchedulerConsumer", ex);
                 }
 
                 Thread.Sleep(TimeSpan.FromMinutes(5));
@@ -80,7 +80,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
             }
             catch (Exception ex)
             {
-                Logger.Error("Application Etl Process failed to initialise", ex);
+                Logger.ErrorException("Application Etl Process failed to initialise", ex);
                 return false;
             }
         }

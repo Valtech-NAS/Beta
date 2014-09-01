@@ -43,15 +43,15 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 }
                 catch (CommunicationException ce)
                 {
-                    Logger.Warn("CommunicationException from legacy web services", ce);
+                    Logger.WarnException("CommunicationException from legacy web services", ce);
                 }
                 catch (TimeoutException te)
                 {
-                    Logger.Warn("TimeoutException from legacy web services", te);
+                    Logger.WarnException("TimeoutException from legacy web services", te);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("Exception from VacancySchedulerConsumer", ex);
+                    Logger.ErrorException("Exception from VacancySchedulerConsumer", ex);
                 }
 
                 Thread.Sleep(TimeSpan.FromMinutes(5));
@@ -86,7 +86,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
             }
             catch (Exception ex)
             {
-                Logger.Error("Vacancy Etl Process failed to initialise", ex);
+                Logger.ErrorException("Vacancy Etl Process failed to initialise", ex);
                 return false;
             }
         }

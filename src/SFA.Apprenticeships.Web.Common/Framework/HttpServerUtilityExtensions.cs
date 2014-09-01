@@ -29,7 +29,9 @@
             var httpException = exception as HttpException;
 
             if (httpException != null)
-                Logger.Error(httpException.Message, exception);
+            {
+                Logger.ErrorException(httpException.Message, exception);
+            }
 
             var controller = DependencyResolver.Current.GetService<T>();
             var routeData = new RouteData();
