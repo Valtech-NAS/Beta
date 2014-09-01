@@ -76,7 +76,7 @@
                 // Either user not selected item from dropdown or javascript disabled.
                 var suggestedLocations = _searchProvider.FindLocation(model.Location.Trim());
 
-                if (suggestedLocations.NeedsToShowAUserMessage())
+                if (suggestedLocations.HasError())
                 {
                         ModelState.Clear();
                         SetUserMessage(suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
@@ -122,7 +122,7 @@
 
             var results = _searchProvider.FindVacancies(model, _vacancyResultsPerPage);
 
-            if (results.NeedsToShowAUserMessage())
+            if (results.HasError())
             {
                 ModelState.Clear();
                 SetUserMessage(results.ViewModelMessage, UserMessageLevel.Warning);
@@ -152,6 +152,14 @@
             }
 
             var vacancy = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
+
+            if (vacancy.HasError())
+            {
+                ModelState.Clear();
+                SetUserMessage(vacancy.ViewModelMessage, UserMessageLevel.Warning);
+
+                return View(vacancy);
+            }
 
             if (vacancy == null)
             {

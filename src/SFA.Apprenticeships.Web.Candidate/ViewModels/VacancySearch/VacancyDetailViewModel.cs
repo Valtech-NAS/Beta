@@ -6,8 +6,12 @@
     using Locations;
 
     [Serializable]
-    public class VacancyDetailViewModel
+    public class VacancyDetailViewModel : ViewModelBase
     {
+        public VacancyDetailViewModel() : base() { }
+
+        public VacancyDetailViewModel(string message) : base(message) { }
+
         #region Vacancy
 
         public int Id { get; set; }

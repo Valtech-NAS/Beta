@@ -13,7 +13,7 @@
 
         public string ViewModelMessage { get; private set; }
 
-        public bool NeedsToShowAUserMessage()
+        public bool HasError()
         {
             return !string.IsNullOrWhiteSpace(ViewModelMessage);
         }
