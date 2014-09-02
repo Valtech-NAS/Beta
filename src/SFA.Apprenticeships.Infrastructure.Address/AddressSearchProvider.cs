@@ -35,12 +35,25 @@
                 return s;
             });
 
+            //TODO: vga: refactor in a new ElasticClient class
+            if (ThereWasAnErrorWhileSearching(search))
+            {
+                throw search.ConnectionStatus.Error.OriginalException;
+            }
+
             var addresses =
                 _mapper
                     .Map<IEnumerable<Elastic.Common.Entities.Address>, IEnumerable<Domain.Entities.Locations.Address>>(
                         search.Documents);
 
-            return  addresses;
+            return addresses;
+        }
+
+        private static bool ThereWasAnErrorWhileSearching(Nest.IQueryResponse<Elastic.Common.Entities.Address> search)
+        {
+            return search != null &&
+                            search.ConnectionStatus.Error != null &&
+                            search.ConnectionStatus.Error.OriginalException != null;
         }
     }
 }
