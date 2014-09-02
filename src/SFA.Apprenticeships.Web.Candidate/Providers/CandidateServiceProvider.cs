@@ -8,6 +8,7 @@
     using Common.Constants;
     using Common.Services;
     using Constants.Pages;
+    using Constants.ViewModels;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
@@ -17,7 +18,6 @@
     using ViewModels.Login;
     using ViewModels.Register;
     using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
-    using domainExceptions = Domain.Entities.Exceptions;
 
     public class CandidateServiceProvider : ICandidateServiceProvider
     {
