@@ -44,7 +44,7 @@
             {
                 var candidate = _candidateReadRepository.Get(user.EntityId);
 
-                if (user.Status == UserStatuses.Locked)
+                if (user.LoginIncorrectAttempts > 0)
                 {
                     user.SetStateActive();
                     _userWriteRepository.Save(user);
