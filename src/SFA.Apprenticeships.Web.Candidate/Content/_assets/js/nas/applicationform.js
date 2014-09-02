@@ -36,32 +36,32 @@
         });
         self.otherQualificationType = ko.observable(itemOtherType).extend({
             pattern: {
-                message: "'Other qualification type' contains some invalid characters",
+                message: "Other qualification mustn't contain invalid characters",
                 params: self.itemRegexPattern
             }
         });
         self.qualificationYear = ko.observable(itemYear).extend({
-            required: { message: "Qualification Year is required" }, number: true
+            required: { message: "Please enter year" }, number: true
         }).extend({
             min: {
-                message: "'Qualification Year' must be 4 digits",
+                message: "Year must be 4 digits",
                 params: 1914
             }
         });
 
         self.qualificationSubject = ko.observable(itemSubject).extend({
-            required: { message: "Subject is required" }
+            required: { message: "Please enter subject" }
         }).extend({
             pattern: {
-                message: "'Subject' contains some invalid characters",
+                message: "Subject mustn't contain invalid characters",
                 params: self.itemRegexPattern
             }
         });
         self.qualificationGrade = ko.observable(itemGrade).extend({
-            required: { message: "Grade is required" }
+            required: { message: "Please enter grade" }
         }).extend({
             pattern: {
-                message: "'Grade' contains some invalid characters",
+                message: "Grade mustn't contain invalid characters",
                 params: self.itemRegexPattern
             }
         });
@@ -139,12 +139,12 @@
 
         self.otherQualification = ko.observable().extend({
             required: {
-                message: "Other qualification is required",
+                message: "Please enter other qualification",
                 onlyIf: function () { return (self.selectedQualification() === "Other"); }
             }
         }).extend({
             pattern: {
-                message: "'Other qualification' contains some invalid characters",
+                message: "Other qualification mustn't contain invalid characters",
                 params: self.regexPattern,
                 onlyIf: function () { return (self.selectedQualification() === "Other"); }
             }
@@ -153,27 +153,27 @@
         self.showOtherQualification = ko.observable(false);
 
         self.year = ko.observable().extend({
-            required: { message: "'Qualification Year' is required" }, number: true
+            required: { message: "Please enter year" }, number: true
         }).extend({
             minLength: {
-                message: "'Qualification Year' must be 4 digits and less than 100 years old",
+                message: "Year must be 4 digits, for example 1990",
                 params: 4
             }
         });
 
         self.subject = ko.observable().extend({
-            required: { message: "Subject is required" }
+            required: { message: "Please enter subject" }
         }).extend({
             pattern: {
-                message: "'Subject' contains some invalid characters",
+                message: "Subject mustn't contain invalid characters",
                 params: self.regexPattern
             }
         });
         self.grade = ko.observable().extend({
-            required: { message: "Grade is required" }
+            required: { message: "Please enter grade" }
         }).extend({
             pattern: {
-                message: "'Grade' contains some invalid characters",
+                message: "Grade mustn't contain invalid characters",
                 params: self.regexPattern
             }
         });
@@ -295,7 +295,7 @@
         validator: function (val, otherVal) {
             return val === otherVal || val > otherVal;
         },
-        message: 'To Year must be greater than or equal to From Year'
+        message: 'Year finished must be after year started'
     };
     ko.validation.registerExtenders();
 
@@ -306,33 +306,33 @@
         self.itemRegexPattern = ko.observable(itemRegex);
 
         self.itemEmployer = ko.observable(itemEmployer).extend({
-            required: { message: "Employer is required" }
+            required: { message: "Please enter employer" }
         }).extend({
             pattern: {
-                message: "'Employer' contains some invalid characters",
+                message: "Employer mustn't contain invalid characters",
                 params: self.itemRegexPattern
             }
         });
 
         self.itemJobTitle = ko.observable(itemJobTitle).extend({
-            required: { message: "Job Title is required" }
+            required: { message: "Please enter job title" }
         }).extend({
             pattern: {
-                message: "'Job Title' contains some invalid characters",
+                message: "Job title mustn't contain invalid characters",
                 params: self.itemRegexPattern
             }
         });
 
         self.itemMainDuties = ko.observable(itemDuties).extend({
-            required: { message: "'Main duties' required" }
+            required: { message: "Please enter main duties" }
         }).extend({
             maxLength: {
-                message: "Main duties must not exceed 200 characters",
+                message: "Main duties mustn't exceed 200 characters",
                 params: 200
             }
         }).extend({
             pattern: {
-                message: "'Main duties' contains some invalid characters",
+                message: "Main duties mustn't contain invalid characters",
                 params: self.itemRegexPattern
             }
         });
@@ -340,16 +340,16 @@
         self.itemIsCurrentEmployment = ko.observable(itemIsCurrentEmployment);
         self.itemCurrentYear = ko.observable(itemCurrentYear);
 
-        self.itemFromMonth = ko.observable(itemFromMonth).extend({ required: { message: "From month is required" } });
+        self.itemFromMonth = ko.observable(itemFromMonth).extend({ required: { message: "Please enter month started" } });
         self.itemFromYear = ko.observable(itemFromYear).extend({
-            required: { message: "From year is required" }
+            required: { message: "Please enter year started" }
         }).extend({
             number: {
-                message: "'From Year' must be a number"
+                message: "Please enter year started"
             }
         }).extend({
             max: {
-                message: "'From Year' must not be in the future",
+                message: "Year finished mustn’t be in the future",
                 params: self.itemCurrentYear
             }
         }).extend({
@@ -357,19 +357,19 @@
                 validator: function (val, fromYearValue) {
                     return val >= (fromYearValue - 100);
                 },
-                message: "'From Year' must not be less than 100 years ago",
+                message: "Year finished must be 4 digits, for example 1990",
                 params: self.itemCurrentYear,
             }
         });
 
         self.itemToYear = ko.observable(itemToYear).extend({
             required: {
-                message: "To year is required",
+                message: "Please enter year finished",
                 onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
             }
         }).extend({
             number: {
-                message: "'To Year' must be a number",
+                message: "Year finished must be 4 digits, for example 1990",
                 onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
             }
         }).extend({
@@ -377,7 +377,7 @@
                 validator: function (val, fromYearValue) {
                     return val >= fromYearValue;
                 },
-                message: "'To Year' must be greater than or equal to 'From Year'",
+                message: "Year finished must be after year started",
                 params: self.itemFromYear,
                 onlyIf: function () {
                     return (self.itemIsCurrentEmployment() === false);
@@ -385,7 +385,7 @@
             }
         }).extend({
             max: {
-                message: "'To Year' must not be in the future",
+                message: "Year finished must be 4 digits, for example 1990",
                 params: self.itemCurrentYear,
                 onlyIf: function () {
                     return (self.itemIsCurrentEmployment() === false);
@@ -395,7 +395,7 @@
 
         self.itemToMonth = ko.observable(itemToMonth).extend({
             required: {
-                message: "To month is required",
+                message: "Please enter month finished",
                 onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
             }
         }).extend({
@@ -403,7 +403,7 @@
                 validator: function (val, fromMonthValue) {
                     return val >= fromMonthValue;
                 },
-                message: "'To Month and Year' must be after 'From Month and Year'",
+                message: "Date finished must be after date started",
                 params: self.itemFromMonth,
                 onlyIf: function () {
                     return (self.itemFromYear() === self.itemToYear());
@@ -458,43 +458,43 @@
         self.regexPattern = ko.observable();
 
         self.employer = ko.observable().extend({
-            required: { message: "Employer is required" }
+            required: { message: "Please enter employer" }
         }).extend({
             maxLength: {
-                message: "'Employer' must not exceed 50 characters",
+                message: "Employer mustn't exceed 50 characters",
                 params: 50
             }
         }).extend({
             pattern: {
-                message: "'Employer' contains some invalid characters",
+                message: "Employer mustn't contain invalid characters",
                 params: self.regexPattern
             }
         });
 
         self.jobTitle = ko.observable().extend({
-            required: { message: "Job Title is required" }
+            required: { message: "Please enter job title" }
         }).extend({
             maxLength: {
-                message: "'Job Title' must not exceed 50 characters",
+                message: "Job title mustn't exceed 50 characters",
                 params: 50
             }
         }).extend({
             pattern: {
-                message: "'Job Title' contains some invalid characters",
+                message: "Job title mustn't contain invalid characters",
                 params: self.regexPattern
             }
         });
 
         self.mainDuties = ko.observable().extend({
-            required: { message: "'Main duties' required" }
+            required: { message: "Please enter main duties" }
         }).extend({
             maxLength: {
-                message: "'Main duties' must not exceed 200 characters",
+                message: "Main duties mustn't exceed 200 characters",
                 params: 200
             }
         }).extend({
             pattern: {
-                message: "'Main duties' contains some invalid characters",
+                message: "Main duties mustn't contain invalid characters",
                 params: self.regexPattern
             }
         });
@@ -502,24 +502,24 @@
         self.isCurrentEmployment = ko.observable(false);
         self.currentYear = ko.observable();
 
-        self.fromMonth = ko.observable().extend({ required: { message: "'From Month' is required" } });
+        self.fromMonth = ko.observable().extend({ required: { message: "Please enter month started" } });
         self.fromYear = ko.observable().extend({
-            required: { message: "'From Year' is required" }, number: true
+            required: { message: "Please enter year started" }, number: true
         }).extend({
             max: {
-                message: "'From Year' must not be in the future",
+                message: "Year started must not be in the future",
                 params: self.currentYear
             }
         }).extend({
             minLength: {
-                message: "'From Year' must be 4 digits",
+                message: "Year started must be 4 digits, for example 1990",
                 params: 4
             }
         });
 
         self.toMonth = ko.observable().extend({
             required: {
-                message: "To month is required",
+                message: "Please enter month finished",
                 onlyIf: function () { return (self.isCurrentEmployment() === false); }
             }
         }).extend({
@@ -527,7 +527,7 @@
                 validator: function (val, fromMonthValue) {
                     return val >= fromMonthValue;
                 },
-                message: "'To Month and Year' must be after 'From Month and Year'",
+                message: "Year finished must be after year started",
                 params: self.fromMonth,
                 onlyIf: function () {
                     return (self.fromYear() === self.toYear());
@@ -537,12 +537,12 @@
 
         self.toYear = ko.observable().extend({
             required: {
-                message: "To year is required",
+                message: "Please enter year finished",
                 onlyIf: function () { return (self.isCurrentEmployment() === false); }
             }
         }).extend({
             number: {
-                message: "'To Year' must be a number",
+                message: "Year finished must be 4 digits, for example 1990",
                 onlyIf: function () { return (self.isCurrentEmployment() === false); }
             }
         }).extend({
@@ -553,7 +553,7 @@
                 validator: function (val, fromYearValue) {
                     return val >= fromYearValue;
                 },
-                message: "'To Year' must be greater than or equal to 'From Year'",
+                message: "Year finished must be after year started",
                 params: self.fromYear,
                 onlyIf: function () {
                     return (self.isCurrentEmployment() === false);
@@ -561,7 +561,7 @@
             }
         }).extend({
             max: {
-                message: "'To Year' must not be in the future",
+                message: "Year finished must not be in the future",
                 params: self.currentYear,
                 onlyIf: function () {
                     return (self.isCurrentEmployment() === false);
