@@ -29,11 +29,10 @@
 
     @using (Html.BeginForm("search", "vacancysearch", FormMethod.Get))
     {                      
+        @Html.Partial("ValidationSummary", ViewData.ModelState)
+
         <section class="grid grid-1-3">
             <fieldset class="search-filter">
-                
-                @Html.Partial("ValidationSummary", ViewData.ModelState)
-
                 <legend class="heading-medium mob-collpanel-trigger">Edit search</legend>
                 <div class="mob-collpanel toggle-content--mob">
 
