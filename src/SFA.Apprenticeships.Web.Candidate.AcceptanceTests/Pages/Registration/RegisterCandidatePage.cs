@@ -75,6 +75,9 @@
         [ElementLocator(Id = "find-addresses")]
         public IWebElement FindAddresses { get; set; }
 
+        [ElementLocator(Id = "address-select-label")]
+        public IWebElement AddressSelectLabel { get; set; }
+
         [ElementLocator(Id = "address-select")]
         public IElementList<IWebElement, AddressDropdownItem> AddressDropdown
         {

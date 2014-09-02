@@ -175,18 +175,21 @@
             }
         }
 
-        public void RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model)
+        public bool RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model)
         {
             try
             {
                 Logger.Debug("{0} requested password reset code", model.EmailAddress);
 
                 _userAccountService.SendPasswordResetCode(model.EmailAddress);
+
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Logger.ErrorException("Send password reset code failed for " + model.EmailAddress, ex);
-                // TODO: fails silently, should return boolean to indicate success
+                Logger.ErrorException("Send password reset code failed for " + model.EmailAddress, e);
+
+                return false;
             }
         }
 

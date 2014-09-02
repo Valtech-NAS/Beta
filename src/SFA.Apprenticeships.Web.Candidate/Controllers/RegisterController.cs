@@ -1,12 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
     using Common.Services;
-    using Constants;
     using Constants.Pages;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
@@ -145,11 +143,15 @@
                 return View(model);
             }
 
-            _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
+            if (_candidateServiceProvider.RequestForgottenPasswordResetCode(model))
+            {
+                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
+                return RedirectToAction("ResetPassword");
+            }
+            
+            SetUserMessage(PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
 
-            UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
-
-            return RedirectToAction("ResetPassword");
+            return View(model);
         }
 
         [HttpGet]
@@ -176,6 +178,7 @@
             try
             {
                 _candidateServiceProvider.VerifyPasswordReset(model);
+
                 model.IsPasswordResetSuccessful = true;
                 model.IsPasswordResetCodeInvalid = true;
             }
@@ -187,20 +190,25 @@
                         model.IsPasswordResetSuccessful = false;
                         model.IsPasswordResetCodeInvalid = false;
                         break;
+
                     case ErrorCodes.UserAccountLockedError:
                         UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
                         return RedirectToAction("Unlock", "Login");
+
                     case ErrorCodes.UserInIncorrectStateError:
                         model.IsPasswordResetCodeInvalid = false;
                         model.IsPasswordResetSuccessful = false;
                         break;
+
                     case ErrorCodes.UserPasswordResetCodeExpiredError:
                         model.IsPasswordResetCodeInvalid = false;
                         break;
+
                     case ErrorCodes.UserPasswordResetCodeIsInvalid:
                         model.IsPasswordResetCodeInvalid = false;
                         model.IsPasswordResetSuccessful = false;
                         break;
+
                     default:
                         model.IsPasswordResetSuccessful = false;
                         model.IsPasswordResetCodeInvalid = false;
@@ -213,7 +221,7 @@
             if (validationResult.IsValid)
             {
                 var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
-                SetUserMessage(PasswordResetPageMessages.SuccessPasswordReset);
+                SetUserMessage(PasswordResetPageMessages.SuccessfulPasswordReset);
                 return SetAuthenticationCookieAndRedirectToAction(candidate);
             }
 
@@ -231,11 +239,16 @@
                 EmailAddress = emailAddress
             };
 
-            _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
-
             UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
 
-            SetUserMessage(string.Format(PasswordResetPageMessages.PasswordResetSent, emailAddress));
+            if (_candidateServiceProvider.RequestForgottenPasswordResetCode(model))
+            {
+                SetUserMessage(string.Format(PasswordResetPageMessages.PasswordResetSent, emailAddress));
+            }
+            else
+            {
+                SetUserMessage(PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
+            }
 
             return RedirectToAction("ResetPassword");
         }
@@ -248,11 +261,9 @@
 
                 return RedirectToAction("Activation");
             }
-            else
-            {
-                SetUserMessage(ActivationPageMessages.ActivationCodeSendingFailure, UserMessageLevel.Warning);
-                return RedirectToAction("Activation");
-            }
+
+            SetUserMessage(ActivationPageMessages.ActivationCodeSendingFailure, UserMessageLevel.Warning);
+            return RedirectToAction("Activation");
         }
 
         [AllowCrossSiteJson]
