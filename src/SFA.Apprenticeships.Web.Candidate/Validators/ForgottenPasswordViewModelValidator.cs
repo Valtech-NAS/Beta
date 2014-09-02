@@ -2,7 +2,6 @@
 {
     using Constants.ViewModels;
     using FluentValidation;
-    using ViewModels.Login;
     using ViewModels.Register;
 
     public class ForgottenPasswordViewModelClientValidator : AbstractValidator<ForgottenPasswordViewModel>

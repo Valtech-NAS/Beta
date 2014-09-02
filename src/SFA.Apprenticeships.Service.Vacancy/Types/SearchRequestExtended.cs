@@ -7,36 +7,36 @@ namespace SFA.Apprenticeships.Service.Vacancy.Types
     {
         public SearchRequestExtended(SearchRequest searchRequest)
         {
-            this.TestRunId = searchRequest.TestRunId;
-            this.JobTitleTerms = searchRequest.JobTitleTerms;
-            this.KeywordTerms = searchRequest.KeywordTerms;
+            TestRunId = searchRequest.TestRunId;
+            JobTitleTerms = searchRequest.JobTitleTerms;
+            KeywordTerms = searchRequest.KeywordTerms;
 
-            this.UseJobTitleTerms = searchRequest.Parameters.ContainsKey(SearchParameters.UseJobTitleTerms) &&
-                                    bool.Parse(searchRequest.Parameters[SearchParameters.UseJobTitleTerms]);
+            UseJobTitleTerms = searchRequest.Parameters.ContainsKey(SearchParameters.UseJobTitleTerms) &&
+                               bool.Parse(searchRequest.Parameters[SearchParameters.UseJobTitleTerms]);
 
-            this.SearchJobTitleField = searchRequest.Parameters.ContainsKey(SearchParameters.SearchJobTitleField) &&
-                                       bool.Parse(searchRequest.Parameters[SearchParameters.SearchJobTitleField]);
+            SearchJobTitleField = searchRequest.Parameters.ContainsKey(SearchParameters.SearchJobTitleField) &&
+                                  bool.Parse(searchRequest.Parameters[SearchParameters.SearchJobTitleField]);
 
-            this.SearchDescriptionField = searchRequest.Parameters.ContainsKey(SearchParameters.SearchDescriptionField) &&
-                                    bool.Parse(searchRequest.Parameters[SearchParameters.SearchDescriptionField]);
+            SearchDescriptionField = searchRequest.Parameters.ContainsKey(SearchParameters.SearchDescriptionField) &&
+                                     bool.Parse(searchRequest.Parameters[SearchParameters.SearchDescriptionField]);
 
-            this.SearchEmployerNameField = searchRequest.Parameters.ContainsKey(SearchParameters.SearchEmployerNameField) &&
-                                    bool.Parse(searchRequest.Parameters[SearchParameters.SearchEmployerNameField]);
+            SearchEmployerNameField = searchRequest.Parameters.ContainsKey(SearchParameters.SearchEmployerNameField) &&
+                                      bool.Parse(searchRequest.Parameters[SearchParameters.SearchEmployerNameField]);
 
             JobTitleFactors = new KeywordFactors(searchRequest.Parameters, SearchParameters.JobTitleBoost,
-                                    SearchParameters.JobTitleFuzziness, SearchParameters.JobTitleFuzzyPrefix,
-                                    SearchParameters.JobTitleMatchAllKeywords, SearchParameters.JobTitlePhraseProximity,
-                                    SearchParameters.JobTitlePhraseOrdering);
+                SearchParameters.JobTitleFuzziness, SearchParameters.JobTitleFuzzyPrefix,
+                SearchParameters.JobTitleMatchAllKeywords, SearchParameters.JobTitlePhraseProximity,
+                SearchParameters.JobTitleMinimumMatch);
 
             DescriptionFactors = new KeywordFactors(searchRequest.Parameters, SearchParameters.DescriptionBoost,
-                                    SearchParameters.DescriptionFuzziness, SearchParameters.DescriptionFuzzyPrefix,
-                                    SearchParameters.DescriptionMatchAllKeywords, SearchParameters.DescriptionPhraseProximity,
-                                    SearchParameters.DescriptionPhraseOrdering);
+                SearchParameters.DescriptionFuzziness, SearchParameters.DescriptionFuzzyPrefix,
+                SearchParameters.DescriptionMatchAllKeywords, SearchParameters.DescriptionPhraseProximity,
+                SearchParameters.DescriptionMinimumMatch);
 
             EmployerFactors = new KeywordFactors(searchRequest.Parameters, SearchParameters.EmployerNameBoost,
-                                    SearchParameters.EmployerNameFuzziness, SearchParameters.EmployerNameFuzzyPrefix,
-                                    SearchParameters.EmployerNameMatchAllKeywords, SearchParameters.EmployerNamePhraseProximity,
-                                    SearchParameters.EmployerNamePhraseOrdering);
+                SearchParameters.EmployerNameFuzziness, SearchParameters.EmployerNameFuzzyPrefix,
+                SearchParameters.EmployerNameMatchAllKeywords, SearchParameters.EmployerNamePhraseProximity,
+                SearchParameters.EmployerMinimumMatch);
         }
 
         public bool UseJobTitleTerms { get; set; }
@@ -57,23 +57,22 @@ namespace SFA.Apprenticeships.Service.Vacancy.Types
             SearchParameters fuzzyPrefix, 
             SearchParameters matchAllKeywords,
             SearchParameters phraseProximity,
-            SearchParameters phaseOrdering)
+            SearchParameters minimumMatch)
         {
 
-            Boost = parameters.ContainsKey(boost) ? double.Parse(parameters[boost]) : 1;
-            Fuzziness = parameters.ContainsKey(fuzzy) ? int.Parse(parameters[fuzzy]) : 0;
-            FuzzinessPrefix = parameters.ContainsKey(fuzzyPrefix) ? int.Parse(parameters[fuzzyPrefix]) : 0;
-            MatchAllKeywords = parameters.ContainsKey(matchAllKeywords) ? bool.Parse(parameters[matchAllKeywords]) : true;
-            PhraseProximity = parameters.ContainsKey(phraseProximity) ? int.Parse(parameters[phraseProximity]) : 1;
-            PhraseOrdering = parameters.ContainsKey(phaseOrdering) ? int.Parse(parameters[phaseOrdering]) : 0;
+            Boost = parameters.ContainsKey(boost) ? new double?(double.Parse(parameters[boost])) : null;
+            Fuzziness = parameters.ContainsKey(fuzzy) ? new int?(int.Parse(parameters[fuzzy])) : null;
+            FuzzinessPrefix = parameters.ContainsKey(fuzzyPrefix) ? new int?(int.Parse(parameters[fuzzyPrefix])) : null;
+            MatchAllKeywords = parameters.ContainsKey(matchAllKeywords) && bool.Parse(parameters[matchAllKeywords]);
+            PhraseProximity = parameters.ContainsKey(phraseProximity) ? new int?(int.Parse(parameters[phraseProximity])) : null;
+            MinimumMatch = parameters.ContainsKey(minimumMatch) ? new int?(int.Parse(parameters[minimumMatch])) : null;
         }
 
-        public double Boost { get; set; }
-        public int Fuzziness { get; set; }
-        public int FuzzinessPrefix { get; set; }
+        public double? Boost { get; set; }
+        public int? Fuzziness { get; set; }
+        public int? FuzzinessPrefix { get; set; }
         public bool MatchAllKeywords { get; set; }
-        public int PhraseProximity { get; set; }
-        public int PhraseOrdering { get; set; }
+        public int? PhraseProximity { get; set; }
+        public int? MinimumMatch { get; set; }
     }
-
 }

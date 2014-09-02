@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4A4346C1-4742-476E-9626-4F31CD6432D4}</ProjectGuid>
+    <ProjectGuid>{7A6640F8-921A-4893-B9DE-BF91BCD4A9E2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Infrastructure.VacancyIndexer.IntegrationTests</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Infrastructure.VacancyIndexer.IntegrationTests</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Infrastructure.VacancySearch.UnitTests</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Infrastructure.VacancySearch.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,27 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Elasticsearch.Net">
-      <HintPath>..\packages\Elasticsearch.Net.1.0.2\lib\Elasticsearch.Net.dll</HintPath>
-    </Reference>
     <Reference Include="FluentAssertions">
       <HintPath>..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions.Core">
       <HintPath>..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Nest, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NEST.1.0.2\lib\Nest.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap">
+    <Reference Include="StructureMap, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap.Net4">
@@ -63,50 +52,31 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="SetUp.cs" />
-    <Compile Include="IndexingInitialisationTests.cs" />
+    <Compile Include="Configuration\SearchConfigurationShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
-      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
-      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyEtl\SFA.Apprenticeships.Application.VacancyEtl.csproj">
-      <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
-      <Name>SFA.Apprenticeships.Application.VacancyEtl</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
-      <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
-      <Name>SFA.Apprenticeships.Domain.Entities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Elastic.Common\SFA.Apprenticeships.Infrastructure.Elastic.Common.csproj">
-      <Project>{f75b0c62-89b5-473d-af2d-366a5a6722ac}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Elastic.Common</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancySearch\SFA.Apprenticeships.Infrastructure.VacancySearch.csproj">
+      <Project>{913445EC-3175-4AFB-869C-F03B6FD2940A}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.VacancySearch</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyIndexer\SFA.Apprenticeships.Infrastructure.VacancyIndexer.csproj">
-      <Project>{02D19199-A4BB-484A-AA48-208C7B6D819F}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.VacancyIndexer</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

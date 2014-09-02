@@ -1,14 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
+    using System.Collections;
     using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
     using ActionResults;
     using Application.Interfaces.Vacancies;
     using Common.Constants;
-    using Constants.Pages;
-    using Constants.ViewModels;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Microsoft.Ajax.Utilities;
@@ -47,17 +46,15 @@
         }
 
         [HttpGet]
-        public ActionResult Search(VacancySearchResponseViewModel searchViewModel)
-        {
-            return RedirectToAction("results", searchViewModel.VacancySearch);
-        }
-
-        [HttpGet]
         public ActionResult Results(VacancySearchViewModel model)
         {
             UserData.Pop(UserDataItemNames.VacancyDistance);
 
-            PopulateLookups(model);
+            if (model.SortType == VacancySortType.Relevancy && string.IsNullOrWhiteSpace(model.Keywords))
+            {
+                model.SortType = VacancySortType.Distance;
+                return RedirectToAction("results", model);
+            }
 
             var clientResult = _searchRequestValidator.Validate(model);
 
@@ -68,8 +65,6 @@
 
                 return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
             }
-
-            model.CheckLatLonLocHash();
 
             if (!HasGeoPoint(model))
             {
@@ -126,9 +121,11 @@
             {
                 ModelState.Clear();
                 SetUserMessage(results.ViewModelMessage, UserMessageLevel.Warning);
-
                 return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
             }
+
+            PopulateDistances(model.WithinDistance);
+            PopulateSortType(model.SortType, model.Keywords);
 
             return View("results", results);
         }
@@ -137,6 +134,7 @@
         public ActionResult DetailsWithDistance(int id, string distance)
         {
             UserData.Push(UserDataItemNames.VacancyDistance, distance.ToString(CultureInfo.InvariantCulture));
+            UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToString(CultureInfo.InvariantCulture));
 
             return RedirectToAction("Details", new { id });
         }
@@ -186,6 +184,7 @@
 
         private static bool HasGeoPoint(VacancySearchViewModel searchViewModel)
         {
+            searchViewModel.CheckLatLonLocHash();
             return searchViewModel.Latitude.HasValue && searchViewModel.Longitude.HasValue;
         }
 
@@ -221,15 +220,21 @@
             ViewBag.Distances = distances;
         }
 
-        private void PopulateSortType(VacancySortType selectedSortType = VacancySortType.Distance)
+        private void PopulateSortType(VacancySortType selectedSortType = VacancySortType.Distance, string keywords = null)
         {
+            var sortTypeOptions = new ArrayList
+            {
+                new {SortType = VacancySortType.Distance, Name = "Distance"},
+                new {SortType = VacancySortType.ClosingDate, Name = "Closing Date"}
+            };
+
+            if (!string.IsNullOrWhiteSpace(keywords))
+            {
+                sortTypeOptions.Add(new {SortType = VacancySortType.Relevancy, Name = "Best Match"});
+            }
+            
             var sortTypes = new SelectList(
-                new[]
-                {
-                    new {SortType = VacancySortType.Distance, Name = "Distance"},
-                    new {SortType = VacancySortType.ClosingDate, Name = "Closing Date"}
-                    //new { SortType = VacancySortType.Relevancy, Name = "Best Match" }
-                },
+                sortTypeOptions,
                 "SortType",
                 "Name",
                 selectedSortType

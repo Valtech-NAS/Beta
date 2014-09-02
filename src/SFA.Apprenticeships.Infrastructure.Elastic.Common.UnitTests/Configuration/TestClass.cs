@@ -5,10 +5,10 @@
     [ElasticType(Name = "test_mapping_class")]
     public class TestMappingClass
     {
-        [ElasticProperty(Index = FieldIndexOption.not_analyzed)]
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public long Id { get; set; }
 
-        [ElasticProperty(Index = FieldIndexOption.analyzed)]
+        [ElasticProperty(Index = FieldIndexOption.Analyzed)]
         public string Dummy { get; set; }
     }
 }

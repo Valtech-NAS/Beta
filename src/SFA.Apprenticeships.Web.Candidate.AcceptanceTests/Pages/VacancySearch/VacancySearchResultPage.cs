@@ -51,6 +51,7 @@
         {
             get
             {
+                bool result = true;
                 SearchResultItem previousItem = null;
                 for (int i = 0; i < SearchResultItems.Count(); i++)
                 {
@@ -59,12 +60,13 @@
                         var currentItem = SearchResultItems.ElementAt(i);
                         var currentDistance = double.Parse(currentItem.Distance.Text);
                         var previousDistance = double.Parse(previousItem.Distance.Text);
-                        currentDistance.Should().BeGreaterOrEqualTo(previousDistance);
+                        result = result & currentDistance >= previousDistance;
+
                     }
                     previousItem = SearchResultItems.ElementAt(i);
                 }
 
-                return "True";
+                return result.ToString();
             }
         }
 
@@ -72,20 +74,48 @@
         {
             get
             {
+                bool result = true;
                 SearchResultItem previousItem = null;
                 for (int i = 0; i < SearchResultItems.Count(); i++)
                 {
                     if (i > 0)
                     {
                         var currentItem = SearchResultItems.ElementAt(i);
-                        var currentClosing = DateTime.Parse(currentItem.ClosingDate.Text);
-                        var previousClosing = DateTime.Parse(previousItem.ClosingDate.Text);
-                        currentClosing.Should().BeOnOrAfter(previousClosing);
+                        var currentDistance = DateTime.Parse(currentItem.ClosingDate.Text);
+                        var previousDistance = DateTime.Parse(previousItem.ClosingDate.Text);
+                        result = result & currentDistance >= previousDistance;
                     }
                     previousItem = SearchResultItems.ElementAt(i);
                 }
 
-                return "True";
+                return result.ToString();
+            }
+        }
+
+        public string ResultsAreInBestMatchScoreOrder
+        {
+            get
+            {
+                bool result = true;
+                SearchResultItem previousItem = null;
+                for (int i = 0; i < SearchResultItems.Count(); i++)
+                {
+                    if (i > 0)
+                    {
+                        var currentItem = SearchResultItems.ElementAt(i);
+                        var currentClosing = double.Parse(currentItem.BestMatchScore.Text);
+                        var previousClosing = double.Parse(previousItem.BestMatchScore.Text);
+                        result = result & previousClosing >= currentClosing;
+                    }
+                    previousItem = SearchResultItems.ElementAt(i);
+
+                    if (previousItem.BestMatchScore == null)
+                    {
+                        return false.ToString();
+                    }
+                }
+
+                return result.ToString();
             }
         }
 
@@ -137,5 +167,8 @@
 
         [ElementLocator(Class = "closing-date-value")]
         public IWebElement ClosingDate { get; set; }
+
+        [ElementLocator(Class = "best-match-score")]
+        public IWebElement BestMatchScore { get; set; }
     }
 }

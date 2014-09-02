@@ -6,7 +6,7 @@
         <div class="float-right-wrap">
             <div class="form-group form-group-compound">
                 <label for="sort-results" class="heading-medium inline">Sort results</label>
-                @Html.DropDownListFor(m => m.VacancySearch.SortType, (SelectList)ViewBag.SortTypes, new { @id = "sort-results", @name = "sortType", @onchange = "this.form.submit();" })
+                @Html.DropDownList("sortType", (SelectList)ViewBag.SortTypes, new { @id = "sort-results", @onchange = "this.form.submit();" })
                 <button class="show-nojs">Sort</button>
             </div>
         </div>
@@ -26,6 +26,10 @@
                 <p>@Html.ActionLink("Read more", "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString })</p>
                 <div class="inl-block-wrapper">
                     <ul class="list-text btm-align width-all-2-3">
+                        @if (!string.IsNullOrWhiteSpace(Model.VacancySearch.Keywords) && vacancy.Score != 0)
+                        {
+                            <li><b>Match Score:</b> <span class="best-match-score">@vacancy.Score</span></li>
+                        }
                         <li><b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles</li>
                         <li><b>Closing date:</b> <span class="closing-date-value">@Html.DisplayFor(m => vacancy.ClosingDate, "Date")</span></li>
                     </ul>

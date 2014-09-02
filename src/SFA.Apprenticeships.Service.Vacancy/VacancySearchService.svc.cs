@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Service.Vacancy
 {
-    using System;
-    using System.Linq;
     using Types;
 
     public class VacancySearchService : IVacancySearchService
@@ -13,7 +11,7 @@
             return new SearchResponse
             {
                 Request = request,
-                Results = results.ToArray()
+                SearchResults = results
             };
         }
     }

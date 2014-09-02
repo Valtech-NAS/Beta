@@ -2,8 +2,8 @@
 {
     public enum VacancySortType
     {
+        Relevancy,
         Distance,
-        ClosingDate,
-        Relevancy
+        ClosingDate
     }
 }
