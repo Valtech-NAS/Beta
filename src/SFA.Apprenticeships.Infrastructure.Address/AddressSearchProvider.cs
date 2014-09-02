@@ -38,7 +38,7 @@
             //TODO: vga: refactor in a new ElasticClient class
             if (ThereWasAnErrorWhileSearching(search))
             {
-                throw search.ConnectionStatus.Error.OriginalException;
+                throw search.ConnectionStatus.OriginalException;
             }
 
             var addresses =
@@ -49,11 +49,11 @@
             return addresses;
         }
 
-        private static bool ThereWasAnErrorWhileSearching(Nest.IQueryResponse<Elastic.Common.Entities.Address> search)
+        private static bool ThereWasAnErrorWhileSearching(Nest.ISearchResponse<Elastic.Common.Entities.Address> search)
         {
             return search != null &&
-                            search.ConnectionStatus.Error != null &&
-                            search.ConnectionStatus.Error.OriginalException != null;
+                            search.ConnectionStatus.Success &&
+                            search.ConnectionStatus.OriginalException != null;
         }
     }
 }
