@@ -128,6 +128,7 @@
             new qualificationTypeModel("GCSE"),
             new qualificationTypeModel("AS Level"),
             new qualificationTypeModel("A Level"),
+            new qualificationTypeModel("BTEC"),
             new qualificationTypeModel("NVQ or SVQ Level 1"),
             new qualificationTypeModel("NVQ or SVQ Level 2"),
             new qualificationTypeModel("NVQ or SVQ Level 3"),
