@@ -30,7 +30,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Services.Candidate.Strategie
 
             var user = GetAnActiveUserWithOneLoginIncorrectAttempt();
 
-            userReadRepository.Setup(urr => urr.Get(It.IsAny<string>(), true))
+            userReadRepository.Setup(urr => urr.Get(It.IsAny<string>(), false))
                 .Returns(user);
 
             authenticationService.Setup(auth => auth.AuthenticateUser(It.IsAny<Guid>(), It.IsAny<string>()))
