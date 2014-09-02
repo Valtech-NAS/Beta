@@ -34,28 +34,31 @@
 
         public Candidate AuthenticateCandidate(string username, string password)
         {
-            var user = _userReadRepository.Get(username);
+            var user = _userReadRepository.Get(username, false);
 
-            user.AssertState(
-                string.Format("Cannot authenticate user in state: {0}.", user.Status),
-                UserStatuses.Active, UserStatuses.PendingActivation, UserStatuses.Locked);
-
-            if (_authenticationService.AuthenticateUser(user.EntityId, password))
+            if (user != null)
             {
-                var candidate = _candidateReadRepository.Get(user.EntityId);
+                user.AssertState(
+                    string.Format("Cannot authenticate user in state: {0}.", user.Status),
+                    UserStatuses.Active, UserStatuses.PendingActivation, UserStatuses.Locked);
 
-                if (user.LoginIncorrectAttempts > 0)
+                if (_authenticationService.AuthenticateUser(user.EntityId, password))
                 {
-                    user.SetStateActive();
-                    _userWriteRepository.Save(user);
+                    var candidate = _candidateReadRepository.Get(user.EntityId);
+
+                    if (user.LoginIncorrectAttempts > 0)
+                    {
+                        user.SetStateActive();
+                        _userWriteRepository.Save(user);
+                    }
+
+                    //_auditLog.Info(AuditEvents.SuccessfulLogon, username); // TODO: audit successful logon (named logger)
+
+                    return candidate;
                 }
 
-                //_auditLog.Info(AuditEvents.SuccessfulLogon, username); // TODO: audit successful logon (named logger)
-
-                return candidate;
+                RegisterFailedLogin(user);
             }
-
-            RegisterFailedLogin(user);
 
             return null;
         }

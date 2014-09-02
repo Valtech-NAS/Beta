@@ -139,17 +139,8 @@
                     return GetLoginResultViewModel(model, userStatus);
                 }
 
-                Candidate candidate = null;
-
-                try
-                {
-                    candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
-                }
-                catch (CustomException)
-                {
-                    return GetAuthenticationFailedViewModel(model, userStatus);
-                }
-
+                var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
+               
                 if (candidate != null)
                 {
                     // User is authentic.

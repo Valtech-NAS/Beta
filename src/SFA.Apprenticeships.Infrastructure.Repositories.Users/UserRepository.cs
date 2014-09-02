@@ -44,7 +44,6 @@
             {
                 Logger.Debug("Unknown username={0}", username);
 
-                //throw new Exception("Unknown user name"); // TODO: EXCEPTION: should use an application exception type
                 throw new CustomException("Unknown candidate", ErrorCodes.UnknownUserError);
             }
 
