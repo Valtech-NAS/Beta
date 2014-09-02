@@ -369,10 +369,9 @@
 
 }
 
-@section scripts{
+@section scripts {
 
-    <script src="~/Content/_assets/js/vendor/knockout-3.1.0.js"></script>
-    <script src="~/Content/_assets/js/vendor/knockout.validation.js"></script>
+    @Scripts.Render("~/bundles/nas/applicationform")
 
     <script type="text/javascript">
 
@@ -419,11 +418,4 @@
             return whitelistregex;
         }
     </script>
-    @*<script id="errorMessage" type="text/html">
-        <span data-bind="visible: !field.isValid(), attr:{'class':!field.isValid()? 'field-validation-error' : 'field-validation-valid'}">
-            <span data-bind="validationMessage: field"></span>
-        </span>
-    </script>*@
-    <script src="~/Content/_assets/js/nas/applicationform.js"></script>
-
 }

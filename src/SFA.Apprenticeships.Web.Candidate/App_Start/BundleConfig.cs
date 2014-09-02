@@ -12,25 +12,29 @@ namespace SFA.Apprenticeships.Web.Candidate
         {
             BundleTable.EnableOptimizations = true;
 
-            bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
-                "~/Content/_assets/js/vendor/jquery-1.11.0.min.js",
-                "~/Content/_assets/js/scripts.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                "~/Content/_assets/js/vendor/jquery-1.11.1.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                "~/Content/_assets/js/vendor/modernizr-custom.js"));
+            bundles.Add(new ScriptBundle("~/bundles/vendor").Include(
+                "~/Content/_assets/js/scripts.min.js",
+                "~/Content/_assets/js/vendor/jquery.validate.min.js",
+                "~/Content/_assets/js/vendor/jquery.validate.unobtrusive.min.js",
+                "~/Content/_assets/js/vendor/knockout-3.1.0.js",
+                "~/Content/_assets/js/vendor/knockout.validation.js"));
 
-            // TODO: DEADCODE: we could/should aggregate some of these "single file" bundles
-            //bundles.Add(new Bundle("~/content/css/bundle").Include(
-            //    "~/Content/_assets/css/main.css"));
+            bundles.Add(new ScriptBundle("~/bundles/nas").Include(
+                "~/Content/_assets/js/nas/lookupService.js",
+                "~/Content/_assets/js/nas/validationscripts.js"));
 
-            //bundles.Add(new Bundle("~/content/css/fonts").Include(
-            //    "~/Content/_assets/css/fonts.css"));
+            bundles.Add(new ScriptBundle("~/bundles/nas/passwordstrength").Include(
+                "~/Content/_assets/js/vendor/zxcvbn-async.js"));
 
-            //bundles.Add(new Bundle("~/content/css/bundle-ie8").Include(
-            //    "~/Content/_assets/css/main-ie8.css"));
+            bundles.Add(new ScriptBundle("~/bundles/nas/applicationform").Include(
+                "~/Content/_assets/js/nas/applicationform.js"));
 
-            //bundles.Add(new Bundle("~/content/css/fonts-ie8").Include(
-            //    "~/Content/_assets/css/fonts-ie8.css"));
+            bundles.Add(new ScriptBundle("~/bundles/nas/locationsearch").Include(
+                "~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js",
+                "~/Content/_assets/js/nas/locationAutocomplete.js"));
         }
     }
 }

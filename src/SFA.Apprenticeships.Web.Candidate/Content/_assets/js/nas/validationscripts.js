@@ -2,6 +2,9 @@
 
     $("form").each(function () {
         var validator = $.data(this, 'validator');
+
+        if (validator === undefined) return;
+
         var settings = validator.settings;
         var oldErrorFunction = settings.errorPlacement;
         var oldSuccessFunction = settings.success;
@@ -77,6 +80,8 @@
  * http://pastebin.com/7uzUJz71
  */
 (function ($) {
+    if ($.validator === undefined) return;
+
     $.validator.unobtrusive.adapters.add('equaltovalue', ['valuetocompare'], function (options) {
         options.rules['equaltovalue'] = options.params;
         if (options.message != null) {

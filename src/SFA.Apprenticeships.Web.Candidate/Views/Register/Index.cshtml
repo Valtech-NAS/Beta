@@ -269,11 +269,9 @@
 
 @section scripts
 {
-    <script src="@Url.Content("~/Content/_assets/js/vendor/zxcvbn-async.js")"></script>
-    <script src="@Url.Content("~/Content/_assets/js/nas/lookupService.js")"></script>
+    @Scripts.Render("~/bundles/nas/passwordstrength")
 
     <script>
-
         $(function () {
 
             $("#find-addresses").addressLookup({

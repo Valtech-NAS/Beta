@@ -29,11 +29,8 @@
 
 @section scripts
 {
-    <script src="@Url.Content("~/Content/_assets/js/nas/lookupService.js")"></script>
-
     <script>
         $(function () {
-
             $("#find-addresses").addressLookup({
                 url: '@Url.Action("Addresses", "Location")',
                 selectlist: '#address-select'

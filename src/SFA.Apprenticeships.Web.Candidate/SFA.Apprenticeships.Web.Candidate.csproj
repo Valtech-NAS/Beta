@@ -371,7 +371,6 @@
     <Content Include="Content\_assets\js\scripts.min.js" />
     <Content Include="Content\_assets\js\vendor\goog\webfont-debug.js" />
     <Content Include="Content\_assets\js\vendor\jquery-1.11.1.min.js" />
-    <Content Include="Content\_assets\js\vendor\modernizr-2.7.1.js" />
     <Content Include="Content\_assets\js\vendor\modernizr-custom.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">

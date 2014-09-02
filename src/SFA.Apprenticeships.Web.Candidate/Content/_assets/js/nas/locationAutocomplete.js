@@ -2,6 +2,7 @@
 (function($) {
     $.fn.locationMatch = function(options) {
 
+        var self = $(this);
         var settings = $.extend({ delay: 300, minLength: 3, maxListSize: 25, url: '', longitude: null, latitude: null, latlonhash: null }, options);
         var tags = [];
         var locations;
@@ -12,7 +13,7 @@
             this.Latitude = null;
         };
 
-        this.autocomplete({
+        self.autocomplete({
             delay: settings.delay,
             minLength: settings.minLength,
             source: function (request, response) {
