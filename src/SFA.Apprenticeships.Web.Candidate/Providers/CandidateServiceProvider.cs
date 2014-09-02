@@ -16,6 +16,7 @@
     using NLog;
     using ViewModels.Login;
     using ViewModels.Register;
+    using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
 
     public class CandidateServiceProvider : ICandidateServiceProvider
     {
@@ -38,9 +39,21 @@
             _mapper = mapper;
         }
 
-        public bool IsUsernameAvailable(string username)
+        public UserNameAvailability IsUsernameAvailable(string username)
         {
-            return _userAccountService.IsUsernameAvailable(username);
+            var userNameAvailability = new UserNameAvailability();
+
+            try
+            {
+                userNameAvailability.Value = _userAccountService.IsUsernameAvailable(username);
+            }
+            catch
+            {
+                userNameAvailability.HasError = true;
+                userNameAvailability.ErrorMessage = "Error checking user name availability";
+            }
+
+            return userNameAvailability;
         }
 
         public UserStatuses GetUserStatus(string username)

@@ -1,6 +1,4 @@
-﻿
-@using SFA.Apprenticeships.Web.Common.Framework
-@model VacancySearchResponseViewModel
+﻿@model VacancySearchResponseViewModel
 
 @{
     ViewBag.Title = "Apprenticeships - Results";
@@ -27,49 +25,11 @@
         <p id="vacancy-result-summary">@Html.Raw(resultMessage)</p>
     </div>
 
-    @using (Html.BeginForm("search", "vacancysearch", FormMethod.Get))
-    {                      
-        <section class="grid grid-1-3">
-            <fieldset class="search-filter">
-                
-                @Html.Partial("ValidationSummary", ViewData.ModelState)
-
-                <legend class="heading-medium mob-collpanel-trigger">Edit search</legend>
-                <div class="mob-collpanel toggle-content--mob">
-
-                    @Html.FormTextFor(m => m.VacancySearch.Keywords, hintText: "")
-                    @Html.FormTextFor(m => m.VacancySearch.Location, hintText: "")
-                    
-                    @if (ViewBag.LocationSearches != null && ViewBag.LocationSearches.Length > 0)
-                    {
-                        <div class="form-group form-group-compound">
-                            <ul class="list-text list-max-11">
-                                <li>Did you mean: </li>
-                                @foreach (var locationSearch in ViewBag.LocationSearches)
-                                {
-                                    <li><a href="@Url.Action("results", locationSearch)">@locationSearch.Location</a></li>
-                                }
-                            </ul>
-                        </div>
-                    }
-
-                    @* TODO::Create a form control for this. *@
-                    <div class="form-group">
-                        <label for="loc-within" class="form-label">Within</label>
-                        @Html.DropDownListFor(m => m.VacancySearch.WithinDistance, (SelectList) ViewBag.Distances, new {@id = "loc-within", @name = "WithinDistance"})
-                    </div>
-                    
-                    @Html.HiddenFor(m => m.VacancySearch.Latitude)
-                    @Html.HiddenFor(m => m.VacancySearch.Longitude)
-                    @Html.Hidden("VacancySearch.Hash", Model.VacancySearch.LatLonLocHash())
-
-                    <div class="form-group">
-                        <button class="button" id="search-button">Update results</button>
-                    </div>
-                </div>
-            </fieldset>
+    @using (Html.BeginForm("results", "vacancysearch", FormMethod.Get))
+    {
+        Html.Partial("ValidationSummary", ViewData.ModelState);
+        Html.RenderPartial("_searchUpdate", Model.VacancySearch);
         
-        </section>
         <section class="grid grid-2-3">
             @{
                 if (Model.TotalHits == 0)
@@ -89,7 +49,6 @@
                     </div>
                 }
             }
-            
         </section>
     }
 </div>

@@ -4,11 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    .blocked-backgroud {
-        background-color: red;
-    }
-</style>
 <div itemscope itemtype="http://schema.org/JobPosting">
     <div class="grid-wrapper">
         <div class="grid grid-2-3">
@@ -179,11 +174,6 @@
                         <li id="vacancy-provider-contact">@Model.Contact</li>
                     </ul>
                 }
-                @*<div class="ad-details__map">
-                        <p class="blocked-backgroud">Where do we get the address for this map?</p>
-                        <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=ST14+5EA,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
-                        <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
-                    </div>*@
             </div>
         </section>
         if (!Request.IsAuthenticated)

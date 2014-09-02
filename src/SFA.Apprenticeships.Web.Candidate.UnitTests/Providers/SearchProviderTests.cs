@@ -75,7 +75,7 @@
                     1,
                     pageSize,
                     It.IsAny<int>(),
-                    VacancySortType.Distance)).Returns(results);
+                    VacancySortType.Relevancy)).Returns(results);
 
             var search = new VacancySearchViewModel
             {

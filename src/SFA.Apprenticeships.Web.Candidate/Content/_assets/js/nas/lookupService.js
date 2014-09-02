@@ -100,7 +100,7 @@ $(document).ready(function () {
 
             } else {
                 $addressList.addClass("toggle-content");
-                showErrorMessage("TODO: 'Postcode' not found");
+                showErrorMessage("Postcode not found. Please enter address manually.");
             }
 
             showFindAddressButton();
@@ -108,21 +108,20 @@ $(document).ready(function () {
 
         var handleMissingPostcode = function () {
             $addressList.addClass("toggle-content");
-            showErrorMessage("TODO: 'Postcode' is required");
+            showErrorMessage("Please enter a postcode");
             showFindAddressButton();
         };
 
         var handleInvalidPostcode = function () {
             $addressList.addClass("toggle-content");
-            showErrorMessage("TODO: 'Postcode' is invalid");
+            showErrorMessage("Please enter a valid postcode");
             showFindAddressButton();
         };
 
         var handleError = function (e) {
-            // TODO: add retry message from 'Points of Failure'.
             // TODO: can we differentiate between proxy error and server-type error (e.g. postcode.io).
             console.error(e);
-            showErrorMessage("TODO: service call failed - retry");
+            showErrorMessage("Sorry, there’s a problem with the service. Please try entering your address manually.");
             showFindAddressButton();
         };
 
@@ -159,26 +158,40 @@ $(document).ready(function () {
 
         var self = this;
 
-        self.focusout(function () {
+        var $emailAvailableMessage = $('#email-available-message');
 
+        var setErrorMessage = function () {
+            $emailAvailableMessage.html('<p class="text">Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it.</p>');
+        };
+
+        var cleanErrorMessage = function () {
+            $emailAvailableMessage.html('');
+        }
+
+        var handleSucess = function (response) {
+            if (response.isUsernameAvailable === false) {
+                setErrorMessage();
+            } else {
+                cleanErrorMessage();
+            }
+        };
+
+        var handleError = function (error) {
+            //Ignore, could be proxy issues so will work as 
+            //non-JS version.
+            //console.log(error);
+        };
+
+        self.focusout(function () {
             var username = $(this).val();
+            cleanErrorMessage();
 
             $.ajax({
                 url: apiurl,
                 type: 'GET',
                 data: { username: username },
-                success: function (response) {
-                    if (response.isUsernameAvailable === false) {
-                        $('#email-available-message').html('<p class="text">Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it.</p>');
-                    } else {
-                        $('#email-available-message').html('');
-                    }
-                },
-                error: function (error) {
-                    //Ignore, could be proxy issues so will work as 
-                    //non-JS version.
-                    //console.log(error);
-                }
+                success: handleSucess,
+                error: handleError
             });
         });
 

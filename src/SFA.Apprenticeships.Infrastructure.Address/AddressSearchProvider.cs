@@ -31,16 +31,29 @@
                 s.Index(indexName);
                 s.Type(documentTypeName);
                 s.Size(100);
-                s.Query(q => q.MatchPhrase(mpqd => mpqd.OnField(a => a.Postcode).QueryString(postcode)));
+                s.Query(q => q.MatchPhrase(mpqd => mpqd.OnField(a => a.Postcode).Query(postcode)));
                 return s;
             });
+
+            //TODO: vga: refactor in a new ElasticClient class
+            if (ThereWasAnErrorWhileSearching(search))
+            {
+                throw search.ConnectionStatus.OriginalException;
+            }
 
             var addresses =
                 _mapper
                     .Map<IEnumerable<Elastic.Common.Entities.Address>, IEnumerable<Domain.Entities.Locations.Address>>(
                         search.Documents);
 
-            return  addresses;
+            return addresses;
+        }
+
+        private static bool ThereWasAnErrorWhileSearching(Nest.ISearchResponse<Elastic.Common.Entities.Address> search)
+        {
+            return search != null &&
+                            search.ConnectionStatus.Success &&
+                            search.ConnectionStatus.OriginalException != null;
         }
     }
 }

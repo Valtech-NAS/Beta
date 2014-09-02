@@ -25,6 +25,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - integrate revised vacancy detail service
 - integrate application update service
 - integrate gateway certificates
+- wrap ElasticSearchClient -> search into a new class to be able to rethrow WebException swallowed by Nest.
 
 ## Cross cutting ##
 

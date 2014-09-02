@@ -58,21 +58,21 @@
         JobTitleFuzzyPrefix,
         JobTitleMatchAllKeywords,
         JobTitlePhraseProximity,
-        JobTitlePhraseOrdering,
+        JobTitleMinimumMatch,
 
         DescriptionBoost,
         DescriptionFuzziness,
         DescriptionFuzzyPrefix,
         DescriptionMatchAllKeywords,
         DescriptionPhraseProximity,
-        DescriptionPhraseOrdering,
+        DescriptionMinimumMatch,
 
         EmployerNameBoost,
         EmployerNameFuzziness,
         EmployerNameFuzzyPrefix,
         EmployerNameMatchAllKeywords,
         EmployerNamePhraseProximity,
-        EmployerNamePhraseOrdering,
+        EmployerMinimumMatch,
 
         // Later... synonyms, stemming
     }

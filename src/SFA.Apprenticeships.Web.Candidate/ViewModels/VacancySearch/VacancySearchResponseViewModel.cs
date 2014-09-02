@@ -5,10 +5,8 @@
     public class VacancySearchResponseViewModel : ViewModelBase
     {
         public VacancySearchResponseViewModel(string message) : base(message) {}
-
         public VacancySearchResponseViewModel() { }
-
-        public int TotalHits { get; set; }
+	public long TotalHits { get; set; }
         public int PageSize { get; set; }
         public IEnumerable<VacancySummaryViewModel> Vacancies { get; set; }
         public VacancySearchViewModel VacancySearch { get; set; }
@@ -41,7 +39,7 @@
                 var pages = 1;
                 if (PageSize > 0)
                 {
-                    pages = TotalHits/PageSize;
+                    pages = (int)TotalHits/PageSize;
                     if (TotalHits%PageSize > 0) pages++;
                 }
 

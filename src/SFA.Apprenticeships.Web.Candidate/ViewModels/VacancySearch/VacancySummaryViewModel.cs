@@ -20,6 +20,8 @@
 
         public double Distance { get; set; }
 
+        public double Score { get; set; }
+
         public string DistanceAsString
         {
             get

@@ -29,7 +29,7 @@
             {
                 if (elasticsearchIndexConfiguration.Name.EndsWith("_integration_test"))
                 {
-                    _elasticClient.DeleteIndex(elasticsearchIndexConfiguration.Name);    
+                    _elasticClient.DeleteIndex(i => i.Index(elasticsearchIndexConfiguration.Name));
                 }
             }
         }
@@ -41,7 +41,7 @@
             {
                 if (elasticsearchIndexConfiguration.Name.EndsWith("_integration_test"))
                 {
-                    _elasticClient.DeleteIndex(elasticsearchIndexConfiguration.Name);
+                    _elasticClient.DeleteIndex(i => i.Index(elasticsearchIndexConfiguration.Name));
                 }
             }
         }
