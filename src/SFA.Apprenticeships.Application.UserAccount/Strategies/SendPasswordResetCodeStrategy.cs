@@ -9,6 +9,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using Interfaces.Users;
+    using exceptions = SFA.Apprenticeships.Domain.Entities.Exceptions;
 
     public class SendPasswordResetCodeStrategy : ISendPasswordResetCodeStrategy
     {
@@ -38,7 +39,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             if (user == null)
             {
-                throw new CustomException("Unknown user name", ErrorCodes.UnknownUserError);
+                throw new CustomException("Unknown user name", exceptions.ErrorCodes.UnknownUserError);
             }
 
             var candidate = _candidateReadRepository.Get(user.EntityId);

@@ -8,6 +8,8 @@
     using Domain.Interfaces.Mapping;
     using ViewModels.VacancySearch;
     using Application.Interfaces.Candidates;
+    using SFA.Apprenticeships.Domain.Entities.Exceptions;
+    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
 
     public class VacancyDetailProvider : IVacancyDetailProvider
     {
@@ -27,26 +29,33 @@
 
         public VacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId)
         {
-            var vacancyDetail = _vacancyDataService.GetVacancyDetails(vacancyId);
-
-            if (vacancyDetail == null || vacancyDetail.ClosingDate < DateTime.Today.ToUniversalTime())
+            try
             {
-                // Vacancy not found or expired.
-                return null;
+                var vacancyDetail = _vacancyDataService.GetVacancyDetails(vacancyId);
+
+                if (vacancyDetail == null || vacancyDetail.ClosingDate < DateTime.Today.ToUniversalTime())
+                {
+                    // Vacancy not found or expired.
+                    return null;
+                }
+
+                var vacancyDetailViewModel = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+
+                // If candidate has applied for vacancy, include the details in the view model.
+                var applicationDetails = GetCandidateApplication(candidateId, vacancyId);
+
+                if (applicationDetails != null)
+                {
+                    vacancyDetailViewModel.CandidateApplicationStatus = applicationDetails.Status;
+                    vacancyDetailViewModel.DateApplied = applicationDetails.DateApplied;
+                }
+
+                return vacancyDetailViewModel;
             }
-
-            var vacancyDetailViewModel = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
-
-            // If candidate has applied for vacancy, include the details in the view model.
-            var applicationDetails = GetCandidateApplication(candidateId, vacancyId);
-
-            if (applicationDetails != null)
+            catch (CustomException)
             {
-                vacancyDetailViewModel.CandidateApplicationStatus = applicationDetails.Status;
-                vacancyDetailViewModel.DateApplied = applicationDetails.DateApplied;
+                return new VacancyDetailViewModel(VacancyDetailPageMessages.GetVacancyDetailFailed);
             }
-            
-            return vacancyDetailViewModel;
         }
 
         private ApplicationSummary GetCandidateApplication(Guid? candidateId, int vacancyId)

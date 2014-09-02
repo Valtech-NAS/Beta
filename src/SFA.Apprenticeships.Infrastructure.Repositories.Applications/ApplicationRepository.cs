@@ -111,5 +111,10 @@
             var mongoEntity = Collection.FindOneById(id);
             return mongoEntity == null ? null : _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
         }
+
+        protected override void Initialise()
+        {
+            Collection.CreateIndex(new IndexKeysBuilder().Ascending("CandidateId"), IndexOptions.SetUnique(false));
+        }
     }
 }

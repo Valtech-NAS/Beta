@@ -15,6 +15,11 @@
             var date = new DateTime(year, month, 1);
 
             return date.ToString("MMM yyyy");
-        }   
+        }
+
+        public static string GetDisplayGrade(this HtmlHelper helper, string grade, bool isPredicted)
+        {
+            return isPredicted ? string.Format("{0}(Predicted)", grade) : grade;
+        }
     }
 }

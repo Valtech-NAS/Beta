@@ -10,9 +10,6 @@
     {
         private static readonly string CookieName = FormsAuthentication.FormsCookieName;
 
-        private const int CookieUpdateWindow = 900;
-        private const int CookieExpirationSeconds = 1800;
-
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public FormsAuthenticationTicket GetTicket(HttpCookieCollection cookies)
@@ -39,7 +36,7 @@
             var timeToExpiry = (ticket.Expiration - DateTime.Now).TotalSeconds;
 
             // Is the expiration within the update window?
-            var expiring = timeToExpiry < CookieUpdateWindow;
+            var expiring = timeToExpiry < (FormsAuthentication.Timeout.TotalSeconds / 2);
 
             if (!expiring)
             {
@@ -51,7 +48,7 @@
             AddTicket(cookies, newTicket);
 
             Logger.Debug("Ticket issued for {0} because it only had {1}s to expire and the update window is {2}s",
-                ticket.Name, timeToExpiry, CookieUpdateWindow);
+                ticket.Name, timeToExpiry, (FormsAuthentication.Timeout.TotalSeconds / 2));
         }
 
         public string[] GetClaims(FormsAuthenticationTicket ticket)
@@ -91,7 +88,7 @@
                 version: 1,
                 name: userName,
                 issueDate: DateTime.Now,
-                expiration: DateTime.Now.AddSeconds(CookieExpirationSeconds),
+                expiration: DateTime.Now.AddSeconds(FormsAuthentication.Timeout.TotalSeconds),
                 isPersistent: false,
                 userData: StringifyClaims(claims));
 

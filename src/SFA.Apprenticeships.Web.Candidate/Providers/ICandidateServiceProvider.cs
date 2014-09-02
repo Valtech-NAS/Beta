@@ -10,11 +10,11 @@
     public interface ICandidateServiceProvider
     {
         bool Register(RegisterViewModel model);
-        bool Activate(ActivationViewModel model, Guid candidateId);
+        ActivationViewModel Activate(ActivationViewModel model, Guid candidateId);
+        LoginResultViewModel Login(LoginViewModel model);
         bool IsUsernameAvailable(string username);
         UserStatuses GetUserStatus(string username);
         ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId);
-        Candidate Authenticate(LoginViewModel model);
         void RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model);
         void RequestAccountUnlockCode(AccountUnlockViewModel model);
         void VerifyPasswordReset(PasswordResetViewModel model);

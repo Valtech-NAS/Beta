@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
-    using System;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
@@ -15,7 +14,6 @@
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ILockAccountStrategy _lockAccountStrategy;
-        private readonly IConfigurationManager _configManager;
         private readonly int _maximumPasswordAttemptsAllowed;
 
         public AuthenticateCandidateStrategy(
@@ -26,13 +24,12 @@
             ICandidateReadRepository candidateReadRepository,
             ILockAccountStrategy lockAccountStrategy)
         {
-            _configManager = configManager;
             _userWriteRepository = userWriteRepository;
             _authenticationService = authenticationService;
             _userReadRepository = userReadRepository;
             _candidateReadRepository = candidateReadRepository;
             _lockAccountStrategy = lockAccountStrategy;
-            _maximumPasswordAttemptsAllowed = _configManager.GetAppSetting<int>("MaximumPasswordAttemptsAllowed");
+            _maximumPasswordAttemptsAllowed = configManager.GetAppSetting<int>("MaximumPasswordAttemptsAllowed");
         }
 
         public Candidate AuthenticateCandidate(string username, string password)
@@ -43,9 +40,7 @@
                 string.Format("Cannot authenticate user in state: {0}.", user.Status),
                 UserStatuses.Active, UserStatuses.PendingActivation, UserStatuses.Locked);
 
-            var authenticated = _authenticationService.AuthenticateUser(user.EntityId, password);
-
-            if (authenticated)
+            if (_authenticationService.AuthenticateUser(user.EntityId, password))
             {
                 var candidate = _candidateReadRepository.Get(user.EntityId);
 
@@ -61,9 +56,8 @@
             }
 
             RegisterFailedLogin(user);
-            // either way, throw an exception to indicate failed auth
 
-            throw new Exception("Authentication failed"); // TODO: EXCEPTION: should use an application exception type
+            return null;
         }
 
         #region Helpers

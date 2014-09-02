@@ -23,7 +23,7 @@
 
         public static class FreetextWhitelist
         {
-            public const string RegularExpression = @"^[a-zA-Z0-9?$@#()""'!,+\-=_:;.&€£*%\s]+$";
+            public const string RegularExpression = @"^[a-zA-Z0-9\u0080-\uFFA7?$@#()""'!,+\-=_:;.&€£*%\s\/]+$";
             public const string ErrorText = @"contains some invalid characters";
         }
 

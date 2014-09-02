@@ -3,11 +3,14 @@
     using System;
     using System.Linq;
     using Application.Interfaces.Candidates;
+    using Common.Validations;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
+    using Constants.Pages;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
+    using exceptions = Domain.Entities.Exceptions;
 
     internal class ApplicationProvider : IApplicationProvider
     {
@@ -34,14 +37,14 @@
 
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
-            catch (CustomException ex)
+            catch (CustomException e)
             {
-                if (ex.Code == ErrorCodes.VacancyExpired)
+                if (e.Code == exceptions.ErrorCodes.VacancyExpired)
                 {
-                    return null;
+                    return new ApplicationViewModel(MyApplicationsPageMessages.DraftExpired);
                 }
 
-                throw;
+                return new ApplicationViewModel(MyApplicationsPageMessages.RetrieveApplicationFailed);
             }
         }
 
@@ -88,7 +91,7 @@
 
             if (applicationModel == null)
             {
-                throw new CustomException("Application not found", ErrorCodes.ApplicationNotFoundError);
+                throw new CustomException("Application not found", exceptions.ErrorCodes.ApplicationNotFoundError);
             }
 
             var patchedApplicationModel = PatchWithVacancyDetail(candidateId, vacancyId, applicationModel);
@@ -111,14 +114,22 @@
                     Title = each.Title,
                     EmployerName = each.EmployerName,
                     UnsuccessfulReason = each.UnsuccessfulReason,
-                    WithdrawnOrDeclinedReason = each.WithdrawnOrDeclinedReason,
                     ApplicationStatus = each.Status,
                     IsArchived = each.IsArchived,
                     DateApplied = each.DateApplied,
+                    ClosingDate = GetVacancyClosingDate(candidateId, each.LegacyVacancyId),
                     DateUpdated = each.DateUpdated
-                });
+                })
+                .ToList();
 
             return new MyApplicationsViewModel(applications);
+        }
+
+        private DateTime? GetVacancyClosingDate(Guid candidateId, int vacancyId)
+        {
+            var vacancyDetail = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+
+            return vacancyDetail == null ? default(DateTime?) : vacancyDetail.ClosingDate;
         }
 
         #region Helpers
@@ -130,6 +141,11 @@
             if (vacancyDetailViewModel == null)
             {
                 return null;
+            }
+
+            if (vacancyDetailViewModel.HasError())
+            {
+                throw new CustomException("VacancyDetail.Error", vacancyDetailViewModel.ViewModelMessage);
             }
 
             applicationViewModel.VacancyDetail = vacancyDetailViewModel;

@@ -40,12 +40,13 @@ namespace SFA.Apprenticeships.Web.Candidate.Validators
         {
             validator.RuleFor(x => x.ActivationCode)
                 .Must(BeTheSameAsCodeHeldOnRecord)
-                .WithMessage(ActivationPageMessages.ActivationFailed);
+                .WithMessage(ActivationPageMessages.ActivationCodeIncorrect);
         }
 
         private static bool BeTheSameAsCodeHeldOnRecord(ActivationViewModel model, string activationCode)
         {
-            return activationCode != null && (!string.IsNullOrEmpty(activationCode) && model.IsActivated);
+            // return activationCode != null && (!string.IsNullOrEmpty(activationCode) && model.IsActivated);
+            return activationCode != null && (!string.IsNullOrEmpty(activationCode) && model.State == ActivateUserState.Activated);
         }
     }
 }

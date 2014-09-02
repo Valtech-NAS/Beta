@@ -35,7 +35,7 @@
             return ApplicationDetail;
         }
 
-        public void DeleleApplications(Guid userCandidateId)
+        public void DeleteApplications(Guid userCandidateId)
         {
             var writerepo = ObjectFactory.GetInstance<IApplicationWriteRepository>();
             var readrepo = ObjectFactory.GetInstance<IApplicationReadRepository>();

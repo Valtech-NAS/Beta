@@ -47,7 +47,7 @@
         <main role="main" id="main">
             <h1 class="heading-xlarge">Service unavailable</h1>
             <div class="text">
-                <p>Sorry, there appears to be an error with this page. Please refresh your browser or try navigating to <a href="/Application/Index">my applications</a>. </p>
+                <p>Sorry, there appears to be an error with this page. Please refresh your browser or try navigating to <a href="/myapplications">my applications</a>. </p>
             </div>
         </main>
     </div>

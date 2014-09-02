@@ -48,12 +48,14 @@
             if (!saved)
             {
                 ModelState.Clear();
-                ModelState.AddModelError("EmailAddress", AccountPageMessages.UpdateFailed);
+                ModelState.AddModelError("EmailAddress", AccountPageMessages.SettingsUpdateFailed);
 
                 return View(model);
             }
 
             UserData.SetUserContext(UserContext.UserName, model.Firstname + " " + model.Lastname);
+
+            SetUserMessage(AccountPageMessages.SettingsUpdated);
 
             return RedirectToAction("Index");
         }

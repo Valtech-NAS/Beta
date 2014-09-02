@@ -59,8 +59,8 @@
                         <td>
                             <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Subject" readonly>
                         </td>
-                        <td>
-                            <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Grade" readonly>
+                        <td>                                                        
+                            <input class="form-control qual-input-edit form-prepopped" type="text" value="@Html.GetDisplayGrade(item.Grade, item.IsPredicted)" readonly>                          
                         </td>
                         <td>
                             <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Year" readonly>
@@ -176,7 +176,7 @@
     </ul>
 </div>
 <div class="form-group">
-    @Html.ActionLink("Submit application", "SubmitApplication", new { id = Model.VacancyId }, new { @class = "button", id = "submit-application" })
+    @Html.ActionLink("Submit application", "SubmitApplication", new {id = Model.VacancyId}, new {@class = "button", id = "submit-application"})
 </div>
 
 @section scripts{

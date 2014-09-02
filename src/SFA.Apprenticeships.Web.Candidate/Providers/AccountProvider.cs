@@ -44,7 +44,7 @@
             }
             catch (Exception e)
             {
-                Logger.Error("Save settings failed for " + candidate.RegistrationDetails.EmailAddress, e);
+                Logger.ErrorException("Save settings failed for " + candidate.RegistrationDetails.EmailAddress, e);
 
                 return false;
             }

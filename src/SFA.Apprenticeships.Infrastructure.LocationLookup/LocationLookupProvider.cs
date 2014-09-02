@@ -23,7 +23,7 @@
         public IEnumerable<Location> FindLocation(string placeName, int maxResults = 50)
         {
             ElasticClient client = _elasticsearchClientFactory.GetElasticClient();
-            string indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (LocationLookup));
+            string indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(LocationLookup));
             string term = placeName.ToLowerInvariant();
 
             Logger.Debug("Calling find location for Term={0} on IndexName={1}", term, indexName);
@@ -55,7 +55,7 @@
             return results.Select(l => new Location
             {
                 Name = MakeName(l, results.Count),
-                GeoPoint = new GeoPoint {Latitude = l.Latitude, Longitude = l.Longitude}
+                GeoPoint = new GeoPoint { Latitude = l.Latitude, Longitude = l.Longitude }
             });
         }
 

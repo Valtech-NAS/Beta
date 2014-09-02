@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
-    using System.Drawing.Imaging;
     using System.Web.Mvc;
     using System.Web.Security;
     using Common.Constants;
@@ -62,37 +60,24 @@
                 return View(model);
             }
 
-            var userStatus = _candidateServiceProvider.GetUserStatus(model.EmailAddress);
-            if (userStatus == UserStatuses.Locked)
+            var result = _candidateServiceProvider.Login(model);
+
+            if (result.UserStatus == UserStatuses.Locked)
             {
-                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
+                UserData.Push(UserDataItemNames.EmailAddress, result.EmailAddress);
 
                 return RedirectToAction("Unlock");
             }
 
-            // Authenticate candidate.
-            var candidate = _candidateServiceProvider.Authenticate(model);
-            
-
-            if (candidate != null)
+            if (result.IsAuthenticated)
             {
-                UserData.SetUserContext(
-                    candidate.RegistrationDetails.EmailAddress,
-                    candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName);
+                UserData.SetUserContext(result.EmailAddress, result.FullName);
 
-                return RedirectOnAuthenticated(candidate, userStatus);
-            }
-
-            userStatus = _candidateServiceProvider.GetUserStatus(model.EmailAddress);
-            if (userStatus == UserStatuses.Locked)
-            {
-                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
-
-                return RedirectToAction("Unlock");
+                return RedirectOnAuthenticated(result.UserStatus, result.EmailAddress);
             }
 
             ModelState.Clear();
-            ModelState.AddModelError(string.Empty, LoginPageMessages.AuthenticationFailedErrorText);
+            ModelState.AddModelError(string.Empty, result.ViewModelMessage);
 
             return View(model);
         }
@@ -185,7 +170,7 @@
 
         #region Helpers
 
-        private ActionResult RedirectOnAuthenticated(Candidate candidate, UserStatuses userStatus)
+        private ActionResult RedirectOnAuthenticated(UserStatuses userStatus, string username)
         {
             // todo: refactor - too much going on here Provider layer
             if (userStatus == UserStatuses.PendingActivation)
@@ -214,7 +199,10 @@
 
             if (lastViewedVacancyId != null)
             {
-                var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId, int.Parse(lastViewedVacancyId));
+                var candidate = _candidateServiceProvider.GetCandidate(username);
+
+                var applicationStatus = _candidateServiceProvider.GetApplicationStatus(
+                    candidate.EntityId, int.Parse(lastViewedVacancyId));
 
                 if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
                 {

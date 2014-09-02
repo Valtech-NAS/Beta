@@ -6,10 +6,12 @@
 
     public interface ISearchProvider
     {
-        IEnumerable<LocationViewModel> FindLocation(string placeNameOrPostcode);
+        LocationsViewModel FindLocation(string placeNameOrPostcode);
 
         IEnumerable<AddressViewModel> FindAddresses(string postcode);
 
         VacancySearchResponseViewModel FindVacancies(VacancySearchViewModel search, int pageSize);
+
+        bool IsValidPostcode(string postcode);
     }
 }

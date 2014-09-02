@@ -62,7 +62,7 @@
                 ((IClientChannel) client).Close();
                 factory.Close();
                 success = true;
-                Logger.Info("Call succeeded and client is now closed");
+                Logger.Debug("Call succeeded and client is now closed");
             }
             catch (CommunicationException ex)
             {

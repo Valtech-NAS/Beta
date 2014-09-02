@@ -14,8 +14,7 @@
                 .ForMember(x => x.ApplicationStatus, opt => opt.ResolveUsing<ApplicationStatusResolver>().FromMember(src => src.ApplicationStatus))
                 .ForMember(x => x.VacancyStatus, opt => opt.ResolveUsing<VacancyStatusResolver>().FromMember(src => src.VacancyStatus))
                 .ForMember(x => x.ClosingDate, opt => opt.MapFrom(src => src.ClosingDate))
-                .ForMember(x => x.UnsuccessfulReason, opt => opt.MapFrom(src => src.UnsuccessfulReason))
-                .ForMember(x => x.WithdrawnOrDeclinedReason, opt => opt.MapFrom(src => src.WithdrawnOrDeclinedReason));
+                .ForMember(x => x.UnsuccessfulReason, opt => opt.MapFrom(src => src.UnsuccessfulReason));
         }
     }
 }

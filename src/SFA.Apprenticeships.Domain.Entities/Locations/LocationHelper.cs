@@ -1,9 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Locations
 {
-    using System;
     using System.Text.RegularExpressions;
 
-    public class LocationHelper
+    public static class LocationHelper
     {
         // adapted from http://stackoverflow.com/a/164994/1882637
         const string PostcodeRegex = @"(GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX‌​]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY]))))\s?[0-9][A-Z-[C‌​IKMOV]]{2})";

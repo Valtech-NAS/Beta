@@ -11,6 +11,7 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using FluentValidation.Mvc;
+    using FluentValidation.Results;
     using Providers;
     using Validators;
     using ViewModels.Register;
@@ -22,7 +23,7 @@
 
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
-        private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;        
+        private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
 
         public RegisterController(ICandidateServiceProvider candidateServiceProvider,
@@ -96,20 +97,24 @@
         [HttpPost]
         public ActionResult Activate(ActivationViewModel model)
         {
-            //todo: refactor - too much going on here
-            model.IsActivated = _candidateServiceProvider.Activate(model, UserContext.CandidateId);
+            model = _candidateServiceProvider.Activate(model, UserContext.CandidateId);
+            ValidationResult activatedResult = new ValidationResult();
 
-            var activatedResult = _activationViewModelServerValidator.Validate(model);
-
-            if (activatedResult.IsValid)
+            switch (model.State)
             {
-                var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
-                SetUserMessage(ActivationPageMessages.AccountActivated);
-                return SetAuthenticationCookieAndRedirectToAction(candidate);
+                case ActivateUserState.Activated:
+                    var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
+                    SetUserMessage(ActivationPageMessages.AccountActivated);
+                    return SetAuthenticationCookieAndRedirectToAction(candidate);
+                case ActivateUserState.Error:
+                    SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
+                    break;
+                case ActivateUserState.InvalidCode:
+                    activatedResult = _activationViewModelServerValidator.Validate(model);
+                    ModelState.Clear();
+                    activatedResult.AddToModelState(ModelState, string.Empty);
+                    break;
             }
-
-            ModelState.Clear();
-            activatedResult.AddToModelState(ModelState, string.Empty);
 
             return View("Activation", model);
         }
@@ -237,11 +242,17 @@
 
         public ActionResult ResendActivationCode(string emailAddress)
         {
-            _candidateServiceProvider.ResendActivationCode(emailAddress);
+            if (_candidateServiceProvider.ResendActivationCode(emailAddress))
+            {
+                SetUserMessage(string.Format(ActivationPageMessages.ActivationCodeSent, emailAddress));
 
-            SetUserMessage(string.Format(ActivationPageMessages.ActivationCodeSent, emailAddress));
-
-            return RedirectToAction("Activation");
+                return RedirectToAction("Activation");
+            }
+            else
+            {
+                SetUserMessage(ActivationPageMessages.ActivationCodeSendingFailure, UserMessageLevel.Warning);
+                return RedirectToAction("Activation");
+            }
         }
 
         [AllowCrossSiteJson]
@@ -270,7 +281,7 @@
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                return Redirect(Server.UrlDecode(returnUrl));    
+                return Redirect(Server.UrlDecode(returnUrl));
             }
 
             if (lastViewedVacancyId != null)

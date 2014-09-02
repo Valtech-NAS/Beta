@@ -25,7 +25,7 @@
 
         public void ErrorWrite(Exception exception)
         {
-            Logger.Error(exception);
+            Logger.ErrorException("RabbitMQ Error Exception", exception);
         }
     }
 }

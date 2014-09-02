@@ -17,7 +17,7 @@
                 {
                     FirstName = "John",
                     LastName = "Doe",
-                    EmailAddress = "john.doe@example.com",
+                    EmailAddress = string.Format("john.doe+{0}@example.com", DateTime.Now.Ticks) ,
                     DateOfBirth = new DateTime(1980, 1, 1),
                     PhoneNumber = "01683200911",
                     Address = new Address

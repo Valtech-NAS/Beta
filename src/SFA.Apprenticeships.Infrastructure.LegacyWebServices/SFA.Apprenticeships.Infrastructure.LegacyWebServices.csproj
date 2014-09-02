@@ -83,19 +83,11 @@
     <Compile Include="Mappers\VacancyLocationTypeResolver.cs" />
     <Compile Include="Mappers\VacancySummaryMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReferenceData\CachedLegacyReferenceDataProvider.cs" />
-    <Compile Include="ReferenceData\ReferenceDataServiceCacheKeyEntry.cs" />
     <Compile Include="Service References\GatewayServiceProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Service References\ReferenceDataProxy\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="ReferenceData\LegacyReferenceDataProvider.cs" />
     <Compile Include="Service References\VacancyDetailProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -107,8 +99,10 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="VacancyDetail\CachedLegacyVacancyDataProvider.cs" />
+    <Compile Include="VacancyDetail\GatewayVacancyDataProvider.cs" />
     <Compile Include="VacancyDetail\LegacyVacancyDataProvider.cs" />
     <Compile Include="VacancyDetail\VacancyDataServiceCacheKeyEntry.cs" />
+    <Compile Include="VacancySummary\GatewayVacancyIndexDataProvider.cs" />
     <Compile Include="VacancySummary\LegacyVacancyIndexDataProvider.cs" />
     <Compile Include="Wcf\IWcfService.cs" />
     <Compile Include="Wcf\WcfService.cs" />
@@ -116,8 +110,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Service References\GatewayServiceProxy\GatewayService.wsdl" />
-    <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ApplicationStatus.datasource">
+    <None Include="Service References\GatewayServiceProxy\GatewayService1.wsdl" />
+    <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.CandidateApplication.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.CreateApplicationResponse.datasource">
@@ -144,38 +138,13 @@
     <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancyDetailsResponse1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancySummaryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.VacancySummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ValidationError.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReferenceDataProxy\ReferenceDataService.wsdl" />
-    <None Include="Service References\ReferenceDataProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceDataProxy.ApprenticeshipFrameworkAndOccupationData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReferenceDataProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceDataProxy.CountyData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReferenceDataProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceDataProxy.ErrorCodesData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReferenceDataProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceDataProxy.GetApprenticeshipFrameworksResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReferenceDataProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceDataProxy.GetCountiesResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReferenceDataProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceDataProxy.GetErrorCodesResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReferenceDataProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceDataProxy.GetLocalAuthoritiesResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReferenceDataProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceDataProxy.GetRegionResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReferenceDataProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceDataProxy.LocalAuthorityData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReferenceDataProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceDataProxy.RegionData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\VacancyDetailProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancyDetailProxy.VacancyDetailResponseData.datasource">
@@ -236,21 +205,8 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\GatewayServiceProxy\" />
-    <WCFMetadataStorage Include="Service References\ReferenceDataProxy\" />
     <WCFMetadataStorage Include="Service References\VacancyDetailProxy\" />
     <WCFMetadataStorage Include="Service References\VacancySummaryProxy\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReferenceDataProxy\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReferenceDataProxy\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReferenceDataProxy\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\VacancySummaryProxy\configuration91.svcinfo" />

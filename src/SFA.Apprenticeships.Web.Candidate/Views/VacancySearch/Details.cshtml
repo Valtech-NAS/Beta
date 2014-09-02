@@ -21,179 +21,184 @@
             @Html.ActionLink("Find an apprenticeship", "Index", "VacancySearch", null, new { @class = "page-link" })
         </div>
     </div>
-    <section class="grid-wrapper">
-        <div class="grid grid-2-3">
-            <div class="inner-block-padr">
-                <div class="text" itemprop="description">
-                    <p id="vacancy-description">@Model.Description</p>
-                </div>
-            </div>
-        </div>
-        <div class="grid grid-1-3">
-            @Html.Partial("_Apply", Model)
-        </div>
-    </section>
-    <section class="section-border grid-wrapper" id="vacancy-info">
-        <h2 class="heading-large">Apprenticeship summary</h2>
-        <div class="grid grid-1-3">
-            <div class="inner-block-padr">
-                <ul class="list-text">
-                    <li><h3 class="bold-small">Weekly wage</h3></li>
-                    <li id="vacancy-wage">@Model.Wage</li>
-                </ul>
-                <ul class="list-text">
-                    <li>
-                        <h3 class="bold-small">Working week</h3>
-                    </li>
-                    <li id="vacancy-working-week" itemprop="workHours">@Model.WorkingWeek</li>
-                </ul>
-                @if (!string.IsNullOrWhiteSpace(Model.ExpectedDuration))
-                {
-                    <ul class="list-text">
-                        <li>
-                            <h3 class="bold-small">Expected duration</h3>
-                        </li>
-                        <li id="vacancy-expected-duration">@Model.ExpectedDuration</li>
-                    </ul>
-                }
-                @if (ViewBag.Distance != null)
-                {
-                    <ul class="list-text">
-                        <li class="bold-small">Distance</li>
-                        <li id="vacancy-distance">@ViewBag.Distance miles</li>
-                    </ul>
-                }
-                <ul class="list-text">
-                    <li>
-                        <h3 class="bold-small">Apprenticeship type</h3>
-                    </li>
-                    <li id="vacancy-type" itemprop="employmentType">@Model.VacancyType</li>
-                </ul>
-                <ul class="list-text">
-                    <li class="bold-small">Reference number</li>
-                    <li id="vacancy-reference-id">@Model.FullVacancyReferenceId</li>
-                </ul>
-            </div>
-        </div>
-        <div class="grid grid-2-3">
-            <div class="text" itemprop="responsibilities">
-                <p id="vacancy-full-descrpition">@Html.Raw(Model.FullDescription)</p>
-            </div>
-        </div>
 
-    </section>
-    <section class="section-border grid-wrapper" id="course-info">
-        <h2 class="heading-large">Information for candidate</h2>
-        <div class="grid grid-1-2">
-            <div class="inner-block-padr">
-                <div class="text">
-                    @**Both Skills Required and Quals Required are optional - but displaying headers regradless*@
-                    <h3 class="heading-small">Desired skills</h3>
-                    <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.SkillsRequired)</p>
-                    <h3 class="heading-small">Qualifications required</h3>
-                    <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.QualificationRequired)</p>
+    @if (!Model.HasError())
+    {
+
+        <section class="grid-wrapper">
+            <div class="grid grid-2-3">
+                <div class="inner-block-padr">
+                    <div class="text" itemprop="description">
+                        <p id="vacancy-description">@Model.Description</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="grid grid-1-2">
-            <div class="text">
-                @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
-                {
-                    <h3 class="heading-small">Future prospects</h3>
-                    <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.FutureProspects)</p>
-                }
+            <div class="grid grid-1-3">
+                @Html.Partial("_Apply", Model)
             </div>
-        </div>
-    </section>
-    <section class="section-border" id="employer-info">
-        <h2 class="heading-large">About the employer</h2>
-        <div class="text">
-            <p id="vacancy-employer-description">@Html.Raw(Model.EmployerDescription)</p>
-        </div>
-        <div class="grid-wrapper">
-            <div class="grid grid-1-2">
+        </section>
+        <section class="section-border grid-wrapper" id="vacancy-info">
+            <h2 class="heading-large">Apprenticeship summary</h2>
+            <div class="grid grid-1-3">
                 <div class="inner-block-padr">
                     <ul class="list-text">
-                        <li class="bold-small">Contact</li>
-                        <li id="vacancy-employer-name">@Model.EmployerName</li>
-                        @if (!string.IsNullOrWhiteSpace(Model.EmployerWebsite))
-                        {
-                            <li><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Web Site">@Model.EmployerWebsite</a></li>
-                        }
+                        <li><h3 class="bold-small">Weekly wage</h3></li>
+                        <li id="vacancy-wage">@Model.Wage</li>
                     </ul>
-                    <div itemscope itemtype="http://schema.org/PostalAddress">
-                        <ul class="list-text" itemprop="address">
-                            <li itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</li>
-                            <li itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</li>
-                            <li itemprop="addressLocality">@Model.VacancyAddress.AddressLine3</li>
-                            <li itemprop="addressRegion">@Model.VacancyAddress.AddressLine4</li>
-                            <li itemprop="postalCode">@Model.VacancyAddress.Postcode</li>
+                    <ul class="list-text">
+                        <li>
+                            <h3 class="bold-small">Working week</h3>
+                        </li>
+                        <li id="vacancy-working-week" itemprop="workHours">@Model.WorkingWeek</li>
+                    </ul>
+                    @if (!string.IsNullOrWhiteSpace(Model.ExpectedDuration))
+                    {
+                        <ul class="list-text">
+                            <li>
+                                <h3 class="bold-small">Expected duration</h3>
+                            </li>
+                            <li id="vacancy-expected-duration">@Model.ExpectedDuration</li>
                         </ul>
+                    }
+                    @if (ViewBag.Distance != null)
+                    {
+                        <ul class="list-text">
+                            <li class="bold-small">Distance</li>
+                            <li id="vacancy-distance">@ViewBag.Distance miles</li>
+                        </ul>
+                    }
+                    <ul class="list-text">
+                        <li>
+                            <h3 class="bold-small">Apprenticeship type</h3>
+                        </li>
+                        <li id="vacancy-type" itemprop="employmentType">@Model.VacancyType</li>
+                    </ul>
+                    <ul class="list-text">
+                        <li class="bold-small">Reference number</li>
+                        <li id="vacancy-reference-id">@Model.FullVacancyReferenceId</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="grid grid-2-3">
+                <div class="text" itemprop="responsibilities">
+                    <p id="vacancy-full-descrpition">@Html.Raw(Model.FullDescription)</p>
+                </div>
+            </div>
+
+        </section>
+        <section class="section-border grid-wrapper" id="course-info">
+            <h2 class="heading-large">Information for candidate</h2>
+            <div class="grid grid-1-2">
+                <div class="inner-block-padr">
+                    <div class="text">
+                        @**Both Skills Required and Quals Required are optional - but displaying headers regradless*@
+                        <h3 class="heading-small">Desired skills</h3>
+                        <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.SkillsRequired)</p>
+                        <h3 class="heading-small">Qualifications required</h3>
+                        <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.QualificationRequired)</p>
                     </div>
                 </div>
             </div>
             <div class="grid grid-1-2">
-                <div class="ad-details__map">
-                    <div class="map-overlay" onclick="style.pointerEvents='none'"></div>
-                    <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
-                    <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="section-border grid-wrapper" id="provider-info">
-        <h2 class="heading-large">Training provider</h2>
-        <div class="grid grid-2-3">
-            <div class="inner-block-padr">
                 <div class="text">
-                    @if (!string.IsNullOrWhiteSpace(Model.TrainingToBeProvided))
+                    @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
                     {
-                        <p id="vacancy-training-to-be-provided">@Html.Raw(Model.TrainingToBeProvided)</p>
-                    }
-                    <h3 class="heading-small">Apprenticeship framework</h3>
-                    <p id="vacancy-framework">@Html.Raw(Model.Framework)</p>
-                    @if (Model.ProviderSectorPassRate.HasValue)
-                    {
-                        <p>The training provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprencticeship training.</p>
+                        <h3 class="heading-small">Future prospects</h3>
+                        <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.FutureProspects)</p>
                     }
                 </div>
             </div>
-        </div>
-        <div class="grid grid-1-3">
-            <ul class="list-text">
-                <li>
-                    <h3 class="bold-small">Training provider</h3>
-                </li>
-                <li id="vacancy-provider-name">@Model.ProviderName</li>
-            </ul>
-            @if (!string.IsNullOrWhiteSpace(Model.Contact))
-            {
+        </section>
+        <section class="section-border" id="employer-info">
+            <h2 class="heading-large">About the employer</h2>
+            <div class="text">
+                <p id="vacancy-employer-description">@Html.Raw(Model.EmployerDescription)</p>
+            </div>
+            <div class="grid-wrapper">
+                <div class="grid grid-1-2">
+                    <div class="inner-block-padr">
+                        <ul class="list-text">
+                            <li class="bold-small">Contact</li>
+                            <li id="vacancy-employer-name">@Model.EmployerName</li>
+                            @if (!string.IsNullOrWhiteSpace(Model.EmployerWebsite))
+                            {
+                                <li><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Web Site">@Model.EmployerWebsite</a></li>
+                            }
+                        </ul>
+                        <div itemscope itemtype="http://schema.org/PostalAddress">
+                            <ul class="list-text" itemprop="address">
+                                <li itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</li>
+                                <li itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</li>
+                                <li itemprop="addressLocality">@Model.VacancyAddress.AddressLine3</li>
+                                <li itemprop="addressRegion">@Model.VacancyAddress.AddressLine4</li>
+                                <li itemprop="postalCode">@Model.VacancyAddress.Postcode</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-1-2">
+                    <div class="ad-details__map">
+                        <div class="map-overlay" onclick="style.pointerEvents='none'"></div>
+                        <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                        <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-border grid-wrapper" id="provider-info">
+            <h2 class="heading-large">Training provider</h2>
+            <div class="grid grid-2-3">
+                <div class="inner-block-padr">
+                    <div class="text">
+                        @if (!string.IsNullOrWhiteSpace(Model.TrainingToBeProvided))
+                        {
+                            <p id="vacancy-training-to-be-provided">@Html.Raw(Model.TrainingToBeProvided)</p>
+                        }
+                        <h3 class="heading-small">Apprenticeship framework</h3>
+                        <p id="vacancy-framework">@Html.Raw(Model.Framework)</p>
+                        @if (Model.ProviderSectorPassRate.HasValue)
+                        {
+                            <p>The training provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprencticeship training.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-1-3">
                 <ul class="list-text">
                     <li>
-                        <h3 class="bold-small">Contact</h3>
+                        <h3 class="bold-small">Training provider</h3>
                     </li>
-                    <li id="vacancy-provider-contact">@Model.Contact</li>
+                    <li id="vacancy-provider-name">@Model.ProviderName</li>
                 </ul>
-            }
-            @*<div class="ad-details__map">
-                    <p class="blocked-backgroud">Where do we get the address for this map?</p>
-                    <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=ST14+5EA,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
-                    <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
-                </div>*@
-        </div>
-    </section>
-    @if (!Request.IsAuthenticated)
-    {
-        <section id="before-apply">
-            <h2 class="heading-large">Before you apply</h2>
-            <div class="text">
-                <p>Before you apply for an apprenticeship you must first create an account. If you already have an account you'll need to sign in.</p>
+                @if (!string.IsNullOrWhiteSpace(Model.Contact))
+                {
+                    <ul class="list-text">
+                        <li>
+                            <h3 class="bold-small">Contact</h3>
+                        </li>
+                        <li id="vacancy-provider-contact">@Model.Contact</li>
+                    </ul>
+                }
+                @*<div class="ad-details__map">
+                        <p class="blocked-backgroud">Where do we get the address for this map?</p>
+                        <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=ST14+5EA,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                        <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+                    </div>*@
+            </div>
+        </section>
+        if (!Request.IsAuthenticated)
+        {
+            <section id="before-apply">
+                <h2 class="heading-large">Before you apply</h2>
+                <div class="text">
+                    <p>Before you apply for an apprenticeship you must first create an account. If you already have an account you'll need to sign in.</p>
+                </div>
+            </section>
+        }
+        <section>
+            <div class="form-group">
+                @Html.Partial("_Apply", Model)
             </div>
         </section>
     }
-    <section>
-        <div class="form-group">
-            @Html.Partial("_Apply", Model)
-        </div>
-    </section>
 </div>

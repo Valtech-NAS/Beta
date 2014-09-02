@@ -7,6 +7,7 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
+    using SFA.Apprenticeships.Domain.Entities.Exceptions;
     using Strategies;
     using Web.Common.Constants;
 
@@ -69,7 +70,14 @@
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
-            _resendActivationCodeStrategy.ResendActivationCode(username);
+            try
+            {
+                _resendActivationCodeStrategy.ResendActivationCode(username);
+            }
+            catch
+            {
+                throw new CustomException("Resend activation code failed", Interfaces.Users.ErrorCodes.ActivationCodeResendingFailed);
+            }
         }
 
         public void SendPasswordResetCode(string username)

@@ -51,7 +51,7 @@
         {
             Logger.Debug("Called Mongodb to get candidate with username={0}", username);
 
-            var mongoEntity = Collection.FindOne(Query<MongoCandidate>.EQ(o => o.RegistrationDetails.EmailAddress, username));
+            var mongoEntity = Collection.FindOne(Query<MongoCandidate>.EQ(o => o.RegistrationDetails.EmailAddress, username.ToLower()));
 
             if (mongoEntity == null && errorIfNotFound)
             {
@@ -83,6 +83,12 @@
             Logger.Debug("Saved candidate to Mongodb with Id={0}", entity.EntityId);
 
             return _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
-        }    
+        }
+
+        protected override void Initialise()
+        {
+            //TODO: review the index
+            Collection.CreateIndex(new IndexKeysBuilder().Ascending("RegistrationDetails.EmailAddress"), IndexOptions.SetUnique(true));
+        }
     }
 }

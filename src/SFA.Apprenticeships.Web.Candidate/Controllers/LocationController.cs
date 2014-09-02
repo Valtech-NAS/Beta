@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Net;
     using System.Web.Mvc;
     using Common.Attributes;
     using Domain.Interfaces.Configuration;
@@ -23,11 +24,11 @@
         [AllowCrossSiteJson]
         public ActionResult Location(string term)
         {
-            var matches = _searchProvider.FindLocation(term);
+            var result = _searchProvider.FindLocation(term);
 
             if (Request.IsAjaxRequest())
             {
-                return Json(matches.Take(_locationResultLimit), JsonRequestBehavior.AllowGet);
+                return Json(result.Locations.Take(_locationResultLimit), JsonRequestBehavior.AllowGet);
             }
 
             throw new NotImplementedException("Non-js not yet implemented!");
@@ -37,6 +38,11 @@
         [AllowCrossSiteJson]
         public ActionResult Addresses(string postcode)
         {
+            if (!_searchProvider.IsValidPostcode(postcode))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid postcode.");
+            }
+
             var matches = _searchProvider.FindAddresses(postcode);
 
             if (Request.IsAjaxRequest())

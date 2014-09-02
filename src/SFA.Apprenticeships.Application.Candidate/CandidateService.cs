@@ -7,6 +7,7 @@
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
+    using SFA.Apprenticeships.Domain.Entities.Exceptions;
     using Strategies;
     using UserAccount.Strategies;
 
@@ -71,7 +72,19 @@
             Condition.Requires(username).IsNotNullOrEmpty();
             Condition.Requires(activationCode).IsNotNullOrEmpty();
 
-            _activateCandidateStrategy.ActivateCandidate(username, activationCode);
+            try
+            {
+
+                _activateCandidateStrategy.ActivateCandidate(username, activationCode);
+            }
+            catch ( CustomException )
+            {
+                throw new CustomException("Activate user failed", Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode);
+            }
+            catch (Exception )
+            {
+                throw new CustomException("Activate user failed", Interfaces.Candidates.ErrorCodes.ActivateUserFailed);
+            }
         }
 
         public Candidate Authenticate(string username, string password)

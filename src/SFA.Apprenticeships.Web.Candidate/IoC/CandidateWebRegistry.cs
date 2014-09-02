@@ -17,8 +17,6 @@
     using Application.UserAccount;
     using Application.UserAccount.Strategies;
     using Application.Vacancy;
-    using Common.Providers;
-    using Controllers;
     using Domain.Interfaces.Mapping;
     using Mappers;
     using Providers;

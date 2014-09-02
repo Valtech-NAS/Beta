@@ -37,7 +37,7 @@
             }
             catch (Exception cacheException)
             {
-                Logger.Warn("Attempt to store item in cache with key: {0} and timespan: {1} raised the exception: {2}", key, cacheTimeSpan, cacheException.Message);
+                Logger.WarnException("Attempt to store item in cache with key: " + key + " and timespan: " + cacheTimeSpan, cacheException);
                 return;
             }
 
@@ -56,7 +56,7 @@
             }
             catch (Exception cacheException)
             {
-                Logger.Warn("Attempt to retreive item from cache with key: {0} raised the exception: {1}", key, cacheException.Message);
+                Logger.WarnException("Attempt to retreive item from cache with key: " + key, cacheException);
                 return null;
             }
 
@@ -78,7 +78,7 @@
             }
             catch (Exception cacheException)
             {
-                Logger.Warn("Attempt to remove item from cache with key: {0} raised the exception: {1}", key, cacheException.Message);
+                Logger.WarnException("Attempt to remove item from cache with key: " + key, cacheException);
             }
         }
 
@@ -92,7 +92,7 @@
             }
             catch (Exception cacheException)
             {
-                Logger.Warn("Attempt to clear cache raised the exception: {0}", cacheException.Message);
+                Logger.WarnException("Attempt to clear cache failed", cacheException);
                 return;
             }
 

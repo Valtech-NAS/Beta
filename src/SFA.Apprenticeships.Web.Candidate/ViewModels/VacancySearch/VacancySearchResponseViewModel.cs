@@ -2,9 +2,11 @@
 {
     using System.Collections.Generic;
 
-    public class VacancySearchResponseViewModel
+    public class VacancySearchResponseViewModel : ViewModelBase
     {
-        public long TotalHits { get; set; }
+        public VacancySearchResponseViewModel(string message) : base(message) {}
+        public VacancySearchResponseViewModel() { }
+	public long TotalHits { get; set; }
         public int PageSize { get; set; }
         public IEnumerable<VacancySummaryViewModel> Vacancies { get; set; }
         public VacancySearchViewModel VacancySearch { get; set; }

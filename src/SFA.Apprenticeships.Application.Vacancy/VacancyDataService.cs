@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancy
 {
     using System;
-    using Interfaces.Vacancies;
     using Domain.Entities.Vacancies;
+    using Interfaces.Vacancies;
 
     public class VacancyDataService : IVacancyDataService
     {
@@ -15,7 +15,15 @@
 
         public VacancyDetail GetVacancyDetails(int vacancyId)
         {
-            return _service.GetVacancyDetails(vacancyId);
+            try
+            {
+                return _service.GetVacancyDetails(vacancyId);
+            }
+            catch (Exception e)
+            {
+                throw new Domain.Entities.Exceptions.CustomException(
+                    "Get vacancy failed.", e, ErrorCodes.GetVacancyDetailFailed);
+            }
         }
     }
 }

@@ -7,6 +7,7 @@
     using Application.Interfaces.Users;
     using Common.Constants;
     using Common.Services;
+    using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
@@ -74,51 +75,103 @@
             }
             catch (Exception ex)
             {
-                Logger.Error("Candidate registration failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Candidate registration failed for " + model.EmailAddress, ex);
                 return false;
             }
         }
 
-        public bool Activate(ActivationViewModel model, Guid candidateId)
+        public ActivationViewModel Activate(ActivationViewModel model, Guid candidateId)
         {
             try
             {
                 var httpContext = new HttpContextWrapper(HttpContext.Current);
                 _candidateService.Activate(model.EmailAddress, model.ActivationCode);
-                _authenticationTicketService.SetAuthenticationCookie(httpContext.Response.Cookies, candidateId.ToString(), UserRoleNames.Activated);
+                _authenticationTicketService.SetAuthenticationCookie(httpContext.Response.Cookies, candidateId.ToString(), 
+                    UserRoleNames.Activated);
 
-                return true;
+                return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Activated);
             }
-            catch (Exception ex)
+            catch (CustomException ex)
             {
-                //todo: catch more specific custom errors first
-                Logger.Error("Candidate activation failed for " + model.EmailAddress, ex);
-                return false;
+                Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, ex);
+                string message = string.Empty;
+
+                switch ( ex.Code )
+                {
+                    case SFA.Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.ActivateUserFailed:
+                        message = ActivationPageMessages.ActivationFailed;
+                        return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error,
+                            viewModelMessage: message);
+                    case SFA.Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode:
+                        message = ActivationPageMessages.ActivationCodeIncorrect;
+                        return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.InvalidCode,
+                            viewModelMessage: message);
+
+                }
+                
             }
+
+            return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error);
         }
 
-        public Candidate Authenticate(LoginViewModel model)
+        public LoginResultViewModel Login(LoginViewModel model)
         {
             try
             {
-                var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
+                var userStatus = GetUserStatus(model.EmailAddress);
 
-                if (candidate == null)
+                if (userStatus == UserStatuses.Locked)
                 {
-                    return null;
+                    return new LoginResultViewModel
+                    {
+                        EmailAddress = model.EmailAddress,
+                        UserStatus = userStatus
+                    };
                 }
 
-                var roles = _userAccountService.GetRoleNames(model.EmailAddress);
+                var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
 
-                SetUserCookies(candidate, roles);
+                if (candidate != null)
+                {
+                    // User is authentic.
+                    SetUserCookies(candidate, _userAccountService.GetRoleNames(model.EmailAddress));
 
-                return candidate;
+                    return new LoginResultViewModel
+                    {
+                        EmailAddress = candidate.RegistrationDetails.EmailAddress,
+                        FullName = candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
+                        UserStatus = userStatus,
+                        IsAuthenticated = true
+                    };
+                }
+
+                userStatus = GetUserStatus(model.EmailAddress);
+
+                if (userStatus == UserStatuses.Locked)
+                {
+                    // Authentication failed, user just locked their account.
+                    return new LoginResultViewModel
+                    {
+                        EmailAddress = model.EmailAddress,
+                        UserStatus = userStatus
+                    };
+                }
+
+                // Authentication failed, user's account is not locked yet.
+                return new LoginResultViewModel(LoginPageMessages.InvalidUsernameOrPasswordErrorText)
+                {
+                    EmailAddress = model.EmailAddress,
+                    UserStatus = userStatus
+                };
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                //todo: catch more specific errors here not just assume incorrect credentials
-                Logger.Error("Candidate authentication failed for " + model.EmailAddress, ex);
-                return null;
+                Logger.ErrorException("Candidate login failed for " + model.EmailAddress, e);
+
+                return new LoginResultViewModel(LoginPageMessages.LoginFailedErrorText)
+                {
+                    EmailAddress = model.EmailAddress
+                };
             }
         }
 
@@ -132,7 +185,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Error("Send password reset code failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Send password reset code failed for " + model.EmailAddress, ex);
                 // TODO: fails silently, should return boolean to indicate success
             }
         }
@@ -146,7 +199,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Error("Send account unlock code failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Send account unlock code failed for " + model.EmailAddress, ex);
                 // TODO: fails silently, should return boolean to indicate success
             }
         }
@@ -160,7 +213,7 @@
             catch (CustomException ex)
             {
                 //todo: catch more specific custom errors first
-                Logger.Error("Reset forgotten password failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Reset forgotten password failed for " + model.EmailAddress, ex);
                 throw;
             }
         }
@@ -174,7 +227,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Error("Account unlock failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Account unlock failed for " + model.EmailAddress, ex);
                 return false;
             }
         }
@@ -190,7 +243,7 @@
             }
             catch (CustomException ex)
             {
-                Logger.Error("Reset forgotten password failed for " + username, ex);
+                Logger.ErrorException("Reset activation code failed for " + username, ex);
                 return false;
             }
         }
@@ -205,6 +258,8 @@
             return _candidateService.GetCandidate(candidateId);
         }
 
+        #region Helpers
+
         private void SetUserCookies(Candidate candidate, params string[] roles)
         {
             var httpContext = new HttpContextWrapper(HttpContext.Current);
@@ -213,5 +268,7 @@
                 candidate.EntityId.ToString(),
                 roles);
         }
+
+        #endregion
     }
 }

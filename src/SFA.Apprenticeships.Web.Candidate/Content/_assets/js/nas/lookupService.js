@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿// TODO: get 'postcode' messages from C#
+
+$(document).ready(function () {
     $("#address-select").change(function () {
         var option = $(this);
         var selected = $(this).find('option:selected');
@@ -23,7 +25,6 @@
         $("#Address_GeoPoint_Latitude").val("");
         $("#Address_GeoPoint_Longitude").val("");
     });
-
 });
 
 // provides the matching addresses from postcode
@@ -33,55 +34,124 @@
         var self = this;
         var settings = options;
 
+        var $postcodeSearchValidationError = $("#postcode-search-validation-error");
+        var $addressSelect = $("#address-select");
+        var $addressList = $("#address-list");
+        var $findAddressButton = $('#find-addresses');
+
         self.click(function (e) {
             e.preventDefault();
             getAddresses($("#postcode-search").val());
         });
 
-        function getAddresses(postcode) {
+        var showErrorMessage = function (message) {
+            $postcodeSearchValidationError.removeClass("field-validation-valid");
+            $postcodeSearchValidationError.addClass("field-validation-error");
+            $postcodeSearchValidationError.html(message);
+        };
+
+        var hideErrorMessage = function () {
+            $postcodeSearchValidationError.removeClass("field-validation-error");
+            $postcodeSearchValidationError.addClass("field-validation-valid");
+            $postcodeSearchValidationError.html('');
+        };
+
+        var showFindAddressButton = function() {
+            $findAddressButton.removeClass('disabled').text('Find address');
+        };
+
+        var $makeAddressOption = function (address) {
+            var displayVal = address.AddressLine1;
+
+            if (address.AddressLine2 && address.AddressLine2 !== "") {
+                displayVal += ", " + address.AddressLine2;
+            }
+
+            return $('<option/>')
+                .val(address.Uprn)
+                .html(displayVal)
+                .addClass("address-select-option")
+                .attr("data-address-line1", _.escape(address.AddressLine1))
+                .attr("data-address-line2", _.escape(address.AddressLine2))
+                .attr("data-address-line3", _.escape(address.AddressLine3))
+                .attr("data-address-line4", _.escape(address.AddressLine4))
+                .attr("data-post-code", _.escape(address.Postcode))
+                .attr("data-lat", address.GeoPoint.Latitude)
+                .attr("data-lon", address.GeoPoint.Longitude);
+        };
+
+        var $makeAddressCountOption = function(count) {
+            return $('<option/>')
+                .val("")
+                .html("-- " + count + " found --")
+                .addClass("address-select-option");
+        }
+
+        var handleResponse = function(response) {
+            if (response != null && response.length) {
+                $addressSelect.empty();
+                $addressSelect.append($makeAddressCountOption(response.length));
+
+                $.each(response, function(i, address) {
+                    $addressSelect.append($makeAddressOption(address));
+                });
+
+                $addressList.removeClass("toggle-content");
+
+            } else {
+                $addressList.addClass("toggle-content");
+                showErrorMessage("TODO: 'Postcode' not found");
+            }
+
+            showFindAddressButton();
+        };
+
+        var handleMissingPostcode = function () {
+            $addressList.addClass("toggle-content");
+            showErrorMessage("TODO: 'Postcode' is required");
+            showFindAddressButton();
+        };
+
+        var handleInvalidPostcode = function () {
+            $addressList.addClass("toggle-content");
+            showErrorMessage("TODO: 'Postcode' is invalid");
+            showFindAddressButton();
+        };
+
+        var handleError = function (e) {
+            // TODO: add retry message from 'Points of Failure'.
+            // TODO: can we differentiate between proxy error and server-type error (e.g. postcode.io).
+            console.error(e);
+            showErrorMessage("TODO: service call failed - retry");
+            showFindAddressButton();
+        };
+
+        var isEmptyString = function (s) {
+            return !s || /^\s*$/.test(s);
+        };
+
+        var getAddresses = function (postcode) {
             jQuery.support.cors = true;
+
+            hideErrorMessage();
+
+            if (isEmptyString(postcode)) {
+                handleMissingPostcode();
+                return;
+            }
+
             $.ajax({
+                statusCode: {
+                    400: handleInvalidPostcode
+                },
                 url: settings.url,
                 type: 'GET',
-                data: { postcode: postcode },
-                success: function (response) {
-                    if (response != null) {
-                        var addressList = $("#address-select");
-                        addressList.empty();
-
-                        var opt = $('<option/>').val("").html("-- " + response.length + " found --").addClass("address-select-option");
-                        addressList.append(opt);
-
-                        $.each(response, function (i, item) {
-                            var displayVal = item.AddressLine1;
-                            if (item.AddressLine2 && item.AddressLine2 != "") {
-                                displayVal += ", " + item.AddressLine2;
-                            }
-                            var opt = $('<option/>')
-                                            .val(item.Uprn)
-                                            .html(displayVal)
-                                            .addClass("address-select-option")
-                                            .attr("data-address-line1", _.escape(item.AddressLine1))
-                                            .attr("data-address-line2", _.escape(item.AddressLine2))
-                                            .attr("data-address-line3", _.escape(item.AddressLine3))
-                                            .attr("data-address-line4", _.escape(item.AddressLine4))
-                                            .attr("data-post-code", _.escape(item.Postcode))
-                                            .attr("data-lat", item.GeoPoint.Latitude)
-                                            .attr("data-lon", item.GeoPoint.Longitude);
-                            addressList.append(opt);
-                        });
-
-                        $("#address-list").removeClass("toggle-content");
-                        $('#find-addresses').removeClass('disabled').text('Find address');
-                    }
+                data: {
+                    postcode: postcode
                 },
-                error: function (error) {
-                    //Ignore, could be proxy issues so will work as 
-                    //non-JS version.
-                    //console.log(error);
-                }
+                success: handleResponse,
+                error: handleError
             });
-            return true;
         };
     };
 
