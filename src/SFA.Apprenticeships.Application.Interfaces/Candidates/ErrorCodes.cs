@@ -2,6 +2,8 @@
 {
     public static class ErrorCodes
     {
-        public static string ActivateUserFailed = "ActivateUser.Failed";
+        public const string ActivateUserFailed = "ActivateUser.Failed";
+
+        public const string ActivateUserInvalidCode = "ActivateUser.InvalidCode";
     }
 }

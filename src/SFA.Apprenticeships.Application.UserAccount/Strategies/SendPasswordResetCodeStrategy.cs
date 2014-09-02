@@ -3,13 +3,12 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using System;
     using System.Collections.Generic;
     using Domain.Entities.Candidates;
-    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using Interfaces.Users;
-    using exceptions = SFA.Apprenticeships.Domain.Entities.Exceptions;
+    using NLog;
 
     public class SendPasswordResetCodeStrategy : ISendPasswordResetCodeStrategy
     {
@@ -19,6 +18,8 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         private readonly int _passwordResetCodeExpiryDays;
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
+
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public SendPasswordResetCodeStrategy(IConfigurationManager configurationManager,
             ICommunicationService communicationService, ICodeGenerator codeGenerator,
@@ -39,7 +40,8 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             if (user == null)
             {
-                throw new CustomException("Unknown user name", exceptions.ErrorCodes.UnknownUserError);
+                Logger.Debug(string.Format("Cannot send password reset code, username not found: \"{0}\".", username));
+                return;
             }
 
             var candidate = _candidateReadRepository.Get(user.EntityId);

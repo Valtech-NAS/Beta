@@ -46,7 +46,7 @@ Scenario: As a candidate I would like to apply for a vacancy
 		| SubmittedApplicationsCount | Equals | 1     |
 
 @US461 @US154 @US458 @US464
-Scenario: As a candidate I want to save my application as a draft and be able to resume or delete it later
+Scenario: As a candidate I want to save my application as a draft and be able to resume
 	Given I have registered a new candidate
 	When I enter data
 		| Field    | Value  |
@@ -88,12 +88,6 @@ Scenario: As a candidate I want to save my application as a draft and be able to
 		| HobbiesAndInterests     | Equals    | Hobbies and interests |
 	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
-	When I choose DeleteLink
-	Then I wait to see SuccessMessageText
-	And I see
-	| Field                       | Rule        | Value                                         |
-	| SuccessMessageText          | Equals      | Application has been removed from your drafts |
-	| EmptyApplicationHistoryText | Starts With | Your application history is currently empty   |
 
 @US461 @US362 @US365 @US154 @US463 @US352 @US354
 @ignore

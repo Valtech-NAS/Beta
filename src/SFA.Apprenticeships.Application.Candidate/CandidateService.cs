@@ -77,7 +77,11 @@
 
                 _activateCandidateStrategy.ActivateCandidate(username, activationCode);
             }
-            catch
+            catch ( CustomException )
+            {
+                throw new CustomException("Activate user failed", Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode);
+            }
+            catch (Exception )
             {
                 throw new CustomException("Activate user failed", Interfaces.Candidates.ErrorCodes.ActivateUserFailed);
             }

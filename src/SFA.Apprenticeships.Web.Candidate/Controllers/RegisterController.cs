@@ -1,12 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
     using Common.Services;
-    using Constants;
     using Constants.Pages;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
@@ -23,7 +21,7 @@
 
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
-        private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;        
+        private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
 
         public RegisterController(ICandidateServiceProvider candidateServiceProvider,
@@ -97,30 +95,24 @@
         [HttpPost]
         public ActionResult Activate(ActivationViewModel model)
         {
-            //todo: refactor - too much going on here
-            model.IsActivated = _candidateServiceProvider.Activate(model, UserContext.CandidateId);
+            model = _candidateServiceProvider.Activate(model, UserContext.CandidateId);
             ValidationResult activatedResult = new ValidationResult();
 
-            //todo: vga: treat all errors in a boolean?
-            if (!model.IsActivated)
+            switch (model.State)
             {
-                SetUserMessage(ActivationPageMessages.ActivationFailed, UserMessageLevel.Warning);
-            }
-            else 
-            { 
-                activatedResult = _activationViewModelServerValidator.Validate(model);
-
-                if (activatedResult.IsValid)
-                {
+                case ActivateUserState.Activated:
                     var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
                     SetUserMessage(ActivationPageMessages.AccountActivated);
                     return SetAuthenticationCookieAndRedirectToAction(candidate);
-                }
+                case ActivateUserState.Error:
+                    SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
+                    break;
+                case ActivateUserState.InvalidCode:
+                    activatedResult = _activationViewModelServerValidator.Validate(model);
+                    ModelState.Clear();
+                    activatedResult.AddToModelState(ModelState, string.Empty);
+                    break;
             }
-
-
-            ModelState.Clear();
-            activatedResult.AddToModelState(ModelState, string.Empty);
 
             return View("Activation", model);
         }
@@ -151,11 +143,15 @@
                 return View(model);
             }
 
-            _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
+            if (_candidateServiceProvider.RequestForgottenPasswordResetCode(model))
+            {
+                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
+                return RedirectToAction("ResetPassword");
+            }
+            
+            SetUserMessage(PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
 
-            UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
-
-            return RedirectToAction("ResetPassword");
+            return View(model);
         }
 
         [HttpGet]
@@ -182,6 +178,7 @@
             try
             {
                 _candidateServiceProvider.VerifyPasswordReset(model);
+
                 model.IsPasswordResetSuccessful = true;
                 model.IsPasswordResetCodeInvalid = true;
             }
@@ -193,20 +190,25 @@
                         model.IsPasswordResetSuccessful = false;
                         model.IsPasswordResetCodeInvalid = false;
                         break;
+
                     case ErrorCodes.UserAccountLockedError:
                         UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
                         return RedirectToAction("Unlock", "Login");
+
                     case ErrorCodes.UserInIncorrectStateError:
                         model.IsPasswordResetCodeInvalid = false;
                         model.IsPasswordResetSuccessful = false;
                         break;
+
                     case ErrorCodes.UserPasswordResetCodeExpiredError:
                         model.IsPasswordResetCodeInvalid = false;
                         break;
+
                     case ErrorCodes.UserPasswordResetCodeIsInvalid:
                         model.IsPasswordResetCodeInvalid = false;
                         model.IsPasswordResetSuccessful = false;
                         break;
+
                     default:
                         model.IsPasswordResetSuccessful = false;
                         model.IsPasswordResetCodeInvalid = false;
@@ -219,7 +221,7 @@
             if (validationResult.IsValid)
             {
                 var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
-                SetUserMessage(PasswordResetPageMessages.SuccessPasswordReset);
+                SetUserMessage(PasswordResetPageMessages.SuccessfulPasswordReset);
                 return SetAuthenticationCookieAndRedirectToAction(candidate);
             }
 
@@ -237,11 +239,16 @@
                 EmailAddress = emailAddress
             };
 
-            _candidateServiceProvider.RequestForgottenPasswordResetCode(model);
-
             UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
 
-            SetUserMessage(string.Format(PasswordResetPageMessages.PasswordResetSent, emailAddress));
+            if (_candidateServiceProvider.RequestForgottenPasswordResetCode(model))
+            {
+                SetUserMessage(string.Format(PasswordResetPageMessages.PasswordResetSent, emailAddress));
+            }
+            else
+            {
+                SetUserMessage(PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
+            }
 
             return RedirectToAction("ResetPassword");
         }
@@ -254,11 +261,9 @@
 
                 return RedirectToAction("Activation");
             }
-            else
-            {
-                SetUserMessage(ActivationPageMessages.ActivationCodeSendingFailure, UserMessageLevel.Warning);
-                return RedirectToAction("Activation");
-            }
+
+            SetUserMessage(ActivationPageMessages.ActivationCodeSendingFailure, UserMessageLevel.Warning);
+            return RedirectToAction("Activation");
         }
 
         [AllowCrossSiteJson]
@@ -287,7 +292,7 @@
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                return Redirect(Server.UrlDecode(returnUrl));    
+                return Redirect(Server.UrlDecode(returnUrl));
             }
 
             if (lastViewedVacancyId != null)

@@ -80,22 +80,38 @@
             }
         }
 
-        public bool Activate(ActivationViewModel model, Guid candidateId)
+        public ActivationViewModel Activate(ActivationViewModel model, Guid candidateId)
         {
             try
             {
                 var httpContext = new HttpContextWrapper(HttpContext.Current);
                 _candidateService.Activate(model.EmailAddress, model.ActivationCode);
-                _authenticationTicketService.SetAuthenticationCookie(httpContext.Response.Cookies, candidateId.ToString(), UserRoleNames.Activated);
+                _authenticationTicketService.SetAuthenticationCookie(httpContext.Response.Cookies, candidateId.ToString(), 
+                    UserRoleNames.Activated);
 
-                return true;
+                return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Activated);
             }
-            catch (Exception ex)
+            catch (CustomException ex)
             {
-                //todo: catch more specific custom errors first
                 Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, ex);
-                return false;
+                string message = string.Empty;
+
+                switch ( ex.Code )
+                {
+                    case SFA.Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.ActivateUserFailed:
+                        message = ActivationPageMessages.ActivationFailed;
+                        return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error,
+                            viewModelMessage: message);
+                    case SFA.Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode:
+                        message = ActivationPageMessages.ActivationCodeIncorrect;
+                        return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.InvalidCode,
+                            viewModelMessage: message);
+
+                }
+                
             }
+
+            return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error);
         }
 
         public LoginResultViewModel Login(LoginViewModel model)
@@ -159,18 +175,21 @@
             }
         }
 
-        public void RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model)
+        public bool RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model)
         {
             try
             {
                 Logger.Debug("{0} requested password reset code", model.EmailAddress);
 
                 _userAccountService.SendPasswordResetCode(model.EmailAddress);
+
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Logger.ErrorException("Send password reset code failed for " + model.EmailAddress, ex);
-                // TODO: fails silently, should return boolean to indicate success
+                Logger.ErrorException("Send password reset code failed for " + model.EmailAddress, e);
+
+                return false;
             }
         }
 

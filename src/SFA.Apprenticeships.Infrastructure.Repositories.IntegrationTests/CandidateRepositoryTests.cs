@@ -66,7 +66,7 @@
                         Postcode = "CV1 2WT"
                     },
                     PhoneNumber = "555 123 4567",
-                    EmailAddress = "peter@griffin.net",
+                    EmailAddress = string.Format("peter+{0}@griffin.net", DateTime.Now.Ticks),
                     DateOfBirth = new DateTime(1970, 3, 1)
                 },
                 ApplicationTemplate =

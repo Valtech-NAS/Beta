@@ -45,7 +45,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Validators
 
         private static bool BeTheSameAsCodeHeldOnRecord(ActivationViewModel model, string activationCode)
         {
-            return activationCode != null && (!string.IsNullOrEmpty(activationCode) && model.IsActivated);
+            // return activationCode != null && (!string.IsNullOrEmpty(activationCode) && model.IsActivated);
+            return activationCode != null && (!string.IsNullOrEmpty(activationCode) && model.State == ActivateUserState.Activated);
         }
     }
 }
