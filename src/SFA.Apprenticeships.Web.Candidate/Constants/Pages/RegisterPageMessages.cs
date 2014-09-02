@@ -4,6 +4,6 @@
 
     public static class RegisterPageMessages
     {
-        public const string RegistrationFailed = "Registration failed";
+        public const string RegistrationFailed = "There's been a problem registering your account. Please try again.";
     }
 }
