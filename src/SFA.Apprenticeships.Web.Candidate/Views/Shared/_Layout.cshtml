@@ -82,25 +82,25 @@
                     if (infoMessage != null)
                     {
                         <div class="panel-info">
-                            <p id="InfoMessageText" class="text">@infoMessage</p>
+                            <p id="InfoMessageText">@infoMessage</p>
                         </div>
                     }
                     if (successMessage != null)
                     {
                         <div class="panel-success">
-                            <p id="SuccessMessageText" class="text"><i class="fa fa-check"></i>@successMessage</p>
+                            <p id="SuccessMessageText"><i class="fa fa-check"></i>@successMessage</p>
                         </div>
                     }
                     if (warningMessage != null)
                     {
                         <div class="panel-warning">
-                            <p id="WarningMessageText" class="text">@warningMessage</p>
+                            <p id="WarningMessageText">@warningMessage</p>
                         </div>
                     }
                     if (errorMessage != null)
                     {
                         <div class="panel-danger">
-                            <p id="ErrorMessageText" class="text">@errorMessage</p>
+                            <p id="ErrorMessageText">@errorMessage</p>
                         </div>
                     }
                 }
@@ -112,14 +112,14 @@
     <footer class="gov-border" role="contentinfo">
         <div class="footer__wrapper">
             <div class="footer__meta">
-                <ul class="footer__nav" role="navigation">
+                <ul class="footer__nav">
                     <li class="footer__link"><a href='@Url.RouteUrl(RouteNames.Helpdesk)'>Helpdesk</a></li>
                     <li class="footer__link"><a href='@Url.RouteUrl(RouteNames.Privacy)'>Privacy &amp; Cookies</a></li>
                     <li class="footer__link">Built by <a href="http://gov.uk/sfa" target="_blank">Skills Funding Agency</a></li>
                     <li class="footer__ogl"><a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2" class="ir ogl-logo">OGL</a>All content is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2">Open Government Licence v2.0</a>, except where otherwise stated</li>
                 </ul>
                 <a class="footer__copyright" href="http://www.nationalarchives.gov.uk/information-management/our-services/crown-copyright.htm" target="_blank">
-                    <img src="@Url.Content("~/Content/_assets/img/logos/govuk-crest@2x.png")" width="125" height="102" alt="Crown copyright logo">
+                    <img src="@Url.Content("~/Content/_assets/img/govuk-crest@2x.png")" width="125" height="102" alt="Crown copyright logo">
                     <p>&copy; Crown copyright</p>
                 </a>
             </div>
