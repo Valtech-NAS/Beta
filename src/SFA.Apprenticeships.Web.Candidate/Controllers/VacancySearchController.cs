@@ -56,6 +56,9 @@
                 return RedirectToAction("results", model);
             }
 
+            PopulateDistances(model.WithinDistance);
+            PopulateSortType(model.SortType, model.Keywords);
+
             var clientResult = _searchRequestValidator.Validate(model);
 
             if (!clientResult.IsValid)
@@ -123,9 +126,6 @@
                 SetUserMessage(results.ViewModelMessage, UserMessageLevel.Warning);
                 return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
             }
-
-            PopulateDistances(model.WithinDistance);
-            PopulateSortType(model.SortType, model.Keywords);
 
             return View("results", results);
         }
