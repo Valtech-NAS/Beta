@@ -17,6 +17,7 @@
     using ViewModels.Login;
     using ViewModels.Register;
     using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
+    using domainExceptions = Domain.Entities.Exceptions;
 
     public class CandidateServiceProvider : ICandidateServiceProvider
     {
@@ -99,7 +100,7 @@
             {
                 var httpContext = new HttpContextWrapper(HttpContext.Current);
                 _candidateService.Activate(model.EmailAddress, model.ActivationCode);
-                _authenticationTicketService.SetAuthenticationCookie(httpContext.Response.Cookies, candidateId.ToString(), 
+                _authenticationTicketService.SetAuthenticationCookie(httpContext.Response.Cookies, candidateId.ToString(),
                     UserRoleNames.Activated);
 
                 return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Activated);
@@ -109,7 +110,7 @@
                 Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, ex);
                 string message = string.Empty;
 
-                switch ( ex.Code )
+                switch (ex.Code)
                 {
                     case SFA.Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.ActivateUserFailed:
                         message = ActivationPageMessages.ActivationFailed;
@@ -121,7 +122,7 @@
                             viewModelMessage: message);
 
                 }
-                
+
             }
 
             return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error);
@@ -135,14 +136,19 @@
 
                 if (userStatus == UserStatuses.Locked)
                 {
-                    return new LoginResultViewModel
-                    {
-                        EmailAddress = model.EmailAddress,
-                        UserStatus = userStatus
-                    };
+                    return GetLoginResultViewModel(model, userStatus);
                 }
 
-                var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
+                Candidate candidate = null;
+
+                try
+                {
+                    candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
+                }
+                catch (CustomException)
+                {
+                    return GetAuthenticationFailedViewModel(model, userStatus);
+                }
 
                 if (candidate != null)
                 {
@@ -163,19 +169,10 @@
                 if (userStatus == UserStatuses.Locked)
                 {
                     // Authentication failed, user just locked their account.
-                    return new LoginResultViewModel
-                    {
-                        EmailAddress = model.EmailAddress,
-                        UserStatus = userStatus
-                    };
+                    return GetLoginResultViewModel(model, userStatus);
                 }
 
-                // Authentication failed, user's account is not locked yet.
-                return new LoginResultViewModel(LoginPageMessages.InvalidUsernameOrPasswordErrorText)
-                {
-                    EmailAddress = model.EmailAddress,
-                    UserStatus = userStatus
-                };
+                return GetAuthenticationFailedViewModel(model, userStatus);
             }
             catch (Exception e)
             {
@@ -186,6 +183,25 @@
                     EmailAddress = model.EmailAddress
                 };
             }
+        }
+
+        private static LoginResultViewModel GetLoginResultViewModel(LoginViewModel model, UserStatuses userStatus)
+        {
+            return new LoginResultViewModel
+            {
+                EmailAddress = model.EmailAddress,
+                UserStatus = userStatus
+            };
+        }
+
+        private static LoginResultViewModel GetAuthenticationFailedViewModel(LoginViewModel model, UserStatuses userStatus)
+        {
+            // Authentication failed, user's account is not locked yet.
+            return new LoginResultViewModel(LoginPageMessages.InvalidUsernameOrPasswordErrorText)
+            {
+                EmailAddress = model.EmailAddress,
+                UserStatus = userStatus
+            };
         }
 
         public bool RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model)

@@ -11,6 +11,7 @@
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
     using NLog;
+    using SFA.Apprenticeships.Domain.Entities.Exceptions;
 
     public class UserRepository : GenericMongoClient<MongoUser>, IUserReadRepository, IUserWriteRepository
     {
@@ -43,7 +44,8 @@
             {
                 Logger.Debug("Unknown username={0}", username);
 
-                throw new Exception("Unknown user name"); // TODO: EXCEPTION: should use an application exception type
+                //throw new Exception("Unknown user name"); // TODO: EXCEPTION: should use an application exception type
+                throw new CustomException("Unknown candidate", ErrorCodes.UnknownUserError);
             }
 
             return mongoEntity == null ? null : _mapper.Map<MongoUser, User>(mongoEntity);
