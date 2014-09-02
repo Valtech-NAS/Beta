@@ -9,17 +9,16 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using FluentValidation.Mvc;
-    using FluentValidation.Results;
     using Providers;
     using Validators;
     using ViewModels.Register;
 
     public class RegisterController : CandidateControllerBase
     {
+        private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
 
-        private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
         private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
@@ -96,7 +95,6 @@
         public ActionResult Activate(ActivationViewModel model)
         {
             model = _candidateServiceProvider.Activate(model, UserContext.CandidateId);
-            ValidationResult activatedResult = new ValidationResult();
 
             switch (model.State)
             {
@@ -108,7 +106,7 @@
                     SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
                     break;
                 case ActivateUserState.InvalidCode:
-                    activatedResult = _activationViewModelServerValidator.Validate(model);
+                    var activatedResult = _activationViewModelServerValidator.Validate(model);
                     ModelState.Clear();
                     activatedResult.AddToModelState(ModelState, string.Empty);
                     break;
@@ -148,7 +146,7 @@
                 UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
                 return RedirectToAction("ResetPassword");
             }
-            
+
             SetUserMessage(PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
 
             return View(model);
@@ -271,7 +269,7 @@
         {
             var isUsernameAvailable = _candidateServiceProvider.IsUsernameAvailable(username.Trim());
 
-            return Json(new { isUsernameAvailable }, JsonRequestBehavior.AllowGet);
+            return Json(new {isUsernameAvailable}, JsonRequestBehavior.AllowGet);
         }
 
         #region Helpers
@@ -280,8 +278,10 @@
         {
             //todo: refactor - similar to stuff in login controller... move to ILoginServiceProvider
             //todo: test this
-            _authenticationTicketService.SetAuthenticationCookie(HttpContext.Response.Cookies, candidate.EntityId.ToString(), UserRoleNames.Activated);
-            UserData.SetUserContext(candidate.RegistrationDetails.EmailAddress, candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName);
+            _authenticationTicketService.SetAuthenticationCookie(HttpContext.Response.Cookies,
+                candidate.EntityId.ToString(), UserRoleNames.Activated);
+            UserData.SetUserContext(candidate.RegistrationDetails.EmailAddress,
+                candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName);
 
             // ReturnUrl takes precedence over last view vacnacy id.
             var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
@@ -297,7 +297,7 @@
 
             if (lastViewedVacancyId != null)
             {
-                return RedirectToAction("Details", "VacancySearch", new { id = int.Parse(lastViewedVacancyId) });
+                return RedirectToAction("Details", "VacancySearch", new {id = int.Parse(lastViewedVacancyId)});
             }
 
             return RedirectToAction("Index", "VacancySearch");
