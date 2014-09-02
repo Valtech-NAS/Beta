@@ -8,8 +8,6 @@
     using ActionResults;
     using Application.Interfaces.Vacancies;
     using Common.Constants;
-    using Constants.Pages;
-    using Constants.ViewModels;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Microsoft.Ajax.Utilities;
@@ -52,11 +50,13 @@
         {
             UserData.Pop(UserDataItemNames.VacancyDistance);
 
-            if (searchViewModel.SortType == VacancySortType.Relevancy && string.IsNullOrWhiteSpace(searchViewModel.Keywords))
+            if (model.SortType == VacancySortType.Relevancy && string.IsNullOrWhiteSpace(model.Keywords))
             {
-                searchViewModel.SortType = VacancySortType.Distance;
-                return RedirectToAction("results", searchViewModel);
+                model.SortType = VacancySortType.Distance;
+                return RedirectToAction("results", model);
             }
+
+            var clientResult = _searchRequestValidator.Validate(model);
 
             if (!clientResult.IsValid)
             {
@@ -65,8 +65,6 @@
 
                 return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
             }
-
-            model.CheckLatLonLocHash();
 
             if (!HasGeoPoint(model))
             {
@@ -123,12 +121,11 @@
             {
                 ModelState.Clear();
                 SetUserMessage(results.ViewModelMessage, UserMessageLevel.Warning);
-
                 return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
             }
 
-            PopulateDistances(searchViewModel.WithinDistance);
-            PopulateSortType(searchViewModel.SortType, searchViewModel.Keywords);
+            PopulateDistances(model.WithinDistance);
+            PopulateSortType(model.SortType, model.Keywords);
 
             return View("results", results);
         }
@@ -187,6 +184,7 @@
 
         private static bool HasGeoPoint(VacancySearchViewModel searchViewModel)
         {
+            searchViewModel.CheckLatLonLocHash();
             return searchViewModel.Latitude.HasValue && searchViewModel.Longitude.HasValue;
         }
 
