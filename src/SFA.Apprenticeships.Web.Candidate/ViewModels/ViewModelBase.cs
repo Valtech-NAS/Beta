@@ -11,8 +11,10 @@
             ViewModelMessage = message;
         }
 
-        public string ViewModelMessage { get; private set; }
+        // TODO: AG: consider refactoring into PageMessageViewModel with Text (string) and Level (UserMessageLevel).
+        public string ViewModelMessage { get; set; }
 
+        // TODO: AG: see above. Consider refactoring as HasPageMessage property (not function).
         public bool HasError()
         {
             return !string.IsNullOrWhiteSpace(ViewModelMessage);

@@ -8,7 +8,7 @@
     using Common.Services;
     using Constants.Pages;
     using Domain.Entities.Candidates;
-    using Domain.Entities.Exceptions;
+    using Domain.Entities.Users;
     using FluentValidation.Mvc;
     using Providers;
     using Validators;
@@ -110,9 +110,11 @@
                     var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
                     SetUserMessage(ActivationPageMessages.AccountActivated);
                     return SetAuthenticationCookieAndRedirectToAction(candidate);
+
                 case ActivateUserState.Error:
                     SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
                     break;
+
                 case ActivateUserState.InvalidCode:
                     var activatedResult = _activationViewModelServerValidator.Validate(model);
                     ModelState.Clear();
@@ -183,60 +185,35 @@
         [HttpPost]
         public ActionResult ResetPassword(PasswordResetViewModel model)
         {
-            try
+            var result = _candidateServiceProvider.VerifyPasswordReset(model);
+
+            if (result.HasError())
             {
-                _candidateServiceProvider.VerifyPasswordReset(model);
-
-                model.IsPasswordResetSuccessful = true;
-                model.IsPasswordResetCodeInvalid = true;
-            }
-            catch (CustomException exception)
-            {
-                switch (exception.Code)
-                {
-                    case ErrorCodes.UnknownUserError:
-                        model.IsPasswordResetSuccessful = false;
-                        model.IsPasswordResetCodeInvalid = false;
-                        break;
-
-                    case ErrorCodes.UserAccountLockedError:
-                        UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
-                        return RedirectToAction("Unlock", "Login");
-
-                    case ErrorCodes.UserInIncorrectStateError:
-                        model.IsPasswordResetCodeInvalid = false;
-                        model.IsPasswordResetSuccessful = false;
-                        break;
-
-                    case ErrorCodes.UserPasswordResetCodeExpiredError:
-                        model.IsPasswordResetCodeInvalid = false;
-                        break;
-
-                    case ErrorCodes.UserPasswordResetCodeIsInvalid:
-                        model.IsPasswordResetCodeInvalid = false;
-                        model.IsPasswordResetSuccessful = false;
-                        break;
-
-                    default:
-                        model.IsPasswordResetSuccessful = false;
-                        model.IsPasswordResetCodeInvalid = false;
-                        break;
-                }
+                SetUserMessage(result.ViewModelMessage, UserMessageLevel.Warning);
+                return View(result);
             }
 
-            var validationResult = _passwordResetViewModelServerValidator.Validate(model);
+            if (result.UserStatus == UserStatuses.Locked)
+            {
+                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
+                return RedirectToAction("Unlock", "Login");
+            }
+
+            var validationResult = _passwordResetViewModelServerValidator.Validate(result);
 
             if (validationResult.IsValid)
             {
-                var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
+                var candidate = _candidateServiceProvider.GetCandidate(result.EmailAddress);
+
                 SetUserMessage(PasswordResetPageMessages.SuccessfulPasswordReset);
+
                 return SetAuthenticationCookieAndRedirectToAction(candidate);
             }
 
             ModelState.Clear();
             validationResult.AddToModelState(ModelState, string.Empty);
 
-            return View(model);
+            return View(result);
         }
 
         [HttpGet]

@@ -43,24 +43,14 @@
 
         public static void AddServerRules(this AbstractValidator<PasswordResetViewModel> validator)
         {
-            validator.RuleFor(x => x.Password)
-                .Must(IsPasswordResetSuccessful)
-                .WithMessage(PasswordResetPageMessages.FailedPasswordReset);
-
             validator.RuleFor(x => x.PasswordResetCode)
-                .Must(IsPasswordResetCodeInvalid)
+                .Must(IsPasswordResetCodeValid)
                 .WithName(PasswordResetPageMessages.InvalidCode);
         }
 
-        private static bool IsPasswordResetCodeInvalid(PasswordResetViewModel model, string passwordResetCode)
+        private static bool IsPasswordResetCodeValid(PasswordResetViewModel model, string passwordResetCode)
         {
-            return passwordResetCode != null &&
-                   (!string.IsNullOrEmpty(passwordResetCode) && model.IsPasswordResetCodeInvalid);
-        }
-
-        private static bool IsPasswordResetSuccessful(PasswordResetViewModel model, string password)
-        {
-            return password != null && (!string.IsNullOrEmpty(password) && model.IsPasswordResetSuccessful);
+            return !string.IsNullOrWhiteSpace(passwordResetCode) && model.IsPasswordResetCodeValid;
         }
     }
 }

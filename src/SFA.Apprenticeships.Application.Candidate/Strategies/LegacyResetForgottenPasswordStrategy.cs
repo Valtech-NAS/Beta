@@ -30,18 +30,17 @@
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
 
-            if (candidate.LegacyCandidateId > 0)
+            if (candidate.LegacyCandidateId == 0)
             {
-                _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
-            }
-            else
-            {
-                // Create candidate on legacy system and reset forgotten password
+                // Candidate record does not exist on legacy system, create it now.
                 var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
+
                 candidate.LegacyCandidateId = legacyCandidateId;
+
                 _candidateWriteRepository.Save(candidate);
-                _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
             }
+
+            _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
         }
     }
 }

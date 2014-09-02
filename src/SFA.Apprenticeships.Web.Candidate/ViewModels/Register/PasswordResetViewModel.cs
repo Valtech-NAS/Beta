@@ -2,11 +2,12 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
+    using Domain.Entities.Users;
     using FluentValidation.Attributes;
     using Validators;
 
     [Validator(typeof (PasswordResetViewModelClientValidator))]
-    public class PasswordResetViewModel
+    public class PasswordResetViewModel : ViewModelBase
     {
         public string EmailAddress { get; set; }
 
@@ -18,7 +19,8 @@
             Description = PasswordResetViewModelMessages.PasswordMessages.HintText)]
         public string Password { get; set; }
 
-        public bool IsPasswordResetSuccessful { get; set; }
-        public bool IsPasswordResetCodeInvalid { get; set; }
+        public UserStatuses UserStatus { get; set; }
+
+        public bool IsPasswordResetCodeValid { get; set; }
     }
 }

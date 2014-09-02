@@ -9,7 +9,9 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using Interfaces.Users;
-    using exceptions = SFA.Apprenticeships.Domain.Entities.Exceptions;
+
+    // TODO: AG: US333: fix this reference.
+    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
 
     public class ResetForgottenPasswordStrategy : IResetForgottenPasswordStrategy
     {
@@ -44,7 +46,8 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             if (user == null)
             {
-                throw new CustomException("Unknown user name", exceptions.ErrorCodes.UnknownUserError);
+                // TODO: US333: AG: should throw correct exception from _userReadRepository.Get() above.
+                throw new CustomException("Unknown user name.", ErrorCodes.UnknownUserError);
             }
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
@@ -53,18 +56,20 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             {
                 if (user.PasswordResetCodeExpiry != null && DateTime.Now > user.PasswordResetCodeExpiry)
                 {
-                    throw new CustomException("Password reset code has expired.", exceptions.ErrorCodes.UserPasswordResetCodeExpiredError);
+                    throw new CustomException("Password reset code has expired.", ErrorCodes.UserPasswordResetCodeExpiredError);
                 }
 
                 _authenticationService.ResetUserPassword(user.EntityId, newPassword);
+
                 user.SetStateActive();
                 _userWriteRepository.Save(user);
-                SendPasswordResetConfirmationViaCommunicationService(candidate);
+
+                SendPasswordResetConfirmationMessage(candidate);
             }
             else
             {
                 RegisterFailedPasswordReset(user);
-                throw new CustomException("Password reset code is invalid", exceptions.ErrorCodes.UserPasswordResetCodeIsInvalid);
+                throw new CustomException("Password reset code is invalid.", ErrorCodes.UserPasswordResetCodeIsInvalid);
             }
         }
 
@@ -74,14 +79,14 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             if (user.PasswordResetIncorrectAttempts == _maximumPasswordAttemptsAllowed)
             {
                 _lockAccountStrategy.LockAccount(user);
-                throw new CustomException("Maximum password attempts allowed reached, account is now locked.", exceptions.ErrorCodes.UserAccountLockedError);
+                throw new CustomException("Maximum password attempts allowed reached, account is now locked.", ErrorCodes.UserAccountLockedError);
             }
 
             user.PasswordResetIncorrectAttempts++;
             _userWriteRepository.Save(user);
         }
 
-        private void SendPasswordResetConfirmationViaCommunicationService(Candidate candidate)
+        private void SendPasswordResetConfirmationMessage(Candidate candidate)
         {
             var firstName = candidate.RegistrationDetails.FirstName;
             var emailAddress = candidate.RegistrationDetails.EmailAddress;

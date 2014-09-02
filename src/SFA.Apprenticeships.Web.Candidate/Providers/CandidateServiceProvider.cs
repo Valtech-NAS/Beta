@@ -16,7 +16,7 @@
     using NLog;
     using ViewModels.Login;
     using ViewModels.Register;
-    using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
+    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
     using domainExceptions = Domain.Entities.Exceptions;
 
     public class CandidateServiceProvider : ICandidateServiceProvider
@@ -87,9 +87,9 @@
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Logger.ErrorException("Candidate registration failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Candidate registration failed for " + model.EmailAddress, e);
                 return false;
             }
         }
@@ -99,28 +99,29 @@
             try
             {
                 var httpContext = new HttpContextWrapper(HttpContext.Current);
+
                 _candidateService.Activate(model.EmailAddress, model.ActivationCode);
                 _authenticationTicketService.SetAuthenticationCookie(httpContext.Response.Cookies, candidateId.ToString(),
                     UserRoleNames.Activated);
 
                 return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Activated);
             }
-            catch (CustomException ex)
+            catch (CustomException e)
             {
-                Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, ex);
-                string message = string.Empty;
+                Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, e);
+                string message;
 
-                switch (ex.Code)
+                switch (e.Code)
                 {
-                    case SFA.Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.ActivateUserFailed:
+                    case Application.Interfaces.Candidates.ErrorCodes.ActivateUserFailed:
                         message = ActivationPageMessages.ActivationFailed;
                         return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error,
                             viewModelMessage: message);
-                    case SFA.Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode:
+
+                    case Application.Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode:
                         message = ActivationPageMessages.ActivationCodeIncorrect;
                         return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.InvalidCode,
                             viewModelMessage: message);
-
                 }
 
             }
@@ -220,25 +221,51 @@
                 Logger.Debug("{0} requested account unlock code", model.EmailAddress);
                 _userAccountService.ResendAccountUnlockCode(model.EmailAddress);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Logger.ErrorException("Send account unlock code failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Send account unlock code failed for " + model.EmailAddress, e);
                 // TODO: fails silently, should return boolean to indicate success
             }
         }
 
-        public void VerifyPasswordReset(PasswordResetViewModel model)
+        public PasswordResetViewModel VerifyPasswordReset(PasswordResetViewModel model)
         {
+            // TODO: US333: AG: this function changes an object then returns it. Yuk.
             try
             {
                 _candidateService.ResetForgottenPassword(model.EmailAddress, model.PasswordResetCode, model.Password);
+                model.IsPasswordResetCodeValid = true;
             }
-            catch (CustomException ex)
+            catch (CustomException e)
             {
-                //todo: catch more specific custom errors first
-                Logger.ErrorException("Reset forgotten password failed for " + model.EmailAddress, ex);
-                throw;
+                Logger.ErrorException("Reset forgotten password failed for " + model.EmailAddress, e);
+
+                switch (e.Code)
+                {
+                    case ErrorCodes.UnknownUserError:
+                    case ErrorCodes.UserInIncorrectStateError:
+                    case ErrorCodes.UserPasswordResetCodeExpiredError:
+                    case ErrorCodes.UserPasswordResetCodeIsInvalid:
+                        model.IsPasswordResetCodeValid = false;
+                        break;
+
+                    case ErrorCodes.UserAccountLockedError:
+                        model.UserStatus = UserStatuses.Locked;
+                        break;
+
+                    default:
+                        model.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
+                        break;
+                }
             }
+            catch (Exception e)
+            {
+                Logger.ErrorException("Reset forgotten password failed for " + model.EmailAddress, e);
+
+                model.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
+            }
+
+            return model;
         }
 
         public bool VerifyAccountUnlockCode(AccountUnlockViewModel model)
@@ -248,9 +275,9 @@
                 _candidateService.UnlockAccount(model.EmailAddress, model.AccountUnlockCode);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Logger.ErrorException("Account unlock failed for " + model.EmailAddress, ex);
+                Logger.ErrorException("Account unlock failed for " + model.EmailAddress, e);
                 return false;
             }
         }
@@ -264,9 +291,9 @@
                 _userAccountService.ResendActivationCode(username);
                 return true;
             }
-            catch (CustomException ex)
+            catch (CustomException e)
             {
-                Logger.ErrorException("Reset activation code failed for " + username, ex);
+                Logger.ErrorException("Reset activation code failed for " + username, e);
                 return false;
             }
         }
