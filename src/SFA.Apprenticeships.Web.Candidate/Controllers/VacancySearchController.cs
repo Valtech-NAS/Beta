@@ -151,17 +151,17 @@
 
             var vacancy = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
 
+            if (vacancy == null)
+            {
+                return new VacancyNotFoundResult();
+            }
+
             if (vacancy.HasError())
             {
                 ModelState.Clear();
                 SetUserMessage(vacancy.ViewModelMessage, UserMessageLevel.Warning);
 
                 return View(vacancy);
-            }
-
-            if (vacancy == null)
-            {
-                return new VacancyNotFoundResult();
             }
 
             var distance = UserData.Pop(UserDataItemNames.VacancyDistance);
