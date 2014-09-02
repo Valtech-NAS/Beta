@@ -416,6 +416,49 @@ this.FeatureBackground();
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Search doesn\'t error when location doesn\'t exist")]
+        public virtual void SearchDoesnTErrorWhenLocationDoesnTExist()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Search doesn\'t error when location doesn\'t exist", ((string[])(null)));
+#line 123
+this.ScenarioSetup(scenarioInfo);
+#line 8
+this.FeatureBackground();
+#line 124
+ testRunner.Given("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table18.AddRow(new string[] {
+                        "Location",
+                        "KJHNSAKDFJHA"});
+#line 125
+ testRunner.When("I enter data", ((string)(null)), table18, "When ");
+#line 128
+ testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 129
+ testRunner.And("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table19.AddRow(new string[] {
+                        "SortOrderingDropDown",
+                        "Does Not Exist",
+                        ""});
+            table19.AddRow(new string[] {
+                        "NoResultsTitle",
+                        "Exists",
+                        ""});
+#line 130
+ testRunner.Then("I see", ((string)(null)), table19, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

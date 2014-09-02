@@ -119,3 +119,15 @@ Scenario: Search when no results are returned for location
         | Field                | Rule           | Value |
         | SortOrderingDropDown | Does Not Exist |       |
         | NoResultsTitle       | Exists         |       |
+
+Scenario: Search doesn't error when location doesn't exist
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field    | Value        |
+		 | Location | KJHNSAKDFJHA |
+	And I choose Search
+	And I am on the VacancySearchResultPage page
+	Then I see
+        | Field                | Rule           | Value |
+        | SortOrderingDropDown | Does Not Exist |       |
+        | NoResultsTitle       | Exists         |       |
