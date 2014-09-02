@@ -12,6 +12,8 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - validation summary links need to be clicked twice
 - validation messages should be parameterised where possible (e.g. max length). See AddressMessages.cs for an example.
 - check all messages starting with "TODO" and 'TODO' (C# and JavaScript).
+- usernamecheck should use remote validator
+- write bundle orderer for bundle.config
 
 ## Service layer ##
 

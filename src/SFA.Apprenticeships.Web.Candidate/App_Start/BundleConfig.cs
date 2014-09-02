@@ -9,17 +9,21 @@ namespace SFA.Apprenticeships.Web.Candidate
         /// </summary>
         /// <param name="bundles">The bundles.</param>
         public static void RegisterBundles(BundleCollection bundles)
-        {
-            BundleTable.EnableOptimizations = true;
-
+        {         
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 "~/Content/_assets/js/vendor/jquery-1.11.1.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/vendor").Include(
-                "~/Content/_assets/js/scripts.min.js",
+            bundles.Add(new ScriptBundle("~/bundles/nascript").Include(
+                  "~/Content/_assets/js/scripts.min.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/vendor").Include(              
                 "~/Content/_assets/js/vendor/jquery.validate.min.js",
-                "~/Content/_assets/js/vendor/jquery.validate.unobtrusive.min.js",
-                "~/Content/_assets/js/vendor/knockout-3.1.0.js",
+                "~/Content/_assets/js/vendor/jquery.validate.unobtrusive.min.js"                
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
+               "~/Content/_assets/js/vendor/knockout-3.1.0.js",
                 "~/Content/_assets/js/vendor/knockout.validation.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas").Include(
@@ -35,6 +39,8 @@ namespace SFA.Apprenticeships.Web.Candidate
             bundles.Add(new ScriptBundle("~/bundles/nas/locationsearch").Include(
                 "~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js",
                 "~/Content/_assets/js/nas/locationAutocomplete.js"));
+            
+            BundleTable.EnableOptimizations = true;
         }
     }
 }
