@@ -84,8 +84,8 @@ Scenario: As a candidate I can change my personal settings
 	| BannerUserName | Equals | Jane Dovedale       |
 
 	And I see
-	| Field              | Rule   | Value                  |
-	| SuccessMessageText | Equals | TODO: settings updated |
+	| Field              | Rule   | Value                                     |
+	| SuccessMessageText | Equals | You've successfully updated your settings |
 
 Scenario: As a candidate I cannot save invalid personal settings
 

@@ -2,8 +2,8 @@
 {
     public class VacancySearchResultsPageMessages
     {
-        public const string PostcodeLookupFailed = "TODO: 'Postcode' lookup failed - retry";
-        public const string LocationLookupFailed = "TODO: 'Location' lookup failed - retry";
-        public static string VacanciesSearchFailed = "TODO: 'Vacancies' search failed - retry";
+        public const string PostcodeLookupFailed = "Sorry, there’s a problem with the service. Please try searching by place name.";
+        public const string LocationLookupFailed = "Sorry, there’s a problem with the service. Please try searching again.";
+        public static string VacancySearchFailed = "There's been a problem with the apprenticeship search. Please try again.";
     }
 }

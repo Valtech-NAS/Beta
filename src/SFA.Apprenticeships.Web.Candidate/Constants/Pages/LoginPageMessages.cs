@@ -3,6 +3,6 @@
     public class LoginPageMessages
     {
         public const string InvalidUsernameOrPasswordErrorText = "Please enter a valid email address or password";
-        public const string LoginFailedErrorText = "TODO: There was a problem logging in - retry";
+        public const string LoginFailedErrorText = "There's been a problem signing in. Please try again.";
     }
 }

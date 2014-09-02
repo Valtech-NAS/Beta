@@ -267,7 +267,7 @@ this.FeatureBackground();
             table6.AddRow(new string[] {
                         "SuccessMessageText",
                         "Equals",
-                        "TODO: settings updated"});
+                        "You\'ve successfully updated your settings"});
 #line 86
  testRunner.And("I see", ((string)(null)), table6, "And ");
 #line hidden

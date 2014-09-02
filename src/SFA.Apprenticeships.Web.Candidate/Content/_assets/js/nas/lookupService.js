@@ -100,7 +100,7 @@ $(document).ready(function () {
 
             } else {
                 $addressList.addClass("toggle-content");
-                showErrorMessage("TODO: 'Postcode' not found");
+                showErrorMessage("Postcode not found. Please enter address manually.");
             }
 
             showFindAddressButton();
@@ -108,21 +108,20 @@ $(document).ready(function () {
 
         var handleMissingPostcode = function () {
             $addressList.addClass("toggle-content");
-            showErrorMessage("TODO: 'Postcode' is required");
+            showErrorMessage("Please enter a postcode");
             showFindAddressButton();
         };
 
         var handleInvalidPostcode = function () {
             $addressList.addClass("toggle-content");
-            showErrorMessage("TODO: 'Postcode' is invalid");
+            showErrorMessage("Please enter a valid postcode");
             showFindAddressButton();
         };
 
         var handleError = function (e) {
-            // TODO: add retry message from 'Points of Failure'.
             // TODO: can we differentiate between proxy error and server-type error (e.g. postcode.io).
             console.error(e);
-            showErrorMessage("TODO: service call failed - retry");
+            showErrorMessage("Sorry, there’s a problem with the service. Please try entering your address manually.");
             showFindAddressButton();
         };
 

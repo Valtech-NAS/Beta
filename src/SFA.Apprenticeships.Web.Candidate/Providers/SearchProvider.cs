@@ -85,7 +85,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Providers
             }
             catch (CustomException)
             {
-                return new VacancySearchResponseViewModel(VacancySearchResultsPageMessages.VacanciesSearchFailed);
+                return new VacancySearchResponseViewModel(VacancySearchResultsPageMessages.VacancySearchFailed);
             }
         }
 
