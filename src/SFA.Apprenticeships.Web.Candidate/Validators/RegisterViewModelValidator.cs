@@ -77,11 +77,11 @@
         {
             validator.RuleFor(x => x.DateOfBirth).SetValidator(new DateOfBirthViewModelServerValidator());
             validator.RuleFor(x => x.EmailAddress)
-               .Must(UsernameNotAvailable)
+               .Must(UsernameAvailable)
                .WithMessage(RegisterViewModelMessages.EmailAddressMessages.UsernameNotAvailableErrorText);
         }
 
-        private static bool UsernameNotAvailable(RegisterViewModel model, string emailAddress)
+        private static bool UsernameAvailable(RegisterViewModel model, string emailAddress)
         {
             return emailAddress != null && (!string.IsNullOrEmpty(emailAddress) && model.IsUsernameAvailable);
         }

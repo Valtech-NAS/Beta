@@ -158,26 +158,40 @@ $(document).ready(function () {
 
         var self = this;
 
-        self.focusout(function () {
+        var $emailAvailableMessage = $('#email-available-message');
 
+        var setErrorMessage = function () {
+            $emailAvailableMessage.html('<p class="text">Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it.</p>');
+        };
+
+        var cleanErrorMessage = function () {
+            $emailAvailableMessage.html('');
+        }
+
+        var handleSucess = function (response) {
+            if (response.isUsernameAvailable === false) {
+                setErrorMessage();
+            } else {
+                cleanErrorMessage();
+            }
+        };
+
+        var handleError = function (error) {
+            //Ignore, could be proxy issues so will work as 
+            //non-JS version.
+            //console.log(error);
+        };
+
+        self.focusout(function () {
             var username = $(this).val();
+            cleanErrorMessage();
 
             $.ajax({
                 url: apiurl,
                 type: 'GET',
                 data: { username: username },
-                success: function (response) {
-                    if (response.isUsernameAvailable === false) {
-                        $('#email-available-message').html('<p class="text">Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it.</p>');
-                    } else {
-                        $('#email-available-message').html('');
-                    }
-                },
-                error: function (error) {
-                    //Ignore, could be proxy issues so will work as 
-                    //non-JS version.
-                    //console.log(error);
-                }
+                success: handleSucess,
+                error: handleError
             });
         });
 

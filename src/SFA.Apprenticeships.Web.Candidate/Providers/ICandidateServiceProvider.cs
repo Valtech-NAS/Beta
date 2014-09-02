@@ -6,13 +6,14 @@
     using Domain.Entities.Candidates;
     using ViewModels.Login;
     using ViewModels.Register;
+    using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
 
     public interface ICandidateServiceProvider
     {
         bool Register(RegisterViewModel model);
         ActivationViewModel Activate(ActivationViewModel model, Guid candidateId);
         LoginResultViewModel Login(LoginViewModel model);
-        bool IsUsernameAvailable(string username);
+        UserNameAvailability IsUsernameAvailable(string username);
         UserStatuses GetUserStatus(string username);
         ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId);
         bool RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model);

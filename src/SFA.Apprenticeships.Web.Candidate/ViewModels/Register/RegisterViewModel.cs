@@ -7,7 +7,7 @@
     using Validators;
 
     [Validator(typeof(RegisterViewModelClientValidator))]
-    public class RegisterViewModel
+    public class RegisterViewModel : ViewModelBase
     {
         [Display(Name = RegisterViewModelMessages.FirstnameMessages.LabelText)]
         public string Firstname { get; set; }

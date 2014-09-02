@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -46,31 +47,38 @@
         [HttpPost]
         public ActionResult Index(RegisterViewModel model)
         {
-            model.IsUsernameAvailable = _candidateServiceProvider.IsUsernameAvailable(model.EmailAddress.Trim());
-
-            var validationResult = _registerViewModelServerValidator.Validate(model);
-
-            if (!validationResult.IsValid)
+            var userNameAvailable = _candidateServiceProvider.IsUsernameAvailable(model.EmailAddress.Trim());
+            var serverError = true;
+            if (!userNameAvailable.HasError)
             {
-                ModelState.Clear();
-                validationResult.AddToModelState(ModelState, string.Empty);
+                serverError = false;
+                model.IsUsernameAvailable = userNameAvailable.Value;
+                var validationResult = _registerViewModelServerValidator.Validate(model);
 
-                return View(model);
+                if (!validationResult.IsValid)
+                {
+                    ModelState.Clear();
+                    validationResult.AddToModelState(ModelState, string.Empty);
+
+                    return View(model);
+                }
+
+                serverError = !_candidateServiceProvider.Register(model);
+                if (!serverError)
+                {
+                    UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname);
+
+                    return RedirectToAction("Activation");
+                }
             }
 
-            var registered = _candidateServiceProvider.Register(model);
-
-            if (!registered)
+            if (serverError)
             {
-                ModelState.Clear();
-                ModelState.AddModelError("EmailAddress", RegisterPageMessages.RegistrationFailed);
-
-                return View(model);
+                SetUserMessage(RegisterPageMessages.RegistrationFailed, UserMessageLevel.Warning); 
             }
 
-            UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname);
-
-            return RedirectToAction("Activation");
+            ModelState.Clear();
+            return View(model);
         }
 
         [HttpGet]
@@ -265,11 +273,16 @@
         }
 
         [AllowCrossSiteJson]
-        public JsonResult CheckUsername(string username)
+        public ActionResult CheckUsername(string username)
         {
-            var isUsernameAvailable = _candidateServiceProvider.IsUsernameAvailable(username.Trim());
+            var userNameAvailability = _candidateServiceProvider.IsUsernameAvailable(username.Trim());
 
-            return Json(new {isUsernameAvailable}, JsonRequestBehavior.AllowGet);
+            if (userNameAvailability.HasError)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, userNameAvailability.ErrorMessage);
+            }
+
+            return Json(new { isUsernameAvailable = userNameAvailability.Value }, JsonRequestBehavior.AllowGet);
         }
 
         #region Helpers

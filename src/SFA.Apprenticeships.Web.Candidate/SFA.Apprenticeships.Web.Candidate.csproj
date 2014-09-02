@@ -391,6 +391,7 @@
     <Compile Include="Constants\ViewModels\EducationViewModelMessages.cs" />
     <Compile Include="Constants\Pages\SignOutPageMessages.cs" />
     <Compile Include="Constants\ViewModels\SettingsViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\UserNameAvailability.cs" />
     <Compile Include="Constants\ViewModels\ViewModelStates.cs" />
     <Compile Include="Constants\ViewModels\WorkExperienceViewModelMessages.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
