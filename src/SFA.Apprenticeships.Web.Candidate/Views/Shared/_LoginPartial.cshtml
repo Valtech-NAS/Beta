@@ -18,8 +18,8 @@
 else
 {
     <div class="account-info" id="bannerSignedOut">
-        @if (!Request.Url.AbsolutePath.StartsWith("/login", StringComparison.InvariantCultureIgnoreCase))
-        {
+        @if (ViewBag.AllowReturnUrl && Request.Url != null) 
+        {            
             <a href="@Url.Action("Index", "Login", new {ReturnUrl = Request.Url.PathAndQuery})" id="loginLink" title="Sign in"><i class="fa fa-sign-in"></i>Sign in</a>
         }
         else

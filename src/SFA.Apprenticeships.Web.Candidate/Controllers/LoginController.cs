@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using System.Web.Security;
+    using Common.Attributes;
     using Common.Constants;
     using Common.Services;
     using Constants;
@@ -33,6 +34,7 @@
         }
 
         [HttpGet]
+        [AllowReturnUrl(Allow = false)]
         public ActionResult Index(string returnUrl)
         {
             _authenticationTicketService.Clear(HttpContext.Request.Cookies); //todo: yuk
@@ -83,6 +85,7 @@
         }
 
         [HttpGet]
+        [AllowReturnUrl(Allow = false)]
         public ActionResult Unlock()
         {
             var emailAddress = UserData.Pop(UserDataItemNames.EmailAddress);

@@ -131,6 +131,7 @@
         }
 
         [HttpGet]
+        [AllowReturnUrl(Allow = false)]
         public ActionResult ForgottenPassword()
         {
             return View();
@@ -161,6 +162,7 @@
         }
 
         [HttpGet]
+        [AllowReturnUrl(Allow = false)]
         public ActionResult ResetPassword()
         {
             var emailAddress = UserData.Get(UserDataItemNames.EmailAddress);

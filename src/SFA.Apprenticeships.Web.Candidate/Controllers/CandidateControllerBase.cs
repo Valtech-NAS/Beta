@@ -11,7 +11,7 @@
     using Providers;
     using StructureMap;
 
-    [SessionTimeout,CookiesEnabled]
+    [SessionTimeout, CookiesEnabled, AllowReturnUrl(Allow = true)]
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
         protected CandidateControllerBase()
@@ -29,6 +29,7 @@
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             filterContext.Controller.ViewBag.FeedbackUrl = FeedbackUrl;
+
             UserContext = null;
 
             if (!string.IsNullOrWhiteSpace(User.Identity.Name))
