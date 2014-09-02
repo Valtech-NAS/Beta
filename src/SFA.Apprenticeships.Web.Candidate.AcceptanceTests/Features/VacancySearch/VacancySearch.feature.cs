@@ -158,10 +158,6 @@ this.FeatureBackground();
                         "ResultsAreInDistanceOrder",
                         "Equals",
                         "True"});
-            table4.AddRow(new string[] {
-                        "ResultsAreInClosingDateOrder",
-                        "Equals",
-                        "False"});
 #line 31
  testRunner.Then("I see", ((string)(null)), table4, "Then ");
 #line hidden
@@ -184,10 +180,6 @@ this.FeatureBackground();
                         "SearchResultItemsCount",
                         "Equals",
                         "5"});
-            table6.AddRow(new string[] {
-                        "ResultsAreInDistanceOrder",
-                        "Equals",
-                        "False"});
             table6.AddRow(new string[] {
                         "ResultsAreInClosingDateOrder",
                         "Equals",
@@ -238,14 +230,6 @@ this.FeatureBackground();
                         "Equals",
                         "5"});
             table8.AddRow(new string[] {
-                        "ResultsAreInDistanceOrder",
-                        "Equals",
-                        "False"});
-            table8.AddRow(new string[] {
-                        "ResultsAreInClosingDateOrder",
-                        "Equals",
-                        "False"});
-            table8.AddRow(new string[] {
                         "ResultsAreInBestMatchScoreOrder",
                         "Equals",
                         "True"});
@@ -272,17 +256,9 @@ this.FeatureBackground();
                         "Equals",
                         "5"});
             table10.AddRow(new string[] {
-                        "ResultsAreInDistanceOrder",
-                        "Equals",
-                        "False"});
-            table10.AddRow(new string[] {
                         "ResultsAreInClosingDateOrder",
                         "Equals",
                         "True"});
-            table10.AddRow(new string[] {
-                        "ResultsAreInBestMatchScoreOrder",
-                        "Equals",
-                        "False"});
 #line 69
  testRunner.And("I see", ((string)(null)), table10, "And ");
 #line hidden

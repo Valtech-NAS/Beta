@@ -29,10 +29,10 @@ Scenario: Find apprenticeships and test ordering without keywords
 	And I choose Search
 	And I am on the VacancySearchResultPage page
 	Then I see
-        | Field                        | Rule   | Value |
-        | SearchResultItemsCount       | Equals | 5     |
-        | ResultsAreInDistanceOrder    | Equals | True  |
-        | ResultsAreInClosingDateOrder | Equals | False |
+        | Field                     | Rule   | Value |
+        | SearchResultItemsCount    | Equals | 5     |
+        | ResultsAreInDistanceOrder | Equals | True  |
+        #| ResultsAreInClosingDateOrder | Equals | False |
 		# Need the ignore when not present added to specbind - KB talking to Dan Piessens
         #| ResultsAreInBestMatchScoreOrder | Equals | False |
 	And I enter data
@@ -42,8 +42,8 @@ Scenario: Find apprenticeships and test ordering without keywords
 	And I see
         | Field                        | Rule   | Value |
         | SearchResultItemsCount       | Equals | 5     |
-        | ResultsAreInDistanceOrder    | Equals | False |
         | ResultsAreInClosingDateOrder | Equals | True  |
+		#| ResultsAreInDistanceOrder    | Equals | False | 
 		# Need the ignore when not present added to specbind - KB talking to Dan Piessens
         #| ResultsAreInBestMatchScoreOrder | Equals | False |
 
@@ -59,19 +59,19 @@ Scenario: Find apprenticeships and test ordering with keywords
 	Then I see
         | Field                           | Rule   | Value |
         | SearchResultItemsCount          | Equals | 5     |
-        | ResultsAreInDistanceOrder       | Equals | False |
-        | ResultsAreInClosingDateOrder    | Equals | False |
         | ResultsAreInBestMatchScoreOrder | Equals | True  |
+        #| ResultsAreInDistanceOrder       | Equals | False |
+        #| ResultsAreInClosingDateOrder    | Equals | False |
 	And I enter data
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing Date |
 	And I am on the VacancySearchResultPage page
 	And I see
-        | Field                           | Rule   | Value |
-        | SearchResultItemsCount          | Equals | 5     |
-        | ResultsAreInDistanceOrder       | Equals | False |
-        | ResultsAreInClosingDateOrder    | Equals | True  |
-        | ResultsAreInBestMatchScoreOrder | Equals | False |
+        | Field                        | Rule   | Value |
+        | SearchResultItemsCount       | Equals | 5     |
+        | ResultsAreInClosingDateOrder | Equals | True  |
+        #| ResultsAreInDistanceOrder       | Equals | False |
+        #| ResultsAreInBestMatchScoreOrder | Equals | False |
 
 Scenario: Find apprenticeships and test paging
 	Given I navigated to the VacancySearchPage page
