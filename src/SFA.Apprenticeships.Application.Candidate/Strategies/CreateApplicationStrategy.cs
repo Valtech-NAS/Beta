@@ -31,31 +31,38 @@
 
         public ApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
         {
-            var applicationDetail = _applicationReadRepository.GetForCandidate(
-                candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
-
-            if (applicationDetail == null)
+            try
             {
-                return CreateNewApplication(candidateId, vacancyId);
-            }
+                var applicationDetail = _applicationReadRepository.GetForCandidate(
+                    candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
 
-            if (applicationDetail.Vacancy.ClosingDate < DateTime.Today.ToUniversalTime())
+                if (applicationDetail == null)
+                {
+                    return CreateNewApplication(candidateId, vacancyId);
+                }
+
+                if (applicationDetail.Vacancy.ClosingDate < DateTime.Today.ToUniversalTime())
+                {
+                    // Vacancy has expired, closing date is before today.
+                    applicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;
+                    _applicationWriteRepository.Save(applicationDetail);
+
+                    throw new CustomException("Vacancy has expired", ErrorCodes.VacancyExpired);
+                }
+
+                applicationDetail.AssertState("Application should be in draft", ApplicationStatuses.Draft);
+
+                if (applicationDetail.IsArchived)
+                {
+                    applicationDetail = UnarchiveApplication(applicationDetail);
+                }
+
+                return applicationDetail;
+            }
+            catch
             {
-                // Vacancy has expired, closing date is before today.
-                applicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;
-                _applicationWriteRepository.Save(applicationDetail);
-
-                throw new CustomException("Vacancy has expired", ErrorCodes.VacancyExpired);
+                throw new CustomException("Application creation error", ErrorCodes.ApplicationCreationError);
             }
-
-            applicationDetail.AssertState("Application should be in draft", ApplicationStatuses.Draft);
-
-            if (applicationDetail.IsArchived)
-            {
-                applicationDetail = UnarchiveApplication(applicationDetail);
-            }
-
-            return applicationDetail;
         }
 
         private ApplicationDetail UnarchiveApplication(ApplicationDetail applicationDetail)
@@ -116,7 +123,7 @@
                 },
             };
         }
-
+        
         private VacancyDetail GetVacancyDetails(int vacancyId)
         {
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);

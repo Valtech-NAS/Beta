@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Users
 {
     using System;
-    using System.Linq;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
@@ -9,9 +8,8 @@
     using Entities;
     using Mongo.Common;
     using MongoDB.Driver.Builders;
-    using MongoDB.Driver.Linq;
     using NLog;
-    using SFA.Apprenticeships.Domain.Entities.Exceptions;
+    using Domain.Entities.Exceptions;
 
     public class UserRepository : GenericMongoClient<MongoUser>, IUserReadRepository, IUserWriteRepository
     {

@@ -18,6 +18,7 @@
         public const string ApplicationInIncorrectStateError = "Application002";
         public const string ApplicationQueuingError = "Application003";
         public const string ApplicationViewIdNotFound = "Application004";
+        public const string ApplicationCreationError = "Application005";
 
         // Vacancy Exception Codes
         public const string VacancyNotFoundError = "Vacancy001";
