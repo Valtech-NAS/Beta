@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Constants.Pages
 {
-    using System;
-
     public static class PasswordResetPageMessages
     {
         public const string PasswordResetSent = "A password reset code has been sent to {0}";
