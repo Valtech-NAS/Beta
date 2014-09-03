@@ -68,7 +68,15 @@
             if (!indexExistsResponse.Exists)
             {
                 var indexSettings = new IndexSettings();
-                indexSettings.Analysis.Analyzers.Add("snowball", new SnowballAnalyzer { Language = "English" });
+
+                //Standard snowball analyser
+                //indexSettings.Analysis.Analyzers.Add("snowball", new SnowballAnalyzer { Language = "English" });
+
+                //Custom snowball analyser without stop words being removed
+                var snowballFilter = new SnowballTokenFilter { Language = "English" };
+                indexSettings.Analysis.TokenFilters.Add("snowball", snowballFilter);
+                indexSettings.Analysis.Analyzers.Add("snowball", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "snowball" } });
+
                 var indexCreationResp = client.CreateIndex(i => i.Index(newIndexName).InitializeUsing(indexSettings));
                 var mapResp = client.Map<VacancySummary>(p => p.Index(newIndexName).MapFromAttributes());
                 Logger.Debug("Created new vacancy search index named: {0}", newIndexName);
