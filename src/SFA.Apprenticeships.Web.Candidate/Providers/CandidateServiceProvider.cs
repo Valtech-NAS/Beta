@@ -46,7 +46,7 @@
 
             try
             {
-                userNameAvailability.Value = _userAccountService.IsUsernameAvailable(username);
+                userNameAvailability.IsUserNameAvailable = _userAccountService.IsUsernameAvailable(username);
             }
             catch
             {

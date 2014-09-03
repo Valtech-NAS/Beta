@@ -6,6 +6,6 @@
 
         public bool HasError { get; set; }
 
-        public bool Value { get; set; }
+        public bool IsUserNameAvailable { get; set; }
     }
 }

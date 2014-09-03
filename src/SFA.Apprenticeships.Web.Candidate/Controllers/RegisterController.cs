@@ -52,7 +52,7 @@
             if (!userNameAvailable.HasError)
             {
                 serverError = false;
-                model.IsUsernameAvailable = userNameAvailable.Value;
+                model.IsUsernameAvailable = userNameAvailable.IsUserNameAvailable;
                 var validationResult = _registerViewModelServerValidator.Validate(model);
 
                 if (!validationResult.IsValid)
@@ -279,12 +279,7 @@
         {
             var userNameAvailability = _candidateServiceProvider.IsUsernameAvailable(username.Trim());
 
-            if (userNameAvailability.HasError)
-            {
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, userNameAvailability.ErrorMessage);
-            }
-
-            return Json(new { isUsernameAvailable = userNameAvailability.Value }, JsonRequestBehavior.AllowGet);
+            return Json(userNameAvailability, JsonRequestBehavior.AllowGet);
         }
 
         #region Helpers

@@ -169,10 +169,13 @@ $(document).ready(function () {
         }
 
         var handleSucess = function (response) {
-            if (response.isUsernameAvailable === false) {
-                setErrorMessage();
-            } else {
-                cleanErrorMessage();
+            if (!response.HasError) {
+                if (response.IsUserNameAvailable == false) {
+                    setErrorMessage();
+                }
+                else {
+                    cleanErrorMessage();
+                }
             }
         };
 
