@@ -14,6 +14,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - check all messages starting with "TODO" and 'TODO' (C# and JavaScript).
 - usernamecheck should use remote validator
 - write bundle orderer for bundle.config
+- need to trim user input data, e.g. http://stackoverflow.com/questions/1718501/asp-net-mvc-best-way-to-trim-strings-after-data-entry-should-i-create-a-custo
 
 ## Service layer ##
 
