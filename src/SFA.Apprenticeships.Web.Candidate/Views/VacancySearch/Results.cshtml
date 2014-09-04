@@ -53,16 +53,15 @@
     }
 </div>
 
-
 @section scripts
 {
     @Scripts.Render("~/bundles/nas/locationsearch")
     <script>
-        $("#VacancySearch_Location").locationMatch({
+        $("#Location").locationMatch({
             url: '@Url.Action("location", "Location")',
-            longitude: '#@(Html.IdFor(m => m.VacancySearch.Longitude))',
-            latitude: '#@(Html.IdFor(m => m.VacancySearch.Latitude))',
-            latlonhash: '#@(Html.IdFor(m => m.VacancySearch.Hash))'
+            longitude: '#Longitude',
+            latitude: '#Latitude',
+            latlonhash: '#Hash'
         });
     </script>
 }
