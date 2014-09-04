@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Interfaces.Candidates;
+    using Common.Providers;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using Domain.Interfaces.Mapping;
@@ -33,10 +34,10 @@
 
         public bool SaveSettings(Guid candidateId, SettingsViewModel model)
         {
-            var candidate = _candidateService.GetCandidate(candidateId);
-
             try
             {
+                var candidate = _candidateService.GetCandidate(candidateId);
+
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
                 _candidateService.SaveCandidate(candidate);
 
@@ -44,7 +45,7 @@
             }
             catch (Exception e)
             {
-                Logger.ErrorException("Save settings failed for " + candidate.RegistrationDetails.EmailAddress, e);
+                Logger.ErrorException("Save settings failed for candidate " + candidateId, e);
 
                 return false;
             }
