@@ -188,17 +188,6 @@
             return searchViewModel.Latitude.HasValue && searchViewModel.Longitude.HasValue;
         }
 
-        private void PopulateLookups(VacancySearchViewModel searchViewModel)
-        {
-            PopulateDistances(searchViewModel.WithinDistance);
-            PopulateSortType(searchViewModel.SortType);
-        }
-
-        private VacancySearchViewModel[] FindSuggestedLocations(VacancySearchViewModel searchViewModel)
-        {
-            return null;
-        }
-
         private void PopulateDistances(int selectedValue = 2)
         {
             var distances = new SelectList(
