@@ -88,18 +88,11 @@
 
             if (savedApplicationViewModel.HasError())
             {
-                if (applicationViewModel.ApplicationAction == ApplicationAction.Preview)
-                {
-                    SetUserMessage(ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning);
-                }
-                else
-                {
-                    SetUserMessage(ApplicationPageMessages.SaveFailed, UserMessageLevel.Warning);    
-                }
-                
+                ShowErrorMessageToUser(applicationViewModel);
+
                 return View("Apply", applicationViewModel);
             }
-            
+
             var result = applicationViewModel.ApplicationAction == ApplicationAction.Preview
                 ? _applicationViewModelFullValidator.Validate(applicationViewModel)
                 : _applicationViewModelSaveValidator.Validate(applicationViewModel);
@@ -124,6 +117,18 @@
             applicationViewModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
             return View("Apply", applicationViewModel);
+        }
+
+        private void ShowErrorMessageToUser(ApplicationViewModel applicationViewModel)
+        {
+            if (applicationViewModel.ApplicationAction == ApplicationAction.Preview)
+            {
+                SetUserMessage(ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning);
+            }
+            else
+            {
+                SetUserMessage(ApplicationPageMessages.SaveFailed, UserMessageLevel.Warning);
+            }
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
