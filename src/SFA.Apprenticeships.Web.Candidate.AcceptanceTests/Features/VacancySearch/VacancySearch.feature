@@ -131,3 +131,19 @@ Scenario: Search doesn't error when location doesn't exist
         | Field                | Rule           | Value |
         | SortOrderingDropDown | Does Not Exist |       |
         | NoResultsTitle       | Exists         |       |
+
+Scenario: Search locaton autocomplete appears on both initial search page and search results page
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field    | Value    |
+		 | Location | Coventry |
+	Then I wait for 5 seconds to see LocationAutoComplete
+	When I choose Search
+	And I am on the VacancySearchResultPage page
+	Then I see
+	    | Field         | Rule   | Value |
+	    | ClearLocation | Equals | True  |
+	When I enter data
+		 | Field    | Value  |
+		 | Location | London |
+	Then I wait for 5 seconds to see LocationAutoComplete

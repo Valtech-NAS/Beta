@@ -7,6 +7,8 @@
     [PageAlias("VacancySearchPage")]
     public class VacancySearchPage : BaseValidationPage
     {
+        private IWebElement _locationAutoComplete;
+
         public VacancySearchPage(ISearchContext context) : base(context)
         {
         }
@@ -22,5 +24,15 @@
 
         [ElementLocator(Id = "search-button")]
         public IWebElement Search { get; set; }
+
+        [ElementLocator(Class = "ui-autocomplete")]
+        public IWebElement LocationAutoComplete
+        {
+            get { return _locationAutoComplete; }
+            set { _locationAutoComplete = value; }
+        }
+
+        [ElementLocator(Class = "ui-autocomplete")]
+        public IElementList<IWebElement, LocationAutoCompleteItem> LocationAutoCompletItems { get; set; }
     }
 }

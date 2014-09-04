@@ -11,6 +11,8 @@
     [PageAlias("VacancySearchResultPage")]
     public class VacancySearchResultPage : BaseValidationPage
     {
+        private IWebElement _locationAutoComplete;
+
         public VacancySearchResultPage(ISearchContext context) : base(context)
         {
         }
@@ -20,6 +22,15 @@
 
         [ElementLocator(Id = "Location")]
         public IWebElement Location { get; set; }
+
+        public string ClearLocation
+        {
+            get
+            {
+                Location.Clear();
+                return "True";
+            }
+        }
 
         [ElementLocator(Id = "search-button", Type = "submit", TagName = "button")]
         public IWebElement Search { get; set; }
@@ -38,6 +49,16 @@
 
         [ElementLocator(Id = "search-no-results-title")]
         public IWebElement NoResultsTitle { get; set; }
+
+        [ElementLocator(Class = "ui-autocomplete")]
+        public IWebElement LocationAutoComplete
+        {
+            get { return _locationAutoComplete; }
+            set { _locationAutoComplete = value; }
+        }
+
+        [ElementLocator(Class = "ui-autocomplete")]
+        public IElementList<IWebElement, LocationAutoCompleteItem> LocationAutoCompletItems { get; set; }
 
         [ElementLocator(Class = "search-results")]
         public IElementList<IWebElement, SearchResultItem> SearchResultItems { get; set; }

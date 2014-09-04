@@ -459,6 +459,60 @@ this.FeatureBackground();
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Search locaton autocomplete appears on both initial search page and search result" +
+            "s page")]
+        public virtual void SearchLocatonAutocompleteAppearsOnBothInitialSearchPageAndSearchResultsPage()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Search locaton autocomplete appears on both initial search page and search result" +
+                    "s page", ((string[])(null)));
+#line 135
+this.ScenarioSetup(scenarioInfo);
+#line 8
+this.FeatureBackground();
+#line 136
+ testRunner.Given("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table20.AddRow(new string[] {
+                        "Location",
+                        "Coventry"});
+#line 137
+ testRunner.When("I enter data", ((string)(null)), table20, "When ");
+#line 140
+ testRunner.Then("I wait for 5 seconds to see LocationAutoComplete", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 141
+ testRunner.When("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 142
+ testRunner.And("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table21.AddRow(new string[] {
+                        "ClearLocation",
+                        "Equals",
+                        "True"});
+#line 143
+ testRunner.Then("I see", ((string)(null)), table21, "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table22.AddRow(new string[] {
+                        "Location",
+                        "London"});
+#line 146
+ testRunner.When("I enter data", ((string)(null)), table22, "When ");
+#line 149
+ testRunner.Then("I wait for 5 seconds to see LocationAutoComplete", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
