@@ -39,8 +39,6 @@ namespace SFA.Apprenticeships.Web.Candidate
             bundles.Add(new ScriptBundle("~/bundles/nas/locationsearch").Include(
                 "~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js",
                 "~/Content/_assets/js/nas/locationAutocomplete.js"));
-            
-            //BundleTable.EnableOptimizations = true;
         }
     }
 }

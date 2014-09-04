@@ -75,6 +75,14 @@
                 return new VacancyNotFoundResult();
             }
 
+            //TODO: VGA: talking with Scott about what to do in this case
+            //if (model.HasError())
+            //{
+            //    ShowErrorMessageToUser(model);
+
+            //    return View("Apply", model);
+            //}
+
             return View(model);
         }
 
@@ -150,6 +158,7 @@
             }
             catch (Exception)
             {
+                // TOD: vga: this will never happen
                 return new VacancyNotFoundResult();
             }
         }
