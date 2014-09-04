@@ -117,19 +117,12 @@
                     ApplicationStatus = each.Status,
                     IsArchived = each.IsArchived,
                     DateApplied = each.DateApplied,
-                    ClosingDate = GetVacancyClosingDate(candidateId, each.LegacyVacancyId),
+                    ClosingDate = each.ClosingDate,
                     DateUpdated = each.DateUpdated
                 })
                 .ToList();
 
             return new MyApplicationsViewModel(applications);
-        }
-
-        private DateTime? GetVacancyClosingDate(Guid candidateId, int vacancyId)
-        {
-            var vacancyDetail = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
-
-            return vacancyDetail == null ? default(DateTime?) : vacancyDetail.ClosingDate;
         }
 
         #region Helpers

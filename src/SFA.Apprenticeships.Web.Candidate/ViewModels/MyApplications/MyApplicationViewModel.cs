@@ -22,9 +22,9 @@
 
         [UIHint("Date")]
         [DataType(DataType.DateTime)]
-        public DateTime? ClosingDate { get; set; }
+        public DateTime ClosingDate { get; set; }
 
-        public DateTime? DateUpdated { get; set; }
+        public DateTime DateUpdated { get; set; }
 
         public string UnsuccessfulReason { get; set; }
     }

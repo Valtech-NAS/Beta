@@ -32,30 +32,30 @@
 else
 {
     <ul class="list-nav">
-    @if (Model.SuccessfulApplications.Any())
-    {
-        <li>
-            <span class="bold-medium">@Model.SuccessfulApplications.Count()</span>  <a class="" href="#dashSuccessful">Successful</a>
-        </li>
-    }
-    @if (Model.SubmittedApplications.Any())
-    {
-        <li>
-            <span id="submitted-applications-count" class="bold-medium">@Model.SubmittedApplications.Count()</span>  <a class="" href="#dashSubmitted">Submitted</a>
-        </li>
-    }
-    @if (Model.UnsuccessfulApplications.Any())
-    {
-        <li>
-            <span class="bold-medium">@Model.UnsuccessfulApplications.Count()</span>  <a class="" href="#dashUnsuccessful">Unsuccessful</a>
-        </li>
-    }
-    @if (Model.DraftApplications.Any())
-    {
-        <li>
-            <span id="draft-applications-count" class="bold-medium">@Model.DraftApplications.Count()</span>  <a class="" href="#dashDrafts">Drafts</a>
-        </li>
-    }
+        @if (Model.SuccessfulApplications.Any())
+        {
+            <li>
+                <span class="bold-medium">@Model.SuccessfulApplications.Count()</span>  <a class="" href="#dashSuccessful">Successful</a>
+            </li>
+        }
+        @if (Model.SubmittedApplications.Any())
+        {
+            <li>
+                <span id="submitted-applications-count" class="bold-medium">@Model.SubmittedApplications.Count()</span>  <a class="" href="#dashSubmitted">Submitted</a>
+            </li>
+        }
+        @if (Model.UnsuccessfulApplications.Any())
+        {
+            <li>
+                <span class="bold-medium">@Model.UnsuccessfulApplications.Count()</span>  <a class="" href="#dashUnsuccessful">Unsuccessful</a>
+            </li>
+        }
+        @if (Model.DraftApplications.Any())
+        {
+            <li>
+                <span id="draft-applications-count" class="bold-medium">@Model.DraftApplications.Count()</span>  <a class="" href="#dashDrafts">Drafts</a>
+            </li>
+        }
     </ul>
     <div class="grid-wrapper proto-dashboard">
         @if (
@@ -98,7 +98,7 @@ else
                                 </tbody>
                             </table>
                         }
-                        
+
                         @if (Model.SubmittedApplications.Any())
                         {
                             <h2 class="heading-medium" id="dashSubmitted">Submitted</h2>
@@ -129,7 +129,7 @@ else
                                 </tbody>
                             </table>
                         }
-                        
+
                         @if (Model.UnsuccessfulApplications.Any())
                         {
                             <h2 class="heading-medium" id="dashUnsuccessful">Unsuccessful</h2>
@@ -193,11 +193,8 @@ else
                                 <tr>
                                     <td>
                                         @application.Title with @application.EmployerName
-                                        @if (application.ClosingDate.HasValue)
-                                        {
-                                            <br/>
-                                            <strong>Closing date:</strong> @Html.DisplayFor(m => application.ClosingDate)
-                                        }
+                                        <br />
+                                        <strong>Closing date:</strong> @Html.DisplayFor(m => application.ClosingDate)
                                     </td>
                                     <td class="ta-center">
                                         @if (application.ApplicationStatus == ApplicationStatuses.Draft)

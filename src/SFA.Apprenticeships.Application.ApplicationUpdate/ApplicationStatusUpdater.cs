@@ -34,12 +34,27 @@
 
                 if (applicationDetail != null)
                 {
+                    var updated = false;
+
                     // TODO: US154: do we need to check vacancy status too and then derive application status? 
                     // ...or does the the app status already reflect the vacancy status? (e.g. if withdrawn, etc)
                     // check with legacy team.
                     if (applicationDetail.Status != status.ApplicationStatus)
                     {
                         applicationDetail.Status = status.ApplicationStatus;
+                        updated = true;
+                    }
+
+                    // TODO: AG: added subject to review to ensure we have the latest view of the ClosingDate in Exemplar database.
+                     // TODO: AG: map other fields in ApplicationStatusSummary? E.g. UnsuccessfulReason, VacancyStatus?
+                    if (applicationDetail.Vacancy.ClosingDate != status.ClosingDate)
+                    {
+                        applicationDetail.Vacancy.ClosingDate = status.ClosingDate;
+                        updated = true;
+                    }
+
+                    if (updated)
+                    {
                         _applicationWriteRepository.Save(applicationDetail);
                     }
                 }
