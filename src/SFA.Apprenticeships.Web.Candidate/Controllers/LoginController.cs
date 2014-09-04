@@ -8,7 +8,6 @@
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
-    using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using FluentValidation.Mvc;
     using Providers;
