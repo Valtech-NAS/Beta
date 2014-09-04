@@ -359,9 +359,9 @@
 
     <div class="form-group">
         @*The buttons below need the values so the controller knows what action to perform if restyling*@
-        <button id="apply-button" type="submit" name="ApplicationAction" class="button" value="Preview">Preview application</button>
+        <button id="apply-button" type="submit" name="ApplicationAction" class="button no-check-for-dirty-form" value="Preview">Preview application</button>
         <p id="saveApplication">
-            <button id="save-button" type="submit" name="ApplicationAction" class="button-link cancel" value="Save">Save draft</button>
+            <button id="save-button" type="submit" name="ApplicationAction" class="button-link no-check-for-dirty-form cancel" value="Save">Save draft</button>
         </p>
         @if (Model.DateUpdated.HasValue)
         {

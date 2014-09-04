@@ -17,7 +17,7 @@
         protected CandidateControllerBase()
         {
             //TODO: Think about "new"ing this up instead - Mark doesn't like this. Doesn't need to be lazy, is used everywhere
-            //vga: can't we inject them? It's very difficult to test the controllers if not.
+            //TODO: VGA: can't we inject them? It's very difficult to test the controllers if not.
             UserData = ObjectFactory.GetInstance<IUserDataProvider>();
             AuthenticationTicketService = ObjectFactory.GetInstance<IAuthenticationTicketService>();
 
