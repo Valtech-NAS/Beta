@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -48,10 +47,8 @@
         public ActionResult Index(RegisterViewModel model)
         {
             var userNameAvailable = _candidateServiceProvider.IsUsernameAvailable(model.EmailAddress.Trim());
-            var serverError = true;
             if (!userNameAvailable.HasError)
             {
-                serverError = false;
                 model.IsUsernameAvailable = userNameAvailable.IsUserNameAvailable;
                 var validationResult = _registerViewModelServerValidator.Validate(model);
 
@@ -63,7 +60,7 @@
                     return View(model);
                 }
 
-                serverError = !_candidateServiceProvider.Register(model);
+                var serverError = !_candidateServiceProvider.Register(model);
                 if (!serverError)
                 {
                     UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname);
@@ -72,10 +69,7 @@
                 }
             }
 
-            if (serverError)
-            {
-                SetUserMessage(RegisterPageMessages.RegistrationFailed, UserMessageLevel.Warning); 
-            }
+            SetUserMessage(RegisterPageMessages.RegistrationFailed, UserMessageLevel.Warning); 
 
             ModelState.Clear();
             return View(model);
