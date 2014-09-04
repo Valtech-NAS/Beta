@@ -49,6 +49,8 @@
 
         public int NumberOfPositions { get; set; }
 
+        public string RealityCheck { get; set; }
+
         public DateTime Created { get; set; }
 
         #endregion
@@ -63,13 +65,15 @@
 
         public string EmployerWebsite { get; set; }
 
+        public bool ApplyViaEmployerWebsite { get; set; }
+
         public bool IsEmployerAnonymous { get; set; }
 
         public string ExpectedDuration { get; set; }
 
         public Address VacancyAddress { get; set; }
 
-        public bool IsDisplayRecruitmentAgency { get; set; }
+        public bool IsRecruitmentAgencyAnonymous { get; set; }
 
         public bool IsSmallEmployerWageIncentive { get; set; }
 
@@ -83,6 +87,8 @@
 
         public string ProviderName { get; set; }
 
+        public string TradingName { get; set; }
+
         public string ProviderDescription { get; set; }
 
         public string Contact { get; set; }
@@ -95,6 +101,7 @@
 
         public string DeliveryOrganisation { get; set; }
 
+        public bool IsNasProvider { get; set; }
 
         #endregion
 

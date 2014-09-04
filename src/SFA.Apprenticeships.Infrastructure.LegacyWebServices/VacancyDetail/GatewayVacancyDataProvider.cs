@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancyDetail
 {
-    using System;
     using System.Linq;
     using Application.Vacancy;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
+    using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
     using NLog;
@@ -13,11 +13,16 @@
     public class GatewayVacancyDataProvider : IVacancyDataProvider
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IWcfService<GatewayServiceContract> _service;
 
-        public GatewayVacancyDataProvider(IWcfService<GatewayServiceContract> service)
+        private readonly IWcfService<GatewayServiceContract> _service;
+        private readonly IMapper _mapper;
+
+        public GatewayVacancyDataProvider(
+            IWcfService<GatewayServiceContract> service,
+            IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         public VacancyDetail GetVacancyDetails(int vacancyId)
@@ -47,8 +52,7 @@
                 throw new CustomException("Gateway GetVacancyDetails failed to retrieve vacancy details from legacy system");
             }
 
-            //TODO: return _mapper.Map<Vacancy, VacancyDetail>(response.Vacancy);
-            throw new NotImplementedException();
+            return _mapper.Map<Vacancy, VacancyDetail>(response.Vacancy);
         }
     }
 }
