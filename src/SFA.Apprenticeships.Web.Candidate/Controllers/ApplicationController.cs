@@ -86,6 +86,20 @@
 
             ModelState.Clear();
 
+            if (savedApplicationViewModel.HasError())
+            {
+                if (applicationViewModel.ApplicationAction == ApplicationAction.Preview)
+                {
+                    SetUserMessage(ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning);
+                }
+                else
+                {
+                    SetUserMessage(ApplicationPageMessages.SaveFailed, UserMessageLevel.Warning);    
+                }
+                
+                return View("Apply", applicationViewModel);
+            }
+            
             var result = applicationViewModel.ApplicationAction == ApplicationAction.Preview
                 ? _applicationViewModelFullValidator.Validate(applicationViewModel)
                 : _applicationViewModelSaveValidator.Validate(applicationViewModel);

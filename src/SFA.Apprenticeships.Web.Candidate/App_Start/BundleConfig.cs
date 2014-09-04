@@ -40,7 +40,7 @@ namespace SFA.Apprenticeships.Web.Candidate
                 "~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js",
                 "~/Content/_assets/js/nas/locationAutocomplete.js"));
             
-            BundleTable.EnableOptimizations = true;
+            //BundleTable.EnableOptimizations = true;
         }
     }
 }

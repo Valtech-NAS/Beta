@@ -246,6 +246,12 @@
             }
         };
 
+        self.checkHasNoQualifications = function() {
+            self.showQualifications(false);
+            self.hasQualifications(undefined);
+            self.hasNoQualifications("checked");
+        };
+
         self.getqualifications = function (data) {
 
             $(data).each(function (index, item) {
@@ -260,9 +266,7 @@
                 self.hasNoQualifications(undefined);
                 self.errors.showAllMessages(false);
             } else {
-                self.showQualifications(false);
-                self.hasQualifications(undefined);
-                self.hasNoQualifications("checked");
+                self.checkHasNoQualifications();
             }
         };
 
@@ -635,6 +639,12 @@
             self.workExperiences.remove(workExperience);
         };
 
+        self.checkHasNoWorkExperience = function (){
+            self.showWorkExperience(false);
+            self.hasWorkExperience(undefined);
+            self.hasNoWorkExperience("checked");
+        };
+
         self.getWorkExperiences = function (data) {
 
             $(data).each(function (index, item) {
@@ -658,9 +668,7 @@
                 self.hasNoWorkExperience(undefined);
 
             } else {
-                self.showWorkExperience(false);
-                self.hasWorkExperience(undefined);
-                self.hasNoWorkExperience("checked");
+                self.checkHasNoWorkExperience();
             }
 
         };
@@ -723,6 +731,9 @@
         if (window.getQualificationData()) {
             model.getqualifications(window.getQualificationData());
         }
+        else {
+            model.checkHasNoQualifications();
+        }
 
         ko.applyBindings(model, document.getElementById('applyQualifications'));
 
@@ -738,6 +749,8 @@
 
         if (window.getWorkExperienceData()) {
             experienceModel.getWorkExperiences(window.getWorkExperienceData());
+        } else {
+            experienceModel.checkHasNoWorkExperience();
         }
 
         ko.applyBindings(experienceModel, document.getElementById('applyWorkExperience'));
