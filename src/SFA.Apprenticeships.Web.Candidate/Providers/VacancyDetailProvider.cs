@@ -41,11 +41,14 @@
             {
                 var vacancyDetail = _vacancyDataService.GetVacancyDetails(vacancyId);
 
-                if (IsVacancyExpiredOrWithdrawn(vacancyDetail))
+                if (candidateId != null)
                 {
-                    // Vacancy has expired, closing date is before today.
-                    ExpireVacancy(candidateId, vacancyId);
-                    return null;
+                    // Vacancy is being viewed by a signed-in candidate, ensure it is not expired or withdrawn.
+                    if (vacancyDetail == null || vacancyDetail.IsExpired())
+                    {
+                        _applicationWriteRepository.ExpireOrWithdrawForCandidate(candidateId.Value, vacancyId);
+                        return null;
+                    }
                 }
 
                 var vacancyDetailViewModel = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
@@ -65,28 +68,6 @@
             {
                 return new VacancyDetailViewModel(VacancyDetailPageMessages.GetVacancyDetailFailed);
             }
-        }
-
-        private void ExpireVacancy(Guid? candidateId, int vacancyId)
-        {
-            if (candidateId == null)
-            {
-                // Vacancy is not being viewed by a signed-in candidate.
-                return;
-            }
-
-            // Vacancy is not being viewed by a signed-in candidate.
-            var applicationDetail = _applicationReadRepository.GetForCandidate(
-                candidateId.Value, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
-
-            applicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;
-            _applicationWriteRepository.Save(applicationDetail);
-        }
-
-        private static bool IsVacancyExpiredOrWithdrawn(VacancyDetail vacancyDetail)
-        {
-            // TODO: AG: we have this logic in a few places (look for "< DateTime.Today"). This should be factored out into a strategy or service?
-            return vacancyDetail == null || vacancyDetail.ClosingDate < DateTime.Today.ToUniversalTime();
         }
 
         private ApplicationSummary GetCandidateApplication(Guid? candidateId, int vacancyId)

@@ -5,9 +5,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using Domain.Entities.Applications;
-    using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
@@ -21,9 +19,12 @@
         IApplicationWriteRepository
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly IMapper _mapper;
 
-        public ApplicationRepository(IConfigurationManager configurationManager, IMapper mapper)
+        public ApplicationRepository(
+            IConfigurationManager configurationManager,
+            IMapper mapper)
             : base(configurationManager, "Applications.mongoDB", "applications")
         {
             _mapper = mapper;
@@ -110,6 +111,16 @@
             Logger.Debug("Called Mongodb to get ApplicationDetail with Id={0}", id);
             var mongoEntity = Collection.FindOneById(id);
             return mongoEntity == null ? null : _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
+        }
+
+        public void ExpireOrWithdrawForCandidate(Guid candidateId, int vacancyId)
+        {
+            var applicationDetail = GetForCandidate(
+                candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
+
+            applicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;
+            Save(applicationDetail);
+
         }
 
         protected override void Initialise()

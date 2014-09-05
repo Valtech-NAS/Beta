@@ -15,6 +15,7 @@
     using Repositories.Candidates.IoC;
     using StructureMap;
 
+    [TestFixture]
     public class LegacyApplicationStatusesProviderIntegrationTests
     {
         private ILegacyCandidateProvider _legacyCandidateProvider;
@@ -52,7 +53,9 @@
             var candidate = CreateCandidate();
 
             // Act.
-            var result = _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate);
+            var result = _legacyApplicationStatusesProvider
+                .GetCandidateApplicationStatuses(candidate)
+                .ToList();
 
             // Assert.
             result.Should().NotBeNull();
@@ -67,7 +70,9 @@
             var applicationDetail = CreateApplicationForCandidate(candidate);
 
             // Act: get application statuses (should only be one).
-            var statuses = _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate);
+            var statuses = _legacyApplicationStatusesProvider
+                .GetCandidateApplicationStatuses(candidate)
+                .ToList();
 
             // Assert.
             statuses.Should().NotBeNull();

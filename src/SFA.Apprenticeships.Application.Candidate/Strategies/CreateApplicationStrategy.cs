@@ -38,15 +38,16 @@
 
                 if (applicationDetail == null)
                 {
+                    // Candidate has not previously applied for this vacancy.
                     return CreateNewApplication(candidateId, vacancyId);
                 }
 
-                if (applicationDetail.Vacancy.ClosingDate < DateTime.Today.ToUniversalTime())
+                if (applicationDetail.Vacancy.IsExpired())
                 {
-                    // Vacancy has expired, closing date is before today.
                     applicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;
                     _applicationWriteRepository.Save(applicationDetail);
 
+                    // TODO: AG: US333: return null.
                     throw new CustomException("Vacancy has expired", ErrorCodes.VacancyExpired);
                 }
 
@@ -61,6 +62,7 @@
             }
             catch
             {
+                // TODO: AG: US333: review this catch and throw. It's masking all exceptions.
                 throw new CustomException("Application creation error", ErrorCodes.ApplicationCreationError);
             }
         }
@@ -77,8 +79,9 @@
         {
             var vacancyDetails = GetVacancyDetails(vacancyId);
 
-            if (vacancyDetails.ClosingDate < DateTime.Today.ToUniversalTime())
+            if (vacancyDetails.IsExpired())
             {
+                // TODO: AG: US333: return null.
                 throw new CustomException(
                     "Vacancy has expired, cannot create a new application.",
                     ErrorCodes.VacancyExpired);
@@ -130,6 +133,7 @@
 
             if (vacancyDetails == null)
             {
+                // TODO: AG: US333: return null.
                 // TODO: move null check to data provider (same as User and Candidate repositories).
                 throw new CustomException(
                     "Vacancy not found with ID {0}.", ErrorCodes.VacancyNotFoundError, vacancyId);

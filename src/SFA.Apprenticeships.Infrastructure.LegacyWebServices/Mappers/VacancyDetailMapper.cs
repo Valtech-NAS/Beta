@@ -14,11 +14,14 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
                 .ForMember(d => d.StartDate, opt => opt.MapFrom(src => src.PossibleStartDate.ToUniversalTime()))
                 .ForMember(d => d.Description, opt => opt.MapFrom(src => src.ShortDescription))
                 .ForMember(d => d.Framework, opt => opt.MapFrom(src => src.ApprenticeshipFramework))
-                .ForMember(d => d.VacancyAddress, opt => opt.ResolveUsing<VacancyDetailAddressResolver>().FromMember(src => src.VacancyAddress))
+                .ForMember(d => d.VacancyAddress,
+                    opt => opt.ResolveUsing<VacancyDetailAddressResolver>().FromMember(src => src.VacancyAddress))
                 .ForMember(d => d.ProviderName, opt => opt.MapFrom(src => src.LearningProviderName))
                 .ForMember(d => d.Title, opt => opt.MapFrom(src => src.VacancyTitle))
-                .ForMember(d => d.VacancyLocationType, opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
-                .ForMember(d => d.VacancyType, opt => opt.ResolveUsing<VacancyTypeResolver>().FromMember(src => src.VacancyType))
+                .ForMember(d => d.VacancyLocationType,
+                    opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
+                .ForMember(d => d.VacancyType,
+                    opt => opt.ResolveUsing<VacancyTypeResolver>().FromMember(src => src.VacancyType))
                 .ForMember(d => d.WageDescription, opt => opt.MapFrom(src => src.WageText))
                 .ForMember(d => d.OtherInformation, opt => opt.MapFrom(src => src.OtherImportantInformation))
                 .ForMember(d => d.ProviderDescription, opt => opt.MapFrom(src => src.LearningProviderDesc))
@@ -28,7 +31,12 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
                 .ForMember(d => d.ClosingDate, opt => opt.MapFrom(src => src.ClosingDate.ToUniversalTime()))
                 // TODO: US484: need to map when field is available in NAS Gateway interface.
                 .ForMember(d => d.IsEmployerAnonymous, opt => opt.MapFrom(src => false))
-                .ForMember(d => d.AnonymousEmployerName, opt => opt.MapFrom(src => src.EmployerDescription));
+                .ForMember(d => d.AnonymousEmployerName, opt => opt.MapFrom(src => src.EmployerDescription))
+                .ForMember(d => d.ApplyViaEmployerWebsite, opt => opt.Ignore())
+                .ForMember(d => d.IsRecruitmentAgencyAnonymous, opt => opt.Ignore())
+                .ForMember(d => d.TradingName, opt => opt.Ignore())
+                .ForMember(d => d.IsNasProvider, opt => opt.Ignore())
+                .ForMember(d => d.RealityCheck, opt => opt.Ignore());
         }
     }
 }

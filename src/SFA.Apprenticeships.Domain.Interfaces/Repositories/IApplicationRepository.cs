@@ -15,5 +15,7 @@
         ApplicationDetail GetForCandidate(Guid candidateId, Func<ApplicationDetail, bool> filter);
     }
 
-    public interface IApplicationWriteRepository : IWriteRepository<ApplicationDetail> { }
+    public interface IApplicationWriteRepository : IWriteRepository<ApplicationDetail> {
+        void ExpireOrWithdrawForCandidate(Guid value, int vacancyId);
+    }
 }
