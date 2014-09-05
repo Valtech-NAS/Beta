@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Application.Interfaces.Vacancies;
+    using Common.Models.Common;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Validators;
@@ -71,5 +72,7 @@
                 Latitude = null;
             }
         }
+
+        public VacancyLocationType LocationType { get; set; }
     }
 }

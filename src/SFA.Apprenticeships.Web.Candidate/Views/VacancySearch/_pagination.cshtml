@@ -6,7 +6,7 @@
     var nextLink = Model.VacancySearch.PageNumber < pages ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) {PageNumber = Model.NextPage}) : "#";
 }
 
-@if (Model.TotalHits > 0)
+@if (Model.TotalLocalHits > 0 || Model.TotalNationalHits > 0 )
 {
     <div class="page-navigation">
         <a href="@prevLink"

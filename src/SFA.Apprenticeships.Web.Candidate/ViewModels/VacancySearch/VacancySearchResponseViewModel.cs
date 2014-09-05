@@ -4,9 +4,16 @@
 
     public class VacancySearchResponseViewModel : ViewModelBase
     {
-        public VacancySearchResponseViewModel(string message) : base(message) {}
-        public VacancySearchResponseViewModel() { }
-	public long TotalHits { get; set; }
+        public VacancySearchResponseViewModel(string message) : base(message)
+        {
+        }
+
+        public VacancySearchResponseViewModel()
+        {
+        }
+
+        public long TotalLocalHits { get; set; }
+        public long TotalNationalHits { get; set; }
         public int PageSize { get; set; }
         public IEnumerable<VacancySummaryViewModel> Vacancies { get; set; }
         public VacancySearchViewModel VacancySearch { get; set; }
@@ -39,8 +46,8 @@
                 var pages = 1;
                 if (PageSize > 0)
                 {
-                    pages = (int)TotalHits/PageSize;
-                    if (TotalHits%PageSize > 0) pages++;
+                    pages = (int) TotalLocalHits/PageSize;
+                    if (TotalLocalHits%PageSize > 0) pages++;
                 }
 
                 return pages;

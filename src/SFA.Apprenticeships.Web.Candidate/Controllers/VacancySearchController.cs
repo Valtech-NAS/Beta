@@ -8,6 +8,7 @@
     using ActionResults;
     using Application.Interfaces.Vacancies;
     using Common.Constants;
+    using Common.Models.Common;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Microsoft.Ajax.Utilities;
@@ -42,7 +43,7 @@
             PopulateDistances();
             PopulateSortType();
 
-            return View(new VacancySearchViewModel { WithinDistance = 2 });
+            return View(new VacancySearchViewModel { WithinDistance = 2 , LocationType = VacancyLocationType.Local});
         }
 
         [HttpGet]
@@ -50,14 +51,28 @@
         {
             UserData.Pop(UserDataItemNames.VacancyDistance);
 
-            if (model.SortType == VacancySortType.Relevancy && string.IsNullOrWhiteSpace(model.Keywords))
+            if (model.LocationType == VacancyLocationType.Local && model.SortType == VacancySortType.Relevancy && string.IsNullOrWhiteSpace(model.Keywords))
             {
                 model.SortType = VacancySortType.Distance;
                 return RedirectToAction("results", model);
             }
 
+            if (model.LocationType == VacancyLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) && model.SortType != VacancySortType.ClosingDate)
+            {
+                model.SortType = VacancySortType.ClosingDate;
+                return RedirectToAction("results", model);
+            }
+
             PopulateDistances(model.WithinDistance);
-            PopulateSortType(model.SortType, model.Keywords);
+
+            if (model.LocationType == VacancyLocationType.National)
+            {
+                PopulateSortType(model.SortType, model.Keywords, false);
+            }
+            else
+            {
+                PopulateSortType(model.SortType, model.Keywords);
+            }           
 
             var clientResult = _searchRequestValidator.Validate(model);
 
@@ -127,9 +142,18 @@
                 return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
             }
 
+            //TODO CM perform this in the provider
+            if (results.TotalLocalHits == 0 && results.VacancySearch.LocationType == VacancyLocationType.Local && results.TotalNationalHits != 0)
+            {
+                model.SortType = VacancySortType.ClosingDate;
+                model.LocationType = VacancyLocationType.National;
+
+                return RedirectToAction("results", model);
+            }
+
             return View("results", results);
         }
-
+    
         [HttpGet]
         public ActionResult DetailsWithDistance(int id, string distance)
         {
@@ -209,19 +233,22 @@
             ViewBag.Distances = distances;
         }
 
-        private void PopulateSortType(VacancySortType selectedSortType = VacancySortType.Distance, string keywords = null)
+        private void PopulateSortType(VacancySortType selectedSortType = VacancySortType.Distance, string keywords = null, bool isLocalLocationType = true)
         {
-            var sortTypeOptions = new ArrayList
-            {
-                new {SortType = VacancySortType.Distance, Name = "Distance"},
-                new {SortType = VacancySortType.ClosingDate, Name = "Closing Date"}
-            };
+            var sortTypeOptions = new ArrayList();
 
             if (!string.IsNullOrWhiteSpace(keywords))
             {
                 sortTypeOptions.Add(new {SortType = VacancySortType.Relevancy, Name = "Best Match"});
             }
-            
+
+            sortTypeOptions.Add(new {SortType = VacancySortType.ClosingDate, Name = "Closing Date"});
+
+            if (isLocalLocationType)
+            {
+                sortTypeOptions.Add(new {SortType = VacancySortType.Distance, Name = "Distance"});
+            }
+
             var sortTypes = new SelectList(
                 sortTypeOptions,
                 "SortType",

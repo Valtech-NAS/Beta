@@ -3,26 +3,75 @@
 @{
     ViewBag.Title = "Apprenticeships - Results";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    var locationTypeLink = Model.VacancySearch.LocationType == VacancyLocationType.National ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.Local }) : Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.National });
+    
     string resultMessage;
+    string nationalResultsMessage;
 
-    if (Model.TotalHits == 0)
+    if (Model.TotalLocalHits == 0)
     {
         resultMessage = "";
     }
-    else if (Model.TotalHits == 1)
+    else if (Model.TotalLocalHits == 1)
     {
-        resultMessage = "There is <b class=\"bold-medium\">1</b> apprenticeship that closely matches your search";
+        
+        if (Model.VacancySearch.LocationType == VacancyLocationType.National)
+        {
+            resultMessage = "There is <a href=" + locationTypeLink + "><b class=\"bold-medium\">1</b> local apprenticeship.</a>";
+        }
+        else
+        {
+            resultMessage = "There is <b class=\"bold-medium\">1</b> local apprenticeship.";
+        }
     }
     else
     {
-        resultMessage = string.Format("There are <b class=\"bold-medium\">{0}</b> apprenticeships that closely match your search", Model.TotalHits);
+        if (Model.VacancySearch.LocationType == VacancyLocationType.National)
+        {
+            var message = "There are <a href=" + locationTypeLink + "><b class=\"bold-medium\">{0}</b> local apprenticeships.</a>";
+            resultMessage = string.Format(message, Model.TotalLocalHits);
+        }
+        else
+        {
+            resultMessage = string.Format("There are <b class=\"bold-medium\">{0}</b> local apprenticeships.", Model.TotalLocalHits);
+        }        
+    }
+
+    if (Model.TotalNationalHits == 0)
+    {
+        nationalResultsMessage = "";
+    }
+    else if (Model.TotalNationalHits == 1)
+    {
+
+        if (Model.VacancySearch.LocationType == VacancyLocationType.Local)
+        {
+            nationalResultsMessage = "There is <a href=" + locationTypeLink + "><b class=\"bold-medium\">1</b> nationwide apprenticeship.</a>";
+        }
+        else
+        {
+            nationalResultsMessage = "There is <b class=\"bold-medium\">1</b> nationwide apprenticeship.";
+        }
+    }
+    else
+    {
+        if (Model.VacancySearch.LocationType == VacancyLocationType.Local)
+        {
+            var nationalMessage = "There are <a href=" + locationTypeLink + "><b class=\"bold-medium\">{0}</b> nationwide apprenticeships.</a>";
+            nationalResultsMessage = string.Format(nationalMessage, Model.TotalNationalHits);
+        }
+        else
+        {
+            nationalResultsMessage = string.Format("There are <b class=\"bold-medium\">{0}</b> nationwide apprenticeships.", Model.TotalNationalHits);
+        }
     }
 }
 
 <div class="search-results-wrapper grid-wrapper">
     <div class="hgroup">
         <h1 class="heading-xlarge">Search results</h1>
-        <p id="vacancy-result-summary">@Html.Raw(resultMessage)</p>
+        <p id="vacancy-result-summary">@Html.Raw(resultMessage) @Html.Raw(nationalResultsMessage)</p>
     </div>
 
     @using (Html.BeginForm("results", "vacancysearch", FormMethod.Get))
@@ -32,7 +81,7 @@
         
         <section class="grid grid-2-3">
             @{
-                if (Model.TotalHits == 0)
+                if (Model.TotalLocalHits == 0)
                 {
                     <p id="search-no-results-title">There are currently no apprenticeships that match your search.</p>
                     <p>Try editing your search:</p>

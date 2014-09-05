@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Providers
     using Application.Interfaces.Locations;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
+    using Common.Models.Common;
     using Constants.Pages;
     using Constants.ViewModels;
     using Domain.Entities.Exceptions;
@@ -14,6 +15,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Providers
     using Domain.Interfaces.Mapping;
     using ViewModels.Locations;
     using ViewModels.VacancySearch;
+    using WebGrease.Css.Extensions;
 
     public class SearchProvider : ISearchProvider
     {
@@ -67,7 +69,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Providers
         }
 
         public VacancySearchResponseViewModel FindVacancies(VacancySearchViewModel search, int pageSize)
-        {
+        {            
             var searchLocation = _mapper.Map<VacancySearchViewModel, Location>(search);
 
             try
@@ -77,6 +79,19 @@ namespace SFA.Apprenticeships.Web.Candidate.Providers
 
                 var vacancySearchResponseViewModel =
                     _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(searchResponse);
+
+                switch (search.LocationType)
+                {
+                    case VacancyLocationType.Local:
+                        vacancySearchResponseViewModel.Vacancies.ForEach(r => r.VacancyLocationType = VacancyLocationType.Local);
+                        break;
+                    case VacancyLocationType.National:
+                        vacancySearchResponseViewModel.Vacancies.ForEach(r => r.VacancyLocationType = VacancyLocationType.National);
+                        break;                  
+                }
+               
+                vacancySearchResponseViewModel.TotalLocalHits = searchResponse.Total;
+                vacancySearchResponseViewModel.TotalNationalHits = searchResponse.Total;
 
                 vacancySearchResponseViewModel.PageSize = pageSize;
                 vacancySearchResponseViewModel.VacancySearch = search;

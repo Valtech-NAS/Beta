@@ -2,6 +2,7 @@
 {
     using System;
     using System.Globalization;
+    using Common.Models.Common;
     using Locations;
 
     public class VacancySummaryViewModel
@@ -29,5 +30,7 @@
                 return Math.Round(Distance, 1, MidpointRounding.AwayFromZero).ToString(CultureInfo.InvariantCulture);
             }
         }
+
+        public VacancyLocationType VacancyLocationType { get; set; }
     }
 }
