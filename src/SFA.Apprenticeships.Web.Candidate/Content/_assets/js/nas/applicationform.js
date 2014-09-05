@@ -756,20 +756,4 @@
         ko.applyBindings(experienceModel, document.getElementById('applyWorkExperience'));
 
     });
-
-    window.initialFormValue = $("form").serialize();
-
-    window.addEventListener("beforeunload", function (e) {
-        if ($(e.target.activeElement).hasClass("no-check-for-dirty-form")) {
-            return;
-        }
-        //https://developer.mozilla.org/en-US/docs/Web/Events/beforeunload
-
-        var actualFormValue = $("form").serialize();
-        if (window.initialFormValue !== actualFormValue) {
-            var confirmationMessage = 'TODO: You have unsaved changes.';
-            (e || window.event).returnValue = confirmationMessage;     //Gecko + IE
-            return confirmationMessage;                                //Webkit, Safari, Chrome etc.
-        }
-    });
 }());

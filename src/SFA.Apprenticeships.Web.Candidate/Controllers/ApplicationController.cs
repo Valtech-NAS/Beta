@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web.Mvc;
+    using System.Web.Security;
     using ActionResults;
     using Attributes;
     using Common.Constants;
@@ -75,13 +76,17 @@
                 return new VacancyNotFoundResult();
             }
 
-            //TODO: VGA: talking with Scott about what to do in this case
+            //TODO: VGA: must talk with Scott about what to do in this case
             //if (model.HasError())
             //{
             //    ShowErrorMessageToUser(model);
 
             //    return View("Apply", model);
             //}
+
+            //TODO: VGA: Consider add this to ViewModel
+            ViewBag.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+            ViewBag.ConfirmationMessage = ApplicationPageMessages.LeavingPageMessage;
 
             return View(model);
         }

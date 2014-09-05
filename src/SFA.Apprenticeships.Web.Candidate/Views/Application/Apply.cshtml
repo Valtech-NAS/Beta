@@ -419,6 +419,15 @@
         function getWhiteListRegex() {
             return whitelistregex;
         }
+
+        window.addEventListener("load", function() {
+            dirtyFormDialog.initialise({
+                formSelector: "form",
+                classToExclude: "no-check-for-dirty-form",
+                timeout: @ViewBag.SessionTimeout * 1000,
+                confirmationMessage: @ViewBag.ConfirmationMessage
+            });
+        });
     </script>
     
     

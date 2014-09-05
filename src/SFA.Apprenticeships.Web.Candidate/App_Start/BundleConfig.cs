@@ -34,7 +34,8 @@ namespace SFA.Apprenticeships.Web.Candidate
                 "~/Content/_assets/js/vendor/zxcvbn-async.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas/applicationform").Include(
-                "~/Content/_assets/js/nas/applicationform.js"));
+                "~/Content/_assets/js/nas/applicationform.js",
+                "~/Content/_assets/js/nas/dirtyFormDialog.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas/locationsearch").Include(
                 "~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js",
