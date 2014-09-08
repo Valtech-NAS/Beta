@@ -84,9 +84,7 @@
             //    return View("Apply", model);
             //}
 
-            // TODO: VGA: Consider add this to ViewModel.
-            ViewBag.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
-            ViewBag.ConfirmationMessage = ApplicationPageMessages.LeavingPageMessage;
+            model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
             return View(model);
         }
@@ -106,10 +104,12 @@
 
             ModelState.Clear();
 
+            model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+
             if (savedModel.HasError())
             {
                 SetApplicationViewModelUserMessage(model);
-
+              
                 return View("Apply", model);
             }
 
@@ -123,7 +123,7 @@
             if (!result.IsValid)
             {
                 result.AddToModelState(ModelState, string.Empty);
-
+             
                 return View("Apply", model);
             }
 
@@ -136,7 +136,7 @@
 
             // NOTE: we do not check again for an expired or withdrawn vacancy here.
             model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
+            model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
             return View("Apply", model);
         }
 

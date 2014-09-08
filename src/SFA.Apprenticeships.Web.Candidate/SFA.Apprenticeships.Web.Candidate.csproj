@@ -317,6 +317,8 @@
     <Content Include="Views\Home\Helpdesk.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTimeSaved.cshtml" />
     <Content Include="Views\VacancySearch\_searchUpdate.cshtml" />
+    <Content Include="Views\Application\_qualificationsJS.cshtml" />
+    <Content Include="Views\Application\_workExperiencesJS.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
