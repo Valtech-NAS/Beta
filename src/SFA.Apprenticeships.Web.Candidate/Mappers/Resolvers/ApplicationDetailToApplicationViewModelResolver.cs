@@ -38,7 +38,8 @@
                     }
                 },
                 DateUpdated = application.DateUpdated,
-                VacancyId = application.Vacancy.Id
+                VacancyId = application.Vacancy.Id,
+                Status = application.Status
             };
 
             return model;

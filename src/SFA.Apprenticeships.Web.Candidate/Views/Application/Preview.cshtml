@@ -195,5 +195,10 @@
 
             return month;
         }
+
+        $('#submit-application').on('click', function () {
+            $(this).attr("disabled", true);
+            console.log('button clicked');
+        });
     </script>
 }

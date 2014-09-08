@@ -41,7 +41,6 @@
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
         [AllowReturnUrl(Allow = false)]
-        [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
         public ActionResult Index()
         {
             return View();
@@ -49,7 +48,6 @@
 
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
-        [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
         public ActionResult Index(RegisterViewModel model)
         {
             var userNameAvailable = _candidateServiceProvider.IsUsernameAvailable(model.EmailAddress.Trim());

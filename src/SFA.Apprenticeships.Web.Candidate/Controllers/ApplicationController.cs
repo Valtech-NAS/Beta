@@ -172,7 +172,11 @@
         {
             try
             {
-                _applicationProvider.SubmitApplication(UserContext.CandidateId, id);
+                var applicationViewModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                if (applicationViewModel.Status == ApplicationStatuses.Draft)
+                {
+                    _applicationProvider.SubmitApplication(UserContext.CandidateId, id);
+                }
 
                 return RedirectToAction("WhatHappensNext", new { id });
             }

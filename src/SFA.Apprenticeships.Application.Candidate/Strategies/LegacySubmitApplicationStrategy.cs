@@ -40,21 +40,27 @@
 
             try
             {
-                // queue application for submission to legacy
-                var message = new SubmitApplicationRequest
+                var tempApplicationDetail = _applicationReadRepository.Get(applicationId, true);
+
+                if (tempApplicationDetail.Status == ApplicationStatuses.Draft)
                 {
-                    ApplicationId = applicationDetail.EntityId
-                };
 
-                _messageBus.PublishMessage(message);
+                    // queue application for submission to legacy
+                    var message = new SubmitApplicationRequest
+                    {
+                        ApplicationId = applicationDetail.EntityId
+                    };
 
-                // update application status to "submitting"
-                applicationDetail.SetStateSubmitting();
+                    _messageBus.PublishMessage(message);
 
-                _applicationWriteRepository.Save(applicationDetail);
+                    // update application status to "submitting"
+                    applicationDetail.SetStateSubmitting();
 
-                // send email acknowledgement to candidate
-                NotifyCandidate(candidate.EntityId, applicationDetail.EntityId.ToString());
+                    _applicationWriteRepository.Save(applicationDetail);
+
+                    // send email acknowledgement to candidate
+                    NotifyCandidate(candidate.EntityId, applicationDetail.EntityId.ToString());
+                }
             }
             catch (Exception ex)
             {
