@@ -14,6 +14,6 @@
 
         int? PhraseProximity { get; set; }
 
-        int? MinimumMatch { get; set; }
+        string MinimumMatch { get; set; }
     }
 }

@@ -211,9 +211,9 @@
                 queryDescriptor.Operator(Operator.And);
             }
 
-            if (searchFactors.MinimumMatch.HasValue)
+            if (!string.IsNullOrWhiteSpace(searchFactors.MinimumMatch))
             {
-                queryDescriptor.MinimumShouldMatch(searchFactors.MinimumMatch.Value + "%");
+                queryDescriptor.MinimumShouldMatch(searchFactors.MinimumMatch);
             }
 
             if (searchFactors.PhraseProximity.HasValue)

@@ -55,9 +55,9 @@
         }
 
         [ConfigurationProperty(MinimumMatchConst, IsRequired = false, IsKey = false, DefaultValue = null)]
-        public int? MinimumMatch
+        public string MinimumMatch
         {
-            get { return (int?)this[MinimumMatchConst]; }
+            get { return (string)this[MinimumMatchConst]; }
             set { this[MinimumMatchConst] = value; } 
         }
     }

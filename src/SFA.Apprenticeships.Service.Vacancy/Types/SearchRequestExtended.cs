@@ -65,7 +65,7 @@ namespace SFA.Apprenticeships.Service.Vacancy.Types
             FuzzinessPrefix = parameters.ContainsKey(fuzzyPrefix) ? new int?(int.Parse(parameters[fuzzyPrefix])) : null;
             MatchAllKeywords = parameters.ContainsKey(matchAllKeywords) && bool.Parse(parameters[matchAllKeywords]);
             PhraseProximity = parameters.ContainsKey(phraseProximity) ? new int?(int.Parse(parameters[phraseProximity])) : null;
-            MinimumMatch = parameters.ContainsKey(minimumMatch) ? new int?(int.Parse(parameters[minimumMatch])) : null;
+            MinimumMatch = parameters.ContainsKey(minimumMatch) ? parameters[minimumMatch] : null;
         }
 
         public double? Boost { get; set; }
@@ -73,6 +73,6 @@ namespace SFA.Apprenticeships.Service.Vacancy.Types
         public int? FuzzinessPrefix { get; set; }
         public bool MatchAllKeywords { get; set; }
         public int? PhraseProximity { get; set; }
-        public int? MinimumMatch { get; set; }
+        public string MinimumMatch { get; set; }
     }
 }

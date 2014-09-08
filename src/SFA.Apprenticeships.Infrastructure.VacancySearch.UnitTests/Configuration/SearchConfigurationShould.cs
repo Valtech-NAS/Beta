@@ -38,7 +38,7 @@
             jobFactors.FuzzyPrefix.Should().Be(2);
             jobFactors.MatchAllKeywords.Should().BeTrue();
             jobFactors.PhraseProximity.Should().Be(3);
-            jobFactors.MinimumMatch.Should().Be(10);
+            jobFactors.MinimumMatch.Should().Be("10");
 
             var descriptionFactors = config.SearchTermParameters.DescriptionFactors;
             descriptionFactors.Should().NotBeNull();
@@ -47,7 +47,7 @@
             descriptionFactors.FuzzyPrefix.Should().Be(5);
             descriptionFactors.MatchAllKeywords.Should().BeFalse();
             descriptionFactors.PhraseProximity.Should().Be(6);
-            descriptionFactors.MinimumMatch.Should().Be(20);
+            descriptionFactors.MinimumMatch.Should().Be("2<50");
 
             //Not in config so should all be defaults
             var employerFactors = config.SearchTermParameters.EmployerFactors;
@@ -57,7 +57,7 @@
             employerFactors.FuzzyPrefix.Should().NotHaveValue();
             employerFactors.MatchAllKeywords.Should().BeFalse();
             employerFactors.PhraseProximity.Should().NotHaveValue();
-            employerFactors.MinimumMatch.Should().NotHaveValue();
+            employerFactors.MinimumMatch.Should().BeNullOrWhiteSpace();
         }
     }
 }
