@@ -9,8 +9,6 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using Interfaces.Users;
-
-    // TODO: AG: US333: fix this reference.
     using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
 
     public class ResetForgottenPasswordStrategy : IResetForgottenPasswordStrategy
@@ -42,13 +40,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
         public void ResetForgottenPassword(string username, string passwordCode, string newPassword)
         {
-            var user = _userReadRepository.Get(username, false);
-
-            if (user == null)
-            {
-                // TODO: US333: AG: should throw correct exception from _userReadRepository.Get() above.
-                throw new CustomException("Unknown user name.", ErrorCodes.UnknownUserError);
-            }
+            var user = _userReadRepository.Get(username);
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
 
@@ -74,6 +66,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         }
 
         #region Helpers
+
         private void RegisterFailedPasswordReset(User user)
         {
             if (user.PasswordResetIncorrectAttempts == _maximumPasswordAttemptsAllowed)
@@ -98,6 +91,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
                     new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, emailAddress)
                 });
         }
+
         #endregion
     }
 }

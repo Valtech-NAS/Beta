@@ -4,7 +4,6 @@
     using AutoMapper;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
-    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
@@ -31,40 +30,30 @@
 
         public ApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
         {
-            try
+            var applicationDetail = _applicationReadRepository.GetForCandidate(
+                candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
+
+            if (applicationDetail == null)
             {
-                var applicationDetail = _applicationReadRepository.GetForCandidate(
-                    candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
-
-                if (applicationDetail == null)
-                {
-                    // Candidate has not previously applied for this vacancy.
-                    return CreateNewApplication(candidateId, vacancyId);
-                }
-
-                if (applicationDetail.Vacancy.IsExpired())
-                {
-                    applicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;
-                    _applicationWriteRepository.Save(applicationDetail);
-
-                    // TODO: AG: US333: return null.
-                    throw new CustomException("Vacancy has expired", ErrorCodes.VacancyExpired);
-                }
-
-                applicationDetail.AssertState("Application should be in draft", ApplicationStatuses.Draft);
-
-                if (applicationDetail.IsArchived)
-                {
-                    applicationDetail = UnarchiveApplication(applicationDetail);
-                }
-
-                return applicationDetail;
+                // Candidate has not previously applied for this vacancy.
+                return CreateNewApplication(candidateId, vacancyId);
             }
-            catch
+
+            if (applicationDetail.Vacancy.IsExpired())
             {
-                // TODO: AG: US333: review this catch and throw. It's masking all exceptions.
-                throw new CustomException("Application creation error", ErrorCodes.ApplicationCreationError);
+                _applicationWriteRepository.ExpireOrWithdrawForCandidate(candidateId, vacancyId);
+
+                return _applicationReadRepository.Get(applicationDetail.EntityId);
             }
+
+            applicationDetail.AssertState("Application should be in draft", ApplicationStatuses.Draft);
+
+            if (applicationDetail.IsArchived)
+            {
+                return UnarchiveApplication(applicationDetail);
+            }
+
+            return applicationDetail;
         }
 
         private ApplicationDetail UnarchiveApplication(ApplicationDetail applicationDetail)
@@ -79,12 +68,12 @@
         {
             var vacancyDetails = GetVacancyDetails(vacancyId);
 
-            if (vacancyDetails.IsExpired())
+            if (vacancyDetails == null || vacancyDetails.IsExpired())
             {
-                // TODO: AG: US333: return null.
-                throw new CustomException(
-                    "Vacancy has expired, cannot create a new application.",
-                    ErrorCodes.VacancyExpired);
+                return new ApplicationDetail
+                {
+                    Status = ApplicationStatuses.ExpiredOrWithdrawn
+                };
             }
 
             var candidate = _candidateReadRepository.Get(candidateId);
@@ -126,20 +115,10 @@
                 },
             };
         }
-        
+
         private VacancyDetail GetVacancyDetails(int vacancyId)
         {
-            var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
-
-            if (vacancyDetails == null)
-            {
-                // TODO: AG: US333: return null.
-                // TODO: move null check to data provider (same as User and Candidate repositories).
-                throw new CustomException(
-                    "Vacancy not found with ID {0}.", ErrorCodes.VacancyNotFoundError, vacancyId);
-            }
-
-            return vacancyDetails;
+            return _vacancyDataProvider.GetVacancyDetails(vacancyId);
         }
     }
 }

@@ -8,6 +8,7 @@
     using Common.Constants;
     using Constants;
     using Constants.Pages;
+    using Domain.Entities.Applications;
     using FluentValidation.Mvc;
     using Providers;
     using Validators;
@@ -44,12 +45,6 @@
         {
             var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-            if (model == null)
-            {
-                SetUserMessage(MyApplicationsPageMessages.DraftExpired, UserMessageLevel.Warning);
-                return RedirectToAction("Index");
-            }
-
             if (model.HasError())
             {
                 SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
@@ -76,12 +71,12 @@
         {
             var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-            if (model == null)
+            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
                 return new VacancyNotFoundResult();
             }
 
-            //TODO: VGA: must talk with Scott about what to do in this case
+            // TODO: VGA: US333: must talk with Scott about what to do in this case. We do not have a fully hydrated view model here.
             //if (model.HasError())
             //{
             //    ShowErrorMessageToUser(model);
@@ -89,7 +84,7 @@
             //    return View("Apply", model);
             //}
 
-            //TODO: VGA: Consider add this to ViewModel
+            // TODO: VGA: Consider add this to ViewModel.
             ViewBag.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
             ViewBag.ConfirmationMessage = ApplicationPageMessages.LeavingPageMessage;
 
@@ -100,79 +95,75 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ValidateInput(false)]
-        public ActionResult Apply(int id, ApplicationViewModel applicationViewModel)
+        public ActionResult Apply(int id, ApplicationViewModel model)
         {
-            var savedApplicationViewModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+            var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-            if (savedApplicationViewModel == null)
+            if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
                 return new VacancyNotFoundResult();
             }
 
             ModelState.Clear();
 
-            if (savedApplicationViewModel.HasError())
+            if (savedModel.HasError())
             {
-                ShowErrorMessageToUser(applicationViewModel);
+                SetApplicationViewModelUserMessage(model);
 
-                return View("Apply", applicationViewModel);
+                return View("Apply", model);
             }
 
-            var result = applicationViewModel.ApplicationAction == ApplicationAction.Preview
-                ? _applicationViewModelFullValidator.Validate(applicationViewModel)
-                : _applicationViewModelSaveValidator.Validate(applicationViewModel);
+            var result = model.ApplicationAction == ApplicationAction.Preview
+                ? _applicationViewModelFullValidator.Validate(model)
+                : _applicationViewModelSaveValidator.Validate(model);
 
-            applicationViewModel = _applicationProvider.PatchApplicationViewModel(
-                UserContext.CandidateId, savedApplicationViewModel, applicationViewModel);
+            model = _applicationProvider.PatchApplicationViewModel(
+                UserContext.CandidateId, savedModel, model);
 
             if (!result.IsValid)
             {
                 result.AddToModelState(ModelState, string.Empty);
 
-                return View("Apply", applicationViewModel);
+                return View("Apply", model);
             }
 
-            _applicationProvider.SaveApplication(UserContext.CandidateId, id, applicationViewModel);
+            _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
 
-            if (applicationViewModel.ApplicationAction == ApplicationAction.Preview)
+            if (model.ApplicationAction == ApplicationAction.Preview)
             {
-                return RedirectToAction("Preview", new {id});
+                return RedirectToAction("Preview", new { id });
             }
 
-            applicationViewModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+            // NOTE: we do not check again for an expired or withdrawn vacancy here.
+            model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-            return View("Apply", applicationViewModel);
+            return View("Apply", model);
         }
 
-        private void ShowErrorMessageToUser(ApplicationViewModel applicationViewModel)
+        private void SetApplicationViewModelUserMessage(ApplicationViewModel model)
         {
-            if (applicationViewModel.ApplicationAction == ApplicationAction.Preview)
-            {
-                SetUserMessage(ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning);
-            }
-            else
-            {
-                SetUserMessage(ApplicationPageMessages.SaveFailed, UserMessageLevel.Warning);
-            }
+            var message = model.ApplicationAction == ApplicationAction.Preview
+                ? ApplicationPageMessages.PreviewFailed
+                : ApplicationPageMessages.SaveFailed;
+
+            SetUserMessage(message, UserMessageLevel.Warning);
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Preview(int id)
         {
-            try
-            {
-                var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+            var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-                ViewBag.VacancyId = id; // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
-
-                return View(model);
-            }
-            catch (Exception)
+            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
-                // TOD: vga: this will never happen
                 return new VacancyNotFoundResult();
             }
+
+            // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
+            ViewBag.VacancyId = id;
+
+            return View(model);
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -198,6 +189,11 @@
         public ActionResult WhatHappensNext(int id)
         {
             var model = _applicationProvider.GetSubmittedApplicationVacancySummary(UserContext.CandidateId, id);
+
+            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            {
+                return new VacancyNotFoundResult();
+            }
 
             return View(model);
         }

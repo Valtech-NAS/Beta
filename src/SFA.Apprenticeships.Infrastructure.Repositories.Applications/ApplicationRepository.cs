@@ -120,7 +120,6 @@
 
             applicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;
             Save(applicationDetail);
-
         }
 
         protected override void Initialise()

@@ -1,15 +1,11 @@
-﻿// TODO: AG: US333: logging (should be in which layer?).
-
-namespace SFA.Apprenticeships.Web.Candidate.Providers
+﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
-    using System;
     using System.Collections.Generic;
     using Application.Interfaces.Locations;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Common.Models.Common;
     using Constants.Pages;
-    using Constants.ViewModels;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Domain.Interfaces.Mapping;

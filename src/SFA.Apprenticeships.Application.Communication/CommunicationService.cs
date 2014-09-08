@@ -56,11 +56,6 @@
                 case CandidateMessageTypes.ApplicationSubmitted:
                     var application = GetApplicationDetail(tokens);
 
-                    if (application == null)
-                    {
-                        throw new CustomException("Application details not found", ErrorCodes.ApplicationNotFoundError);
-                    }
-
                     _sendApplicationSubmittedStrategy.Send(candidate, application, messageType, tokens);
                     break;
 
@@ -76,6 +71,7 @@
         private ApplicationDetail GetApplicationDetail(IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
         {
             var applicationId = Guid.Parse(tokens.First(m => m.Key == CommunicationTokens.ApplicationId).Value);
+
             return _applicationReadRepository.Get(applicationId);
         }
     }

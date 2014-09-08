@@ -3,7 +3,6 @@
     using System;
     using Application.Candidate.Strategies;
     using Domain.Entities.Applications;
-    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
     using Moq;
     using NUnit.Framework;
@@ -12,8 +11,8 @@
     [TestFixture]
     public class GivenAFaultedServer
     {
-        [TestCase, ExpectedException(typeof(CustomException))]
-        public void WhenCreateingANewApplication_ShouldThrowACustomException()
+        [TestCase, ExpectedException(typeof(Exception))]
+        public void WhenCreatingANewApplication_ShouldThrowACustomException()
         {
             var vacancyDataProvider = new Mock<IVacancyDataProvider>();
             var applicationReadRepository = new Mock<IApplicationReadRepository>();

@@ -3,17 +3,19 @@
     using System;
     using System.Linq;
     using Application.Interfaces.Candidates;
-    using Common.Validations;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
     using Constants.Pages;
+    using NLog;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
-    using exceptions = Domain.Entities.Exceptions;
+    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
 
     internal class ApplicationProvider : IApplicationProvider
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly IVacancyDetailProvider _vacancyDetailProvider;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
@@ -33,38 +35,47 @@
             try
             {
                 var applicationDetails = _candidateService.CreateApplication(candidateId, vacancyId);
+
+                if (applicationDetails.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                {
+                    return new ApplicationViewModel(MyApplicationsPageMessages.DraftExpired)
+                    {
+                        Status = applicationDetails.Status
+                    };
+                }
+
                 var applicationViewModel = _mapper.Map<ApplicationDetail, ApplicationViewModel>(applicationDetails);
 
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
-            catch (CustomException e)
+            catch (Exception e)
             {
-                if (e.Code == exceptions.ErrorCodes.VacancyExpired)
-                {
-                    return new ApplicationViewModel(MyApplicationsPageMessages.DraftExpired);
-                }
+                var message = string.Format("Get Application View Model failed for candidate ID: {0}, vacancy ID: {1}.",
+                    candidateId, vacancyId);
 
-                return new ApplicationViewModel(MyApplicationsPageMessages.RetrieveApplicationFailed);
+                Logger.ErrorException(message, e);
+
+                return new ApplicationViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
             }
         }
 
-        public ApplicationViewModel PatchApplicationViewModel(Guid candidateId, ApplicationViewModel savedApplicationViewModel, ApplicationViewModel submittedApplicationViewModel)
+        public ApplicationViewModel PatchApplicationViewModel(Guid candidateId, ApplicationViewModel savedModel, ApplicationViewModel submittedModel)
         {
-            if (!submittedApplicationViewModel.Candidate.AboutYou.RequiresSupportForInterview)
+            if (!submittedModel.Candidate.AboutYou.RequiresSupportForInterview)
             {
-                submittedApplicationViewModel.Candidate.AboutYou.AnythingWeCanDoToSupportYourInterview = string.Empty;
+                submittedModel.Candidate.AboutYou.AnythingWeCanDoToSupportYourInterview = string.Empty;
             }
 
-            savedApplicationViewModel.Candidate.AboutYou = submittedApplicationViewModel.Candidate.AboutYou;
-            savedApplicationViewModel.Candidate.Education = submittedApplicationViewModel.Candidate.Education;
-            savedApplicationViewModel.Candidate.HasQualifications = submittedApplicationViewModel.Candidate.HasQualifications;
-            savedApplicationViewModel.Candidate.Qualifications = submittedApplicationViewModel.Candidate.Qualifications;
-            savedApplicationViewModel.Candidate.HasWorkExperience = submittedApplicationViewModel.Candidate.HasWorkExperience;
-            savedApplicationViewModel.Candidate.WorkExperience = submittedApplicationViewModel.Candidate.WorkExperience;
-            savedApplicationViewModel.Candidate.EmployerQuestionAnswers = submittedApplicationViewModel.Candidate.EmployerQuestionAnswers;
-            savedApplicationViewModel.ApplicationAction = submittedApplicationViewModel.ApplicationAction;
+            savedModel.Candidate.AboutYou = submittedModel.Candidate.AboutYou;
+            savedModel.Candidate.Education = submittedModel.Candidate.Education;
+            savedModel.Candidate.HasQualifications = submittedModel.Candidate.HasQualifications;
+            savedModel.Candidate.Qualifications = submittedModel.Candidate.Qualifications;
+            savedModel.Candidate.HasWorkExperience = submittedModel.Candidate.HasWorkExperience;
+            savedModel.Candidate.WorkExperience = submittedModel.Candidate.WorkExperience;
+            savedModel.Candidate.EmployerQuestionAnswers = submittedModel.Candidate.EmployerQuestionAnswers;
+            savedModel.ApplicationAction = submittedModel.ApplicationAction;
 
-            return savedApplicationViewModel;
+            return savedModel;
         }
 
         public void SaveApplication(Guid candidateId, int vacancyId, ApplicationViewModel applicationViewModel)
@@ -87,19 +98,27 @@
         public WhatHappensNextViewModel GetSubmittedApplicationVacancySummary(Guid candidateId, int vacancyId)
         {
             var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
-            var applicationModel = _mapper.Map<ApplicationDetail, ApplicationViewModel>(applicationDetails);
 
-            if (applicationModel == null)
+            if (applicationDetails != null)
             {
-                throw new CustomException("Application not found", exceptions.ErrorCodes.ApplicationNotFoundError);
+                var model = _mapper.Map<ApplicationDetail, ApplicationViewModel>(applicationDetails);
+
+                var patchedModel = PatchWithVacancyDetail(candidateId, vacancyId, model);
+
+                if (patchedModel != null)
+                {
+                    return new WhatHappensNextViewModel
+                    {
+                        VacancyReference = patchedModel.VacancyDetail.FullVacancyReferenceId,
+                        VacancyTitle = patchedModel.VacancyDetail.Title,
+                        Status = patchedModel.Status
+                    };
+                }
             }
 
-            var patchedApplicationModel = PatchWithVacancyDetail(candidateId, vacancyId, applicationModel);
-
-            return new WhatHappensNextViewModel
+            return new WhatHappensNextViewModel(MyApplicationsPageMessages.DraftExpired)
             {
-                VacancyReference = patchedApplicationModel.VacancyDetail.FullVacancyReferenceId,
-                VacancyTitle = patchedApplicationModel.VacancyDetail.Title
+                Status = ApplicationStatuses.ExpiredOrWithdrawn
             };
         }
 
@@ -128,7 +147,7 @@
         #region Helpers
         private ApplicationViewModel PatchWithVacancyDetail(Guid candidateId, int vacancyId, ApplicationViewModel applicationViewModel)
         {
-            //todo: why have a patch method like this? should be done in mapper
+            // TODO: why have a patch method like this? should be done in mapper.
             var vacancyDetailViewModel = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null)
