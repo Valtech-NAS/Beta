@@ -81,8 +81,8 @@
                     case VacancyLocationType.Local:
                         vacancySearchResponseViewModel.Vacancies.ForEach(r => r.VacancyLocationType = VacancyLocationType.Local);
                         break;
-                    case VacancyLocationType.National:
-                        vacancySearchResponseViewModel.Vacancies.ForEach(r => r.VacancyLocationType = VacancyLocationType.National);
+                    case VacancyLocationType.Nationwide:
+                        vacancySearchResponseViewModel.Vacancies.ForEach(r => r.VacancyLocationType = VacancyLocationType.Nationwide);
                         break;                  
                 }
                

@@ -2,13 +2,16 @@
 
 @if (Model.TotalLocalHits > 0 || Model.TotalNationalHits > 0)
 {
+    var disableSortDropdownList = string.IsNullOrEmpty(Model.VacancySearch.Keywords) && Model.VacancySearch.LocationType == VacancyLocationType.Nationwide ? true : false;
     <fieldset>
         <legend class="visuallyhidden">Search items</legend>
         <div class="float-right-wrap">
             <div class="form-group form-group-compound">
                 <label for="sort-results" class="heading-medium inline">Sort results</label>
-                @Html.DropDownList("sortType", (SelectList) ViewBag.SortTypes, new {@id = "sort-results", @onchange = "this.form.submit();"})
-                <button class="button show-nojs">Sort</button>
+                @Html.DropDownList("sortType", (SelectList)ViewBag.SortTypes, disableSortDropdownList ? new { @id = "sort-results", @onchange = "this.form.submit();", @disabled = "disabled" } as object : new { @id = "sort-results", @onchange = "this.form.submit();" })
+                <noscript>
+                    <button class="button show-nojs">Sort</button>
+                </noscript>                
             </div>
         </div>
     </fieldset>
@@ -39,7 +42,7 @@
 
                         <li><b>Closing date:</b> <span class="closing-date-value">@Html.DisplayFor(m => vacancy.ClosingDate, "Date")</span></li>
                     </ul>
-                    @if (vacancy.VacancyLocationType == VacancyLocationType.National)
+                    @if (vacancy.VacancyLocationType == VacancyLocationType.Nationwide)
                     {
                         <p>This apprenticeship has multiple positions nationwide.</p>
                     }

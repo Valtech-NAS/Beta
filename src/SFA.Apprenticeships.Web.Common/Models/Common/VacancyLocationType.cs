@@ -3,6 +3,6 @@
     public enum VacancyLocationType
     {
         Local,
-        National
+        Nationwide
     }
 }

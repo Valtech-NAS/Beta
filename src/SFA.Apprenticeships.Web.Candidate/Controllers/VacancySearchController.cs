@@ -60,7 +60,7 @@
                 return RedirectToAction("results", model);
             }
 
-            if (model.LocationType == VacancyLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) && model.SortType != VacancySortType.ClosingDate)
+            if (model.LocationType == VacancyLocationType.Nationwide && string.IsNullOrWhiteSpace(model.Keywords) && model.SortType != VacancySortType.ClosingDate)
             {
                 model.SortType = VacancySortType.ClosingDate;
                 return RedirectToAction("results", model);
@@ -68,7 +68,7 @@
 
             PopulateDistances(model.WithinDistance);
 
-            if (model.LocationType == VacancyLocationType.National)
+            if (model.LocationType == VacancyLocationType.Nationwide)
             {
                 PopulateSortType(model.SortType, model.Keywords, false);
             }
@@ -149,7 +149,7 @@
             if (results.TotalLocalHits == 0 && results.VacancySearch.LocationType == VacancyLocationType.Local && results.TotalNationalHits != 0)
             {
                 model.SortType = VacancySortType.ClosingDate;
-                model.LocationType = VacancyLocationType.National;
+                model.LocationType = VacancyLocationType.Nationwide;
 
                 return RedirectToAction("results", model);
             }

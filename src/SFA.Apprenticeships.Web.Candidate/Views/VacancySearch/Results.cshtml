@@ -4,7 +4,7 @@
     ViewBag.Title = "Apprenticeships - Results";
     Layout = "~/Views/Shared/_Layout.cshtml";
     
-    var locationTypeLink = Model.VacancySearch.LocationType == VacancyLocationType.National ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.Local }) : Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.National });
+    var locationTypeLink = Model.VacancySearch.LocationType == VacancyLocationType.Nationwide ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.Local }) : Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.Nationwide });
     
     string resultMessage;
     string nationalResultsMessage;
@@ -16,9 +16,9 @@
     else if (Model.TotalLocalHits == 1)
     {
         
-        if (Model.VacancySearch.LocationType == VacancyLocationType.National)
+        if (Model.VacancySearch.LocationType == VacancyLocationType.Nationwide)
         {
-            resultMessage = "There is <a href=" + locationTypeLink + "><b class=\"bold-medium\">1</b> local apprenticeship.</a>";
+            resultMessage = "There is <a id='localLocationTypeLink' href=" + locationTypeLink + "><b class=\"bold-medium\">1</b> local apprenticeship.</a>";
         }
         else
         {
@@ -27,9 +27,9 @@
     }
     else
     {
-        if (Model.VacancySearch.LocationType == VacancyLocationType.National)
+        if (Model.VacancySearch.LocationType == VacancyLocationType.Nationwide)
         {
-            var message = "There are <a href=" + locationTypeLink + "><b class=\"bold-medium\">{0}</b> local apprenticeships.</a>";
+            var message = "There are <a id='localLocationTypeLink' href=" + locationTypeLink + "><b class=\"bold-medium\">{0}</b> local apprenticeships.</a>";
             resultMessage = string.Format(message, Model.TotalLocalHits);
         }
         else
@@ -47,7 +47,7 @@
 
         if (Model.VacancySearch.LocationType == VacancyLocationType.Local)
         {
-            nationalResultsMessage = "There is <a href=" + locationTypeLink + "><b class=\"bold-medium\">1</b> nationwide apprenticeship.</a>";
+            nationalResultsMessage = "There is <a id='nationwideLocationTypeLink' href=" + locationTypeLink + "><b class=\"bold-medium\">1</b> nationwide apprenticeship.</a>";
         }
         else
         {
@@ -58,7 +58,7 @@
     {
         if (Model.VacancySearch.LocationType == VacancyLocationType.Local)
         {
-            var nationalMessage = "There are <a href=" + locationTypeLink + "><b class=\"bold-medium\">{0}</b> nationwide apprenticeships.</a>";
+            var nationalMessage = "There are <a id='nationwideLocationTypeLink' href=" + locationTypeLink + "><b class=\"bold-medium\">{0}</b> nationwide apprenticeships.</a>";
             nationalResultsMessage = string.Format(nationalMessage, Model.TotalNationalHits);
         }
         else
