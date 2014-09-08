@@ -34,6 +34,7 @@
 
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Index(SettingsViewModel model)
         {
             var validationResult = _settingsViewModelServerValidator.Validate(model);
