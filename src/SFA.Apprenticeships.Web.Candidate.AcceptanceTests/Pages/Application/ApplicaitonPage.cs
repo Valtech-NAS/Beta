@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application
 {
+    using System.Globalization;
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
     using SpecBind.Selenium;
     using System.Linq;
-    using System.Collections.Generic;
-    using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application.SummaryItems;
+    using SummaryItems;
 
     [PageNavigation("/application/apply/[0-9]+")]
     [PageAlias("ApplicationPage")]
@@ -106,7 +106,7 @@
         public string QualificationsSummaryCount
         {
             get { 
-                return QualificationsSummaryItems.Count().ToString(); 
+                return QualificationsSummaryItems.Count().ToString(CultureInfo.InvariantCulture); 
             }
         }
 
@@ -151,18 +151,29 @@
         {
             get
             {
-                return WorkExperienceSummaryItems.Count().ToString();
+                return WorkExperienceSummaryItems.Count().ToString(CultureInfo.InvariantCulture);
+            }
+        }
+
+        [ElementLocator(Id = "qualifications-panel")]
+        public WorkExperiencePanel QualificationsPanel { get; set; }
+
+        public string QualificationsValidationErrorsCount
+        {
+            get
+            {
+                return QualificationsPanel.ValidationErrorsCount;
             }
         }
 
         [ElementLocator(Id = "workexperience-panel")]
         public WorkExperiencePanel WorkExperiencePanel { get; set; }
 
-        public string ValidationErrorsCount
+        public string WorkExperienceValidationErrorsCount
         {
             get
             {
-                return WorkExperiencePanel.WorkExperienceValidationErrorsCount;
+                return WorkExperiencePanel.ValidationErrorsCount;
             }
         }
 
@@ -210,11 +221,33 @@
         {
         }
     
-        public string WorkExperienceValidationErrorsCount
+        public string ValidationErrorsCount
         {
             get
             {
-                var count = this.FindElements(By.ClassName("field-validation-error")).Count().ToString();
+                var count = FindElements(By.ClassName("field-validation-error"))
+                    .Count(fve => fve.GetCssValue("display") != "none")
+                    .ToString(CultureInfo.InvariantCulture);
+                return count;
+                //GetCssValue("color").ToLower() == "rgba(223, 48, 52, 1)".ToLower()).Count().ToString();
+            }
+        }
+    }
+
+    public class QualificationsPanel : WebElement
+    {
+        public QualificationsPanel(ISearchContext parent)
+            : base(parent)
+        {
+        }
+
+        public string ValidationErrorsCount
+        {
+            get
+            {
+                var count = FindElements(By.ClassName("field-validation-error"))
+                    .Count(fve => fve.GetCssValue("display") != "none")
+                    .ToString(CultureInfo.InvariantCulture);
                 return count;
                 //GetCssValue("color").ToLower() == "rgba(223, 48, 52, 1)".ToLower()).Count().ToString();
             }
