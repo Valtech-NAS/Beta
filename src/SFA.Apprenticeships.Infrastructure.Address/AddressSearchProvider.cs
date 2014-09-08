@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Address
 {
-    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Application.Interfaces.Locations;
     using CuttingEdge.Conditions;
+    using Domain.Entities.Locations;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
 
@@ -41,12 +42,27 @@
                 throw search.ConnectionStatus.OriginalException;
             }
 
-            var addresses =
-                _mapper
-                    .Map<IEnumerable<Elastic.Common.Entities.Address>, IEnumerable<Domain.Entities.Locations.Address>>(
-                        search.Documents);
+            var addresses = _mapper
+                .Map<IEnumerable<Elastic.Common.Entities.Address>, IEnumerable<Domain.Entities.Locations.Address>>(search.Documents)
+                .ToList();
+
+            SanitiseAddresses(addresses);
 
             return addresses;
+        }
+
+        private static void SanitiseAddresses(IEnumerable<Address> addresses)
+        {
+            const string ampersand = "&";
+            const string and = "and";
+
+            foreach (var address in addresses)
+            {
+                address.AddressLine1 = address.AddressLine1.Replace(ampersand, and);
+                address.AddressLine2 = address.AddressLine2.Replace(ampersand, and);
+                address.AddressLine3 = address.AddressLine3.Replace(ampersand, and);
+                address.AddressLine4 = address.AddressLine4.Replace(ampersand, and);
+            }
         }
 
         private static bool ThereWasAnErrorWhileSearching(Nest.ISearchResponse<Elastic.Common.Entities.Address> search)
