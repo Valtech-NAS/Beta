@@ -11,16 +11,19 @@
             {
                 case "Sent":
                 case "New":
-                    return ApplicationStatuses.Submitted;
                 case "InProgress":
-                    return ApplicationStatuses.InProgress;
+                    return ApplicationStatuses.Submitted;
+
                 case "Successful":
                     return ApplicationStatuses.Successful;
+
                 case "Unsuccessful":
                     return ApplicationStatuses.Unsuccessful;
+
                 case "PastApplication":
                 case "Withdrawn":
                     return ApplicationStatuses.ExpiredOrWithdrawn;
+
                 default:
                     return ApplicationStatuses.Unknown;
             }

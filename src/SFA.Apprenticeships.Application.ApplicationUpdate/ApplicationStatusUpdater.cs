@@ -46,7 +46,7 @@
                     }
 
                     // TODO: AG: added subject to review to ensure we have the latest view of the ClosingDate in Exemplar database.
-                     // TODO: AG: map other fields in ApplicationStatusSummary? E.g. UnsuccessfulReason, VacancyStatus?
+                    // TODO: AG: map other fields in ApplicationStatusSummary? E.g. UnsuccessfulReason, VacancyStatus?
                     if (applicationDetail.Vacancy.ClosingDate != status.ClosingDate)
                     {
                         applicationDetail.Vacancy.ClosingDate = status.ClosingDate;

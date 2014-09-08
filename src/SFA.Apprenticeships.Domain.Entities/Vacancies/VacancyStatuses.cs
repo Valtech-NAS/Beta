@@ -1,12 +1,14 @@
 namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
-    using System;
-
     public enum VacancyStatuses
     {
         Unknown,
-        Live,           // current vacancy which can be applied for
-        Withdrawn,      // withdrawn from vacancy manager / provider / employer
-        Expired         // past the closing date for applications
+
+        // Current vacancy which can be applied for.
+        Live,
+
+        // Vacancy which can no longer be applied for: Deleted, Closing Date Passed, Withdrawn,
+        // Completed, Posted In Error etc.
+        Unavailable     
     }
 }

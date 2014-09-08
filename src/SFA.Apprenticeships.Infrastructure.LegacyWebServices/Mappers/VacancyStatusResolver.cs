@@ -9,12 +9,17 @@
         {
             switch (source)
             {
-                case "Live": //todo: confirm value from w/s - awaiting response from John @ Capgemini
+                case "Live":
                     return VacancyStatuses.Live;
-                case "Withdrawn": //todo: confirm value from w/s - awaiting response from John @ Capgemini
-                    return VacancyStatuses.Withdrawn;
-                case "Expired": //todo: confirm value from w/s - awaiting response from John @ Capgemini
-                    return VacancyStatuses.Expired;
+
+                case "Deleted":
+                case "ClosingDatePassed":
+                case "Withdrawn":
+                case "Expired":
+                case "Completed":
+                case "PostedInError":
+                    return VacancyStatuses.Unavailable;
+
                 default:
                     return VacancyStatuses.Unknown;
             }
