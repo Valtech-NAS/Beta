@@ -197,8 +197,11 @@
         }
 
         $('#submit-application').on('click', function () {
-            $(this).attr("disabled", true);
-            console.log('button clicked');
+            if ($(this).attr('disabled') != undefined) {
+                event.preventDefault();
+            } else {
+                $(this).attr("disabled", "disabled");
+            }
         });
     </script>
 }
