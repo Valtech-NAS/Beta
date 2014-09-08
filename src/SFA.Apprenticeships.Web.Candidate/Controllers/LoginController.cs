@@ -134,6 +134,7 @@
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AllowReturnUrl(Allow = false)]
         public ActionResult ResendAccountUnlockCode(string emailAddress)
         {
             var model = new AccountUnlockViewModel
@@ -151,6 +152,7 @@
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AllowReturnUrl(Allow = false)]
         public ActionResult SignOut()
         {
             FormsAuthentication.SignOut();
@@ -162,6 +164,7 @@
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AllowReturnUrl(Allow = false)]
         public ActionResult SessionTimeout(string returnUrl)
         {
             FormsAuthentication.SignOut();

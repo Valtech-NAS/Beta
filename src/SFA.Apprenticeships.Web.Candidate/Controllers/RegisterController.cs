@@ -40,6 +40,7 @@
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
+        [AllowReturnUrl(Allow = false)]
         public ActionResult Index()
         {
             return View();
@@ -81,6 +82,7 @@
         [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AllowReturnUrl(Allow = false)]
         public ActionResult Activation(string returnUrl)
         {
             var model = new ActivationViewModel
@@ -124,6 +126,7 @@
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AllowReturnUrl(Allow = false)]
         public ActionResult Complete()
         {
             ViewBag.Message = UserContext.UserName;
@@ -221,6 +224,7 @@
 
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AllowReturnUrl(Allow = false)]
         public ActionResult ResendPasswordResetCode(string emailAddress)
         {
             var model = new ForgottenPasswordViewModel
@@ -243,6 +247,7 @@
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AllowReturnUrl(Allow = false)]
         public ActionResult ResendActivationCode(string emailAddress)
         {
             if (_candidateServiceProvider.ResendActivationCode(emailAddress))
