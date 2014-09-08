@@ -193,8 +193,12 @@ else
                                 <tr>
                                     <td>
                                         @application.Title with @application.EmployerName
-                                        <br />
-                                        <strong>Closing date:</strong> @Html.DisplayFor(m => application.ClosingDate)
+
+                                        @if (application.ApplicationStatus == ApplicationStatuses.Draft)
+                                        {
+                                            <br />
+                                            <strong>Closing date:</strong> @Html.DisplayFor(m => application.ClosingDate)
+                                        }
                                     </td>
                                     <td class="ta-center">
                                         @if (application.ApplicationStatus == ApplicationStatuses.Draft)
