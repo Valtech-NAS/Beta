@@ -138,7 +138,12 @@ Scenario: Search locaton autocomplete appears on both initial search page and se
 		 | Field    | Value    |
 		 | Location | Coventry |
 	Then I wait for 5 seconds to see LocationAutoComplete
-	When I choose Search
+	When I am on LocationAutoCompletItems list item matching criteria
+		| Field | Rule   | Value                    |
+		| Text  | Equals | Coventry (West Midlands) |
+	And I choose WrappedElement
+	And I am on the VacancySearchPage page
+	And I choose Search
 	And I am on the VacancySearchResultPage page
 	Then I see
 	    | Field         | Rule   | Value |

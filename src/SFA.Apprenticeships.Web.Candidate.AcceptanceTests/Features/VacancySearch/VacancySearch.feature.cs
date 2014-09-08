@@ -484,31 +484,46 @@ this.FeatureBackground();
  testRunner.When("I enter data", ((string)(null)), table20, "When ");
 #line 140
  testRunner.Then("I wait for 5 seconds to see LocationAutoComplete", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 141
- testRunner.When("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 142
- testRunner.And("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
             table21.AddRow(new string[] {
-                        "ClearLocation",
+                        "Text",
                         "Equals",
-                        "True"});
-#line 143
- testRunner.Then("I see", ((string)(null)), table21, "Then ");
+                        "Coventry (West Midlands)"});
+#line 141
+ testRunner.When("I am on LocationAutoCompletItems list item matching criteria", ((string)(null)), table21, "When ");
+#line 144
+ testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 145
+ testRunner.And("I am on the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 146
+ testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 147
+ testRunner.And("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
+                        "Rule",
                         "Value"});
             table22.AddRow(new string[] {
+                        "ClearLocation",
+                        "Equals",
+                        "True"});
+#line 148
+ testRunner.Then("I see", ((string)(null)), table22, "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table23.AddRow(new string[] {
                         "Location",
                         "London"});
-#line 146
- testRunner.When("I enter data", ((string)(null)), table22, "When ");
-#line 149
+#line 151
+ testRunner.When("I enter data", ((string)(null)), table23, "When ");
+#line 154
  testRunner.Then("I wait for 5 seconds to see LocationAutoComplete", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
