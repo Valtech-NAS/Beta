@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
     using Locations;
 
     [Serializable]
@@ -30,6 +31,8 @@
         public string Framework { get; set; }
         
         public string VacancyType { get; set; }
+
+        public VacancyLocationType VacancyLocationType { get; set; }
 
         [UIHint("Date")]
         [DataType(DataType.DateTime)]

@@ -1,4 +1,5 @@
-﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.VacancyDetailViewModel
+﻿@using VacancyLocationType = SFA.Apprenticeships.Domain.Entities.Vacancies.VacancyLocationType
+@model VacancyDetailViewModel
 @{
     ViewBag.Title = "Apprenticeships - " + Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,13 +14,12 @@
             </div>
         </div>
         <div class="grid grid-1-3">
-            @Html.ActionLink("Find an apprenticeship", "Index", "VacancySearch", null, new { @class = "page-link" })
+            @Html.ActionLink("Find an apprenticeship", "Index", "VacancySearch", null, new {@class = "page-link"})
         </div>
     </div>
 
     @if (!Model.HasError())
     {
-
         <section class="grid-wrapper">
             <div class="grid grid-2-3">
                 <div class="inner-block-padr">
@@ -55,13 +55,13 @@
                             <li id="vacancy-expected-duration">@Model.ExpectedDuration</li>
                         </ul>
                     }
-                    @if (ViewBag.Distance != null)
+                    @if (Model.VacancyLocationType != VacancyLocationType.National && ViewBag.Distance != null)
                     {
                         <ul class="list-text">
                             <li class="bold-small">Distance</li>
                             <li id="vacancy-distance">@ViewBag.Distance miles</li>
                         </ul>
-                    }
+                    }                  
                     <ul class="list-text">
                         <li>
                             <h3 class="bold-small">Apprenticeship type</h3>
@@ -120,23 +120,29 @@
                                 <li><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Web Site">@Model.EmployerWebsite</a></li>
                             }
                         </ul>
-                        <div itemscope itemtype="http://schema.org/PostalAddress">
-                            <ul class="list-text" itemprop="address">
-                                <li itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</li>
-                                <li itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</li>
-                                <li itemprop="addressLocality">@Model.VacancyAddress.AddressLine3</li>
-                                <li itemprop="addressRegion">@Model.VacancyAddress.AddressLine4</li>
-                                <li itemprop="postalCode">@Model.VacancyAddress.Postcode</li>
-                            </ul>
-                        </div>
+                        @if (Model.VacancyLocationType != VacancyLocationType.National)
+                        {
+                            <div itemscope itemtype="http://schema.org/PostalAddress">
+                                <ul class="list-text" itemprop="address">
+                                    <li itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</li>
+                                    <li itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</li>
+                                    <li itemprop="addressLocality">@Model.VacancyAddress.AddressLine3</li>
+                                    <li itemprop="addressRegion">@Model.VacancyAddress.AddressLine4</li>
+                                    <li itemprop="postalCode">@Model.VacancyAddress.Postcode</li>
+                                </ul>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="grid grid-1-2">
-                    <div class="ad-details__map">
-                        <div class="map-overlay" onclick="style.pointerEvents='none'"></div>
-                        <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
-                        <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
-                    </div>
+                    @if (Model.VacancyLocationType != VacancyLocationType.National)
+                    {
+                        <div class="ad-details__map">
+                            <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
+                            <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                            <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+                        </div>
+                    }                    
                 </div>
             </div>
         </section>
