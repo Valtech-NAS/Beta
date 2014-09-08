@@ -38,6 +38,7 @@
         }
 
         [HttpGet]
+        [OutputCache(CacheProfile = "Long")]
         public ActionResult Index()
         {
             PopulateDistances();
@@ -164,6 +165,7 @@
         }
 
         [HttpGet]
+        [OutputCache(CacheProfile = "Data", VaryByParam = "id")]
         public ActionResult Details(int id)
         {
             Guid? candidateId = null;

@@ -38,6 +38,7 @@
             _passwordResetViewModelServerValidator = passwordResetViewModelServerValidator;
         }
 
+        [OutputCache(CacheProfile = "Long")]
         public ActionResult Index()
         {
             return View();
@@ -128,6 +129,7 @@
 
         [HttpGet]
         [AllowReturnUrl(Allow = false)]
+        [OutputCache(CacheProfile = "Long")]
         public ActionResult ForgottenPassword()
         {
             return View();

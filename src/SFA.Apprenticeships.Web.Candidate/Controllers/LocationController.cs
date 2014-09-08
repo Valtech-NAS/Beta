@@ -22,6 +22,7 @@
 
         [HttpGet]
         [AllowCrossSiteJson]
+        [OutputCache(CacheProfile = "Data", VaryByParam = "term")]
         public ActionResult Location(string term)
         {
             var result = _searchProvider.FindLocation(term);
@@ -36,6 +37,7 @@
 
         [HttpGet]
         [AllowCrossSiteJson]
+        [OutputCache(CacheProfile = "Data", VaryByParam = "postcode")]
         public ActionResult Addresses(string postcode)
         {
             if (!_searchProvider.IsValidPostcode(postcode))
