@@ -369,6 +369,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Attributes\AuthorizeCandidateAttribute.cs" />
+    <Compile Include="Constants\CacheProfiles.cs" />
     <Compile Include="Constants\CandidateRouteNames.cs" />
     <Compile Include="Constants\Pages\ApplicationPageMessages.cs" />
     <Compile Include="Constants\Pages\AccountPageMessages.cs" />

@@ -91,7 +91,6 @@ Scenario: As a candidate I can login with a registered but unactivated account a
 	Then I am on the VacancySearchPage page
 
 @US458 @US457
-@ignore
 Scenario: Reset password after locking an account does not have to unlock the account
 	Given I have registered a new candidate
 	When I navigate to the LoginPage page

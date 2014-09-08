@@ -5,6 +5,7 @@
     using Common.Attributes;
     using Common.Constants;
     using Common.Services;
+    using Constants;
     using Constants.Pages;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
@@ -38,13 +39,14 @@
             _passwordResetViewModelServerValidator = passwordResetViewModelServerValidator;
         }
 
-        [OutputCache(CacheProfile = "Long")]
+        [OutputCache(CacheProfile = CacheProfiles.Long)]
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Index(RegisterViewModel model)
         {
             var userNameAvailable = _candidateServiceProvider.IsUsernameAvailable(model.EmailAddress.Trim());
@@ -78,7 +80,7 @@
 
         [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
-        [NoCache]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Activation(string returnUrl)
         {
             var model = new ActivationViewModel
@@ -95,6 +97,7 @@
         }
 
         [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Activate(ActivationViewModel model)
         {
             model = _candidateServiceProvider.Activate(model, UserContext.CandidateId);
@@ -120,6 +123,7 @@
             return View("Activation", model);
         }
 
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Complete()
         {
             ViewBag.Message = UserContext.UserName;
@@ -129,13 +133,14 @@
 
         [HttpGet]
         [AllowReturnUrl(Allow = false)]
-        [OutputCache(CacheProfile = "Long")]
+        [OutputCache(CacheProfile = CacheProfiles.Long)]
         public ActionResult ForgottenPassword()
         {
             return View();
         }
 
         [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult ForgottenPassword(ForgottenPasswordViewModel model)
         {
             var validationResult = _forgottenPasswordViewModelServerValidator.Validate(model);
@@ -160,6 +165,7 @@
         }
 
         [HttpGet]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
         public ActionResult ResetPassword()
         {
@@ -179,6 +185,7 @@
         }
 
         [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult ResetPassword(PasswordResetViewModel model)
         {
             var result = _candidateServiceProvider.VerifyPasswordReset(model);
@@ -213,6 +220,7 @@
         }
 
         [HttpGet]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult ResendPasswordResetCode(string emailAddress)
         {
             var model = new ForgottenPasswordViewModel
@@ -234,6 +242,7 @@
             return RedirectToAction("ResetPassword");
         }
 
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult ResendActivationCode(string emailAddress)
         {
             if (_candidateServiceProvider.ResendActivationCode(emailAddress))
@@ -248,6 +257,7 @@
         }
 
         [AllowCrossSiteJson]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult CheckUsername(string username)
         {
             var userNameAvailability = _candidateServiceProvider.IsUsernameAvailable(username.Trim());

@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using Attributes;
     using Common.Constants;
+    using Constants;
     using Constants.Pages;
     using FluentValidation.Mvc;
     using Providers;
@@ -22,6 +23,7 @@
             _settingsViewModelServerValidator = settingsViewModelServerValidator;
         }
 
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Index()
         {
@@ -31,6 +33,7 @@
         }
 
         [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Index(SettingsViewModel model)
         {
             var validationResult = _settingsViewModelServerValidator.Validate(model);

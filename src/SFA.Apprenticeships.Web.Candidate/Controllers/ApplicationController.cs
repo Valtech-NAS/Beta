@@ -6,6 +6,7 @@
     using ActionResults;
     using Attributes;
     using Common.Constants;
+    using Constants;
     using Constants.Pages;
     using FluentValidation.Mvc;
     using Providers;
@@ -28,6 +29,7 @@
             _applicationViewModelSaveValidator = applicationViewModelSaveValidator;
         }
 
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Index()
         {
@@ -36,6 +38,7 @@
             return View(model);
         }
 
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Resume(int id)
         {
@@ -56,6 +59,7 @@
             return RedirectToAction("Apply", new { id });
         }
 
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Archive(int id)
         {
@@ -66,6 +70,7 @@
             return RedirectToAction("Index");
         }
 
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Apply(int id)
         {
@@ -92,6 +97,7 @@
         }
 
         [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ValidateInput(false)]
         public ActionResult Apply(int id, ApplicationViewModel applicationViewModel)
@@ -151,6 +157,7 @@
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Preview(int id)
         {
             try
@@ -168,6 +175,7 @@
             }
         }
 
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult SubmitApplication(int id)
         {
@@ -185,6 +193,7 @@
             }
         }
 
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult WhatHappensNext(int id)
         {

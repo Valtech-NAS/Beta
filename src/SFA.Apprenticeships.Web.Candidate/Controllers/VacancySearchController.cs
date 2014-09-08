@@ -9,6 +9,7 @@
     using Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Models.Common;
+    using Constants;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Microsoft.Ajax.Utilities;
@@ -38,7 +39,7 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = "Long")]
+        [OutputCache(CacheProfile = CacheProfiles.Long)]
         public ActionResult Index()
         {
             PopulateDistances();
@@ -48,6 +49,7 @@
         }
 
         [HttpGet]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Results(VacancySearchViewModel model)
         {
             UserData.Pop(UserDataItemNames.VacancyDistance);
@@ -156,6 +158,7 @@
         }
     
         [HttpGet]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult DetailsWithDistance(int id, string distance)
         {
             UserData.Push(UserDataItemNames.VacancyDistance, distance.ToString(CultureInfo.InvariantCulture));
@@ -165,7 +168,7 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = "Data", VaryByParam = "id")]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Details(int id)
         {
             Guid? candidateId = null;

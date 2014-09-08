@@ -147,11 +147,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RegisterCandidate.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\VacancySearch\VacancyApply.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VacancyApply.feature</DependentUpon>
-    </Compile>
     <Compile Include="Features\VacancySearch\VacancySearch.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -233,10 +228,6 @@
     <None Include="Features\Registration\RegisterCandidate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RegisterCandidate.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\VacancySearch\VacancyApply.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>VacancyApply.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\VacancySearch\VacancySearch.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

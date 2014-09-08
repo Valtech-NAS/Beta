@@ -5,6 +5,7 @@
     using System.Net;
     using System.Web.Mvc;
     using Common.Attributes;
+    using Constants;
     using Domain.Interfaces.Configuration;
     using Providers;
 
@@ -12,7 +13,6 @@
     {
         private readonly ISearchProvider _searchProvider;
         private readonly int _locationResultLimit;
-
 
         public LocationController(IConfigurationManager configManager, ISearchProvider searchProvider)
         {
@@ -22,7 +22,7 @@
 
         [HttpGet]
         [AllowCrossSiteJson]
-        [OutputCache(CacheProfile = "Data", VaryByParam = "term")]
+        [OutputCache(CacheProfile = CacheProfiles.Data, VaryByParam = "term")]
         public ActionResult Location(string term)
         {
             var result = _searchProvider.FindLocation(term);
@@ -37,7 +37,7 @@
 
         [HttpGet]
         [AllowCrossSiteJson]
-        [OutputCache(CacheProfile = "Data", VaryByParam = "postcode")]
+        [OutputCache(CacheProfile = CacheProfiles.Data, VaryByParam = "postcode")]
         public ActionResult Addresses(string postcode)
         {
             if (!_searchProvider.IsValidPostcode(postcode))

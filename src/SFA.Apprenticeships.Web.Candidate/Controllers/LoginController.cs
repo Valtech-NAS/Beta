@@ -33,6 +33,7 @@
         }
 
         [HttpGet]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
         public ActionResult Index(string returnUrl)
         {
@@ -47,6 +48,7 @@
         }
 
         [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Index(LoginViewModel model)
         {
             // todo: refactor - too much going on here Provider layer
@@ -84,6 +86,7 @@
         }
 
         [HttpGet]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
         public ActionResult Unlock()
         {
@@ -101,6 +104,7 @@
         }
 
         [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Unlock(AccountUnlockViewModel model)
         {
             // todo: refactor - too much going on here Provider layer
@@ -129,6 +133,7 @@
             return View(model);
         }
 
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult ResendAccountUnlockCode(string emailAddress)
         {
             var model = new AccountUnlockViewModel
@@ -145,6 +150,7 @@
             return RedirectToAction("Unlock");
         }
 
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult SignOut()
         {
             FormsAuthentication.SignOut();
@@ -155,6 +161,7 @@
             return RedirectToAction("Index");
         }
 
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult SessionTimeout(string returnUrl)
         {
             FormsAuthentication.SignOut();
