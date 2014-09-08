@@ -44,7 +44,7 @@ Scenario: As a candidate I must provide an email address and password
 @US415
 Scenario: As a candidate I want to be redirected to the previous page when I login
 	Given I registered an account and activated it
-	And I navigated to the RegisterCandidatePage page
+	And I navigated to the VacancySearchPage page
 	When I choose SignInLink
 	And I am on the LoginPage page
 	And I enter data
@@ -52,7 +52,7 @@ Scenario: As a candidate I want to be redirected to the previous page when I log
 		| EmailAddress | {EmailAddressToken} |
 		| Password     | {PasswordToken}     |
 	And I choose SignInButton
-	Then I am on the RegisterCandidatePage page
+	Then I am on the VacancySearchPage page
 
 @US415
 Scenario: As a candidate I cannot login with an invalid password
