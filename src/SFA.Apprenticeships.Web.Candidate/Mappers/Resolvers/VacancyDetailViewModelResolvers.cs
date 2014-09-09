@@ -41,7 +41,8 @@
         {
             protected override bool ResolveCore(VacancyDetail vacancyDetail)
             {
-                return vacancyDetail.Title.Contains("Bank");
+                return !string.IsNullOrWhiteSpace(vacancyDetail.Title) &&
+                    vacancyDetail.Title.Contains("Bank");
             }
         }
 
@@ -50,7 +51,8 @@
         {
             protected override string ResolveCore(VacancyDetail vacancyDetail)
             {
-                return vacancyDetail.Title.Contains("Bank")
+                return !string.IsNullOrWhiteSpace(vacancyDetail.Title) && 
+                    vacancyDetail.Title.Contains("Bank")
                     ? "http://www.barclays.co.uk"
                     : null;
             }
@@ -61,7 +63,8 @@
         {
             protected override string ResolveCore(VacancyDetail vacancyDetail)
             {
-                return vacancyDetail.Title.Contains("Bank")
+                return !string.IsNullOrWhiteSpace(vacancyDetail.Title) &&
+                    vacancyDetail.Title.Contains("Bank")
                     ? "Bacon ipsum dolor sit amet ribeye corned beef pastrami prosciutto. Meatloaf t-bone shankle kielbasa beef ribs, short ribs shank. Salami beef ribs meatball capicola. Ball tip turkey drumstick, ham jowl venison pork belly porchetta landjaeger ham hock. Bacon tail kevin ham hock, pig strip steak pork fatback. Shank jerky fatback tongue ribeye, bacon bresaola beef. Shank shankle ground round kielbasa, doner beef ribs boudin turkey jowl tenderloin porchetta pancetta capicola."
                     : null;
             }

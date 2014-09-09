@@ -36,7 +36,8 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
                 .ForMember(d => d.IsRecruitmentAgencyAnonymous, opt => opt.Ignore())
                 .ForMember(d => d.TradingName, opt => opt.Ignore())
                 .ForMember(d => d.IsNasProvider, opt => opt.Ignore())
-                .ForMember(d => d.RealityCheck, opt => opt.Ignore());
+                .ForMember(d => d.RealityCheck, opt => opt.Ignore())
+                .ForMember(d => d.ApplicationInstructions, opt => opt.Ignore());
         }
     }
 }
