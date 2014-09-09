@@ -84,6 +84,8 @@
 
         public string RealityCheck { get; set; }
 
+        public string OtherInformation { get; set; }
+
         public ApplicationStatuses? CandidateApplicationStatus { get; set; }
 
         [UIHint("Date")]
