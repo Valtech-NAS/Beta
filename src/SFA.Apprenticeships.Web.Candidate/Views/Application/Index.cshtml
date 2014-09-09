@@ -35,7 +35,7 @@ else
         @if (Model.SuccessfulApplications.Any())
         {
             <li>
-                <span class="bold-medium">@Model.SuccessfulApplications.Count()</span>  <a class="" href="#dashSuccessful">Successful</a>
+                <span id="successful-applications-count" class="bold-medium">@Model.SuccessfulApplications.Count()</span>  <a class="" href="#dashSuccessful">Successful</a>
             </li>
         }
         @if (Model.SubmittedApplications.Any())
@@ -47,7 +47,7 @@ else
         @if (Model.UnsuccessfulApplications.Any())
         {
             <li>
-                <span class="bold-medium">@Model.UnsuccessfulApplications.Count()</span>  <a class="" href="#dashUnsuccessful">Unsuccessful</a>
+                <span id="unsuccessful-applications-count" class="bold-medium">@Model.UnsuccessfulApplications.Count()</span>  <a class="" href="#dashUnsuccessful">Unsuccessful</a>
             </li>
         }
         @if (Model.DraftApplications.Any())

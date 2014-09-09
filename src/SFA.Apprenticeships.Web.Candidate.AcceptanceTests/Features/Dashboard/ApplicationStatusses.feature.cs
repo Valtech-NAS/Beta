@@ -128,6 +128,18 @@ this.FeatureBackground();
                         "DraftApplicationsCount",
                         "Equals",
                         "4"});
+            table2.AddRow(new string[] {
+                        "SubmittedApplicationsCount",
+                        "Equals",
+                        "4"});
+            table2.AddRow(new string[] {
+                        "SuccessfulApplicationsCount",
+                        "Equals",
+                        "4"});
+            table2.AddRow(new string[] {
+                        "UnsuccessfulApplicationsCount",
+                        "Equals",
+                        "4"});
 #line 27
  testRunner.And("I see", ((string)(null)), table2, "And ");
 #line hidden

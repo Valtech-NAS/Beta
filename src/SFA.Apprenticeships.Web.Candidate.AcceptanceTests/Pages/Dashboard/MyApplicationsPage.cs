@@ -17,6 +17,12 @@
         [ElementLocator(Id = "submitted-applications-count")]
         public IWebElement SubmittedApplicationsCount { get; set; }
 
+        [ElementLocator(Id = "successful-applications-count")]
+        public IWebElement SuccessfulApplicationsCount { get; set; }
+
+        [ElementLocator(Id = "unsuccessful-applications-count")]
+        public IWebElement UnsuccessfulApplicationsCount { get; set; }
+
         [ElementLocator(Id = "resume-link")]
         public IWebElement ResumeLink { get; set; }
 

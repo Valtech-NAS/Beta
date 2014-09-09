@@ -25,5 +25,8 @@ Scenario: As a candidate I want to see the applications in my dashbord grouped b
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see
-		| Field                  | Rule   | Value |
-		| DraftApplicationsCount | Equals | 4     |
+		| Field                         | Rule   | Value |
+		| DraftApplicationsCount        | Equals | 4     |
+		| SubmittedApplicationsCount    | Equals | 4     |
+		| SuccessfulApplicationsCount   | Equals | 4     |
+		| UnsuccessfulApplicationsCount | Equals | 4     |
