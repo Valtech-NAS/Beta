@@ -21,7 +21,7 @@
             {
                 return AllApplications.Where(each =>
                     each.ApplicationStatus == ApplicationStatuses.Submitting ||
-                    each.ApplicationStatus == ApplicationStatuses.Submitted); 
+                    each.ApplicationStatus == ApplicationStatuses.Submitted);
             }
         }
 
@@ -39,11 +39,11 @@
         {
             get
             {
-                // return draft or expired draft applications
+                // Return Draft or Expired / Withdrawn draft applications.
                 return AllApplications
                     .Where(each =>
                         each.ApplicationStatus == ApplicationStatuses.Draft ||
-                        each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && each.DateApplied == null);
+                        (each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && each.DateApplied == null));
             }
         }
     }

@@ -115,6 +115,8 @@ Scenario: Reset password after locking an account does not have to unlock the ac
 		| Password     | {InvalidPasswordToken} |
 	#email is already in the form. We don't have to enter it another time
 	And I choose SignInButton
+	#should be removed when the button works properly
+	And I choose SignInButton
 	And I am on the LoginPage page
 	And I wait for 300 seconds to see ValidationSummary
 	Then I see
@@ -130,6 +132,8 @@ Scenario: Reset password after locking an account does not have to unlock the ac
 		| Password     | {InvalidPasswordToken} |
 	#email is already in the form. We don't have to enter it another time
 	When I choose SignInButton
+	#should be removed when the button works properly
+	And I choose SignInButton
 	Then I wait 180 second for the UnlockPage page
 	And I get the account unlock code
 	And I see

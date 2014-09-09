@@ -24,5 +24,16 @@
                     string.Format("£{0:N2}", vacancyDetail.Wage);
             }
         }
+
+        // TODO: US490: AG: remove when NAS Gateway service becomes available.
+        public class RealityCheckResolver : ValueResolver<VacancyDetail, string>
+        {
+            protected override string ResolveCore(VacancyDetail vacancyDetail)
+            {
+                return vacancyDetail.Id % 2 == 0
+                    ? null
+                    : "You must be capable of standing during all working hours. A degree of physical work will be required.";
+            }
+        }
     }
 }

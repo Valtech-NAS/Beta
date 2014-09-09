@@ -101,6 +101,11 @@
                         <h3 class="heading-small">Future prospects</h3>
                         <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.FutureProspects)</p>
                     }
+                    @if (!string.IsNullOrWhiteSpace(Model.RealityCheck))
+                    {
+                        <h3 class="heading-small">Reality check</h3>
+                        <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.RealityCheck)</p>
+                    }
                 </div>
             </div>
         </section>
