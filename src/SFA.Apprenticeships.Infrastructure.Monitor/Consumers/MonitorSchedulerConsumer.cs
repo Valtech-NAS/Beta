@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Consumers
 {
-    using System;
     using System.Threading.Tasks;
     using Domain.Interfaces.Messaging;
     using Messaging;

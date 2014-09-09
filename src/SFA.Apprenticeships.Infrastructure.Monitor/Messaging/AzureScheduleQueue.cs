@@ -6,7 +6,6 @@
     using Domain.Interfaces.Messaging;
     using NLog;
 
-    //todo: maybe refactor this and SFA.Apprenticeships.Infrastructure.VacancyEtl.Messaging.AzureScheduleQueue to shared type
     public class AzureScheduleQueue : IProcessControlQueue<StorageQueueMessage>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

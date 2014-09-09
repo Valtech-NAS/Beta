@@ -7,15 +7,15 @@
     using Domain.Entities.Locations;
     using NLog;
 
-    public class CheckVacancySearch : IMonitorTask
+    public class CheckLocationLookup : IMonitorTask
     {
-        private const string TaskName = "Check vacancy search";
+        private const string TaskName = "Check location lookup";
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IVacancySearchProvider _vacancySearchProvider;
+        private readonly ILocationLookupProvider _locationLookupProvider;
 
-        public CheckVacancySearch(IVacancySearchProvider vacancySearchProvider)
+        public CheckLocationLookup(ILocationLookupProvider locationLookupProvider)
         {
-            _vacancySearchProvider = vacancySearchProvider;
+            _locationLookupProvider = locationLookupProvider;
         }
 
         public void Run()
@@ -24,12 +24,11 @@
 
             try
             {
-                _vacancySearchProvider.FindVacancies(string.Empty, new Location{GeoPoint = new GeoPoint()}, 
-                    1, 10, 10, VacancySortType.Distance);
+                _locationLookupProvider.FindLocation("London");
             }
             catch (Exception execption)
             {
-                Logger.ErrorException("Error while accessing Vacancy search", execption);
+                Logger.ErrorException("Error while accessing Location lookup", execption);
             }
 
             Logger.Debug(string.Format("Finished running task {0}", TaskName));

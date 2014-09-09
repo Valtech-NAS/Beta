@@ -66,6 +66,7 @@
     <Compile Include="Tasks\CheckApplicationRepository.cs" />
     <Compile Include="Tasks\CheckCandidateRepository.cs" />
     <Compile Include="Tasks\CheckUserRepository.cs" />
+    <Compile Include="Tasks\CheckLocationLookup.cs" />
     <Compile Include="Tasks\CheckVacancySearch.cs" />
     <Compile Include="Tasks\IMonitorTask.cs" />
     <Compile Include="Tasks\IMonitorTasksRunner.cs" />
@@ -80,6 +81,7 @@
     <None Include="app.config" />
     <Content Include="Configs\settings.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="NLog.config">
       <SubType>Designer</SubType>
@@ -116,6 +118,14 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Elastic.Common\SFA.Apprenticeships.Infrastructure.Elastic.Common.csproj">
+      <Project>{F75B0C62-89B5-473D-AF2D-366A5A6722AC}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Elastic.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LocationLookup\SFA.Apprenticeships.Infrastructure.LocationLookup.csproj">
+      <Project>{1C6F7710-0AE6-4D9F-BC73-0FAA9C9C60CA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.LocationLookup</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{a2d82061-bcbd-4030-9eb4-5148aee79241}</Project>

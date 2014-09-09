@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
 {
     using System.Collections.Generic;
+    using System.Security.Cryptography.X509Certificates;
+    using Application.Interfaces.Locations;
     using Application.Vacancy;
     using Consumers;
     using Domain.Interfaces.Messaging;
@@ -21,10 +23,10 @@
             For<MonitorSchedulerConsumer>().Use<MonitorSchedulerConsumer>();
             For<IMonitorTasksRunner>().Use<MonitorTasksRunner>();
             For<CheckUserRepository>().Use<CheckUserRepository>();
-            For<IUserReadRepository>().Use<UserRepository>();
-            For<ICandidateReadRepository>().Use<CandidateRepository>();
-            For<IApplicationReadRepository>().Use<ApplicationRepository>();
-            For<IVacancySearchProvider>().Use<VacancySearchProvider>();
+            For<CheckCandidateRepository>().Use<CheckCandidateRepository>();
+            For<CheckApplicationRepository>().Use<CheckApplicationRepository>();
+            For<CheckVacancySearch>().Use<CheckVacancySearch>();
+            For<CheckLocationLookup>().Use<CheckLocationLookup>();
 
             For<IMonitorTasksRunner>().Use<MonitorTasksRunner>()
                 .EnumerableOf<IMonitorTask>()
@@ -34,6 +36,7 @@
                     x.Type<CheckApplicationRepository>();
                     x.Type<CheckCandidateRepository>();
                     x.Type<CheckVacancySearch>();
+                    x.Type<CheckLocationLookup>();
                 });
         }
     }

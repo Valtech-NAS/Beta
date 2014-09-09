@@ -7,13 +7,16 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Azure.Common.IoC;
     using Common.IoC;
     using Consumers;
+    using Elastic.Common.IoC;
     using IoC;
+    using LocationLookup.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
     using Repositories.Applications.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Users.IoC;
     using StructureMap;
+    using VacancySearch.IoC;
 
     public class WorkerRole : RoleEntryPoint
     {
@@ -62,9 +65,12 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 {
                     x.AddRegistry<CommonRegistry>();
                     x.AddRegistry<AzureCommonRegistry>();
+                    x.AddRegistry<ElasticsearchCommonRegistry>();
                     x.AddRegistry<UserRepositoryRegistry>();
                     x.AddRegistry<CandidateRepositoryRegistry>();
                     x.AddRegistry<ApplicationRepositoryRegistry>();
+                    x.AddRegistry<VacancySearchRegistry>();
+                    x.AddRegistry<LocationLookupRegistry>();
                     x.AddRegistry<MonitorRegistry>();
                 });
 
