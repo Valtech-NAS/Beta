@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using System.Net;
     using System.ServiceModel;
     using System.Threading;
+    using Address.IoC;
     using Azure.Common.IoC;
     using Common.IoC;
     using Consumers;
@@ -71,6 +72,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                     x.AddRegistry<ApplicationRepositoryRegistry>();
                     x.AddRegistry<VacancySearchRegistry>();
                     x.AddRegistry<LocationLookupRegistry>();
+                    x.AddRegistry<AddressRegistry>();
                     x.AddRegistry<MonitorRegistry>();
                 });
 

@@ -37,6 +37,7 @@
                     x.Type<CheckCandidateRepository>();
                     x.Type<CheckVacancySearch>();
                     x.Type<CheckLocationLookup>();
+                    x.Type<CheckAddressSearch>();
                 });
         }
     }
