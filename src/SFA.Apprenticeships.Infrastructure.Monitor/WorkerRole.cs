@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using System.ServiceModel;
     using System.Threading;
     using Consumers;
+    using IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
     using StructureMap;
@@ -52,17 +53,12 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
         {
             try
             {
-                /* TODO: implement worker role
                 ObjectFactory.Initialize(x =>
                 {
-                    x.AddRegistry<CommonRegistry>();
-                    x.AddRegistry<AzureCommonRegistry>();
-                    x.AddRegistry<RabbitMqRegistry>();
-                    etc.
+                    x.AddRegistry<MonitorRegistry>();
                 });
 
                 Logger.Debug("Monitor Process IoC initialized");
-                */
 
                 _monitorSchedulerConsumer = ObjectFactory.GetInstance<MonitorSchedulerConsumer>();
 
