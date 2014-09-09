@@ -82,6 +82,8 @@
         
         public string FutureProspects { get; set; }
 
+        public string RealityCheck { get; set; }
+
         public ApplicationStatuses? CandidateApplicationStatus { get; set; }
 
         [UIHint("Date")]
