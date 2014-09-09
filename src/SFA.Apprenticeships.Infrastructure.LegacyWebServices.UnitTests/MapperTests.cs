@@ -11,6 +11,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
     using VacancyDetailProxy;
     using AddressData = VacancySummaryProxy.AddressData;
     using VacancySummaryData = VacancySummaryProxy.VacancySummaryData;
+    using WageType = Domain.Entities.Vacancies.WageType;
 
     [TestFixture]
     public class MapperTests
@@ -40,6 +41,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
                 VacancyReference = 1,
                 VacancyLocationType = "MultipleLocation",
                 VacancyType = "IntermediateLevelApprenticeship",
+                WageType = VacancyDetailProxy.WageType.Text
             };
 
             var test = _vacancyDetailMapper.Map<VacancyFullData, Domain.Entities.Vacancies.VacancyDetail>(data);
@@ -47,6 +49,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             test.Id.Should().Be(1);
             test.VacancyLocationType.Should().Be(VacancyLocationType.NonNational);
             test.VacancyType.Should().Be(VacancyType.Intermediate);
+            test.WageType.Should().Be(WageType.Text);
         }
 
         [TestCase]

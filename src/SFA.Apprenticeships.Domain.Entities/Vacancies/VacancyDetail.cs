@@ -25,7 +25,7 @@
 
         public DateTime InterviewFromDate { get; set; }
 
-        public double Wage { get; set; }
+        public decimal Wage { get; set; }
 
         public string WageDescription { get; set; }
 
