@@ -23,7 +23,7 @@
         {
             Logger.Debug("Checking Azure queue for control message");
 
-            var message = _azureCloud.GetMessage(_cloudConfig.VacancyScheduleQueueName);
+            var message = _azureCloud.GetMessage(_cloudConfig.QueueName);
             if (message == null)
             {
                 Logger.Debug("Azure control queue empty");
@@ -45,7 +45,7 @@
         {
             Logger.Debug("Deleting Azure control queue item, userId:{0}, receipt:{1}", id, popReceipt);
 
-            _azureCloud.DeleteMessage(_cloudConfig.VacancyScheduleQueueName, id, popReceipt);
+            _azureCloud.DeleteMessage(_cloudConfig.QueueName, id, popReceipt);
 
             Logger.Debug("Deleted Azure control queue item, userId:{0}, receipt:{1}", id, popReceipt);
         }
@@ -53,7 +53,7 @@
         public void AddMessage(StorageQueueMessage queueMessage)
         {
             var cloudMessage = AzureMessageHelper.SerialiseQueueMessage(queueMessage);
-            _azureCloud.AddMessage(_cloudConfig.VacancyScheduleQueueName, cloudMessage);
+            _azureCloud.AddMessage(_cloudConfig.QueueName, cloudMessage);
         }
     }
 }

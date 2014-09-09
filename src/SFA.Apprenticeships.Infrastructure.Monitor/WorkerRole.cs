@@ -4,10 +4,15 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using System.Net;
     using System.ServiceModel;
     using System.Threading;
+    using Azure.Common.IoC;
+    using Common.IoC;
     using Consumers;
     using IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
+    using Repositories.Applications.IoC;
+    using Repositories.Candidates.IoC;
+    using Repositories.Users.IoC;
     using StructureMap;
 
     public class WorkerRole : RoleEntryPoint
@@ -55,6 +60,11 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
             {
                 ObjectFactory.Initialize(x =>
                 {
+                    x.AddRegistry<CommonRegistry>();
+                    x.AddRegistry<AzureCommonRegistry>();
+                    x.AddRegistry<UserRepositoryRegistry>();
+                    x.AddRegistry<CandidateRepositoryRegistry>();
+                    x.AddRegistry<ApplicationRepositoryRegistry>();
                     x.AddRegistry<MonitorRegistry>();
                 });
 
