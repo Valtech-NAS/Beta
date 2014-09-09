@@ -1,6 +1,4 @@
-﻿
-
-namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings.Dashboard
+﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings.Dashboard
 {
     using Builders;
     using Domain.Entities.Applications;
@@ -9,8 +7,6 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings.Dashboard
     using System;
     using SpecBind.Helpers;
     using TechTalk.SpecFlow;
-
-    
 
     [Binding]
     public class DashboardBinding
@@ -37,11 +33,14 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings.Dashboard
 
             SetTokens(candidate, user);
 
+            var applicationBuilder = new ApplicationBuilder(candidate.EntityId,
+                    UserEmailAddress);
+            applicationBuilder.DeleteApplications(candidate.EntityId);
+
             for (var i = 0; i < numberOfApplications; i++)
             {
                 var applicationStatus = (ApplicationStatuses)Enum.Parse(typeof(ApplicationStatuses), state);
-                var applicationBuilder = new ApplicationBuilder(candidate.EntityId, 
-                    UserEmailAddress, applicationStatus);
+                applicationBuilder.WithApplicationStatus(applicationStatus).Build();
                 applicationBuilder.Build();
             }
         }

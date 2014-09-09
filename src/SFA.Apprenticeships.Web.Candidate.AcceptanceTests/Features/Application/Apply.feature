@@ -118,7 +118,9 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| SubjectGrade | SubjectGrade |
 	And I am on the ApplicationPage page
 	And I choose SaveQualification
-	Then I wait for 30 seconds to see QualificationsSummary
+	#testing
+	And I choose SaveQualification
+	And I wait for 30 seconds to see QualificationsSummary
 	Then I see
         | Field                      | Rule   | Value |
         | QualificationsSummaryCount | Equals | 1     |
