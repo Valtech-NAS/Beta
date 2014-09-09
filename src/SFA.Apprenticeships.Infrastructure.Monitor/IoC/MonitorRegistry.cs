@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
 {
+    using System.Collections.Generic;
     using Application.Vacancy;
     using Consumers;
     using Domain.Interfaces.Messaging;
@@ -24,8 +25,14 @@
             For<ICandidateReadRepository>().Use<CandidateRepository>();
             For<IApplicationReadRepository>().Use<ApplicationRepository>();
             For<IVacancySearchProvider>().Use<VacancySearchProvider>();
+            For<IMonitorTask>().Use<CheckUserRepository>();
+            For<IMonitorTask>().Use<CheckCandidateRepository>();
+            For<IMonitorTask>().Use<CheckApplicationRepository>();
+            For<IMonitorTask>().Use<CheckVacancySearch>();
+            //For<IEnumerable<IMonitorTask>>().Use(new List<IMonitorTask>
+            //{
 
-            //For<IEnumerable<IMonitorTask> >().Use()
+            //});
         }
     }
 }
