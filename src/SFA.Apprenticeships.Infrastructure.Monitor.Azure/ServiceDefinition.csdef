@@ -4,5 +4,9 @@
     <Imports>
       <Import moduleName="Diagnostics" />
     </Imports>
+    <ConfigurationSettings>
+      <Setting name="StorageConnectionString" />
+      <Setting name="MonitorQueueName" />
+    </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>
