@@ -18,6 +18,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Repositories.Candidates.IoC;
     using Repositories.Users.IoC;
     using StructureMap;
+    using UserDirectory.IoC;
     using VacancySearch.IoC;
 
     public class WorkerRole : RoleEntryPoint
@@ -75,6 +76,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                     x.AddRegistry<LocationLookupRegistry>();
                     x.AddRegistry<AddressRegistry>();
                     x.AddRegistry<PostcodeRegistry>();
+                    x.AddRegistry<UserDirectoryRegistry>();
                     x.AddRegistry<MonitorRegistry>();
                 });
 

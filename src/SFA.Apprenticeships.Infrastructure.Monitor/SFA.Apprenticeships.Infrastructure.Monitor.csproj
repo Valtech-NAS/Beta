@@ -56,6 +56,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +64,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Consumers\MonitorSchedulerConsumer.cs" />
+    <Compile Include="Tasks\CheckActiveDirectory.cs" />
     <Compile Include="Tasks\CheckPostcodeService.cs" />
     <Compile Include="Tasks\CheckApplicationRepository.cs" />
     <Compile Include="Tasks\CheckCandidateRepository.cs" />
@@ -156,6 +158,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">
       <Project>{4696D786-2F3C-4A12-BD6B-38E2981D6DF1}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Users</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.UserDirectory\SFA.Apprenticeships.Infrastructure.UserDirectory.csproj">
+      <Project>{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.UserDirectory</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancySearch\SFA.Apprenticeships.Infrastructure.VacancySearch.csproj">
       <Project>{913445EC-3175-4AFB-869C-F03B6FD2940A}</Project>

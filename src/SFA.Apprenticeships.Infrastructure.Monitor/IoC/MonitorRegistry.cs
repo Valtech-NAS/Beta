@@ -22,11 +22,11 @@
             For<IProcessControlQueue<StorageQueueMessage>>().Use<AzureScheduleQueue>();
             For<MonitorSchedulerConsumer>().Use<MonitorSchedulerConsumer>();
             For<IMonitorTasksRunner>().Use<MonitorTasksRunner>();
-            For<CheckUserRepository>().Use<CheckUserRepository>();
-            For<CheckCandidateRepository>().Use<CheckCandidateRepository>();
-            For<CheckApplicationRepository>().Use<CheckApplicationRepository>();
-            For<CheckVacancySearch>().Use<CheckVacancySearch>();
-            For<CheckLocationLookup>().Use<CheckLocationLookup>();
+            //For<CheckUserRepository>().Use<CheckUserRepository>();
+            //For<CheckCandidateRepository>().Use<CheckCandidateRepository>();
+            //For<CheckApplicationRepository>().Use<CheckApplicationRepository>();
+            //For<CheckVacancySearch>().Use<CheckVacancySearch>();
+            //For<CheckLocationLookup>().Use<CheckLocationLookup>();
 
             For<IMonitorTasksRunner>().Use<MonitorTasksRunner>()
                 .EnumerableOf<IMonitorTask>()
@@ -39,6 +39,7 @@
                     x.Type<CheckLocationLookup>();
                     x.Type<CheckAddressSearch>();
                     x.Type<CheckPostcodeService>();
+                    x.Type<CheckActiveDirectory>();
                 });
         }
     }
