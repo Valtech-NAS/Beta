@@ -105,11 +105,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Configs\settings.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Configs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ApplicationUpdate\SFA.Apprenticeships.Application.ApplicationUpdate.csproj">
       <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>

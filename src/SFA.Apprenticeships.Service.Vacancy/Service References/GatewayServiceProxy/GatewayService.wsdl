@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://schemas.imservices.org.uk/nas/gatewayservice/1" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="GatewayService" targetNamespace="http://schemas.imservices.org.uk/nas/gatewayservice/1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="DefaultEndpoint_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="true" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.imservices.org.uk/nas/gatewayservice/1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.imservice.org.uk/nas/gatewayservice/1/datatypes" />
+      <xs:import namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" />
+      <xs:element name="CreateApplicationRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q1="http://schemas.imservice.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="Application" nillable="true" type="q1:Application" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateApplicationResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ApplicationId" type="xs:int" />
+            <xs:element xmlns:q2="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="ValidationErrors" nillable="true" type="q2:ValidationErrors" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateCandidateRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q3="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="Candidate" nillable="true" type="q3:Candidate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateCandidateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="CandidateId" type="xs:int" />
+            <xs:element xmlns:q4="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="ValidationErrors" nillable="true" type="q4:ValidationErrors" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Version" nillable="true" type="xs:string" />
+      <xs:element xmlns:q5="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" name="ApplicationsStatus" nillable="true" type="q5:ApplicationsStatus" />
+      <xs:element name="CandidateId" type="xs:int" />
+      <xs:element name="GetCandidateInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q6="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="CandidateApplications" nillable="true" type="q6:CandidateApplications" />
+            <xs:element xmlns:q7="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="ValidationErrors" nillable="true" type="q7:ValidationErrors" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="VacancyId" type="xs:int" />
+      <xs:element name="GetVacancyDetailsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q8="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="Vacancy" nillable="true" type="q8:Vacancy" />
+            <xs:element xmlns:q9="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="ValidationErrors" nillable="true" type="q9:ValidationErrors" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="anyType" nillable="true" type="xs:anyType" />
+      <xs:element name="anyURI" nillable="true" type="xs:anyURI" />
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary" />
+      <xs:element name="boolean" nillable="true" type="xs:boolean" />
+      <xs:element name="byte" nillable="true" type="xs:byte" />
+      <xs:element name="dateTime" nillable="true" type="xs:dateTime" />
+      <xs:element name="decimal" nillable="true" type="xs:decimal" />
+      <xs:element name="double" nillable="true" type="xs:double" />
+      <xs:element name="float" nillable="true" type="xs:float" />
+      <xs:element name="int" nillable="true" type="xs:int" />
+      <xs:element name="long" nillable="true" type="xs:long" />
+      <xs:element name="QName" nillable="true" type="xs:QName" />
+      <xs:element name="short" nillable="true" type="xs:short" />
+      <xs:element name="string" nillable="true" type="xs:string" />
+      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" />
+      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" />
+      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" />
+      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" />
+      <xs:element name="char" nillable="true" type="tns:char" />
+      <xs:simpleType name="char">
+        <xs:restriction base="xs:int" />
+      </xs:simpleType>
+      <xs:element name="duration" nillable="true" type="tns:duration" />
+      <xs:simpleType name="duration">
+        <xs:restriction base="xs:duration">
+          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" />
+          <xs:minInclusive value="-P10675199DT2H48M5.4775808S" />
+          <xs:maxInclusive value="P10675199DT2H48M5.4775807S" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="guid" nillable="true" type="tns:guid" />
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:attribute name="FactoryType" type="xs:QName" />
+      <xs:attribute name="Id" type="xs:ID" />
+      <xs:attribute name="Ref" type="xs:IDREF" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.imservice.org.uk/nas/gatewayservice/1/datatypes" elementFormDefault="qualified" targetNamespace="http://schemas.imservice.org.uk/nas/gatewayservice/1/datatypes" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" />
+      <xs:complexType name="Application">
+        <xs:sequence>
+          <xs:element name="CandidateId" type="xs:int" />
+          <xs:element name="VacancyId" type="xs:int" />
+          <xs:element minOccurs="0" name="VacancyRef" nillable="true" type="xs:string" />
+          <xs:element xmlns:q1="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="School" nillable="true" type="q1:School" />
+          <xs:element xmlns:q2="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="EducationResults" nillable="true" type="q2:EducationResults" />
+          <xs:element xmlns:q3="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="WorkExperiences" nillable="true" type="q3:WorkExperiences" />
+          <xs:element minOccurs="0" name="AdditionalQuestion1Answer" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AdditionalQuestion2Answer" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Application" nillable="true" type="tns:Application" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" elementFormDefault="qualified" targetNamespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xs:complexType name="School">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Town" nillable="true" type="xs:string" />
+          <xs:element name="AttendedFrom" type="xs:dateTime" />
+          <xs:element name="AttendedTo" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="School" nillable="true" type="tns:School" />
+      <xs:complexType name="EducationResults">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="EducationResult" nillable="true" type="tns:EducationResult" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="EducationResults" nillable="true" type="tns:EducationResults" />
+      <xs:complexType name="EducationResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Level" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Grade" nillable="true" type="xs:string" />
+          <xs:element name="DateAchieved" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="EducationResult" nillable="true" type="tns:EducationResult" />
+      <xs:complexType name="WorkExperiences">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="WorkExperience" nillable="true" type="tns:WorkExperience" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="WorkExperiences" nillable="true" type="tns:WorkExperiences" />
+      <xs:complexType name="WorkExperience">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Employer" nillable="true" type="xs:string" />
+          <xs:element name="FromDate" type="xs:dateTime" />
+          <xs:element name="ToDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="TypeOfWork" nillable="true" type="xs:string" />
+          <xs:element name="PartialCompletion" type="xs:boolean" />
+          <xs:element name="Voluntary" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="WorkExperience" nillable="true" type="tns:WorkExperience" />
+      <xs:complexType name="ValidationErrors">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ValidationError" nillable="true" type="tns:ValidationError" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ValidationErrors" nillable="true" type="tns:ValidationErrors" />
+      <xs:complexType name="ValidationError">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ErrorCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="KeyData" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ValidationError" nillable="true" type="tns:ValidationError" />
+      <xs:complexType name="Candidate">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MiddleName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+          <xs:element name="DateOfBirth" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="AddressLine1" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine2" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine3" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine4" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TownCity" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="County" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Postcode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LandlineTelephone" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MobileTelephone" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Candidate" nillable="true" type="tns:Candidate" />
+      <xs:complexType name="ApplicationsStatus">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ApplicationStatus" nillable="true" type="tns:ApplicationStatus" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ApplicationsStatus" nillable="true" type="tns:ApplicationsStatus" />
+      <xs:complexType name="ApplicationStatus">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ApplicationId" type="xs:int" />
+          <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ApplicationStatus" nillable="true" type="tns:ApplicationStatus" />
+      <xs:complexType name="CandidateApplications">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CandidateApplication" nillable="true" type="tns:CandidateApplication" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CandidateApplications" nillable="true" type="tns:CandidateApplications" />
+      <xs:complexType name="CandidateApplication">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ApplicationId" type="xs:int" />
+          <xs:element minOccurs="0" name="ApplicationStatus" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyId" type="xs:int" />
+          <xs:element minOccurs="0" name="VacancyStatus" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ClosingDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="WithdrawnOrDeclinedReason" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UnsuccessfulReason" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CandidateApplication" nillable="true" type="tns:CandidateApplication" />
+      <xs:complexType name="Vacancy">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ApplicationInstructions" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApplicationLock" nillable="true" type="tns:ApplicationLock" />
+          <xs:element minOccurs="0" name="ApplyViaEmployerWebsite" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ApprenticeshipDuration" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApprenticeshipFramework" nillable="true" type="tns:ApprenticeshipFramework" />
+          <xs:element minOccurs="0" name="ApprenticeshipOccupation" nillable="true" type="tns:ApprenticeshipOccupation" />
+          <xs:element minOccurs="0" name="ApprFrameworkNewSector" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ApprFrameworkSuccessRate" type="xs:int" />
+          <xs:element minOccurs="0" name="AttachedImageId" type="xs:int" />
+          <xs:element minOccurs="0" name="BeingSupportBy" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ClosingDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ContactForCandidate" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ContactPerson" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ContractedProviderName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ContractOwner" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DeliveredBy" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DeliveryOrganisation" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EmployerAnonymous" type="xs:boolean" />
+          <xs:element minOccurs="0" name="EmployerAnonymousDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EmployerDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EmployerId" type="xs:int" />
+          <xs:element minOccurs="0" name="EmployerName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EmployerRecuitmentWebsite" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EmployerWebsite" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ExpectedDuration" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FullDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FutureProspects" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ImportantOtherInfo" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="InterviewFromDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="IsDisableAllowed" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsNasProvider" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsProviderInfoUpToDate" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsRecruitmentAgncyAnonymous" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsSmallEmployerWageIncentive" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsTrackingAllowed" type="xs:boolean" />
+          <xs:element minOccurs="0" name="LastUpdatedBy" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LearningDeliverySiteContactDetailsForCandidate" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LearningDeliverySiteDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LearningDeliverySiteName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LearningDeliverySiteStatus" type="xs:int" />
+          <xs:element minOccurs="0" name="LearningProviderSectorPassRate" type="xs:int" />
+          <xs:element minOccurs="0" name="LockedForSupportUntil" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="MasterVacancyId" type="xs:int" />
+          <xs:element minOccurs="0" name="NoOfOfflineApplicants" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="NoOfOfflineSystemApplications" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="NotifyCandidates" type="xs:boolean" />
+          <xs:element minOccurs="0" name="NumberOfPositions" type="xs:int" />
+          <xs:element minOccurs="0" name="OnlineUsingEmployees" type="xs:boolean" />
+          <xs:element minOccurs="0" name="OnlineUsingNavms" type="xs:boolean" />
+          <xs:element minOccurs="0" name="PersonalQualities" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PossibleStartDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="QualificationRequired" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RealityCheck" nillable="true" type="xs:string" />
+          <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ReviewComments" nillable="true" type="q1:ArrayOfKeyValueOfstringstring" />
+          <xs:element minOccurs="0" name="ShortDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SkillsRequired" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SupplementaryQuestion1" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SupplementaryQuestion2" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TradingName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TrainingProviderDesc" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TrainingProviderId" type="xs:int" />
+          <xs:element minOccurs="0" name="TrainingProviderName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TrainingRequired" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyAddress" nillable="true" type="tns:AddressDetails" />
+          <xs:element minOccurs="0" name="VacancyId" type="xs:int" />
+          <xs:element minOccurs="0" name="VacancyLocationType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyManager" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyManagerTradingName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyOwner" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyPostedDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="VacancyReference" type="xs:int" />
+          <xs:element minOccurs="0" name="VacancyTitle" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyUrl" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WageText" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WebsiteAddress" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WeeklyWage" type="xs:decimal" />
+          <xs:element minOccurs="0" name="WorkingWeek" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WageType" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Vacancy" nillable="true" type="tns:Vacancy" />
+      <xs:complexType name="ApplicationLock">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="LockedByUser" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LockExpiryDateTime" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ApplicationLock" nillable="true" type="tns:ApplicationLock" />
+      <xs:complexType name="ApprenticeshipFramework">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ApprenticeshipFrameworkId" type="xs:int" />
+          <xs:element minOccurs="0" name="ApprenticeshipOccupationId" type="xs:int" />
+          <xs:element minOccurs="0" name="ClosedDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsCeasable" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsDeletable" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsPendingClosable" type="xs:boolean" />
+          <xs:element minOccurs="0" name="NewApprenticeshipOccupationId" type="xs:int" />
+          <xs:element minOccurs="0" name="PreviousApprenticeshipOccupationId" type="xs:int" />
+          <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ApprenticeshipFramework" nillable="true" type="tns:ApprenticeshipFramework" />
+      <xs:complexType name="ApprenticeshipOccupation">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ApprenticeshipOccupationId" type="xs:int" />
+          <xs:element minOccurs="0" name="ClosedDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsCeasable" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsDeletable" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="StatusType" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ApprenticeshipOccupation" nillable="true" type="tns:ApprenticeshipOccupation" />
+      <xs:complexType name="AddressDetails">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AddressLine1" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine2" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine3" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine4" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine5" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="County" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CountyName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GeographicRegionDetails" nillable="true" type="tns:GeographicRegion" />
+          <xs:element minOccurs="0" name="GridEastM" type="xs:int" />
+          <xs:element minOccurs="0" name="GridNorthM" type="xs:int" />
+          <xs:element minOccurs="0" name="Latitude" type="xs:decimal" />
+          <xs:element minOccurs="0" name="LocalAuthorityDetail" nillable="true" type="tns:LocalAuthority" />
+          <xs:element minOccurs="0" name="Longitude" type="xs:decimal" />
+          <xs:element minOccurs="0" name="PafAddressId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PostCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Town" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="AddressDetails" nillable="true" type="tns:AddressDetails" />
+      <xs:complexType name="GeographicRegion">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CodeName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GeographicRegionId" type="xs:int" />
+          <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GeographicRegion" nillable="true" type="tns:GeographicRegion" />
+      <xs:complexType name="LocalAuthority">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CodeName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LocalAuthorityId" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="LocalAuthority" nillable="true" type="tns:LocalAuthority" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="ArrayOfKeyValueOfstringstring">
+        <xs:annotation>
+          <xs:appinfo>
+            <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfstringstring">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Key" nillable="true" type="xs:string" />
+                <xs:element name="Value" nillable="true" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfKeyValueOfstringstring" nillable="true" type="tns:ArrayOfKeyValueOfstringstring" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="CreateApplicationRequest">
+    <wsdl:part name="parameters" element="tns:CreateApplicationRequest" />
+  </wsdl:message>
+  <wsdl:message name="CreateApplicationResponse">
+    <wsdl:part name="parameters" element="tns:CreateApplicationResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateCandidateRequest">
+    <wsdl:part name="parameters" element="tns:CreateCandidateRequest" />
+  </wsdl:message>
+  <wsdl:message name="CreateCandidateResponse">
+    <wsdl:part name="parameters" element="tns:CreateCandidateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GatewayServiceContract_GetServiceStatus_InputMessage" />
+  <wsdl:message name="GetServiceStatusResponse">
+    <wsdl:part name="Version" element="tns:Version" />
+  </wsdl:message>
+  <wsdl:message name="GatewayServiceContract_GetApplicationsStatus_InputMessage" />
+  <wsdl:message name="GetApplicationsStatusResponse">
+    <wsdl:part name="ApplicationsStatus" element="tns:ApplicationsStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetCandidateInfoRequest">
+    <wsdl:part name="CandidateId" element="tns:CandidateId" />
+  </wsdl:message>
+  <wsdl:message name="GetCandidateInfoResponse">
+    <wsdl:part name="parameters" element="tns:GetCandidateInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetVacancyDetailsRequest">
+    <wsdl:part name="VacancyId" element="tns:VacancyId" />
+  </wsdl:message>
+  <wsdl:message name="GetVacancyDetailsResponse">
+    <wsdl:part name="parameters" element="tns:GetVacancyDetailsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="GatewayServiceContract">
+    <wsdl:operation name="CreateApplication">
+      <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/CreateApplication" name="CreateApplicationRequest" message="tns:CreateApplicationRequest" />
+      <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/CreateApplicationResponse" name="CreateApplicationResponse" message="tns:CreateApplicationResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateCandidate">
+      <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/CreateCandidate" name="CreateCandidateRequest" message="tns:CreateCandidateRequest" />
+      <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/CreateCandidateResponse" name="CreateCandidateResponse" message="tns:CreateCandidateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServiceStatus">
+      <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetServiceStatus" message="tns:GatewayServiceContract_GetServiceStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetServiceStatusResponse" name="GetServiceStatusResponse" message="tns:GetServiceStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetApplicationsStatus">
+      <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetApplicationsStatus" message="tns:GatewayServiceContract_GetApplicationsStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetApplicationsStatusResponse" name="GetApplicationsStatusResponse" message="tns:GetApplicationsStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCandidateInfo">
+      <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetCandidateInfo" name="GetCandidateInfoRequest" message="tns:GetCandidateInfoRequest" />
+      <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetCandidateInfoResponse" name="GetCandidateInfoResponse" message="tns:GetCandidateInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVacancyDetails">
+      <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetVacancyDetails" name="GetVacancyDetailsRequest" message="tns:GetVacancyDetailsRequest" />
+      <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetVacancyDetailsResponse" name="GetVacancyDetailsResponse" message="tns:GetVacancyDetailsResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DefaultEndpoint" type="tns:GatewayServiceContract">
+    <wsp:PolicyReference URI="#DefaultEndpoint_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateApplication">
+      <soap:operation soapAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/CreateApplication" style="document" />
+      <wsdl:input name="CreateApplicationRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="CreateApplicationResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateCandidate">
+      <soap:operation soapAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/CreateCandidate" style="document" />
+      <wsdl:input name="CreateCandidateRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="CreateCandidateResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServiceStatus">
+      <soap:operation soapAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetServiceStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetServiceStatusResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetApplicationsStatus">
+      <soap:operation soapAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetApplicationsStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetApplicationsStatusResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCandidateInfo">
+      <soap:operation soapAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetCandidateInfo" style="document" />
+      <wsdl:input name="GetCandidateInfoRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetCandidateInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVacancyDetails">
+      <soap:operation soapAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetVacancyDetails" style="document" />
+      <wsdl:input name="GetVacancyDetailsRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetVacancyDetailsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GatewayService">
+    <wsdl:port name="DefaultEndpoint" binding="tns:DefaultEndpoint">
+      <soap:address location="https://sfacapvm1/NASGatewayServiceSimulator/GatewayService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
