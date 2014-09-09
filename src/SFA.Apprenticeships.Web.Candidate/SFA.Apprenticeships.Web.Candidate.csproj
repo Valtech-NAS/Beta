@@ -319,6 +319,8 @@
     <Content Include="Views\VacancySearch\_searchUpdate.cshtml" />
     <Content Include="Views\Application\_qualificationsJS.cshtml" />
     <Content Include="Views\Application\_workExperiencesJS.cshtml" />
+    <Content Include="Views\Application\_qualificationsNonJS.cshtml" />
+    <Content Include="Views\Application\_workExperiencesNonJS.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

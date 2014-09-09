@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="ActionResults\HttpCustomStatusCodeResult.cs" />
     <Compile Include="Attributes\AllowCrossSiteJsonAttribute .cs" />
+    <Compile Include="Attributes\ApplyFormButtonAttribute.cs" />
     <Compile Include="Attributes\AuthenticateUserAttribute.cs" />
     <Compile Include="Attributes\CookiesEnabledAttribute.cs" />
     <Compile Include="Attributes\NoCacheAttribute.cs" />

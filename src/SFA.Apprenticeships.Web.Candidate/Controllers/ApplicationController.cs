@@ -1,10 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using System.Web.Security;
     using ActionResults;
     using Attributes;
+    using Common.Attributes;
     using Common.Constants;
     using Constants;
     using Constants.Pages;
@@ -13,6 +16,7 @@
     using Providers;
     using Validators;
     using ViewModels.Applications;
+    using ViewModels.Candidate;
 
     public class ApplicationController : CandidateControllerBase
     {
@@ -92,9 +96,16 @@
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyFormButton(Name = "ApplicationAction", Argument = "Preview")]
         [ValidateInput(false)]
         public ActionResult Apply(int id, ApplicationViewModel model)
         {
+            model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
+            model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
+
+            model.DefaultQualificationRows = 0;
+            model.DefaultWorkExperienceRows = 0;
+
             var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
             if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
@@ -108,14 +119,12 @@
 
             if (savedModel.HasError())
             {
-                SetApplicationViewModelUserMessage(model);
-              
+                SetUserMessage(ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning);
+
                 return View("Apply", model);
             }
 
-            var result = model.ApplicationAction == ApplicationAction.Preview
-                ? _applicationViewModelFullValidator.Validate(model)
-                : _applicationViewModelSaveValidator.Validate(model);
+            var result = _applicationViewModelFullValidator.Validate(model);
 
             model = _applicationProvider.PatchApplicationViewModel(
                 UserContext.CandidateId, savedModel, model);
@@ -123,30 +132,116 @@
             if (!result.IsValid)
             {
                 result.AddToModelState(ModelState, string.Empty);
-             
+
                 return View("Apply", model);
             }
 
             _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
 
-            if (model.ApplicationAction == ApplicationAction.Preview)
+            return RedirectToAction("Preview", new { id });
+        }
+
+        [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyFormButton(Name = "ApplicationAction", Argument = "Save")]
+        [ValidateInput(false)]
+        public ActionResult Save(int id, ApplicationViewModel model)
+        {
+            model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
+            model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
+
+            model.DefaultQualificationRows = 0;
+            model.DefaultWorkExperienceRows = 0;
+
+            var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+
+            if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
-                return RedirectToAction("Preview", new { id });
+                return new VacancyNotFoundResult();
             }
 
-            // NOTE: we do not check again for an expired or withdrawn vacancy here.
+            ModelState.Clear();
+
+            model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+
+            if (savedModel.HasError())
+            {
+                SetUserMessage(ApplicationPageMessages.SaveFailed, UserMessageLevel.Warning);
+
+                return View("Apply", model);
+            }
+
+            var result = _applicationViewModelSaveValidator.Validate(model);
+
+            model = _applicationProvider.PatchApplicationViewModel(
+                UserContext.CandidateId, savedModel, model);
+
+            if (!result.IsValid)
+            {
+                result.AddToModelState(ModelState, string.Empty);
+
+                return View("Apply", model);
+            }
+
+            _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
+
             model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
             model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+
             return View("Apply", model);
         }
 
-        private void SetApplicationViewModelUserMessage(ApplicationViewModel model)
+        [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyFormButton(Name = "ApplicationAction", Argument = "AddEmptyQualificationRows")]
+        [ValidateInput(false)]
+        public ActionResult AddEmptyQualificationRows(int id, ApplicationViewModel model)
         {
-            var message = model.ApplicationAction == ApplicationAction.Preview
-                ? ApplicationPageMessages.PreviewFailed
-                : ApplicationPageMessages.SaveFailed;
+            model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
+            model.Candidate.HasQualifications = model.Candidate.Qualifications.Count() != 0;
+            model.DefaultQualificationRows = 5;
+            model.DefaultWorkExperienceRows = 0;
 
-            SetUserMessage(message, UserMessageLevel.Warning);
+            ModelState.Clear();
+
+            return View("Apply", model);
+        }
+
+        [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyFormButton(Name = "ApplicationAction", Argument = "AddEmptyWorkExperienceRows")]
+        [ValidateInput(false)]
+        public ActionResult AddEmptyWorkExperienceRows(int id, ApplicationViewModel model)
+        {
+            model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
+            model.Candidate.HasWorkExperience = model.Candidate.WorkExperience.Count() != 0;
+
+            model.DefaultQualificationRows = 0;
+            model.DefaultWorkExperienceRows = 3;
+
+            ModelState.Clear();
+
+            return View("Apply", model);
+        }
+
+        private static IEnumerable<WorkExperienceViewModel> RemoveEmptyRowsFromWorkExperience(IEnumerable<WorkExperienceViewModel> workExperience)
+        {
+            return workExperience.Where(vm =>
+                vm.Employer != null && !string.IsNullOrWhiteSpace(vm.Employer.Trim()) ||
+                vm.JobTitle != null && !string.IsNullOrWhiteSpace(vm.JobTitle.Trim()) ||
+                vm.Description != null && !string.IsNullOrWhiteSpace(vm.Description.Trim())
+                ).ToList();
+        }
+
+        private static IEnumerable<QualificationsViewModel> RemoveEmptyRowsFromQualifications(IEnumerable<QualificationsViewModel> qualifications)
+        {
+            return qualifications.Where(vm =>
+                vm.Subject != null && !string.IsNullOrWhiteSpace(vm.Subject.Trim()) ||
+                vm.QualificationType != null && !string.IsNullOrWhiteSpace(vm.QualificationType.Trim()) ||
+                vm.Grade != null && !string.IsNullOrWhiteSpace(vm.Grade.Trim())).ToList();
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]

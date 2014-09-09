@@ -1,0 +1,222 @@
+﻿@model  SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApplicationViewModel
+
+
+<noscript>
+
+    <fieldset class="fieldset-with-border" id="applyWorkExperience">
+        <legend class="heading-large">Work experience</legend>
+        <p class="form-label text">Do you have any work experience?</p>
+        <p class="form-hint text">
+            Please include any work, whether paid or voluntary
+        </p>
+        <div class="form-group inline clearfix">
+            <label for="workexp-yes" class="block-label">
+                @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, true, true, new {id = "workexp-yes"})
+                Yes
+            </label>
+            <label for="workexp-no" class="block-label">
+                @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, false, false, new {id = "workexp-no"})
+                No
+            </label>
+        </div>
+
+        <div class="clearfix">
+            <div class="grid-3-4">
+                @for (var i = 0; i < Model.Candidate.WorkExperience.Count() + Model.DefaultWorkExperienceRows; i++)
+                {
+                    if (i < Model.Candidate.WorkExperience.Count())
+                    {
+                        <div id="work-history-item" class="grid-wrapper work-history-item">
+                            <div class="grid grid-1-2">
+                                <table class="table-no-btm-border table-compound">
+                                    <colgroup>
+                                        <col class="t100">
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <span class="heading-span">Work experience</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="form-group form-group-compound inline-float width-all-49">
+                                                    <span class="cell-span">Employer</span>
+                                               
+                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].Employer, new {@id = "candidate_workexperience_" + i + "__employer", Name = "Candidate.WorkExperience[" + i + "].Employer", @class = "form-control", @maxlength = 50})
+                                               
+                                                </div>
+
+                                                <div class="form-group form-group-compound inline-float width-all-49 no-right-margin">
+                                                    <span class="cell-span">Job Title</span>
+                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].JobTitle, new {@id = "candidate_workexperience_" + i + "__jobtitle", Name = "Candidate.WorkExperience[" + i + "].JobTitle", @class = "form-control", @maxlength = 50})
+                                               
+                                                </div>
+
+                                                <div></div>
+                                                <span class="cell-span">Main Duties</span>
+                                                @Html.TextAreaFor(m => Model.Candidate.WorkExperience.ToList()[i].Description, new {@id = "candidate_workexperience_" + i + "__description", Name = "Candidate.WorkExperience[" + i + "].Description", @class = "form-control", @rows = 3})                                           
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="grid grid-1-2">
+                                <table class="table-no-btm-border table-compound">
+                                    <colgroup>
+                                        <col class="t30">
+                                        <col class="t30">
+                                        <col class="t25">
+                                        <col class="t15">
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <span class="heading-span">From</span>
+                                            </th>
+                                            <th>
+                                                <span class="heading-span">To</span>
+                                            </th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span class="cell-span">From</span>
+                                                <div class="form-group form-group-compound">
+                                                    @Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].FromMonth), new { @id = "candidate_workexperience_" + i + "__frommonth", Name = "Candidate.WorkExperience[" + i + "].FromMonth" })
+
+                                                </div>
+                                                <div class="form-group form-group-compound">
+                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].FromYear, new {@id = "candidate_workexperience_" + i + "__fromyear", Name = "Candidate.WorkExperience[" + i + "].FromYear", @class = "form-control", @pattern = "[0-9]*", @maxlength = 4})
+                                                
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="cell-span">To</span>
+                                                <div class="form-group form-group-compound">
+                                                    @Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].ToMonth), new { @id = "candidate_workexperience_" + i + "__tomonth", Name = "Candidate.WorkExperience[" + i + "].ToMonth" })
+
+                                                </div>
+                                                <div class="form-group form-group-compound">
+                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].ToYear, new {@id = "candidate_workexperience_" + i + "__toyear", Name = "Candidate.WorkExperience[" + i + "].ToYear", @class = "form-control", @pattern = "[0-9]*", @maxlength = 4})                                               
+                                                </div>                                           
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="work-history-item" class="grid-wrapper work-history-item">
+                            <div class="grid grid-1-2">
+                                <table class="table-no-btm-border table-compound">
+                                    <colgroup>
+                                        <col class="t100">
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <span class="heading-span">Work experience</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="form-group form-group-compound inline-float width-all-49">
+                                                    <span class="cell-span">Employer</span>
+
+                                                    @Html.TextBox("Candidate.WorkExperience[" + i + "].Employer", "", new {@id = "candidate_workexperience_" + i + "__employer", Name = "Candidate.WorkExperience[" + i + "].Employer", @class = "form-control", @maxlength = 50})
+
+                                                </div>
+
+                                                <div class="form-group form-group-compound inline-float width-all-49 no-right-margin">
+                                                    <span class="cell-span">Job Title</span>
+                                                    @Html.TextBox("Candidate.WorkExperience[" + i + "].JobTitle", "", new {@id = "candidate_workexperience_" + i + "__jobtitle", Name = "Candidate.WorkExperience[" + i + "].JobTitle", @class = "form-control", @maxlength = 50})
+
+                                                </div>
+
+                                                <div></div>
+                                                <span class="cell-span">Main Duties</span>
+                                                @Html.TextArea("Candidate.WorkExperience[" + i + "].Description", "", new {@id = "candidate_workexperience_" + i + "__description", Name = "Candidate.WorkExperience[" + i + "].Description", @class = "form-control", @rows = 3})
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="grid grid-1-2">
+                                <table class="table-no-btm-border table-compound">
+                                    <colgroup>
+                                        <col class="t30">
+                                        <col class="t30">
+                                        <col class="t25">
+                                        <col class="t15">
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <span class="heading-span">From</span>
+                                            </th>
+                                            <th>
+                                                <span class="heading-span">To</span>
+                                            </th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span class="cell-span">From</span>
+                                                <div class="form-group form-group-compound">
+                                                    @Html.DropDownList("Candidate.WorkExperience[" + i + "].FromMonth", new SelectList(Model.Months, "Value","Text",1), new { @id = "candidate_workexperience_" + i + "__frommonth", Name = "Candidate.WorkExperience[" + i + "].FromMonth" })
+
+                                                </div>
+                                                <div class="form-group form-group-compound">
+                                                    @Html.TextBox("Candidate.WorkExperience[" + i + "].FromYear", "0", new {@id = "candidate_workexperience_" + i + "__fromyear", Name = "Candidate.WorkExperience[" + i + "].FromYear", @class = "form-control", @pattern = "[0-9]*", @maxlength = 4})
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="cell-span">To</span>
+                                                <div class="form-group form-group-compound">
+                                                    @Html.DropDownList("Candidate.WorkExperience[" + i + "].ToMonth", new SelectList(Model.Months, "Value", "Text", 1), new { @id = "candidate_workexperience_" + i + "__tomonth", Name = "Candidate.WorkExperience[" + i + "].ToMonth" })
+
+                                                </div>
+                                                <div class="form-group form-group-compound">
+                                                    @Html.TextBox("Candidate.WorkExperience[" + i + "].ToYear", "0", new {@id = "candidate_workexperience_" + i + "__toyear", Name = "Candidate.WorkExperience[" + i + "].ToYear", @class = "form-control", @pattern = "[0-9]*", @maxlength = 4})
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                }                              
+
+                <div>
+
+                    <button id="add-workexperience-rows-button" class="button" type="submit" name="ApplicationAction:AddEmptyWorkExperienceRows">Add More Work Experience Rows</button>
+
+                </div>
+            </div>
+        </div>
+
+    </fieldset>
+</noscript>
