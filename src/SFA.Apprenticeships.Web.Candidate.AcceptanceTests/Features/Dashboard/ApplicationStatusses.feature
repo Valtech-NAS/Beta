@@ -11,10 +11,11 @@ Background:
 
 @US463
 Scenario: As a candidate I want to see the applications in my dashbord grouped by state
-	Given I have 4 applications in "Draft" state
-	And I have 4 applications in "Successful" state
-	And I have 4 applications in "Submitted" state
-	And I have 4 applications in "Unsuccessful" state
+	Given I have an empty dashboard
+	And I add 4 applications in "Draft" state
+	And I add 4 applications in "Successful" state
+	And I add 4 applications in "Submitted" state
+	And I add 4 applications in "Unsuccessful" state
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
@@ -23,3 +24,6 @@ Scenario: As a candidate I want to see the applications in my dashbord grouped b
 		| Password     | {PasswordToken}     |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
+	And I see
+		| Field                  | Rule   | Value |
+		| DraftApplicationsCount | Equals | 4     |

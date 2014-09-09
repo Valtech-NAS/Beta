@@ -16,14 +16,15 @@
         private const string PasswordTokenName = "PasswordToken";
         private const string Password = "?Password01!";
         private readonly ITokenManager _tokenManager;
+        private ApplicationBuilder _applicationBuilder;
 
         public DashboardBinding(ITokenManager tokenManager)
         {
             _tokenManager = tokenManager;
         }
 
-        [Given(@"I have (.*) applications in ""(.*)"" state")]
-        public void GivenIHaveApplicationsInState(int numberOfApplications, string state)
+        [Given(@"I have an empty dashboard")]
+        public void GivenIHaveAnEmptyDashboard()
         {
             var candidate = new CandidateBuilder(UserEmailAddress)
                     .Build();
@@ -33,15 +34,21 @@
 
             SetTokens(candidate, user);
 
-            var applicationBuilder = new ApplicationBuilder(candidate.EntityId,
+            _applicationBuilder = new ApplicationBuilder(candidate.EntityId,
                     UserEmailAddress);
-            applicationBuilder.DeleteApplications(candidate.EntityId);
+            _applicationBuilder.DeleteApplications(candidate.EntityId);
+        }
 
+
+        [Given(@"I add (.*) applications in ""(.*)"" state")]
+        public void GivenIAddApplicationsInState(int numberOfApplications, string state)
+        {
+            
             for (var i = 0; i < numberOfApplications; i++)
             {
                 var applicationStatus = (ApplicationStatuses)Enum.Parse(typeof(ApplicationStatuses), state);
-                applicationBuilder.WithApplicationStatus(applicationStatus).Build();
-                applicationBuilder.Build();
+                _applicationBuilder
+                    .WithApplicationStatus(applicationStatus).Build();
             }
         }
 

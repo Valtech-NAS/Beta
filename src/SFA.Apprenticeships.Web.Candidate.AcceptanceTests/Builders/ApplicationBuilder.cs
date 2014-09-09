@@ -12,6 +12,7 @@
         private readonly Guid _candidateId = new Guid("00000000-0000-0000-0000-000000000001");
         private readonly string _emailAddress = string.Empty;
         private ApplicationStatuses _applicationStatus = ApplicationStatuses.Unknown;
+        private DateTime _dateApplied = DateTime.Now;
 
         public ApplicationBuilder(Guid candidateId, string emailAddress)
         {
@@ -37,7 +38,8 @@
             {
                 CandidateId = _candidateId,
                 CandidateInformation = new ApplicationTemplate(),
-                Status = _applicationStatus
+                Status = _applicationStatus,
+                DateApplied = _dateApplied
             };
 
             var repo = ObjectFactory.GetInstance<IApplicationWriteRepository>();
