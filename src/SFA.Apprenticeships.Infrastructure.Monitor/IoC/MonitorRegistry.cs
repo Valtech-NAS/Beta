@@ -25,14 +25,16 @@
             For<ICandidateReadRepository>().Use<CandidateRepository>();
             For<IApplicationReadRepository>().Use<ApplicationRepository>();
             For<IVacancySearchProvider>().Use<VacancySearchProvider>();
-            For<IMonitorTask>().Use<CheckUserRepository>();
-            For<IMonitorTask>().Use<CheckCandidateRepository>();
-            For<IMonitorTask>().Use<CheckApplicationRepository>();
-            For<IMonitorTask>().Use<CheckVacancySearch>();
-            //For<IEnumerable<IMonitorTask>>().Use(new List<IMonitorTask>
-            //{
 
-            //});
+            For<IMonitorTasksRunner>().Use<MonitorTasksRunner>()
+                .EnumerableOf<IMonitorTask>()
+                .Contains(x =>
+                {
+                    x.Type<CheckUserRepository>();
+                    x.Type<CheckApplicationRepository>();
+                    x.Type<CheckCandidateRepository>();
+                    x.Type<CheckVacancySearch>();
+                });
         }
     }
 }
