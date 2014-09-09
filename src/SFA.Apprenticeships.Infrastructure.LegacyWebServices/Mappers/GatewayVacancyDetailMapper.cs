@@ -20,9 +20,6 @@
                 .ForMember(dest => dest.ClosingDate,
                     opt => opt.MapFrom(src => src.ClosingDate))
 
-                .ForMember(dest => dest.ClosingDate,
-                    opt => opt.MapFrom(src => src.ClosingDate))
-
                 .ForMember(dest => dest.Contact,
                     opt => opt.MapFrom(src => src.ContactPerson))
 
@@ -74,6 +71,11 @@
                 .ForMember(dest => dest.IsSmallEmployerWageIncentive,
                     opt => opt.MapFrom(src => src.IsSmallEmployerWageIncentiveSpecified && src.IsSmallEmployerWageIncentive))
 
+                .ForMember(d => d.ProviderSectorPassRate,
+                    opt => opt.MapFrom(src => src.LearningProviderSectorPassRateSpecified
+                        ? src.LearningProviderSectorPassRate
+                        : default(int?)))
+
                 .ForMember(dest => dest.NumberOfPositions,
                     opt => opt.MapFrom(src => src.NumberOfPositions))
 
@@ -104,11 +106,18 @@
                 .ForMember(dest => dest.TradingName,
                     opt => opt.MapFrom(src => src.TradingName))
 
-                // TODO: AG: US483: need GatewayVacancyDetailAddressResolver?
-                .ForMember(d => d.VacancyAddress,
-                    opt => opt.ResolveUsing<VacancyDetailAddressResolver>().FromMember(src => src.VacancyAddress))
+                .ForMember(dest => dest.ProviderDescription,
+                    opt => opt.MapFrom(src => src.TrainingProviderDesc))
 
-                .ForMember(d => d.VacancyLocationType,
+                // TODO: AG: US483: check mapping, 'to be provided' versus 'required' does not sound right.
+                .ForMember(dest => dest.TrainingToBeProvided,
+                    opt => opt.MapFrom(src => src.TrainingRequired))
+
+                .ForMember(dest => dest.VacancyAddress,
+                    opt => opt.ResolveUsing<GatewayVacancyDetailAddressDetailsResolver>()
+                        .FromMember(src => src.VacancyAddress))
+
+                .ForMember(dest => dest.VacancyLocationType,
                    opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
 
                 .ForMember(dest => dest.VacancyManager,
@@ -120,17 +129,29 @@
                 .ForMember(dest => dest.Title,
                     opt => opt.MapFrom(src => src.VacancyTitle))
 
-                .ForMember(d => d.VacancyType,
+                .ForMember(dest => dest.VacancyType,
                     opt => opt.ResolveUsing<VacancyTypeResolver>().FromMember(src => src.VacancyType))
 
-                .ForMember(d => d.VacancyUrl,
-                    opt => opt.ResolveUsing<VacancyTypeResolver>().FromMember(src => src.VacancyUrl))
+                .ForMember(dest => dest.VacancyUrl,
+                    opt => opt.MapFrom(src => src.VacancyUrl))
 
-                .ForMember(d => d.WageDescription,
+                .ForMember(dest => dest.WageType,
+                    opt => opt.ResolveUsing<WageTypeResolver>().FromMember(src => src.WageType))
+
+                .ForMember(dest => dest.Wage,
+                    opt => opt.MapFrom(src => src.WeeklyWage))
+
+                .ForMember(dest => dest.WageDescription,
                     opt => opt.MapFrom(src => src.WageText))
 
-                .ForMember(d => d.WorkingWeek,
+                .ForMember(dest => dest.WorkingWeek,
                     opt => opt.MapFrom(src => src.WorkingWeek))
+
+                .ForMember(dest => dest.Created,
+                    opt => opt.Ignore())
+
+                .ForMember(dest => dest.LocalAuthority,
+                    opt => opt.Ignore())
              ;
         }
     }

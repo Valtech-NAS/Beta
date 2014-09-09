@@ -62,7 +62,7 @@
             var vacancyDetail = new VacancyDetail
             {
                 WageType = WageType.Weekly,
-                Wage = 101.19
+                Wage = 101.19m
             };
 
             var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);

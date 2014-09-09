@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
-    using System;
     using AutoMapper;
     using Domain.Entities.Vacancies;
 
@@ -12,8 +11,10 @@
             {
                 case "IntermediateLevelApprenticeship":
                     return VacancyType.Intermediate;
+
                 case "AdvancedLevelApprenticeship":
                     return VacancyType.Advanced;
+
                 default:
                     return VacancyType.Unknown;
             }
