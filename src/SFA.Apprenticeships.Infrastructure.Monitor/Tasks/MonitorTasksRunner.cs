@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.InteropServices;
+    using System.Threading.Tasks;
     using NLog;
 
     public class MonitorTasksRunner : IMonitorTasksRunner
@@ -20,8 +21,11 @@
         {
             Logger.Debug("Starting to run {0} monitor tasks", _monitorTasks.Count());
 
-            //todo: run tasks in parallel
+            var tasks = _monitorTasks
+                .Select(mt => Task.Factory.StartNew(mt.Run)).ToArray();
 
+            Task.WaitAll(tasks);
+            
             Logger.Debug("Finished running monitor tasks");
 
             throw new NotImplementedException();

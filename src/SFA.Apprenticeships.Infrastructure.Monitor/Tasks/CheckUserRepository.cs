@@ -8,6 +8,7 @@
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IUserReadRepository _userReadRepository;
+        private const string TaskName = "Check user repository";
 
         public CheckUserRepository(IUserReadRepository userReadRepository)
         {
@@ -16,7 +17,18 @@
 
         public void Run()
         {
-            throw new NotImplementedException();
+            Logger.Debug(string.Format("Start running task {0}", TaskName));
+            
+            try
+            {
+                _userReadRepository.Get(Guid.NewGuid());
+            }
+            catch (Exception execption)
+            {
+                Logger.ErrorException("Error while accessing UserRepository", execption);
+            }
+
+            Logger.Debug(string.Format("Finished running task {0}", TaskName));
         }
     }
 }

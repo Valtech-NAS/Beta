@@ -96,6 +96,14 @@
       <Project>{a2d82061-bcbd-4030-9eb4-5148aee79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Mongo.Common\SFA.Apprenticeships.Infrastructure.Mongo.Common.csproj">
+      <Project>{CE62BDE8-C127-4808-95F8-5F5E24485830}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Mongo.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">
+      <Project>{4696D786-2F3C-4A12-BD6B-38E2981D6DF1}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Users</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

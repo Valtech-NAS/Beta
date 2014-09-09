@@ -2,7 +2,9 @@
 {
     using Consumers;
     using Domain.Interfaces.Messaging;
+    using Domain.Interfaces.Repositories;
     using Messaging;
+    using Repositories.Users;
     using StructureMap.Configuration.DSL;
     using Tasks;
 
@@ -14,6 +16,7 @@
             For<MonitorSchedulerConsumer>().Use<MonitorSchedulerConsumer>();
             For<MonitorTasksRunner>().Use<MonitorTasksRunner>();
             For<CheckUserRepository>().Use<CheckUserRepository>();
+            For<IUserReadRepository>().Use<UserRepository>();
 
             //For<IEnumerable<IMonitorTask> >().Use()
         }
