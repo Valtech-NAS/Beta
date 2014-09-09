@@ -63,7 +63,10 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Consumers\MonitorSchedulerConsumer.cs" />
+    <Compile Include="Tasks\CheckApplicationRepository.cs" />
+    <Compile Include="Tasks\CheckCandidateRepository.cs" />
     <Compile Include="Tasks\CheckUserRepository.cs" />
+    <Compile Include="Tasks\CheckVacancySearch.cs" />
     <Compile Include="Tasks\IMonitorTask.cs" />
     <Compile Include="Tasks\IMonitorTasksRunner.cs" />
     <Compile Include="Tasks\MonitorTasksRunner.cs" />
@@ -101,6 +104,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{a2d82061-bcbd-4030-9eb4-5148aee79241}</Project>
