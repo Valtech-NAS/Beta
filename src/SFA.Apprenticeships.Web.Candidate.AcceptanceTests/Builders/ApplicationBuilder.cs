@@ -9,14 +9,16 @@
 
     public class ApplicationBuilder
     {
-        public ApplicationBuilder(Guid candidateId, string emailAddress)
+        public ApplicationBuilder(Guid candidateId, string emailAddress,
+            ApplicationStatuses applicationStatus)
         {
             RegistrationBuilder = new RegistrationBuilder(emailAddress);
 
             ApplicationDetail = new ApplicationDetail
             {
                 CandidateId = candidateId,
-                CandidateInformation = new ApplicationTemplate()
+                CandidateInformation = new ApplicationTemplate(),
+                Status = applicationStatus
             };
         }
 

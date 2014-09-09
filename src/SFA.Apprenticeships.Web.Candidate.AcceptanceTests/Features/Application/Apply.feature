@@ -118,7 +118,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| SubjectGrade | SubjectGrade |
 	And I am on the ApplicationPage page
 	And I choose SaveQualification
-	Then I wait to see QualificationsSummary
+	Then I wait for 30 seconds to see QualificationsSummary
 	Then I see
         | Field                      | Rule   | Value |
         | QualificationsSummaryCount | Equals | 1     |
@@ -145,7 +145,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| WorkFromYear | 2011         |
 		| WorkToYear   | 2012         |
 	And I choose SaveWorkExperience
-	Then I wait to see WorkExperienceSummary
+	Then I wait for 30 seconds to see WorkExperienceSummary
 	Then I see
         | Field                | Rule   | Value |
         | WorkExperiencesCount | Equals | 1     |

@@ -95,6 +95,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Bindings\Application\ApplicationPageBinding.cs" />
+    <Compile Include="Bindings\Dashboard\DashboardBinding.cs" />
     <Compile Include="Bindings\DataGeneratorBinding.cs" />
     <Compile Include="Bindings\Registration\ForgottenPasswordDataBinding.cs" />
     <Compile Include="Builders\ApplicationBuilder.cs" />
@@ -115,6 +116,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WarningWhenNavigatingOutOfApplyPage.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Dashboard\ApplicationStatusses.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApplicationStatusses.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\EpicHappyPath.feature.cs">
       <AutoGen>True</AutoGen>
@@ -204,6 +210,10 @@
     <None Include="Features\Application\WarningWhenNavigatingOutOfApplyPage.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>WarningWhenNavigatingOutOfApplyPage.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Dashboard\ApplicationStatusses.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ApplicationStatusses.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\EpicHappyPath.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
