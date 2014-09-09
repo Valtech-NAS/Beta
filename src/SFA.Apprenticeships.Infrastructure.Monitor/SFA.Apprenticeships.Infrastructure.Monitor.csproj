@@ -41,6 +41,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=3.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
     </Reference>
@@ -59,9 +63,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Consumers\MonitorSchedulerConsumer.cs" />
-    <Compile Include="Tasks\CheckVacancySearch.cs" />
-    <Compile Include="Tasks\CheckApplicationRepository.cs" />
-    <Compile Include="Tasks\CheckCandidateRepository.cs" />
     <Compile Include="Tasks\CheckUserRepository.cs" />
     <Compile Include="Tasks\IMonitorTask.cs" />
     <Compile Include="Tasks\IMonitorTasksRunner.cs" />
@@ -89,10 +90,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
-      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
-      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
       <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
       <Name>SFA.Apprenticeships.Application.Vacancy</Name>
@@ -110,7 +107,7 @@
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Mongo.Common\SFA.Apprenticeships.Infrastructure.Mongo.Common.csproj">
-      <Project>{CE62BDE8-C127-4808-95F8-5F5E24485830}</Project>
+      <Project>{ce62bde8-c127-4808-95f8-5f5e24485830}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Mongo.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
