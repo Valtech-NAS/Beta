@@ -37,6 +37,16 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Monitor\SFA.Apprenticeships.Infrastructure.Monitor.csproj">
+      <Name>SFA.Apprenticeships.Infrastructure.Monitor</Name>
+      <Project>{61619f66-5f17-4ef7-a8cf-ba720bea3ad3}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>SFA.Apprenticeships.Infrastructure.Monitor</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Profiles" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.MonitorContent\" />
   </ItemGroup>
