@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Common", "SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj", "{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}"
 EndProject
@@ -167,6 +167,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Service.Vacancy.TestLoader", "SFA.Apprenticeships.Service.Vacancy.TestLoader\SFA.Apprenticeships.Service.Vacancy.TestLoader.csproj", "{F769D7BD-ADC0-443A-846F-748B00B25BF1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.VacancySearch.UnitTests", "SFA.Apprenticeships.Infrastructure.VacancySearch.UnitTests\SFA.Apprenticeships.Infrastructure.VacancySearch.UnitTests.csproj", "{7A6640F8-921A-4893-B9DE-BF91BCD4A9E2}"
+EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Infrastructure.Monitor.Azure", "SFA.Apprenticeships.Infrastructure.Monitor.Azure\SFA.Apprenticeships.Infrastructure.Monitor.Azure.ccproj", "{0C31B37E-ABA6-40D1-9389-456BAA44F47A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Monitor", "SFA.Apprenticeships.Infrastructure.Monitor\SFA.Apprenticeships.Infrastructure.Monitor.csproj", "{61619F66-5F17-4EF7-A8CF-BA720BEA3AD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -438,6 +442,14 @@ Global
 		{7A6640F8-921A-4893-B9DE-BF91BCD4A9E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A6640F8-921A-4893-B9DE-BF91BCD4A9E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A6640F8-921A-4893-B9DE-BF91BCD4A9E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C31B37E-ABA6-40D1-9389-456BAA44F47A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C31B37E-ABA6-40D1-9389-456BAA44F47A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C31B37E-ABA6-40D1-9389-456BAA44F47A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C31B37E-ABA6-40D1-9389-456BAA44F47A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61619F66-5F17-4EF7-A8CF-BA720BEA3AD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61619F66-5F17-4EF7-A8CF-BA720BEA3AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61619F66-5F17-4EF7-A8CF-BA720BEA3AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61619F66-5F17-4EF7-A8CF-BA720BEA3AD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -518,5 +530,7 @@ Global
 		{3605194E-8BF2-4A05-887D-B77CF3D76CB7} = {55BA30E9-C87E-46C7-8A66-B97BE867540D}
 		{F769D7BD-ADC0-443A-846F-748B00B25BF1} = {55BA30E9-C87E-46C7-8A66-B97BE867540D}
 		{7A6640F8-921A-4893-B9DE-BF91BCD4A9E2} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
+		{0C31B37E-ABA6-40D1-9389-456BAA44F47A} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
+		{61619F66-5F17-4EF7-A8CF-BA720BEA3AD3} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 	EndGlobalSection
 EndGlobal
