@@ -86,6 +86,12 @@
 
         public string OtherInformation { get; set; }
 
+        public bool ApplyViaEmployerWebsite { get; set; }
+
+        public string ApplicationInstructions { get; set; }
+
+        public string VacancyUrl { get; set; }
+
         public ApplicationStatuses? CandidateApplicationStatus { get; set; }
 
         [UIHint("Date")]

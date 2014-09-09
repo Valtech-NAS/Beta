@@ -1,8 +1,14 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Applications
 @using SFA.Apprenticeships.Web.Candidate.Constants
+
 @model VacancyDetailViewModel
 
-@if (Request.IsAuthenticated)
+@if (@Model.ApplyViaEmployerWebsite)
+{
+    <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
+    <a rel="external" href="@Model.VacancyUrl" target="_blank">Apply now</a>
+}
+else if (Request.IsAuthenticated)
 {
     if (Model.CandidateApplicationStatus.HasValue)
     {
@@ -18,8 +24,8 @@
             case ApplicationStatuses.InProgress:
             case ApplicationStatuses.Successful:
             case ApplicationStatuses.Unsuccessful:
-                <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
-                <a href='@Url.RouteUrl(CandidateRouteNames.MyApplications)'>Track application status</a>    
+            <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
+            <a href='@Url.RouteUrl(CandidateRouteNames.MyApplications)'>Track application status</a>
                 break;
         }
     }

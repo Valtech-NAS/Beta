@@ -32,6 +32,7 @@
             var src = new Vacancy
             {
                 VacancyReference = 42,
+                ApplicationInstructions = "ApplicationInstructions",
                 ClosingDate = DateTime.Today.AddDays(1),
                 ContactPerson = "ContactPerson",
                 ContractedProviderName = "ContractedProviderName",
@@ -73,6 +74,7 @@
             dest.Should().NotBeNull();
 
             dest.Id.Should().Be(src.VacancyReference);
+            dest.ApplicationInstructions.Should().Be(src.ApplicationInstructions);
             dest.ClosingDate.Should().Be(src.ClosingDate);
             dest.Contact.Should().Be(src.ContactPerson);
             dest.ProviderName.Should().Be(src.ContractedProviderName);

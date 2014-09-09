@@ -11,6 +11,9 @@
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom(src => src.VacancyReference))
 
+                .ForMember(dest => dest.ApplicationInstructions,
+                    opt => opt.MapFrom(src => src.ApplicationInstructions))
+
                 .ForMember(dest => dest.ApplyViaEmployerWebsite,
                     opt => opt.MapFrom(src => src.ApplyViaEmployerWebsiteSpecified && src.ApplyViaEmployerWebsite))
 

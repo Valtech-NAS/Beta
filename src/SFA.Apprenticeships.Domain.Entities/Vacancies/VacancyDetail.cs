@@ -43,8 +43,6 @@
 
         public VacancyLocationType VacancyLocationType { get; set; }
 
-        public string VacancyUrl { get; set; }
-
         public string LocalAuthority { get; set; }
 
         public int NumberOfPositions { get; set; }
@@ -66,6 +64,10 @@
         public string EmployerWebsite { get; set; }
 
         public bool ApplyViaEmployerWebsite { get; set; }
+
+        public string VacancyUrl { get; set; }
+
+        public string ApplicationInstructions { get; set; }
 
         public bool IsEmployerAnonymous { get; set; }
 

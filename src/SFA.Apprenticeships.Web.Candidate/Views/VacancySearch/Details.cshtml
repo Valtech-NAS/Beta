@@ -1,4 +1,5 @@
 ﻿@using VacancyLocationType = SFA.Apprenticeships.Domain.Entities.Vacancies.VacancyLocationType
+
 @model VacancyDetailViewModel
 @{
     ViewBag.Title = "Apprenticeships - " + Model.Title;
@@ -190,17 +191,25 @@
 
         if (!string.IsNullOrWhiteSpace(Model.OtherInformation))
         {
-            var sectionBorder = Request.IsAuthenticated ? null : "section-border";
-            
-            <section class="@sectionBorder">
+            <section id="other-information" class="section-border">
                 <h2 class="heading-large collpanel-trigger">Other information</h2>
                 <div class="text collpanel toggle-content">
                     <p>@Model.OtherInformation</p>
                 </div>
             </section>
         }
+
+        if (Model.ApplyViaEmployerWebsite && !string.IsNullOrWhiteSpace(Model.ApplicationInstructions))
+        {      
+            <section id="application-instructions" class="section-border">
+                <h2 class="heading-large">Employer's Application Instructions</h2>
+                <div class="text">
+                    <p>@Model.ApplicationInstructions</p>
+                </div>
+            </section>
+        }
         
-        if (!Request.IsAuthenticated)
+        if (!Model.ApplyViaEmployerWebsite && !Request.IsAuthenticated)
         {
             <section id="before-apply">
                 <h2 class="heading-large">Before you apply</h2>
@@ -209,7 +218,7 @@
                 </div>
             </section>
         }
-        
+
         <section>
             <div class="form-group">
                 @Html.Partial("_Apply", Model)
