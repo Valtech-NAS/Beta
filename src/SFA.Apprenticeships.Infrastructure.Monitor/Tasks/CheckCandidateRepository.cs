@@ -4,15 +4,15 @@
     using Domain.Interfaces.Repositories;
     using NLog;
 
-    public class CheckUserRepository : IMonitorTask
+    public class CheckCandidateRepository : IMonitorTask
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IUserReadRepository _userReadRepository;
-        private const string TaskName = "Check user repository";
+        private readonly ICandidateReadRepository _candidateReadRepository;
+        private const string TaskName = "Check candidate repository";
 
-        public CheckUserRepository(IUserReadRepository userReadRepository)
+        public CheckCandidateRepository(ICandidateReadRepository candidateReadRepository)
         {
-            _userReadRepository = userReadRepository;
+            _candidateReadRepository = candidateReadRepository;
         }
 
         public void Run()
@@ -21,11 +21,11 @@
             
             try
             {
-                _userReadRepository.Get(Guid.NewGuid());
+                _candidateReadRepository.Get(Guid.NewGuid());
             }
             catch (Exception execption)
             {
-                Logger.ErrorException("Error while accessing UserRepository", execption);
+                Logger.ErrorException("Error while accessing CandidateRepository", execption);
             }
 
             Logger.Debug(string.Format("Finished running task {0}", TaskName));

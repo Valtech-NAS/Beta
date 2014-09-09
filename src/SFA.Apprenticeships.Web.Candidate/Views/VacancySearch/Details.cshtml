@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="grid grid-1-3">
-            @Html.ActionLink("Find an apprenticeship", "Index", "VacancySearch", null, new {@class = "page-link"})
+            @Html.ActionLink("Find an apprenticeship", "Index", "VacancySearch", null, new { @class = "page-link" })
         </div>
     </div>
 
@@ -61,7 +61,7 @@
                             <li class="bold-small">Distance</li>
                             <li id="vacancy-distance">@ViewBag.Distance miles</li>
                         </ul>
-                    }                  
+                    }
                     <ul class="list-text">
                         <li>
                             <h3 class="bold-small">Apprenticeship type</h3>
@@ -147,7 +147,7 @@
                             <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                         </div>
-                    }                    
+                    }
                 </div>
             </div>
         </section>
@@ -187,6 +187,19 @@
                 }
             </div>
         </section>
+
+        if (!string.IsNullOrWhiteSpace(Model.OtherInformation))
+        {
+            var sectionBorder = Request.IsAuthenticated ? null : "section-border";
+            
+            <section class="@sectionBorder">
+                <h2 class="heading-large collpanel-trigger">Other information</h2>
+                <div class="text collpanel toggle-content">
+                    <p>@Model.OtherInformation</p>
+                </div>
+            </section>
+        }
+        
         if (!Request.IsAuthenticated)
         {
             <section id="before-apply">
@@ -196,6 +209,7 @@
                 </div>
             </section>
         }
+        
         <section>
             <div class="form-group">
                 @Html.Partial("_Apply", Model)
