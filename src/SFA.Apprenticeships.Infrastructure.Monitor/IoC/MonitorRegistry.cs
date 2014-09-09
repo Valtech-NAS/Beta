@@ -12,7 +12,7 @@
         {
             For<IProcessControlQueue<StorageQueueMessage>>().Use<AzureScheduleQueue>();
             For<MonitorSchedulerConsumer>().Use<MonitorSchedulerConsumer>();
-            For<MonitorTasksRunner>().Use<MonitorTasksRunner>();
+            For<IMonitorTasksRunner>().Use<MonitorTasksRunner>();
             For<CheckUserRepository>().Use<CheckUserRepository>();
 
             //For<IEnumerable<IMonitorTask> >().Use()
