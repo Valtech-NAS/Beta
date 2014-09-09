@@ -63,6 +63,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Consumers\MonitorSchedulerConsumer.cs" />
+    <Compile Include="Tasks\CheckPostcodeService.cs" />
     <Compile Include="Tasks\CheckApplicationRepository.cs" />
     <Compile Include="Tasks\CheckCandidateRepository.cs" />
     <Compile Include="Tasks\CheckAddressSearch.cs" />
@@ -139,6 +140,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Mongo.Common\SFA.Apprenticeships.Infrastructure.Mongo.Common.csproj">
       <Project>{ce62bde8-c127-4808-95f8-5f5e24485830}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Mongo.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
+      <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
       <Project>{91822365-711D-4976-AD7F-069063D8B487}</Project>

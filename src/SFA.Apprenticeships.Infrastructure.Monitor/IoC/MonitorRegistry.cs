@@ -38,6 +38,7 @@
                     x.Type<CheckVacancySearch>();
                     x.Type<CheckLocationLookup>();
                     x.Type<CheckAddressSearch>();
+                    x.Type<CheckPostcodeService>();
                 });
         }
     }
