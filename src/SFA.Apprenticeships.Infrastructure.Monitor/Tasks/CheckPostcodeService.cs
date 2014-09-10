@@ -23,9 +23,9 @@
             {
                 _postcodeLookupProvider.GetLocation("EC1A 4JQ");
             }
-            catch (Exception execption)
+            catch (Exception exception)
             {
-                Logger.ErrorException("Error while accessing Postcode lookup", execption);
+                Logger.ErrorException("Error while accessing Postcode lookup", exception);
             }
 
             Logger.Debug(string.Format("Finished running task {0}", TaskName));

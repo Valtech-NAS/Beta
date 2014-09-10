@@ -23,9 +23,9 @@
             {
                 _addressSearchProvider.FindAddress("EC1A 4JQ");
             }
-            catch (Exception execption)
+            catch (Exception exception)
             {
-                Logger.ErrorException("Error while accessing Address search", execption);
+                Logger.ErrorException("Error while accessing Address search", exception);
             }
 
             Logger.Debug(string.Format("Finished running task {0}", TaskName));
