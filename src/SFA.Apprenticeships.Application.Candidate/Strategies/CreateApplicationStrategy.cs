@@ -39,14 +39,17 @@
                 return CreateNewApplication(candidateId, vacancyId);
             }
 
-            if (applicationDetail.Vacancy.IsExpired())
+            applicationDetail.AssertState("Application should be in draft", ApplicationStatuses.Draft);
+
+            var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
+
+            if (vacancyDetails == null)
             {
+                // Update application status.
                 _applicationWriteRepository.ExpireOrWithdrawForCandidate(candidateId, vacancyId);
 
                 return _applicationReadRepository.Get(applicationDetail.EntityId);
             }
-
-            applicationDetail.AssertState("Application should be in draft", ApplicationStatuses.Draft);
 
             if (applicationDetail.IsArchived)
             {
@@ -66,9 +69,9 @@
 
         private ApplicationDetail CreateNewApplication(Guid candidateId, int vacancyId)
         {
-            var vacancyDetails = GetVacancyDetails(vacancyId);
+            var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
-            if (vacancyDetails == null || vacancyDetails.IsExpired())
+            if (vacancyDetails == null)
             {
                 return new ApplicationDetail
                 {
@@ -114,11 +117,6 @@
                     AboutYou = candidate.ApplicationTemplate.AboutYou
                 },
             };
-        }
-
-        private VacancyDetail GetVacancyDetails(int vacancyId)
-        {
-            return _vacancyDataProvider.GetVacancyDetails(vacancyId);
         }
     }
 }

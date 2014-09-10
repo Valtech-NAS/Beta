@@ -16,7 +16,7 @@
 
         void SubmitApplication(Guid candidateId, int vacancyId);
 
-        WhatHappensNextViewModel GetSubmittedApplicationVacancySummary(Guid candidateId, int vacancyId);
+        WhatHappensNextViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId);
 
         void ArchiveApplication(Guid candidateId, int vacancyId);
     }

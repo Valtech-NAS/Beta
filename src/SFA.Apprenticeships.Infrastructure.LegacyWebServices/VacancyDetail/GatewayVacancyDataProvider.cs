@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancyDetail
 {
+    using System;
     using System.Linq;
     using Application.Vacancy;
     using Domain.Entities.Exceptions;
@@ -28,7 +29,7 @@
 
         public VacancyDetail GetVacancyDetails(int vacancyId)
         {
-            var request = new GetVacancyDetailsRequest { VacancyId = vacancyId };
+            var request = new GetVacancyDetailsRequest {VacancyId = vacancyId};
 
             Logger.Debug("Calling GetVacancyDetails webservice for vacancy details with ID {0}", vacancyId);
 
@@ -58,7 +59,15 @@
                     ErrorCodes.GatewayServiceFailed);
             }
 
-            return _mapper.Map<Vacancy, VacancyDetail>(response.Vacancy);
+            var vacancyDetail = _mapper.Map<Vacancy, VacancyDetail>(response.Vacancy);
+
+            if (vacancyDetail.ClosingDate < DateTime.Today.ToUniversalTime())
+            {
+                // Vacancy has expired.
+                return null;
+            }
+
+            return vacancyDetail;
         }
     }
 }
