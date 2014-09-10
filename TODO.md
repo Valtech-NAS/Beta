@@ -21,6 +21,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 - remove legacy reference data service
 - candidate registration should be queued
+- refactor azure message queue types
 
 ## Infrastructure layer ##
 
