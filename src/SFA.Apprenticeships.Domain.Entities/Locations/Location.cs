@@ -6,5 +6,10 @@ namespace SFA.Apprenticeships.Domain.Entities.Locations
     {
         public string Name { get; set; }
         public GeoPoint GeoPoint { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Geopoint: {0}", GeoPoint);
+        }
     }
 }

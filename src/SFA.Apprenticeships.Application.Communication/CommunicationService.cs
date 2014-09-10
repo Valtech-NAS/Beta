@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Applications;
-    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using Strategies;

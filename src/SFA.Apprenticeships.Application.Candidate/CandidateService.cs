@@ -79,11 +79,13 @@
             }
             catch ( CustomException )
             {
-                throw new CustomException("Activate user failed", Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode);
+                var message = string.Format("Activate user failed for user {0}", username);
+                throw new CustomException(message, Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode);
             }
             catch (Exception )
             {
-                throw new CustomException("Activate user failed", Interfaces.Candidates.ErrorCodes.ActivateUserFailed);
+                var message = string.Format("Activate user failed for user {0}", username);
+                throw new CustomException(message, Interfaces.Candidates.ErrorCodes.ActivateUserFailed);
             }
         }
 

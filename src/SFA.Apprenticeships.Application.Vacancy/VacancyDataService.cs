@@ -21,8 +21,9 @@
             }
             catch (Exception e)
             {
+                var message = string.Format("Get vacancy failed for vacancy {0}.", vacancyId);
                 throw new Domain.Entities.Exceptions.CustomException(
-                    "Get vacancy failed.", e, ErrorCodes.GetVacancyDetailFailed);
+                    message, e, ErrorCodes.GetVacancyDetailFailed);
             }
         }
     }

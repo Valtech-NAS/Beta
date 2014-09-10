@@ -34,8 +34,12 @@
             }
             catch (Exception e)
             {
+                var message = string.Format("Vacancy search failed. Keywords:{0}, Location:{1}," +
+                                            "PageNumber:{2}, PageSize{3}, SearchRadius:{4}," +
+                                            "SortType:{5}", keywords, location, pageNumber, pageSize,
+                                            searchRadius, sortType);
                 throw new Domain.Entities.Exceptions.CustomException(
-                    "Vacancy search failed.", e, ErrorCodes.VacanciesSearchFailed);
+                    message, e, ErrorCodes.VacanciesSearchFailed);
             }
         }
     }

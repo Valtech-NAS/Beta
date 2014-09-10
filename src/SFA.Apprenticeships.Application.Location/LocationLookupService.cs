@@ -31,8 +31,9 @@
                 }
                 catch (Exception e)
                 {
+                    var message = string.Format("Postcode lookup failed for postcode {0}.", placeNameOrPostcode);
                     throw new Domain.Entities.Exceptions.CustomException(
-                        "Postcode lookup failed.", e, ErrorCodes.PostcodeLookupFailed);
+                        message, e, ErrorCodes.PostcodeLookupFailed);
                 }
 
                 if (location == null) return null; // no match
