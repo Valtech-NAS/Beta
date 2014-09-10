@@ -30,7 +30,7 @@
 
             if (latestScheduledMessage != null)
             {
-                Logger.Info("Found Monitor control message, starting application update process");
+                Logger.Info("Found Monitor control message, starting monitor process");
 
                 _monitorTasksRunner.RunMonitorTasks();
             }
