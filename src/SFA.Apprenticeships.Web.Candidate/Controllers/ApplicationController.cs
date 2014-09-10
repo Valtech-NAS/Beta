@@ -49,6 +49,11 @@
         {
             var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
+            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            {
+                return new VacancyNotFoundResult();
+            }
+
             if (model.HasError())
             {
                 SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
@@ -242,13 +247,16 @@
         {
             try
             {
-                var applicationViewModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-                if (applicationViewModel.Status == ApplicationStatuses.Draft)
+                var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+
+                if (model.Status == ApplicationStatuses.Draft)
                 {
                     _applicationProvider.SubmitApplication(UserContext.CandidateId, id);
+
+                    return RedirectToAction("WhatHappensNext", new { id });
                 }
 
-                return RedirectToAction("WhatHappensNext", new {id});
+                return new VacancyNotFoundResult();
             }
             catch (Exception)
             {
@@ -262,11 +270,17 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult WhatHappensNext(int id)
         {
-            var model = _applicationProvider.GetSubmittedApplicationVacancySummary(UserContext.CandidateId, id);
+            var model = _applicationProvider.GetWhatHappensNextViewModel(UserContext.CandidateId, id);
 
             if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
                 return new VacancyNotFoundResult();
+            }
+
+            if (model.HasError())
+            {
+                SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
+                return RedirectToAction("Index");
             }
 
             return View(model);

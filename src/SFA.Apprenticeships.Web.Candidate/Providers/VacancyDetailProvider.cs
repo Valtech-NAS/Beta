@@ -7,14 +7,16 @@
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
+    using NLog;
     using ViewModels.VacancySearch;
     using Application.Interfaces.Candidates;
     using Domain.Entities.Exceptions;
     using Constants.Pages;
-    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
 
     public class VacancyDetailProvider : IVacancyDetailProvider
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly IVacancyDataService _vacancyDataService;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
@@ -41,45 +43,48 @@
             {
                 var vacancyDetail = _vacancyDataService.GetVacancyDetails(vacancyId);
 
-                if (candidateId != null)
+                if (vacancyDetail == null)
                 {
-                    // Vacancy is being viewed by a signed-in candidate, ensure it is not expired or withdrawn.
-                    if (vacancyDetail == null || vacancyDetail.IsExpired())
+                    if (candidateId != null)
                     {
+                        // Vacancy is being viewed by a signed-in candidate, update application status.
                         _applicationWriteRepository.ExpireOrWithdrawForCandidate(candidateId.Value, vacancyId);
-                        return null;
                     }
+
+                    return null;
                 }
 
                 var vacancyDetailViewModel = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
-                // If candidate has applied for vacancy, include the details in the view model.
-                var applicationDetails = GetCandidateApplication(candidateId, vacancyId);
-
-                if (applicationDetails != null)
+                if (candidateId != null)
                 {
-                    vacancyDetailViewModel.CandidateApplicationStatus = applicationDetails.Status;
-                    vacancyDetailViewModel.DateApplied = applicationDetails.DateApplied;
+                    // If candidate has applied for vacancy, include the details in the view model.
+                    var applicationDetails = GetCandidateApplication(candidateId.Value, vacancyId);
+
+                    if (applicationDetails != null)
+                    {
+                        vacancyDetailViewModel.CandidateApplicationStatus = applicationDetails.Status;
+                        vacancyDetailViewModel.DateApplied = applicationDetails.DateApplied;
+                    }
                 }
 
                 return vacancyDetailViewModel;
             }
-            catch (CustomException)
+            catch (CustomException e)
             {
+                var message = string.Format("Get Vacancy View Model failed for candidate ID: {0}, vacancy ID: {1}.",
+                    candidateId, vacancyId);
+
+                Logger.ErrorException(message, e);
+
                 return new VacancyDetailViewModel(VacancyDetailPageMessages.GetVacancyDetailFailed);
             }
         }
 
-        private ApplicationSummary GetCandidateApplication(Guid? candidateId, int vacancyId)
+        private ApplicationSummary GetCandidateApplication(Guid candidateId, int vacancyId)
         {
-            if (candidateId == null)
-            {
-                // Vacancy is not being viewed by a signed-in candidate.
-                return null;
-            }
-
             return _candidateService
-                .GetApplications(candidateId.Value)
+                .GetApplications(candidateId)
                 .SingleOrDefault(a => a.LegacyVacancyId == vacancyId);
         }
     }

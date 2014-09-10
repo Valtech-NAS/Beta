@@ -15,7 +15,7 @@
 
         public void InfoWrite(string format, params object[] args)
         {
-            Logger.Info(format, args);
+            Logger.Debug(format, args);
         }
 
         public void ErrorWrite(string format, params object[] args)

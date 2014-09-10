@@ -3,13 +3,13 @@
     using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
-    using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
-    using SFA.Apprenticeships.Domain.Entities.Exceptions;
     using Strategies;
     using Web.Common.Constants;
+    using ErrorCodes = Interfaces.Users.ErrorCodes;
 
     public class UserAccountService : IUserAccountService
     {
@@ -46,7 +46,7 @@
             Condition.Requires(username).IsNotNullOrEmpty();
 
             // check status of user (unactivated account should also be considered "available")
-            var user = _userReadRepository.Get(username, false);
+            User user = _userReadRepository.Get(username, false);
             return user == null || user.Status == UserStatuses.PendingActivation;
         }
 
@@ -76,7 +76,8 @@
             }
             catch
             {
-                throw new CustomException("Resend activation code failed", Interfaces.Users.ErrorCodes.ActivationCodeResendingFailed);
+                var message = string.Format("Resend activation code failed for username {0}", username);
+                throw new CustomException(message, ErrorCodes.ActivationCodeResendingFailed);
             }
         }
 
@@ -115,7 +116,7 @@
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
-            var user = _userReadRepository.Get(username, false);
+            User user = _userReadRepository.Get(username, false);
 
             if (user == null)
             {
@@ -130,7 +131,7 @@
             Condition.Requires(username).IsNotNullOrEmpty();
 
             var claims = new List<string>();
-            var userStatus = GetUserStatus(username);
+            UserStatuses userStatus = GetUserStatus(username);
 
             // Add 'roles' for user status.
             switch (userStatus)

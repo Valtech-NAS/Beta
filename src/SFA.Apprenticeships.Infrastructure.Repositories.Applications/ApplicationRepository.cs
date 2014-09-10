@@ -60,9 +60,9 @@
 
             if (mongoEntity == null && errorIfNotFound)
             {
-                Logger.Debug("Unknown ApplicationDetail with Id={0}", id);
+                var message = string.Format("Unknown ApplicationDetail with Id={0}", id);
 
-                throw new CustomException("Unknown ApplicationDetail", ErrorCodes.ApplicationNotFoundError);
+                throw new CustomException(message, ErrorCodes.ApplicationNotFoundError);
             }
 
             return mongoEntity == null ? null : _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);

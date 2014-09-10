@@ -47,7 +47,6 @@
     <Compile Include="Applications\ApplicationStatuses.cs" />
     <Compile Include="Exceptions\CustomException.cs" />
     <Compile Include="Exceptions\ErrorCodes.cs" />
-    <Compile Include="Vacancies\VacanciesHelper.cs" />
     <Compile Include="Vacancies\VacancyStatuses.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Candidates\AboutYou.cs" />

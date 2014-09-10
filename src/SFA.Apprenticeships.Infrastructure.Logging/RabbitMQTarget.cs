@@ -171,7 +171,7 @@
 
             public void InfoWrite(string format, params object[] args)
             {
-                InternalLogger.Info(format, args);
+                InternalLogger.Debug(format, args);
             }
 
             public void ErrorWrite(string format, params object[] args)

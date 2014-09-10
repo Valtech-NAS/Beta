@@ -82,12 +82,12 @@
                     return _server.Connection.SendRequest(modifyRequest);
                 }
             }
-            catch (DirectoryOperationException doex)
+            catch (DirectoryOperationException e)
             {
-                Logger.ErrorException("Active directory change password. ", doex);
+                Logger.DebugException("Active directory change password. ", e);
 
                 // TODO: EXCEPTION: Low::Act on the exceptions.
-                switch (doex.Response.ResultCode)
+                switch (e.Response.ResultCode)
                 {
                     case ResultCode.UnwillingToPerform:
                         //Console.WriteLine("Pwd violates pwd-history: {0}", doex.Response.ErrorMessage);

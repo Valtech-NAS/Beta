@@ -53,7 +53,16 @@
             }
 
             Logger.Debug("{0} results returned from Legacy Vacancy Data Provider for VacancyId={1}", rs.SearchResults.SearchResults.Count(), vacancyId);
-            return _mapper.Map<VacancyFullData, VacancyDetail>(rs.SearchResults.SearchResults.First());
+
+            var vacancyDetail = _mapper.Map<VacancyFullData, VacancyDetail>(rs.SearchResults.SearchResults.First());
+
+            if (vacancyDetail.ClosingDate < DateTime.Today.ToUniversalTime())
+            {
+                // Vacancy has expired.
+                return null;
+            }
+
+            return vacancyDetail;
         }
     }
 }

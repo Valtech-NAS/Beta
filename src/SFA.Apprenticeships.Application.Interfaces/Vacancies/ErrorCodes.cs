@@ -4,6 +4,6 @@
     {
         public const string VacanciesSearchFailed = "VacanciesSearch.Failed";
 
-        public const string GetVacancyDetailFailed = "GetVacancyDetail.Failed";
+        public const string GetVacancyDetailsFailed = "GetVacancyDetails.Failed";
     }
 }
