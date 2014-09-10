@@ -9,6 +9,7 @@
     using Newtonsoft.Json;
     using NLog;
     using Wcf;
+    using ErrorCodes = Application.VacancyEtl.ErrorCodes;
 
     public class GatewayVacancyDataProvider : IVacancyDataProvider
     {
@@ -29,7 +30,7 @@
         {
             var request = new GetVacancyDetailsRequest { VacancyId = vacancyId };
 
-            Logger.Debug("Calling Gateway webservice for vacancy details with ID {0}", vacancyId);
+            Logger.Debug("Calling GetVacancyDetails webservice for vacancy details with ID {0}", vacancyId);
 
             var response = default(GetVacancyDetailsResponse);
             _service.Use(client => response = client.GetVacancyDetails(request).GetVacancyDetailsResponse);
@@ -48,8 +49,9 @@
                     Logger.Error("Gateway GetVacancyDetails did not respond");
                 }
 
-                // TODO: EXCEPTION: use specific exception code
-                throw new CustomException("Gateway GetVacancyDetails failed to retrieve vacancy details from legacy system");
+                throw new CustomException(
+                    "Gateway GetVacancyDetails failed to retrieve vacancy details from legacy system.",
+                    ErrorCodes.GatewayServiceFailed);
             }
 
             return _mapper.Map<Vacancy, VacancyDetail>(response.Vacancy);

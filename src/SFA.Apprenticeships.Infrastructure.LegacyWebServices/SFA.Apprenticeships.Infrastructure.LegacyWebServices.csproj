@@ -75,7 +75,9 @@
     <Compile Include="IoC\LegacyWebServicesRegistry.cs" />
     <Compile Include="Mappers\GatewayVacancyDetailMapper.cs" />
     <Compile Include="Mappers\GatewayVacancyDetailAddressDetailsResolver.cs" />
+    <Compile Include="Mappers\GatewayVacancySummaryMapper.cs" />
     <Compile Include="Mappers\VacancyDetailAddressResolver.cs" />
+    <Compile Include="Mappers\GatewayVacancySummaryLocationResolver.cs" />
     <Compile Include="Mappers\VacancySummaryLocationResolver.cs" />
     <Compile Include="Mappers\VacancyDetailMapper.cs" />
     <Compile Include="Mappers\ApplicationStatusSummaryMapper.cs" />

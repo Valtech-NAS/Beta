@@ -108,7 +108,6 @@
             dest.Wage.Should().Be(src.WeeklyWage);
             dest.WageDescription.Should().Be(src.WageText);
             dest.WorkingWeek.Should().Be(src.WorkingWeek);
-
         }
 
         [TestCase]

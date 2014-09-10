@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
     using Common.Mappers;
-    using GatewayServiceProxy;
 
     public class GatewayVacancyDetailMapper : MapperEngine
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<Vacancy, Domain.Entities.Vacancies.VacancyDetail>()
+            Mapper.CreateMap<GatewayServiceProxy.Vacancy, Domain.Entities.Vacancies.VacancyDetail>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom(src => src.VacancyReference))
 
@@ -155,7 +154,7 @@
 
                 .ForMember(dest => dest.LocalAuthority,
                     opt => opt.Ignore())
-             ;
+            ;
         }
     }
 }
