@@ -31,7 +31,7 @@
         {
             var request = new GetVacancyDetailsRequest {VacancyId = vacancyId};
 
-            Logger.Debug("Calling GetVacancyDetails webservice for vacancy details with ID {0}", vacancyId);
+            Logger.Debug("Calling Gateway GetVacancyDetails webservice for vacancy details with ID {0}", vacancyId);
 
             var response = default(GetVacancyDetailsResponse);
             _service.Use(client => response = client.GetVacancyDetails(request).GetVacancyDetailsResponse);
@@ -64,6 +64,7 @@
             if (vacancyDetail.ClosingDate < DateTime.Today.ToUniversalTime())
             {
                 // Vacancy has expired.
+                Logger.Debug("Vacancy has expired. Returning null.");
                 return null;
             }
 

@@ -29,12 +29,14 @@
 
         public void SendEmail(EmailRequest request)
         {
+            Logger.Debug("Sending email.");
             var message = ComposeMessage(request);
             DispatchMessage(message);
         }
 
         private SendGridMessage ComposeMessage(EmailRequest request)
         {
+            Logger.Debug("Composing message.");
             var message = CreateMessage(request);
 
             AttachTemplate(request, message);

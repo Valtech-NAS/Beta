@@ -26,7 +26,7 @@
             string indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(LocationLookup));
             string term = placeName.ToLowerInvariant();
 
-            Logger.Debug("Calling find location for Term={0} on IndexName={1}", term, indexName);
+            Logger.Debug("Calling FindLocation for Term={0} on IndexName={1}", term, indexName);
 
             ISearchResponse<LocationLookup> exactMatchResults = client.Search<LocationLookup>(s => s
                 .Index(indexName)

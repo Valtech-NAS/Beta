@@ -30,7 +30,7 @@
             // TODO: remove vacancyLocationType arg as results will contain all types.
             var request = new GetVacancySummaryRequest { PageNumber = 1 };
 
-            Logger.Debug("Calling GetVacancySummaries webservice for vacancy index page count");
+            Logger.Debug("Calling Gateway GetVacancySummaries webservice for vacancy index page count");
 
             var response = default(GetVacancySummaryResponse);
 
@@ -54,7 +54,7 @@
             // TODO: remove vacancyLocationType arg as results will contain all types.
             var request = new GetVacancySummaryRequest { PageNumber = page };
 
-            Logger.Debug("Calling GetVacancySummaries webservice for vacancy data page {0}", page);
+            Logger.Debug("Calling Gateway GetVacancySummaries webservice for vacancy data page {0}", page);
 
             var response = default(GetVacancySummaryResponse);
 

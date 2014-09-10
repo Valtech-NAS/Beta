@@ -28,6 +28,9 @@
 
         public VacancyDetail GetVacancyDetails(int vacancyId)
         {
+            var message = string.Format("Calling Legacy GetVacancyDetails for vacancy {0}", vacancyId);
+            Logger.Debug(message);
+
             var vacancyDetailRequest = new VacancyDetailsRequest
             {
                 ExternalSystemId = _legacyServicesConfiguration.SystemId,
