@@ -28,28 +28,37 @@
 
                     @for (var i = 0; i < Model.Candidate.Qualifications.Count() + Model.DefaultQualificationRows; i++)
                     {
+                        var nameAttributeForSubject = "Candidate.Qualifications[" + i + "].Subject";
+                        var nameAttributeForQualificationType = "Candidate.Qualifications[" + i + "].QualificationType";
+                        var nameAttributeForYear = "Candidate.Qualifications[" + i + "].Year";
+                        var nameAttributeForGrade = "Candidate.Qualifications[" + i + "].Grade";
+                        //var nameAttributeForIsPredicted = "Candidate.Qualifications[" + i + "].IsPredicted";
+
                         if (i < Model.Candidate.Qualifications.Count())
                         {
                             <tr>
                                 <td>
-                                    @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Subject, new { @id = "candidate_qualifications_" + i + "__subject", Name = "Candidate.Qualifications[" + i + "].Subject", @class = "form-control qual-input-edit", @maxlength = 50 })
-
+                               
+                                    @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Subject, new {@id = "candidate_qualifications_" + i + "__subject", Name = "Candidate.Qualifications[" + i + "].Subject", @class = "form-control qual-input-edit", @maxlength = 50})
+                                   @Html.ValidationMessageFor(m => Model.Candidate.Qualifications.ToList()[i].Subject);
                                 </td>
                                 <td>
-                                    @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].QualificationType, new { @id = "candidate_qualifications_" + i + "__qualificationtype", Name = "Candidate.Qualifications[" + i + "].QualificationType", @class = "form-control qual-input-edit", @maxlength = 50 })
+                                    @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].QualificationType, new {@id = "candidate_qualifications_" + i + "__qualificationtype", Name = "Candidate.Qualifications[" + i + "].QualificationType", @class = "form-control qual-input-edit", @maxlength = 50})
+                                   @Html.ValidationMessageFor(m => Model.Candidate.Qualifications.ToList()[i].QualificationType)
                                 </td>
 
                                 <td>
-                                    @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Year, new { @id = "candidate_qualifications_" + i + "__year", Name = "Candidate.Qualifications[" + i + "].Year", @class = "form-control qual-input-edit", @maxlength = 4, @pattern = "[0-9]*" })
-
+                                    @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Year, new {@id = "candidate_qualifications_" + i + "__year", Name = "Candidate.Qualifications[" + i + "].Year", @class = "form-control qual-input-edit", @maxlength = 4, @pattern = "[0-9]*"})
+                                    @Html.ValidationMessageFor(m => Model.Candidate.Qualifications.ToList()[i].Year)
                                 </td>
                                 <td>
                                     <div class="small-btm-margin">
-                                        @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Grade, new { @id = "candidate_qualifications_" + i + "__grade", Name = "Candidate.Qualifications[" + i + "].Grade", @class = "form-control qual-input-edit", @maxlength = 11 })
+                                        @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Grade, new {@id = "candidate_qualifications_" + i + "__grade", Name = "Candidate.Qualifications[" + i + "].Grade", @class = "form-control qual-input-edit", @maxlength = 11})
+                                        @Html.ValidationMessageFor(m => Model.Candidate.Qualifications.ToList()[i].Grade) 
                                     </div>
                                 </td>
                                 <td class="ta-center">
-                                    @Html.CheckBoxFor(m => Model.Candidate.Qualifications.ToList()[i].IsPredicted, new { @id = "candidate_qualifications_" + i + "__ispredicted", Name = "Candidate.Qualifications[" + i + "].IsPredicted" })
+                                    @Html.CheckBoxFor(m => Model.Candidate.Qualifications.ToList()[i].IsPredicted, new {@id = "candidate_qualifications_" + i + "__ispredicted", Name = "Candidate.Qualifications[" + i + "].IsPredicted"})
                                 </td>
                             </tr>
                         }
@@ -57,24 +66,26 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.TextBox("Candidate.Qualifications[" + i + "].Subject", "", new { @id = "candidate_qualifications_" + i + "__subject", Name = "Candidate.Qualifications[" + i + "].Subject", @class = "form-control qual-input-edit", @maxlength = 50 })
-
+                                    @Html.TextBox("Candidate.Qualifications[" + i + "].Subject", "", new {@id = "candidate_qualifications_" + i + "__subject", Name = "Candidate.Qualifications[" + i + "].Subject", @class = "form-control qual-input-edit", @maxlength = 50})
+                                    
                                 </td>
                                 <td>
-                                    @Html.TextBox("Candidate.Qualifications[" + i + "].QualificationType", "", new { @id = "candidate_qualifications_" + i + "__qualificationtype", Name = "Candidate.Qualifications[" + i + "].QualificationType", @class = "form-control qual-input-edit", @maxlength = 50 })
+                                    @Html.TextBox("Candidate.Qualifications[" + i + "].QualificationType", "", new {@id = "candidate_qualifications_" + i + "__qualificationtype", Name = "Candidate.Qualifications[" + i + "].QualificationType", @class = "form-control qual-input-edit", @maxlength = 50})
+                                   
                                 </td>
 
                                 <td>
-                                    @Html.TextBox("Candidate.Qualifications[" + i + "].Year", "0", new { @id = "candidate_qualifications_" + i + "__year", Name = "Candidate.Qualifications[" + i + "].Year", @class = "form-control qual-input-edit", @maxlength = 4, @pattern = "[0-9]*" })
-
+                                    @Html.TextBox("Candidate.Qualifications[" + i + "].Year", "", new {@id = "candidate_qualifications_" + i + "__year", Name = "Candidate.Qualifications[" + i + "].Year", @class = "form-control qual-input-edit", @maxlength = 4, @pattern = "[0-9]*"})
+                                   
                                 </td>
                                 <td>
                                     <div class="small-btm-margin">
-                                        @Html.TextBox("Candidate.Qualifications[" + i + "].Grade", "", new { @id = "candidate_qualifications_" + i + "__grade", Name = "Candidate.Qualifications[" + i + "].Grade", @class = "form-control qual-input-edit", @maxlength = 11 })
+                                        @Html.TextBox("Candidate.Qualifications[" + i + "].Grade", "", new {@id = "candidate_qualifications_" + i + "__grade", Name = "Candidate.Qualifications[" + i + "].Grade", @class = "form-control qual-input-edit", @maxlength = 11})
+                                       
                                     </div>
                                 </td>
                                 <td class="ta-center">
-                                    @Html.CheckBox("Candidate.Qualifications[" + i + "].IsPredicted", new { @id = "candidate_qualifications_" + i + "__ispredicted", Name = "Candidate.Qualifications[" + i + "].IsPredicted" })
+                                    @Html.CheckBox("Candidate.Qualifications[" + i + "].IsPredicted", new {@id = "candidate_qualifications_" + i + "__ispredicted", Name = "Candidate.Qualifications[" + i + "].IsPredicted"})
                                 </td>
                             </tr>
                         }

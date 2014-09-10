@@ -25,6 +25,8 @@
             public const string RequiredErrorText = "Please enter year started";
             public const string MustBeNumericText = "Please enter year started";
             public const string BeforeOrEqualErrorText = "Year started mustn’t be in the future";
+            public const string WhiteListRegularExpression = Whitelists.YearWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "From year " + Whitelists.YearWhitelist.ErrorText;
         }
 
         public static class JobTitleMessages
@@ -40,7 +42,8 @@
             public const string RequiredErrorText = "Please enter year finished";
             public const string MustBeNumericText = "Year finished must be a number";
             public const string BeforeOrEqualErrorText = "Year finished mustn’t be in the future";
-            public const string MustBeFourDigitNumberErrorText = "Year finished must be 4 digits, for example 1990";
+            public const string WhiteListRegularExpression = Whitelists.YearWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "To year " + Whitelists.YearWhitelist.ErrorText;
         }
     }
 }

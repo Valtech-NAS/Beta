@@ -305,7 +305,10 @@
         private static IEnumerable<WorkExperienceViewModel> RemoveEmptyRowsFromWorkExperience(
             IEnumerable<WorkExperienceViewModel> workExperience)
         {
-            workExperience = workExperience ?? new WorkExperienceViewModel[] { };
+            if (workExperience == null)
+            {
+                return new List<WorkExperienceViewModel>();
+            }
 
             return workExperience.Where(vm =>
                 vm.Employer != null && !string.IsNullOrWhiteSpace(vm.Employer.Trim()) ||
@@ -317,7 +320,10 @@
         private static IEnumerable<QualificationsViewModel> RemoveEmptyRowsFromQualifications(
             IEnumerable<QualificationsViewModel> qualifications)
         {
-            qualifications = qualifications ?? new QualificationsViewModel[] { };
+            if (qualifications == null)
+            {
+                return new List<QualificationsViewModel>();
+            }
 
             return qualifications.Where(vm =>
                 vm.Subject != null && !string.IsNullOrWhiteSpace(vm.Subject.Trim()) ||

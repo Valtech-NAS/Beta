@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
     using System.Globalization;
     using System.Linq;
     using Domain.Entities.Candidates;
@@ -38,7 +37,8 @@
             return addressViewModel;
         }
 
-        public static IEnumerable<QualificationsViewModel> GetQualificationsViewModels(IEnumerable<Qualification> qualifications)
+        public static IEnumerable<QualificationsViewModel> GetQualificationsViewModels(
+            IEnumerable<Qualification> qualifications)
         {
             return qualifications.Select(q => new QualificationsViewModel
             {
@@ -46,7 +46,7 @@
                 IsPredicted = q.IsPredicted,
                 QualificationType = q.QualificationType,
                 Subject = q.Subject,
-                Year = q.Year
+                Year = ConvertYearIntToString(q.Year)
             }).AsEnumerable();
         }
 
@@ -59,9 +59,9 @@
                 Employer = m.Employer,
                 JobTitle = m.JobTitle,
                 FromMonth = m.FromDate.Month,
-                FromYear = m.FromDate.Year, 
+                FromYear = ConvertYearIntToString(m.FromDate.Year),
                 ToMonth = m.ToDate.Month,
-                ToYear = m.ToDate.Year 
+                ToYear = ConvertYearIntToString(m.ToDate.Year)
             }).AsEnumerable();
         }
 
@@ -74,9 +74,9 @@
 
             return new EducationViewModel
             {
-                FromYear = educationHistory.FromYear.ToString(CultureInfo.InvariantCulture),
+                FromYear = ConvertYearIntToString(educationHistory.FromYear),
                 NameOfMostRecentSchoolCollege = educationHistory.Institution,
-                ToYear = educationHistory.ToYear.ToString(CultureInfo.InvariantCulture)
+                ToYear = ConvertYearIntToString(educationHistory.ToYear)
             };
         }
 
@@ -153,8 +153,11 @@
                 Description = model.Description,
                 Employer = model.Employer,
                 JobTitle = model.JobTitle,
-                FromDate = new DateTime(model.FromYear, model.FromMonth, 1),
-                ToDate = model.ToYear != 0 ? new DateTime(model.ToYear, model.ToMonth, 1) : DateTime.MinValue
+                FromDate = new DateTime(ConvertYearStringToInt(model.FromYear), model.FromMonth, 1),
+                ToDate =
+                    ConvertYearStringToInt(model.ToYear) != 0
+                        ? new DateTime(ConvertYearStringToInt(model.ToYear), model.ToMonth, 1)
+                        : DateTime.MinValue
             }).ToList();
         }
 
@@ -163,7 +166,7 @@
         {
             if (qualifications == null)
             {
-                return  new List<Qualification>();
+                return new List<Qualification>();
             }
 
             return qualifications.Select(model => new Qualification
@@ -172,7 +175,7 @@
                 IsPredicted = model.IsPredicted,
                 QualificationType = model.QualificationType,
                 Subject = model.Subject,
-                Year = model.Year
+                Year = ConvertYearStringToInt(model.Year)
             }).ToList();
         }
 
@@ -181,6 +184,11 @@
             int year;
             int.TryParse(stringYear, out year);
             return year;
+        }
+
+        private static string ConvertYearIntToString(int intYear)
+        {
+            return intYear > 0 ? intYear.ToString(CultureInfo.InvariantCulture) : string.Empty;
         }
 
         #endregion

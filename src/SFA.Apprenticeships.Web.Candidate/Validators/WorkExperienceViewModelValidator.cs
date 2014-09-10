@@ -36,24 +36,27 @@
             RuleFor(x => x.FromYear)
                 .NotEmpty()
                 .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.RequiredErrorText)
-                .GreaterThanOrEqualTo(0)
-                .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.MustBeNumericText)
-                .InclusiveBetween(DateTime.Now.Year - 100, DateTime.Now.Year)
+                .Matches(WorkExperienceViewModelMessages.FromYearMessages.WhiteListRegularExpression)
+                .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.WhiteListErrorText)
+                .Must(BeNowOrInThePast)
                 .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.BeforeOrEqualErrorText);
 
             RuleFor(x => x.ToYear)
-                .GreaterThanOrEqualTo(0)
-                .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.MustBeNumericText)
-                .LessThanOrEqualTo(DateTime.Now.Year)
+                .Must(BeNowOrInThePast)
                 .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.BeforeOrEqualErrorText)
-                .Must(MustBeZeroOrFourDigitNumber)
-                .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.MustBeFourDigitNumberErrorText);
-        }
+                .Matches(WorkExperienceViewModelMessages.ToYearMessages.WhiteListRegularExpression)
+                .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.WhiteListErrorText);
+        }     
 
-        private bool MustBeZeroOrFourDigitNumber(int year)
+        private static bool BeNowOrInThePast( string year)
         {
-            var dateTimeNow = DateTime.Now;
-            return year <= 1 || year > dateTimeNow.Year - 100;
+            if (string.IsNullOrEmpty(year))
+            {
+                //Will be picked up by required validator
+                return true;
+            }
+            var from = int.Parse(year);
+            return from <= DateTime.Now.Year;
         }
     }
 }

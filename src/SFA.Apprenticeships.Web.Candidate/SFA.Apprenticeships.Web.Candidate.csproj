@@ -318,7 +318,6 @@
     <Content Include="Views\Application\_workExperiencesJS.cshtml" />
     <Content Include="Views\Application\_qualificationsNonJS.cshtml" />
     <Content Include="Views\Application\_workExperiencesNonJS.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Year.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

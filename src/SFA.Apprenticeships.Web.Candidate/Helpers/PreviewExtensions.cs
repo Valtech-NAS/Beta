@@ -5,14 +5,22 @@
 
     public static class PreviewExtensions
     {
-        public static string GetMonthYearLabel(this HtmlHelper helper, int month, int year)
+        public static string GetMonthYearLabel(this HtmlHelper helper, int month, string year)
         {
-            if ( year == DateTime.MinValue.Year )
+            if (string.IsNullOrEmpty(year))
             {
                 return "Current";
             }
 
-            var date = new DateTime(year, month, 1);
+            int intYear;
+            int.TryParse(year, out intYear);
+
+            if (intYear == DateTime.MinValue.Year)
+            {
+                return "Current";
+            }
+
+            var date = new DateTime(intYear, month, 1);
 
             return date.ToString("MMM yyyy");
         }

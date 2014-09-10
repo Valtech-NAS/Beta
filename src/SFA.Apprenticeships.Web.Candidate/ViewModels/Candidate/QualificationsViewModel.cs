@@ -10,7 +10,6 @@
         public bool IsPredicted { get; set; }
         public string QualificationType { get; set; }
         public string Subject { get; set; }
-       // [UIHint("Year")]
-        public int Year { get; set; }
+        public string Year { get; set; }
     }
 }
