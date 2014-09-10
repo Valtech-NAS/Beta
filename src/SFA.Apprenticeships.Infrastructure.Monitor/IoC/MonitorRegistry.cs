@@ -26,6 +26,7 @@
                     x.Type<CheckAddressSearch>();
                     x.Type<CheckPostcodeService>();
                     x.Type<CheckActiveDirectory>();
+                    x.Type<CheckRabbitMessageQueue>();
                 });
         }
     }
