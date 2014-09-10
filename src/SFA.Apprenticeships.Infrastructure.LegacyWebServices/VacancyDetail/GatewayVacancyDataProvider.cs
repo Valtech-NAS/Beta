@@ -49,8 +49,12 @@
                     Logger.Error("Gateway GetVacancyDetails did not respond");
                 }
 
+                var message =
+                    string.Format(
+                        "Gateway GetVacancyDetails failed to retrieve vacancy details from legacy system for vacancyId {0}",
+                        vacancyId);
                 throw new CustomException(
-                    "Gateway GetVacancyDetails failed to retrieve vacancy details from legacy system.",
+                    message,
                     ErrorCodes.GatewayServiceFailed);
             }
 

@@ -54,7 +54,10 @@
                 }
 
                 // TODO: EXCEPTION: should use an application exception type
-                throw new Exception("Failed to retrieve candidate applications in legacy system");
+                var message =
+                    string.Format("Failed to retrieve candidate applications in legacy system for candidate {0}",
+                        candidate.LegacyCandidateId);
+                throw new Exception(message);
             }
 
             Logger.Debug("Candidate applications were successfully retrieved from Legacy web service ({0})", response.CandidateApplications.Count());
