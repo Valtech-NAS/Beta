@@ -6,9 +6,9 @@
 
     public class CheckUserRepository : IMonitorTask
     {
+        private const string TaskName = "Check user repository";
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IUserReadRepository _userReadRepository;
-        private const string TaskName = "Check user repository";
 
         public CheckUserRepository(IUserReadRepository userReadRepository)
         {
@@ -23,9 +23,9 @@
             {
                 _userReadRepository.Get(Guid.NewGuid());
             }
-            catch (Exception execption)
+            catch (Exception exception)
             {
-                Logger.ErrorException("Error while accessing UserRepository", execption);
+                Logger.ErrorException("Error while accessing UserRepository", exception);
             }
 
             Logger.Debug(string.Format("Finished running task {0}", TaskName));

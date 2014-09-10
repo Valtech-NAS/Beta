@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
     using System;
-    using Application.Interfaces.Locations;
     using NLog;
     using UserDirectory.ActiveDirectory;
 
@@ -27,9 +26,9 @@
                     
                 }
             }
-            catch (Exception execption)
+            catch (Exception exception)
             {
-                Logger.ErrorException("Error while accessing Active Directory", execption);
+                Logger.ErrorException("Error while accessing Active Directory", exception);
             }
 
             Logger.Debug(string.Format("Finished running task {0}", TaskName));

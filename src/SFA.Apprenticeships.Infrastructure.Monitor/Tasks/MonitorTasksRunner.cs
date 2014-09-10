@@ -20,8 +20,7 @@
         {
             Logger.Debug("Starting to run monitor tasks");
 
-            Task[] tasks = _monitorTasks
-                .Select(mt => Task.Factory.StartNew(mt.Run)).ToArray();
+            var tasks = _monitorTasks.Select(mt => Task.Factory.StartNew(mt.Run)).ToArray();
 
             Task.WaitAll(tasks);
 

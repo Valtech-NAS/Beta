@@ -2,9 +2,6 @@
 {
     using System;
     using Application.Interfaces.Locations;
-    using Application.Interfaces.Vacancies;
-    using Application.Vacancy;
-    using Domain.Entities.Locations;
     using NLog;
 
     public class CheckLocationLookup : IMonitorTask
@@ -26,9 +23,9 @@
             {
                 _locationLookupProvider.FindLocation("London");
             }
-            catch (Exception execption)
+            catch (Exception exception)
             {
-                Logger.ErrorException("Error while accessing Location lookup", execption);
+                Logger.ErrorException("Error while accessing Location lookup", exception);
             }
 
             Logger.Debug(string.Format("Finished running task {0}", TaskName));

@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
     using System;
-    using Application.Interfaces.Locations;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Domain.Entities.Locations;
@@ -27,9 +26,9 @@
                 _vacancySearchProvider.FindVacancies(string.Empty, new Location{GeoPoint = new GeoPoint()}, 
                     1, 10, 10, VacancySortType.Distance);
             }
-            catch (Exception execption)
+            catch (Exception exception)
             {
-                Logger.ErrorException("Error while accessing Vacancy search", execption);
+                Logger.ErrorException("Error while accessing Vacancy search", exception);
             }
 
             Logger.Debug(string.Format("Finished running task {0}", TaskName));

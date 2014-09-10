@@ -6,9 +6,9 @@
 
     public class CheckApplicationRepository : IMonitorTask
     {
+        private const string TaskName = "Check applications repository";
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IApplicationReadRepository _applicationReadRepository;
-        private const string TaskName = "Check applications repository";
 
         public CheckApplicationRepository(IApplicationReadRepository applicationReadRepository)
         {
@@ -23,9 +23,9 @@
             {
                 _applicationReadRepository.Get(Guid.NewGuid());
             }
-            catch (Exception execption)
+            catch (Exception exception)
             {
-                Logger.ErrorException("Error while accessing ApplicationsRepository", execption);
+                Logger.ErrorException("Error while accessing ApplicationsRepository", exception);
             }
 
             Logger.Debug(string.Format("Finished running task {0}", TaskName));

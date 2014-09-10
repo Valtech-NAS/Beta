@@ -60,6 +60,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
             }
         }
 
+        #region Helpers
         private bool Initialise()
         {
             try
@@ -99,11 +100,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
         {
             Logger.Debug("Monitor Process OnStart called");
 
-            // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
-
-            // For information on handling configuration changes
-            // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
 
             return base.OnStart();
         }
@@ -117,5 +114,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
             base.OnStop();
         }
+
+        #endregion
     }
 }
