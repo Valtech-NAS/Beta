@@ -281,18 +281,15 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\Application\Apply.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\CandidateViewModel.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\QualificationsViewModel.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\WorkExperienceViewModel.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\AboutYouViewModel.cshtml" />
+    <Content Include="Views\Application\DisplayTemplates\CandidateViewModel.cshtml" />
+    <Content Include="Views\Application\EditorTemplates\AboutYouViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Date.cshtml" />
     <Content Include="Views\Application\Preview.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\QualificationsViewModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\AboutYouViewModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EmployerQuestionAnswersViewModel.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EducationViewModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\EducationViewModel.cshtml" />
+    <Content Include="Views\Application\DisplayTemplates\AboutYouViewModel.cshtml" />
+    <Content Include="Views\Application\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml" />
+    <Content Include="Views\Application\EditorTemplates\EmployerQuestionAnswersViewModel.cshtml" />
+    <Content Include="Views\Application\EditorTemplates\EducationViewModel.cshtml" />
+    <Content Include="Views\Application\DisplayTemplates\EducationViewModel.cshtml" />
     <Content Include="Views\Shared\ValidationSummary.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AddressViewModel.cshtml" />
@@ -321,6 +318,7 @@
     <Content Include="Views\Application\_workExperiencesJS.cshtml" />
     <Content Include="Views\Application\_qualificationsNonJS.cshtml" />
     <Content Include="Views\Application\_workExperiencesNonJS.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Year.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

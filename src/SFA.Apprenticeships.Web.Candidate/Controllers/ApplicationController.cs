@@ -55,7 +55,7 @@
                 return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Apply", new { id });
+            return RedirectToAction("Apply", new {id});
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -100,11 +100,7 @@
         [ValidateInput(false)]
         public ActionResult Apply(int id, ApplicationViewModel model)
         {
-            model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
-            model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
-
-            model.DefaultQualificationRows = 0;
-            model.DefaultWorkExperienceRows = 0;
+            model = StripApplicationViewModelBeforeValidation(model);
 
             var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
@@ -138,7 +134,7 @@
 
             _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
 
-            return RedirectToAction("Preview", new { id });
+            return RedirectToAction("Preview", new {id});
         }
 
         [HttpPost]
@@ -148,11 +144,7 @@
         [ValidateInput(false)]
         public ActionResult Save(int id, ApplicationViewModel model)
         {
-            model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
-            model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
-
-            model.DefaultQualificationRows = 0;
-            model.DefaultWorkExperienceRows = 0;
+            model = StripApplicationViewModelBeforeValidation(model);
 
             var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
@@ -191,7 +183,7 @@
 
             return View("Apply", model);
         }
-
+       
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
@@ -226,24 +218,7 @@
 
             return View("Apply", model);
         }
-
-        private static IEnumerable<WorkExperienceViewModel> RemoveEmptyRowsFromWorkExperience(IEnumerable<WorkExperienceViewModel> workExperience)
-        {
-            return workExperience.Where(vm =>
-                vm.Employer != null && !string.IsNullOrWhiteSpace(vm.Employer.Trim()) ||
-                vm.JobTitle != null && !string.IsNullOrWhiteSpace(vm.JobTitle.Trim()) ||
-                vm.Description != null && !string.IsNullOrWhiteSpace(vm.Description.Trim())
-                ).ToList();
-        }
-
-        private static IEnumerable<QualificationsViewModel> RemoveEmptyRowsFromQualifications(IEnumerable<QualificationsViewModel> qualifications)
-        {
-            return qualifications.Where(vm =>
-                vm.Subject != null && !string.IsNullOrWhiteSpace(vm.Subject.Trim()) ||
-                vm.QualificationType != null && !string.IsNullOrWhiteSpace(vm.QualificationType.Trim()) ||
-                vm.Grade != null && !string.IsNullOrWhiteSpace(vm.Grade.Trim())).ToList();
-        }
-
+     
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Preview(int id)
@@ -273,13 +248,13 @@
                     _applicationProvider.SubmitApplication(UserContext.CandidateId, id);
                 }
 
-                return RedirectToAction("WhatHappensNext", new { id });
+                return RedirectToAction("WhatHappensNext", new {id});
             }
             catch (Exception)
             {
                 SetUserMessage(PreviewPageMessages.SubmissionFailed, UserMessageLevel.Error);
 
-                return RedirectToAction("Preview", new { id });
+                return RedirectToAction("Preview", new {id});
             }
         }
 
@@ -296,5 +271,47 @@
 
             return View(model);
         }
+
+        #region Helpers
+
+        private static ApplicationViewModel StripApplicationViewModelBeforeValidation(ApplicationViewModel model)
+        {
+            model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
+            model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
+
+            model.DefaultQualificationRows = 0;
+            model.DefaultWorkExperienceRows = 0;
+
+            if (model.IsJavascript)
+            {
+                return model;
+            }
+
+            model.Candidate.HasQualifications = model.Candidate.Qualifications.Count() != 0;
+            model.Candidate.HasWorkExperience = model.Candidate.WorkExperience.Count() != 0;
+
+            return model;
+        }
+
+        private static IEnumerable<WorkExperienceViewModel> RemoveEmptyRowsFromWorkExperience(
+            IEnumerable<WorkExperienceViewModel> workExperience)
+        {
+            return workExperience.Where(vm =>
+                vm.Employer != null && !string.IsNullOrWhiteSpace(vm.Employer.Trim()) ||
+                vm.JobTitle != null && !string.IsNullOrWhiteSpace(vm.JobTitle.Trim()) ||
+                vm.Description != null && !string.IsNullOrWhiteSpace(vm.Description.Trim())
+                ).ToList();
+        }
+
+        private static IEnumerable<QualificationsViewModel> RemoveEmptyRowsFromQualifications(
+            IEnumerable<QualificationsViewModel> qualifications)
+        {
+            return qualifications.Where(vm =>
+                vm.Subject != null && !string.IsNullOrWhiteSpace(vm.Subject.Trim()) ||
+                vm.QualificationType != null && !string.IsNullOrWhiteSpace(vm.QualificationType.Trim()) ||
+                vm.Grade != null && !string.IsNullOrWhiteSpace(vm.Grade.Trim())).ToList();
+        }
+
+        #endregion
     }
 }

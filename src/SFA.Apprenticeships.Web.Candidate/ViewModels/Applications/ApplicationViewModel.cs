@@ -67,5 +67,6 @@
         public DateTime? DateUpdated { get; set; }
         public ApplicationAction ApplicationAction { get; set; }
         public int VacancyId { get; set; }
+        public bool IsJavascript  { get; set; }
     }
 }

@@ -2,21 +2,7 @@
 <noscript>
     <fieldset class="fieldset-with-border" id="applyQualifications">
         <legend class="heading-large">Qualifications</legend>
-        <p class="form-label">Do you have any qualifications?</p>
-        <p class="form-hint text">
-            If you don't know your results yet, enter your predicted grades. These are grades your teacher expects you to get.
-        </p>
-        <div class="form-group inline clearfix">
-            <label data-target="qualifications-panel" for="qualifications-yes" class="block-label">
-                @Html.RadioButtonFor(m => m.Candidate.HasQualifications, true, true, new { id = "qualifications-yes" })
-                Yes
-
-            </label>
-            <label for="qualifications-no" class="block-label">
-                @Html.RadioButtonFor(m => m.Candidate.HasQualifications, false, false, new { id = "qualifications-no" })
-                No
-            </label>
-        </div>
+       
         <div class="clearfix">
             <table class="grid-3-4">
                 <thead>

@@ -36,6 +36,7 @@
     @Html.DisplayFor(m => m.Candidate)
     @Html.EditorFor(m => m.Candidate.Education)
     @Html.HiddenFor(m => m.VacancyId)
+    @Html.HiddenFor(m => m.IsJavascript, new{ @id="hidden-flag-javascript"})
 
     Html.RenderPartial("_qualificationsJS", Model);    
     
@@ -74,6 +75,8 @@
         var whitelistregex = null;
 
         $(function() {
+
+            document.getElementById("hidden-flag-javascript").value = "True";
 
             qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
             workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));

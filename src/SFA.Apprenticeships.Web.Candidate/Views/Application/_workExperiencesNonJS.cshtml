@@ -4,21 +4,7 @@
 <noscript>
 
     <fieldset class="fieldset-with-border" id="applyWorkExperience">
-        <legend class="heading-large">Work experience</legend>
-        <p class="form-label text">Do you have any work experience?</p>
-        <p class="form-hint text">
-            Please include any work, whether paid or voluntary
-        </p>
-        <div class="form-group inline clearfix">
-            <label for="workexp-yes" class="block-label">
-                @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, true, true, new {id = "workexp-yes"})
-                Yes
-            </label>
-            <label for="workexp-no" class="block-label">
-                @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, false, false, new {id = "workexp-no"})
-                No
-            </label>
-        </div>
+        <legend class="heading-large">Work experience</legend>       
 
         <div class="clearfix">
             <div class="grid-3-4">
@@ -46,8 +32,8 @@
                                                 <div class="form-group form-group-compound inline-float width-all-49">
                                                     <span class="cell-span">Employer</span>
                                                
-                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].Employer, new {@id = "candidate_workexperience_" + i + "__employer", Name = "Candidate.WorkExperience[" + i + "].Employer", @class = "form-control", @maxlength = 50})
-                                               
+                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].Employer, new {@id = "candidate_workexperience_" + i + "__employer", Name = "Candidate.WorkExperience[" + i + "].Employer", @class = "form-control", @maxlength = 50})                                                                                                  
+
                                                 </div>
 
                                                 <div class="form-group form-group-compound inline-float width-all-49 no-right-margin">
