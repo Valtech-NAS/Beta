@@ -49,18 +49,13 @@
         {
             var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
-            {
-                return new VacancyNotFoundResult();
-            }
-
             if (model.HasError())
             {
                 SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
                 return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Apply", new {id});
+            return RedirectToAction("Apply", new { id });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -139,7 +134,7 @@
 
             _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
 
-            return RedirectToAction("Preview", new {id});
+            return RedirectToAction("Preview", new { id });
         }
 
         [HttpPost]
@@ -188,7 +183,7 @@
 
             return View("Apply", model);
         }
-       
+
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
@@ -223,7 +218,7 @@
 
             return View("Apply", model);
         }
-     
+
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Preview(int id)
@@ -262,7 +257,7 @@
             {
                 SetUserMessage(PreviewPageMessages.SubmissionFailed, UserMessageLevel.Error);
 
-                return RedirectToAction("Preview", new {id});
+                return RedirectToAction("Preview", new { id });
             }
         }
 
@@ -310,6 +305,8 @@
         private static IEnumerable<WorkExperienceViewModel> RemoveEmptyRowsFromWorkExperience(
             IEnumerable<WorkExperienceViewModel> workExperience)
         {
+            workExperience = workExperience ?? new WorkExperienceViewModel[] { };
+
             return workExperience.Where(vm =>
                 vm.Employer != null && !string.IsNullOrWhiteSpace(vm.Employer.Trim()) ||
                 vm.JobTitle != null && !string.IsNullOrWhiteSpace(vm.JobTitle.Trim()) ||
@@ -320,6 +317,8 @@
         private static IEnumerable<QualificationsViewModel> RemoveEmptyRowsFromQualifications(
             IEnumerable<QualificationsViewModel> qualifications)
         {
+            qualifications = qualifications ?? new QualificationsViewModel[] { };
+
             return qualifications.Where(vm =>
                 vm.Subject != null && !string.IsNullOrWhiteSpace(vm.Subject.Trim()) ||
                 vm.QualificationType != null && !string.IsNullOrWhiteSpace(vm.QualificationType.Trim()) ||
