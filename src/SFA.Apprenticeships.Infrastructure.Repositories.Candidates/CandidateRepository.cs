@@ -39,9 +39,10 @@
 
             if (mongoEntity == null && errorIfNotFound)
             {
-                Logger.Debug("Unknown candidate with Id={0}", id);
+                var message = string.Format("Unknown candidate with Id={0}", id);
+                Logger.Debug(message);
 
-                throw new CustomException("Unknown candidate", ErrorCodes.UnknownCandidateError);
+                throw new CustomException(message, ErrorCodes.UnknownCandidateError);
             }
 
             return mongoEntity == null ? null : _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
@@ -55,9 +56,10 @@
 
             if (mongoEntity == null && errorIfNotFound)
             {
-                Logger.Debug("Unknown candidate with EmailAddress={0}", username);
+                var message = string.Format("Unknown candidate with EmailAddress={0}", username);
+                Logger.Debug(message, username);
 
-                throw new CustomException("Unknown candidate", ErrorCodes.UnknownCandidateError); 
+                throw new CustomException(message, ErrorCodes.UnknownCandidateError); 
             }
 
             return mongoEntity == null ? null : _mapper.Map<MongoCandidate, Candidate>(mongoEntity);

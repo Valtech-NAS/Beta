@@ -89,6 +89,8 @@
             return response;
         }
 
+        #region Helpers
+
         private static void ThrowIncompleteResponseException<T>(IRestResponse<T> response)
         {
             string message = string.Format(
@@ -97,8 +99,6 @@
 
             throw new ApplicationException(message);
         }
-
-        #region Helpers
 
         private static void ThrowErrorException(IRestResponse response)
         {

@@ -66,7 +66,7 @@
             }
             catch (LdapException ldapException)
             {
-                Logger.ErrorException("Active directory binding failed: ", ldapException);
+                Logger.DebugException("Active directory binding failed: ", ldapException);
 
                 if (ldapException.ErrorCode == ValidationFailed)
                 {

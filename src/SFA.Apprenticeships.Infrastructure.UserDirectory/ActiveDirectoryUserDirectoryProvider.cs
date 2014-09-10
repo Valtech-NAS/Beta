@@ -43,8 +43,9 @@
 
                 if (user != null)
                 {
-                    Logger.Error("Active directory account for userId={0} already exist", userId);
-                    throw new Exception("User already exist");
+                    var message = string.Format("Active directory account for userId={0} already exist", userId);
+                    Logger.Debug(message);
+                    throw new Exception(message);
                     // TODO: EXCEPTION: should use an application exception type
                 }
 
@@ -90,8 +91,9 @@
                 {
                     if (user == null)
                     {
-                        Logger.Error("No active directory account found for userId={0}", userId);
-                        throw new CustomException("User does not exist", ErrorCodes.UnknownUserError);
+                        var message = string.Format("No active directory account found for userId={0}", userId);
+                        Logger.Debug(message);
+                        throw new CustomException(message, ErrorCodes.UnknownUserError);
                     }
 
                     try
@@ -107,7 +109,7 @@
                     }
                     catch (PasswordException exception)
                     {
-                        var message = string.Format("SetPassword failed for {0}", userId);
+                        var message = string.Format("SetPassword failed for user {0}", userId);
                         Logger.ErrorException(message, exception);
                         throw;
                     }
