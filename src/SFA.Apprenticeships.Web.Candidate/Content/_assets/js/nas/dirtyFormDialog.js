@@ -16,6 +16,7 @@
                 hasToShowMessage = false;
             }, settings.timeout);
             setBeforeUnloadEvent(settings.formSelector, settings.classToExclude, settings.confirmationMessage);
+            setKeyUpEvent(settings.formSelector);
         },
         setBeforeUnloadEvent = function(formSelector, classToExclude, confirmationMessage) {
             window.addEventListener("beforeunload", function(e) {
@@ -28,6 +29,15 @@
                 if (initialFormValue !== actualFormValue) {
                     (e || window.event).returnValue = confirmationMessage; //Gecko + IE
                     return confirmationMessage; //Webkit, Safari, Chrome etc.
+                }
+            });
+        },
+        setKeyUpEvent = function(formSelector) {
+            $('input').keypress(function (e) {
+                if (e.which == 13) {
+                    hasToShowMessage = false;
+                    $(formSelector).submit();
+                    return false;
                 }
             });
         };
