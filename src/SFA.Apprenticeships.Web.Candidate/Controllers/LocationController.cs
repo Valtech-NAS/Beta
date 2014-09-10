@@ -40,16 +40,10 @@
         [OutputCache(CacheProfile = CacheProfiles.Data, VaryByParam = "postcode")]
         public ActionResult Addresses(string postcode)
         {
-            if (!_searchProvider.IsValidPostcode(postcode))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid postcode.");
-            }
-
-            var matches = _searchProvider.FindAddresses(postcode);
-
+            var addresses = _searchProvider.FindAddresses(postcode);
             if (Request.IsAjaxRequest())
             {
-                return Json(matches.OrderBy(a => a.Uprn), JsonRequestBehavior.AllowGet);
+                return Json(addresses, JsonRequestBehavior.AllowGet);
             }
 
             throw new NotImplementedException("Non-js not yet implemented!");

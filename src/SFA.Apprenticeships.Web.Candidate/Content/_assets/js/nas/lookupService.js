@@ -87,20 +87,26 @@ $(document).ready(function () {
                 .addClass("address-select-option");
         }
 
-        var handleResponse = function(response) {
-            if (response != null && response.length) {
-                $addressSelect.empty();
-                $addressSelect.append($makeAddressCountOption(response.length));
+        var handleResponse = function (response) {
 
-                $.each(response, function(i, address) {
-                    $addressSelect.append($makeAddressOption(address));
-                });
-
-                $addressList.removeClass("toggle-content");
-
+            if (response.HasError) {
+                showErrorMessage("Sorry, there’s a problem with the service. Please try entering your address manually.");
             } else {
-                $addressList.addClass("toggle-content");
-                showErrorMessage("Postcode not found. Please enter address manually.");
+                var addresses = response.Addresses;
+                if (addresses != null && addresses.length) {
+                    $addressSelect.empty();
+                    $addressSelect.append($makeAddressCountOption(addresses.length));
+
+                    $.each(addresses, function (i, address) {
+                        $addressSelect.append($makeAddressOption(address));
+                    });
+
+                    $addressList.removeClass("toggle-content");
+
+                } else {
+                    $addressList.addClass("toggle-content");
+                    showErrorMessage("Postcode not found. Please enter address manually.");
+                }
             }
 
             showFindAddressButton();

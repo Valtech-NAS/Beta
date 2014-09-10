@@ -382,6 +382,7 @@
     <Compile Include="Constants\Pages\LoginPageMessages.cs" />
     <Compile Include="Constants\Pages\VacancyDetailPageMessages.cs" />
     <Compile Include="Constants\Pages\VacancySearchResultsPageMessages.cs" />
+    <Compile Include="Constants\ViewModels\AddressSearchResult.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ActivationCodeMessages.cs" />

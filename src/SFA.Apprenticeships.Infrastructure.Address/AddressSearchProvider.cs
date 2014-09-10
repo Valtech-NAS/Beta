@@ -7,9 +7,11 @@
     using Domain.Entities.Locations;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
+    using NLog;
 
     public class AddressSearchProvider : IAddressSearchProvider
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
         private readonly IMapper _mapper;
 
@@ -21,8 +23,9 @@
 
         public IEnumerable<Address> FindAddress(string postcode)
         {
+            Logger.Debug("FindAddress for postcode {0}", postcode);
             Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
-
+            
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(Elastic.Common.Entities.Address));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(Elastic.Common.Entities.Address));

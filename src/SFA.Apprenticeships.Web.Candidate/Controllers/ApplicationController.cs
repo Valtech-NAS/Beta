@@ -13,6 +13,7 @@
     using Constants.Pages;
     using Domain.Entities.Applications;
     using FluentValidation.Mvc;
+    using NLog;
     using Providers;
     using Validators;
     using ViewModels.Applications;
@@ -20,6 +21,7 @@
 
     public class ApplicationController : CandidateControllerBase
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IApplicationProvider _applicationProvider;
         private readonly ApplicationViewModelServerValidator _applicationViewModelFullValidator;
         private readonly ApplicationViewModelSaveValidator _applicationViewModelSaveValidator;
@@ -253,8 +255,10 @@
 
                 return new VacancyNotFoundResult();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                var message = string.Format("Submission of application {0} failed for user {1}", id, User.Identity.Name);
+                Logger.ErrorException(message, ex);
                 SetUserMessage(PreviewPageMessages.SubmissionFailed, UserMessageLevel.Error);
 
                 return RedirectToAction("Preview", new { id });

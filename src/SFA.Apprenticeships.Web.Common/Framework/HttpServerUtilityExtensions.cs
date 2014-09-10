@@ -28,9 +28,9 @@
             var exception = server.GetLastError();
             var httpException = exception as HttpException;
 
-            if (httpException != null)
+            if (exception != null)
             {
-                Logger.ErrorException(httpException.Message, exception);
+                Logger.ErrorException(exception.Message, exception);
             }
 
             var controller = DependencyResolver.Current.GetService<T>();

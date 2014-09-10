@@ -48,10 +48,13 @@
             {
                 userNameAvailability.IsUserNameAvailable = _userAccountService.IsUsernameAvailable(username);
             }
-            catch
+            catch ( Exception ex)
             {
+                const string errorMessage = "Error checking user name availability";
+                var message = string.Format("{0} for {1}", errorMessage, username);
+                Logger.ErrorException(message, ex);
                 userNameAvailability.HasError = true;
-                userNameAvailability.ErrorMessage = "Error checking user name availability";
+                userNameAvailability.ErrorMessage = errorMessage;
             }
 
             return userNameAvailability;

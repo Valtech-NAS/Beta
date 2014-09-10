@@ -2,7 +2,6 @@
 {
     using System;
     using Application.Interfaces.Candidates;
-    using Common.Providers;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using Domain.Interfaces.Mapping;
