@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
+    using System;
     using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.Register;
@@ -21,7 +22,7 @@
         }
     }
 
-    internal static class RegisterValidaitonRules
+    internal static class RegisterValidationRules
     {
         internal static void AddCommonRules(this AbstractValidator<RegisterViewModel> validator)
         {
@@ -68,6 +69,12 @@
                 .Matches(RegisterViewModelMessages.PasswordMessages.WhiteListRegularExpression)
                 .WithMessage(RegisterViewModelMessages.PasswordMessages.WhiteListErrorText);
 
+            validator.RuleFor(x => x.ConfirmPassword)
+                .NotEmpty()
+                .WithMessage(RegisterViewModelMessages.ConfirmPasswordMessages.RequiredErrorText)
+                .Must(ConfirmPasswordMatchesPassword)
+                .WithMessage(RegisterViewModelMessages.ConfirmPasswordMessages.PasswordsDoNotMatchErrorText);
+
             validator.RuleFor(x => x.HasAcceptedTermsAndConditions)
                 .Equal(true)
                 .WithMessage(RegisterViewModelMessages.TermsAndConditions.MustAcceptTermsAndConditions);
@@ -76,6 +83,7 @@
         internal static void AddServerRules(this AbstractValidator<RegisterViewModel> validator)
         {
             validator.RuleFor(x => x.DateOfBirth).SetValidator(new DateOfBirthViewModelServerValidator());
+
             validator.RuleFor(x => x.EmailAddress)
                .Must(UsernameAvailable)
                .WithMessage(RegisterViewModelMessages.EmailAddressMessages.UsernameNotAvailableErrorText);
@@ -84,6 +92,11 @@
         private static bool UsernameAvailable(RegisterViewModel model, string emailAddress)
         {
             return emailAddress != null && (!string.IsNullOrEmpty(emailAddress) && model.IsUsernameAvailable);
+        }
+
+        private static bool ConfirmPasswordMatchesPassword(RegisterViewModel model, string confirmPassword)
+        {
+            return model.Password.Equals(confirmPassword, StringComparison.InvariantCulture);
         }
     }
 }

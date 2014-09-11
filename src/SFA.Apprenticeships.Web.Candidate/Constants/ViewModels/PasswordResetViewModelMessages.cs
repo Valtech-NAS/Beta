@@ -25,7 +25,6 @@
         public static class ConfirmPasswordMessages
         {
             public const string LabelText = "TODO: Confirm new password";
-            public const string HintText = "";
             public const string RequiredErrorText = "TODO: Please confirm your new password";
             public const string PasswordsDoNotMatchErrorText = "TODO: Passwords do not match";
         }

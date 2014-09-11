@@ -28,6 +28,9 @@
         [Display(Name = RegisterViewModelMessages.PasswordMessages.LabelText)]
         public string Password { get; set; }
 
+        [Display(Name = RegisterViewModelMessages.ConfirmPasswordMessages.LabelText)]
+        public string ConfirmPassword { get; set; }
+
         [Display(Name = RegisterViewModelMessages.TermsAndConditions.LabelText)]
         public bool HasAcceptedTermsAndConditions { get; set; }
 

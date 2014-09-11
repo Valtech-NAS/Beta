@@ -91,16 +91,17 @@ Scenario: Reset password in an unactivated account
 	Given I navigated to the RegisterCandidatePage page
 	When I have created a new email address
 	And I enter data
-		| Field          | Value         |
-		| Firstname      | FirstnameTest |
-		| Lastname       | LastnameTest  |
-		| Phonenumber    | 07970523193   |
-		| EmailAddress   | {EmailToken}  |
-		| PostcodeSearch | N7 8LS        |
-		| Day            | 01            |
-		| Month          | 01            |
-		| Year           | 2000          |
-		| Password       | ?Password01!  | 
+		| Field           | Value         |
+		| Firstname       | FirstnameTest |
+		| Lastname        | LastnameTest  |
+		| Phonenumber     | 07970523193   |
+		| EmailAddress    | {EmailToken}  |
+		| PostcodeSearch  | N7 8LS        |
+		| Day             | 01            |
+		| Month           | 01            |
+		| Year            | 2000          |
+		| Password        | ?Password01!  |
+		| ConfirmPassword | ?Password01!  |
 	And I choose HasAcceptedTermsAndConditions
 	And I choose FindAddresses
 	And I am on AddressDropdown list item matching criteria

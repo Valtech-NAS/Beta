@@ -57,5 +57,12 @@
             public const string LabelText = "I accept the terms & conditions";
             public const string MustAcceptTermsAndConditions = "Please accept the terms & conditions";
         }
+
+        public class ConfirmPasswordMessages
+        {
+            public const string LabelText = "TODO: Confirm password";
+            public const string RequiredErrorText = "TODO: Please confirm your password";
+            public const string PasswordsDoNotMatchErrorText = "TODO: Passwords do not match";
+        }
     }
 }

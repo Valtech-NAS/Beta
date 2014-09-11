@@ -52,7 +52,7 @@
             When("I get the token for my newly created account");
             And("I enter data", GetActivationCodeData());
             And("I choose ActivateButton");
-            Then("I am on the VacancySearchPage page"); 
+            Then("I am on the VacancySearchPage page");
         }
 
         private Table GetRegistrationData()
@@ -67,8 +67,10 @@
             string[] row7 = { "Month", "01" };
             string[] row8 = { "Year", "2000" };
             string[] row9 = { "Password", "?Password01!" };
+            string[] row10 = { "ConfirmPassword", "?Password01!" };
 
             var t = new Table(header);
+
             t.AddRow(row1);
             t.AddRow(row2);
             t.AddRow(row3);
@@ -78,6 +80,7 @@
             t.AddRow(row7);
             t.AddRow(row8);
             t.AddRow(row9);
+            t.AddRow(row10);
 
             return t;
         }

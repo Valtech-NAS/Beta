@@ -19,12 +19,13 @@ Scenario: As a candidate I am on the registration page and all required fields a
 	And I wait to see Year
 	And I wait to see EmailAddress
 	And I wait to see Password
+	And I wait to see ConfirmPassword
 	And I wait to see HasAcceptedTermsAndConditions
 	And I choose CreateAccountButton
 	And I wait to see ValidationSummary
 	Then I see
         | Field                  | Rule   | Value |
-        | ValidationSummaryCount | Equals | 11    |
+        | ValidationSummaryCount | Equals | 12    |
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                   |
 		| Text  | Equals | Please enter first name |
@@ -65,7 +66,6 @@ Scenario: As a candidate on the registration page I want to be able to pick my a
 		| Uprn         | Equals | 5300034721           |
 		| Latitude     | Equals | 51.54751633697479    |
 		| Longitude    | Equals | -0.10660693737952387 |
-
 
 Scenario: As a candidate I want to be told quickly that my email/username is available
 	Given I navigated to the RegisterCandidatePage page
@@ -108,15 +108,16 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 	And I choose WrappedElement
 	And I am on the RegisterCandidatePage page
 	And I enter data
-		| Field        | Value         |
-		| Firstname    | FirstnameTest |
-		| Lastname     | LastnameTest  |
-		| Day          | 01            |
-		| Month        | 01            |
-		| Year         | 1999          |
-		| EmailAddress | {EmailToken}  |
-		| Phonenumber  | 07999999999   |
-		| Password     | ?Password01!  |
+		| Field           | Value         |
+		| Firstname       | FirstnameTest |
+		| Lastname        | LastnameTest  |
+		| Day             | 01            |
+		| Month           | 01            |
+		| Year            | 1999          |
+		| EmailAddress    | {EmailToken}  |
+		| Phonenumber     | 07999999999   |
+		| Password        | ?Password01!  |
+		| ConfirmPassword | ?Password01!  |
 	And I choose HasAcceptedTermsAndConditions
 	And I am on the RegisterCandidatePage page
 	And I choose CreateAccountButton
@@ -142,3 +143,39 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 	And I am on the ApplicationPage page
 	And I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
+
+Scenario: As a candidate I must confirm my password
+	Given I navigated to the RegisterCandidatePage page
+	And I have created a new email address
+	When I am on the RegisterCandidatePage page
+	And I enter data
+		 | Field          | Value  |
+		 | PostcodeSearch | N7 8LS |
+	And I choose FindAddresses
+	And I am on AddressDropdown list item matching criteria
+		| Field | Rule   | Value                  |
+		| Text  | Equals | Flat A, 6 Furlong Road |
+	And I choose WrappedElement
+	And I am on the RegisterCandidatePage page
+	And I enter data
+		| Field           | Value         |
+		| Firstname       | FirstnameTest |
+		| Lastname        | LastnameTest  |
+		| Day             | 01            |
+		| Month           | 01            |
+		| Year            | 1999          |
+		| EmailAddress    | {EmailToken}  |
+		| Phonenumber     | 07999999999   |
+		| Password        | ?Password01!  |
+		| ConfirmPassword | !10drowssaP?  |
+	And I choose HasAcceptedTermsAndConditions
+	And I am on the RegisterCandidatePage page
+	And I choose CreateAccountButton
+	Then I am on the RegisterCandidatePage page
+	And I see
+        | Field                  | Rule   | Value |
+        | ValidationSummaryCount | Equals | 1     |
+	And I am on ValidationSummaryItems list item matching criteria
+		| Field | Rule   | Value                        |
+		| Text  | Equals | TODO: Passwords do not match |
+		| Href  | Equals | #ConfirmPassword             |

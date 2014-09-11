@@ -42,6 +42,8 @@
                 .WithMessage(PasswordResetViewModelMessages.PasswordMessages.WhiteListErrorText);
 
             validator.RuleFor(x => x.ConfirmPassword)
+                .NotEmpty()
+                .WithMessage(PasswordResetViewModelMessages.ConfirmPasswordMessages.RequiredErrorText)
                 .Must(ConfirmPasswordMatchesPassword)
                 .WithMessage(PasswordResetViewModelMessages.ConfirmPasswordMessages.PasswordsDoNotMatchErrorText);
         }
