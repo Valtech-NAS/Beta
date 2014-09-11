@@ -18,6 +18,9 @@
         [ElementLocator(Id = "Password")]
         public IWebElement Password { get; set; }
 
+        [ElementLocator(Id = "ConfirmPassword")]
+        public IWebElement ConfirmPassword { get; set; }
+
         [ElementLocator(Id = "reset-password-button")]
         public IWebElement ResetPasswordButton { get; set; }
     }

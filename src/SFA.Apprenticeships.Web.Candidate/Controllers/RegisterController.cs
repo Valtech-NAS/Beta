@@ -191,6 +191,7 @@
 
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AllowReturnUrl(Allow = false)]
         public ActionResult ResetPassword(PasswordResetViewModel model)
         {
             var result = _candidateServiceProvider.VerifyPasswordReset(model);

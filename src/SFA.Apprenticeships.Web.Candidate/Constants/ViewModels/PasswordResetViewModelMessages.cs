@@ -16,10 +16,18 @@
         {
             public const string LabelText = "New password";
             public const string HintText = "Requires upper and lowercase letters, a number and at least 8 characters";
-            public const string RequiredErrorText = "Please enter valid password reset code";
+            public const string RequiredErrorText = "Please enter valid password";
             public const string LengthErrorText = "New password must be at least 8 characters";
             public const string WhiteListRegularExpression = Whitelists.PasswordWhitelist.RegularExpression;
             public const string WhiteListErrorText = "New password " + Whitelists.PasswordWhitelist.ErrorText;
+        }
+
+        public static class ConfirmPasswordMessages
+        {
+            public const string LabelText = "TODO: Confirm new password";
+            public const string HintText = "";
+            public const string RequiredErrorText = "TODO: Please confirm your new password";
+            public const string PasswordsDoNotMatchErrorText = "TODO: Passwords do not match";
         }
     }
 }

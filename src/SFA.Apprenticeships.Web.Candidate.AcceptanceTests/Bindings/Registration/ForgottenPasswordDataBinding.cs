@@ -1,9 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings.Registration
 {
-    using System;
-    using NUnit.Framework;
-    using SFA.Apprenticeships.Domain.Interfaces.Repositories;
-    using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Generators;
+    using Domain.Interfaces.Repositories;
     using SpecBind.Helpers;
     using StructureMap;
     using FluentAssertions;
@@ -16,13 +13,11 @@
         private const string NewPasswordTokenName = "NewPasswordToken";
         private const string NewPassword = "?Password02!";
 
-        private const string EmailAddressTokenName = "EmailAddressToken";
         private const string EmailTokenName = "EmailToken";
         private const string PasswordResetCodeTokenName = "PasswordResetCodeToken";
-        private const string PasswordResetCode = "RESET1";
 
         private readonly IUserReadRepository _userReadRepository;
-        protected readonly ITokenManager _tokenManager;
+        private readonly ITokenManager _tokenManager;
 
         public ForgottenPasswordDataBinding(ITokenManager tokenManager)
         {

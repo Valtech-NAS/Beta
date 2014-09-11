@@ -317,7 +317,9 @@
             return workExperience.Where(vm =>
                 vm.Employer != null && !string.IsNullOrWhiteSpace(vm.Employer.Trim()) ||
                 vm.JobTitle != null && !string.IsNullOrWhiteSpace(vm.JobTitle.Trim()) ||
-                vm.Description != null && !string.IsNullOrWhiteSpace(vm.Description.Trim())
+                vm.Description != null && !string.IsNullOrWhiteSpace(vm.Description.Trim())||
+                vm.FromYear != null && !string.IsNullOrWhiteSpace(vm.FromYear.Trim())||
+                vm.ToYear != null && !string.IsNullOrWhiteSpace(vm.ToYear.Trim())
                 ).ToList();
         }
 
@@ -332,7 +334,8 @@
             return qualifications.Where(vm =>
                 vm.Subject != null && !string.IsNullOrWhiteSpace(vm.Subject.Trim()) ||
                 vm.QualificationType != null && !string.IsNullOrWhiteSpace(vm.QualificationType.Trim()) ||
-                vm.Grade != null && !string.IsNullOrWhiteSpace(vm.Grade.Trim())).ToList();
+                vm.Grade != null && !string.IsNullOrWhiteSpace(vm.Grade.Trim())||
+                vm.Year != null && !string.IsNullOrWhiteSpace(vm.Year.Trim())).ToList();
         }
 
         #endregion
