@@ -57,7 +57,7 @@
                 return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Apply", new { id });
+            return RedirectToAction("Apply", new {id});
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -136,7 +136,7 @@
 
             _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
 
-            return RedirectToAction("Preview", new { id });
+            return RedirectToAction("Preview", new {id});
         }
 
         [HttpPost]
@@ -250,7 +250,7 @@
                 {
                     _applicationProvider.SubmitApplication(UserContext.CandidateId, id);
 
-                    return RedirectToAction("WhatHappensNext", new { id });
+                    return RedirectToAction("WhatHappensNext", new {id});
                 }
 
                 return new VacancyNotFoundResult();
@@ -261,7 +261,7 @@
                 Logger.ErrorException(message, ex);
                 SetUserMessage(PreviewPageMessages.SubmissionFailed, UserMessageLevel.Error);
 
-                return RedirectToAction("Preview", new { id });
+                return RedirectToAction("Preview", new {id});
             }
         }
 

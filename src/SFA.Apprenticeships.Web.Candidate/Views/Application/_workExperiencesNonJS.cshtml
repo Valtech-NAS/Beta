@@ -31,21 +31,24 @@
                                             <td>
                                                 <div class="form-group form-group-compound inline-float width-all-49">
                                                     <span class="cell-span">Employer</span>
-                                               
-                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].Employer, new {@id = "candidate_workexperience_" + i + "__employer", Name = "Candidate.WorkExperience[" + i + "].Employer", @class = "form-control", @maxlength = 50})                                                                                                  
 
+                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].Employer, new { @id = "candidate_workexperience_" + i + "__employer", Name = "Candidate.WorkExperience[" + i + "].Employer", @class = "form-control", @maxlength = 50 })
+
+                                                    @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].Employer")
                                                 </div>
 
                                                 <div class="form-group form-group-compound inline-float width-all-49 no-right-margin">
                                                     <span class="cell-span">Job Title</span>
-                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].JobTitle, new {@id = "candidate_workexperience_" + i + "__jobtitle", Name = "Candidate.WorkExperience[" + i + "].JobTitle", @class = "form-control", @maxlength = 50})
-                                               
+                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].JobTitle, new { @id = "candidate_workexperience_" + i + "__jobtitle", Name = "Candidate.WorkExperience[" + i + "].JobTitle", @class = "form-control", @maxlength = 50 })
+
+                                                    @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].JobTitle")
                                                 </div>
 
                                                 <div></div>
                                                 <span class="cell-span">Main Duties</span>
-                                                @Html.TextAreaFor(m => Model.Candidate.WorkExperience.ToList()[i].Description, new {@id = "candidate_workexperience_" + i + "__description", Name = "Candidate.WorkExperience[" + i + "].Description", @class = "form-control", @rows = 3})                                           
-                                            </td>
+                                                @Html.TextAreaFor(m => Model.Candidate.WorkExperience.ToList()[i].Description, new { @id = "candidate_workexperience_" + i + "__description", Name = "Candidate.WorkExperience[" + i + "].Description", @class = "form-control", @rows = 3 })
+
+                                                @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].Description")</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -82,6 +85,7 @@
                                                 <div class="form-group form-group-compound">
                                                     @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].FromYear, new {@id = "candidate_workexperience_" + i + "__fromyear", Name = "Candidate.WorkExperience[" + i + "].FromYear", @class = "form-control", @pattern = "[0-9]*", @maxlength = 4})
                                                 
+                                                    @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].FromYear")
                                                 </div>
                                             </td>
                                             <td>
@@ -91,8 +95,10 @@
 
                                                 </div>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].ToYear, new {@id = "candidate_workexperience_" + i + "__toyear", Name = "Candidate.WorkExperience[" + i + "].ToYear", @class = "form-control", @pattern = "[0-9]*", @maxlength = 4})                                               
-                                                </div>                                           
+                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].ToYear, new { @id = "candidate_workexperience_" + i + "__toyear", Name = "Candidate.WorkExperience[" + i + "].ToYear", @class = "form-control", @pattern = "[0-9]*", @maxlength = 4 })
+
+                                                    @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].ToYear")
+                                                </div>
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -125,18 +131,19 @@
                                                     <span class="cell-span">Employer</span>
 
                                                     @Html.TextBox("Candidate.WorkExperience[" + i + "].Employer", "", new {@id = "candidate_workexperience_" + i + "__employer", Name = "Candidate.WorkExperience[" + i + "].Employer", @class = "form-control", @maxlength = 50})
-
+                                                    @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].Employer")
                                                 </div>
 
                                                 <div class="form-group form-group-compound inline-float width-all-49 no-right-margin">
                                                     <span class="cell-span">Job Title</span>
                                                     @Html.TextBox("Candidate.WorkExperience[" + i + "].JobTitle", "", new {@id = "candidate_workexperience_" + i + "__jobtitle", Name = "Candidate.WorkExperience[" + i + "].JobTitle", @class = "form-control", @maxlength = 50})
-
+                                                    @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].JobTitle")
                                                 </div>
 
                                                 <div></div>
                                                 <span class="cell-span">Main Duties</span>
                                                 @Html.TextArea("Candidate.WorkExperience[" + i + "].Description", "", new {@id = "candidate_workexperience_" + i + "__description", Name = "Candidate.WorkExperience[" + i + "].Description", @class = "form-control", @rows = 3})
+                                                @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].Description")
                                             </td>
                                         </tr>
                                     </tbody>
@@ -173,7 +180,7 @@
                                                 </div>
                                                 <div class="form-group form-group-compound">
                                                     @Html.TextBox("Candidate.WorkExperience[" + i + "].FromYear", "", new {@id = "candidate_workexperience_" + i + "__fromyear", Name = "Candidate.WorkExperience[" + i + "].FromYear", @class = "form-control", @pattern = "[0-9]*", @maxlength = 4})
-
+                                                    @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].FromYear")
                                                 </div>
                                             </td>
                                             <td>
@@ -184,6 +191,7 @@
                                                 </div>
                                                 <div class="form-group form-group-compound">
                                                     @Html.TextBox("Candidate.WorkExperience[" + i + "].ToYear", "", new {@id = "candidate_workexperience_" + i + "__toyear", Name = "Candidate.WorkExperience[" + i + "].ToYear", @class = "form-control", @pattern = "[0-9]*", @maxlength = 4})
+                                                    @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].ToYear")
                                                 </div>
                                             </td>
                                             <td></td>

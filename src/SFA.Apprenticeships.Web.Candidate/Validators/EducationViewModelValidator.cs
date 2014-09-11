@@ -56,7 +56,7 @@
                 .Matches(EducationViewModelMessages.NameOfMostRecentSchoolCollegeMessages.WhiteListRegularExpression)
                 .WithMessage(EducationViewModelMessages.NameOfMostRecentSchoolCollegeMessages.WhiteListErrorText);
 
-            validator.RuleFor(x => x.FromYear)
+            validator.RuleFor(x => x.FromYear)               
                 .Matches(EducationViewModelMessages.FromYearMessages.WhiteListRegularExpression)
                 .WithMessage(EducationViewModelMessages.FromYearMessages.WhiteListErrorText)
                 .Must(BeNowOrInThePast)
@@ -76,6 +76,12 @@
                 //Will be picked up by required validator
                 return true;
             }
+
+            if (string.IsNullOrEmpty(instance.FromYear))
+            {
+                return false;
+            }
+
             var to = int.Parse(toYear);
             var from = int.Parse(instance.FromYear);
             return from <= to;

@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
     using System;
-    using System.Data;
     using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.Candidate;
@@ -37,11 +36,11 @@
             RuleFor(x => x.Year)
                 .NotEmpty()
                 .WithMessage(QualificationViewModelMessages.YearMessages.RequiredErrorText)
-                .Matches(QualificationViewModelMessages.YearMessages.WhiteListRegularExpression)               
+                .Matches(QualificationViewModelMessages.YearMessages.WhiteListRegularExpression)
                 .WithMessage(QualificationViewModelMessages.YearMessages.WhiteListErrorText);
 
             RuleFor(x => x.Year)
-                .Must(BeNowOrInThePast)   
+                .Must(BeNowOrInThePast)
                 .WithMessage(QualificationViewModelMessages.YearMessages.BeforeOrEqualErrorText)
                 .When(x => !x.IsPredicted);
         }
