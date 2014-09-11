@@ -238,6 +238,7 @@
                 EmailAddress = model.EmailAddress,
                 PasswordResetCode = model.PasswordResetCode,
                 Password = model.Password,
+                ConfirmPassword = model.ConfirmPassword,
                 UserStatus = model.UserStatus,
                 IsPasswordResetCodeValid = false
             };

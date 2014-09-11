@@ -1,5 +1,5 @@
 ﻿@US276
-Feature: ResetPassword
+Feature: Forgotten Password
 	As a candidate who has forgotten my password
 	I want to request to reset my password
 	so that I can sign in to my account
@@ -9,12 +9,12 @@ Background:
 	Given I navigated to the HomePage page
 	When I am on the HomePage page
 
-Scenario: Password successful reset
+Scenario: Reset password successful
 	Given I have registered a new candidate
 	When I navigate to the ForgottenPasswordPage page
 	Then I am on the ForgottenPasswordPage page
 	When I enter data
-		| Field        | Value               |
+		| Field        | Value        |
 		| EmailAddress | {EmailToken} |
 	And I choose SendCodeButton
 	Then I am on the ResetPasswordPage page
@@ -31,6 +31,7 @@ Scenario: Password successful reset
 		| Field             | Value                    |
 		| PasswordResetCode | {PasswordResetCodeToken} |
 		| Password          | {NewPasswordToken}       |
+		| ConfirmPassword   | {NewPasswordToken}       |
 	And I choose ResetPasswordButton
 	Then I am on the VacancySearchPage page
 	And I see
@@ -42,11 +43,49 @@ Scenario: Reset password with an invalid email
 	And I navigated to the ForgottenPasswordPage page
 	When I am on the ForgottenPasswordPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {InvalidEmailToken} |
+		| Field        | Value                             |
+		| EmailAddress | invalid.email.address@invalid.com |
 	And I choose SendCodeButton
 	Then I am on the ResetPasswordPage page
 	And I don't receive an email with the token to reset the password
+
+Scenario: Reset password with a mismatching password
+	Given I have registered a new candidate
+	When I navigate to the ForgottenPasswordPage page
+	Then I am on the ForgottenPasswordPage page
+	When I enter data
+		| Field        | Value        |
+		| EmailAddress | {EmailToken} |
+	And I choose SendCodeButton
+	
+	Then I am on the ResetPasswordPage page
+	When I get the token to reset the password
+	And I navigate to the ForgottenPasswordPage page
+	When I am on the ForgottenPasswordPage page
+	And I enter data
+		| Field        | Value        |
+		| EmailAddress | {EmailToken} |
+	And I choose SendCodeButton
+
+	Then I am on the ResetPasswordPage page
+	And I get the same token to reset the password
+	When I enter data
+		| Field             | Value                    |
+		| PasswordResetCode | {PasswordResetCodeToken} |
+		| Password          | {NewPasswordToken}       |
+		| ConfirmPassword   | !CannotPossiblyM4tch!    |
+	And I choose ResetPasswordButton
+
+	Then I am on the ResetPasswordPage page
+	And I see
+    | Field                  | Rule   | Value |
+    | ValidationSummaryCount | Equals | 1     |
+	
+	And I am on the ResetPasswordPage page
+	And I am on ValidationSummaryItems list item matching criteria
+	| Field | Rule   | Value                        |
+	| Text  | Equals | TODO: Passwords do not match |
+	| Href  | Equals | #ConfirmPassword             |
 
 Scenario: Reset password in an unactivated account
 	Given I navigated to the RegisterCandidatePage page
@@ -83,6 +122,7 @@ Scenario: Reset password in an unactivated account
 		| Field             | Value                    |
 		| PasswordResetCode | {PasswordResetCodeToken} |
 		| Password          | {NewPasswordToken}       |
+		| ConfirmPassword   | {NewPasswordToken}       |
 	And I choose ResetPasswordButton
 	Then I am on the VacancySearchPage page
 	And I see

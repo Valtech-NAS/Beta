@@ -6,7 +6,7 @@
     using FluentValidation.Attributes;
     using Validators;
 
-    [Validator(typeof (PasswordResetViewModelClientValidator))]
+    [Validator(typeof(PasswordResetViewModelClientValidator))]
     public class PasswordResetViewModel : ViewModelBase
     {
         public string EmailAddress { get; set; }
@@ -18,6 +18,10 @@
         [Display(Name = PasswordResetViewModelMessages.PasswordMessages.LabelText,
             Description = PasswordResetViewModelMessages.PasswordMessages.HintText)]
         public string Password { get; set; }
+
+        [Display(Name = PasswordResetViewModelMessages.ConfirmPasswordMessages.LabelText)]
+        [Compare("Password", ErrorMessage = PasswordResetViewModelMessages.ConfirmPasswordMessages.PasswordsDoNotMatchErrorText)]
+        public string ConfirmPassword { get; set; }
 
         public UserStatuses UserStatus { get; set; }
 

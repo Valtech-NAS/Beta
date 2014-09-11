@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
+    using System;
     using Constants.Pages;
     using Constants.ViewModels;
     using FluentValidation;
@@ -39,13 +40,22 @@
                 .WithMessage(PasswordResetViewModelMessages.PasswordMessages.RequiredErrorText)
                 .Matches(PasswordResetViewModelMessages.PasswordMessages.WhiteListRegularExpression)
                 .WithMessage(PasswordResetViewModelMessages.PasswordMessages.WhiteListErrorText);
+
+            validator.RuleFor(x => x.ConfirmPassword)
+                .Must(ConfirmPasswordMatchesPassword)
+                .WithMessage(PasswordResetViewModelMessages.ConfirmPasswordMessages.PasswordsDoNotMatchErrorText);
         }
 
         public static void AddServerRules(this AbstractValidator<PasswordResetViewModel> validator)
         {
             validator.RuleFor(x => x.PasswordResetCode)
                 .Must(IsPasswordResetCodeValid)
-                .WithName(PasswordResetPageMessages.InvalidCode);
+                .WithMessage(PasswordResetPageMessages.InvalidCode);
+        }
+
+        private static bool ConfirmPasswordMatchesPassword(PasswordResetViewModel model, string confirmPassword)
+        {
+            return model.Password.Equals(confirmPassword, StringComparison.InvariantCulture);
         }
 
         private static bool IsPasswordResetCodeValid(PasswordResetViewModel model, string passwordResetCode)
