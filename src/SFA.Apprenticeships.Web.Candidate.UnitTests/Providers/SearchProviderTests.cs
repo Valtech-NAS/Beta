@@ -21,7 +21,7 @@
         private Mock<IAddressSearchService> _addressSearchService;
 
         private CandidateWebMappers _mapper;
-
+        
         [SetUp]
         public void Setup()
         {

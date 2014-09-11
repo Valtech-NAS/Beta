@@ -28,7 +28,7 @@
             var exception = server.GetLastError();
             var httpException = exception as HttpException;
 
-            if (exception != null)
+            if (httpException == null)
             {
                 Logger.ErrorException(exception.Message, exception);
             }

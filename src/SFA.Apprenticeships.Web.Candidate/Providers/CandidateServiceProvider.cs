@@ -249,7 +249,7 @@
             }
             catch (CustomException e)
             {
-                Logger.ErrorException("Reset forgotten password failed for " + result.EmailAddress, e);
+                Logger.InfoException("Reset forgotten password failed for " + result.EmailAddress, e);
 
                 switch (e.Code)
                 {
