@@ -38,6 +38,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - logging levels should be used in accordance with article on wiki
 - logging should be called consistently across components (i.e. volume of log entries)
 - demo website should use separate configuration (e.g. databases)
+- logging should include an identifier which can be used to correlate a user's activity during a session (Nlog MDC)
 
 ----------
 
