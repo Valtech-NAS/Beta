@@ -50,6 +50,8 @@
                 }
             }
 
+            SetLoggingIds();
+
             base.OnActionExecuting(filterContext);
         }
 
@@ -70,6 +72,19 @@
                     UserData.Push(UserMessageConstants.ErrorMessage, message);
                     break;
             }
+        }
+
+        private void SetLoggingIds()
+        {
+            var sessionId = UserData.Get(UserDataItemNames.LoggingSessionId);
+            if (sessionId == null)
+            {
+                sessionId = Guid.NewGuid().ToString("N");
+                UserData.Push(UserDataItemNames.LoggingSessionId, sessionId);
+            }
+
+            NLog.MappedDiagnosticsContext.Set("sessionId", sessionId);
+            NLog.MappedDiagnosticsContext.Set("userId", UserContext != null ? UserContext.CandidateId.ToString() : "<none>");
         }
     }
 }
