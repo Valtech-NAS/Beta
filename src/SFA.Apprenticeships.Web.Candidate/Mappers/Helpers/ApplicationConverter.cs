@@ -188,7 +188,8 @@
 
         private static string ConvertYearIntToString(int intYear)
         {
-            return intYear > 0 ? intYear.ToString(CultureInfo.InvariantCulture) : string.Empty;
+            //Using 1 because we using DateTime.MinValue
+            return intYear > 1 ? intYear.ToString(CultureInfo.InvariantCulture) : string.Empty;
         }
 
         #endregion
