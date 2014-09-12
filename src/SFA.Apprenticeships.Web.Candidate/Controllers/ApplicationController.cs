@@ -251,6 +251,10 @@
             {
                 return new VacancyNotFoundResult();
             }
+            if (model.Status != ApplicationStatuses.Draft)
+            {
+                return RedirectToAction("Index");
+            }
 
             if (!model.HasError()) return RedirectToAction("WhatHappensNext", new {id});
             
