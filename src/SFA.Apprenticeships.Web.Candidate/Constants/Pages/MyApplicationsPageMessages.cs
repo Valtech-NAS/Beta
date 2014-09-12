@@ -5,5 +5,6 @@
         public const string DraftExpired = "This apprenticeship is no longer available";
         public const string ApplicationArchived = "Application has been removed from your drafts";
         public const string CreateOrRetrieveApplicationFailed = "There's been a problem creating or retrieving your application details. Please try again.";
+        public const string ApplicationInIncorrectState = "The application is not in draf state.";
     }
 }

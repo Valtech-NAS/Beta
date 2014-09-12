@@ -81,7 +81,7 @@
 
             if (model.HasError())
             {
-                RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
 
             model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;

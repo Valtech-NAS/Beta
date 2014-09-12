@@ -39,6 +39,14 @@
 
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
+            catch (CustomException e)
+            {
+                if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
+                {
+                    Logger.Error(e.Message, e);
+                    return new ApplicationViewModel(MyApplicationsPageMessages.ApplicationInIncorrectState);
+                }
+            }
             catch (Exception e)
             {
                 var message = string.Format("Get Application View Model failed for candidate ID: {0}, vacancy ID: {1}.",
@@ -48,6 +56,8 @@
 
                 return new ApplicationViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
             }
+
+            return new ApplicationViewModel("Unhandled error");
         }
 
         public ApplicationViewModel PatchApplicationViewModel(Guid candidateId, ApplicationViewModel savedModel, ApplicationViewModel submittedModel)
