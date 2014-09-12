@@ -104,6 +104,10 @@
             {
                 return new VacancyNotFoundResult();
             }
+            if (savedModel.Status != ApplicationStatuses.Draft)
+            {
+                return RedirectToAction("Index");
+            }
 
             ModelState.Clear();
 

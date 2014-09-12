@@ -43,7 +43,7 @@
             {
                 if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
                 {
-                    Logger.Error(e.Message, e);
+                    Logger.InfoException(e.Message, e);
                     return new ApplicationViewModel(MyApplicationsPageMessages.ApplicationInIncorrectState);
                 }
             }
