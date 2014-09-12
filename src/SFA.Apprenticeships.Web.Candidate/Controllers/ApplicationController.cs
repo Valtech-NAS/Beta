@@ -98,7 +98,7 @@
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyFormButton(Name = "ApplicationAction", Argument = "Preview")]
+        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Preview")]
         [ValidateInput(false)]
         public ActionResult Apply(int id, ApplicationViewModel model)
         {
@@ -142,7 +142,7 @@
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyFormButton(Name = "ApplicationAction", Argument = "Save")]
+        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Save")]
         [ValidateInput(false)]
         public ActionResult Save(int id, ApplicationViewModel model)
         {
@@ -189,7 +189,7 @@
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyFormButton(Name = "ApplicationAction", Argument = "AddEmptyQualificationRows")]
+        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyQualificationRows")]
         [ValidateInput(false)]
         public ActionResult AddEmptyQualificationRows(int id, ApplicationViewModel model)
         {
@@ -206,7 +206,7 @@
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyFormButton(Name = "ApplicationAction", Argument = "AddEmptyWorkExperienceRows")]
+        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyWorkExperienceRows")]
         [ValidateInput(false)]
         public ActionResult AddEmptyWorkExperienceRows(int id, ApplicationViewModel model)
         {

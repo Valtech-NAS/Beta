@@ -4,7 +4,7 @@
     using System.Reflection;
     using System.Web.Mvc;
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public class ApplyFormButtonAttribute : ActionNameSelectorAttribute
+    public class MultipleFormActionsButtonAttribute : ActionNameSelectorAttribute
     {
         public string Name { get; set; }
         public string Argument { get; set; }

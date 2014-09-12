@@ -2,8 +2,8 @@
 
 @{
     var pages = Model.Pages;
-    var prevLink = Model.VacancySearch.PageNumber > 1 ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) {PageNumber = Model.PrevPage}) : "#";
-    var nextLink = Model.VacancySearch.PageNumber < pages ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) {PageNumber = Model.NextPage}) : "#";
+    var prevLink = Model.VacancySearch.PageNumber > 1 ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) {PageNumber = Model.PrevPage, LocationType = Model.VacancySearch.LocationType, SearchAction = SearchAction.Sort}) : "#";
+    var nextLink = Model.VacancySearch.PageNumber < pages ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) {PageNumber = Model.NextPage, LocationType = Model.VacancySearch.LocationType, SearchAction = SearchAction.Sort}) : "#";
 }
 
 @if (Model.TotalLocalHits > 0 || Model.TotalNationalHits > 0 )

@@ -19,9 +19,9 @@
 
     public class VacancySearchController : CandidateControllerBase //todo: rename
     {
+        private readonly VacancySearchViewModelLocationValidator _searchLocationValidator;
         private readonly ISearchProvider _searchProvider;
         private readonly VacancySearchViewModelClientValidator _searchRequestValidator;
-        private readonly VacancySearchViewModelLocationValidator _searchLocationValidator;
         private readonly IVacancyDetailProvider _vacancyDetailProvider;
         private readonly int _vacancyResultsPerPage;
 
@@ -45,7 +45,7 @@
             PopulateDistances();
             PopulateSortType();
 
-            return View(new VacancySearchViewModel { WithinDistance = 2 , LocationType = VacancyLocationType.Local});
+            return View(new VacancySearchViewModel {WithinDistance = 2, LocationType = VacancyLocationType.Local});
         }
 
         [HttpGet]
@@ -54,16 +54,24 @@
         {
             UserData.Pop(UserDataItemNames.VacancyDistance);
 
-            if (model.LocationType == VacancyLocationType.Local && model.SortType == VacancySortType.Relevancy && string.IsNullOrWhiteSpace(model.Keywords))
+            if (model.SearchAction == SearchAction.Search && model.LocationType != VacancyLocationType.Local)
             {
-                model.SortType = VacancySortType.Distance;
+                model.LocationType = VacancyLocationType.Local;
                 return RedirectToAction("results", model);
             }
 
-            if (model.LocationType == VacancyLocationType.Nationwide && string.IsNullOrWhiteSpace(model.Keywords) && model.SortType != VacancySortType.ClosingDate)
+            if (model.LocationType == VacancyLocationType.Local && model.SortType == VacancySortType.Relevancy &&
+                string.IsNullOrWhiteSpace(model.Keywords))
+            {
+                model.SortType = VacancySortType.Distance;
+                //return RedirectToAction("results", model);
+            }
+
+            if (model.LocationType == VacancyLocationType.Nationwide && string.IsNullOrWhiteSpace(model.Keywords) &&
+                model.SortType != VacancySortType.ClosingDate)
             {
                 model.SortType = VacancySortType.ClosingDate;
-                return RedirectToAction("results", model);
+                //return RedirectToAction("results", model);
             }
 
             PopulateDistances(model.WithinDistance);
@@ -75,7 +83,7 @@
             else
             {
                 PopulateSortType(model.SortType, model.Keywords);
-            }           
+            }
 
             var clientResult = _searchRequestValidator.Validate(model);
 
@@ -84,7 +92,7 @@
                 ModelState.Clear();
                 clientResult.AddToModelState(ModelState, string.Empty);
 
-                return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
+                return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
             }
 
             if (!HasGeoPoint(model))
@@ -94,10 +102,10 @@
 
                 if (suggestedLocations.HasError())
                 {
-                        ModelState.Clear();
-                        SetUserMessage(suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
+                    ModelState.Clear();
+                    SetUserMessage(suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
 
-                        return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
+                    return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
                 }
 
                 if (suggestedLocations.Locations.Any())
@@ -133,7 +141,7 @@
             if (!locationResult.IsValid)
             {
                 ModelState.Clear();
-                return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
+                return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
             }
 
             var results = _searchProvider.FindVacancies(model, _vacancyResultsPerPage);
@@ -142,11 +150,12 @@
             {
                 ModelState.Clear();
                 SetUserMessage(results.ViewModelMessage, UserMessageLevel.Warning);
-                return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
+                return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
             }
 
             //TODO CM perform this in the provider
-            if (results.TotalLocalHits == 0 && results.VacancySearch.LocationType == VacancyLocationType.Local && results.TotalNationalHits != 0)
+            if (results.TotalLocalHits == 0 && results.VacancySearch.LocationType == VacancyLocationType.Local &&
+                results.TotalNationalHits != 0)
             {
                 model.SortType = VacancySortType.ClosingDate;
                 model.LocationType = VacancyLocationType.Nationwide;
@@ -154,9 +163,14 @@
                 return RedirectToAction("results", model);
             }
 
+            if (model.SearchAction == SearchAction.Search)
+            {
+                results.VacancySearch.LocationType = VacancyLocationType.Local;
+            }
+
             return View("results", results);
         }
-    
+
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult DetailsWithDistance(int id, string distance)
@@ -164,7 +178,7 @@
             UserData.Push(UserDataItemNames.VacancyDistance, distance.ToString(CultureInfo.InvariantCulture));
             UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToString(CultureInfo.InvariantCulture));
 
-            return RedirectToAction("Details", new { id });
+            return RedirectToAction("Details", new {id});
         }
 
         [HttpGet]
@@ -197,8 +211,8 @@
             var lastVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
 
             if (!string.IsNullOrWhiteSpace(distance)
-                    && !string.IsNullOrWhiteSpace(lastVacancyId)
-                    && int.Parse(lastVacancyId) == id)
+                && !string.IsNullOrWhiteSpace(lastVacancyId)
+                && int.Parse(lastVacancyId) == id)
             {
                 ViewBag.Distance = distance;
                 UserData.Push(UserDataItemNames.VacancyDistance, distance);
@@ -238,7 +252,8 @@
             ViewBag.Distances = distances;
         }
 
-        private void PopulateSortType(VacancySortType selectedSortType = VacancySortType.Distance, string keywords = null, bool isLocalLocationType = true)
+        private void PopulateSortType(VacancySortType selectedSortType = VacancySortType.Distance,
+            string keywords = null, bool isLocalLocationType = true)
         {
             var sortTypeOptions = new ArrayList();
 

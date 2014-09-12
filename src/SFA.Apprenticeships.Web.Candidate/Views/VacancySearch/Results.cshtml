@@ -4,7 +4,7 @@
     ViewBag.Title = "Apprenticeships - Results";
     Layout = "~/Views/Shared/_Layout.cshtml";
     
-    var locationTypeLink = Model.VacancySearch.LocationType == VacancyLocationType.Nationwide ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.Local }) : Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.Nationwide });
+    var locationTypeLink = Model.VacancySearch.LocationType == VacancyLocationType.Nationwide ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.Local, SearchAction = SearchAction.Sort}) : Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.Nationwide , SearchAction = SearchAction.Sort});
     
     string resultMessage;
     string nationalResultsMessage;
@@ -78,10 +78,10 @@
     {
         Html.Partial("ValidationSummary", ViewData.ModelState);
         Html.RenderPartial("_searchUpdate", Model.VacancySearch);
-        
+        @(Model.VacancySearch.SearchAction == SearchAction.Search ? Html.Hidden("LocationType", "Local") : Html.Hidden("LocationType", Model.VacancySearch.LocationType))
         <section class="grid grid-2-3">
             @{
-                if (Model.TotalLocalHits == 0)
+        if (Model.TotalLocalHits == 0)
                 {
                     <p id="search-no-results-title">There are currently no apprenticeships that match your search.</p>
                     <p>Try editing your search:</p>
@@ -105,12 +105,23 @@
 @section scripts
 {
     @Scripts.Render("~/bundles/nas/locationsearch")
-    <script>
-        $("#Location").locationMatch({
-            url: '@Url.Action("location", "Location")',
-            longitude: '#Longitude',
-            latitude: '#Latitude',
-            latlonhash: '#Hash'
+    <script type="text/javascript">
+
+        $(function () {
+
+            $("#Location").locationMatch({
+                url: '@Url.Action("location", "Location")',
+                longitude: '#Longitude',
+                latitude: '#Latitude',
+                latlonhash: '#Hash'
+            });
+
+            $('#sort-results').change(function () {
+
+                $('#SearchAction').val("Sort");
+                $("form").submit();
+            });
         });
+
     </script>
 }

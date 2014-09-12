@@ -74,5 +74,13 @@
         }
 
         public VacancyLocationType LocationType { get; set; }
+
+        public SearchAction SearchAction { get; set; }
+    }
+
+    public enum SearchAction
+    {
+        Search,
+        Sort
     }
 }

@@ -8,10 +8,11 @@
         <div class="float-right-wrap">
             <div class="form-group form-group-compound">
                 <label for="sort-results" class="heading-medium inline">Sort results</label>
-                @Html.DropDownList("sortType", (SelectList)ViewBag.SortTypes, disableSortDropdownList ? new { @id = "sort-results", @onchange = "this.form.submit();", @disabled = "disabled" } as object : new { @id = "sort-results", @onchange = "this.form.submit();" })
+                @Html.DropDownList("sortType", (SelectList)ViewBag.SortTypes, disableSortDropdownList ? new { @id = "sort-results", @disabled = "disabled" } as object : new { @id = "sort-results" })
                 <noscript>
-                    <button class="button show-nojs">Sort</button>
-                </noscript>                
+                    <button class="button show-nojs" name="SearchAction" value="Sort">Sort</button>
+                </noscript>
+                <input id="SearchAction" name="SearchAction" value="Search" type="hidden" />
             </div>
         </div>
     </fieldset>
@@ -23,11 +24,11 @@
         {
             <li class="search-results__item section-border">
                 <div class="hgroup-medium">
-                    <h3 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new {id = vacancy.Id, distance = vacancy.DistanceAsString}, new {@class = "vacancy-link", data_vacancy_id = vacancy.Id})</h3>
+                    <h3 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id })</h3>
                     <h4 class="subtitle">@vacancy.EmployerName</h4>
                 </div>
                 <p class="search-shortdesc">@vacancy.Description</p>
-                <p>@Html.ActionLink("Read more", "DetailsWithDistance", new {id = vacancy.Id, distance = vacancy.DistanceAsString})</p>
+                <p>@Html.ActionLink("Read more", "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString })</p>
                 <div class="inl-block-wrapper">
                     <ul class="list-text btm-align width-all-2-3">
                         @if (!string.IsNullOrWhiteSpace(Model.VacancySearch.Keywords) && vacancy.Score != 0)

@@ -31,9 +31,9 @@
             @Html.HiddenFor(m => m.Latitude)
             @Html.HiddenFor(m => m.Longitude)
             @Html.Hidden("Hash", Model.LatLonLocHash())
-
+           
             <div class="form-group">
-                <button class="button" id="search-button">Update results</button>
+                <button class="button" id="search-button" name="SearchAction" value="Search">Update results</button>
             </div>
         </div>
     </fieldset>
