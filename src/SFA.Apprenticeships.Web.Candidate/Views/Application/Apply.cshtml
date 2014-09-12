@@ -73,6 +73,7 @@
         var workExperienceData = null;
         var currentYear = null;
         var whitelistregex = null;
+        var yearRegex = null;
 
         $(function() {
 
@@ -82,6 +83,10 @@
             workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
             currentYear = @Html.Raw(Model.CurrentYear);
             whitelistregex =  @Html.Raw(Json.Encode(Model.WhiteListRegex));
+            yearRegex =  @Html.Raw(Json.Encode(Model.FourDigitYearRegex));
+
+            console.log(whitelistregex);
+            console.log(yearRegex);
 
             window.addEventListener("load", function() {
                 dirtyFormDialog.initialise({
@@ -107,6 +112,10 @@
 
         function getWhiteListRegex() {
             return whitelistregex;
+        }
+
+        function getYearRegex() {
+            return yearRegex;
         }
 
         function getMonthLabel(index) {

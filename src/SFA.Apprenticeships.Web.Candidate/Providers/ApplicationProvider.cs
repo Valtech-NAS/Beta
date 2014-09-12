@@ -74,7 +74,6 @@
             savedModel.Candidate.HasWorkExperience = submittedModel.Candidate.HasWorkExperience;
             savedModel.Candidate.WorkExperience = submittedModel.Candidate.WorkExperience;
             savedModel.Candidate.EmployerQuestionAnswers = submittedModel.Candidate.EmployerQuestionAnswers;
-            savedModel.ApplicationAction = submittedModel.ApplicationAction;
 
             return savedModel;
         }

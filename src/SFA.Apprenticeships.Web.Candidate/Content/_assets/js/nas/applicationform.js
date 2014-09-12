@@ -1,4 +1,38 @@
 ﻿(function () {
+    //Qualification Validation Messages
+    var validationMessageSelectQualificationType = "Select qualification type";
+    var validationMessageOtherQualificationRequired = "Please enter other qualification";
+    var validationMessageOtherQualificationContainsInvalidCharacters = "Other qualification mustn't contain invalid characters";
+    var validationMessageQualificationYearRequired = "Please enter year";
+    var validationMessageQualificationYearMustBeAFourDigitNumber = "Year must be 4 digits";
+    var validationMessageQualificationYearMustBeNumeric = "Year must be numeric";
+    var validationMessageSubjectRequired = "Please enter subject";
+    var validationMessageSubjectContainsInvalidCharacters = "Subject mustn't contain invalid characters";
+    var validationMessageGradeRequired = "Please enter grade";
+    var validationMessageGradeContainsInvalidCharacters = "Grade mustn't contain invalid characters";
+
+    //Work Experience Validation Messages
+    var validationMessageToYearMustBeAfterFromYear = 'Year finished must be after year started';
+    var validationMessageEmployerRequired = "Please enter employer";
+    var validationMessageEmployerExceedsFiftyCharacters = "Employer mustn't exceed 50 characters";
+    var validationMessageEmployerContainsInvalidCharacters = "Employer mustn't contain invalid characters";
+    var validationMessageJobTitleRequired = "Please enter job title";
+    var validationMessageJobTitleExceedsFiftyCharacters = "Job title mustn't exceed 50 characters";
+    var validationMessageJobTitleContainsInvalidCharacters = "Job title mustn't contain invalid characters";
+    var validationMessageMainDutiesRequired = "Please enter main duties";
+    var validationMessageMainDutiesExceedsTwoHundredCharacters = "Main duties mustn't exceed 200 characters";
+    var validationMessageMainDutiesContainInvalidCharacters = "Main duties mustn't contain invalid characters";
+    var validationMessageFromMonthRequired = "Please enter month started";
+    var validationMessageFromYearRequired = "Please enter year started";
+    var validationMessageFromYearMustBeNumeric = "Year must be numeric";
+    var validationMessageFromYearMustNotBeInFuture = "Year started must not be in the future";
+    var validationMessageFromYearMustBeFourDigits = "Year started must be 4 digits, for example 1990";
+    var validationMessageToMonthRequired = "Please enter month finished";
+    var validationMessageToYearRequired = "Please enter year finished";
+    var validationMessageToYearMustBeNumeric = "Year must be numeric";
+    var validationMessageToYearMustBeFourDigits = "Year finished must be 4 digits, for example 1990";
+    var validationMessageToYearMustNotBeInFuture = "Year finished must not be in the future";
+    var validationMessageDateFinishedMustBeAfterDateStarted = "Date finished must be after date started";
 
     var qualificationTypeModel = function (name) {
         var self = this;
@@ -24,44 +58,48 @@
         }
     }
 
-    var listItemModel = function (itemType, itemOtherType, itemYear, itemSubject, itemGrade, itemPredicted, itemRegexPattern) {
+    var listItemModel = function (itemType, itemOtherType, itemYear, itemSubject, itemGrade, itemPredicted, itemRegexPattern, itemYearRegexPattern) {
 
         var self = this;
-
         self.itemIndex = ko.observable(0);
         self.itemRegexPattern = ko.observable(itemRegexPattern);
-
+        self.itemYearRegexPattern = ko.observable(itemYearRegexPattern);
         self.qualificationType = ko.observable(itemType).extend({
-            required: { message: "Select qualification type" }
+            required: { message: validationMessageSelectQualificationType }
         });
         self.otherQualificationType = ko.observable(itemOtherType).extend({
             pattern: {
-                message: "Other qualification mustn't contain invalid characters",
+                message: validationMessageOtherQualificationContainsInvalidCharacters,
                 params: self.itemRegexPattern
             }
         });
+
         self.qualificationYear = ko.observable(itemYear).extend({
-            required: { message: "Please enter year" }, number: true
+            required: { message: validationMessageQualificationYearRequired }
         }).extend({
-            min: {
-                message: "Year must be 4 digits",
-                params: 1914
+            number: {
+                message: validationMessageQualificationYearMustBeNumeric
+            }
+        }).extend({
+            pattern: {
+                message: validationMessageQualificationYearMustBeAFourDigitNumber,
+                params: self.itemYearRegexPattern
             }
         });
 
         self.qualificationSubject = ko.observable(itemSubject).extend({
-            required: { message: "Please enter subject" }
+            required: { message: validationMessageSubjectRequired }
         }).extend({
             pattern: {
-                message: "Subject mustn't contain invalid characters",
+                message: validationMessageSubjectContainsInvalidCharacters,
                 params: self.itemRegexPattern
             }
         });
         self.qualificationGrade = ko.observable(itemGrade).extend({
-            required: { message: "Please enter grade" }
+            required: { message: validationMessageGradeRequired }
         }).extend({
             pattern: {
-                message: "Grade mustn't contain invalid characters",
+                message: validationMessageGradeContainsInvalidCharacters,
                 params: self.itemRegexPattern
             }
         });
@@ -76,7 +114,7 @@
         }, self);
     };
 
-    function addQualification(qualifications, typeSelected, typeOther, year, subject, grade, predicted, regex) {
+    function addQualification(qualifications, typeSelected, typeOther, year, subject, grade, predicted, regex, yearRegex) {
 
         var qualificationArrays = qualifications;
 
@@ -93,7 +131,7 @@
             }
         }
 
-        var qualificationItemModel = new listItemModel(typeSelected, typeOther, year, subject, grade, predicted, regex);
+        var qualificationItemModel = new listItemModel(typeSelected, typeOther, year, subject, grade, predicted, regex, yearRegex);
 
         var match = ko.utils.arrayFirst(qualificationArrays, function (item) {
             return item.groupKey() === typeSelected;
@@ -121,7 +159,9 @@
         self.qualificationStatus = ko.computed(function () {
             return self.showQualifications() ? "block" : "none";
         }, qualificationViewModel);
+
         self.regexPattern = ko.observable();
+        self.yearRegexPattern = ko.observable();
 
         //TODO get values from config.
         self.qualificationTypes = ko.observableArray([
@@ -135,16 +175,16 @@
             new qualificationTypeModel("Other")
         ]);
 
-        self.selectedQualification = ko.observable().extend({ required: { message: "Select qualification type" } });
-
+        self.selectedQualification = ko.observable().extend({ required: { message: validationMessageSelectQualificationType } });
+       
         self.otherQualification = ko.observable().extend({
             required: {
-                message: "Please enter other qualification",
+                message: validationMessageOtherQualificationRequired,
                 onlyIf: function () { return (self.selectedQualification() === "Other"); }
             }
         }).extend({
             pattern: {
-                message: "Other qualification mustn't contain invalid characters",
+                message: validationMessageOtherQualificationContainsInvalidCharacters,
                 params: self.regexPattern,
                 onlyIf: function () { return (self.selectedQualification() === "Other"); }
             }
@@ -153,27 +193,31 @@
         self.showOtherQualification = ko.observable(false);
 
         self.year = ko.observable().extend({
-            required: { message: "Please enter year" }, number: true
+            required: { message: validationMessageQualificationYearRequired }
         }).extend({
-            minLength: {
-                message: "Year must be 4 digits, for example 1990",
-                params: 4
+            number: {
+                message: validationMessageQualificationYearMustBeNumeric
+            }
+        }).extend({
+            pattern: {
+                message: validationMessageQualificationYearMustBeAFourDigitNumber,
+                params: self.yearRegexPattern
             }
         });
 
         self.subject = ko.observable().extend({
-            required: { message: "Please enter subject" }
+            required: { message: validationMessageSubjectRequired }
         }).extend({
             pattern: {
-                message: "Subject mustn't contain invalid characters",
+                message: validationMessageSubjectContainsInvalidCharacters,
                 params: self.regexPattern
             }
         });
         self.grade = ko.observable().extend({
-            required: { message: "Please enter grade" }
+            required: { message: validationMessageGradeRequired}
         }).extend({
             pattern: {
-                message: "Grade mustn't contain invalid characters",
+                message: validationMessageGradeContainsInvalidCharacters,
                 params: self.regexPattern
             }
         });
@@ -216,7 +260,7 @@
                 var grade = self.grade();
                 var predicted = self.predicted();
 
-                var result = addQualification(self.qualifications(), typeSelected, typeOther, year, subject, grade, predicted, self.regexPattern());
+                var result = addQualification(self.qualifications(), typeSelected, typeOther, year, subject, grade, predicted, self.regexPattern(), self.yearRegexPattern());
                 self.qualifications(result);
 
                 self.reIndexQualifications(); //re-index qualifications
@@ -255,7 +299,7 @@
         self.getqualifications = function (data) {
 
             $(data).each(function (index, item) {
-                var result = addQualification(self.qualifications(), item.QualificationType, "", item.Year, item.Subject, item.Grade, item.IsPredicted, self.regexPattern());
+                var result = addQualification(self.qualifications(), item.QualificationType, "", item.Year, item.Subject, item.Grade, item.IsPredicted, self.regexPattern(), self.yearRegexPattern());
                 self.qualifications(result);
             });
 
@@ -294,49 +338,62 @@
         self.monthName = monthName;
         self.monthNumber = monthNo;
     };
-
+   
     ko.validation.rules['mustBeGreaterThanOrEqual'] = {
         validator: function (val, otherVal) {
             return val === otherVal || val > otherVal;
         },
-        message: 'Year finished must be after year started'
+        message: validationMessageToYearMustBeAfterFromYear
     };
+
     ko.validation.registerExtenders();
 
-    var workExperienceItemModel = function (itemEmployer, itemJobTitle, itemDuties, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemIsCurrentEmployment, itemCurrentYear, itemRegex) {
+    var workExperienceItemModel = function (itemEmployer, itemJobTitle, itemDuties, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemIsCurrentEmployment, itemCurrentYear, itemRegex, itemYearRegexPattern) {
 
         var self = this;
 
         self.itemRegexPattern = ko.observable(itemRegex);
 
+        self.itemYearRegexPattern = ko.observable(itemYearRegexPattern);
+
         self.itemEmployer = ko.observable(itemEmployer).extend({
-            required: { message: "Please enter employer" }
+            required: { message: validationMessageEmployerRequired }
+        }).extend({
+            maxLength: {
+                message: validationMessageEmployerExceedsFiftyCharacters,
+                params: 50
+            }
         }).extend({
             pattern: {
-                message: "Employer mustn't contain invalid characters",
+                message: validationMessageEmployerContainsInvalidCharacters,
                 params: self.itemRegexPattern
             }
         });
 
         self.itemJobTitle = ko.observable(itemJobTitle).extend({
-            required: { message: "Please enter job title" }
+            required: { message: validationMessageJobTitleRequired }
+        }).extend({
+            maxLength: {
+                message: validationMessageJobTitleExceedsFiftyCharacters,
+                params: 50
+            }
         }).extend({
             pattern: {
-                message: "Job title mustn't contain invalid characters",
+                message: validationMessageJobTitleContainsInvalidCharacters,
                 params: self.itemRegexPattern
             }
         });
 
         self.itemMainDuties = ko.observable(itemDuties).extend({
-            required: { message: "Please enter main duties" }
+            required: { message: validationMessageMainDutiesRequired }
         }).extend({
             maxLength: {
-                message: "Main duties mustn't exceed 200 characters",
+                message: validationMessageMainDutiesExceedsTwoHundredCharacters,
                 params: 200
             }
         }).extend({
             pattern: {
-                message: "Main duties mustn't contain invalid characters",
+                message: validationMessageMainDutiesContainInvalidCharacters,
                 params: self.itemRegexPattern
             }
         });
@@ -344,36 +401,33 @@
         self.itemIsCurrentEmployment = ko.observable(itemIsCurrentEmployment);
         self.itemCurrentYear = ko.observable(itemCurrentYear);
 
-        self.itemFromMonth = ko.observable(itemFromMonth).extend({ required: { message: "Please enter month started" } });
+        self.itemFromMonth = ko.observable(itemFromMonth).extend({ required: { message: validationMessageFromMonthRequired } });
         self.itemFromYear = ko.observable(itemFromYear).extend({
-            required: { message: "Please enter year started" }
+            required: { message: validationMessageFromYearRequired }
         }).extend({
             number: {
-                message: "Please enter year started"
+                message: validationMessageFromYearMustBeNumeric
             }
         }).extend({
             max: {
-                message: "Year finished mustn’t be in the future",
+                message: validationMessageFromYearMustNotBeInFuture,
                 params: self.itemCurrentYear
             }
         }).extend({
-            validation: {
-                validator: function (val, fromYearValue) {
-                    return val >= (fromYearValue - 100);
-                },
-                message: "Year finished must be 4 digits, for example 1990",
-                params: self.itemCurrentYear,
+            pattern: {               
+                message: validationMessageFromYearMustBeFourDigits,
+                params: self.itemYearRegexPattern,
             }
         });
 
         self.itemToYear = ko.observable(itemToYear).extend({
             required: {
-                message: "Please enter year finished",
+                message: validationMessageToYearRequired,
                 onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
             }
         }).extend({
             number: {
-                message: "Year finished must be 4 digits, for example 1990",
+                message: validationMessageToYearMustBeNumeric,
                 onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
             }
         }).extend({
@@ -381,25 +435,25 @@
                 validator: function (val, fromYearValue) {
                     return val >= fromYearValue;
                 },
-                message: "Year finished must be after year started",
+                message: validationMessageToYearMustBeAfterFromYear,
                 params: self.itemFromYear,
                 onlyIf: function () {
                     return (self.itemIsCurrentEmployment() === false);
                 }
             }
         }).extend({
-            max: {
-                message: "Year finished must be 4 digits, for example 1990",
-                params: self.itemCurrentYear,
+            pattern: {
+                message: validationMessageToYearMustBeFourDigits,
+                params: self.itemYearRegexPattern,
                 onlyIf: function () {
                     return (self.itemIsCurrentEmployment() === false);
                 }
             }
-        });
+        });       
 
         self.itemToMonth = ko.observable(itemToMonth).extend({
             required: {
-                message: "Please enter month finished",
+                message: validationMessageToMonthRequired,
                 onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
             }
         }).extend({
@@ -407,7 +461,7 @@
                 validator: function (val, fromMonthValue) {
                     return val >= fromMonthValue;
                 },
-                message: "Date finished must be after date started",
+                message: validationMessageDateFinishedMustBeAfterDateStarted,
                 params: self.itemFromMonth,
                 onlyIf: function () {
                     return (self.itemFromYear() === self.itemToYear());
@@ -460,70 +514,72 @@
         }, self);
 
         self.regexPattern = ko.observable();
+        self.yearRegexPattern = ko.observable();
 
         self.employer = ko.observable().extend({
-            required: { message: "Please enter employer" }
+            required: { message: validationMessageEmployerRequired }
         }).extend({
             maxLength: {
-                message: "Employer mustn't exceed 50 characters",
+                message: validationMessageEmployerExceedsFiftyCharacters,
                 params: 50
             }
         }).extend({
             pattern: {
-                message: "Employer mustn't contain invalid characters",
+                message: validationMessageEmployerContainsInvalidCharacters,
                 params: self.regexPattern
             }
         });
-
         self.jobTitle = ko.observable().extend({
-            required: { message: "Please enter job title" }
+            required: { message: validationMessageJobTitleRequired }
         }).extend({
             maxLength: {
-                message: "Job title mustn't exceed 50 characters",
+                message: validationMessageJobTitleExceedsFiftyCharacters,
                 params: 50
             }
         }).extend({
             pattern: {
-                message: "Job title mustn't contain invalid characters",
+                message: validationMessageJobTitleContainsInvalidCharacters,
                 params: self.regexPattern
             }
         });
-
         self.mainDuties = ko.observable().extend({
-            required: { message: "Please enter main duties" }
+            required: { message: validationMessageMainDutiesRequired }
         }).extend({
             maxLength: {
-                message: "Main duties mustn't exceed 200 characters",
+                message: validationMessageMainDutiesExceedsTwoHundredCharacters,
                 params: 200
             }
         }).extend({
             pattern: {
-                message: "Main duties mustn't contain invalid characters",
+                message: validationMessageMainDutiesContainInvalidCharacters,
                 params: self.regexPattern
             }
         });
-
         self.isCurrentEmployment = ko.observable(false);
         self.currentYear = ko.observable();
-
-        self.fromMonth = ko.observable().extend({ required: { message: "Please enter month started" } });
+        self.fromMonth = ko.observable().extend({
+             required: { message: validationMessageFromMonthRequired }
+        });
         self.fromYear = ko.observable().extend({
-            required: { message: "Please enter year started" }, number: true
+            required: { message: validationMessageFromYearRequired }
+        }).extend({
+             number: {
+                 message: validationMessageFromYearMustBeNumeric
+             }
         }).extend({
             max: {
-                message: "Year started must not be in the future",
+                message: validationMessageFromYearMustNotBeInFuture,
                 params: self.currentYear
             }
         }).extend({
-            minLength: {
-                message: "Year started must be 4 digits, for example 1990",
-                params: 4
+            pattern: {
+                message: validationMessageFromYearMustBeFourDigits,
+                params: self.yearRegexPattern
             }
         });
-
         self.toMonth = ko.observable().extend({
             required: {
-                message: "Please enter month finished",
+                message: validationMessageToMonthRequired,
                 onlyIf: function () { return (self.isCurrentEmployment() === false); }
             }
         }).extend({
@@ -531,7 +587,7 @@
                 validator: function (val, fromMonthValue) {
                     return val >= fromMonthValue;
                 },
-                message: "Year finished must be after year started",
+                message: validationMessageDateFinishedMustBeAfterDateStarted,
                 params: self.fromMonth,
                 onlyIf: function () {
                     return (self.fromYear() === self.toYear());
@@ -541,23 +597,21 @@
 
         self.toYear = ko.observable().extend({
             required: {
-                message: "Please enter year finished",
+                message: validationMessageToYearRequired,
                 onlyIf: function () { return (self.isCurrentEmployment() === false); }
             }
         }).extend({
-            number: {
-                message: "Year finished must be 4 digits, for example 1990",
+            pattern: {
+                message: validationMessageToYearMustBeFourDigits,
+                params: self.yearRegexPattern,
                 onlyIf: function () { return (self.isCurrentEmployment() === false); }
             }
-        }).extend({
-            minLength: 4,
-            onlyIf: function () { return (self.isCurrentEmployment() === false); }
         }).extend({
             validation: {
                 validator: function (val, fromYearValue) {
                     return val >= fromYearValue;
                 },
-                message: "Year finished must be after year started",
+                message: validationMessageToYearMustBeAfterFromYear,
                 params: self.fromYear,
                 onlyIf: function () {
                     return (self.isCurrentEmployment() === false);
@@ -565,7 +619,7 @@
             }
         }).extend({
             max: {
-                message: "Year finished must not be in the future",
+                message: validationMessageToYearMustNotBeInFuture,
                 params: self.currentYear,
                 onlyIf: function () {
                     return (self.isCurrentEmployment() === false);
@@ -601,7 +655,7 @@
                     toYear = 0;
                 }
 
-                var experience = new workExperienceItemModel(self.employer(), self.jobTitle(), self.mainDuties(), self.fromMonth(), self.fromYear(), toMonth, toYear, self.isCurrentEmployment(), self.currentYear(), self.regexPattern());
+                var experience = new workExperienceItemModel(self.employer(), self.jobTitle(), self.mainDuties(), self.fromMonth(), self.fromYear(), toMonth, toYear, self.isCurrentEmployment(), self.currentYear(), self.regexPattern(), self.yearRegexPattern());
                 experience.disableToDateIfCurrent();
                 self.workExperiences.push(experience);
 
@@ -657,7 +711,7 @@
                     myToYear = null;
                 }
 
-                var experienceItemModel = new workExperienceItemModel(item.Employer, item.JobTitle, item.Description, item.FromMonth, item.FromYear, item.ToMonth, myToYear, currentEmployer, self.currentYear(), self.regexPattern());
+                var experienceItemModel = new workExperienceItemModel(item.Employer, item.JobTitle, item.Description, item.FromMonth, item.FromYear, item.ToMonth, myToYear, currentEmployer, self.currentYear(), self.regexPattern(), self.yearRegexPattern());
                 experienceItemModel.disableToDateIfCurrent();
                 self.workExperiences.push(experienceItemModel);
             });
@@ -723,9 +777,20 @@
         });
 
         var model = new qualificationViewModel();
+        var experienceModel = new workExperienceViewModel();
+
+        if (window.getCurrentYear()) {
+            experienceModel.currentYear(window.getCurrentYear());
+        }
 
         if (window.getWhiteListRegex()) {
             model.regexPattern(window.getWhiteListRegex());
+            experienceModel.regexPattern(window.getWhiteListRegex());
+        }
+
+        if (window.getYearRegex()) {
+            model.yearRegexPattern(window.getYearRegex());
+            experienceModel.yearRegexPattern(window.getYearRegex());
         }
 
         if (window.getQualificationData()) {
@@ -735,23 +800,13 @@
             model.checkHasNoQualifications();
         }
 
-        ko.applyBindings(model, document.getElementById('applyQualifications'));
-
-        var experienceModel = new workExperienceViewModel();
-
-        if (window.getCurrentYear()) {
-            experienceModel.currentYear(window.getCurrentYear());
-        }
-
-        if (window.getWhiteListRegex()) {
-            experienceModel.regexPattern(window.getWhiteListRegex());
-        }
-
         if (window.getWorkExperienceData()) {
             experienceModel.getWorkExperiences(window.getWorkExperienceData());
         } else {
             experienceModel.checkHasNoWorkExperience();
         }
+
+        ko.applyBindings(model, document.getElementById('applyQualifications'));
 
         ko.applyBindings(experienceModel, document.getElementById('applyWorkExperience'));
 

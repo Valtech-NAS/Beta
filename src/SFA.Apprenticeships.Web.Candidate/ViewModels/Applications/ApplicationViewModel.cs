@@ -10,13 +10,6 @@
     using VacancySearch;
 
     [Serializable]
-    public enum ApplicationAction
-    {
-        Preview,
-        Save
-    }
-
-    [Serializable]
     public class ApplicationViewModel : ViewModelBase
     {
         //Constants used on application form
@@ -26,6 +19,7 @@
         public double SessionTimeout;
         public string ConfirmationMessage = ApplicationPageMessages.LeavingPageMessage;
         public string WhiteListRegex = Whitelists.FreetextWhitelist.RegularExpression;
+        public string FourDigitYearRegex = Whitelists.YearWhitelist.RegularExpression;
 
         public ApplicationViewModel(string message) : base(message)
         {
@@ -65,7 +59,6 @@
         public CandidateViewModel Candidate { get; set; }
         public ApplicationStatuses Status { get; set; }
         public DateTime? DateUpdated { get; set; }
-        public ApplicationAction ApplicationAction { get; set; }
         public int VacancyId { get; set; }
         public bool IsJavascript  { get; set; }
     }

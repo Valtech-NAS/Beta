@@ -66,14 +66,14 @@
                 .WithMessage(RegisterViewModelMessages.PasswordMessages.LengthErrorText)
                 .NotEmpty()
                 .WithMessage(RegisterViewModelMessages.PasswordMessages.RequiredErrorText)
+                .Must(ConfirmPasswordMatchesPassword)
+                .WithMessage(RegisterViewModelMessages.PasswordMessages.PasswordsDoNotMatchErrorText)
                 .Matches(RegisterViewModelMessages.PasswordMessages.WhiteListRegularExpression)
                 .WithMessage(RegisterViewModelMessages.PasswordMessages.WhiteListErrorText);
 
             validator.RuleFor(x => x.ConfirmPassword)
                 .NotEmpty()
-                .WithMessage(RegisterViewModelMessages.ConfirmPasswordMessages.RequiredErrorText)
-                .Must(ConfirmPasswordMatchesPassword)
-                .WithMessage(RegisterViewModelMessages.ConfirmPasswordMessages.PasswordsDoNotMatchErrorText);
+                .WithMessage(RegisterViewModelMessages.ConfirmPasswordMessages.RequiredErrorText);
 
             validator.RuleFor(x => x.HasAcceptedTermsAndConditions)
                 .Equal(true)
@@ -85,8 +85,8 @@
             validator.RuleFor(x => x.DateOfBirth).SetValidator(new DateOfBirthViewModelServerValidator());
 
             validator.RuleFor(x => x.EmailAddress)
-               .Must(UsernameAvailable)
-               .WithMessage(RegisterViewModelMessages.EmailAddressMessages.UsernameNotAvailableErrorText);
+                .Must(UsernameAvailable)
+                .WithMessage(RegisterViewModelMessages.EmailAddressMessages.UsernameNotAvailableErrorText);
         }
 
         private static bool UsernameAvailable(RegisterViewModel model, string emailAddress)
@@ -94,9 +94,9 @@
             return emailAddress != null && (!string.IsNullOrEmpty(emailAddress) && model.IsUsernameAvailable);
         }
 
-        private static bool ConfirmPasswordMatchesPassword(RegisterViewModel model, string confirmPassword)
+        private static bool ConfirmPasswordMatchesPassword(RegisterViewModel model, string password)
         {
-            return model.Password.Equals(confirmPassword, StringComparison.InvariantCulture);
+            return model.ConfirmPassword.Equals(password, StringComparison.InvariantCulture);
         }
     }
 }
