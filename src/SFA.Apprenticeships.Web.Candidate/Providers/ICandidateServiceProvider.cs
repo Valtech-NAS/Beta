@@ -14,12 +14,12 @@
         ActivationViewModel Activate(ActivationViewModel model, Guid candidateId);
         LoginResultViewModel Login(LoginViewModel model);
         UserNameAvailability IsUsernameAvailable(string username);
-        UserStatuses GetUserStatus(string username);
+        UserStatusesViewModel GetUserStatus(string username);
         ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId);
         bool RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model);
         void RequestAccountUnlockCode(AccountUnlockViewModel model);
         PasswordResetViewModel VerifyPasswordReset(PasswordResetViewModel model);
-        bool VerifyAccountUnlockCode(AccountUnlockViewModel model);
+        AccountUnlockViewModel VerifyAccountUnlockCode(AccountUnlockViewModel model);
         bool ResendActivationCode(string username);
         Candidate GetCandidate(string username);
         Candidate GetCandidate(Guid candidateId);
