@@ -226,6 +226,11 @@
                 return new VacancyNotFoundResult();
             }
 
+            if (model.HasError())
+            {
+                return RedirectToAction("Index");
+            }
+
             // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
             ViewBag.VacancyId = id;
 
