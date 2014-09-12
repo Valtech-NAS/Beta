@@ -42,12 +42,12 @@
                 {
                     var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
-                    Logger.Error("Gateway GetVacancyDetails reported {0} validation error(s): {1}",
+                    Logger.Info("Gateway GetVacancyDetails reported {0} validation error(s): {1}",
                         response.ValidationErrors.Count(), responseAsJson);
                 }
                 else
                 {
-                    Logger.Error("Gateway GetVacancyDetails did not respond");
+                    Logger.Info("Gateway GetVacancyDetails did not respond");
                 }
 
                 var message =

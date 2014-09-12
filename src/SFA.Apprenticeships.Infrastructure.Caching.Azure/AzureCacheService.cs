@@ -51,12 +51,12 @@
             
             try
             {
-
                 result = _cache[key] as T;
             }
             catch (Exception cacheException)
             {
-                Logger.WarnException("Attempt to retreive item from cache with key: " + key, cacheException);
+                var message = string.Format("Attempt to retreive item from cache with key {0} failed", key);
+                Logger.WarnException(message, cacheException);
                 return null;
             }
 

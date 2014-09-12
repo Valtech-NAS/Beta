@@ -1,15 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
-    using System.IO;
     using System.Linq;
     using Application.Interfaces.Candidates;
     using Domain.Entities.Applications;
+    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
     using Constants.Pages;
     using NLog;
+    using StructureMap.Query;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
+    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
 
     public class ApplicationProvider : IApplicationProvider
     {
@@ -75,9 +77,42 @@
             _candidateService.SaveApplication(candidateId, vacancyId, application);
         }
 
-        public void SubmitApplication(Guid candidateId, int vacancyId)
+        public ApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId)
         {
-            _candidateService.SubmitApplication(candidateId, vacancyId);
+            try
+            {
+                var model = GetApplicationViewModel(candidateId, vacancyId);
+                
+                if (model.HasError())
+                {
+                    return model;
+                }
+
+                _candidateService.SubmitApplication(candidateId, vacancyId);
+
+                return model;
+            }
+            catch (CustomException e)
+            {
+                if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
+                {
+                    Logger.WarnException(e.Message, e);
+                    return new ApplicationViewModel();
+                }
+                
+                return ApplicationViewModelSubmitFailed(vacancyId, candidateId, e);
+            }
+            catch (Exception e)
+            {
+                return ApplicationViewModelSubmitFailed(vacancyId, candidateId, e);
+            }
+        }
+
+        private ApplicationViewModel ApplicationViewModelSubmitFailed(int vacancyId, Guid candidateId, Exception ex)
+        {
+            var message = string.Format("Submission of application {0} failed for user {1}", vacancyId, candidateId);
+            Logger.ErrorException(message, ex);
+            return new ApplicationViewModel(ApplicationPageMessages.SubmitApplicationFailed);
         }
 
         public void ArchiveApplication(Guid candidateId, int vacancyId)
@@ -112,7 +147,8 @@
 
                 Logger.ErrorException(message, e);
 
-                return new WhatHappensNextViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
+                return new WhatHappensNextViewModel(
+                    MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
             }
         }
 

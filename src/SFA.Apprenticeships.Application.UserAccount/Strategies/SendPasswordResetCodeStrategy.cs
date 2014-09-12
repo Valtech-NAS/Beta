@@ -40,7 +40,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             if (user == null)
             {
-                Logger.Debug(string.Format("Cannot send password reset code, username not found: \"{0}\".", username));
+                Logger.Info(string.Format("Cannot send password reset code, username not found: \"{0}\".", username));
                 return;
             }
 

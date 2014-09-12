@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
@@ -13,7 +12,6 @@
     using Constants.Pages;
     using Domain.Entities.Applications;
     using FluentValidation.Mvc;
-    using NLog;
     using Providers;
     using Validators;
     using ViewModels.Applications;
@@ -21,7 +19,6 @@
 
     public class ApplicationController : CandidateControllerBase
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IApplicationProvider _applicationProvider;
         private readonly ApplicationViewModelServerValidator _applicationViewModelFullValidator;
         private readonly ApplicationViewModelSaveValidator _applicationViewModelSaveValidator;
@@ -242,27 +239,17 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult SubmitApplication(int id)
         {
-            try
+            var model = _applicationProvider.SubmitApplication(UserContext.CandidateId, id);
+
+            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
-                var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
-                if (model.Status == ApplicationStatuses.Draft)
-                {
-                    _applicationProvider.SubmitApplication(UserContext.CandidateId, id);
-
-                    return RedirectToAction("WhatHappensNext", new {id});
-                }
-
                 return new VacancyNotFoundResult();
             }
-            catch (Exception ex)
-            {
-                var message = string.Format("Submission of application {0} failed for user {1}", id, User.Identity.Name);
-                Logger.ErrorException(message, ex);
-                SetUserMessage(PreviewPageMessages.SubmissionFailed, UserMessageLevel.Error);
 
-                return RedirectToAction("Preview", new {id});
-            }
+            if (!model.HasError()) return RedirectToAction("WhatHappensNext", new {id});
+            
+            SetUserMessage(ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning);
+            return RedirectToAction("Preview", new { id });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]

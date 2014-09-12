@@ -55,7 +55,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             }
             else
             {
-                // generate new code and send
+                // generate new code and set expiry date
                 var activationCode = _codeGenerator.Generate();
                 user.SetStatePendingActivation(activationCode, expiry);
             }

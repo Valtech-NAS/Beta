@@ -44,7 +44,6 @@
 
                 if (tempApplicationDetail.Status == ApplicationStatuses.Draft)
                 {
-
                     // queue application for submission to legacy
                     var message = new SubmitApplicationRequest
                     {
