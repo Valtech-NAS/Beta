@@ -143,7 +143,11 @@ $(document).ready(function () {
         var $this     = $(this),
             $thisText = $this.text();
 
-        $this.text('Loading').addClass('disabled');
+        if ($this.is('#save-button')) {
+            $this.text('Saving').addClass('disabled');
+        } else {
+            $this.text('Loading').addClass('disabled');
+        }
 
         setTimeout(function () {
             if($('.form-group.input-validation-error').length > 0) {
