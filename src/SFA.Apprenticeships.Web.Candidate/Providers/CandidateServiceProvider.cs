@@ -227,17 +227,19 @@
             }
         }
 
-        public void RequestAccountUnlockCode(AccountUnlockViewModel model)
+        public AccountUnlockViewModel RequestAccountUnlockCode(AccountUnlockViewModel model)
         {
             try
             {
                 Logger.Debug("{0} requested account unlock code", model.EmailAddress);
                 _userAccountService.ResendAccountUnlockCode(model.EmailAddress);
+                return new AccountUnlockViewModel(){EmailAddress = model.EmailAddress};
             }
             catch (Exception e)
             {
-                Logger.ErrorException("Send account unlock code failed for " + model.EmailAddress, e);
-                // TODO: fails silently, should return boolean to indicate success
+                var message = string.Format("Send account unlock code failed for " + model.EmailAddress);
+                Logger.ErrorException(message, e);
+                return new AccountUnlockViewModel(message){EmailAddress = model.EmailAddress};
             }
         }
 

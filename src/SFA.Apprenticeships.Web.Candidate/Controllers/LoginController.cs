@@ -156,12 +156,20 @@
                 EmailAddress = emailAddress
             };
 
-            _candidateServiceProvider.RequestAccountUnlockCode(model);
+            //TODO: make different things if we have an error or a user with an invalid state
 
+            model = _candidateServiceProvider.RequestAccountUnlockCode(model);
             UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
 
-            SetUserMessage(string.Format(AccountUnlockPageMessages.AccountUnlockCodeResent, emailAddress));
-
+            if (model.HasError())
+            {
+                SetUserMessage(AccountUnlockPageMessages.AccountUnlockResendCodeFailed, UserMessageLevel.Warning);
+            }
+            else
+            {
+                SetUserMessage(string.Format(AccountUnlockPageMessages.AccountUnlockCodeResent, emailAddress));    
+            }
+            
             return RedirectToAction("Unlock");
         }
 

@@ -6,8 +6,17 @@
     using Validators;
 
     [Validator(typeof(AccountUnlockViewModelClientValidator))]
-    public class AccountUnlockViewModel
+    public class AccountUnlockViewModel : ViewModelBase
     {
+        public AccountUnlockViewModel()
+        {
+        }
+
+        public AccountUnlockViewModel(string message)
+            : base(message)
+        {
+        }
+
         public string EmailAddress { get; set; }
 
         [Display(Name = AccountUnlockViewModelMessages.AccountUnlockCodeMessages.LabelText)]

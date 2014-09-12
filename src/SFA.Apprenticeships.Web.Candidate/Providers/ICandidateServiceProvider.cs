@@ -17,7 +17,7 @@
         UserStatusesViewModel GetUserStatus(string username);
         ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId);
         bool RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model);
-        void RequestAccountUnlockCode(AccountUnlockViewModel model);
+        AccountUnlockViewModel RequestAccountUnlockCode(AccountUnlockViewModel model);
         PasswordResetViewModel VerifyPasswordReset(PasswordResetViewModel model);
         AccountUnlockViewModel VerifyAccountUnlockCode(AccountUnlockViewModel model);
         bool ResendActivationCode(string username);
