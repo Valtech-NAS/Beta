@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
     using System;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using ErrorCodes = Interfaces.Users.ErrorCodes;
 
     public class UnlockAccountStrategy : IUnlockAccountStrategy
     {
@@ -30,12 +32,13 @@
             {
                 // NOTE: account unlock code has expired, send a new one.
                 _sendAccountUnlockCodeStrategy.SendAccountUnlockCode(username);
-                throw new Exception("Account unlock code has expired, new account unlock code has been sent.");
+                throw new CustomException("Account unlock code has expired, new account unlock code has been sent.",
+                    ErrorCodes.AccountUnlockCodeExpired);
             }
 
             if (!user.AccountUnlockCode.Equals(accountUnlockCode, StringComparison.InvariantCultureIgnoreCase))
             {
-                throw new Exception("Invalid account unlock code.");
+                throw new CustomException("Invalid account unlock code.", ErrorCodes.AccountUnlockCodeInvalid);
             }
 
             // 

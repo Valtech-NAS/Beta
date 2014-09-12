@@ -15,13 +15,4 @@
 
         public AccountUnlockState Status { get; set; }
     }
-
-    public enum AccountUnlockState
-    {
-        Ok,
-        UserInIncorrectState,
-        AccountUnlockCodeExpired,
-        AccountUnlockCodeInvalid,
-        Error
-    }
 }

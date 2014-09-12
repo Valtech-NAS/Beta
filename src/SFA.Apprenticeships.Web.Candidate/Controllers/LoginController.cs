@@ -42,7 +42,7 @@
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
                 UserData.Push(UserDataItemNames.ReturnUrl, Server.UrlEncode(returnUrl));
-            }        
+            }
 
             return View();
         }
@@ -90,9 +90,11 @@
         [AllowReturnUrl(Allow = false)]
         public ActionResult Unlock()
         {
-            var emailAddress = UserData.Pop(UserDataItemNames.EmailAddress);
+            var emailAddress = UserData.Get(UserDataItemNames.EmailAddress);
+            var userStatusViewModel = _candidateServiceProvider.GetUserStatus(emailAddress);
 
-            if (string.IsNullOrWhiteSpace(emailAddress))
+            if (string.IsNullOrWhiteSpace(emailAddress) ||
+                userStatusViewModel.UserStatus != UserStatuses.Locked)
             {
                 return RedirectToAction("Index");
             }
@@ -118,19 +120,26 @@
                 return View(model);
             }
 
-            var verified = _candidateServiceProvider.VerifyAccountUnlockCode(model);
-
-            if (verified)
+            var accountUnlockViewModel = _candidateServiceProvider.VerifyAccountUnlockCode(model);
+            switch (accountUnlockViewModel.Status)
             {
-                SetUserMessage(AccountUnlockPageMessages.AccountUnlockedText);
-
-                return RedirectToAction("Index");
+                case AccountUnlockState.Ok:
+                    UserData.Pop(UserDataItemNames.EmailAddress);
+                    SetUserMessage(AccountUnlockPageMessages.AccountUnlockedText);
+                    return RedirectToAction("Index");
+                case AccountUnlockState.UserInIncorrectState:
+                    return RedirectToAction("Index");
+                case AccountUnlockState.AccountUnlockCodeInvalid:
+                    ModelState.Clear();
+                    ModelState.AddModelError("AccountUnlockCode", AccountUnlockPageMessages.WrongAccountUnlockCodeErrorText);
+                    return View(model);
+                case AccountUnlockState.AccountUnlockCodeExpired:
+                    SetUserMessage(AccountUnlockPageMessages.AccountUnlockCodeExpired, UserMessageLevel.Warning);
+                    return View(model);
+                default:
+                    SetUserMessage(AccountUnlockPageMessages.AccountUnlockFailed, UserMessageLevel.Warning);
+                    return View(model);
             }
-
-            ModelState.Clear();
-            ModelState.AddModelError("AccountUnlockCode", AccountUnlockPageMessages.WrongAccountUnlockCodeErrorText);
-
-            return View(model);
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -175,7 +184,7 @@
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
                 UserData.Push(UserDataItemNames.SessionReturnUrl, Server.UrlEncode(returnUrl));
-            } 
+            }
 
             return RedirectToAction("Index");
         }

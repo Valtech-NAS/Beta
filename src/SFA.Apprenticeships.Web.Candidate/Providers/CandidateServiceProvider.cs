@@ -60,9 +60,19 @@
             return userNameAvailability;
         }
 
-        public UserStatuses GetUserStatus(string username)
+        public UserStatusesViewModel GetUserStatus(string username)
         {
-            return _userAccountService.GetUserStatus(username);
+            try
+            {
+                return new UserStatusesViewModel
+                {
+                    UserStatus = _userAccountService.GetUserStatus(username)
+                };
+            }
+            catch (Exception e)
+            {
+                return new UserStatusesViewModel(e.Message);
+            }
         }
 
         public ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId)
@@ -136,11 +146,11 @@
         {
             try
             {
-                var userStatus = GetUserStatus(model.EmailAddress);
+                var userStatusViewModel = GetUserStatus(model.EmailAddress);
 
-                if (userStatus == UserStatuses.Locked)
+                if (userStatusViewModel.UserStatus == UserStatuses.Locked)
                 {
-                    return GetLoginResultViewModel(model, userStatus);
+                    return GetLoginResultViewModel(model, userStatusViewModel.UserStatus);
                 }
 
                 var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
@@ -154,20 +164,20 @@
                     {
                         EmailAddress = candidate.RegistrationDetails.EmailAddress,
                         FullName = candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
-                        UserStatus = userStatus,
+                        UserStatus = userStatusViewModel.UserStatus,
                         IsAuthenticated = true
                     };
                 }
 
-                userStatus = GetUserStatus(model.EmailAddress);
+                userStatusViewModel = GetUserStatus(model.EmailAddress);
 
-                if (userStatus == UserStatuses.Locked)
+                if (userStatusViewModel.UserStatus == UserStatuses.Locked)
                 {
                     // Authentication failed, user just locked their account.
-                    return GetLoginResultViewModel(model, userStatus);
+                    return GetLoginResultViewModel(model, userStatusViewModel.UserStatus);
                 }
 
-                return GetAuthenticationFailedViewModel(model, userStatus);
+                return GetAuthenticationFailedViewModel(model, userStatusViewModel.UserStatus);
             }
             catch (Exception e)
             {
@@ -280,17 +290,35 @@
             return result;
         }
 
-        public bool VerifyAccountUnlockCode(AccountUnlockViewModel model)
+        public AccountUnlockViewModel VerifyAccountUnlockCode(AccountUnlockViewModel model)
         {
             try
             {
                 _candidateService.UnlockAccount(model.EmailAddress, model.AccountUnlockCode);
-                return true;
+                return new AccountUnlockViewModel {Status = AccountUnlockState.Ok};
+            }
+            catch (CustomException e)
+            {
+                switch (e.Code)
+                {
+                    case ErrorCodes.UserInIncorrectStateError:
+                        Logger.WarnException(e.Message, e);
+                        return new AccountUnlockViewModel {Status = AccountUnlockState.UserInIncorrectState};
+                    case Application.Interfaces.Users.ErrorCodes.AccountUnlockCodeExpired:
+                        Logger.WarnException(e.Message, e);
+                        return new AccountUnlockViewModel {Status = AccountUnlockState.AccountUnlockCodeExpired};
+                    case Application.Interfaces.Users.ErrorCodes.AccountUnlockCodeInvalid:
+                        Logger.InfoException(e.Message, e);
+                        return new AccountUnlockViewModel {Status = AccountUnlockState.AccountUnlockCodeInvalid};
+                    default:
+                        Logger.ErrorException(e.Message,e);
+                        return new AccountUnlockViewModel { Status = AccountUnlockState.Error };
+                }
             }
             catch (Exception e)
             {
                 Logger.ErrorException("Account unlock failed for " + model.EmailAddress, e);
-                return false;
+                return new AccountUnlockViewModel{ Status = AccountUnlockState.Error };
             }
         }
 
