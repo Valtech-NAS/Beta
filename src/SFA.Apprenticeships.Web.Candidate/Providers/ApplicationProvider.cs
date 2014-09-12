@@ -8,7 +8,6 @@
     using Domain.Interfaces.Mapping;
     using Constants.Pages;
     using NLog;
-    using StructureMap.Query;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
     using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
@@ -133,7 +132,7 @@
                     return new WhatHappensNextViewModel(patchedModel.ViewModelMessage);
                 }
 
-                return new WhatHappensNextViewModel()
+                return new WhatHappensNextViewModel
                 {
                     VacancyReference = patchedModel.VacancyDetail.FullVacancyReferenceId,
                     VacancyTitle = patchedModel.VacancyDetail.Title,
