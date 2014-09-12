@@ -79,13 +79,10 @@
                 return new VacancyNotFoundResult();
             }
 
-            // TODO: VGA: US333: must talk with Scott about what to do in this case. We do not have a fully hydrated view model here.
-            //if (model.HasError())
-            //{
-            //    ShowErrorMessageToUser(model);
-
-            //    return View("Apply", model);
-            //}
+            if (model.HasError())
+            {
+                RedirectToAction("Index");
+            }
 
             model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
