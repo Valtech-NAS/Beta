@@ -37,6 +37,11 @@
         [AllowReturnUrl(Allow = false)]
         public ActionResult Index(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToRoute(CandidateRouteNames.MyApplications);
+            }
+
             _authenticationTicketService.Clear(HttpContext.Request.Cookies); //todo: yuk
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
