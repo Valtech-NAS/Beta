@@ -153,6 +153,7 @@ $(document).ready(function () {
             if($('.form-group.input-validation-error').length > 0) {
                 $this.text($thisText).removeClass('disabled');
             }
+            $this.attr('disabled');
         }, 50);
     });
 });
