@@ -29,6 +29,12 @@
         [ElementLocator(Id = "delete-link")]
         public IWebElement DeleteLink { get; set; }
 
+        [ElementLocator(Class = "archive-successful")]
+        public IWebElement ArchiveSuccessfulLink { get; set; }
+
+        [ElementLocator(Class = "archive-unsuccessful")]
+        public IWebElement ArchiveUnsuccessfulLink { get; set; }
+
         [ElementLocator(Id = "empty-application-history-text")]
         public IWebElement EmptyApplicationHistoryText { get; set; }
     }

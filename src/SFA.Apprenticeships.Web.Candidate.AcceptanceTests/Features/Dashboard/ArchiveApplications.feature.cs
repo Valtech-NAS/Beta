@@ -76,43 +76,109 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Dashboard
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("As an candidate I want to be able to delete draft applications")]
-        [NUnit.Framework.IgnoreAttribute()]
+        [NUnit.Framework.DescriptionAttribute("As an candidate I want to be able to archive succesful applications")]
         [NUnit.Framework.CategoryAttribute("US154")]
-        public virtual void AsAnCandidateIWantToBeAbleToDeleteDraftApplications()
+        public virtual void AsAnCandidateIWantToBeAbleToArchiveSuccesfulApplications()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As an candidate I want to be able to delete draft applications", new string[] {
-                        "ignore",
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As an candidate I want to be able to archive succesful applications", new string[] {
                         "US154"});
-#line 12
+#line 11
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 13
+#line 12
  testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 14
+#line 13
  testRunner.And("I add 2 applications in \"Successful\" state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 14
+ testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
- testRunner.And("I add 2 applications in \"Unsuccessful\" state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 17
- testRunner.When("I choose DeleteLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 18
- testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
-                        "Rule",
                         "Value"});
             table1.AddRow(new string[] {
+                        "EmailAddress",
+                        "{EmailAddressToken}"});
+            table1.AddRow(new string[] {
+                        "Password",
+                        "{PasswordToken}"});
+#line 16
+ testRunner.And("I enter data", ((string)(null)), table1, "And ");
+#line 20
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 21
+ testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 22
+ testRunner.When("I choose ArchiveSuccessfulLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 23
+ testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table2.AddRow(new string[] {
                         "SuccessfulApplicationsCount",
                         "Equals",
                         "1"});
-            table1.AddRow(new string[] {
+#line 24
+ testRunner.And("I see", ((string)(null)), table2, "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("As an candidate I want to be able to archive unsuccesful applications")]
+        [NUnit.Framework.CategoryAttribute("US154")]
+        public virtual void AsAnCandidateIWantToBeAbleToArchiveUnsuccesfulApplications()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As an candidate I want to be able to archive unsuccesful applications", new string[] {
+                        "US154"});
+#line 29
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 30
+ testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 31
+ testRunner.And("I add 2 applications in \"Unsuccessful\" state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 32
+ testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 33
+ testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table3.AddRow(new string[] {
+                        "EmailAddress",
+                        "{EmailAddressToken}"});
+            table3.AddRow(new string[] {
+                        "Password",
+                        "{PasswordToken}"});
+#line 34
+ testRunner.And("I enter data", ((string)(null)), table3, "And ");
+#line 38
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 39
+ testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 40
+ testRunner.When("I choose ArchiveUnsuccessfulLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 41
+ testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table4.AddRow(new string[] {
                         "UnsuccessfulApplicationsCount",
                         "Equals",
                         "1"});
-#line 19
- testRunner.And("I see", ((string)(null)), table1, "And ");
+#line 42
+ testRunner.And("I see", ((string)(null)), table4, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
