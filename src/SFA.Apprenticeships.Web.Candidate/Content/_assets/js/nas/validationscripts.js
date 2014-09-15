@@ -116,29 +116,6 @@ $(document).ready(function () {
         });
     }
 
-    $('.pw-masktoggle').on("click", function () {
-        changePassType();
-        toggleShowHide();
-    });
-
-    function changePassType() {
-        var password = document.getElementById('Password');
-        if (password.type == 'password') {
-            password.type = 'text';
-        } else {
-            password.type = 'password';
-        }
-    }
-
-    function toggleShowHide() {
-        var showOrHide = $('.pw-masktoggle').text();
-        if (showOrHide == 'Show') {
-            $('.pw-masktoggle').text('Hide');
-        } else {
-            $('.pw-masktoggle').text('Show');
-        }
-    }
-
     $('button, input[type="submit"], a.button').not('#qualifications-panel .button, #workexperience-panel .button').on('click', function () {
         var $this     = $(this),
             $thisText = $this.text();
