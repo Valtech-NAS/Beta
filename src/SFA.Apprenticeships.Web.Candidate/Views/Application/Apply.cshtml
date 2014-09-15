@@ -83,10 +83,7 @@
             workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
             currentYear = @Html.Raw(Model.CurrentYear);
             whitelistregex =  @Html.Raw(Json.Encode(Model.WhiteListRegex));
-            yearRegex =  @Html.Raw(Json.Encode(Model.FourDigitYearRegex));
-
-            console.log(whitelistregex);
-            console.log(yearRegex);
+            yearRegex =  @Html.Raw(Json.Encode(Model.FourDigitYearRegex));           
 
             window.addEventListener("load", function() {
                 dirtyFormDialog.initialise({

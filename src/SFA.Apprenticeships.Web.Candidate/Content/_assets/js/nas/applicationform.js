@@ -12,7 +12,6 @@
     var validationMessageGradeContainsInvalidCharacters = "Grade mustn't contain invalid characters";
 
     //Work Experience Validation Messages
-    var validationMessageToYearMustBeAfterFromYear = 'Year finished must be after year started';
     var validationMessageEmployerRequired = "Please enter employer";
     var validationMessageEmployerExceedsFiftyCharacters = "Employer mustn't exceed 50 characters";
     var validationMessageEmployerContainsInvalidCharacters = "Employer mustn't contain invalid characters";
@@ -32,6 +31,7 @@
     var validationMessageToYearMustBeNumeric = "Year must be numeric";
     var validationMessageToYearMustBeFourDigits = "Year finished must be 4 digits, for example 1990";
     var validationMessageToYearMustNotBeInFuture = "Year finished must not be in the future";
+    var validationMessageToYearMustBeAfterFromYear = 'Year finished must be after year started';
     var validationMessageDateFinishedMustBeAfterDateStarted = "Date finished must be after date started";
 
     var qualificationTypeModel = function (name) {
@@ -431,12 +431,9 @@
                 onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
             }
         }).extend({
-            validation: {
-                validator: function (val, fromYearValue) {
-                    return val >= fromYearValue;
-                },
-                message: validationMessageToYearMustBeAfterFromYear,
-                params: self.itemFromYear,
+            max: {
+                message: validationMessageToYearMustNotBeInFuture,
+                params: self.itemCurrentYear,
                 onlyIf: function () {
                     return (self.itemIsCurrentEmployment() === false);
                 }
@@ -445,6 +442,17 @@
             pattern: {
                 message: validationMessageToYearMustBeFourDigits,
                 params: self.itemYearRegexPattern,
+                onlyIf: function () {
+                    return (self.itemIsCurrentEmployment() === false);
+                }
+            }
+        }).extend({
+            validation: {
+                validator: function (val, fromYearValue) {
+                    return val >= fromYearValue;
+                },
+                message: validationMessageToYearMustBeAfterFromYear,
+                params: self.itemFromYear,
                 onlyIf: function () {
                     return (self.itemIsCurrentEmployment() === false);
                 }
@@ -529,6 +537,7 @@
                 params: self.regexPattern
             }
         });
+
         self.jobTitle = ko.observable().extend({
             required: { message: validationMessageJobTitleRequired }
         }).extend({
@@ -542,6 +551,7 @@
                 params: self.regexPattern
             }
         });
+
         self.mainDuties = ko.observable().extend({
             required: { message: validationMessageMainDutiesRequired }
         }).extend({
@@ -555,11 +565,15 @@
                 params: self.regexPattern
             }
         });
+
         self.isCurrentEmployment = ko.observable(false);
+
         self.currentYear = ko.observable();
+
         self.fromMonth = ko.observable().extend({
              required: { message: validationMessageFromMonthRequired }
         });
+
         self.fromYear = ko.observable().extend({
             required: { message: validationMessageFromYearRequired }
         }).extend({
@@ -577,6 +591,7 @@
                 params: self.yearRegexPattern
             }
         });
+
         self.toMonth = ko.observable().extend({
             required: {
                 message: validationMessageToMonthRequired,
@@ -607,6 +622,14 @@
                 onlyIf: function () { return (self.isCurrentEmployment() === false); }
             }
         }).extend({
+            max: {
+                message: validationMessageToYearMustNotBeInFuture,
+                params: self.currentYear,
+                onlyIf: function () {
+                    return (self.isCurrentEmployment() === false);
+                }
+            }
+        }).extend({
             validation: {
                 validator: function (val, fromYearValue) {
                     return val >= fromYearValue;
@@ -617,15 +640,7 @@
                     return (self.isCurrentEmployment() === false);
                 }
             }
-        }).extend({
-            max: {
-                message: validationMessageToYearMustNotBeInFuture,
-                params: self.currentYear,
-                onlyIf: function () {
-                    return (self.isCurrentEmployment() === false);
-                }
-            }
-        });;
+        });
 
         self.toDateReadonly = ko.observable(undefined);
 
@@ -776,39 +791,39 @@
             //grouping: { deep: true, observable: false }
         });
 
-        var model = new qualificationViewModel();
-        var experienceModel = new workExperienceViewModel();
+        var qualificationModel = new qualificationViewModel();
+        var experienceViewModel = new workExperienceViewModel();
 
         if (window.getCurrentYear()) {
-            experienceModel.currentYear(window.getCurrentYear());
+            experienceViewModel.currentYear(window.getCurrentYear());
         }
 
         if (window.getWhiteListRegex()) {
-            model.regexPattern(window.getWhiteListRegex());
-            experienceModel.regexPattern(window.getWhiteListRegex());
+            qualificationModel.regexPattern(window.getWhiteListRegex());
+            experienceViewModel.regexPattern(window.getWhiteListRegex());
         }
 
         if (window.getYearRegex()) {
-            model.yearRegexPattern(window.getYearRegex());
-            experienceModel.yearRegexPattern(window.getYearRegex());
+            qualificationModel.yearRegexPattern(window.getYearRegex());
+            experienceViewModel.yearRegexPattern(window.getYearRegex());
         }
 
         if (window.getQualificationData()) {
-            model.getqualifications(window.getQualificationData());
+            qualificationModel.getqualifications(window.getQualificationData());
         }
         else {
-            model.checkHasNoQualifications();
+            qualificationModel.checkHasNoQualifications();
         }
 
         if (window.getWorkExperienceData()) {
-            experienceModel.getWorkExperiences(window.getWorkExperienceData());
+            experienceViewModel.getWorkExperiences(window.getWorkExperienceData());
         } else {
-            experienceModel.checkHasNoWorkExperience();
+            experienceViewModel.checkHasNoWorkExperience();
         }
 
-        ko.applyBindings(model, document.getElementById('applyQualifications'));
+        ko.applyBindings(qualificationModel, document.getElementById('applyQualifications'));
 
-        ko.applyBindings(experienceModel, document.getElementById('applyWorkExperience'));
+        ko.applyBindings(experienceViewModel, document.getElementById('applyWorkExperience'));
 
     });
 }());
