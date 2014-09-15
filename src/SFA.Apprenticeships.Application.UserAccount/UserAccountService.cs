@@ -70,15 +70,7 @@
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
-            try
-            {
-                _resendActivationCodeStrategy.ResendActivationCode(username);
-            }
-            catch
-            {
-                var message = string.Format("Resend activation code failed for username {0}", username);
-                throw new CustomException(message, ErrorCodes.ActivationCodeResendingFailed);
-            }
+            _resendActivationCodeStrategy.ResendActivationCode(username);
         }
 
         public void SendPasswordResetCode(string username)

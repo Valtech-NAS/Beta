@@ -349,6 +349,11 @@
             }
             catch (CustomException e)
             {
+                Logger.InfoException("Reset activation code failed for " + username, e);
+                return false;
+            }
+            catch (Exception e)
+            {
                 Logger.ErrorException("Reset activation code failed for " + username, e);
                 return false;
             }
