@@ -178,4 +178,4 @@ Scenario: As a candidate I must confirm my password
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                        |
 		| Text  | Equals | TODO: Passwords do not match |
-		| Href  | Equals | #ConfirmPassword             |
+		| Href  | Equals | #Password             |
