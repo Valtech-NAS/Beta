@@ -90,6 +90,8 @@ Scenario: As a candidate I can login with a registered but unactivated account a
 	And I choose ActivateButton
 	Then I am on the VacancySearchPage page
 
+@ignore
+#TODO: change clicking twice to login button to select another textbox.
 @US458 @US457
 Scenario: Reset password after locking an account does not have to unlock the account
 	Given I have registered a new candidate
