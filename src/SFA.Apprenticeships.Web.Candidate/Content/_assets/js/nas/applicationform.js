@@ -1,36 +1,36 @@
 ﻿(function () {
     //Qualification Validation Messages
-    var validationMessageSelectQualificationType = "Select qualification type";
+    var validationMessageSelectQualificationType = "Please select qualification type";
     var validationMessageOtherQualificationRequired = "Please enter other qualification";
-    var validationMessageOtherQualificationContainsInvalidCharacters = "Other qualification mustn't contain invalid characters";
-    var validationMessageQualificationYearRequired = "Please enter year";
-    var validationMessageQualificationYearMustBeAFourDigitNumber = "Year must be 4 digits";
+    var validationMessageOtherQualificationContainsInvalidCharacters = "Other qualification can't contain invalid characters, eg '/'";
+    var validationMessageQualificationYearRequired = "Please enter year of qualification";
+    var validationMessageQualificationYearMustBeAFourDigitNumber = "Year must be 4 digits, eg 1990";
     var validationMessageQualificationYearMustBeNumeric = "Year must be numeric";
     var validationMessageSubjectRequired = "Please enter subject";
-    var validationMessageSubjectContainsInvalidCharacters = "Subject mustn't contain invalid characters";
+    var validationMessageSubjectContainsInvalidCharacters = "Subject can't contain invalid characters, eg '/'";
     var validationMessageGradeRequired = "Please enter grade";
-    var validationMessageGradeContainsInvalidCharacters = "Grade mustn't contain invalid characters";
+    var validationMessageGradeContainsInvalidCharacters = "Grade can't contain invalid characters, eg '/'";
 
     //Work Experience Validation Messages
-    var validationMessageEmployerRequired = "Please enter employer";
-    var validationMessageEmployerExceedsFiftyCharacters = "Employer mustn't exceed 50 characters";
-    var validationMessageEmployerContainsInvalidCharacters = "Employer mustn't contain invalid characters";
+    var validationMessageEmployerRequired = "Please enter employer name";
+    var validationMessageEmployerExceedsFiftyCharacters = "Employer name can't exceed 50 characters";
+    var validationMessageEmployerContainsInvalidCharacters = "Employer name can't contain invalid characters, eg '/'";
     var validationMessageJobTitleRequired = "Please enter job title";
-    var validationMessageJobTitleExceedsFiftyCharacters = "Job title mustn't exceed 50 characters";
-    var validationMessageJobTitleContainsInvalidCharacters = "Job title mustn't contain invalid characters";
-    var validationMessageMainDutiesRequired = "Please enter main duties";
-    var validationMessageMainDutiesExceedsTwoHundredCharacters = "Main duties mustn't exceed 200 characters";
-    var validationMessageMainDutiesContainInvalidCharacters = "Main duties mustn't contain invalid characters";
+    var validationMessageJobTitleExceedsFiftyCharacters = "Job title can't exceed 50 characters";
+    var validationMessageJobTitleContainsInvalidCharacters = "Job title can't contain invalid characters, eg '/'";
+    var validationMessageMainDutiesRequired = "Please provide main duties";
+    var validationMessageMainDutiesExceedsTwoHundredCharacters = "Main duties can't exceed 200 characters";
+    var validationMessageMainDutiesContainInvalidCharacters = "Main duties can't contain invalid characters, eg '/'";
     var validationMessageFromMonthRequired = "Please enter month started";
     var validationMessageFromYearRequired = "Please enter year started";
-    var validationMessageFromYearMustBeNumeric = "Year must be numeric";
-    var validationMessageFromYearMustNotBeInFuture = "Year started must not be in the future";
-    var validationMessageFromYearMustBeFourDigits = "Year started must be 4 digits, for example 1990";
-    var validationMessageToMonthRequired = "Please enter month finished";
-    var validationMessageToYearRequired = "Please enter year finished";
-    var validationMessageToYearMustBeNumeric = "Year must be numeric";
-    var validationMessageToYearMustBeFourDigits = "Year finished must be 4 digits, for example 1990";
-    var validationMessageToYearMustNotBeInFuture = "Year finished must not be in the future";
+    var validationMessageFromYearMustBeNumeric = "Year started must contain 4 digits, eg 1990";
+    var validationMessageFromYearMustNotBeInFuture = "Year started can't be in the future";
+    var validationMessageFromYearMustBeFourDigits = "Year started must be 4 digits, eg 1990";
+    var validationMessageToMonthRequired = "Please enter month you finished";
+    var validationMessageToYearRequired = "Please enter year you finished";
+    var validationMessageToYearMustBeNumeric = "Year finished must be 4 digits, eg 1990";
+    var validationMessageToYearMustBeFourDigits = "Year finished must be 4 digits, eg 1990";
+    var validationMessageToYearMustNotBeInFuture = "Year finished can't be in the future";
     var validationMessageToYearMustBeAfterFromYear = 'Year finished must be after year started';
     var validationMessageDateFinishedMustBeAfterDateStarted = "Date finished must be after date started";
 
