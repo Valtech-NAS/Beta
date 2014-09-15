@@ -56,6 +56,11 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Index(LoginViewModel model)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToRoute(CandidateRouteNames.MyApplications);
+            }
+
             // todo: refactor - too much going on here Provider layer
             // Validate view model.
             var validationResult = _loginViewModelServerValidator.Validate(model);
