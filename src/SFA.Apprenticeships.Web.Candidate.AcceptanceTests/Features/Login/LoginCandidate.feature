@@ -93,8 +93,7 @@ Scenario: As a candidate I can login with a registered but unactivated account a
 @US458 @US457
 Scenario: Reset password after locking an account does not have to unlock the account
 	Given I have registered a new candidate
-	When I am on the MyApplicationsPage page
-	And I choose SignoutLink
+	When I choose SignoutLink
 	Then I am on the LoginPage page
 	When I enter data
 		| Field        | Value                  |
