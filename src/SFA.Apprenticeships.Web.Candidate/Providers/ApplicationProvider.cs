@@ -104,7 +104,7 @@
             {
                 if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
                 {
-                    Logger.WarnException(e.Message, e);
+                    Logger.InfoException(e.Message, e);
                     return new ApplicationViewModel();
                 }
                 
