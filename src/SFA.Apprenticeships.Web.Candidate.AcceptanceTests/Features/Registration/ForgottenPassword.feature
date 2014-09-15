@@ -84,8 +84,8 @@ Scenario: Reset password with a mismatching password
 	And I am on the ResetPasswordPage page
 	And I am on ValidationSummaryItems list item matching criteria
 	| Field | Rule   | Value                        |
-	| Text  | Equals | TODO: Passwords do not match |
-	| Href  | Equals | #ConfirmPassword             |
+	| Text  | Equals | Sorry, your passwords don’t match |
+	| Href  | Equals | #Password             |
 
 Scenario: Reset password in an unactivated account
 	Given I navigated to the RegisterCandidatePage page

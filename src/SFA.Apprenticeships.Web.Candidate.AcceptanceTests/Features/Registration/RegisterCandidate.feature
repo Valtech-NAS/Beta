@@ -176,6 +176,6 @@ Scenario: As a candidate I must confirm my password
         | Field                  | Rule   | Value |
         | ValidationSummaryCount | Equals | 1     |
 	And I am on ValidationSummaryItems list item matching criteria
-		| Field | Rule   | Value                        |
-		| Text  | Equals | TODO: Passwords do not match |
-		| Href  | Equals | #Password             |
+		| Field | Rule   | Value                             |
+		| Text  | Equals | Sorry, your passwords don’t match |
+		| Href  | Equals | #Password                         |

@@ -605,7 +605,7 @@ this.FeatureBackground();
             table20.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "TODO: Passwords do not match"});
+                        "Sorry, your passwords don’t match"});
             table20.AddRow(new string[] {
                         "Href",
                         "Equals",

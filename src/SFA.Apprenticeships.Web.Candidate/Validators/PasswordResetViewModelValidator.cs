@@ -39,13 +39,13 @@
                 .NotEmpty()
                 .WithMessage(PasswordResetViewModelMessages.PasswordMessages.RequiredErrorText)
                 .Matches(PasswordResetViewModelMessages.PasswordMessages.WhiteListRegularExpression)
-                .WithMessage(PasswordResetViewModelMessages.PasswordMessages.WhiteListErrorText);
+                .WithMessage(PasswordResetViewModelMessages.PasswordMessages.WhiteListErrorText)
+                .Must(ConfirmPasswordMatchesPassword)
+                .WithMessage(PasswordResetViewModelMessages.ConfirmPasswordMessages.PasswordsDoNotMatchErrorText);
 
             validator.RuleFor(x => x.ConfirmPassword)
                 .NotEmpty()
-                .WithMessage(PasswordResetViewModelMessages.ConfirmPasswordMessages.RequiredErrorText)
-                .Must(ConfirmPasswordMatchesPassword)
-                .WithMessage(PasswordResetViewModelMessages.ConfirmPasswordMessages.PasswordsDoNotMatchErrorText);
+                .WithMessage(PasswordResetViewModelMessages.ConfirmPasswordMessages.RequiredErrorText);
         }
 
         public static void AddServerRules(this AbstractValidator<PasswordResetViewModel> validator)
@@ -55,9 +55,9 @@
                 .WithMessage(PasswordResetPageMessages.InvalidCode);
         }
 
-        private static bool ConfirmPasswordMatchesPassword(PasswordResetViewModel model, string confirmPassword)
+        private static bool ConfirmPasswordMatchesPassword(PasswordResetViewModel model, string password)
         {
-            return model.Password.Equals(confirmPassword, StringComparison.InvariantCulture);
+            return model.ConfirmPassword.Equals(password, StringComparison.InvariantCulture);
         }
 
         private static bool IsPasswordResetCodeValid(PasswordResetViewModel model, string passwordResetCode)
