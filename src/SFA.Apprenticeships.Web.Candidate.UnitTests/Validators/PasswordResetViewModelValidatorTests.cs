@@ -20,7 +20,7 @@
         [TestCase("Password1$%")]
         public void ShouldNotHaveErrorsWhenPasswordComplexitySatisfied(string password)
         {
-            var viewModel = new PasswordResetViewModel { Password = password };
+            var viewModel = new PasswordResetViewModel { Password = password, ConfirmPassword = password};
             _viewModelClientValidator.ShouldNotHaveValidationErrorFor(x => x.Password, viewModel);
         }
 
@@ -30,7 +30,7 @@
         [TestCase("password1")]
         public void ShouldHaveErrorsWhenPasswordComplexitySatisfied(string password)
         {
-            var viewModel = new PasswordResetViewModel { Password = password };
+            var viewModel = new PasswordResetViewModel { Password = password, ConfirmPassword = password};
             _viewModelClientValidator.ShouldHaveValidationErrorFor(x => x.Password, viewModel);
         }
     }
