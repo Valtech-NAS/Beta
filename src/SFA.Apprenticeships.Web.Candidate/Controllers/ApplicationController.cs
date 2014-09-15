@@ -256,7 +256,14 @@
                 return RedirectToAction("Index");
             }
 
-            if (!model.HasError()) return RedirectToAction("WhatHappensNext", new {id});
+            if (!model.HasError())
+                return RedirectToAction("WhatHappensNext",
+                    new
+                    {
+                        id,
+                        vacancyReference = model.VacancyDetail.FullVacancyReferenceId,
+                        vacancyTitle = model.VacancyDetail.Title
+                    });
             
             SetUserMessage(ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning);
             return RedirectToAction("Preview", new { id });
@@ -264,7 +271,7 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult WhatHappensNext(int id)
+        public ActionResult WhatHappensNext(int id, string vacancyReference, string vacancyTitle)
         {
             var model = _applicationProvider.GetWhatHappensNextViewModel(UserContext.CandidateId, id);
 
@@ -275,8 +282,8 @@
 
             if (model.HasError())
             {
-                SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
-                return RedirectToAction("Index");
+                model.VacancyReference = vacancyReference;
+                model.VacancyTitle = vacancyTitle;
             }
 
             return View(model);
