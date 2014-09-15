@@ -61,7 +61,14 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Archive(int id)
         {
-            _applicationProvider.ArchiveApplication(UserContext.CandidateId, id);
+           var applicationViewModel = _applicationProvider.ArchiveApplication(UserContext.CandidateId, id);
+
+            if (applicationViewModel.HasError())
+            {
+                SetUserMessage(applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
+
+                return RedirectToAction("Index");
+            }
 
             SetUserMessage(MyApplicationsPageMessages.ApplicationArchived);
 
@@ -73,9 +80,16 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Delete(int id)
         {
-            //Call 
+           var applicationViewModel =  _applicationProvider.DeleteApplication(UserContext.CandidateId, id);
 
-            SetUserMessage(MyApplicationsPageMessages.ApplicationArchived);
+            if (applicationViewModel.HasError())
+            {
+                SetUserMessage(applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
+
+                return RedirectToAction("Index");
+            }
+
+            SetUserMessage(MyApplicationsPageMessages.ApplicationDeleted);
 
             return RedirectToAction("Index");
         }
