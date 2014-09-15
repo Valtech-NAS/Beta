@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Application.Interfaces.Locations;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
@@ -122,7 +123,7 @@
 
             try
             {
-                IEnumerable<Address> addresses = _addressSearchService.FindAddress(postcode);
+                IEnumerable<Address> addresses = _addressSearchService.FindAddress(postcode).OrderBy(x => x.Uprn);
                 addressSearchViewModel.Addresses = addresses != null
                     ? _mapper.Map<IEnumerable<Address>, IEnumerable<AddressViewModel>>(addresses)
                     : new AddressViewModel[] {};
