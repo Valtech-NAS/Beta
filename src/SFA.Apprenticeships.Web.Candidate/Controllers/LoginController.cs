@@ -96,19 +96,27 @@
         public ActionResult Unlock()
         {
             var emailAddress = UserData.Get(UserDataItemNames.EmailAddress);
-            var userStatusViewModel = _candidateServiceProvider.GetUserStatus(emailAddress);
 
-            if (string.IsNullOrWhiteSpace(emailAddress) ||
-                userStatusViewModel.UserStatus != UserStatuses.Locked)
+            if (string.IsNullOrWhiteSpace(emailAddress))
             {
                 return RedirectToAction("Index");
             }
 
-            return View(new AccountUnlockViewModel
+            var userStatusViewModel = _candidateServiceProvider.GetUserStatus(emailAddress);
+
+            if (userStatusViewModel.HasError())
             {
-                EmailAddress = emailAddress
-            });
+                return ViewAccountUnlock(emailAddress);
+            }
+
+            if (userStatusViewModel.UserStatus != UserStatuses.Locked)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return ViewAccountUnlock(emailAddress);
         }
+
 
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -203,6 +211,14 @@
         }
 
         #region Helpers
+
+        private ActionResult ViewAccountUnlock(string emailAddress)
+        {
+            return View(new AccountUnlockViewModel
+            {
+                EmailAddress = emailAddress
+            });
+        }
 
         private ActionResult RedirectOnAuthenticated(UserStatuses userStatus, string username)
         {
