@@ -68,6 +68,18 @@
             return RedirectToAction("Index");
         }
 
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public ActionResult Delete(int id)
+        {
+            //Call 
+
+            SetUserMessage(MyApplicationsPageMessages.ApplicationArchived);
+
+            return RedirectToAction("Index");
+        }
+
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Apply(int id)
@@ -239,7 +251,7 @@
             ViewBag.VacancyId = id;
 
             return View(model);
-        }
+        }       
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
@@ -290,7 +302,6 @@
         }
 
         #region Helpers
-
         private static ApplicationViewModel StripApplicationViewModelBeforeValidation(ApplicationViewModel model)
         {
             model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
