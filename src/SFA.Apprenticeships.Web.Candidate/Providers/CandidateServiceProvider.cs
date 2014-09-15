@@ -100,6 +100,19 @@
 
                 return true;
             }
+            catch (CustomException e)
+            {
+                var message = string.Format("Candidate registration failed for {0}.", model.EmailAddress);
+
+                if (e.Code == ErrorCodes.UserInIncorrectStateError)
+                {
+                    Logger.InfoException(message, e);
+                }
+                else {
+                    Logger.ErrorException(message, e);
+                }
+                return false;
+            }
             catch (Exception e)
             {
                 Logger.ErrorException("Candidate registration failed for " + model.EmailAddress, e);
@@ -120,21 +133,22 @@
                 return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Activated);
             }
             catch (CustomException e)
-            {
-                Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, e);
+            {   
                 string message;
 
                 switch (e.Code)
                 {
                     case Application.Interfaces.Candidates.ErrorCodes.ActivateUserFailed:
+                        Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, e);
                         message = ActivationPageMessages.ActivationFailed;
                         return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error,
-                            viewModelMessage: message);
+                            message);
 
                     case Application.Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode:
+                        Logger.InfoException("Candidate activation failed for " + model.EmailAddress, e);
                         message = ActivationPageMessages.ActivationCodeIncorrect;
                         return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.InvalidCode,
-                            viewModelMessage: message);
+                            message);
                 }
 
             }
