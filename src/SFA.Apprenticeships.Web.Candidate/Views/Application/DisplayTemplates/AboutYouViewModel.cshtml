@@ -1,4 +1,5 @@
-﻿@model AboutYouViewModel
+﻿@using Microsoft.Ajax.Utilities
+@model AboutYouViewModel
 
 <fieldset class="fieldset-with-border">
     <legend class="heading-large">
@@ -9,7 +10,7 @@
                 <i class="the-icon fa fa-pencil"></i><span class="the-text">Amend details</span>
             </a>
 
-        }       
+        }
     </legend>
 
     <div class="form-group">
@@ -24,11 +25,16 @@
         @Html.LabelFor(m => m.WhatAreYourHobbiesInterests, new { @class = "form-label text" })
         <span id="@Html.IdFor(m => m.WhatAreYourHobbiesInterests)" class="form-prepopped prewrap">@Html.DisplayFor(m => m.WhatAreYourHobbiesInterests)</span>
     </div>
-    @if (Model.RequiresSupportForInterview)
-    {
-        <div class="form-group">
-            <p class="form-label">Is there anything we can do to support your interview?</p>
+
+    <div class="form-group">
+        <p class="form-label">Is there anything we can do to support your interview?</p>
+        @if (Model.RequiresSupportForInterview)
+        {
             <span id="@Html.IdFor(m => m.AnythingWeCanDoToSupportYourInterview)" class="form-prepopped prewrap">@Html.DisplayFor(m => m.AnythingWeCanDoToSupportYourInterview)</span>
-        </div>
-    }   
+        }
+        else
+        {
+            <span id="@Html.IdFor(m => m.AnythingWeCanDoToSupportYourInterview)" class="form-prepopped prewrap">I do not have any interview support requirements</span>
+        }
+    </div>
 </fieldset>
