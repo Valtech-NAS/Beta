@@ -32,14 +32,16 @@
 
         public void Delete(Guid id)
         {
-            Logger.Debug("Called Mongodb to delete ApplicationDetail with Id={0}", id);
+            Logger.Debug("Calling repository to delete ApplicationDetail with Id={0}", id);
 
             Collection.Remove(Query<MongoApplicationDetail>.EQ(o => o.Id, id));
+
+            Logger.Debug("Deleted ApplicationDetail with Id={0}", id);
         }
 
         public ApplicationDetail Save(ApplicationDetail entity)
         {
-            Logger.Debug("Called Mongodb to save ApplicationDetail EntityId={0}, Status={1}", entity.EntityId, entity.Status);
+            Logger.Debug("Calling repository to save ApplicationDetail Id={0}, Status={1}", entity.EntityId, entity.Status);
 
             var mongoEntity = _mapper.Map<ApplicationDetail, MongoApplicationDetail>(entity);
 
@@ -47,23 +49,29 @@
 
             Collection.Save(mongoEntity);
 
-            Logger.Debug("Saved ApplicationDetail to Mongodb with Id={0}", entity.EntityId);
+            Logger.Debug("Saved ApplicationDetail to repository with Id={0}", entity.EntityId);
 
             return _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
         }
 
         public ApplicationDetail Get(Guid id, bool errorIfNotFound)
         {
-            Logger.Debug("Called Mongodb to get ApplicationDetail with Id={0}", id);
+            Logger.Debug("Calling repository to get ApplicationDetail with Id={0}", id);
 
             var mongoEntity = Collection.FindOneById(id);
 
+            string message;
+
             if (mongoEntity == null && errorIfNotFound)
             {
-                var message = string.Format("Unknown ApplicationDetail with Id={0}", id);
+                 message = string.Format("Unknown ApplicationDetail with Id={0}", id);
 
                 throw new CustomException(message, ErrorCodes.ApplicationNotFoundError);
             }
+
+            message = mongoEntity == null ? "Found no ApplicationDetail with Id={0}" : "Found ApplicationDetail with Id={0}";
+
+            Logger.Debug(message, id);
 
             return mongoEntity == null ? null : _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
         }
@@ -78,38 +86,61 @@
 
         public IList<ApplicationSummary> GetForCandidate(Guid candidateId)
         {
+            Logger.Debug("Calling repository to get ApplicationSummary list for candidate with Id={0}", candidateId);
             // Get application summaries for the specified candidate, excluding any that are archived.
             var mongoApplicationDetailsList = Collection
                 .AsQueryable()
                 .Where(each => each.CandidateId == candidateId)
                 .ToArray();
 
+            Logger.Debug("{0} MongoApplicationDetail items returned in collection for candidate with Id={1}", mongoApplicationDetailsList.Count(), candidateId);
+
+            Logger.Debug("Mapping MongoApplicationDetail items to ApplicationSummary list for candidate with Id={0}", candidateId);
+
             var applicationDetailsList = _mapper
                 .Map<MongoApplicationDetail[], IEnumerable<ApplicationSummary>>(mongoApplicationDetailsList)
                 .ToList();
+
+            Logger.Debug("{0} ApplicationSummary items returned for candidate with Id={1}", applicationDetailsList.Count(), candidateId);
 
             return applicationDetailsList;
         }
 
         public ApplicationDetail GetForCandidate(Guid candidateId, Func<ApplicationDetail, bool> filter)
         {
+            Logger.Debug("Calling repository to get ApplicationSummary list for candidate with Id={0}", candidateId);
+
             var mongoApplicationDetailsList = Collection
                 .AsQueryable()
                 .Where(each => each.CandidateId == candidateId)
                 .ToArray();
 
+            Logger.Debug("{0} MongoApplicationDetail items returned in collection for candidate with Id={1}", mongoApplicationDetailsList.Count(), candidateId);
+
+            Logger.Debug("Mapping MongoApplicationDetail items to ApplicationSummary list for candidate with Id={0}", candidateId);
+
             var applicationDetailsList = _mapper.Map<MongoApplicationDetail[], IEnumerable<ApplicationDetail>>(
                 mongoApplicationDetailsList);
 
-            return applicationDetailsList
+            var applicationDetails = applicationDetailsList as IList<ApplicationDetail> ?? applicationDetailsList.ToList();
+
+            Logger.Debug("{0} ApplicationSummary items returned for candidate with Id={1}", applicationDetails.Count(), candidateId);
+
+            return applicationDetails
                 .Where(filter)
                 .FirstOrDefault(); // we expect zero or 1
         }
 
         public ApplicationDetail Get(Guid id)
         {
-            Logger.Debug("Called Mongodb to get ApplicationDetail with Id={0}", id);
+            Logger.Debug("Calling repository to get ApplicationDetail with Id={0}", id);
+
             var mongoEntity = Collection.FindOneById(id);
+
+            var message = mongoEntity == null ? "Found no ApplicationDetail with Id={0}" : "Found ApplicationDetail with Id={0}";
+
+            Logger.Debug(message, id);
+
             return mongoEntity == null ? null : _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
         }
 
