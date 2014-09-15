@@ -61,8 +61,8 @@
 
         public class ConfirmPasswordMessages
         {
-            public const string LabelText = "TODO: Confirm password";
-            public const string RequiredErrorText = "TODO: Please confirm your password";            
+            public const string LabelText = "Confirm password";
+            public const string RequiredErrorText = "Please confirm password";            
         }
     }
 }
