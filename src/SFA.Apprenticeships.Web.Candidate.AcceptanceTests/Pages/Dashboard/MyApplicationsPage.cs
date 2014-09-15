@@ -26,8 +26,8 @@
         [ElementLocator(Id = "resume-link")]
         public IWebElement ResumeLink { get; set; }
 
-        [ElementLocator(Id = "delete-link")]
-        public IWebElement DeleteLink { get; set; }
+        [ElementLocator(Class = "delete-draft")]
+        public IWebElement DeleteDraftLink { get; set; }
 
         [ElementLocator(Class = "archive-successful")]
         public IWebElement ArchiveSuccessfulLink { get; set; }
