@@ -68,6 +68,7 @@
     <Compile Include="Strategies\ILegacyCandidateProvider.cs" />
     <Compile Include="Strategies\IRegisterCandidateStrategy.cs" />
     <Compile Include="Strategies\IActivateCandidateStrategy.cs" />
+    <Compile Include="Strategies\IDeleteApplicationStrategy.cs" />
     <Compile Include="Strategies\ISaveApplicationStrategy.cs" />
     <Compile Include="Strategies\ISubmitApplicationStrategy.cs" />
     <Compile Include="Strategies\IVacancyStatusProvider.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Strategies\LegacyUnlockAccountStrategy .cs" />
     <Compile Include="Strategies\LegacyVacancyStatusProvider.cs" />
     <Compile Include="Strategies\RegisterCandidateStrategy.cs" />
+    <Compile Include="Strategies\DeleteApplicationStrategy.cs" />
     <Compile Include="Strategies\SaveApplicationStrategy.cs" />
   </ItemGroup>
   <ItemGroup>

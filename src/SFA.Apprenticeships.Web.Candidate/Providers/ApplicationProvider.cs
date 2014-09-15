@@ -107,25 +107,56 @@
                     Logger.InfoException(e.Message, e);
                     return new ApplicationViewModel();
                 }
-                
-                return ApplicationViewModelSubmitFailed(vacancyId, candidateId, e);
+
+                return FailedApplicationViewModel(vacancyId, candidateId, "Submission of application",
+                    ApplicationPageMessages.SubmitApplicationFailed, e);
             }
             catch (Exception e)
             {
-                return ApplicationViewModelSubmitFailed(vacancyId, candidateId, e);
+                return FailedApplicationViewModel(vacancyId, candidateId, "Submission of application",
+                    ApplicationPageMessages.SubmitApplicationFailed, e);
             }
         }
-
-        private ApplicationViewModel ApplicationViewModelSubmitFailed(int vacancyId, Guid candidateId, Exception ex)
+        
+        public ApplicationViewModel ArchiveApplication(Guid candidateId, int vacancyId)
         {
-            var message = string.Format("Submission of application {0} failed for user {1}", vacancyId, candidateId);
-            Logger.ErrorException(message, ex);
-            return new ApplicationViewModel(ApplicationPageMessages.SubmitApplicationFailed);
+            try
+            {
+                _candidateService.ArchiveApplication(candidateId, vacancyId);
+            }
+            catch (Exception e)
+            {
+                return FailedApplicationViewModel(vacancyId, candidateId, "Archive of application",
+                    ApplicationPageMessages.ArchiveFailed, e);
+            }
+
+            return new ApplicationViewModel();
         }
 
-        public void ArchiveApplication(Guid candidateId, int vacancyId)
+        public ApplicationViewModel DeleteApplication(Guid candidateId, int vacancyId)
         {
-            _candidateService.ArchiveApplication(candidateId, vacancyId);
+            try
+            {
+                _candidateService.DeleteApplication(candidateId, vacancyId);
+            }
+            catch (CustomException e)
+            {
+                if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
+                {
+                    Logger.InfoException(e.Message, e);
+                    return new ApplicationViewModel();
+                }
+
+                return FailedApplicationViewModel(vacancyId, candidateId, "Delete of application",
+                    ApplicationPageMessages.DeleteFailed, e);
+            }
+            catch (Exception e)
+            {
+                return FailedApplicationViewModel(vacancyId, candidateId, "Delete of application",
+                    ApplicationPageMessages.DeleteFailed, e);
+            }
+
+            return new ApplicationViewModel();
         }
 
         public WhatHappensNextViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId)
@@ -183,6 +214,14 @@
         }
 
         #region Helpers
+        
+        private static ApplicationViewModel FailedApplicationViewModel(int vacancyId, Guid candidateId, string failure,
+            string failMessage, Exception e)
+        {
+            var message = string.Format("{0} {1} failed for user {2}", failure, vacancyId, candidateId);
+            Logger.ErrorException(message, e);
+            return new ApplicationViewModel(failMessage);
+        }
 
         private ApplicationViewModel PatchWithVacancyDetail(Guid candidateId, int vacancyId, ApplicationViewModel applicationViewModel)
         {

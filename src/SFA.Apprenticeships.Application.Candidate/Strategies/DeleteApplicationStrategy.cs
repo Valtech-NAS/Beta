@@ -1,28 +1,28 @@
-namespace SFA.Apprenticeships.Application.Candidate.Strategies
+﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using System;
+    using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
 
-    public class ArchiveApplicationStrategy : IArchiveApplicationStrategy
+    public class DeleteApplicationStrategy : IDeleteApplicationStrategy
     {
         private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly IApplicationWriteRepository _applicationWriteRepository;
 
-        public ArchiveApplicationStrategy(IApplicationReadRepository applicationReadRepository,
+        public DeleteApplicationStrategy(IApplicationReadRepository applicationReadRepository,
             IApplicationWriteRepository applicationWriteRepository)
         {
             _applicationReadRepository = applicationReadRepository;
             _applicationWriteRepository = applicationWriteRepository;
         }
 
-        public void ArchiveApplication(Guid applicationId)
+        public void DeleteApplication(Guid applicationId)
         {
             var applicationDetail = _applicationReadRepository.Get(applicationId, true);
 
-            if (applicationDetail.IsArchived) return;
+            applicationDetail.AssertState("Application should not be deleted", ApplicationStatuses.Draft);
 
-            applicationDetail.IsArchived = true;
-            _applicationWriteRepository.Save(applicationDetail);
+            _applicationWriteRepository.Delete(applicationDetail.EntityId);
         }
     }
 }

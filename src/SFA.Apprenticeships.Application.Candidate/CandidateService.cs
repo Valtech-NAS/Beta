@@ -7,7 +7,7 @@
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
-    using SFA.Apprenticeships.Domain.Entities.Exceptions;
+    using Domain.Entities.Exceptions;
     using Strategies;
     using UserAccount.Strategies;
 
@@ -26,6 +26,7 @@
         private readonly IArchiveApplicationStrategy _archiveApplicationStrategy;
         private readonly ISubmitApplicationStrategy _submitApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
+        private readonly IDeleteApplicationStrategy _deleteApplicationStrategy;
 
         public CandidateService(
             ICandidateReadRepository candidateReadRepository,
@@ -40,7 +41,8 @@
             IResetForgottenPasswordStrategy resetForgottenPasswordStrategy,
             IUnlockAccountStrategy unlockAccountStrategy,
             ISaveApplicationStrategy saveApplicationStrategy,
-            IArchiveApplicationStrategy archiveApplicationStrategy)
+            IArchiveApplicationStrategy archiveApplicationStrategy, 
+            IDeleteApplicationStrategy deleteApplicationStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _candidateWriteRepository = candidateWriteRepository;
@@ -55,6 +57,7 @@
             _applicationReadRepository = applicationReadRepository;
             _saveApplicationStrategy = saveApplicationStrategy;
             _archiveApplicationStrategy = archiveApplicationStrategy;
+            _deleteApplicationStrategy = deleteApplicationStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -139,6 +142,14 @@
             var applicationId = GetApplicationId(candidateId, vacancyId);
 
             _archiveApplicationStrategy.ArchiveApplication(applicationId);
+        }
+
+        public void DeleteApplication(Guid candidateId, int vacancyId)
+        {
+            Condition.Requires(candidateId);
+
+            var applicationId = GetApplicationId(candidateId, vacancyId);
+            _deleteApplicationStrategy.DeleteApplication(applicationId);
         }
 
         public void SaveApplication(Guid candidateId, int vacancyId, ApplicationDetail application)
