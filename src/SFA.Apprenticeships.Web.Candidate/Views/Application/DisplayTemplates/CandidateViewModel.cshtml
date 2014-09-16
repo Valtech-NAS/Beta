@@ -17,16 +17,26 @@
         <div class="form-group">
             <span class="form-label">Address</span>
             <ul class="list-text form-prepopped">
-                @Html.HiddenFor(m => m.Address.AddressLine1)
-                <li id="candidate-address-line1">@Model.Address.AddressLine1</li>
-                @Html.HiddenFor(m => m.Address.AddressLine2)
-                <li id="candidate-address-line2">@Model.Address.AddressLine2</li>
-                @Html.HiddenFor(m => m.Address.AddressLine3)
-                <li id="candidate-address-line3">@Model.Address.AddressLine3</li>
-                @Html.HiddenFor(m => m.Address.AddressLine4)
-                <li id="candidate-address-line4">@Model.Address.AddressLine4</li>
-                @Html.HiddenFor(m => m.Address.Postcode)
-                <li id="candidate-address-postcode">@Model.Address.Postcode</li>
+                <li id="candidate-address-line1">
+                    @Html.HiddenFor(m => m.Address.AddressLine1)
+                    @Model.Address.AddressLine1
+                </li>
+                <li id="candidate-address-line2">
+                    @Html.HiddenFor(m => m.Address.AddressLine2)
+                    @Model.Address.AddressLine2
+                </li>
+                <li id="candidate-address-line3">
+                    @Html.HiddenFor(m => m.Address.AddressLine3)
+                    @Model.Address.AddressLine3
+                </li>
+                <li id="candidate-address-line4">
+                    @Html.HiddenFor(m => m.Address.AddressLine4)
+                    @Model.Address.AddressLine4
+                </li>
+                <li id="candidate-address-postcode">
+                    @Html.HiddenFor(m => m.Address.Postcode)
+                    @Model.Address.Postcode
+                </li>
             </ul>
         </div>
     </div>

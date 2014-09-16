@@ -13,9 +13,9 @@
         </details>
     </div>
 
-    @Html.FormTextAreaFor(m => m.WhatAreYourStrengths, controlHtmlAttributes: new { @data_val_length_max = "4000" }, hintHtmlAttributes: new { @class = "text" })
-    @Html.FormTextAreaFor(m => m.WhatDoYouFeelYouCouldImprove, controlHtmlAttributes: new { @data_val_length_max = "4000" }, hintHtmlAttributes: new { @class = "text" })
-    @Html.FormTextAreaFor(m => m.WhatAreYourHobbiesInterests, controlHtmlAttributes: new { @data_val_length_max = "4000" }, hintHtmlAttributes: new { @class = "text" })
+    @Html.FormTextAreaFor(m => m.WhatAreYourStrengths, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4" }, hintHtmlAttributes: new { @class = "text" })
+    @Html.FormTextAreaFor(m => m.WhatDoYouFeelYouCouldImprove, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4" }, hintHtmlAttributes: new { @class = "text" })
+    @Html.FormTextAreaFor(m => m.WhatAreYourHobbiesInterests, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4" }, hintHtmlAttributes: new { @class = "text" })
 
     <div class="form-group">
         <p class="form-label">Is there anything we can do to support your interview?</p>
@@ -29,7 +29,7 @@
             </label>
         </div>
         <div id="support-panel" class="panel-indent toggle-content">
-            @Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview, controlHtmlAttributes: new { @data_val_length_max = "4000" }, labelHtmlAttributes: new { @class = "form-hint text" })
+            @Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4" }, labelHtmlAttributes: new { @class = "form-hint text" })
         </div>
     </div>
 
