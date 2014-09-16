@@ -123,7 +123,7 @@
                             <li id="vacancy-employer-name">@Model.EmployerName</li>
                             @if (!string.IsNullOrWhiteSpace(Model.EmployerWebsite))
                             {
-                                <li><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Web Site">@Model.EmployerWebsite</a></li>
+                                <li><a itemprop="url" href="http://@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a></li>
                             }
                         </ul>
                         @if (Model.VacancyLocationType != VacancyLocationType.National)
