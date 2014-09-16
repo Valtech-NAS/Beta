@@ -146,11 +146,18 @@
 
         public void ExpireOrWithdrawForCandidate(Guid candidateId, int vacancyId)
         {
+            Logger.Debug("Calling repository to expire or withdraw application for candidate with Id={0} and VacancyId={1}", candidateId, vacancyId);
+
             var applicationDetail = GetForCandidate(
                 candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
 
+            Logger.Debug("Found application to be expired or withdrawn with Id={0}, Status={1}", applicationDetail.EntityId, applicationDetail.Status);
+
             applicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;
+
             Save(applicationDetail);
+
+            Logger.Debug("Saved expired or withdrawn application for candidate with Id={0} and VacancyId={1}", applicationDetail.CandidateId, vacancyId);
         }
 
         protected override void Initialise()

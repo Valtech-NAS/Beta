@@ -84,7 +84,7 @@
             }
             catch (DirectoryOperationException e)
             {
-                Logger.DebugException("Active directory change password. ", e);
+                Logger.ErrorException("Active directory change password exceptions ", e);
 
                 // TODO: EXCEPTION: Low::Act on the exceptions.
                 switch (e.Response.ResultCode)
