@@ -23,7 +23,7 @@
         [ElementLocator(Id = "unsuccessful-applications-count")]
         public IWebElement UnsuccessfulApplicationsCount { get; set; }
 
-        [ElementLocator(Id = "resume-link")]
+        [ElementLocator(Class = "resume-link")]
         public IWebElement ResumeLink { get; set; }
 
         [ElementLocator(Class = "delete-draft")]

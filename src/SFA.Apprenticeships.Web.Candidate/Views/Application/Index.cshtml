@@ -204,7 +204,7 @@ else
                                     <td class="ta-center">
                                         @if (application.ApplicationStatus == ApplicationStatuses.Draft)
                                         {
-                                            @Html.ActionLink("Resume", "Resume", "Application", new { id = application.VacancyId }, new { id = "resume-link" })
+                                            @Html.ActionLink("Resume", "Resume", "Application", new { id = application.VacancyId }, new { @class = "resume-link" })
                                         }
                                         else
                                         {
