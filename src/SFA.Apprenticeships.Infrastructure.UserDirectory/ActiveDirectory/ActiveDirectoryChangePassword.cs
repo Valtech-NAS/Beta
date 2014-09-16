@@ -3,114 +3,123 @@
     using System;
     using System.DirectoryServices.Protocols;
     using System.Text;
+    using Configuration;
+    using Domain.Entities.Exceptions;
     using NLog;
 
     public class ActiveDirectoryChangePassword
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private const string LdapServerPolicyHintsOid = "1.2.840.113556.1.4.2066";
+
+        private readonly ActiveDirectoryConfiguration _config;
         private readonly ActiveDirectoryServer _server;
 
-        public ActiveDirectoryChangePassword(ActiveDirectoryServer server)
+        public ActiveDirectoryChangePassword(ActiveDirectoryServer server, ActiveDirectoryConfiguration config)
         {
             _server = server;
+            _config = config;
         }
 
         public DirectoryResponse Change(
-            string username, 
+            string username,
             string oldPassword = null,
-            string newPassword = null, 
-            bool enforceHistory = false)
+            string newPassword = null)
         {
-            var distinguishedName = string.Format(@"CN={0},{1}", username, _server.DistinguishedName);
+            Logger.Debug("Calling active directory server to set or change password username={0}.", username);
 
-            // the 'unicodePWD' attribute is used to handle pwd handling requests
-            const string attribute = "unicodePwd";
+            if (string.IsNullOrWhiteSpace(newPassword))
+            {
+                Logger.Debug("New password is empty, active directory server call cannot continue further.");
+                throw new CustomException("New password cannot be empty", ErrorCodes.LdapEmptyNewPasswordError);
+            }
+
+            var distinguishedName = string.Format(@"CN={0},{1}", username, _server.DistinguishedName);
+            var attribute = _config.DirectoryAttributeName;
 
             try
             {
-                DirectoryAttributeModification[] damList;
                 ModifyRequest modifyRequest;
 
-                //do we have an old and a new pwd -> change pwd
-                if (!String.IsNullOrEmpty(oldPassword) && !String.IsNullOrEmpty(newPassword))
+                if (!string.IsNullOrWhiteSpace(oldPassword))
                 {
-                    var directoryAttributeModificationDelete = new DirectoryAttributeModification
-                    {
-                        Name = attribute,
-                        Operation = DirectoryAttributeOperation.Delete
-                    };
-
-                    directoryAttributeModificationDelete.Add(BuildBytePwd(oldPassword));
-
-                    var directoryAttributeModificationAdd = new DirectoryAttributeModification
-                    {
-                        Name = attribute,
-                        Operation = DirectoryAttributeOperation.Add
-                    };
-
-                    directoryAttributeModificationAdd.Add(BuildBytePwd(newPassword));
-
-                    damList = new[] {directoryAttributeModificationDelete, directoryAttributeModificationAdd};
-                    modifyRequest = new ModifyRequest(distinguishedName, damList);
-
-                    return _server.Connection.SendRequest(modifyRequest);
+                    Logger.Debug(
+                        "Generating change password modification request for username={0} with distinguishedName={1}",
+                        username, distinguishedName);
+                    modifyRequest = GenerateChangePasswordModifyRequest(oldPassword, newPassword, attribute,
+                        distinguishedName);
+                }
+                else
+                {
+                    Logger.Debug(
+                        "Generating set password modification request for username={0} with distinguishedName={1}",
+                        username, distinguishedName);
+                    modifyRequest = GenerateSetPasswordModifyRequest(newPassword, attribute, distinguishedName);
                 }
 
-                if (!String.IsNullOrEmpty(newPassword))
-                {
-                    // do we have a pwd to set -> set pwd
-                    var directoryAttributeModificationReplace = new DirectoryAttributeModification
-                    {
-                        Name = attribute,
-                        Operation = DirectoryAttributeOperation.Replace
-                    };
+                Logger.Debug("Sending generated request to server for username={0}", username);
 
-                    directoryAttributeModificationReplace.Add(BuildBytePwd(newPassword));
-
-                    damList = new[] {directoryAttributeModificationReplace};
-                    modifyRequest = new ModifyRequest(distinguishedName, damList);
-
-                    // should we utilize pwd history on the pwd reset?
-                    if (enforceHistory)
-                    {
-                        byte[] value = BerConverter.Encode("{i}", new object[] {0x1});
-                        var pwdHistory = new DirectoryControl(LdapServerPolicyHintsOid, value, false, true);
-                        modifyRequest.Controls.Add(pwdHistory);
-                    }
-
-                    return _server.Connection.SendRequest(modifyRequest);
-                }
+                return _server.Connection.SendRequest(modifyRequest);
             }
             catch (DirectoryOperationException e)
             {
-                Logger.ErrorException("Active directory change password exceptions ", e);
-
-                // TODO: EXCEPTION: Low::Act on the exceptions.
-                switch (e.Response.ResultCode)
-                {
-                    case ResultCode.UnwillingToPerform:
-                        //Console.WriteLine("Pwd violates pwd-history: {0}", doex.Response.ErrorMessage);
-                        break;
-
-                    case ResultCode.ConstraintViolation:
-                        //Console.WriteLine("Pwd constraints: {0}", doex.Response.ErrorMessage);
-                        break;
-
-                    //default:
-                    //    //Console.WriteLine("Update pwd error: {0}", doex.Response.ErrorMessage);
-                    //    break;
-                }
-
-                throw;
+                Logger.ErrorException("DirectoryOperationException with the following details was thrown: ", e);
+                throw new CustomException("Password modify request failed", e, ErrorCodes.LdapModifyPasswordError);
             }
+        }
 
-            return null;
+        #region Helpers
+
+        private static ModifyRequest GenerateSetPasswordModifyRequest(string newPassword, string attribute,
+            string distinguishedName)
+        {
+            var directoryAttributeModificationReplace = new DirectoryAttributeModification
+            {
+                Name = attribute,
+                Operation = DirectoryAttributeOperation.Replace
+            };
+
+            directoryAttributeModificationReplace.Add(BuildBytePwd(newPassword));
+
+            DirectoryAttributeModification[] directoryAttributeModifications = {directoryAttributeModificationReplace};
+            var modifyRequest = new ModifyRequest(distinguishedName, directoryAttributeModifications);
+            return modifyRequest;
+        }
+
+        private static ModifyRequest GenerateChangePasswordModifyRequest(string oldPassword, string newPassword,
+            string attribute, string distinguishedName)
+        {
+            var directoryAttributeModificationDelete = new DirectoryAttributeModification
+            {
+                Name = attribute,
+                Operation = DirectoryAttributeOperation.Delete
+            };
+
+            directoryAttributeModificationDelete.Add(BuildBytePwd(oldPassword));
+
+            var directoryAttributeModificationAdd = new DirectoryAttributeModification
+            {
+                Name = attribute,
+                Operation = DirectoryAttributeOperation.Add
+            };
+
+            directoryAttributeModificationAdd.Add(BuildBytePwd(newPassword));
+
+            DirectoryAttributeModification[] directoryAttributeModifications =
+            {
+                directoryAttributeModificationDelete,
+                directoryAttributeModificationAdd
+            };
+
+            var modifyRequest = new ModifyRequest(distinguishedName, directoryAttributeModifications);
+
+            return modifyRequest;
         }
 
         private static byte[] BuildBytePwd(string pwd)
         {
             return (Encoding.Unicode.GetBytes(String.Format("\"{0}\"", pwd)));
         }
+
+        #endregion
     }
 }
