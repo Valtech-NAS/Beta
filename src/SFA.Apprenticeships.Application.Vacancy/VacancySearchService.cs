@@ -5,9 +5,11 @@
     using Domain.Entities.Locations;
     using Interfaces.Search;
     using Interfaces.Vacancies;
+    using NLog;
 
     public class VacancySearchService : IVacancySearchService
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IVacancySearchProvider _vacancySearchProvider;
 
         public VacancySearchService(IVacancySearchProvider vacancySearchProvider)
@@ -28,6 +30,13 @@
             Condition.Requires(pageNumber, "pageNumber").IsGreaterOrEqual(1);
             Condition.Requires(pageSize, "pageSize").IsGreaterOrEqual(1);
 
+            var enterMmessage =
+                string.Format("Calling VacancySearchService to search for a vacancy. Keywords:{0}, Location:{1}," +
+                              "PageNumber:{2}, PageSize{3}, SearchRadius:{4}," +
+                              "SortType:{5}", keywords, location, pageNumber, pageSize,
+                    searchRadius, sortType);
+            Logger.Debug(enterMmessage);
+
             try
             {
                 return _vacancySearchProvider.FindVacancies(keywords, location, pageNumber, pageSize, searchRadius, sortType);
@@ -38,6 +47,7 @@
                                             "PageNumber:{2}, PageSize{3}, SearchRadius:{4}," +
                                             "SortType:{5}", keywords, location, pageNumber, pageSize,
                                             searchRadius, sortType);
+                Logger.DebugException(message, e);
                 throw new Domain.Entities.Exceptions.CustomException(
                     message, e, ErrorCodes.VacanciesSearchFailed);
             }

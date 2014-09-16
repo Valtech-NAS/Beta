@@ -68,6 +68,7 @@
                 // set initial password
                 if (!SetUserPassword(userId, null, password))
                 {
+                    Logger.Debug("Failed setting user password for active directory account userId={0}", userId);
                     return false;
                 }
 
@@ -100,11 +101,13 @@
                     {
                         if (!SetUserPassword(userId, null, newpassword))
                         {
+                            Logger.Debug("Failed setting user password for active directory account userId={0}", userId);
                             return false;
                         }
                         user.Enabled = true;
                         user.Save();
 
+                        Logger.Debug("Successfully reseted password for userId={0}.", userId);
                         return true;
                     }
                     catch (PasswordException exception)

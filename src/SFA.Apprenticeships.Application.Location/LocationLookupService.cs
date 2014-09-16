@@ -5,9 +5,11 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
     using Interfaces.Locations;
+    using NLog;
 
     public class LocationSearchService : ILocationSearchService
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly ILocationLookupProvider _locationLookupProvider;
         private readonly IPostcodeLookupProvider _postcodeLookupProvider;
 
@@ -21,6 +23,9 @@
         {
             Condition.Requires(placeNameOrPostcode, "placeNameOrPostcode").IsNotNullOrWhiteSpace();
 
+            Logger.Debug("Calling LocationLookupService to find location for place name or postcode {0}.",
+                placeNameOrPostcode);
+
             if (LocationHelper.IsPostcode(placeNameOrPostcode))
             {
                 Location location;
@@ -32,11 +37,16 @@
                 catch (Exception e)
                 {
                     var message = string.Format("Postcode lookup failed for postcode {0}.", placeNameOrPostcode);
+                    Logger.DebugException(message, e);
                     throw new Domain.Entities.Exceptions.CustomException(
                         message, e, ErrorCodes.PostcodeLookupFailed);
                 }
 
-                if (location == null) return null; // no match
+                if (location == null)
+                {
+                    Logger.Debug("Cannot find any match for place name or postcode {0}.", placeNameOrPostcode);
+                    return null; // no match
+                }
 
                 return new[]
                 {
@@ -54,8 +64,10 @@
             }
             catch (Exception e)
             {
+                const string message = "Location lookup failed.";
+                Logger.DebugException(message, e);
                 throw new Domain.Entities.Exceptions.CustomException(
-                    "Location lookup failed.", e, ErrorCodes.LocationLookupFailed);
+                    message, e, ErrorCodes.LocationLookupFailed);
             }
         }
     }

@@ -71,6 +71,9 @@
             }
             catch (Exception e)
             {
+                const string errorMessage = "Error getting user status";
+                var message = string.Format("{0} for {1}", errorMessage, username);
+                Logger.ErrorException(message, e);
                 return new UserStatusesViewModel(e.Message);
             }
         }
@@ -247,7 +250,7 @@
             {
                 Logger.Debug("{0} requested account unlock code", model.EmailAddress);
                 _userAccountService.ResendAccountUnlockCode(model.EmailAddress);
-                return new AccountUnlockViewModel(){EmailAddress = model.EmailAddress};
+                return new AccountUnlockViewModel{EmailAddress = model.EmailAddress};
             }
             catch (Exception e)
             {

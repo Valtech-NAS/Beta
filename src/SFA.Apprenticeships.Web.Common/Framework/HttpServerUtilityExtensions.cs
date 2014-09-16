@@ -30,7 +30,12 @@
 
             if (httpException == null)
             {
-                Logger.ErrorException(exception.Message, exception);
+                var verb = httpContext.Request.HttpMethod;
+                
+                var exceptionMessage = string.Format("Error while performing action {0}/{1} of controller {2}: {3}",
+                    currentAction, verb, currentController, exception.Message);
+
+                Logger.ErrorException(exceptionMessage, exception);
             }
 
             var controller = DependencyResolver.Current.GetService<T>();

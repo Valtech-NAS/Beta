@@ -55,6 +55,8 @@
             Logger.Debug("Removing item with key: {0} from cache", key);
 
             _cache.Remove(key);
+
+            Logger.Debug("Removed item with key: {0} from cache", key);
         }
 
         public void FlushAll()

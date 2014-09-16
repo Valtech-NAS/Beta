@@ -8,11 +8,14 @@
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
     using Domain.Entities.Exceptions;
+    using NLog;
     using Strategies;
     using UserAccount.Strategies;
 
     public class CandidateService : ICandidateService
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly IActivateCandidateStrategy _activateCandidateStrategy;
         private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly IAuthenticateCandidateStrategy _authenticateCandidateStrategy;
@@ -65,6 +68,8 @@
             Condition.Requires(newCandidate);
             Condition.Requires(password).IsNotNullOrEmpty();
 
+            Logger.Debug("Calling CandidateService to register a new candidate.");
+
             var candidate = _registerCandidateStrategy.RegisterCandidate(newCandidate, password);
 
             return candidate;
@@ -75,19 +80,22 @@
             Condition.Requires(username).IsNotNullOrEmpty();
             Condition.Requires(activationCode).IsNotNullOrEmpty();
 
+            Logger.Debug("Calling CandidateService to activate the user {0}.", username);
+
             try
             {
-
                 _activateCandidateStrategy.ActivateCandidate(username, activationCode);
             }
-            catch ( CustomException )
+            catch ( CustomException e)
             {
                 var message = string.Format("Activate user failed for user {0}", username);
+                Logger.DebugException(message,e);
                 throw new CustomException(message, Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode);
             }
-            catch (Exception )
+            catch (Exception e)
             {
                 var message = string.Format("Activate user failed for user {0}", username);
+                Logger.DebugException(message, e);
                 throw new CustomException(message, Interfaces.Candidates.ErrorCodes.ActivateUserFailed);
             }
         }
@@ -97,17 +105,22 @@
             Condition.Requires(username).IsNotNullOrEmpty();
             Condition.Requires(password).IsNotNullOrEmpty();
 
+            Logger.Debug("Calling CandidateService to authenticate the user {0}.", username);
+
             return _authenticateCandidateStrategy.AuthenticateCandidate(username, password);
         }
 
         public Candidate GetCandidate(Guid id)
         {
+            Logger.Debug("Calling CandidateService to get the user with Id={0}.", id);
             return _candidateReadRepository.Get(id);
         }
 
         public Candidate GetCandidate(string username)
         {
             Condition.Requires(username).IsNotNullOrEmpty();
+
+            Logger.Debug("Calling CandidateService to get the user {0}.", username);
 
             return _candidateReadRepository.Get(username);
         }
@@ -116,12 +129,39 @@
         {
             Condition.Requires(candidate);
 
+            Logger.Debug("Calling CandidateService to save a candidate.");
+
             return _candidateWriteRepository.Save(candidate);
+        }
+
+        public void UnlockAccount(string username, string accountUnlockCode)
+        {
+            Condition.Requires(username).IsNotNullOrEmpty();
+            Condition.Requires(accountUnlockCode).IsNotNullOrEmpty();
+
+            Logger.Debug("Calling CandidateService to unlock the account of the user {0}.", username);
+
+            _unlockAccountStrategy.UnlockAccount(username, accountUnlockCode);
+        }
+
+        public void ResetForgottenPassword(string username, string passwordCode, string newPassword)
+        {
+            Condition.Requires(username).IsNotNullOrEmpty();
+            Condition.Requires(passwordCode).IsNotNullOrEmpty();
+            Condition.Requires(newPassword).IsNotNullOrEmpty();
+
+            Logger.Debug("Calling CandidateService to reseth the password for the user {0}.", username);
+
+            _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
         }
 
         public ApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
+
+            Logger.Debug(
+                "Calling CandidateService to create an application of the user with Id={0} to the application with Id={1}.",
+                candidateId, vacancyId);
 
             return _createApplicationStrategy.CreateApplication(candidateId, vacancyId);
         }
@@ -129,6 +169,10 @@
         public ApplicationDetail GetApplication(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
+
+            Logger.Debug(
+                "Calling CandidateService to get the application of the user with Id={0} to the application with Id={1}.",
+                candidateId, vacancyId);
 
             var applicationId = GetApplicationId(candidateId, vacancyId);
 
@@ -139,6 +183,10 @@
         {
             Condition.Requires(candidateId);
 
+            Logger.Debug(
+                "Calling CandidateService to archive the application of the user with Id={0} to the application with Id={1}.",
+                candidateId, vacancyId);
+
             var applicationId = GetApplicationId(candidateId, vacancyId);
 
             _archiveApplicationStrategy.ArchiveApplication(applicationId);
@@ -148,6 +196,10 @@
         {
             Condition.Requires(candidateId);
 
+            Logger.Debug(
+                "Calling CandidateService to delete the application of the user with Id={0} to the application with Id={1}.",
+                candidateId, vacancyId);
+
             var applicationId = GetApplicationId(candidateId, vacancyId);
             _deleteApplicationStrategy.DeleteApplication(applicationId);
         }
@@ -155,6 +207,10 @@
         public void SaveApplication(Guid candidateId, int vacancyId, ApplicationDetail application)
         {
             Condition.Requires(application);
+
+            Logger.Debug(
+                "Calling CandidateService to save the application of the user with Id={0} to the application with Id={1}.",
+                candidateId, vacancyId);
 
             var applicationId = GetApplicationId(candidateId, vacancyId);
             application.EntityId = applicationId;
@@ -166,6 +222,10 @@
         {
             Condition.Requires(candidateId);
 
+            Logger.Debug(
+                "Calling CandidateService to get the applications of the user with Id={0}.",
+                candidateId);
+
             return _getCandidateApplicationsStrategy.GetApplications(candidateId);
         }
 
@@ -173,26 +233,13 @@
         {
             Condition.Requires(candidateId);
 
+            Logger.Debug(
+                "Calling CandidateService to submit the application of the user with Id={0} to the application with Id={1}.",
+                candidateId, vacancyId);
+
             var applicationId = GetApplicationId(candidateId, vacancyId);
 
             _submitApplicationStrategy.SubmitApplication(applicationId);
-        }
-
-        public void UnlockAccount(string username, string accountUnlockCode)
-        {
-            Condition.Requires(username).IsNotNullOrEmpty();
-            Condition.Requires(accountUnlockCode).IsNotNullOrEmpty();
-
-            _unlockAccountStrategy.UnlockAccount(username, accountUnlockCode);
-        }
-
-        public void ResetForgottenPassword(string username, string passwordCode, string newPassword)
-        {
-            Condition.Requires(username).IsNotNullOrEmpty();
-            Condition.Requires(passwordCode).IsNotNullOrEmpty();
-            Condition.Requires(newPassword).IsNotNullOrEmpty();
-
-            _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
         }
 
         private Guid GetApplicationId(Guid candidateId, int vacancyId)

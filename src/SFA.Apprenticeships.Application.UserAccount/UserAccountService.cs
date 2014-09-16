@@ -3,16 +3,17 @@
     using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
-    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
+    using NLog;
     using Strategies;
     using Web.Common.Constants;
-    using ErrorCodes = Interfaces.Users.ErrorCodes;
-
+    
     public class UserAccountService : IUserAccountService
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly IActivateUserStrategy _activateUserStrategy;
         private readonly IRegisterUserStrategy _registerUserStrategy;
         private readonly ISendAccountUnlockCodeStrategy _resendAccountUnlockCodeStrategy;
@@ -45,6 +46,8 @@
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
+            Logger.Debug("Calling UserAccountService to discover if the username {0} is available.", username);
+
             // check status of user (unactivated account should also be considered "available")
             User user = _userReadRepository.Get(username, false);
             return user == null || user.Status == UserStatuses.PendingActivation;
@@ -55,6 +58,8 @@
             Condition.Requires(username).IsNotNullOrEmpty();
             Condition.Requires(activationCode).IsNotNullOrEmpty();
 
+            Logger.Debug("Calling UserAccountService to register the user {0}.", username);
+
             _registerUserStrategy.Register(username, userId, activationCode, roles);
         }
 
@@ -63,6 +68,8 @@
             Condition.Requires(username).IsNotNullOrEmpty();
             Condition.Requires(activationCode).IsNotNullOrEmpty();
 
+            Logger.Debug("Calling UserAccountService to activate the user {0}.", username);
+
             _activateUserStrategy.Activate(username, activationCode);
         }
 
@@ -70,12 +77,16 @@
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
+            Logger.Debug("Calling UserAccountService to resend the activation code for the user {0}.", username);
+
             _resendActivationCodeStrategy.ResendActivationCode(username);
         }
 
         public void SendPasswordResetCode(string username)
         {
             Condition.Requires(username).IsNotNullOrEmpty();
+
+            Logger.Debug("Calling UserAccountService to send the password reset code for the user {0}.", username);
 
             _sendPasswordCodeStrategy.SendPasswordResetCode(username);
         }
@@ -86,12 +97,16 @@
             Condition.Requires(passwordCode).IsNotNullOrEmpty();
             Condition.Requires(newPassword).IsNotNullOrEmpty();
 
+            Logger.Debug("Calling UserAccountService to reset the forgotten password for the user {0}.", username);
+
             _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
         }
 
         public void ResendAccountUnlockCode(string username)
         {
             Condition.Requires(username).IsNotNullOrEmpty();
+
+            Logger.Debug("Calling UserAccountService to resend the account unlock code for the user {0}.", username);
 
             _resendAccountUnlockCodeStrategy.SendAccountUnlockCode(username);
         }
@@ -101,12 +116,16 @@
             Condition.Requires(username).IsNotNullOrEmpty();
             Condition.Requires(accountUnlockCode).IsNotNullOrEmpty();
 
+            Logger.Debug("Calling UserAccountService to unlock the account for the user {0}.", username);
+
             _unlockAccountStrategy.UnlockAccount(username, accountUnlockCode);
         }
 
         public UserStatuses GetUserStatus(string username)
         {
             Condition.Requires(username).IsNotNullOrEmpty();
+
+            Logger.Debug("Calling UserAccountService to get the status for the user {0}.", username);
 
             User user = _userReadRepository.Get(username, false);
 
@@ -121,6 +140,8 @@
         public string[] GetRoleNames(string username)
         {
             Condition.Requires(username).IsNotNullOrEmpty();
+
+            Logger.Debug("Calling UserAccountService to get the role names for the user {0}.", username);
 
             var claims = new List<string>();
             UserStatuses userStatus = GetUserStatus(username);

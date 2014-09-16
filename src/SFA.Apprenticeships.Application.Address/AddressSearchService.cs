@@ -5,9 +5,11 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
     using Interfaces.Locations;
+    using NLog;
 
     public class AddressSearchService : IAddressSearchService
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IAddressSearchProvider _addressSearchProvider;
 
         public AddressSearchService(IAddressSearchProvider addressSearchProvider)
@@ -17,6 +19,7 @@
 
         public IEnumerable<Address> FindAddress(string postcode)
         {
+            Logger.Debug("Calling AddressSearchService to find address for postcode={0}", postcode);
             Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
 
             if (!LocationHelper.IsPostcode(postcode))
@@ -29,6 +32,7 @@
             catch (Exception e)
             {
                 var message = string.Format("FindAddress failed for postcode {0}.", postcode);
+                Logger.DebugException(message, e);
                 throw new Domain.Entities.Exceptions.CustomException(
                     message, e, ErrorCodes.AddressSearchFailed);
             }
