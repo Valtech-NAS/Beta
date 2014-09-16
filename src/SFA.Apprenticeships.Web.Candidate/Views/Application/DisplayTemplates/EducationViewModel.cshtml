@@ -1,7 +1,7 @@
 ﻿@model EducationViewModel
 
-<fieldset id="applyEducation" class="fieldset-with-border">
-    <legend class="heading-large">
+<section id="applyEducation" class="section-border">
+    <h2 class="heading-large">
         Education
         @if (ViewBag.VacancyId != null)
         {
@@ -10,7 +10,7 @@
             </a>
 
         }              
-    </legend>
+    </h2>
     <div class="form-group">
         <p class="form-label">Name of most recent school/college</p>
         <span id="@Html.IdFor(m => m.NameOfMostRecentSchoolCollege)" class="form-prepopped">@Html.DisplayTextFor(m => m.NameOfMostRecentSchoolCollege)</span>
@@ -26,4 +26,4 @@
             <span id="@Html.IdFor(m => m.ToYear)" class="form-prepopped">@Html.DisplayTextFor(m => m.ToYear)</span>
         </div>
     </div>
-</fieldset>
+</section>

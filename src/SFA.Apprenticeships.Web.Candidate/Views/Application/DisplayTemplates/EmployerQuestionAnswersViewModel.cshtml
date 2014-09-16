@@ -2,8 +2,8 @@
 
 @if (Model != null && (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1) || !string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1)))
 {
-    <fieldset class="fieldset-with-border">
-        <legend class="heading-large">
+    <section class="section-border">
+        <h2 class="heading-large">
             Employer questions
             @if (ViewBag.VacancyId != null)
             {
@@ -11,7 +11,7 @@
                     <i class="the-icon fa fa-pencil"></i><span class="the-text">Amend details</span>
                 </a>
             }           
-        </legend>
+        </h2>
 
         @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1))
         {
@@ -27,5 +27,5 @@
                 <span class="form-prepopped prewrap">@Html.Display("CandidateAnswer2", Model.CandidateAnswer2)</span>
             </div>
         }
-    </fieldset>
+    </section>
 }

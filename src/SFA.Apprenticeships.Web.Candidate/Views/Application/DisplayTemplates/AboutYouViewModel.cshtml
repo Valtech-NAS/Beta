@@ -1,8 +1,8 @@
 ﻿@using Microsoft.Ajax.Utilities
 @model AboutYouViewModel
 
-<fieldset class="fieldset-with-border">
-    <legend class="heading-large">
+<section class="section-border">
+    <h2 class="heading-large">
         About you
         @if (ViewBag.VacancyId != null)
         {
@@ -11,7 +11,7 @@
             </a>
 
         }
-    </legend>
+    </h2>
 
     <div class="form-group">
         @Html.LabelFor(m => m.WhatAreYourStrengths, new { @class = "form-label text" })
@@ -37,4 +37,4 @@
             <span id="@Html.IdFor(m => m.AnythingWeCanDoToSupportYourInterview)" class="form-prepopped prewrap">I don't have any interview support requirements</span>
         }
     </div>
-</fieldset>
+</section>
