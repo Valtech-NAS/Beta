@@ -29,5 +29,6 @@
         public const string LdapAccountNotFoundError = "LDAP002";
         public const string LdapEmptyNewPasswordError = "LDAP003";
         public const string LdapModifyPasswordError = "LDAP004";
+        public const string LdapSetPasswordError = "LDAP005";
     }
 }

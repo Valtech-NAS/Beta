@@ -123,20 +123,20 @@
                     {
                         if (!SetUserPassword(userId, null, newpassword))
                         {
-                            Logger.Debug("Failed setting user password for active directory account userId={0}", userId);
+                            Logger.Debug("Failed to set password for LDAP account with userId={0}", userId);
                             return false;
                         }
                         user.Enabled = true;
                         user.Save();
 
-                        Logger.Debug("Successfully reseted password for userId={0}.", userId);
+                        Logger.Debug("Successfully reset password for LDAP account with userId={0}.", userId);
                         return true;
                     }
                     catch (PasswordException exception)
                     {
-                        var message = string.Format("SetPassword failed for user {0}", userId);
+                        var message = string.Format("Set password failed for user {0}", userId);
                         Logger.ErrorException(message, exception);
-                        throw;
+                        throw new CustomException(message, exception, ErrorCodes.LdapSetPasswordError);
                     }
                 }
             }
@@ -151,11 +151,20 @@
 
         private bool SetUserPassword(string userId, string oldPassword, string newPassword)
         {
-            if (!_server.Bind()) return false;
+            Logger.Debug("Calling LDAP to set password for user with Id={0}", userId);
+            
+            if (!_server.Bind())
+            {
+                Logger.Debug("LDAP server is not bound, cannot set password for userId={0}", userId);
+                return false;
+            }
 
             Logger.Debug("Set user password for active directory account userId={0}", userId);
 
             var rs = _changePassword.Change(userId, oldPassword, newPassword);
+
+            Logger.Debug("Change password outcome for user with Id={0} was ResultCode={1}", userId, rs.ResultCode);
+
             return (rs.ResultCode == ResultCode.Success);
         }
     }
