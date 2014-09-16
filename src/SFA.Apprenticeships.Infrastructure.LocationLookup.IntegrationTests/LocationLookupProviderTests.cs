@@ -20,7 +20,7 @@
             });
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldMatchExactPlaceName()
         {
             // arrange
@@ -35,7 +35,7 @@
             Assert.AreEqual(term, results.First().Name);
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldMatchFuzzyPlaceName()
         {
             // arrange

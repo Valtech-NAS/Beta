@@ -46,7 +46,7 @@
             _applicationWriteRepository = ObjectFactory.GetInstance<IApplicationWriteRepository>();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldNotGetAnyApplicationStatusesForCandidateWithNoSubmittedApplications()
         {
             // Arrange.
@@ -62,7 +62,7 @@
             result.Count().Should().Be(0);
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldGetOneApplicationStatusForCandidateWithOneSubmittedApplication()
         {
             // Arrange.

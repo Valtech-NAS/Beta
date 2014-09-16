@@ -34,7 +34,7 @@
             busToTidy.Advanced.Dispose();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldSendSubmitApplicationRequest()
         {
             var message = new SubmitApplicationRequest

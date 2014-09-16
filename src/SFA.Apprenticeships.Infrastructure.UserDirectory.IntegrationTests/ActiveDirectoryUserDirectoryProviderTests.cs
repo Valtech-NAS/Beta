@@ -20,7 +20,7 @@
             _service = ObjectFactory.GetInstance<IUserDirectoryProvider>();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldCreateActiveDirectoryUser()
         {
             string username = CreateUseId();
@@ -28,7 +28,7 @@
             succeeded.Should().BeTrue();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldCreateActiveDirectoryUserAndAuthenticate()
         {
             string username = Guid.NewGuid().ToString();
@@ -39,7 +39,7 @@
             authenticationSucceeded.Should().BeTrue();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldCreateActiveDirectoryUserAndChangePassword()
         {
             string username = Guid.NewGuid().ToString();

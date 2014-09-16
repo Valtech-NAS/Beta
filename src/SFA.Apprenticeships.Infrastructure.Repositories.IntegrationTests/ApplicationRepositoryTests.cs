@@ -21,7 +21,7 @@
             });
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldCreateApplication()
         {
             // arrange

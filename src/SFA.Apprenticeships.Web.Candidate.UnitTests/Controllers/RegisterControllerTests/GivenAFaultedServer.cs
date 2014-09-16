@@ -10,6 +10,7 @@
     using Moq;
     using NUnit.Framework;
     using StructureMap;
+    using FluentAssertions;
 
     [TestFixture]
     public class GivenAFaultedServer
@@ -19,7 +20,7 @@
         {
             // Arrange
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            var username = "username";
+            const string username = "username";
 
             RegisterDependencies(null);
 
@@ -39,10 +40,12 @@
         private static void AssertTheViewModelHasError(ActionResult result)
         {
             var jsonResult = result as JsonResult;
-            Assert.IsNotNull(jsonResult);
+            jsonResult.Should().NotBeNull();
+// ReSharper disable once PossibleNullReferenceException
             var data = jsonResult.Data as UserNameAvailability;
-            Assert.IsNotNull(data);
-            Assert.IsTrue(data.HasError);
+            data.Should().NotBeNull();
+// ReSharper disable once PossibleNullReferenceException
+            data.HasError.Should().BeTrue();
         }
 
         private static void RegisterDependencies(HttpContextBase contextBase)

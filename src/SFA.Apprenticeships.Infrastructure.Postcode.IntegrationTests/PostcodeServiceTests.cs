@@ -21,7 +21,7 @@
             });
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldReturnCorrectLocationForPostcode()
         {
             var service = ObjectFactory.GetInstance<IPostcodeLookupProvider>();
@@ -30,7 +30,7 @@
             location.GeoPoint.Longitude.Should().Be(-1.50812239495425);
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldReturnNullForNonExistentPostcode()
         {
             var service = ObjectFactory.GetInstance<IPostcodeLookupProvider>();

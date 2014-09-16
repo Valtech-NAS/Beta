@@ -87,7 +87,7 @@
             return exchange;
         }
 
-        [TestCase]
+        [TestCase, Category("Integration")]
         public void AutoBindsSubscriptions()
         {
             var exchange = GetExchange(ExchangeName);
@@ -119,7 +119,7 @@
             asyncBindingToExchange.Should().NotBeNull();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ConsumesSyncAndAsyncMessagesFromQueue()
         {
             var bus = ObjectFactory.GetInstance<IBus>();

@@ -22,7 +22,7 @@
             _legacyServicesConfiguration = ObjectFactory.GetInstance<ILegacyServicesConfiguration>();
         }
 
-        [TestCase]
+        [TestCase, Category("Integration")]
         public void TheServiceEndpointShouldRespond()
         {
             var vacancySummaryRequest = new VacancySummaryRequest
@@ -44,7 +44,7 @@
             result.Should().NotBeNull();
         }
 
-        [TestCase]
+        [TestCase, Category("Integration")]
         public void ShouldReturnMappedCollectionFromGetVacancySummary()
         {
             var service = ObjectFactory.GetInstance<IVacancyIndexDataProvider>();

@@ -52,7 +52,7 @@
             _legacyCandidateProvider = ObjectFactory.GetInstance<ILegacyCandidateProvider>();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldCreateApplication()
         {
             var applicationDetail = TestApplicationHelper.CreateFakeApplicationDetail();
@@ -61,7 +61,7 @@
             result.Should().BeGreaterThan(0);
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldCreateApplicationForCandidateWithNoInformation()
         {
             var applicationDetail = TestApplicationHelper.CreateFakeMinimalApplicationDetail();

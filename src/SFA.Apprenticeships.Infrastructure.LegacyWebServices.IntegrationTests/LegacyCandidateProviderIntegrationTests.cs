@@ -27,7 +27,7 @@
             _legacyCandidateProvider = ObjectFactory.GetInstance<ILegacyCandidateProvider>();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldCreateCandidateUsingLegacyCandidateProvider()
         {
             var candidate = new Candidate
