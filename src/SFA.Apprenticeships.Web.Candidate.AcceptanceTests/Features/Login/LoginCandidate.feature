@@ -90,7 +90,6 @@ Scenario: As a candidate I can login with a registered but unactivated account a
 	And I choose ActivateButton
 	Then I am on the VacancySearchPage page
 
-@ignore
 #TODO: change clicking twice to login button to select another textbox.
 @US458 @US457
 Scenario: Reset password after locking an account does not have to unlock the account
@@ -115,9 +114,7 @@ Scenario: Reset password after locking an account does not have to unlock the ac
 	When I enter data
 		| Field        | Value                  |
 		| Password     | {InvalidPasswordToken} |
-	#email is already in the form. We don't have to enter it another time
-	And I choose SignInButton
-	#should be removed when the button works properly
+	And I choose EmailAddress
 	And I choose SignInButton
 	And I am on the LoginPage page
 	And I wait for 300 seconds to see ValidationSummary
@@ -133,8 +130,7 @@ Scenario: Reset password after locking an account does not have to unlock the ac
 		| Field        | Value                  |
 		| Password     | {InvalidPasswordToken} |
 	#email is already in the form. We don't have to enter it another time
-	When I choose SignInButton
-	#should be removed when the button works properly
+	When I choose EmailAddress
 	And I choose SignInButton
 	Then I wait 180 second for the UnlockPage page
 	And I get the account unlock code

@@ -287,7 +287,7 @@ this.FeatureBackground();
             table10.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#Password"});
+                        "#ConfirmPassword"});
 #line 85
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table10, "And ");
 #line hidden
