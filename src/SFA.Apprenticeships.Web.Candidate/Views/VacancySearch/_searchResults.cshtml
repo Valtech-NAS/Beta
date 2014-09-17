@@ -29,28 +29,25 @@
                 </div>
                 <p class="search-shortdesc">@vacancy.Description</p>
                 <p>@Html.ActionLink("Read more", "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString })</p>
-                <div class="inl-block-wrapper">
-                    <ul class="list-text btm-align width-all-2-3">
-                        @if (!string.IsNullOrWhiteSpace(Model.VacancySearch.Keywords) && vacancy.Score != 0)
-                        {
-                            <li><b>Match Score:</b> <span class="best-match-score">@vacancy.Score</span></li>
-                        }
+                <ul class="list-text">
+                    @if (!string.IsNullOrWhiteSpace(Model.VacancySearch.Keywords) && vacancy.Score != 0)
+                    {
+                        <li><b>Match Score:</b> <span class="best-match-score">@vacancy.Score</span></li>
+                    }
 
-                        @if (vacancy.VacancyLocationType == VacancyLocationType.Local)
-                        {
-                            <li><b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles</li>
-                        }
+                    @if (vacancy.VacancyLocationType == VacancyLocationType.Local)
+                    {
+                        <li><b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles</li>
+                    }
 
-                        <li><b>Closing date:</b> <span class="closing-date-value">@Html.DisplayFor(m => vacancy.ClosingDate, "Date")</span></li>
-                    </ul>
+                    <li><b>Closing date:</b> <span class="closing-date-value">@Html.DisplayFor(m => vacancy.ClosingDate, "Date")</span></li>
+
                     @if (vacancy.VacancyLocationType == VacancyLocationType.Nationwide)
                     {
-                        <p>This apprenticeship has multiple positions nationwide.</p>
+                        <li>This apprenticeship has multiple positions nationwide.</li>
                     }
-                    <div class="btm-align width-all-1-3">
 
-                    </div>
-                </div>
+                </ul>
             </li>
         }
     }

@@ -37,5 +37,7 @@
         void UnlockAccount(string username, string accountUnlockCode);
 
         void ResetForgottenPassword(string username, string passwordCode, string newPassword);
+
+        void DeleteApplication(Guid candidateId, int vacancyId);
     }
 }

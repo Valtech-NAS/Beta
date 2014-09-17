@@ -42,6 +42,8 @@
 
         public UserNameAvailability IsUsernameAvailable(string username)
         {
+            Logger.Debug("Calling CandidateServiceProvider to if the username {0} is available.", username);
+
             var userNameAvailability = new UserNameAvailability();
 
             try
@@ -53,6 +55,7 @@
                 const string errorMessage = "Error checking user name availability";
                 var message = string.Format("{0} for {1}", errorMessage, username);
                 Logger.ErrorException(message, ex);
+
                 userNameAvailability.HasError = true;
                 userNameAvailability.ErrorMessage = errorMessage;
             }
@@ -62,6 +65,8 @@
 
         public UserStatusesViewModel GetUserStatus(string username)
         {
+            Logger.Debug("Calling CandidateServiceProvider to get the user status for the user {0}.", username);
+
             try
             {
                 return new UserStatusesViewModel
@@ -71,25 +76,46 @@
             }
             catch (Exception e)
             {
+                const string errorMessage = "Error getting user status";
+                var message = string.Format("{0} for {1}", errorMessage, username);
+                Logger.ErrorException(message, e);
+
                 return new UserStatusesViewModel(e.Message);
             }
         }
 
         public ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId)
         {
-            var application = _candidateService.GetApplications(candidateId)
-                .SingleOrDefault(a => a.LegacyVacancyId == vacancyId);
+            Logger.Debug(
+                "Calling CandidateServiceProvider to get the application status for CandidateID={0}, VacancyId={1}.",
+                candidateId, vacancyId);
 
-            if (application == null)
+            try
             {
-                return null;
-            }
+                var application = _candidateService.GetApplications(candidateId)
+                    .SingleOrDefault(a => a.LegacyVacancyId == vacancyId);
 
-            return application.Status;
+                if (application == null)
+                {
+                    return null;
+                }
+
+                return application.Status;
+            }
+            catch (Exception e)
+            {
+                var message = string.Format("Get Application status failed for candidate ID: {0}, vacancy ID: {1}.",
+                    candidateId, vacancyId);
+
+                Logger.ErrorException(message, e);
+                throw;
+            }
         }
 
         public bool Register(RegisterViewModel model)
         {
+            Logger.Debug("Calling CandidateServiceProvider to register a new candidate");
+
             try
             {
                 var candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
@@ -100,6 +126,19 @@
 
                 return true;
             }
+            catch (CustomException e)
+            {
+                var message = string.Format("Candidate registration failed for {0}.", model.EmailAddress);
+
+                if (e.Code == ErrorCodes.UserInIncorrectStateError)
+                {
+                    Logger.InfoException(message, e);
+                }
+                else {
+                    Logger.ErrorException(message, e);
+                }
+                return false;
+            }
             catch (Exception e)
             {
                 Logger.ErrorException("Candidate registration failed for " + model.EmailAddress, e);
@@ -109,34 +148,48 @@
 
         public ActivationViewModel Activate(ActivationViewModel model, Guid candidateId)
         {
+            Logger.Debug(
+                "Calling CandidateServiceProvider to activate user with Id={0}",
+                candidateId);
+
             try
             {
                 var httpContext = new HttpContextWrapper(HttpContext.Current);
 
                 _candidateService.Activate(model.EmailAddress, model.ActivationCode);
-                _authenticationTicketService.SetAuthenticationCookie(httpContext.Response.Cookies, candidateId.ToString(),
+                _authenticationTicketService.SetAuthenticationCookie(httpContext.Response.Cookies,
+                    candidateId.ToString(),
                     UserRoleNames.Activated);
 
                 return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Activated);
             }
             catch (CustomException e)
             {
-                Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, e);
                 string message;
 
                 switch (e.Code)
                 {
                     case Application.Interfaces.Candidates.ErrorCodes.ActivateUserFailed:
+                        Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, e);
                         message = ActivationPageMessages.ActivationFailed;
                         return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error,
-                            viewModelMessage: message);
+                            message);
 
                     case Application.Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode:
+                        Logger.InfoException("Candidate activation failed for " + model.EmailAddress, e);
                         message = ActivationPageMessages.ActivationCodeIncorrect;
-                        return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.InvalidCode,
-                            viewModelMessage: message);
+                        return new ActivationViewModel(model.EmailAddress, model.ActivationCode,
+                            ActivateUserState.InvalidCode,
+                            message);
+                    default:
+                        Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, e);
+                        break;
                 }
-
+            }
+            catch (Exception e)
+            {
+                Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, e);
+                throw;
             }
 
             return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error);
@@ -144,6 +197,9 @@
 
         public LoginResultViewModel Login(LoginViewModel model)
         {
+            Logger.Debug("Calling CandidateServiceProvider to log the user {0}",
+                model.EmailAddress);
+
             try
             {
                 var userStatusViewModel = GetUserStatus(model.EmailAddress);
@@ -211,10 +267,10 @@
 
         public bool RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model)
         {
+            Logger.Debug("Calling CandidateServiceProvider to request a password reset code for user {0}", model.EmailAddress);
+
             try
             {
-                Logger.Debug("{0} requested password reset code", model.EmailAddress);
-
                 _userAccountService.SendPasswordResetCode(model.EmailAddress);
 
                 return true;
@@ -229,11 +285,13 @@
 
         public AccountUnlockViewModel RequestAccountUnlockCode(AccountUnlockViewModel model)
         {
+            Logger.Debug("Calling CandidateServiceProvider to request an account unlock code for user {0}",
+                model.EmailAddress);
+
             try
-            {
-                Logger.Debug("{0} requested account unlock code", model.EmailAddress);
+            {   
                 _userAccountService.ResendAccountUnlockCode(model.EmailAddress);
-                return new AccountUnlockViewModel(){EmailAddress = model.EmailAddress};
+                return new AccountUnlockViewModel{EmailAddress = model.EmailAddress};
             }
             catch (Exception e)
             {
@@ -245,6 +303,9 @@
 
         public PasswordResetViewModel VerifyPasswordReset(PasswordResetViewModel model)
         {
+            Logger.Debug("Calling CandidateServiceProvider to verify password reset for user {0}",
+                model.EmailAddress);
+
             var result = new PasswordResetViewModel
             {
                 EmailAddress = model.EmailAddress,
@@ -294,6 +355,9 @@
 
         public AccountUnlockViewModel VerifyAccountUnlockCode(AccountUnlockViewModel model)
         {
+            Logger.Debug("Calling CandidateServiceProvider to verify account unlock code for user {0}",
+                model.EmailAddress);
+
             try
             {
                 _candidateService.UnlockAccount(model.EmailAddress, model.AccountUnlockCode);
@@ -326,14 +390,19 @@
 
         public bool ResendActivationCode(string username)
         {
+            Logger.Debug("Calling CandidateServiceProvider to request activation code for user {0}.", username);
+
             try
             {
-                Logger.Debug("{0} requested activation code to be resent", username);
-
                 _userAccountService.ResendActivationCode(username);
                 return true;
             }
             catch (CustomException e)
+            {
+                Logger.InfoException("Reset activation code failed for " + username, e);
+                return false;
+            }
+            catch (Exception e)
             {
                 Logger.ErrorException("Reset activation code failed for " + username, e);
                 return false;
@@ -342,12 +411,32 @@
 
         public Candidate GetCandidate(string username)
         {
-            return _candidateService.GetCandidate(username);
+            Logger.Debug("Calling CandidateServiceProvider to get Candidate for user {0}.", username);
+
+            try
+            {
+                return _candidateService.GetCandidate(username);
+            }
+            catch (Exception e)
+            {
+                var message = string.Format("GetCandidate for user {0} failed.", username);
+                Logger.ErrorException(message, e);
+                throw;
+            }
         }
 
         public Candidate GetCandidate(Guid candidateId)
         {
-            return _candidateService.GetCandidate(candidateId);
+            try
+            {
+                return _candidateService.GetCandidate(candidateId);
+            }
+            catch (Exception e)
+            {
+                var message = string.Format("GetCandidate for user with Id={0} failed.", candidateId);
+                Logger.ErrorException(message, e);
+                throw;
+            }
         }
 
         #region Helpers

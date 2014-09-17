@@ -4,8 +4,17 @@
     ViewBag.Title = "Apprenticeships - My settings";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="grid-wrapper">
+    <div class="grid grid-1-2">
+        <h1 class="heading-xlarge">Settings</h1>
+    </div>
+    <div class="grid grid-1-2">
+        <p>
+            @Html.ActionLink("Find an apprenticeship", "Index", "VacancySearch", null, new { @class = "page-link" })
+        </p>
+    </div>
+</div>
 
-<h1 class="heading-xlarge">Settings</h1>
 <div class="panel-indent">
     <p class="text">Any changes will only be seen on new applications. If you have any draft applications, these will continue to show your old details.</p>
 </div>

@@ -16,8 +16,8 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="format-detection" content="date=no">
         <meta name="format-detection" content="address=no">
-        <!--[if gt IE 8]><!-->@Styles.Render("~/Content/_assets/css/main.css")<!--<![endif]-->
-        <!--[if lte IE 8]>@Styles.Render("~/Content/_assets/css/main-ie8.css")<![endif]-->
+        <!--[if gt IE 8]><!-->@Styles.Render("~/Content/_assets/css/main.css?=Sprint18")<!--<![endif]-->
+        <!--[if lte IE 8]>@Styles.Render("~/Content/_assets/css/main-ie8.css?=Sprint18")<![endif]-->
         <!--[if lte IE 8]>@Styles.Render("~/Content/_assets/css/fonts-ie8.css")<![endif]-->
         <!--[if gte IE 9]><!-->@Styles.Render("~/Content/_assets/css/fonts.css")<!--<![endif]-->
         <link rel="shortcut icon" href="@Url.Content("~/Content/_assets/img/favicon.ico")" type="image/x-icon">
@@ -112,7 +112,7 @@
         <footer class="gov-border" role="contentinfo">
             <div class="footer__wrapper">
                 <div class="footer__meta">
-                    <ul class="footer__nav" role="navigation">
+                    <ul class="footer__nav">
                         <li class="footer__link"><a href='@Url.RouteUrl(RouteNames.Helpdesk)'>Helpdesk</a></li>
                         <li class="footer__link"><a href='@Url.RouteUrl(RouteNames.Privacy)'>Privacy &amp; Cookies</a></li>
                         <li class="footer__link">Built by <a href="http://gov.uk/sfa" target="_blank">Skills Funding Agency</a></li>

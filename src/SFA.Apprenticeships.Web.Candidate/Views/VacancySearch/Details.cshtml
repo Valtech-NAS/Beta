@@ -123,7 +123,7 @@
                             <li id="vacancy-employer-name">@Model.EmployerName</li>
                             @if (!string.IsNullOrWhiteSpace(Model.EmployerWebsite))
                             {
-                                <li><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Web Site">@Model.EmployerWebsite</a></li>
+                                <li><a itemprop="url" href="http://@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a></li>
                             }
                         </ul>
                         @if (Model.VacancyLocationType != VacancyLocationType.National)
@@ -145,7 +145,7 @@
                     {
                         <div class="ad-details__map">
                             <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
-                            <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                            <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                         </div>
                     }
@@ -165,7 +165,7 @@
                         <p id="vacancy-framework">@Html.Raw(Model.Framework)</p>
                         @if (Model.ProviderSectorPassRate.HasValue)
                         {
-                            <p>The training provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprencticeship training.</p>
+                            <p>The training provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprenticeship training.</p>
                         }
                     </div>
                 </div>

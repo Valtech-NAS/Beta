@@ -2,55 +2,69 @@
 {
     using System.Web;
     using System.Web.Mvc;
+    using Candidate.Controllers;
+    using Candidate.Providers;
+    using Common.IoC;
+    using Constants.ViewModels;
+    using Infrastructure.Common.IoC;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Infrastructure.Common.IoC;
-    using SFA.Apprenticeships.Web.Candidate.Controllers;
-    using SFA.Apprenticeships.Web.Candidate.Providers;
-    using SFA.Apprenticeships.Web.Candidate.UnitTests.Mocks;
-    using SFA.Apprenticeships.Web.Common.IoC;
     using StructureMap;
+    using FluentAssertions;
 
-    [TestFixture, Ignore("Rethink the way the controllers are created")]
+    [TestFixture]
     public class GivenAFaultedServer
     {
         [TestCase]
         public void WhenICheckAUsername_ThenIReceiveAJsonWithHasError()
         {
+            // Arrange
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            var username = "username";
+            const string username = "username";
 
-            // We should change this to an injection of these objects ---
-            RegisterDependencies();
+            RegisterDependencies(null);
 
             candidateServiceProvider.Setup(csp => csp.IsUsernameAvailable(username))
-                .Returns(new Constants.ViewModels.UserNameAvailability() { HasError = true });
+                .Returns(new UserNameAvailability {HasError = true});
 
             var registerController = new RegisterController(candidateServiceProvider.Object, null, null, null,
                 null, null);
 
+            // Act
             var result = registerController.CheckUsername(username);
-            var jsonResult = result as JsonResult;
-            Assert.IsNotNull(jsonResult);
+
+            //Assert
+            AssertTheViewModelHasError(result);
         }
 
-        private void RegisterDependencies()
+        private static void AssertTheViewModelHasError(ActionResult result)
+        {
+            var jsonResult = result as JsonResult;
+            jsonResult.Should().NotBeNull();
+// ReSharper disable once PossibleNullReferenceException
+            var data = jsonResult.Data as UserNameAvailability;
+            data.Should().NotBeNull();
+// ReSharper disable once PossibleNullReferenceException
+            data.HasError.Should().BeTrue();
+        }
+
+        private static void RegisterDependencies(HttpContextBase contextBase)
         {
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<WebCommonRegistry>();
-                x.For<HttpContextBase>().Use(GetFakeHttpContext());
+                x.For<HttpContextBase>().Use( contextBase ?? GetBasicFakeHttpContext());
             });
             WebCommonRegistry.Configure(ObjectFactory.Container);
         }
 
-        private HttpContextBase GetFakeHttpContext()
+        private static HttpContextBase GetBasicFakeHttpContext()
         {
             var request = new Mock<HttpRequestBase>();
             var response = new Mock<HttpResponseBase>();
 
-            HttpCookieCollection cookieCollection = new HttpCookieCollection();
+            var cookieCollection = new HttpCookieCollection();
             request.Setup(r => r.Cookies).Returns(cookieCollection);
             response.Setup(r => r.Cookies).Returns(cookieCollection);
 

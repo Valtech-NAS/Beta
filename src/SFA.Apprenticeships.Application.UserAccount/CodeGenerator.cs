@@ -3,9 +3,11 @@
     using System.Text;
     using System.Security.Cryptography;
     using Interfaces.Users;
+    using NLog;
 
     public class CodeGenerator : ICodeGenerator
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public const int CodeLength = 6;
 
         // all vowels are omitted to avoid confusion with numbers (e.g. O and I) and to avoid profanities
@@ -13,6 +15,7 @@
 
         public string Generate()
         {
+            Logger.Debug("Generating new code.");
             var bytes = GenerateRandomBytes(CodeLength);
             var sb = new StringBuilder(CodeLength);
 

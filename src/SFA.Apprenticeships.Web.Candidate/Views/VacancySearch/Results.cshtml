@@ -18,7 +18,7 @@
         
         if (Model.VacancySearch.LocationType == VacancyLocationType.Nationwide)
         {
-            resultMessage = "There is <a id='localLocationTypeLink' href=" + locationTypeLink + "><b class=\"bold-medium\">1</b> local apprenticeship.</a>";
+            resultMessage = "There is <b class=\"bold-medium\">1</b> <a id='localLocationTypeLink' href=" + locationTypeLink + ">local apprenticeship.</a>";
         }
         else
         {
@@ -29,7 +29,7 @@
     {
         if (Model.VacancySearch.LocationType == VacancyLocationType.Nationwide)
         {
-            var message = "There are <a id='localLocationTypeLink' href=" + locationTypeLink + "><b class=\"bold-medium\">{0}</b> local apprenticeships.</a>";
+            var message = "There are <b class=\"bold-medium\">{0}</b> <a id='localLocationTypeLink' href=" + locationTypeLink + ">local apprenticeships.</a>";
             resultMessage = string.Format(message, Model.TotalLocalHits);
         }
         else
@@ -47,7 +47,7 @@
 
         if (Model.VacancySearch.LocationType == VacancyLocationType.Local)
         {
-            nationalResultsMessage = "There is <a id='nationwideLocationTypeLink' href=" + locationTypeLink + "><b class=\"bold-medium\">1</b> nationwide apprenticeship.</a>";
+            nationalResultsMessage = "There is <b class=\"bold-medium\">1</b> <a id='nationwideLocationTypeLink' href=" + locationTypeLink + ">nationwide apprenticeship.</a>";
         }
         else
         {
@@ -58,7 +58,7 @@
     {
         if (Model.VacancySearch.LocationType == VacancyLocationType.Local)
         {
-            var nationalMessage = "There are <a id='nationwideLocationTypeLink' href=" + locationTypeLink + "><b class=\"bold-medium\">{0}</b> nationwide apprenticeships.</a>";
+            var nationalMessage = "There are <b class=\"bold-medium\">{0}</b> <a id='nationwideLocationTypeLink' href=" + locationTypeLink + ">nationwide apprenticeships.</a>";
             nationalResultsMessage = string.Format(nationalMessage, Model.TotalNationalHits);
         }
         else

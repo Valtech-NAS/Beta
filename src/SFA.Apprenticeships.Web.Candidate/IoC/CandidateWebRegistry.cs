@@ -73,6 +73,7 @@
             For<ICreateApplicationStrategy>().Use<CreateApplicationStrategy>();
             For<ISaveApplicationStrategy>().Use<SaveApplicationStrategy>();
             For<IArchiveApplicationStrategy>().Use<ArchiveApplicationStrategy>();
+            For<IDeleteApplicationStrategy>().Use<DeleteApplicationStrategy>();
             For<IAuthenticateCandidateStrategy>().Use<AuthenticateCandidateStrategy>();
             For<IUserAccountService>().Use<UserAccountService>();
             For<IAddressSearchService>().Use<AddressSearchService>();

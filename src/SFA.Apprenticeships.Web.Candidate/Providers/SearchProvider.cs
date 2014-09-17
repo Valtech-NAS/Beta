@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Application.Interfaces.Locations;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
@@ -37,6 +39,9 @@
 
         public LocationsViewModel FindLocation(string placeNameOrPostcode)
         {
+            Logger.Debug("Calling SearchProvider to find the location for placename or postcode: {0}",
+                placeNameOrPostcode);
+
             try
             {
                 IEnumerable<Location> locations = _locationSearchService.FindLocation(placeNameOrPostcode);
@@ -51,7 +56,7 @@
             }
             catch (CustomException e)
             {
-                string message, errorMessage = string.Empty;
+                string message, errorMessage;
 
                 switch (e.Code)
                 {
@@ -69,11 +74,19 @@
                 Logger.ErrorException(errorMessage, e);
                 return new LocationsViewModel(message);
             }
+            catch (Exception e)
+            {
+                var message = string.Format("Find location failed for placename or postcode {0}", placeNameOrPostcode);
+                Logger.ErrorException(message, e);
+                throw;
+            }
         }
 
         public VacancySearchResponseViewModel FindVacancies(VacancySearchViewModel search, int pageSize)
         {
-            Location searchLocation = _mapper.Map<VacancySearchViewModel, Location>(search);
+            Logger.Debug("Calling SearchProvider to find vacancies.");
+
+            var searchLocation = _mapper.Map<VacancySearchViewModel, Location>(search);
 
             try
             {
@@ -109,30 +122,54 @@
                 Logger.ErrorException("Find vacancies failed. Check inner details for more info", ex);
                 return new VacancySearchResponseViewModel(VacancySearchResultsPageMessages.VacancySearchFailed);
             }
+            catch (Exception e)
+            {
+                Logger.ErrorException("Find vacancies failed. Check inner details for more info", e);
+                throw;
+            }
         }
 
         public bool IsValidPostcode(string postcode)
         {
-            return LocationHelper.IsPostcode(postcode);
+            Logger.Debug("Calling SearchProvider to find out if {0} is a valid postcode.", postcode);
+
+            try
+            {
+                return LocationHelper.IsPostcode(postcode);
+            }
+            catch (Exception e)
+            {
+                var message = string.Format("IsValidPostcode failed for postcode {0}.", postcode);
+                Logger.ErrorException(message, e);
+                throw;
+            }
         }
 
         public AddressSearchResult FindAddresses(string postcode)
         {
+            Logger.Debug("Calling SearchProvider to find out the addresses for postcode {0}.", postcode);
+
             var addressSearchViewModel = new AddressSearchResult();
 
             try
             {
-                IEnumerable<Address> addresses = _addressSearchService.FindAddress(postcode);
+                IEnumerable<Address> addresses = _addressSearchService.FindAddress(postcode).OrderBy(x => x.Uprn);
                 addressSearchViewModel.Addresses = addresses != null
                     ? _mapper.Map<IEnumerable<Address>, IEnumerable<AddressViewModel>>(addresses)
                     : new AddressViewModel[] {};
             }
             catch (CustomException e)
             {
-                string message = string.Format("FindAddresses error retrieving addresses for postcode {0}", postcode);
+                var message = string.Format("FindAddresses for postcode {0} failed.", postcode);
                 Logger.ErrorException(message, e);
                 addressSearchViewModel.ErrorMessage = e.Message;
                 addressSearchViewModel.HasError = true;
+            }
+            catch (Exception e)
+            {
+                var message = string.Format("FindAddresses for postcode {0} failed.", postcode);
+                Logger.ErrorException(message, e);
+                throw;
             }
 
             return addressSearchViewModel;

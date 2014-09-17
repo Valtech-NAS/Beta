@@ -32,6 +32,7 @@
             Logger.Debug("Sending email.");
             var message = ComposeMessage(request);
             DispatchMessage(message);
+            Logger.Debug("Email sent.");
         }
 
         private SendGridMessage ComposeMessage(EmailRequest request)

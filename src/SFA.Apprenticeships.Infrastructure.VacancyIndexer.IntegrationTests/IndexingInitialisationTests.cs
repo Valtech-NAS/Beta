@@ -28,7 +28,7 @@
             _vacancyIndexAlias = _elasticsearchClientFactory.GetIndexNameForType(typeof(VacancySummary));
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldCreateScheduledIndexAndMapping()
         {
             var indexName = _vacancyIndexAlias + ".2000-01-01";
@@ -46,7 +46,7 @@
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeFalse();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldCreateScheduledIndexAndPublishWithAlias()
         {
             var indexName = _vacancyIndexAlias + ".2000-01-01";
@@ -62,7 +62,7 @@
             _elasticClient.IndexExists(i => i.Index(_vacancyIndexAlias)).Exists.Should().BeFalse();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldCreateIndexAndIndexDocument()
         {
             var indexName = _vacancyIndexAlias + ".2000-01-01";

@@ -50,7 +50,7 @@
             public const string LengthErrorText = "Password must be at least 8 characters long, contain upper and lowercase letters and one number";
             public const string WhiteListRegularExpression = Whitelists.PasswordWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Password " + Whitelists.PasswordWhitelist.ErrorText;
-            public const string PasswordsDoNotMatchErrorText = "TODO: Passwords do not match";
+            public const string PasswordsDoNotMatchErrorText = "Sorry, your passwords don’t match";
         }
 
         public static class TermsAndConditions
@@ -61,8 +61,8 @@
 
         public class ConfirmPasswordMessages
         {
-            public const string LabelText = "TODO: Confirm password";
-            public const string RequiredErrorText = "TODO: Please confirm your password";            
+            public const string LabelText = "Confirm password";
+            public const string RequiredErrorText = "Please confirm password";            
         }
     }
 }

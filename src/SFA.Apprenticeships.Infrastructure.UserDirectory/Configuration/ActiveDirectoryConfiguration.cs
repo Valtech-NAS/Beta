@@ -13,6 +13,7 @@
         private const string SslPortConstant = "SslPort";
         private const string DefaultValueConstant = "";
         private const string SecureModeConstant = "SecureMode";
+        private const string DirectoryAttributeNameConstant = "DirectoryAttributeName";
 
         public ActiveDirectoryConfiguration()
             : base("ActiveDirectoryConfiguration")
@@ -66,6 +67,14 @@
         {
             get { return (bool)this[SecureModeConstant]; }
             set { this[SslPortConstant] = value; }
+        }
+
+        // the 'unicodePwd' attribute is being used to handle password handling requests
+        [ConfigurationProperty(DirectoryAttributeNameConstant, IsRequired = true, DefaultValue = "unicodePwd")]
+        public string DirectoryAttributeName
+        {
+            get { return (string)this[DirectoryAttributeNameConstant]; }
+            set { this[DirectoryAttributeNameConstant] = value; }
         }
     }
 }

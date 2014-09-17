@@ -11,8 +11,8 @@
 @Html.DisplayFor(m => m.Candidate)
 @Html.DisplayFor(m => m.Candidate.Education)
 
-<fieldset id="applyQualifications" class="fieldset-with-border">
-    <legend class="heading-large">
+<section id="applyQualifications" class="section-border">
+    <h2 class="heading-large">
         Qualifications
         @if (ViewBag.VacancyId != null)
         {
@@ -20,7 +20,7 @@
                 <i class="the-icon fa fa-pencil"></i><span class="the-text">Amend details</span>
             </a>
         }
-    </legend>
+    </h2>
     
     @if (!Model.Candidate.Qualifications.Any())
     {
@@ -71,10 +71,10 @@
         </table>
     }
 
-</fieldset>
+</section>
 
-<fieldset class="fieldset-with-border">
-    <legend class="heading-large">
+<section class="section-border">
+    <h2 class="heading-large">
         Work experience
         @if (ViewBag.VacancyId != null)
         {
@@ -82,7 +82,7 @@
                 <i class="the-icon fa fa-pencil"></i><span class="the-text">Amend details</span>
             </a>
         }
-    </legend>
+    </h2>
     
     @if (!Model.Candidate.WorkExperience.Any())
     {
@@ -159,7 +159,7 @@
         </div>
     }
 
-</fieldset>
+</section>
 
 
 

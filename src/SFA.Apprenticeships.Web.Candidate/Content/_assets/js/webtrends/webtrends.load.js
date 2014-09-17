@@ -14,7 +14,6 @@ window.webtrendsAsyncInit=function(){
         download:true,
         downloadtypes:"xls,doc,pdf,txt,csv,zip,docx,xlsx,rar,gzip",
         onsitedoms:"candidates.gov.uk",
-        fpcdom:".candidates.gov.uk",
         plugins:{
             //hm:{src:"//s.webtrends.com/js/webtrends.hm.js"}
         }

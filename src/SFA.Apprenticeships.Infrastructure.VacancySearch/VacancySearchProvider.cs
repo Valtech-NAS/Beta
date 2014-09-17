@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
-    using System;
     using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Search;
@@ -45,7 +44,7 @@
                 s.Type(documentTypeName);
                 s.Skip((pageNumber - 1)*pageSize);
                 s.Take(pageSize);
-                s.TrackScores(true);
+                s.TrackScores();
 
                 s.Query(q =>
                 {

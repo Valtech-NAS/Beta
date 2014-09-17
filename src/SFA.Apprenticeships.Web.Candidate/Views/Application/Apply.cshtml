@@ -33,6 +33,7 @@
 
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
+
     @Html.DisplayFor(m => m.Candidate)
     @Html.EditorFor(m => m.Candidate.Education)
     @Html.HiddenFor(m => m.VacancyId)
@@ -60,7 +61,7 @@
             <p id="applicationSaved">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
         }
     </div>
-
+    
 }
 
 @section scripts {
@@ -83,10 +84,7 @@
             workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
             currentYear = @Html.Raw(Model.CurrentYear);
             whitelistregex =  @Html.Raw(Json.Encode(Model.WhiteListRegex));
-            yearRegex =  @Html.Raw(Json.Encode(Model.FourDigitYearRegex));
-
-            console.log(whitelistregex);
-            console.log(yearRegex);
+            yearRegex =  @Html.Raw(Json.Encode(Model.FourDigitYearRegex));           
 
             window.addEventListener("load", function() {
                 dirtyFormDialog.initialise({

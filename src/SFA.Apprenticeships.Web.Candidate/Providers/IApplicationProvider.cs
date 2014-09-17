@@ -18,6 +18,8 @@
 
         WhatHappensNextViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId);
 
-        void ArchiveApplication(Guid candidateId, int vacancyId);
+        ApplicationViewModel ArchiveApplication(Guid candidateId, int vacancyId);
+
+        ApplicationViewModel DeleteApplication(Guid candidateId, int vacancyId);
     }
 }

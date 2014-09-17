@@ -4,6 +4,7 @@
     using System.Linq;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
     using StructureMap;
 
@@ -12,7 +13,8 @@
         private readonly Guid _candidateId = new Guid("00000000-0000-0000-0000-000000000001");
         private readonly string _emailAddress = string.Empty;
         private ApplicationStatuses _applicationStatus = ApplicationStatuses.Unknown;
-        private DateTime _dateApplied = DateTime.Now;
+        private DateTime? _dateApplied = DateTime.Now;
+        private DateTime _expirationDate = DateTime.Now.AddDays(30);
 
         public ApplicationBuilder(Guid candidateId, string emailAddress)
         {
@@ -23,6 +25,18 @@
         public ApplicationBuilder WithApplicationStatus(ApplicationStatuses applicationStatus)
         {
             _applicationStatus = applicationStatus;
+            return this;
+        }
+
+        public ApplicationBuilder WithExpirationDate(DateTime expirationDate)
+        {
+            _expirationDate = expirationDate;
+            return this;
+        }
+
+        public ApplicationBuilder WithoutDateApplied()
+        {
+            _dateApplied = null;
             return this;
         }
 
@@ -39,7 +53,11 @@
                 CandidateId = _candidateId,
                 CandidateInformation = new ApplicationTemplate(),
                 Status = _applicationStatus,
-                DateApplied = _dateApplied
+                DateApplied = _dateApplied,
+                Vacancy = new VacancySummary
+                {
+                    ClosingDate = _expirationDate
+                }
             };
 
             var repo = ObjectFactory.GetInstance<IApplicationWriteRepository>();

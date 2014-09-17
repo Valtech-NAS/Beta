@@ -122,6 +122,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ApplicationStatusses.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Dashboard\ArchiveApplications.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArchiveApplications.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Dashboard\DeleteADraft.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DeleteADraft.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\EpicHappyPath.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -214,6 +224,14 @@
     <None Include="Features\Dashboard\ApplicationStatusses.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ApplicationStatusses.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Dashboard\ArchiveApplications.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ArchiveApplications.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Dashboard\DeleteADraft.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>DeleteADraft.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\EpicHappyPath.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

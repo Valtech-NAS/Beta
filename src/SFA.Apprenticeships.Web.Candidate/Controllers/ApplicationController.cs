@@ -61,9 +61,35 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Archive(int id)
         {
-            _applicationProvider.ArchiveApplication(UserContext.CandidateId, id);
+           var applicationViewModel = _applicationProvider.ArchiveApplication(UserContext.CandidateId, id);
+
+            if (applicationViewModel.HasError())
+            {
+                SetUserMessage(applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
+
+                return RedirectToAction("Index");
+            }
 
             SetUserMessage(MyApplicationsPageMessages.ApplicationArchived);
+
+            return RedirectToAction("Index");
+        }
+
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public ActionResult Delete(int id)
+        {
+           var applicationViewModel =  _applicationProvider.DeleteApplication(UserContext.CandidateId, id);
+
+            if (applicationViewModel.HasError())
+            {
+                SetUserMessage(applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
+
+                return RedirectToAction("Index");
+            }
+
+            SetUserMessage(MyApplicationsPageMessages.ApplicationDeleted);
 
             return RedirectToAction("Index");
         }
@@ -239,7 +265,7 @@
             ViewBag.VacancyId = id;
 
             return View(model);
-        }
+        }       
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
@@ -256,7 +282,14 @@
                 return RedirectToAction("Index");
             }
 
-            if (!model.HasError()) return RedirectToAction("WhatHappensNext", new {id});
+            if (!model.HasError())
+                return RedirectToAction("WhatHappensNext",
+                    new
+                    {
+                        id,
+                        vacancyReference = model.VacancyDetail.FullVacancyReferenceId,
+                        vacancyTitle = model.VacancyDetail.Title
+                    });
             
             SetUserMessage(ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning);
             return RedirectToAction("Preview", new { id });
@@ -264,7 +297,7 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult WhatHappensNext(int id)
+        public ActionResult WhatHappensNext(int id, string vacancyReference, string vacancyTitle)
         {
             var model = _applicationProvider.GetWhatHappensNextViewModel(UserContext.CandidateId, id);
 
@@ -275,15 +308,14 @@
 
             if (model.HasError())
             {
-                SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
-                return RedirectToAction("Index");
+                model.VacancyReference = vacancyReference;
+                model.VacancyTitle = vacancyTitle;
             }
 
             return View(model);
         }
 
         #region Helpers
-
         private static ApplicationViewModel StripApplicationViewModelBeforeValidation(ApplicationViewModel model)
         {
             model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);

@@ -2,36 +2,33 @@
 {
     using System;
     using System.Linq;
+    using Application.Interfaces.Candidates;
     using Application.Interfaces.Vacancies;
+    using Constants.Pages;
     using Domain.Entities.Applications;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using NLog;
     using ViewModels.VacancySearch;
-    using Application.Interfaces.Candidates;
-    using Domain.Entities.Exceptions;
-    using Constants.Pages;
 
     public class VacancyDetailProvider : IVacancyDetailProvider
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly IVacancyDataService _vacancyDataService;
+        private readonly IApplicationWriteRepository _applicationWriteRepository;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
-        private readonly IApplicationReadRepository _applicationReadRepository;
-        private readonly IApplicationWriteRepository _applicationWriteRepository;
+        private readonly IVacancyDataService _vacancyDataService;
 
         public VacancyDetailProvider(
             IVacancyDataService vacancyDataService,
             ICandidateService candidateService,
-            IApplicationReadRepository applicationReadRepository,
             IApplicationWriteRepository applicationWriteRepository,
             IMapper mapper)
         {
             _applicationWriteRepository = applicationWriteRepository;
-            _applicationReadRepository = applicationReadRepository;
             _vacancyDataService = vacancyDataService;
             _candidateService = candidateService;
             _mapper = mapper;
@@ -39,9 +36,13 @@
 
         public VacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId)
         {
+            Logger.Debug(
+                "Calling VacancyDetailProvider to get the Vacancy detail View Model for candidate ID: {0}, vacancy ID: {1}.",
+                candidateId, vacancyId);
+
             try
             {
-                var vacancyDetail = _vacancyDataService.GetVacancyDetails(vacancyId);
+                VacancyDetail vacancyDetail = _vacancyDataService.GetVacancyDetails(vacancyId);
 
                 if (vacancyDetail == null)
                 {
@@ -54,12 +55,13 @@
                     return null;
                 }
 
-                var vacancyDetailViewModel = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+                var vacancyDetailViewModel =
+                    _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
                 if (candidateId != null)
                 {
                     // If candidate has applied for vacancy, include the details in the view model.
-                    var applicationDetails = GetCandidateApplication(candidateId.Value, vacancyId);
+                    ApplicationSummary applicationDetails = GetCandidateApplication(candidateId.Value, vacancyId);
 
                     if (applicationDetails != null)
                     {
@@ -78,6 +80,14 @@
                 Logger.ErrorException(message, e);
 
                 return new VacancyDetailViewModel(VacancyDetailPageMessages.GetVacancyDetailFailed);
+            }
+            catch (Exception e)
+            {
+                var message = string.Format("Get Vacancy View Model failed for candidate ID: {0}, vacancy ID: {1}.",
+                    candidateId, vacancyId);
+
+                Logger.ErrorException(message, e);
+                throw;
             }
         }
 

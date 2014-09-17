@@ -6,11 +6,13 @@
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
+    using NLog;
     using Strategies;
 
     //TODO: MG: design breaks OCP - may refactor
     public class CommunicationService : ICommunicationService
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ISendAccountUnlockCodeStrategy _sendAccountUnlockCodeStrategy;
@@ -39,6 +41,9 @@
         public void SendMessageToCandidate(Guid candidateId, CandidateMessageTypes messageType,
             IList<KeyValuePair<CommunicationTokens, string>> tokens)
         {
+            Logger.Debug("Calling CommunicationService to send a message of type {0} to candidate with Id={1}",
+                messageType.ToString(), candidateId);
+
             var candidate = _candidateReadRepository.Get(candidateId);
 
             switch (messageType)

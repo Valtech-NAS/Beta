@@ -1,9 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.ReferenceData
 {
-    using System;
     using System.Collections.Generic;
-    using Interfaces.ReferenceData;
     using Domain.Entities.ReferenceData;
+    using Interfaces.ReferenceData;
 
     public class ReferenceDataService : IReferenceDataService
     {

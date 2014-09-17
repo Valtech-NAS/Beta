@@ -25,15 +25,18 @@
 
         public Candidate Get(Guid id)
         {
-            Logger.Debug("Called Mongodb to get candidate with Id={0}", id);
+            Logger.Debug("Calling repository to get candidate with Id={0}", id);
 
             var mongoEntity = Collection.FindOneById(id);
+
+            LogOutcome(id, mongoEntity);
+
             return mongoEntity == null ? null : _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
         }
 
         public Candidate Get(Guid id, bool errorIfNotFound)
         {
-            Logger.Debug("Called Mongodb to get candidate with Id={0}", id);
+            Logger.Debug("Calling repository to get candidate with Id={0}", id);
 
             var mongoEntity = Collection.FindOneById(id);
 
@@ -45,12 +48,14 @@
                 throw new CustomException(message, ErrorCodes.UnknownCandidateError);
             }
 
+            LogOutcome(id, mongoEntity);
+
             return mongoEntity == null ? null : _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
         }
 
         public Candidate Get(string username, bool errorIfNotFound = true)
         {
-            Logger.Debug("Called Mongodb to get candidate with username={0}", username);
+            Logger.Debug("Calling repository to get candidate with username={0}", username);
 
             var mongoEntity = Collection.FindOne(Query<MongoCandidate>.EQ(o => o.RegistrationDetails.EmailAddress, username.ToLower()));
 
@@ -62,19 +67,23 @@
                 throw new CustomException(message, ErrorCodes.UnknownCandidateError); 
             }
 
+            LogOutcome(username, mongoEntity);
+
             return mongoEntity == null ? null : _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
         }
-
+     
         public void Delete(Guid id)
         {
-            Logger.Debug("Called Mongodb to delete candidate with Id={0}", id);
+            Logger.Debug("Calling repository to delete candidate with Id={0}", id);
 
             Collection.Remove(Query<MongoCandidate>.EQ(o => o.Id, id));
+
+            Logger.Debug("Deleted candidate with Id={0}",id);
         }
 
         public Candidate Save(Candidate entity)
         {
-            Logger.Debug("Called Mongodb to save candidate EntityId={0}, FirstName={1}, EmailAddress={2}", entity.EntityId, entity.RegistrationDetails.FirstName, entity.RegistrationDetails.EmailAddress);
+            Logger.Debug("Calling repository to save candidate with Id={0}, FirstName={1}, EmailAddress={2}", entity.EntityId, entity.RegistrationDetails.FirstName, entity.RegistrationDetails.EmailAddress);
             
             var mongoEntity = _mapper.Map<Candidate, MongoCandidate>(entity);
 
@@ -82,7 +91,7 @@
 
             Collection.Save(mongoEntity);
 
-            Logger.Debug("Saved candidate to Mongodb with Id={0}", entity.EntityId);
+            Logger.Debug("Saved candidate to repository with Id={0}", entity.EntityId);
 
             return _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
         }
@@ -92,5 +101,20 @@
             //TODO: review the index
             Collection.CreateIndex(new IndexKeysBuilder().Ascending("RegistrationDetails.EmailAddress"), IndexOptions.SetUnique(true));
         }
+
+        private static void LogOutcome(Guid id, MongoCandidate mongoEntity)
+        {
+            var message = mongoEntity == null ? "Found no candidate with Id={0}" : "Found candidate with Id={0}";
+
+            Logger.Debug(message, id);
+        }
+
+        private static void LogOutcome(string username, MongoCandidate mongoEntity)
+        {
+            var message = mongoEntity == null ? "Found no candidate with username={0}" : "Found candidate with username={0}";
+
+            Logger.Debug(message, username);
+        }
+
     }
 }

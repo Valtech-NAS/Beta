@@ -7,19 +7,19 @@
     [TestFixture]
     public class SendGridConfigurationTests
     {
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldGetUserNameConfiguration()
         {
             Assert.IsNotNull(SendGridConfiguration.Instance.UserName);
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldGetPasswordConfiguration()
         {
             Assert.IsNotNull(SendGridConfiguration.Instance.Password);
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldGetMultipleTemplates()
         {
             var templates = SendGridConfiguration.Instance.Templates;
@@ -28,8 +28,8 @@
             Assert.IsTrue(templates.Count() > 1);
         }
 
-        [TestCase(0)]
-        [TestCase(1)]
+        [TestCase(0), Category("Integration")]
+        [TestCase(1), Category("Integration")]
         public void ShouldGetMultipleTemplateConfiguration(int index)
         {
             var template = SendGridConfiguration.Instance.Templates.ElementAt(index);
@@ -39,7 +39,7 @@
             Assert.IsNotNull(template.Id);
         }
 
-        [TestCase(0, "donotreply@example.com")]
+        [TestCase(0, "donotreply@example.com"), Category("Integration")]
         public void ShouldGetFromEmailConfiguration(int index, string expectedFromEmail)
         {
             var template = SendGridConfiguration.Instance.Templates.ElementAt(index);

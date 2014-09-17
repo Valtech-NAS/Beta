@@ -17,13 +17,12 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
 
         public void ArchiveApplication(Guid applicationId)
         {
-            var applicationDetail = _applicationReadRepository.Get(applicationId);
+            var applicationDetail = _applicationReadRepository.Get(applicationId, true);
 
-            if (applicationDetail != null && !applicationDetail.IsArchived)
-            {
-                applicationDetail.IsArchived = true;
-                _applicationWriteRepository.Save(applicationDetail);
-            }
+            if (applicationDetail.IsArchived) return;
+
+            applicationDetail.IsArchived = true;
+            _applicationWriteRepository.Save(applicationDetail);
         }
     }
 }

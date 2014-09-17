@@ -52,6 +52,20 @@
             }
         }
 
+        [Given(@"I add (.*) expired applications")]
+        public void GivenIAddExpiredApplications(int numberOfApplications)
+        {
+            for (var i = 0; i < numberOfApplications; i++)
+            {
+                _applicationBuilder
+                    .WithApplicationStatus(ApplicationStatuses.ExpiredOrWithdrawn)
+                    .WithExpirationDate(DateTime.Now.AddDays(-5))
+                    .WithoutDateApplied()
+                    .Build();
+            }
+        }
+
+
         private void SetTokens(Candidate candidate, User user)
         {
             // Email.

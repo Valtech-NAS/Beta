@@ -23,11 +23,17 @@
         [ElementLocator(Id = "unsuccessful-applications-count")]
         public IWebElement UnsuccessfulApplicationsCount { get; set; }
 
-        [ElementLocator(Id = "resume-link")]
+        [ElementLocator(Class = "resume-link")]
         public IWebElement ResumeLink { get; set; }
 
-        [ElementLocator(Id = "delete-link")]
-        public IWebElement DeleteLink { get; set; }
+        [ElementLocator(Class = "delete-draft")]
+        public IWebElement DeleteDraftLink { get; set; }
+
+        [ElementLocator(Class = "archive-successful")]
+        public IWebElement ArchiveSuccessfulLink { get; set; }
+
+        [ElementLocator(Class = "archive-unsuccessful")]
+        public IWebElement ArchiveUnsuccessfulLink { get; set; }
 
         [ElementLocator(Id = "empty-application-history-text")]
         public IWebElement EmptyApplicationHistoryText { get; set; }

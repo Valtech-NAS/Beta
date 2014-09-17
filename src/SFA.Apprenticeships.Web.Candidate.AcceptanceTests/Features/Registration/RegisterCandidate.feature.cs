@@ -605,11 +605,11 @@ this.FeatureBackground();
             table20.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "TODO: Passwords do not match"});
+                        "Sorry, your passwords don’t match"});
             table20.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#ConfirmPassword"});
+                        "#Password"});
 #line 178
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table20, "And ");
 #line hidden

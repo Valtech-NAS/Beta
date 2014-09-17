@@ -35,7 +35,7 @@
             _provider = ObjectFactory.GetInstance<IVacancyDataProvider>();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         [Ignore]
         public void ShouldNotReturnVacancyDetailsForNonExistentVacancyId()
         {

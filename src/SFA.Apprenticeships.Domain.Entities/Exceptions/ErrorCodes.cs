@@ -23,5 +23,12 @@
         // Vacancy Exception Codes
         public const string VacancyNotFoundError = "Vacancy001";
         public const string VacancyExpired = "Vacancy002";
+
+        // LDAP Exception Codes
+        public const string LdapAccountExistError = "LDAP001";
+        public const string LdapAccountNotFoundError = "LDAP002";
+        public const string LdapEmptyNewPasswordError = "LDAP003";
+        public const string LdapModifyPasswordError = "LDAP004";
+        public const string LdapSetPasswordError = "LDAP005";
     }
 }

@@ -48,6 +48,7 @@
 
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ValidateInput(false)]
         public ActionResult Index(RegisterViewModel model)
         {
             var userNameAvailable = _candidateServiceProvider.IsUsernameAvailable(model.EmailAddress.Trim());
@@ -192,6 +193,7 @@
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
+        [ValidateInput(false)]
         public ActionResult ResetPassword(PasswordResetViewModel model)
         {
             var result = _candidateServiceProvider.VerifyPasswordReset(model);

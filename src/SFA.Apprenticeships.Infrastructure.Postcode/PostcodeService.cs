@@ -7,15 +7,18 @@
     using Domain.Entities.Locations;
     using Domain.Interfaces.Configuration;
     using Entities;
+    using NLog;
     using Rest;
 
     public class PostcodeService : RestService, IPostcodeLookupProvider
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public PostcodeService(IConfigurationManager configurationManager) : 
             base(configurationManager.GetAppSetting("PostcodeServiceEndpoint")) { }
 
         public Location GetLocation(string postcode)
         {
+            Logger.Debug("Calling GetLocation for Postcode={0}", postcode);
             var result = GetPartialMatches(postcode).FirstOrDefault();
 
             return result == null

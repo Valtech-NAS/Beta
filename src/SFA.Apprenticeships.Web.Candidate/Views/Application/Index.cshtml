@@ -83,7 +83,7 @@ else
                                             <td>@application.Title with @application.EmployerName</td>
                                             <td class="ta-center">Successful</td>
                                             <td class="ta-center">
-                                                <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                                <a class="icon-black archive-successful" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                             </td>
                                         </tr>
                                     }
@@ -147,7 +147,7 @@ else
                                             <td>@application.Title with @application.EmployerName</td>
                                             <td class="ta-center">Unsuccessful</td>
                                             <td class="ta-center">
-                                                <a class="icon-black" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                                <a class="icon-black archive-unsuccessful" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                             </td>
                                         </tr>
 
@@ -184,7 +184,8 @@ else
                     <table class="vert-middle">
                         <colgroup>
                             <col class="t70">
-                            <col class="t30">
+                            <col class="t20">
+                            <col class="t10">
                             <col>
                         </colgroup>
                         <tbody class="tbody-3rows">
@@ -203,19 +204,22 @@ else
                                     <td class="ta-center">
                                         @if (application.ApplicationStatus == ApplicationStatuses.Draft)
                                         {
-                                            @Html.ActionLink("Resume", "Resume", "Application", new { id = application.VacancyId }, new { id = "resume-link" })
+                                            @Html.ActionLink("Resume", "Resume", "Application", new { id = application.VacancyId }, new { @class = "resume-link" })
                                         }
                                         else
                                         {
                                             @:Apprenticeship withdrawn
                                         }
                                     </td>
+                                    <td class="ta-center">
+                                        <a class="icon-black delete-draft" href="@Url.Action("Delete", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>
                         <tbody class="tbody-expandrows">
                             <tr class="no-btm-border">
-                                <td></td>
+                                <td colspan="2"></td>
                                 <td class="no-wrap ta-center">
                                     <span class="btnExpandRows fake-link" href=""><i class="fa fa-angle-down"></i>More</span>
                                 </td>

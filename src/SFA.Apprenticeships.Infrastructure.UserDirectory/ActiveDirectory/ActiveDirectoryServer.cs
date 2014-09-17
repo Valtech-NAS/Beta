@@ -4,16 +4,15 @@
     using System.DirectoryServices.AccountManagement;
     using System.DirectoryServices.Protocols;
     using System.Net;
-    using System.Security.Cryptography.X509Certificates;
     using Configuration;
     using NLog;
 
     public class ActiveDirectoryServer : IDisposable
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private const int ValidationFailed = 49;
-        private readonly bool _isSecure;
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly ActiveDirectoryConfiguration _config;
+        private readonly bool _isSecure;
 
         public ActiveDirectoryServer(ActiveDirectoryConfiguration config)
         {
@@ -21,12 +20,18 @@
             _isSecure = _config.SecureMode;
             Connection = new LdapConnection(new LdapDirectoryIdentifier(Server, Port));
             Connection.SessionOptions.SecureSocketLayer = _isSecure;
-            Connection.SessionOptions.VerifyServerCertificate = ServerCallback;
+            Connection.SessionOptions.VerifyServerCertificate = (s, e) => true;
         }
 
-        public string Server { get { return _config.Server; } }
+        public string Server
+        {
+            get { return _config.Server; }
+        }
 
-        public string DistinguishedName { get { return _config.DistinguishedName; } }
+        public string DistinguishedName
+        {
+            get { return _config.DistinguishedName; }
+        }
 
         public int Port
         {
@@ -54,51 +59,34 @@
             }
         }
 
+        public void Dispose()
+        {
+            Connection.Dispose();
+        }
+
         public bool Bind()
         {
+            Logger.Debug("Binding to LDAP using credentials from configuration.");
+
             Connection.Credential = new NetworkCredential(_config.Username, _config.Password);
             Connection.AuthType = AuthType.Negotiate;
 
             try
             {
                 Connection.Bind();
+                Logger.Debug("Succeeded in binding to LDAP.");
                 return true;
             }
             catch (LdapException ldapException)
             {
-                Logger.DebugException("Active directory binding failed: ", ldapException);
+                Logger.DebugException("Failed to bind to LDAP: ", ldapException);
 
-                if (ldapException.ErrorCode == ValidationFailed)
-                {
-                    return false;
-                }
+                if (ldapException.ErrorCode != ValidationFailed) { throw; }
 
-                throw;
+                Logger.Debug("Failed to bind to LDAP because validation failed with ErrorCode={0}",
+                    ldapException.ErrorCode);
+                return false;
             }
-        }
-
-        private static bool ServerCallback(LdapConnection connection, X509Certificate certificate)
-        {
-            // TODO: NOTIMPL: High::Validate certificate
-            return true;
-            //try
-            //{
-            //    // Need to create a Config manager library and use an interface for this
-            //    var localCertificate = ConfigurationManager.AppSettings["AdCertificaate"];
-            //    X509Certificate expectedCert = X509Certificate.CreateFromCertFile(localCertificate);
-
-            //    return expectedCert.Equals(certificate);
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    return false;
-            //}
-        }
-
-        public void Dispose()
-        {
-            Connection.Dispose();
         }
     }
 }
