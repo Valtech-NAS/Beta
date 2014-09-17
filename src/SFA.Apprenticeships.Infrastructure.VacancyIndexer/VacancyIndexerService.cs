@@ -77,8 +77,8 @@
                 indexSettings.Analysis.TokenFilters.Add("snowball", snowballFilter);
                 indexSettings.Analysis.Analyzers.Add("snowball", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "snowball" } });
 
-                var indexCreationResp = client.CreateIndex(i => i.Index(newIndexName).InitializeUsing(indexSettings));
-                var mapResp = client.Map<VacancySummary>(p => p.Index(newIndexName).MapFromAttributes());
+                client.CreateIndex(i => i.Index(newIndexName).InitializeUsing(indexSettings));
+                client.Map<VacancySummary>(p => p.Index(newIndexName).MapFromAttributes());
                 Logger.Debug("Created new vacancy search index named: {0}", newIndexName);
             }
             else
@@ -118,7 +118,7 @@
             return _elasticsearchClientFactory.GetIndexNameForType(typeof(VacancySummary));
         }
 
-        private string GetIndexNameAndDateExtension(string indexAlias, DateTime dateTime)
+        private static string GetIndexNameAndDateExtension(string indexAlias, DateTime dateTime)
         {
             return string.Format("{0}.{1}", indexAlias, dateTime.ToString("yyyy-MM-dd"));
         }

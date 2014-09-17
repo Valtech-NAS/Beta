@@ -33,7 +33,7 @@
         {
             var scheduledMessageQueue = GetScheduledMessagesQueue(queuedScheduledMessages);
             _messageServiceMock.Setup(x => x.GetMessage()).Returns(scheduledMessageQueue.Dequeue);
-            var vacancyConsumer = new VacancySchedulerConsumer(_messageServiceMock.Object, _vacancySummaryProcessorMock.Object, _vacancyIndexerService.Object);
+            var vacancyConsumer = new VacancyEtlControlQueueConsumer(_messageServiceMock.Object, _vacancySummaryProcessorMock.Object, _vacancyIndexerService.Object);
             var task = vacancyConsumer.CheckScheduleQueue();
             task.Wait();
 

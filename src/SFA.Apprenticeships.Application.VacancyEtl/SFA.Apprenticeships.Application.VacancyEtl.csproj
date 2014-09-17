@@ -45,7 +45,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Entities\StorageQueueMessage.cs" />
     <Compile Include="Entities\VacancySummaryPage.cs" />
     <Compile Include="Entities\VacancySummaryPageComplete.cs" />
     <Compile Include="Entities\VacancySummaryUpdate.cs" />

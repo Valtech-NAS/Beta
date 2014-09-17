@@ -2,11 +2,10 @@
 {
     using System;
     using Domain.Entities.Applications;
-    using Entities;
 
     public interface IApplicationStatusProcessor
     {
-        void QueueApplicationStatuses(StorageQueueMessage scheduledQueueMessage);
+        void QueueApplicationStatuses();
 
         void ProcessApplicationStatuses(ApplicationStatusSummary applicationStatusSummary);
     }

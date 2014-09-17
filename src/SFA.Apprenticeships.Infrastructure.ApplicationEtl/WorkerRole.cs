@@ -13,7 +13,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
     public class WorkerRole : RoleEntryPoint
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private ApplicationSchedulerConsumer _applicationSchedulerConsumer;
+        private ApplicationEtlControlQueueConsumer _applicationEtlControlQueueConsumer;
 
         public override void Run()
         {
@@ -30,8 +30,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                 try
                 {
                     /* TODO: implement worker role
-                    var task = _applicationSchedulerConsumer.CheckScheduleQueue();
-                    task.Wait();
+                    _applicationSchedulerConsumer.CheckScheduleQueue().Wait();
                     */
                 }
                 catch (CommunicationException ce)
@@ -72,7 +71,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                 Logger.Debug("Rabbit subscriptions setup");
                 */
 
-                _applicationSchedulerConsumer = ObjectFactory.GetInstance<ApplicationSchedulerConsumer>();
+                _applicationEtlControlQueueConsumer = ObjectFactory.GetInstance<ApplicationEtlControlQueueConsumer>();
 
                 Logger.Debug("Application Etl Process setup complete");
 

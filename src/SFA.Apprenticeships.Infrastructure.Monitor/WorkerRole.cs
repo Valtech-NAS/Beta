@@ -25,7 +25,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     public class WorkerRole : RoleEntryPoint
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private MonitorSchedulerConsumer _monitorSchedulerConsumer;
+        private MonitorControlQueueConsumer _monitorControlQueueConsumer;
 
         public override void Run()
         {
@@ -41,8 +41,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
             {
                 try
                 {
-                    var task = _monitorSchedulerConsumer.CheckScheduleQueue();
-                    task.Wait();
+                    _monitorControlQueueConsumer.CheckScheduleQueue().Wait();
                 }
                 catch (CommunicationException ce)
                 {
@@ -85,7 +84,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
                 Logger.Debug("Monitor Process IoC initialized");
 
-                _monitorSchedulerConsumer = ObjectFactory.GetInstance<MonitorSchedulerConsumer>();
+                _monitorControlQueueConsumer = ObjectFactory.GetInstance<MonitorControlQueueConsumer>();
 
                 Logger.Debug("Monitor Process setup complete");
 

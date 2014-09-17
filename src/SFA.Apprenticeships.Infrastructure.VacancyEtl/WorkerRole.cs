@@ -22,7 +22,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     public class WorkerRole : RoleEntryPoint
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private VacancySchedulerConsumer _vacancySchedulerConsumer;
+        private VacancyEtlControlQueueConsumer _vacancyEtlControlQueueConsumer;
 
         public override void Run()
         {
@@ -38,8 +38,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
             {
                 try
                 {
-                    var task = _vacancySchedulerConsumer.CheckScheduleQueue();
-                    task.Wait();
+                    _vacancyEtlControlQueueConsumer.CheckScheduleQueue().Wait();
                 }
                 catch (CommunicationException ce)
                 {
@@ -79,7 +78,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(VacancySummaryConsumerAsync)), "VacancyEtl");
                 Logger.Debug("Rabbit subscriptions setup");
 
-                _vacancySchedulerConsumer = ObjectFactory.GetInstance<VacancySchedulerConsumer>();
+                _vacancyEtlControlQueueConsumer = ObjectFactory.GetInstance<VacancyEtlControlQueueConsumer>();
 
                 Logger.Debug("Vacancy Etl Process setup complete");
                 return true;

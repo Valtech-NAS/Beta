@@ -96,10 +96,9 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Consumers\ApplicationSchedulerConsumer.cs" />
+    <Compile Include="Consumers\ApplicationEtlControlQueueConsumer.cs" />
     <Compile Include="Consumers\ApplicationStatusSummaryConsumerAsync.cs" />
     <Compile Include="IoC\ApplicationEtlRegistry.cs" />
-    <Compile Include="Messaging\AzureScheduleQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />
   </ItemGroup>
@@ -121,6 +120,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.Common\SFA.Apprenticeships.Infrastructure.Azure.Common.csproj">
+      <Project>{4FE5E4BE-91DF-49C6-B6CD-9B69FCD0C0FE}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Azure.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

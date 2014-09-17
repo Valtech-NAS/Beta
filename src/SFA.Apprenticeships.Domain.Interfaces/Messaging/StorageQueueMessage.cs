@@ -1,10 +1,9 @@
-﻿namespace SFA.Apprenticeships.Application.ApplicationUpdate.Entities
+﻿namespace SFA.Apprenticeships.Domain.Interfaces.Messaging
 {
-    //todo: this is similar to the VacancyEtl.Entities.StorageQueueMessage - maybe refactor to a common type
     using System;
 
     [Serializable]
-    public sealed class StorageQueueMessage
+    public class StorageQueueMessage
     {
         public string MessageId { get; set; }
 

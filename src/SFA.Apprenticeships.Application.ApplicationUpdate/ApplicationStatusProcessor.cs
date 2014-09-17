@@ -6,7 +6,6 @@
     using Domain.Entities.Applications;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using Entities;
     using NLog;
     using Strategies;
 
@@ -33,12 +32,10 @@
             _messageBus = messageBus;
         }
 
-        public void QueueApplicationStatuses(StorageQueueMessage scheduledQueueMessage)
+        public void QueueApplicationStatuses()
         {
             // retrieve all status updates from legacy... then queue each one for subsequent processing
             var applicationStatusSummaries = _legacyApplicationStatusesProvider.GetAllApplicationStatuses().ToList();
-
-            _processControlQueue.DeleteMessage(scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
 
             Parallel.ForEach(
                 applicationStatusSummaries,

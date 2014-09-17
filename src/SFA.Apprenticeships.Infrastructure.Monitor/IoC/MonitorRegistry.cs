@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
 {
     using Consumers;
-    using Domain.Interfaces.Messaging;
-    using Messaging;
     using StructureMap.Configuration.DSL;
     using Tasks;
 
@@ -10,8 +8,7 @@
     {
         public MonitorRegistry()
         {
-            For<IProcessControlQueue<StorageQueueMessage>>().Use<AzureScheduleQueue>();
-            For<MonitorSchedulerConsumer>().Use<MonitorSchedulerConsumer>();
+            For<MonitorControlQueueConsumer>().Use<MonitorControlQueueConsumer>();
             For<IMonitorTasksRunner>().Use<MonitorTasksRunner>();
 
             For<IMonitorTasksRunner>().Use<MonitorTasksRunner>()
