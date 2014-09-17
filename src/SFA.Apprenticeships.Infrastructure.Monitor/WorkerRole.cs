@@ -33,7 +33,6 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
             if (!Initialise())
             {
-                Logger.Fatal("Monitor Process failed to initialise");
                 return;
             }
 
@@ -92,7 +91,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
             }
             catch (Exception ex)
             {
-                Logger.ErrorException("Monitor Process failed to initialise", ex);
+                Logger.FatalException("Monitor Process failed to initialise", ex);
                 return false;
             }
         }

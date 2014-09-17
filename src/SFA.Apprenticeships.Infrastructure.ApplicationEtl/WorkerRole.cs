@@ -21,7 +21,6 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
 
             if (!Initialise())
             {
-                Logger.Fatal("Application Etl Process failed to initialise");
                 return;
             }
 
@@ -79,7 +78,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
             }
             catch (Exception ex)
             {
-                Logger.ErrorException("Application Etl Process failed to initialise", ex);
+                Logger.FatalException("Application Etl Process failed to initialise", ex);
                 return false;
             }
         }

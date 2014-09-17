@@ -30,7 +30,6 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
             if (!Initialise())
             {
-                Logger.Fatal("Vacancy Etl Process failed to initialise");
                 return;
             }
 
@@ -85,7 +84,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
             }
             catch (Exception ex)
             {
-                Logger.ErrorException("Vacancy Etl Process failed to initialise", ex);
+                Logger.FatalException("Vacancy Etl Process failed to initialise", ex);
                 return false;
             }
         }
