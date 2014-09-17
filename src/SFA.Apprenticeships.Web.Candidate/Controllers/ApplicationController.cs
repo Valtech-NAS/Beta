@@ -8,6 +8,7 @@
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
+    using Common.Models.Application;
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
@@ -54,14 +55,14 @@
                 return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Apply", new {id});
+            return RedirectToAction("Apply", new { id });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Archive(int id)
         {
-           var applicationViewModel = _applicationProvider.ArchiveApplication(UserContext.CandidateId, id);
+            var applicationViewModel = _applicationProvider.ArchiveApplication(UserContext.CandidateId, id);
 
             if (applicationViewModel.HasError())
             {
@@ -80,7 +81,7 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Delete(int id)
         {
-           var applicationViewModel =  _applicationProvider.DeleteApplication(UserContext.CandidateId, id);
+            var applicationViewModel = _applicationProvider.DeleteApplication(UserContext.CandidateId, id);
 
             if (applicationViewModel.HasError())
             {
@@ -160,7 +161,7 @@
 
             _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
 
-            return RedirectToAction("Preview", new {id});
+            return RedirectToAction("Preview", new { id });
         }
 
         [HttpPost]
@@ -265,7 +266,7 @@
             ViewBag.VacancyId = id;
 
             return View(model);
-        }       
+        }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
@@ -277,22 +278,24 @@
             {
                 return new VacancyNotFoundResult();
             }
-            if (model.Status != ApplicationStatuses.Draft)
+
+            if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
             {
                 return RedirectToAction("Index");
             }
+            if (model.ViewModelStatus == ApplicationViewModelStatus.Error)
+            {
+                SetUserMessage(ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning);
+                return RedirectToAction("Preview", new { id });
+            }
 
-            if (!model.HasError())
-                return RedirectToAction("WhatHappensNext",
-                    new
-                    {
-                        id,
-                        vacancyReference = model.VacancyDetail.FullVacancyReferenceId,
-                        vacancyTitle = model.VacancyDetail.Title
-                    });
-            
-            SetUserMessage(ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning);
-            return RedirectToAction("Preview", new { id });
+            return RedirectToAction("WhatHappensNext",
+                new
+                {
+                    id,
+                    vacancyReference = model.VacancyDetail.FullVacancyReferenceId,
+                    vacancyTitle = model.VacancyDetail.Title
+                });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -346,8 +349,8 @@
             return workExperience.Where(vm =>
                 vm.Employer != null && !string.IsNullOrWhiteSpace(vm.Employer.Trim()) ||
                 vm.JobTitle != null && !string.IsNullOrWhiteSpace(vm.JobTitle.Trim()) ||
-                vm.Description != null && !string.IsNullOrWhiteSpace(vm.Description.Trim())||
-                vm.FromYear != null && !string.IsNullOrWhiteSpace(vm.FromYear.Trim())||
+                vm.Description != null && !string.IsNullOrWhiteSpace(vm.Description.Trim()) ||
+                vm.FromYear != null && !string.IsNullOrWhiteSpace(vm.FromYear.Trim()) ||
                 vm.ToYear != null && !string.IsNullOrWhiteSpace(vm.ToYear.Trim())
                 ).ToList();
         }
@@ -363,7 +366,7 @@
             return qualifications.Where(vm =>
                 vm.Subject != null && !string.IsNullOrWhiteSpace(vm.Subject.Trim()) ||
                 vm.QualificationType != null && !string.IsNullOrWhiteSpace(vm.QualificationType.Trim()) ||
-                vm.Grade != null && !string.IsNullOrWhiteSpace(vm.Grade.Trim())||
+                vm.Grade != null && !string.IsNullOrWhiteSpace(vm.Grade.Trim()) ||
                 vm.Year != null && !string.IsNullOrWhiteSpace(vm.Year.Trim())).ToList();
         }
 

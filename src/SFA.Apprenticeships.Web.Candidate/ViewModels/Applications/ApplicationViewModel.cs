@@ -5,6 +5,7 @@
     using System.Web.Mvc;
     using Candidate;
     using Common.Constants;
+    using Common.Models.Application;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using VacancySearch;
@@ -21,9 +22,18 @@
         public string WhiteListRegex = Whitelists.FreetextWhitelist.RegularExpression;
         public string FourDigitYearRegex = Whitelists.YearWhitelist.RegularExpression;
 
+        public ApplicationViewModel(string message, ApplicationViewModelStatus viewModelStatus) : base(message)
+        {
+            ViewModelStatus = viewModelStatus;
+        }
         public ApplicationViewModel(string message) : base(message)
         {
 
+        }
+
+        public ApplicationViewModel(ApplicationViewModelStatus viewModelStatus)
+        {
+            ViewModelStatus = viewModelStatus;
         }
 
         public ApplicationViewModel()
@@ -61,5 +71,7 @@
         public DateTime? DateUpdated { get; set; }
         public int VacancyId { get; set; }
         public bool IsJavascript  { get; set; }
+
+        public ApplicationViewModelStatus ViewModelStatus { get; set; }
     }
 }

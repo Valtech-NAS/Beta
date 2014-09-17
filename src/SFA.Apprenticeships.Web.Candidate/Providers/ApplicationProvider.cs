@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using Application.Interfaces.Candidates;
+    using Common.Models.Application;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
@@ -47,7 +48,8 @@
                 if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
                 {
                     Logger.InfoException(e.Message, e);
-                    return new ApplicationViewModel(MyApplicationsPageMessages.ApplicationInIncorrectState);
+                    return new ApplicationViewModel(MyApplicationsPageMessages.ApplicationInIncorrectState,
+                        ApplicationViewModelStatus.ApplicationInIncorrectState);
                 }
 
                 var message =
@@ -55,7 +57,7 @@
                         "Unhandled custom exception while getting the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
                 Logger.ErrorException(message, e);
-                return new ApplicationViewModel("Unhandled error");
+                return new ApplicationViewModel("Unhandled error", ApplicationViewModelStatus.Error);
             }
             catch (Exception e)
             {
@@ -64,7 +66,8 @@
 
                 Logger.ErrorException(message, e);
 
-                return new ApplicationViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
+                return new ApplicationViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed,
+                    ApplicationViewModelStatus.Error);
             }
         }
 
@@ -129,9 +132,11 @@
             Logger.Debug("Calling ApplicationProvider to submit the Application for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
+            var model = new ApplicationViewModel();
+
             try
             {
-                var model = GetApplicationViewModel(candidateId, vacancyId);
+                model = GetApplicationViewModel(candidateId, vacancyId);
 
                 if (model.HasError())
                 {
@@ -150,7 +155,10 @@
                 if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
                 {
                     Logger.InfoException(e.Message, e);
-                    return new ApplicationViewModel();
+                    return new ApplicationViewModel(ApplicationViewModelStatus.ApplicationInIncorrectState)
+                    {
+                        Status = model.Status
+                    };
                 }
 
                 var message =
@@ -321,7 +329,7 @@
         {
             var message = string.Format("{0} {1} failed for user {2}", failure, vacancyId, candidateId);
             Logger.ErrorException(message, e);
-            return new ApplicationViewModel(failMessage);
+            return new ApplicationViewModel(failMessage, ApplicationViewModelStatus.Error);
         }
 
         private ApplicationViewModel PatchWithVacancyDetail(Guid candidateId, int vacancyId, ApplicationViewModel applicationViewModel)
