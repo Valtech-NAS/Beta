@@ -29,15 +29,12 @@
 
         public void SendEmail(EmailRequest request)
         {
-            Logger.Debug("Sending email.");
             var message = ComposeMessage(request);
             DispatchMessage(message);
-            Logger.Debug("Email sent.");
         }
 
         private SendGridMessage ComposeMessage(EmailRequest request)
         {
-            Logger.Debug("Composing message.");
             var message = CreateMessage(request);
 
             AttachTemplate(request, message);
@@ -104,11 +101,9 @@
         {
             var enumType = messageType.GetType();
             var templateName = string.Format("{0}.{1}", enumType.Name, Enum.GetName(enumType, messageType));
-            Logger.Debug("EnumType={0} Name={1} TemplateName={2} MessageType={3}", enumType, enumType.Name, templateName,
-                messageType);
+            Logger.Debug("Determined email template: EnumType={0} Name={1} TemplateName={2} MessageType={3}", enumType, enumType.Name, templateName, messageType);
             return templateName;
         }
-
 
         private static string DefaultFromEmail(EmailRequest request, SendGridTemplateConfiguration template)
         {
