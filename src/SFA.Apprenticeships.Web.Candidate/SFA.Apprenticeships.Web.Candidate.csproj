@@ -239,7 +239,6 @@
     <Content Include="Content\_assets\js\nas\lookupService.js" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
     <Content Include="Content\_assets\js\nas\locationAutocomplete.js" />
-    <Content Include="Content\_assets\img\arrow-sprite-2x.png" />
     <Content Include="Content\_assets\js\vendor\jquery-1.11.1.js" />
     <Content Include="Content\_assets\js\vendor\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="Content\_assets\js\vendor\jquery.cookie.js" />
@@ -334,7 +333,6 @@
     <Content Include="Content\_assets\img\apple-touch-icon-144x144.png" />
     <Content Include="Content\_assets\img\apple-touch-icon-57x57.png" />
     <Content Include="Content\_assets\img\apple-touch-icon-72x72.png" />
-    <Content Include="Content\_assets\img\arrow-sprite.png" />
     <Content Include="Content\_assets\img\favicon.ico" />
     <Content Include="Content\_assets\img\gov.uk_logotype_crown.png" />
     <Content Include="Content\_assets\img\icon-pointer-2x.png" />

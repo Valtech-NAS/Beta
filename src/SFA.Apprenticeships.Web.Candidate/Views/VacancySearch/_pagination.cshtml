@@ -12,14 +12,14 @@
         <a href="@prevLink"
            style="visibility: @(Model.VacancySearch.PageNumber == 1 ? "hidden" : "visible")"
            class="page-navigation__btn previous">
-            <i class="arrow-button"></i>
+            <i class="arrow-button fa fa-angle-left"></i>
             <span class="description">Previous <span class="hide-mob">page</span></span>
             <span class="counter">@Model.PrevPage of @pages</span>
         </a>
         <a href="@nextLink"
            style="visibility: @(Model.VacancySearch.PageNumber == pages ? "hidden" : "visible")"
            class="page-navigation__btn next">
-            <i class="arrow-button"></i>
+            <i class="arrow-button fa fa-angle-right"></i>
             <span class="description">Next <span class="hide-mob">page</span></span>
             <span class="counter">@Model.NextPage of @pages</span>
         </a>
