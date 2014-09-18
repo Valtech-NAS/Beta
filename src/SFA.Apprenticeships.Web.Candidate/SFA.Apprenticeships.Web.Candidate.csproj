@@ -233,8 +233,6 @@
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\_assets\img\av-screenshot.png" />
-    <Content Include="Content\_assets\img\icon-remove-2x.png" />
-    <Content Include="Content\_assets\img\icon-remove.png" />
     <Content Include="Content\_assets\js\nas\applicationform.js" />
     <Content Include="Content\_assets\js\nas\lookupService.js" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
