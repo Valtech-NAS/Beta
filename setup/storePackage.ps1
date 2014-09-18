@@ -9,15 +9,14 @@ param(
 )
 
 $srcPath = "src\$projectName\bin\$buildConfiguration\app.publish"
-$version = (Get-Content src\version.txt) + $buildNumber
+$version = (Get-Content Beta\src\version.txt -ErrorAction Stop) + $buildNumber
 
 Write-Output "Storing package at: $srcPath for version: $version"
 
 Write-Output "Running Azure Imports"
-Import-Module "C:\Program Files (x86)\Microsoft SDKs\Windows Azure\PowerShell\ServiceManagement\Azure\*.psd1"
+#Import-Module "C:\Program Files (x86)\Microsoft SDKs\Windows Azure\PowerShell\ServiceManagement\Azure\*.psd1"
 Import-AzurePublishSettingsFile "G:\Azure\Pre-Production-9-12-2014-credentials.publishsettings"
 Set-AzureSubscription -CurrentStorageAccount $storageName -SubscriptionName $subscriptionName
-
 Write-Host "Files will be uploaded to $storageAccountName\$storage$storageContainer"
 $context = New-AzureStorageContext -StorageAccountName $storageName -StorageAccountKey $storageKey
 
