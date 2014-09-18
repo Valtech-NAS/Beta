@@ -21,7 +21,7 @@
             setClickEvent(settings.classToExclude);
         },
         setBeforeUnloadEvent = function(formSelector, classToExclude, confirmationMessage) {
-            window.addEventListener("beforeunload", function(e) {
+            $(window).on('beforeunload', function (e){
                 if (!hasToShowMessage || linkClicked || $(e.target.activeElement).hasClass(classToExclude)) {
                     return;
                 } else {
