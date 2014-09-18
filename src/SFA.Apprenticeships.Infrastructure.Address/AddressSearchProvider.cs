@@ -56,16 +56,22 @@
 
         private static void SanitiseAddresses(IEnumerable<Address> addresses)
         {
+            foreach (var address in addresses)
+            {
+                address.AddressLine1 = SanitiseAddressLine(address.AddressLine1);
+                address.AddressLine2 = SanitiseAddressLine(address.AddressLine2);
+                address.AddressLine3 = SanitiseAddressLine(address.AddressLine3);
+                address.AddressLine4 = SanitiseAddressLine(address.AddressLine4);
+            }
+        }
+
+        private static string SanitiseAddressLine(string addressLine)
+        {
             const string ampersand = "&";
             const string and = "and";
 
-            foreach (var address in addresses)
-            {
-                address.AddressLine1 = address.AddressLine1.Replace(ampersand, and);
-                address.AddressLine2 = address.AddressLine2.Replace(ampersand, and);
-                address.AddressLine3 = address.AddressLine3.Replace(ampersand, and);
-                address.AddressLine4 = address.AddressLine4.Replace(ampersand, and);
-            }
+            return string.IsNullOrWhiteSpace(addressLine) ? addressLine 
+                : addressLine.Replace(ampersand, and);
         }
 
         private static bool ThereWasAnErrorWhileSearching(Nest.ISearchResponse<Elastic.Common.Entities.Address> search)
