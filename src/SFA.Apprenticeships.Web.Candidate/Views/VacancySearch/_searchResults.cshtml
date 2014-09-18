@@ -30,10 +30,6 @@
                 <p class="search-shortdesc">@vacancy.Description</p>
                 <p>@Html.ActionLink("Read more", "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString })</p>
                 <ul class="list-text">
-                    @if (!string.IsNullOrWhiteSpace(Model.VacancySearch.Keywords) && vacancy.Score != 0)
-                    {
-                        <li><b>Match Score:</b> <span class="best-match-score">@vacancy.Score</span></li>
-                    }
 
                     @if (vacancy.VacancyLocationType == VacancyLocationType.Local)
                     {

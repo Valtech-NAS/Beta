@@ -144,6 +144,7 @@
     <Compile Include="IoC\StructureMapDependencyResolver.cs" />
     <Compile Include="IoC\StructureMapDependencyScope.cs" />
     <Compile Include="IoC\WebCommonRegistry.cs" />
+    <Compile Include="Models\Application\ApplicationViewModelStatus.cs" />
     <Compile Include="Models\Common\ReferenceDataTypes.cs" />
     <Compile Include="Models\Common\ReferenceDataViewModel.cs" />
     <Compile Include="Models\Common\VacancyLocationType.cs" />
