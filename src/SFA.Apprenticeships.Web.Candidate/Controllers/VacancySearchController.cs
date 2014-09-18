@@ -112,6 +112,8 @@
                 {
                     var location = suggestedLocations.Locations.First();
 
+                    ModelState.Clear();
+
                     model.Location = location.Name;
                     model.Latitude = location.Latitude;
                     model.Longitude = location.Longitude;
