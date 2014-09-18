@@ -16,8 +16,8 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="format-detection" content="date=no">
         <meta name="format-detection" content="address=no">
-        <!--[if gt IE 8]><!-->@Styles.Render("~/Content/_assets/css/main.css?=Sprint18")<!--<![endif]-->
-        <!--[if lte IE 8]>@Styles.Render("~/Content/_assets/css/main-ie8.css?=Sprint18")<![endif]-->
+        <!--[if gt IE 8]><!-->@Styles.Render("~/Content/_assets/css/main.css?=Sprint19")<!--<![endif]-->
+        <!--[if lte IE 8]>@Styles.Render("~/Content/_assets/css/main-ie8.css?=Sprint19")<![endif]-->
         <!--[if lte IE 8]>@Styles.Render("~/Content/_assets/css/fonts-ie8.css")<![endif]-->
         <!--[if gte IE 9]><!-->@Styles.Render("~/Content/_assets/css/fonts.css")<!--<![endif]-->
         <link rel="shortcut icon" href="@Url.Content("~/Content/_assets/img/favicon.ico")" type="image/x-icon">
@@ -64,7 +64,7 @@
         <div class="content-container">
             <div class="phase-notice gov-border">
                 <div class="prototype-warning">
-                    <strong class="beta__label">Beta</strong> <span>This is a new service – your <a href="@(ViewBag.FeedbackUrl)" target="_blank">feedback</a> will help to improve it.</span>
+                    <strong class="beta__label">Beta</strong> <span>This is a new service – your <a rel="external" href="@(ViewBag.FeedbackUrl)" target="_blank">feedback</a> will help to improve it.</span>
                 </div>
                 @Html.Partial("_LoginPartial")
             </div>
