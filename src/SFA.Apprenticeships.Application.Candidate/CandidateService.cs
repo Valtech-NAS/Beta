@@ -20,7 +20,6 @@
         private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly IAuthenticateCandidateStrategy _authenticateCandidateStrategy;
         private readonly ICandidateReadRepository _candidateReadRepository;
-        private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly ICreateApplicationStrategy _createApplicationStrategy;
         private readonly IGetCandidateApplicationsStrategy _getCandidateApplicationsStrategy;
         private readonly IRegisterCandidateStrategy _registerCandidateStrategy;
@@ -30,10 +29,10 @@
         private readonly ISubmitApplicationStrategy _submitApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IDeleteApplicationStrategy _deleteApplicationStrategy;
+        private readonly ISaveCandidateStrategy _saveCandidateStrategy;
 
         public CandidateService(
             ICandidateReadRepository candidateReadRepository,
-            ICandidateWriteRepository candidateWriteRepository,
             IApplicationReadRepository applicationReadRepository,
             IActivateCandidateStrategy activateCandidateStrategy,
             IAuthenticateCandidateStrategy authenticateCandidateStrategy,
@@ -45,10 +44,10 @@
             IUnlockAccountStrategy unlockAccountStrategy,
             ISaveApplicationStrategy saveApplicationStrategy,
             IArchiveApplicationStrategy archiveApplicationStrategy, 
-            IDeleteApplicationStrategy deleteApplicationStrategy)
+            IDeleteApplicationStrategy deleteApplicationStrategy, 
+            ISaveCandidateStrategy saveCandidateStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
-            _candidateWriteRepository = candidateWriteRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
             _authenticateCandidateStrategy = authenticateCandidateStrategy;
             _submitApplicationStrategy = submitApplicationStrategy;
@@ -61,6 +60,7 @@
             _saveApplicationStrategy = saveApplicationStrategy;
             _archiveApplicationStrategy = archiveApplicationStrategy;
             _deleteApplicationStrategy = deleteApplicationStrategy;
+            _saveCandidateStrategy = saveCandidateStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -131,7 +131,7 @@
 
             Logger.Debug("Calling CandidateService to save a candidate.");
 
-            return _candidateWriteRepository.Save(candidate);
+            return _saveCandidateStrategy.SaveCandidate(candidate);
         }
 
         public void UnlockAccount(string username, string accountUnlockCode)

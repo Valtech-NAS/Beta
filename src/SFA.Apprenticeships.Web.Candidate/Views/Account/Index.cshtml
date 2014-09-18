@@ -15,9 +15,6 @@
     </div>
 </div>
 
-<div class="panel-indent">
-    <p class="text">Any changes will only be seen on new applications. If you have any draft applications, these will continue to show your old details.</p>
-</div>
 @using (Html.BeginForm("Index", "Account", FormMethod.Post))
 {
     @Html.Partial("ValidationSummary", ViewData.ModelState)
