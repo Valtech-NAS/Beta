@@ -10,16 +10,20 @@ param(
 $srcPath = "src\$projectName\bin\$buildConfiguration\app.publish"
 $version = (Get-Content src\version.txt) + $buildNumber
 
+Write-Output "Storing package at: $srcPath for version: $version"
+
 Write-Output "Running Azure Imports"
 Import-Module "C:\Program Files (x86)\Microsoft SDKs\Windows Azure\PowerShell\ServiceManagement\Azure\*.psd1"
-#Import-AzurePublishSettingsFile "C:\TeamCity\Visual Studio Ultimate with MSDN-6-13-2014-credentials.publishsettings"
+Import-AzurePublishSettingsFile "G:\Azure\Pre-Production-9-12-2014-credentials.publishsettings"
 
-Write-Host "Files will be uploaded to $storageAccountName\$storage"
+Write-Host "Files will be uploaded to $storageAccountName\$storage$storageContainer"
 $context = New-AzureStorageContext -StorageAccountName $storageName -StorageAccountKey $storageKey
 
-Write-Host "Writing files" 
+Write-Host "Copying files to Azure Storage" 
 #$fqName = "$srcPath\ServiceConfiguration.Cloud.cscfg"
 #Set-AzureStorageBlobContent -Blob "$storeageFolder\$buildnumber\ServiceConfiguration.Cloud.cscfg" -Container "$storage" -File "$fqName" -Context $context -Force
 
 $fqName = "$srcPath\$projectName.cspkg"
+Write-Host "Copying file: $fqName to $storageContainer\$projectName-$version.cspkg"
 Set-AzureStorageBlobContent -Blob "$storageContainer\$projectName-$version.cspkg" -Container $storageName -File $fqName -Context $context -Force
+Write-Host "Copyied file: $fqName to $storageContainer\$projectName-$version.cspkg"
