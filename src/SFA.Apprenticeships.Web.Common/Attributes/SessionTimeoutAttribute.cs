@@ -14,7 +14,7 @@
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            var controller = filterContext.Controller as IUserContoller;
+            var controller = filterContext.Controller as IUserController;
             if (controller == null)
             {
                 var message = string.Format("Controller {0} must inherit from IUserController",

@@ -7,7 +7,7 @@
     using Services;
 
     [AuthenticateUser]
-    public abstract class ControllerBase<TContextType> : Controller, IUserContoller<TContextType> where TContextType : UserContext
+    public abstract class ControllerBase<TContextType> : Controller, IUserController<TContextType> where TContextType : UserContext
     {
         public TContextType UserContext { get; protected set; }
 

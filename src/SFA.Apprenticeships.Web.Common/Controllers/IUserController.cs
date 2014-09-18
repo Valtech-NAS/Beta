@@ -3,12 +3,12 @@
     using Providers;
     using Services;
 
-    public interface IUserContoller<out TContextType> : IUserContoller where TContextType : UserContext
+    public interface IUserController<out TContextType> : IUserController where TContextType : UserContext
     {
         TContextType UserContext { get; }
     }
 
-    public interface IUserContoller 
+    public interface IUserController 
     {
         IUserDataProvider UserData { get; }
 
