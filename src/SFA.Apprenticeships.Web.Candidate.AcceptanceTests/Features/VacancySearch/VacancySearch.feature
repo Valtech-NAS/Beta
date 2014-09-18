@@ -57,9 +57,9 @@ Scenario: Find apprenticeships and test ordering with keywords
 	And I choose Search
 	And I am on the VacancySearchResultPage page
 	Then I see
-        | Field                           | Rule   | Value |
-        | SearchResultItemsCount          | Equals | 5     |
-        | ResultsAreInBestMatchScoreOrder | Equals | True  |
+        | Field                  | Rule   | Value |
+        | SearchResultItemsCount | Equals | 5     |
+        #| ResultsAreInBestMatchScoreOrder | Equals | True  |
         #| ResultsAreInDistanceOrder       | Equals | False |
         #| ResultsAreInClosingDateOrder    | Equals | False |
 	And I enter data
