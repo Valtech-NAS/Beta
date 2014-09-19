@@ -76,6 +76,7 @@
     </Compile>
     <Compile Include="Consumers\MonitorControlQueueConsumer.cs" />
     <Compile Include="Tasks\CheckActiveDirectory.cs" />
+    <Compile Include="Tasks\CheckNasGateway.cs" />
     <Compile Include="Tasks\CheckPostcodeService.cs" />
     <Compile Include="Tasks\CheckApplicationRepository.cs" />
     <Compile Include="Tasks\CheckCandidateRepository.cs" />

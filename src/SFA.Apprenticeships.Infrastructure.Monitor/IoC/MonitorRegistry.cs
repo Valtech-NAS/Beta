@@ -24,6 +24,7 @@
                     x.Type<CheckPostcodeService>();
                     x.Type<CheckActiveDirectory>();
                     x.Type<CheckRabbitMessageQueue>();
+                    x.Type<CheckNasGateway>();
                 });
         }
     }

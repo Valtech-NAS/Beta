@@ -8,7 +8,6 @@
     public class CheckRabbitMessageQueue : IMonitorTask
     {
         private const string MonitorAppSetting = "Monitor.Rabbit";
-        private const string TaskName = "Check Rabbit MessageQueue";
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly string _connectionString;
         private IBus _rabbitBus;
@@ -18,10 +17,13 @@
             _connectionString = configurationManager.GetAppSetting(MonitorAppSetting);
         }
 
+        public string TaskName
+        {
+            get { return "Check rabbit message queue"; }
+        }
+
         public void Run()
         {
-            Logger.Debug(string.Format("Start running task {0}", TaskName));
-
             _rabbitBus = RabbitHutch.CreateBus(_connectionString);
 
             try
@@ -41,11 +43,10 @@
             finally
             {
                 _rabbitBus.Dispose();
-                Logger.Debug(string.Format("Finished running task {0}", TaskName));
             }
         }
 
-        private void LogError(Exception exception)
+        private static void LogError(Exception exception)
         {
             Logger.ErrorException("Error while connecting to Rabbit queue", exception);
         }
