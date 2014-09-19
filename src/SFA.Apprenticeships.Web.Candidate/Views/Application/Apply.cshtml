@@ -86,7 +86,7 @@
             whitelistregex =  @Html.Raw(Json.Encode(Model.WhiteListRegex));
             yearRegex =  @Html.Raw(Json.Encode(Model.FourDigitYearRegex));           
 
-            window.addEventListener("load", function() {
+            $(window).on('load', function (){
                 dirtyFormDialog.initialise({
                     formSelector: "form",
                     classToExclude: "no-check-for-dirty-form",

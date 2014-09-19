@@ -57,6 +57,7 @@
             For<Application.Communication.Strategies.ISendAccountUnlockCodeStrategy>().Use<QueueEmailOnlyAccountUnlockCodeStrategy>();
             For<IResendActivationCodeStrategy>().Use<ResendActivationCodeStrategy>();
             For<Application.UserAccount.Strategies.ISendAccountUnlockCodeStrategy>().Use<SendAccountUnlockCodeStrategy>();
+            For<ISaveCandidateStrategy>().Use<SaveCandidateStrategy>();
 
             For<IUnlockAccountStrategy>()
                 .Use<UnlockAccountStrategy>()

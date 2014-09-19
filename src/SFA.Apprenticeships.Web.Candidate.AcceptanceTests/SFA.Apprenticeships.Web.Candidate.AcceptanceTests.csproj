@@ -107,6 +107,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AccountSettings.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Account\UpdatinPersonalDetailsWillUpdateDraftApplications.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UpdatinPersonalDetailsWillUpdateDraftApplications.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Application\Apply.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -212,6 +217,10 @@
     <None Include="Features\Account\AccountSettings.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>AccountSettings.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Account\UpdatinPersonalDetailsWillUpdateDraftApplications.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>UpdatinPersonalDetailsWillUpdateDraftApplications.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Application\Apply.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

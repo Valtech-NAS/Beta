@@ -18,8 +18,18 @@ if(!(Test-Path -Path "c:\Projects\SFA\Apprenticeships\Configuration" )){
     New-Item -ItemType directory -Path "C:\Projects\SFA\Apprenticeships\Configuration"
 }
 
+Write-Output "Removing old config items"
+
 Remove-Item C:\Projects\SFA\Apprenticeships\Configuration\* -recurse
 
-Write-Host "$checkoutRoot\Apprenticeships\Configuration\**"
+Write-Output "$checkoutRoot\Apprenticeships\Configuration\**"
 
-Copy-Item "$checkoutRoot\Configuration\**" "C:\Projects\SFA\Apprenticeships\Configuration" -recurse
+if((Test-Path -Path "$checkoutRoot\Configuration")){
+	Write-Output "Copying config on old build server set up"
+	Copy-Item "$checkoutRoot\Configuration\**" "C:\Projects\SFA\Apprenticeships\Configuration" -recurse
+}
+
+if((Test-Path -Path "$checkoutRoot\Apprenticeships\Configuration" )){
+	Write-Output "Copying config on new build server set up"
+	Copy-Item "$checkoutRoot\Apprenticeships\Configuration\**" "C:\Projects\SFA\Apprenticeships\Configuration" -recurse
+}

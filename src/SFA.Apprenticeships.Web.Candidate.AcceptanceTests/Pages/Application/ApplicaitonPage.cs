@@ -42,6 +42,9 @@
         [ElementLocator(Id = "Fullname")]
         public IWebElement Fullname { get; set; }
 
+        [ElementLocator(Id = "candidate-fullname")]
+        public IWebElement FullnameReadOnly { get; set; }
+
         [ElementLocator(Id = "EmailAddress")]
         public IWebElement EmailAddress { get; set; }
 
