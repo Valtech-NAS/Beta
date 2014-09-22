@@ -83,7 +83,8 @@
                 Longitude = 0d,
                 Latitude = 0d,
                 PageNumber = 1,
-                WithinDistance = 2
+                WithinDistance = 2,
+                ResultsPerPage = pageSize
             };
 
             var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object, _addressSearchService.Object, _mapper);

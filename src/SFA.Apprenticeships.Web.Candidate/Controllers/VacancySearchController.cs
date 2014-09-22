@@ -161,7 +161,6 @@
                 return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
             }
 
-            // var results = _searchProvider.FindVacancies(model, _vacancyResultsPerPage);
             var results = _searchProvider.FindVacancies(model);
 
             if (results.HasError())
