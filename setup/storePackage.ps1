@@ -28,7 +28,7 @@ Write-Host "Copying files to Azure Storage"
 
 $fqName = "$srcPath\$projectName.cspkg"
 Write-Host "Copying file: $fqName to $storageContainerName\$projectName-$version.cspkg"
-Set-AzureStorageBlobContent -Blob "$storageContainerName\$projectName-$version.cspkg" -Container $storageName -File $fqName -Context $context -Force
+Set-AzureStorageBlobContent -Blob "$storageContainerName\$projectName-$version.cspkg" -Container $storageContainerName -File $fqName -Context $context -Force
 Write-Host "Copied file: $fqName to $storageContainerName\$projectName-$version.cspkg"
 
 Return $error.Count
