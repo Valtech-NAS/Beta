@@ -53,7 +53,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in group)
+                @foreach (QualificationsViewModel item in group)
                 {
                     <tr>
                         <td>
@@ -89,7 +89,7 @@
         <p id="no-work-experience">I don't have any work experience</p>
     }
 
-    @foreach (var experience in Model.Candidate.WorkExperience)
+    @foreach (WorkExperienceViewModel experience in Model.Candidate.WorkExperience)
     {
         <div class="grid-3-4">
             <div class="grid-wrapper work-history-item">
@@ -175,9 +175,10 @@
         <li>checked the apprenticeship location</li>
     </ul>
 </div>
-<div class="form-group">
-    @Html.ActionLink("Submit application", "SubmitApplication", new {id = Model.VacancyId}, new {@class = "button", id = "submit-application"})
-</div>
+@*<div class="form-group">*@
+@*@Html.ActionLink("Submit application", "SubmitApplication", new {id = Model.VacancyId}, new {@class = "button", id = "submit-application"})*@
+<a id="submit-application" href="@Url.Action("SubmitApplication", new {id = Model.VacancyId})">Submit application</a>
+@*</div>*@
 
 @section scripts{
     
@@ -196,12 +197,23 @@
             return month;
         }
 
-        $('#submit-application').on('click', function () {
-            if ($(this).attr('disabled') != undefined) {
-                event.preventDefault();
-            } else {
-                $(this).attr("disabled", "disabled");
-            }
+        $(function() {
+            $('#submit-application').on('click', function() {
+
+                if ($('#submit-application').attr('data-disabled') != undefined) {
+                    if (event.preventDefault) {
+                        event.preventDefault();
+                    }
+
+                    $('#submit-application').attr("disabled", "disabled");
+                    return false;
+
+                } else {
+                    $('#submit-application').attr("data-disabled", "disabled");
+                }
+            });
         });
+
+
     </script>
 }

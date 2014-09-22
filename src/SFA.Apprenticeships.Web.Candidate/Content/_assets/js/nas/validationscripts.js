@@ -116,21 +116,21 @@ $(document).ready(function () {
         });
     }
 
-    $('button, input[type="submit"], a.button').not('#qualifications-panel .button, #workexperience-panel .button').on('click', function () {
-        var $this     = $(this),
-            $thisText = $this.text();
+    //$('button, input[type="submit"], a.button').not('#qualifications-panel .button, #workexperience-panel .button').on('click', function () {
+    //    var $this     = $(this),
+    //        $thisText = $this.text();
 
-        if ($this.is('#save-button')) {
-            $this.text('Saving').addClass('disabled');
-        } else {
-            $this.text('Loading').addClass('disabled');
-        }
+    //    if ($this.is('#save-button')) {
+    //        $this.text('Saving').addClass('disabled');
+    //    } else {
+    //        $this.text('Loading').addClass('disabled');
+    //    }
 
-        setTimeout(function () {
-            if($('.form-group.input-validation-error').length > 0) {
-                $this.text($thisText).removeClass('disabled');
-            }
-            $this.attr('disabled');
-        }, 50);
-    });
+    //    setTimeout(function () {
+    //        if($('.form-group.input-validation-error').length > 0) {
+    //            $this.text($thisText).removeClass('disabled');
+    //        }
+    //        $this.attr('disabled');
+    //    }, 50);
+    //});
 });
