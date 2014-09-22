@@ -40,7 +40,7 @@
                                                     @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].JobTitle")
                                                 </div>
 
-                                                <div></div>
+                                                <div class="clearfix"></div>
                                                 <span class="cell-span">Main Duties</span>
                                                 @Html.TextAreaFor(m => Model.Candidate.WorkExperience.ToList()[i].Description, new { @id = "candidate_workexperience_" + i + "__description", Name = "Candidate.WorkExperience[" + i + "].Description", @class = "form-control", @rows = 3 })
 
