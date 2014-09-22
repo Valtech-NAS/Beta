@@ -8,7 +8,7 @@ param(
 	[string]$buildNumber
 )
 
-$srcPath = "src\$projectName\bin\$buildConfiguration\app.publish"
+$srcPath = "Beta\src\$projectName\bin\$buildConfiguration\app.publish"
 $version = (Get-Content Beta\src\version.txt -ErrorAction Stop) + $buildNumber
 
 Write-Output "Storing package at: $srcPath for version: $version"
