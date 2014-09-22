@@ -46,8 +46,11 @@
             PopulateSortType();
 
 // ReSharper disable once RedundantAssignment
-            int resultsPerPage = _vacancyResultsPerPage;
-            int.TryParse(UserData.Get(UserDataItemNames.ResultsPerPage), out resultsPerPage);
+            int resultsPerPage = 0;
+            if (!int.TryParse(UserData.Get(UserDataItemNames.ResultsPerPage), out resultsPerPage))
+            {
+                resultsPerPage = _vacancyResultsPerPage;
+            }
             
             return
                 View(new VacancySearchViewModel
@@ -256,7 +259,7 @@
                     new{ResultsPerPage = 5, Name = "5 Results"},
                     new{ResultsPerPage = 10, Name = "10 Results"},
                     new{ResultsPerPage = 25, Name = "25 Results"},
-                    new{ResultsPerPage = -1, Name = "All Results"}
+                    new{ResultsPerPage = 50, Name = "50 Results"}
                 },
                 "ResultsPerPage",
                 "Name",

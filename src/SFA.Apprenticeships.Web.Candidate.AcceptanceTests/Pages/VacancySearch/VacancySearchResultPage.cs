@@ -38,6 +38,9 @@
         [ElementLocator(Id = "sort-results")]
         public IWebElement SortOrderingDropDown { get; set; }
 
+        [ElementLocator(Id = "results-per-page")]
+        public IWebElement ResultsPerPageDropDown { get; set; }
+
         [ElementLocator(Class = "search-results")]
         public IWebElement SearchResults { get; set; }
 

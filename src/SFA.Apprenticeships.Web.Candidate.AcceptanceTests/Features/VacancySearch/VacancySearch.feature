@@ -152,3 +152,37 @@ Scenario: Search locaton autocomplete appears on both initial search page and se
 		 | Field    | Value  |
 		 | Location | London |
 	Then I wait for 5 seconds to see LocationAutoComplete
+
+@US517
+Scenario: Different results per page
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value    |
+		 | Location       | London   |
+		 | WithInDistance | 40 miles |
+	And I choose Search
+	Then I am on the VacancySearchResultPage page
+	And I see
+        | Field                  | Rule   | Value |
+        | SearchResultItemsCount | Equals | 5     |
+	When I enter data
+		| Field                  | Value      |
+		| ResultsPerPageDropDown | 10 Results |
+	Then I am on the VacancySearchResultPage page
+	And I see
+        | Field                  | Rule   | Value |
+        | SearchResultItemsCount | Equals | 10    |
+	When I enter data
+		| Field                  | Value      |
+		| ResultsPerPageDropDown | 25 Results |
+	Then I am on the VacancySearchResultPage page
+	And I see
+        | Field                  | Rule   | Value |
+        | SearchResultItemsCount | Equals | 25    |
+	When I enter data
+		| Field                  | Value      |
+		| ResultsPerPageDropDown | 50 Results |
+	Then I am on the VacancySearchResultPage page
+	And I see
+        | Field                  | Rule   | Value |
+        | SearchResultItemsCount | Equals | 50    |

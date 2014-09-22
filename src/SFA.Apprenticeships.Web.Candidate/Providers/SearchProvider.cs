@@ -20,9 +20,6 @@
 
     public class SearchProvider : ISearchProvider
     {
-        private const int AllDocuments = 5000;
-        private const int SearchAll = -1;
-
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IAddressSearchService _addressSearchService;
         private readonly ILocationSearchService _locationSearchService;
@@ -93,11 +90,6 @@
 
             try
             {
-                if (search.ResultsPerPage == SearchAll)
-                {
-                    search.ResultsPerPage = AllDocuments;
-                }
-
                 SearchResults<VacancySummaryResponse> searchResponse = _vacancySearchService.Search(search.Keywords,
                     searchLocation, search.PageNumber,
                     search.ResultsPerPage, search.WithinDistance, search.SortType);
