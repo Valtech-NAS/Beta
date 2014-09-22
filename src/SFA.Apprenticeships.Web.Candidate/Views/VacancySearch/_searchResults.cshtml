@@ -54,7 +54,7 @@
 @*TODO: needs Henry work -> put in partial view?*@
 
 <div class="form-group">
-    <label for="results-per-page" class="heading-medium inline">Results per page</label>
+    <label for="results-per-page" class="heading-small inline">Display results</label>
     @Html.DropDownList("resultsPerPage", (SelectList)ViewBag.ResultsPerPage, new { @id = "results-per-page" })
     <noscript>
         <button class="button show-nojs" name="ChangeResultsPerPageAction" value="ResultsPerPage">View</button>

@@ -7,7 +7,7 @@
         <legend class="heading-large">Work experience</legend>       
 
         <div class="clearfix">
-            <div class="grid-3-4">
+            <div>
                 @for (var i = 0; i < Model.Candidate.WorkExperience.Count() + Model.DefaultWorkExperienceRows; i++)
                 {
                     if (i < Model.Candidate.WorkExperience.Count())
@@ -196,9 +196,9 @@
                     }
                 }                              
 
-                <div>
+                <div class="form-group">
 
-                    <button id="add-workexperience-rows-button" class="button" type="submit" name="ApplicationAction:AddEmptyWorkExperienceRows">Add More Work Experience Rows</button>
+                    <button id="add-workexperience-rows-button" class="button" type="submit" name="ApplicationAction:AddEmptyWorkExperienceRows">Add 1 more work experience</button>
 
                 </div>
             </div>

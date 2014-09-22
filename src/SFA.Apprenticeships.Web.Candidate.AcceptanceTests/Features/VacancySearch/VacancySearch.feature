@@ -167,21 +167,21 @@ Scenario: Different results per page
         | SearchResultItemsCount | Equals | 5     |
 	When I enter data
 		| Field                  | Value      |
-		| ResultsPerPageDropDown | 10 Results |
+		| ResultsPerPageDropDown | 10 per page |
 	Then I am on the VacancySearchResultPage page
 	And I see
         | Field                  | Rule   | Value |
         | SearchResultItemsCount | Equals | 10    |
 	When I enter data
 		| Field                  | Value      |
-		| ResultsPerPageDropDown | 25 Results |
+		| ResultsPerPageDropDown | 25 per page |
 	Then I am on the VacancySearchResultPage page
 	And I see
         | Field                  | Rule   | Value |
         | SearchResultItemsCount | Equals | 25    |
 	When I enter data
 		| Field                  | Value      |
-		| ResultsPerPageDropDown | 50 Results |
+		| ResultsPerPageDropDown | 50 per page |
 	Then I am on the VacancySearchResultPage page
 	And I see
         | Field                  | Rule   | Value |
