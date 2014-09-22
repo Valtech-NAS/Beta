@@ -20,6 +20,9 @@
 
     public class SearchProvider : ISearchProvider
     {
+        private const int AllDocuments = 5000;
+        private const int SearchAll = -1;
+
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IAddressSearchService _addressSearchService;
         private readonly ILocationSearchService _locationSearchService;
@@ -82,7 +85,7 @@
             }
         }
 
-        public VacancySearchResponseViewModel FindVacancies(VacancySearchViewModel search, int pageSize)
+        public VacancySearchResponseViewModel FindVacancies(VacancySearchViewModel search)
         {
             Logger.Debug("Calling SearchProvider to find vacancies.");
 
@@ -90,9 +93,14 @@
 
             try
             {
+                if (search.ResultsPerPage == SearchAll)
+                {
+                    search.ResultsPerPage = AllDocuments;
+                }
+
                 SearchResults<VacancySummaryResponse> searchResponse = _vacancySearchService.Search(search.Keywords,
                     searchLocation, search.PageNumber,
-                    pageSize, search.WithinDistance, search.SortType);
+                    search.ResultsPerPage, search.WithinDistance, search.SortType);
 
                 VacancySearchResponseViewModel vacancySearchResponseViewModel =
                     _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(searchResponse);
@@ -112,7 +120,7 @@
                 vacancySearchResponseViewModel.TotalLocalHits = searchResponse.Total;
                 vacancySearchResponseViewModel.TotalNationalHits = searchResponse.Total;
 
-                vacancySearchResponseViewModel.PageSize = pageSize;
+                vacancySearchResponseViewModel.PageSize = search.ResultsPerPage;
                 vacancySearchResponseViewModel.VacancySearch = search;
 
                 return vacancySearchResponseViewModel;

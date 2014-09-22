@@ -28,7 +28,7 @@
             Condition.Requires(location, "location").IsNotNull();
             Condition.Requires(searchRadius, "searchRadius").IsGreaterOrEqual(0);
             Condition.Requires(pageNumber, "pageNumber").IsGreaterOrEqual(1);
-            Condition.Requires(pageSize, "pageSize").IsGreaterOrEqual(1);
+            // Condition.Requires(pageSize, "pageSize").IsGreaterOrEqual(1);
 
             var enterMmessage =
                 string.Format("Calling VacancySearchService to search for a vacancy. Keywords:{0}, Location:{1}," +

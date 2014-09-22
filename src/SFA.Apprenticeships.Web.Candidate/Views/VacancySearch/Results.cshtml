@@ -75,7 +75,7 @@
     </div>
 
     @using (Html.BeginForm("results", "vacancysearch", FormMethod.Get))
-    {
+    {   
         Html.Partial("ValidationSummary", ViewData.ModelState);
         Html.RenderPartial("_searchUpdate", Model.VacancySearch);
         @(Model.VacancySearch.SearchAction == SearchAction.Search ? Html.Hidden("LocationType", "Local") : Html.Hidden("LocationType", Model.VacancySearch.LocationType))
@@ -121,6 +121,11 @@
                 $('#SearchAction').val("Sort");
                 $("form").submit();
             });
+
+            $('#results-per-page').change(function () {
+                $("form").submit();
+            });
+           
         });
 
     </script>

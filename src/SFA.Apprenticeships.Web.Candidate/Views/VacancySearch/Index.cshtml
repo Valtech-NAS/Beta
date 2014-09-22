@@ -33,6 +33,7 @@
                 @Html.HiddenFor(m => m.Longitude)
                 @Html.Hidden("Hash", Model.LatLonLocHash())
                 @Html.HiddenFor(m => m.LocationType)
+                @Html.HiddenFor(m=> m.ResultsPerPage);
             }
             <div class="form-group">
                 <p>You can also apply for apprenticeships in other parts of the UK</p>
