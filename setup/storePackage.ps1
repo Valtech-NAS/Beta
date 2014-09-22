@@ -1,8 +1,8 @@
 param(
 	[string]$subscriptionName,
 	[string]$storageName,
-	[string]$storageKey,
-	[string]$storageContainer,
+	[string]$storageAccessKey,
+	[string]$storageContainerName,
 	[string]$buildConfiguration,
 	[string]$projectName,
 	[string]$buildNumber
@@ -18,7 +18,7 @@ Write-Output "Running Azure Imports"
 Import-AzurePublishSettingsFile "G:\Azure\Pre-Production-9-12-2014-credentials.publishsettings"
 Set-AzureSubscription -CurrentStorageAccount $storageName -SubscriptionName $subscriptionName
 Write-Host "Files will be uploaded to $storageAccountName\$storage$storageContainer"
-$context = New-AzureStorageContext -StorageAccountName $storageName -StorageAccountKey $storageKey
+$context = New-AzureStorageContext -StorageAccountName $storageName -StorageAccountKey $storageAccessKey
 
 Write-Host "Copying files to Azure Storage" 
 
@@ -27,6 +27,8 @@ Write-Host "Copying files to Azure Storage"
 #Set-AzureStorageBlobContent -Blob "$storeageFolder\$buildnumber\ServiceConfiguration.Cloud.cscfg" -Container "$storage" -File "$fqName" -Context $context -Force
 
 $fqName = "$srcPath\$projectName.cspkg"
-Write-Host "Copying file: $fqName to $storageContainer\$projectName-$version.cspkg"
-Set-AzureStorageBlobContent -Blob "$storageContainer\$projectName-$version.cspkg" -Container $storageName -File $fqName -Context $context -Force
-Write-Host "Copied file: $fqName to $storageContainer\$projectName-$version.cspkg"
+Write-Host "Copying file: $fqName to $storageContainerName\$projectName-$version.cspkg"
+Set-AzureStorageBlobContent -Blob "$storageContainerName\$projectName-$version.cspkg" -Container $storageName -File $fqName -Context $context -Force
+Write-Host "Copied file: $fqName to $storageContainerName\$projectName-$version.cspkg"
+
+Return $error.Count
