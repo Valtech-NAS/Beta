@@ -34,7 +34,8 @@
 
             var response = default(GetVacancySummaryResponse);
 
-            _service.Use(client => response = client.GetVacancySummaries(request));
+            //todo: remove endpoint config name once all new service operations integrated
+            _service.Use("SecureService", client => response = client.GetVacancySummaries(request));
 
             if (response == null)
             {
@@ -58,7 +59,8 @@
 
             var response = default(GetVacancySummaryResponse);
 
-            _service.Use(client => response = client.GetVacancySummaries(request));
+            //todo: remove endpoint config name once all new service operations integrated
+            _service.Use("SecureService", client => response = client.GetVacancySummaries(request));
 
             if (response == null)
             {

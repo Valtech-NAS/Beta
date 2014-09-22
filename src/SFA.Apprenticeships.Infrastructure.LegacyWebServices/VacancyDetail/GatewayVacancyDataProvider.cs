@@ -34,7 +34,9 @@
             Logger.Debug("Calling Gateway GetVacancyDetails webservice for vacancy details with ID {0}", vacancyId);
 
             var response = default(GetVacancyDetailsResponse);
-            _service.Use(client => response = client.GetVacancyDetails(request).GetVacancyDetailsResponse);
+
+            //todo: remove endpoint config name once all new service operations integrated
+            _service.Use("SecureService", client => response = client.GetVacancyDetails(request).GetVacancyDetailsResponse);
 
             if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
             {

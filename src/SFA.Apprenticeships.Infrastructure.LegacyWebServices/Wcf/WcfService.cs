@@ -27,8 +27,7 @@
                 {
                     ExeConfigFilename = configurationManager.ConfigurationFilePath
                 };
-                _configuration = ConfigurationManager.OpenMappedExeConfiguration(configMap,
-                    ConfigurationUserLevel.None);
+                _configuration = ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
             }
         }
 
