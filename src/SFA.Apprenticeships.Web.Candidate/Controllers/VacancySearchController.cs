@@ -39,13 +39,23 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.Long)]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Index()
         {
             PopulateDistances();
             PopulateSortType();
 
-            return View(new VacancySearchViewModel {WithinDistance = 2, LocationType = VacancyLocationType.Local});
+// ReSharper disable once RedundantAssignment
+            int resultsPerPage = _vacancyResultsPerPage;
+            int.TryParse(UserData.Get(UserDataItemNames.ResultsPerPage), out resultsPerPage);
+            
+            return
+                View(new VacancySearchViewModel
+                {
+                    WithinDistance = 2,
+                    LocationType = VacancyLocationType.Local,
+                    ResultsPerPage = resultsPerPage
+                });
         }
 
         [HttpGet]
@@ -53,6 +63,7 @@
         public ActionResult Results(VacancySearchViewModel model)
         {
             UserData.Pop(UserDataItemNames.VacancyDistance);
+            UserData.Push(UserDataItemNames.ResultsPerPage, model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
 
             if (model.SearchAction == SearchAction.Search && model.LocationType != VacancyLocationType.Local)
             {
@@ -75,6 +86,7 @@
             }
 
             PopulateDistances(model.WithinDistance);
+            PopulateResultsPerPage(model.ResultsPerPage);
 
             if (model.LocationType == VacancyLocationType.Nationwide)
             {
@@ -112,7 +124,9 @@
                 {
                     var location = suggestedLocations.Locations.First();
 
-                    ModelState.Clear();
+                    ModelState.Remove("Location");
+                    ModelState.Remove("Latitude");
+                    ModelState.Remove("Longitude");
 
                     model.Location = location.Name;
                     model.Latitude = location.Latitude;
@@ -128,7 +142,8 @@
                             Longitude = each.Longitude,
                             PageNumber = model.PageNumber,
                             SortType = model.SortType,
-                            WithinDistance = model.WithinDistance
+                            WithinDistance = model.WithinDistance,
+                            ResultsPerPage = model.ResultsPerPage
                         };
 
                         vsvm.Hash = vsvm.LatLonLocHash();
@@ -146,7 +161,8 @@
                 return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
             }
 
-            var results = _searchProvider.FindVacancies(model, _vacancyResultsPerPage);
+            // var results = _searchProvider.FindVacancies(model, _vacancyResultsPerPage);
+            var results = _searchProvider.FindVacancies(model);
 
             if (results.HasError())
             {
@@ -231,6 +247,24 @@
         {
             searchViewModel.CheckLatLonLocHash();
             return searchViewModel.Latitude.HasValue && searchViewModel.Longitude.HasValue;
+        }
+
+        private void PopulateResultsPerPage(int selectedValue)
+        {
+            var resultsPerPage = new SelectList(
+                new[]
+                {
+                    new{ResultsPerPage = 5, Name = "5 Results"},
+                    new{ResultsPerPage = 10, Name = "10 Results"},
+                    new{ResultsPerPage = 25, Name = "25 Results"},
+                    new{ResultsPerPage = -1, Name = "All Results"}
+                },
+                "ResultsPerPage",
+                "Name",
+                selectedValue
+                );
+
+            ViewBag.ResultsPerPage = resultsPerPage;
         }
 
         private void PopulateDistances(int selectedValue = 2)

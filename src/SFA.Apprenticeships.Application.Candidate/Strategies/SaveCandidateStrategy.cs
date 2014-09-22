@@ -1,15 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
+    using NLog;
     using Vacancy;
 
     public class SaveCandidateStrategy : ISaveCandidateStrategy
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly IApplicationWriteRepository _applicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
@@ -43,12 +47,24 @@
 
             candidateApplications.ForEach(candidateApplication =>
             {
-                VacancyDetail vacancyDetails =
-                    _vacancyDataProvider.GetVacancyDetails(candidateApplication.LegacyVacancyId);
-                Candidate reloadedCandidate = _candidateReadRepository.Get(candidate.EntityId);
-                ApplicationDetail applicationDetail = UpdateApplicationDetail(reloadedCandidate, vacancyDetails);
+                try
+                {
+                    VacancyDetail vacancyDetails =
+                        _vacancyDataProvider.GetVacancyDetails(candidateApplication.LegacyVacancyId);
+                    Candidate reloadedCandidate = _candidateReadRepository.Get(candidate.EntityId);
+                    ApplicationDetail applicationDetail = UpdateApplicationDetail(reloadedCandidate, vacancyDetails);
 
-                _applicationWriteRepository.Save(applicationDetail);
+                    _applicationWriteRepository.Save(applicationDetail);
+                }
+                catch (Exception e)
+                {
+                    // Try updating the next one
+                    var message =
+                        string.Format(
+                            "Error while updating an application in draft state with the new user personal details for user {0}",
+                            candidate.EntityId);
+                    Logger.ErrorException(message, e);
+                }
             });
 
             return result;

@@ -87,7 +87,7 @@
             };
 
             var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object, _addressSearchService.Object, _mapper);
-            var test = searchProvider.FindVacancies(search, 10);
+            var test = searchProvider.FindVacancies(search);
 
             test.Should().NotBeNull();
             test.Pages.Should().Be(10);

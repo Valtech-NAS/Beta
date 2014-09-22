@@ -50,3 +50,13 @@
 </ul>
 
 @{ Html.RenderPartial("_pagination", Model); }
+
+@*TODO: needs Henry work -> put in partial view?*@
+@*TODO: use the PageSize view model's property?*@
+@*@Url.Action("results", new VacancySearchViewModel(Model.VacancySearch))*@
+
+<div class="form-group">
+    <label for="results-per-page" class="form-label">Results per page</label>
+    @Html.DropDownList("resultsPerPage", (SelectList)ViewBag.ResultsPerPage, new { @id = "results-per-page" })
+</div>
+

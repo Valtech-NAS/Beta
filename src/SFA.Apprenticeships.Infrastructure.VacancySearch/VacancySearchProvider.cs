@@ -42,8 +42,9 @@
             {
                 s.Index(indexName);
                 s.Type(documentTypeName);
-                s.Skip((pageNumber - 1)*pageSize);
-                s.Take(pageSize);
+                s.Skip((pageNumber - 1) * pageSize);
+                s.Take(pageSize);    
+
                 s.TrackScores();
 
                 s.Query(q =>

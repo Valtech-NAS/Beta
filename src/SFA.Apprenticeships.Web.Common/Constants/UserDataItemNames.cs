@@ -3,6 +3,7 @@
     //todo: move some of these as they are candidate web specific (not common)
     public class UserDataItemNames
     {
+        public const string ResultsPerPage = "Data.ResultsPerPage";
         public const string ReturnUrl = "Data.ReturnUrl";
         public const string SessionReturnUrl = "Data.SessionReturnUrl";
         public const string EmailAddress = "Data.UserEmail";

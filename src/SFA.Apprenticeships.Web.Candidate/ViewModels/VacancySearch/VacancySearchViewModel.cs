@@ -26,6 +26,7 @@
             PageNumber = viewModel.PageNumber;
             SortType = viewModel.SortType;
             Hash = viewModel.Hash;
+            ResultsPerPage = viewModel.ResultsPerPage;
         }
 
         [Display(Name = VacancySearchViewModelMessages.KeywordMessages.LabelText, Description = VacancySearchViewModelMessages.KeywordMessages.HintText)]
@@ -76,6 +77,8 @@
         public VacancyLocationType LocationType { get; set; }
 
         public SearchAction SearchAction { get; set; }
+
+        public int ResultsPerPage { get; set; }
     }
 
     public enum SearchAction
