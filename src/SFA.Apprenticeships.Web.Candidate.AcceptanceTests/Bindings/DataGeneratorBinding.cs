@@ -44,15 +44,18 @@
             And("I choose HasAcceptedTermsAndConditions");
             And("I choose FindAddresses");
             And("I wait for 30 seconds to see AddressSelectLabel");
-            And("I am on AddressDropdown list item matching criteria", GetAddressMatchingCriteria());
+            Then("I am on the RegisterCandidatePage page");
+            
+            When("I am on AddressDropdown list item matching criteria", GetAddressMatchingCriteria());
             And("I choose WrappedElement");
-            And("I am on the RegisterCandidatePage page");
-            And("I choose CreateAccountButton");
-            Then("I wait 300 second for the ActivationPage page");
+            When("I am on the RegisterCandidatePage page");
+            When("I choose CreateAccountButton");
+            Then("I wait 500 second for the ActivationPage page");
             When("I get the token for my newly created account");
             And("I enter data", GetActivationCodeData());
             And("I choose ActivateButton");
-            Then("I am on the VacancySearchPage page");
+            Then("I wait 120 second for the VacancySearchPage page");
+            And("I am on the VacancySearchPage page");
         }
 
         private Table GetRegistrationData()
