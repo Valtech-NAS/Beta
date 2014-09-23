@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Web.Mvc;
     using Candidate;
     using Common.Constants;
@@ -21,6 +22,7 @@
         public string ConfirmationMessage = ApplicationPageMessages.LeavingPageMessage;
         public string WhiteListRegex = Whitelists.FreetextWhitelist.RegularExpression;
         public string FourDigitYearRegex = Whitelists.YearWhitelist.RegularExpression;
+        public string AutoSaveTimeInMiutes = ConfigurationManager.AppSettings["AutoSaveTimeInMinutes"];
 
         public ApplicationViewModel(string message, ApplicationViewModelStatus viewModelStatus) : base(message)
         {

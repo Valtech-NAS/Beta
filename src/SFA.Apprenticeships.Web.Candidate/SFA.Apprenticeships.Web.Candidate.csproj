@@ -406,6 +406,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AutoSaveDateTimeHelper.cs" />
     <Compile Include="Helpers\PreviewExtensions.cs" />
     <Compile Include="IoC\CandidateWebRegistry.cs" />
     <Compile Include="Mappers\Helpers\ApplicationConverter.cs" />
@@ -451,6 +452,7 @@
     <Compile Include="Validators\WorkExperienceViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Applications\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Applications\AutoSaveResultViewModel.cs" />
     <Compile Include="ViewModels\Login\AccountUnlockState.cs" />
     <Compile Include="ViewModels\Login\LoginResultViewModel.cs" />
     <Compile Include="ViewModels\Login\UserStatusesViewModel.cs" />

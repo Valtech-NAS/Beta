@@ -20,6 +20,9 @@
             setKeyUpEvent(settings.formSelector);
             setClickEvent(settings.classToExclude);
         },
+        resetDirtyForm = function(settings) {
+            initialFormValue = $(settings.formSelector).serialize();
+        },
         setBeforeUnloadEvent = function(formSelector, classToExclude, confirmationMessage) {
             $(window).on('beforeunload', function (e){
                 if (!hasToShowMessage || linkClicked || $(e.target.activeElement).hasClass(classToExclude)) {
@@ -54,6 +57,7 @@
 
 
     return {
-        initialise: initialise
+        initialise: initialise,
+        resetDirtyForm: resetDirtyForm
     };
 })();
