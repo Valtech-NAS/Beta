@@ -44,7 +44,7 @@
             };
 
             var rs = default(VacancyDetailsResponse);
-            _service.Use("DefaultEndpoint", client => rs = client.Get(vacancyDetailRequest));
+            _service.Use(client => rs = client.Get(vacancyDetailRequest));
 
             if (rs == null ||
                 rs.SearchResults == null ||
