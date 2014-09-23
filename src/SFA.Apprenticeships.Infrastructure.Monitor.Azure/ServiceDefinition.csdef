@@ -8,5 +8,8 @@
       <Setting name="StorageConnectionString" />
       <Setting name="QueueName" />
     </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="NasClientCertificate" storeLocation="LocalMachine" storeName="My" />
+    </Certificates>
   </WorkerRole>
 </ServiceDefinition>
