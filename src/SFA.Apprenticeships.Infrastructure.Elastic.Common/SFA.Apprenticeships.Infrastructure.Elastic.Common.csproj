@@ -70,6 +70,7 @@
     <Compile Include="Entities\LocationLookup.cs" />
     <Compile Include="Entities\VacancyLocationType.cs" />
     <Compile Include="Entities\VacancySummary.cs" />
+    <Compile Include="Entities\VacancyLevel.cs" />
     <Compile Include="Entities\VacancyType.cs" />
     <Compile Include="Entities\WageType.cs" />
     <Compile Include="IoC\ElasticsearchCommonRegistry.cs" />

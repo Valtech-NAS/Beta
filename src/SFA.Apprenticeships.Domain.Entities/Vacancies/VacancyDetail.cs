@@ -17,7 +17,7 @@
 
         public string Framework { get; set; }
 
-        public VacancyType VacancyType { get; set; }
+        public VacancyLevel VacancyLevel { get; set; }
 
         public DateTime StartDate { get; set; }
 

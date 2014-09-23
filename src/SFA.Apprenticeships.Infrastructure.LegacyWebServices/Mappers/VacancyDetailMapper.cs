@@ -20,8 +20,8 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
                 .ForMember(d => d.Title, opt => opt.MapFrom(src => src.VacancyTitle))
                 .ForMember(d => d.VacancyLocationType,
                     opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
-                .ForMember(d => d.VacancyType,
-                    opt => opt.ResolveUsing<VacancyTypeResolver>().FromMember(src => src.VacancyType))
+                .ForMember(d => d.VacancyLevel,
+                    opt => opt.ResolveUsing<VacancyLevelResolver>().FromMember(src => src.VacancyType))
                 .ForMember(d => d.WageDescription, opt => opt.MapFrom(src => src.WageText))
                 .ForMember(d => d.OtherInformation, opt => opt.MapFrom(src => src.OtherImportantInformation))
                 .ForMember(d => d.ProviderDescription, opt => opt.MapFrom(src => src.LearningProviderDesc))

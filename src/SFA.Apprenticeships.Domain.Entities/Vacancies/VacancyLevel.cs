@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
-    public enum VacancyType
+    public enum VacancyLevel
     {
         Unknown = 0,
-        Apprenticeship,
-        Traineeship
+        Intermediate,
+        Advanced,
     }
 }

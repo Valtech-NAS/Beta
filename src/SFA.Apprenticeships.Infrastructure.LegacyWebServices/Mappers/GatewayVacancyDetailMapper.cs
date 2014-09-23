@@ -131,8 +131,8 @@
                 .ForMember(dest => dest.Title,
                     opt => opt.MapFrom(src => src.VacancyTitle))
 
-                .ForMember(dest => dest.VacancyType,
-                    opt => opt.ResolveUsing<VacancyTypeResolver>().FromMember(src => src.VacancyType))
+                .ForMember(dest => dest.VacancyLevel,
+                    opt => opt.ResolveUsing<VacancyLevelResolver>().FromMember(src => src.VacancyType))
 
                 .ForMember(dest => dest.VacancyUrl,
                     opt => opt.MapFrom(src => src.VacancyUrl))

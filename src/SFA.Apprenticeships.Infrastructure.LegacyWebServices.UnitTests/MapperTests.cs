@@ -48,7 +48,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
 
             test.Id.Should().Be(1);
             test.VacancyLocationType.Should().Be(VacancyLocationType.NonNational);
-            test.VacancyType.Should().Be(VacancyType.Intermediate);
+            test.VacancyLevel.Should().Be(VacancyLevel.Intermediate);
             test.WageType.Should().Be(WageType.Text);
         }
 

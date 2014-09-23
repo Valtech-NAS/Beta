@@ -424,7 +424,7 @@
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.VacancyType.Should().Be(VacancyType.Intermediate);
+            dest.VacancyLevel.Should().Be(VacancyLevel.Intermediate);
         }
 
         [TestCase]
@@ -441,7 +441,7 @@
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.VacancyType.Should().Be(VacancyType.Advanced);
+            dest.VacancyLevel.Should().Be(VacancyLevel.Advanced);
         }
 
         [TestCase]
@@ -458,7 +458,7 @@
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.VacancyType.Should().Be(VacancyType.Unknown);
+            dest.VacancyLevel.Should().Be(VacancyLevel.Unknown);
         }
     }
 }

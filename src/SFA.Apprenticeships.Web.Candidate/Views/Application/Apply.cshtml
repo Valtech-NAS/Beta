@@ -109,15 +109,6 @@
         }, autoSaveTimeout);
     }
 
-    //function chromeTimeDelay(){
-    //    if (navigator.userAgent.indexOf("Chrome") > 0){
-    //        var d =e = new Date();
-    //        while(d.getTime()<(e.getTime()+1500)){
-    //            d = new Date();
-    //        }
-    //    }
-    //}
-
     function timeout_trigger() {
 
         var request = $.ajax({
@@ -127,9 +118,6 @@
             });
 
             request.done(function(result) {
-                //alert("success status: " + result.Status);
-                //chromeTimeDelay();
-                //alert("auto save date time: " + result.DateTimeMessage);
 
                 if (result.Status == "succeeded") {
                     var savedMessage = 'Last saved at ' + result.DateTimeMessage + ' to ' + '<a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a>';

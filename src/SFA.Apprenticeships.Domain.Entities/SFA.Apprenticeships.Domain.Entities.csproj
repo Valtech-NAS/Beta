@@ -69,6 +69,7 @@
     <Compile Include="Vacancies\VacancyDetail.cs" />
     <Compile Include="Vacancies\VacancyLocationType.cs" />
     <Compile Include="Vacancies\VacancySummary.cs" />
+    <Compile Include="Vacancies\VacancyLevel.cs" />
     <Compile Include="Vacancies\VacancyType.cs" />
     <Compile Include="Vacancies\WageType.cs" />
   </ItemGroup>
