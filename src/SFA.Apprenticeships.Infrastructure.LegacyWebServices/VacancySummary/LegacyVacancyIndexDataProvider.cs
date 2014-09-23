@@ -42,7 +42,7 @@
             Logger.Debug("Calling Legacy webservice for VacancyPageCount MessageId={0}", vacancySummaryRequest.MessageId);
 
             var rs = default(VacancySummaryResponse);
-            _service.Use("DefaultEndpoint", client => rs = client.Get(vacancySummaryRequest));
+            _service.Use(client => rs = client.Get(vacancySummaryRequest));
 
             if (rs == null || rs.ResponseData == null)
             {
@@ -72,7 +72,7 @@
             Logger.Debug("Calling Legacy webservice for VacancySummaries MessageId={0}", vacancySummaryRequest.MessageId);
 
             var rs = default(VacancySummaryResponse);
-            _service.Use("DefaultEndpoint", client => rs = client.Get(vacancySummaryRequest));
+            _service.Use(client => rs = client.Get(vacancySummaryRequest));
 
             if (rs == null ||
                 rs.ResponseData == null ||
