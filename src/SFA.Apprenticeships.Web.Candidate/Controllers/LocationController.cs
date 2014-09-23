@@ -2,17 +2,18 @@
 {
     using System;
     using System.Linq;
-    using System.Net;
     using System.Web.Mvc;
     using Common.Attributes;
     using Constants;
+    using Constants.ViewModels;
     using Domain.Interfaces.Configuration;
     using Providers;
+    using ViewModels.VacancySearch;
 
     public class LocationController : Controller
     {
-        private readonly ISearchProvider _searchProvider;
         private readonly int _locationResultLimit;
+        private readonly ISearchProvider _searchProvider;
 
         public LocationController(IConfigurationManager configManager, ISearchProvider searchProvider)
         {
@@ -25,7 +26,7 @@
         [OutputCache(CacheProfile = CacheProfiles.Data, VaryByParam = "term")]
         public ActionResult Location(string term)
         {
-            var result = _searchProvider.FindLocation(term);
+            LocationsViewModel result = _searchProvider.FindLocation(term);
 
             if (Request.IsAjaxRequest())
             {
@@ -40,7 +41,7 @@
         [OutputCache(CacheProfile = CacheProfiles.Data, VaryByParam = "postcode")]
         public ActionResult Addresses(string postcode)
         {
-            var addresses = _searchProvider.FindAddresses(postcode);
+            AddressSearchResult addresses = _searchProvider.FindAddresses(postcode);
             if (Request.IsAjaxRequest())
             {
                 return Json(addresses, JsonRequestBehavior.AllowGet);
