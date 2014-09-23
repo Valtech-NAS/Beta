@@ -38,7 +38,7 @@
 
             CreateApplicationResponse response = null;
 
-            _service.Use("DefaultEndpoint", client => response = client.CreateApplication(legacyRequest));
+            _service.Use(client => response = client.CreateApplication(legacyRequest));
 
             if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
             {
