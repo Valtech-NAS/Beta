@@ -71,6 +71,9 @@
         });
     }, 1000);
 
+    $('[data-valmsg-for]').each(function () {
+        $(this).attr('aria-live', 'polite');
+    });
 });
 
 /*
