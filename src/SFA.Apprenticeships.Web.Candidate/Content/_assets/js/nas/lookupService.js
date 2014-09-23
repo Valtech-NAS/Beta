@@ -15,9 +15,6 @@ $(document).ready(function () {
             $("#Address_GeoPoint_Longitude").val(selected.attr("data-lon"));
         }
         //TODO: if needing validation groups this should be refactored too
-        //$("#Address_AddressLine1").focus();
-        //$("#Address_Postcode").focus();
-        //$("#EmailAddress").focus();     - Not sure why this is in here??
     });
 
     $(".address-item").change(function() {
