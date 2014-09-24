@@ -146,6 +146,7 @@
         }
 
         return qualificationArrays;
+        
     }
 
     var qualificationViewModel = function () {
@@ -263,6 +264,8 @@
                 var result = addQualification(self.qualifications(), typeSelected, typeOther, year, subject, grade, predicted, self.regexPattern(), self.yearRegexPattern());
                 self.qualifications(result);
 
+                $('#qualAddConfirmText').text('Qualification has been added to table below');
+
                 self.reIndexQualifications(); //re-index qualifications
 
                 self.subject("");
@@ -272,6 +275,7 @@
                 self.errors.showAllMessages(false);
             } else {
                 self.errors.showAllMessages();
+                $('#qualAddConfirmText').text('There has been a problem adding this qualification, check errors above');
             }
         };
 
@@ -684,8 +688,11 @@
 
                 self.errors.showAllMessages(false);
 
+                $('#workAddConfirmText').text("Work experience has been added to table below");
+
             } else {
                 self.errors.showAllMessages();
+                $('#workAddConfirmText').text("There has been a problem adding work experience, check you've entered all details correctly");
             }
 
         };
@@ -765,6 +772,7 @@
             var span = document.createElement('span');
 
             span.className = "field-validation-error";
+            $(span).attr('aria-live', 'polite');
 
             var inputFormControls = $(element).closest(".form-control");
 
