@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
@@ -13,6 +14,7 @@
     using Constants.Pages;
     using Domain.Entities.Applications;
     using FluentValidation.Mvc;
+    using Helpers;
     using Providers;
     using Validators;
     using ViewModels.Applications;
@@ -209,6 +211,58 @@
             model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
             return View("Apply", model);
+        }
+
+        [HttpPost]
+        public JsonResult AutoSave(int id, ApplicationViewModel model)
+        {
+            var autoSaveResult = new AutoSaveResultViewModel();
+
+            var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+
+            if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            {
+                autoSaveResult.Status = "failed";
+
+                return new JsonResult {Data = autoSaveResult };
+            }
+
+            ModelState.Clear();
+
+            model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+
+            if (savedModel.HasError())
+            {
+                autoSaveResult.Status = "failed";
+
+                return new JsonResult { Data = autoSaveResult };
+            }
+
+            var result = _applicationViewModelSaveValidator.Validate(model);
+
+            model = _applicationProvider.PatchApplicationViewModel(
+                UserContext.CandidateId, savedModel, model);
+
+            if (!result.IsValid)
+            {
+                autoSaveResult.Status = "failed";
+
+                return new JsonResult { Data = autoSaveResult };
+            }
+
+            _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
+
+            model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+            model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+
+            autoSaveResult.Status = "succeeded";
+
+            if (model.DateUpdated != null)
+            {
+                autoSaveResult.DateTimeMessage = AutoSaveDateTimeHelper.GetDisplayDateTime((DateTime) model.DateUpdated);
+            }
+
+            return new JsonResult {Data = autoSaveResult};
         }
 
         [HttpPost]

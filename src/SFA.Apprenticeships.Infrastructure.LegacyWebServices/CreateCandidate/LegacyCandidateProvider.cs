@@ -43,7 +43,7 @@
             };
 
             var response = default(CreateCandidateResponse);
-            _service.Use(client => response = client.CreateCandidate(request));
+            _service.Use("DefaultEndpoint", client => response = client.CreateCandidate(request));
 
             if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
             {

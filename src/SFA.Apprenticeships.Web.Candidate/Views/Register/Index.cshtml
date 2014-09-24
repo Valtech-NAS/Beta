@@ -27,7 +27,7 @@
 
             @Html.EditorFor(a => a.Address)
             @Html.FormTextFor(m => m.EmailAddress, controlHtmlAttributes: new { @class = "linked-input-master", type = "email", spellcheck = "false" }, hintHtmlAttributes: new { @class = "text" })
-            <span id="email-available-message" class="validation-message"></span>
+            <span aria-live="polite" id="email-available-message" class="validation-message"></span>
 
             @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { @class = "form-control-1-3", type = "tel" }, hintHtmlAttributes: new { @class = "text" })
 
@@ -58,8 +58,8 @@
 
     <fieldset>
         <details class="text">
-            <summary role="button">Read our terms &amp; conditions</summary>
-            <div class="detail-content max-height-15 scrolling-panel copy-16">
+            <summary aria-controls="tAndCs" role="button">Read our terms &amp; conditions</summary>
+            <div id="tAndCs" class="detail-content max-height-15 scrolling-panel copy-16" aria-expanded="false" role="region">
                 <div class="terms-and-conditions">
                     <h2 class="heading-small">Skills Funding Agency&#8217;s terms and conditions for the apprenticeship vacancies system</h2>
                     <p>[Page last updated on 19 Aug 2014]</p>

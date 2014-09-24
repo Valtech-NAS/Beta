@@ -50,9 +50,3 @@ Scenario: Selecting yes will redirect me to another page
 	And I choose MyApplicationsLink
 	When I see an alert box and select Yes
 	Then I am on the MyApplicationsPage page
-
-
-
-
-
-#When I see an alert box and select "Dont't Reload"

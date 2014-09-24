@@ -7,11 +7,11 @@
 @if (Model.DateUpdated.HasValue)
 {
     <div class="panel-info">
-        <p id="applicationSavedTopMessage">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
+        <p class="autosave" id="applicationSavedTopMessage">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
     </div>
 }
 
-@using (Html.BeginForm(null, "Application", new { id = Model.VacancyId }, FormMethod.Post))
+@using (Html.BeginForm(null, "Application", new { id = Model.VacancyId }, FormMethod.Post, new { id = "application-form" }))
 {
     <h1 class="heading-xlarge">Application form</h1>
     <section class="section-border">
@@ -58,7 +58,7 @@
         </p>
         @if (Model.DateUpdated.HasValue)
         {
-            <p id="applicationSaved">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
+            <p class="autosave" id="applicationSaved">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
         }
     </div>
     
@@ -70,31 +70,84 @@
 
     <script type="text/javascript">
 
-        var qualificationData = null;
-        var workExperienceData = null;
-        var currentYear = null;
-        var whitelistregex = null;
-        var yearRegex = null;
+    var qualificationData = null;
+    var workExperienceData = null;
+    var currentYear = null;
+    var whitelistregex = null;
+    var yearRegex = null;
+    var autoSaveTimeout = null;
 
-        $(function() {
+    $(function() {
 
-            document.getElementById("hidden-flag-javascript").value = "True";
+        document.getElementById("hidden-flag-javascript").value = "True";
 
-            qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
-            workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
-            currentYear = @Html.Raw(Model.CurrentYear);
-            whitelistregex =  @Html.Raw(Json.Encode(Model.WhiteListRegex));
-            yearRegex =  @Html.Raw(Json.Encode(Model.FourDigitYearRegex));           
+        qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
+        workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
+        currentYear = @Html.Raw(Model.CurrentYear);
+        whitelistregex =  @Html.Raw(Json.Encode(Model.WhiteListRegex));
+        yearRegex =  @Html.Raw(Json.Encode(Model.FourDigitYearRegex));
 
-            $(window).on('load', function (){
-                dirtyFormDialog.initialise({
-                    formSelector: "form",
-                    classToExclude: "no-check-for-dirty-form",
-                    timeout: @Model.SessionTimeout * 1000,
-                    confirmationMessage: '@Model.ConfirmationMessage'
-                });
+        autoSaveTimeout = @Html.Raw(Json.Encode(Model.AutoSaveTimeInMiutes)) * 60 * 1000;
+
+        $(window).on('load', function (){
+            dirtyFormDialog.initialise({
+                formSelector: "form",
+                classToExclude: "no-check-for-dirty-form",
+                timeout: @Model.SessionTimeout * 1000,
+                confirmationMessage: '@Model.ConfirmationMessage'
             });
         });
+
+        setTimeout(function() {
+            timeout_trigger();
+        }, autoSaveTimeout);
+    });
+
+    function timeout_reset() {
+        setTimeout(function() {
+            timeout_trigger();
+        }, autoSaveTimeout);
+    }
+
+    //function chromeTimeDelay(){
+    //    if (navigator.userAgent.indexOf("Chrome") > 0){
+    //        var d =e = new Date();
+    //        while(d.getTime()<(e.getTime()+1500)){
+    //            d = new Date();
+    //        }
+    //    }
+    //}
+
+    function timeout_trigger() {
+
+        var request = $.ajax({
+            type: "POST",
+            url: '@Url.Action("AutoSave","Application", new { id = Model.VacancyId })',
+                data: $("#application-form").serialize()
+            });
+
+            request.done(function(result) {
+                //alert("success status: " + result.Status);
+                //chromeTimeDelay();
+                //alert("auto save date time: " + result.DateTimeMessage);
+
+                if (result.Status == "succeeded") {
+                    var savedMessage = 'Last saved at ' + result.DateTimeMessage + ' to ' + '<a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a>';
+                    $("p.autosave").html(savedMessage);
+
+                    dirtyFormDialog.resetDirtyForm({
+                        formSelector: "form"                       
+                    });
+                }
+
+            });
+
+            request.fail(function(jqXHR, textStatus) {
+
+            });
+
+            timeout_reset();
+        }
 
         function getCurrentYear() {
             return currentYear;
@@ -129,7 +182,7 @@
 
             return month;
         }
-              
+
     </script>
         
     @Scripts.Render("~/bundles/nas/applicationform")

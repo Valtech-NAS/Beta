@@ -15,9 +15,6 @@ $(document).ready(function () {
             $("#Address_GeoPoint_Longitude").val(selected.attr("data-lon"));
         }
         //TODO: if needing validation groups this should be refactored too
-        $("#Address_AddressLine1").focus();
-        $("#Address_Postcode").focus();
-        $("#EmailAddress").focus();
     });
 
     $(".address-item").change(function() {
@@ -101,10 +98,10 @@ $(document).ready(function () {
                         $addressSelect.append($makeAddressOption(address));
                     });
 
-                    $addressList.removeClass("toggle-content");
+                    $addressList.removeClass("toggle-content").removeAttr('hidden');
 
                 } else {
-                    $addressList.addClass("toggle-content");
+                    $addressList.addClass("toggle-content").attr('hidden', true);
                     showErrorMessage("Postcode not found. Please enter address manually.");
                 }
             }
@@ -113,13 +110,13 @@ $(document).ready(function () {
         };
 
         var handleMissingPostcode = function () {
-            $addressList.addClass("toggle-content");
+            $addressList.addClass("toggle-content").attr('hidden', true);
             showErrorMessage("Please enter a postcode");
             showFindAddressButton();
         };
 
         var handleInvalidPostcode = function () {
-            $addressList.addClass("toggle-content");
+            $addressList.addClass("toggle-content").attr('hidden', true);
             showErrorMessage("Please enter a valid postcode");
             showFindAddressButton();
         };

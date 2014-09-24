@@ -232,3 +232,41 @@ else
     </div>
 }
 
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        var lastDraftDeleteClicked = new Date();
+
+        function timeDelay() {
+            var d = new Date();
+            while (d.getTime() < (lastDraftDeleteClicked.getTime() + 2550)) {
+                d = new Date();
+            }
+
+            lastDraftDeleteClicked = new Date();
+        }
+
+        var showConfirmationMessage = function (message, e) {
+            timeDelay();
+            if (!window.confirm(message)) {
+                if (e.preventDefault) e.preventDefault();
+                return false;
+            }
+        };
+
+        $('.delete-draft').on('click', function(e) {
+            showConfirmationMessage("TODO: Do you really want to delete this draft?", e);
+        });
+
+        $('.archive-successful').on('click', function(e) {
+            showConfirmationMessage("TODO: Do you really want to delete this successful application?", e);
+        });
+
+        $('.archive-unsuccessful').on('click', function(e) {
+            showConfirmationMessage("TODO: Do you really want to delete this unsuccessful application?", e);
+        });
+
+    </script>
+}

@@ -114,6 +114,8 @@ this.FeatureBackground();
 #line 22
  testRunner.When("I choose DeleteDraftLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 23
+ testRunner.And("I see an alert box and select Yes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 24
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -124,7 +126,7 @@ this.FeatureBackground();
                         "DraftApplicationsCount",
                         "Equals",
                         "1"});
-#line 24
+#line 25
  testRunner.And("I see", ((string)(null)), table2, "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -139,17 +141,17 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As an candidate I want to be able to delete expired or withdrawn draft applicatio" +
                     "ns", new string[] {
                         "US464"});
-#line 29
+#line 30
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 30
- testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 31
- testRunner.And("I add 2 expired applications", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 32
- testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I add 2 expired applications", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 33
+ testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 34
  testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -161,15 +163,17 @@ this.FeatureBackground();
             table3.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
-#line 34
+#line 35
  testRunner.And("I enter data", ((string)(null)), table3, "And ");
-#line 38
- testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 39
- testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 40
- testRunner.When("I choose DeleteDraftLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 41
+ testRunner.When("I choose DeleteDraftLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 42
+ testRunner.And("I see an alert box and select Yes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 43
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -180,7 +184,7 @@ this.FeatureBackground();
                         "DraftApplicationsCount",
                         "Equals",
                         "1"});
-#line 42
+#line 44
  testRunner.And("I see", ((string)(null)), table4, "And ");
 #line hidden
             this.ScenarioCleanup();
