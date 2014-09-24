@@ -133,23 +133,25 @@
                 var credentials = new NetworkCredential(_userName, _password);
                 var web = new Web(credentials);
 
-                Logger.Info("Dispatching email:", LogSendGridMessage(message));
+                Logger.Debug("Dispatching email: {0}", LogSendGridMessage(message));
                 web.Deliver(message);
-                Logger.Info("Dispatched email:", LogSendGridMessage(message));
+                Logger.Info("Dispatched email: {0} to {1}", message.Subject, message.To);
             }
             catch (Exception e)
             {
-                Logger.ErrorException("Failed to dispatch email.", e);
+                Logger.ErrorException("Failed to dispatch email", e);
                 // TODO: EXCEPTION: failed to send, log / throw domain exception.
-                throw new Exception("Failed to dispatch email.", e);
+                throw new Exception("Failed to dispatch email", e);
             }
         }
 
         private static string LogSendGridMessage(SendGridMessage message)
         {
-            var messageLog = string.Format("From:{0}, ", message.From.Address);
-            message.To.ToList().ForEach(t => messageLog += string.Format("To:{0},", t.Address));
-            messageLog += string.Format("Subject:{0}", message.Subject);
+            var messageLog = string.Format("Subject: {0}", message.Subject);
+            messageLog += "To: ";
+            message.To.ToList().ForEach(t => messageLog += string.Format("{0}, ", t.Address));
+            messageLog += string.Format("From: {0}, ", message.From.Address);
+
             return messageLog;
         }
     }
