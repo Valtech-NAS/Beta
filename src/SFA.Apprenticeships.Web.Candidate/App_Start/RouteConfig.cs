@@ -45,6 +45,12 @@
             );
 
             routes.MapRoute(
+                name: RouteNames.Terms,
+                url: "terms",
+                defaults: new { controller = "Home", action = "Terms" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

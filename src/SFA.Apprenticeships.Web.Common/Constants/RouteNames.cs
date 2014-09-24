@@ -6,5 +6,6 @@
         public const string SignOut = "SignOut";
         public const string Privacy = "Privacy";
         public const string Helpdesk = "Helpdesk";
+        public const string Terms = "Terms";
     }
 }

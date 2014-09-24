@@ -56,9 +56,10 @@
         <div class="footer__wrapper">
             <div class="footer__meta">
                 <ul class="footer__nav" role="navigation">
-                    <li class="footer__link"><a href="/claim-notes#16" target="_blank">Helpdesk</a></li>
-                    <li class="footer__link"><a href="http://www.dwp.gov.uk/privacy-policy/" target="_blank">Privacy &amp; Cookies</a></li>
-                    <li class="footer__link">Built by <a href="http://apprenticeships.org.uk" target="_blank">Skills Funding Agency</a></li>
+                    <li class="footer__link"><a href="/helpdesk" target="_blank">Helpdesk</a></li>
+                    <li class="footer__link"><a href="/privacy" target="_blank">Privacy &amp; Cookies</a></li>
+                    <li class="footer__link"><a href="/terms" target="_blank">Terms &amp; Conditions</a></li>
+                    <li class="footer__link">Built by <a href="http://gov.uk/sfa" target="_blank">Skills Funding Agency</a></li>
                     <li class="footer__ogl"><a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2" class="ir ogl-logo">OGL</a>All content is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2">Open Government Licence v2.0</a>, except where otherwise stated</li>
                 </ul>
                 <a class="footer__copyright" href="http://www.nationalarchives.gov.uk/information-management/our-services/crown-copyright.htm" target="_blank">

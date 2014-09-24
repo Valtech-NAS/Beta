@@ -29,5 +29,11 @@
         {
             return View();
         }
+
+        [OutputCache(CacheProfile = CacheProfiles.Long)]
+        public ActionResult Terms()
+        {
+            return View();
+        }
     }
 }
