@@ -22,9 +22,10 @@
 
         public static class FromYearMessages
         {
+            public const string BeforeOrEqualErrorText = "Year started can’t be after year finished";
             public const string RequiredErrorText = "Please enter year started";
             public const string MustBeNumericText = "Please enter year started";
-            public const string BeforeOrEqualErrorText = "Year started mustn’t be in the future";
+            public const string MustNotBeInTheFutureErrorText = "Year started mustn’t be in the future";
             public const string WhiteListRegularExpression = Whitelists.YearWhitelist.RegularExpression;
             public const string WhiteListErrorText = "From year " + Whitelists.YearWhitelist.ErrorText;
         }

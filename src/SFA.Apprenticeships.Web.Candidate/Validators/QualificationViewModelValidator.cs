@@ -52,8 +52,15 @@
                 //Will be picked up by required validator
                 return true;
             }
-            var from = int.Parse(year);
-            return from <= DateTime.Now.Year;
+
+            int from;
+
+            if (int.TryParse(year, out from))
+            {
+                return from <= DateTime.Now.Year;
+            }
+
+            return  true;
         }
     }
 }

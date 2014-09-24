@@ -42,7 +42,7 @@
                                 </td>
 
                                 <td>
-                                    @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Year, new { @id = "candidate_qualifications_" + i + "__year", Name = "Candidate.Qualifications[" + i + "].Year", @class = "form-control qual-input-edit", @maxlength = 4, @pattern = "[0-9]*" })
+                                    @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Year, new { @id = "candidate_qualifications_" + i + "__year", Name = "Candidate.Qualifications[" + i + "].Year", @class = "form-control qual-input-edit", @maxlength = 4 })
                                     @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Year")
                                 </td>
                                 <td>
@@ -70,7 +70,7 @@
                                 </td>
 
                                 <td>
-                                    @Html.TextBox("Candidate.Qualifications[" + i + "].Year", "", new {@id = "candidate_qualifications_" + i + "__year", Name = "Candidate.Qualifications[" + i + "].Year", @class = "form-control qual-input-edit", @maxlength = 4, @pattern = "[0-9]*"})
+                                    @Html.TextBox("Candidate.Qualifications[" + i + "].Year", "", new {@id = "candidate_qualifications_" + i + "__year", Name = "Candidate.Qualifications[" + i + "].Year", @class = "form-control qual-input-edit", @maxlength = 4})
                                     @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Year")
                                 </td>
                                 <td>

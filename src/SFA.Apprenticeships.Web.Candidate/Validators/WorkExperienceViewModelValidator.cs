@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
-    using System;
     using Constants.ViewModels;
     using FluentValidation;
+    using Helpers;
     using ViewModels.Candidate;
 
     public class WorkExperienceViewModelValidator : AbstractValidator<WorkExperienceViewModel>
@@ -38,25 +38,16 @@
                 .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.RequiredErrorText)
                 .Matches(WorkExperienceViewModelMessages.FromYearMessages.WhiteListRegularExpression)
                 .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.WhiteListErrorText)
-                .Must(BeNowOrInThePast)
-                .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.BeforeOrEqualErrorText);
-
+                .Must(ValidatorsHelper.BeNowOrInThePast)
+                .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.MustNotBeInTheFutureErrorText);
+                
             RuleFor(x => x.ToYear)
-                .Must(BeNowOrInThePast)
+                .Must(ValidatorsHelper.BeNowOrInThePast)
                 .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.BeforeOrEqualErrorText)
                 .Matches(WorkExperienceViewModelMessages.ToYearMessages.WhiteListRegularExpression)
-                .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.WhiteListErrorText);
-        }     
-
-        private static bool BeNowOrInThePast( string year)
-        {
-            if (string.IsNullOrEmpty(year))
-            {
-                //Will be picked up by required validator
-                return true;
-            }
-            var from = int.Parse(year);
-            return from <= DateTime.Now.Year;
+                .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.WhiteListErrorText)
+                .Must(ValidatorsHelper.WorkExperienceYearBeBeforeOrEqual)
+                .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.BeforeOrEqualErrorText);
         }
     }
 }

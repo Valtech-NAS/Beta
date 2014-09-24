@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
-    using System;
     using Constants.ViewModels;
     using FluentValidation;
+    using Helpers;
     using ViewModels.Candidate;
 
     public class EducationViewModelClientValidator : AbstractValidator<EducationViewModel>
@@ -59,43 +59,14 @@
             validator.RuleFor(x => x.FromYear)               
                 .Matches(EducationViewModelMessages.FromYearMessages.WhiteListRegularExpression)
                 .WithMessage(EducationViewModelMessages.FromYearMessages.WhiteListErrorText)
-                .Must(BeNowOrInThePast)
+                .Must(ValidatorsHelper.BeNowOrInThePast)
                 .WithMessage(EducationViewModelMessages.FromYearMessages.NotInFutureErrorText);
 
             validator.RuleFor(x => x.ToYear)
                 .Matches(EducationViewModelMessages.ToYearMessages.WhiteListRegularExpression)
                 .WithMessage(EducationViewModelMessages.ToYearMessages.WhiteListErrorText)
-                .Must(BeBeforeOrEqual)
+                .Must(ValidatorsHelper.EducationYearBeBeforeOrEqual)
                 .WithMessage(EducationViewModelMessages.ToYearMessages.BeforeOrEqualErrorText);
-        }
-
-        private static bool BeBeforeOrEqual(EducationViewModel instance, string toYear)
-        {
-            if (string.IsNullOrEmpty(toYear))
-            {
-                //Will be picked up by required validator
-                return true;
-            }
-
-            if (string.IsNullOrEmpty(instance.FromYear))
-            {
-                return false;
-            }
-
-            var to = int.Parse(toYear);
-            var from = int.Parse(instance.FromYear);
-            return from <= to;
-        }
-
-        private static bool BeNowOrInThePast(EducationViewModel instance, string fromYear)
-        {
-            if (string.IsNullOrEmpty(fromYear))
-            {
-                //Will be picked up by required validator
-                return true;
-            }
-            var from = int.Parse(fromYear);
-            return from <= DateTime.Now.Year;
         }
     }
 }

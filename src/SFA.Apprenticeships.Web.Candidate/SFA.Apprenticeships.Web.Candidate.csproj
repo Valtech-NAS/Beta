@@ -450,6 +450,7 @@
     <Compile Include="Validators\AboutYouViewModelClientValidator.cs" />
     <Compile Include="Validators\SettingsViewModelValidator.cs" />
     <Compile Include="Validators\VacancySearchViewModelValidator.cs" />
+    <Compile Include="Validators\Helpers\ValidatorsHelper.cs" />
     <Compile Include="Validators\WorkExperienceViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Applications\ApplicationViewModel.cs" />

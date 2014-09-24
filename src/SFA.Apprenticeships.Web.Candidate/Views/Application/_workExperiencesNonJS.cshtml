@@ -79,7 +79,7 @@
 
                                                 </div>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].FromYear, new {@id = "candidate_workexperience_" + i + "__fromyear", Name = "Candidate.WorkExperience[" + i + "].FromYear", @class = "form-control", @pattern = "[0-9]*", @maxlength = 4})
+                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].FromYear, new {@id = "candidate_workexperience_" + i + "__fromyear", Name = "Candidate.WorkExperience[" + i + "].FromYear", @class = "form-control", @maxlength = 4})
                                                 
                                                     @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].FromYear")
                                                 </div>
@@ -91,7 +91,7 @@
 
                                                 </div>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].ToYear, new { @id = "candidate_workexperience_" + i + "__toyear", Name = "Candidate.WorkExperience[" + i + "].ToYear", @class = "form-control", @pattern = "[0-9]*", @maxlength = 4 })
+                                                    @Html.TextBoxFor(m => Model.Candidate.WorkExperience.ToList()[i].ToYear, new { @id = "candidate_workexperience_" + i + "__toyear", Name = "Candidate.WorkExperience[" + i + "].ToYear", @class = "form-control", @maxlength = 4 })
 
                                                     @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].ToYear")
                                                 </div>
@@ -171,7 +171,7 @@
 
                                                 </div>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.TextBox("Candidate.WorkExperience[" + i + "].FromYear", "", new {@id = "candidate_workexperience_" + i + "__fromyear", Name = "Candidate.WorkExperience[" + i + "].FromYear", @class = "form-control", @pattern = "[0-9]*", @maxlength = 4})
+                                                    @Html.TextBox("Candidate.WorkExperience[" + i + "].FromYear", "", new {@id = "candidate_workexperience_" + i + "__fromyear", Name = "Candidate.WorkExperience[" + i + "].FromYear", @class = "form-control", @maxlength = 4})
                                                     @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].FromYear")
                                                 </div>
                                             </td>
@@ -182,7 +182,7 @@
 
                                                 </div>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.TextBox("Candidate.WorkExperience[" + i + "].ToYear", "", new {@id = "candidate_workexperience_" + i + "__toyear", Name = "Candidate.WorkExperience[" + i + "].ToYear", @class = "form-control", @pattern = "[0-9]*", @maxlength = 4})
+                                                    @Html.TextBox("Candidate.WorkExperience[" + i + "].ToYear", "", new {@id = "candidate_workexperience_" + i + "__toyear", Name = "Candidate.WorkExperience[" + i + "].ToYear", @class = "form-control", @maxlength = 4})
                                                     @Html.ValidationMessage("Candidate.WorkExperience[" + i + "].ToYear")
                                                 </div>
                                             </td>
