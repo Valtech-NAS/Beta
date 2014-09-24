@@ -11,7 +11,6 @@
             {
                 case "IntermediateLevelApprenticeship":
                     return VacancyLevel.Intermediate;
-
                 case "AdvancedLevelApprenticeship":
                     return VacancyLevel.Advanced;
                 case "HigherApprenticeship":

@@ -39,7 +39,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             var data = new VacancyFullData
             {
                 VacancyReference = 1,
-                VacancyLocationType = "MultipleLocation",
+                VacancyLocationType = "MultipleLocation",            
                 VacancyType = "IntermediateLevelApprenticeship",
                 WageType = VacancyDetailProxy.WageType.Text
             };
