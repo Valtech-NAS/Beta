@@ -27,7 +27,7 @@
                 var latestScheduledMessage = GetLatestQueueMessage();
 
                 if (latestScheduledMessage != null)
-                {
+                {                    
                     _vacancyIndexerService.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
                     _vacancySummaryProcessor.QueueVacancyPages(latestScheduledMessage);
                 }
