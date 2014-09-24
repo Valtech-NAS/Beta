@@ -31,8 +31,8 @@
         [Test, Category("Integration")]
         public void ShouldCreateScheduledIndexAndMapping()
         {
-            var indexName = _vacancyIndexAlias + ".2000-01-01";
-            var scheduledDate = new DateTime(2000, 1, 1);
+            var scheduledDate = DateTime.Now; //new DateTime(2000, 1, 1);
+            var indexName = string.Format("{0}.{1}", _vacancyIndexAlias, scheduledDate.ToString("yyyy-MM-dd-HH-mm"));
             var vis = ObjectFactory.GetInstance<IVacancyIndexerService>();
 
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeFalse();
@@ -49,8 +49,8 @@
         [Test, Category("Integration")]
         public void ShouldCreateScheduledIndexAndPublishWithAlias()
         {
-            var indexName = _vacancyIndexAlias + ".2000-01-01";
-            var scheduledDate = new DateTime(2000, 1, 1);
+            var scheduledDate = DateTime.Now; //new DateTime(2000, 1, 1);
+            var indexName = string.Format("{0}.{1}", _vacancyIndexAlias, scheduledDate.ToString("yyyy-MM-dd-HH-mm"));
             var vis = ObjectFactory.GetInstance<IVacancyIndexerService>();
 
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeFalse();
