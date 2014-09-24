@@ -2,12 +2,20 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
 {
     using System;
     using System.Net;
+    using System.Reflection;
     using System.ServiceModel;
     using System.Threading;
+    using Azure.Common.IoC;
+    using Common.IoC;
     using Consumers;
     using EasyNetQ;
+    using IoC;
+    using LegacyWebServices.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
+    using RabbitMq.Interfaces;
+    using RabbitMq.IoC;
+    using Repositories.Applications.IoC;
     using StructureMap;
 
     public class WorkerRole : RoleEntryPoint
@@ -28,9 +36,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
             {
                 try
                 {
-                    /* TODO: implement worker role
-                    _applicationSchedulerConsumer.CheckScheduleQueue().Wait();
-                    */
+                    _applicationEtlControlQueueConsumer.CheckScheduleQueue().Wait();
                 }
                 catch (CommunicationException ce)
                 {
@@ -53,22 +59,22 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
         {
             try
             {
-                /* TODO: implement worker role
                 ObjectFactory.Initialize(x =>
                 {
                     x.AddRegistry<CommonRegistry>();
                     x.AddRegistry<AzureCommonRegistry>();
                     x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<LegacyWebServicesRegistry>();
+                    x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<ApplicationEtlRegistry>();
+                    x.AddRegistry<ApplicationRepositoryRegistry>();
                 });
 
                 Logger.Debug("Application Etl Process IoC initialized");
 
                 var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
-                subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(ApplicationSummaryConsumerAsync)), "ApplicationEtl");
-                Logger.Debug("Rabbit subscriptions setup");
-                */
+                subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(ApplicationStatusSummaryConsumerAsync)), "ApplicationEtl");
+                Logger.Debug("Rabbit subscriptions setup complete");
 
                 _applicationEtlControlQueueConsumer = ObjectFactory.GetInstance<ApplicationEtlControlQueueConsumer>();
 

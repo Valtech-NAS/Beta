@@ -2,13 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq.Expressions;
     using Entities.Applications;
 
     public interface IApplicationReadRepository : IReadRepository<ApplicationDetail>
     {
         ApplicationDetail Get(Guid id, bool errerrorIfNotFound);
-        ApplicationDetail Get(Expression<Func<ApplicationDetail, bool>> filter);
+
+        ApplicationDetail Get(int legacyApplicationId);
 
         IList<ApplicationSummary> GetForCandidate(Guid candidateId);
 

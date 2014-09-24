@@ -76,19 +76,5 @@
             var candidateApplications = readrepo.GetForCandidate(UserBuilder.UserAndCandidateId);
             candidateApplications.ToList().ForEach(a => writerepo.Delete(a.ApplicationId));
         }
-
-        public void DeleteApplications(string useremailAddress)
-        {
-            var writerepo = ObjectFactory.GetInstance<IApplicationWriteRepository>();
-            var readrepo = ObjectFactory.GetInstance<IApplicationReadRepository>();
-            var candidateApplication = readrepo.Get(ad => ad.CandidateDetails.EmailAddress == useremailAddress);
-
-            while (candidateApplication != null)
-            {
-                writerepo.Delete(candidateApplication.EntityId);
-                candidateApplication = readrepo.Get(ad => ad.CandidateDetails.EmailAddress == useremailAddress);
-            }
-            
-        }
     }
 }

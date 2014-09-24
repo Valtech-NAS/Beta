@@ -5,12 +5,14 @@
     using System.Linq;
     using Application.ApplicationUpdate;
     using Domain.Entities.Applications;
+    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
     using NLog;
     using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
+    using ErrorCodes = Application.VacancyEtl.ErrorCodes;
 
     public class LegacyCandidateApplicationStatusesProvider : ILegacyApplicationStatusesProvider
     {
@@ -67,9 +69,31 @@
 
         public IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses()
         {
-            //todo: retrieve application statuses for ALL candidates (used in ETL process)
-            //todo: the WSDL contract for this is going to change to match the above signature - awaiting update from John for when this will be done
-            throw new NotImplementedException();
+            // retrieve application statuses for ALL candidates (used in application ETL process)
+
+            Logger.Debug("Calling GetAllApplicationStatuses");
+
+            var request = new GetApplicationsStatusRequest
+            {
+                PageNumber = 1 //todo: currently paging is not supported in the NAS gateway. awaiting confirmation from John Shaw when this will be added
+            };
+
+            var response = default(GetApplicationsStatusResponse);
+
+            _service.Use("SecureService", client => response = client.GetApplicationsStatus(request));
+
+            if (response == null)
+            {
+                Logger.Error("Legacy GetAllApplicationStatuses did not respond");
+
+                throw new CustomException(
+                    "Failed to retrieve application statuses in legacy system for candidate",
+                    ErrorCodes.GatewayServiceFailed);
+            }
+
+            Logger.Debug("Application statuses were successfully retrieved from Legacy web service ({0})", response.CandidateApplications.Count());
+
+            return _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications);
         }
     }
 }

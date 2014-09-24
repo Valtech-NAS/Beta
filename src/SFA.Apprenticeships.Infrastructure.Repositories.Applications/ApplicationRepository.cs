@@ -76,12 +76,17 @@
             return mongoEntity == null ? null : _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
         }
 
-        public ApplicationDetail Get(Expression<Func<ApplicationDetail, bool>> filter)
+        public ApplicationDetail Get(int legacyApplicationId)
         {
-            //var item = Collection.AsQueryable().Where(filter);
-            //todo: return the first application that matches the filter
-            // .FirstOrDefault()
-            throw new NotImplementedException();
+            Logger.Debug("Calling repository to get ApplicationDetail with legacy Id={0}", legacyApplicationId);
+
+            var mongoEntity = Collection.AsQueryable().FirstOrDefault(a => a.LegacyApplicationId == legacyApplicationId);
+
+            var message = mongoEntity == null ? "Found no ApplicationDetail with legacy Id={0}" : "Found ApplicationDetail with legacy Id={0}";
+
+            Logger.Debug(message, legacyApplicationId);
+
+            return mongoEntity == null ? null : _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
         }
 
         public IList<ApplicationSummary> GetForCandidate(Guid candidateId)

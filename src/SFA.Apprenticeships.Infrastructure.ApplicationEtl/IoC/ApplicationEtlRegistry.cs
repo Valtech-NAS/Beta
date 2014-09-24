@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl.IoC
 {
     using System;
+    using Application.ApplicationUpdate;
+    using Application.ApplicationUpdate.Strategies;
     using Consumers;
     using StructureMap.Configuration.DSL;
 
@@ -10,6 +12,8 @@
         {
             For<ApplicationEtlControlQueueConsumer>().Use<ApplicationEtlControlQueueConsumer>();
             For<ApplicationStatusSummaryConsumerAsync>().Use<ApplicationStatusSummaryConsumerAsync>();
+            For<IApplicationStatusProcessor>().Use<ApplicationStatusProcessor>();
+            For<IApplicationStatusUpdateStrategy>().Use<ApplicationStatusUpdateStrategy>();
         }
     }
 }
