@@ -29,7 +29,7 @@
 
         public int CreateApplication(ApplicationDetail applicationDetail)
         {
-            var message = string.Format("Leggacy CreateApplication of candidate {0} to vacancy {1}",
+            var message = string.Format("Legacy CreateApplication of candidate {0} to vacancy {1}",
                 applicationDetail.CandidateId, applicationDetail.Vacancy.Id);
             Logger.Debug(message);
 
