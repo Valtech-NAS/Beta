@@ -22,13 +22,13 @@
         <p class="form-hint">For example, do you need a signer, information in braille.</p>
         <div class="form-group form-group-compound inline">
             <label data-target="support-panel" for="support-yes" class="block-label">
-                @Html.RadioButtonFor(m => m.RequiresSupportForInterview, true, true, new { id = "support-yes" }) Yes
+                @Html.RadioButtonFor(m => m.RequiresSupportForInterview, true, true, new { id = "support-yes", aria_controls = "support-panel", aria_expanded = "false" }) Yes
             </label>
             <label for="support-no" class="block-label">
                 @Html.RadioButtonFor(m => m.RequiresSupportForInterview, false, false, new { id = "support-no" }) No
             </label>
         </div>
-        <div id="support-panel" class="panel-indent toggle-content">
+        <div id="support-panel" class="panel-indent toggle-content" aria-hidden="true">
             @Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" }, labelHtmlAttributes: new { @class = "form-hint text" })
         </div>
     </div>

@@ -11,7 +11,7 @@
         <div class="hide-nojs">
             <div class="form-group inline clearfix">
                 <label data-target="workexperience-panel" for="workexp-yes" class="block-label" data-bind="css: {selected: showWorkExperience()}">
-                    @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, true, true, new { id = "workexp-yes", data_bind = "attr:{'checked': hasWorkExperience() }" })
+                    @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, true, true, new { id = "workexp-yes", data_bind = "attr:{'checked': hasWorkExperience() }", aria_controls = "workexperience-panel", aria_expanded = "false" })
                     Yes
                 </label>
                 <label for="workexp-no" class="block-label" data-bind="css: {selected: !showWorkExperience()}">
@@ -19,7 +19,7 @@
                     No
                 </label>
             </div>
-            <div id="workexperience-panel" class="toggle-content" data-bind="style: {'display': workExperienceStatus() }">
+            <div id="workexperience-panel" class="toggle-content" data-bind="style: {'display': workExperienceStatus() }" aria-hidden="true">
                 <div class="clearfix">
                     <div class="form-group form-group-compound" data-bind="parentvalElement: employer">
                         <label for="work-employer" class="form-label">Employer</label>
