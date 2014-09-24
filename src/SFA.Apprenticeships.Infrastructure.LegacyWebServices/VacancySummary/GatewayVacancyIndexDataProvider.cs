@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummary
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Application.VacancyEtl;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
@@ -71,8 +72,10 @@
                     ErrorCodes.GatewayServiceFailed);
             }
 
-            return _mapper.Map<GatewayServiceProxy.VacancySummary[], IEnumerable<Domain.Entities.Vacancies.VacancySummary>>(
+            var results = _mapper.Map<GatewayServiceProxy.VacancySummary[], IEnumerable<Domain.Entities.Vacancies.VacancySummary>>(
                 response.VacancySummaries);
+
+            return results.Where(r => r.VacancyType == VacancyType.Apprenticeship);
         }
     }
 }

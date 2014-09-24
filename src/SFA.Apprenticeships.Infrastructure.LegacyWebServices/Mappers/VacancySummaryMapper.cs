@@ -13,6 +13,7 @@
                 .ForMember(d => d.VacancyLocationType, opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
                 .ForMember(d => d.Location, opt => opt.ResolveUsing<VacancySummaryLocationResolver>().FromMember(src => src.VacancyAddress))
                 .ForMember(d => d.Title, opt => opt.MapFrom(src => src.VacancyTitle))
+                .ForMember(d => d.VacancyType, opt => opt.ResolveUsing<VacancyTypeResolver>().FromMember(src => src.VacancyType))
                 .ForMember(d => d.ClosingDate, opt => opt.MapFrom(src => src.ClosingDate.ToUniversalTime()));
         }
     }

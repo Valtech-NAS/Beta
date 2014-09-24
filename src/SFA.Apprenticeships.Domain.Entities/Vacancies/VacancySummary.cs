@@ -18,5 +18,7 @@
         public GeoPoint Location { get; set; }
 
         public VacancyLocationType VacancyLocationType { get; set; }
+
+        public VacancyType VacancyType { get; set; }
     }
 }

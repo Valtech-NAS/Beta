@@ -92,6 +92,7 @@
     <Compile Include="Consumers\VacancySummaryCompleteConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryPageConsumerAsync.cs" />
+    <Compile Include="IoC\GatewayVacancyEtlRegistry.cs" />
     <Compile Include="IoC\VacancyEtlRegistry.cs" />
     <Compile Include="Mappers\VacancyEtlMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -49,6 +49,7 @@
     <Compile Include="Entities\VacancySummaryPageComplete.cs" />
     <Compile Include="Entities\VacancySummaryUpdate.cs" />
     <Compile Include="ErrorCodes.cs" />
+    <Compile Include="GatewayVacancySummaryProcessor.cs" />
     <Compile Include="IVacancyIndexDataProvider.cs" />
     <Compile Include="IVacancySummaryProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
