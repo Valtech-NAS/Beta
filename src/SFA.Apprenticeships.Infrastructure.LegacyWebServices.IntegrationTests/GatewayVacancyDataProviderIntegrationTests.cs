@@ -1,51 +1,56 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
+    using System.Linq;
     using Application.Vacancy;
+    using Application.VacancyEtl;
     using Common.IoC;
+    using Domain.Entities.Exceptions;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using IoC;
     using NUnit.Framework;
-    using Repositories.Applications.IoC;
-    using Repositories.Candidates.IoC;
     using StructureMap;
-    using VacancyDetail;
-
-    // TODO: AG: US484: use or remove this integration test.
 
     [TestFixture]
     public class GatewayVacancyDataProviderIntegrationTests
     {
-        private IVacancyDataProvider _provider;
-
         [SetUp]
         public void SetUp()
         {
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
-                x.AddRegistry<CandidateRepositoryRegistry>();
-                x.AddRegistry<ApplicationRepositoryRegistry>();
-
-                // Inject provider under test.
-                x.For<IVacancyDataProvider>().Use<GatewayVacancyDataProvider>();
+                x.AddRegistry<GatewayWebServicesRegistry>();
             });
 
-            // Providers.
-            _provider = ObjectFactory.GetInstance<IVacancyDataProvider>();
+            _vacancyDataProvider = ObjectFactory.GetInstance<IVacancyDataProvider>();
+            _vacancyIndexDataProvider = ObjectFactory.GetInstance<IVacancyIndexDataProvider>();
+        }
+
+        private IVacancyDataProvider _vacancyDataProvider;
+        private IVacancyIndexDataProvider _vacancyIndexDataProvider;
+
+        [Test, Category("Integration")]
+        [ExpectedException(typeof(CustomException))]
+        public void ShouldNotReturnVacancyDetailsForInvalidVacancyId()
+        {
+            var result = _vacancyDataProvider.GetVacancyDetails(-123);
+
+            result.Should().BeNull();
         }
 
         [Test, Category("Integration")]
-        [Ignore]
-        public void ShouldNotReturnVacancyDetailsForNonExistentVacancyId()
+        public void ShouldReturnVacancyDetailsForValidVacancyId()
         {
-            // Arrange.
+            var response = _vacancyIndexDataProvider.GetVacancySummaries(VacancyLocationType.Unknown, 1);
 
-            // Act.
-            var result = _provider.GetVacancyDetails(-1);
+            var firstOrDefault = response.FirstOrDefault();
 
-            // Assert.
-            result.Should().BeNull();
+            if (firstOrDefault == null) return;
+
+            var firstVacancyId = firstOrDefault.Id;
+            var result = _vacancyDataProvider.GetVacancyDetails(firstVacancyId);
+            result.Should().NotBeNull();
         }
     }
 }

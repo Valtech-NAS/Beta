@@ -9,7 +9,7 @@
     using Domain.Interfaces.Messaging;
     using Entities;
     using NLog;
-
+    
     public class VacancySummaryProcessor : IVacancySummaryProcessor
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -29,7 +29,7 @@
             _mapper = mapper;
             _processControlQueue = processControlQueue;
         }
-
+       
         public void QueueVacancyPages(StorageQueueMessage scheduledQueueMessage)
         {
             Logger.Debug("Loading national and non-national vacancy counts");

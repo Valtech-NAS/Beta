@@ -5,7 +5,8 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Locations;
-
+    
+    //TODO Remove unused properties
     [Serializable]
     public class VacancyDetailViewModel : ViewModelBase
     {

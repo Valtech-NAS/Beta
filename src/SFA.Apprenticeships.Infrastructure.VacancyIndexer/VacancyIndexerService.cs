@@ -120,7 +120,7 @@
 
         private static string GetIndexNameAndDateExtension(string indexAlias, DateTime dateTime)
         {
-            return string.Format("{0}.{1}", indexAlias, dateTime.ToString("yyyy-MM-dd"));
+            return string.Format("{0}.{1}", indexAlias, dateTime.ToString("yyyy-MM-dd-HH-mm"));
         }
     }
 }

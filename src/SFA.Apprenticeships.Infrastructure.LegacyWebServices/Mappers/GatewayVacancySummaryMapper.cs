@@ -20,14 +20,17 @@
                     opt => opt.MapFrom(src => src.ShortDescription))
 
                 .ForMember(dest => dest.Location,
-                   opt => opt.ResolveUsing<GatewayVacancySummaryLocationResolver>()
-                       .FromMember(src => src.Address))
+                    opt => opt.ResolveUsing<GatewayVacancySummaryLocationResolver>()
+                        .FromMember(src => src.Address))
 
                 .ForMember(dest => dest.VacancyLocationType,
-                   opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
+                    opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
 
                 .ForMember(dest => dest.Title,
-                    opt => opt.MapFrom(src => src.VacancyTitle));
+                    opt => opt.MapFrom(src => src.VacancyTitle))
+
+                .ForMember(dest => dest.VacancyType,
+                    opt => opt.ResolveUsing<VacancyTypeResolver>().FromMember(src => src.VacancyType));
             ;
         }
     }

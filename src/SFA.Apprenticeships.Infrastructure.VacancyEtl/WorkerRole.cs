@@ -66,8 +66,8 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                     x.AddRegistry<AzureCommonRegistry>();
                     x.AddRegistry<VacancyIndexerRegistry>();
                     x.AddRegistry<RabbitMqRegistry>();
-                    x.AddRegistry<LegacyWebServicesRegistry>();
-                    x.AddRegistry<VacancyEtlRegistry>();
+                    x.AddRegistry<GatewayWebServicesRegistry>();
+                    x.AddRegistry<GatewayVacancyEtlRegistry>();
                     x.AddRegistry<ElasticsearchCommonRegistry>();
                 });
 

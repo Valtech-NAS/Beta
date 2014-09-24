@@ -39,7 +39,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             var data = new VacancyFullData
             {
                 VacancyReference = 1,
-                VacancyLocationType = "MultipleLocation",
+                VacancyLocationType = "MultipleLocation",            
                 VacancyType = "IntermediateLevelApprenticeship",
                 WageType = VacancyDetailProxy.WageType.Text
             };
@@ -48,7 +48,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
 
             test.Id.Should().Be(1);
             test.VacancyLocationType.Should().Be(VacancyLocationType.NonNational);
-            test.VacancyType.Should().Be(VacancyType.Intermediate);
+            test.VacancyLevel.Should().Be(VacancyLevel.Intermediate);
             test.WageType.Should().Be(WageType.Text);
         }
 

@@ -3,20 +3,20 @@
     using AutoMapper;
     using Domain.Entities.Vacancies;
 
-    public class VacancyTypeResolver : ValueResolver<string, VacancyType>
+    public class VacancyLevelResolver : ValueResolver<string, VacancyLevel>
     {
-        protected override VacancyType ResolveCore(string source)
+        protected override VacancyLevel ResolveCore(string source)
         {
             switch (source)
             {
                 case "IntermediateLevelApprenticeship":
+                    return VacancyLevel.Intermediate;
                 case "AdvancedLevelApprenticeship":
+                    return VacancyLevel.Advanced;
                 case "HigherApprenticeship":
-                    return VacancyType.Apprenticeship;
-                case "Traineeship":
-                    return VacancyType.Traineeship;
+                    return VacancyLevel.Higher;
                 default:
-                    return VacancyType.Unknown;
+                    return VacancyLevel.Unknown;
             }
         }
     }

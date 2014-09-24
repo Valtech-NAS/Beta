@@ -17,7 +17,7 @@
 
         public string Framework { get; set; }
 
-        public VacancyType VacancyType { get; set; }
+        public VacancyLevel VacancyLevel { get; set; }
 
         public DateTime StartDate { get; set; }
 
@@ -42,6 +42,8 @@
         public string VacancyManager { get; set; }
 
         public VacancyLocationType VacancyLocationType { get; set; }
+
+        public VacancyType VacancyType { get; set; }
 
         public string LocalAuthority { get; set; }
 
