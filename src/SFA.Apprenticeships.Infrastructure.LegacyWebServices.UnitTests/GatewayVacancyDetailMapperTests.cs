@@ -31,6 +31,7 @@
             // Arrange.
             var src = new Vacancy
             {
+                VacancyId =  67,
                 VacancyReference = 42,
                 ApplicationInstructions = "ApplicationInstructions",
                 ClosingDate = DateTime.Today.AddDays(1),
@@ -73,7 +74,7 @@
             // Assert.
             dest.Should().NotBeNull();
 
-            dest.Id.Should().Be(src.VacancyReference);
+            dest.Id.Should().Be(src.VacancyId);
             dest.ApplicationInstructions.Should().Be(src.ApplicationInstructions);
             dest.ClosingDate.Should().Be(src.ClosingDate);
             dest.Contact.Should().Be(src.ContactPerson);
@@ -108,6 +109,8 @@
             dest.Wage.Should().Be(src.WeeklyWage);
             dest.WageDescription.Should().Be(src.WageText);
             dest.WorkingWeek.Should().Be(src.WorkingWeek);
+            dest.VacancyReference.Should().Be("VAC" + src.VacancyReference.ToString("D9"))
+            ;
         }
 
         [TestCase]

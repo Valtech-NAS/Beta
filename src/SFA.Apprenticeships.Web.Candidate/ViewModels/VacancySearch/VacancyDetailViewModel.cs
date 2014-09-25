@@ -18,10 +18,7 @@
 
         public int Id { get; set; }
 
-        public string FullVacancyReferenceId
-        {
-            get { return "VAC" + Id.ToString("D9"); }
-        }
+        public string VacancyReference { get; set; }
 
         public string Title { get; set; }
         

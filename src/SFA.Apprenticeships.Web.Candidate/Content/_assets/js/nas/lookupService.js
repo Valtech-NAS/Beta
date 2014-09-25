@@ -35,6 +35,7 @@ $(document).ready(function () {
         var $addressSelect = $("#address-select");
         var $addressList = $("#address-list");
         var $findAddressButton = $('#find-addresses');
+        var $ariaFoundText = $('#addressesFound');
 
         self.click(function (e) {
             e.preventDefault();
@@ -100,9 +101,12 @@ $(document).ready(function () {
 
                     $addressList.removeClass("toggle-content").removeAttr('hidden');
 
+                    $ariaFoundText.text(addresses.length + ' addresses have been found, please select from the dropdown');
+
                 } else {
                     $addressList.addClass("toggle-content").attr('hidden', true);
                     showErrorMessage("Postcode not found. Please enter address manually.");
+                    $ariaFoundText.text('');
                 }
             }
 
@@ -113,12 +117,14 @@ $(document).ready(function () {
             $addressList.addClass("toggle-content").attr('hidden', true);
             showErrorMessage("Please enter a postcode");
             showFindAddressButton();
+            $ariaFoundText.text('');
         };
 
         var handleInvalidPostcode = function () {
             $addressList.addClass("toggle-content").attr('hidden', true);
             showErrorMessage("Please enter a valid postcode");
             showFindAddressButton();
+            $ariaFoundText.text('');
         };
 
         var handleError = function (e) {

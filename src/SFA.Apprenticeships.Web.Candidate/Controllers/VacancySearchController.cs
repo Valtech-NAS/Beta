@@ -46,12 +46,8 @@
             PopulateSortType();
 
 // ReSharper disable once RedundantAssignment
-            int resultsPerPage = 0;
-            if (!int.TryParse(UserData.Get(UserDataItemNames.ResultsPerPage), out resultsPerPage))
-            {
-                resultsPerPage = _vacancyResultsPerPage;
-            }
-            
+            var resultsPerPage = GetResultsPerPage();
+
             return
                 View(new VacancySearchViewModel
                 {
@@ -61,11 +57,27 @@
                 });
         }
 
+        private int GetResultsPerPage()
+        {
+            int resultsPerPage = 0;
+            if (!int.TryParse(UserData.Get(UserDataItemNames.ResultsPerPage), out resultsPerPage))
+            {
+                resultsPerPage = _vacancyResultsPerPage;
+            }
+            return resultsPerPage;
+        }
+
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         public ActionResult Results(VacancySearchViewModel model)
         {
             UserData.Pop(UserDataItemNames.VacancyDistance);
+
+            if (model.ResultsPerPage == 0)
+            {
+                model.ResultsPerPage = GetResultsPerPage();
+            }
+
             UserData.Push(UserDataItemNames.ResultsPerPage, model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
 
             if (model.SearchAction == SearchAction.Search && model.LocationType != VacancyLocationType.Local)

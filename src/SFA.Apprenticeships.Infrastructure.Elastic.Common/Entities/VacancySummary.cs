@@ -24,6 +24,9 @@
         [ElasticProperty(Index = FieldIndexOption.Analyzed)]
         public VacancyLocationType VacancyLocationType { get; set; }
 
+        [ElasticProperty(Index = FieldIndexOption.Analyzed)]
+        public VacancyType VacancyType { get; set; }
+
         [ElasticProperty(Type = FieldType.GeoPoint, Index = FieldIndexOption.Analyzed)]
         public GeoPoint Location { get; set; }
     }
