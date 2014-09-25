@@ -47,6 +47,7 @@
     </Compile>
     <Compile Include="ApplicationStatusProcessor.cs" />
     <Compile Include="ApplicationStatusUpdater.cs" />
+    <Compile Include="Entities\ApplicationUpdatePage.cs" />
     <Compile Include="IApplicationStatusProcessor.cs" />
     <Compile Include="IApplicationStatusUpdater.cs" />
     <Compile Include="ILegacyApplicationStatusesProvider.cs" />

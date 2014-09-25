@@ -2,10 +2,13 @@
 {
     using System;
     using Domain.Entities.Applications;
+    using Entities;
 
     public interface IApplicationStatusProcessor
     {
-        void QueueApplicationStatuses();
+        void QueueApplicationStatusesPages();
+
+        void QueueApplicationStatuses(ApplicationUpdatePage applicationStatusSummaryPage);
 
         void ProcessApplicationStatuses(ApplicationStatusSummary applicationStatusSummary);
     }

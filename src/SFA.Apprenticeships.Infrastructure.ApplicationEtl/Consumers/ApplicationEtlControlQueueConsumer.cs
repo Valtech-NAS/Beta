@@ -22,7 +22,7 @@
             {
                 if (GetLatestQueueMessage() != null)
                 {
-                    _applicationStatusProcessor.QueueApplicationStatuses();
+                    _applicationStatusProcessor.QueueApplicationStatusesPages();
                 }
             });
         }

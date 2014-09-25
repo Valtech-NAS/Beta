@@ -35,7 +35,7 @@
             Logger.Debug("Loading vacancy counts from NAS Gateway");
 
             var vacancyPageCount = _vacancyIndexDataProvider.GetVacancyPageCount(VacancyLocationType.National);
-            Logger.Debug("Loaded vacancy count of: {0} from NAS Gateway", vacancyPageCount);
+            Logger.Debug("Loaded vacancy page count of: {0} from NAS Gateway", vacancyPageCount);
          
             var vacancySumaries = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, vacancyPageCount).ToList();
 

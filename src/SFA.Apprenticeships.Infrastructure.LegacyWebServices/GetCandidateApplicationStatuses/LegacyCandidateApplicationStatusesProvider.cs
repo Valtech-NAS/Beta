@@ -67,15 +67,42 @@
             return _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications);
         }
 
-        public IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses()
+        public int GetApplicationStatusesPageCount()
         {
-            // retrieve application statuses for ALL candidates (used in application ETL process)
+            // retrieve application statuses page count so can queue subsequent paged requests
 
-            Logger.Debug("Calling GetAllApplicationStatuses");
+            Logger.Debug("Calling GetAllApplicationStatuses to find page count");
 
             var request = new GetApplicationsStatusRequest
             {
-                PageNumber = 1 //todo: currently paging is not supported in the NAS gateway. awaiting confirmation from John Shaw when this will be added
+                PageNumber = 1
+            };
+
+            var response = default(GetApplicationsStatusResponse);
+
+            _service.Use("SecureService", client => response = client.GetApplicationsStatus(request));
+
+            if (response == null)
+            {
+                Logger.Error("Legacy GetAllApplicationStatuses for page count did not respond");
+
+                throw new CustomException("Failed to retrieve application statuses page count in legacy system", ErrorCodes.GatewayServiceFailed);
+            }
+
+            Logger.Debug("Application statuses page count returned {0}", response.TotalPages);
+
+            return response.TotalPages;
+        }
+
+        public IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses(int pageNumber)
+        {
+            // retrieve application statuses for ALL candidates (used in application ETL process)
+
+            Logger.Debug("Calling GetAllApplicationStatuses (page {0})", pageNumber);
+
+            var request = new GetApplicationsStatusRequest
+            {
+                PageNumber = pageNumber
             };
 
             var response = default(GetApplicationsStatusResponse);
@@ -86,12 +113,11 @@
             {
                 Logger.Error("Legacy GetAllApplicationStatuses did not respond");
 
-                throw new CustomException(
-                    "Failed to retrieve application statuses in legacy system for candidate",
-                    ErrorCodes.GatewayServiceFailed);
+                throw new CustomException("Failed to retrieve application statuses in legacy system", ErrorCodes.GatewayServiceFailed);
             }
 
-            Logger.Debug("Application statuses were successfully retrieved from Legacy web service ({0})", response.CandidateApplications.Count());
+            Logger.Debug("Application statuses (page {0}) were successfully retrieved from Legacy web service ({1})", 
+                pageNumber, response.CandidateApplications.Count());
 
             return _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications);
         }

@@ -99,6 +99,7 @@
     </Compile>
     <Compile Include="Consumers\ApplicationEtlControlQueueConsumer.cs" />
     <Compile Include="Consumers\ApplicationStatusSummaryConsumerAsync.cs" />
+    <Compile Include="Consumers\ApplicationStatusSummaryPageConsumerAsync.cs" />
     <Compile Include="IoC\ApplicationEtlRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />

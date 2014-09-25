@@ -9,6 +9,8 @@
     {
         IEnumerable<ApplicationStatusSummary> GetCandidateApplicationStatuses(Candidate candidate);
 
-        IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses();
+        int GetApplicationStatusesPageCount();
+
+        IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses(int pageNumber);
     }
 }

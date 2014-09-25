@@ -40,20 +40,20 @@
             var nonNationalCount = _vacancyIndexDataProvider.GetVacancyPageCount(VacancyLocationType.NonNational);
             Logger.Debug("Loaded non-national vacancy count of: {0}", nationalCount);
 
-            var vacancySumaries = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, nationalCount, nonNationalCount).ToList();
+            var vacancySumamaryPageMessages = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, nationalCount, nonNationalCount).ToList();
 
             // Only delete from queue once we have all vacancies from the service without error.
             _processControlQueue.DeleteMessage(scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
 
             Parallel.ForEach(
-                vacancySumaries,
+                vacancySumamaryPageMessages,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 vacancySummaryPage => _messageBus.PublishMessage(vacancySummaryPage));
 
-            Logger.Debug("Posted {0} vacancy summary pages to queue", vacancySumaries.Count());
+            Logger.Debug("Posted {0} vacancy summary pages to queue", vacancySumamaryPageMessages.Count());
         }
 
-        private IEnumerable<VacancySummaryPage> BuildVacancySummaryPages(DateTime scheduledRefreshDateTime, int nationalCount, int nonNationalCount)
+        private static IEnumerable<VacancySummaryPage> BuildVacancySummaryPages(DateTime scheduledRefreshDateTime, int nationalCount, int nonNationalCount)
         {
             var totalCount = nationalCount + nonNationalCount;
             var vacancySumaries = new List<VacancySummaryPage>(totalCount);
