@@ -270,7 +270,7 @@
 
                 return new WhatHappensNextViewModel
                 {
-                    VacancyReference = patchedModel.VacancyDetail.FullVacancyReferenceId,
+                    VacancyReference = patchedModel.VacancyDetail.VacancyReference,
                     VacancyTitle = patchedModel.VacancyDetail.Title,
                     Status = patchedModel.Status
                 };

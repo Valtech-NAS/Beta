@@ -11,5 +11,9 @@
 
         [Description("AdvancedLevelApprenticeship")] 
         Advanced,
+
+        [Description("HigherApprenticeship")]
+        Higher
     }
 }
+    

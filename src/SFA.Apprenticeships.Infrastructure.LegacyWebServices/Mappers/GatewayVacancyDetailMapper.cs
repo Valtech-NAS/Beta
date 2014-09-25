@@ -8,7 +8,10 @@
         {
             Mapper.CreateMap<GatewayServiceProxy.Vacancy, Domain.Entities.Vacancies.VacancyDetail>()
                 .ForMember(dest => dest.Id,
-                    opt => opt.MapFrom(src => src.VacancyReference))
+                    opt => opt.MapFrom(src => src.VacancyId))
+
+                .ForMember(dest => dest.VacancyReference,
+                 opt => opt.MapFrom(src => "VAC" + src.VacancyReference.ToString("D9")))
 
                 .ForMember(dest => dest.ApplicationInstructions,
                     opt => opt.MapFrom(src => src.ApplicationInstructions))

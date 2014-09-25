@@ -347,7 +347,7 @@
                 new
                 {
                     id,
-                    vacancyReference = model.VacancyDetail.FullVacancyReferenceId,
+                    vacancyReference = model.VacancyDetail.VacancyReference,
                     vacancyTitle = model.VacancyDetail.Title
                 });
         }
