@@ -55,7 +55,7 @@
 
         public static class TermsAndConditions
         {
-            public const string LabelText = "I accept the <a href='/terms'>terms & conditions</a>";
+            public const string LabelText = "I accept the <a href='/terms' target='_blank'>terms & conditions</a>";
             public const string MustAcceptTermsAndConditions = "Please accept the terms & conditions";
         }
 
