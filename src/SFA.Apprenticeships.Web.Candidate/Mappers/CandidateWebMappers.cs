@@ -35,9 +35,9 @@
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
                 .ForMember(d => d.Wage, opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.WageResolver>())
                 .ForMember(d => d.RealityCheck,
-                    opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.LoremIpsumResolver>())
+                    opt => opt.MapFrom(src => src.RealityCheck))
                 .ForMember(d => d.OtherInformation,
-                    opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.LoremIpsumResolver>())
+                    opt => opt.MapFrom(src => src.OtherInformation))
                 .ForMember(d => d.ApplyViaEmployerWebsite,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.ApplyViaEmployerWebsiteResolver>())
                 .ForMember(d => d.VacancyUrl,

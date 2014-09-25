@@ -75,7 +75,6 @@
 
             if (model.ResultsPerPage == 0)
             {
-                ModelState.Remove("ResultsPerPage");
                 model.ResultsPerPage = GetResultsPerPage();
             }
 
