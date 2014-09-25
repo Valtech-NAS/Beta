@@ -9,6 +9,7 @@
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.Locations;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -75,7 +76,18 @@
                     1,
                     pageSize,
                     It.IsAny<int>(),
-                    VacancySortType.Relevancy)).Returns(results);
+                    VacancySortType.Relevancy,
+                    VacancyLocationType.National)).Returns(results);
+
+            _vacancySearchService.Setup(
+                x => x.Search(
+                    It.IsAny<string>(),
+                    It.IsAny<Location>(),
+                    1,
+                    pageSize,
+                    It.IsAny<int>(),
+                    VacancySortType.Relevancy,
+                    VacancyLocationType.NonNational)).Returns(results);
 
             var search = new VacancySearchViewModel
             {
@@ -84,7 +96,8 @@
                 Latitude = 0d,
                 PageNumber = 1,
                 WithinDistance = 2,
-                ResultsPerPage = pageSize
+                ResultsPerPage = pageSize,
+                LocationType = VacancyLocationType.National
             };
 
             var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object, _addressSearchService.Object, _mapper);

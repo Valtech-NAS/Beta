@@ -1,10 +1,11 @@
-﻿@model VacancySearchResponseViewModel
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
+@model VacancySearchResponseViewModel
 
 @{
     ViewBag.Title = "Apprenticeships - Results";
     Layout = "~/Views/Shared/_Layout.cshtml";
     
-    var locationTypeLink = Model.VacancySearch.LocationType == VacancyLocationType.Nationwide ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.Local, SearchAction = SearchAction.Sort}) : Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.Nationwide , SearchAction = SearchAction.Sort});
+    var locationTypeLink = Model.VacancySearch.LocationType == VacancyLocationType.National ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.NonNational, SearchAction = SearchAction.Sort, PageNumber = 1}) : Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.National , SearchAction = SearchAction.Sort, PageNumber = 1});
     
     string resultMessage;
     string nationalResultsMessage;
@@ -16,7 +17,7 @@
     else if (Model.TotalLocalHits == 1)
     {
         
-        if (Model.VacancySearch.LocationType == VacancyLocationType.Nationwide)
+        if (Model.VacancySearch.LocationType == VacancyLocationType.National)
         {
             resultMessage = "There is <b class=\"bold-medium\">1</b> <a id='localLocationTypeLink' href=" + locationTypeLink + ">local apprenticeship.</a>";
         }
@@ -27,7 +28,7 @@
     }
     else
     {
-        if (Model.VacancySearch.LocationType == VacancyLocationType.Nationwide)
+        if (Model.VacancySearch.LocationType == VacancyLocationType.National)
         {
             var message = "There are <b class=\"bold-medium\">{0}</b> <a id='localLocationTypeLink' href=" + locationTypeLink + ">local apprenticeships.</a>";
             resultMessage = string.Format(message, Model.TotalLocalHits);
@@ -45,7 +46,7 @@
     else if (Model.TotalNationalHits == 1)
     {
 
-        if (Model.VacancySearch.LocationType == VacancyLocationType.Local)
+        if (Model.VacancySearch.LocationType == VacancyLocationType.NonNational)
         {
             nationalResultsMessage = "There is <b class=\"bold-medium\">1</b> <a id='nationwideLocationTypeLink' href=" + locationTypeLink + ">nationwide apprenticeship.</a>";
         }
@@ -56,7 +57,7 @@
     }
     else
     {
-        if (Model.VacancySearch.LocationType == VacancyLocationType.Local)
+        if (Model.VacancySearch.LocationType == VacancyLocationType.NonNational)
         {
             var nationalMessage = "There are <b class=\"bold-medium\">{0}</b> <a id='nationwideLocationTypeLink' href=" + locationTypeLink + ">nationwide apprenticeships.</a>";
             nationalResultsMessage = string.Format(nationalMessage, Model.TotalNationalHits);
@@ -123,6 +124,7 @@
             });
 
             $('#results-per-page').change(function () {
+                $('#SearchAction').val("Sort");
                 $("form").submit();
             });
            

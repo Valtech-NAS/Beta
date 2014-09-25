@@ -3,6 +3,7 @@
     using System;
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
+    using Domain.Entities.Vacancies;
     using Interfaces.Search;
     using Interfaces.Vacancies;
     using NLog;
@@ -23,7 +24,8 @@
             int pageNumber,
             int pageSize,
             int searchRadius,
-            VacancySortType sortType)
+            VacancySortType sortType,
+            VacancyLocationType vacancyLocationType)
         {
             Condition.Requires(location, "location").IsNotNull();
             Condition.Requires(searchRadius, "searchRadius").IsGreaterOrEqual(0);
@@ -33,20 +35,20 @@
             var enterMmessage =
                 string.Format("Calling VacancySearchService to search for a vacancy. Keywords:{0}, Location:{1}," +
                               "PageNumber:{2}, PageSize{3}, SearchRadius:{4}," +
-                              "SortType:{5}", keywords, location, pageNumber, pageSize,
-                    searchRadius, sortType);
+                              "SortType:{5}" + "LocationType:{6}", keywords, location, pageNumber, pageSize,
+                    searchRadius, sortType, vacancyLocationType);
             Logger.Debug(enterMmessage);
 
             try
             {
-                return _vacancySearchProvider.FindVacancies(keywords, location, pageNumber, pageSize, searchRadius, sortType);
+                return _vacancySearchProvider.FindVacancies(keywords, location, pageNumber, pageSize, searchRadius, sortType, vacancyLocationType);
             }
             catch (Exception e)
             {
                 var message = string.Format("Vacancy search failed. Keywords:{0}, Location:{1}," +
                                             "PageNumber:{2}, PageSize{3}, SearchRadius:{4}," +
-                                            "SortType:{5}", keywords, location, pageNumber, pageSize,
-                                            searchRadius, sortType);
+                                            "SortType:{5}" + "LocationType:{6}", keywords, location, pageNumber, pageSize,
+                                            searchRadius, sortType, vacancyLocationType);
                 Logger.DebugException(message, e);
                 throw new Domain.Entities.Exceptions.CustomException(
                     message, e, ErrorCodes.VacanciesSearchFailed);

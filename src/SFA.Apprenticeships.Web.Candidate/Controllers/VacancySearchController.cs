@@ -10,6 +10,7 @@
     using Common.Constants;
     using Common.Models.Common;
     using Constants;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Microsoft.Ajax.Utilities;
@@ -52,18 +53,20 @@
                 View(new VacancySearchViewModel
                 {
                     WithinDistance = 2,
-                    LocationType = VacancyLocationType.Local,
+                    LocationType = VacancyLocationType.NonNational,
                     ResultsPerPage = resultsPerPage
                 });
         }
 
         private int GetResultsPerPage()
         {
-            int resultsPerPage = 0;
+            int resultsPerPage;
             if (!int.TryParse(UserData.Get(UserDataItemNames.ResultsPerPage), out resultsPerPage))
             {
                 resultsPerPage = _vacancyResultsPerPage;
             }
+
+
             return resultsPerPage;
         }
 
@@ -80,20 +83,20 @@
 
             UserData.Push(UserDataItemNames.ResultsPerPage, model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
 
-            if (model.SearchAction == SearchAction.Search && model.LocationType != VacancyLocationType.Local)
+            if (model.SearchAction == SearchAction.Search && model.LocationType != VacancyLocationType.NonNational)
             {
-                model.LocationType = VacancyLocationType.Local;
+                model.LocationType = VacancyLocationType.NonNational;
                 return RedirectToAction("results", model);
             }
 
-            if (model.LocationType == VacancyLocationType.Local && model.SortType == VacancySortType.Relevancy &&
+            if (model.LocationType == VacancyLocationType.NonNational && model.SortType == VacancySortType.Relevancy &&
                 string.IsNullOrWhiteSpace(model.Keywords))
             {
                 model.SortType = VacancySortType.Distance;
                 //return RedirectToAction("results", model);
             }
 
-            if (model.LocationType == VacancyLocationType.Nationwide && string.IsNullOrWhiteSpace(model.Keywords) &&
+            if (model.LocationType == VacancyLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) &&
                 model.SortType != VacancySortType.ClosingDate)
             {
                 model.SortType = VacancySortType.ClosingDate;
@@ -103,7 +106,7 @@
             PopulateDistances(model.WithinDistance);
             PopulateResultsPerPage(model.ResultsPerPage);
 
-            if (model.LocationType == VacancyLocationType.Nationwide)
+            if (model.LocationType == VacancyLocationType.National)
             {
                 PopulateSortType(model.SortType, model.Keywords, false);
             }
@@ -186,18 +189,18 @@
             }
 
             //TODO CM perform this in the provider
-            if (results.TotalLocalHits == 0 && results.VacancySearch.LocationType == VacancyLocationType.Local &&
+            if (results.TotalLocalHits == 0 && results.VacancySearch.LocationType == VacancyLocationType.NonNational &&
                 results.TotalNationalHits != 0)
             {
                 model.SortType = VacancySortType.ClosingDate;
-                model.LocationType = VacancyLocationType.Nationwide;
+                model.LocationType = VacancyLocationType.National;
 
                 return RedirectToAction("results", model);
             }
 
             if (model.SearchAction == SearchAction.Search)
             {
-                results.VacancySearch.LocationType = VacancyLocationType.Local;
+                results.VacancySearch.LocationType = VacancyLocationType.NonNational;
             }
 
             return View("results", results);

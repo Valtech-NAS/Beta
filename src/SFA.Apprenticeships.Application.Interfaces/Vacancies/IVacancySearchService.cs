@@ -2,6 +2,7 @@
 {
     using System;
     using Domain.Entities.Locations;
+    using Domain.Entities.Vacancies;
     using Search;
 
     public interface IVacancySearchService
@@ -15,12 +16,14 @@
         /// <param name="pageSize">number of results per page</param>
         /// <param name="searchRadius">in miles</param>
         /// <param name="sortType">the sort order for the results</param>
+        /// <param name="vacancyLocationType"></param>
         /// <returns>0..* matching vacancies</returns>
         SearchResults<VacancySummaryResponse> Search(string keywords,
             Location location,
             int pageNumber,
             int pageSize,
             int searchRadius,
-            VacancySortType sortType);
+            VacancySortType sortType,
+            VacancyLocationType vacancyLocationType);
     }
 }

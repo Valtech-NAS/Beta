@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
+    using System;
     using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Search;
@@ -7,11 +8,12 @@
     using Application.Vacancy;
     using Configuration;
     using Domain.Entities.Locations;
+    using Domain.Entities.Vacancies;
     using Elastic.Common.Configuration;
-    using Elastic.Common.Entities;
     using Nest;
     using Newtonsoft.Json.Linq;
     using NLog;
+    using VacancySummary = Elastic.Common.Entities.VacancySummary;
 
     public class VacancySearchProvider : IVacancySearchProvider
     {
@@ -19,7 +21,8 @@
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
         private readonly SearchConfiguration _searchConfiguration;
 
-        public VacancySearchProvider(IElasticsearchClientFactory elasticsearchClientFactory, SearchConfiguration searchConfiguration)
+        public VacancySearchProvider(IElasticsearchClientFactory elasticsearchClientFactory,
+            SearchConfiguration searchConfiguration)
         {
             _elasticsearchClientFactory = elasticsearchClientFactory;
             _searchConfiguration = searchConfiguration;
@@ -30,20 +33,22 @@
             int pageNumber,
             int pageSize,
             int searchRadius,
-            VacancySortType sortType)
+            VacancySortType sortType,
+            VacancyLocationType vacancyLocationType)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (VacancySummary));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (VacancySummary));
 
-            Logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName, indexName);
+            Logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
+                indexName);
 
             var search = client.Search<VacancySummaryResponse>(s =>
             {
                 s.Index(indexName);
                 s.Type(documentTypeName);
-                s.Skip((pageNumber - 1) * pageSize);
-                s.Take(pageSize);    
+                s.Skip((pageNumber - 1)*pageSize);
+                s.Take(pageSize);
 
                 s.TrackScores();
 
@@ -95,9 +100,12 @@
                         query = BuildContainer(query, queryClause);
                     }
 
+                    var vacancyLocationTypeClause =
+                        q.Match(p => p.OnField(f => f.VacancyLocationType).Query(vacancyLocationType.ToString()));
+                    query = BuildContainer(query, vacancyLocationTypeClause);
+
                     return query;
                 });
-
 
                 switch (sortType)
                 {
@@ -131,7 +139,7 @@
                                     return fp;
                                 })
                                 .Script("doc['location'].arcDistanceInMiles(lat, lon)")));
-                                //.Script("doc[\u0027location\u0027].distanceInMiles(lat,lon)")));
+                        //.Script("doc[\u0027location\u0027].distanceInMiles(lat,lon)")));
                         break;
                 }
 
@@ -148,7 +156,7 @@
             });
 
             var responses = search.Documents.ToList();
-            
+
             responses.ForEach(r =>
             {
                 var hitMd = search.HitsMetaData.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture));
@@ -164,10 +172,10 @@
                     var value = array[0];
                     r.Distance = double.Parse(value.ToString());
                 }
-                
+
                 r.Score = hitMd.Score;
             });
-            
+
             Logger.Debug("{0} search results returned", search.Total);
 
             var results = new SearchResults<VacancySummaryResponse>(search.Total, pageNumber, responses);
@@ -189,7 +197,8 @@
             return queryContainer;
         }
 
-        private static void BuildFieldQuery(MatchQueryDescriptor<VacancySummaryResponse> queryDescriptor, ISearchTermFactorsConfiguration searchFactors)
+        private static void BuildFieldQuery(MatchQueryDescriptor<VacancySummaryResponse> queryDescriptor,
+            ISearchTermFactorsConfiguration searchFactors)
         {
             if (searchFactors.Boost.HasValue)
             {

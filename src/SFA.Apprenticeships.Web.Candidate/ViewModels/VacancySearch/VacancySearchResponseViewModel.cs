@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     using System.Collections.Generic;
+    using Domain.Entities.Vacancies;
 
     public class VacancySearchResponseViewModel : ViewModelBase
     {
@@ -44,10 +45,17 @@
             get
             {
                 var pages = 1;
-                if (PageSize > 0)
+                if (PageSize <= 0) {return pages;}
+
+                if (VacancySearch.LocationType == VacancyLocationType.NonNational)
                 {
-                    pages = (int) TotalLocalHits/PageSize;
-                    if (TotalLocalHits%PageSize > 0) pages++;
+                    pages = (int)TotalLocalHits / PageSize;
+                    if (TotalLocalHits % PageSize > 0) pages++;
+                }
+                else
+                {
+                    pages = (int)TotalNationalHits / PageSize;
+                    if (TotalNationalHits % PageSize > 0) pages++;
                 }
 
                 return pages;

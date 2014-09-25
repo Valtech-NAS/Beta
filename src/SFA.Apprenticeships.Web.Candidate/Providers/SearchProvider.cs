@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Application.Interfaces.Locations;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
@@ -11,11 +13,11 @@
     using Constants.ViewModels;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Mapping;
     using NLog;
     using ViewModels.Locations;
     using ViewModels.VacancySearch;
-    using WebGrease.Css.Extensions;
     using ErrorCodes = Application.Interfaces.Locations.ErrorCodes;
 
     public class SearchProvider : ISearchProvider
@@ -44,7 +46,7 @@
 
             try
             {
-                IEnumerable<Location> locations = _locationSearchService.FindLocation(placeNameOrPostcode);
+                var locations = _locationSearchService.FindLocation(placeNameOrPostcode);
 
                 if (locations == null)
                 {
@@ -90,36 +92,36 @@
 
             try
             {
-                var searchResponse = _vacancySearchService.Search(search.Keywords,
+                var searchResponseNational = _vacancySearchService.Search(search.Keywords,
                     searchLocation, search.PageNumber,
-                    search.ResultsPerPage, search.WithinDistance, search.SortType);
+                    search.ResultsPerPage, search.WithinDistance, search.SortType, VacancyLocationType.National);
 
-                var searchResponseViewModel =
-                    _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(searchResponse);
+                var searchResponseNonNational = _vacancySearchService.Search(search.Keywords,
+                    searchLocation, search.PageNumber,
+                    search.ResultsPerPage, search.WithinDistance, search.SortType, VacancyLocationType.NonNational);
 
-                var localSearchResponseViewModel = searchResponseViewModel.Vacancies
-                    .Where(r => r.VacancyLocationType == VacancyLocationType.Local).ToList();
+                var searchResponseViewModelNational =
+                    _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(
+                        searchResponseNational);
 
-                var nationwideSearchResponseViewModel = searchResponseViewModel.Vacancies
-                    .Where(r => r.VacancyLocationType == VacancyLocationType.Nationwide).ToList();
-               
-                switch (search.LocationType)
+                var searchResponseViewModelNonNational =
+                    _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(
+                        searchResponseNonNational);
+
+                if (search.LocationType == VacancyLocationType.NonNational)
                 {
-                    case VacancyLocationType.Local:
-                        searchResponseViewModel.Vacancies = localSearchResponseViewModel;
-                        break;
-                    case VacancyLocationType.Nationwide:
-                        searchResponseViewModel.Vacancies = nationwideSearchResponseViewModel;
-                        break;
+                    searchResponseViewModelNonNational.TotalLocalHits = searchResponseNonNational.Total;
+                    searchResponseViewModelNonNational.TotalNationalHits = searchResponseNational.Total;
+                    searchResponseViewModelNonNational.PageSize = search.ResultsPerPage;
+                    searchResponseViewModelNonNational.VacancySearch = search;
+                    return searchResponseViewModelNonNational;
                 }
 
-                searchResponseViewModel.TotalLocalHits = localSearchResponseViewModel.Count;
-                searchResponseViewModel.TotalNationalHits = nationwideSearchResponseViewModel.Count;
-
-                searchResponseViewModel.PageSize = search.ResultsPerPage;
-                searchResponseViewModel.VacancySearch = search;
-
-                return searchResponseViewModel;
+                searchResponseViewModelNational.TotalLocalHits = searchResponseNonNational.Total;
+                searchResponseViewModelNational.TotalNationalHits = searchResponseNational.Total;
+                searchResponseViewModelNational.PageSize = search.ResultsPerPage;
+                searchResponseViewModelNational.VacancySearch = search;
+                return searchResponseViewModelNational;
             }
             catch (CustomException ex)
             {
@@ -160,7 +162,7 @@
                 IEnumerable<Address> addresses = _addressSearchService.FindAddress(postcode).OrderBy(x => x.Uprn);
                 addressSearchViewModel.Addresses = addresses != null
                     ? _mapper.Map<IEnumerable<Address>, IEnumerable<AddressViewModel>>(addresses)
-                    : new AddressViewModel[] {};
+                    : new AddressViewModel[] { };
             }
             catch (CustomException e)
             {

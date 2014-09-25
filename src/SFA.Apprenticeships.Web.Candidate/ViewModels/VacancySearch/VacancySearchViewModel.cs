@@ -4,6 +4,7 @@
     using Application.Interfaces.Vacancies;
     using Common.Models.Common;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies;
     using FluentValidation.Attributes;
     using Validators;
 

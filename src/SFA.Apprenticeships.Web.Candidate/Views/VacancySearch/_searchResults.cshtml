@@ -1,8 +1,9 @@
-﻿@model VacancySearchResponseViewModel
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
+@model VacancySearchResponseViewModel
 
 @if (Model.TotalLocalHits > 0 || Model.TotalNationalHits > 0)
 {
-    var disableSortDropdownList = string.IsNullOrEmpty(Model.VacancySearch.Keywords) && Model.VacancySearch.LocationType == VacancyLocationType.Nationwide ? true : false;
+    var disableSortDropdownList = string.IsNullOrEmpty(Model.VacancySearch.Keywords) && Model.VacancySearch.LocationType == VacancyLocationType.National ? true : false;
     <fieldset>
         <legend class="visuallyhidden">Search items</legend>
         <div class="float-right-wrap">
@@ -31,14 +32,14 @@
                 <p>@Html.ActionLink("Read more", "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString })</p>
                 <ul class="list-text">
 
-                    @if (vacancy.VacancyLocationType == VacancyLocationType.Local)
+                    @if (vacancy.VacancyLocationType == VacancyLocationType.NonNational)
                     {
                         <li><b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles</li>
                     }
 
                     <li><b>Closing date:</b> <span class="closing-date-value">@Html.DisplayFor(m => vacancy.ClosingDate, "Date")</span></li>
 
-                    @if (vacancy.VacancyLocationType == VacancyLocationType.Nationwide)
+                    @if (vacancy.VacancyLocationType == VacancyLocationType.National)
                     {
                         <li>This apprenticeship has multiple positions nationwide.</li>
                     }
