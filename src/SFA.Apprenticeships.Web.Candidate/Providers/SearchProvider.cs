@@ -90,32 +90,36 @@
 
             try
             {
-                SearchResults<VacancySummaryResponse> searchResponse = _vacancySearchService.Search(search.Keywords,
+                var searchResponse = _vacancySearchService.Search(search.Keywords,
                     searchLocation, search.PageNumber,
                     search.ResultsPerPage, search.WithinDistance, search.SortType);
 
-                VacancySearchResponseViewModel vacancySearchResponseViewModel =
+                var searchResponseViewModel =
                     _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(searchResponse);
 
+                var localSearchResponseViewModel = searchResponseViewModel.Vacancies
+                    .Where(r => r.VacancyLocationType == VacancyLocationType.Local).ToList();
+
+                var nationwideSearchResponseViewModel = searchResponseViewModel.Vacancies
+                    .Where(r => r.VacancyLocationType == VacancyLocationType.Nationwide).ToList();
+               
                 switch (search.LocationType)
                 {
                     case VacancyLocationType.Local:
-                        vacancySearchResponseViewModel.Vacancies.ForEach(
-                            r => r.VacancyLocationType = VacancyLocationType.Local);
+                        searchResponseViewModel.Vacancies = localSearchResponseViewModel;
                         break;
                     case VacancyLocationType.Nationwide:
-                        vacancySearchResponseViewModel.Vacancies.ForEach(
-                            r => r.VacancyLocationType = VacancyLocationType.Nationwide);
+                        searchResponseViewModel.Vacancies = nationwideSearchResponseViewModel;
                         break;
                 }
 
-                vacancySearchResponseViewModel.TotalLocalHits = searchResponse.Total;
-                vacancySearchResponseViewModel.TotalNationalHits = searchResponse.Total;
+                searchResponseViewModel.TotalLocalHits = localSearchResponseViewModel.Count;
+                searchResponseViewModel.TotalNationalHits = nationwideSearchResponseViewModel.Count;
 
-                vacancySearchResponseViewModel.PageSize = search.ResultsPerPage;
-                vacancySearchResponseViewModel.VacancySearch = search;
+                searchResponseViewModel.PageSize = search.ResultsPerPage;
+                searchResponseViewModel.VacancySearch = search;
 
-                return vacancySearchResponseViewModel;
+                return searchResponseViewModel;
             }
             catch (CustomException ex)
             {
