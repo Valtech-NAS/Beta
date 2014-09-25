@@ -48,7 +48,7 @@ namespace SFA.Apprenticeships.Web.Candidate
 
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(useCache));
+                x.AddRegistry(new GatewayWebServicesRegistry(useCache));
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
