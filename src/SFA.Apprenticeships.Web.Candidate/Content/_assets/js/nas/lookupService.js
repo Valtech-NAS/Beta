@@ -13,6 +13,7 @@ $(document).ready(function () {
             $("#Address_Uprn").val(option.val());
             $("#Address_GeoPoint_Latitude").val(selected.attr("data-lat"));
             $("#Address_GeoPoint_Longitude").val(selected.attr("data-lon"));
+            $('#addressesFound').text('Address has been entered into the fields below');
         }
         //TODO: if needing validation groups this should be refactored too
     });
@@ -28,14 +29,14 @@ $(document).ready(function () {
 (function ($) {
 
     $.fn.addressLookup = function (options) {
-        var self = this;
-        var settings = options;
+        var self = this,
+            settings = options;
 
-        var $postcodeSearchValidationError = $("#postcode-search-validation-error");
-        var $addressSelect = $("#address-select");
-        var $addressList = $("#address-list");
-        var $findAddressButton = $('#find-addresses');
-        var $ariaFoundText = $('#addressesFound');
+        var $postcodeSearchValidationError = $("#postcode-search-validation-error"),
+            $addressSelect = $("#address-select"),
+            $addressList = $("#address-list"),
+            $findAddressButton = $('#find-addresses'),
+            $ariaFoundText = $('#addressesFound');
 
         self.click(function (e) {
             e.preventDefault();
