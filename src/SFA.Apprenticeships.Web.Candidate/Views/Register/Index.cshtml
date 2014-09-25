@@ -16,8 +16,8 @@
 
     <fieldset class="fieldset-with-border">
         <legend class="heading-large">Your details</legend>
-        @Html.FormTextFor(m => m.Firstname, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { type = "text", autocapitalize = "words", autocorrect = "off", autofocus = "true" })
-        @Html.FormTextFor(m => m.Lastname, controlHtmlAttributes: new { type = "text", autocapitalize = "words", autocorrect = "off" })
+        @Html.FormTextFor(m => m.Firstname, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { type = "text", autocorrect = "off", autofocus = "true" })
+        @Html.FormTextFor(m => m.Lastname, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
         @Html.EditorFor(r => r.DateOfBirth)
     </fieldset>
 
