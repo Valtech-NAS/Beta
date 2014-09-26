@@ -73,6 +73,11 @@
                 .ForMember(dest => dest.IsRecruitmentAgencyAnonymous,
                     opt => opt.MapFrom(src => src.IsRecruitmentAgncyAnonymousSpecified && src.IsRecruitmentAgncyAnonymous))
 
+                 .ForMember(d => d.RecruitmentAgency,
+                    opt => opt.MapFrom(src => string.IsNullOrWhiteSpace(src.VacancyManager)
+                        ? src.VacancyManagerTradingName
+                        : default(string)))
+
                 .ForMember(dest => dest.IsSmallEmployerWageIncentive,
                     opt => opt.MapFrom(src => src.IsSmallEmployerWageIncentiveSpecified && src.IsSmallEmployerWageIncentive))
 

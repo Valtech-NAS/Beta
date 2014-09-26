@@ -28,7 +28,7 @@
             Mapper.CreateMap<Location, LocationViewModel>()
                 .ForMember(d => d.Latitude, opt => opt.MapFrom(s => s.GeoPoint.Latitude))
                 .ForMember(d => d.Longitude, opt => opt.MapFrom(s => s.GeoPoint.Longitude));
-            
+
             Mapper.CreateMap<VacancyDetail, VacancyDetailViewModel>()
                 .ForMember(d => d.EmployerName,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
@@ -42,7 +42,13 @@
                 .ForMember(d => d.VacancyUrl,
                     opt => opt.MapFrom(src => src.VacancyUrl))
                 .ForMember(d => d.ApplicationInstructions,
-                    opt => opt.MapFrom(src => src.ApplicationInstructions));
+                    opt => opt.MapFrom(src => src.ApplicationInstructions))
+                .ForMember(d => d.IsRecruitmentAgencyAnonymous,
+                    opt => opt.MapFrom(src => src.IsRecruitmentAgencyAnonymous))
+                .ForMember(d => d.RecruitmentAgency,
+                    opt => opt.MapFrom(src => src.RecruitmentAgency))
+                .ForMember(d => d.IsEmployerAnonymous,
+                    opt => opt.MapFrom(src => src.IsEmployerAnonymous));
 
             Mapper.CreateMap<VacancySummaryResponse, VacancySummaryViewModel>();
             

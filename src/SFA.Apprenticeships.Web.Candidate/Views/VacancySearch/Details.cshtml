@@ -112,9 +112,13 @@
         </section>
         <section class="section-border" id="employer-info">
             <h2 class="heading-large">About the employer</h2>
-            <div class="text">
-                <p id="vacancy-employer-description">@Html.Raw(Model.EmployerDescription)</p>
-            </div>
+            @if (!Model.IsEmployerAnonymous)
+            {
+                <div class="text">
+                    <p id="vacancy-employer-description">@Html.Raw(Model.EmployerDescription)</p>
+                </div>
+            }
+            
             <div class="grid-wrapper">
                 <div class="grid grid-1-2">
                     <div class="inner-block-padr">
@@ -177,6 +181,13 @@
                     </li>
                     <li id="vacancy-provider-name">@Model.ProviderName</li>
                 </ul>
+                
+                @if (!Model.IsRecruitmentAgencyAnonymous)
+                {
+                    <ul class="list-text">
+                        <li id="recruitment-agency-name">TODO: Applications to be processed by @Model.RecruitmentAgency</li>
+                    </ul>
+                }
 
                 @if (!string.IsNullOrWhiteSpace(Model.Contact))
                 {

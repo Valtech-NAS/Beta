@@ -58,6 +58,12 @@
 
         public string SupplementaryQuestion2 { get; set; }
 
+        public bool IsRecruitmentAgencyAnonymous { get; set; }
+
+        public string RecruitmentAgency { get; set; }
+
+        public bool IsEmployerAnonymous { get; set; }
+
         #endregion
 
         #region Provider
