@@ -156,6 +156,13 @@
             var applicationDetail = GetForCandidate(
                 candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
 
+            if (applicationDetail == null)
+            {
+                Logger.Debug("Application to be expired or withdrawn was not found for CandidateId={0}, VacancyId={1}", candidateId, vacancyId);
+
+                return;
+            }
+
             Logger.Debug("Found application to be expired or withdrawn with Id={0}, Status={1}", applicationDetail.EntityId, applicationDetail.Status);
 
             applicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;

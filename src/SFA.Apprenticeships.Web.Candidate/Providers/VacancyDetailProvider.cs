@@ -42,7 +42,7 @@
 
             try
             {
-                VacancyDetail vacancyDetail = _vacancyDataService.GetVacancyDetails(vacancyId);
+                var vacancyDetail = _vacancyDataService.GetVacancyDetails(vacancyId);
 
                 if (vacancyDetail == null)
                 {
@@ -58,17 +58,15 @@
                 var vacancyDetailViewModel =
                     _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
-                if (candidateId != null)
-                {
-                    // If candidate has applied for vacancy, include the details in the view model.
-                    ApplicationSummary applicationDetails = GetCandidateApplication(candidateId.Value, vacancyId);
+                if (candidateId == null) { return vacancyDetailViewModel; }
 
-                    if (applicationDetails != null)
-                    {
-                        vacancyDetailViewModel.CandidateApplicationStatus = applicationDetails.Status;
-                        vacancyDetailViewModel.DateApplied = applicationDetails.DateApplied;
-                    }
-                }
+                // If candidate has applied for vacancy, include the details in the view model.
+                var applicationDetails = GetCandidateApplication(candidateId.Value, vacancyId);
+
+                if (applicationDetails == null) { return vacancyDetailViewModel; }
+
+                vacancyDetailViewModel.CandidateApplicationStatus = applicationDetails.Status;
+                vacancyDetailViewModel.DateApplied = applicationDetails.DateApplied;
 
                 return vacancyDetailViewModel;
             }

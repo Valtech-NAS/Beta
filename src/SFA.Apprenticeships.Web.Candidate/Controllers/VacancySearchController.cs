@@ -8,7 +8,6 @@
     using ActionResults;
     using Application.Interfaces.Vacancies;
     using Common.Constants;
-    using Common.Models.Common;
     using Constants;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
@@ -46,7 +45,6 @@
             PopulateDistances();
             PopulateSortType();
 
-// ReSharper disable once RedundantAssignment
             var resultsPerPage = GetResultsPerPage();
 
             return
@@ -188,7 +186,7 @@
                 return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
             }
 
-            if (results.TotalLocalHits == 0 && 
+            if (results.TotalLocalHits == 0 &&
                 results.VacancySearch.LocationType == VacancyLocationType.NonNational &&
                 results.TotalNationalHits != 0)
             {
@@ -271,10 +269,10 @@
             var resultsPerPage = new SelectList(
                 new[]
                 {
-                    new{ResultsPerPage = 5, Name = "5 per page"},
-                    new{ResultsPerPage = 10, Name = "10 per page"},
-                    new{ResultsPerPage = 25, Name = "25 per page"},
-                    new{ResultsPerPage = 50, Name = "50 per page"}
+                    new {ResultsPerPage = 5, Name = "5 per page"},
+                    new {ResultsPerPage = 10, Name = "10 per page"},
+                    new {ResultsPerPage = 25, Name = "25 per page"},
+                    new {ResultsPerPage = 50, Name = "50 per page"}
                 },
                 "ResultsPerPage",
                 "Name",
