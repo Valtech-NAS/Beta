@@ -53,6 +53,12 @@
         [ElementLocator(Id = "search-no-results-title")]
         public IWebElement NoResultsTitle { get; set; }
 
+        [ElementLocator(Id = "nationwideLocationTypeLink")]
+        public IWebElement NationwideLocationTypeLink { get; set; }
+
+        [ElementLocator(Id = "localLocationTypeLink")]
+        public IWebElement LocalLocationTypeLink { get; set; }
+
         [ElementLocator(Class = "ui-autocomplete")]
         public IWebElement LocationAutoComplete
         {
