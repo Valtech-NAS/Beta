@@ -255,17 +255,20 @@ this.FeatureBackground();
                         "Field",
                         "Value"});
             table8.AddRow(new string[] {
+                        "Keywords",
+                        "Chef"});
+            table8.AddRow(new string[] {
                         "Location",
                         "London"});
 #line 62
  testRunner.When("I enter data", ((string)(null)), table8, "When ");
-#line 65
- testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 66
- testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 67
- testRunner.When("I choose NationwideLocationTypeLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 68
+ testRunner.When("I choose NationwideLocationTypeLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 69
  testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
@@ -274,9 +277,9 @@ this.FeatureBackground();
             table9.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Distance"});
-#line 69
+#line 70
  testRunner.When("I enter data", ((string)(null)), table9, "When ");
-#line 72
+#line 73
  testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
@@ -291,7 +294,7 @@ this.FeatureBackground();
                         "NationwideLocationTypeLink",
                         "Does Not Exist",
                         ""});
-#line 73
+#line 74
  testRunner.And("I see", ((string)(null)), table10, "And ");
 #line hidden
             this.ScenarioCleanup();

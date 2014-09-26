@@ -61,6 +61,7 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the sort order
 	Given I navigated to the VacancySearchPage page
 	When I enter data
 		 | Field          | Value    |
+		 | Keywords       | Chef     |
 		 | Location       | London   |
 	And I choose Search
 	Then I am on the VacancySearchResultPage page
