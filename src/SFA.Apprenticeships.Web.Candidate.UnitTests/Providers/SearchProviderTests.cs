@@ -67,31 +67,16 @@
         public void ShouldFindVacanciesFromCriteria()
         {
             const int pageSize = 10;
-            var results = new SearchResults<VacancySummaryResponse>(100, 1, new List<VacancySummaryResponse>());
-
-            _vacancySearchService.Setup(
-                x => x.Search(new SearchParameters
+            var results = new SearchResults<VacancySummaryResponse>(100, 1, new List<VacancySummaryResponse>()
+            {
+                new VacancySummaryResponse
                 {
-                    Keywords = It.IsAny<string>(),
-                    Location = It.IsAny<Location>(),
-                    PageNumber = 1,
-                    PageSize = pageSize,
-                    SearchRadius = It.IsAny<int>(),
-                    SortType = VacancySortType.Relevancy,
                     VacancyLocationType = VacancyLocationType.National
-                })).Returns(results);
+                }
+            });
 
             _vacancySearchService.Setup(
-                x => x.Search(new SearchParameters
-                {
-                    Keywords = It.IsAny<string>(),
-                    Location = It.IsAny<Location>(),
-                    PageNumber = 1,
-                    PageSize = pageSize,
-                    SearchRadius = It.IsAny<int>(),
-                    SortType = VacancySortType.Relevancy,
-                    VacancyLocationType = VacancyLocationType.NonNational
-                })).Returns(results);
+                x => x.Search(It.IsAny<SearchParameters>())).Returns(results);          
 
             var search = new VacancySearchViewModel
             {
