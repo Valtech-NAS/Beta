@@ -10,7 +10,7 @@ Background:
 	When I am on the HomePage page
 
 @US486 @US458 @US354
-Scenario: As a candidate I would like to apply for a vacancy
+Scenario: As a candidate I would like to preview a vacancy application
 	Given I have registered a new candidate
 	When I enter data
 		| Field    | Value  |
@@ -37,13 +37,6 @@ Scenario: As a candidate I would like to apply for a vacancy
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
 	And I choose ApplyButton
 	Then I am on the ApplicationPreviewPage page
-	When I choose SubmitApplication
-	Then I am on the ApplicationCompletePage page
-	When I choose MyApplicationsLink
-	Then I am on the MyApplicationsPage page
-	And I see
-		| Field                      | Rule   | Value |
-		| SubmittedApplicationsCount | Equals | 1     |
 
 @US461 @US154 @US458 @US464
 Scenario: As a candidate I want to save my application as a draft and be able to resume
