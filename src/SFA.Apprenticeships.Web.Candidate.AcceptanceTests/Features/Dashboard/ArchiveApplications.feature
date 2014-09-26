@@ -20,7 +20,7 @@ Scenario: As an candidate I want to be able to archive succesful applications
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	When I choose ArchiveSuccessfulLink 
-	And I see an alert box and select Yes
+	@And I see an alert box and select Yes
 	Then I am on the MyApplicationsPage page
 	And I see
 		| Field                         | Rule   | Value |
@@ -39,7 +39,7 @@ Scenario: As an candidate I want to be able to archive unsuccesful applications
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	When I choose ArchiveUnsuccessfulLink 
-	And I see an alert box and select Yes
+	@And I see an alert box and select Yes
 	Then I am on the MyApplicationsPage page
 	And I see
 		| Field                         | Rule   | Value |

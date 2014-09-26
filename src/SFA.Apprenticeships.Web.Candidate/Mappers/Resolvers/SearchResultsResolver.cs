@@ -14,7 +14,6 @@
 
             var viewModel = new VacancySearchResponseViewModel
             {
-                TotalLocalHits = source.Total,
                 Vacancies = context.Engine.Map<IEnumerable<VacancySummaryResponse>, IEnumerable<VacancySummaryViewModel>>(source.Results)
             };
 

@@ -1,14 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
-    using System.Collections;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Application.Interfaces.Locations;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
-    using Common.Models.Common;
     using Constants.Pages;
     using Constants.ViewModels;
     using Domain.Entities.Exceptions;
@@ -92,36 +91,39 @@
 
             try
             {
-                var searchResponseNational = _vacancySearchService.Search(search.Keywords,
-                    searchLocation, search.PageNumber,
-                    search.ResultsPerPage, search.WithinDistance, search.SortType, VacancyLocationType.National);
+                var results = ProcessNationalAndNonNationalSearches(search, searchLocation);
 
-                var searchResponseNonNational = _vacancySearchService.Search(search.Keywords,
-                    searchLocation, search.PageNumber,
-                    search.ResultsPerPage, search.WithinDistance, search.SortType, VacancyLocationType.NonNational);
+                var nationalResults = results[0].Results.Any(x => x.VacancyLocationType == VacancyLocationType.National)
+                    ? results[0]
+                    : results[1];
 
-                var searchResponseViewModelNational =
+                var nonNationalResults =
+                    results[0].Results.Any(x => x.VacancyLocationType == VacancyLocationType.NonNational)
+                        ? results[0]
+                        : results[1];
+
+                var nationalResponse =
                     _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(
-                        searchResponseNational);
+                        nationalResults);
 
-                var searchResponseViewModelNonNational =
+                var nonNationlResponse =
                     _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(
-                        searchResponseNonNational);
+                        nonNationalResults);
 
                 if (search.LocationType == VacancyLocationType.NonNational)
                 {
-                    searchResponseViewModelNonNational.TotalLocalHits = searchResponseNonNational.Total;
-                    searchResponseViewModelNonNational.TotalNationalHits = searchResponseNational.Total;
-                    searchResponseViewModelNonNational.PageSize = search.ResultsPerPage;
-                    searchResponseViewModelNonNational.VacancySearch = search;
-                    return searchResponseViewModelNonNational;
+                    nonNationlResponse.TotalLocalHits = nonNationalResults.Total;
+                    nonNationlResponse.TotalNationalHits = nationalResults.Total;
+                    nonNationlResponse.PageSize = search.ResultsPerPage;
+                    nonNationlResponse.VacancySearch = search;
+                    return nonNationlResponse;
                 }
 
-                searchResponseViewModelNational.TotalLocalHits = searchResponseNonNational.Total;
-                searchResponseViewModelNational.TotalNationalHits = searchResponseNational.Total;
-                searchResponseViewModelNational.PageSize = search.ResultsPerPage;
-                searchResponseViewModelNational.VacancySearch = search;
-                return searchResponseViewModelNational;
+                nationalResponse.TotalLocalHits = nonNationalResults.Total;
+                nationalResponse.TotalNationalHits = nationalResults.Total;
+                nationalResponse.PageSize = search.ResultsPerPage;
+                nationalResponse.VacancySearch = search;
+                return nationalResponse;
             }
             catch (CustomException ex)
             {
@@ -160,9 +162,7 @@
             try
             {
                 IEnumerable<Address> addresses = _addressSearchService.FindAddress(postcode).OrderBy(x => x.Uprn);
-                addressSearchViewModel.Addresses = addresses != null
-                    ? _mapper.Map<IEnumerable<Address>, IEnumerable<AddressViewModel>>(addresses)
-                    : new AddressViewModel[] { };
+                addressSearchViewModel.Addresses = _mapper.Map<IEnumerable<Address>, IEnumerable<AddressViewModel>>(addresses);
             }
             catch (CustomException e)
             {
@@ -179,6 +179,40 @@
             }
 
             return addressSearchViewModel;
+        }
+
+        private SearchResults<VacancySummaryResponse>[] ProcessNationalAndNonNationalSearches(
+            VacancySearchViewModel search, Location searchLocation)
+        {
+            var searchparameters = new List<SearchParameters>
+            {
+                new SearchParameters
+                {
+                    Keywords = search.Keywords,
+                    Location = searchLocation,
+                    PageNumber = search.PageNumber,
+                    PageSize = search.ResultsPerPage,
+                    SearchRadius = search.WithinDistance,
+                    SortType = search.SortType,
+                    VacancyLocationType = VacancyLocationType.National
+                },
+                new SearchParameters
+                {
+                    Keywords = search.Keywords,
+                    Location = searchLocation,
+                    PageNumber = search.PageNumber,
+                    PageSize = search.ResultsPerPage,
+                    SearchRadius = search.WithinDistance,
+                    SortType = search.SortType,
+                    VacancyLocationType = VacancyLocationType.NonNational
+                }
+            };
+        
+            var resultCollection = new ConcurrentBag<SearchResults<VacancySummaryResponse>>();
+            Parallel.ForEach(searchparameters,
+                parameters => resultCollection.Add(_vacancySearchService.Search(parameters)));
+
+            return resultCollection.ToArray();
         }
     }
 }

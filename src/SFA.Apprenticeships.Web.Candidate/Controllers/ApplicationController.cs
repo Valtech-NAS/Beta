@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Security;
@@ -40,6 +41,20 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Index()
         {
+            var deletedVacancyId = UserData.Pop(UserDataItemNames.DeletedVacancyId);
+
+            if (!string.IsNullOrEmpty(deletedVacancyId))
+            {
+                ViewBag.VacancyId = deletedVacancyId;
+            }
+
+            var deletedVacancyTitle = UserData.Pop(UserDataItemNames.DeletedVacancyTitle);
+
+            if (!string.IsNullOrEmpty(deletedVacancyTitle))
+            {
+                ViewBag.VacancyTitle = deletedVacancyTitle;
+            }
+
             var model = _applicationProvider.GetMyApplications(UserContext.CandidateId);
 
             return View(model);
@@ -83,6 +98,8 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public ActionResult Delete(int id)
         {
+            var viewModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+
             var applicationViewModel = _applicationProvider.DeleteApplication(UserContext.CandidateId, id);
 
             if (applicationViewModel.HasError())
@@ -92,7 +109,15 @@
                 return RedirectToAction("Index");
             }
 
-            SetUserMessage(MyApplicationsPageMessages.ApplicationDeleted);
+            if (viewModel.HasError())
+            {
+                SetUserMessage(MyApplicationsPageMessages.ApplicationDeleted);
+            }
+            else
+            {
+              UserData.Push(UserDataItemNames.DeletedVacancyId,viewModel.VacancyDetail.Id.ToString(CultureInfo.InvariantCulture));
+              UserData.Push(UserDataItemNames.DeletedVacancyTitle, viewModel.VacancyDetail.Title); 
+            }
 
             return RedirectToAction("Index");
         }

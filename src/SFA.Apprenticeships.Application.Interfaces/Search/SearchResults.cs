@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Search
 {
-    using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
 
@@ -21,6 +20,6 @@
         public int PageNumber { get; private set; }
 
         [DataMember(Order = 3, Name = "Results")]
-        public IEnumerable<TResult> Results { get; private set; } 
+        public IEnumerable<TResult> Results { get; private set; }
     }
 }

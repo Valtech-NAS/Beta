@@ -52,6 +52,7 @@
     <Compile Include="Messaging\IEmailDispatcher.cs" />
     <Compile Include="Messaging\ISmsDispatcher.cs" />
     <Compile Include="Messaging\SmsRequest.cs" />
+    <Compile Include="Search\SearchParameters.cs" />
     <Compile Include="Users\ErrorCodes.cs" />
     <Compile Include="Users\ICodeGenerator.cs" />
     <Compile Include="Users\IUserAccountService.cs" />

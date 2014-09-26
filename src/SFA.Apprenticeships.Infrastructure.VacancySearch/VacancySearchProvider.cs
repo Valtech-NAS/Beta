@@ -1,19 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
-    using System;
     using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Configuration;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Vacancies;
     using Elastic.Common.Configuration;
+    using Elastic.Common.Entities;
     using Nest;
     using Newtonsoft.Json.Linq;
     using NLog;
-    using VacancySummary = Elastic.Common.Entities.VacancySummary;
 
     public class VacancySearchProvider : IVacancySearchProvider
     {
@@ -28,13 +25,7 @@
             _searchConfiguration = searchConfiguration;
         }
 
-        public SearchResults<VacancySummaryResponse> FindVacancies(string keywords,
-            Location location,
-            int pageNumber,
-            int pageSize,
-            int searchRadius,
-            VacancySortType sortType,
-            VacancyLocationType vacancyLocationType)
+        public SearchResults<VacancySummaryResponse> FindVacancies(SearchParameters parameters)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (VacancySummary));
@@ -47,8 +38,8 @@
             {
                 s.Index(indexName);
                 s.Type(documentTypeName);
-                s.Skip((pageNumber - 1)*pageSize);
-                s.Take(pageSize);
+                s.Skip((parameters.PageNumber - 1)*parameters.PageSize);
+                s.Take(parameters.PageSize);
 
                 s.TrackScores();
 
@@ -58,11 +49,11 @@
 
                     if (_searchConfiguration.SearchJobTitleField)
                     {
-                        if (_searchConfiguration.UseJobTitleTerms && !string.IsNullOrWhiteSpace(keywords))
+                        if (_searchConfiguration.UseJobTitleTerms && !string.IsNullOrWhiteSpace(parameters.Keywords))
                         {
                             var queryClause = q.Match(m =>
                             {
-                                m.OnField(f => f.Title).Query(keywords);
+                                m.OnField(f => f.Title).Query(parameters.Keywords);
                                 BuildFieldQuery(m, _searchConfiguration.SearchTermParameters.JobTitleFactors);
                             });
 
@@ -72,7 +63,7 @@
                         {
                             var queryClause = q.Match(m =>
                             {
-                                m.OnField(f => f.Title).Query(keywords);
+                                m.OnField(f => f.Title).Query(parameters.Keywords);
                                 BuildFieldQuery(m, _searchConfiguration.SearchTermParameters.JobTitleFactors);
                             });
 
@@ -80,39 +71,40 @@
                         }
                     }
 
-                    if (_searchConfiguration.SearchDescriptionField && !string.IsNullOrWhiteSpace(keywords))
+                    if (_searchConfiguration.SearchDescriptionField && !string.IsNullOrWhiteSpace(parameters.Keywords))
                     {
                         var queryClause = q.Match(m =>
                         {
-                            m.OnField(f => f.Description).Query(keywords);
+                            m.OnField(f => f.Description).Query(parameters.Keywords);
                             BuildFieldQuery(m, _searchConfiguration.SearchTermParameters.DescriptionFactors);
                         });
                         query = BuildContainer(query, queryClause);
                     }
 
-                    if (_searchConfiguration.SearchEmployerNameField && !string.IsNullOrWhiteSpace(keywords))
+                    if (_searchConfiguration.SearchEmployerNameField && !string.IsNullOrWhiteSpace(parameters.Keywords))
                     {
                         var queryClause = q.Match(m =>
                         {
-                            m.OnField(f => f.EmployerName).Query(keywords);
+                            m.OnField(f => f.EmployerName).Query(parameters.Keywords);
                             BuildFieldQuery(m, _searchConfiguration.SearchTermParameters.EmployerFactors);
                         });
                         query = BuildContainer(query, queryClause);
                     }
 
                     var vacancyLocationTypeClause =
-                        q.Match(p => p.OnField(f => f.VacancyLocationType).Query(vacancyLocationType.ToString()));
+                        q.Match(
+                            p => p.OnField(f => f.VacancyLocationType).Query(parameters.VacancyLocationType.ToString()));
                     query = BuildContainer(query, vacancyLocationTypeClause);
 
                     return query;
                 });
 
-                switch (sortType)
+                switch (parameters.SortType)
                 {
                     case VacancySortType.Distance:
                         s.SortGeoDistance(g =>
                         {
-                            g.PinTo(location.GeoPoint.Latitude, location.GeoPoint.Longitude)
+                            g.PinTo(parameters.Location.GeoPoint.Latitude, parameters.Location.GeoPoint.Longitude)
                                 .Unit(GeoUnit.Miles).OnField(f => f.Location);
                             return g;
                         });
@@ -123,7 +115,7 @@
                         //Was trying to get distance in relevancy without this sort but can't .. yet
                         s.SortGeoDistance(g =>
                         {
-                            g.PinTo(location.GeoPoint.Latitude, location.GeoPoint.Longitude)
+                            g.PinTo(parameters.Location.GeoPoint.Latitude, parameters.Location.GeoPoint.Longitude)
                                 .Unit(GeoUnit.Miles).OnField(f => f.Location);
                             return g;
                         });
@@ -134,8 +126,8 @@
                             sf.Add("distance", sfd => sfd
                                 .Params(fp =>
                                 {
-                                    fp.Add("lat", location.GeoPoint.Latitude);
-                                    fp.Add("lon", location.GeoPoint.Longitude);
+                                    fp.Add("lat", parameters.Location.GeoPoint.Latitude);
+                                    fp.Add("lon", parameters.Location.GeoPoint.Longitude);
                                     return fp;
                                 })
                                 .Script("doc['location'].arcDistanceInMiles(lat, lon)")));
@@ -143,13 +135,13 @@
                         break;
                 }
 
-                if (location != null)
+                if (parameters.Location != null)
                 {
                     s.Filter(f => f
                         .GeoDistance(vs => vs
                             .Location, descriptor => descriptor
-                                .Location(location.GeoPoint.Latitude, location.GeoPoint.Longitude)
-                                .Distance(searchRadius, GeoUnit.Miles)));
+                                .Location(parameters.Location.GeoPoint.Latitude, parameters.Location.GeoPoint.Longitude)
+                                .Distance(parameters.SearchRadius, GeoUnit.Miles)));
                 }
 
                 return s;
@@ -161,7 +153,8 @@
             {
                 var hitMd = search.HitsMetaData.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture));
 
-                if (sortType == VacancySortType.ClosingDate || sortType == VacancySortType.Distance)
+                if (parameters.SortType == VacancySortType.ClosingDate ||
+                    parameters.SortType == VacancySortType.Distance)
                 {
                     r.Distance = double.Parse(hitMd.Sorts.Skip(hitMd.Sorts.Count() - 1).First().ToString());
                 }
@@ -178,7 +171,7 @@
 
             Logger.Debug("{0} search results returned", search.Total);
 
-            var results = new SearchResults<VacancySummaryResponse>(search.Total, pageNumber, responses);
+            var results = new SearchResults<VacancySummaryResponse>(search.Total, parameters.PageNumber, responses);
 
             return results;
         }

@@ -70,24 +70,28 @@
             var results = new SearchResults<VacancySummaryResponse>(100, 1, new List<VacancySummaryResponse>());
 
             _vacancySearchService.Setup(
-                x => x.Search(
-                    It.IsAny<string>(),
-                    It.IsAny<Location>(),
-                    1,
-                    pageSize,
-                    It.IsAny<int>(),
-                    VacancySortType.Relevancy,
-                    VacancyLocationType.National)).Returns(results);
+                x => x.Search(new SearchParameters
+                {
+                    Keywords = It.IsAny<string>(),
+                    Location = It.IsAny<Location>(),
+                    PageNumber = 1,
+                    PageSize = pageSize,
+                    SearchRadius = It.IsAny<int>(),
+                    SortType = VacancySortType.Relevancy,
+                    VacancyLocationType = VacancyLocationType.National
+                })).Returns(results);
 
             _vacancySearchService.Setup(
-                x => x.Search(
-                    It.IsAny<string>(),
-                    It.IsAny<Location>(),
-                    1,
-                    pageSize,
-                    It.IsAny<int>(),
-                    VacancySortType.Relevancy,
-                    VacancyLocationType.NonNational)).Returns(results);
+                x => x.Search(new SearchParameters
+                {
+                    Keywords = It.IsAny<string>(),
+                    Location = It.IsAny<Location>(),
+                    PageNumber = 1,
+                    PageSize = pageSize,
+                    SearchRadius = It.IsAny<int>(),
+                    SortType = VacancySortType.Relevancy,
+                    VacancyLocationType = VacancyLocationType.NonNational
+                })).Returns(results);
 
             var search = new VacancySearchViewModel
             {

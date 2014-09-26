@@ -2,14 +2,23 @@
 {
     using System;
     using CuttingEdge.Conditions;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Exceptions;
     using Interfaces.Search;
     using Interfaces.Vacancies;
     using NLog;
+    using ErrorCodes = Interfaces.Vacancies.ErrorCodes;
 
     public class VacancySearchService : IVacancySearchService
     {
+        private const string MessageFormat =
+            "Keywords:{0}, Location:{1}, PageNumber:{2}, PageSize{3}, SearchRadius:{4}, SortType:{5}, LocationType:{6}";
+
+        private const string CallingMessageFormat =
+            "Calling VacancySearchService with the following parameters; " + MessageFormat;
+
+        private const string FailedMessageFormat =
+            "Vacancy search failed for the following parameters; " + MessageFormat;
+
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IVacancySearchProvider _vacancySearchProvider;
 
@@ -18,41 +27,33 @@
             _vacancySearchProvider = vacancySearchProvider;
         }
 
-        public SearchResults<VacancySummaryResponse> Search(
-            string keywords,
-            Location location,
-            int pageNumber,
-            int pageSize,
-            int searchRadius,
-            VacancySortType sortType,
-            VacancyLocationType vacancyLocationType)
+        public SearchResults<VacancySummaryResponse> Search(SearchParameters parameters)
         {
-            Condition.Requires(location, "location").IsNotNull();
-            Condition.Requires(searchRadius, "searchRadius").IsGreaterOrEqual(0);
-            Condition.Requires(pageNumber, "pageNumber").IsGreaterOrEqual(1);
-            Condition.Requires(pageSize, "pageSize").IsGreaterOrEqual(1);
+            Condition.Requires(parameters).IsNotNull();
+            Condition.Requires(parameters.SearchRadius).IsGreaterOrEqual(0);
+            Condition.Requires(parameters.PageNumber).IsGreaterOrEqual(1);
+            Condition.Requires(parameters.PageSize).IsGreaterOrEqual(1);
 
-            var enterMmessage =
-                string.Format("Calling VacancySearchService to search for a vacancy. Keywords:{0}, Location:{1}," +
-                              "PageNumber:{2}, PageSize{3}, SearchRadius:{4}," +
-                              "SortType:{5}" + "LocationType:{6}", keywords, location, pageNumber, pageSize,
-                    searchRadius, sortType, vacancyLocationType);
+            var enterMmessage = GetLoggerMessage(CallingMessageFormat, parameters);
             Logger.Debug(enterMmessage);
 
             try
             {
-                return _vacancySearchProvider.FindVacancies(keywords, location, pageNumber, pageSize, searchRadius, sortType, vacancyLocationType);
+                return _vacancySearchProvider.FindVacancies(parameters);
             }
             catch (Exception e)
             {
-                var message = string.Format("Vacancy search failed. Keywords:{0}, Location:{1}," +
-                                            "PageNumber:{2}, PageSize{3}, SearchRadius:{4}," +
-                                            "SortType:{5}" + "LocationType:{6}", keywords, location, pageNumber, pageSize,
-                                            searchRadius, sortType, vacancyLocationType);
+                var message = GetLoggerMessage(FailedMessageFormat, parameters);
                 Logger.DebugException(message, e);
-                throw new Domain.Entities.Exceptions.CustomException(
-                    message, e, ErrorCodes.VacanciesSearchFailed);
+                throw new CustomException(message, e, ErrorCodes.VacanciesSearchFailed);
             }
+        }
+
+        private static string GetLoggerMessage(string message, SearchParameters parameters)
+        {
+            return string.Format(message, parameters.Keywords, parameters.Location,
+                parameters.PageNumber, parameters.PageSize, parameters.SearchRadius, parameters.SortType,
+                parameters.VacancyLocationType);
         }
     }
 }

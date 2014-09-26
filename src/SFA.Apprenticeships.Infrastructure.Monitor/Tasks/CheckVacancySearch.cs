@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
-    using System;
+    using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Domain.Entities.Locations;
@@ -22,8 +22,18 @@
 
         public void Run()
         {
-            _vacancySearchProvider.FindVacancies(string.Empty, new Location {GeoPoint = new GeoPoint()},
-                1, 10, 10, VacancySortType.Distance, VacancyLocationType.National);
+            var parameters = new SearchParameters
+            {
+                Keywords = string.Empty,
+                Location = new Location {GeoPoint = new GeoPoint()},
+                PageNumber = 1,
+                PageSize = 10,
+                SearchRadius = 10,
+                SortType = VacancySortType.Distance,
+                VacancyLocationType = VacancyLocationType.National
+            };
+
+            _vacancySearchProvider.FindVacancies(parameters);
         }
     }
 }

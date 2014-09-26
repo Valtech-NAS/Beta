@@ -188,8 +188,8 @@
                 return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
             }
 
-            //TODO CM perform this in the provider
-            if (results.TotalLocalHits == 0 && results.VacancySearch.LocationType == VacancyLocationType.NonNational &&
+            if (results.TotalLocalHits == 0 && 
+                results.VacancySearch.LocationType == VacancyLocationType.NonNational &&
                 results.TotalNationalHits != 0)
             {
                 model.SortType = VacancySortType.ClosingDate;
