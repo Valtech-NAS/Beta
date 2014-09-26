@@ -62,7 +62,7 @@
             result.Count().Should().Be(0);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore]
         public void ShouldGetOneApplicationStatusForCandidateWithOneSubmittedApplication()
         {
             // Arrange.

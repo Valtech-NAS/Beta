@@ -76,6 +76,8 @@
 
         public string TrainingToBeProvided { get; set; }
 
+        public bool IsNasProvider { get; set; }
+
         #endregion
 
         #region Candidate

@@ -48,7 +48,9 @@
                 .ForMember(d => d.RecruitmentAgency,
                     opt => opt.MapFrom(src => src.RecruitmentAgency))
                 .ForMember(d => d.IsEmployerAnonymous,
-                    opt => opt.MapFrom(src => src.IsEmployerAnonymous));
+                    opt => opt.MapFrom(src => src.IsEmployerAnonymous))
+                .ForMember(d => d.IsNasProvider,
+                    opt => opt.MapFrom(src => src.IsNasProvider));
 
             Mapper.CreateMap<VacancySummaryResponse, VacancySummaryViewModel>();
             

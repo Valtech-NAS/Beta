@@ -158,47 +158,54 @@
         </section>
         <section class="section-border grid-wrapper" id="provider-info">
             <h2 class="heading-large">Training provider</h2>
-            <div class="grid grid-2-3">
-                <div class="inner-block-padr">
-                    <div class="text">
-                        @if (!string.IsNullOrWhiteSpace(Model.TrainingToBeProvided))
-                        {
-                            <p id="vacancy-training-to-be-provided">@Html.Raw(Model.TrainingToBeProvided)</p>
-                        }
-                        <h3 class="heading-small">Apprenticeship framework</h3>
-                        <p id="vacancy-framework">@Html.Raw(Model.Framework)</p>
-                        @if (Model.ProviderSectorPassRate.HasValue)
-                        {
-                            <p>The training provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprenticeship training.</p>
-                        }
+            @if (Model.IsNasProvider)
+            {
+                <p>Training provider selection is currently in progress</p>
+            }
+            else
+            {
+                <div class="grid grid-2-3">
+                    <div class="inner-block-padr">
+                        <div class="text">
+                            @if (!string.IsNullOrWhiteSpace(Model.TrainingToBeProvided))
+                            {
+                                <p id="vacancy-training-to-be-provided">@Html.Raw(Model.TrainingToBeProvided)</p>
+                            }
+                            <h3 class="heading-small">Apprenticeship framework</h3>
+                            <p id="vacancy-framework">@Html.Raw(Model.Framework)</p>
+                            @if (Model.ProviderSectorPassRate.HasValue)
+                            {
+                                <p>The training provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprenticeship training.</p>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="grid grid-1-3">
-                <ul class="list-text">
-                    <li>
-                        <h3 class="bold-small">Training provider</h3>
-                    </li>
-                    <li id="vacancy-provider-name">@Model.ProviderName</li>
-                </ul>
-                
-                @if (!Model.IsRecruitmentAgencyAnonymous)
-                {
-                    <ul class="list-text">
-                        <li id="recruitment-agency-name">TODO: Applications to be processed by @Model.RecruitmentAgency</li>
-                    </ul>
-                }
-
-                @if (!string.IsNullOrWhiteSpace(Model.Contact))
-                {
+                <div class="grid grid-1-3">
                     <ul class="list-text">
                         <li>
-                            <h3 class="bold-small">Contact</h3>
+                            <h3 class="bold-small">Training provider</h3>
                         </li>
-                        <li id="vacancy-provider-contact">@Model.Contact</li>
+                        <li id="vacancy-provider-name">@Model.ProviderName</li>
                     </ul>
-                }
-            </div>
+                
+                    @if (!Model.IsRecruitmentAgencyAnonymous)
+                    {
+                        <ul class="list-text">
+                            <li id="recruitment-agency-name">TODO: Applications to be processed by @Model.RecruitmentAgency</li>
+                        </ul>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Contact))
+                    {
+                        <ul class="list-text">
+                            <li>
+                                <h3 class="bold-small">Contact</h3>
+                            </li>
+                            <li id="vacancy-provider-contact">@Model.Contact</li>
+                        </ul>
+                    }
+                </div>
+            }
         </section>
 
         if (!string.IsNullOrWhiteSpace(Model.OtherInformation))
