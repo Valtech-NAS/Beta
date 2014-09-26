@@ -37,7 +37,7 @@
         @if (ViewBag.ShowEuCookieDirective == true)
         {
             <div id="global-cookie-message" class="cookie-banner">
-                <div class="content-container">
+                <div class="content-container" role="alert">
                     <span class="copy-16">GOV.UK uses cookies to make the site simpler. <a href='@Url.RouteUrl(RouteNames.Privacy)'>Find out more about cookies</a></span>
                 </div>
             </div>
@@ -81,25 +81,25 @@
 
                         if (infoMessage != null)
                         {
-                            <div role ="alert" aria-live="assertive" class="panel-info">
+                            <div role="alert" class="panel-info">
                                 <p id="InfoMessageText">@infoMessage</p>
                             </div>
                         }
                         if (successMessage != null)
                         {
-                            <div role="alert" aria-live="assertive" class="panel-success">
+                            <div role="alert" class="panel-success">
                                 <p id="SuccessMessageText"><i class="fa fa-check"></i>@successMessage</p>
                             </div>
                         }
                         if (warningMessage != null)
                         {
-                            <div role="alert" aria-live="assertive" class="panel-warning">
+                            <div role="alert" class="panel-warning">
                                 <p id="WarningMessageText">@warningMessage</p>
                             </div>
                         }
                         if (errorMessage != null)
                         {
-                            <div role="alert" aria-live="assertive" class="panel-danger">
+                            <div role="alert" class="panel-danger">
                                 <p id="ErrorMessageText">@errorMessage</p>
                             </div>
                         }
