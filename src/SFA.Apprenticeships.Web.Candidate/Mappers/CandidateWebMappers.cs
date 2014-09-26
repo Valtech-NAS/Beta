@@ -28,8 +28,7 @@
             Mapper.CreateMap<Location, LocationViewModel>()
                 .ForMember(d => d.Latitude, opt => opt.MapFrom(s => s.GeoPoint.Latitude))
                 .ForMember(d => d.Longitude, opt => opt.MapFrom(s => s.GeoPoint.Longitude));
-
-            // TODO: US509 etc.: AG: REMOVE these mappers when new NAS Gateway service is available (replacement is GatewayVacancyDetailMapper.cs).
+            
             Mapper.CreateMap<VacancyDetail, VacancyDetailViewModel>()
                 .ForMember(d => d.EmployerName,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
@@ -39,11 +38,11 @@
                 .ForMember(d => d.OtherInformation,
                     opt => opt.MapFrom(src => src.OtherInformation))
                 .ForMember(d => d.ApplyViaEmployerWebsite,
-                    opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.ApplyViaEmployerWebsiteResolver>())
+                    opt => opt.MapFrom(src => src.ApplyViaEmployerWebsite))
                 .ForMember(d => d.VacancyUrl,
-                    opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.VacancyUrlesolver>())
+                    opt => opt.MapFrom(src => src.VacancyUrl))
                 .ForMember(d => d.ApplicationInstructions,
-                    opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.ApplicationInstructionsResolver>());
+                    opt => opt.MapFrom(src => src.ApplicationInstructions));
 
             Mapper.CreateMap<VacancySummaryResponse, VacancySummaryViewModel>();
             
