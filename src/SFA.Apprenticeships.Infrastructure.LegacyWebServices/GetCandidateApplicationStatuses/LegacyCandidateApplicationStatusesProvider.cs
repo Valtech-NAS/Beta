@@ -38,7 +38,7 @@
 
             var response = default(GetCandidateInfoResponse);
 
-            _service.Use("DefaultEndpoint", client => response = client.GetCandidateInfo(request).GetCandidateInfoResponse);
+            _service.Use("SecureService", client => response = client.GetCandidateInfo(request).GetCandidateInfoResponse);
 
             if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
             {

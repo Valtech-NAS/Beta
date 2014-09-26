@@ -21,7 +21,8 @@
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
+                //x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry<GatewayWebServicesRegistry>();
             });
 
             _legacyCandidateProvider = ObjectFactory.GetInstance<ILegacyCandidateProvider>();
@@ -37,7 +38,7 @@
                 {
                     FirstName = "FirstName",
                     LastName = "LastName",
-                    EmailAddress = string.Format("{0}@gmail.com", Guid.NewGuid()),
+                    EmailAddress = string.Format("nas.exemplar+{0}@gmail.com", Guid.NewGuid()),
                     DateOfBirth = new DateTime(1980, 06, 15),
                     PhoneNumber = "01221234567",
                     Address = new Address

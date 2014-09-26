@@ -9,7 +9,7 @@
     [Binding]
     public class ForgottenPasswordDataBinding
     {
-        private const string UserEmailAddress = "valtechnas+acceptancetests@gmail.com";
+        private const string UserEmailAddress = "nas.exemplar+acceptancetests@gmail.com";
         private const string NewPasswordTokenName = "NewPasswordToken";
         private const string NewPassword = "?Password02!";
 

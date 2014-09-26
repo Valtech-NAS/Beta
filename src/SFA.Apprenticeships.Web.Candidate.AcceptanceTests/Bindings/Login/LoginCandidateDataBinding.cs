@@ -7,16 +7,14 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using Generators;
     using global::SpecBind.Helpers;
-    using NUnit.Framework;
     using StructureMap;
     using TechTalk.SpecFlow;
 
     [Binding]
     public class LoginCandidateDataBinding
     {
-        private const string UserEmailAddress = "valtechnas+acceptancetests@gmail.com";
+        private const string UserEmailAddress = "nas.exemplar+acceptancetests@gmail.com";
         private const string EmailAddressTokenName = "EmailAddressToken";
         private const string InvalidEmailTokenName = "InvalidEmailToken";
         private const string EmailTokenName = "EmailToken";

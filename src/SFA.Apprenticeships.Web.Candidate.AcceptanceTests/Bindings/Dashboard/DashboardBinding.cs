@@ -11,7 +11,7 @@
     [Binding]
     public class DashboardBinding
     {
-        private const string UserEmailAddress = "valtechnas+acceptancetests@gmail.com";
+        private const string UserEmailAddress = "nas.exemplar+acceptancetests@gmail.com";
         private const string EmailAddressTokenName = "EmailAddressToken";
         private const string PasswordTokenName = "PasswordToken";
         private const string Password = "?Password01!";

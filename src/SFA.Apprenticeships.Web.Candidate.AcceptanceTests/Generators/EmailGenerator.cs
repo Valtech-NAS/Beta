@@ -6,7 +6,7 @@
     {
         public static string GenerateEmailAddress()
         {
-            const string format = "valtechnas+{0}@gmail.com";
+            const string format = "nas.exemplar+{0}@gmail.com";
 
             return string.Format(format, DateTime.Now.Ticks);
         }

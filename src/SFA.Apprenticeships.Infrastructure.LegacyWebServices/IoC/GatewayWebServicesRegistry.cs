@@ -68,7 +68,7 @@
 
             #region Candidate and Application Providers
 
-            For<ILegacyCandidateProvider>().Use<LegacyCandidateProvider>();
+            For<ILegacyCandidateProvider>().Use<GatewayCandidateProvider>();
 
             For<ILegacyApplicationProvider>().Use<LegacyApplicationProvider>();
 
