@@ -15,15 +15,10 @@
            
             switch (source)
             {
-                case "National":
-                //TODO HACK HACK HACK - REMOVE THIS HACK!!!
-                case "IntermediateLevelApprenticeship":
+                case "National":              
                     return VacancyLocationType.National;
                 case "Standard":
-                case "MultipleLocation":
-                //TODO HACK HACK HACK - REMOVE THIS HACK!!!
-                case "AdvancedLevelApprenticeship":
-                case "HigherApprenticeship":
+                case "MultipleLocation":               
                     // TODO: DONTKNOW: MultiLocation are posted once for each location so are equivelent to NonNational but needs backed by requirements in new system.
                     return VacancyLocationType.NonNational;
                 default:
