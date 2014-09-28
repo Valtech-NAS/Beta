@@ -12,7 +12,8 @@ window.webtrendsAsyncInit=function(){
         adsparam:"WT.ac",
         offsite:true,
         download:true,
-        downloadtypes:"xls,doc,pdf,txt,csv,zip,docx,xlsx,rar,gzip",
+        downloadtypes: "xls,doc,pdf,txt,csv,zip,docx,xlsx,rar,gzip",
+        anchor:true,
         onsitedoms:"candidates.gov.uk",
         plugins:{
             //hm:{src:"//s.webtrends.com/js/webtrends.hm.js"}

@@ -25,7 +25,7 @@
             {
                 if (VacancySearch == null) return 1;
 
-                return VacancySearch.PageNumber == 1 ? 1 : VacancySearch.PageNumber - 1;
+                return VacancySearch.PageNumber == 1 ? 0 : VacancySearch.PageNumber - 1;
             }
         }
 

@@ -25,7 +25,7 @@
         <legend class="heading-large">Contact details</legend>
         <div class="form-group">
 
-            @Html.EditorFor(a => a.Address)
+            @Html.EditorFor(a => a.Address, new { AnalyticsDSCUri = "/register/findaddress" })
             @Html.FormTextFor(m => m.EmailAddress, controlHtmlAttributes: new { @class = "linked-input-master", type = "email", spellcheck = "false" }, hintHtmlAttributes: new { @class = "text" })
             <span aria-live="polite" id="email-available-message" class="validation-message"></span>
 

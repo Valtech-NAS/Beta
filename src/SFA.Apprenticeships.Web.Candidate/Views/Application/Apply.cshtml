@@ -4,6 +4,7 @@
     ViewBag.Title = "Apprenticeships - Application form";
     Layout = "~/Views/Shared/_Layout.cshtml";   
 }
+
 @if (Model.DateUpdated.HasValue)
 {
     <div class="panel-info">
@@ -54,7 +55,7 @@
         @*The buttons below need the values so the controller knows what action to perform if restyling*@
         <button id="apply-button" type="submit" name="ApplicationAction:Preview" class="button no-check-for-dirty-form" value="Preview">Preview application</button>
         <p id="saveApplication">
-            <button id="save-button" type="submit" name="ApplicationAction:Save" class="button-link no-check-for-dirty-form cancel" value="Save">Save draft</button>
+            <button id="save-button" type="submit" name="ApplicationAction:Save" class="button-link no-check-for-dirty-form cancel" value="Save" onclick='Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", "/application/apply/savedraft/@Model.VacancyId", "WT.dl", "99", "WT.ti", "Application – Save Draft Form"] });'>Save draft</button>
         </p>
         @if (Model.DateUpdated.HasValue)
         {
@@ -111,67 +112,68 @@
 
     function timeout_trigger() {
 
+        Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", "/application/apply/autosavedraft/@Model.VacancyId", "WT.dl", "99", "WT.ti", "Application – Auto Save Draft Form"] });
         var request = $.ajax({
             type: "POST",
             url: '@Url.Action("AutoSave","Application", new { id = Model.VacancyId })',
-                data: $("#application-form").serialize()
-            });
+            data: $("#application-form").serialize()
+        });
 
-            request.done(function(result) {
+        request.done(function(result) {
 
-                if (result.Status == "succeeded") {
-                    var savedMessage = 'Last saved at ' + result.DateTimeMessage + ' to ' + '<a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a>';
-                    $("p.autosave").html(savedMessage);
+            if (result.Status == "succeeded") {
+                var savedMessage = 'Last saved at ' + result.DateTimeMessage + ' to ' + '<a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a>';
+                $("p.autosave").html(savedMessage);
 
-                    dirtyFormDialog.resetDirtyForm({
-                        formSelector: "form"                       
-                    });
-                }
-
-            });
-
-            request.fail(function(jqXHR, textStatus) {
-
-            });
-
-            timeout_reset();
-        }
-
-        function getCurrentYear() {
-            return currentYear;
-        }
-
-        function getQualificationData() {
-            return qualificationData;
-        }
-
-        function getWorkExperienceData() {
-            return workExperienceData;
-        }
-
-        function getWhiteListRegex() {
-            return whitelistregex;
-        }
-
-        function getYearRegex() {
-            return yearRegex;
-        }
-
-        function getMonthLabel(index) {
-
-            var month = "";
-
-            if (index === 0) {
-
-            } else {
-                var mths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-                month = mths[index - 1];
+                dirtyFormDialog.resetDirtyForm({
+                    formSelector: "form"
+                });
             }
 
-            return month;
+        });
+
+        request.fail(function(jqXHR, textStatus) {
+
+        });
+
+        timeout_reset();
+    }
+
+    function getCurrentYear() {
+        return currentYear;
+    }
+
+    function getQualificationData() {
+        return qualificationData;
+    }
+
+    function getWorkExperienceData() {
+        return workExperienceData;
+    }
+
+    function getWhiteListRegex() {
+        return whitelistregex;
+    }
+
+    function getYearRegex() {
+        return yearRegex;
+    }
+
+    function getMonthLabel(index) {
+
+        var month = "";
+
+        if (index === 0) {
+
+        } else {
+            var mths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+            month = mths[index - 1];
         }
 
-    </script>
+        return month;
+    }
+
+</script>
         
     @Scripts.Render("~/bundles/nas/applicationform")
 }

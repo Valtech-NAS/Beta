@@ -50,7 +50,7 @@
             test.NextPage.Should().Be(1);
         }
 
-        [TestCase(1, 1)]
+        [TestCase(1, 0)]
         [TestCase(11, 10)]
         public void ShouldReturnPrevPageNUmberGivenStartPage(int startPage, int expected)
         {

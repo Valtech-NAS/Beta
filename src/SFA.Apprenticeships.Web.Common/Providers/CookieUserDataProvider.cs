@@ -51,7 +51,7 @@
         public void Push(string key, string value)
         {
             _httpDataCookie.Values.Remove(key);
-            _httpDataCookie.Values.Add(key, value);
+            _httpDataCookie.Values.Add(key, HttpContext.Current.Server.UrlEncode(value));
         }
 
         public string Get(string key)
@@ -75,7 +75,7 @@
 
             _httpDataCookie.Values.Remove(key);
 
-            return value;
+            return HttpContext.Current.Server.UrlDecode(value);
         }
 
         private HttpCookie GetOrCreateDataCookie()

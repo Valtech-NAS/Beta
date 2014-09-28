@@ -16,6 +16,8 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="format-detection" content="date=no">
         <meta name="format-detection" content="address=no">
+        <meta name="DCSext.Authenticated" content="@(Request.IsAuthenticated ? "Yes" : "No")" />
+        @RenderSection("metatags", false)
         <!--[if gt IE 8]><!-->@Styles.Render("~/Content/_assets/css/main.css?=Sprint19")<!--<![endif]-->
         <!--[if lte IE 8]>@Styles.Render("~/Content/_assets/css/main-ie8.css?=Sprint19")<![endif]-->
         <!--[if lte IE 8]>@Styles.Render("~/Content/_assets/css/fonts-ie8.css")<![endif]-->
@@ -82,25 +84,25 @@
                         if (infoMessage != null)
                         {
                             <div role="alert" class="panel-info">
-                                <p id="InfoMessageText">@infoMessage</p>
+                                <p id="InfoMessageText">@Html.Raw(infoMessage)</p>
                             </div>
                         }
                         if (successMessage != null)
                         {
                             <div role="alert" class="panel-success">
-                                <p id="SuccessMessageText"><i class="fa fa-check"></i>@successMessage</p>
+                                <p id="SuccessMessageText"><i class="fa fa-check"></i>@Html.Raw(successMessage)</p>
                             </div>
                         }
                         if (warningMessage != null)
                         {
                             <div role="alert" class="panel-warning">
-                                <p id="WarningMessageText">@warningMessage</p>
+                                <p id="WarningMessageText">@Html.Raw(warningMessage)</p>
                             </div>
                         }
                         if (errorMessage != null)
                         {
                             <div role="alert" class="panel-danger">
-                                <p id="ErrorMessageText">@errorMessage</p>
+                                <p id="ErrorMessageText">@Html.Raw(errorMessage)</p>
                             </div>
                         }
                     }

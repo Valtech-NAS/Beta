@@ -28,7 +28,7 @@
         @Html.FormTextFor(m => m.Firstname, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
         @Html.FormTextFor(m => m.Lastname, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
         @Html.EditorFor(r => r.DateOfBirth)
-        @Html.EditorFor(a => a.Address)
+        @Html.EditorFor(a => a.Address, new { AnalyticsDSCUri = "/settings/findaddress" }))
         @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { @class = "form-control-1-3", type = "tel" })
     </fieldset>
 

@@ -69,6 +69,12 @@
     }
 }
 
+@section metatags
+{
+    @*Used by analytics to track succesful/unsuccessful searches*@
+    <meta name="WT.oss_r" content="@Model.TotalLocalHits"/>
+}
+
 <div class="search-results-wrapper grid-wrapper">
     <div class="hgroup">
         <h1 class="heading-xlarge">Search results</h1>

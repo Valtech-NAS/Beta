@@ -96,7 +96,7 @@
             test.Should().NotBeNull();
             test.Pages.Should().Be(10);
             test.NextPage.Should().Be(2);
-            test.PrevPage.Should().Be(1);
+            test.PrevPage.Should().Be(0);
             test.TotalNationalHits.Should().Be(100);
             test.TotalLocalHits.Should().Be(0);
             test.VacancySearch.Should().Be(search);
