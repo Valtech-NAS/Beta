@@ -247,6 +247,7 @@
 
                 match.removeItem(qualification);
                 self.reIndexQualifications(); //re-index qualifications
+                $('#qualAddConfirmText').text('Qualification removed from table');
             }
         };
 

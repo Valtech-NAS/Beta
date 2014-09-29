@@ -18,14 +18,14 @@
     @Html.FormTextAreaFor(m => m.WhatAreYourHobbiesInterests, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" }, hintHtmlAttributes: new { @class = "text" })
 
     <div class="form-group">
-        <p class="form-label">Is there anything we can do to support your interview?</p>
+        <p class="form-label" id="interviewSupportLabel">Is there anything we can do to support your interview?</p>
         <p class="form-hint">For example, do you need a signer, information in braille.</p>
         <div class="form-group form-group-compound inline">
             <label data-target="support-panel" for="support-yes" class="block-label">
-                @Html.RadioButtonFor(m => m.RequiresSupportForInterview, true, true, new { id = "support-yes", aria_controls = "support-panel", aria_expanded = "false" }) Yes
+                @Html.RadioButtonFor(m => m.RequiresSupportForInterview, true, true, new { id = "support-yes", aria_controls = "support-panel", aria_expanded = "false", aria_labelledby = "interviewSupportLabel" }) Yes
             </label>
             <label for="support-no" class="block-label">
-                @Html.RadioButtonFor(m => m.RequiresSupportForInterview, false, false, new { id = "support-no" }) No
+                @Html.RadioButtonFor(m => m.RequiresSupportForInterview, false, false, new { id = "support-no", aria_labelledby = "interviewSupportLabel" }) No
             </label>
         </div>
         <div id="support-panel" class="panel-indent toggle-content" aria-hidden="true">

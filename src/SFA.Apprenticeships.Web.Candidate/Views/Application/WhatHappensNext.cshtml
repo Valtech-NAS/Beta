@@ -4,11 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="success-banner">
+<div class="success-banner" role="alert" aria-live="assertive">
     <h1 class="heading-large"><i class="fa fa-check"></i>Apprenticeship application submitted</h1>
     <div>
         You've applied for:
-        <h2 class="heading-medium">@Html.DisplayFor(m => m.VacancyTitle) - @Html.DisplayFor(m =>m.VacancyReference)</h2>
+        <h2 class="heading-medium">@Html.DisplayFor(m => m.VacancyTitle) - @Html.DisplayFor(m => m.VacancyReference)</h2>
     </div>
 </div>
 <section class="section-border">

@@ -4,18 +4,18 @@
 
     <fieldset id="applyWorkExperience" class="fieldset-with-border">
         <legend class="heading-large">Work experience</legend>
-        <p class="hide-nojs form-label text">Do you have any work experience?</p>
+        <p class="hide-nojs form-label text" id="workExpQuestion">Do you have any work experience?</p>
         <p class="form-hint text">
             Please include any work, whether paid or voluntary
         </p>
         <div class="hide-nojs">
             <div class="form-group inline clearfix">
                 <label data-target="workexperience-panel" for="workexp-yes" class="block-label" data-bind="css: {selected: showWorkExperience()}">
-                    @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, true, true, new { id = "workexp-yes", data_bind = "attr:{'checked': hasWorkExperience() }", aria_controls = "workexperience-panel", aria_expanded = "false" })
+                    @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, true, true, new { id = "workexp-yes", data_bind = "attr:{'checked': hasWorkExperience() }", aria_controls = "workexperience-panel", aria_expanded = "false", aria_labelledby = "workExpQuestion" })
                     Yes
                 </label>
                 <label for="workexp-no" class="block-label" data-bind="css: {selected: !showWorkExperience()}">
-                    @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, false, false, new { id = "workexp-no", data_bind = "attr:{'checked': hasNoWorkExperience() }" })
+                    @Html.RadioButtonFor(m => m.Candidate.HasWorkExperience, false, false, new { id = "workexp-no", data_bind = "attr:{'checked': hasNoWorkExperience() }", aria_labelledby = "workExpQuestion" })
                     No
                 </label>
             </div>

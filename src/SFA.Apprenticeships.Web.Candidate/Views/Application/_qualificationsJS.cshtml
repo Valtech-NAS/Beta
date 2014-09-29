@@ -4,18 +4,18 @@
 
     <fieldset class="fieldset-with-border" id="applyQualifications">
         <legend class="heading-large">Qualifications</legend>
-        <p class="form-label">Do you have any qualifications?</p>
+        <p class="form-label" id="qualificationQuestion">Do you have any qualifications?</p>
         <p class="form-hint text">
             If you don't know your results yet, enter your predicted grades. These are grades your teacher expects you to get.
         </p>
         <div class="form-group inline clearfix">
             <label data-target="qualifications-panel" for="qualifications-yes" class="block-label" data-bind="css: {selected:showQualifications() }">
-                @Html.RadioButtonFor(m => m.Candidate.HasQualifications, true, true, new { id = "qualifications-yes", data_bind = "attr:{'checked': hasQualifications() }", aria_controls = "qualifications-panel", aria_expanded = "false" })
+                @Html.RadioButtonFor(m => m.Candidate.HasQualifications, true, true, new { id = "qualifications-yes", data_bind = "attr:{'checked': hasQualifications() }", aria_controls = "qualifications-panel", aria_expanded = "false", aria_labelledby = "qualificationQuestion" })
                 Yes
 
             </label>
             <label for="qualifications-no" class="block-label" data-bind="css: {selected: !showQualifications() }">
-                @Html.RadioButtonFor(m => m.Candidate.HasQualifications, false, false, new { id = "qualifications-no", data_bind = "attr:{'checked': hasNoQualifications() }" })
+                @Html.RadioButtonFor(m => m.Candidate.HasQualifications, false, false, new { id = "qualifications-no", data_bind = "attr:{'checked': hasNoQualifications() }", aria_labelledby = "qualificationQuestion" })
                 No
             </label>
         </div>
