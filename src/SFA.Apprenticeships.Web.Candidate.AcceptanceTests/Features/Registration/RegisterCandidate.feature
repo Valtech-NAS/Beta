@@ -132,12 +132,13 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 	And I am on the ActivationPage page
 	And I choose ActivateButton
 	And I am on the VacancySearchPage page
-	And I enter data
-		| Field    | Value  |
-		| Location | N7 8LS |
-	And I choose Search
-	And I am on the VacancySearchResultPage page	
-	And I choose FirstVacancyLink
+	#And I enter data
+	#	| Field    | Value  |
+	#	| Location | N7 8LS |
+	#And I choose Search
+	#And I am on the VacancySearchResultPage page	
+	#And I choose FirstVacancyLink
+	When I select the first vacancy in location "N7 8LS" that can apply by this website
 	And I am on the VacancyDetailsPage page
 	And I choose ApplyButton
 	And I am on the ApplicationPage page

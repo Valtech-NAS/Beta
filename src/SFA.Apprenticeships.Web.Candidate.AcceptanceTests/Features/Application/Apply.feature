@@ -12,12 +12,13 @@ Background:
 @US486 @US458 @US354
 Scenario: As a candidate I would like to preview a vacancy application
 	Given I have registered a new candidate
-	When I enter data
-		| Field    | Value  |
-		| Location | N7 8LS |
-	And I choose Search
-	Then I am on the VacancySearchResultPage page
-	When I choose FirstVacancyLink
+	#When I enter data
+	#	| Field    | Value  |
+	#	| Location | N7 8LS |
+	#And I choose Search
+	#Then I am on the VacancySearchResultPage page
+	#When I choose FirstVacancyLink
+	When I select the first vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -41,12 +42,13 @@ Scenario: As a candidate I would like to preview a vacancy application
 @US461 @US154 @US458 @US464
 Scenario: As a candidate I want to save my application as a draft and be able to resume
 	Given I have registered a new candidate
-	When I enter data
-		| Field    | Value  |
-		| Location | N7 8LS |
-	And I choose Search
-	Then I am on the VacancySearchResultPage page
-	When I choose FirstVacancyLink
+	#When I enter data
+	#	| Field    | Value  |
+	#	| Location | N7 8LS |
+	#And I choose Search
+	#Then I am on the VacancySearchResultPage page
+	#When I choose FirstVacancyLink
+	When I select the first vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -85,12 +87,13 @@ Scenario: As a candidate I want to save my application as a draft and be able to
 @US461 @US362 @US365 @US154 @US463 @US352 @US354
 Scenario: As a candidate I want to enter my qualifications and work experience
 	Given I have registered a new candidate
-	When I enter data
-		| Field    | Value  |
-		| Location | N7 8LS |
-	And I choose Search
-	Then I am on the VacancySearchResultPage page
-	When I choose FirstVacancyLink
+	#When I enter data
+	#	| Field    | Value  |
+	#	| Location | N7 8LS |
+	#And I choose Search
+	#Then I am on the VacancySearchResultPage page
+	#When I choose FirstVacancyLink
+	When I select the first vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page

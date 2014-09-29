@@ -188,7 +188,7 @@
                         <li id="vacancy-provider-name">@Model.ProviderName</li>
                     </ul>
                 
-                    @if (!Model.IsRecruitmentAgencyAnonymous)
+                    @if (!Model.IsRecruitmentAgencyAnonymous && !string.IsNullOrWhiteSpace(Model.RecruitmentAgency))
                     {
                         <ul class="list-text">
                             <li id="recruitment-agency-name">TODO: Applications to be processed by @Model.RecruitmentAgency</li>

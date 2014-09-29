@@ -11,13 +11,15 @@ Background:
 
 Scenario: Epic happy path
 	Given I navigated to the VacancySearchPage page
-	When I enter data
-		 | Field          | Value    |
-		 | Location       | Coventry |
-		 | WithInDistance | 40 miles |
-	And I choose Search
-	Then I am on the VacancySearchResultPage page
-	When I choose FirstVacancyLink
+	#When I enter data
+	#	 | Field          | Value    |
+	#	 | Location       | Coventry |
+	#	 | WithInDistance | 40 miles |
+	#And I choose Search
+	#Then I am on the VacancySearchResultPage page
+	#When I choose FirstVacancyLink
+	#TODO: Add within distance here
+	When I select the first vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the LoginPage page

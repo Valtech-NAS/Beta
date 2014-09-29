@@ -11,12 +11,7 @@ Background:
 
 Scenario: Updating personal details will update draft applications
 	Given I have registered a new candidate
-	When I enter data
-		| Field    | Value  |
-		| Location | N7 8LS |
-	And I choose Search
-	Then I am on the VacancySearchResultPage page
-	When I choose FirstVacancyLink
+	When I select the first vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -62,16 +57,8 @@ Scenario: Updating personal details will update draft applications
 		| Field    | Rule     | Value |
 		| Fullname | Contains | Jane  |
 
-	Given I navigated to the VacancySearchPage page
-	When I am on the VacancySearchPage page
-	And I enter data
-		| Field    | Value   |
-		| Location | B27 6HY |
-	And I choose Search
-	Then I am on the VacancySearchResultPage page
-	When I choose FirstVacancyLink
-	Then I am on the VacancyDetailsPage page
-	When I choose ApplyButton
+	When I select the first vacancy in location "London" that can apply by this website
+	And I choose ApplyButton
 	Then I am on the ApplicationPage page
 	And I see
 		| Field            | Rule     | Value |

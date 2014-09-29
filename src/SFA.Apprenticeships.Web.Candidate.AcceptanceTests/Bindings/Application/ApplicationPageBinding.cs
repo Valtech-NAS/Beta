@@ -1,11 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings.Application
 {
-    using System;
-    using System.Collections.Generic;
     using System.Reflection;
-    using NUnit.Framework.Constraints;
     using OpenQA.Selenium;
-    using OpenQA.Selenium.Support.UI;
     using SpecBind.BrowserSupport;
     using SpecBind.Selenium;
     using TechTalk.SpecFlow;

@@ -6,12 +6,13 @@
 @US501
 Scenario: Selecting No I will remain in the same page
 	Given I have registered a new candidate
-	When I enter data
-		| Field    | Value  |
-		| Location | N7 8LS |
-	And I choose Search
-	Then I am on the VacancySearchResultPage page
-	When I choose FirstVacancyLink
+	#When I enter data
+	#	| Field    | Value  |
+	#	| Location | N7 8LS |
+	#And I choose Search
+	#Then I am on the VacancySearchResultPage page
+	#When I choose FirstVacancyLink
+	When I select the first vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -30,12 +31,13 @@ Scenario: Selecting No I will remain in the same page
 @US501
 Scenario: Selecting yes will redirect me to another page
 	Given I have registered a new candidate
-	When I enter data
-		| Field    | Value  |
-		| Location | N7 8LS |
-	And I choose Search
-	Then I am on the VacancySearchResultPage page
-	When I choose FirstVacancyLink
+	#When I enter data
+	#	| Field    | Value  |
+	#	| Location | N7 8LS |
+	#And I choose Search
+	#Then I am on the VacancySearchResultPage page
+	#When I choose FirstVacancyLink
+	When I select the first vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
