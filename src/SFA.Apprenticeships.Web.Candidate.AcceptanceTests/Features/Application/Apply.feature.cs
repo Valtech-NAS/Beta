@@ -703,11 +703,11 @@ this.FeatureBackground();
                         "ApplicationSavedTopMessage",
                         "Ends With",
                         "your applications"});
-            table32.AddRow(new string[] {
+            table29.AddRow(new string[] {
                         "ApplicationSavedBottomMessage",
                         "Ends With",
                         "wibble"});
-            table32.AddRow(new string[] {
+            table29.AddRow(new string[] {
                         "Fullname",
                         "Equals",
                         "Firstname Lastname"});
