@@ -120,53 +120,49 @@
                 ModelState.Clear();
                 clientResult.AddToModelState(ModelState, string.Empty);
 
-                return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
+                return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
             }
 
-            if (!HasGeoPoint(model))
+            var suggestedLocations = _searchProvider.FindLocation(model.Location.Trim());
+
+            if (suggestedLocations.HasError())
             {
-                // Either user not selected item from dropdown or javascript disabled.
-                var suggestedLocations = _searchProvider.FindLocation(model.Location.Trim());
+                ModelState.Clear();
+                SetUserMessage(suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
 
-                if (suggestedLocations.HasError())
+                return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
+            }
+
+            if (suggestedLocations.Locations.Any())
+            {
+                var location = suggestedLocations.Locations.First();
+
+                ModelState.Remove("Location");
+                ModelState.Remove("Latitude");
+                ModelState.Remove("Longitude");
+
+                model.Location = location.Name;
+                model.Latitude = location.Latitude;
+                model.Longitude = location.Longitude;
+
+                ViewBag.LocationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
                 {
-                    ModelState.Clear();
-                    SetUserMessage(suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
-
-                    return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
-                }
-
-                if (suggestedLocations.Locations.Any())
-                {
-                    var location = suggestedLocations.Locations.First();
-
-                    ModelState.Remove("Location");
-                    ModelState.Remove("Latitude");
-                    ModelState.Remove("Longitude");
-
-                    model.Location = location.Name;
-                    model.Latitude = location.Latitude;
-                    model.Longitude = location.Longitude;
-
-                    ViewBag.LocationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
+                    var vsvm = new VacancySearchViewModel
                     {
-                        var vsvm = new VacancySearchViewModel
-                        {
-                            Keywords = model.Keywords,
-                            Location = each.Name,
-                            Latitude = each.Latitude,
-                            Longitude = each.Longitude,
-                            PageNumber = model.PageNumber,
-                            SortType = model.SortType,
-                            WithinDistance = model.WithinDistance,
-                            ResultsPerPage = model.ResultsPerPage
-                        };
+                        Keywords = model.Keywords,
+                        Location = each.Name,
+                        Latitude = each.Latitude,
+                        Longitude = each.Longitude,
+                        PageNumber = model.PageNumber,
+                        SortType = model.SortType,
+                        WithinDistance = model.WithinDistance,
+                        ResultsPerPage = model.ResultsPerPage
+                    };
 
-                        vsvm.Hash = vsvm.LatLonLocHash();
+                    vsvm.Hash = vsvm.LatLonLocHash();
 
-                        return vsvm;
-                    }).ToArray();
-                }
+                    return vsvm;
+                }).ToArray();
             }
 
             var locationResult = _searchLocationValidator.Validate(model);
@@ -174,7 +170,7 @@
             if (!locationResult.IsValid)
             {
                 ModelState.Clear();
-                return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
+                return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
             }
 
             var results = _searchProvider.FindVacancies(model);
@@ -183,7 +179,7 @@
             {
                 ModelState.Clear();
                 SetUserMessage(results.ViewModelMessage, UserMessageLevel.Warning);
-                return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
+                return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
             }
 
             if (results.TotalLocalHits == 0 &&
@@ -211,7 +207,7 @@
             UserData.Push(UserDataItemNames.VacancyDistance, distance.ToString(CultureInfo.InvariantCulture));
             UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToString(CultureInfo.InvariantCulture));
 
-            return RedirectToAction("Details", new {id});
+            return RedirectToAction("Details", new { id });
         }
 
         [HttpGet]
@@ -257,12 +253,6 @@
         }
 
         #region Helpers
-
-        private static bool HasGeoPoint(VacancySearchViewModel searchViewModel)
-        {
-            searchViewModel.CheckLatLonLocHash();
-            return searchViewModel.Latitude.HasValue && searchViewModel.Longitude.HasValue;
-        }
 
         private void PopulateResultsPerPage(int selectedValue)
         {
@@ -310,14 +300,14 @@
 
             if (!string.IsNullOrWhiteSpace(keywords))
             {
-                sortTypeOptions.Add(new {SortType = VacancySortType.Relevancy, Name = "Best Match"});
+                sortTypeOptions.Add(new { SortType = VacancySortType.Relevancy, Name = "Best Match" });
             }
 
-            sortTypeOptions.Add(new {SortType = VacancySortType.ClosingDate, Name = "Closing Date"});
+            sortTypeOptions.Add(new { SortType = VacancySortType.ClosingDate, Name = "Closing Date" });
 
             if (isLocalLocationType)
             {
-                sortTypeOptions.Add(new {SortType = VacancySortType.Distance, Name = "Distance"});
+                sortTypeOptions.Add(new { SortType = VacancySortType.Distance, Name = "Distance" });
             }
 
             var sortTypes = new SelectList(
