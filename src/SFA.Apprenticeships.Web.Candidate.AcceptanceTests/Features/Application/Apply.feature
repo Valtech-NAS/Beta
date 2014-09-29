@@ -83,6 +83,7 @@ Scenario: As a candidate I want to save my application as a draft and be able to
 	Then I am on the MyApplicationsPage page
 
 @US461 @US362 @US365 @US154 @US463 @US352 @US354
+@Ignore
 Scenario: As a candidate I want to enter my qualifications and work experience
 	Given I have registered a new candidate
 	When I enter data
@@ -223,18 +224,20 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 	And I choose ApplyButton
 	Then I am on the ApplicationPreviewPage page
 	And I see
-		| Field                 | Rule   | Value                 |
-		| Fullname              | Equals | Firstname Lastname    |
-		| Phonenumber           | Equals | 07970523193           |
-		| EmailAddress          | Equals | {EmailToken}          |
-		| Postcode              | Equals | N7 8LS                |
-		| DateOfBirth           | Equals | 01 January 2000       |
-		| EducationNameOfSchool | Equals | SchoolName            |
-		| EducationFromYear     | Equals | 2010                  |
-		| EducationToYear       | Equals | 2012                  |
-		| WhatAreYourStrengths  | Equals | My strengths          |
-		| WhatCanYouImprove     | Equals | What can I improve    |
-		| HobbiesAndInterests   | Equals | Hobbies and interests |
+		| Field                         | Rule      | Value                 |
+		| ApplicationSavedTopMessage    | Ends With | your applications     |
+		| ApplicationSavedBottomMessage | Ends With | wibble                |
+		| Fullname                      | Equals    | Firstname Lastname    |
+		| Phonenumber                   | Equals    | 07970523193           |
+		| EmailAddress                  | Equals    | {EmailToken}          |
+		| Postcode                      | Equals    | N7 8LS                |
+		| DateOfBirth                   | Equals    | 01 January 2000       |
+		| EducationNameOfSchool         | Equals    | SchoolName            |
+		| EducationFromYear             | Equals    | 2010                  |
+		| EducationToYear               | Equals    | 2012                  |
+		| WhatAreYourStrengths          | Equals    | My strengths          |
+		| WhatCanYouImprove             | Equals    | What can I improve    |
+		| HobbiesAndInterests           | Equals    | Hobbies and interests |
 	When I choose SubmitApplication
 	Then I am on the ApplicationCompletePage page
 	When I choose MyApplicationsLink

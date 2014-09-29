@@ -6,6 +6,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (Model.DateUpdated.HasValue)
+{
+    <div class="panel-info">
+        <p id="applicationSavedTopMessage">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
+    </div>
+}
+
 <h1 class="heading-xlarge">Preview your application</h1>
 
 @Html.DisplayFor(m => m.Candidate)
@@ -177,6 +184,11 @@
 </div>
 <div class="form-group">
     @Html.ActionLink("Submit application", "SubmitApplication", new {id = Model.VacancyId}, new {@class = "button", id = "submit-application"})
+
+    @if (Model.DateUpdated.HasValue)
+    {
+        <p id="applicationSavedBottomMessage">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
+    }
 </div>
 
 @section scripts{

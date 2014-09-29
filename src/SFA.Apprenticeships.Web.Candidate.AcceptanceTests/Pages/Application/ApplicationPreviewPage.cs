@@ -11,6 +11,12 @@
         {
         }
 
+        [ElementLocator(Id = "applicationSavedTopMessage")]
+        public IWebElement ApplicationSavedTopMessage { get; set; }
+
+        [ElementLocator(Id = "applicationSavedBottomMessage")]
+        public IWebElement ApplicationSavedBottomMessage { get; set; }
+
         [ElementLocator(Id = "candidate-fullname")]
         public IWebElement Fullname { get; set; }
 
