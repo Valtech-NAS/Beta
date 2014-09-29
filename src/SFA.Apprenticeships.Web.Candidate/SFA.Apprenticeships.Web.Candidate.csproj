@@ -208,6 +208,7 @@
     <Content Include="Content\_assets\img\performance-icon-2x.png" />
     <Content Include="Content\_assets\img\performance-icon.png" />
     <Content Include="Content\_assets\js\nas\dirtyFormDialog.js" />
+    <Content Include="Content\_assets\js\scripts.js" />
     <Content Include="Content\_assets\js\webtrends\webtrends.load.js" />
     <Content Include="Content\_assets\js\webtrends\webtrends.min.js" />
     <Content Include="VacancyNotFound.html" />
