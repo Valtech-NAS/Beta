@@ -279,7 +279,7 @@
                 selectedValue
                 );
 
-            ViewBag.ResultsPerPage = resultsPerPage;
+            ViewBag.ResultsPerPageSelectList = resultsPerPage;
         }
 
         private void PopulateDistances(int selectedValue = 2)
