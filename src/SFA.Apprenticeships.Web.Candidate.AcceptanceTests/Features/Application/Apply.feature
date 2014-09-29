@@ -128,8 +128,8 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 	When I choose RemoveQualificationLink
 	And I am on the ApplicationPage page
 	Then I see
-        | Field                      | Rule   | Value |
-        | QualificationsSummaryCount | Equals | 0     |
+        | Field                 | Rule           | Value |
+        | QualificationsSummary | Does Not Exist |       |
 	When I choose WorkExperienceYes
 	And I choose SaveWorkExperience
 	Then I see
@@ -157,8 +157,8 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 	When I choose RemoveLink
 	And I am on the ApplicationPage page
 	Then I see
-        | Field                | Rule   | Value |
-        | WorkExperiencesCount | Equals | 0     |
+        | Field                 | Rule           | Value |
+        | WorkExperienceSummary | Does Not Exist |       |
 #Enter data to save
 	When I enter data
 		| Field                   | Value                         |
@@ -204,8 +204,9 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| Field                  | Rule   | Value |
 		| DraftApplicationsCount | Equals | 1     |
 	When I choose ResumeLink
-	Then I am on the ApplicationPage page
-	And I see
+	Then I wait 120 second for the ApplicationPage page
+	When I am on the ApplicationPage page
+	Then I see
         | Field                      | Rule   | Value |
         | QualificationsSummaryCount | Equals | 1     |
 	And I am on QualificationsSummaryItems list item matching criteria
