@@ -3,6 +3,7 @@
     using System;
     using System.Reflection;
     using Domain.Interfaces.Repositories;
+    using FluentAssertions;
     using Generators;
     using global::SpecBind.Helpers;
     using OpenQA.Selenium;
@@ -43,12 +44,7 @@
         [When(@"I select the first vacancy in location ""(.*)"" that can apply by this website")]
         public void WhenISelectTheFirstVacancyThatCanApplyByThisWebsite(string location)
         {
-            Given("I navigated to the VacancySearchPage page");
-            When("I enter data", GetVacancySearchData(location));
-            And("I choose Search");
-            Then("I am on the VacancySearchResultPage page");
-            When("I enter data", Get50ResultsPerPage());
-            Then("I am on the VacancySearchResultPage page");
+            SearchForAVacancyIn(location);
 
             var isLocalVacancy = false;
 
@@ -82,6 +78,70 @@
                 }
             }
         }
+
+        private void SearchForAVacancyIn(string location)
+        {
+            Given("I navigated to the VacancySearchPage page");
+            When("I enter data", GetVacancySearchData(location));
+            And("I choose Search");
+            Then("I am on the VacancySearchResultPage page");
+            When("I enter data", Get50ResultsPerPage());
+            Then("I am on the VacancySearchResultPage page");
+        }
+
+        [When(@"I select the first vacancy in location ""(.*)"" that I can apply via the employer site")]
+        public void WhenISelectTheFirstVacancyInLocationThatICanApplyViaTheEmployerSite(string location)
+        {
+            SearchForAVacancyIn(location);
+
+            var isExternalVacancy = false;
+
+            const int numResults = 50;
+            var i = 0;
+
+            _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(180));
+
+            while (!isExternalVacancy)
+            {
+                if (i == numResults)
+                {
+                    throw new Exception("Can't find any suitable vacancy.");
+                }
+
+                // Click on the i-th search result
+                _driver.FindElements(
+                    By.CssSelector(".search-results__item .vacancy-link"))
+                    .Skip(i++).First().Click();
+
+                try
+                {
+                    _driver.FindElement(By.Id("external-employer-website"));
+                    isExternalVacancy = true;
+                }
+                catch
+                {
+                    //Go Back
+                    _driver.Navigate().Back();
+                }
+            }
+        }
+
+        [Then(@"Another browser window is opened")]
+        public void ThenAnotherBrowserWindowIsOpened()
+        {
+            _driver.WindowHandles.Count.Should().Be(2);
+        }
+
+        [When(@"I navigate to the details of the vacancy (.*)")]
+        public void WhenINavigateToTheDetailsOfTheVacancy(int vacancyid)
+        {
+            var vacancySearchUri = new Uri(_driver.Url);
+            var vacancyDetailsUri = 
+                string.Format("{0}://{1}/vacancysearch/details/{2}", 
+                vacancySearchUri.Scheme, vacancySearchUri.Host, vacancyid);
+            _driver.Navigate().GoToUrl(vacancyDetailsUri);
+        }
+
 
         private Table GetVacancySearchData(string location)
         {

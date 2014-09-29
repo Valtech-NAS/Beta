@@ -9,5 +9,8 @@
     {
         [ElementLocator(Id = "apply-button")]
         public IWebElement ApplyButton { get; set; }
+
+        [ElementLocator(Id="external-employer-website")]
+        public IWebElement ApplyExternalLink { get; set; }
     }
 }

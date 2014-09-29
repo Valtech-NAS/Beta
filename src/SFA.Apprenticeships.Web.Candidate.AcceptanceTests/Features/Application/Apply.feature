@@ -75,7 +75,11 @@ Scenario: As a candidate I want to save my application as a draft and be able to
 @US461 @US362 @US365 @US154 @US463 @US352 @US354
 Scenario: As a candidate I want to enter my qualifications and work experience
 	Given I have registered a new candidate
-	When I select the first vacancy in location "N7 8LS" that can apply by this website
+	#When I select the first vacancy in location "N7 8LS" that can apply by this website
+	#When I navigate to the VacancyDetailsPage page with parameters
+	#	| Id     |
+	#	| 445650 |
+	When I navigate to the details of the vacancy 445650
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -230,3 +234,12 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 	And I see
 		| Field                      | Rule   | Value |
 		| SubmittedApplicationsCount | Equals | 1     |
+
+
+@US509
+Scenario: As a candidate I would like to preview a vacancy application via the employer site
+	Given I navigated to the VacancySearchPage page
+	When I select the first vacancy in location "N7 8LS" that I can apply via the employer site
+	Then I am on the VacancyDetailsPage page
+	When I choose ApplyExternalLink
+	Then Another browser window is opened

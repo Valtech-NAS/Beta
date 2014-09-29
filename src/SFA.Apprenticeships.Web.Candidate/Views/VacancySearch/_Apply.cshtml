@@ -6,7 +6,7 @@
 @if (@Model.ApplyViaEmployerWebsite)
 {
     <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
-    <a rel="external" href="@Model.VacancyUrl" target="_blank">Apply now</a>
+    <a id="external-employer-website" rel="external" href="@Model.VacancyUrl" target="_blank">Apply now</a>
 }
 else if (Request.IsAuthenticated)
 {
