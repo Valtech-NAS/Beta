@@ -21,7 +21,12 @@
 
             var cookie = cookies[CookieName];
 
-            return cookie != null && !string.IsNullOrWhiteSpace(cookie.Value) ? FormsAuthentication.Decrypt(cookie.Value) : null;
+            if (cookie == null || string.IsNullOrWhiteSpace(cookie.Value) || cookie.Expires < DateTime.Now)
+            {
+                return null;
+            }
+
+            return FormsAuthentication.Decrypt(cookie.Value);
         }
 
         public void RefreshTicket(HttpCookieCollection cookies)
@@ -78,7 +83,8 @@
         {
             cookies.Add(new HttpCookie(CookieName, FormsAuthentication.Encrypt(ticket))
             {
-                HttpOnly = true
+                HttpOnly = true,
+                Expires = ticket.Expiration
             });
         }
 
