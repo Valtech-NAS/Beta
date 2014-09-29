@@ -702,11 +702,11 @@ this.FeatureBackground();
             table29.AddRow(new string[] {
                         "ApplicationSavedTopMessage",
                         "Ends With",
-                        "your applications"});
+                        "my applications"});
             table29.AddRow(new string[] {
                         "ApplicationSavedBottomMessage",
                         "Ends With",
-                        "wibble"});
+                        "my applications"});
             table29.AddRow(new string[] {
                         "Fullname",
                         "Equals",
@@ -753,13 +753,13 @@ this.FeatureBackground();
                         "Hobbies and interests"});
 #line 228
  testRunner.And("I see", ((string)(null)), table29, "And ");
-#line 241
- testRunner.When("I choose SubmitApplication", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 242
- testRunner.Then("I am on the ApplicationCompletePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 243
- testRunner.When("I choose MyApplicationsLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I choose SubmitApplication", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 244
+ testRunner.Then("I am on the ApplicationCompletePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 245
+ testRunner.When("I choose MyApplicationsLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 246
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
@@ -770,7 +770,7 @@ this.FeatureBackground();
                         "SubmittedApplicationsCount",
                         "Equals",
                         "1"});
-#line 245
+#line 247
  testRunner.And("I see", ((string)(null)), table30, "And ");
 #line hidden
             this.ScenarioCleanup();

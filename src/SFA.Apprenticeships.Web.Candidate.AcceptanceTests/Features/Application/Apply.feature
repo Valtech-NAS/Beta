@@ -227,8 +227,8 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 	Then I am on the ApplicationPreviewPage page
 	And I see
 		| Field                         | Rule      | Value                 |
-		| ApplicationSavedTopMessage    | Ends With | your applications     |
-		| ApplicationSavedBottomMessage | Ends With | wibble                |
+		| ApplicationSavedTopMessage    | Ends With | my applications       |
+		| ApplicationSavedBottomMessage | Ends With | my applications       |
 		| Fullname                      | Equals    | Firstname Lastname    |
 		| Phonenumber                   | Equals    | 07970523193           |
 		| EmailAddress                  | Equals    | {EmailToken}          |
