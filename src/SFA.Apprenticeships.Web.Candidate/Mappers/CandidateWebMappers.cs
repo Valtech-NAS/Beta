@@ -40,7 +40,7 @@
                 .ForMember(d => d.ApplyViaEmployerWebsite,
                     opt => opt.MapFrom(src => src.ApplyViaEmployerWebsite))
                 .ForMember(d => d.VacancyUrl,
-                    opt => opt.MapFrom(src => src.VacancyUrl))
+                    opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.VacancyUrlResolver>())
                 .ForMember(d => d.ApplicationInstructions,
                     opt => opt.MapFrom(src => src.ApplicationInstructions))
                 .ForMember(d => d.IsRecruitmentAgencyAnonymous,

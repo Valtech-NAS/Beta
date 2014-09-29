@@ -1,5 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
 {
+    using System;
+    using System.Net;
+    using System.Web.Http;
     using AutoMapper;
     using Domain.Entities.Vacancies;
 
@@ -23,6 +26,19 @@
                     vacancyDetail.WageDescription :
                     string.Format("£{0:N2}", vacancyDetail.Wage);
             }
-        }       
+        }      
+ 
+        public class VacancyUrlResolver : ValueResolver<VacancyDetail, string>
+        {
+            protected override string ResolveCore(VacancyDetail vacancyDetail)
+            {
+                return GetUri(vacancyDetail.VacancyUrl);
+            }
+
+            private static string GetUri(string s)
+            {
+                return new UriBuilder(s).Uri.ToString();
+            }
+        }
     }
 }
