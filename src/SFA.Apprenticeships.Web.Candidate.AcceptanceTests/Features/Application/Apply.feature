@@ -83,7 +83,6 @@ Scenario: As a candidate I want to save my application as a draft and be able to
 	Then I am on the MyApplicationsPage page
 
 @US461 @US362 @US365 @US154 @US463 @US352 @US354
-@Ignore
 Scenario: As a candidate I want to enter my qualifications and work experience
 	Given I have registered a new candidate
 	When I enter data
