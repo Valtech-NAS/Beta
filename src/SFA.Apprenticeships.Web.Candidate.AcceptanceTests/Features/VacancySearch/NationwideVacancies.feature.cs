@@ -276,7 +276,7 @@ this.FeatureBackground();
                         "Value"});
             table9.AddRow(new string[] {
                         "SortOrderingDropDown",
-                        "Distance"});
+                        "Closing Date"});
 #line 70
  testRunner.When("I enter data", ((string)(null)), table9, "When ");
 #line 73

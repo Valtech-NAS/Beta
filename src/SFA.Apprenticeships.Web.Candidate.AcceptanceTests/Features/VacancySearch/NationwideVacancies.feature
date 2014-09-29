@@ -68,8 +68,8 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the sort order
 	When I choose NationwideLocationTypeLink
 	Then I am on the VacancySearchResultPage page
 	When I enter data
-		| Field                | Value    |
-		| SortOrderingDropDown | Distance |
+		| Field                | Value        |
+		| SortOrderingDropDown | Closing Date |
 	Then I am on the VacancySearchResultPage page
 	And I see
         | Field                      | Rule           | Value |
