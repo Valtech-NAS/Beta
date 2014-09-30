@@ -93,14 +93,15 @@
             {
                 var results = ProcessNationalAndNonNationalSearches(search, searchLocation);
 
-                var nationalResults = results[0].Results.Any(x => x.VacancyLocationType == VacancyLocationType.National)
+                var nationalResults =
+                    results[0].Results.Any(x => x.VacancyLocationType == VacancyLocationType.National)
                     ? results[0]
-                    : results[1];
+                    : results[1].Results.Any(x => x.VacancyLocationType == VacancyLocationType.National) ? results[1] : new SearchResults<VacancySummaryResponse>(0, 1, null);
 
-                var nonNationalResults =
-                    results[0].Results.Any(x => x.VacancyLocationType == VacancyLocationType.NonNational)
-                        ? results[0]
-                        : results[1];
+                var nonNationalResults = 
+                    results[1].Results.Any(x => x.VacancyLocationType == VacancyLocationType.NonNational) 
+                    ? results[1]
+                    : results[0].Results.Any(x => x.VacancyLocationType == VacancyLocationType.NonNational) ? results[0] : new SearchResults<VacancySummaryResponse>(0, 1, null);
 
                 var nationalResponse =
                     _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(
@@ -189,11 +190,11 @@
                 new SearchParameters
                 {
                     Keywords = search.Keywords,
-                    Location = searchLocation,
+                    Location = null,
                     PageNumber = search.PageNumber,
                     PageSize = search.ResultsPerPage,
                     SearchRadius = search.WithinDistance,
-                    SortType = search.SortType,
+                    SortType = string.IsNullOrWhiteSpace(search.Keywords) ? VacancySortType.ClosingDate : VacancySortType.Relevancy,
                     VacancyLocationType = VacancyLocationType.National
                 },
                 new SearchParameters
@@ -207,10 +208,14 @@
                     VacancyLocationType = VacancyLocationType.NonNational
                 }
             };
-        
+
             var resultCollection = new ConcurrentBag<SearchResults<VacancySummaryResponse>>();
             Parallel.ForEach(searchparameters,
-                parameters => resultCollection.Add(_vacancySearchService.Search(parameters)));
+                parameters =>
+                {
+                    var searchResults = _vacancySearchService.Search(parameters);
+                    resultCollection.Add(searchResults);
+                });
 
             return resultCollection.ToArray();
         }
