@@ -34,6 +34,48 @@
             Logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
                 indexName);
 
+            var search = PerformSearch(parameters, client, indexName, documentTypeName);
+
+            var responses = search.Documents.ToList();
+
+            responses.ForEach(r =>
+            {
+                var hitMd = search.HitsMetaData.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture));
+
+                if (parameters.Location != null)
+                {
+                    if (parameters.SortType == VacancySortType.ClosingDate ||
+                        parameters.SortType == VacancySortType.Distance)
+                    {
+                        r.Distance = double.Parse(hitMd.Sorts.Skip(hitMd.Sorts.Count() - 1).First().ToString());
+                    }
+                    else
+                    {
+                        //if anyone can find a better way to get this value out, feel free!
+                        var array = hitMd.Fields.FieldValues<JArray>("distance");
+                        var value = array[0];
+                        r.Distance = double.Parse(value.ToString());
+                    }
+                }
+
+                r.Score = hitMd.Score;
+            });
+
+            Logger.Debug("{0} search results returned", search.Total);
+
+            var results = new SearchResults<VacancySummaryResponse>(search.Total, parameters.PageNumber, responses);
+
+            return results;
+        }
+
+        private ISearchResponse<VacancySummaryResponse> PerformNationalSearch(SearchParameters parameters, ElasticClient client, string indexName, string documentTypeName)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private ISearchResponse<VacancySummaryResponse> PerformSearch(SearchParameters parameters, ElasticClient client, string indexName,
+            string documentTypeName)
+        {
             var search = client.Search<VacancySummaryResponse>(s =>
             {
                 s.Index(indexName);
@@ -45,6 +87,7 @@
 
                 s.Query(q =>
                 {
+                    QueryContainer queryVacancyLocation = null;
                     QueryContainer query = null;
 
                     if (_searchConfiguration.SearchJobTitleField)
@@ -91,10 +134,10 @@
                         query = BuildContainer(query, queryClause);
                     }
 
-                    var vacancyLocationTypeClause =
+                    queryVacancyLocation =
                         q.Match(
-                            p => p.OnField(f => f.VacancyLocationType).Query(parameters.VacancyLocationType.ToString()));
-                    query = BuildContainer(query, vacancyLocationTypeClause);
+                            m => m.OnField(f => f.VacancyLocationType).Query(parameters.VacancyLocationType.ToString()));
+                    query = query && queryVacancyLocation;
 
                     return query;
                 });
@@ -111,6 +154,10 @@
                         break;
                     case VacancySortType.ClosingDate:
                         s.Sort(v => v.OnField(f => f.ClosingDate).Ascending());
+                        if (parameters.Location == null) 
+                        {
+                            break;
+                        }
                         //Need this to get the distance from the sort.
                         //Was trying to get distance in relevancy without this sort but can't .. yet
                         s.SortGeoDistance(g =>
@@ -122,6 +169,10 @@
                         break;
                     case VacancySortType.Relevancy:
                         s.Fields("_source");
+                        if (parameters.Location == null)
+                        {
+                            break;
+                        }
                         s.ScriptFields(sf =>
                             sf.Add("distance", sfd => sfd
                                 .Params(fp =>
@@ -146,34 +197,7 @@
 
                 return s;
             });
-
-            var responses = search.Documents.ToList();
-
-            responses.ForEach(r =>
-            {
-                var hitMd = search.HitsMetaData.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture));
-
-                if (parameters.SortType == VacancySortType.ClosingDate ||
-                    parameters.SortType == VacancySortType.Distance)
-                {
-                    r.Distance = double.Parse(hitMd.Sorts.Skip(hitMd.Sorts.Count() - 1).First().ToString());
-                }
-                else
-                {
-                    //if anyone can find a better way to get this value out, feel free!
-                    var array = hitMd.Fields.FieldValues<JArray>("distance");
-                    var value = array[0];
-                    r.Distance = double.Parse(value.ToString());
-                }
-
-                r.Score = hitMd.Score;
-            });
-
-            Logger.Debug("{0} search results returned", search.Total);
-
-            var results = new SearchResults<VacancySummaryResponse>(search.Total, parameters.PageNumber, responses);
-
-            return results;
+            return search;
         }
 
         private QueryContainer BuildContainer(QueryContainer queryContainer, QueryContainer queryClause)

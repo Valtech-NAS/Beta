@@ -25,7 +25,7 @@
         [Display(Name = RegisterViewModelMessages.PhoneNumberMessages.LabelText, Description = RegisterViewModelMessages.PhoneNumberMessages.HintText)]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = RegisterViewModelMessages.PasswordMessages.LabelText)]
+        [Display(Name = RegisterViewModelMessages.PasswordMessages.LabelText, Description = RegisterViewModelMessages.PasswordMessages.HintText)]
         public string Password { get; set; }
 
         [Display(Name = RegisterViewModelMessages.ConfirmPasswordMessages.LabelText)]

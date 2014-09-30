@@ -42,6 +42,32 @@
         /// Creates the NAS form element with the appropriate classes.
         /// </summary>
         /// <returns>The html to render</returns>
+        public static MvcHtmlString FormPasswordFor<TModel, TProperty>(
+                    this HtmlHelper<TModel> helper,
+                    Expression<Func<TModel, TProperty>> expression,
+                    string labelText = null,
+                    string hintText = null,
+                    object containerHtmlAttributes = null,
+                    object labelHtmlAttributes = null,
+                    object hintHtmlAttributes = null,
+                    object controlHtmlAttributes = null)
+        {
+            return BuildFormControl(helper,
+                                    expression,
+                                    helper.PasswordFor,
+                                    labelText,
+                                    hintText,
+                                    false,
+                                    containerHtmlAttributes,
+                                    labelHtmlAttributes,
+                                    hintHtmlAttributes,
+                                    controlHtmlAttributes);
+        }
+
+        /// <summary>
+        /// Creates the NAS form element with the appropriate classes.
+        /// </summary>
+        /// <returns>The html to render</returns>
         public static MvcHtmlString FormTextAreaFor<TModel, TProperty>(
                     this HtmlHelper<TModel> helper,
                     Expression<Func<TModel, TProperty>> expression,

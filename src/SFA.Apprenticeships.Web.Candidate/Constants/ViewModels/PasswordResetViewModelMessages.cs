@@ -20,13 +20,13 @@
             public const string LengthErrorText = "New password must be at least 8 characters";
             public const string WhiteListRegularExpression = Whitelists.PasswordWhitelist.RegularExpression;
             public const string WhiteListErrorText = "New password " + Whitelists.PasswordWhitelist.ErrorText;
+            public const string PasswordsDoNotMatchErrorText = "Sorry, your passwords don’t match";
         }
 
         public static class ConfirmPasswordMessages
         {
             public const string LabelText = "Confirm password";
             public const string RequiredErrorText = "Please confirm password";
-            public const string PasswordsDoNotMatchErrorText = "Sorry, your passwords don’t match";
         }
     }
 }
