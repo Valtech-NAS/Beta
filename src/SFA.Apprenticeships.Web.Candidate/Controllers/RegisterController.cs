@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -41,21 +42,129 @@
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
         [AllowReturnUrl(Allow = false)]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            return await Task.Run<ActionResult>(() => View());
         }
 
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [ValidateInput(false)]
-        public ActionResult Index(RegisterViewModel model)
+        public async Task<ActionResult> Index(RegisterViewModel model)
         {
-            var userNameAvailable = _candidateServiceProvider.IsUsernameAvailable(model.EmailAddress.Trim());
-            if (!userNameAvailable.HasError)
+            return await Task.Run<ActionResult>(() =>
             {
-                model.IsUsernameAvailable = userNameAvailable.IsUserNameAvailable;
-                var validationResult = _registerViewModelServerValidator.Validate(model);
+                var userNameAvailable = _candidateServiceProvider.IsUsernameAvailable(model.EmailAddress.Trim());
+                if (!userNameAvailable.HasError)
+                {
+                    model.IsUsernameAvailable = userNameAvailable.IsUserNameAvailable;
+                    var validationResult = _registerViewModelServerValidator.Validate(model);
+
+                    if (!validationResult.IsValid)
+                    {
+                        ModelState.Clear();
+                        validationResult.AddToModelState(ModelState, string.Empty);
+
+                        return View(model);
+                    }
+
+                    var serverError = !_candidateServiceProvider.Register(model);
+                    if (!serverError)
+                    {
+                        UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname);
+
+                        return RedirectToAction("Activation");
+                    }
+                }
+
+                SetUserMessage(RegisterPageMessages.RegistrationFailed, UserMessageLevel.Warning);
+
+                ModelState.Clear();
+                return View(model);
+            });
+        }
+
+        [HttpGet]
+        [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AllowReturnUrl(Allow = false)]
+        public async Task<ActionResult> Activation(string returnUrl)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var model = new ActivationViewModel
+                {
+                    EmailAddress = UserContext.UserName
+                };
+
+                if (!string.IsNullOrWhiteSpace(returnUrl))
+                {
+                    UserData.Push(UserDataItemNames.ReturnUrl, Server.UrlEncode(returnUrl));
+                }
+
+                return View(model);
+            });
+        }
+
+        [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
+        public async Task<ActionResult> Activate(ActivationViewModel model)
+        {
+            return await Task.Run(() =>
+            {
+                model = _candidateServiceProvider.Activate(model, UserContext.CandidateId);
+
+                switch (model.State)
+                {
+                    case ActivateUserState.Activated:
+                        var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
+                        SetUserMessage(ActivationPageMessages.AccountActivated);
+                        return SetAuthenticationCookieAndRedirectToAction(candidate);
+
+                    case ActivateUserState.Error:
+                        SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
+                        break;
+
+                    case ActivateUserState.InvalidCode:
+                        var activatedResult = _activationViewModelServerValidator.Validate(model);
+                        ModelState.Clear();
+                        activatedResult.AddToModelState(ModelState, string.Empty);
+                        break;
+                }
+
+                return View("Activation", model);
+            });
+        }
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AllowReturnUrl(Allow = false)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public async Task<ActionResult> Complete()
+        {
+            return await Task.Run(() =>
+            {
+                ViewBag.Message = UserContext.UserName;
+
+                return View();
+            });
+        }
+
+        [HttpGet]
+        [AllowReturnUrl(Allow = false)]
+        [OutputCache(CacheProfile = CacheProfiles.Long)]
+        public async Task<ActionResult> ForgottenPassword()
+        {
+            return await Task.Run(() => View());
+        }
+
+        [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        public async Task<ActionResult> ForgottenPassword(ForgottenPasswordViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var validationResult = _forgottenPasswordViewModelServerValidator.Validate(model);
 
                 if (!validationResult.IsValid)
                 {
@@ -65,205 +174,124 @@
                     return View(model);
                 }
 
-                var serverError = !_candidateServiceProvider.Register(model);
-                if (!serverError)
+                if (_candidateServiceProvider.RequestForgottenPasswordResetCode(model))
                 {
-                    UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname);
-
-                    return RedirectToAction("Activation");
+                    UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
+                    return RedirectToAction("ResetPassword");
                 }
-            }
 
-            SetUserMessage(RegisterPageMessages.RegistrationFailed, UserMessageLevel.Warning); 
-
-            ModelState.Clear();
-            return View(model);
-        }
-
-        [HttpGet]
-        [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [AllowReturnUrl(Allow = false)]
-        public ActionResult Activation(string returnUrl)
-        {
-            var model = new ActivationViewModel
-            {
-                EmailAddress = UserContext.UserName
-            };
-
-            if (!string.IsNullOrWhiteSpace(returnUrl))
-            {
-                UserData.Push(UserDataItemNames.ReturnUrl, Server.UrlEncode(returnUrl));
-            }
-
-            return View(model);
-        }
-
-        [HttpPost]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
-        public ActionResult Activate(ActivationViewModel model)
-        {
-            model = _candidateServiceProvider.Activate(model, UserContext.CandidateId);
-
-            switch (model.State)
-            {
-                case ActivateUserState.Activated:
-                    var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
-                    SetUserMessage(ActivationPageMessages.AccountActivated);
-                    return SetAuthenticationCookieAndRedirectToAction(candidate);
-
-                case ActivateUserState.Error:
-                    SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
-                    break;
-
-                case ActivateUserState.InvalidCode:
-                    var activatedResult = _activationViewModelServerValidator.Validate(model);
-                    ModelState.Clear();
-                    activatedResult.AddToModelState(ModelState, string.Empty);
-                    break;
-            }
-
-            return View("Activation", model);
-        }
-
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [AllowReturnUrl(Allow = false)]
-        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult Complete()
-        {
-            ViewBag.Message = UserContext.UserName;
-
-            return View();
-        }
-
-        [HttpGet]
-        [AllowReturnUrl(Allow = false)]
-        [OutputCache(CacheProfile = CacheProfiles.Long)]
-        public ActionResult ForgottenPassword()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        public ActionResult ForgottenPassword(ForgottenPasswordViewModel model)
-        {
-            var validationResult = _forgottenPasswordViewModelServerValidator.Validate(model);
-
-            if (!validationResult.IsValid)
-            {
-                ModelState.Clear();
-                validationResult.AddToModelState(ModelState, string.Empty);
+                SetUserMessage(PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
 
                 return View(model);
-            }
-
-            if (_candidateServiceProvider.RequestForgottenPasswordResetCode(model))
-            {
-                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
-                return RedirectToAction("ResetPassword");
-            }
-
-            SetUserMessage(PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
-
-            return View(model);
+            });
         }
 
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        public ActionResult ResetPassword()
+        public async Task<ActionResult> ResetPassword()
         {
-            var emailAddress = UserData.Get(UserDataItemNames.EmailAddress);
-
-            if (string.IsNullOrWhiteSpace(emailAddress))
+            return await Task.Run<ActionResult>(() =>
             {
-                return RedirectToAction("ForgottenPassword");
-            }
+                var emailAddress = UserData.Get(UserDataItemNames.EmailAddress);
 
-            var model = new PasswordResetViewModel
-            {
-                EmailAddress = emailAddress
-            };
+                if (string.IsNullOrWhiteSpace(emailAddress))
+                {
+                    return RedirectToAction("ForgottenPassword");
+                }
 
-            return View(model);
+                var model = new PasswordResetViewModel
+                {
+                    EmailAddress = emailAddress
+                };
+
+                return View(model);
+            });
         }
 
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
         [ValidateInput(false)]
-        public ActionResult ResetPassword(PasswordResetViewModel model)
+        public async Task<ActionResult> ResetPassword(PasswordResetViewModel model)
         {
-            var result = _candidateServiceProvider.VerifyPasswordReset(model);
-
-            if (result.HasError())
+            return await Task.Run(() =>
             {
-                SetUserMessage(result.ViewModelMessage, UserMessageLevel.Warning);
+                var result = _candidateServiceProvider.VerifyPasswordReset(model);
+
+                if (result.HasError())
+                {
+                    SetUserMessage(result.ViewModelMessage, UserMessageLevel.Warning);
+                    return View(result);
+                }
+
+                if (result.UserStatus == UserStatuses.Locked)
+                {
+                    UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
+                    return RedirectToAction("Unlock", "Login");
+                }
+
+                var validationResult = _passwordResetViewModelServerValidator.Validate(result);
+
+                if (validationResult.IsValid)
+                {
+                    var candidate = _candidateServiceProvider.GetCandidate(result.EmailAddress);
+
+                    SetUserMessage(PasswordResetPageMessages.SuccessfulPasswordReset);
+
+                    return SetAuthenticationCookieAndRedirectToAction(candidate);
+                }
+
+                ModelState.Clear();
+                validationResult.AddToModelState(ModelState, string.Empty);
+
                 return View(result);
-            }
-
-            if (result.UserStatus == UserStatuses.Locked)
-            {
-                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
-                return RedirectToAction("Unlock", "Login");
-            }
-
-            var validationResult = _passwordResetViewModelServerValidator.Validate(result);
-
-            if (validationResult.IsValid)
-            {
-                var candidate = _candidateServiceProvider.GetCandidate(result.EmailAddress);
-
-                SetUserMessage(PasswordResetPageMessages.SuccessfulPasswordReset);
-
-                return SetAuthenticationCookieAndRedirectToAction(candidate);
-            }
-
-            ModelState.Clear();
-            validationResult.AddToModelState(ModelState, string.Empty);
-
-            return View(result);
+            });
         }
 
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        public ActionResult ResendPasswordResetCode(string emailAddress)
+        public async Task<ActionResult> ResendPasswordResetCode(string emailAddress)
         {
-            var model = new ForgottenPasswordViewModel
+            return await Task.Run(() =>
             {
-                EmailAddress = emailAddress
-            };
+                var model = new ForgottenPasswordViewModel
+                {
+                    EmailAddress = emailAddress
+                };
 
-            UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
+                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
 
-            if (_candidateServiceProvider.RequestForgottenPasswordResetCode(model))
-            {
-                SetUserMessage(string.Format(PasswordResetPageMessages.PasswordResetSent, emailAddress));
-            }
-            else
-            {
-                SetUserMessage(PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
-            }
+                if (_candidateServiceProvider.RequestForgottenPasswordResetCode(model))
+                {
+                    SetUserMessage(string.Format(PasswordResetPageMessages.PasswordResetSent, emailAddress));
+                }
+                else
+                {
+                    SetUserMessage(PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
+                }
 
-            return RedirectToAction("ResetPassword");
+                return RedirectToAction("ResetPassword");
+            });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        public ActionResult ResendActivationCode(string emailAddress)
+        public async Task<ActionResult> ResendActivationCode(string emailAddress)
         {
-            if (_candidateServiceProvider.ResendActivationCode(emailAddress))
+            return await Task.Run(() =>
             {
-                SetUserMessage(string.Format(ActivationPageMessages.ActivationCodeSent, emailAddress));
+                if (_candidateServiceProvider.ResendActivationCode(emailAddress))
+                {
+                    SetUserMessage(string.Format(ActivationPageMessages.ActivationCodeSent, emailAddress));
 
+                    return RedirectToAction("Activation");
+                }
+
+                SetUserMessage(ActivationPageMessages.ActivationCodeSendingFailure, UserMessageLevel.Warning);
                 return RedirectToAction("Activation");
-            }
-
-            SetUserMessage(ActivationPageMessages.ActivationCodeSendingFailure, UserMessageLevel.Warning);
-            return RedirectToAction("Activation");
+            });
         }
 
         [AllowCrossSiteJson]

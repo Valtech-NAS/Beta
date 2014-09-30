@@ -1,39 +1,40 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Constants;
 
     public class HomeController : CandidateControllerBase
     {
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            return await Task.Run<ActionResult>(() => View());
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        public ActionResult Privacy()
+        public async Task<ActionResult> Privacy()
         {
-            return View();
+            return await Task.Run<ActionResult>(() => View());
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        public ActionResult Cookies(string returnUrl)
+        public async Task<ActionResult> Cookies(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return await Task.Run<ActionResult>(() => View());
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        public ActionResult Helpdesk()
+        public async Task<ActionResult> Helpdesk()
         {
-            return View();
+            return await Task.Run<ActionResult>(() => View());
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        public ActionResult Terms()
+        public async Task<ActionResult> Terms()
         {
-            return View();
+            return await Task.Run<ActionResult>(() => View());
         }
     }
 }

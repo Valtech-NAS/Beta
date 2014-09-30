@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Attributes;
     using Common.Constants;
@@ -25,42 +26,48 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var model = _accountProvider.GetSettingsViewModel(UserContext.CandidateId);
+            return await Task.Run<ActionResult>(() =>
+            {
+                var model = _accountProvider.GetSettingsViewModel(UserContext.CandidateId);
 
-            return View(model);
+                return View(model);
+            });
         }
 
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult Index(SettingsViewModel model)
+        public async Task<ActionResult> Index(SettingsViewModel model)
         {
-            var validationResult = _settingsViewModelServerValidator.Validate(model);
-
-            if (!validationResult.IsValid)
+            return await Task.Run<ActionResult>(() =>
             {
-                ModelState.Clear();
-                validationResult.AddToModelState(ModelState, string.Empty);
+                var validationResult = _settingsViewModelServerValidator.Validate(model);
 
-                return View(model);
-            }
+                if (!validationResult.IsValid)
+                {
+                    ModelState.Clear();
+                    validationResult.AddToModelState(ModelState, string.Empty);
 
-            var saved = _accountProvider.SaveSettings(UserContext.CandidateId, model);
+                    return View(model);
+                }
 
-            if (!saved)
-            {
-                ModelState.Clear();
-                SetUserMessage(AccountPageMessages.SettingsUpdateFailed, UserMessageLevel.Warning);
+                var saved = _accountProvider.SaveSettings(UserContext.CandidateId, model);
 
-                return View(model);
-            }
+                if (!saved)
+                {
+                    ModelState.Clear();
+                    SetUserMessage(AccountPageMessages.SettingsUpdateFailed, UserMessageLevel.Warning);
 
-            UserData.SetUserContext(UserContext.UserName, model.Firstname + " " + model.Lastname);
-            SetUserMessage(AccountPageMessages.SettingsUpdated);
+                    return View(model);
+                }
 
-            return RedirectToAction("Index");
+                UserData.SetUserContext(UserContext.UserName, model.Firstname + " " + model.Lastname);
+                SetUserMessage(AccountPageMessages.SettingsUpdated);
+
+                return RedirectToAction("Index");
+            });
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using System.Web.Security;
     using Common.Attributes;
@@ -35,184 +36,206 @@
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        public ActionResult Index(string returnUrl)
+        public async Task<ActionResult> Index(string returnUrl)
         {
-            if (User.Identity.IsAuthenticated)
+            return await Task.Run<ActionResult>(() =>
             {
-                return RedirectToRoute(CandidateRouteNames.MyApplications);
-            }
+                if (User.Identity.IsAuthenticated)
+                {
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                }
 
-            _authenticationTicketService.Clear(HttpContext.Request.Cookies); //todo: yuk
+                _authenticationTicketService.Clear(HttpContext.Request.Cookies); //todo: yuk
 
-            if (!string.IsNullOrWhiteSpace(returnUrl))
-            {
-                UserData.Push(UserDataItemNames.ReturnUrl, Server.UrlEncode(returnUrl));
-            }
+                if (!string.IsNullOrWhiteSpace(returnUrl))
+                {
+                    UserData.Push(UserDataItemNames.ReturnUrl, Server.UrlEncode(returnUrl));
+                }
 
-            return View();
+                return View();
+            });
         }
 
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
-        public ActionResult Index(LoginViewModel model)
+        public async Task<ActionResult> Index(LoginViewModel model)
         {
-            if (User.Identity.IsAuthenticated)
+            return await Task.Run(() =>
             {
-                return RedirectToRoute(CandidateRouteNames.MyApplications);
-            }
+                if (User.Identity.IsAuthenticated)
+                {
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                }
 
-            // todo: refactor - too much going on here Provider layer
-            // Validate view model.
-            var validationResult = _loginViewModelServerValidator.Validate(model);
+                // todo: refactor - too much going on here Provider layer
+                // Validate view model.
+                var validationResult = _loginViewModelServerValidator.Validate(model);
 
-            if (!validationResult.IsValid)
-            {
+                if (!validationResult.IsValid)
+                {
+                    ModelState.Clear();
+                    validationResult.AddToModelState(ModelState, string.Empty);
+
+                    return View(model);
+                }
+
+                var result = _candidateServiceProvider.Login(model);
+
+                if (result.UserStatus == UserStatuses.Locked)
+                {
+                    UserData.Push(UserDataItemNames.EmailAddress, result.EmailAddress);
+
+                    return RedirectToAction("Unlock");
+                }
+
+                if (result.IsAuthenticated)
+                {
+                    UserData.SetUserContext(result.EmailAddress, result.FullName);
+
+                    return RedirectOnAuthenticated(result.UserStatus, result.EmailAddress);
+                }
+
                 ModelState.Clear();
-                validationResult.AddToModelState(ModelState, string.Empty);
+                ModelState.AddModelError(string.Empty, result.ViewModelMessage);
 
                 return View(model);
-            }
-
-            var result = _candidateServiceProvider.Login(model);
-
-            if (result.UserStatus == UserStatuses.Locked)
-            {
-                UserData.Push(UserDataItemNames.EmailAddress, result.EmailAddress);
-
-                return RedirectToAction("Unlock");
-            }
-
-            if (result.IsAuthenticated)
-            {
-                UserData.SetUserContext(result.EmailAddress, result.FullName);
-
-                return RedirectOnAuthenticated(result.UserStatus, result.EmailAddress);
-            }
-
-            ModelState.Clear();
-            ModelState.AddModelError(string.Empty, result.ViewModelMessage);
-
-            return View(model);
+            });
         }
 
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        public ActionResult Unlock()
+        public async Task<ActionResult> Unlock()
         {
-            var emailAddress = UserData.Get(UserDataItemNames.EmailAddress);
-
-            if (string.IsNullOrWhiteSpace(emailAddress))
+            return await Task.Run(() =>
             {
-                return RedirectToAction("Index");
-            }
+                var emailAddress = UserData.Get(UserDataItemNames.EmailAddress);
 
-            var userStatusViewModel = _candidateServiceProvider.GetUserStatus(emailAddress);
+                if (string.IsNullOrWhiteSpace(emailAddress))
+                {
+                    return RedirectToAction("Index");
+                }
 
-            if (userStatusViewModel.HasError())
-            {
+                var userStatusViewModel = _candidateServiceProvider.GetUserStatus(emailAddress);
+
+                if (userStatusViewModel.HasError())
+                {
+                    return ViewAccountUnlock(emailAddress);
+                }
+
+                if (userStatusViewModel.UserStatus != UserStatuses.Locked)
+                {
+                    return RedirectToAction("Index");
+                }
+
                 return ViewAccountUnlock(emailAddress);
-            }
-
-            if (userStatusViewModel.UserStatus != UserStatuses.Locked)
-            {
-                return RedirectToAction("Index");
-            }
-
-            return ViewAccountUnlock(emailAddress);
+            });
         }
 
 
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
-        public ActionResult Unlock(AccountUnlockViewModel model)
+        public async Task<ActionResult> Unlock(AccountUnlockViewModel model)
         {
-            // todo: refactor - too much going on here Provider layer
-            var validationResult = _accountUnlockViewModelServerValidator.Validate(model);
-
-            if (!validationResult.IsValid)
+            return await Task.Run<ActionResult>(() =>
             {
-                ModelState.Clear();
-                validationResult.AddToModelState(ModelState, string.Empty);
+                // todo: refactor - too much going on here Provider layer
+                var validationResult = _accountUnlockViewModelServerValidator.Validate(model);
 
-                return View(model);
-            }
-
-            var accountUnlockViewModel = _candidateServiceProvider.VerifyAccountUnlockCode(model);
-            switch (accountUnlockViewModel.Status)
-            {
-                case AccountUnlockState.Ok:
-                    UserData.Pop(UserDataItemNames.EmailAddress);
-                    SetUserMessage(AccountUnlockPageMessages.AccountUnlockedText);
-                    return RedirectToAction("Index");
-                case AccountUnlockState.UserInIncorrectState:
-                    return RedirectToAction("Index");
-                case AccountUnlockState.AccountUnlockCodeInvalid:
+                if (!validationResult.IsValid)
+                {
                     ModelState.Clear();
-                    ModelState.AddModelError("AccountUnlockCode", AccountUnlockPageMessages.WrongAccountUnlockCodeErrorText);
+                    validationResult.AddToModelState(ModelState, string.Empty);
+
                     return View(model);
-                case AccountUnlockState.AccountUnlockCodeExpired:
-                    SetUserMessage(AccountUnlockPageMessages.AccountUnlockCodeExpired, UserMessageLevel.Warning);
-                    return View(model);
-                default:
-                    SetUserMessage(AccountUnlockPageMessages.AccountUnlockFailed, UserMessageLevel.Warning);
-                    return View(model);
-            }
+                }
+
+                var accountUnlockViewModel = _candidateServiceProvider.VerifyAccountUnlockCode(model);
+                switch (accountUnlockViewModel.Status)
+                {
+                    case AccountUnlockState.Ok:
+                        UserData.Pop(UserDataItemNames.EmailAddress);
+                        SetUserMessage(AccountUnlockPageMessages.AccountUnlockedText);
+                        return RedirectToAction("Index");
+                    case AccountUnlockState.UserInIncorrectState:
+                        return RedirectToAction("Index");
+                    case AccountUnlockState.AccountUnlockCodeInvalid:
+                        ModelState.Clear();
+                        ModelState.AddModelError("AccountUnlockCode",
+                            AccountUnlockPageMessages.WrongAccountUnlockCodeErrorText);
+                        return View(model);
+                    case AccountUnlockState.AccountUnlockCodeExpired:
+                        SetUserMessage(AccountUnlockPageMessages.AccountUnlockCodeExpired, UserMessageLevel.Warning);
+                        return View(model);
+                    default:
+                        SetUserMessage(AccountUnlockPageMessages.AccountUnlockFailed, UserMessageLevel.Warning);
+                        return View(model);
+                }
+            });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        public ActionResult ResendAccountUnlockCode(string emailAddress)
+        public async Task<ActionResult> ResendAccountUnlockCode(string emailAddress)
         {
-            var model = new AccountUnlockViewModel
+            return await Task.Run<ActionResult>(() =>
             {
-                EmailAddress = emailAddress
-            };
+                var model = new AccountUnlockViewModel
+                {
+                    EmailAddress = emailAddress
+                };
 
-            //TODO: make different things if we have an error or a user with an invalid state
+                //TODO: make different things if we have an error or a user with an invalid state
 
-            model = _candidateServiceProvider.RequestAccountUnlockCode(model);
-            UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
+                model = _candidateServiceProvider.RequestAccountUnlockCode(model);
+                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
 
-            if (model.HasError())
-            {
-                SetUserMessage(AccountUnlockPageMessages.AccountUnlockResendCodeFailed, UserMessageLevel.Warning);
-            }
-            else
-            {
-                SetUserMessage(string.Format(AccountUnlockPageMessages.AccountUnlockCodeResent, emailAddress));    
-            }
-            
-            return RedirectToAction("Unlock");
+                if (model.HasError())
+                {
+                    SetUserMessage(AccountUnlockPageMessages.AccountUnlockResendCodeFailed, UserMessageLevel.Warning);
+                }
+                else
+                {
+                    SetUserMessage(string.Format(AccountUnlockPageMessages.AccountUnlockCodeResent, emailAddress));
+                }
+
+                return RedirectToAction("Unlock");
+            });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        public ActionResult SignOut()
+        public async Task<ActionResult> SignOut()
         {
-            FormsAuthentication.SignOut();
-            UserData.Clear();
+            return await Task.Run<ActionResult>(() =>
+            {
+                FormsAuthentication.SignOut();
+                UserData.Clear();
 
-            SetUserMessage(SignOutPageMessages.SignOutMessageText);
+                SetUserMessage(SignOutPageMessages.SignOutMessageText);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        public ActionResult SessionTimeout(string returnUrl)
+        public async Task<ActionResult> SessionTimeout(string returnUrl)
         {
-            FormsAuthentication.SignOut();
-            UserData.Clear();
-
-            SetUserMessage(SignOutPageMessages.SessionTimeoutMessageText);
-
-            if (!string.IsNullOrWhiteSpace(returnUrl))
+            return await Task.Run<ActionResult>(() =>
             {
-                UserData.Push(UserDataItemNames.SessionReturnUrl, Server.UrlEncode(returnUrl));
-            }
+                FormsAuthentication.SignOut();
+                UserData.Clear();
 
-            return RedirectToAction("Index");
+                SetUserMessage(SignOutPageMessages.SessionTimeoutMessageText);
+
+                if (!string.IsNullOrWhiteSpace(returnUrl))
+                {
+                    UserData.Push(UserDataItemNames.SessionReturnUrl, Server.UrlEncode(returnUrl));
+                }
+
+                return RedirectToAction("Index");
+            });
         }
 
         #region Helpers

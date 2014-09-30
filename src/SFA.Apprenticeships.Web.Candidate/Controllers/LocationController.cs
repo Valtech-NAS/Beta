@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Common.Attributes;
     using Constants;
@@ -24,30 +25,36 @@
         [HttpGet]
         [AllowCrossSiteJson]
         [OutputCache(CacheProfile = CacheProfiles.Data, VaryByParam = "term")]
-        public ActionResult Location(string term)
+        public async Task<ActionResult> Location(string term)
         {
-            LocationsViewModel result = _searchProvider.FindLocation(term);
-
-            if (Request.IsAjaxRequest())
+            return await Task.Run<ActionResult>(() =>
             {
-                return Json(result.Locations.Take(_locationResultLimit), JsonRequestBehavior.AllowGet);
-            }
+                LocationsViewModel result = _searchProvider.FindLocation(term);
 
-            throw new NotImplementedException("Non-js not yet implemented!");
+                if (Request.IsAjaxRequest())
+                {
+                    return Json(result.Locations.Take(_locationResultLimit), JsonRequestBehavior.AllowGet);
+                }
+
+                throw new NotImplementedException("Non-js not yet implemented!");
+            });
         }
 
         [HttpGet]
         [AllowCrossSiteJson]
         [OutputCache(CacheProfile = CacheProfiles.Data, VaryByParam = "postcode")]
-        public ActionResult Addresses(string postcode)
+        public async Task<ActionResult> Addresses(string postcode)
         {
-            AddressSearchResult addresses = _searchProvider.FindAddresses(postcode);
-            if (Request.IsAjaxRequest())
+            return await Task.Run<ActionResult>(() =>
             {
-                return Json(addresses, JsonRequestBehavior.AllowGet);
-            }
+                AddressSearchResult addresses = _searchProvider.FindAddresses(postcode);
+                if (Request.IsAjaxRequest())
+                {
+                    return Json(addresses, JsonRequestBehavior.AllowGet);
+                }
 
-            throw new NotImplementedException("Non-js not yet implemented!");
+                throw new NotImplementedException("Non-js not yet implemented!");
+            });
         }
     }
 }

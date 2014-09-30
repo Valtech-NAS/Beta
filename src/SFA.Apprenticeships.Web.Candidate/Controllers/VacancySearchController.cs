@@ -41,20 +41,23 @@
 
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            PopulateDistances();
-            PopulateSortType();
+            return await Task.Run<ActionResult>(() =>
+            {
+                PopulateDistances();
+                PopulateSortType();
 
-            var resultsPerPage = GetResultsPerPage();
+                var resultsPerPage = GetResultsPerPage();
 
-            return
-                View(new VacancySearchViewModel
-                {
-                    WithinDistance = 2,
-                    LocationType = VacancyLocationType.NonNational,
-                    ResultsPerPage = resultsPerPage
-                });
+                return
+                    View(new VacancySearchViewModel
+                    {
+                        WithinDistance = 2,
+                        LocationType = VacancyLocationType.NonNational,
+                        ResultsPerPage = resultsPerPage
+                    });
+            });
         }
 
         private int GetResultsPerPage()
@@ -71,151 +74,158 @@
 
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
-        public ActionResult Results(VacancySearchViewModel model)
+        public async Task<ActionResult> Results(VacancySearchViewModel model)
         {
-            UserData.Pop(UserDataItemNames.VacancyDistance);
-
-            if (model.ResultsPerPage == 0)
+            return await Task.Run<ActionResult>(() =>
             {
-                model.ResultsPerPage = GetResultsPerPage();
-            }
+                UserData.Pop(UserDataItemNames.VacancyDistance);
 
-            UserData.Push(UserDataItemNames.ResultsPerPage, model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
-
-            if (model.SearchAction == SearchAction.Search && model.LocationType != VacancyLocationType.NonNational)
-            {
-                model.LocationType = VacancyLocationType.NonNational;
-                //return RedirectToAction("results", model);
-            }
-
-            if (model.LocationType == VacancyLocationType.NonNational && model.SortType == VacancySortType.Relevancy &&
-                string.IsNullOrWhiteSpace(model.Keywords))
-            {
-                model.SortType = VacancySortType.Distance;
-                //return RedirectToAction("results", model);
-            }
-
-            if (model.LocationType == VacancyLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) &&
-                model.SortType != VacancySortType.ClosingDate)
-            {
-                model.SortType = VacancySortType.ClosingDate;
-                //return RedirectToAction("results", model);
-            }
-
-            PopulateDistances(model.WithinDistance);
-            PopulateResultsPerPage(model.ResultsPerPage);
-
-            if (model.LocationType == VacancyLocationType.National)
-            {
-                PopulateSortType(model.SortType, model.Keywords, false);
-            }
-            else
-            {
-                PopulateSortType(model.SortType, model.Keywords);
-            }
-
-            var clientResult = _searchRequestValidator.Validate(model);
-
-            if (!clientResult.IsValid)
-            {
-                ModelState.Clear();
-                clientResult.AddToModelState(ModelState, string.Empty);
-
-                return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
-            }
-
-            var suggestedLocations = _searchProvider.FindLocation(model.Location.Trim());
-
-            if (suggestedLocations.HasError())
-            {
-                ModelState.Clear();
-                SetUserMessage(suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
-
-                return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
-            }
-
-            if (suggestedLocations.Locations.Any())
-            {
-                var location = suggestedLocations.Locations.First();
-
-                ModelState.Remove("Location");
-                ModelState.Remove("Latitude");
-                ModelState.Remove("Longitude");
-
-                model.Location = location.Name;
-                model.Latitude = location.Latitude;
-                model.Longitude = location.Longitude;
-
-                ViewBag.LocationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
+                if (model.ResultsPerPage == 0)
                 {
-                    var vsvm = new VacancySearchViewModel
+                    model.ResultsPerPage = GetResultsPerPage();
+                }
+
+                UserData.Push(UserDataItemNames.ResultsPerPage,
+                    model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
+
+                if (model.SearchAction == SearchAction.Search && model.LocationType != VacancyLocationType.NonNational)
+                {
+                    model.LocationType = VacancyLocationType.NonNational;
+                    //return RedirectToAction("results", model);
+                }
+
+                if (model.LocationType == VacancyLocationType.NonNational && model.SortType == VacancySortType.Relevancy &&
+                    string.IsNullOrWhiteSpace(model.Keywords))
+                {
+                    model.SortType = VacancySortType.Distance;
+                    //return RedirectToAction("results", model);
+                }
+
+                if (model.LocationType == VacancyLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) &&
+                    model.SortType != VacancySortType.ClosingDate)
+                {
+                    model.SortType = VacancySortType.ClosingDate;
+                    //return RedirectToAction("results", model);
+                }
+
+                PopulateDistances(model.WithinDistance);
+                PopulateResultsPerPage(model.ResultsPerPage);
+
+                if (model.LocationType == VacancyLocationType.National)
+                {
+                    PopulateSortType(model.SortType, model.Keywords, false);
+                }
+                else
+                {
+                    PopulateSortType(model.SortType, model.Keywords);
+                }
+
+                var clientResult = _searchRequestValidator.Validate(model);
+
+                if (!clientResult.IsValid)
+                {
+                    ModelState.Clear();
+                    clientResult.AddToModelState(ModelState, string.Empty);
+
+                    return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
+                }
+
+                var suggestedLocations = _searchProvider.FindLocation(model.Location.Trim());
+
+                if (suggestedLocations.HasError())
+                {
+                    ModelState.Clear();
+                    SetUserMessage(suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
+
+                    return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
+                }
+
+                if (suggestedLocations.Locations.Any())
+                {
+                    var location = suggestedLocations.Locations.First();
+
+                    ModelState.Remove("Location");
+                    ModelState.Remove("Latitude");
+                    ModelState.Remove("Longitude");
+
+                    model.Location = location.Name;
+                    model.Latitude = location.Latitude;
+                    model.Longitude = location.Longitude;
+
+                    ViewBag.LocationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
                     {
-                        Keywords = model.Keywords,
-                        Location = each.Name,
-                        Latitude = each.Latitude,
-                        Longitude = each.Longitude,
-                        PageNumber = model.PageNumber,
-                        SortType = model.SortType,
-                        WithinDistance = model.WithinDistance,
-                        ResultsPerPage = model.ResultsPerPage
-                    };
+                        var vsvm = new VacancySearchViewModel
+                        {
+                            Keywords = model.Keywords,
+                            Location = each.Name,
+                            Latitude = each.Latitude,
+                            Longitude = each.Longitude,
+                            PageNumber = model.PageNumber,
+                            SortType = model.SortType,
+                            WithinDistance = model.WithinDistance,
+                            ResultsPerPage = model.ResultsPerPage
+                        };
 
-                    vsvm.Hash = vsvm.LatLonLocHash();
+                        vsvm.Hash = vsvm.LatLonLocHash();
 
-                    return vsvm;
-                }).ToArray();
-            }
+                        return vsvm;
+                    }).ToArray();
+                }
 
-            var locationResult = _searchLocationValidator.Validate(model);
+                var locationResult = _searchLocationValidator.Validate(model);
 
-            if (!locationResult.IsValid)
-            {
-                ModelState.Clear();
-                return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
-            }
+                if (!locationResult.IsValid)
+                {
+                    ModelState.Clear();
+                    return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
+                }
 
-            var results = _searchProvider.FindVacancies(model);
+                var results = _searchProvider.FindVacancies(model);
 
-            if (results.HasError())
-            {
-                ModelState.Clear();
-                SetUserMessage(results.ViewModelMessage, UserMessageLevel.Warning);
-                return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
-            }
+                if (results.HasError())
+                {
+                    ModelState.Clear();
+                    SetUserMessage(results.ViewModelMessage, UserMessageLevel.Warning);
+                    return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
+                }
 
-            if (results.TotalLocalHits == 0 &&
-                results.VacancySearch.LocationType == VacancyLocationType.NonNational &&
-                results.TotalNationalHits != 0)
-            {
-                model.SortType = VacancySortType.ClosingDate;
-                model.LocationType = VacancyLocationType.National;
+                if (results.TotalLocalHits == 0 &&
+                    results.VacancySearch.LocationType == VacancyLocationType.NonNational &&
+                    results.TotalNationalHits != 0)
+                {
+                    model.SortType = VacancySortType.ClosingDate;
+                    model.LocationType = VacancyLocationType.National;
 
-                return RedirectToAction("results", model);
-            }
+                    return RedirectToAction("results", model);
+                }
 
-            if (model.SearchAction == SearchAction.Search)
-            {
-                results.VacancySearch.LocationType = VacancyLocationType.NonNational;
-            }
+                if (model.SearchAction == SearchAction.Search)
+                {
+                    results.VacancySearch.LocationType = VacancyLocationType.NonNational;
+                }
 
-            return View("results", results);
+                return View("results", results);
+            });
         }
 
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
-        public ActionResult DetailsWithDistance(int id, string distance)
+        public async Task<ActionResult> DetailsWithDistance(int id, string distance)
         {
-            UserData.Push(UserDataItemNames.VacancyDistance, distance.ToString(CultureInfo.InvariantCulture));
-            UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToString(CultureInfo.InvariantCulture));
+            return await Task.Run<ActionResult>(() =>
+            {
+                UserData.Push(UserDataItemNames.VacancyDistance, distance.ToString(CultureInfo.InvariantCulture));
+                UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToString(CultureInfo.InvariantCulture));
 
-            return RedirectToAction("Details", new { id });
+                return RedirectToAction("Details", new {id});
+            });
         }
 
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         public async Task<ActionResult> Details(int id)
         {
-            var result = await Task.Run<ActionResult>(() =>
+            return await Task.Run<ActionResult>(() =>
             {
                 Guid? candidateId = null;
 
@@ -254,8 +264,6 @@
 
                 return View(vacancy);
             });
-
-            return result;
         }
 
         #region Helpers

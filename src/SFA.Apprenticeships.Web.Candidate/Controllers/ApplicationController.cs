@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using System.Web.Security;
     using ActionResults;
@@ -39,108 +40,124 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var deletedVacancyId = UserData.Pop(UserDataItemNames.DeletedVacancyId);
-
-            if (!string.IsNullOrEmpty(deletedVacancyId))
+            return await Task.Run<ActionResult>(() =>
             {
-                ViewBag.VacancyId = deletedVacancyId;
-            }
+                var deletedVacancyId = UserData.Pop(UserDataItemNames.DeletedVacancyId);
 
-            var deletedVacancyTitle = UserData.Pop(UserDataItemNames.DeletedVacancyTitle);
+                if (!string.IsNullOrEmpty(deletedVacancyId))
+                {
+                    ViewBag.VacancyId = deletedVacancyId;
+                }
 
-            if (!string.IsNullOrEmpty(deletedVacancyTitle))
-            {
-                ViewBag.VacancyTitle = deletedVacancyTitle;
-            }
+                var deletedVacancyTitle = UserData.Pop(UserDataItemNames.DeletedVacancyTitle);
 
-            var model = _applicationProvider.GetMyApplications(UserContext.CandidateId);
+                if (!string.IsNullOrEmpty(deletedVacancyTitle))
+                {
+                    ViewBag.VacancyTitle = deletedVacancyTitle;
+                }
 
-            return View(model);
+                var model = _applicationProvider.GetMyApplications(UserContext.CandidateId);
+
+                return View(model);
+            });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult Resume(int id)
+        public async Task<ActionResult> Resume(int id)
         {
-            var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
-            if (model.HasError())
+            return await Task.Run<ActionResult>(() =>
             {
-                SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
-                return RedirectToAction("Index");
-            }
+                var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-            return RedirectToAction("Apply", new { id });
+                if (model.HasError())
+                {
+                    SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
+                    return RedirectToAction("Index");
+                }
+
+                return RedirectToAction("Apply", new {id});
+            });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult Archive(int id)
+        public async Task<ActionResult> Archive(int id)
         {
-            var applicationViewModel = _applicationProvider.ArchiveApplication(UserContext.CandidateId, id);
-
-            if (applicationViewModel.HasError())
+            return await Task.Run<ActionResult>(() =>
             {
-                SetUserMessage(applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
+                var applicationViewModel = _applicationProvider.ArchiveApplication(UserContext.CandidateId, id);
+
+                if (applicationViewModel.HasError())
+                {
+                    SetUserMessage(applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
+
+                    return RedirectToAction("Index");
+                }
+
+                SetUserMessage(MyApplicationsPageMessages.ApplicationArchived);
 
                 return RedirectToAction("Index");
-            }
-
-            SetUserMessage(MyApplicationsPageMessages.ApplicationArchived);
-
-            return RedirectToAction("Index");
+            });
         }
 
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var viewModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
-            var applicationViewModel = _applicationProvider.DeleteApplication(UserContext.CandidateId, id);
-
-            if (applicationViewModel.HasError())
+            return await Task.Run<ActionResult>(() =>
             {
-                SetUserMessage(applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
+                var viewModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+
+                var applicationViewModel = _applicationProvider.DeleteApplication(UserContext.CandidateId, id);
+
+                if (applicationViewModel.HasError())
+                {
+                    SetUserMessage(applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
+
+                    return RedirectToAction("Index");
+                }
+
+                if (viewModel.HasError())
+                {
+                    SetUserMessage(MyApplicationsPageMessages.ApplicationDeleted);
+                }
+                else
+                {
+                    UserData.Push(UserDataItemNames.DeletedVacancyId,
+                        viewModel.VacancyDetail.Id.ToString(CultureInfo.InvariantCulture));
+                    UserData.Push(UserDataItemNames.DeletedVacancyTitle, viewModel.VacancyDetail.Title);
+                }
 
                 return RedirectToAction("Index");
-            }
-
-            if (viewModel.HasError())
-            {
-                SetUserMessage(MyApplicationsPageMessages.ApplicationDeleted);
-            }
-            else
-            {
-              UserData.Push(UserDataItemNames.DeletedVacancyId,viewModel.VacancyDetail.Id.ToString(CultureInfo.InvariantCulture));
-              UserData.Push(UserDataItemNames.DeletedVacancyTitle, viewModel.VacancyDetail.Title); 
-            }
-
-            return RedirectToAction("Index");
+            });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult Apply(int id)
+        public async Task<ActionResult> Apply(int id)
         {
-            var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
-            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            return await Task.Run<ActionResult>(() =>
             {
-                return new VacancyNotFoundResult();
-            }
+                var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-            if (model.HasError())
-            {
-                return RedirectToAction("Index");
-            }
+                if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                {
+                    return new VacancyNotFoundResult();
+                }
 
-            model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+                if (model.HasError())
+                {
+                    return RedirectToAction("Index");
+                }
 
-            return View(model);
+                model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+
+                return View(model);
+            });
         }
 
         [HttpPost]
@@ -148,47 +165,50 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Preview")]
         [ValidateInput(false)]
-        public ActionResult Apply(int id, ApplicationViewModel model)
+        public async Task<ActionResult> Apply(int id, ApplicationViewModel model)
         {
-            model = StripApplicationViewModelBeforeValidation(model);
-
-            var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
-            if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            return await Task.Run<ActionResult>(() =>
             {
-                return new VacancyNotFoundResult();
-            }
-            if (savedModel.Status != ApplicationStatuses.Draft)
-            {
-                return RedirectToAction("Index");
-            }
+                model = StripApplicationViewModelBeforeValidation(model);
 
-            ModelState.Clear();
+                var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-            model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+                if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                {
+                    return new VacancyNotFoundResult();
+                }
+                if (savedModel.Status != ApplicationStatuses.Draft)
+                {
+                    return RedirectToAction("Index");
+                }
 
-            if (savedModel.HasError())
-            {
-                SetUserMessage(ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning);
+                ModelState.Clear();
 
-                return View("Apply", model);
-            }
+                model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
-            var result = _applicationViewModelFullValidator.Validate(model);
+                if (savedModel.HasError())
+                {
+                    SetUserMessage(ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning);
 
-            model = _applicationProvider.PatchApplicationViewModel(
-                UserContext.CandidateId, savedModel, model);
+                    return View("Apply", model);
+                }
 
-            if (!result.IsValid)
-            {
-                result.AddToModelState(ModelState, string.Empty);
+                var result = _applicationViewModelFullValidator.Validate(model);
 
-                return View("Apply", model);
-            }
+                model = _applicationProvider.PatchApplicationViewModel(
+                    UserContext.CandidateId, savedModel, model);
 
-            _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
+                if (!result.IsValid)
+                {
+                    result.AddToModelState(ModelState, string.Empty);
 
-            return RedirectToAction("Preview", new { id });
+                    return View("Apply", model);
+                }
+
+                _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
+
+                return RedirectToAction("Preview", new {id});
+            });
         }
 
         [HttpPost]
@@ -196,98 +216,105 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Save")]
         [ValidateInput(false)]
-        public ActionResult Save(int id, ApplicationViewModel model)
+        public async Task<ActionResult> Save(int id, ApplicationViewModel model)
         {
-            model = StripApplicationViewModelBeforeValidation(model);
-
-            var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
-            if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            return await Task.Run<ActionResult>(() =>
             {
-                return new VacancyNotFoundResult();
-            }
+                model = StripApplicationViewModelBeforeValidation(model);
 
-            ModelState.Clear();
+                var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-            model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+                if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                {
+                    return new VacancyNotFoundResult();
+                }
 
-            if (savedModel.HasError())
-            {
-                SetUserMessage(ApplicationPageMessages.SaveFailed, UserMessageLevel.Warning);
+                ModelState.Clear();
+
+                model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+
+                if (savedModel.HasError())
+                {
+                    SetUserMessage(ApplicationPageMessages.SaveFailed, UserMessageLevel.Warning);
+
+                    return View("Apply", model);
+                }
+
+                var result = _applicationViewModelSaveValidator.Validate(model);
+
+                model = _applicationProvider.PatchApplicationViewModel(
+                    UserContext.CandidateId, savedModel, model);
+
+                if (!result.IsValid)
+                {
+                    result.AddToModelState(ModelState, string.Empty);
+
+                    return View("Apply", model);
+                }
+
+                _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
+
+                model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
                 return View("Apply", model);
-            }
-
-            var result = _applicationViewModelSaveValidator.Validate(model);
-
-            model = _applicationProvider.PatchApplicationViewModel(
-                UserContext.CandidateId, savedModel, model);
-
-            if (!result.IsValid)
-            {
-                result.AddToModelState(ModelState, string.Empty);
-
-                return View("Apply", model);
-            }
-
-            _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
-
-            model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-            model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
-
-            return View("Apply", model);
+            });
         }
 
         [HttpPost]
-        public JsonResult AutoSave(int id, ApplicationViewModel model)
+        public async Task<JsonResult> AutoSave(int id, ApplicationViewModel model)
         {
-            var autoSaveResult = new AutoSaveResultViewModel();
-
-            var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
-            if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            return await Task.Run(() =>
             {
-                autoSaveResult.Status = "failed";
+                var autoSaveResult = new AutoSaveResultViewModel();
 
-                return new JsonResult {Data = autoSaveResult };
-            }
+                var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-            ModelState.Clear();
+                if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                {
+                    autoSaveResult.Status = "failed";
 
-            model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+                    return new JsonResult {Data = autoSaveResult};
+                }
 
-            if (savedModel.HasError())
-            {
-                autoSaveResult.Status = "failed";
+                ModelState.Clear();
 
-                return new JsonResult { Data = autoSaveResult };
-            }
+                model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
-            var result = _applicationViewModelSaveValidator.Validate(model);
+                if (savedModel.HasError())
+                {
+                    autoSaveResult.Status = "failed";
 
-            model = _applicationProvider.PatchApplicationViewModel(
-                UserContext.CandidateId, savedModel, model);
+                    return new JsonResult {Data = autoSaveResult};
+                }
 
-            if (!result.IsValid)
-            {
-                autoSaveResult.Status = "failed";
+                var result = _applicationViewModelSaveValidator.Validate(model);
 
-                return new JsonResult { Data = autoSaveResult };
-            }
+                model = _applicationProvider.PatchApplicationViewModel(
+                    UserContext.CandidateId, savedModel, model);
 
-            _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
+                if (!result.IsValid)
+                {
+                    autoSaveResult.Status = "failed";
 
-            model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-            model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+                    return new JsonResult {Data = autoSaveResult};
+                }
 
-            autoSaveResult.Status = "succeeded";
+                _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
 
-            if (model.DateUpdated != null)
-            {
-                autoSaveResult.DateTimeMessage = AutoSaveDateTimeHelper.GetDisplayDateTime((DateTime) model.DateUpdated);
-            }
+                model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
-            return new JsonResult {Data = autoSaveResult};
+                autoSaveResult.Status = "succeeded";
+
+                if (model.DateUpdated != null)
+                {
+                    autoSaveResult.DateTimeMessage =
+                        AutoSaveDateTimeHelper.GetDisplayDateTime((DateTime) model.DateUpdated);
+                }
+
+                return new JsonResult {Data = autoSaveResult};
+            });
         }
 
         [HttpPost]
@@ -295,16 +322,19 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyQualificationRows")]
         [ValidateInput(false)]
-        public ActionResult AddEmptyQualificationRows(int id, ApplicationViewModel model)
+        public async Task<ActionResult> AddEmptyQualificationRows(int id, ApplicationViewModel model)
         {
-            model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
-            model.Candidate.HasQualifications = model.Candidate.Qualifications.Count() != 0;
-            model.DefaultQualificationRows = 5;
-            model.DefaultWorkExperienceRows = 0;
+            return await Task.Run<ActionResult>(() =>
+            {
+                model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
+                model.Candidate.HasQualifications = model.Candidate.Qualifications.Count() != 0;
+                model.DefaultQualificationRows = 5;
+                model.DefaultWorkExperienceRows = 0;
 
-            ModelState.Clear();
+                ModelState.Clear();
 
-            return View("Apply", model);
+                return View("Apply", model);
+            });
         }
 
         [HttpPost]
@@ -312,89 +342,101 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyWorkExperienceRows")]
         [ValidateInput(false)]
-        public ActionResult AddEmptyWorkExperienceRows(int id, ApplicationViewModel model)
+        public async Task<ActionResult> AddEmptyWorkExperienceRows(int id, ApplicationViewModel model)
         {
-            model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
-            model.Candidate.HasWorkExperience = model.Candidate.WorkExperience.Count() != 0;
+            return await Task.Run<ActionResult>(() =>
+            {
+                model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
+                model.Candidate.HasWorkExperience = model.Candidate.WorkExperience.Count() != 0;
 
-            model.DefaultQualificationRows = 0;
-            model.DefaultWorkExperienceRows = 3;
+                model.DefaultQualificationRows = 0;
+                model.DefaultWorkExperienceRows = 3;
 
-            ModelState.Clear();
+                ModelState.Clear();
 
-            return View("Apply", model);
+                return View("Apply", model);
+            });
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [OutputCache(CacheProfile = CacheProfiles.None)]
-        public ActionResult Preview(int id)
+        public async Task<ActionResult> Preview(int id)
         {
-            var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
-            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            return await Task.Run<ActionResult>(() =>
             {
-                return new VacancyNotFoundResult();
-            }
+                var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-            if (model.HasError())
-            {
-                return RedirectToAction("Index");
-            }
-
-            // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
-            ViewBag.VacancyId = id;
-
-            return View(model);
-        }
-
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult SubmitApplication(int id)
-        {
-            var model = _applicationProvider.SubmitApplication(UserContext.CandidateId, id);
-
-            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
-            {
-                return new VacancyNotFoundResult();
-            }
-
-            if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
-            {
-                return RedirectToAction("Index");
-            }
-            if (model.ViewModelStatus == ApplicationViewModelStatus.Error)
-            {
-                SetUserMessage(ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning);
-                return RedirectToAction("Preview", new { id });
-            }
-
-            return RedirectToAction("WhatHappensNext",
-                new
+                if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
                 {
-                    id,
-                    vacancyReference = model.VacancyDetail.VacancyReference,
-                    vacancyTitle = model.VacancyDetail.Title
-                });
+                    return new VacancyNotFoundResult();
+                }
+
+                if (model.HasError())
+                {
+                    return RedirectToAction("Index");
+                }
+
+                // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
+                ViewBag.VacancyId = id;
+
+                return View(model);
+            });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public ActionResult WhatHappensNext(int id, string vacancyReference, string vacancyTitle)
+        public async Task<ActionResult> SubmitApplication(int id)
         {
-            var model = _applicationProvider.GetWhatHappensNextViewModel(UserContext.CandidateId, id);
-
-            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            return await Task.Run<ActionResult>(() =>
             {
-                return new VacancyNotFoundResult();
-            }
+                var model = _applicationProvider.SubmitApplication(UserContext.CandidateId, id);
 
-            if (model.HasError())
+                if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                {
+                    return new VacancyNotFoundResult();
+                }
+
+                if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
+                {
+                    return RedirectToAction("Index");
+                }
+                if (model.ViewModelStatus == ApplicationViewModelStatus.Error)
+                {
+                    SetUserMessage(ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning);
+                    return RedirectToAction("Preview", new {id});
+                }
+
+                return RedirectToAction("WhatHappensNext",
+                    new
+                    {
+                        id,
+                        vacancyReference = model.VacancyDetail.VacancyReference,
+                        vacancyTitle = model.VacancyDetail.Title
+                    });
+            });
+        }
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public async Task<ActionResult> WhatHappensNext(int id, string vacancyReference, string vacancyTitle)
+        {
+            return await Task.Run<ActionResult>(() =>
             {
-                model.VacancyReference = vacancyReference;
-                model.VacancyTitle = vacancyTitle;
-            }
+                var model = _applicationProvider.GetWhatHappensNextViewModel(UserContext.CandidateId, id);
 
-            return View(model);
+                if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                {
+                    return new VacancyNotFoundResult();
+                }
+
+                if (model.HasError())
+                {
+                    model.VacancyReference = vacancyReference;
+                    model.VacancyTitle = vacancyTitle;
+                }
+
+                return View(model);
+            });
         }
 
         #region Helpers

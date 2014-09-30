@@ -1,20 +1,22 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System.Runtime.Remoting.Messaging;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Constants;
 
     public class ErrorController : Controller
     {
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        public ActionResult NotFound()
+        public async Task<ActionResult> NotFound()
         {
-            return View("NotFound");
+            return await Task.Run<ActionResult>(() => View("NotFound"));
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        public ActionResult InternalServerError()
+        public async Task<ActionResult> InternalServerError()
         {
-            return View("InternalServerError");
+            return await Task.Run<ActionResult>(() =>  View("InternalServerError"));
         }
     }
 }
