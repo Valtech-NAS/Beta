@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate
+﻿using SFA.Apprenticeships.Web.Common.Binders;
+
+namespace SFA.Apprenticeships.Web.Candidate
 {
     using System;
     using System.Web;
@@ -29,6 +31,7 @@
 
             ControllerBuilder.Current.SetControllerFactory(new DefaultControllerFactory());
 
+            ModelBinders.Binders.DefaultBinder = new TrimModelBinder();
             FluentValidationModelValidatorProvider.Configure(provider =>
             {
                 provider.AddImplicitRequiredValidator = false;
