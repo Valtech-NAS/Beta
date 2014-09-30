@@ -30,7 +30,7 @@
                 var status = applicationStatus;
 
                 var applicationDetail = _applicationReadRepository.GetForCandidate(
-                    candidate.EntityId, each => each.LegacyApplicationId == status.LegacyApplicationId);
+                    candidate.EntityId, each => each.Vacancy.Id == status.LegacyVacancyId);
 
                 if (applicationDetail != null)
                 {
@@ -42,6 +42,8 @@
                     if (applicationDetail.Status != status.ApplicationStatus)
                     {
                         applicationDetail.Status = status.ApplicationStatus;
+                        applicationDetail.IsArchived = false;
+                        applicationDetail.LegacyApplicationId = status.LegacyApplicationId;
                         updated = true;
                     }
 

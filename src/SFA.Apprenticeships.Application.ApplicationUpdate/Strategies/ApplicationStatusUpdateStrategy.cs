@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.ApplicationUpdate.Strategies
 {
-    using System;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
     using NLog;
@@ -30,6 +29,7 @@
 
             application.Status = applicationStatusSummary.ApplicationStatus;
             application.IsArchived = false; // note, this ensures the application will be become visible on user's dashboard if hidden
+            application.LegacyApplicationId = applicationStatusSummary.LegacyApplicationId;
 
             _applicationWriteRepository.Save(application);
         }

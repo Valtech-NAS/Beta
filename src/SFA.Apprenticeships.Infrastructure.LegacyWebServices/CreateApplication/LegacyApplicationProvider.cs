@@ -6,6 +6,7 @@
     using Application.Candidate.Strategies;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
@@ -38,28 +39,39 @@
 
             CreateApplicationResponse response = null;
 
-            _service.Use("DefaultEndpoint", client => response = client.CreateApplication(legacyRequest));
+            _service.Use("SecureService", client => response = client.CreateApplication(legacyRequest));
 
-            if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
+            if (response != null && (response.ValidationErrors == null || response.ValidationErrors.Count() == 0))
             {
-                if (response != null)
-                {
-                    var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
-
-                    Logger.Error(
-                        "Legacy CreateApplication reported {0} validation error(s): {1}",
-                        response.ValidationErrors.Count(), responseAsJson);
-                }
-                else
-                {
-                    Logger.Error("Legacy CreateApplication did not respond.");
-                }
-
-                // TODO: EXCEPTION: should use an application exception type
-                throw new Exception("Failed to create application in legacy system");
+                return response.ApplicationId;
             }
 
-            return response.ApplicationId;
+            if (response != null)
+            {
+                if (response.ValidationErrors.Any(e => e.ErrorCode == "DUPLICATE_APPLICATION"))
+                {
+                    var warnMessage = string.Format("Duplicate application {0} for candidate {1} in legacy system",
+                        applicationDetail.Vacancy.Id, applicationDetail.CandidateId);
+                    Logger.Warn(warnMessage);
+                    throw new CustomException(warnMessage, ErrorCodes.ApplicationDuplicatedError);
+                }
+
+                var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
+
+                Logger.Error(
+                    "Legacy CreateApplication reported {0} validation error(s): {1} when creating application of candidate {2} to vacancy {3}",
+                    response.ValidationErrors.Count(), responseAsJson, applicationDetail.CandidateId, applicationDetail.Vacancy.Id);
+            }
+            else
+            {
+                Logger.Error(
+                    string.Format("Legacy CreateApplication of candidate {0} to vacancy {1} did not respond.",
+                        applicationDetail.CandidateId, applicationDetail.Vacancy.Id));
+            }
+
+            throw new CustomException(
+                string.Format("Failed to create application of candidate {0} to vacancy {1} in legacy system",
+                    applicationDetail.CandidateId, applicationDetail.Vacancy.Id), ErrorCodes.ApplicationGatewayCreationError);
         }
 
         private static CreateApplicationRequest MapApplicationToLegacyRequest(
@@ -109,7 +121,7 @@
                 Subject = each.Subject,
                 DateAchieved = MapYearToDate(each.Year),
                 Level = each.QualificationType.Substring(0, Math.Min(each.QualificationType.Length, maxLevelLength)),
-                Grade = MapGrade(each.Grade, each.IsPredicted) 
+                Grade = MapGrade(each.Grade, each.IsPredicted)
             }).ToArray();
         }
 

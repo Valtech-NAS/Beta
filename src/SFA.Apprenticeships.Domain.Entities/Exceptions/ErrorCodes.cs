@@ -19,6 +19,9 @@
         public const string ApplicationQueuingError = "Application003";
         public const string ApplicationViewIdNotFound = "Application004";
         public const string ApplicationCreationError = "Application005";
+        public const string ApplicationDuplicatedError = "Application006";
+        public const string ApplicationGatewayCreationError = "Application007";
+
 
         // Vacancy Exception Codes
         public const string VacancyNotFoundError = "Vacancy001";

@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.ApplicationUpdate
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Domain.Entities.Applications;

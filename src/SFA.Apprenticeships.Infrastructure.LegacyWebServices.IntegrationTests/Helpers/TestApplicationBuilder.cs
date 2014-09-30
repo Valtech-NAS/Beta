@@ -6,8 +6,58 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Vacancies;
 
-    public static class TestApplicationHelper
+    public class TestApplicationBuilder
     {
+        private readonly Guid _entityid = new Guid();
+        private int _vacancyId = 12345;
+        private ApplicationTemplate _candidateInformation;
+
+        public ApplicationDetail Build()
+        {
+            if (_candidateInformation == null)
+            {
+                _candidateInformation = new ApplicationTemplate
+                {
+                    AboutYou = null,
+                    EducationHistory = null,
+                    Qualifications = new Qualification[]
+                    {
+                    },
+                    WorkExperience = new WorkExperience[]
+                    {
+                    }
+                };
+            }
+            return new ApplicationDetail
+            {
+                EntityId = _entityid,
+                Vacancy = new VacancySummary
+                {
+                    Id = _vacancyId
+                },
+                CandidateInformation = _candidateInformation
+            };
+        }
+
+        public TestApplicationBuilder WithCandidateInformation()
+        {
+            _candidateInformation = new ApplicationTemplate
+            {
+                AboutYou = CreateFakeAboutYou(),
+                EducationHistory = CreateFakeEducationHistory(),
+                Qualifications = CreateFakeQualifications(),
+                WorkExperience = CreateFakeWorkExperience()
+            };
+
+            return this;
+        }
+
+        public TestApplicationBuilder WithVacancyId(int vacancyId)
+        {
+            _vacancyId = vacancyId;
+            return this;
+        }
+
         public static ApplicationDetail CreateFakeApplicationDetail()
         {
             return new ApplicationDetail

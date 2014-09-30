@@ -16,23 +16,17 @@
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
         private readonly IApplicationStatusUpdater _applicationStatusUpdater;
         private readonly IApplicationReadRepository _applicationReadRepository;
-        private readonly IApplicationWriteRepository _applicationWriteRepository;
-        private readonly IVacancyStatusProvider _vacancyStatusProvider;
 
         public LegacyGetCandidateApplicationsStrategy(
             ICandidateReadRepository candidateReadRepository,
             ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider,
             IApplicationStatusUpdater applicationStatusUpdater,
-            IApplicationReadRepository applicationReadRepository,
-            IApplicationWriteRepository applicationWriteRepository,
-            IVacancyStatusProvider vacancyStatusProvider)
+            IApplicationReadRepository applicationReadRepository)
         {
             _candidateReadRepository = candidateReadRepository;
             _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
             _applicationStatusUpdater = applicationStatusUpdater;
             _applicationReadRepository = applicationReadRepository;
-            _applicationWriteRepository = applicationWriteRepository;
-            _vacancyStatusProvider = vacancyStatusProvider;
         }
 
         public IList<ApplicationSummary> GetApplications(Guid candidateId)

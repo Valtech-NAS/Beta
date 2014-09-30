@@ -1,9 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
 {
+    using System;
     using System.Threading.Tasks;
     using Application.Candidate.Strategies;
     using Application.Interfaces.Messaging;
     using Domain.Entities.Applications;
+    using Domain.Entities.Exceptions;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;
     using NLog;
@@ -15,15 +18,18 @@
         private readonly ILegacyApplicationProvider _legacyApplicationProvider;
         private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly IApplicationWriteRepository _applicationWriteRepository;
+        private readonly IMessageBus _messageBus;
 
         public SubmitApplicationRequestConsumerAsync(
             ILegacyApplicationProvider legacyApplicationProvider,
             IApplicationReadRepository applicationReadRepository,
-            IApplicationWriteRepository applicationWriteRepository)
+            IApplicationWriteRepository applicationWriteRepository, 
+            IMessageBus messageBus)
         {
             _legacyApplicationProvider = legacyApplicationProvider;
             _applicationReadRepository = applicationReadRepository;
             _applicationWriteRepository = applicationWriteRepository;
+            _messageBus = messageBus;
         }
 
         [AutoSubscriberConsumer(SubscriptionId = "SubmitApplicationRequestConsumerAsync")]
@@ -49,23 +55,31 @@
 
             Log("Creating", request);
 
-            application.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(application);
+            try
+            {
+                application.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(application);
 
-            //todo: handle duplicate application
-            // if the call to legacy fails because of a duplicate request, a particular fault/code will be returned 
-            // from the legacy service and the provider should return 0 to indicate this or throw a custom exception 
-            // which is caught here. 
-            // in this case, call ILegacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate) to 
-            // retrieve the candidate's apps then match on the vacancy ID to find the app ID to store in our repo
+                Log("Created", request);
 
-            Log("Created", request);
+                Log("Updating", request);
 
-            Log("Updating", request);
+                application.SetStateSubmitted();
+                _applicationWriteRepository.Save(application);
 
-            application.SetStateSubmitted();
-            _applicationWriteRepository.Save(application);
-
-            Log("Updated", request);
+                Log("Updated", request);
+            }
+            catch (CustomException ex)
+            {
+                if (ex.Code != ErrorCodes.ApplicationDuplicatedError)
+                {
+                    // re-queue application for submission to legacy
+                    var message = new SubmitApplicationRequest
+                    {
+                        ApplicationId = request.ApplicationId
+                    };
+                    _messageBus.PublishMessage(message); 
+                }
+            }
         }
 
         private static void EnsureApplicationCanBeCreated(ApplicationDetail applicationDetail)

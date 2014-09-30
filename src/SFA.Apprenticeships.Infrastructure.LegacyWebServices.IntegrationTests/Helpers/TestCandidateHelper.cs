@@ -12,12 +12,11 @@
             var candidate = new Candidate
             {
                 EntityId = Guid.NewGuid(),
-                LegacyCandidateId = 201,
                 RegistrationDetails = new RegistrationDetails
                 {
-                    FirstName = "John",
-                    LastName = "Doe",
-                    EmailAddress = string.Format("john.doe+{0}@example.com", DateTime.Now.Ticks) ,
+                    FirstName = "NAS",
+                    LastName = "Exemplar",
+                    EmailAddress = string.Format("nas.exemplar+{0}@gmail.com", DateTime.Now.Ticks) ,
                     DateOfBirth = new DateTime(1980, 1, 1),
                     PhoneNumber = "01683200911",
                     Address = new Address

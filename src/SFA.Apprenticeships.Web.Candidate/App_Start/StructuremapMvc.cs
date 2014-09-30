@@ -6,7 +6,6 @@ using WebActivatorEx;
 namespace SFA.Apprenticeships.Web.Candidate
 {
     using Common.IoC;
-    using Domain.Interfaces.Configuration;
     using Infrastructure.Address.IoC;
     using Infrastructure.Azure.Session.IoC;
     using Infrastructure.Caching.Azure.IoC;

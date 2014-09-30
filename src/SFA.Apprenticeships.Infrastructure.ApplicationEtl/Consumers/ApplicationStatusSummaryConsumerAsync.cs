@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl.Consumers
 {
-    using System;
     using System.Threading.Tasks;
     using Application.ApplicationUpdate;
     using Domain.Entities.Applications;

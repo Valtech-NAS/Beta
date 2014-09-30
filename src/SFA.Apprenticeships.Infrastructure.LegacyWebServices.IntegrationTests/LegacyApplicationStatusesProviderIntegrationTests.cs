@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
+    using System;
     using System.Linq;
     using Application.ApplicationUpdate;
     using Application.Candidate.Strategies;
@@ -10,6 +11,7 @@
     using FluentAssertions;
     using Helpers;
     using IoC;
+    using Moq;
     using NUnit.Framework;
     using Repositories.Applications.IoC;
     using Repositories.Candidates.IoC;
@@ -18,12 +20,13 @@
     [TestFixture]
     public class LegacyApplicationStatusesProviderIntegrationTests
     {
+        private const int TestVacancyId = 445650;
+
         private ILegacyCandidateProvider _legacyCandidateProvider;
         private ILegacyApplicationProvider _legacyApplicationProvider;
         private ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
 
-        private ICandidateWriteRepository _candidateWriteRepository;
-        private IApplicationWriteRepository _applicationWriteRepository;
+        private readonly Mock<ICandidateReadRepository> _candidateReadRepositoryMock = new Mock<ICandidateReadRepository>();
 
         [SetUp]
         public void SetUp()
@@ -31,19 +34,15 @@
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
-                x.AddRegistry<CandidateRepositoryRegistry>();
+                x.AddRegistry<GatewayWebServicesRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
+                x.For<ICandidateReadRepository>().Use(_candidateReadRepositoryMock.Object);
             });
 
             // Providers.
             _legacyCandidateProvider = ObjectFactory.GetInstance<ILegacyCandidateProvider>();
             _legacyApplicationProvider = ObjectFactory.GetInstance<ILegacyApplicationProvider>();
             _legacyApplicationStatusesProvider = ObjectFactory.GetInstance<ILegacyApplicationStatusesProvider>();
-
-            // Repositories.
-            _candidateWriteRepository = ObjectFactory.GetInstance<ICandidateWriteRepository>();
-            _applicationWriteRepository = ObjectFactory.GetInstance<IApplicationWriteRepository>();
         }
 
         [Test, Category("Integration")]
@@ -51,6 +50,8 @@
         {
             // Arrange.
             var candidate = CreateCandidate();
+            _candidateReadRepositoryMock.ResetCalls();
+            _candidateReadRepositoryMock.Setup(cr => cr.Get(It.IsAny<Guid>())).Returns(candidate);
 
             // Act.
             var result = _legacyApplicationStatusesProvider
@@ -67,6 +68,9 @@
         {
             // Arrange.
             var candidate = CreateCandidate();
+            _candidateReadRepositoryMock.ResetCalls();
+            _candidateReadRepositoryMock.Setup(cr => cr.Get(It.IsAny<Guid>())).Returns(candidate);
+
             var applicationDetail = CreateApplicationForCandidate(candidate);
 
             // Act: get application statuses (should only be one).
@@ -90,7 +94,6 @@
             var candidate = TestCandidateHelper.CreateFakeCandidate();
 
             candidate.LegacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
-            candidate = _candidateWriteRepository.Save(candidate);
 
             return candidate;
         }
@@ -98,10 +101,12 @@
         private ApplicationDetail CreateApplicationForCandidate(Candidate candidate)
         {
             // Create a new application for candidate in legacy and repo.
-            var applicationDetail = TestApplicationHelper.CreateFakeApplicationDetail();
+            var applicationDetail = new TestApplicationBuilder()
+                .WithCandidateInformation()
+                .WithVacancyId(TestVacancyId)
+                .Build();
 
             applicationDetail.CandidateId = candidate.EntityId;
-            applicationDetail = _applicationWriteRepository.Save(applicationDetail);
 
             var legacyApplicationId = _legacyApplicationProvider.CreateApplication(applicationDetail);
 

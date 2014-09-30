@@ -60,7 +60,7 @@
     </Compile>
     <Compile Include="GatewayVacancyDataProviderIntegrationTests.cs" />
     <Compile Include="GatewayVacancyIndexDataProviderIntegrationTests.cs" />
-    <Compile Include="Helpers\TestApplicationHelper.cs" />
+    <Compile Include="Helpers\TestApplicationBuilder.cs" />
     <Compile Include="Helpers\TestCandidateHelper.cs" />
     <Compile Include="LegacyApplicationProviderIntegrationTests.cs" />
     <Compile Include="LegacyApplicationStatusesProviderIntegrationTests.cs" />
