@@ -41,7 +41,7 @@
 
             _service.Use("SecureService", client => response = client.CreateApplication(legacyRequest));
 
-            if (response != null && (response.ValidationErrors == null || response.ValidationErrors.Count() == 0))
+            if (response != null && (response.ValidationErrors == null || !response.ValidationErrors.Any()))
             {
                 return response.ApplicationId;
             }

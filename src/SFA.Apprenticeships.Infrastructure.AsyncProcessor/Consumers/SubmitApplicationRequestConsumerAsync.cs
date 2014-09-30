@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
 {
-    using System;
     using System.Threading.Tasks;
     using Application.Candidate.Strategies;
     using Application.Interfaces.Messaging;
@@ -72,7 +71,7 @@
             {
                 if (ex.Code != ErrorCodes.ApplicationDuplicatedError)
                 {
-                    // re-queue application for submission to legacy
+                    // re-queue application for submission
                     var message = new SubmitApplicationRequest
                     {
                         ApplicationId = request.ApplicationId

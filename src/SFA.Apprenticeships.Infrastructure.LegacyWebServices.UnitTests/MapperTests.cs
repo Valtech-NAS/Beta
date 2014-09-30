@@ -16,14 +16,14 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
     [TestFixture]
     public class MapperTests
     {
-        private VacancySummaryMapper _vacancySummaryMapper;
-        private VacancyDetailMapper _vacancyDetailMapper;
+        private GatewayVacancySummaryMapper _vacancySummaryMapper;
+        private GatewayVacancyDetailMapper _vacancyDetailMapper;
 
         [TestFixtureSetUp]
         public void Setup()
         {
-            _vacancySummaryMapper = new VacancySummaryMapper();
-            _vacancyDetailMapper = new VacancyDetailMapper();
+            _vacancySummaryMapper = new GatewayVacancySummaryMapper();
+            _vacancyDetailMapper = new GatewayVacancyDetailMapper();
         }
 
         [TestCase]

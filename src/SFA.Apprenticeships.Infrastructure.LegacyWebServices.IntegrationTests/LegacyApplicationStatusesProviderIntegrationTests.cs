@@ -14,7 +14,6 @@
     using Moq;
     using NUnit.Framework;
     using Repositories.Applications.IoC;
-    using Repositories.Candidates.IoC;
     using StructureMap;
 
     [TestFixture]

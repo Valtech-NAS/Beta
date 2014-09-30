@@ -72,22 +72,16 @@
     <Compile Include="CreateApplication\LegacyApplicationProvider.cs" />
     <Compile Include="CreateCandidate\GatewayCandidateProvider.cs" />
     <Compile Include="GetCandidateApplicationStatuses\LegacyCandidateApplicationStatusesProvider.cs" />
-    <Compile Include="CreateCandidate\LegacyCandidateProvider.cs" />
     <Compile Include="IoC\GatewayWebServicesRegistry.cs" />
-    <Compile Include="IoC\LegacyWebServicesRegistry.cs" />
     <Compile Include="Mappers\GatewayVacancyDetailMapper.cs" />
     <Compile Include="Mappers\GatewayVacancyDetailAddressDetailsResolver.cs" />
     <Compile Include="Mappers\GatewayVacancySummaryMapper.cs" />
-    <Compile Include="Mappers\VacancyDetailAddressResolver.cs" />
     <Compile Include="Mappers\GatewayVacancySummaryLocationResolver.cs" />
-    <Compile Include="Mappers\VacancySummaryLocationResolver.cs" />
-    <Compile Include="Mappers\VacancyDetailMapper.cs" />
     <Compile Include="Mappers\ApplicationStatusSummaryMapper.cs" />
     <Compile Include="Mappers\ApplicationStatusResolver.cs" />
     <Compile Include="Mappers\VacancyStatusResolver.cs" />
     <Compile Include="Mappers\VacancyLevelResolver.cs" />
     <Compile Include="Mappers\VacancyLocationTypeResolver.cs" />
-    <Compile Include="Mappers\VacancySummaryMapper.cs" />
     <Compile Include="Mappers\VacancyTypeResolver.cs" />
     <Compile Include="Mappers\WageTypeResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -108,10 +102,8 @@
     </Compile>
     <Compile Include="VacancyDetail\CachedLegacyVacancyDataProvider.cs" />
     <Compile Include="VacancyDetail\GatewayVacancyDataProvider.cs" />
-    <Compile Include="VacancyDetail\LegacyVacancyDataProvider.cs" />
     <Compile Include="VacancyDetail\VacancyDataServiceCacheKeyEntry.cs" />
     <Compile Include="VacancySummary\GatewayVacancyIndexDataProvider.cs" />
-    <Compile Include="VacancySummary\LegacyVacancyIndexDataProvider.cs" />
     <Compile Include="Wcf\IWcfService.cs" />
     <Compile Include="Wcf\WcfService.cs" />
   </ItemGroup>
