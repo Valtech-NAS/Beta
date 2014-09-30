@@ -3210,7 +3210,8 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
     var $this         = $(that),
         $maxLength    = $this.attr('data-val-length-max'),
         $lengthOfText = $this.val().replace(/\n/g, '').length,
-        $charCountEl  = $this.closest('.form-group').find('.maxchar-count');
+        $charCountEl  = $this.closest('.form-group').find('.maxchar-count'),
+        $thisAria     = $this.closest('.form-group').find('[aria-live]');
 
     if($maxLength) {
       $($charCountEl).text($maxLength - $lengthOfText);
@@ -3218,8 +3219,10 @@ if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) 
 
     if($lengthOfText > $maxLength) {
       $charCountEl.addClass('has-error');
+      $thisAria.text("Character limit has been reached, you must type fewer than " + $maxLength + " characters");
     } else {
       $charCountEl.removeClass('has-error');
+      $thisAria.text("");
     }
   }
 
