@@ -47,7 +47,7 @@ namespace SFA.Apprenticeships.Web.Candidate
 
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry(new GatewayWebServicesRegistry(useCache));
+                x.AddRegistry(new LegacyWebServicesRegistry(useCache));
                 x.AddRegistry<PostcodeRegistry>();
                 // TODO: DEBT: AG: if Rabbit is incorrectly configured, website fails to start properly. Need to more lazily initialise RabbitMQ.
                 x.AddRegistry<RabbitMqRegistry>();

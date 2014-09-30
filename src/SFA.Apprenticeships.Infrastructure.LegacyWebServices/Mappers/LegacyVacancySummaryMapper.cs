@@ -2,7 +2,7 @@
 {
     using Common.Mappers;
 
-    public class GatewayVacancySummaryMapper : MapperEngine
+    public class LegacyVacancySummaryMapper : MapperEngine
     {
         public override void Initialise()
         {
@@ -20,7 +20,7 @@
                     opt => opt.MapFrom(src => src.ShortDescription))
 
                 .ForMember(dest => dest.Location,
-                    opt => opt.ResolveUsing<GatewayVacancySummaryLocationResolver>()
+                    opt => opt.ResolveUsing<LegacyVacancySummaryLocationResolver>()
                         .FromMember(src => src.Address))
 
                 .ForMember(dest => dest.VacancyLocationType,
@@ -31,7 +31,6 @@
 
                 .ForMember(dest => dest.VacancyType,
                     opt => opt.ResolveUsing<VacancyTypeResolver>().FromMember(src => src.VacancyType));
-            ;
         }
     }
 }

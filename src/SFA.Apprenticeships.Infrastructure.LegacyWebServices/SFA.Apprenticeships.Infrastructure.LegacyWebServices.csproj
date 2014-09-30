@@ -70,13 +70,13 @@
     <Compile Include="Configuration\ILegacyServicesConfiguration.cs" />
     <Compile Include="Configuration\LegacyServicesConfiguration.cs" />
     <Compile Include="CreateApplication\LegacyApplicationProvider.cs" />
-    <Compile Include="CreateCandidate\GatewayCandidateProvider.cs" />
+    <Compile Include="CreateCandidate\LegacyCandidateProvider.cs" />
     <Compile Include="GetCandidateApplicationStatuses\LegacyCandidateApplicationStatusesProvider.cs" />
-    <Compile Include="IoC\GatewayWebServicesRegistry.cs" />
-    <Compile Include="Mappers\GatewayVacancyDetailMapper.cs" />
-    <Compile Include="Mappers\GatewayVacancyDetailAddressDetailsResolver.cs" />
-    <Compile Include="Mappers\GatewayVacancySummaryMapper.cs" />
-    <Compile Include="Mappers\GatewayVacancySummaryLocationResolver.cs" />
+    <Compile Include="IoC\LegacyWebServicesRegistry.cs" />
+    <Compile Include="Mappers\LegacyVacancyDetailMapper.cs" />
+    <Compile Include="Mappers\LegacyVacancyDetailAddressDetailsResolver.cs" />
+    <Compile Include="Mappers\LegacyVacancySummaryMapper.cs" />
+    <Compile Include="Mappers\LegacyVacancySummaryLocationResolver.cs" />
     <Compile Include="Mappers\ApplicationStatusSummaryMapper.cs" />
     <Compile Include="Mappers\ApplicationStatusResolver.cs" />
     <Compile Include="Mappers\VacancyStatusResolver.cs" />
@@ -90,20 +90,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Service References\VacancyDetailProxy\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\VacancySummaryProxy\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="VacancyDetail\CachedLegacyVacancyDataProvider.cs" />
-    <Compile Include="VacancyDetail\GatewayVacancyDataProvider.cs" />
+    <Compile Include="VacancyDetail\LegacyVacancyDataProvider.cs" />
     <Compile Include="VacancyDetail\VacancyDataServiceCacheKeyEntry.cs" />
-    <Compile Include="VacancySummary\GatewayVacancyIndexDataProvider.cs" />
+    <Compile Include="VacancySummary\LegacyVacancyIndexDataProvider.cs" />
     <Compile Include="Wcf\IWcfService.cs" />
     <Compile Include="Wcf\WcfService.cs" />
   </ItemGroup>
@@ -147,20 +137,6 @@
     <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ValidationError.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\VacancyDetailProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancyDetailProxy.VacancyDetailResponseData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\VacancyDetailProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancyDetailProxy.VacancyDetailsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\VacancyDetailProxy\VacancyDetailsService.wsdl" />
-    <None Include="Service References\VacancySummaryProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummaryProxy.VacancySummaryResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\VacancySummaryProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummaryProxy.VacancySummaryResponseData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\VacancySummaryProxy\VacancySummaryService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ApplicationUpdate\SFA.Apprenticeships.Application.ApplicationUpdate.csproj">
@@ -205,32 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\GatewayServiceProxy\" />
-    <WCFMetadataStorage Include="Service References\VacancyDetailProxy\" />
-    <WCFMetadataStorage Include="Service References\VacancySummaryProxy\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\VacancySummaryProxy\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\VacancySummaryProxy\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\VacancySummaryProxy\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\VacancyDetailProxy\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\VacancyDetailProxy\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\VacancyDetailProxy\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -10,12 +10,12 @@
     [TestFixture]
     public class GatewayVacancyDetailMapperTests
     {
-        private GatewayVacancyDetailMapper _mapper;
+        private LegacyVacancyDetailMapper _mapper;
 
         [SetUp]
         public void Setup()
         {
-            _mapper = new GatewayVacancyDetailMapper();
+            _mapper = new LegacyVacancyDetailMapper();
         }
 
         [TestCase]

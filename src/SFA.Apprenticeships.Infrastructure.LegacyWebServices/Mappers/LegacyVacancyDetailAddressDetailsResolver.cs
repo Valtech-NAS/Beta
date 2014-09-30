@@ -5,7 +5,7 @@
     using GatewayServiceProxy;
     using Domain.Entities.Locations;
 
-    public class GatewayVacancyDetailAddressDetailsResolver : ValueResolver<AddressDetails, Address>
+    public class LegacyVacancyDetailAddressDetailsResolver : ValueResolver<AddressDetails, Address>
     {
         protected override Address ResolveCore(AddressDetails source)
         {

@@ -32,7 +32,7 @@
                 x.AddRegistry<VacancyIndexerRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry<GatewayWebServicesRegistry>();
+                x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<GatewayVacancyEtlRegistry>();
             });
 

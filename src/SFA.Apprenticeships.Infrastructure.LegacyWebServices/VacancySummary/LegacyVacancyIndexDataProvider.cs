@@ -11,14 +11,14 @@
     using Wcf;
     using ErrorCodes = Application.VacancyEtl.ErrorCodes;
 
-    public class GatewayVacancyIndexDataProvider : IVacancyIndexDataProvider
+    public class LegacyVacancyIndexDataProvider : IVacancyIndexDataProvider
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IWcfService<GatewayServiceContract> _service;
         private readonly IMapper _mapper;
 
-        public GatewayVacancyIndexDataProvider(
+        public LegacyVacancyIndexDataProvider(
             IWcfService<GatewayServiceContract> service,
             IMapper mapper)
         {

@@ -9,12 +9,12 @@
     using Candidate = Domain.Entities.Candidates.Candidate;
     using Newtonsoft.Json;
 
-    public class GatewayCandidateProvider : ILegacyCandidateProvider
+    public class LegacyCandidateProvider : ILegacyCandidateProvider
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IWcfService<GatewayServiceContract> _service;
 
-        public GatewayCandidateProvider(IWcfService<GatewayServiceContract> service)
+        public LegacyCandidateProvider(IWcfService<GatewayServiceContract> service)
         {
             _service = service;
         }

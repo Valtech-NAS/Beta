@@ -16,7 +16,7 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<MemoryCacheRegistry>();
-                x.AddRegistry<GatewayWebServicesRegistry>();
+                x.AddRegistry<LegacyWebServicesRegistry>();
             });
         }
     }

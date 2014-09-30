@@ -23,10 +23,10 @@
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<GatewayWebServicesRegistry>();
+                x.AddRegistry<LegacyWebServicesRegistry>();
 
                 // Inject provider under test.
-                x.For<IVacancyIndexDataProvider>().Use<GatewayVacancyIndexDataProvider>();
+                x.For<IVacancyIndexDataProvider>().Use<LegacyVacancyIndexDataProvider>();
             });
 
             // Providers.

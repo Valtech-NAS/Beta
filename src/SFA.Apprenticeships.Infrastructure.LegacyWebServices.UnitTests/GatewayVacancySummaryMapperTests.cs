@@ -11,10 +11,10 @@
         [SetUp]
         public void Setup()
         {
-            _mapper = new GatewayVacancySummaryMapper();
+            _mapper = new LegacyVacancySummaryMapper();
         }
 
-        private GatewayVacancySummaryMapper _mapper;
+        private LegacyVacancySummaryMapper _mapper;
 
         [TestCase]
         public void ShouldCreateAMap()

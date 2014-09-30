@@ -20,7 +20,7 @@
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<GatewayWebServicesRegistry>();
+                x.AddRegistry<LegacyWebServicesRegistry>();
             });
 
             _vacancyDataProvider = ObjectFactory.GetInstance<IVacancyDataProvider>();

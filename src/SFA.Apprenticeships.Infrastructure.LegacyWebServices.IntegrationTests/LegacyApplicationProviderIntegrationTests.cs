@@ -28,7 +28,7 @@
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<GatewayWebServicesRegistry>();
+                x.AddRegistry<LegacyWebServicesRegistry>();
                 x.For<ICandidateReadRepository>().Use(_candidateRepositoryMock.Object);
             });
 

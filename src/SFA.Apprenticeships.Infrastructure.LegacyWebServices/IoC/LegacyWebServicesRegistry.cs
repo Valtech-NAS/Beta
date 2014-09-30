@@ -14,39 +14,35 @@
     using Mappers;
     using StructureMap.Configuration.DSL;
     using VacancyDetail;
-    using VacancyDetailProxy;
     using VacancySummary;
-    using VacancySummaryProxy;
     using Wcf;
 
-    public class GatewayWebServicesRegistry : Registry
+    public class LegacyWebServicesRegistry : Registry
     {
-        public GatewayWebServicesRegistry(): this(false)
+        public LegacyWebServicesRegistry(): this(false)
         {
             
         }
 
-        public GatewayWebServicesRegistry(bool useCache)
+        public LegacyWebServicesRegistry(bool useCache)
         {
-            For<IMapper>().Use<GatewayVacancySummaryMapper>().Name = "LegacyWebServices.GatewayVacancySummaryMapper";
-            For<IMapper>().Use<GatewayVacancyDetailMapper>().Name = "LegacyWebServices.GatewayVacancyDetailMapper";
+            For<IMapper>().Use<LegacyVacancySummaryMapper>().Name = "LegacyWebServices.LegacyVacancySummaryMapper";
+            For<IMapper>().Use<LegacyVacancyDetailMapper>().Name = "LegacyWebServices.LegacyVacancyDetailMapper";
             For<ILegacyServicesConfiguration>().Singleton().Use(LegacyServicesConfiguration.Instance);
-            For<IWcfService<IVacancySummary>>().Use<WcfService<IVacancySummary>>();
-            For<IWcfService<IVacancyDetails>>().Use<WcfService<IVacancyDetails>>();
             For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
 
             For<IVacancyIndexDataProvider>()
-                .Use<GatewayVacancyIndexDataProvider>()
+                .Use<LegacyVacancyIndexDataProvider>()
                 .Ctor<IMapper>()
-                .Named("LegacyWebServices.GatewayVacancySummaryMapper");
+                .Named("LegacyWebServices.LegacyVacancySummaryMapper");
 
             #region Vacancy Data Service And Providers
 
             For<IVacancyDataProvider>()
-                .Use<GatewayVacancyDataProvider>()
+                .Use<LegacyVacancyDataProvider>()
                 .Ctor<IMapper>()
-                .Named("LegacyWebServices.GatewayVacancyDetailMapper")
-                .Name = "GatewayVacancyDataProvider";
+                .Named("LegacyWebServices.LegacyVacancyDetailMapper")
+                .Name = "LegacyVacancyDataProvider";
 
             if (useCache)
             {
@@ -55,7 +51,7 @@
                     .Ctor<IVacancyDataProvider>()
                     .IsTheDefault()
                     .Ctor<IVacancyDataProvider>()
-                    .Named("GatewayVacancyDataProvider");
+                    .Named("LegacyVacancyDataProvider");
             }
 
             For<IVacancyDataService>()
@@ -68,7 +64,7 @@
 
             #region Candidate and Application Providers
 
-            For<ILegacyCandidateProvider>().Use<GatewayCandidateProvider>();
+            For<ILegacyCandidateProvider>().Use<LegacyCandidateProvider>();
 
             For<ILegacyApplicationProvider>().Use<LegacyApplicationProvider>();
 

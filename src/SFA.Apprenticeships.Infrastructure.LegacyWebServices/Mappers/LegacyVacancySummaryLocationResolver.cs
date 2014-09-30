@@ -5,7 +5,7 @@
     using Domain.Entities.Locations;
     using GatewayServiceProxy;
 
-    public class GatewayVacancySummaryLocationResolver : ValueResolver<VacancySummaryAddress, GeoPoint>
+    public class LegacyVacancySummaryLocationResolver : ValueResolver<VacancySummaryAddress, GeoPoint>
     {
         protected override GeoPoint ResolveCore(VacancySummaryAddress source)
         {

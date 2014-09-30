@@ -39,7 +39,7 @@
 
             var vacancyConsumer = new GatewayVacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object, _mapperMock.Object, _messagingServiceMock.Object);
             
-            var scheduledMessage = new StorageQueueMessage()
+            var scheduledMessage = new StorageQueueMessage
             {
                 ClientRequestId = Guid.NewGuid(),
                 ExpectedExecutionTime = DateTime.Today,
@@ -83,7 +83,7 @@
                     vacancies.ToList()
                         .ForEach(
                             v =>
-                                vacUpdates.Add(new VacancySummaryUpdate()
+                                vacUpdates.Add(new VacancySummaryUpdate
                                 {
                                     Id = v.Id,
                                     ScheduledRefreshDateTime = summaryPage.ScheduledRefreshDateTime

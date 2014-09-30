@@ -22,7 +22,7 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 //x.AddRegistry<LegacyWebServicesRegistry>();
-                x.AddRegistry<GatewayWebServicesRegistry>();
+                x.AddRegistry<LegacyWebServicesRegistry>();
             });
 
             _legacyCandidateProvider = ObjectFactory.GetInstance<ILegacyCandidateProvider>();
