@@ -14,7 +14,7 @@ namespace SFA.Apprenticeships.Web.Candidate
                 "~/Content/_assets/js/vendor/jquery-1.11.1.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nascript").Include(
-                  "~/Content/_assets/js/scripts.min.js"
+                  "~/Content/_assets/js/scripts.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/vendor").Include(              

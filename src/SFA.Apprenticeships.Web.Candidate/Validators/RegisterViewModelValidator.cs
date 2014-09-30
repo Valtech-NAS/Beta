@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
-    using System;
     using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.Register;
@@ -66,8 +65,6 @@
                 .WithMessage(RegisterViewModelMessages.PasswordMessages.LengthErrorText)
                 .NotEmpty()
                 .WithMessage(RegisterViewModelMessages.PasswordMessages.RequiredErrorText)
-                .Must(ConfirmPasswordMatchesPassword)
-                .WithMessage(RegisterViewModelMessages.PasswordMessages.PasswordsDoNotMatchErrorText)
                 .Matches(RegisterViewModelMessages.PasswordMessages.WhiteListRegularExpression)
                 .WithMessage(RegisterViewModelMessages.PasswordMessages.WhiteListErrorText);
 
@@ -87,16 +84,15 @@
             validator.RuleFor(x => x.EmailAddress)
                 .Must(UsernameAvailable)
                 .WithMessage(RegisterViewModelMessages.EmailAddressMessages.UsernameNotAvailableErrorText);
+
+            validator.RuleFor(x => x.Password)
+                .Equal(x => x.ConfirmPassword)
+                .WithMessage(RegisterViewModelMessages.PasswordMessages.PasswordsDoNotMatchErrorText);
         }
 
         private static bool UsernameAvailable(RegisterViewModel model, string emailAddress)
         {
             return emailAddress != null && (!string.IsNullOrEmpty(emailAddress) && model.IsUsernameAvailable);
-        }
-
-        private static bool ConfirmPasswordMatchesPassword(RegisterViewModel model, string password)
-        {
-            return model.ConfirmPassword.Equals(password, StringComparison.InvariantCulture);
         }
     }
 }

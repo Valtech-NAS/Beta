@@ -20,7 +20,6 @@
         public string Password { get; set; }
 
         [Display(Name = PasswordResetViewModelMessages.ConfirmPasswordMessages.LabelText)]
-        [Compare("Password", ErrorMessage = PasswordResetViewModelMessages.ConfirmPasswordMessages.PasswordsDoNotMatchErrorText)]
         public string ConfirmPassword { get; set; }
 
         public UserStatuses UserStatus { get; set; }

@@ -46,6 +46,7 @@
         public static class PasswordMessages
         {
             public const string LabelText = "Create password";
+            public const string HintText = "Requires upper and lowercase letters, a number and at least 8 characters";
             public const string RequiredErrorText = "Please enter password";
             public const string LengthErrorText = "Password must be at least 8 characters long, contain upper and lowercase letters and one number";
             public const string WhiteListRegularExpression = Whitelists.PasswordWhitelist.RegularExpression;
