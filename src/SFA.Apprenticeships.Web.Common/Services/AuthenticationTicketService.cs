@@ -21,7 +21,7 @@
 
             var cookie = cookies[CookieName];
 
-            if (cookie == null || string.IsNullOrWhiteSpace(cookie.Value) || cookie.Expires < DateTime.Now)
+            if (cookie == null || string.IsNullOrWhiteSpace(cookie.Value))
             {
                 return null;
             }
