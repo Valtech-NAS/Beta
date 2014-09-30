@@ -68,7 +68,7 @@
                 PageSize = 10,
                 VacancySearch = new VacancySearchViewModel {LocationType = VacancyLocationType.NonNational}
             };
-            test.PrevPage.Should().Be(1);
+            test.PrevPage.Should().Be(0);
         }
     }
 }
