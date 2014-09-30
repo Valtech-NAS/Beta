@@ -4,18 +4,18 @@
 @model VacancyDetailViewModel
 
 @{
-    string AnalyticsTag = "onclick=\"Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '{0}" + Model.Id + "', 'WT.dl', '99', 'WT.ti', '{1}'], 'DCSext.buttonPos', '{2}'] });\"";
+    string AnalyticsTag = "onclick=\"Webtrends.multiTrack({{ element: this, argsa: ['DCS.dcsuri', '{0}" + Model.Id + "', 'WT.dl', '99', 'WT.ti', '{1}', 'DCSext.buttonPos', '{2}'] }});\"";
 }
 
 @if (@Model.ApplyViaEmployerWebsite)
 {
     <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
-    <a rel="external" href="@Model.VacancyUrl" target="_blank" onclick='Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", "/application/apply/offline/@Model.Id", "WT.dl", "99", "WT.ti", "Application – Apply Offline"] });'>Apply now</a>
+    <a id="external-employer-website" rel="external" href="@Model.VacancyUrl" target="_blank" @Html.Raw(string.Format(AnalyticsTag, "/application/apply/offline/", "Application – Apply Offline", ViewData["AnalyticsButtonPosition"]))>Apply now</a>
 }
 else if (Request.IsAuthenticated)
-{   
+{
     if (Model.CandidateApplicationStatus.HasValue)
-    {   
+    {
         // Candidate has applied for this vacancy.
         switch (Model.CandidateApplicationStatus.Value)
         {
@@ -40,9 +40,7 @@ else if (Request.IsAuthenticated)
     }
 }
 else
-{
-    var applySignInAnalyticsClick = "onclick=Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/application/apply/signin/" + Model.Id + ", 'WT.dl', '99', 'WT.ti', 'Application – Sign In to Apply'], 'DCSext.buttonPos', '" + ViewData["AnalyticsButtonPosition"] + "'] });";
-
+{ 
     // Vacancy is not being viewed by a signed-in candidate.
     <a id="apply-button" class="button button-with-hint" title="Sign in to apply" href="@Url.Action("Apply", "Application", new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/application/apply/signin/", "Application – Sign In to Apply", ViewData["AnalyticsButtonPosition"]))>Sign in to apply</a>
 }
