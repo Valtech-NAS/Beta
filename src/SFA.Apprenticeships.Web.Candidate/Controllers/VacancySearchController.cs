@@ -84,7 +84,7 @@
             if (model.SearchAction == SearchAction.Search && model.LocationType != VacancyLocationType.NonNational)
             {
                 model.LocationType = VacancyLocationType.NonNational;
-                return RedirectToAction("results", model);
+                //return RedirectToAction("results", model);
             }
 
             if (model.LocationType == VacancyLocationType.NonNational && model.SortType == VacancySortType.Relevancy &&

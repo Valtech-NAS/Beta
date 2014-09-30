@@ -25,7 +25,7 @@
             return Task.Run(() =>
             {
                 var latestScheduledMessage = GetLatestQueueMessage();
-
+              
                 if (latestScheduledMessage != null)
                 {                    
                     _vacancyIndexerService.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
