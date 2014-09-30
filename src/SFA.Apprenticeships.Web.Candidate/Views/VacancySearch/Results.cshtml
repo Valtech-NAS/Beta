@@ -4,9 +4,9 @@
 @{
     ViewBag.Title = "Apprenticeships - Results";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    
-    var locationTypeLink = Model.VacancySearch.LocationType == VacancyLocationType.National ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.NonNational, SearchAction = SearchAction.Sort, PageNumber = 1}) : Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.National , SearchAction = SearchAction.Sort, PageNumber = 1});
-    
+
+    var locationTypeLink = Model.VacancySearch.LocationType == VacancyLocationType.National ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.NonNational, SearchAction = SearchAction.Sort, PageNumber = 1 }) : Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.National, SearchAction = SearchAction.Sort, PageNumber = 1 });
+
     string resultMessage;
     string nationalResultsMessage;
 
@@ -16,27 +16,27 @@
     }
     else if (Model.TotalLocalHits == 1)
     {
-        
+
         if (Model.VacancySearch.LocationType == VacancyLocationType.National)
         {
-            resultMessage = "There is <b class=\"bold-medium\">1</b> <a id='localLocationTypeLink' href=" + locationTypeLink + ">local apprenticeship.</a>";
+            resultMessage = "We've found <b class=\"bold-medium\">1</b> <a id='localLocationTypeLink' href=" + locationTypeLink + ">apprenticeship in your selected area</a>.";
         }
         else
         {
-            resultMessage = "There is <b class=\"bold-medium\">1</b> local apprenticeship.";
+            resultMessage = "We've found <b class=\"bold-medium\">1</b> apprenticeship in your selected area.";
         }
     }
     else
     {
         if (Model.VacancySearch.LocationType == VacancyLocationType.National)
         {
-            var message = "There are <b class=\"bold-medium\">{0}</b> <a id='localLocationTypeLink' href=" + locationTypeLink + ">local apprenticeships.</a>";
+            var message = "We've found <b class=\"bold-medium\">{0}</b> <a id='localLocationTypeLink' href=" + locationTypeLink + ">apprenticeships in your selected area.</a>";
             resultMessage = string.Format(message, Model.TotalLocalHits);
         }
         else
         {
-            resultMessage = string.Format("There are <b class=\"bold-medium\">{0}</b> local apprenticeships.", Model.TotalLocalHits);
-        }        
+            resultMessage = string.Format("We've found <b class=\"bold-medium\">{0}</b> apprenticeships in your selected area.", Model.TotalLocalHits);
+        }
     }
 
     if (Model.TotalNationalHits == 0)
@@ -48,23 +48,23 @@
 
         if (Model.VacancySearch.LocationType == VacancyLocationType.NonNational)
         {
-            nationalResultsMessage = "There is <b class=\"bold-medium\">1</b> <a id='nationwideLocationTypeLink' href=" + locationTypeLink + ">nationwide apprenticeship.</a>";
+            nationalResultsMessage = "We also found <a id='nationwideLocationTypeLink' href=" + locationTypeLink + ">1 apprenticeship nationwide.</a>";
         }
         else
         {
-            nationalResultsMessage = "There is <b class=\"bold-medium\">1</b> nationwide apprenticeship.";
+            nationalResultsMessage = "We also found 1 apprenticeship nationwide.";
         }
     }
     else
     {
         if (Model.VacancySearch.LocationType == VacancyLocationType.NonNational)
         {
-            var nationalMessage = "There are <b class=\"bold-medium\">{0}</b> <a id='nationwideLocationTypeLink' href=" + locationTypeLink + ">nationwide apprenticeships.</a>";
+            var nationalMessage = "We also found <a id='nationwideLocationTypeLink' href=" + locationTypeLink + ">{0} apprenticeships nationwide.</a>";
             nationalResultsMessage = string.Format(nationalMessage, Model.TotalNationalHits);
         }
         else
         {
-            nationalResultsMessage = string.Format("There are <b class=\"bold-medium\">{0}</b> nationwide apprenticeships.", Model.TotalNationalHits);
+            nationalResultsMessage = string.Format("We also found {0} apprenticeships nationwide.", Model.TotalNationalHits);
         }
     }
 }
@@ -72,23 +72,26 @@
 @section metatags
 {
     @*Used by analytics to track succesful/unsuccessful searches*@
-    <meta name="WT.oss_r" content="@Model.TotalLocalHits"/>
+    <meta name="WT.oss_r" content="@Model.TotalLocalHits" />
 }
 
 <div class="search-results-wrapper grid-wrapper">
     <div class="hgroup">
         <h1 class="heading-xlarge">Search results</h1>
-        <p id="vacancy-result-summary">@Html.Raw(resultMessage) @Html.Raw(nationalResultsMessage)</p>
+        <div id="vacancy-result-summary">
+            <p class="small-btm-margin">@Html.Raw(resultMessage)</p>
+            <p>@Html.Raw(nationalResultsMessage)</p>
+        </div>
     </div>
 
     @using (Html.BeginForm("results", "vacancysearch", FormMethod.Get))
-    {   
+    {
         Html.Partial("ValidationSummary", ViewData.ModelState);
         Html.RenderPartial("_searchUpdate", Model.VacancySearch);
         @(Model.VacancySearch.SearchAction == SearchAction.Search ? Html.Hidden("LocationType", "Local") : Html.Hidden("LocationType", Model.VacancySearch.LocationType))
         <section class="grid grid-2-3">
             @{
-        if (Model.TotalLocalHits == 0)
+                if (Model.TotalLocalHits == 0)
                 {
                     <p id="search-no-results-title">There are currently no apprenticeships that match your search.</p>
                     <p>Try editing your search:</p>
@@ -133,7 +136,7 @@
                 $('#SearchAction').val("Sort");
                 $("form").submit();
             });
-           
+
         });
 
     </script>
