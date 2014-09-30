@@ -61,7 +61,7 @@
                 return null;
             }
 
-            return _httpDataCookie.Values[key];
+            return HttpContext.Current.Server.UrlDecode(_httpDataCookie.Values[key]);
         }
 
         public string Pop(string key)
