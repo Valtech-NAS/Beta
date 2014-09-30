@@ -7,8 +7,8 @@ namespace SFA.Apprenticeships.Application.VacancyEtl
 
     public interface IVacancyIndexDataProvider
     {
-        int GetVacancyPageCount(VacancyLocationType vacancyLocationType);
+        int GetVacancyPageCount();
 
-        IEnumerable<VacancySummary> GetVacancySummaries(VacancyLocationType vacancyLocationType, int page);
+        IEnumerable<VacancySummary> GetVacancySummaries(int page);
     }
 }

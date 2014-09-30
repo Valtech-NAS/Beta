@@ -34,7 +34,7 @@
         {
             Logger.Debug("Loading vacancy counts from NAS Gateway");
 
-            var vacancyPageCount = _vacancyIndexDataProvider.GetVacancyPageCount(VacancyLocationType.National);
+            var vacancyPageCount = _vacancyIndexDataProvider.GetVacancyPageCount();
             Logger.Debug("Loaded vacancy page count of: {0} from NAS Gateway", vacancyPageCount);
          
             var vacancySumaries = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, vacancyPageCount).ToList();
@@ -54,7 +54,7 @@
         {
             Logger.Debug("Loading NAS Gateway vacancy search page number: {0}", vacancySummaryPage.PageNumber);
 
-            var vacancies = _vacancyIndexDataProvider.GetVacancySummaries(vacancySummaryPage.VacancyLocation, vacancySummaryPage.PageNumber).ToList();
+            var vacancies = _vacancyIndexDataProvider.GetVacancySummaries(vacancySummaryPage.PageNumber).ToList();
             var vacanciesExtended = _mapper.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(vacancies);
 
             Logger.Debug("Loaded and transformed NAS Gateway vacancy search page number: {0}", vacancySummaryPage.PageNumber);
@@ -81,8 +81,7 @@
                 {
                     PageNumber = i,
                     TotalPages = count,
-                    ScheduledRefreshDateTime = scheduledRefreshDateTime,
-                    VacancyLocation = VacancyLocationType.National
+                    ScheduledRefreshDateTime = scheduledRefreshDateTime
                 };
 
                 vacancySumaries.Add(vacancySummaryPage);

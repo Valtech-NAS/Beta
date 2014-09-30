@@ -9,8 +9,6 @@
 
         public int TotalPages { get; set; }
 
-        public VacancyLocationType VacancyLocation { get; set; }
-
         public DateTime ScheduledRefreshDateTime { get; set; }
     }
 }

@@ -63,7 +63,6 @@
     <Compile Include="Configuration\LegacyServicesConfigurationTests.cs" />
     <Compile Include="GatewayVacancySummaryMapperTests.cs" />
     <Compile Include="GatewayVacancyDetailMapperTests.cs" />
-    <Compile Include="MapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

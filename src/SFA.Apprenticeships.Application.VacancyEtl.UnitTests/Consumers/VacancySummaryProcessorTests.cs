@@ -29,15 +29,13 @@
             _vacancyProviderMock = new Mock<IVacancyIndexDataProvider>();
         }
 
-        [TestCase(0, 0)]
-        [TestCase(1, 0)]
-        [TestCase(0, 1)]
-        [TestCase(4, 7)]
-        [TestCase(10, 5)]
-        public void ShouldQueueCorrectNumberOfVacancyPages(int nationalVacancyPages, int nonNationalVancanyPages)
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(4)]
+        [TestCase(10)]
+        public void ShouldQueueCorrectNumberOfVacancyPages(int vancanyPages)
         {
-            _vacancyProviderMock.Setup(x => x.GetVacancyPageCount(VacancyLocationType.National)).Returns(nationalVacancyPages);
-            _vacancyProviderMock.Setup(x => x.GetVacancyPageCount(VacancyLocationType.NonNational)).Returns(nonNationalVancanyPages);
+            _vacancyProviderMock.Setup(x => x.GetVacancyPageCount()).Returns(vancanyPages);
 
             var vacancyConsumer = new GatewayVacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object, _mapperMock.Object, _messagingServiceMock.Object);
             
@@ -53,18 +51,18 @@
             Thread.Sleep(100); //Slight delay to ensure parallel foreach has completed before assertions are made
 
             _messagingServiceMock.Verify(x => x.DeleteMessage(It.Is<string>(mid => mid == scheduledMessage.MessageId), It.Is<string>(pr => pr == scheduledMessage.PopReceipt)), Times.Once);
-            _busMock.Verify(x => x.PublishMessage(It.IsAny<VacancySummaryPage>()), Times.Exactly(nationalVacancyPages + nonNationalVancanyPages));
+            _busMock.Verify(x => x.PublishMessage(It.IsAny<VacancySummaryPage>()), Times.Exactly(vancanyPages));
         }
 
-        [TestCase(VacancyLocationType.National, 0)]
-        [TestCase(VacancyLocationType.NonNational, 5)]
-        [TestCase(VacancyLocationType.Unknown, 10)]
-        public void ShouldQueueCorrectNumberOfVacanySummaries(VacancyLocationType vacancyLocationType, int vacanciesReturned)
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(10)]
+        public void ShouldQueueCorrectNumberOfVacanySummaries(int vacanciesReturned)
         {
-            var summaryPage = new VacancySummaryPage { VacancyLocation = vacancyLocationType, PageNumber = vacanciesReturned, ScheduledRefreshDateTime = DateTime.Today };
+            var summaryPage = new VacancySummaryPage { PageNumber = vacanciesReturned, ScheduledRefreshDateTime = DateTime.Today };
 
-            _vacancyProviderMock.Setup(x => x.GetVacancySummaries(vacancyLocationType, vacanciesReturned))
-                .Returns((VacancyLocationType vlt, int vr) =>
+            _vacancyProviderMock.Setup(x => x.GetVacancySummaries(vacanciesReturned))
+                .Returns((int vr) =>
                 {
                     var sumaries = new List<VacancySummary>(vr);
                     for (int i = 1; i <= vr; i++)
@@ -98,7 +96,6 @@
             vacancyConsumer.QueueVacancySummaries(summaryPage);
 
             _vacancyProviderMock.Verify(x => x.GetVacancySummaries(
-                                                It.Is<VacancyLocationType>(vlt => vlt == vacancyLocationType),
                                                 It.Is<int>(pn => pn == vacanciesReturned)), 
                                                 Times.Once);
             _mapperMock.Verify(x => x.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(It.Is<IEnumerable<VacancySummary>>(vc => vc.Count() == vacanciesReturned)), Times.Once);

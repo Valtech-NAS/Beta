@@ -42,7 +42,7 @@
         [Test, Category("Integration")]
         public void ShouldReturnVacancyDetailsForValidVacancyId()
         {
-            var response = _vacancyIndexDataProvider.GetVacancySummaries(VacancyLocationType.Unknown, 1);
+            var response = _vacancyIndexDataProvider.GetVacancySummaries(1);
 
             var firstOrDefault = response.FirstOrDefault();
 

@@ -29,7 +29,7 @@
         {
             try
             {
-                var summaries = _vacancyIndexDataProvider.GetVacancySummaries(VacancyLocationType.NonNational, 1);
+                var summaries = _vacancyIndexDataProvider.GetVacancySummaries(1);
 
                 var vacancySummaries = summaries as IList<VacancySummary> ?? summaries.ToList();
 

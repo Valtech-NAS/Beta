@@ -26,9 +26,8 @@
             _mapper = mapper;
         }
 
-        public int GetVacancyPageCount(VacancyLocationType vacancyLocationType)
+        public int GetVacancyPageCount()
         {
-            // TODO: remove vacancyLocationType arg as results will contain all types.
             var request = new GetVacancySummaryRequest { PageNumber = 1 };
 
             Logger.Debug("Calling Gateway GetVacancySummaries webservice for vacancy index page count");
@@ -50,10 +49,8 @@
             return response.TotalPages;
         }
 
-        public IEnumerable<Domain.Entities.Vacancies.VacancySummary> GetVacancySummaries(
-            VacancyLocationType vacancyLocationType, int page)
+        public IEnumerable<Domain.Entities.Vacancies.VacancySummary> GetVacancySummaries(int page)
         {
-            // TODO: remove vacancyLocationType arg as results will contain all types.
             var request = new GetVacancySummaryRequest { PageNumber = page };
 
             Logger.Debug("Calling Gateway GetVacancySummaries webservice for vacancy data page {0}", page);

@@ -36,7 +36,7 @@
         [Test]
         public void ShouldReturnThePageCountForVacancies()
         {
-            var result = _vacancyIndexDataProvider.GetVacancyPageCount(VacancyLocationType.National);
+            var result = _vacancyIndexDataProvider.GetVacancyPageCount();
 
             // Assert.
             result.Should().BePositive();
@@ -45,7 +45,7 @@
         [Test]
         public void ShouldReturnTheFirstPageResultForVacancies()
         {
-            var response = _vacancyIndexDataProvider.GetVacancySummaries(VacancyLocationType.NonNational, 1);
+            var response = _vacancyIndexDataProvider.GetVacancySummaries(1);
 
             response.Should().NotBeNull();
         }
