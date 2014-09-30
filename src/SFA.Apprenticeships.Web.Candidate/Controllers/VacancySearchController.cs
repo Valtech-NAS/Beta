@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Globalization;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
     using Application.Interfaces.Vacancies;
@@ -212,44 +213,49 @@
 
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            Guid? candidateId = null;
-
-            if (Request.IsAuthenticated)
+            var result = await Task.Run<ActionResult>(() =>
             {
-                candidateId = UserContext.CandidateId;
-            }
+                Guid? candidateId = null;
 
-            var vacancy = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
+                if (Request.IsAuthenticated)
+                {
+                    candidateId = UserContext.CandidateId;
+                }
 
-            if (vacancy == null)
-            {
-                return new VacancyNotFoundResult();
-            }
+                var vacancy = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
 
-            if (vacancy.HasError())
-            {
-                ModelState.Clear();
-                SetUserMessage(vacancy.ViewModelMessage, UserMessageLevel.Warning);
+                if (vacancy == null)
+                {
+                    return new VacancyNotFoundResult();
+                }
+
+                if (vacancy.HasError())
+                {
+                    ModelState.Clear();
+                    SetUserMessage(vacancy.ViewModelMessage, UserMessageLevel.Warning);
+
+                    return View(vacancy);
+                }
+
+                var distance = UserData.Pop(UserDataItemNames.VacancyDistance);
+                var lastVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
+
+                if (!string.IsNullOrWhiteSpace(distance)
+                    && !string.IsNullOrWhiteSpace(lastVacancyId)
+                    && int.Parse(lastVacancyId) == id)
+                {
+                    ViewBag.Distance = distance;
+                    UserData.Push(UserDataItemNames.VacancyDistance, distance);
+                }
+
+                UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToStringInvariant());
 
                 return View(vacancy);
-            }
+            });
 
-            var distance = UserData.Pop(UserDataItemNames.VacancyDistance);
-            var lastVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
-
-            if (!string.IsNullOrWhiteSpace(distance)
-                && !string.IsNullOrWhiteSpace(lastVacancyId)
-                && int.Parse(lastVacancyId) == id)
-            {
-                ViewBag.Distance = distance;
-                UserData.Push(UserDataItemNames.VacancyDistance, distance);
-            }
-
-            UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToStringInvariant());
-
-            return View(vacancy);
+            return result;
         }
 
         #region Helpers
