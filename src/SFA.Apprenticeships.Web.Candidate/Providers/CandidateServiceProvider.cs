@@ -27,17 +27,20 @@
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
         private readonly IAuthenticationTicketService _authenticationTicketService;
+        private readonly HttpContextBase _httpContext;
 
         public CandidateServiceProvider(
             ICandidateService candidateService,
             IUserAccountService userAccountService,
             IAuthenticationTicketService authenticationTicketService,
-            IMapper mapper)
+            IMapper mapper, 
+            HttpContextBase httpContext)
         {
             _candidateService = candidateService;
             _userAccountService = userAccountService;
             _authenticationTicketService = authenticationTicketService;
             _mapper = mapper;
+            _httpContext = httpContext;
         }
 
         public UserNameAvailability IsUsernameAvailable(string username)
@@ -154,10 +157,8 @@
 
             try
             {
-                var httpContext = new HttpContextWrapper(HttpContext.Current);
-
                 _candidateService.Activate(model.EmailAddress, model.ActivationCode);
-                _authenticationTicketService.SetAuthenticationCookie(httpContext.Response.Cookies,
+                _authenticationTicketService.SetAuthenticationCookie(_httpContext.Response.Cookies,
                     candidateId.ToString(),
                     UserRoleNames.Activated);
 
@@ -443,9 +444,7 @@
 
         private void SetUserCookies(Candidate candidate, params string[] roles)
         {
-            var httpContext = new HttpContextWrapper(HttpContext.Current);
-
-            _authenticationTicketService.SetAuthenticationCookie(httpContext.Response.Cookies,
+            _authenticationTicketService.SetAuthenticationCookie(_httpContext.Response.Cookies,
                 candidate.EntityId.ToString(),
                 roles);
         }

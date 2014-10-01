@@ -205,17 +205,14 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        public async Task<ActionResult> SignOut()
+        public ActionResult SignOut()
         {
-            return await Task.Run<ActionResult>(() =>
-            {
                 FormsAuthentication.SignOut();
                 UserData.Clear();
 
                 SetUserMessage(SignOutPageMessages.SignOutMessageText);
 
                 return RedirectToAction("Index");
-            });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
