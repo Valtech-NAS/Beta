@@ -4,10 +4,12 @@
     using System.Threading.Tasks;
     using EasyNetQ.AutoSubscribe;
     using Application.VacancyEtl.Entities;
+    using NLog;
     using VacancyIndexer;
 
     public class VacancySummaryConsumerAsync : IConsumeAsync<VacancySummaryUpdate>
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IVacancyIndexerService _vacancyIndexer;
 
         public VacancySummaryConsumerAsync(IVacancyIndexerService vacancyIndexer)
@@ -20,9 +22,13 @@
         {
             return Task.Run(() =>
             {
+                Logger.Debug("Vacancy summary update calling vacancy indexer index VacancyId={0} at {1}",
+                      vacancySummaryToIndex.Id,DateTime.UtcNow);
+
                 _vacancyIndexer.Index(vacancySummaryToIndex);
 
-                throw new Exception("Something terrible occurred while indexing");
+                Logger.Debug("Vacancy summary update indexed VacancyId={0} at {1} ",
+                     vacancySummaryToIndex.Id, DateTime.UtcNow);
             });
         }
     }

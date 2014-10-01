@@ -33,11 +33,18 @@
 
             if (vacancySummaryPage.PageNumber == vacancySummaryPage.TotalPages)
             {
+                Logger.Debug("Vacancy ETL Queue completed: {0} vacancy summary pages queued ", vacancySummaryPage.TotalPages);
+
+                Logger.Debug("Publishing  VacancySummaryUpdateComplete message to queue with schedule refresh datetime {0} ", vacancySummaryPage.ScheduledRefreshDateTime);
+                
                 var vsuc = new VacancySummaryUpdateComplete
                 {
                     ScheduledRefreshDateTime = vacancySummaryPage.ScheduledRefreshDateTime
                 };
+
                 _messageBus.PublishMessage(vsuc);
+
+                Logger.Debug("VacancySummaryUpdateComplete message published to queue with schedule refresh datetime {0} ", vacancySummaryPage.ScheduledRefreshDateTime);
             }
         }
     }
