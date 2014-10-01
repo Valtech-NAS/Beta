@@ -117,6 +117,14 @@
                     nonNationlResponse.TotalNationalHits = nationalResults.Total;
                     nonNationlResponse.PageSize = search.ResultsPerPage;
                     nonNationlResponse.VacancySearch = search;
+
+                    if (nonNationalResults.Total == 0 && nationalResults.Total != 0)
+                    {
+                        nonNationlResponse.Vacancies = nationalResponse.Vacancies;
+                        nonNationlResponse.VacancySearch.SortType = VacancySortType.ClosingDate;
+                        nonNationlResponse.VacancySearch.LocationType = VacancyLocationType.National;
+                    }
+
                     return nonNationlResponse;
                 }
 
@@ -124,6 +132,12 @@
                 nationalResponse.TotalNationalHits = nationalResults.Total;
                 nationalResponse.PageSize = search.ResultsPerPage;
                 nationalResponse.VacancySearch = search;
+
+                if (nationalResults.Total == 0 && nonNationalResults.Total != 0)
+                {
+                    nationalResponse.Vacancies = nonNationlResponse.Vacancies;                   
+                }
+
                 return nationalResponse;
             }
             catch (CustomException ex)

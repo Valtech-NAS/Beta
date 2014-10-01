@@ -91,7 +91,7 @@
         @(Model.VacancySearch.SearchAction == SearchAction.Search ? Html.Hidden("LocationType", "Local") : Html.Hidden("LocationType", Model.VacancySearch.LocationType))
         <section class="grid grid-2-3">
             @{
-                if (Model.TotalLocalHits == 0)
+                if (Model.TotalLocalHits == 0 && Model.TotalNationalHits == 0)
                 {
                     <p id="search-no-results-title">There are currently no apprenticeships that match your search.</p>
                     <p>Try editing your search:</p>

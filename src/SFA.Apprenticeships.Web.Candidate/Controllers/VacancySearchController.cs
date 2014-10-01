@@ -91,21 +91,18 @@
                 if (model.SearchAction == SearchAction.Search && model.LocationType != VacancyLocationType.NonNational)
                 {
                     model.LocationType = VacancyLocationType.NonNational;
-                    //return RedirectToAction("results", model);
                 }
 
                 if (model.LocationType == VacancyLocationType.NonNational && model.SortType == VacancySortType.Relevancy &&
                     string.IsNullOrWhiteSpace(model.Keywords))
                 {
                     model.SortType = VacancySortType.Distance;
-                    //return RedirectToAction("results", model);
                 }
 
                 if (model.LocationType == VacancyLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) &&
                     model.SortType != VacancySortType.ClosingDate)
                 {
                     model.SortType = VacancySortType.ClosingDate;
-                    //return RedirectToAction("results", model);
                 }
 
                 PopulateDistances(model.WithinDistance);
@@ -189,17 +186,7 @@
                     return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
                 }
 
-                if (results.TotalLocalHits == 0 &&
-                    results.VacancySearch.LocationType == VacancyLocationType.NonNational &&
-                    results.TotalNationalHits != 0)
-                {
-                    model.SortType = VacancySortType.ClosingDate;
-                    model.LocationType = VacancyLocationType.National;
-
-                    return RedirectToAction("results", model);
-                }
-
-                if (model.SearchAction == SearchAction.Search)
+                if (model.SearchAction == SearchAction.Search && results.TotalLocalHits != 0)
                 {
                     results.VacancySearch.LocationType = VacancyLocationType.NonNational;
                 }

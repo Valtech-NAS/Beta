@@ -112,6 +112,7 @@ Scenario: Search when no results are returned for location
 	Given I navigated to the VacancySearchPage page
 	When I enter data
 		 | Field    | Value  |
+		 | Keywords | Chef   |
 		 | Location | Dundee |
 	And I choose Search
 	And I am on the VacancySearchResultPage page
