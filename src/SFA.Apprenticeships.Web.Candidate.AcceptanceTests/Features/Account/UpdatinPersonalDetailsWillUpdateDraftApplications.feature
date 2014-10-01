@@ -58,7 +58,8 @@ Scenario: Updating personal details will update draft applications
 		| Fullname | Contains | Jane  |
 
 	When I select the first vacancy in location "London" that can apply by this website
-	And I choose ApplyButton
+	Then I am on the VacancyDetailsPage page
+	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	And I see
 		| Field            | Rule     | Value |

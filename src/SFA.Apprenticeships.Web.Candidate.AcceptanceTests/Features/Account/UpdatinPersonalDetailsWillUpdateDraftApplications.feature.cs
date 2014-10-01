@@ -207,8 +207,10 @@ this.FeatureBackground();
 #line 60
  testRunner.When("I select the first vacancy in location \"London\" that can apply by this website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 61
- testRunner.And("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("I am on the VacancyDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 62
+ testRunner.When("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 63
  testRunner.Then("I am on the ApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
@@ -219,7 +221,7 @@ this.FeatureBackground();
                         "FullnameReadOnly",
                         "Contains",
                         "Jane"});
-#line 63
+#line 64
  testRunner.And("I see", ((string)(null)), table7, "And ");
 #line hidden
             this.ScenarioCleanup();
