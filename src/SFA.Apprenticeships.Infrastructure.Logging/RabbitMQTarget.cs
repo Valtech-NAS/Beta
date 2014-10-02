@@ -22,6 +22,7 @@
         private string _appId = "SFA.Apprenticeships.App";
         private IAdvancedBus _bus;
         private IExchange _exchange;
+
         private string _exchangeName = "app-logging";
         private string _exchangeType = EasyNetQ.Topology.ExchangeType.Topic;
         private string _queueName = "NLog";
@@ -93,29 +94,38 @@
                     return _bus;
                 }
 
-                if (_rabbitMqHostHostConfig.OutputEasyNetQLogsToNLogInternal)
+                try
                 {
-                    var logger = new EasyNetNLogInternalLogger();
-                    _bus =
-                        RabbitHutch.CreateBus(_rabbitMqHostHostConfig.HostName, _rabbitMqHostHostConfig.Port,
-                            _rabbitMqHostHostConfig.VirtualHost, _rabbitMqHostHostConfig.UserName,
-                            _rabbitMqHostHostConfig.Password, _rabbitMqHostHostConfig.HeartBeatSeconds,
-                            reg => reg.Register<IEasyNetQLogger>(log => logger)).Advanced;
+                    if (_rabbitMqHostHostConfig.OutputEasyNetQLogsToNLogInternal)
+                    {
+                        var logger = new EasyNetNLogInternalLogger();
+                        _bus =
+                            RabbitHutch.CreateBus(_rabbitMqHostHostConfig.HostName, _rabbitMqHostHostConfig.Port,
+                                _rabbitMqHostHostConfig.VirtualHost, _rabbitMqHostHostConfig.UserName,
+                                _rabbitMqHostHostConfig.Password, _rabbitMqHostHostConfig.HeartBeatSeconds,
+                                reg => reg.Register<IEasyNetQLogger>(log => logger)).Advanced;
+                    }
+                    else
+                    {
+                        _bus =
+                            RabbitHutch.CreateBus(_rabbitMqHostHostConfig.HostName, _rabbitMqHostHostConfig.Port,
+                                _rabbitMqHostHostConfig.VirtualHost, _rabbitMqHostHostConfig.UserName,
+                                _rabbitMqHostHostConfig.Password, _rabbitMqHostHostConfig.HeartBeatSeconds, reg => { })
+                                .Advanced;
+                    }
+
+                    // This will create the exchange and queue and bind them if they doesn't already exist 
+                    // Change passive from false to true on both calls if it needs to be pre-declared.
+                    _exchange = _bus.ExchangeDeclare(ExchangeName, ExchangeType, false, _rabbitMqHostHostConfig.Durable);
+                    var queue = _bus.QueueDeclare(QueueName, false);
+                    _bus.Bind(_exchange, queue, GetRoutingKey("*"));
+
                 }
-                else
+                catch (Exception)
                 {
-                    _bus =
-                        RabbitHutch.CreateBus(_rabbitMqHostHostConfig.HostName, _rabbitMqHostHostConfig.Port,
-                            _rabbitMqHostHostConfig.VirtualHost, _rabbitMqHostHostConfig.UserName,
-                            _rabbitMqHostHostConfig.Password, _rabbitMqHostHostConfig.HeartBeatSeconds, reg => { }).Advanced;
+                    
                 }
-
-                // This will create the exchange and queue and bind them if they doesn't already exist 
-                // Change passive from false to true on both calls if it needs to be pre-declared.
-                _exchange = _bus.ExchangeDeclare(ExchangeName, ExchangeType, false, _rabbitMqHostHostConfig.Durable);
-                var queue = _bus.QueueDeclare(QueueName, false);
-                _bus.Bind(_exchange, queue, GetRoutingKey("*"));
-
+                
                 return _bus;
             }
         }
@@ -137,16 +147,7 @@
                 Type = "Log",
             };
 
-            try
-            {
-                Bus.Publish(_exchange, routingKey, true, false, properties, message);
-            }
-            catch (Exception exception)
-            {
-                
-                throw;
-            }
-            
+            Bus.Publish(_exchange, routingKey, true, false, properties, message);
         }
 
         private string GetRoutingKey(string routeParam)

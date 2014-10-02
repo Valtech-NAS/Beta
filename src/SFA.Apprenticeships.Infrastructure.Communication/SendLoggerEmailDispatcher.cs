@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
     using System.Net;
     using System.Net.Mail;
@@ -12,11 +11,11 @@
 
     public class SendLoggerEmailDispatcher : ILoggerEmailDispatcher
     {
+        private static string _logToEmail;
         private readonly string _password;
-        private readonly string _userName;
 
         private readonly SendGridTemplateConfiguration[] _templates;
-        private static string _logToEmail;
+        private readonly string _userName;
 
         public SendLoggerEmailDispatcher(SendGridConfiguration configuration)
         {
@@ -34,7 +33,7 @@
 
         private SendGridMessage ComposeMessage(LogRequest request)
         {
-            var message = CreateMessage(request);
+            var message = CreateMessage();
 
             AttachTemplate(request, message);
             PopulateTemplate(request, message);
@@ -42,11 +41,11 @@
             return message;
         }
 
-        private static SendGridMessage CreateMessage(LogRequest request)
+        private static SendGridMessage CreateMessage()
         {
             const string emptyHtml = "<span></span>";
             const string emptyText = "";
-           
+
             // NOTE: https://github.com/sendgrid/sendgrid-csharp.
             var message = new SendGridMessage
             {
@@ -80,45 +79,25 @@
 
         private void AttachTemplate(LogRequest request, SendGridMessage message)
         {
-            var templateName = GetTemplateName(request.MessageType);
-            var template = GetTemplateConfiguration(templateName);
-            var fromEmail = DefaultFromEmail(template);
+            var enumType = request.MessageType.GetType();
+            var templateName = string.Format("{0}.{1}", enumType.Name, Enum.GetName(enumType, request.MessageType));
+            var template = _templates.FirstOrDefault(each => each.Name == templateName);
+            if (template == null)
+            {
+                return;
+            }
 
+            var fromEmail = template.FromEmail;
             message.From = new MailAddress(fromEmail);
             message.EnableTemplateEngine(template.Id);
         }
 
-        private static string GetTemplateName(Enum messageType)
-        {
-            var enumType = messageType.GetType();
-            var templateName = string.Format("{0}.{1}", enumType.Name, Enum.GetName(enumType, messageType));
-           
-            return templateName;
-        }
-
-        private static string DefaultFromEmail(SendGridTemplateConfiguration template)
-        {
-            return template.FromEmail;
-        }
-
-        private SendGridTemplateConfiguration GetTemplateConfiguration(string templateName)
-        {
-            return _templates.FirstOrDefault(each => each.Name == templateName);
-        }
-
         private void DispatchMessage(SendGridMessage message)
         {
-            try
-            {
-                var credentials = new NetworkCredential(_userName, _password);
-                var web = new Web(credentials);
-              
-                web.Deliver(message);               
-            }
-            catch (Exception e)
-            {
-                
-            }
-        }      
+            var credentials = new NetworkCredential(_userName, _password);
+            var web = new Web(credentials);
+
+            web.Deliver(message);
+        }
     }
 }

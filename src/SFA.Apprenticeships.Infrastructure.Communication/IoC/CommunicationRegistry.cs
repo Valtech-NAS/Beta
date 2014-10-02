@@ -10,7 +10,7 @@
         {
             For<IEmailDispatcher>().Use<SendGridEmailDispatcher>().Name = "SendGridEmailDispatcher";
             For<IEmailDispatcher>().Use<VoidEmailDispatcher>().Name = "VoidEmailDispatcher";
-
+            For<ILoggerEmailDispatcher>().Use<SendLoggerEmailDispatcher>();
             For<ISmsDispatcher>().Use<TwilioSmsDispatcher>();
             For<SendGridConfiguration>().Singleton().Use(SendGridConfiguration.Instance);
         }

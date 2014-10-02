@@ -137,6 +137,10 @@
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Communication\SFA.Apprenticeships.Infrastructure.Communication.csproj">
+      <Project>{D34D27D3-79A9-407E-86EF-AF3AC0EA024B}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Communication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Elastic.Common\SFA.Apprenticeships.Infrastructure.Elastic.Common.csproj">
       <Project>{f75b0c62-89b5-473d-af2d-366a5a6722ac}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Elastic.Common</Name>
