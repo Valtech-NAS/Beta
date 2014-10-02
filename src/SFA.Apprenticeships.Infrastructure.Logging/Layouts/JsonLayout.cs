@@ -27,7 +27,7 @@ namespace SFA.Apprenticeships.Infrastructure.Logging.Layouts
         /// Gets the array of parameters to be passed.
         /// </summary>
         /// <docgen category='Json Property' order='10' />
-        [ArrayParameter(typeof(JsonProperty), "property")]
+        [ArrayParameter(typeof (JsonProperty), "property")]
         public IList<JsonProperty> Properties { get; private set; }
 
         /// <summary>
@@ -41,21 +41,20 @@ namespace SFA.Apprenticeships.Infrastructure.Logging.Layouts
 
             sb.Append("{");
 
-            for (int i = 1; i <= Properties.Count; i++)
+            for (var i = 1; i <= Properties.Count; i++)
             {
-                JsonProperty prop = Properties[i - 1];
-                string text = prop.Layout.Render(logEvent);
+                var prop = Properties[i - 1];
+                var text = prop.Layout.Render(logEvent);
 
-                if (!string.IsNullOrEmpty(text))
-                {
-                    sb.Append(string.Format("\"{0}\" : ", prop.Name));
-                    sb.Append(string.Format(Json.Encode(text)));
-                    sb.Append(",");
-                }
+                if (string.IsNullOrWhiteSpace(text)) continue;
+
+                var detail = Json.Encode(text.Replace("{", "[").Replace("}", "]"));
+
+                sb.Append(string.Format("\"{0}\" : {1},", prop.Name, detail));
             }
 
             var json = sb.ToString();
-            return json.Substring(0, json.Length-1) + "}";
+            return json.Substring(0, json.Length - 1) + "}";
         }
     }
 }
