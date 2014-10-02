@@ -94,6 +94,13 @@
             });
             var applicationDetail = new TestApplicationBuilder().Build();
 
+            applicationDetail.CandidateInformation.EducationHistory = new Education()
+            {
+                Institution =  "GENERAL_ERROR",
+                FromYear = 1999,
+                ToYear = 2001
+            };
+          
             _legacyApplicationProviderProvider.CreateApplication(applicationDetail);
         }
 
