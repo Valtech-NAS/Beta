@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Controllers.RegisterControllerTests
 {
+    using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
     using Candidate.Controllers;
@@ -16,7 +17,7 @@
     public class GivenAFaultedServer
     {
         [TestCase]
-        public void WhenICheckAUsername_ThenIReceiveAJsonWithHasError()
+        public async Task WhenICheckAUsername_ThenIReceiveAJsonWithHasError()
         {
             // Arrange
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
@@ -31,7 +32,7 @@
                 null, null);
 
             // Act
-            var result = registerController.CheckUsername(username);
+            var result = await registerController.CheckUsername(username);
 
             //Assert
             AssertTheViewModelHasError(result);

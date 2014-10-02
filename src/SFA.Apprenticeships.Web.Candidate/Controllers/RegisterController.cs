@@ -296,11 +296,14 @@
 
         [AllowCrossSiteJson]
         [OutputCache(CacheProfile = CacheProfiles.None)]
-        public ActionResult CheckUsername(string username)
+        public async Task<ActionResult> CheckUsername(string username)
         {
-            var userNameAvailability = _candidateServiceProvider.IsUsernameAvailable(username.Trim());
+            return await Task.Run(() =>
+            {
+                var userNameAvailability = _candidateServiceProvider.IsUsernameAvailable(username.Trim());
 
-            return Json(userNameAvailability, JsonRequestBehavior.AllowGet);
+                return Json(userNameAvailability, JsonRequestBehavior.AllowGet);
+            });
         }
 
         #region Helpers
