@@ -22,7 +22,6 @@
     using Mappers;
     using Providers;
     using StructureMap.Configuration.DSL;
-    using WebGrease;
     using ISendPasswordResetCodeStrategy = Application.UserAccount.Strategies.ISendPasswordResetCodeStrategy;
 
     public class CandidateWebRegistry : Registry
