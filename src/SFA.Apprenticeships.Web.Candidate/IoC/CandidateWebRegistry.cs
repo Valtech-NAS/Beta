@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
+    using System.Configuration;
     using System.Web;
     using Application.Address;
     using Application.ApplicationUpdate;
@@ -21,21 +22,28 @@
     using Mappers;
     using Providers;
     using StructureMap.Configuration.DSL;
+    using WebGrease;
     using ISendPasswordResetCodeStrategy = Application.UserAccount.Strategies.ISendPasswordResetCodeStrategy;
 
     public class CandidateWebRegistry : Registry
     {
         public CandidateWebRegistry()
         {
+            var codeGenerator = ConfigurationManager.AppSettings["CodeGenerator"];
+
             // services (app)
             For<ILocationSearchService>().Use<LocationSearchService>();
             For<IVacancySearchService>().Use<VacancySearchService>();
 
             For<ICandidateService>().Use<CandidateService>();
             For<IActivateCandidateStrategy>().Use<LegacyActivateCandidateStrategy>();
-            For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>();
+            For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>()
+                .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IRegisterUserStrategy>().Use<RegisterUserStrategy>();
             For<IActivateUserStrategy>().Use<ActivateUserStrategy>();
+
+            For<ICodeGenerator>().Use<CodeGenerator>().Name = "RandomCodeGenerator";
+            For<ICodeGenerator>().Use<DefaultCodeGenerator>().Name = "DefaultCodeGenerator";
 
             For<IResetForgottenPasswordStrategy>()
                 .Use<ResetForgottenPasswordStrategy>()
@@ -47,7 +55,8 @@
                 .Named("ResetForgottenPasswordStrategy")
                 .Name = "LegacyResetForgottenPasswordStrategy";
 
-            For<ISendPasswordResetCodeStrategy>().Use<SendPasswordResetCodeStrategy>();
+            For<ISendPasswordResetCodeStrategy>().Use<SendPasswordResetCodeStrategy>()
+                .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<Application.Communication.Strategies.ISendPasswordResetCodeStrategy>()
                 .Use<QueueEmailOnlyPasswordResetCodeStrategy>();
             For<ISubmitApplicationStrategy>().Use<LegacySubmitApplicationStrategy>();
@@ -55,7 +64,8 @@
             For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApplicationSubmittedStrategy>();
             For<ISendPasswordChangedStrategy>().Use<QueueEmailOnlyPasswordChangedStrategy>();
             For<Application.Communication.Strategies.ISendAccountUnlockCodeStrategy>().Use<QueueEmailOnlyAccountUnlockCodeStrategy>();
-            For<IResendActivationCodeStrategy>().Use<ResendActivationCodeStrategy>();
+            For<IResendActivationCodeStrategy>().Use<ResendActivationCodeStrategy>()
+                .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<Application.UserAccount.Strategies.ISendAccountUnlockCodeStrategy>().Use<SendAccountUnlockCodeStrategy>();
             For<ISaveCandidateStrategy>().Use<SaveCandidateStrategy>();
 
@@ -70,7 +80,7 @@
                .Name = "LegacyUnlockAccountStrategy";
 
             For<ILockAccountStrategy>().Use<LockAccountStrategy>();
-            For<ILockUserStrategy>().Use<LockUserStrategy>();
+            For<ILockUserStrategy>().Use<LockUserStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ICreateApplicationStrategy>().Use<CreateApplicationStrategy>();
             For<ISaveApplicationStrategy>().Use<SaveApplicationStrategy>();
             For<IArchiveApplicationStrategy>().Use<ArchiveApplicationStrategy>();
@@ -80,7 +90,6 @@
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<IAuthenticationService>().Use<AuthenticationService>();
             For<ICommunicationService>().Use<CommunicationService>();
-            For<ICodeGenerator>().Use<CodeGenerator>();
             For<IGetCandidateApplicationsStrategy>().Use<LegacyGetCandidateApplicationsStrategy>();
             For<IApplicationStatusUpdater>().Use<ApplicationStatusUpdater>();
 

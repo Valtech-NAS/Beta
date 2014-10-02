@@ -50,6 +50,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CodeGenerator.cs" />
+    <Compile Include="DefaultCodeGenerator.cs" />
     <Compile Include="Strategies\ILockAccountStrategy.cs" />
     <Compile Include="Strategies\ILockUserStrategy.cs" />
     <Compile Include="Strategies\ISendAccountUnlockCodeStrategy.cs" />
