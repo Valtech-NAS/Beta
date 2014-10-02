@@ -18,8 +18,8 @@ namespace SFA.Apprenticeships.Web.Candidate
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/vendor").Include(              
-                "~/Content/_assets/js/vendor/jquery.validate.min.js",
-                "~/Content/_assets/js/vendor/jquery.validate.unobtrusive.min.js"                
+                "~/Content/_assets/js/vendor/jquery.validate.js",
+                "~/Content/_assets/js/vendor/jquery.validate.unobtrusive.custom.js"                
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
