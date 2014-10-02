@@ -36,11 +36,24 @@ $(document).ready(function () {
             $addressSelect = $("#address-select"),
             $addressList = $("#address-list"),
             $findAddressButton = $('#find-addresses'),
+            $postCodeSearch = $('#postcode-search'),
             $ariaFoundText = $('#addressesFound');
 
         self.click(function (e) {
             e.preventDefault();
-            getAddresses($("#postcode-search").val());
+            getAddresses($postCodeSearch.val());
+        });
+
+        $postCodeSearch.keypress(function (e) {
+            var keycode = (e.keyCode ? e.keyCode : e.which);
+
+            if (keycode == 13) {
+                getAddresses($postCodeSearch.val());
+                e.preventDefault();
+                $findAddressButton.addClass('disabled').text('Loading');
+            }
+
+            e.stopPropagation();
         });
 
         var showErrorMessage = function (message) {
