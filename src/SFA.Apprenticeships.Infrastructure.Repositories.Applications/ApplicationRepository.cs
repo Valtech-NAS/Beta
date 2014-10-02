@@ -154,7 +154,7 @@
             Logger.Debug("Calling repository to expire or withdraw application for candidate with Id={0} and VacancyId={1}", candidateId, vacancyId);
 
             var applicationDetail = GetForCandidate(
-                candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
+                candidateId, each => each.Vacancy.Id == vacancyId);
 
             if (applicationDetail == null)
             {
