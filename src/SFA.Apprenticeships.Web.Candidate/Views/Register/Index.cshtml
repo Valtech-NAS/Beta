@@ -44,7 +44,7 @@
         </div>
         
         <div class="form-group">
-            @Html.FormPasswordFor(m => m.Password)
+            @Html.FormPasswordFor(m => m.Password, containerHtmlAttributes: new { @class = "form-group-compound" })
             <p class="form-hint strength-indicator hide-nojs">Password strength: <span id="pass_meter" class=""></span></p>
         </div>
         
