@@ -10,7 +10,9 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.IoC
     {
         public CommunicationRegistry()
         {
-            For<IEmailDispatcher>().Use<SendGridEmailDispatcher>();
+            For<IEmailDispatcher>().Use<SendGridEmailDispatcher>().Name = "SendGridEmailDispatcher";
+            For<IEmailDispatcher>().Use<VoidEmailDispatcher>().Name = "VoidEmailDispatcher";           
+
             For<ISmsDispatcher>().Use<TwilioSmsDispatcher>();
             For<SendGridConfiguration>().Singleton().Use(SendGridConfiguration.Instance);
         }

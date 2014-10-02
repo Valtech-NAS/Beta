@@ -68,6 +68,7 @@
     <Compile Include="SendGridEmailDispatcher.cs" />
     <Compile Include="IoC\CommunicationRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VoidEmailDispatcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
