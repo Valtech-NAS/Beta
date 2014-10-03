@@ -32,10 +32,10 @@
 
         public void QueueVacancyPages(StorageQueueMessage scheduledQueueMessage)
         {
-            Logger.Debug("Loading vacancy counts from NAS Gateway");
+            Logger.Debug("Retrieving vacancy summary page count");
 
             var vacancyPageCount = _vacancyIndexDataProvider.GetVacancyPageCount();
-            Logger.Debug("Loaded vacancy page count of: {0} from NAS Gateway", vacancyPageCount);
+            Logger.Debug("Retrieved vacancy summary page count of {0}", vacancyPageCount);
          
             var vacancySumaries = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, vacancyPageCount).ToList();
 
@@ -47,17 +47,17 @@
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 vacancySummaryPage => _messageBus.PublishMessage(vacancySummaryPage));
 
-            Logger.Debug("Posted {0} vacancy summary pages from NAS Gateway to queue", vacancySumaries.Count());
+            Logger.Debug("Queued {0} vacancy summary pages", vacancySumaries.Count());
         }
       
         public void QueueVacancySummaries(VacancySummaryPage vacancySummaryPage)
         {
-            Logger.Debug("Loading NAS Gateway vacancy search page number: {0}", vacancySummaryPage.PageNumber);
+            Logger.Debug("Retrieving vacancy search page number: {0}/{1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
 
             var vacancies = _vacancyIndexDataProvider.GetVacancySummaries(vacancySummaryPage.PageNumber).ToList();
             var vacanciesExtended = _mapper.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(vacancies);
 
-            Logger.Debug("Loaded and transformed NAS Gateway vacancy search page number: {0}", vacancySummaryPage.PageNumber);
+            Logger.Debug("Retrieved vacancy search page number: {0}/{1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
 
             Parallel.ForEach(
                 vacanciesExtended,
