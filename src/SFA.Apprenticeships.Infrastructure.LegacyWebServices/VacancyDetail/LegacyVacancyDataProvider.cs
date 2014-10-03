@@ -38,9 +38,9 @@
             //todo: remove endpoint config name once all new service operations integrated
             _service.Use("SecureService", client => response = client.GetVacancyDetails(request).GetVacancyDetailsResponse);
 
-            if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
+            if (response == null || response.Vacancy == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
             {
-                if (response != null)
+                if (response != null && response.ValidationErrors != null && response.ValidationErrors.Any())
                 {
                     var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
