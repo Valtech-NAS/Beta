@@ -111,6 +111,7 @@ csx
 *.cscfg
 settings.config
 dataCacheClient.config
+emailSettings.config
 *.azurePubxml
 
 # Windows Store app package directory

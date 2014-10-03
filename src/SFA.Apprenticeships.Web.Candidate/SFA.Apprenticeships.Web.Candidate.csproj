@@ -226,6 +226,9 @@
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\_assets\css\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Configs\emailSettings.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

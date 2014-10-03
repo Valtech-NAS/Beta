@@ -102,6 +102,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Configs\emailSettings.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -204,8 +207,10 @@
   <PropertyGroup>
     <PreBuildEvent>REM Copy from local dev machines locations
 if exist $(ProjectDir)..\..\..\Apprenticeships copy /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName)\settings.config $(ProjectDir)Configs\settings.config
+if exist $(ProjectDir)..\..\..\Apprenticeships copy /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\\Applications\Shared\Email\emailSettings.config $(ProjectDir)Configs\emailSettings.config
 REM Copy from build server locations
-if exist $(ProjectDir)..\..\Configuration copy /Y $(ProjectDir)..\..\Configuration\Applications\$(ProjectName)\settings.config $(ProjectDir)Configs\settings.config</PreBuildEvent>
+if exist $(ProjectDir)..\..\Configuration copy /Y $(ProjectDir)..\..\Configuration\Applications\$(ProjectName)\settings.config $(ProjectDir)Configs\settings.config
+if exist $(ProjectDir)..\..\Configuration copy /Y $(ProjectDir)..\..\Configuration\\Applications\Shared\Email\emailSettings.config $(ProjectDir)Configs\emailSettings.config</PreBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

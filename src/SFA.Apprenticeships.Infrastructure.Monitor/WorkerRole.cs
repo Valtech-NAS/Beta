@@ -80,7 +80,6 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                     x.AddRegistry<UserDirectoryRegistry>();
                     x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<MonitorRegistry>();
-                    x.AddRegistry<CommunicationRegistry>();
                 });
 
                 Logger.Debug("Monitor Process IoC initialized");

@@ -69,7 +69,6 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                     x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<ApplicationEtlRegistry>();
                     x.AddRegistry<ApplicationRepositoryRegistry>();
-                    x.AddRegistry<CommunicationRegistry>();
                 });
 
                 Logger.Debug("Application Etl Process IoC initialized");
