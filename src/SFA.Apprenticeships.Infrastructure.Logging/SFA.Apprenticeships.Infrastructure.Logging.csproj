@@ -73,7 +73,6 @@
     <Compile Include="Layouts\JsonProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabbitMQTarget.cs" />
-    <Compile Include="SendGridTarget.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

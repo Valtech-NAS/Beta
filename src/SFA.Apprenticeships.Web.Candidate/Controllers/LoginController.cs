@@ -207,32 +207,30 @@
         [AllowReturnUrl(Allow = false)]
         public ActionResult SignOut()
         {
-                FormsAuthentication.SignOut();
-                UserData.Clear();
+            FormsAuthentication.SignOut();
+            UserData.Clear();
 
-                SetUserMessage(SignOutPageMessages.SignOutMessageText);
+            SetUserMessage(SignOutPageMessages.SignOutMessageText);
 
-                return RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        public async Task<ActionResult> SessionTimeout(string returnUrl)
+        public ActionResult SessionTimeout(string returnUrl)
         {
-            return await Task.Run<ActionResult>(() =>
+
+            FormsAuthentication.SignOut();
+            UserData.Clear();
+
+            SetUserMessage(SignOutPageMessages.SessionTimeoutMessageText);
+
+            if (!string.IsNullOrWhiteSpace(returnUrl))
             {
-                FormsAuthentication.SignOut();
-                UserData.Clear();
+                UserData.Push(UserDataItemNames.SessionReturnUrl, Server.UrlEncode(returnUrl));
+            }
 
-                SetUserMessage(SignOutPageMessages.SessionTimeoutMessageText);
-
-                if (!string.IsNullOrWhiteSpace(returnUrl))
-                {
-                    UserData.Push(UserDataItemNames.SessionReturnUrl, Server.UrlEncode(returnUrl));
-                }
-
-                return RedirectToAction("Index");
-            });
+            return RedirectToAction("Index");
         }
 
         #region Helpers

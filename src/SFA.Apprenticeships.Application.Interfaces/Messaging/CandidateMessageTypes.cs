@@ -6,7 +6,6 @@
         SendPasswordResetCode,
         SendAccountUnlockCode,
         ApplicationSubmitted,
-        PasswordChanged,
-        EmailLogger
+        PasswordChanged
     }
 }

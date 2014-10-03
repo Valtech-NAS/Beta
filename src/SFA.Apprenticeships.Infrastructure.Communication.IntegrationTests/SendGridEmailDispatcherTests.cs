@@ -22,11 +22,13 @@
             });
 
             _configManager = ObjectFactory.GetInstance<IConfigurationManager>();
-            _dispatcher = ObjectFactory.GetInstance<IEmailDispatcher>();
+            _dispatcher = ObjectFactory.GetNamedInstance<IEmailDispatcher>("SendGridEmailDispatcher");
+            _voidEmailDispatcher = ObjectFactory.GetNamedInstance<IEmailDispatcher>("VoidEmailDispatcher");
         }
 
         private IConfigurationManager _configManager;
         private IEmailDispatcher _dispatcher;
+        private IEmailDispatcher _voidEmailDispatcher;
 
         private string TestToEmail
         {
@@ -106,6 +108,13 @@
         {
             Assert.IsNotNull(_dispatcher);
             Assert.IsInstanceOf<SendGridEmailDispatcher>(_dispatcher);
+        }
+
+        [Test, Category("Integration")]
+        public void ShouldConstructVoidEmailDispatcher()
+        {
+            Assert.IsNotNull(_voidEmailDispatcher);
+            Assert.IsInstanceOf<VoidEmailDispatcher>(_voidEmailDispatcher);
         }
 
         [Test, Category("Integration")]

@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using Application.Candidate.Strategies;
+    using Domain.Entities.Exceptions;
     using GatewayServiceProxy;
     using NLog;
     using Wcf;
@@ -57,8 +58,7 @@
                 {
                     Logger.Error("Legacy CreateCandidate did not respond");
                 }
-                // TODO: EXCEPTION: should use an application exception type
-                throw new Exception("Failed to create candidate in legacy system");
+                throw new CustomException("Failed to create candidate in legacy system", ErrorCodes.CandidateCreationError);
             }
 
             var legacyCandidateId = response.CandidateId;

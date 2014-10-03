@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Application.VacancyEtl.Entities;
+    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
@@ -84,8 +85,7 @@
             else
             {
                 Logger.Error("Vacancy search index already exists: {0}", newIndexName);
-                // TODO: EXCEPTION: specialise the exception type thrown here and log - should prevent the indexing job from continuing.
-                throw new Exception(string.Format("Index already created: {0}", newIndexName));
+                throw new CustomException(string.Format("Index already created: {0}", newIndexName), ErrorCodes.VacancyIndexerServiceError);
             }
         }
 

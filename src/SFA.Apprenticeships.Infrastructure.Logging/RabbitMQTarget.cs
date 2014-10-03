@@ -119,13 +119,11 @@
                     _exchange = _bus.ExchangeDeclare(ExchangeName, ExchangeType, false, _rabbitMqHostHostConfig.Durable);
                     var queue = _bus.QueueDeclare(QueueName, false);
                     _bus.Bind(_exchange, queue, GetRoutingKey("*"));
-
                 }
                 catch (Exception)
                 {
-                    
                 }
-                
+
                 return _bus;
             }
         }

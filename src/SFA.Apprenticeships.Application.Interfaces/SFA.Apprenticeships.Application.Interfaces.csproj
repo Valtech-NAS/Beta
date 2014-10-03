@@ -44,8 +44,6 @@
     <Compile Include="Candidates\ErrorCodes.cs" />
     <Compile Include="Locations\ErrorCodes.cs" />
     <Compile Include="Locations\IAddressSearchProvider.cs" />
-    <Compile Include="Messaging\ILoggerEmailDispatcher.cs" />
-    <Compile Include="Messaging\LogRequest.cs" />
     <Compile Include="Messaging\SubmitApplicationRequest.cs" />
     <Compile Include="Messaging\CandidateMessageTypes.cs" />
     <Compile Include="Messaging\CommunicationTokens.cs" />

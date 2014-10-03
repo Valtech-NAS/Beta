@@ -2,7 +2,7 @@
 {
     using Application.Interfaces.Messaging;
 
-    internal class VoidEmailDispatcher : IEmailDispatcher
+    public class VoidEmailDispatcher : IEmailDispatcher
     {
         public void SendEmail(EmailRequest request)
         {
