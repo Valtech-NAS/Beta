@@ -7,7 +7,6 @@
     {
         private const string UserNameConstant = "UserName";
         private const string PasswordConstant = "Password";
-        private const string LogToEmailAddressConstant = "LogToEmailAddress";
 
         public SendGridConfiguration()
             : base("SendGridConfiguration")
@@ -26,14 +25,7 @@
         {
             get { return (string)this[PasswordConstant]; }
             set { this[PasswordConstant] = value; }
-        }
-
-        [ConfigurationProperty(LogToEmailAddressConstant, IsRequired = true)]
-        public string LogToEmailAddress
-        {
-            get { return (string)this[LogToEmailAddressConstant]; }
-            set { this[LogToEmailAddressConstant] = value; }
-        }
+        }       
 
         [ConfigurationProperty("", IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(SendGridTemplateConfigurationCollection), AddItemName = "Template")]

@@ -20,12 +20,6 @@
         }
 
         [Test, Category("Integration")]
-        public void ShouldGetLogToEmailAddress()
-        {
-            Assert.IsNotNull(SendGridConfiguration.Instance.LogToEmailAddress);
-        }
-
-        [Test, Category("Integration")]
         public void ShouldGetMultipleTemplates()
         {
             var templates = SendGridConfiguration.Instance.Templates;
