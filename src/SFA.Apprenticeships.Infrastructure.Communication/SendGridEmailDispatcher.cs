@@ -8,6 +8,7 @@
     using System.Net.Mail;
     using Application.Interfaces.Messaging;
     using Configuration;
+    using Domain.Entities.Exceptions;
     using NLog;
     using SendGrid;
 
@@ -140,8 +141,7 @@
             catch (Exception e)
             {
                 Logger.ErrorException("Failed to dispatch email", e);
-                // TODO: EXCEPTION: failed to send, log / throw domain exception.
-                throw new Exception("Failed to dispatch email", e);
+                throw new CustomException("Failed to dispatch email", e, ErrorCodes.EmailSendGridError);
             }
         }
 

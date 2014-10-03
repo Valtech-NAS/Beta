@@ -55,11 +55,10 @@
                     Logger.Error("Legacy GetCandidateInfo did not respond");
                 }
 
-                // TODO: EXCEPTION: should use an application exception type
                 var message =
                     string.Format("Failed to retrieve candidate applications in legacy system for candidate {0}",
                         candidate.LegacyCandidateId);
-                throw new Exception(message);
+                throw new CustomException(message, ErrorCodes.GatewayServiceFailed);
             }
 
             Logger.Debug("Candidate applications were successfully retrieved from Legacy web service ({0})", response.CandidateApplications.Count());

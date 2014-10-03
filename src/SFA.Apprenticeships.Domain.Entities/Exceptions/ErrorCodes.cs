@@ -9,6 +9,9 @@
         public const string UserAccountLockedError = "User004";
         public const string UserActivationCodeError = "User005";
         public const string UserPasswordResetCodeIsInvalid = "User006";
+        public const string UserCreationError = "User007";
+        public const string UserResetPasswordError = "User008";
+        public const string UserChangePasswordError = "User009";
 
         // Candidate Exception Codes
         public const string UnknownCandidateError = "Candidate001";
@@ -36,5 +39,11 @@
 
         // Candidate Exception Codes
         public const string CandidateCreationError = "Candidate001";
+
+        // Email Exception Codes
+        public const string EmailSendGridError = "Email001";
+
+        // Vacancy Exception Codes
+        public const string VacancyIndexerServiceError = "VacancyIndexer001";
     }
 }
