@@ -33,5 +33,8 @@
         public const string LdapEmptyNewPasswordError = "LDAP003";
         public const string LdapModifyPasswordError = "LDAP004";
         public const string LdapSetPasswordError = "LDAP005";
+
+        // Candidate Exception Codes
+        public const string CandidateCreationError = "Candidate001";
     }
 }

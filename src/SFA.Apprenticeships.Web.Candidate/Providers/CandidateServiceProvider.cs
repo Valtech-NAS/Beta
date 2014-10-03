@@ -339,6 +339,10 @@
                         result.UserStatus = UserStatuses.Locked;
                         break;
 
+                    case ErrorCodes.CandidateCreationError:
+                        result.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
+                        Logger.ErrorException("Reset forgotten password failed for " + result.EmailAddress, e);
+                        break;
                     default:
                         result.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
                         break;
