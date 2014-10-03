@@ -25,18 +25,18 @@
 
         public void Index(VacancySummaryUpdate vacancySummaryToIndex)
         {
-            Logger.Debug("Indexing vacancy item");
+            //Logger.Debug("Indexing vacancy item");
             
             var indexAlias = GetIndexAlias();
             var newIndexName = GetIndexNameAndDateExtension(indexAlias, vacancySummaryToIndex.ScheduledRefreshDateTime);
             var vacancySummaryElastic = _mapper.Map<VacancySummaryUpdate, VacancySummary>(vacancySummaryToIndex);
 
-            Logger.Debug("Indexing vacancy item to index: {0}", newIndexName);
+            //Logger.Debug("Indexing vacancy item to index: {0}", newIndexName);
 
             var client = _elasticsearchClientFactory.GetElasticClient();
             client.Index(vacancySummaryElastic, f => f.Index(newIndexName));
 
-            Logger.Debug("Indexed vacancy item");
+            //Logger.Debug("Indexed vacancy item");
         }
 
         public void CreateScheduledIndex(DateTime scheduledRefreshDateTime)

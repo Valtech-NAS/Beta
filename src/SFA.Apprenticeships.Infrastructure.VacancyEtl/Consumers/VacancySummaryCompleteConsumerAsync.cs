@@ -21,11 +21,11 @@
         {
             return Task.Run(() =>
             {
-                Logger.Debug("Swapping Index after vacancy summary update completed at {0} ", updateComplete.ScheduledRefreshDateTime);
+                Logger.Debug("Swapping index alias after vacancy summary update completed");
 
                 _vacancyIndexer.SwapIndex(updateComplete.ScheduledRefreshDateTime);
 
-                Logger.Debug("Index swapped after vacancy summary update completed at {0} ", updateComplete.ScheduledRefreshDateTime);
+                Logger.Debug("Index swapped after vacancy summary update completed");
             });
         }
     }

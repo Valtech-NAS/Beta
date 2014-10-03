@@ -27,15 +27,15 @@
 
         private void ConsumeTask(VacancySummaryPage vacancySummaryPage)
         {
-            Logger.Debug("Queueing Vacancy Etl Index Page {0} of {1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
+            //Logger.Debug("Queueing Vacancy Etl Index Page {0} of {1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
             _vacancySummaryProcessor.QueueVacancySummaries(vacancySummaryPage);
-            Logger.Debug("Queued Vacancy Etl Index Page {0} of {1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
+            //Logger.Debug("Queued Vacancy Etl Index Page {0} of {1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
 
             if (vacancySummaryPage.PageNumber == vacancySummaryPage.TotalPages)
             {
                 Logger.Debug("Vacancy ETL Queue completed: {0} vacancy summary pages queued ", vacancySummaryPage.TotalPages);
 
-                Logger.Debug("Publishing  VacancySummaryUpdateComplete message to queue with schedule refresh datetime {0} ", vacancySummaryPage.ScheduledRefreshDateTime);
+                Logger.Debug("Publishing VacancySummaryUpdateComplete message to queue with schedule refresh datetime {0} ", vacancySummaryPage.ScheduledRefreshDateTime);
                 
                 var vsuc = new VacancySummaryUpdateComplete
                 {
