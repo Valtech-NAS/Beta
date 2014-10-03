@@ -34,6 +34,7 @@
   <!-- Items for the project -->
   <ItemGroup>
     <ServiceDefinition Include="ServiceDefinition.csdef" />
+    <ServiceConfiguration Include="ServiceConfiguration.MSDN.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
@@ -58,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <PublishProfile Include="Profiles\svc-vacancyindexer-Production.azurePubxml" />
+    <PublishProfile Include="Profiles\svc-vacancyindexer-MSDN.azurePubxml" />
     <PublishProfile Include="Profiles\svc-vacancyindexer-Staging.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
