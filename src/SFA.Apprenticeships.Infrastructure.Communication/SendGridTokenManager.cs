@@ -47,6 +47,9 @@ namespace SFA.Apprenticeships.Infrastructure.Communication
                 case CommunicationTokens.AccountUnlockCodeExpiryDays:
                     emailTemplateToken = "Candidate.AccountUnlockCodeExpiryDays";
                     break;
+                case CommunicationTokens.LogMessage:
+                    emailTemplateToken = "Application.LogMessage";
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("key");
             }

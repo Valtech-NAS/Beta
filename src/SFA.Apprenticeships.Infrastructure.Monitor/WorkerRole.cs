@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Address.IoC;
     using Azure.Common.IoC;
     using Common.IoC;
+    using Communication.IoC;
     using Consumers;
     using Elastic.Common.IoC;
     using IoC;
@@ -79,6 +80,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                     x.AddRegistry<UserDirectoryRegistry>();
                     x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<MonitorRegistry>();
+                    x.AddRegistry<CommunicationRegistry>();
                 });
 
                 Logger.Debug("Monitor Process IoC initialized");

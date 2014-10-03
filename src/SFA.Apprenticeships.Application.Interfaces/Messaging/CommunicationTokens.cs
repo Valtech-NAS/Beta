@@ -15,6 +15,7 @@
         AccountUnlockCodeExpiryDays,
         ApplicationVacancyTitle,
         ApplicationVacancyReference,
-        ApplicationId
+        ApplicationId,
+        LogMessage
     }
 }

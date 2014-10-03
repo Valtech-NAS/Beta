@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
     using System.Threading;
     using Azure.Common.IoC;
     using Common.IoC;
+    using Communication.IoC;
     using Consumers;
     using EasyNetQ;
     using IoC;
@@ -68,6 +69,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                     x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<ApplicationEtlRegistry>();
                     x.AddRegistry<ApplicationRepositoryRegistry>();
+                    x.AddRegistry<CommunicationRegistry>();
                 });
 
                 Logger.Debug("Application Etl Process IoC initialized");
