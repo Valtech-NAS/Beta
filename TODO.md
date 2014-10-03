@@ -13,7 +13,6 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - check all messages starting with "TODO" and 'TODO' (C# and JavaScript).
 - usernamecheck should use remote validator
 - write bundle orderer for bundle.config
-- ensure autosave interval and other settings are set to production values
 
 ## Service layer ##
 
@@ -45,3 +44,4 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - remove legacy reference data service
 - controller actions should use async where possible
 - validation summary links need to be clicked twice
+- ensure autosave interval and other settings are set to production values
