@@ -11,6 +11,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Consumers;
     using Elastic.Common.IoC;
     using IoC;
+    using LegacyWebServices.IoC;
     using LocationLookup.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
@@ -79,6 +80,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                     x.AddRegistry<PostcodeRegistry>();
                     x.AddRegistry<UserDirectoryRegistry>();
                     x.AddRegistry<RabbitMqRegistry>();
+                    x.AddRegistry<LegacyWebServicesRegistry>();
                     x.AddRegistry<MonitorRegistry>();
                 });
 
