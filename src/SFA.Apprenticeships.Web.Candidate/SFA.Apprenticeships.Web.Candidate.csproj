@@ -321,6 +321,9 @@
     <Content Include="Views\Application\_qualificationsNonJS.cshtml" />
     <Content Include="Views\Application\_workExperiencesNonJS.cshtml" />
     <Content Include="Views\Home\Terms.cshtml" />
+    <Content Include="Startup\startup.cmd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

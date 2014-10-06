@@ -1,0 +1,1 @@
+﻿%windir%\system32\inetsrv\AppCmd.exe unlock config -section:system.webServer/security/ipSecurity
