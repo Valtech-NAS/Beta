@@ -11,14 +11,14 @@
     [TestFixture]
     public class VacancyServiceTests
     {
-        [TestCase, Category("Integration"), Ignore("Passing when is run alone.")]
+        [TestCase, Category("Integration")]
         public void ShouldReturnMappedCollectionFromGetVacancySummary()
         {
             var service = ObjectFactory.GetInstance<IVacancyIndexDataProvider>();
             List<VacancySummary> result = service.GetVacancySummaries(1).ToList();
 
             result.Should().NotBeNullOrEmpty();
-            result.ForEach(r => r.VacancyLocationType.Should().Be(VacancyLocationType.NonNational));
+            result.ForEach(r => r.VacancyType.Should().Be(VacancyType.Apprenticeship));
         }
     }
 }

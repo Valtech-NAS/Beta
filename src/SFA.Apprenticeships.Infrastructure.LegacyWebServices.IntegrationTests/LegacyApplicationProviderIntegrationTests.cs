@@ -36,20 +36,6 @@
             _legacyCandidateProvider = ObjectFactory.GetInstance<ILegacyCandidateProvider>();
         }
 
-
-        [Test, Category("Integration"), Ignore]
-        [ExpectedException(Handler = "CheckForApplicationGatewayCreationException")]
-        public void ShouldThrowAnErrorForanInvalidApplication()
-        {
-            _candidateRepositoryMock.ResetCalls();
-            _candidateRepositoryMock.Setup(cr => cr.Get(It.IsAny<Guid>())).Returns(new Candidate
-            {
-                LegacyCandidateId = CreateLegacyCandidateId()
-            });
-            var applicationDetail = new TestApplicationBuilder().WithCandidateInformation().Build();
-            _legacyApplicationProviderProvider.CreateApplication(applicationDetail);
-        }
-
         [Test, Category("Integration")]
         public void ShouldCreateApplicationForAValidApplication()
         {

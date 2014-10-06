@@ -7,7 +7,6 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Address.IoC;
     using Azure.Common.IoC;
     using Common.IoC;
-    using Communication.IoC;
     using Consumers;
     using Elastic.Common.IoC;
     using IoC;
