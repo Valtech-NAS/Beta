@@ -35,7 +35,7 @@
             {
                 Logger.Debug("Vacancy ETL Queue completed: {0} vacancy summary pages queued ", vacancySummaryPage.TotalPages);
 
-                Logger.Debug("Publishing VacancySummaryUpdateComplete message to queue with schedule refresh datetime {0} ", vacancySummaryPage.ScheduledRefreshDateTime);
+                Logger.Debug("Publishing VacancySummaryUpdateComplete message to queue");
                 
                 var vsuc = new VacancySummaryUpdateComplete
                 {
@@ -44,7 +44,7 @@
 
                 _messageBus.PublishMessage(vsuc);
 
-                Logger.Debug("VacancySummaryUpdateComplete message published to queue with schedule refresh datetime {0} ", vacancySummaryPage.ScheduledRefreshDateTime);
+                Logger.Debug("Published VacancySummaryUpdateComplete message published to queue");
             }
         }
     }
