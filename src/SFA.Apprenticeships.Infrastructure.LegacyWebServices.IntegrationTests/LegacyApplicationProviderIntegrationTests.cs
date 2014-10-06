@@ -37,7 +37,7 @@
         }
 
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore]
         [ExpectedException(Handler = "CheckForApplicationGatewayCreationException")]
         public void ShouldThrowAnErrorForanInvalidApplication()
         {
