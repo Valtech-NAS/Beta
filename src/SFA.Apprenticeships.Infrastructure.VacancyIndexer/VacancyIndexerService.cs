@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using Application.Interfaces.Vacancies;
     using Application.VacancyEtl.Entities;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
@@ -9,11 +11,15 @@
     using Elastic.Common.Entities;
     using Nest;
     using NLog;
+    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
 
     public class VacancyIndexerService : IVacancyIndexerService
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private const int PageSize = 5;
+        private const double LondonLatitude = 51;
+        private const double LondonLongitude = -0.1;
+        private const int SearchRadius = 20;
 
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
         private readonly IMapper _mapper;
@@ -108,9 +114,53 @@
             }
             
             aliasRequest.Actions.Add(new AliasAddAction { Add = new AliasAddOperation { Alias = indexAlias, Index = newIndexName } });
-            var aliasResp = client.Alias(aliasRequest);
+            client.Alias(aliasRequest);
 
             Logger.Debug("Swapped vacancy search index alias to new index: {0}", newIndexName);
+        }
+
+        public bool IsIndexCorrectlyCreated(DateTime scheduledRefreshDateTime)
+        {
+            Logger.Debug("Checking if the index is correctly created.");
+
+            var indexAlias = GetIndexAlias();
+            var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
+            var client = _elasticsearchClientFactory.GetElasticClient();
+            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (VacancySummary));
+
+            var search = client.Search<VacancySummaryResponse>(s =>
+            {
+                s.Index(newIndexName);
+                s.Type(documentTypeName);
+                s.Take(PageSize);
+
+                s.TrackScores();
+
+                s.Filter(f => f
+                    .GeoDistance(vs => vs
+                        .Location, descriptor => descriptor
+                            .Location(LondonLatitude, LondonLongitude)
+                            .Distance(SearchRadius, GeoUnit.Miles)));
+
+                return s;
+            });
+           
+            var result = search.Documents.Any();
+            LogResult(result, newIndexName);
+
+            return result;
+        }
+
+        private static void LogResult(bool result, string newIndexName)
+        {
+            var logMessage =
+                string.Format(
+                    result
+                        ? "The index {0} is not correctly created."
+                        : "The index {0} is correctly created.",
+                    newIndexName);
+
+            Logger.Debug(string.Format("Checked if the index is correctly created. {0}", logMessage));
         }
 
         private string GetIndexAlias()

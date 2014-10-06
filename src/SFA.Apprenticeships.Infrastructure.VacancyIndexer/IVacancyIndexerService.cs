@@ -26,5 +26,11 @@
         /// </summary>
         /// <param name="scheduledRefreshDateTime"></param>
         void SwapIndex(DateTime scheduledRefreshDateTime);
+
+        /// <summary>
+        /// Checks if the index is correctly created
+        /// </summary>
+        /// <returns>True if the index is correctly created. Otherwise false.</returns>
+        bool IsIndexCorrectlyCreated(DateTime scheduledRefreshDateTime);
     }
 }

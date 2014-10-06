@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
 {
+    using System;
     using System.Threading.Tasks;
     using EasyNetQ.AutoSubscribe;
     using Application.VacancyEtl.Entities;
@@ -19,14 +20,26 @@
         [AutoSubscriberConsumer(SubscriptionId = "VacancySummaryCompleteConsumerAsync")]
         public Task Consume(VacancySummaryUpdateComplete updateComplete)
         {
+            Logger.Debug("Received vacancy summary update completed message.");
+
             return Task.Run(() =>
             {
-                Logger.Debug("Swapping index alias after vacancy summary update completed");
-
-                _vacancyIndexer.SwapIndex(updateComplete.ScheduledRefreshDateTime);
-
-                Logger.Debug("Index swapped after vacancy summary update completed");
+                if (IndexIsCorrectlyCreated(updateComplete.ScheduledRefreshDateTime))
+                {
+                    Logger.Debug("Swapping index alias after vacancy summary update completed");
+                    _vacancyIndexer.SwapIndex(updateComplete.ScheduledRefreshDateTime);
+                    Logger.Debug("Index swapped after vacancy summary update completed");
+                }
+                else
+                {
+                    Logger.Error("The new index is not correctly created. Aborting swap.");
+                }
             });
+        }
+
+        private bool IndexIsCorrectlyCreated(DateTime scheduledRefreshDateTime)
+        {
+            return _vacancyIndexer.IsIndexCorrectlyCreated(scheduledRefreshDateTime);
         }
     }
 }
