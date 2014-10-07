@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
 {
-    using System;
     using System.Threading.Tasks;
     using Application.VacancyEtl;
     using Azure.Common.Messaging;

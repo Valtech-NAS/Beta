@@ -7,7 +7,6 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using System.Threading;
     using Azure.Common.IoC;
     using Common.IoC;
-    using Communication.IoC;
     using Consumers;
     using EasyNetQ;
     using Elastic.Common.IoC;
