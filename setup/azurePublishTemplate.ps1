@@ -5,15 +5,10 @@ param(
 	[string]$service,
 	[string]$storage,
 	[string]$slot,
-	[string]$buildNumber,
-    [AllowEmptyString()]
-    [string]$projectConfiguration
+	[string]$buildNumber
 )
 
-if ( !$projectConfiguration ){
-    $projectConfiguration = 'Cloud'
-}
-#$subscription = "Visual Studio Ultimate with MSDN"
+scription = "Visual Studio Ultimate with MSDN"
 #$projectname = "$project.Azure"
 #$service = "web-candidatedev"
 #$storage = "webcandidatedev"
@@ -23,6 +18,7 @@ $configuration = "src\$projectname\bin\$buildConfiguration\app.publish\ServiceCo
 $timeStampFormat = "g"
 $deploymentLabel = "ContinuousDeploy to $service v$buildNumber"
 
+Write-Output "Using $configuration"
  
 Write-Output "Running Azure Imports"
 Import-Module "C:\Program Files (x86)\Microsoft SDKs\Windows Azure\PowerShell\ServiceManagement\Azure\*.psd1"
