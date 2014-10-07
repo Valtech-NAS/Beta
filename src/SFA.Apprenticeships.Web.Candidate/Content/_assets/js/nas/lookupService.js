@@ -45,12 +45,20 @@ $(document).ready(function () {
         });
 
         $postCodeSearch.keypress(function (e) {
-            var keycode = (e.keyCode ? e.keyCode : e.which);
+            var keycode = (e.keyCode ? e.keyCode : e.which),
+                $thisText = $findAddressButton.text();
 
             if (keycode == 13) {
                 getAddresses($postCodeSearch.val());
                 e.preventDefault();
-                $findAddressButton.addClass('disabled').text('Loading');
+                
+                setTimeout(function () {
+                    if ($('#postcode-search-validation-error.field-validation-error').length > 0) {
+                        $findAddressButton.text($thisText).removeClass('disabled');
+                    } else {
+                        $findAddressButton.addClass('disabled').text('Loading');
+                    }
+                }, 50);
             }
 
             e.stopPropagation();
