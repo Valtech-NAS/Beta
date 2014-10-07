@@ -48,23 +48,23 @@
 
         if (Model.VacancySearch.LocationType == VacancyLocationType.NonNational)
         {
-            nationalResultsMessage = "We also found <a id='nationwideLocationTypeLink' href=" + locationTypeLink + ">1 apprenticeship nationwide.</a>";
+            nationalResultsMessage = "We've also found <a id='nationwideLocationTypeLink' href=" + locationTypeLink + ">1 apprenticeship nationwide.</a>";
         }
         else
         {
-            nationalResultsMessage = "We also found 1 apprenticeship nationwide.";
+            nationalResultsMessage = "We've also found 1 apprenticeship nationwide.";
         }
     }
     else
     {
         if (Model.VacancySearch.LocationType == VacancyLocationType.NonNational)
         {
-            var nationalMessage = "We also found <a id='nationwideLocationTypeLink' href=" + locationTypeLink + ">{0} apprenticeships nationwide.</a>";
+            var nationalMessage = "We've also found <a id='nationwideLocationTypeLink' href=" + locationTypeLink + ">{0} apprenticeships nationwide.</a>";
             nationalResultsMessage = string.Format(nationalMessage, Model.TotalNationalHits);
         }
         else
         {
-            nationalResultsMessage = string.Format("We also found {0} apprenticeships nationwide.", Model.TotalNationalHits);
+            nationalResultsMessage = string.Format("We've also found {0} apprenticeships nationwide.", Model.TotalNationalHits);
         }
     }
 }
