@@ -19,6 +19,6 @@
     </Certificates>
     <Startup>
       <Task commandLine="Startup\startup.cmd" executionContext="elevated" />
-    </Startup>
+    </Startup>	
   </WebRole>
 </ServiceDefinition>
