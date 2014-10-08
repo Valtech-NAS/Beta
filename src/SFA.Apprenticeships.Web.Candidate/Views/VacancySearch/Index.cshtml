@@ -17,7 +17,7 @@
             {
                 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-                @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new { autofocus = "true" })
+                @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new { autofocus = "autofocus" })
                 @Html.FormTextFor(m => m.Location)
 
                 <div class="form-group">

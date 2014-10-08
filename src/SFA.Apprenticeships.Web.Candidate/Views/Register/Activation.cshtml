@@ -16,7 +16,7 @@
 
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    @Html.FormTextFor(m => m.ActivationCode, controlHtmlAttributes: new {@maxlength = "6", autofocus = "true"}, containerHtmlAttributes: new {@class = "form-group-withlink"})
+    @Html.FormTextFor(m => m.ActivationCode, controlHtmlAttributes: new {@maxlength = "6", autofocus = "autofocus"}, containerHtmlAttributes: new {@class = "form-group-withlink"})
     <div class="form-group">
         <p>
             @Html.ActionLink("Resend code", "ResendActivationCode", new { @emailAddress = Model.EmailAddress }, new { onclick = "Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/register/activation/resend', 'WT.dl', '99', 'WT.ti', 'Resend Activation Code'] });" })
