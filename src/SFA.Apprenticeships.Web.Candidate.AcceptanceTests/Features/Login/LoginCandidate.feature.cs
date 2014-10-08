@@ -104,9 +104,9 @@ this.FeatureBackground();
                         "Rule",
                         "Value"});
             table1.AddRow(new string[] {
-                        "ValidationSummary",
-                        "Does Not Exist",
-                        ""});
+                        "ValidationFieldErrorCount",
+                        "Equals",
+                        "0"});
 #line 19
  testRunner.And("I see", ((string)(null)), table1, "And ");
 #line hidden
@@ -177,7 +177,7 @@ this.FeatureBackground();
                         "Rule",
                         "Value"});
             table3.AddRow(new string[] {
-                        "ValidationSummaryCount",
+                        "ValidationFieldErrorCount",
                         "Equals",
                         "2"});
 #line 41

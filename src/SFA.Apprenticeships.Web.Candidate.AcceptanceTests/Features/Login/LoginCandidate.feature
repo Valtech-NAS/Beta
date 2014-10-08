@@ -17,8 +17,8 @@ Scenario: As a candidate all required fields are present
 	Then I wait to see EmailAddress
 	And I wait to see Password
 	And I see
-		| Field             | Rule           | Value |
-		| ValidationSummary | Does Not Exist |       |
+		| Field                     | Rule   | Value |
+		| ValidationFieldErrorCount | Equals | 0     |
 
 @US415
 Scenario: As a candidate I can login with a registered and activated email address and password
@@ -39,8 +39,8 @@ Scenario: As a candidate I must provide an email address and password
 	And I choose SignInButton
 	And I am on the LoginPage page
 	Then I see
-		| Field                  | Rule   | Value |
-		| ValidationSummaryCount | Equals | 2     |
+		| Field                     | Rule   | Value |
+		| ValidationFieldErrorCount | Equals | 2     |
 @US415
 Scenario: As a candidate I want to be redirected to the previous page when I login
 	Given I registered an account and activated it
