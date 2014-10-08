@@ -205,6 +205,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\_assets\img\icon-external-hover.svg" />
+    <Content Include="Content\_assets\img\icon-external.png" />
+    <Content Include="Content\_assets\img\icon-external.svg" />
     <Content Include="Content\_assets\img\performance-icon-2x.png" />
     <Content Include="Content\_assets\img\performance-icon.png" />
     <Content Include="Content\_assets\js\nas\dirtyFormDialog.js" />
