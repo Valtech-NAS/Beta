@@ -109,6 +109,7 @@ tools/*/packages/*
 csx
 *.build.csdef
 *.cscfg
+*.csdef
 settings.config
 dataCacheClient.config
 emailSettings.config

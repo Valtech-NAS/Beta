@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition name="SFA.Apprenticeships.Infrastructure.ApplicationEtl.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2014-06.2.4">
   <WorkerRole name="SFA.Apprenticeships.Infrastructure.ApplicationEtl" vmsize="Small">
+	<Runtime>
+		<EntryPoint>
+			<NetFxEntryPoint assemblyName="SFA.Apprenticeships.Infrastructure.ApplicationEtl.dll" targetFrameworkVersion="v4.5.1"/>
+		</EntryPoint>
+    </Runtime>   
     <Imports>
       <Import moduleName="Diagnostics" />
     </Imports>
