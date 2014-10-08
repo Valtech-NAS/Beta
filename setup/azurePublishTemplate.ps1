@@ -8,7 +8,7 @@ param(
 	[string]$buildNumber
 )
 
-scription = "Visual Studio Ultimate with MSDN"
+#$subscription = "Visual Studio Ultimate with MSDN"
 #$projectname = "$project.Azure"
 #$service = "web-candidatedev"
 #$storage = "webcandidatedev"
