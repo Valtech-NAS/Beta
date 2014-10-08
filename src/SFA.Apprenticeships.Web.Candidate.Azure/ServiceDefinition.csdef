@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition name="SFA.Apprenticeships.Web.Candidate.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2014-06.2.4">
-  <WebRole name="SFA.Apprenticeships.Web.Candidate" vmsize="Small">
+  <WebRole name="SFA.Apprenticeships.Web.Candidate" vmsize="Medium">
     <Sites>
       <Site name="Web">
         <Bindings>
@@ -19,6 +19,6 @@
     </Certificates>
     <Startup>
       <Task commandLine="Startup\startup.cmd" executionContext="elevated" />
-    </Startup>	
+    </Startup>
   </WebRole>
 </ServiceDefinition>
