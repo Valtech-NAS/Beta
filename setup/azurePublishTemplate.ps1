@@ -5,7 +5,8 @@ param(
 	[string]$service,
 	[string]$storage,
 	[string]$slot,
-	[string]$buildNumber
+	[string]$buildNumber,
+    $projectConfiguration
 )
 
 #$subscription = "Visual Studio Ultimate with MSDN"
@@ -70,5 +71,11 @@ function UpgradeDeployment()
     Write-Output "$(Get-Date -f $timeStampFormat) - Upgrading Deployment: Complete, Deployment ID: $completeDeploymentID"
 }
  
-Write-Output "Create Azure Deployment"
-Publish
+try{
+    Write-Output "Create Azure Deployment"
+    Publish
+}
+catch [System.Exception] {
+    Write-Output $_.Exception.ToString()
+    exit 1
+}
