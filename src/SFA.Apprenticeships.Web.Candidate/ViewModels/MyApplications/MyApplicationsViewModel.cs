@@ -32,7 +32,13 @@
 
         public IEnumerable<MyApplicationViewModel> UnsuccessfulApplications
         {
-            get { return AllApplications.Where(each => each.ApplicationStatus == ApplicationStatuses.Unsuccessful); }
+            get
+            {
+                return AllApplications
+                    .Where(each =>
+                        each.ApplicationStatus == ApplicationStatuses.Unsuccessful ||
+                        (each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && each.DateApplied.HasValue));
+            }
         }
 
         public IEnumerable<MyApplicationViewModel> DraftApplications
@@ -43,7 +49,7 @@
                 return AllApplications
                     .Where(each =>
                         each.ApplicationStatus == ApplicationStatuses.Draft ||
-                        (each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && each.DateApplied == null));
+                        (each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && !each.DateApplied.HasValue));
             }
         }
     }
