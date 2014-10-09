@@ -4,8 +4,6 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 ## Web layer ##
 
-- need to consider turning off integration tests against NAS Gateway services once we are hitting the live service
-- need to trim user input data, e.g. http://stackoverflow.com/questions/1718501/asp-net-mvc-best-way-to-trim-strings-after-data-entry-should-i-create-a-custo
 - controllers should use providers to avoid containing orchestration logic
 - qualification types reference data should be read from configuration / provided by a configuration service
 - some website URLs need to be reviewed to be more "friendly"
@@ -16,7 +14,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 ## Service layer ##
 
-- candidate registration should be queued
+- candidate registration should be queued (need to consider applying if not registered)
 
 ## Infrastructure layer ##
 
@@ -45,3 +43,5 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - controller actions should use async where possible
 - validation summary links need to be clicked twice
 - ensure autosave interval and other settings are set to production values
+- need to trim user input data, e.g. http://stackoverflow.com/questions/1718501/asp-net-mvc-best-way-to-trim-strings-after-data-entry-should-i-create-a-custo
+- need to consider turning off integration tests against NAS Gateway services once we are hitting the live service
