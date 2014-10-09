@@ -138,11 +138,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DeleteADraft.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\EpicHappyPath.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EpicHappyPath.feature</DependentUpon>
-    </Compile>
     <Compile Include="Features\HomePage.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -247,10 +242,6 @@
     <None Include="Features\Dashboard\DeleteADraft.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>DeleteADraft.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\EpicHappyPath.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>EpicHappyPath.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\HomePage.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
