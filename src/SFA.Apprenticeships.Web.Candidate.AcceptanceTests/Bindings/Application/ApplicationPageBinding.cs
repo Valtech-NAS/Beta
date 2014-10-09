@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings.Application
 {
+    using System;
     using System.Reflection;
     using OpenQA.Selenium;
     using SpecBind.BrowserSupport;
@@ -39,6 +40,13 @@
                 }
             }   
         }
+
+        [When(@"I wait (.*) seconds")]
+        public void WhenIWaitSeconds(int numSeconds)
+        {
+            System.Threading.Thread.Sleep(numSeconds * 1000);
+        }
+
 
         private static IWebDriver Driver(IBrowser browser)
         {
