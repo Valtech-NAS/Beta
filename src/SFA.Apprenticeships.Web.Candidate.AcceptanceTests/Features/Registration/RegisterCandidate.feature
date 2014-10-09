@@ -133,10 +133,10 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 	And I choose ActivateButton
 	And I am on the VacancySearchPage page
 	When I select the first vacancy in location "N7 8LS" that can apply by this website
-	And I am on the VacancyDetailsPage page
-	And I choose ApplyButton
-	And I am on the ApplicationPage page
-	And I choose MyApplicationsLink
+	Then I am on the VacancyDetailsPage page
+	When I choose ApplyButton
+	Then I am on the ApplicationPage page
+	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
 
 Scenario: As a candidate I must confirm my password
