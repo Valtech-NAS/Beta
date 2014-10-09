@@ -347,7 +347,7 @@
     <Content Include="Content\_assets\img\gov.uk_logotype_crown.png" />
     <Content Include="Content\_assets\img\icon-pointer-2x.png" />
     <Content Include="Content\_assets\img\icon-pointer.png" />
-    <Content Include="Content\_assets\img\govuk-crest%402x.png" />
+    <Content Include="Content\_assets\img\govuk-crest-2x.png" />
     <Content Include="Content\_assets\img\open-government-licence.png" />
     <Content Include="Content\_assets\img\open-government-licence_2x.png" />
     <Content Include="Content\_assets\js\scripts.min.js" />
