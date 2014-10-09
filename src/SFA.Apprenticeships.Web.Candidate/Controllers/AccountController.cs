@@ -26,6 +26,7 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Index()
         {
             return await Task.Run<ActionResult>(() =>
@@ -39,6 +40,7 @@
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Index(SettingsViewModel model)
         {
             return await Task.Run<ActionResult>(() =>

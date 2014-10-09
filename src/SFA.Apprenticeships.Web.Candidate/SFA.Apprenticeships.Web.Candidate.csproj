@@ -375,6 +375,7 @@
     <Compile Include="App_Start\WebApiConfig.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Attributes\ApplyWebTrendsAttribute.cs" />
     <Compile Include="Attributes\AuthorizeCandidateAttribute.cs" />
     <Compile Include="Constants\CacheProfiles.cs" />
     <Compile Include="Constants\CandidateRouteNames.cs" />

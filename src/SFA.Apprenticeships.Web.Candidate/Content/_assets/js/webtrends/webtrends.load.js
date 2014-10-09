@@ -2,9 +2,10 @@
 // Copyright (c) 2014 Webtrends Inc.  All rights reserved.
 // Tag Builder Version: 4.1.3.2
 // Created: 2014.03.27
-window.webtrendsAsyncInit=function(){
+window.webtrendsAsyncInit = function () {
+    //alert(window.WebTrendsDscId);
     var dcs=new Webtrends.dcs().init({
-        dcsid:"dcsgw7t9t00000o69a73eezyj_9s1e",
+        dcsid: window.WebTrendsDscId,
         domain:"stats.matraxis.net",
         timezone:0,
         i18n:true,
@@ -20,7 +21,8 @@ window.webtrendsAsyncInit=function(){
         }
         }).track();
 };
-(function(){
+(function () {
+   
     var s=document.createElement("script"); s.async=true; s.src="/Content/_assets/js/webtrends/webtrends.min.js";    
     var s2=document.getElementsByTagName("script")[0]; s2.parentNode.insertBefore(s,s2);
 }());

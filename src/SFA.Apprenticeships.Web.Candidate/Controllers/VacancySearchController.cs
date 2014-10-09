@@ -8,6 +8,7 @@
     using System.Web.Mvc;
     using ActionResults;
     using Application.Interfaces.Vacancies;
+    using Attributes;
     using Common.Constants;
     using Constants;
     using Domain.Entities.Vacancies;
@@ -41,6 +42,7 @@
 
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Index()
         {
             return await Task.Run<ActionResult>(() =>
@@ -74,6 +76,7 @@
 
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Results(VacancySearchViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -197,6 +200,7 @@
 
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
         public async Task<ActionResult> DetailsWithDistance(int id, string distance)
         {
             return await Task.Run<ActionResult>(() =>
@@ -210,6 +214,7 @@
 
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Details(int id)
         {
             return await Task.Run<ActionResult>(() =>

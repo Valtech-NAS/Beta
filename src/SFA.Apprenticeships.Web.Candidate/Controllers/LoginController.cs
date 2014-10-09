@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using System.Web.Security;
+    using Attributes;
     using Common.Attributes;
     using Common.Constants;
     using Common.Services;
@@ -36,6 +37,7 @@
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Index(string returnUrl)
         {
             return await Task.Run<ActionResult>(() =>
@@ -58,6 +60,7 @@
 
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Index(LoginViewModel model)
         {
             return await Task.Run(() =>
@@ -105,6 +108,7 @@
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Unlock()
         {
             return await Task.Run(() =>
@@ -135,6 +139,7 @@
 
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Unlock(AccountUnlockViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -176,6 +181,7 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
+        [ApplyWebTrends]
         public async Task<ActionResult> ResendAccountUnlockCode(string emailAddress)
         {
             return await Task.Run<ActionResult>(() =>
@@ -205,6 +211,7 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
+        [ApplyWebTrends]
         public ActionResult SignOut()
         {
             FormsAuthentication.SignOut();
@@ -217,6 +224,7 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
+        [ApplyWebTrends]
         public ActionResult SessionTimeout(string returnUrl)
         {
 

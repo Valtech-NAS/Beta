@@ -40,6 +40,7 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Index()
         {
             return await Task.Run<ActionResult>(() =>
@@ -66,6 +67,7 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Resume(int id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -84,6 +86,7 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Archive(int id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -106,6 +109,7 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Delete(int id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -138,6 +142,7 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Apply(int id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -164,6 +169,7 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Preview")]
+        [ApplyWebTrends]
         [ValidateInput(false)]
         public async Task<ActionResult> Apply(int id, ApplicationViewModel model)
         {
@@ -215,6 +221,7 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Save")]
+        [ApplyWebTrends]
         [ValidateInput(false)]
         public async Task<ActionResult> Save(int id, ApplicationViewModel model)
         {
@@ -321,6 +328,7 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyQualificationRows")]
+        [ApplyWebTrends]
         [ValidateInput(false)]
         public async Task<ActionResult> AddEmptyQualificationRows(int id, ApplicationViewModel model)
         {
@@ -341,6 +349,7 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyWorkExperienceRows")]
+        [ApplyWebTrends]
         [ValidateInput(false)]
         public async Task<ActionResult> AddEmptyWorkExperienceRows(int id, ApplicationViewModel model)
         {
@@ -360,6 +369,7 @@
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Preview(int id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -385,6 +395,7 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
         public async Task<ActionResult> SubmitApplication(int id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -418,6 +429,7 @@
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
         public async Task<ActionResult> WhatHappensNext(int id, string vacancyReference, string vacancyTitle)
         {
             return await Task.Run<ActionResult>(() =>
