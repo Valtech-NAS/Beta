@@ -120,6 +120,7 @@
                 validator,
                 AnchorFor(helper, expression),
                 addMaxLengthCounter ? CharactersLeftFor(helper, expression) : null,
+                addMaxLengthCounter ? ScreenReaderSpan(helper, expression) : null,
                 containerAttributes,
                 validationError
                 );
@@ -131,6 +132,7 @@
                                     MvcHtmlString validationMessage,
                                     MvcHtmlString anchorTag,
                                     MvcHtmlString maxLengthSpan,
+                                    MvcHtmlString ariaLimitVisuallyHidden,
                                     RouteValueDictionary containerHtmlAttributes,
                                     bool validationError = false
                                     )
@@ -143,7 +145,7 @@
                 container.AddCssClass(HtmlHelper.ValidationInputCssClassName);
             }
 
-            container.InnerHtml += string.Concat(anchorTag, labelContent, hintContent, fieldContent, maxLengthSpan, validationMessage);
+            container.InnerHtml += string.Concat(anchorTag, labelContent, hintContent, fieldContent, maxLengthSpan, ariaLimitVisuallyHidden, validationMessage);
 
             return MvcHtmlString.Create(container.ToString());
         }
@@ -266,6 +268,21 @@
 
             // TODO: NOTIMPL: This needs to be calculated dyamically either by refelction from from the generated HTML of the control.
             tag.SetInnerText("4000");
+            return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+        }
+
+
+        private static MvcHtmlString ScreenReaderSpan<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression)
+        {
+            Condition.Requires(helper, "helper").IsNotNull();
+            Condition.Requires(expression, "expression").IsNotNull();
+
+            var metadata = ModelMetadata.FromLambdaExpression(expression, helper.ViewData);
+
+            var tag = new TagBuilder("span");
+            tag.Attributes.Add("aria-live", "polite");
+            tag.Attributes.Add("class", "visuallyhidden aria-limit");
+
             return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
         }
 
