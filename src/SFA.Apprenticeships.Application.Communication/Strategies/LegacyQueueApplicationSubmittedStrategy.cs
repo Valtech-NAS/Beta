@@ -52,7 +52,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
                     "Vacancy not found with ID {0}.", ErrorCodes.VacancyNotFoundError, id);
             }
 
-            return "VAC" + vacancyDetails.Id.ToString("D9");
+            return vacancyDetails.VacancyReference;
         }
     }
 }
