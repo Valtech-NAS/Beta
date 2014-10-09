@@ -55,6 +55,12 @@
                         updated = true;
                     }
 
+                    if (applicationDetail.UnsuccessfulReason != status.UnsuccessfulReason)
+                    {
+                        applicationDetail.UnsuccessfulReason = status.UnsuccessfulReason;
+                        updated = true;
+                    }
+
                     if (updated)
                     {
                         _applicationWriteRepository.Save(applicationDetail);

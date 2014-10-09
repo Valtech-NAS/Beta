@@ -15,7 +15,7 @@
             {
                 case "Sent":
                 case "New":
-                case "InProgress":
+                case "In progress":
                     return ApplicationStatuses.Submitted;
 
                 case "Successful":
@@ -29,7 +29,7 @@
                     return ApplicationStatuses.ExpiredOrWithdrawn;
 
                 default:
-                    Logger.Error("Unknown Application Status: \"{0}\".", source);
+                    Logger.Error("Unknown Application Status received from NAS Gateway Service, defaulting to Unknown: \"{0}\".", source);
                     return ApplicationStatuses.Unknown;
             }
         }
