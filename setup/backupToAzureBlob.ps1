@@ -6,7 +6,8 @@ param(
 	[string]$storage,
 	[string]$storagekey,
 	[string]$buildnumber,
-	[string]$environment
+	[string]$environment,
+	[string]$projectConfiguration
 )
 
 $srcpath = "src\$projectname\bin\$buildConfiguration\app.publish"
@@ -19,8 +20,8 @@ Write-Host "Files will be uploaded to $storageAccountName\$storage"
 $context = New-AzureStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $storagekey
 
 Write-Host "Writing files" 
-$fqName = "$srcpath\ServiceConfiguration.Cloud.cscfg"
-Set-AzureStorageBlobContent -Blob "$environment\$sitename\$buildnumber\ServiceConfiguration.Cloud.cscfg" -Container "$storage" -File "$fqName" -Context $context -Force
+$fqName = "$srcpath\ServiceConfiguration.$projectConfiguration.cscfg"
+Set-AzureStorageBlobContent -Blob "$environment\$sitename\$buildnumber\ServiceConfiguration.$projectConfiguration.cscfg" -Container "$storage" -File "$fqName" -Context $context -Force
 
 $fqName = "$srcpath\$projectname.cspkg"
 Set-AzureStorageBlobContent -Blob "$environment\$sitename\$buildnumber\$projectname.cspkg" -Container "$storage" -File "$fqName" -Context $context -Force

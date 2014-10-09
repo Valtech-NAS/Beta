@@ -6,7 +6,7 @@ param(
 	[string]$storage,
 	[string]$slot,
 	[string]$buildNumber,
-    $projectConfiguration
+    [string]$projectConfiguration
 )
 
 #$subscription = "Visual Studio Ultimate with MSDN"
