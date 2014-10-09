@@ -239,7 +239,7 @@ Scenario: As a candidate I would like to preview a vacancy application via the e
 	When I choose ApplyExternalLink
 	Then Another browser window is opened
 
-@US154
+@US154 @ignore
 Scenario: As a candidate I would like to see my application as successful
 	Given I have registered a new candidate
 	When I select the first vacancy in location "N7 8LS" that can apply by this website

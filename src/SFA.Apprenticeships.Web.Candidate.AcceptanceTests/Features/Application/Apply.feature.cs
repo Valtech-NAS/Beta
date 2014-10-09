@@ -808,11 +808,13 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("As a candidate I would like to see my application as successful")]
+        [NUnit.Framework.IgnoreAttribute()]
         [NUnit.Framework.CategoryAttribute("US154")]
         public virtual void AsACandidateIWouldLikeToSeeMyApplicationAsSuccessful()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I would like to see my application as successful", new string[] {
-                        "US154"});
+                        "US154",
+                        "ignore"});
 #line 243
 this.ScenarioSetup(scenarioInfo);
 #line 7
