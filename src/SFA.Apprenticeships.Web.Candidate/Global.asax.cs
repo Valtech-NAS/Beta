@@ -7,7 +7,6 @@
     using System.Web.Optimization;
     using System.Web.Routing;
     using Common.Binders;
-    using Common.Constants;
     using Common.Framework;
     using Common.Validations;
     using Controllers;
@@ -26,11 +25,23 @@
                 return;
             }
 
-            if (Request.Path.Contains(RouteNames.Maintenance)) { return; }
+            var context = HttpContext.Current;
+            var path = context.Request.Path.ToLower();       
+
+            var lastExtension = path.LastIndexOf(".aspx", StringComparison.Ordinal);
+            if (lastExtension != -1)
+            {
+                return;
+            }
+            var lastContent = path.LastIndexOf("/content/", StringComparison.Ordinal);
+            if (lastContent != -1)
+            {
+                return;
+            }
 
             if (isWebsiteOffline)
-            {
-                Response.RedirectToRoute(RouteNames.Maintenance);
+            {               
+                context.RewritePath("~/403.aspx", false);
             }
         }
 
