@@ -65,9 +65,13 @@
   <!-- Items for the project -->
   <ItemGroup>
     <ServiceDefinition Include="ServiceDefinition.csdef" />
+    <ServiceConfiguration Include="ServiceConfiguration.Dev.cscfg" />
+    <ServiceConfiguration Include="ServiceConfiguration.Sit.cscfg" />
+    <ServiceConfiguration Include="ServiceConfiguration.Pre.cscfg" />
+    <ServiceConfiguration Include="ServiceConfiguration.Prod.cscfg" />
+    <ServiceConfiguration Include="ServiceConfiguration.Demo.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.MSDN.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
-    <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.AsyncProcessor\SFA.Apprenticeships.Infrastructure.AsyncProcessor.csproj">
@@ -87,10 +91,6 @@
     <Content Include="SFA.Apprenticeships.Infrastructure.AsyncProcessorContent\diagnostics.wadcfg">
       <SubType>Content</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <PublishProfile Include="Profiles\svc-asyncprocessesProduction.azurePubxml" />
-    <PublishProfile Include="Profiles\svc-asyncprocessesStaging.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
