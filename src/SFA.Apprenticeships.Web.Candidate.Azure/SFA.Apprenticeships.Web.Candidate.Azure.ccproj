@@ -65,10 +65,14 @@
   </PropertyGroup>
   <!-- Items for the project -->
   <ItemGroup>
+    <ServiceConfiguration Include="ServiceConfiguration.Dev.cscfg" />
+    <ServiceConfiguration Include="ServiceConfiguration.Sit.cscfg" />
+    <ServiceConfiguration Include="ServiceConfiguration.Pre.cscfg" />
+    <ServiceConfiguration Include="ServiceConfiguration.Prod.cscfg" />
+    <ServiceConfiguration Include="ServiceConfiguration.Demo.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.MSDN.cscfg" />
     <ServiceDefinition Include="ServiceDefinition.csdef" />
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
-    <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Profiles" />
@@ -88,12 +92,6 @@
     <Content Include="SFA.Apprenticeships.Web.CandidateContent\diagnostics.wadcfg">
       <SubType>Content</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <PublishProfile Include="Profiles\web-candidate-Staging.azurePubxml" />
-    <PublishProfile Include="Profiles\web-candidate-DEV-Production.azurePubxml" />
-    <PublishProfile Include="Profiles\web-candidate-DEV-Staging.azurePubxml" />
-    <PublishProfile Include="Profiles\web-candidate-Production.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
