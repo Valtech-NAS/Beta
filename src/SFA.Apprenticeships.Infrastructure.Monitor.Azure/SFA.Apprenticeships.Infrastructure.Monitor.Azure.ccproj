@@ -64,10 +64,14 @@
   </PropertyGroup>
   <!-- Items for the project -->
   <ItemGroup>
+    <ServiceConfiguration Include="ServiceConfiguration.Pre.cscfg" />
     <ServiceDefinition Include="ServiceDefinition.csdef" />
+    <ServiceConfiguration Include="ServiceConfiguration.Prod.cscfg" />
+    <ServiceConfiguration Include="ServiceConfiguration.Demo.cscfg" />
+    <ServiceConfiguration Include="ServiceConfiguration.Sit.cscfg" />
+    <ServiceConfiguration Include="ServiceConfiguration.Dev.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.MSDN.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
-    <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Monitor\SFA.Apprenticeships.Infrastructure.Monitor.csproj">
