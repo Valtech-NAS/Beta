@@ -196,6 +196,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="403.aspx" />
+    <Content Include="403.html" />
     <Content Include="Content\_assets\img\icon-external-hover.svg" />
     <Content Include="Content\_assets\img\icon-external.png" />
     <Content Include="Content\_assets\img\icon-external.svg" />
@@ -365,6 +367,13 @@
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="403.aspx.cs">
+      <DependentUpon>403.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="403.aspx.designer.cs">
+      <DependentUpon>403.aspx</DependentUpon>
     </Compile>
     <Compile Include="ActionResults\VacancyNotFoundResult.cs" />
     <Compile Include="App_Start\BundleConfig.cs">

@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Common.Binders;
-
-namespace SFA.Apprenticeships.Web.Candidate
+﻿namespace SFA.Apprenticeships.Web.Candidate
 {
     using System;
     using System.Web;
@@ -8,14 +6,34 @@ namespace SFA.Apprenticeships.Web.Candidate
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
+    using Common.Binders;
     using Common.Framework;
     using Common.Validations;
     using Controllers;
     using FluentValidation.Mvc;
     using FluentValidation.Validators;
+    using Microsoft.WindowsAzure;
 
     public class MvcApplication : HttpApplication
     {
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            bool isWebsiteOffline;
+
+            if (!bool.TryParse(CloudConfigurationManager.GetSetting("IsWebsiteOffline"), out isWebsiteOffline))
+            {
+                return;
+            }
+
+            if (Request.Path.Contains("403.aspx")) { return;}
+
+            if (isWebsiteOffline)
+            {
+                //Response.StatusCode = 403;
+                Response.Redirect("403.aspx");
+            }
+        }
+
         protected void Application_Start()
         {
             RuntimeHelper.SetRuntimeName("SFA.Apprenticeships.Web.Candidate");
@@ -43,7 +61,7 @@ namespace SFA.Apprenticeships.Web.Candidate
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            Server.HandleError<ErrorController>(((MvcApplication)sender).Context);
+            Server.HandleError<ErrorController>(((MvcApplication) sender).Context);
         }
     }
 }
