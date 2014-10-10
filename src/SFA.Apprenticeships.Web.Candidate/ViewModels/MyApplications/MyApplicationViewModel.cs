@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using Domain.Entities.Applications;
+    using Microsoft.Ajax.Utilities;
 
     public class MyApplicationViewModel
     {
@@ -13,6 +14,36 @@
         public string EmployerName { get; set; }
 
         public ApplicationStatuses ApplicationStatus { get; set; }
+
+        public string ApplicationStatusDescription
+        {
+            get
+            {
+                switch (ApplicationStatus)
+                {
+                    case ApplicationStatuses.Draft:
+                        return "Draft";
+
+                    case ApplicationStatuses.Submitted:
+                    case ApplicationStatuses.Submitting:
+                        return "Submitted";
+
+                    case ApplicationStatuses.InProgress:
+                        return "In progress";
+
+                    case ApplicationStatuses.ExpiredOrWithdrawn:
+                        return "Expired or withdrawn";
+
+                    case ApplicationStatuses.Successful:
+                        return "Successful";
+
+                    case ApplicationStatuses.Unsuccessful:
+                        return "Unsuccessful";
+                }
+
+                return string.Empty;
+            }
+        }
 
         public bool IsArchived { get; set; }
 

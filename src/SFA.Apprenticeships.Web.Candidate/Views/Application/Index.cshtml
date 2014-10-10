@@ -92,7 +92,7 @@ else
                                     {
                                         <tr>
                                             <td>@application.Title with @application.EmployerName</td>
-                                            <td class="ta-center">Successful</td>
+                                            <td class="ta-center">@application.ApplicationStatusDescription</td>
                                             <td class="ta-center">
                                                 <a class="icon-black archive-successful" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                             </td>
@@ -125,7 +125,7 @@ else
                                     {
                                         <tr>
                                             <td>@application.Title with @application.EmployerName</td>
-                                            <td class="ta-center">Submitted</td>
+                                            <td class="ta-center">@application.ApplicationStatusDescription</td>
                                             <td class="ta-center">@Html.DisplayFor(m => application.DateApplied)</td>
                                         </tr>
                                     }
@@ -156,7 +156,7 @@ else
                                     {
                                         <tr>
                                             <td>@application.Title with @application.EmployerName</td>
-                                            <td class="ta-center">Unsuccessful</td>
+                                            <td class="ta-center">@application.ApplicationStatusDescription</td>
                                             <td class="ta-center">
                                                 <a class="icon-black archive-unsuccessful" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                             </td>
