@@ -114,6 +114,7 @@ settings.config
 dataCacheClient.config
 emailSettings.config
 *.azurePubxml
+*.wadcfg
 
 # Windows Store app package directory
 AppPackages/
