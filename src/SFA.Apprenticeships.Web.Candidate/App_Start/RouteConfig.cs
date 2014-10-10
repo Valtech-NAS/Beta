@@ -56,6 +56,11 @@
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
+            routes.MapRoute(
+                name: RouteNames.Maintenance,
+                url: "maintenance",
+                defaults: "~/403.aspx");
+
             routes.LowercaseUrls = true;
         }
     }

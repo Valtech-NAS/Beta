@@ -7,6 +7,7 @@
     using System.Web.Optimization;
     using System.Web.Routing;
     using Common.Binders;
+    using Common.Constants;
     using Common.Framework;
     using Common.Validations;
     using Controllers;
@@ -25,12 +26,11 @@
                 return;
             }
 
-            if (Request.Path.Contains("403.aspx")) { return;}
+            if (Request.Path.Contains(RouteNames.Maintenance)) { return; }
 
             if (isWebsiteOffline)
             {
-                //Response.StatusCode = 403;
-                Response.Redirect("403.aspx");
+                Response.RedirectToRoute(RouteNames.Maintenance);
             }
         }
 
