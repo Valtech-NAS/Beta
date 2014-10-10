@@ -9,7 +9,14 @@
                 var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
                 foreach (var modelError in modelState.Errors)
                 {
-                    <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
+                    if (elementId == string.Empty)
+                    {
+                        <li>@modelError.ErrorMessage</li>
+                    }
+                    else
+                    {
+                        <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
+                    }
                 }
             }
         </ul>

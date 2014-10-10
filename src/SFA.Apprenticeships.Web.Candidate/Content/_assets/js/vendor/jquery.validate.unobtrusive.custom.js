@@ -72,14 +72,19 @@
     function onErrors(event, validator) {  // 'this' is the form element
         var container = $(this).find("[data-valmsg-summary=true]"),
             list = container.find("ul");
-
+       
         if (list && list.length && validator.errorList.length) {
             list.empty();
             container.addClass("validation-summary-errors").removeClass("validation-summary-valid");
-
+         
             $.each(validator.errorList, function () {
-                $("<li />").html($("<a />").attr("id", "summaryError" + this.element.id).attr("href", "#" + this.element.id).html(this.message)).appendTo(list);
-                //$("<li />").html(this.message).appendTo(list);
+                if (this.element.id.length != 0) {
+                   
+                    $("<li />").html($("<a />").attr("id", "summaryError" + this.element.id).attr("href", "#" + this.element.id).html(this.message)).appendTo(list);
+                } else {
+                    $("<li />").html(this.message).appendTo(list);
+                }
+               
             });
         }
     }
