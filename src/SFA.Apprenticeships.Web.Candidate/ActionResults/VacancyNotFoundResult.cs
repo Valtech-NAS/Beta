@@ -5,6 +5,6 @@
 
     public class VacancyNotFoundResult : HttpCustomStatusCodeResult
     {
-        public VacancyNotFoundResult() : base(404, 1) {}
+        public VacancyNotFoundResult() : base(410) {}
     }
 }
