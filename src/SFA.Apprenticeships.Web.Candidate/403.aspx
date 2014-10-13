@@ -46,7 +46,7 @@
             </div>
         </div>
         <main role="main" id="main">
-            <h1 class="heading-xlarge">TODO: Website Down For Maintenance</h1>
+            <h1 class="heading-xlarge">Service is currently down for maintenance</h1>
             <div class="text">
                 <p><asp:Label runat="server" ID="OfflineMessageLabel" ></asp:Label></p>
             </div>
