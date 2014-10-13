@@ -8,7 +8,7 @@
         private readonly int _statusCode;
         private readonly int _subStatusCode;
 
-        protected HttpCustomStatusCodeResult(int statusCode, int subStatusCode)
+        protected HttpCustomStatusCodeResult(int statusCode, int subStatusCode = 0)
         {
             _statusCode = statusCode;
             _subStatusCode = subStatusCode;
