@@ -33,7 +33,7 @@
             _vacancyIndexDataProvider = ObjectFactory.GetInstance<IVacancyIndexDataProvider>();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldReturnThePageCountForVacancies()
         {
             var result = _vacancyIndexDataProvider.GetVacancyPageCount();
@@ -42,7 +42,7 @@
             result.Should().BePositive();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldReturnTheFirstPageResultForVacancies()
         {
             var response = _vacancyIndexDataProvider.GetVacancySummaries(1);

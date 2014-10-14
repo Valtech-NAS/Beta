@@ -77,6 +77,16 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MSDN|AnyCPU'">
+    <OutputPath>bin\MSDN\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EasyNetQ">
       <HintPath>..\packages\EasyNetQ.0.30.2.258\lib\net40\EasyNetQ.dll</HintPath>
@@ -218,11 +228,9 @@
   </Target>
   <PropertyGroup>
     <PreBuildEvent>REM Copy from local dev machines locations
-if exist $(ProjectDir)..\..\..\Apprenticeships copy /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName)\settings.config $(ProjectDir)Configs\settings.config
-if exist $(ProjectDir)..\..\..\Apprenticeships copy /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\Shared\Email\emailSettings.config $(ProjectDir)Configs\emailSettings.config
+if exist $(ProjectDir)..\..\..\Apprenticeships copy /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\settings.config $(ProjectDir)Configs\settings.config
 REM Copy from build server locations
-if exist $(ProjectDir)..\..\Configuration copy /Y $(ProjectDir)..\..\Configuration\Applications\$(ProjectName)\settings.config $(ProjectDir)Configs\settings.config
-if exist $(ProjectDir)..\..\Configuration copy /Y $(ProjectDir)..\..\Configuration\Applications\Shared\Email\emailSettings.config $(ProjectDir)Configs\emailSettings.config</PreBuildEvent>
+if exist $(ProjectDir)..\..\Configuration copy /Y $(ProjectDir)..\..\Configuration\Applications\$(ConfigurationName)\settings.config $(ProjectDir)Configs\settings.config</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

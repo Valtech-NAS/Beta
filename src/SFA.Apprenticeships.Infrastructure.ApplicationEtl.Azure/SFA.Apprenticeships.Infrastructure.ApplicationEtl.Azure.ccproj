@@ -63,6 +63,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'MSDN|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\MSDN\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <!-- Items for the project -->
   <ItemGroup>
     <ServiceDefinition Include="ServiceDefinition.csdef" />
@@ -120,5 +128,8 @@ if exist $(ProjectDir)..\..\Configuration xcopy /E /Y $(ProjectDir)..\..\Configu
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Demo' ">
     <OutputPath>bin\Demo\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'MSDN' ">
+    <OutputPath>bin\MSDN\</OutputPath>
   </PropertyGroup>
 </Project>

@@ -50,6 +50,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'MSDN|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\MSDN\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <!-- Items for the project -->
   <ItemGroup>
     <ServiceDefinition Include="ServiceDefinition.csdef" />
@@ -125,14 +133,17 @@
     <CloudExtensionsDir Condition=" '$(CloudExtensionsDir)' == '' ">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Windows Azure Tools\2.4\</CloudExtensionsDir>
     <ProductVersion>2.4</ProductVersion>
     <ProjectGuid>{3f950894-ddc7-436f-9df7-8236c76cbcec}</ProjectGuid>
+    <PackageEnableRemoteDebugger>False</PackageEnableRemoteDebugger>
   </PropertyGroup>
   <Import Project="$(CloudExtensionsDir)Microsoft.WindowsAzure.targets" />
   <PropertyGroup>
     <PreBuildEvent>REM Copy from local dev machines locations
-ECHO $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName)
 if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /E /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName) $(ProjectDir)
 REM Copy from build server locations
 if exist $(ProjectDir)..\..\Configuration xcopy /E /Y $(ProjectDir)..\..\Configuration\Applications\$(ProjectName) $(ProjectDir)
 </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'MSDN' ">
+    <OutputPath>bin\MSDN\</OutputPath>
   </PropertyGroup>
 </Project>

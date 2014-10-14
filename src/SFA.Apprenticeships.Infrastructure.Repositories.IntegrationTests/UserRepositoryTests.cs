@@ -28,14 +28,14 @@
             _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldCreateUser()
         {
             var user = CreateAndSaveUserInMongoDb();
             user.Should().NotBeNull();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldCreateAndReadUser()
         {
             var user = CreateAndSaveUserInMongoDb();

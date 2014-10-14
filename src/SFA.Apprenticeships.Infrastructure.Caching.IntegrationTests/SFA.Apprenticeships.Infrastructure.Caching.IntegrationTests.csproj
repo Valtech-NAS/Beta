@@ -69,6 +69,15 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MSDN|AnyCPU'">
+    <OutputPath>bin\MSDN\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions">
       <HintPath>..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.dll</HintPath>
@@ -167,9 +176,9 @@
   </Target>
   <PropertyGroup>
     <PreBuildEvent>REM Copy from local dev machines locations
-if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\Shared\$(ConfigurationName)\*.config $(ProjectDir)Configs
+if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\*.config $(ProjectDir)Configs
 REM Copy from build server locations
-if exist $(ProjectDir)..\..\Configuration xcopy /C /Y $(ProjectDir)..\..\Configuration\Applications\Shared\$(ConfigurationName)\*.config $(ProjectDir)Configs</PreBuildEvent>
+if exist $(ProjectDir)..\..\Configuration xcopy /C /Y $(ProjectDir)..\..\Configuration\Applications\$(ConfigurationName)\*.config $(ProjectDir)Configs</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

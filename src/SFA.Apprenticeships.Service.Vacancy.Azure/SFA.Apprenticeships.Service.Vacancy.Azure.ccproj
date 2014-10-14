@@ -62,7 +62,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  
   <!-- Items for the project -->
   <ItemGroup>
     <ServiceDefinition Include="ServiceDefinition.csdef" />
@@ -104,4 +103,7 @@ if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /E /Y $(ProjectDir)..\..\..
 REM Copy from build server locations
 if exist $(ProjectDir)..\..\Configuration xcopy /E /Y $(ProjectDir)..\..\Configuration\Applications\$(ProjectName) $(ProjectDir)</PreBuildEvent>
   </PropertyGroup>
- </Project>
+  <PropertyGroup Condition=" '$(Configuration)' == 'MSDN' ">
+    <OutputPath>bin\MSDN\</OutputPath>
+  </PropertyGroup>
+</Project>

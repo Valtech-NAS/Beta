@@ -63,6 +63,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'MSDN|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\MSDN\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <!-- Items for the project -->
   <ItemGroup>
     <ServiceConfiguration Include="ServiceConfiguration.Dev.cscfg" />
@@ -93,6 +101,9 @@
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <PublishProfile Include="Profiles\web-candidatedevProduction.azurePubxml" />
+  </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
@@ -119,5 +130,8 @@ if exist $(ProjectDir)..\..\Configuration xcopy /E /Y $(ProjectDir)..\..\Configu
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Demo' ">
     <OutputPath>bin\Demo\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'MSDN' ">
+    <OutputPath>bin\MSDN\</OutputPath>
   </PropertyGroup>
 </Project>

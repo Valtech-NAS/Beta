@@ -63,6 +63,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'MSDN|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\MSDN\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <!-- Items for the project -->
   <ItemGroup>
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
@@ -104,5 +112,8 @@
 if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /E /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName) $(ProjectDir)
 REM Copy from build server locations
 if exist $(ProjectDir)..\..\Configuration xcopy /E /Y $(ProjectDir)..\..\Configuration\Applications\$(ProjectName) $(ProjectDir)</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'MSDN' ">
+    <OutputPath>bin\MSDN\</OutputPath>
   </PropertyGroup>
 </Project>

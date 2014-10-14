@@ -39,7 +39,7 @@
             Assert.IsNotNull(template.Id);
         }
 
-        [TestCase(0, "donotreply@example.com"), Category("Integration")]
+        [TestCase(0, "donotreply@apprenticeships.gov.uk"), Category("Integration")]
         public void ShouldGetFromEmailConfiguration(int index, string expectedFromEmail)
         {
             var template = SendGridConfiguration.Instance.Templates.ElementAt(index);

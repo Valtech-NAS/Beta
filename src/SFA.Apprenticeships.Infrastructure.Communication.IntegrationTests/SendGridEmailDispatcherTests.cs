@@ -30,21 +30,12 @@
         private IEmailDispatcher _dispatcher;
         private IEmailDispatcher _voidEmailDispatcher;
 
-        private string TestToEmail
-        {
-            get { return _configManager.GetAppSetting("Email.Test.To"); }
-        }
+        private const string TestToEmail = "valtechnas@gmail.com";
 
-        private string TestActivationCode
-        {
-            get { return "ABC123"; }
-        }
+        private const string TestActivationCode = "ABC123"; 
 
-        private string TestFromEmail
-        {
-            get { return _configManager.GetAppSetting("Email.Test.From"); }
-        }
-
+        private const string TestFromEmail = "from@example.com";
+        
         private IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateActivationEmailTokens()
         {
             return new[]
