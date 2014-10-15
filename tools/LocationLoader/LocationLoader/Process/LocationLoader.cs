@@ -61,7 +61,10 @@ namespace LocationLoader.Process
                 }
                 else
                 {
-                    throw new Exception("Cannot append to existing data because there is no existing index");
+                    if (_append)
+                    {
+                        throw new Exception("Cannot append to existing data because there is no existing index");
+                    }                   
                 }
 
                 if (_append)
