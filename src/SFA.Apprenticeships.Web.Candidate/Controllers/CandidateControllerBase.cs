@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
+    using System.Configuration;
     using System.Web.Mvc;
     using Common.Attributes;
     using Common.Constants;
@@ -52,7 +53,14 @@
 
             SetLoggingIds();
 
+            SetAbout();
+
             base.OnActionExecuting(filterContext);
+        }
+
+        private void SetAbout()
+        {
+            ViewBag.ShowAbout = bool.Parse(ConfigurationManager.AppSettings["ShowAbout"]);
         }
 
         protected void SetUserMessage(string message, UserMessageLevel level = UserMessageLevel.Success)
