@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System.Runtime.Remoting.Messaging;
-    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Attributes;
     using Constants;
@@ -10,16 +8,16 @@
     {
         [OutputCache(CacheProfile = CacheProfiles.Long)]
         [ApplyWebTrends]
-        public async Task<ActionResult> NotFound()
+        public ActionResult NotFound()
         {
-            return await Task.Run<ActionResult>(() => View("NotFound"));
+            return View("NotFound");
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
         [ApplyWebTrends]
-        public async Task<ActionResult> InternalServerError()
+        public ActionResult InternalServerError()
         {
-            return await Task.Run<ActionResult>(() =>  View("InternalServerError"));
+            return View("InternalServerError");
         }
     }
 }
