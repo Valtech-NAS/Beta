@@ -1,0 +1,19 @@
+﻿<style>
+    .about {
+        background-color: #6E777A;
+        color: #fff;
+        font-size: 1.25em;
+        padding: 0.5em;
+    }
+</style>
+
+<div class="about">
+    @{
+        //TODO: finish "about" view
+        var version = "x.x.x.x";
+        var environment = "XXX"; 
+        var sessionId = NLog.MappedDiagnosticsContext.Contains("sessionId") ? NLog.MappedDiagnosticsContext.Get("sessionId") : "---";
+        var userId = NLog.MappedDiagnosticsContext.Contains("userId") ? NLog.MappedDiagnosticsContext.Get("userId") : "---";
+    }
+    Environment: @environment &#x25cf; Version: @version &#x25cf; Session: @sessionId &#x25cf; User: @userId
+</div>
