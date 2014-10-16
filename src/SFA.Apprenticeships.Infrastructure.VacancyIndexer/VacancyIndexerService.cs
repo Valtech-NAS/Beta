@@ -85,7 +85,10 @@
                 indexSettings.Analysis.Analyzers.Add("snowball", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "snowball" } });
 
                 client.CreateIndex(i => i.Index(newIndexName).InitializeUsing(indexSettings));
-                client.Map<VacancySummary>(p => p.Index(newIndexName).MapFromAttributes());
+                // client.Map<VacancySummary>(p => p.Index(newIndexName).MapFromAttributes());
+
+                client.Map<VacancySummary>(p => p.Index(newIndexName).MapFromAttributes().Properties(prop =>
+                    prop.GeoPoint(g => g.Name(n => n.Location))));
                 Logger.Debug("Created new vacancy search index named: {0}", newIndexName);
             }
             else
