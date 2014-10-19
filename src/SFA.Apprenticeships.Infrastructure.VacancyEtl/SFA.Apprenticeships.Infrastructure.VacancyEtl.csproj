@@ -238,9 +238,10 @@
   <Import Project="..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
   <PropertyGroup>
     <PreBuildEvent>REM Copy from local dev machines locations
-if exist $(ProjectDir)..\..\..\Apprenticeships copy /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\settings.config $(ProjectDir)Configs\settings.config
+if exist $(ProjectDir)..\..\..\Apprenticeships copy /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\*.config $(ProjectDir)Configs
 REM Copy from build server locations
-if exist $(ProjectDir)..\..\Configuration copy /Y $(ProjectDir)..\..\Configuration\Applications\$(ConfigurationName)\settings.config $(ProjectDir)Configs\settings.config</PreBuildEvent>
+if exist $(ProjectDir)..\..\Configuration copy /Y $(ProjectDir)..\..\Configuration\Applications\$(ConfigurationName)\*.config $(ProjectDir)Configs
+</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
