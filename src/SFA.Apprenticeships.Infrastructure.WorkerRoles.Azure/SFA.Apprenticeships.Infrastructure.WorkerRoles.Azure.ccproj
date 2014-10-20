@@ -125,8 +125,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PublishProfile Include="Profiles\svc-workerrolesProduction.azurePubxml" />
-    <PublishProfile Include="Profiles\web-candidatedevProduction.azurePubxml" />
+    <PublishProfile Include="Profiles\svc-workerrolesProduction1.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>

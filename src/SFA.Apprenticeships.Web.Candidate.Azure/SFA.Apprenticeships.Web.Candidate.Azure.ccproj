@@ -102,8 +102,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PublishProfile Include="Profiles\web-candidatedevProduction.azurePubxml" />
-    <PublishProfile Include="Profiles\web-candidatedevProduction1.azurePubxml" />
+    <PublishProfile Include="Profiles\web-candidatedevProduction2.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
