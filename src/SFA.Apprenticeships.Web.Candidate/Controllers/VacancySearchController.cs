@@ -283,7 +283,7 @@
             var distances = new SelectList(
                 new[]
                 {
-                    new {WithinDistance = 2, Name = "This area only"},
+                    new {WithinDistance = 2, Name = "2 miles"},
                     new {WithinDistance = 5, Name = "5 miles"},
                     new {WithinDistance = 10, Name = "10 miles"},
                     new {WithinDistance = 15, Name = "15 miles"},
