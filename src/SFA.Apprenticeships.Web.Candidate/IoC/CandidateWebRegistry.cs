@@ -20,6 +20,7 @@
     using Application.Vacancy;
     using Domain.Interfaces.Mapping;
     using Mappers;
+    using Microsoft.WindowsAzure;
     using Providers;
     using StructureMap.Configuration.DSL;
     using ISendPasswordResetCodeStrategy = Application.UserAccount.Strategies.ISendPasswordResetCodeStrategy;
@@ -28,7 +29,7 @@
     {
         public CandidateWebRegistry()
         {
-            var codeGenerator = ConfigurationManager.AppSettings["CodeGenerator"];
+            var codeGenerator = CloudConfigurationManager.GetSetting("CodeGenerator");//ConfigurationManager.AppSettings["CodeGenerator"];
 
             // services (app)
             For<ILocationSearchService>().Use<LocationSearchService>();

@@ -2,14 +2,14 @@
 {
     using Application.Interfaces.Messaging;
     using Consumers;
-    using Properties;
+    using Microsoft.WindowsAzure;
     using StructureMap.Configuration.DSL;
 
     public class AsyncProcessorRegistry : Registry
     {
         public AsyncProcessorRegistry()
         {
-            var emailDispatcher = Settings.Default.EmailDispatcher;
+            var emailDispatcher = CloudConfigurationManager.GetSetting("EmailDispatcher");
 
             For<EmailRequestConsumerAsync>().Use<EmailRequestConsumerAsync>().
                 Ctor<IEmailDispatcher>().Named(emailDispatcher);
