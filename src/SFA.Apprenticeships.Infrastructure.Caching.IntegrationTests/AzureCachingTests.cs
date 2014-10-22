@@ -29,7 +29,7 @@
             _azureCacheService.FlushAll();
         }
 
-        [Test, Category("Integration"), Ignore]
+        [Test, Category("Integration")]
         public void AddsItemToCache()
         {
             var nullResult = _azureCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
@@ -42,7 +42,7 @@
             notNullResult.DateTimeCached.Should().Be(_testCachedObject.DateTimeCached);
         }
 
-        [Test, Category("Integration"), Ignore]
+        [Test, Category("Integration")]
         public void RemovesItemFromCache()
         {
             _azureCacheService.Get(_cacheKeyEntry, _testFunc, 1, "2");

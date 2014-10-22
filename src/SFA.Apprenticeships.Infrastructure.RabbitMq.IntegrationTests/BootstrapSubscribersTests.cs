@@ -32,7 +32,7 @@
         [TestFixtureSetUp]
         public void BeforeAllTests()
         {
-            var rabitConfig = RabbitMqHostsConfiguration.Instance.RabbitHosts["Dev"]; //previously was test
+            var rabitConfig = RabbitMqHostsConfiguration.Instance.RabbitHosts["Messaging"]; //previously was test
             _managementClient = new ManagementClient(string.Format("http://{0}", rabitConfig.HostName),
                 rabitConfig.UserName, rabitConfig.Password);
 
@@ -88,7 +88,6 @@
         }
 
         [TestCase, Category("Integration")]
-        [Ignore]
         public void AutoBindsSubscriptions()
         {
             var exchange = GetExchange(ExchangeName);
@@ -120,7 +119,7 @@
             asyncBindingToExchange.Should().NotBeNull();
         }
 
-        [Test, Category("Integration"), Ignore]
+        [Test, Category("Integration")]
         public void ConsumesSyncAndAsyncMessagesFromQueue()
         {
             var bus = ObjectFactory.GetInstance<IBus>();

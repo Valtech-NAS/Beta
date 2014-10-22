@@ -36,7 +36,7 @@
             _legacyCandidateProvider = ObjectFactory.GetInstance<ILegacyCandidateProvider>();
         }
 
-        [Test, Category("Integration"), Ignore]
+        [Test, Category("Integration")]
         public void ShouldCreateApplicationForAValidApplication()
         {
             _candidateRepositoryMock.ResetCalls();
@@ -52,7 +52,7 @@
             _legacyApplicationProviderProvider.CreateApplication(applicationDetail);
         }
 
-        [Test, Category("Integration"), Ignore("Ignored")]
+        [Test, Category("Integration")]
         [ExpectedException(Handler = "CheckForApplicationGatewayCreationException")]
         public void ShouldThrowAnErrorIfTheCandidateDoesntExistInNasGateway()
         {
@@ -69,7 +69,7 @@
             _legacyApplicationProviderProvider.CreateApplication(applicationDetail);
         }
 
-        [Test, Category("Integration"), Ignore]
+        [Test, Category("Integration")]
         [ExpectedException(Handler = "CheckForApplicationGatewayCreationException")]
         public void ShouldGetAnErrorWhenCreatinganApplication()
         {
@@ -90,7 +90,7 @@
             _legacyApplicationProviderProvider.CreateApplication(applicationDetail);
         }
 
-        [Test, Category("Integration"), Ignore]
+        [Test, Category("Integration")]
         [ExpectedException(Handler = "CheckForDuplicatedApplicationException")]
         public void ShouldGetACustomExceptionWhenResubmittingAnApplication()
         {

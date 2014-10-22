@@ -14,7 +14,6 @@
     public class IndexingInitialisationTests
     {
         private string _vacancyIndexAlias;
-        private string _originalVacancyIndexAlias;
         private IElasticsearchClientFactory _elasticsearchClientFactory;
         private ElasticClient _elasticClient;
         private readonly ElasticsearchConfiguration _elasticsearchConfiguration = ElasticsearchConfiguration.Instance;
@@ -26,16 +25,14 @@
             _elasticClient = new ElasticClient(settings);
 
             _elasticsearchClientFactory = ObjectFactory.GetInstance<IElasticsearchClientFactory>();
-            _originalVacancyIndexAlias = _elasticsearchClientFactory.GetIndexNameForType(typeof (VacancySummary));
-            _vacancyIndexAlias = string.Format("{0}_integration_tests",_originalVacancyIndexAlias);
+            _vacancyIndexAlias = _elasticsearchClientFactory.GetIndexNameForType(typeof(VacancySummary));
         }
 
         [Test, Category("Integration")]
         public void ShouldCreateScheduledIndexAndMapping()
         {
             var scheduledDate = DateTime.Now; //new DateTime(2000, 1, 1);
-            var indexName = string.Format("{0}.{1}", _originalVacancyIndexAlias,
-                scheduledDate.ToString("yyyy-MM-dd-HH-mm"));
+            var indexName = string.Format("{0}.{1}", _vacancyIndexAlias, scheduledDate.ToString("yyyy-MM-dd-HH-mm"));
             var vis = ObjectFactory.GetInstance<IVacancyIndexerService>();
 
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeFalse();
@@ -49,12 +46,11 @@
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeFalse();
         }
 
-        [Test, Category("Integration"), Ignore("Swapping index wil change real environment.")]
+        [Test, Category("Integration")]
         public void ShouldCreateScheduledIndexAndPublishWithAlias()
         {
             var scheduledDate = DateTime.Now; //new DateTime(2000, 1, 1);
-            var indexName = string.Format("{0}.{1}", _originalVacancyIndexAlias,
-                scheduledDate.ToString("yyyy-MM-dd-HH-mm"));
+            var indexName = string.Format("{0}.{1}", _vacancyIndexAlias, scheduledDate.ToString("yyyy-MM-dd-HH-mm"));
             var vis = ObjectFactory.GetInstance<IVacancyIndexerService>();
 
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeFalse();
@@ -66,13 +62,14 @@
             _elasticClient.IndexExists(i => i.Index(_vacancyIndexAlias)).Exists.Should().BeFalse();
         }
 
-        [Test, Category("Integration"), Ignore("Swapping index wil change real environment.")]
+        [Test, Category("Integration")]
         public void ShouldCreateIndexAndIndexDocument()
         {
-            var indexName = _vacancyIndexAlias + ".2000-01-01";
+            var indexName = _vacancyIndexAlias + ".2000-01-01-00-00";
             var scheduledDate = new DateTime(2000, 1, 1);
             var vis = ObjectFactory.GetInstance<IVacancyIndexerService>();
 
+            //DeleteIndexIfExists(indexName);
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeFalse();
             vis.CreateScheduledIndex(scheduledDate);
             vis.SwapIndex(scheduledDate);
@@ -84,14 +81,20 @@
                 Description = "Description test",
                 EmployerName = "Employer name test",
                 ClosingDate = DateTime.Today,
-                Location = new Domain.Entities.Locations.GeoPoint() {Latitude = 1d, Longitude= 2d},
+                Location = new Domain.Entities.Locations.GeoPoint() { Latitude = 1d, Longitude = 2d },
                 VacancyLocationType = VacancyLocationType.NonNational,
                 ScheduledRefreshDateTime = new DateTime(2000, 1, 1)
             };
 
             vis.Index(vacancySummary);
-
+            
             _elasticClient.DeleteIndex(i => i.Index(indexName));
+        }
+
+        private void DeleteIndexIfExists(string indexName)
+        {
+            if ( _elasticClient.IndexExists(i => i.Index(indexName)).Exists)
+                _elasticClient.DeleteIndex(i => i.Index(indexName));
         }
     }
 }

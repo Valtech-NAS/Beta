@@ -29,7 +29,7 @@
             _memoryCacheService.FlushAll();
         }
 
-        [Test, Category("Integration"), Ignore]
+        [Test, Category("Integration")]
         public void AddsItemToCache()
         {
             var nullResult = _memoryCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
@@ -42,7 +42,7 @@
             notNullResult.DateTimeCached.Should().Be(_testCachedObject.DateTimeCached);
         }
 
-        [Test, Category("Integration"), Ignore]
+        [Test, Category("Integration")]
         public void RemovesItemFromCache()
         {
             _memoryCacheService.Get(_cacheKeyEntry, _testFunc, 1, "2");
