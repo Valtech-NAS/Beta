@@ -9,6 +9,7 @@ Background:
 	Given I navigated to the HomePage page
 	When I am on the HomePage page
 
+@SmokeTests
 Scenario: As a candidate I am on the registration page and all required fields are present and all validators show
 	Given I navigated to the RegisterCandidatePage page
 	When I am on the RegisterCandidatePage page
@@ -36,6 +37,7 @@ Scenario: As a candidate I am on the registration page and all required fields a
 		| Text  | Equals | Please enter last name |
 		| Href  | Equals | #lastname              |
 
+@SmokeTests
 Scenario: As a candidate on the registration page I want to be able to pick my address from a list returned from the postcode search
 	Given I navigated to the RegisterCandidatePage page
 	When I am on the RegisterCandidatePage page
@@ -67,6 +69,7 @@ Scenario: As a candidate on the registration page I want to be able to pick my a
 		| Latitude     | Equals | 51.54751633697479    |
 		| Longitude    | Equals | -0.10660693737952387 |
 
+@SmokeTests
 Scenario: As a candidate I want to be told quickly that my email/username is available
 	Given I navigated to the RegisterCandidatePage page
 	And I have created a new email address

@@ -8,11 +8,11 @@ Background:
 	When I am on the HomePage page
 	And I am on the HomePage page
 
-@pageload
+@pageload @SmokeTests
 Scenario: Home Page Test Scenario
 	Then I wait to see Header
 
-@pagenavigation
+@pagenavigation @SmokeTests
 Scenario: Vacancy Search Navigation Test
 	Given I navigated to the HomePage page
 	When I choose VacancySearchLink

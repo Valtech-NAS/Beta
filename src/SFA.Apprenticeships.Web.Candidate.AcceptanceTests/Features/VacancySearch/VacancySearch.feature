@@ -9,6 +9,7 @@ Background:
 	Given I navigated to the HomePage page
 	When I am on the HomePage page
 
+@SmokeTests
 Scenario: Show validation error message when no location entered
 	Given I navigated to the VacancySearchPage page
 	When I enter data
@@ -20,6 +21,7 @@ Scenario: Show validation error message when no location entered
         | Field                  | Rule   | Value |
         | ValidationSummaryCount | Equals | 1     |
 
+@SmokeTests
 Scenario: Find apprenticeships and test ordering without keywords
 	Given I navigated to the VacancySearchPage page
 	When I enter data
@@ -47,6 +49,7 @@ Scenario: Find apprenticeships and test ordering without keywords
 		# Need the ignore when not present added to specbind - KB talking to Dan Piessens
         #| ResultsAreInBestMatchScoreOrder | Equals | False |
 
+@SmokeTests
 Scenario: Find apprenticeships and test ordering with keywords
 	Given I navigated to the VacancySearchPage page
 	When I enter data
@@ -73,6 +76,7 @@ Scenario: Find apprenticeships and test ordering with keywords
         #| ResultsAreInDistanceOrder       | Equals | False |
         #| ResultsAreInBestMatchScoreOrder | Equals | False |
 
+@SmokeTests
 Scenario: Find apprenticeships and test paging
 	Given I navigated to the VacancySearchPage page
 	When I enter data
@@ -108,6 +112,7 @@ Scenario: Find apprenticeships and test paging
         | Field    | Rule     | Value |
         | NextPage | Contains | 2 of  |
 
+@SmokeTests
 Scenario: Search when no results are returned for location
 	Given I navigated to the VacancySearchPage page
 	When I enter data
@@ -121,6 +126,7 @@ Scenario: Search when no results are returned for location
         | SortOrderingDropDown | Does Not Exist |       |
         | NoResultsTitle       | Exists         |       |
 
+@SmokeTests
 Scenario: Search doesn't error when location doesn't exist
 	Given I navigated to the VacancySearchPage page
 	When I enter data
@@ -133,6 +139,7 @@ Scenario: Search doesn't error when location doesn't exist
         | SortOrderingDropDown | Does Not Exist |       |
         | NoResultsTitle       | Exists         |       |
 
+@SmokeTests
 Scenario: Search locaton autocomplete appears on both initial search page and search results page
 	Given I navigated to the VacancySearchPage page
 	When I enter data
@@ -154,7 +161,7 @@ Scenario: Search locaton autocomplete appears on both initial search page and se
 		 | Location | London |
 	Then I wait for 5 seconds to see LocationAutoComplete
 
-@US517
+@US517 @SmokeTests
 Scenario: Different results per page
 	Given I navigated to the VacancySearchPage page
 	When I enter data

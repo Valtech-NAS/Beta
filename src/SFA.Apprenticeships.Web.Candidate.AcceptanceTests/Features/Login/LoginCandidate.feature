@@ -10,7 +10,7 @@ Background:
 	Given I navigated to the HomePage page
 	When I am on the HomePage page
 
-@US415
+@US415 @SmokeTests
 Scenario: As a candidate all required fields are present
 	Given I navigated to the LoginPage page
 	When I am on the LoginPage page
@@ -32,7 +32,7 @@ Scenario: As a candidate I can login with a registered and activated email addre
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 
-@US415
+@US415 @SmokeTests
 Scenario: As a candidate I must provide an email address and password
 	Given I navigated to the LoginPage page
 	When I am on the LoginPage page

@@ -10,6 +10,7 @@ Background:
 	When I am on the HomePage page
 
 
+@SmokeTests
 Scenario: After search I see the local apprenticeships
 	Given I navigated to the VacancySearchPage page
 	When I enter data
@@ -23,6 +24,7 @@ Scenario: After search I see the local apprenticeships
         | LocalLocationTypeLink      | Does Not Exist |       |
         | NationwideLocationTypeLink | Exists         |       |
 
+@SmokeTests
 Scenario: After clicking on nationwide apprenticeships I see them
 	Given I navigated to the VacancySearchPage page
 	When I enter data
@@ -38,6 +40,7 @@ Scenario: After clicking on nationwide apprenticeships I see them
         | LocalLocationTypeLink      | Exists         |       |
         | NationwideLocationTypeLink | Does Not Exist |       |
 
+@SmokeTests
 Scenario: When I'm seeing nationwide apprenticeships and I change the results per page I remain there
 	Given I navigated to the VacancySearchPage page
 	When I enter data
@@ -57,6 +60,7 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the results pe
         | LocalLocationTypeLink      | Exists         |       |
         | NationwideLocationTypeLink | Does Not Exist |       |
 
+@SmokeTests
 Scenario: When I'm seeing nationwide apprenticeships and I change the sort order I remain there
 	Given I navigated to the VacancySearchPage page
 	When I enter data
