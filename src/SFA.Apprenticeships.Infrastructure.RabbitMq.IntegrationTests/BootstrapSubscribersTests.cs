@@ -87,7 +87,7 @@
             return exchange;
         }
 
-        [TestCase, Category("Integration")]
+        [TestCase, Category("Integration"), Ignore("Has this test value?")]
         public void AutoBindsSubscriptions()
         {
             var exchange = GetExchange(ExchangeName);
