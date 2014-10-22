@@ -298,10 +298,6 @@
     <Content Include="Views\Register\Activation.cshtml" />
     <Content Include="Views\Register\Complete.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="NLog.config">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Views\Register\ForgottenPassword.cshtml" />
     <Content Include="Views\Register\ResetPassword.cshtml" />
     <Content Include="Views\Login\Unlock.cshtml" />
@@ -334,6 +330,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Local.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.MSDN.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Pre.config">

@@ -61,6 +61,7 @@
         private void SetAbout()
         {
             ViewBag.ShowAbout = bool.Parse(ConfigurationManager.AppSettings["ShowAbout"]);
+            ViewBag.Environment = ConfigurationManager.AppSettings["Environment"];
         }
 
         protected void SetUserMessage(string message, UserMessageLevel level = UserMessageLevel.Success)

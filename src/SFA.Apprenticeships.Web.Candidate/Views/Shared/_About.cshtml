@@ -11,7 +11,7 @@
     @{
         //TODO: finish "about" view
         var version = "x.x.x.x";
-        var environment = "XXX"; 
+        var environment = ViewBag.Environment; 
         var sessionId = NLog.MappedDiagnosticsContext.Contains("sessionId") ? NLog.MappedDiagnosticsContext.Get("sessionId") : "---";
         var userId = NLog.MappedDiagnosticsContext.Contains("userId") ? NLog.MappedDiagnosticsContext.Get("userId") : "---";
     }
