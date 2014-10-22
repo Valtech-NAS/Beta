@@ -115,4 +115,24 @@ $(document).ready(function () {
             $this.attr('disabled');
         }, 50);
     });
+
+    // -- Sort out styling issues on details page
+
+    $('[itemscope]').find('[style]').not('iframe').removeAttr('style');
+
+    // -- Remove unnecessary breaks from details page
+
+    $('[itemscope] p').contents().each(function () {
+        if (this.nodeType === 3 && $.trim(this.nodeValue).length) {
+            $(this).wrap('<span class="temp_span">')
+        }
+
+    });
+
+    $('p .temp_span').each(function () {
+        var $br = $(this).nextUntil('.temp_span');
+        $br.filter('br:gt(0)').remove()
+    }).replaceWith(function () {
+        return $(this).text()
+    });
 });
