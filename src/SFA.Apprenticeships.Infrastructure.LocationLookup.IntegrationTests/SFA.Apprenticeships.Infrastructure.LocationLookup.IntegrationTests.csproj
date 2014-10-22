@@ -143,10 +143,7 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>REM Copy from local dev machines locations
-if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\*.config $(ProjectDir)Configs
-REM Copy from build server locations
-if exist $(ProjectDir)..\..\Configuration xcopy /C /Y $(ProjectDir)..\..\Configuration\Applications\$(ConfigurationName)\*.config $(ProjectDir)Configs</PreBuildEvent>
+    <PreBuildEvent>xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\*.config $(ProjectDir)Configs</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

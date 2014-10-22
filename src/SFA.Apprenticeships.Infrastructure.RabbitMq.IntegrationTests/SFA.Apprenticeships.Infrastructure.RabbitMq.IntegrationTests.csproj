@@ -166,10 +166,7 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>REM Copy from local dev machines locations
-if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\*.config $(ProjectDir)Configs
-REM Copy from build server locations
-if exist $(ProjectDir)..\..\Configuration xcopy /C /Y $(ProjectDir)..\..\Configuration\Applications\$(ConfigurationName)\*.config $(ProjectDir)Configs
+    <PreBuildEvent>xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\*.config $(ProjectDir)Configs
 taskkill /F /IM vstest.executionengine.exe /FI "MEMUSAGE gt 1"
 taskkill /F /IM vstest.executionengine.x86.exe /FI "MEMUSAGE gt 1"</PreBuildEvent>
   </PropertyGroup>
