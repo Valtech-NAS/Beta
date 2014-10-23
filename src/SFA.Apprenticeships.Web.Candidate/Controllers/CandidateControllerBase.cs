@@ -2,6 +2,8 @@
 {
     using System;
     using System.Configuration;
+    using System.Diagnostics;
+    using System.Reflection;
     using System.Web.Mvc;
     using Common.Attributes;
     using Common.Constants;
@@ -9,6 +11,7 @@
     using Common.Providers;
     using Common.Services;
     using Domain.Interfaces.Configuration;
+    using NLog;
     using Providers;
     using StructureMap;
 
@@ -19,6 +22,7 @@
         {
             //TODO: Think about "new"ing this up instead - Mark doesn't like this. Doesn't need to be lazy, is used everywhere
             //TODO: VGA: can't we inject them? It's very difficult to test the controllers if not.
+            //TODO: MG: we shouldn't need to test controllers
             UserData = ObjectFactory.GetInstance<IUserDataProvider>();
             AuthenticationTicketService = ObjectFactory.GetInstance<IAuthenticationTicketService>();
 
@@ -58,12 +62,6 @@
             base.OnActionExecuting(filterContext);
         }
 
-        private void SetAbout()
-        {
-            ViewBag.ShowAbout = bool.Parse(ConfigurationManager.AppSettings["ShowAbout"]);
-            ViewBag.Environment = ConfigurationManager.AppSettings["Environment"];
-        }
-
         protected void SetUserMessage(string message, UserMessageLevel level = UserMessageLevel.Success)
         {
             switch (level)
@@ -83,6 +81,22 @@
             }
         }
 
+        private void SetAbout()
+        {
+            var showAbout = bool.Parse(ConfigurationManager.AppSettings["ShowAbout"]);
+            ViewBag.ShowAbout = showAbout;
+
+            if (!showAbout) return;
+
+            if (!MappedDiagnosticsContext.Contains("version"))
+            {
+                var version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
+                ViewBag.Version = version;
+                MappedDiagnosticsContext.Set("version", version);                    
+            }
+            ViewBag.Environment = ConfigurationManager.AppSettings["Environment"];
+        }
+
         private void SetLoggingIds()
         {
             var sessionId = UserData.Get(UserDataItemNames.LoggingSessionId);
@@ -92,8 +106,8 @@
                 UserData.Push(UserDataItemNames.LoggingSessionId, sessionId);
             }
 
-            NLog.MappedDiagnosticsContext.Set("sessionId", sessionId);
-            NLog.MappedDiagnosticsContext.Set("userId", UserContext != null ? UserContext.CandidateId.ToString() : "<none>");
+            MappedDiagnosticsContext.Set("sessionId", sessionId);
+            MappedDiagnosticsContext.Set("userId", UserContext != null ? UserContext.CandidateId.ToString() : "<none>");
         }
     }
 }

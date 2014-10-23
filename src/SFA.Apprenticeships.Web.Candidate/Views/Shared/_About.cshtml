@@ -9,8 +9,7 @@
 
 <div class="about">
     @{
-        //TODO: finish "about" view
-        var version = "x.x.x.x";
+        var version = ViewBag.Version;
         var environment = ViewBag.Environment; 
         var sessionId = NLog.MappedDiagnosticsContext.Contains("sessionId") ? NLog.MappedDiagnosticsContext.Get("sessionId") : "---";
         var userId = NLog.MappedDiagnosticsContext.Contains("userId") ? NLog.MappedDiagnosticsContext.Get("userId") : "---";
