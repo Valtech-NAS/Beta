@@ -90,9 +90,9 @@ Scenario: As a candidate I want to be told quickly that my email/username is not
 		| Field        | Value                |
 		| EmailAddress | nas.exemplar@gmail.com |
 	And I choose Phonenumber
-	And I am on the RegisterCandidatePage page
-	And I wait to see EmailAddressAvailableMessage
-	And I am on the RegisterCandidatePage page
+	Then I am on the RegisterCandidatePage page
+	Given I waited for 30 seconds to see EmailAddressAvailableMessage
+	When I am on the RegisterCandidatePage page
 	Then I see 
 		| Field                        | Rule   | Value                                                                                                                           |
 		| EmailAddressAvailableMessage | Equals | Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it. |

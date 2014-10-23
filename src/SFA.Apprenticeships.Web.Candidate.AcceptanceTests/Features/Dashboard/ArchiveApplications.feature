@@ -18,7 +18,8 @@ Scenario: As an candidate I want to be able to archive succesful applications
 		| EmailAddress | {EmailAddressToken} |
 		| Password     | {PasswordToken}     |
 	And I choose SignInButton
-	Then I am on the MyApplicationsPage page
+	
+	Given I was on the MyApplicationsPage page
 	When I choose ArchiveSuccessfulLink 
 	Then I am on the MyApplicationsPage page
 	And I see

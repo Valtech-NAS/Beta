@@ -83,7 +83,8 @@
 
         private static void EnsureApplicationCanBeCreated(ApplicationDetail applicationDetail)
         {
-            var message = string.Format("Cannot create application in state: \"{0}\".", applicationDetail.Status);
+            var message = string.Format("Cannot create application with Id \"{0}\" for candidate with Id \"{1}\" in state: \"{2}\".",
+                applicationDetail.EntityId, applicationDetail.CandidateId, applicationDetail.Status);
 
             applicationDetail.AssertState(message, ApplicationStatuses.Submitting);
         }

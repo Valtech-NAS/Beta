@@ -83,8 +83,12 @@
         public User Build()
         {
             var repo = ObjectFactory.GetInstance<IUserWriteRepository>();
+            var repoRead = ObjectFactory.GetInstance<IUserReadRepository>();
 
-            repo.Save(User);
+            if (repoRead.Get(User.Username) == null)
+            {
+                repo.Save(User);
+            }
 
             return User;
         }
