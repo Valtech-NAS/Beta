@@ -968,7 +968,7 @@ this.FeatureBackground();
 #line 297
  testRunner.Then("I am on the ApplicationCompletePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 298
- testRunner.When("I wait 5 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I wait 35 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 299
  testRunner.And("I choose MyApplicationsLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 300

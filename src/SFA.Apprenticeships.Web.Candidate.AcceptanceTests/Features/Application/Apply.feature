@@ -295,7 +295,7 @@ Scenario: As a candidate I would like to see my application as submitted
 	Then I am on the ApplicationPreviewPage page
 	When I choose SubmitApplication
 	Then I am on the ApplicationCompletePage page
-	When I wait 5 seconds
+	When I wait 35 seconds
 	And I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
 	And I see

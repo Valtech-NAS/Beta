@@ -85,11 +85,13 @@
             var repo = ObjectFactory.GetInstance<IUserWriteRepository>();
             var repoRead = ObjectFactory.GetInstance<IUserReadRepository>();
 
-            if (repoRead.Get(User.Username) == null)
+            var userRead = repoRead.Get(User.Username);
+            if ( userRead != null)
             {
-                repo.Save(User);
+                User.EntityId = userRead.EntityId;
             }
 
+            repo.Save(User);
             return User;
         }
     }
