@@ -73,7 +73,7 @@
         {
             var writerepo = ObjectFactory.GetInstance<IApplicationWriteRepository>();
             var readrepo = ObjectFactory.GetInstance<IApplicationReadRepository>();
-            var candidateApplications = readrepo.GetForCandidate(UserBuilder.UserAndCandidateId);
+            var candidateApplications = readrepo.GetForCandidate(userCandidateId);
             candidateApplications.ToList().ForEach(a => writerepo.Delete(a.ApplicationId));
         }
     }

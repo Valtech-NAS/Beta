@@ -137,8 +137,8 @@
         {
             var vacancySearchUri = new Uri(_driver.Url);
             var vacancyDetailsUri = 
-                string.Format("{0}://{1}/vacancysearch/details/{2}", 
-                vacancySearchUri.Scheme, vacancySearchUri.Host, vacancyid);
+                string.Format("{0}://{1}:{2}/vacancysearch/details/{3}", 
+                vacancySearchUri.Scheme, vacancySearchUri.Host, vacancySearchUri.Port, vacancyid);
             _driver.Navigate().GoToUrl(vacancyDetailsUri);
         }
 

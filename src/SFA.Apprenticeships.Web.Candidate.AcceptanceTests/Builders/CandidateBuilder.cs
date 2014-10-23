@@ -25,10 +25,19 @@
         public Candidate Build()
         {
             var repo = ObjectFactory.GetInstance<ICandidateWriteRepository>();
+            var repoRead = ObjectFactory.GetInstance<ICandidateReadRepository>();
 
             Candidate.RegistrationDetails = RegistrationBuilder.Build();
 
-            repo.Save(Candidate);
+            var candidateInRepo = repoRead.Get(Candidate.RegistrationDetails.EmailAddress);
+            if (candidateInRepo == null)
+            {
+                repo.Save(Candidate);
+            }
+            else
+            {
+                Candidate.EntityId = candidateInRepo.EntityId;
+            }
 
             return Candidate;
         }

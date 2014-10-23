@@ -66,12 +66,11 @@ Scenario: As a candidate I cannot login with an invalid password
 	And I choose SignInButton
 	And I wait to see ValidationSummary
 	Then I see
-		| Field                  | Rule   | Value |
-		| ValidationSummaryCount | Equals | 1     |
-	And I am on ValidationSummaryItems list item matching criteria
+		| Field						   | Rule   | Value |
+		| ValidationSummaryNoLinkCount | Equals | 1     |
+	And I am on ValidationSummaryNoLinkItems list item matching criteria
 		| Field | Rule   | Value                                          |
 		| Text  | Equals | Please enter a valid email address or password |
-		| Href  | Equals | #                                              |
 
 @US458 @US444 @US456
 Scenario: As a candidate I can login with a registered but unactivated account and am redirected to the activation page
@@ -104,12 +103,11 @@ Scenario: Reset password after locking an account does not have to unlock the ac
 	And I am on the LoginPage page
 	And I wait for 300 seconds to see ValidationSummary
 	Then I see
-		| Field                  | Rule   | Value |
-		| ValidationSummaryCount | Equals | 1     |
-	And I am on ValidationSummaryItems list item matching criteria
+		| Field						   | Rule   | Value |
+		| ValidationSummaryNoLinkCount | Equals | 1     |
+	And I am on ValidationSummaryNoLinkItems list item matching criteria
 		| Field | Rule   | Value                                          |
 		| Text  | Equals | Please enter a valid email address or password |
-		| Href  | Equals | #                                              |
 	And I am on the LoginPage page
 	When I enter data
 		| Field        | Value                  |
@@ -119,12 +117,11 @@ Scenario: Reset password after locking an account does not have to unlock the ac
 	And I am on the LoginPage page
 	And I wait for 300 seconds to see ValidationSummary
 	Then I see
-		| Field                  | Rule   | Value |
-		| ValidationSummaryCount | Equals | 1     |
-	And I am on ValidationSummaryItems list item matching criteria
+		| Field					       | Rule   | Value |
+		| ValidationSummaryNoLinkCount | Equals | 1     |
+	And I am on ValidationSummaryNoLinkItems list item matching criteria
 		| Field | Rule   | Value                                          |
 		| Text  | Equals | Please enter a valid email address or password |
-		| Href  | Equals | #                                              |
 	And I am on the LoginPage page
 	When I enter data
 		| Field        | Value                  |

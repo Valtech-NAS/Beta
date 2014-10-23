@@ -239,10 +239,10 @@ Scenario: As a candidate I would like to preview a vacancy application via the e
 	When I choose ApplyExternalLink
 	Then Another browser window is opened
 
-@US154 @ignore
+@US154
 Scenario: As a candidate I would like to see my application as successful
 	Given I have registered a new candidate
-	When I select the first vacancy in location "N7 8LS" that can apply by this website
+	When I select the first vacancy in location "London" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -273,7 +273,7 @@ Scenario: As a candidate I would like to see my application as successful
 @US154
 Scenario: As a candidate I would like to see my application as submitted
 	Given I have registered a new candidate
-	When I select the first vacancy in location "N7 8LS" that can apply by this website
+	When I select the first vacancy in location "London" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -295,7 +295,7 @@ Scenario: As a candidate I would like to see my application as submitted
 	Then I am on the ApplicationPreviewPage page
 	When I choose SubmitApplication
 	Then I am on the ApplicationCompletePage page
-	When I wait 35 seconds
+	When I wait 5 seconds
 	And I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
 	And I see
@@ -305,7 +305,7 @@ Scenario: As a candidate I would like to see my application as submitted
 @US154
 Scenario: As a candidate I would like to see my application as unsuccessful
 	Given I have registered a new candidate
-	When I select the first vacancy in location "N7 8LS" that can apply by this website
+	When I select the first vacancy in location "London" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -338,7 +338,7 @@ Scenario: As a candidate I would like to see my application as unsuccessful
 @US154 @ignore
 Scenario: As a candidate I would like to see my application as withdrawn
 	Given I have registered a new candidate
-	When I select the first vacancy in location "N7 8LS" that can apply by this website
+	When I select the first vacancy in location "London" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page

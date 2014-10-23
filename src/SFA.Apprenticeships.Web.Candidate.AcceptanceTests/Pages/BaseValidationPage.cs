@@ -17,12 +17,20 @@
         [ElementLocator(Class = "validation-summary-errors")]
         public IElementList<IWebElement, ValidationSummaryItem> ValidationSummaryItems { get; set; }
 
+        [ElementLocator(Class = "validation-summary-errors")]
+        public IElementList<IWebElement, ValidationSummaryNoLinkItem> ValidationSummaryNoLinkItems { get; set; }
+
         [ElementLocator(TagName = "form")]
         public IElementList<IWebElement, ValidationErrorFieldItem> ValidationFieldErrorItems { get; set; }
 
         public string ValidationSummaryCount
         {
             get { return ValidationSummaryItems.Count().ToString(); }
+        }
+
+        public string ValidationSummaryNoLinkCount
+        {
+            get { return ValidationSummaryNoLinkItems.Count().ToString(); }
         }
 
         public string ValidationFieldErrorCount
@@ -41,6 +49,15 @@
             public string Href
             {
                 get { return GetAttribute("href").Substring(GetAttribute("href").IndexOf("#")); }
+            }
+        }
+
+        [ElementLocator(TagName = "li")]
+        public class ValidationSummaryNoLinkItem : WebElement
+        {
+            public ValidationSummaryNoLinkItem(ISearchContext parent)
+                : base(parent)
+            {
             }
         }
 

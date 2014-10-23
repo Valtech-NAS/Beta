@@ -268,7 +268,7 @@ this.FeatureBackground();
                         "Rule",
                         "Value"});
             table6.AddRow(new string[] {
-                        "ValidationSummaryCount",
+                        "ValidationSummaryNoLinkCount",
                         "Equals",
                         "1"});
 #line 68
@@ -282,12 +282,8 @@ this.FeatureBackground();
                         "Text",
                         "Equals",
                         "Please enter a valid email address or password"});
-            table7.AddRow(new string[] {
-                        "Href",
-                        "Equals",
-                        "#"});
 #line 71
- testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table7, "And ");
+ testRunner.And("I am on ValidationSummaryNoLinkItems list item matching criteria", ((string)(null)), table7, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -305,15 +301,15 @@ this.FeatureBackground();
                         "US458",
                         "US444",
                         "US456"});
-#line 77
+#line 76
 this.ScenarioSetup(scenarioInfo);
 #line 9
 this.FeatureBackground();
-#line 78
+#line 77
  testRunner.Given("I registered an account but did not activate it", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 79
+#line 78
  testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 80
+#line 79
  testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
@@ -325,11 +321,11 @@ this.FeatureBackground();
             table8.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
-#line 81
+#line 80
  testRunner.And("I enter data", ((string)(null)), table8, "And ");
-#line 85
+#line 84
  testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 86
+#line 85
  testRunner.And("I am on the ActivationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
@@ -338,11 +334,11 @@ this.FeatureBackground();
             table9.AddRow(new string[] {
                         "ActivationCode",
                         "{ActivationCodeToken}"});
-#line 87
+#line 86
  testRunner.And("I enter data", ((string)(null)), table9, "And ");
-#line 90
+#line 89
  testRunner.And("I choose ActivateButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 91
+#line 90
  testRunner.Then("I am on the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -357,15 +353,15 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Reset password after locking an account does not have to unlock the account", new string[] {
                         "US458",
                         "US457"});
-#line 95
+#line 94
 this.ScenarioSetup(scenarioInfo);
 #line 9
 this.FeatureBackground();
-#line 96
+#line 95
  testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 97
+#line 96
  testRunner.When("I choose SignoutLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 98
+#line 97
  testRunner.Then("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
@@ -377,13 +373,13 @@ this.FeatureBackground();
             table10.AddRow(new string[] {
                         "Password",
                         "{InvalidPasswordToken}"});
-#line 99
+#line 98
  testRunner.When("I enter data", ((string)(null)), table10, "When ");
-#line 103
+#line 102
  testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 104
+#line 103
  testRunner.And("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 105
+#line 104
  testRunner.And("I wait for 300 seconds to see ValidationSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
@@ -391,10 +387,10 @@ this.FeatureBackground();
                         "Rule",
                         "Value"});
             table11.AddRow(new string[] {
-                        "ValidationSummaryCount",
+                        "ValidationSummaryNoLinkCount",
                         "Equals",
                         "1"});
-#line 106
+#line 105
  testRunner.Then("I see", ((string)(null)), table11, "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
@@ -405,13 +401,9 @@ this.FeatureBackground();
                         "Text",
                         "Equals",
                         "Please enter a valid email address or password"});
-            table12.AddRow(new string[] {
-                        "Href",
-                        "Equals",
-                        "#"});
-#line 109
- testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table12, "And ");
-#line 113
+#line 108
+ testRunner.And("I am on ValidationSummaryNoLinkItems list item matching criteria", ((string)(null)), table12, "And ");
+#line 111
  testRunner.And("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
@@ -420,15 +412,15 @@ this.FeatureBackground();
             table13.AddRow(new string[] {
                         "Password",
                         "{InvalidPasswordToken}"});
-#line 114
+#line 112
  testRunner.When("I enter data", ((string)(null)), table13, "When ");
-#line 117
+#line 115
  testRunner.And("I choose EmailAddress", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 118
+#line 116
  testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 119
+#line 117
  testRunner.And("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 120
+#line 118
  testRunner.And("I wait for 300 seconds to see ValidationSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
@@ -436,10 +428,10 @@ this.FeatureBackground();
                         "Rule",
                         "Value"});
             table14.AddRow(new string[] {
-                        "ValidationSummaryCount",
+                        "ValidationSummaryNoLinkCount",
                         "Equals",
                         "1"});
-#line 121
+#line 119
  testRunner.Then("I see", ((string)(null)), table14, "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
@@ -450,13 +442,9 @@ this.FeatureBackground();
                         "Text",
                         "Equals",
                         "Please enter a valid email address or password"});
-            table15.AddRow(new string[] {
-                        "Href",
-                        "Equals",
-                        "#"});
-#line 124
- testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table15, "And ");
-#line 128
+#line 122
+ testRunner.And("I am on ValidationSummaryNoLinkItems list item matching criteria", ((string)(null)), table15, "And ");
+#line 125
  testRunner.And("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
@@ -465,15 +453,15 @@ this.FeatureBackground();
             table16.AddRow(new string[] {
                         "Password",
                         "{InvalidPasswordToken}"});
-#line 129
+#line 126
  testRunner.When("I enter data", ((string)(null)), table16, "When ");
-#line 133
+#line 130
  testRunner.When("I choose EmailAddress", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 134
+#line 131
  testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 135
+#line 132
  testRunner.Then("I wait 180 second for the UnlockPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 136
+#line 133
  testRunner.And("I get the account unlock code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
@@ -488,13 +476,13 @@ this.FeatureBackground();
                         "AccountUnlockCode",
                         "Exists",
                         ""});
-#line 137
+#line 134
  testRunner.And("I see", ((string)(null)), table17, "And ");
-#line 141
+#line 138
  testRunner.And("the user login incorrect attempts should be three", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 142
+#line 139
  testRunner.When("I navigate to the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 143
+#line 140
  testRunner.Then("I am on the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
@@ -503,21 +491,21 @@ this.FeatureBackground();
             table18.AddRow(new string[] {
                         "EmailAddress",
                         "{EmailToken}"});
-#line 144
+#line 141
  testRunner.And("I enter data", ((string)(null)), table18, "And ");
-#line 147
+#line 144
  testRunner.When("I choose SendCodeButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 148
+#line 145
  testRunner.Then("I am on the ResetPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 149
+#line 146
  testRunner.And("the user login incorrect attempts should be three", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 150
+#line 147
  testRunner.And("the account unlock code and date should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 151
+#line 148
  testRunner.And("the password reset code and date should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 152
+#line 149
  testRunner.When("I navigate to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 153
+#line 150
  testRunner.Then("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
@@ -529,15 +517,15 @@ this.FeatureBackground();
             table19.AddRow(new string[] {
                         "Password",
                         "?Password01!"});
-#line 154
+#line 151
  testRunner.When("I enter data", ((string)(null)), table19, "When ");
-#line 158
+#line 155
  testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 159
+#line 156
  testRunner.Then("I am on the UnlockPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 160
+#line 157
  testRunner.When("I navigate to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 161
+#line 158
  testRunner.Then("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
@@ -549,23 +537,23 @@ this.FeatureBackground();
             table20.AddRow(new string[] {
                         "Password",
                         "{InvalidPasswordToken}"});
-#line 162
+#line 159
  testRunner.When("I enter data", ((string)(null)), table20, "When ");
-#line 166
+#line 163
  testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 167
+#line 164
  testRunner.Then("I am on the UnlockPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 168
+#line 165
  testRunner.And("the account unlock code and date should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 169
+#line 166
  testRunner.And("the password reset code and date should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 170
+#line 167
  testRunner.When("I choose ResendAccountUnlockCodeLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 171
+#line 168
  testRunner.Then("I get the same account unlock code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 172
+#line 169
  testRunner.When("I navigate to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 173
+#line 170
  testRunner.Then("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
@@ -577,11 +565,11 @@ this.FeatureBackground();
             table21.AddRow(new string[] {
                         "Password",
                         "?Password01!"});
-#line 174
+#line 171
  testRunner.When("I enter data", ((string)(null)), table21, "When ");
-#line 178
+#line 175
  testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 179
+#line 176
  testRunner.Then("I am on the UnlockPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
