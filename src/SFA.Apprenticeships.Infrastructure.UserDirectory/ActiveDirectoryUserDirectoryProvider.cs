@@ -81,21 +81,17 @@
                     GivenName = userId,
                     Name = userId,
                     UserPrincipalName = userId,
-                    Enabled = false,
+                    Enabled = false
                 };
 
-                // create the account
+                // Create the account.
                 userPrincipal.Save();
 
-                // set initial password
-                if (!SetUserPassword(userId, null, password))
-                {
-                    Logger.Debug("Set password for user with Id={0} failed", userId);
-                    return false;
-                }
+                // Set the password.
+                userPrincipal.SetPassword(password);
 
+                // Enable the account.
                 userPrincipal.Enabled = true;
-
                 userPrincipal.Save();
 
                 Logger.Debug("LDAP account for user with Id={0} has been successfully created", userId);

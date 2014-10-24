@@ -3,7 +3,6 @@
     using System;
     using System.DirectoryServices.Protocols;
     using System.Text;
-    using System.Threading;
     using Configuration;
     using Domain.Entities.Exceptions;
     using NLog;
@@ -37,52 +36,34 @@
             var distinguishedName = string.Format(@"CN={0},{1}", username, _server.DistinguishedName);
             var attribute = _config.DirectoryAttributeName;
 
-            const int maxRetries = 5;
-            const int retryDelay = 1000;
-
-            var retryCount = 0;
-
-            while (true)
+            try
             {
-                try
+                ModifyRequest modifyRequest;
+
+                if (!string.IsNullOrWhiteSpace(oldPassword))
                 {
-                    ModifyRequest modifyRequest;
-
-                    if (!string.IsNullOrWhiteSpace(oldPassword))
-                    {
-                        Logger.Debug(
-                            "Generating change password modification request for username={0} with distinguishedName={1}",
-                            username, distinguishedName);
-                        modifyRequest = GenerateChangePasswordModifyRequest(oldPassword, newPassword, attribute,
-                            distinguishedName);
-                    }
-                    else
-                    {
-                        Logger.Debug(
-                            "Generating set password modification request for username={0} with distinguishedName={1}",
-                            username, distinguishedName);
-                        modifyRequest = GenerateSetPasswordModifyRequest(newPassword, attribute, distinguishedName);
-                    }
-
-                    Logger.Debug("Sending generated request to server for username={0}", username);
-
-                    return _server.Connection.SendRequest(modifyRequest);
+                    Logger.Debug(
+                        "Generating change password modification request for username={0} with distinguishedName={1}",
+                        username, distinguishedName);
+                    modifyRequest = GenerateChangePasswordModifyRequest(oldPassword, newPassword, attribute,
+                        distinguishedName);
                 }
-                catch (DirectoryOperationException e)
+                else
                 {
-                    if (retryCount++ == maxRetries)
-                    {
-                        var message = string.Format(
-                            "Maximum number of retries ({0}) exceeded. DirectoryOperationException was thrown.",
-                            maxRetries);
-
-                        Logger.ErrorException(message, e);
-
-                        throw new CustomException("Password modify request failed", e, ErrorCodes.LdapModifyPasswordError);
-                    }
-
-                    Thread.Sleep(retryDelay);
+                    Logger.Debug(
+                        "Generating set password modification request for username={0} with distinguishedName={1}",
+                        username, distinguishedName);
+                    modifyRequest = GenerateSetPasswordModifyRequest(newPassword, attribute, distinguishedName);
                 }
+
+                Logger.Debug("Sending generated request to server for username={0}", username);
+
+                return _server.Connection.SendRequest(modifyRequest);
+            }
+            catch (DirectoryOperationException e)
+            {
+                Logger.ErrorException("DirectoryOperationException with the following details was thrown: ", e);
+                throw new CustomException("Password modify request failed", e, ErrorCodes.LdapModifyPasswordError);
             }
         }
 
@@ -99,7 +80,7 @@
 
             directoryAttributeModificationReplace.Add(BuildBytePwd(newPassword));
 
-            DirectoryAttributeModification[] directoryAttributeModifications = {directoryAttributeModificationReplace};
+            DirectoryAttributeModification[] directoryAttributeModifications = { directoryAttributeModificationReplace };
             var modifyRequest = new ModifyRequest(distinguishedName, directoryAttributeModifications);
             return modifyRequest;
         }
