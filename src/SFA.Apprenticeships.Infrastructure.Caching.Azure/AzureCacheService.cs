@@ -29,11 +29,18 @@
                 return;
             }
 
-            TimeSpan cacheTimeSpan = TimeSpan.FromMinutes((int)cacheDuration);    
-
             try
             {
-                _cache.Add(key, value, cacheTimeSpan);
+                if (cacheDuration != CacheDuration.CacheDefault)
+                {
+                    TimeSpan cacheTimeSpan = TimeSpan.FromMinutes((int)cacheDuration);
+                    _cache.Put(key, value, cacheTimeSpan);
+                }
+                else
+                {
+                    _cache.Put(key, value);
+                }
+                
             }
             catch (Exception cacheException)
             {
