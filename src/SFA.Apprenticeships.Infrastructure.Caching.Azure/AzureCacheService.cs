@@ -29,11 +29,13 @@
                 return;
             }
 
+            TimeSpan cacheTimeSpan = TimeSpan.Zero;
+
             try
             {
                 if (cacheDuration != CacheDuration.CacheDefault)
                 {
-                    TimeSpan cacheTimeSpan = TimeSpan.FromMinutes((int)cacheDuration);
+                    cacheTimeSpan = TimeSpan.FromMinutes((int)cacheDuration);
                     _cache.Put(key, value, cacheTimeSpan);
                 }
                 else
@@ -44,7 +46,15 @@
             }
             catch (Exception cacheException)
             {
-                Logger.WarnException("Attempt to store item in cache with key: " + key + " and timespan: " + cacheTimeSpan, cacheException);
+                if (cacheTimeSpan != TimeSpan.Zero) 
+                {
+                    Logger.WarnException("Attempt to store item in cache with key: " + key + " with expiry timespan: " + cacheTimeSpan, cacheException);
+                }
+                else
+                {
+                    Logger.WarnException("Attempt to store item in cache with key: " + key + " using cache default eveiction policy", cacheException);
+                }
+                
                 return;
             }
 
