@@ -90,7 +90,11 @@
                 userPrincipal.Save();
 
                 // Set the password.
-                userPrincipal.SetPassword(password);
+                if (!SetUserPassword(userId, null, password))
+                {
+                    Logger.Debug("Set password for user with Id={0} failed", userId);
+                    return false;
+                }
 
                 // Enable the account.
                 userPrincipal.Enabled = true;
