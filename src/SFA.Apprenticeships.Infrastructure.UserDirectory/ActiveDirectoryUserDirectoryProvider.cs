@@ -1,24 +1,26 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UserDirectory
 {
-    using System;
     using System.DirectoryServices.AccountManagement;
     using System.DirectoryServices.Protocols;
     using ActiveDirectory;
     using Application.Authentication;
+    using Configuration;
     using Domain.Entities.Exceptions;
     using NLog;
 
     public class ActiveDirectoryUserDirectoryProvider : IUserDirectoryProvider
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly ActiveDirectoryChangePassword _changePassword;
-        private readonly ActiveDirectoryServer _server;
 
-        public ActiveDirectoryUserDirectoryProvider(ActiveDirectoryServer server,
-            ActiveDirectoryChangePassword changePassword)
+        private readonly ActiveDirectoryServer _server;
+        private readonly ActiveDirectoryConfiguration _config;
+
+        public ActiveDirectoryUserDirectoryProvider(
+            ActiveDirectoryServer server,
+            ActiveDirectoryConfiguration config)
         {
             _server = server;
-            _changePassword = changePassword;
+            _config = config;
         }
 
         public bool AuthenticateUser(string userId, string password)
@@ -157,7 +159,9 @@
 
             Logger.Debug("Set user password for active directory account userId={0}", userId);
 
-            var rs = _changePassword.Change(userId, oldPassword, newPassword);
+            var changePassword = new ActiveDirectoryChangePassword(_server, _config);
+
+            var rs = changePassword.Change(userId, oldPassword, newPassword);
 
             Logger.Debug("Change password outcome for user with Id={0} was ResultCode={1}", userId, rs.ResultCode);
 
