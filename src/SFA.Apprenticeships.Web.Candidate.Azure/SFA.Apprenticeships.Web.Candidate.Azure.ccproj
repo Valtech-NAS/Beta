@@ -78,7 +78,6 @@
     <ServiceConfiguration Include="ServiceConfiguration.Pre.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.Prod.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.Demo.cscfg" />
-    <ServiceConfiguration Include="ServiceConfiguration.MSDN.cscfg" />
     <ServiceDefinition Include="ServiceDefinition.csdef" />
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
   </ItemGroup>
