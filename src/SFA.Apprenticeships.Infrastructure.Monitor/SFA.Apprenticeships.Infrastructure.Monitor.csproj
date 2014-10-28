@@ -170,6 +170,7 @@
     <None Include="App.Local.config">
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
+      <SubType>Designer</SubType>
     </None>
     <None Include="App.Dev.config">
       <DependentUpon>App.config</DependentUpon>
