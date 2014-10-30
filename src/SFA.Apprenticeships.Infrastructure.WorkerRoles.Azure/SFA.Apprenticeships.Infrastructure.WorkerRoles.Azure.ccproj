@@ -133,7 +133,7 @@
     <ProductVersion>2.4</ProductVersion>
     <ProjectGuid>{3f950894-ddc7-436f-9df7-8236c76cbcec}</ProjectGuid>
     <PackageEnableRemoteDebugger>False</PackageEnableRemoteDebugger>
-    <UseWebProjectPorts>True</UseWebProjectPorts>
+    <UseWebProjectPorts>False</UseWebProjectPorts>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
   </PropertyGroup>
   <Import Project="$(CloudExtensionsDir)Microsoft.WindowsAzure.targets" />
