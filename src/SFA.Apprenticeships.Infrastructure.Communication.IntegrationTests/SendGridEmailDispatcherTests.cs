@@ -15,11 +15,14 @@
         [SetUp]
         public void SetUp()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommunicationRegistry>();
                 x.AddRegistry<CommonRegistry>();
             });
+#pragma warning restore 0618
 
             _configManager = ObjectFactory.GetInstance<IConfigurationManager>();
             _dispatcher = ObjectFactory.GetNamedInstance<IEmailDispatcher>("SendGridEmailDispatcher");

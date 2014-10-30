@@ -13,17 +13,24 @@
         [SetUp]
         public void SetUp()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Configure(c =>
             {
                 c.AddRegistry<CommonRegistry>();
                 c.AddRegistry<VacancySearchRegistry>();
             });
+#pragma warning restore 0618
         }
 
         [Test]
         public void LoadWithValuesSetFromConfig()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var config = ObjectFactory.GetInstance<SearchConfiguration>();
+#pragma warning restore 0618
+
             config.Should().NotBeNull();
             config.UseJobTitleTerms.Should().BeTrue();
             config.SearchJobTitleField.Should().BeFalse();

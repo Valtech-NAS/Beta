@@ -17,6 +17,8 @@
         [SetUp]
         public void SetUp()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
@@ -25,6 +27,7 @@
 
             _vacancyDataProvider = ObjectFactory.GetInstance<IVacancyDataProvider>();
             _vacancyIndexDataProvider = ObjectFactory.GetInstance<IVacancyIndexDataProvider>();
+#pragma warning restore 0618
         }
 
         private IVacancyDataProvider _vacancyDataProvider;

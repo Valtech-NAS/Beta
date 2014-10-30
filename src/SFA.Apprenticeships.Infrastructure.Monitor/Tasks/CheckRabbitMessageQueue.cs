@@ -48,7 +48,7 @@
 
         private static void LogError(Exception exception)
         {
-            Logger.ErrorException("Error while connecting to Rabbit queue", exception);
+            Logger.Error("Error while connecting to Rabbit queue", exception);
         }
     }
 

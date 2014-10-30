@@ -12,7 +12,10 @@
         [Test]
         public void CheckRegistryDoesntThrowException()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             Action test = () => ObjectFactory.Initialize(x => x.AddRegistry<CommonRegistry>());
+#pragma warning restore 0618
 
             test.ShouldNotThrow<Exception>();
         }

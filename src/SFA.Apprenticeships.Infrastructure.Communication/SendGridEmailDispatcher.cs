@@ -140,7 +140,7 @@
             }
             catch (Exception e)
             {
-                Logger.ErrorException("Failed to dispatch email", e);
+                Logger.Error("Failed to dispatch email", e);
                 throw new CustomException("Failed to dispatch email", e, ErrorCodes.EmailSendGridError);
             }
         }

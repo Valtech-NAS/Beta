@@ -47,7 +47,7 @@
             {
                 if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
                 {
-                    Logger.InfoException(e.Message, e);
+                    Logger.Info(e.Message, e);
                     return new ApplicationViewModel(MyApplicationsPageMessages.ApplicationInIncorrectState,
                         ApplicationViewModelStatus.ApplicationInIncorrectState);
                 }
@@ -56,7 +56,7 @@
                     string.Format(
                         "Unhandled custom exception while getting the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
                 return new ApplicationViewModel("Unhandled error", ApplicationViewModelStatus.Error);
             }
             catch (Exception e)
@@ -64,7 +64,7 @@
                 var message = string.Format("Get Application View Model failed for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
 
                 return new ApplicationViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed,
                     ApplicationViewModelStatus.Error);
@@ -98,7 +98,7 @@
                 var message =
                     string.Format(
                         "Patch application View Model failed for user {0}.",candidateId);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
                 throw;
             }
         }
@@ -122,7 +122,7 @@
                     string.Format(
                         "Save application failed for user {0}.",
                         candidateId);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
                 throw;
             }
         }
@@ -154,7 +154,7 @@
             {
                 if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
                 {
-                    Logger.InfoException(e.Message, e);
+                    Logger.Info(e.Message, e);
                     return new ApplicationViewModel(ApplicationViewModelStatus.ApplicationInIncorrectState)
                     {
                         Status = model.Status
@@ -165,7 +165,7 @@
                     string.Format(
                         "Unhandled custom exception while submitting the Application for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
 
                 return FailedApplicationViewModel(vacancyId, candidateId, "Submission of application",
                     ApplicationPageMessages.SubmitApplicationFailed, e);
@@ -176,7 +176,7 @@
                     string.Format(
                         "Submit Application failed for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
 
                 return FailedApplicationViewModel(vacancyId, candidateId, "Submission of application",
                     ApplicationPageMessages.SubmitApplicationFailed, e);
@@ -200,7 +200,7 @@
                     string.Format(
                         "Archive application failed for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
 
                 return FailedApplicationViewModel(vacancyId, candidateId, "Archive of application",
                     ApplicationPageMessages.ArchiveFailed, e);
@@ -224,7 +224,7 @@
             {
                 if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
                 {
-                    Logger.InfoException(e.Message, e);
+                    Logger.Info(e.Message, e);
                     return new ApplicationViewModel();
                 }
 
@@ -232,7 +232,7 @@
                     string.Format(
                         "Unhandled custom exception while deleting the Application for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
 
                 return FailedApplicationViewModel(vacancyId, candidateId, "Delete of application",
                     ApplicationPageMessages.DeleteFailed, e);
@@ -243,7 +243,7 @@
                     string.Format(
                         "Delete application failed for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
 
                 return FailedApplicationViewModel(vacancyId, candidateId, "Delete of application",
                     ApplicationPageMessages.DeleteFailed, e);
@@ -280,7 +280,7 @@
                 var message = string.Format("Get What Happens Next View Model failed for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
 
                 return new WhatHappensNextViewModel(
                     MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
@@ -316,7 +316,7 @@
             {
                 var message = string.Format("Get MyApplications failed for candidate ID: {0}.", candidateId);
 
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
 
                 throw;
             }
@@ -328,7 +328,7 @@
             string failMessage, Exception e)
         {
             var message = string.Format("{0} {1} failed for user {2}", failure, vacancyId, candidateId);
-            Logger.ErrorException(message, e);
+            Logger.Error(message, e);
             return new ApplicationViewModel(failMessage, ApplicationViewModelStatus.Error);
         }
 

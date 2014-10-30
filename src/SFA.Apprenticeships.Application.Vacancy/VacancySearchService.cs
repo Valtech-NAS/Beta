@@ -44,7 +44,7 @@
             catch (Exception e)
             {
                 var message = GetLoggerMessage(FailedMessageFormat, parameters);
-                Logger.DebugException(message, e);
+                Logger.Debug(message, e);
                 throw new CustomException(message, e, ErrorCodes.VacanciesSearchFailed);
             }
         }

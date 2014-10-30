@@ -60,7 +60,10 @@
                 }
             };
 
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var repo = ObjectFactory.GetInstance<IApplicationWriteRepository>();
+#pragma warning restore 0618
 
             ApplicationDetail.CandidateDetails = RegistrationBuilder.Build();
 
@@ -71,8 +74,12 @@
 
         public void DeleteApplications(Guid userCandidateId)
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var writerepo = ObjectFactory.GetInstance<IApplicationWriteRepository>();
             var readrepo = ObjectFactory.GetInstance<IApplicationReadRepository>();
+#pragma warning restore 0618
+
             var candidateApplications = readrepo.GetForCandidate(userCandidateId);
             candidateApplications.ToList().ForEach(a => writerepo.Delete(a.ApplicationId));
         }

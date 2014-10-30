@@ -24,8 +24,11 @@
 
         public Candidate Build()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var repo = ObjectFactory.GetInstance<ICandidateWriteRepository>();
             var repoRead = ObjectFactory.GetInstance<ICandidateReadRepository>();
+#pragma warning restore 0618
 
             Candidate.RegistrationDetails = RegistrationBuilder.Build();
 

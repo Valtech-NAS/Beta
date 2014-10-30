@@ -12,12 +12,15 @@
         [SetUp]
         public void SetUpTests()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<MemoryCacheRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
             });
+#pragma warning restore 0618
         }
     }
 }

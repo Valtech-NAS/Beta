@@ -51,13 +51,17 @@
 
         private static void RegisterDependencies(HttpContextBase contextBase)
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<WebCommonRegistry>();
                 x.For<HttpContextBase>().Use( contextBase ?? GetBasicFakeHttpContext());
             });
+
             WebCommonRegistry.Configure(ObjectFactory.Container);
+#pragma warning restore 0618
         }
 
         private static HttpContextBase GetBasicFakeHttpContext()

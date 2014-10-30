@@ -36,14 +36,17 @@
             _managementClient = new ManagementClient(string.Format("http://{0}", rabitConfig.HostName),
                 rabitConfig.UserName, rabitConfig.Password);
 
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
             });
 
-
             var bs = ObjectFactory.GetInstance<IBootstrapSubcribers>();
+#pragma warning restore 0618
+
             bs.LoadSubscribers(Assembly.GetExecutingAssembly(), "VacancyEtl"); //previously was test_app
         }
 
@@ -69,7 +72,11 @@
             }
 
             // Needed or tests were hanging.
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var bus = ObjectFactory.GetInstance<IBus>();
+#pragma warning restore 0618
+
             bus.Advanced.Dispose();
         }
 
@@ -122,8 +129,12 @@
         [Test, Category("Integration")]
         public void ConsumesSyncAndAsyncMessagesFromQueue()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var bus = ObjectFactory.GetInstance<IBus>();
-            var testMessage = new TestMessage {TestString = "Testing 123"};
+#pragma warning restore 0618
+
+            var testMessage = new TestMessage { TestString = "Testing 123" };
 
             bus.Publish(testMessage);
             Thread.Sleep(5000);

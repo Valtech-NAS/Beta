@@ -79,7 +79,7 @@
             }
             catch (LdapException ldapException)
             {
-                Logger.DebugException("Failed to bind to LDAP: ", ldapException);
+                Logger.Debug("Failed to bind to LDAP: ", ldapException);
 
                 if (ldapException.ErrorCode != ValidationFailed) { throw; }
 

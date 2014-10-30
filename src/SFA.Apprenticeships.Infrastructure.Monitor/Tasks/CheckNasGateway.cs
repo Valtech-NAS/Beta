@@ -46,7 +46,7 @@
             }
             catch (Exception exception)
             {
-                Logger.ErrorException("Error connecting to NAS Gateway vacancy index", exception);
+                Logger.Error("Error connecting to NAS Gateway vacancy index", exception);
             }           
         }
     }

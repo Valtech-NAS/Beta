@@ -31,7 +31,7 @@
                     }
                     catch (Exception exception)
                     {
-                        Logger.ErrorException(string.Format("Error while running task {0}", mt.TaskName), exception);
+                        Logger.Error(string.Format("Error while running task {0}", mt.TaskName), exception);
                     }
 
                     Logger.Debug(string.Format("Finished running task {0}", mt.TaskName));

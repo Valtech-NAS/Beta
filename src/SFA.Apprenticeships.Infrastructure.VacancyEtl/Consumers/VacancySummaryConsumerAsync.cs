@@ -35,7 +35,7 @@
                 {
                     var message = string.Format("Failed indexing vacancy summary {0}. Requeuing.",
                         vacancySummaryToIndex.Id);
-                    Logger.ErrorException(message, ex);
+                    Logger.Error(message, ex);
 
                     _messageBus.PublishMessage(vacancySummaryToIndex);
                 }

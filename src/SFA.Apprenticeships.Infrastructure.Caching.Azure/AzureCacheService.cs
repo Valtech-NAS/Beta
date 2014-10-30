@@ -48,11 +48,11 @@
             {
                 if (cacheTimeSpan != TimeSpan.Zero) 
                 {
-                    Logger.WarnException("Attempt to store item in cache with key: " + key + " with expiry timespan: " + cacheTimeSpan, cacheException);
+                    Logger.Warn("Attempt to store item in cache with key: " + key + " with expiry timespan: " + cacheTimeSpan, cacheException);
                 }
                 else
                 {
-                    Logger.WarnException("Attempt to store item in cache with key: " + key + " using cache default eveiction policy", cacheException);
+                    Logger.Warn("Attempt to store item in cache with key: " + key + " using cache default eveiction policy", cacheException);
                 }
                 
                 return;
@@ -73,7 +73,7 @@
             catch (Exception cacheException)
             {
                 var message = string.Format("Attempt to retreive item from cache with key {0} failed", key);
-                Logger.WarnException(message, cacheException);
+                Logger.Warn(message, cacheException);
                 return null;
             }
 
@@ -95,7 +95,7 @@
             }
             catch (Exception cacheException)
             {
-                Logger.WarnException("Attempt to remove item from cache with key: " + key, cacheException);
+                Logger.Warn("Attempt to remove item from cache with key: " + key, cacheException);
             }
         }
 
@@ -109,7 +109,7 @@
             }
             catch (Exception cacheException)
             {
-                Logger.WarnException("Attempt to clear cache failed", cacheException);
+                Logger.Warn("Attempt to clear cache failed", cacheException);
                 return;
             }
 

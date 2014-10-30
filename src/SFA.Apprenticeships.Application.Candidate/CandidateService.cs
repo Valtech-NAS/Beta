@@ -89,13 +89,13 @@
             catch ( CustomException e)
             {
                 var message = string.Format("Activate user failed for user {0}", username);
-                Logger.DebugException(message,e);
+                Logger.Debug(message,e);
                 throw new CustomException(message, Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode);
             }
             catch (Exception e)
             {
                 var message = string.Format("Activate user failed for user {0}", username);
-                Logger.DebugException(message, e);
+                Logger.Debug(message, e);
                 throw new CustomException(message, Interfaces.Candidates.ErrorCodes.ActivateUserFailed);
             }
         }

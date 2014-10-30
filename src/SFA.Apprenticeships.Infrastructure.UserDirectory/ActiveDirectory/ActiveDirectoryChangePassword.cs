@@ -62,7 +62,7 @@
             }
             catch (DirectoryOperationException e)
             {
-                Logger.ErrorException("DirectoryOperationException with the following details was thrown: ", e);
+                Logger.Error("DirectoryOperationException with the following details was thrown: ", e);
                 throw new CustomException("Password modify request failed", e, ErrorCodes.LdapModifyPasswordError);
             }
         }

@@ -42,15 +42,15 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 }
                 catch (CommunicationException ce)
                 {
-                    Logger.WarnException("CommunicationException from legacy web services", ce);
+                    Logger.Warn("CommunicationException from legacy web services", ce);
                 }
                 catch (TimeoutException te)
                 {
-                    Logger.WarnException("TimeoutException from legacy web services", te);
+                    Logger.Warn("TimeoutException from legacy web services", te);
                 }
                 catch (Exception ex)
                 {
-                    Logger.ErrorException("Exception from VacancySchedulerConsumer", ex);
+                    Logger.Error("Exception from VacancySchedulerConsumer", ex);
                 }
 
                 Thread.Sleep(TimeSpan.FromMinutes(5));
@@ -61,6 +61,8 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
         {
             try
             {
+#pragma warning disable 0618
+                // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
                 ObjectFactory.Initialize(x =>
                 {
                     x.AddRegistry<CommonRegistry>();
@@ -71,6 +73,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                     x.AddRegistry<GatewayVacancyEtlRegistry>();
                     x.AddRegistry<ElasticsearchCommonRegistry>();
                 });
+#pragma warning restore 0618
 
                 Logger.Debug("Vacancy Etl Process IoC initialized");
 
@@ -86,7 +89,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
             }
             catch (Exception ex)
             {
-                Logger.FatalException("Vacancy Etl Process failed to initialise", ex);
+                Logger.Fatal("Vacancy Etl Process failed to initialise", ex);
                 return false;
             }
         }
@@ -109,7 +112,10 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
             Logger.Debug("Vacancy Etl Process OnStop called");
 
             // Kill the bus which will kill any subscriptions
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.GetInstance<IBus>().Advanced.Dispose();
+#pragma warning restore 0618
 
             // Give it 5 seconds to finish processing any in flight subscriptions.
             Thread.Sleep(TimeSpan.FromSeconds(5));

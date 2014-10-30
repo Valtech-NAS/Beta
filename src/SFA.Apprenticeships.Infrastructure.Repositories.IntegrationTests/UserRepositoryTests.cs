@@ -18,11 +18,14 @@
         [SetUp]
         public void SetUp()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
             });
+#pragma warning restore 0618
 
             _userWriteRepository = ObjectFactory.GetInstance<IUserWriteRepository>();
             _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();

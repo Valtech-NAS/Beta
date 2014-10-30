@@ -14,7 +14,11 @@
         [TestCase, Category("Integration")]
         public void ShouldReturnMappedCollectionFromGetVacancySummary()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var service = ObjectFactory.GetInstance<IVacancyIndexDataProvider>();
+#pragma warning restore 0618
+
             List<VacancySummary> result = service.GetVacancySummaries(1).ToList();
 
             result.Should().NotBeNullOrEmpty();

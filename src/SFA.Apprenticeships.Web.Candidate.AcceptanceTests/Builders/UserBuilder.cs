@@ -82,8 +82,11 @@
 
         public User Build()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var repo = ObjectFactory.GetInstance<IUserWriteRepository>();
             var repoRead = ObjectFactory.GetInstance<IUserReadRepository>();
+#pragma warning restore 0618
 
             var userRead = repoRead.Get(User.Username);
             if ( userRead != null)

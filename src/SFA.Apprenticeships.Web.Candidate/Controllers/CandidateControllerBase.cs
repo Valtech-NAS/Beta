@@ -23,10 +23,15 @@
             //TODO: Think about "new"ing this up instead - Mark doesn't like this. Doesn't need to be lazy, is used everywhere
             //TODO: VGA: can't we inject them? It's very difficult to test the controllers if not.
             //TODO: MG: we shouldn't need to test controllers
+
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             UserData = ObjectFactory.GetInstance<IUserDataProvider>();
             AuthenticationTicketService = ObjectFactory.GetInstance<IAuthenticationTicketService>();
 
             var configurationManager = ObjectFactory.GetInstance<IConfigurationManager>();
+#pragma warning restore 0618
+
             FeedbackUrl = configurationManager.TryGetAppSetting("FeedbackUrl") ?? "#";
         }
 

@@ -26,7 +26,7 @@
             catch (Exception e)
             {
                 var message = string.Format("Get vacancy failed for vacancy {0}.", vacancyId);
-                Logger.DebugException(message, e);
+                Logger.Debug(message, e);
                 throw new Domain.Entities.Exceptions.CustomException(
                     message, e, ErrorCodes.GetVacancyDetailsFailed);
             }

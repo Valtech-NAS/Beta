@@ -75,7 +75,7 @@
                 var message = string.Format("Get Vacancy View Model failed for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
 
                 return new VacancyDetailViewModel(VacancyDetailPageMessages.GetVacancyDetailFailed);
             }
@@ -84,7 +84,7 @@
                 var message = string.Format("Get Vacancy View Model failed for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
                 throw;
             }
         }

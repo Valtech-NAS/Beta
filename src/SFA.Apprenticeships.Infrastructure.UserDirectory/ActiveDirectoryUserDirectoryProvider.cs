@@ -137,7 +137,7 @@
                     catch (PasswordException exception)
                     {
                         var message = string.Format("Set password failed for user {0}", userId);
-                        Logger.ErrorException(message, exception);
+                        Logger.Error(message, exception);
                         throw new CustomException(message, exception, ErrorCodes.LdapSetPasswordError);
                     }
                 }

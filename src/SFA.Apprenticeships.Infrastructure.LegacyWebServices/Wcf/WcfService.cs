@@ -10,6 +10,7 @@
     public class WcfService<T> : IWcfService<T>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private static Configuration _configuration;
         private static readonly object _lock = new object();
 
@@ -23,10 +24,12 @@
                 {
                     return;
                 }
+
                 var configMap = new ExeConfigurationFileMap
                 {
                     ExeConfigFilename = configurationManager.ConfigurationFilePath
                 };
+
                 _configuration = ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
             }
         }
@@ -65,18 +68,17 @@
             }
             catch (CommunicationException ex)
             {
-                Logger.FatalException("WCF CommunicationException ", ex);
-
+                Logger.Fatal("WCF CommunicationException ", ex);
                 throw; // handle WCF CommunicationException
             }
             catch (TimeoutException ex)
             {
-                Logger.FatalException("WCF TimeoutException ", ex);
+                Logger.Fatal("WCF TimeoutException ", ex);
                 throw; // handle WCF TimeoutException
             }
             catch (Exception exception)
             {
-                Logger.ErrorException("Non-WCF TimeoutException ", exception);
+                Logger.Error("Non-WCF TimeoutException ", exception);
                 throw; // handle non-WCF Exception
             }
             finally

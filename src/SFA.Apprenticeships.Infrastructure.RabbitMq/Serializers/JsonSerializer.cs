@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.Serializers
 {
     using System.Text;
+    using ServiceStack;
     using ServiceStack.Text;
 
     /// <summary>

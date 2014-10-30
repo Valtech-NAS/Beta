@@ -57,7 +57,7 @@
             {
                 const string errorMessage = "Error checking user name availability";
                 var message = string.Format("{0} for {1}", errorMessage, username);
-                Logger.ErrorException(message, ex);
+                Logger.Error(message, ex);
 
                 userNameAvailability.HasError = true;
                 userNameAvailability.ErrorMessage = errorMessage;
@@ -81,7 +81,7 @@
             {
                 const string errorMessage = "Error getting user status";
                 var message = string.Format("{0} for {1}", errorMessage, username);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
 
                 return new UserStatusesViewModel(e.Message);
             }
@@ -110,7 +110,7 @@
                 var message = string.Format("Get Application status failed for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
                 throw;
             }
         }
@@ -135,16 +135,16 @@
 
                 if (e.Code == ErrorCodes.UserInIncorrectStateError)
                 {
-                    Logger.InfoException(message, e);
+                    Logger.Info(message, e);
                 }
                 else {
-                    Logger.ErrorException(message, e);
+                    Logger.Error(message, e);
                 }
                 return false;
             }
             catch (Exception e)
             {
-                Logger.ErrorException("Candidate registration failed for " + model.EmailAddress, e);
+                Logger.Error("Candidate registration failed for " + model.EmailAddress, e);
                 return false;
             }
         }
@@ -171,25 +171,25 @@
                 switch (e.Code)
                 {
                     case Application.Interfaces.Candidates.ErrorCodes.ActivateUserFailed:
-                        Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, e);
+                        Logger.Error("Candidate activation failed for " + model.EmailAddress, e);
                         message = ActivationPageMessages.ActivationFailed;
                         return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error,
                             message);
 
                     case Application.Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode:
-                        Logger.InfoException("Candidate activation failed for " + model.EmailAddress, e);
+                        Logger.Info("Candidate activation failed for " + model.EmailAddress, e);
                         message = ActivationPageMessages.ActivationCodeIncorrect;
                         return new ActivationViewModel(model.EmailAddress, model.ActivationCode,
                             ActivateUserState.InvalidCode,
                             message);
                     default:
-                        Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, e);
+                        Logger.Error("Candidate activation failed for " + model.EmailAddress, e);
                         break;
                 }
             }
             catch (Exception e)
             {
-                Logger.ErrorException("Candidate activation failed for " + model.EmailAddress, e);
+                Logger.Error("Candidate activation failed for " + model.EmailAddress, e);
                 throw;
             }
 
@@ -238,7 +238,7 @@
             }
             catch (Exception e)
             {
-                Logger.ErrorException("Candidate login failed for " + model.EmailAddress, e);
+                Logger.Error("Candidate login failed for " + model.EmailAddress, e);
 
                 return new LoginResultViewModel(LoginPageMessages.LoginFailedErrorText)
                 {
@@ -278,7 +278,7 @@
             }
             catch (Exception e)
             {
-                Logger.ErrorException("Send password reset code failed for " + model.EmailAddress, e);
+                Logger.Error("Send password reset code failed for " + model.EmailAddress, e);
 
                 return false;
             }
@@ -297,7 +297,7 @@
             catch (Exception e)
             {
                 var message = string.Format("Send account unlock code failed for " + model.EmailAddress);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
                 return new AccountUnlockViewModel(message){EmailAddress = model.EmailAddress};
             }
         }
@@ -324,7 +324,7 @@
             }
             catch (CustomException e)
             {
-                Logger.InfoException("Reset forgotten password failed for " + result.EmailAddress, e);
+                Logger.Info("Reset forgotten password failed for " + result.EmailAddress, e);
 
                 switch (e.Code)
                 {
@@ -341,7 +341,7 @@
 
                     case ErrorCodes.CandidateCreationError:
                         result.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
-                        Logger.ErrorException("Reset forgotten password failed for " + result.EmailAddress, e);
+                        Logger.Error("Reset forgotten password failed for " + result.EmailAddress, e);
                         break;
                     default:
                         result.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
@@ -350,7 +350,7 @@
             }
             catch (Exception e)
             {
-                Logger.ErrorException("Reset forgotten password failed for " + result.EmailAddress, e);
+                Logger.Error("Reset forgotten password failed for " + result.EmailAddress, e);
 
                 result.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
             }
@@ -373,22 +373,22 @@
                 switch (e.Code)
                 {
                     case ErrorCodes.UserInIncorrectStateError:
-                        Logger.WarnException(e.Message, e);
+                        Logger.Warn(e.Message, e);
                         return new AccountUnlockViewModel {Status = AccountUnlockState.UserInIncorrectState};
                     case Application.Interfaces.Users.ErrorCodes.AccountUnlockCodeExpired:
-                        Logger.WarnException(e.Message, e);
+                        Logger.Warn(e.Message, e);
                         return new AccountUnlockViewModel {Status = AccountUnlockState.AccountUnlockCodeExpired};
                     case Application.Interfaces.Users.ErrorCodes.AccountUnlockCodeInvalid:
-                        Logger.InfoException(e.Message, e);
+                        Logger.Info(e.Message, e);
                         return new AccountUnlockViewModel {Status = AccountUnlockState.AccountUnlockCodeInvalid};
                     default:
-                        Logger.ErrorException(e.Message,e);
+                        Logger.Error(e.Message,e);
                         return new AccountUnlockViewModel { Status = AccountUnlockState.Error };
                 }
             }
             catch (Exception e)
             {
-                Logger.ErrorException("Account unlock failed for " + model.EmailAddress, e);
+                Logger.Error("Account unlock failed for " + model.EmailAddress, e);
                 return new AccountUnlockViewModel{ Status = AccountUnlockState.Error };
             }
         }
@@ -404,12 +404,12 @@
             }
             catch (CustomException e)
             {
-                Logger.InfoException("Reset activation code failed for " + username, e);
+                Logger.Info("Reset activation code failed for " + username, e);
                 return false;
             }
             catch (Exception e)
             {
-                Logger.ErrorException("Reset activation code failed for " + username, e);
+                Logger.Error("Reset activation code failed for " + username, e);
                 return false;
             }
         }
@@ -425,7 +425,7 @@
             catch (Exception e)
             {
                 var message = string.Format("GetCandidate for user {0} failed.", username);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
                 throw;
             }
         }
@@ -439,7 +439,7 @@
             catch (Exception e)
             {
                 var message = string.Format("GetCandidate for user with Id={0} failed.", candidateId);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
                 throw;
             }
         }

@@ -63,7 +63,7 @@
                         string.Format(
                             "Error while updating an application in draft state with the new user personal details for user {0}",
                             candidate.EntityId);
-                    Logger.ErrorException(message, e);
+                    Logger.Error(message, e);
                 }
             });
 

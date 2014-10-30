@@ -36,6 +36,8 @@ namespace SFA.Apprenticeships.Web.Candidate
             bool useCache;
             bool.TryParse(useCacheSetting, out useCache);
 
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
@@ -64,6 +66,7 @@ namespace SFA.Apprenticeships.Web.Candidate
             });
 
             WebCommonRegistry.Configure(ObjectFactory.Container);
+#pragma warning restore 0618
         }
     }
 }

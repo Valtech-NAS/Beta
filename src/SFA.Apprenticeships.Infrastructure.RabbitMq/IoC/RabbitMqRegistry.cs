@@ -24,7 +24,10 @@
         /// </summary>
         public static void DisposeResources()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.GetInstance<IBus>().Advanced.Dispose();
+#pragma warning restore 0618
         }
     }
 }

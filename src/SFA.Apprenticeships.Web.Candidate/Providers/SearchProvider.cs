@@ -72,13 +72,13 @@
                         break;
                 }
 
-                Logger.ErrorException(errorMessage, e);
+                Logger.Error(errorMessage, e);
                 return new LocationsViewModel(message);
             }
             catch (Exception e)
             {
                 var message = string.Format("Find location failed for placename or postcode {0}", placeNameOrPostcode);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
                 throw;
             }
         }
@@ -142,12 +142,12 @@
             }
             catch (CustomException ex)
             {
-                Logger.ErrorException("Find vacancies failed. Check inner details for more info", ex);
+                Logger.Error("Find vacancies failed. Check inner details for more info", ex);
                 return new VacancySearchResponseViewModel(VacancySearchResultsPageMessages.VacancySearchFailed);
             }
             catch (Exception e)
             {
-                Logger.ErrorException("Find vacancies failed. Check inner details for more info", e);
+                Logger.Error("Find vacancies failed. Check inner details for more info", e);
                 throw;
             }
         }
@@ -163,7 +163,7 @@
             catch (Exception e)
             {
                 var message = string.Format("IsValidPostcode failed for postcode {0}.", postcode);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
                 throw;
             }
         }
@@ -182,14 +182,14 @@
             catch (CustomException e)
             {
                 var message = string.Format("FindAddresses for postcode {0} failed.", postcode);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
                 addressSearchViewModel.ErrorMessage = e.Message;
                 addressSearchViewModel.HasError = true;
             }
             catch (Exception e)
             {
                 var message = string.Format("FindAddresses for postcode {0} failed.", postcode);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
                 throw;
             }
 

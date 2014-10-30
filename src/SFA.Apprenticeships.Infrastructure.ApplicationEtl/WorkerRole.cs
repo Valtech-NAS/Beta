@@ -41,15 +41,15 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                 }
                 catch (CommunicationException ce)
                 {
-                    Logger.WarnException("CommunicationException from ApplicationSchedulerConsumer", ce);
+                    Logger.Warn("CommunicationException from ApplicationSchedulerConsumer", ce);
                 }
                 catch (TimeoutException te)
                 {
-                    Logger.WarnException("TimeoutException from ApplicationSchedulerConsumer", te);
+                    Logger.Warn("TimeoutException from ApplicationSchedulerConsumer", te);
                 }
                 catch (Exception ex)
                 {
-                    Logger.ErrorException("Exception from ApplicationSchedulerConsumer", ex);
+                    Logger.Error("Exception from ApplicationSchedulerConsumer", ex);
                 }
 
                 Thread.Sleep(TimeSpan.FromMinutes(5));
@@ -60,6 +60,8 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
         {
             try
             {
+#pragma warning disable 0618
+                // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
                 ObjectFactory.Initialize(x =>
                 {
                     x.AddRegistry<CommonRegistry>();
@@ -70,6 +72,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                     x.AddRegistry<ApplicationEtlRegistry>();
                     x.AddRegistry<ApplicationRepositoryRegistry>();
                 });
+#pragma warning restore 0618
 
                 Logger.Debug("Application Etl Process IoC initialized");
 
@@ -85,7 +88,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
             }
             catch (Exception ex)
             {
-                Logger.FatalException("Application Etl Process failed to initialise", ex);
+                Logger.Fatal("Application Etl Process failed to initialise", ex);
                 return false;
             }
         }
@@ -108,7 +111,10 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
             Logger.Debug("Application Etl Process OnStop called");
 
             // Kill the bus which will kill any subscriptions
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.GetInstance<IBus>().Advanced.Dispose();
+#pragma warning restore 0618
 
             // Give it 5 seconds to finish processing any in flight subscriptions.
             Thread.Sleep(TimeSpan.FromSeconds(5));

@@ -37,7 +37,7 @@
                 catch (Exception e)
                 {
                     var message = string.Format("Postcode lookup failed for postcode {0}.", placeNameOrPostcode);
-                    Logger.DebugException(message, e);
+                    Logger.Debug(message, e);
                     throw new Domain.Entities.Exceptions.CustomException(
                         message, e, ErrorCodes.PostcodeLookupFailed);
                 }
@@ -65,7 +65,7 @@
             catch (Exception e)
             {
                 const string message = "Location lookup failed.";
-                Logger.DebugException(message, e);
+                Logger.Debug(message, e);
                 throw new Domain.Entities.Exceptions.CustomException(
                     message, e, ErrorCodes.LocationLookupFailed);
             }

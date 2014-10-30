@@ -16,13 +16,19 @@
 
         public VacancyDetailViewModelMapperTests()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Initialize(x => x.AddRegistry<CandidateWebRegistry>());
+#pragma warning restore 0618
         }
 
         [SetUp]
         public void Setup()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             _mapper = ObjectFactory.GetInstance<IMapper>();
+#pragma warning restore 0618
         }
 
         [Test]

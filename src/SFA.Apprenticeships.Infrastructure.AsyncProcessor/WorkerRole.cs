@@ -52,7 +52,10 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
             Logger.Debug("AsyncProcessor OnStop called.");
 
             // Kill the bus which will kill any subscriptions
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.GetInstance<IBus>().Advanced.Dispose();
+#pragma warning restore 0618
 
             // Give it 5 seconds to finish processing any in flight subscriptions.
             Thread.Sleep(TimeSpan.FromSeconds(5));
@@ -69,20 +72,24 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
                 Logger.Debug("AsyncProcessor Initialising...");
 
                 InitializeIoC();
-                InitializeRabbitMQSubscribers();
+                InitialiseRabbitMQSubscribers();
 
                 Logger.Debug("AsyncProcessor Initialised.");
             }
             catch (Exception e)
             {
-                Logger.ErrorException("AsyncProcessor Initialisation error.", e);
+                Logger.Error("AsyncProcessor Initialisation error.", e);
             }
         }
 
-        private static void InitializeRabbitMQSubscribers()
+        private static void InitialiseRabbitMQSubscribers()
         {
             const string asyncProcessorSubscriptionId = "AsyncProcessor";
+
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var bootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
+#pragma warning restore 0618
 
             Logger.Debug("RabbitMQ initialising");
 
@@ -95,6 +102,8 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
         {
             Logger.Debug("IoC container initialising");
 
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
@@ -105,6 +114,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<AsyncProcessorRegistry>();
             });
+#pragma warning restore 0618
 
             Logger.Debug("IoC container initialised");
         }

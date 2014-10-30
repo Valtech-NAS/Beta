@@ -32,7 +32,7 @@
             catch (Exception e)
             {
                 var message = string.Format("FindAddress failed for postcode {0}.", postcode);
-                Logger.DebugException(message, e);
+                Logger.Debug(message, e);
                 throw new Domain.Entities.Exceptions.CustomException(
                     message, e, ErrorCodes.AddressSearchFailed);
             }

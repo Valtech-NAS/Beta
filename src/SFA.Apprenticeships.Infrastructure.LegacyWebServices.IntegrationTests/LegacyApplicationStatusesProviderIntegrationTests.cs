@@ -30,6 +30,8 @@
         [SetUp]
         public void SetUp()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
@@ -42,6 +44,7 @@
             _legacyCandidateProvider = ObjectFactory.GetInstance<ILegacyCandidateProvider>();
             _legacyApplicationProvider = ObjectFactory.GetInstance<ILegacyApplicationProvider>();
             _legacyApplicationStatusesProvider = ObjectFactory.GetInstance<ILegacyApplicationStatusesProvider>();
+#pragma warning restore 0618
         }
 
         [Test, Category("Integration")]

@@ -66,7 +66,7 @@
             catch (Exception ex)
             {
                 // if fails just return apps with their current status
-                Logger.ErrorException("Failed to update candidate's application statuses from legacy", ex);
+                Logger.Error("Failed to update candidate's application statuses from legacy", ex);
             }
 
             return _applicationReadRepository.GetForCandidate(candidateId);

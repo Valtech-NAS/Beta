@@ -13,18 +13,25 @@
         [SetUp]
         public void SetUp()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
             });
+#pragma warning restore 0618
         }
 
         [Test, Category("Integration")]
         public void ShouldMatchExactPlaceName()
         {
             // arrange
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var service = ObjectFactory.GetInstance<ILocationLookupProvider>();
+#pragma warning restore 0618
+
             const string term = "Cheylesmore";
 
             // act
@@ -39,7 +46,11 @@
         public void ShouldMatchFuzzyPlaceName()
         {
             // arrange
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var service = ObjectFactory.GetInstance<ILocationLookupProvider>();
+#pragma warning restore 0618
+
             const string term = "Chellsmore";
 
             // act

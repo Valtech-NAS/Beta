@@ -14,19 +14,27 @@
         [SetUp]
         public void SetUp()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<CommonRegistry>();
             });
+#pragma warning restore 0618
         }
 
         [Test, Category("Integration")]
         public void ShouldCreateUpdateAndRemoveCandidate()
         {
             // arrange
+
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var writer = ObjectFactory.GetInstance<ICandidateWriteRepository>();
             var reader = ObjectFactory.GetInstance<ICandidateReadRepository>();
+#pragma warning restore 0618
+
             var candidate = CreateTestCandidate();
 
             // act, assert

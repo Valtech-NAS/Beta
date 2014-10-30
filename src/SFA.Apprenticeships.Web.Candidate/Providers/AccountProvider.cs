@@ -40,7 +40,7 @@
                     string.Format(
                         "Unexpected error while getting settings view model on AccountProvider for candidate with Id={0}.",
                         candidateId);
-                Logger.ErrorException(message, e);
+                Logger.Error(message, e);
                 throw;
             }
         }
@@ -60,7 +60,7 @@
             }
             catch (Exception e)
             {
-                Logger.ErrorException("Save settings failed for candidate " + candidateId, e);
+                Logger.Error("Save settings failed for candidate " + candidateId, e);
 
                 return false;
             }

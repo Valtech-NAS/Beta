@@ -24,7 +24,11 @@
             var settings = new ConnectionSettings(_elasticsearchConfiguration.DefaultHost);
             _elasticClient = new ElasticClient(settings);
 
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             _elasticsearchClientFactory = ObjectFactory.GetInstance<IElasticsearchClientFactory>();
+#pragma warning restore 0618
+
             _vacancyIndexAlias = _elasticsearchClientFactory.GetIndexNameForType(typeof(VacancySummary));
         }
 
@@ -33,7 +37,11 @@
         {
             var scheduledDate = DateTime.Now; //new DateTime(2000, 1, 1);
             var indexName = string.Format("{0}.{1}", _vacancyIndexAlias, scheduledDate.ToString("yyyy-MM-dd-HH-mm"));
+
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var vis = ObjectFactory.GetInstance<IVacancyIndexerService>();
+#pragma warning restore 0618
 
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeFalse();
             vis.CreateScheduledIndex(scheduledDate);
@@ -51,7 +59,11 @@
         {
             var scheduledDate = DateTime.Now; //new DateTime(2000, 1, 1);
             var indexName = string.Format("{0}.{1}", _vacancyIndexAlias, scheduledDate.ToString("yyyy-MM-dd-HH-mm"));
+
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var vis = ObjectFactory.GetInstance<IVacancyIndexerService>();
+#pragma warning restore 0618
 
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeFalse();
             vis.CreateScheduledIndex(scheduledDate);
@@ -67,7 +79,10 @@
         {
             var indexName = _vacancyIndexAlias + ".2000-01-01-00-00";
             var scheduledDate = new DateTime(2000, 1, 1);
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var vis = ObjectFactory.GetInstance<IVacancyIndexerService>();
+#pragma warning restore 0618
 
             //DeleteIndexIfExists(indexName);
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeFalse();

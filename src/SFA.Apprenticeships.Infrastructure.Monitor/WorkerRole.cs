@@ -45,15 +45,15 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 }
                 catch (CommunicationException ce)
                 {
-                    Logger.WarnException("CommunicationException from MonitorSchedulerConsumer", ce);
+                    Logger.Warn("CommunicationException from MonitorSchedulerConsumer", ce);
                 }
                 catch (TimeoutException te)
                 {
-                    Logger.WarnException("TimeoutException from MonitorSchedulerConsumer", te);
+                    Logger.Warn("TimeoutException from MonitorSchedulerConsumer", te);
                 }
                 catch (Exception ex)
                 {
-                    Logger.ErrorException("Exception from MonitorSchedulerConsumer", ex);
+                    Logger.Error("Exception from MonitorSchedulerConsumer", ex);
                 }
 
                 Thread.Sleep(TimeSpan.FromMinutes(5));
@@ -65,6 +65,8 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
         {
             try
             {
+#pragma warning disable 0618
+                // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
                 ObjectFactory.Initialize(x =>
                 {
                     x.AddRegistry<CommonRegistry>();
@@ -86,6 +88,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 Logger.Debug("Monitor Process IoC initialized");
 
                 _monitorControlQueueConsumer = ObjectFactory.GetInstance<MonitorControlQueueConsumer>();
+#pragma warning restore 0618
 
                 Logger.Debug("Monitor Process setup complete");
 
@@ -93,7 +96,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
             }
             catch (Exception ex)
             {
-                Logger.FatalException("Monitor Process failed to initialise", ex);
+                Logger.Fatal("Monitor Process failed to initialise", ex);
                 return false;
             }
         }

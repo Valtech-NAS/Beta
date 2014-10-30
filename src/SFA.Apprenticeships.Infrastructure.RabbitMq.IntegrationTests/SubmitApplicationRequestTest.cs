@@ -17,6 +17,8 @@
         [SetUp]
         public void Setup()
         {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
@@ -24,13 +26,18 @@
             });
 
             _bus = ObjectFactory.GetInstance<IMessageBus>();
+#pragma warning restore 0618
         }
 
         [TearDown]
         public void TearDown()
         {
             // This is needed or the build hangs
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var busToTidy = ObjectFactory.GetInstance<IBus>();
+#pragma warning restore 0618
+
             busToTidy.Advanced.Dispose();
         }
 
