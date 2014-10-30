@@ -43,7 +43,7 @@
             var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
-            model.EmployerName.ShouldBeEquivalentTo(vacancyDetail.EmployerName);
+            model.EmployerName.Should().Be(vacancyDetail.EmployerName);
         }
 
         [Test]
@@ -59,7 +59,7 @@
             var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
-            model.EmployerName.ShouldBeEquivalentTo(vacancyDetail.AnonymousEmployerName);
+            model.EmployerName.Should().Be(vacancyDetail.AnonymousEmployerName);
         }
 
         [Test]
@@ -72,9 +72,10 @@
             };
 
             var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            const string expectedWage = "£101.19";
 
             model.Should().NotBeNull();
-            model.Wage.ShouldAllBeEquivalentTo("£101.19");
+            model.Wage.Should().Be(expectedWage);
         }
 
         [Test]
@@ -89,7 +90,7 @@
             var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
-            model.Wage.ShouldAllBeEquivalentTo(vacancyDetail.WageDescription);
+            model.Wage.Should().Be(vacancyDetail.WageDescription);
         }
     }
 }
