@@ -28,10 +28,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
         {
             Logger.Debug("Application Etl Process Run Called");
 
-            if (!Initialise())
-            {
-                return;
-            }
+            Initialise();
 
             while (true)
             {
@@ -56,7 +53,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
             }
         }
 
-        private bool Initialise()
+        private void Initialise()
         {
             try
             {
@@ -83,13 +80,11 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                 _applicationEtlControlQueueConsumer = ObjectFactory.GetInstance<ApplicationEtlControlQueueConsumer>();
 
                 Logger.Debug("Application Etl Process setup complete");
-
-                return true;
             }
             catch (Exception ex)
             {
                 Logger.Fatal("Application Etl Process failed to initialise", ex);
-                return false;
+                throw ex;
             }
         }
 

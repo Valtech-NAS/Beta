@@ -32,10 +32,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
         {
             Logger.Debug("Monitor Process Run Called");
 
-            if (!Initialise())
-            {
-                return;
-            }
+            Initialise();
 
             while (true)
             {
@@ -61,7 +58,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
         }
 
         #region Helpers
-        private bool Initialise()
+        private void Initialise()
         {
             try
             {
@@ -91,13 +88,11 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 #pragma warning restore 0618
 
                 Logger.Debug("Monitor Process setup complete");
-
-                return true;
             }
             catch (Exception ex)
             {
                 Logger.Fatal("Monitor Process failed to initialise", ex);
-                return false;
+                throw ex;
             }
         }
 

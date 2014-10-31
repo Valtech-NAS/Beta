@@ -23,22 +23,19 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        //private VacancyEtlControlQueueConsumer _vacancyEtlControlQueueConsumer;
+        private VacancyEtlControlQueueConsumer _vacancyEtlControlQueueConsumer;
 
         public override void Run()
         {
             Logger.Debug("Vacancy Etl Process Run Called");
 
-            if (!Initialise())
-            {
-                return;
-            }
+            Initialise();
 
             while (true)
             {
                 try
                 {
-                    //_vacancyEtlControlQueueConsumer.CheckScheduleQueue().Wait();
+                    _vacancyEtlControlQueueConsumer.CheckScheduleQueue().Wait();
                 }
                 catch (CommunicationException ce)
                 {
@@ -57,7 +54,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
             }
         }
 
-        private bool Initialise()
+        private void Initialise()
         {
             try
             {
@@ -66,31 +63,30 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 ObjectFactory.Initialize(x =>
                 {
                     x.AddRegistry<CommonRegistry>();
-                    //x.AddRegistry<AzureCommonRegistry>();
-                    //x.AddRegistry<VacancyIndexerRegistry>();
-                    //x.AddRegistry<RabbitMqRegistry>();
+                    x.AddRegistry<AzureCommonRegistry>();
+                    x.AddRegistry<VacancyIndexerRegistry>();
+                    x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<LegacyWebServicesRegistry>();
                     x.AddRegistry<GatewayVacancyEtlRegistry>();
                     x.AddRegistry<ElasticsearchCommonRegistry>();
                 });
 #pragma warning restore 0618
 
-                //Logger.Debug("Vacancy Etl Process IoC initialized");
+                Logger.Debug("Vacancy Etl Process IoC initialized");
 
-                //var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
-                //subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof (VacancySummaryConsumerAsync)),
-                //    "VacancyEtl");
-                //Logger.Debug("Rabbit subscriptions setup");
+                var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
+                subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(VacancySummaryConsumerAsync)),
+                    "VacancyEtl");
+                Logger.Debug("Rabbit subscriptions setup");
 
-                //_vacancyEtlControlQueueConsumer = ObjectFactory.GetInstance<VacancyEtlControlQueueConsumer>();
+                _vacancyEtlControlQueueConsumer = ObjectFactory.GetInstance<VacancyEtlControlQueueConsumer>();
 
-                //Logger.Debug("Vacancy Etl Process setup complete");
-                return true;
+                Logger.Debug("Vacancy Etl Process setup complete");
             }
             catch (Exception ex)
             {
                 Logger.Fatal("Vacancy Etl Process failed to initialise", ex);
-                return false;
+                throw ex;
             }
         }
 

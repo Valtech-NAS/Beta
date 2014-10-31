@@ -111,9 +111,9 @@ csx
 *.cscfg
 *.csdef
 settings.config
-dataCacheClient.config
 emailSettings.config
 *.azurePubxml
+*.wadcfg
 
 # Windows Store app package directory
 AppPackages/
@@ -170,9 +170,3 @@ $RECYCLE.BIN/
 [Ww]sdl
 
 *.dgml
-src/SFA.Apprenticeships.Infrastructure.VacancyEtl/Configs/emailSettings.config
-src/SFA.Apprenticeships.Web.Candidate.Azure/rcf/Local/SFA.Apprenticeships.Web.CandidateContent/diagnostics.wadcfg
-*.wadcfg
-*.wadcfg
-*.wadcfg
-*.wadcfg
