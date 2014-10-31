@@ -23,7 +23,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private VacancyEtlControlQueueConsumer _vacancyEtlControlQueueConsumer;
+        //private VacancyEtlControlQueueConsumer _vacancyEtlControlQueueConsumer;
 
         public override void Run()
         {
@@ -38,7 +38,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
             {
                 try
                 {
-                    _vacancyEtlControlQueueConsumer.CheckScheduleQueue().Wait();
+                    //_vacancyEtlControlQueueConsumer.CheckScheduleQueue().Wait();
                 }
                 catch (CommunicationException ce)
                 {
@@ -75,16 +75,16 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 });
 #pragma warning restore 0618
 
-                Logger.Debug("Vacancy Etl Process IoC initialized");
+                //Logger.Debug("Vacancy Etl Process IoC initialized");
 
-                var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
-                subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof (VacancySummaryConsumerAsync)),
-                    "VacancyEtl");
-                Logger.Debug("Rabbit subscriptions setup");
+                //var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
+                //subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof (VacancySummaryConsumerAsync)),
+                //    "VacancyEtl");
+                //Logger.Debug("Rabbit subscriptions setup");
 
-                _vacancyEtlControlQueueConsumer = ObjectFactory.GetInstance<VacancyEtlControlQueueConsumer>();
+                //_vacancyEtlControlQueueConsumer = ObjectFactory.GetInstance<VacancyEtlControlQueueConsumer>();
 
-                Logger.Debug("Vacancy Etl Process setup complete");
+                //Logger.Debug("Vacancy Etl Process setup complete");
                 return true;
             }
             catch (Exception ex)
