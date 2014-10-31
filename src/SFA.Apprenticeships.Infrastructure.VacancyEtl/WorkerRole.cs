@@ -86,7 +86,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
             catch (Exception ex)
             {
                 Logger.Fatal("Vacancy Etl Process failed to initialise", ex);
-                throw ex;
+                throw;
             }
         }
 

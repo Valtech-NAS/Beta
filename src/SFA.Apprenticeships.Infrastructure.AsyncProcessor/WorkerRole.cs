@@ -79,7 +79,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
             catch (Exception e)
             {
                 Logger.Error("AsyncProcessor Initialisation error.", e);
-                throw e;
+                throw;
             }
         }
 

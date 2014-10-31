@@ -84,7 +84,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
             catch (Exception ex)
             {
                 Logger.Fatal("Application Etl Process failed to initialise", ex);
-                throw ex;
+                throw;
             }
         }
 

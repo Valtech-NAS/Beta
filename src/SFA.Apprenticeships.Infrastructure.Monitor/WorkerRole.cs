@@ -92,7 +92,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
             catch (Exception ex)
             {
                 Logger.Fatal("Monitor Process failed to initialise", ex);
-                throw ex;
+                throw;
             }
         }
 
