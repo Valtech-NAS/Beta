@@ -9,8 +9,10 @@ namespace SFA.Apprenticeships.Web.Candidate
         /// </summary>
         /// <param name="bundles">The bundles.</param>
         public static void RegisterBundles(BundleCollection bundles)
-        {         
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+        {
+            bundles.UseCdn = true;
+
+            bundles.Add(new ScriptBundle("~/bundles/jquery", "//code.jquery.com/jquery-1.11.1.min.js").Include(
                 "~/Content/_assets/js/vendor/jquery-1.11.1.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nascript").Include(
@@ -23,7 +25,7 @@ namespace SFA.Apprenticeships.Web.Candidate
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
-               "~/Content/_assets/js/vendor/knockout-3.1.0.js",
+                "~/Content/_assets/js/vendor/knockout-3.1.0.js",
                 "~/Content/_assets/js/vendor/knockout.validation.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas").Include(
