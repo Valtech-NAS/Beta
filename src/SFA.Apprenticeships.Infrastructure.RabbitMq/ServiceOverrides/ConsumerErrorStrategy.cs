@@ -10,15 +10,11 @@
         {
         }
 
-        // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-
-        /*
-        public override PostExceptionAckStrategy HandleConsumerError(ConsumerExecutionContext context, System.Exception exception)
+        public override AckStrategy HandleConsumerError(ConsumerExecutionContext context, System.Exception exception)
         {
             return context.Info.Redelivered
-                       ? base.HandleConsumerError(context, exception)
-                       : PostExceptionAckStrategy.ShouldNackWithRequeue;
+                ? base.HandleConsumerError(context, exception)
+                : AckStrategies.NackWithRequeue;
         }
-        */
     }
 }
