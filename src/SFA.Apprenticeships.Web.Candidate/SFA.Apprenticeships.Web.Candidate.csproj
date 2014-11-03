@@ -351,9 +351,6 @@
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Web.MSDN.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
     <None Include="Web.Pre.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
