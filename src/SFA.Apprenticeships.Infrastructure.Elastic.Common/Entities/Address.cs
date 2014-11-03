@@ -32,5 +32,8 @@
 
         [ElasticProperty(Name = "postcode", Type = FieldType.String, Store = true, Index = FieldIndexOption.Analyzed)]
         public string Postcode { get; set; }
+
+        [ElasticProperty(Name = "postcodesearch", Type = FieldType.String, Store = true, Index = FieldIndexOption.Analyzed)]
+        public string PostcodeSearch { get; set; }
     }
 }

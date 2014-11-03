@@ -30,12 +30,14 @@
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(Elastic.Common.Entities.Address));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(Elastic.Common.Entities.Address));
 
+            var postcodeSearch = postcode.Replace(" ", "");
+
             var search = client.Search<Elastic.Common.Entities.Address>(s =>
             {
                 s.Index(indexName);
                 s.Type(documentTypeName);
                 s.Size(100);
-                s.Query(q => q.MatchPhrase(mpqd => mpqd.OnField(a => a.Postcode).Query(postcode)));
+                s.Query(q => q.MatchPhrase(mpqd => mpqd.OnField(a => a.PostcodeSearch).Query(postcodeSearch)));
                 return s;
             });
 
