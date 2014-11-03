@@ -146,6 +146,17 @@
 
     <!-- Placed at the end of the document so the pages load faster -->
     @Scripts.Render("~/bundles/jquery")
+    
+    <script type="text/javascript">
+        if (typeof jQuery === 'undefined') {
+            var e = document.createElement("script");
+
+            e.src = '@Url.Content("~/Content/_assets/js/vendor/jquery-1.11.1.js")';
+            e.type = "text/javascript";
+            document.getElementsByTagName("head")[0].appendChild(e);
+        }
+    </script>    
+
     @Scripts.Render("~/bundles/nascript")
     @Scripts.Render("~/bundles/vendor")
     @Scripts.Render("~/bundles/nas")

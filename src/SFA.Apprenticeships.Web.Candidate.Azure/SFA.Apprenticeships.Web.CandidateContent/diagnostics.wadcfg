@@ -18,13 +18,13 @@
     <PerformanceCounterConfiguration counterSpecifier="\Memory\Committed Bytes" sampleRate="PT1S" />
     <PerformanceCounterConfiguration counterSpecifier="\LogicalDisk(_Total)\Disk Read Bytes/sec" sampleRate="PT1S" />
     <PerformanceCounterConfiguration counterSpecifier="\ASP.NET\Applications Running" sampleRate="PT1S" />
-    <PerformanceCounterConfiguration counterSpecifier="\Process(WaWorkerHost)\% Processor Time" sampleRate="PT1S" />
-    <PerformanceCounterConfiguration counterSpecifier="\Process(WaWorkerHost)\Thread Count" sampleRate="PT1S" />
     <PerformanceCounterConfiguration counterSpecifier="\Process(WaWebHost)\% Processor Time" sampleRate="PT1S" />
     <PerformanceCounterConfiguration counterSpecifier="\Process(WaWebHost)\Thread Count" sampleRate="PT1S" />
     <PerformanceCounterConfiguration counterSpecifier="\.NET CLR Loading(_Global_)\% Time Loading" sampleRate="PT1S" />
+    <PerformanceCounterConfiguration counterSpecifier="\.NET CLR LocksAndThreads(_Global_)\Contention Rate / sec" sampleRate="PT1S" />
     <PerformanceCounterConfiguration counterSpecifier="\.NET CLR Memory(_Global_)\# Bytes in all Heaps" sampleRate="PT1S" />
     <PerformanceCounterConfiguration counterSpecifier="\.NET CLR Networking(_Global_)\Connections Established" sampleRate="PT1S" />
+    <PerformanceCounterConfiguration counterSpecifier="\.NET CLR Remoting(_Global_)\Remote Calls/sec" sampleRate="PT1S" />
   </PerformanceCounters>
   <WindowsEventLog bufferQuotaInMB="1024" scheduledTransferPeriod="PT1M" scheduledTransferLogLevelFilter="Warning">
     <DataSource name="Application!*" />

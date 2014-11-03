@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DiagnosticMonitorConfiguration configurationChangePollInterval="PT1M" overallQuotaInMB="4096" xmlns="http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration">
-   <DiagnosticInfrastructureLogs bufferQuotaInMB="256" scheduledTransferPeriod="PT5M" scheduledTransferLogLevelFilter="Critical" />
+  <DiagnosticInfrastructureLogs bufferQuotaInMB="256" scheduledTransferPeriod="PT5M" scheduledTransferLogLevelFilter="Warning" />
   <Directories bufferQuotaInMB="256" scheduledTransferPeriod="PT5M">
     <IISLogs container="wad-iis-logfiles" directoryQuotaInMB="1024" />
     <CrashDumps container="wad-crash-dumps" />
@@ -10,14 +10,9 @@
     <PerformanceCounterConfiguration counterSpecifier="\Memory\Available MBytes" sampleRate="PT3M" />
     <PerformanceCounterConfiguration counterSpecifier="\Web Service(_Total)\ISAPI Extension Requests/sec" sampleRate="PT3M" />
     <PerformanceCounterConfiguration counterSpecifier="\Web Service(_Total)\Bytes Total/Sec" sampleRate="PT3M" />
-    <PerformanceCounterConfiguration counterSpecifier="\ASP.NET Applications(__Total__)\Requests/Sec" sampleRate="PT3M" />
-    <PerformanceCounterConfiguration counterSpecifier="\ASP.NET Applications(__Total__)\Errors Total/Sec" sampleRate="PT3M" />
-    <PerformanceCounterConfiguration counterSpecifier="\ASP.NET\Requests Queued" sampleRate="PT3M" />
-    <PerformanceCounterConfiguration counterSpecifier="\ASP.NET\Requests Rejected" sampleRate="PT3M" />
     <PerformanceCounterConfiguration counterSpecifier="\Processor(_Total)\% Processor Time" sampleRate="PT1S" />
     <PerformanceCounterConfiguration counterSpecifier="\Memory\Committed Bytes" sampleRate="PT1S" />
     <PerformanceCounterConfiguration counterSpecifier="\LogicalDisk(_Total)\Disk Read Bytes/sec" sampleRate="PT1S" />
-    <PerformanceCounterConfiguration counterSpecifier="\ASP.NET\Applications Running" sampleRate="PT1S" />
     <PerformanceCounterConfiguration counterSpecifier="\Process(WaWorkerHost)\% Processor Time" sampleRate="PT1S" />
     <PerformanceCounterConfiguration counterSpecifier="\Process(WaWorkerHost)\Thread Count" sampleRate="PT1S" />
     <PerformanceCounterConfiguration counterSpecifier="\.NET CLR Loading(_Global_)\% Time Loading" sampleRate="PT1S" />
@@ -26,7 +21,7 @@
     <PerformanceCounterConfiguration counterSpecifier="\.NET CLR Networking(_Global_)\Connections Established" sampleRate="PT1S" />
     <PerformanceCounterConfiguration counterSpecifier="\.NET CLR Remoting(_Global_)\Remote Calls/sec" sampleRate="PT1S" />
   </PerformanceCounters>
-  <WindowsEventLog bufferQuotaInMB="1024" scheduledTransferPeriod="PT1M" scheduledTransferLogLevelFilter="Error">
+  <WindowsEventLog bufferQuotaInMB="1024" scheduledTransferPeriod="PT1M" scheduledTransferLogLevelFilter="Warning">
     <DataSource name="Application!*" />
   </WindowsEventLog>
 </DiagnosticMonitorConfiguration>

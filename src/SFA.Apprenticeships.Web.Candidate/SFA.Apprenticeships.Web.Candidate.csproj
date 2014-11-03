@@ -261,7 +261,9 @@
     <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\_assets\js\vendor\zxcvbn-async.js" />
     <Content Include="Content\_assets\js\vendor\zxcvbn.js" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Content\_assets\fonts\NTA-Bold-20130221.eot" />
     <Content Include="Content\_assets\fonts\NTA-Bold-20130221.woff" />
     <Content Include="Content\_assets\fonts\NTA-Light-20130221.eot" />
