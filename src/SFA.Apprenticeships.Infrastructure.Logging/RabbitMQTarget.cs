@@ -120,8 +120,10 @@
                     var queue = _bus.QueueDeclare(QueueName, false);
                     _bus.Bind(_exchange, queue, GetRoutingKey("*"));
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    InternalLogger.Error("Failed setting up rabbit connections/bindings: Error:{0}{1}Stacktrace: {2}", ex.Message, Environment.NewLine, ex.StackTrace);
+                    throw;
                 }
 
                 return _bus;
