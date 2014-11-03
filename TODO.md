@@ -11,6 +11,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - check all messages starting with "TODO" and 'TODO' (C# and JavaScript).
 - usernamecheck should use remote validator
 - write bundle orderer for bundle.config
+- review ApplyWebTrends attribute - use on controller or apply globally  
 
 ## Service layer ##
 

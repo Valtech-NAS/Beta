@@ -15,7 +15,7 @@ window.webtrendsAsyncInit = function () {
         download:true,
         downloadtypes: "xls,doc,pdf,txt,csv,zip,docx,xlsx,rar,gzip",
         anchor:true,
-        onsitedoms:"candidates.gov.uk",
+        onsitedoms: window.WebTrendsDomainName,
         plugins:{
             //hm:{src:"//s.webtrends.com/js/webtrends.hm.js"}
         }

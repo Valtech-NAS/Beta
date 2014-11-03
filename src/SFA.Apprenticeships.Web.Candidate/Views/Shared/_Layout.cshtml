@@ -32,7 +32,7 @@
         }
 
         window.WebTrendsDscId = "@ViewBag.WebTrendsDscId";
-
+        window.WebTrendsDomainName = "@ViewBag.WebTrendsDomainName";
     </script>
     @Scripts.Render("~/Content/_assets/js/vendor/modernizr-custom.js")
 
@@ -41,6 +41,10 @@
         <noscript><img alt="dcsimg" id="dcsimg" width="1" height="1" src="//stats.matraxis.net/@ViewBag.WebTrendsDscId/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.4.11&amp;WT.dl=0&amp;dcssip=@ViewBag.WebTrendsDomainName" /></noscript>
 
         @Scripts.Render("~/Content/_assets/js/webtrends/webtrends.load.js")
+    }
+    else
+    {
+        @Scripts.Render("~/Content/_assets/js/webtrends/webtrends.stub.js")
     }
 
 
