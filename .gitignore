@@ -113,7 +113,7 @@ csx
 settings.config
 emailSettings.config
 *.azurePubxml
-*.wadcfg
+diagnostics.wadcfg
 
 # Windows Store app package directory
 AppPackages/

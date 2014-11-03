@@ -140,7 +140,10 @@
   <PropertyGroup>
     <PreBuildEvent>xcopy /E /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName) $(ProjectDir)</PreBuildEvent>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'MSDN' ">
-    <OutputPath>bin\MSDN\</OutputPath>
-  </PropertyGroup>
+  <Target Name="CopyWorkerRoleConfigurations" BeforeTargets="AfterPackageComputeService">
+    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.VacancyEtl\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.VacancyEtl.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.VacancyEtl" OverwriteReadOnlyFiles="true"/>
+	<Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Monitor\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Monitor.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Monitor" OverwriteReadOnlyFiles="true"/>
+	<Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.AsyncProcessor\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.AsyncProcessor.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.AsyncProcessor" OverwriteReadOnlyFiles="true"/>
+	<Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.ApplicationEtl\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.ApplicationEtl.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.ApplicationEtl" OverwriteReadOnlyFiles="true"/>
+  </Target>
 </Project>
