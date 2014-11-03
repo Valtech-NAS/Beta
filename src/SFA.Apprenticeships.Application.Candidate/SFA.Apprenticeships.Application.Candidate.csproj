@@ -160,6 +160,10 @@
       <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.PerformanceCounters\SFA.Apprenticeships.Infrastructure.PerformanceCounters.csproj">
+      <Project>{AB4C03CD-F947-4CD5-BF12-8912E7FE97C3}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.PerformanceCounters</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -335,6 +335,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="Views\Shared\_About.cshtml" />
+    <None Include="Startup\startup.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -635,6 +638,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancySearch\SFA.Apprenticeships.Infrastructure.VacancySearch.csproj">
       <Project>{913445EC-3175-4AFB-869C-F03B6FD2940A}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.VacancySearch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.PerformanceCounters\SFA.Apprenticeships.Infrastructure.PerformanceCounters.csproj">
+      <Project>{ab4c03cd-f947-4cd5-bf12-8912e7fe97c3}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.PerformanceCounters</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>

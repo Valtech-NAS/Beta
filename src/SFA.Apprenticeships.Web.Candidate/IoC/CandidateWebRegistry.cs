@@ -22,6 +22,7 @@
     using Mappers;
     using Microsoft.WindowsAzure;
     using Providers;
+    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
     using StructureMap.Configuration.DSL;
     using ISendPasswordResetCodeStrategy = Application.UserAccount.Strategies.ISendPasswordResetCodeStrategy;
 
@@ -78,7 +79,7 @@
                .Ctor<IUnlockAccountStrategy>()
                .Named("UnlockAccountStrategy")
                .Name = "LegacyUnlockAccountStrategy";
-
+            
             For<ILockAccountStrategy>().Use<LockAccountStrategy>();
             For<ILockUserStrategy>().Use<LockUserStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ICreateApplicationStrategy>().Use<CreateApplicationStrategy>();

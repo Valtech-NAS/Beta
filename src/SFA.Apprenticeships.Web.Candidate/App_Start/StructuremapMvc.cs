@@ -22,6 +22,7 @@ namespace SFA.Apprenticeships.Web.Candidate
     using Infrastructure.UserDirectory.IoC;
     using Infrastructure.VacancySearch.IoC;
     using IoC;
+    using SFA.Apprenticeships.Infrastructure.PerformanceCounters.IoC;
     using StructureMap;
 
     /// <summary>
@@ -59,6 +60,7 @@ namespace SFA.Apprenticeships.Web.Candidate
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry<AddressRegistry>();
+                x.AddRegistry<PerformanceCounterRegistry>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

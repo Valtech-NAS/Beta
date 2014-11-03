@@ -8,6 +8,7 @@
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using NLog;
+    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
 
     public class LegacySubmitApplicationStrategy : ISubmitApplicationStrategy
     {
@@ -17,16 +18,18 @@
         private readonly IMessageBus _messageBus;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICommunicationService _communicationService;
+        private readonly IPerformanceCounterService _performanceCounterService;
 
         public LegacySubmitApplicationStrategy(IMessageBus messageBus, IApplicationReadRepository applicationReadRepository,
             IApplicationWriteRepository applicationWriteRepository, ICommunicationService communicationService,
-            ICandidateReadRepository candidateReadRepository)
+            ICandidateReadRepository candidateReadRepository, IPerformanceCounterService performanceCounterService)
         {
             _messageBus = messageBus;
             _applicationReadRepository = applicationReadRepository;
             _applicationWriteRepository = applicationWriteRepository;
             _communicationService = communicationService;
             _candidateReadRepository = candidateReadRepository;
+            _performanceCounterService = performanceCounterService;
         }
 
         public void SubmitApplication(Guid applicationId)
@@ -56,6 +59,8 @@
                     applicationDetail.SetStateSubmitting();
 
                     _applicationWriteRepository.Save(applicationDetail);
+
+                    _performanceCounterService.IncrementApplicationSubmissionCounter();
 
                     // send email acknowledgement to candidate
                     NotifyCandidate(candidate.EntityId, applicationDetail.EntityId.ToString());
