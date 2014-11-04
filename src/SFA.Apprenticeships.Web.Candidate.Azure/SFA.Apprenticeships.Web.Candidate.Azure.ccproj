@@ -92,7 +92,7 @@
       <Private>True</Private>
       <RoleType>Web</RoleType>
       <RoleName>SFA.Apprenticeships.Web.Candidate</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+      <UpdateDiagnosticsConnectionStringOnPublish>False</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -75,7 +75,7 @@
       <Private>True</Private>
       <RoleType>Worker</RoleType>
       <RoleName>SFA.Apprenticeships.Infrastructure.ApplicationEtl</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+      <UpdateDiagnosticsConnectionStringOnPublish>False</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.AsyncProcessor\SFA.Apprenticeships.Infrastructure.AsyncProcessor.csproj">
       <Name>SFA.Apprenticeships.Infrastructure.AsyncProcessor</Name>
@@ -83,7 +83,7 @@
       <Private>True</Private>
       <RoleType>Worker</RoleType>
       <RoleName>SFA.Apprenticeships.Infrastructure.AsyncProcessor</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+      <UpdateDiagnosticsConnectionStringOnPublish>False</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Monitor\SFA.Apprenticeships.Infrastructure.Monitor.csproj">
       <Name>SFA.Apprenticeships.Infrastructure.Monitor</Name>
@@ -91,7 +91,7 @@
       <Private>True</Private>
       <RoleType>Worker</RoleType>
       <RoleName>SFA.Apprenticeships.Infrastructure.Monitor</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+      <UpdateDiagnosticsConnectionStringOnPublish>False</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyEtl\SFA.Apprenticeships.Infrastructure.VacancyEtl.csproj">
       <Name>SFA.Apprenticeships.Infrastructure.VacancyEtl</Name>
@@ -99,7 +99,7 @@
       <Private>True</Private>
       <RoleType>Worker</RoleType>
       <RoleName>SFA.Apprenticeships.Infrastructure.VacancyEtl</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+      <UpdateDiagnosticsConnectionStringOnPublish>False</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -141,9 +141,9 @@
     <PreBuildEvent>xcopy /E /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName) $(ProjectDir)</PreBuildEvent>
   </PropertyGroup>
   <Target Name="CopyWorkerRoleConfigurations" BeforeTargets="AfterPackageComputeService">
-    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.VacancyEtl\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.VacancyEtl.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.VacancyEtl" OverwriteReadOnlyFiles="true"/>
-	<Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Monitor\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Monitor.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Monitor" OverwriteReadOnlyFiles="true"/>
-	<Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.AsyncProcessor\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.AsyncProcessor.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.AsyncProcessor" OverwriteReadOnlyFiles="true"/>
-	<Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.ApplicationEtl\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.ApplicationEtl.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.ApplicationEtl" OverwriteReadOnlyFiles="true"/>
+    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.VacancyEtl\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.VacancyEtl.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.VacancyEtl" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Monitor\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Monitor.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Monitor" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.AsyncProcessor\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.AsyncProcessor.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.AsyncProcessor" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.ApplicationEtl\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.ApplicationEtl.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.ApplicationEtl" OverwriteReadOnlyFiles="true" />
   </Target>
 </Project>
