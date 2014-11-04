@@ -14,19 +14,27 @@
 
         public FormsAuthenticationTicket GetTicket(HttpCookieCollection cookies)
         {
-            if (!cookies.AllKeys.Contains(CookieName))
+            try
             {
+                if (!cookies.AllKeys.Contains(CookieName))
+                {
+                    return null;
+                }
+
+                var cookie = cookies[CookieName];
+
+                if (cookie == null || string.IsNullOrWhiteSpace(cookie.Value))
+                {
+                    return null;
+                }
+
+                return FormsAuthentication.Decrypt(cookie.Value);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error getting/decrypting ticket from cookies", ex);
                 return null;
             }
-
-            var cookie = cookies[CookieName];
-
-            if (cookie == null || string.IsNullOrWhiteSpace(cookie.Value))
-            {
-                return null;
-            }
-
-            return FormsAuthentication.Decrypt(cookie.Value);
         }
 
         public void RefreshTicket(HttpCookieCollection cookies)
