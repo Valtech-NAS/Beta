@@ -130,46 +130,50 @@
                     return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
                 }
 
-                var suggestedLocations = _searchProvider.FindLocation(model.Location.Trim());
-
-                if (suggestedLocations.HasError())
+                if (!HasGeoPoint(model))
                 {
-                    ModelState.Clear();
-                    SetUserMessage(suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
+                    // User did not select a location from the dropdown list, provide suggested locations.
+                    var suggestedLocations = _searchProvider.FindLocation(model.Location.Trim());
 
-                    return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
-                }
-
-                if (suggestedLocations.Locations.Any())
-                {
-                    var location = suggestedLocations.Locations.First();
-
-                    ModelState.Remove("Location");
-                    ModelState.Remove("Latitude");
-                    ModelState.Remove("Longitude");
-
-                    model.Location = location.Name;
-                    model.Latitude = location.Latitude;
-                    model.Longitude = location.Longitude;
-
-                    ViewBag.LocationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
+                    if (suggestedLocations.HasError())
                     {
-                        var vsvm = new VacancySearchViewModel
+                        ModelState.Clear();
+                        SetUserMessage(suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
+
+                        return View("results", new VacancySearchResponseViewModel { VacancySearch = model });
+                    }
+
+                    if (suggestedLocations.Locations.Any())
+                    {
+                        var location = suggestedLocations.Locations.First();
+
+                        ModelState.Remove("Location");
+                        ModelState.Remove("Latitude");
+                        ModelState.Remove("Longitude");
+
+                        model.Location = location.Name;
+                        model.Latitude = location.Latitude;
+                        model.Longitude = location.Longitude;
+
+                        ViewBag.LocationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
                         {
-                            Keywords = model.Keywords,
-                            Location = each.Name,
-                            Latitude = each.Latitude,
-                            Longitude = each.Longitude,
-                            PageNumber = model.PageNumber,
-                            SortType = model.SortType,
-                            WithinDistance = model.WithinDistance,
-                            ResultsPerPage = model.ResultsPerPage
-                        };
+                            var vsvm = new VacancySearchViewModel
+                            {
+                                Keywords = model.Keywords,
+                                Location = each.Name,
+                                Latitude = each.Latitude,
+                                Longitude = each.Longitude,
+                                PageNumber = model.PageNumber,
+                                SortType = model.SortType,
+                                WithinDistance = model.WithinDistance,
+                                ResultsPerPage = model.ResultsPerPage
+                            };
 
-                        vsvm.Hash = vsvm.LatLonLocHash();
+                            vsvm.Hash = vsvm.LatLonLocHash();
 
-                        return vsvm;
-                    }).ToArray();
+                            return vsvm;
+                        }).ToArray();
+                    }
                 }
 
                 var locationResult = _searchLocationValidator.Validate(model);
@@ -321,9 +325,16 @@
                 "SortType",
                 "Name",
                 selectedSortType
-                );
+            );
 
             ViewBag.SortTypes = sortTypes;
+        }
+
+        private static bool HasGeoPoint(VacancySearchViewModel searchViewModel)
+        {
+            searchViewModel.CheckLatLonLocHash();
+
+            return searchViewModel.Latitude.HasValue && searchViewModel.Longitude.HasValue;
         }
 
         #endregion
