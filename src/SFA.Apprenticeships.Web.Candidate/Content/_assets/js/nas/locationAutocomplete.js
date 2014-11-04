@@ -1,7 +1,6 @@
 ﻿// provides the matching for location town/city or postcode
 (function($) {
     $.fn.locationMatch = function(options) {
-
         var self = $(this);
         var settings = $.extend({ delay: 300, minLength: 3, maxListSize: 25, url: '', longitude: null, latitude: null, latlonhash: null }, options);
         var tags = [];
@@ -12,6 +11,38 @@
             this.Longitude = null;
             this.Latitude = null;
         };
+
+        var clearLatLonFields = function() {
+            if (settings.longitude != null) {
+                $(settings.longitude).val(null);
+            }
+            if (settings.latitude != null) {
+                $(settings.latitude).val(null);
+            }
+        };
+
+        var isNavigationKeyCode = function (keyCode) {
+            var navigationKeyCodes = [
+                $.ui.keyCode.UP,
+                $.ui.keyCode.DOWN,
+                $.ui.keyCode.ESCAPE,
+                $.ui.keyCode.ENTER,
+                $.ui.keyCode.TAB,
+                $.ui.keyCode.PAGE_UP,
+                $.ui.keyCode.PAGE_DOWN,
+                $.ui.keyCode.HOME,
+                $.ui.keyCode.END
+            ];
+
+            return $.inArray(keyCode, navigationKeyCodes) !== -1;
+        };
+
+        self.keyup(function (event) {
+            if (!isNavigationKeyCode(event.keyCode)) {
+                // Consider non-navigation keyCodes to be user input.
+                clearLatLonFields();
+            }
+        });
 
         self.autocomplete({
             delay: settings.delay,
@@ -44,12 +75,7 @@
             },
             change: function(event, ui) {
                 if (ui.item == null) {
-                    if (settings.longitude != null) {
-                        $(settings.longitude).val(null);
-                    }
-                    if (settings.latitude != null) {
-                        $(settings.latitude).val(null);
-                    }
+                    clearLatLonFields();
                 }
             },
         });
