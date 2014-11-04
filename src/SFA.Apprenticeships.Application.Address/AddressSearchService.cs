@@ -22,9 +22,6 @@
             Logger.Debug("Calling AddressSearchService to find address for postcode={0}", postcode);
             Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
 
-            if (!LocationHelper.IsPostcode(postcode))
-                throw new ArgumentException("Invalid postcode specified");
-
             try
             {
                 return _addressSearchProvider.FindAddress(postcode);
