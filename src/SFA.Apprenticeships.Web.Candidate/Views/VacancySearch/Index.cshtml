@@ -35,20 +35,20 @@
                 @Html.HiddenFor(m => m.LocationType)
                 @Html.HiddenFor(m=> m.ResultsPerPage);
             }
-            <div class="form-group">
-                <p>You can also apply for apprenticeships in other parts of the UK</p>
-                <ul>
-                    <li><a rel="external" href="http://www.nidirect.gov.uk/apprenticeshipsni">Apprenticeships in Northern Ireland</a></li>
-                    <li><a rel="external" href="http://www.mappit.org.uk/">Apprenticeships in Scotland</a></li>
-                    <li><a rel="external" href="https://ams.careerswales.com/Public/Default.aspx?mode=vacancy&amp;timenow=164517">Apprenticeships in Wales</a></li>
-                </ul>
-            </div>
         </section>
         <aside class="grid grid-1-3">
             <div class="inner-block">
                 <div class="gov-border">
-                    <h2 class="heading-medium">Elsewhere on GOV.UK</h2>
-                    <a href="#">About apprenticeships</a>
+                    <h2 class="heading-medium">Contact us</h2>
+                    <ul class="list-text">
+                        <li>0800 015 0400</li>
+                        <li><a href="mailto:nationalhelpdesk@apprenticeships.gov.uk">Send us an email</a></li>
+                    </ul>
+                    <ul class="list-text">
+                        <li>
+                            <a href="@Url.RouteUrl(RouteNames.Helpdesk)">About apprenticeships</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </aside>
