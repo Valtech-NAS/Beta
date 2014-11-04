@@ -8,6 +8,7 @@
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
     using Constants.Pages;
+    using Microsoft.WindowsAzure;
     using NLog;
     using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
     using ViewModels.Applications;
@@ -149,7 +150,8 @@
 
                 _candidateService.SubmitApplication(candidateId, vacancyId);
 
-                _performanceCounterService.IncrementApplicationSubmissionCounter();
+                IncrementApplicationSubmissionCounter();
+
 
                 Logger.Debug("Application submitted for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
@@ -186,6 +188,17 @@
 
                 return FailedApplicationViewModel(vacancyId, candidateId, "Submission of application",
                     ApplicationPageMessages.SubmitApplicationFailed, e);
+            }
+        }
+
+        private void IncrementApplicationSubmissionCounter()
+        {
+            bool performanceCountersEnabled;
+
+            if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
+                && performanceCountersEnabled)
+            {
+                _performanceCounterService.IncrementApplicationSubmissionCounter();
             }
         }
 

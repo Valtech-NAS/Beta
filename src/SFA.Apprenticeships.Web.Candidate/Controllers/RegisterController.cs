@@ -56,7 +56,6 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                UppercasePostCode(model);
                 var userNameAvailable = _candidateServiceProvider.IsUsernameAvailable(model.EmailAddress.Trim());
                 if (!userNameAvailable.HasError)
                 {
@@ -85,11 +84,6 @@
                 ModelState.Clear();
                 return View(model);
             });
-        }
-
-        private void UppercasePostCode(RegisterViewModel model)
-        {
-            model.Address.Postcode = model.Address.Postcode.ToUpperInvariant();
         }
 
         [HttpGet]

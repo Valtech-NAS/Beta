@@ -14,6 +14,7 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Mapping;
+    using Microsoft.WindowsAzure;
     using NLog;
     using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
     using ViewModels.Login;
@@ -131,7 +132,7 @@
 
                 SetUserCookies(candidate, UserRoleNames.Unactivated);
 
-                _performanceCounterService.IncrementCandidateRegistrationCounter();
+                IncrementCandidateRegistrationCounter();
 
                 return true;
             }
@@ -250,6 +251,17 @@
                 {
                     EmailAddress = model.EmailAddress
                 };
+            }
+        }
+
+        private void IncrementCandidateRegistrationCounter()
+        {
+            bool performanceCountersEnabled;
+
+            if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
+                && performanceCountersEnabled)
+            {
+                _performanceCounterService.IncrementCandidateRegistrationCounter();
             }
         }
 

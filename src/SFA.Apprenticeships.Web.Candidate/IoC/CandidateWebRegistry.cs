@@ -30,7 +30,7 @@
     {
         public CandidateWebRegistry()
         {
-            var codeGenerator = CloudConfigurationManager.GetSetting("CodeGenerator");//ConfigurationManager.AppSettings["CodeGenerator"];
+            var codeGenerator = CloudConfigurationManager.GetSetting("CodeGenerator");
 
             // services (app)
             For<ILocationSearchService>().Use<LocationSearchService>();
