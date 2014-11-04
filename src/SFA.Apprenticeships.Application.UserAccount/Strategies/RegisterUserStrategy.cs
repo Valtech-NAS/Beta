@@ -5,23 +5,19 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
-    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
 
     public class RegisterUserStrategy : IRegisterUserStrategy
     {
         private readonly int _activationCodeExpiryDays;
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
-        private readonly IPerformanceCounterService _performanceCounterService;
 
         public RegisterUserStrategy(IUserWriteRepository userWriteRepository, 
             IConfigurationManager configurationManager,
-            IUserReadRepository userReadRepository, 
-            IPerformanceCounterService performanceCounterService)
+            IUserReadRepository userReadRepository)
         {
             _userWriteRepository = userWriteRepository;
             _userReadRepository = userReadRepository;
-            _performanceCounterService = performanceCounterService;
             _activationCodeExpiryDays = configurationManager.GetAppSetting<int>("ActivationCodeExpiryDays");
         }
 
@@ -43,8 +39,6 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             newUser.SetStatePendingActivation(activationCode, DateTime.Now.AddDays(_activationCodeExpiryDays));
             _userWriteRepository.Save(newUser);
-
-            _performanceCounterService.IncrementCandidateRegistrationCounter();
         }
     }
 }

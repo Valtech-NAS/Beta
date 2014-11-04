@@ -14,7 +14,9 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Mapping;
+    using Microsoft.WindowsAzure;
     using NLog;
+    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
     using ViewModels.Login;
     using ViewModels.Register;
     using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
@@ -27,6 +29,7 @@
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
         private readonly IAuthenticationTicketService _authenticationTicketService;
+        private readonly IPerformanceCounterService _performanceCounterService;
         private readonly HttpContextBase _httpContext;
 
         public CandidateServiceProvider(
@@ -34,13 +37,15 @@
             IUserAccountService userAccountService,
             IAuthenticationTicketService authenticationTicketService,
             IMapper mapper, 
-            HttpContextBase httpContext)
+            HttpContextBase httpContext, 
+            IPerformanceCounterService performanceCounterService)
         {
             _candidateService = candidateService;
             _userAccountService = userAccountService;
             _authenticationTicketService = authenticationTicketService;
             _mapper = mapper;
             _httpContext = httpContext;
+            _performanceCounterService = performanceCounterService;
         }
 
         public UserNameAvailability IsUsernameAvailable(string username)
@@ -126,6 +131,8 @@
                 _candidateService.Register(candidate, model.Password);
 
                 SetUserCookies(candidate, UserRoleNames.Unactivated);
+
+                IncrementCandidateRegistrationCounter();
 
                 return true;
             }
@@ -244,6 +251,17 @@
                 {
                     EmailAddress = model.EmailAddress
                 };
+            }
+        }
+
+        private void IncrementCandidateRegistrationCounter()
+        {
+            bool performanceCountersEnabled;
+
+            if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
+                && performanceCountersEnabled)
+            {
+                _performanceCounterService.IncrementCandidateRegistrationCounter();
             }
         }
 

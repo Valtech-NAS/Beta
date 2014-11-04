@@ -8,7 +8,9 @@
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
     using Constants.Pages;
+    using Microsoft.WindowsAzure;
     using NLog;
+    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
     using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
@@ -20,15 +22,18 @@
         private readonly IVacancyDetailProvider _vacancyDetailProvider;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
+        private readonly IPerformanceCounterService _performanceCounterService;
 
         public ApplicationProvider(
             IVacancyDetailProvider vacancyDetailProvider,
             ICandidateService candidateService,
-            IMapper mapper)
+            IMapper mapper, 
+            IPerformanceCounterService performanceCounterService)
         {
             _vacancyDetailProvider = vacancyDetailProvider;
             _candidateService = candidateService;
             _mapper = mapper;
+            _performanceCounterService = performanceCounterService;
         }
 
         public ApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
@@ -145,6 +150,9 @@
 
                 _candidateService.SubmitApplication(candidateId, vacancyId);
 
+                IncrementApplicationSubmissionCounter();
+
+
                 Logger.Debug("Application submitted for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
@@ -180,6 +188,17 @@
 
                 return FailedApplicationViewModel(vacancyId, candidateId, "Submission of application",
                     ApplicationPageMessages.SubmitApplicationFailed, e);
+            }
+        }
+
+        private void IncrementApplicationSubmissionCounter()
+        {
+            bool performanceCountersEnabled;
+
+            if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
+                && performanceCountersEnabled)
+            {
+                _performanceCounterService.IncrementApplicationSubmissionCounter();
             }
         }
 
