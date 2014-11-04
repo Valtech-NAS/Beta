@@ -111,6 +111,7 @@
     <Compile Include="ActiveDirectory\ActiveDirectoryChangePassword.cs" />
     <Compile Include="Configuration\ActiveDirectoryConfiguration.cs" />
     <Compile Include="ActiveDirectory\ActiveDirectoryServer.cs" />
+    <Compile Include="Hash\PasswordHash.cs" />
     <Compile Include="IoC\UserDirectoryRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

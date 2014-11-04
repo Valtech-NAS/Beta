@@ -119,6 +119,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\ActiveDirectoryConfigurationTests.cs" />
+    <Compile Include="Hash\PasswordHashTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
