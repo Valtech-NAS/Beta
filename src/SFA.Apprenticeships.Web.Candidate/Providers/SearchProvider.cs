@@ -14,7 +14,9 @@
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Mapping;
+    using Microsoft.WindowsAzure;
     using NLog;
+    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
     using ViewModels.Locations;
     using ViewModels.VacancySearch;
     using ErrorCodes = Application.Interfaces.Locations.ErrorCodes;
@@ -26,16 +28,19 @@
         private readonly ILocationSearchService _locationSearchService;
         private readonly IMapper _mapper;
         private readonly IVacancySearchService _vacancySearchService;
+        private readonly IPerformanceCounterService _performanceCounterService;
 
         public SearchProvider(ILocationSearchService locationSearchService,
             IVacancySearchService vacancySearchService,
             IAddressSearchService addressSearchService,
-            IMapper mapper)
+            IMapper mapper, 
+            IPerformanceCounterService performanceCounterService)
         {
             _locationSearchService = locationSearchService;
             _vacancySearchService = vacancySearchService;
             _addressSearchService = addressSearchService;
             _mapper = mapper;
+            _performanceCounterService = performanceCounterService;
         }
 
         public LocationsViewModel FindLocation(string placeNameOrPostcode)
@@ -93,6 +98,11 @@
             {
                 var results = ProcessNationalAndNonNationalSearches(search, searchLocation);
 
+                if (IsANewSearch(search))
+                {
+                    IncrementVacancySearchPerformanceCounter();    
+                }
+
                 var nationalResults =
                     results[0].Results.Any(x => x.VacancyLocationType == VacancyLocationType.National)
                     ? results[0]
@@ -142,6 +152,7 @@
             }
             catch (CustomException ex)
             {
+// ReSharper disable once FormatStringProblem
                 Logger.Error("Find vacancies failed. Check inner details for more info", ex);
                 return new VacancySearchResponseViewModel(VacancySearchResultsPageMessages.VacancySearchFailed);
             }
@@ -232,6 +243,22 @@
                 });
 
             return resultCollection.ToArray();
+        }
+
+        private static bool IsANewSearch(VacancySearchViewModel search)
+        {
+            return search.SearchAction == SearchAction.Search && search.PageNumber == 1;
+        }
+
+        private void IncrementVacancySearchPerformanceCounter()
+        {
+            bool performanceCountersEnabled;
+
+            if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
+                && performanceCountersEnabled)
+            {
+                _performanceCounterService.IncrementVacancySearchPerformanceCounter();
+            }
         }
     }
 }

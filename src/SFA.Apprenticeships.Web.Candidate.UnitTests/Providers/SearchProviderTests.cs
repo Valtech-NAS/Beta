@@ -13,6 +13,7 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
 
     [TestFixture]
     public class SearchProviderTests
@@ -20,6 +21,7 @@
         private Mock<ILocationSearchService> _locationSearchService;
         private Mock<IVacancySearchService> _vacancySearchService;
         private Mock<IAddressSearchService> _addressSearchService;
+        private Mock<IPerformanceCounterService> _performanceCounterService;
 
         private CandidateWebMappers _mapper;
         
@@ -29,6 +31,8 @@
             _locationSearchService = new Mock<ILocationSearchService>();
             _vacancySearchService = new Mock<IVacancySearchService>();
             _addressSearchService = new Mock<IAddressSearchService>();
+            _performanceCounterService = new Mock<IPerformanceCounterService>();
+            
             _mapper = new CandidateWebMappers();
         }
 
@@ -42,7 +46,8 @@
 
             _locationSearchService.Setup(x => x.FindLocation("Location1")).Returns(locations);
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object, _addressSearchService.Object, _mapper);
+            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object,
+                _addressSearchService.Object, _mapper, _performanceCounterService.Object);
             var results = searchProvider.FindLocation("Location1");
             var result = results.Locations.First();
 
@@ -57,7 +62,8 @@
             _locationSearchService.Setup(x => x.FindLocation(It.IsAny<string>()))
                 .Returns(default(IEnumerable<Location>));
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object, _addressSearchService.Object, _mapper);
+            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object,
+                _addressSearchService.Object, _mapper, _performanceCounterService.Object);
             var results = searchProvider.FindLocation(string.Empty);
 
             results.Locations.Should().BeEmpty();
@@ -68,7 +74,7 @@
         {
             const int pageSize = 10;
             var results = new 
-                SearchResults<VacancySummaryResponse>(100, 1, new List<VacancySummaryResponse>()
+                SearchResults<VacancySummaryResponse>(100, 1, new List<VacancySummaryResponse>
             {
                 new VacancySummaryResponse
                 {
@@ -90,7 +96,8 @@
                 LocationType = VacancyLocationType.National
             };
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object, _addressSearchService.Object, _mapper);
+            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object,
+                _addressSearchService.Object, _mapper, _performanceCounterService.Object);
             var test = searchProvider.FindVacancies(search);
 
             test.Should().NotBeNull();

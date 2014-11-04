@@ -2,12 +2,12 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using Constants.ViewModels;
     using FluentValidation.Attributes;
-    using Validators;
+    using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
+    using SFA.Apprenticeships.Web.Candidate.Validators;
 
     [Serializable]
-    [Validator(typeof(AddressViewModelValidator))]
+    [Validator(typeof (AddressViewModelValidator))]
     public class AddressViewModel
     {
         private string _postcode;
@@ -25,14 +25,10 @@
         public string AddressLine4 { get; set; }
 
         [Display(Name = AddressViewModelMessages.Postcode.LabelText)]
-        public string Postcode {
-            get
-            {
-                return string.IsNullOrWhiteSpace(_postcode) ? _postcode : _postcode.ToUpperInvariant();
-            }
-            set {
-                _postcode = !string.IsNullOrWhiteSpace(value) ? value.ToUpperInvariant() : value;
-            }
+        public string Postcode
+        {
+            get { return string.IsNullOrWhiteSpace(_postcode) ? _postcode : _postcode.ToUpperInvariant(); }
+            set { _postcode = !string.IsNullOrWhiteSpace(value) ? value.ToUpperInvariant() : value; }
         }
 
         public string Uprn { get; set; }

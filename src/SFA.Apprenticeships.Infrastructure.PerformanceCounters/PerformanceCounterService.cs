@@ -10,6 +10,7 @@
         private const string PerformanceCounterCategory = "SFA.Apprenticeships.Web.Candidate";
         private const string CandidateRegistrationCounter = "CandidateRegistration";
         private const string ApplicationSubmissionCounter = "ApplicationSubmission";
+        private const string VacancySearchCounter = "VacancySearch";
         
         public void IncrementCandidateRegistrationCounter()
         {
@@ -19,6 +20,11 @@
         public void IncrementApplicationSubmissionCounter()
         {
             IncrementCounter(ApplicationSubmissionCounter);
+        }
+
+        public void IncrementVacancySearchPerformanceCounter()
+        {
+            IncrementCounter(VacancySearchCounter);
         }
 
         private void IncrementCounter(string performanceCounterName)
