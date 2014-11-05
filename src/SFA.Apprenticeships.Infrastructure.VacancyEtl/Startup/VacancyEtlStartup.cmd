@@ -1,5 +1,5 @@
 ﻿@echo off
-if "%EMULATED%"=="true" goto SKIP
+REM if "%EMULATED%"=="true" goto SKIP
 
 cd %ROLEROOT%\approot\bin\startup
 
