@@ -246,36 +246,32 @@ $(function() {
 
 		Plugin.prototype = {
 				init: function() {
+          if (zxcvbn) {
+            var zxLoaded = true;
+          }
+
           var errors = this.customValidators();
 
-          if ("" == this.settings.password) {
+          if ("" == this.settings.password && zxLoaded) {
             this.info = "Cannot be empty";
             this.className = "strength-weak";
-          } else if (errors == 0) {
-            var strength = zxcvbn(this.settings.password, this.settings.blackList);
+          } else if (errors == 0 && zxLoaded) {
+            var strength = zxcvbn(this.settings.password, this.settings.blackList),
+                upperCase = new RegExp('[A-Z]'),
+                lowerCase = new RegExp('[a-z]'),
+                numbers = new RegExp('[0-9]');
 
-            switch (strength.score) {
-              case 0:
-                this.info = "Medium";
-                this.className = "strength-medium";
-                break;
-              case 1:
-                this.info = "Strong";
-                this.className = "strength-strong";
-                break;
-              case 2:
-                this.info = "Strong";
-                this.className = "strength-strong";
-                break;
-              case 3:
-                this.info = "Very strong";
-                this.className = "strength-strong";
-                break;
-              case 4:
-                this.info = "Very strong";
-                this.className = "strength-strong";
-                break;
+            if (strength.score >= 3 && this.settings.password.match(upperCase) && this.settings.password.match(lowerCase) && this.settings.password.match(numbers)) {
+              this.info = "Very strong";
+              this.className = "strength-strong";
+            } else if (this.settings.password.match(upperCase) && this.settings.password.match(lowerCase) && this.settings.password.match(numbers)) {
+              this.info = "Strong";
+              this.className = "strength-strong";
+            } else {
+              this.info = "Too weak";
+              this.className = "strength-weak";
             }
+
           }
 
           $(this.element).html(this.info).removeClass().addClass(this.className);
