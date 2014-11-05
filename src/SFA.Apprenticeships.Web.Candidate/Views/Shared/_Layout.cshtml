@@ -38,16 +38,12 @@
 
     @if (ViewBag.EnableWebTrends == true)
     {
-        <noscript><img alt="dcsimg" id="dcsimg" width="1" height="1" src="//stats.matraxis.net/@ViewBag.WebTrendsDscId/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.4.11&amp;WT.dl=0&amp;dcssip=@ViewBag.WebTrendsDomainName" /></noscript>
-
         @Scripts.Render("~/Content/_assets/js/webtrends/webtrends.load.js")
     }
     else
     {
         @Scripts.Render("~/Content/_assets/js/webtrends/webtrends.stub.js")
     }
-
-
 </head>
 <body>
     @if (ViewBag.ShowEuCookieDirective == true)
@@ -123,6 +119,12 @@
             }
             @RenderBody()
         </main>
+        @if (ViewBag.EnableWebTrends == true)
+        {
+            <noscript>
+                <img alt="dcsimg" id="dcsimg" width="1" height="1" src="//stats.matraxis.net/@ViewBag.WebTrendsDscId/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.4.11&amp;WT.dl=0&amp;dcssip=@ViewBag.WebTrendsDomainName" />
+            </noscript>
+        }
     </div>
 
     <footer class="gov-border" role="contentinfo">
@@ -168,5 +170,6 @@
     @Scripts.Render("~/bundles/nas")
 
     @RenderSection("scripts", required: false)
+    
 </body>
 </html>
