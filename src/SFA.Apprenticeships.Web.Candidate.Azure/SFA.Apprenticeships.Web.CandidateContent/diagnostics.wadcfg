@@ -37,6 +37,7 @@
     <!-- Custom counters -->
     <PerformanceCounterConfiguration counterSpecifier="\SFA.Apprenticeships.Web.Candidate\ApplicationSubmission" sampleRate="PT3M" />
     <PerformanceCounterConfiguration counterSpecifier="\SFA.Apprenticeships.Web.Candidate\CandidateRegistration" sampleRate="PT3M" />
+    <PerformanceCounterConfiguration counterSpecifier="\SFA.Apprenticeships.Web.Candidate\VacancySearch" sampleRate="PT3M" />
   </PerformanceCounters>
   <WindowsEventLog bufferQuotaInMB="1024" scheduledTransferPeriod="PT1M" scheduledTransferLogLevelFilter="Warning">
     <DataSource name="Application!*" />
