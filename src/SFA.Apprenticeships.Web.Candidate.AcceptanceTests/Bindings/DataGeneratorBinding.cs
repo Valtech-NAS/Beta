@@ -55,7 +55,6 @@
             const int numResults = 50;
             var i = 0;
 
-            _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(180));
 
             while (!isLocalVacancy)
             {
@@ -65,12 +64,14 @@
                 }
 
                 // Click on the i-th search result
+                _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(180));
                 _driver.FindElements(
                     By.CssSelector(".search-results__item .vacancy-link"))
                     .Skip(i++).First().Click();
 
                 try
                 {
+                    _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(0));
                     _driver.FindElement(By.Id("apply-button"));
                     isLocalVacancy = true;
                     
@@ -103,8 +104,6 @@
             const int numResults = 50;
             var i = 0;
 
-            _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(180));
-
             while (!isExternalVacancy)
             {
                 if (i == numResults)
@@ -113,12 +112,14 @@
                 }
 
                 // Click on the i-th search result
+                _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(180));
                 _driver.FindElements(
                     By.CssSelector(".search-results__item .vacancy-link"))
                     .Skip(i++).First().Click();
 
                 try
                 {
+                    _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(0)); 
                     _driver.FindElement(By.Id("external-employer-website"));
                     isExternalVacancy = true;
                 }

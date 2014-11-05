@@ -264,8 +264,7 @@ Scenario: As a candidate I would like to see my application as successful
 	Then I am on the ApplicationPreviewPage page
 	When I choose SubmitApplication
 	Then I am on the ApplicationCompletePage page
-	When I wait 5 seconds
-	And I choose MyApplicationsLink
+	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
 	And I see
 		| Field                       | Rule   | Value |
@@ -295,8 +294,7 @@ Scenario: As a candidate I would like to see my application as submitted
 	Then I am on the ApplicationPreviewPage page
 	When I choose SubmitApplication
 	Then I am on the ApplicationCompletePage page
-	When I wait 35 seconds
-	And I choose MyApplicationsLink
+	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
 	And I see
 		| Field                      | Rule   | Value |
@@ -327,8 +325,7 @@ Scenario: As a candidate I would like to see my application as unsuccessful
 	Then I am on the ApplicationPreviewPage page
 	When I choose SubmitApplication
 	Then I am on the ApplicationCompletePage page
-	When I wait 5 seconds
-	And I choose MyApplicationsLink
+	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
 	And I see
 		| Field                         | Rule   | Value |
@@ -360,8 +357,7 @@ Scenario: As a candidate I would like to see my application as withdrawn
 	Then I am on the ApplicationPreviewPage page
 	When I choose SubmitApplication
 	Then I am on the ApplicationCompletePage page
-	When I wait 5 seconds
-	And I choose MyApplicationsLink
+	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
 	And I see
 		| Field                  | Rule   | Value |
