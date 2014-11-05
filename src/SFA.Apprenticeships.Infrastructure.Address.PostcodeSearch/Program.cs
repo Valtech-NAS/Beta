@@ -28,7 +28,7 @@ namespace SFA.Apprenticeships.Infrastructure.Address.PostcodeSearch
                 .Type(documentTypeName)
                 .From(0)
                 .Size(size)
-                .MatchAll()
+                .Filter(fd => fd.Not(fd2 => fd2.Exists(fd3 => fd3.PostcodeSearch)))
                 .SearchType(SearchType.Scan)
                 .Scroll(scroll)
             );

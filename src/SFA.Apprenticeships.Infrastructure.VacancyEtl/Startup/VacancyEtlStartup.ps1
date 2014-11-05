@@ -1,27 +1,18 @@
 ﻿Write-Host "Starting to create the performance counters."
 
-$categoryName = "SFA.Apprenticeships.Web.Candidate"
-$categoryHelp = "Performance counters related to SFA.Apprenticeships.Web.Candidate"
+$categoryName = "SFA.Apprenticeships.WorkerRoles.VacancyEtl"
+$categoryHelp = "Performance counters related to Vacancy Etl Worker Role"
 $categoryType = [System.Diagnostics.PerformanceCounterCategoryType]::SingleInstance
 
-Function CreatePerformanceCounterCategory($candidateRegistrationCount, $applicationSubmissionCount, $vacancySearchCount){
+Function CreatePerformanceCounterCategory($vacancyEtlCount){
     $objCCDC = New-Object System.Diagnostics.CounterCreationDataCollection
   
-    $objCCD1 = CreatePerformanceCounter "CandidateRegistration" "Number of candidate registrations"
+    $objCCD1 = CreatePerformanceCounter "VacancyEtlExecutions" "Number of VacancyEtl executions"
     $objCCDC.Add($objCCD1) | Out-Null
-  
-    $objCCD2 = CreatePerformanceCounter "ApplicationSubmission" "Number of applications submitted"
-    $objCCDC.Add($objCCD2) | Out-Null
-
-	$objCCD3 = CreatePerformanceCounter "VacancySearch" "Number of searches performed"
-    $objCCDC.Add($objCCD3) | Out-Null
-	
   
     [System.Diagnostics.PerformanceCounterCategory]::Create($categoryName, $categoryHelp, $categoryType, $objCCDC) | Out-Null
 
-    CreatePerformanceCounterInstance "CandidateRegistration" $candidateRegistrationCount
-    CreatePerformanceCounterInstance "ApplicationSubmission" $applicationSubmissionCount
-	CreatePerformanceCounterInstance "VacancySearch" $vacancySearchCount
+    CreatePerformanceCounterInstance "VacancyEtlExecutions" $vacancyEtlCount
 }
 
 Function CreatePerformanceCounter($counterName, $counterHelp)
@@ -63,15 +54,13 @@ If (-Not $categoryExists)
 {
   Write-Host "The category doesn't exist. Let's create it."
 
-  CreatePerformanceCounterCategory 0 0 0
+  CreatePerformanceCounterCategory 0
 }
 Else
 {
 	Write-Host "The category already exists. Let's recreate it."
-    $candidateRegistrationCount = GetCounterValue "CandidateRegistration"
-    $applicationSubmissionCount = GetCounterValue "ApplicationSubmission"
-	$vacancySearchCount = GetCounterValue "VacancySearch"        
+    $vacancyEtlRunsCount = GetCounterValue "VacancyEtlExecutions"
     
     [Diagnostics.PerformanceCounterCategory]::Delete($categoryName)    
-    CreatePerformanceCounterCategory $candidateRegistrationCount $applicationSubmissionCount $vacancySearchCount
+    CreatePerformanceCounterCategory $vacancyEtlRunsCount
 }
