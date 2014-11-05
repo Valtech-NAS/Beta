@@ -16,6 +16,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using NLog;
     using RabbitMq.Interfaces;
     using RabbitMq.IoC;
+    using SFA.Apprenticeships.Infrastructure.PerformanceCounters.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
 
@@ -69,6 +70,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                     x.AddRegistry<LegacyWebServicesRegistry>();
                     x.AddRegistry<GatewayVacancyEtlRegistry>();
                     x.AddRegistry<ElasticsearchCommonRegistry>();
+                    x.AddRegistry<PerformanceCounterRegistry>();
                 });
 #pragma warning restore 0618
 
