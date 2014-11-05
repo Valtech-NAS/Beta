@@ -30,7 +30,8 @@ namespace SFA.Apprenticeships.Web.Candidate
 
             bundles.Add(new ScriptBundle("~/bundles/nas").Include(
                 "~/Content/_assets/js/nas/lookupService.js",
-                "~/Content/_assets/js/nas/validationscripts.js"));
+                "~/Content/_assets/js/nas/validationscripts.js",
+                "~/Content/_assets/js/nas/webTrendsInlineTrack.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas/passwordstrength").Include(
                 "~/Content/_assets/js/vendor/zxcvbn-async.js"));
