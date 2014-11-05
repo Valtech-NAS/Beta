@@ -95,7 +95,7 @@
 
             if (!MappedDiagnosticsContext.Contains("version"))
             {
-                var version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
+                var version = FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof(CandidateControllerBase)).Location).FileVersion;
                 ViewBag.Version = version;
                 MappedDiagnosticsContext.Set("version", version);                    
             }
