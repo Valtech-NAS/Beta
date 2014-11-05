@@ -1,41 +1,49 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.PerformanceCounters
 {
-    using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq;
-    using CuttingEdge.Conditions;
 
     public class PerformanceCounterService : IPerformanceCounterService
     {
-        private const string PerformanceCounterCategory = "SFA.Apprenticeships.Web.Candidate";
+        private const string WebRolePerformanceCounterCategory = "SFA.Apprenticeships.Web.Candidate";
+        private const string VacancyEtlPerformanceCounterCategory = "SFA.Apprenticeships.WorkerRoles.VacancyEtl";
         private const string CandidateRegistrationCounter = "CandidateRegistration";
         private const string ApplicationSubmissionCounter = "ApplicationSubmission";
         private const string VacancySearchCounter = "VacancySearch";
         private const string VacancyIndexCounter = "VacancyEtlExecutions";
-        
+
         public void IncrementCandidateRegistrationCounter()
         {
-            IncrementCounter(CandidateRegistrationCounter);
+            IncrementWebRoleCounter(CandidateRegistrationCounter);
         }
 
         public void IncrementApplicationSubmissionCounter()
         {
-            IncrementCounter(ApplicationSubmissionCounter);
+            IncrementWebRoleCounter(ApplicationSubmissionCounter);
         }
 
         public void IncrementVacancySearchPerformanceCounter()
         {
-            IncrementCounter(VacancySearchCounter);
+            IncrementWebRoleCounter(VacancySearchCounter);
         }
 
         public void IncrementVacancyIndexPerformanceCounter()
         {
-            IncrementCounter(VacancyIndexCounter);
+            IncrementVacancyEtlCounter(VacancyIndexCounter);
         }
 
-        private void IncrementCounter(string performanceCounterName)
+        private static void IncrementWebRoleCounter(string performanceCounterName)
         {
-            using (var counter = new PerformanceCounter(PerformanceCounterCategory, performanceCounterName, false))
+            IncrementCounter(WebRolePerformanceCounterCategory, performanceCounterName);
+        }
+
+        private static void IncrementVacancyEtlCounter(string performanceCounterName)
+        {
+            IncrementCounter(VacancyEtlPerformanceCounterCategory, performanceCounterName);
+        }
+
+        private static void IncrementCounter(string categoryName, string performanceCounterName)
+        {
+            using (var counter = new PerformanceCounter(categoryName, performanceCounterName, false))
             {
                 counter.Increment();
             }
