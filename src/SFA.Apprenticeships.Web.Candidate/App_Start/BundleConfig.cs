@@ -12,17 +12,21 @@ namespace SFA.Apprenticeships.Web.Candidate
         {
             bundles.UseCdn = true;
 
-            bundles.Add(new ScriptBundle("~/bundles/jquery", "//code.jquery.com/jquery-1.11.1.min.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/jquery", "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js").Include(
                 "~/Content/_assets/js/vendor/jquery-1.11.1.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/fastclick", "//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.3/fastclick.min.js").Include(
+                "~/Content/_assets/js/vendor/fastclick-1.0.3.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/underscore", "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js").Include(
+                "~/Content/_assets/js/vendor/underscore-1.7.0.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/nascript").Include(
-                  "~/Content/_assets/js/scripts.js"
-                ));
+                  "~/Content/_assets/js/scripts.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/vendor").Include(              
                 "~/Content/_assets/js/vendor/jquery.validate.js",
-                "~/Content/_assets/js/vendor/jquery.validate.unobtrusive.custom.js"                
-                ));
+                "~/Content/_assets/js/vendor/jquery.validate.unobtrusive.custom.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Content/_assets/js/vendor/knockout-3.1.0.js",
