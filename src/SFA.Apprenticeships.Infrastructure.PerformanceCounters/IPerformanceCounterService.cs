@@ -6,5 +6,6 @@
 
         void IncrementApplicationSubmissionCounter();
         void IncrementVacancySearchPerformanceCounter();
+        void IncrementVacancyIndexPerformanceCounter();
     }
 }

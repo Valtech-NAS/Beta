@@ -35,7 +35,7 @@
                     _vacancyIndexer.SwapIndex(updateComplete.ScheduledRefreshDateTime);
                     Logger.Debug("Index swapped after vacancy summary update completed");
 
-                    IncrementVacancySearchPerformanceCounter();
+                    IncrementVacancyIndexPerformanceCounter();
                 }
                 else
                 {
@@ -49,14 +49,14 @@
             return _vacancyIndexer.IsIndexCorrectlyCreated(scheduledRefreshDateTime);
         }
 
-        private void IncrementVacancySearchPerformanceCounter()
+        private void IncrementVacancyIndexPerformanceCounter()
         {
             bool performanceCountersEnabled;
 
             if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
                 && performanceCountersEnabled)
             {
-                _performanceCounterService.IncrementVacancySearchPerformanceCounter();
+                _performanceCounterService.IncrementVacancyIndexPerformanceCounter();
             }
         }
     }
