@@ -221,6 +221,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
+    <None Include="Startup\VacancyEtlStartup.cmd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Startup\VacancyEtlStartup.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
