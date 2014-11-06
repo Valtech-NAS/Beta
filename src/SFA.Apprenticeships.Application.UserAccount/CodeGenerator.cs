@@ -10,8 +10,10 @@
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public const int CodeLength = 6;
 
-        // all vowels are omitted to avoid confusion with numbers (e.g. O and I) and to avoid profanities
-        public const string Alphanumerics = "0123456789BCDFGHJKLMNPQRSTVWXYZ";
+        // Vowels are omitted to avoid confusion with numbers (e.g. O and I) and to avoid profanities,
+        // other letters and numbers are omitted to conform to the DEC Alphabet (http://en.wikipedia.org/wiki/Alphanumeric)
+        // (i.e. I, O, Q, S, Z, 1, 0, 5, 3 and 2).
+        public const string Alphanumerics = "46789BCDFGHJKLMNPRSTVWXY";
 
         public string Generate()
         {
