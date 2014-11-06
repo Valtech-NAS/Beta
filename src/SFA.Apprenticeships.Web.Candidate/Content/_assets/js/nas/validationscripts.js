@@ -111,6 +111,8 @@ $(document).ready(function () {
         setTimeout(function () {
             if($('.form-group.input-validation-error').length > 0) {
                 $this.text($thisText).removeClass('disabled');
+            } else if($('.block-label.input-validation-error').length > 0) {
+                $this.text($thisText).removeClass('disabled');
             }
             $this.attr('disabled');
         }, 50);
