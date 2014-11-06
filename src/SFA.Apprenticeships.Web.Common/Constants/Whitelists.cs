@@ -1,5 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Constants
 {
+    using System;
+    using System.Globalization;
+
     public static class Whitelists
     {
         public static class NameWhitelist
@@ -31,6 +34,19 @@
         {
             public const string RegularExpression = @"^[0-9]{4}$";
             public const string ErrorText = @"must contain a 4 digit year";
+        }
+
+        public static class YearRangeWhiteList
+        {
+            public static string RegularExpression()
+            {
+                return YearRegexRangeGenerator.GetRegex(DateTime.Now.Year.ToString(CultureInfo.InvariantCulture));
+            }
+
+            public static string ErrorText()
+            {
+                return string.Format("must be 4 digits, between {0} and {1}", DateTime.Now.Year - 100, DateTime.Now.Year);
+            }
         }
 
         public static class PhoneNumberWhitelist

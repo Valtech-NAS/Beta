@@ -21,7 +21,7 @@
         public double SessionTimeout;
         public string ConfirmationMessage = ApplicationPageMessages.LeavingPageMessage;
         public string WhiteListRegex = Whitelists.FreetextWhitelist.RegularExpression;
-        public string FourDigitYearRegex = Whitelists.YearWhitelist.RegularExpression;
+        public string FourDigitYearRegex = Whitelists.YearRangeWhiteList.RegularExpression();
         public string AutoSaveTimeInMiutes = ConfigurationManager.AppSettings["AutoSaveTimeInMinutes"];
 
         public ApplicationViewModel(string message, ApplicationViewModelStatus viewModelStatus) : base(message)

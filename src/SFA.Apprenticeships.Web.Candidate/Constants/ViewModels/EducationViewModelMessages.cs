@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Constants.ViewModels
 {
+    using System;
     using Common.Constants;
 
     public static class EducationViewModelMessages
@@ -18,8 +19,8 @@
             public const string LabelText = "From";
             public const string RequiredErrorText = "Please enter year started";
             public const string NotInFutureErrorText = "Year started can’t be in the future";
-            public const string WhiteListRegularExpression = Whitelists.YearWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Year started " + Whitelists.YearWhitelist.ErrorText;
+            public static string WhiteListRegularExpression = Whitelists.YearRangeWhiteList.RegularExpression();
+            public static string WhiteListErrorText = "Year started " + Whitelists.YearRangeWhiteList.ErrorText();
         }
 
         public static class ToYearMessages
@@ -27,8 +28,8 @@
             public const string LabelText = "To";
             public const string RequiredErrorText = "Please enter year finished";
             public const string BeforeOrEqualErrorText = "Year started can’t be after year finished";
-            public const string WhiteListRegularExpression = Whitelists.YearWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Year finished " + Whitelists.YearWhitelist.ErrorText;
+            public static string WhiteListRegularExpression = Whitelists.YearRangeWhiteList.RegularExpression();
+            public static string WhiteListErrorText = "Year finished " + Whitelists.YearRangeWhiteList.ErrorText();
         }
     }
 }

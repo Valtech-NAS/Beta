@@ -192,6 +192,7 @@
     <Compile Include="Constants\UserMessageLevel.cs" />
     <Compile Include="Constants\UserRoleNames.cs" />
     <Compile Include="Constants\Whitelists.cs" />
+    <Compile Include="Constants\YearRangeRegexGenerator.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\IUserController.cs" />
     <Compile Include="Framework\SpanLabelExtensions.cs" />

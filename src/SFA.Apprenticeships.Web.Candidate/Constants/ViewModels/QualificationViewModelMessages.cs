@@ -33,8 +33,8 @@
             public const string RequiredErrorText = "Please enter year";
             public const string MustBeNumericText = "Year must be 4 digits, for example 1990";
             public const string BeforeOrEqualErrorText = "For future qualifications, check 'Predicted'";
-            public const string WhiteListRegularExpression = Whitelists.YearWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Qualification year " + Whitelists.YearWhitelist.ErrorText;
+            public static string WhiteListRegularExpression = Whitelists.YearRangeWhiteList.RegularExpression();
+            public static string WhiteListErrorText = "Qualification year " + Whitelists.YearRangeWhiteList.ErrorText();
         }
     }
 }
