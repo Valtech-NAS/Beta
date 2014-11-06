@@ -14,9 +14,9 @@
         public string NameOfMostRecentSchoolCollege { get; set; }
 
         [Display(Name = EducationViewModelMessages.FromYearMessages.LabelText)]
-        public string FromYear { get; set; }
+        public int? FromYear { get; set; }
 
         [Display(Name = EducationViewModelMessages.ToYearMessages.LabelText)]
-        public string ToYear { get; set; }
+        public int? ToYear { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
+    using System;
     using Constants.ViewModels;
     using FluentValidation;
     using Helpers;
@@ -40,12 +41,16 @@
                 .WithMessage(EducationViewModelMessages.NameOfMostRecentSchoolCollegeMessages.RequiredErrorText);
 
             validator.RuleFor(x => x.FromYear)
+                .InclusiveBetween(DateTime.Now.Year - 100, DateTime.Now.Year)
+                .WithMessage(string.Format(DateViewModelMessages.YearMessages.RangeErrorText, DateTime.Now.Year - 100, DateTime.Now.Year))
                 .NotEmpty()
-                .WithMessage(EducationViewModelMessages.FromYearMessages.RequiredErrorText);
+                .WithMessage(string.Format(DateViewModelMessages.YearMessages.RequiredErrorText, DateTime.Now.Year - 100, DateTime.Now.Year));
 
             validator.RuleFor(x => x.ToYear)
+                .InclusiveBetween(DateTime.Now.Year - 100, DateTime.Now.Year)
+                .WithMessage(string.Format(DateViewModelMessages.YearMessages.RangeErrorText, DateTime.Now.Year - 100, DateTime.Now.Year))
                 .NotEmpty()
-                .WithMessage(EducationViewModelMessages.ToYearMessages.RequiredErrorText);
+                .WithMessage(string.Format(DateViewModelMessages.YearMessages.RequiredErrorText, DateTime.Now.Year - 100, DateTime.Now.Year));
         }
 
         internal static void AddSaveRules(this AbstractValidator<EducationViewModel> validator)
@@ -56,17 +61,13 @@
                 .Matches(EducationViewModelMessages.NameOfMostRecentSchoolCollegeMessages.WhiteListRegularExpression)
                 .WithMessage(EducationViewModelMessages.NameOfMostRecentSchoolCollegeMessages.WhiteListErrorText);
 
-            validator.RuleFor(x => x.FromYear)               
-                .Matches(EducationViewModelMessages.FromYearMessages.WhiteListRegularExpression)
-                .WithMessage(EducationViewModelMessages.FromYearMessages.WhiteListErrorText)
+            validator.RuleFor(x => x.FromYear)
                 .Must(ValidatorsHelper.BeNowOrInThePast)
                 .WithMessage(EducationViewModelMessages.FromYearMessages.NotInFutureErrorText);
 
             validator.RuleFor(x => x.ToYear)
-                .Matches(EducationViewModelMessages.ToYearMessages.WhiteListRegularExpression)
-                .WithMessage(EducationViewModelMessages.ToYearMessages.WhiteListErrorText)
-                .Must(ValidatorsHelper.EducationYearBeBeforeOrEqual)
-                .WithMessage(EducationViewModelMessages.ToYearMessages.BeforeOrEqualErrorText);
+                  .Must(ValidatorsHelper.EducationYearBeBeforeOrEqual)
+                  .WithMessage(EducationViewModelMessages.ToYearMessages.BeforeOrEqualErrorText);
         }
     }
 }
