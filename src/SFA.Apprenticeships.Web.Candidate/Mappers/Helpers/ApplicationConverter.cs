@@ -74,9 +74,9 @@
 
             return new EducationViewModel
             {
-                FromYear = educationHistory.FromYear,
+                FromYear = ConvertYearIntToString(educationHistory.FromYear),
                 NameOfMostRecentSchoolCollege = educationHistory.Institution,
-                ToYear = educationHistory.ToYear
+                ToYear = ConvertYearIntToString(educationHistory.ToYear)
             };
         }
 
@@ -134,11 +134,9 @@
 
             return new Education
             {
-// ReSharper disable once PossibleInvalidOperationException
-                FromYear = model.FromYear.Value,
+                FromYear = ConvertYearStringToInt(model.FromYear),
                 Institution = model.NameOfMostRecentSchoolCollege,
-// ReSharper disable once PossibleInvalidOperationException
-                ToYear = model.ToYear.Value
+                ToYear = ConvertYearStringToInt(model.ToYear)
             };
         }
 

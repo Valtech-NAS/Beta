@@ -31,14 +31,14 @@
         [Test]
         public void ShouldHaveErrorsOnSaveWhenFromYearInTheFuture()
         {
-            var viewModel = new EducationViewModel {FromYear = DateTime.Now.Year + 1};
+            var viewModel = new EducationViewModel {FromYear = (DateTime.Now.Year + 1).ToString()};
             _viewModelSaveValidator.ShouldHaveValidationErrorFor(x => x.FromYear, viewModel);
         }
 
         [Test]
         public void ShouldHaveErrorsOnSaveWhenFromYearGreaterThanToYear()
         {
-            var viewModel = new EducationViewModel { FromYear = 2000, ToYear = 1990 };
+            var viewModel = new EducationViewModel() { FromYear = "2000", ToYear = "1990" };
             _viewModelSaveValidator.ShouldHaveValidationErrorFor(x => x.ToYear, viewModel);
         }
 
