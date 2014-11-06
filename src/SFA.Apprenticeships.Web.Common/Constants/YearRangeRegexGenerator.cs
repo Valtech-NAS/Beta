@@ -16,7 +16,7 @@
             {
                 if (i == d)
                 {
-                    regex += string.Format(@"|20{0}[1-{1}]", i, u);
+                    regex += string.Format(@"|20{0}[0-{1}]", i, u);
                 }
                 else
                 {
