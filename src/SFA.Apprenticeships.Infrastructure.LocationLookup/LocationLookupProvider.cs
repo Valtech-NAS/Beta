@@ -6,7 +6,6 @@
     using Domain.Entities.Locations;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
-    using Nest;
     using NLog;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
 
@@ -22,13 +21,16 @@
 
         public IEnumerable<Location> FindLocation(string placeName, int maxResults = 50)
         {
-            ElasticClient client = _elasticsearchClientFactory.GetElasticClient();
-            string indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(LocationLookup));
-            string term = placeName.ToLowerInvariant();
+            var client = _elasticsearchClientFactory.GetElasticClient();
+            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(LocationLookup));
+            var term = placeName.ToLowerInvariant();
 
             Logger.Debug("Calling FindLocation for Term={0} on IndexName={1}", term, indexName);
 
-            ISearchResponse<LocationLookup> exactMatchResults = client.Search<LocationLookup>(s => s
+            // NOTE: this function executes 3 Elasticsearch queries and then combines the results.
+
+            // 1. Find place names that match the search term exactly.
+            var exactMatchResults = client.Search<LocationLookup>(s => s
                 .Index(indexName)
                 .Query(q => q
                     .Match(m => m.OnField(f => f.Name).Query(term))
@@ -36,7 +38,17 @@
                 .From(0)
                 .Size(maxResults));
 
-            ISearchResponse<LocationLookup> fuzzyMatchResults = client.Search<LocationLookup>(s => s
+            // 2. Find place names that are prefixed with the search term (autocomplete).
+            var prefixMatchResults = client.Search<LocationLookup>(s => s
+                .Index(indexName)
+                .Query(q => q
+                    .Prefix(p => p.OnField(n => n.Name).Value(term))
+                )
+                .From(0)
+                .Size(maxResults));
+
+            // 3. Find place names and counties by Levenshtein distance from the search term (http://en.wikipedia.org/wiki/Levenshtein_distance).
+            var fuzzyMatchResults = client.Search<LocationLookup>(s => s
                 .Index(indexName)
                 .Query(q =>
                     q.Fuzzy(f => f.PrefixLength(1).OnField(n => n.Name).Value(term).Boost(2.0)) ||
@@ -45,17 +57,21 @@
                 .From(0)
                 .Size(maxResults));
 
-            List<LocationLookup> results = exactMatchResults.Documents.Concat(fuzzyMatchResults.Documents)
+            // Prefer exact matches over prefix matches; prefer prefix matches over fuzzy matches.
+            var results =
+                exactMatchResults.Documents
+                .Concat(prefixMatchResults.Documents)
+                .Concat(fuzzyMatchResults.Documents)
                 .Distinct((new LocationLookupComparer()))
                 .Take(maxResults)
                 .ToList();
 
             Logger.Debug("{0} search results were returned", results.Count);
 
-            return results.Select(l => new Location
+            return results.Select(location => new Location
             {
-                Name = MakeName(l, results.Count),
-                GeoPoint = new GeoPoint { Latitude = l.Latitude, Longitude = l.Longitude }
+                Name = MakeName(location, results.Count),
+                GeoPoint = new GeoPoint { Latitude = location.Latitude, Longitude = location.Longitude }
             });
         }
 
