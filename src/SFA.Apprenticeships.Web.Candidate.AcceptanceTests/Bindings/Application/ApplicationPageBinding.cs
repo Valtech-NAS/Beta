@@ -1,10 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings.Application
 {
-    using System;
-    using System.Reflection;
     using OpenQA.Selenium;
     using SpecBind.BrowserSupport;
-    using SpecBind.Selenium;
     using TechTalk.SpecFlow;
 
     [Binding]
@@ -14,7 +11,7 @@
 
         public ApplicationPageBinding(IBrowser browser)
         {
-            _driver = Driver(browser);
+            _driver = BindingUtils.Driver(browser);
         }
 
         [When(@"I enter employer question data if present")]
@@ -45,14 +42,6 @@
         public void WhenIWaitSeconds(int numSeconds)
         {
             System.Threading.Thread.Sleep(numSeconds * 1000);
-        }
-
-
-        private static IWebDriver Driver(IBrowser browser)
-        {
-            var field = typeof(SeleniumBrowser).GetField("driver", BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.Instance);
-            var value = field.GetValue(browser);
-            return (value as System.Lazy<IWebDriver>).Value;
         }
     }
 }

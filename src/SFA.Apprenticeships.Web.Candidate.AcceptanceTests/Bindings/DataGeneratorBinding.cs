@@ -1,14 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
 {
     using System;
-    using System.Reflection;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Generators;
     using global::SpecBind.Helpers;
     using OpenQA.Selenium;
     using SpecBind.BrowserSupport;
-    using SpecBind.Selenium;
     using StructureMap;
     using System.Linq;
     using TechTalk.SpecFlow;
@@ -33,7 +31,7 @@
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
 #pragma warning restore 0618
-            _driver = Driver(browser);
+            _driver = BindingUtils.Driver(browser);
         }
 
         [Given("I have created a new email address")]
@@ -258,13 +256,6 @@
             {
                 _tokenManager.SetToken(ActivationTokenId, user.ActivationCode);
             }
-        }
-
-        private static IWebDriver Driver(IBrowser browser)
-        {
-            var field = typeof(SeleniumBrowser).GetField("driver", BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.Instance);
-            var value = field.GetValue(browser);
-            return (value as System.Lazy<IWebDriver>).Value;
         }
     }
 }
