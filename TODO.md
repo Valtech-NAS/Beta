@@ -4,8 +4,8 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 ## Web layer ##
 
-- controllers should use providers to avoid containing orchestration logic
-- qualification types reference data should be read from configuration / provided by a configuration service
+- refactor: controllers should use providers to avoid containing orchestration logic
+- refactor: qualification types reference data should be read from configuration / provided by a configuration service
 - some website URLs need to be reviewed to be more "friendly"
 - validation messages should be parameterised where possible (e.g. max length). See AddressMessages.cs for an example.
 - check all messages starting with "TODO" and 'TODO' (C# and JavaScript).
@@ -21,11 +21,12 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 - change to entity repos (re. Mark)
 - wrap ElasticSearchClient -> search into a new class to be able to rethrow WebException swallowed by Nest
+- replace AD with user auth repo
+- log request/response payloads for nas gateway calls
 
 ## Cross cutting ##
 
-- solution should be executable when disconnected from platform (i.e. standalone)
-- demo website should use separate configuration (e.g. databases, settings, etc.)
+- 
 
 ----------
 
@@ -46,3 +47,5 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - ensure autosave interval and other settings are set to production values
 - need to trim user input data, e.g. http://stackoverflow.com/questions/1718501/asp-net-mvc-best-way-to-trim-strings-after-data-entry-should-i-create-a-custo
 - need to consider turning off integration tests against NAS Gateway services once we are hitting the live service
+- solution should be executable when disconnected from platform (i.e. standalone)
+- demo website should use separate configuration (e.g. databases, settings, etc.)
