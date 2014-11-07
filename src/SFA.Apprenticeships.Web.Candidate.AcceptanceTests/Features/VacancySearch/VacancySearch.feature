@@ -140,7 +140,7 @@ Scenario: Search doesn't error when location doesn't exist
         | NoResultsTitle       | Exists         |       |
 
 @SmokeTests
-Scenario: Search locaton autocomplete appears on both initial search page and search results page
+Scenario: Search location autocomplete appears on both initial search page and search results page
 	Given I navigated to the VacancySearchPage page
 	When I enter data
 		 | Field    | Value    |

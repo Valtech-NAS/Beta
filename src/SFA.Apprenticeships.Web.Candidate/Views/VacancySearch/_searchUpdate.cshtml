@@ -12,7 +12,7 @@
             @if (ViewBag.LocationSearches != null && ViewBag.LocationSearches.Length > 0)
             {
                 <div class="form-group form-group-compound">
-                    <ul class="list-text list-max-11">
+                    <ul id="location-suggestions" class="list-text list-max-11">
                         <li>Did you mean: </li>
                         @foreach (var locationSearch in ViewBag.LocationSearches)
                         {

@@ -472,13 +472,13 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Search locaton autocomplete appears on both initial search page and search result" +
-            "s page")]
+        [NUnit.Framework.DescriptionAttribute("Search location autocomplete appears on both initial search page and search resul" +
+            "ts page")]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
-        public virtual void SearchLocatonAutocompleteAppearsOnBothInitialSearchPageAndSearchResultsPage()
+        public virtual void SearchLocationAutocompleteAppearsOnBothInitialSearchPageAndSearchResultsPage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Search locaton autocomplete appears on both initial search page and search result" +
-                    "s page", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Search location autocomplete appears on both initial search page and search resul" +
+                    "ts page", new string[] {
                         "SmokeTests"});
 #line 143
 this.ScenarioSetup(scenarioInfo);

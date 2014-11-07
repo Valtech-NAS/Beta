@@ -32,7 +32,7 @@
             }
         }
 
-        [ElementLocator(Id = "search-button", Type = "submit", TagName = "button")]
+        [ElementLocator(Id = "search-button")]
         public IWebElement Search { get; set; }
 
         [ElementLocator(Id = "sort-results")]
@@ -75,6 +75,17 @@
         public string SearchResultItemsCount
         {
             get { return SearchResultItems.Count().ToString(); }
+        }
+
+        [ElementLocator(Id = "location-suggestions")]
+        public IWebElement LocationSuggestionsContainer { get; set; }
+
+        [ElementLocator(Id = "location-suggestions")]
+        public IElementList<IWebElement, LocationSuggestion> LocationSuggestions { get; set; }
+
+        public string LocationSuggestionsCount
+        {
+            get { return LocationSuggestions.Count().ToString(); }
         }
 
         public string ResultsAreInDistanceOrder

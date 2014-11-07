@@ -156,6 +156,7 @@
     <Compile Include="Bindings\Dashboard\DashboardBinding.cs" />
     <Compile Include="Bindings\DataGeneratorBinding.cs" />
     <Compile Include="Bindings\Registration\ForgottenPasswordDataBinding.cs" />
+    <Compile Include="Bindings\VacancySearch\VacancySearchPageBindings.cs" />
     <Compile Include="Builders\ApplicationBuilder.cs" />
     <Compile Include="Builders\CandidateBuilder.cs" />
     <Compile Include="Builders\RegistrationBuilder.cs" />
@@ -221,6 +222,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RegisterCandidate.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\VacancySearch\VacancySearchByLocation.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VacancySearchByLocation.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\VacancySearch\NationwideVacancies.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -251,6 +257,7 @@
     <Compile Include="Pages\Registration\RegisterCandidatePage.cs" />
     <Compile Include="Pages\VacancySearch\DetailsPage.cs" />
     <Compile Include="Pages\VacancySearch\LocationAutoCompleteItem.cs" />
+    <Compile Include="Pages\VacancySearch\LocationSuggestion.cs" />
     <Compile Include="Pages\VacancySearch\VacancySearchResultPage.cs" />
     <Compile Include="Pages\VacancySearch\VacancySearchPage.cs" />
     <Compile Include="Pages\HomePage.cs" />
@@ -344,6 +351,10 @@
     <None Include="Features\Registration\RegisterCandidate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RegisterCandidate.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\VacancySearch\VacancySearchByLocation.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>VacancySearchByLocation.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\VacancySearch\NationwideVacancies.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
