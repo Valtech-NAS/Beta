@@ -23,6 +23,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - wrap ElasticSearchClient -> search into a new class to be able to rethrow WebException swallowed by Nest
 - replace AD with user auth repo
 - log request/response payloads for nas gateway calls
+- replace address lookup with public service
 
 ## Cross cutting ##
 
