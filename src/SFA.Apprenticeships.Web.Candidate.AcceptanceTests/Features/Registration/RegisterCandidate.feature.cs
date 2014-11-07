@@ -608,6 +608,92 @@ this.FeatureBackground();
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("I cannot enter letters on day, month and year")]
+        [NUnit.Framework.CategoryAttribute("SmokeTests")]
+        public virtual void ICannotEnterLettersOnDayMonthAndYear()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I cannot enter letters on day, month and year", new string[] {
+                        "SmokeTests"});
+#line 182
+this.ScenarioSetup(scenarioInfo);
+#line 8
+this.FeatureBackground();
+#line 183
+ testRunner.Given("I navigated to the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 184
+ testRunner.When("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table20.AddRow(new string[] {
+                        "Day",
+                        "aa"});
+            table20.AddRow(new string[] {
+                        "Month",
+                        "aa"});
+            table20.AddRow(new string[] {
+                        "Year",
+                        "aaaa"});
+#line 185
+ testRunner.And("I enter data", ((string)(null)), table20, "And ");
+#line 190
+ testRunner.And("I choose Phonenumber", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 191
+ testRunner.Then("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table21.AddRow(new string[] {
+                        "ValidationFieldErrorCount",
+                        "Equals",
+                        "3"});
+#line 192
+ testRunner.And("I see", ((string)(null)), table21, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table22.AddRow(new string[] {
+                        "Text",
+                        "Equals",
+                        "The field Day must be a number."});
+#line 195
+ testRunner.And("I am on ValidationFieldErrorItems list item matching criteria", ((string)(null)), table22, "And ");
+#line 198
+ testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table23.AddRow(new string[] {
+                        "Text",
+                        "Equals",
+                        "The field Month must be a number."});
+#line 199
+ testRunner.And("I am on ValidationFieldErrorItems list item matching criteria", ((string)(null)), table23, "And ");
+#line 202
+  testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table24.AddRow(new string[] {
+                        "Text",
+                        "Equals",
+                        "The field Year must be a number."});
+#line 203
+ testRunner.And("I am on ValidationFieldErrorItems list item matching criteria", ((string)(null)), table24, "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

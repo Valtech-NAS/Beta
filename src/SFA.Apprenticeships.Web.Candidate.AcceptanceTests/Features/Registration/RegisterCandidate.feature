@@ -177,3 +177,29 @@ Scenario: As a candidate I must confirm my password
 		| Field | Rule   | Value                             |
 		| Text  | Equals | Sorry, your passwords don’t match |
 		| Href  | Equals | #Password                         |
+
+@SmokeTests
+Scenario: I cannot enter letters on day, month and year
+	Given I navigated to the RegisterCandidatePage page
+	When I am on the RegisterCandidatePage page
+	And I enter data
+		| Field           | Value         |
+		| Day             | aa            |
+		| Month           | aa            |
+		| Year            | aaaa          |
+	And I choose Phonenumber
+	Then I am on the RegisterCandidatePage page
+	And I see
+		| Field                     | Rule   | Value |
+		| ValidationFieldErrorCount | Equals | 3     |
+	And I am on ValidationFieldErrorItems list item matching criteria
+		| Field | Rule   | Value                           |
+		| Text  | Equals | The field Day must be a number. |
+	And I am on the RegisterCandidatePage page
+	And I am on ValidationFieldErrorItems list item matching criteria
+		| Field | Rule   | Value                           |
+		| Text  | Equals | The field Month must be a number. |
+		And I am on the RegisterCandidatePage page
+	And I am on ValidationFieldErrorItems list item matching criteria
+		| Field | Rule   | Value                           |
+		| Text  | Equals | The field Year must be a number. |
