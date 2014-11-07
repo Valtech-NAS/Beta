@@ -232,6 +232,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 
 
 @US509
+@ignore
 Scenario: As a candidate I would like to preview a vacancy application via the employer site
 	Given I navigated to the VacancySearchPage page
 	When I select the first vacancy in location "N7 8LS" that I can apply via the employer site
