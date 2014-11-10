@@ -28,13 +28,7 @@
 
             try
             {
-                _rabbitBus.PublishAsync(new MonitorMessage()).ContinueWith(task =>
-                {
-                    if (task.IsFaulted)
-                    {
-                        LogError(task.Exception);
-                    }
-                });
+                _rabbitBus.Publish(new MonitorMessage() );
             }
             catch (Exception ex)
             {
