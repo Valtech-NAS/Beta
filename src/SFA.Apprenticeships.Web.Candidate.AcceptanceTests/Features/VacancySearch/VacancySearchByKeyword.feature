@@ -25,3 +25,139 @@ Scenario: When searching by keyword the results are ordered by best match
         | SortOrderingDropDownItemsCount | Equals       | 3                                |
         | SortOrderingDropDownItemsText  | Equals       | Best Match,Closing Date,Distance |
         | SortOrderingDropDown           | Equals       | Best Match                       |
+
+@US449 @SmokeTests
+Scenario: When searching by keywords the results are ordered by best match
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value                  |
+		 | Keywords       | Mechanical Engineering |
+		 | Location       | Birmingham             |
+		 | WithInDistance | 40 miles               |
+	And I choose Search
+	And I am on the VacancySearchResultPage page
+	Then I see 
+        | Field                          | Rule         | Value                            |
+        | SearchResultItemsCount         | Greater Than | 0                                |
+        | SortOrderingDropDownItemsCount | Equals       | 3                                |
+        | SortOrderingDropDownItemsText  | Equals       | Best Match,Closing Date,Distance |
+        | SortOrderingDropDown           | Equals       | Best Match                       |
+
+@US449 @SmokeTests
+Scenario: When searching by keyword then removing keyword and searching again the results are ordered by distance
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value      |
+		 | Keywords       | Mechanical |
+		 | Location       | Birmingham |
+		 | WithInDistance | 40 miles   |
+	And I choose Search
+	And I am on the VacancySearchResultPage page
+	Then I see 
+        | Field                  | Rule         | Value      |
+        | SearchResultItemsCount | Greater Than | 0          |
+        | SortOrderingDropDown   | Equals       | Best Match |
+	When I clear the Keywords field
+	And I choose Search
+	Then I am on the VacancySearchResultPage page
+	Then I see
+        | Field                          | Rule         | Value                 |
+        | SearchResultItemsCount         | Greater Than | 0                     |
+        | SortOrderingDropDownItemsCount | Equals       | 2                     |
+        | SortOrderingDropDownItemsText  | Equals       | Closing Date,Distance |
+        | SortOrderingDropDown           | Equals       | Distance              |
+
+@US449 @SmokeTests
+Scenario: When searching by location then adding keyword and searching again the results are ordered by best match
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value      |
+		 | Location       | Birmingham |
+		 | WithInDistance | 40 miles   |
+	And I choose Search
+	And I am on the VacancySearchResultPage page
+	Then I see 
+        | Field                  | Rule         | Value    |
+        | SearchResultItemsCount | Greater Than | 0        |
+        | SortOrderingDropDown   | Equals       | Distance |	
+	When I enter data
+		 | Field          | Value      |
+		 | Keywords       | Mechanical |
+	And I choose Search
+	Then I am on the VacancySearchResultPage page
+	Then I see
+        | Field                          | Rule         | Value                            |
+        | SearchResultItemsCount         | Greater Than | 0                                |
+        | SortOrderingDropDownItemsCount | Equals       | 3                                |
+        | SortOrderingDropDownItemsText  | Equals       | Best Match,Closing Date,Distance |
+        | SortOrderingDropDown           | Equals       | Distance                         |
+
+@US449 @SmokeTest
+Scenario: Nationwide apprenticeships are included in keyword search results
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value       |
+		 | Keywords       | bricklaying |
+		 | Location       | Birmingham  |
+		 | WithInDistance | 40 miles    |
+	And I choose Search
+	And I am on the VacancySearchResultPage page
+	Then I see 
+        | Field                      | Rule           | Value      |
+        | SearchResultItemsCount     | Greater Than   | 0          |
+        | SortOrderingDropDown       | Equals         | Best Match |
+        | NationwideLocationTypeLink | Does Not Exist |            |
+
+@SmokeTests
+Scenario: Find apprenticeships and change ordering to distance
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value    |
+		 | Keywords       | Admin    |
+		 | Location       | Coventry |
+		 | WithInDistance | 40 miles |
+	And I choose Search
+	And I am on the VacancySearchResultPage page
+	Then I see
+        | Field                           | Rule   | Value |
+        | SearchResultItemsCount          | Equals | 5     |
+        #| ResultsAreInBestMatchScoreOrder | Equals | True  |
+        #| ResultsAreInDistanceOrder       | Equals | False |
+        #| ResultsAreInClosingDateOrder    | Equals | False |
+	And I enter data
+		| Field                | Value    |
+		| SortOrderingDropDown | Distance |
+	And I am on the VacancySearchResultPage page
+	And I see
+        | Field                     | Rule   | Value |
+        | SearchResultItemsCount    | Equals | 5     |
+        | ResultsAreInDistanceOrder | Equals | True  |
+        #| ResultsAreInClosingDateOrder | Equals | True  |
+        #| ResultsAreInBestMatchScoreOrder | Equals | False |
+
+@SmokeTests
+Scenario: Find apprenticeships and change ordering to closing date
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value    |
+		 | Keywords       | Admin    |
+		 | Location       | Coventry |
+		 | WithInDistance | 40 miles |
+	And I choose Search
+	And I am on the VacancySearchResultPage page
+	Then I see
+        | Field                           | Rule   | Value |
+        | SearchResultItemsCount          | Equals | 5     |
+        #| ResultsAreInBestMatchScoreOrder | Equals | True  |
+        #| ResultsAreInDistanceOrder       | Equals | False |
+        #| ResultsAreInClosingDateOrder    | Equals | False |
+	And I enter data
+		| Field                | Value        |
+		| SortOrderingDropDown | Closing Date |
+	And I am on the VacancySearchResultPage page
+	And I see
+        | Field                        | Rule   | Value |
+        | SearchResultItemsCount       | Equals | 5     |
+        | ResultsAreInClosingDateOrder | Equals | True  |
+        #| ResultsAreInDistanceOrder       | Equals | False |
+        #| ResultsAreInBestMatchScoreOrder | Equals | False |

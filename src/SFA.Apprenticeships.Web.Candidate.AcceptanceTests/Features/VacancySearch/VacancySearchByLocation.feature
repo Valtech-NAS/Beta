@@ -57,7 +57,7 @@ Scenario: User enters location manually then changes location manually and sees 
 		 | Location | Manchester |
 	And I choose Search
 	Then I am on the VacancySearchResultPage page
-	Then I clear the location
+	Then I clear the Location field
 	When I enter data
 		 | Field    | Value |
 		 | Location | Birm  |
@@ -99,7 +99,7 @@ Scenario: User enters location manually then selects from autocomplete then chan
 		| Text  | Equals | Leeds (West Yorkshire) |
 	And I choose WrappedElement
 	And I am on the VacancySearchPage page
-	Then I clear the location
+	Then I clear the Location field
 	When I enter data
 		 | Field    | Value |
 		 | Location | Manchester  |
@@ -122,7 +122,7 @@ Scenario: User enters location manually then selects from autocomplete then refi
 		| Text  | Equals | Leeds (West Yorkshire) |
 	And I choose WrappedElement
 	And I am on the VacancySearchPage page
-	Then I clear the location
+	Then I clear the Location field
 	When I enter data
 		 | Field    | Value |
 		 | Location | Manchester  |
@@ -132,7 +132,7 @@ Scenario: User enters location manually then selects from autocomplete then refi
         | Field                    | Rule         | Value                           |
         | Location                 | Equals       | Manchester (Greater Manchester) |
         | LocationSuggestionsCount | Greater Than | 0                               |
-	Then I clear the location
+	Then I clear the Location field
 	When I enter data
 		 | Field    | Value |
 		 | Location | Birm  |
@@ -155,7 +155,7 @@ Scenario: User enters location manually then selects from autocomplete then chan
         | Field                    | Rule         | Value           |
         | Location                 | Equals       | Cove (Highland) |
         | LocationSuggestionsCount | Greater Than | 0               |
-	Then I clear the location
+	Then I clear the Location field
 	When I enter data
 		 | Field    | Value  |
 		 | Location | Covent |

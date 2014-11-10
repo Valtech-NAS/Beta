@@ -49,21 +49,11 @@ Scenario: Find apprenticeships and test ordering with keywords
 	And I choose Search
 	And I am on the VacancySearchResultPage page
 	Then I see
-        | Field                  | Rule   | Value |
-        | SearchResultItemsCount | Equals | 5     |
+        | Field                           | Rule   | Value |
+        | SearchResultItemsCount          | Equals | 5     |
         #| ResultsAreInBestMatchScoreOrder | Equals | True  |
         #| ResultsAreInDistanceOrder       | Equals | False |
         #| ResultsAreInClosingDateOrder    | Equals | False |
-	And I enter data
-		| Field                | Value        |
-		| SortOrderingDropDown | Closing Date |
-	And I am on the VacancySearchResultPage page
-	And I see
-        | Field                        | Rule   | Value |
-        | SearchResultItemsCount       | Equals | 5     |
-        | ResultsAreInClosingDateOrder | Equals | True  |
-        #| ResultsAreInDistanceOrder       | Equals | False |
-        #| ResultsAreInBestMatchScoreOrder | Equals | False |
 
 @SmokeTests
 Scenario: Find apprenticeships and test paging

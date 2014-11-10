@@ -14,12 +14,12 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings.VacancySear
             _driver = BindingUtils.Driver(browser);
         }
 
-        [Then(@"I clear the location")]
-        public void ThenIClearTheLocation()
+        [When(@"I clear the (.*) field")]
+        [Then(@"I clear the (.*) field")]
+        public void ThenIClearTheLocation(string fieldId)
         {
-            var location = _driver.FindElement(By.Id("Location"));
+            var location = _driver.FindElement(By.Id(fieldId));
             location.Clear();
         }
- 
     }
 }
