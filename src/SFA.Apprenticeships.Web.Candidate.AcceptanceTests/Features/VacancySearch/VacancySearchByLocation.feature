@@ -171,3 +171,65 @@ Scenario: User enters location manually then selects from autocomplete then chan
         | Field                        | Rule           | Value                    |
         | Location                     | Equals         | Coventry (West Midlands) |
         | LocationSuggestionsContainer | Does Not Exist |                          |
+
+@SmokeTests
+Scenario: Find apprenticeships by location and change ordering to closing date
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value    |
+		 | Location       | Coventry |
+		 | WithInDistance | 40 miles |
+	And I choose Search
+	And I am on the VacancySearchResultPage page
+	Then I see
+        | Field                     | Rule   | Value |
+        | SearchResultItemsCount    | Equals | 5     |
+        | ResultsAreInDistanceOrder | Equals | True  |
+        #| ResultsAreInBestMatchScoreOrder | Equals | True  |
+        #| ResultsAreInClosingDateOrder    | Equals | False |
+	And I enter data
+		| Field                | Value        |
+		| SortOrderingDropDown | Closing Date |
+	And I am on the VacancySearchResultPage page
+	And I see
+        | Field                        | Rule   | Value |
+        | SearchResultItemsCount       | Equals | 5     |
+        | ResultsAreInClosingDateOrder | Equals | True  |
+        #| ResultsAreInDistanceOrder       | Equals | False |
+        #| ResultsAreInBestMatchScoreOrder | Equals | False |
+
+@SmokeTests
+Scenario: Find apprenticeships by location and change ordering to closing date and back again
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value    |
+		 | Location       | Coventry |
+		 | WithInDistance | 40 miles |
+	And I choose Search
+	And I am on the VacancySearchResultPage page
+	Then I see
+        | Field                     | Rule   | Value |
+        | SearchResultItemsCount    | Equals | 5     |
+        | ResultsAreInDistanceOrder | Equals | True  |
+        #| ResultsAreInBestMatchScoreOrder | Equals | True  |
+        #| ResultsAreInClosingDateOrder    | Equals | False |
+	And I enter data
+		| Field                | Value        |
+		| SortOrderingDropDown | Closing Date |
+	And I am on the VacancySearchResultPage page
+	And I see
+        | Field                        | Rule   | Value |
+        | SearchResultItemsCount       | Equals | 5     |
+        | ResultsAreInClosingDateOrder | Equals | True  |
+        #| ResultsAreInDistanceOrder       | Equals | False |
+        #| ResultsAreInBestMatchScoreOrder | Equals | False |
+	And I enter data
+		| Field                | Value        |
+		| SortOrderingDropDown | Distance |
+	And I am on the VacancySearchResultPage page
+	And I see
+        | Field                     | Rule   | Value |
+        | SearchResultItemsCount    | Equals | 5     |
+        | ResultsAreInDistanceOrder | Equals | True  |
+        #| ResultsAreInBestMatchScoreOrder | Equals | True  |
+        #| ResultsAreInClosingDateOrder    | Equals | False |
