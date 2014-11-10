@@ -41,7 +41,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - integrate gateway certificates
 - logging levels should be used in accordance with article on wiki
 - logging should be called consistently across components (i.e. volume of log entries)
-- logging should include an identifier which can be used to correlate a user's activity during a session (Nlog MDC)
+- logging should include an identifier which can be used to correlate a user's activity during a session (NLog MDC)
 - remove legacy reference data service
 - controller actions should use async where possible
 - validation summary links need to be clicked twice
