@@ -5,7 +5,9 @@
 
 Background: 
 	Given I navigated to the HomePage page
-	When I am on the HomePage page
+	And I am logged out
+	And I navigated to the HomePage page
+	Then I am on the HomePage page
 
 @US154
 Scenario: As an candidate I want to be able to archive succesful applications 

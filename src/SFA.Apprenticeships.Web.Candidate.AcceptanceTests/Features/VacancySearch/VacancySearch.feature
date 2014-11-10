@@ -4,22 +4,11 @@ Feature: Vacancy Search
 	As a candidate
 	I want to find a vacancy apprenticeship by location or keywords
 
-#TODO Refine background step to support cookie detection
 Background: 
 	Given I navigated to the HomePage page
-	When I am on the HomePage page
-
-@SmokeTests
-Scenario: Show validation error message when no location entered
-	Given I navigated to the VacancySearchPage page
-	When I enter data
-		 | Field          | Value    |
-		 | WithInDistance | 40 miles |
-	And I choose Search
-	And I wait to see ValidationSummary
-	Then I see
-        | Field                  | Rule   | Value |
-        | ValidationSummaryCount | Equals | 1     |
+	And I am logged out
+	And I navigated to the HomePage page
+	Then I am on the HomePage page
 
 @SmokeTests
 Scenario: Find apprenticeships and test ordering without keywords

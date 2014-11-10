@@ -70,11 +70,15 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.VacancySear
         
         public virtual void FeatureBackground()
         {
+#line 7
 #line 8
-#line 9
  testRunner.Given("I navigated to the HomePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 9
+ testRunner.And("I am logged out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10
- testRunner.When("I am on the HomePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I navigated to the HomePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 11
+ testRunner.Then("I am on the HomePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
         }
         
@@ -87,7 +91,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.VacancySear
                         "SmokeTests"});
 #line 14
 this.ScenarioSetup(scenarioInfo);
-#line 8
+#line 7
 this.FeatureBackground();
 #line 15
  testRunner.Given("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
@@ -135,7 +139,7 @@ this.FeatureBackground();
                         "SmokeTests"});
 #line 28
 this.ScenarioSetup(scenarioInfo);
-#line 8
+#line 7
 this.FeatureBackground();
 #line 29
  testRunner.Given("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
@@ -189,7 +193,7 @@ this.FeatureBackground();
                         "SmokeTests"});
 #line 44
 this.ScenarioSetup(scenarioInfo);
-#line 8
+#line 7
 this.FeatureBackground();
 #line 45
  testRunner.Given("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
@@ -254,7 +258,7 @@ this.FeatureBackground();
                         "SmokeTests"});
 #line 64
 this.ScenarioSetup(scenarioInfo);
-#line 8
+#line 7
 this.FeatureBackground();
 #line 65
  testRunner.Given("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");

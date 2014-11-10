@@ -3,6 +3,12 @@
 	As a candidate
 	I want to be able to find and refine vacancies by location
 
+Background: 
+	Given I navigated to the HomePage page
+	And I am logged out
+	And I navigated to the HomePage page
+	Then I am on the HomePage page
+
 @USXXX @SmokeTests
 Scenario: User enters location manually and sees a list of suggested locations
 	Given I navigated to the VacancySearchPage page

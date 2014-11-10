@@ -4,11 +4,11 @@ Feature: Nationwide apprenticeships
 	I want to be able to see apprenticeships that exist nationwide
 	so that I can see opportunities that may be of interest to me irrespective of my location
 
-#TODO Refine background step to support cookie detection
 Background: 
 	Given I navigated to the HomePage page
-	When I am on the HomePage page
-
+	And I am logged out
+	And I navigated to the HomePage page
+	Then I am on the HomePage page
 
 @SmokeTests
 Scenario: After search I see the local apprenticeships

@@ -5,8 +5,9 @@
 
 Background: 
 	Given I navigated to the HomePage page
-	When I am on the HomePage page
-	And I am on the HomePage page
+	And I am logged out
+	And I navigated to the HomePage page
+	Then I am on the HomePage page
 
 @pageload @SmokeTests
 Scenario: Home Page Test Scenario

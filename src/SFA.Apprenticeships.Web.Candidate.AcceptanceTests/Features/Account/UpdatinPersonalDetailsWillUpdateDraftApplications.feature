@@ -4,10 +4,11 @@ Feature: Show my up-to-date details
 	I want to see the most up to date details on my existing draft applications
 	so that when I submit my application it contains my most recent personal details
 
-#TODO Refine background step to support cookie detection
 Background: 
 	Given I navigated to the HomePage page
-	When I am on the HomePage page
+	And I am logged out
+	And I navigated to the HomePage page
+	Then I am on the HomePage page
 
 Scenario: Updating personal details will update draft applications
 	Given I have registered a new candidate

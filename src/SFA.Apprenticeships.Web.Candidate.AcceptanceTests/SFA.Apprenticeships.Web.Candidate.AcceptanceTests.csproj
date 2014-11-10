@@ -155,6 +155,7 @@
     <Compile Include="Bindings\BindingUtils.cs" />
     <Compile Include="Bindings\Dashboard\DashboardBinding.cs" />
     <Compile Include="Bindings\DataGeneratorBinding.cs" />
+    <Compile Include="Bindings\HomePageBinding.cs" />
     <Compile Include="Bindings\Registration\ForgottenPasswordDataBinding.cs" />
     <Compile Include="Bindings\VacancySearch\VacancySearchPageBindings.cs" />
     <Compile Include="Builders\ApplicationBuilder.cs" />
@@ -236,6 +237,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>VacancySearch.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\VacancySearch\VacancySearchValidation.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VacancySearchValidation.feature</DependentUpon>
     </Compile>
     <Compile Include="Generators\EmailGenerator.cs" />
     <Compile Include="Hooks\BeforeAllScenarios.cs" />
@@ -363,6 +369,10 @@
     <None Include="Features\VacancySearch\VacancySearch.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>VacancySearch.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\VacancySearch\VacancySearchValidation.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>VacancySearchValidation.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>

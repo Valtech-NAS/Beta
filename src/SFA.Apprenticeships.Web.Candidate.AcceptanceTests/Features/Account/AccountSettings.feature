@@ -4,10 +4,11 @@ Feature: Account Settings - Personal Details
 	I want to be able to make amendments to my first name, last name, date of birth, address and mobile phone number
 	so that I can manage my personal details and make sure they are correct
 
-# TODO: Refine background step to support cookie detection.
 Background: 
 	Given I navigated to the HomePage page
-	When I am on the HomePage page
+	And I am logged out
+	And I navigated to the HomePage page
+	Then I am on the HomePage page
 
 	Given I registered an account and activated it
 	And I navigated to the LoginPage page

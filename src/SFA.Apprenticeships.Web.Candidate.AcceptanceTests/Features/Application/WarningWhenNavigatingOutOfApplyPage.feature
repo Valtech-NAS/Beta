@@ -3,6 +3,12 @@
 	I want to be warned that I will lose changes if I proceed
 	so that I don't lose any changes I have made without consciously deciding to do so
 
+Background: 
+	Given I navigated to the HomePage page
+	And I am logged out
+	And I navigated to the HomePage page
+	Then I am on the HomePage page
+
 @US501
 Scenario: Selecting No I will remain in the same page
 	Given I have registered a new candidate

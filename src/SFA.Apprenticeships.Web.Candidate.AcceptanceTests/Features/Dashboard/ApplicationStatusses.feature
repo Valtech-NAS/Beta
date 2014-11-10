@@ -7,7 +7,9 @@
 
 Background: 
 	Given I navigated to the HomePage page
-	When I am on the HomePage page
+	And I am logged out
+	And I navigated to the HomePage page
+	Then I am on the HomePage page
 
 @US463
 Scenario: As a candidate I want to see the applications in my dashbord grouped by state
