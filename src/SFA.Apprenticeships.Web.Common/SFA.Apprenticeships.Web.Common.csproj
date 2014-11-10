@@ -199,6 +199,7 @@
     <Compile Include="Framework\RuntimeHelper.cs" />
     <Compile Include="Framework\HttpServerUtilityExtensions.cs" />
     <Compile Include="Framework\HtmlExtensions.cs" />
+    <Compile Include="Framework\UrlHelperExtensions.cs" />
     <Compile Include="IoC\DependencyResolverFilterProvider.cs" />
     <Compile Include="IoC\StructureMapDependencyResolver.cs" />
     <Compile Include="IoC\StructureMapDependencyScope.cs" />
