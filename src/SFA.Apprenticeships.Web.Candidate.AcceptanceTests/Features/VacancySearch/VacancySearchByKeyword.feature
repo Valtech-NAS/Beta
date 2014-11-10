@@ -23,5 +23,5 @@ Scenario: When searching by keyword the results are ordered by best match
         | Field                          | Rule         | Value                            |
         | SearchResultItemsCount         | Greater Than | 0                                |
         | SortOrderingDropDownItemsCount | Equals       | 3                                |
-        | SortOrderingDropDownItems      | Equals       | Best Match,Closing Date,Distance |
+        | SortOrderingDropDownItemsText  | Equals       | Best Match,Closing Date,Distance |
         | SortOrderingDropDown           | Equals       | Best Match                       |

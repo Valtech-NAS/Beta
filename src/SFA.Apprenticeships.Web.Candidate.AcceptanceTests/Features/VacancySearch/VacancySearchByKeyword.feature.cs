@@ -127,7 +127,7 @@ this.FeatureBackground();
                         "Equals",
                         "3"});
             table2.AddRow(new string[] {
-                        "SortOrderingDropDownItems",
+                        "SortOrderingDropDownItemsText",
                         "Equals",
                         "Best Match,Closing Date,Distance"});
             table2.AddRow(new string[] {

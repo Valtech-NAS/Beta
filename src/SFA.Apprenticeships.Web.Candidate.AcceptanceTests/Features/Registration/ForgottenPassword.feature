@@ -105,6 +105,7 @@ Scenario: Reset password in an unactivated account
 		| ConfirmPassword | ?Password01!  |
 	And I choose HasAcceptedTermsAndConditions
 	And I choose FindAddresses
+	And I wait 2 seconds
 	And I am on AddressDropdown list item matching criteria
 		| Field        | Rule   | Value                  |
 		| Text         | Equals | Flat A, 6 Furlong Road |

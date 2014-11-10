@@ -22,7 +22,7 @@ Scenario: When searching by location the results are ordered by distance and ord
         | Field                          | Rule         | Value                 |
         | SearchResultItemsCount         | Greater Than | 0                     |
         | SortOrderingDropDownItemsCount | Equals       | 2                     |
-        | SortOrderingDropDownItems      | Equals       | Closing Date,Distance |
+        | SortOrderingDropDownItemsText  | Equals       | Closing Date,Distance |
         | SortOrderingDropDown           | Equals       | Distance              |
 
 @USXXX @SmokeTests

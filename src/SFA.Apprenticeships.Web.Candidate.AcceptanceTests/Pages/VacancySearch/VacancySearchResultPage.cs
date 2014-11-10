@@ -36,16 +36,19 @@
         public IWebElement Search { get; set; }
 
         [ElementLocator(Id = "sort-results")]
-        public IElementList<IWebElement, SortOrderingDropDownItem> SortOrderingDropDown { get; set; }
+        public IWebElement SortOrderingDropDown { get; set; }
 
-        public string SortOrderingDropDownItems
+        [ElementLocator(Id = "sort-results")]
+        public IElementList<IWebElement, SortOrderingDropDownItem> SortOrderingDropDownItems { get; set; }
+
+        public string SortOrderingDropDownItemsText
         {
-            get { return string.Join(",", SortOrderingDropDown.Select(i => i.Text)); }
+            get { return string.Join(",", SortOrderingDropDownItems.Select(i => i.Text)); }
         }
 
         public string SortOrderingDropDownItemsCount
         {
-            get { return SortOrderingDropDown.Count().ToString(); }
+            get { return SortOrderingDropDownItems.Count().ToString(); }
         }
 
         [ElementLocator(Id = "results-per-page")]
