@@ -9,6 +9,22 @@ Background:
 	And I navigated to the HomePage page
 	Then I am on the HomePage page
 
+@US449 @SmokeTests
+Scenario: When searching by location the results are ordered by distance and order options do not contain best match
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value      |
+		 | Location       | Birmingham |
+		 | WithInDistance | 40 miles   |
+	And I choose Search
+	And I am on the VacancySearchResultPage page
+	Then I see
+        | Field                          | Rule         | Value                 |
+        | SearchResultItemsCount         | Greater Than | 0                     |
+        | SortOrderingDropDownItemsCount | Equals       | 2                     |
+        | SortOrderingDropDownItems      | Equals       | Closing Date,Distance |
+        | SortOrderingDropDown           | Equals       | Distance              |
+
 @USXXX @SmokeTests
 Scenario: User enters location manually and sees a list of suggested locations
 	Given I navigated to the VacancySearchPage page

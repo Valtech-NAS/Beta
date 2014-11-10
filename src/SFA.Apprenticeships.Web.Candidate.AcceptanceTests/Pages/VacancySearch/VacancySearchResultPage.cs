@@ -36,7 +36,17 @@
         public IWebElement Search { get; set; }
 
         [ElementLocator(Id = "sort-results")]
-        public IWebElement SortOrderingDropDown { get; set; }
+        public IElementList<IWebElement, SortOrderingDropDownItem> SortOrderingDropDown { get; set; }
+
+        public string SortOrderingDropDownItems
+        {
+            get { return string.Join(",", SortOrderingDropDown.Select(i => i.Text)); }
+        }
+
+        public string SortOrderingDropDownItemsCount
+        {
+            get { return SortOrderingDropDown.Count().ToString(); }
+        }
 
         [ElementLocator(Id = "results-per-page")]
         public IWebElement ResultsPerPageDropDown { get; set; }

@@ -5,7 +5,7 @@ Scenario: Display and dismiss an alert box
 	  And I chose New Information
 	  And I was on the Information page
 	 When I choose Alert Box
-	  And I see an alert box and select Ok
+	  And I see an alert box and select Ok	
 	 Then I see
 		  | Field  | Rule   | Value         |
 		  | Result | Equals | Alert Cleared |
