@@ -1,0 +1,764 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SpecBind.Selenium</name>
+    </assembly>
+    <members>
+        <member name="T:SpecBind.Selenium.LocatorBuilder">
+            <summary>
+            A class that translates attributes into locators.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.LocatorBuilder.GetElementLocators(SpecBind.Pages.ElementLocatorAttribute)">
+            <summary>
+            Gets the element locators.
+            </summary>
+            <param name="attribute">The attribute.</param>
+            <returns>The list of locators to use.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.LocatorBuilder.SetProperty``1(System.Collections.Generic.ICollection{OpenQA.Selenium.By},``0,System.Func{``0,OpenQA.Selenium.By},System.Func{``0,System.Boolean})">
+            <summary>
+            Sets the property of the locator by the filter.
+            </summary>
+            <typeparam name="T">The type of the element being set.</typeparam>
+            <param name="locators">The locator collection.</param>
+            <param name="item">The item.</param>
+            <param name="setterFunc">The setter function.</param>
+            <param name="filterFunc">The filter function.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.LocatorBuilder.SetAttribute(SpecBind.Selenium.LocatorBuilder.XPathTag,System.String,System.String,System.Func{System.Boolean})">
+            <summary>
+            Sets the property of the locator by the filter.
+            </summary>
+            <param name="tag">The locator collection.</param>
+            <param name="attributeName">Name of the attribute.</param>
+            <param name="value">The value.</param>
+            <param name="filterFunc">The filter function.</param>
+        </member>
+        <member name="T:SpecBind.Selenium.LocatorBuilder.XPathTag">
+            <summary>
+            A class that assists in construction of the XPath tag.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.LocatorBuilder.XPathTag.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SpecBind.Selenium.LocatorBuilder.XPathTag"/> class.
+            </summary>
+            <param name="tagName">Name of the tag.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.LocatorBuilder.XPathTag.AddAttribute(System.String,System.String)">
+            <summary>
+            Adds the attribute.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.LocatorBuilder.XPathTag.CreateLocator">
+            <summary>
+            Creates the locator.
+            </summary>
+            <returns>The locator XPath value.</returns>
+        </member>
+        <member name="P:SpecBind.Selenium.LocatorBuilder.XPathTag.Index">
+            <summary>
+            Gets or sets the index.
+            </summary>
+            <value>The index.</value>
+        </member>
+        <member name="P:SpecBind.Selenium.LocatorBuilder.XPathTag.HasData">
+            <summary>
+            Gets a value indicating whether this instance has data.
+            </summary>
+            <value><c>true</c> if this instance has data; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:SpecBind.Selenium.LocatorBuilder.XPathTag.TagName">
+            <summary>
+            Gets the name of the tag.
+            </summary>
+            <value>The name of the tag.</value>
+        </member>
+        <member name="T:SpecBind.Selenium.NativeAttributeBuilder">
+            <summary>
+            A static class that constructs locators based on the Selenium Page attribute.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.NativeAttributeBuilder.GetLocator(OpenQA.Selenium.Support.PageObjects.FindsByAttribute)">
+            <summary>
+            Gets the locator from the attribute.
+            </summary>
+            <param name="attribute">The attribute.</param>
+            <returns>The created locator; otherwise <c>null</c>.</returns>
+        </member>
+        <member name="T:SpecBind.Selenium.RemoteScreenshotWebDriver">
+            <summary>
+            A <see cref="T:OpenQA.Selenium.Remote.RemoteWebDriver"/> class extension that supports taking a screenshot.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.RemoteScreenshotWebDriver.#ctor(System.Uri,OpenQA.Selenium.ICapabilities)">
+            <summary>
+            Initializes a new instance of the RemoteWebDriver class
+            </summary>
+            <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4444).</param>
+            <param name="desiredCapabilities">An <see cref="T:OpenQA.Selenium.ICapabilities" /> object containing the desired capabilities of the browser.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.RemoteScreenshotWebDriver.GetScreenshot">
+            <summary>
+            Gets a <see cref="T:OpenQA.Selenium.Screenshot" /> object representing the image of the page on the screen.
+            </summary>
+            <returns>A <see cref="T:OpenQA.Selenium.Screenshot" /> object containing the image.</returns>
+        </member>
+        <member name="T:SpecBind.Selenium.SeleniumBrowser">
+            <summary>
+            A web browser level wrapper for selenium
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowser.#ctor(System.Lazy{OpenQA.Selenium.IWebDriver},SpecBind.Actions.ILogger)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SpecBind.Selenium.SeleniumBrowser"/> class.
+            </summary>
+            <param name="driver">The browser driver as a lazy object.</param>
+            <param name="logger">The logger.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowser.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:SpecBind.Selenium.SeleniumBrowser"/> class.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowser.Close">
+            <summary>
+            Closes this instance.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowser.DismissAlert(SpecBind.BrowserSupport.AlertBoxAction,System.String)">
+            <summary>
+            Dismisses the alert.
+            </summary>
+            <param name="action">The action.</param>
+            <param name="text">The text to enter.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowser.ExecuteScript(System.String,System.Object[])">
+            <summary>
+            Executes the script.
+            </summary>
+            <param name="script">The script to execute.</param>
+            <param name="args">The arguments.</param>
+            <returns>The result of the script if needed.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowser.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowser.GoTo(System.Uri)">
+            <summary>
+            Navigates the browser to the given <paramref name="url" />.
+            </summary>
+            <param name="url">The URL specified as a well formed Uri.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowser.TakeScreenshot(System.String,System.String)">
+            <summary>
+            Takes the screenshot from the native browser.
+            </summary>
+            <param name="imageFolder">The image folder.</param>
+            <param name="fileNameBase">The file name base.</param>
+            <returns>The complete file path if created; otherwise <c>null</c>.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowser.SaveHtml(System.String,System.String)">
+            <summary>
+            Save the html from the native browser.
+            </summary>
+            <param name="destinationFolder">The destination folder.</param>
+            <param name="fileNameBase">The file name base.</param>
+            <returns>The complete file path if created; otherwise <c>null</c>.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowser.GetNativePageLocation(SpecBind.Pages.IPage)">
+            <summary>
+            Gets the native page location.
+            </summary>
+            <param name="page">The page interface.</param>
+            <returns>A collection of URIs to validate.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowser.CreateNativePage(System.Type,System.Boolean)">
+            <summary>
+            Creates the native page.
+            </summary>
+            <param name="pageType">Type of the page.</param>
+            <param name="verifyPageValidity">if set to <c>true</c> verify the page validity.</param>
+            <returns>The created page object.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowser.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="P:SpecBind.Selenium.SeleniumBrowser.BasePageType">
+            <summary>
+            Gets the type of the base page.
+            </summary>
+            <value>The type of the base page.</value>
+        </member>
+        <member name="P:SpecBind.Selenium.SeleniumBrowser.Url">
+            <summary>
+            Gets the url of the current page.
+            </summary>
+            <value>
+            The url of the base page.
+            </value>
+        </member>
+        <member name="T:SpecBind.Selenium.SeleniumBrowserFactory">
+            <summary>
+            A browser factory class for Selenium tests.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowserFactory.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:SpecBind.Selenium.SeleniumBrowserFactory"/> class.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowserFactory.CreateWebDriver(SpecBind.BrowserSupport.BrowserType,SpecBind.Configuration.BrowserFactoryConfigurationElement)">
+            <summary>
+            Creates the web driver.
+            </summary>
+            <param name="browserType">Type of the browser.</param>
+            <param name="browserFactoryConfiguration">The browser factory configuration.</param>
+            <returns>The created web driver.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the browser is not supported.</exception>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowserFactory.CreateBrowser(SpecBind.BrowserSupport.BrowserType,SpecBind.Configuration.BrowserFactoryConfigurationElement,SpecBind.Actions.ILogger)">
+            <summary>
+            Creates the browser.
+            </summary>
+            <param name="browserType">Type of the browser.</param>
+            <param name="browserFactoryConfiguration">The browser factory configuration.</param>
+            <param name="logger">The logger.</param>
+            <returns>A browser object.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the browser type is not supported.</exception>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowserFactory.ValidateDriverSetup(SpecBind.BrowserSupport.BrowserType,SpecBind.Configuration.BrowserFactoryConfigurationElement)">
+            <summary>
+            Validates the driver setup.
+            </summary>
+            <param name="browserType">Type of the browser.</param>
+            <param name="browserFactoryConfiguration">The browser factory configuration.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowserFactory.DownloadPhantomJsDriver">
+            <summary>
+            Downloads the Phantom JS driver.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowserFactory.DownloadChromeDriver">
+            <summary>
+            Downloads the chrome driver.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowserFactory.DownloadIeDriver">
+            <summary>
+            Downloads the IE driver.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowserFactory.DownloadAndExtractZip(System.String,System.String)">
+            <summary>
+            Downloads the specified file from the URL and extracts it to the path.
+            </summary>
+            <param name="baseUri">The base URI.</param>
+            <param name="zipName">Name of the zip.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowserFactory.GetFireFoxDriver(SpecBind.Configuration.BrowserFactoryConfigurationElement)">
+            <summary>
+            Gets the FireFox driver.
+            </summary>
+            <param name="browserFactoryConfiguration">The browser factory configuration.</param>
+            <returns>The configured web driver.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowserFactory.GetRemoteDriverUri(System.Configuration.NameValueConfigurationCollection)">
+            <summary>
+            Gets the remote driver URI.
+            </summary>
+            <param name="settings">The settings.</param>
+            <returns>The URI if the setting is valid, otherwise <c>null</c>.</returns>
+            <exception cref="T:System.Configuration.ConfigurationErrorsException">Thrown if the URI is not valid.</exception>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowserFactory.RemoteDriverExists(System.Configuration.NameValueConfigurationCollection,SpecBind.BrowserSupport.BrowserType,OpenQA.Selenium.IWebDriver@)">
+            <summary>
+            Checks to see if settings for the remote driver exists.
+            </summary>
+            <param name="settings">The settings.</param>
+            <param name="browserType">Type of the browser.</param>
+            <param name="remoteWebDriver">The created remote web driver.</param>
+            <returns><c>true</c> if the settings exist; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumBrowserFactory.SetupDriverFolder">
+            <summary>
+            Sets up the driver folder.
+            </summary>
+            <returns>The driver folder path.</returns>
+        </member>
+        <member name="T:SpecBind.Selenium.SeleniumTableDriver">
+            <summary>
+            A class that abstracts the functionality of a table for UI tests.
+            </summary>
+        </member>
+        <member name="T:SpecBind.Selenium.SeleniumListElementWrapper`2">
+            <summary>
+            A list element wrapper collection for Selenium elements.
+            </summary>
+            <typeparam name="TElement">The type of the parent element.</typeparam>
+            <typeparam name="TChildElement">The type of the child element.</typeparam>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumListElementWrapper`2.#ctor(`0,SpecBind.BrowserSupport.IBrowser)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SpecBind.Selenium.SeleniumListElementWrapper`2"/> class.
+            </summary>
+            <param name="parentElement">The parent element.</param>
+            <param name="browser">The browser.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumListElementWrapper`2.CreateElement(SpecBind.BrowserSupport.IBrowser,`0,System.Int32)">
+            <summary>
+            Creates the element.
+            </summary>
+            <param name="browser">The browser.</param>
+            <param name="parentElement">The parent element.</param>
+            <param name="index">The index.</param>
+            <returns>The created child element.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumListElementWrapper`2.BuildItemCollection(`0)">
+            <summary>
+            Builds the item collection from the parent.
+            </summary>
+            <param name="parentElement">The parent element.</param>
+            <returns>The created collection.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumListElementWrapper`2.CreateBuilderFunction">
+            <summary>
+            Creates the builder function.
+            </summary>
+            <returns>The created builder function.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumListElementWrapper`2.CreateChildElement(SpecBind.BrowserSupport.IBrowser,`0,OpenQA.Selenium.IWebElement)">
+            <summary>
+            Creates the child element.
+            </summary>
+            <param name="browser">The browser.</param>
+            <param name="parentElement">The parent element.</param>
+            <param name="element">The element.</param>
+            <returns>The created child element.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumListElementWrapper`2.ElementExists(`1,System.Int32)">
+            <summary>
+            Checks to see if the element exists.
+            </summary>
+            <param name="element">The element.</param>
+            <param name="expectedIndex">The expected index.</param>
+            <returns><c>true</c> if the element exists, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumListElementWrapper`2.GetElementLocator">
+            <summary>
+            Gets the element locator.
+            </summary>
+            <returns>The most important locator attribute.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumTableDriver.#ctor(OpenQA.Selenium.IWebElement,SpecBind.BrowserSupport.IBrowser)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SpecBind.Selenium.SeleniumTableDriver"/> class.
+            </summary>
+            <param name="parentElement">The parent element.</param>
+            <param name="browser">The browser.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumTableDriver.BuildItemCollection(OpenQA.Selenium.IWebElement)">
+            <summary>
+            Builds the item collection.
+            </summary>
+            <param name="parentElement">The parent element.</param>
+            <returns>The created item collection.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumTableDriver.CreateChildElement(SpecBind.BrowserSupport.IBrowser,OpenQA.Selenium.IWebElement,OpenQA.Selenium.IWebElement)">
+            <summary>
+            Creates the child element.
+            </summary>
+            <param name="browser">The browser.</param>
+            <param name="parentElement">The parent element.</param>
+            <param name="element">The element.</param>
+            <returns>The created child element.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumTableDriver.GetElementLocator">
+            <summary>
+            Gets the element locator.
+            </summary>
+            <returns>The locator to get the rows.</returns>
+        </member>
+        <member name="T:SpecBind.Selenium.SeleniumTableDriver.RowWrapper">
+            <summary>
+            A wrapper class for an individual row.
+            </summary>
+        </member>
+        <member name="T:SpecBind.Selenium.WebElement">
+            <summary>
+            Represents a proxy class for an element to be used with the PageFactory.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.WebElement.#ctor(OpenQA.Selenium.ISearchContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SpecBind.Selenium.WebElement"/> class.
+            </summary>
+            <param name="searchContext">The driver used to search for elements.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.WebElement.Clear">
+            <summary>
+            Clears the content of this element.
+            </summary>
+            <remarks>If this element is a text entry element, the <see cref="M:OpenQA.Selenium.IWebElement.Clear" />
+            method will clear the value. It has no effect on other elements. Text entry elements
+            are defined as elements with INPUT or TEXTAREA tags.</remarks>
+        </member>
+        <member name="M:SpecBind.Selenium.WebElement.Click">
+            <summary>
+            Clicks this element.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.WebElement.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current object.
+            </summary>
+            <param name="obj">The object to compare with the current object.</param>
+            <returns><see langword="true" /> if the specified object is equal to the current object; otherwise, <see langword="false" />.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.WebElement.FindElement(OpenQA.Selenium.By)">
+            <summary>
+            Finds the first <see cref="T:OpenQA.Selenium.IWebElement" /> using the given method.
+            </summary>
+            <param name="by">The locating mechanism to use.</param>
+            <returns>The first matching <see cref="T:OpenQA.Selenium.IWebElement" /> on the current context.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.WebElement.FindElements(OpenQA.Selenium.By)">
+            <summary>
+            Finds all <see cref="T:OpenQA.Selenium.IWebElement">IWebElements</see> within the current context
+            using the given mechanism.
+            </summary>
+            <param name="by">The locating mechanism to use.</param>
+            <returns>A <see cref="T:System.Collections.ObjectModel.ReadOnlyCollection`1" /> of all <see cref="T:OpenQA.Selenium.IWebElement">WebElements</see>
+            matching the current criteria, or an empty list if nothing matches.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.WebElement.GetAttribute(System.String)">
+            <summary>
+            Gets the value of the specified attribute for this element.
+            </summary>
+            <param name="attributeName">The name of the attribute.</param>
+            <returns>The attribute's current value. Returns a <see langword="null" /> if the
+            value is not set.</returns>
+            <remarks>The <see cref="M:OpenQA.Selenium.IWebElement.GetAttribute(System.String)" /> method will return the current value
+            of the attribute, even if the value has been modified after the page has been
+            loaded. Note that the value of the following attributes will be returned even if
+            there is no explicit attribute on the element:
+            <list type="table"><listheader><term>Attribute name</term><term>Value returned if not explicitly specified</term><term>Valid element types</term></listheader><item><description>checked</description><description>checked</description><description>Check Box</description></item><item><description>selected</description><description>selected</description><description>Options in Select elements</description></item><item><description>disabled</description><description>disabled</description><description>Input and other UI elements</description></item></list></remarks>
+        </member>
+        <member name="M:SpecBind.Selenium.WebElement.GetCssValue(System.String)">
+            <summary>
+            Gets the value of a CSS property of this element.
+            </summary>
+            <param name="propertyName">The name of the CSS property to get the value of.</param>
+            <returns>The value of the specified CSS property.</returns>
+            <remarks>The value returned by the <see cref="M:OpenQA.Selenium.IWebElement.GetCssValue(System.String)" />
+            method is likely to be unpredictable in a cross-browser environment.
+            Color values should be returned as hex strings. For example, a
+            "background-color" property set as "green" in the HTML source, will
+            return "#008000" for its value.</remarks>
+        </member>
+        <member name="M:SpecBind.Selenium.WebElement.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+            <returns>A hash code for the current object.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.WebElement.SendKeys(System.String)">
+            <summary>
+            Simulates typing text into the element.
+            </summary>
+            <param name="text">The text to type into the element.</param>
+            <seealso cref="T:OpenQA.Selenium.Keys" />
+            <remarks>The text to be typed may include special characters like arrow keys,
+            backspaces, function keys, and so on. Valid special keys are defined in
+            <see cref="T:OpenQA.Selenium.Keys" />.</remarks>
+        </member>
+        <member name="M:SpecBind.Selenium.WebElement.Submit">
+            <summary>
+            Submits this element to the web server.
+            </summary>
+            <remarks>If this current element is a form, or an element within a form,
+            then this will be submitted to the web server. If this causes the current
+            page to change, then this method will block until the new page is loaded.</remarks>
+        </member>
+        <member name="M:SpecBind.Selenium.WebElement.CloneNativeElement(OpenQA.Selenium.IWebElement)">
+            <summary>
+            Clones the native element, setting <paramref name="nativeElement"/> as the core element.
+            </summary>
+            <param name="nativeElement">The native element.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.WebElement.UpdateLocators(System.Collections.Generic.IEnumerable{OpenQA.Selenium.By})">
+            <summary>
+            Updates the locators for the element.
+            </summary>
+            <param name="locators">The locators.</param>
+        </member>
+        <member name="P:SpecBind.Selenium.WebElement.Cache">
+            <summary>
+            Gets a value indicating whether to cache the element lookup.
+            </summary>
+            <value><c>true</c> if cache; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:SpecBind.Selenium.WebElement.Coordinates">
+            <summary>
+            Gets the coordinates identifying the location of this element using
+            various frames of reference.
+            </summary>
+            <value>The coordinates.</value>
+        </member>
+        <member name="P:SpecBind.Selenium.WebElement.Displayed">
+            <summary>
+            Gets a value indicating whether or not this element is displayed.
+            </summary>
+            <value><c>true</c> if displayed; otherwise, <c>false</c>.</value>
+            <remarks>The <see cref="P:OpenQA.Selenium.IWebElement.Displayed" /> property avoids the problem
+            of having to parse an element's "style" attribute to determine
+            visibility of an element.</remarks>
+        </member>
+        <member name="P:SpecBind.Selenium.WebElement.Enabled">
+            <summary>
+            Gets a value indicating whether or not this element is enabled.
+            </summary>
+            <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
+            <remarks>The <see cref="P:OpenQA.Selenium.IWebElement.Enabled" /> property will generally
+            return <see langword="true" /> for everything except explicitly disabled input elements.</remarks>
+        </member>
+        <member name="P:SpecBind.Selenium.WebElement.Location">
+            <summary>
+            Gets a <see cref="T:System.Drawing.Point" /> object containing the coordinates of the upper-left corner
+            of this element relative to the upper-left corner of the page.
+            </summary>
+            <value>The location.</value>
+        </member>
+        <member name="P:SpecBind.Selenium.WebElement.LocationOnScreenOnceScrolledIntoView">
+            <summary>
+            Gets the location of an element on the screen, scrolling it into view
+            if it is not currently on the screen.
+            </summary>
+            <value>The location on screen once scrolled into view.</value>
+        </member>
+        <member name="P:SpecBind.Selenium.WebElement.Locators">
+            <summary>
+            Gets the locators.
+            </summary>
+            <value>The locators.</value>
+        </member>
+        <member name="P:SpecBind.Selenium.WebElement.Selected">
+            <summary>
+            Gets a value indicating whether or not this element is selected.
+            </summary>
+            <value><c>true</c> if selected; otherwise, <c>false</c>.</value>
+            <remarks>This operation only applies to input elements such as checkboxes,
+            options in a select element and radio buttons.</remarks>
+        </member>
+        <member name="P:SpecBind.Selenium.WebElement.Size">
+            <summary>
+            Gets a <see cref="P:OpenQA.Selenium.Support.PageObjects.WebElementProxy.Size" /> object containing the height and width of this element.
+            </summary>
+            <value>The size.</value>
+        </member>
+        <member name="P:SpecBind.Selenium.WebElement.TagName">
+            <summary>
+            Gets the tag name of this element.
+            </summary>
+            <value>The name of the tag.</value>
+            <remarks>The <see cref="P:OpenQA.Selenium.IWebElement.TagName" /> property returns the tag name of the
+            element, not the value of the name attribute. For example, it will return
+            "input" for an element specified by the HTML markup &lt;input name="foo" /&gt;.</remarks>
+        </member>
+        <member name="P:SpecBind.Selenium.WebElement.Text">
+            <summary>
+            Gets the innerText of this element, without any leading or trailing whitespace,
+            and with other whitespace collapsed.
+            </summary>
+            <value>The text.</value>
+        </member>
+        <member name="P:SpecBind.Selenium.WebElement.WrappedElement">
+            <summary>
+            Gets the interface through which the user can discover if there is an underlying element to be used.
+            </summary>
+            <value>The wrapped element.</value>
+            <exception cref="T:OpenQA.Selenium.NoSuchElementException">Thrown if the element cannot be found.</exception>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumTableDriver.RowWrapper.#ctor(OpenQA.Selenium.ISearchContext,System.Collections.Generic.Dictionary{System.Int32,System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:SpecBind.Selenium.WebElement"/> class.
+            </summary>
+            <param name="searchContext">The driver used to search for elements.</param>
+            <param name="cellLookup">The cell lookup.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumTableDriver.RowWrapper.GetElements">
+            <summary>
+            Gets the properties.
+            </summary>
+            <returns>The properties list for the class.</returns>
+        </member>
+        <member name="T:SpecBind.Selenium.SeleniumPage">
+            <summary>
+            An implementation of <see cref="T:SpecBind.Pages.IPage"/> for the Selenium driver.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPage.#ctor(System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SpecBind.Selenium.SeleniumPage"/> class.
+            </summary>
+            <param name="nativePage">The native page.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPage.ElementEnabledCheck(OpenQA.Selenium.IWebElement)">
+            <summary>
+            Checks to see if the element is enabled.
+            </summary>
+            <param name="element">The element.</param>
+            <returns><c>true</c> if the element is enabled, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPage.ElementExistsCheck(OpenQA.Selenium.IWebElement)">
+            <summary>
+            Checks to see if the element exists.
+            </summary>
+            <param name="element">The element.</param>
+            <returns><c>true</c> if the element exists, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPage.GetElementAttributeValue(OpenQA.Selenium.IWebElement,System.String)">
+            <summary>
+            Gets the element attribute value.
+            </summary>
+            <param name="element">The element.</param>
+            <param name="attributeName">Name of the attribute.</param>
+            <returns>The attribute value.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPage.GetElementText(OpenQA.Selenium.IWebElement)">
+            <summary>
+            Gets the element text.
+            </summary>
+            <param name="element">The element.</param>
+            <returns>The text of the element.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPage.GetPageFromElement(OpenQA.Selenium.IWebElement)">
+            <summary>
+            Gets the page from element.
+            </summary>
+            <param name="element">The parent element.</param>
+            <returns>The child page as a scope.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPage.ClickElement(OpenQA.Selenium.IWebElement)">
+            <summary>
+            Clicks the element.
+            </summary>
+            <param name="element">The element.</param>
+            <returns><c>true</c> if the element is clicked, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPage.GetPageFillMethod(System.Type)">
+            <summary>
+            Gets the page fill method.
+            </summary>
+            <param name="propertyType">Type of the property.</param>
+            <returns>The action to fill the page.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPage.WaitForElement(OpenQA.Selenium.IWebElement,SpecBind.Actions.WaitConditions,System.Nullable{System.TimeSpan})">
+            <summary>
+            Waits for the element to meet a certain condition.
+            </summary>
+            <param name="element">The element.</param>
+            <param name="waitCondition">The wait condition.</param>
+            <param name="timeout">The timeout to wait before failing.</param>
+            <returns><c>true</c> if the condition is met, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPage.SupportedPropertyType(System.Type)">
+            <summary>
+            Checks to see if the property type is supported.
+            </summary>
+            <param name="type">The type being checked.</param>
+            <returns><c>true</c> if the type is supported, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPage.TypeIsNotBaseClass(System.Reflection.PropertyInfo)">
+            <summary>
+            Checks to see if the current type matches the base type of the system to not reflect base properties.
+            </summary>
+            <param name="propertyInfo">Type of the page.</param>
+            <returns><c>true</c> if the type is the base class, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPage.CheckElementState(System.Func{OpenQA.Selenium.IWebElement,System.Boolean},OpenQA.Selenium.IWebElement)">
+            <summary>
+            Checks the state of the element.
+            </summary>
+            <param name="checkFunc">The check function.</param>
+            <param name="element">The element.</param>
+            <returns>The result of the check.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPage.FillPage(OpenQA.Selenium.IWebElement,System.String)">
+            <summary>
+            Fills the page.
+            </summary>
+            <param name="element">The element.</param>
+            <param name="data">The data.</param>
+        </member>
+        <member name="T:SpecBind.Selenium.SeleniumPageBuilder">
+            <summary>
+            A page builder class that follows Selenium rules for page building.
+            </summary>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPageBuilder.CreatePage(System.Type)">
+            <summary>
+            Creates the page.
+            </summary>
+            <param name="pageType">Type of the page.</param>
+            <returns>The created page class.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPageBuilder.AssignElementAttributes(OpenQA.Selenium.IWebElement,SpecBind.Pages.ElementLocatorAttribute,System.Object[])">
+            <summary>
+            Assigns the element attributes.
+            </summary>
+            <param name="control">The control.</param>
+            <param name="attribute">The attribute.</param>
+            <param name="nativeAttributes">The native attributes.</param>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPageBuilder.GetTableDriverType">
+            <summary>
+            Gets the type of the table driver.
+            </summary>
+            <returns>The type of the table driver.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPageBuilder.GetCustomAttributes(System.Reflection.PropertyInfo)">
+            <summary>
+            Gets the custom attributes.
+            </summary>
+            <param name="propertyInfo">Type of the item.</param>
+            <returns>A collection of custom attributes.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPageBuilder.GetPropertyProxyType(System.Type)">
+            <summary>
+            Gets the type of the property proxy.
+            </summary>
+            <param name="propertyType">Type of the property.</param>
+            <returns>The created type.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPageBuilder.FillConstructorParameter(System.Type,SpecBind.Pages.ExpressionData,SpecBind.Pages.ExpressionData)">
+            <summary>
+            Gets the constructor parameter for the given type.
+            </summary>
+            <param name="parameterType">Type of the parameter to fill.</param>
+            <param name="parentArgument">The parent argument.</param>
+            <param name="rootLocator">The root locator argument if different from the parent.</param>
+            <returns>The constructor information that matches.</returns>
+        </member>
+        <member name="M:SpecBind.Selenium.SeleniumPageBuilder.GetElementCollectionType">
+            <summary>
+            Gets the type of the element collection.
+            </summary>
+            <returns>The collection type.</returns>
+        </member>
+        <member name="P:SpecBind.Selenium.SeleniumPageBuilder.AllowEmptyConstructor">
+            <summary>
+            Gets a value indicating whether to allow an empty constructor for a page object.
+            </summary>
+            <value><c>true</c> if an empty constructor should be allowed; otherwise, <c>false</c>.</value>
+        </member>
+    </members>
+</doc>
