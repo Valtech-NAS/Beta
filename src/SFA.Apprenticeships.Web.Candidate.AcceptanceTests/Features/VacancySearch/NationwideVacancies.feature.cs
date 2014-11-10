@@ -183,13 +183,11 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("When I\'m seeing nationwide apprenticeships and I change the results per page I re" +
-            "main there")]
+        [NUnit.Framework.DescriptionAttribute("Nationwide apprenticeships cannot have their sort order changed")]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
-        public virtual void WhenIMSeeingNationwideApprenticeshipsAndIChangeTheResultsPerPageIRemainThere()
+        public virtual void NationwideApprenticeshipsCannotHaveTheirSortOrderChanged()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When I\'m seeing nationwide apprenticeships and I change the results per page I re" +
-                    "main there", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Nationwide apprenticeships cannot have their sort order changed", new string[] {
                         "SmokeTests"});
 #line 44
 this.ScenarioSetup(scenarioInfo);
@@ -217,16 +215,44 @@ this.FeatureBackground();
  testRunner.When("I choose NationwideLocationTypeLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 53
  testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 54
+ testRunner.Then("I wait 0 seconds for SortOrderingDropDown to become disabled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("nationwide apprenticeships are in closing date order")]
+        [NUnit.Framework.CategoryAttribute("SmokeTests")]
+        public virtual void NationwideApprenticeshipsAreInClosingDateOrder()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("nationwide apprenticeships are in closing date order", new string[] {
+                        "SmokeTests"});
+#line 57
+this.ScenarioSetup(scenarioInfo);
+#line 7
+this.FeatureBackground();
+#line 58
+ testRunner.Given("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Value"});
             table6.AddRow(new string[] {
-                        "ResultsPerPageDropDown",
-                        "25 per page"});
-#line 54
+                        "Location",
+                        "London"});
+            table6.AddRow(new string[] {
+                        "WithInDistance",
+                        "40 miles"});
+#line 59
  testRunner.When("I enter data", ((string)(null)), table6, "When ");
-#line 57
+#line 63
+ testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 64
+ testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 65
+ testRunner.When("I choose NationwideLocationTypeLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 66
  testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
@@ -234,33 +260,29 @@ this.FeatureBackground();
                         "Rule",
                         "Value"});
             table7.AddRow(new string[] {
-                        "LocalLocationTypeLink",
-                        "Exists",
-                        ""});
-            table7.AddRow(new string[] {
-                        "NationwideLocationTypeLink",
-                        "Does Not Exist",
-                        ""});
-#line 58
+                        "ResultsAreInClosingDateOrder",
+                        "Equals",
+                        "True"});
+#line 67
  testRunner.And("I see", ((string)(null)), table7, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("When I\'m seeing nationwide apprenticeships and I change the sort order I remain t" +
-            "here")]
-        [NUnit.Framework.CategoryAttribute("SmokeTests")]
-        public virtual void WhenIMSeeingNationwideApprenticeshipsAndIChangeTheSortOrderIRemainThere()
+        [NUnit.Framework.DescriptionAttribute("Nationwide apprenticeships found by keyword can be ordered")]
+        [NUnit.Framework.CategoryAttribute("US500")]
+        [NUnit.Framework.CategoryAttribute("SmokeTest")]
+        public virtual void NationwideApprenticeshipsFoundByKeywordCanBeOrdered()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When I\'m seeing nationwide apprenticeships and I change the sort order I remain t" +
-                    "here", new string[] {
-                        "SmokeTests"});
-#line 64
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Nationwide apprenticeships found by keyword can be ordered", new string[] {
+                        "US500",
+                        "SmokeTest"});
+#line 72
 this.ScenarioSetup(scenarioInfo);
 #line 7
 this.FeatureBackground();
-#line 65
+#line 73
  testRunner.Given("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
@@ -268,30 +290,41 @@ this.FeatureBackground();
                         "Value"});
             table8.AddRow(new string[] {
                         "Keywords",
-                        "Construction"});
+                        "bricklaying"});
             table8.AddRow(new string[] {
                         "Location",
-                        "London"});
-#line 66
+                        "Birmingham"});
+            table8.AddRow(new string[] {
+                        "WithInDistance",
+                        "40 miles"});
+#line 74
  testRunner.When("I enter data", ((string)(null)), table8, "When ");
-#line 70
+#line 79
  testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 71
- testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 72
- testRunner.When("I choose NationwideLocationTypeLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 73
- testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 80
+ testRunner.And("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
+                        "Rule",
                         "Value"});
             table9.AddRow(new string[] {
+                        "SearchResultItemsCount",
+                        "Greater Than",
+                        "0"});
+            table9.AddRow(new string[] {
                         "SortOrderingDropDown",
-                        "Closing Date"});
-#line 74
- testRunner.When("I enter data", ((string)(null)), table9, "When ");
-#line 77
+                        "Equals",
+                        "Best Match"});
+            table9.AddRow(new string[] {
+                        "NationwideLocationTypeLink",
+                        "Exists",
+                        ""});
+#line 81
+ testRunner.Then("I see", ((string)(null)), table9, "Then ");
+#line 86
+ testRunner.When("I choose NationwideLocationTypeLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 87
  testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
@@ -306,8 +339,154 @@ this.FeatureBackground();
                         "NationwideLocationTypeLink",
                         "Does Not Exist",
                         ""});
-#line 78
+            table10.AddRow(new string[] {
+                        "SortOrderingDropDownItemsCount",
+                        "Equals",
+                        "2"});
+            table10.AddRow(new string[] {
+                        "SortOrderingDropDownItemsText",
+                        "Equals",
+                        "Best Match,Closing Date"});
+            table10.AddRow(new string[] {
+                        "SortOrderingDropDown",
+                        "Equals",
+                        "Best Match"});
+            table10.AddRow(new string[] {
+                        "ResultsAreInClosingDateOrder",
+                        "Equals",
+                        "True"});
+#line 88
  testRunner.And("I see", ((string)(null)), table10, "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("When I\'m seeing nationwide apprenticeships and I change the results per page I re" +
+            "main there")]
+        [NUnit.Framework.CategoryAttribute("SmokeTests")]
+        public virtual void WhenIMSeeingNationwideApprenticeshipsAndIChangeTheResultsPerPageIRemainThere()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When I\'m seeing nationwide apprenticeships and I change the results per page I re" +
+                    "main there", new string[] {
+                        "SmokeTests"});
+#line 98
+this.ScenarioSetup(scenarioInfo);
+#line 7
+this.FeatureBackground();
+#line 99
+ testRunner.Given("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table11.AddRow(new string[] {
+                        "Location",
+                        "London"});
+            table11.AddRow(new string[] {
+                        "WithInDistance",
+                        "40 miles"});
+#line 100
+ testRunner.When("I enter data", ((string)(null)), table11, "When ");
+#line 104
+ testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 105
+ testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 106
+ testRunner.When("I choose NationwideLocationTypeLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 107
+ testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table12.AddRow(new string[] {
+                        "ResultsPerPageDropDown",
+                        "25 per page"});
+#line 108
+ testRunner.When("I enter data", ((string)(null)), table12, "When ");
+#line 111
+ testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table13.AddRow(new string[] {
+                        "LocalLocationTypeLink",
+                        "Exists",
+                        ""});
+            table13.AddRow(new string[] {
+                        "NationwideLocationTypeLink",
+                        "Does Not Exist",
+                        ""});
+#line 112
+ testRunner.And("I see", ((string)(null)), table13, "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("When I\'m seeing nationwide apprenticeships and I change the sort order I remain t" +
+            "here")]
+        [NUnit.Framework.CategoryAttribute("SmokeTests")]
+        public virtual void WhenIMSeeingNationwideApprenticeshipsAndIChangeTheSortOrderIRemainThere()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When I\'m seeing nationwide apprenticeships and I change the sort order I remain t" +
+                    "here", new string[] {
+                        "SmokeTests"});
+#line 118
+this.ScenarioSetup(scenarioInfo);
+#line 7
+this.FeatureBackground();
+#line 119
+ testRunner.Given("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table14.AddRow(new string[] {
+                        "Keywords",
+                        "Construction"});
+            table14.AddRow(new string[] {
+                        "Location",
+                        "London"});
+#line 120
+ testRunner.When("I enter data", ((string)(null)), table14, "When ");
+#line 124
+ testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 125
+ testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 126
+ testRunner.When("I choose NationwideLocationTypeLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 127
+ testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table15.AddRow(new string[] {
+                        "SortOrderingDropDown",
+                        "Closing Date"});
+#line 128
+ testRunner.When("I enter data", ((string)(null)), table15, "When ");
+#line 131
+ testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table16.AddRow(new string[] {
+                        "LocalLocationTypeLink",
+                        "Exists",
+                        ""});
+            table16.AddRow(new string[] {
+                        "NationwideLocationTypeLink",
+                        "Does Not Exist",
+                        ""});
+#line 132
+ testRunner.And("I see", ((string)(null)), table16, "And ");
 #line hidden
             this.ScenarioCleanup();
         }

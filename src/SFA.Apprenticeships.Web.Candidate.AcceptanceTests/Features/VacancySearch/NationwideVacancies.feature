@@ -36,9 +36,63 @@ Scenario: After clicking on nationwide apprenticeships I see them
 	When I choose NationwideLocationTypeLink
 	Then I am on the VacancySearchResultPage page
 	And I see
-        | Field                      | Rule           | Value |
-        | LocalLocationTypeLink      | Exists         |       |
-        | NationwideLocationTypeLink | Does Not Exist |       |
+        | Field                        | Rule           | Value |
+        | LocalLocationTypeLink        | Exists         |       |
+        | NationwideLocationTypeLink   | Does Not Exist |       |
+
+@SmokeTests
+Scenario: Nationwide apprenticeships cannot have their sort order changed
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value    |
+		 | Location       | London   |
+		 | WithInDistance | 40 miles |
+	And I choose Search
+	Then I am on the VacancySearchResultPage page
+	When I choose NationwideLocationTypeLink
+	Then I am on the VacancySearchResultPage page
+	Then I wait 0 seconds for SortOrderingDropDown to become disabled
+
+@SmokeTests
+Scenario: nationwide apprenticeships are in closing date order
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value    |
+		 | Location       | London   |
+		 | WithInDistance | 40 miles |
+	And I choose Search
+	Then I am on the VacancySearchResultPage page
+	When I choose NationwideLocationTypeLink
+	Then I am on the VacancySearchResultPage page
+	And I see
+        | Field                        | Rule           | Value |
+        | ResultsAreInClosingDateOrder | Equals         | True  |
+
+@US500 @SmokeTest
+Scenario: Nationwide apprenticeships found by keyword can be ordered
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value       |
+		 | Keywords       | bricklaying |
+		 | Location       | Birmingham  |
+		 | WithInDistance | 40 miles    |
+	And I choose Search
+	And I am on the VacancySearchResultPage page
+	Then I see 
+        | Field                      | Rule         | Value      |
+        | SearchResultItemsCount     | Greater Than | 0          |
+        | SortOrderingDropDown       | Equals       | Best Match |
+        | NationwideLocationTypeLink | Exists       |            |
+	When I choose NationwideLocationTypeLink
+	Then I am on the VacancySearchResultPage page
+	And I see
+        | Field                          | Rule           | Value                   |
+        | LocalLocationTypeLink          | Exists         |                         |
+        | NationwideLocationTypeLink     | Does Not Exist |                         |
+        | SortOrderingDropDownItemsCount | Equals         | 2                       |
+        | SortOrderingDropDownItemsText  | Equals         | Best Match,Closing Date |
+        | SortOrderingDropDown           | Equals         | Best Match              |
+        | ResultsAreInClosingDateOrder   | Equals         | True                    |
 
 @SmokeTests
 Scenario: When I'm seeing nationwide apprenticeships and I change the results per page I remain there

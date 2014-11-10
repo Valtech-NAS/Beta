@@ -134,7 +134,8 @@ Scenario: When searching by location then adding keyword and searching again the
         | SortOrderingDropDownItemsText  | Equals       | Best Match,Closing Date,Distance |
         | SortOrderingDropDown           | Equals       | Distance                         |
 
-@US449 @SmokeTest
+#Inclusion of nationwide vacancies in results superceeded by US500
+@US449 @SmokeTest @Ignore
 Scenario: Nationwide apprenticeships are included in keyword search results
 	Given I navigated to the VacancySearchPage page
 	When I enter data
