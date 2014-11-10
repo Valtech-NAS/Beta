@@ -55,7 +55,7 @@
         public IWebElement ResultsPerPageDropDown { get; set; }
 
         [ElementLocator(Class = "search-results")]
-        public IWebElement SearchResults { get; set; }
+        public IElementList<IWebElement, SearchResultsItem> SearchResults { get; set; }
 
         [ElementLocator(Class = "next")]
         public IWebElement NextPage { get; set; }

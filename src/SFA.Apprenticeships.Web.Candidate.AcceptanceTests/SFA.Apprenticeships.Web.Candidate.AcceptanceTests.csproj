@@ -269,6 +269,7 @@
     <Compile Include="Pages\VacancySearch\DetailsPage.cs" />
     <Compile Include="Pages\VacancySearch\LocationAutoCompleteItem.cs" />
     <Compile Include="Pages\VacancySearch\LocationSuggestion.cs" />
+    <Compile Include="Pages\VacancySearch\SearchResultsItem.cs" />
     <Compile Include="Pages\VacancySearch\SortOrderingDropDownItem.cs" />
     <Compile Include="Pages\VacancySearch\VacancySearchResultPage.cs" />
     <Compile Include="Pages\VacancySearch\VacancySearchPage.cs" />

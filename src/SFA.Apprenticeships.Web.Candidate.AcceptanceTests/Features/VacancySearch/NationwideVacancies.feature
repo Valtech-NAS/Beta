@@ -54,6 +54,23 @@ Scenario: Nationwide apprenticeships cannot have their sort order changed
 	Then I wait 0 seconds for SortOrderingDropDown to become disabled
 
 @SmokeTests
+Scenario: Nationwide apprenticeships do not show distance
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value    |
+		 | Location       | London   |
+		 | WithInDistance | 40 miles |
+	And I choose Search
+	Then I am on the VacancySearchResultPage page
+	When I choose NationwideLocationTypeLink
+	Then I am on the VacancySearchResultPage page
+	Then I see SearchResults list contains
+        | Field                | Rule   | Value |
+        | DistanceDisplayed    | Equals | False |
+        | ClosingDateDisplayed | Equals | True  |
+        | NationwideDisplayed  | Equals | True  |
+
+@SmokeTests
 Scenario: nationwide apprenticeships are in closing date order
 	Given I navigated to the VacancySearchPage page
 	When I enter data

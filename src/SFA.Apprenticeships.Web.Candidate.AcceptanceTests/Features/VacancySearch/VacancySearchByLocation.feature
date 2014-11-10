@@ -25,6 +25,21 @@ Scenario: When searching by location the results are ordered by distance and ord
         | SortOrderingDropDownItemsText  | Equals       | Closing Date,Distance |
         | SortOrderingDropDown           | Equals       | Distance              |
 
+@US449 @SmokeTests
+Scenario: When searching by location the results are ordered by distance and distance is shown
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value      |
+		 | Location       | Birmingham |
+		 | WithInDistance | 40 miles   |
+	And I choose Search
+	And I am on the VacancySearchResultPage page
+	Then I see SearchResults list contains
+        | Field                | Rule   | Value |
+        | DistanceDisplayed    | Equals | True  |
+        | ClosingDateDisplayed | Equals | True  |
+        | NationwideDisplayed  | Equals | False |
+
 @USXXX @SmokeTests
 Scenario: User enters location manually and sees a list of suggested locations
 	Given I navigated to the VacancySearchPage page
