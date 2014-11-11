@@ -36,7 +36,7 @@
         public void ShouldCreateScheduledIndexAndMapping()
         {
             var scheduledDate = DateTime.Now; //new DateTime(2000, 1, 1);
-            var indexName = string.Format("{0}.{1}", _vacancyIndexAlias, scheduledDate.ToString("yyyy-MM-dd-HH-mm"));
+            var indexName = string.Format("{0}.{1}", _vacancyIndexAlias, scheduledDate.ToString("yyyy-MM-dd-HH"));
 
 #pragma warning disable 0618
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
@@ -58,7 +58,7 @@
         public void ShouldCreateScheduledIndexAndPublishWithAlias()
         {
             var scheduledDate = DateTime.Now; //new DateTime(2000, 1, 1);
-            var indexName = string.Format("{0}.{1}", _vacancyIndexAlias, scheduledDate.ToString("yyyy-MM-dd-HH-mm"));
+            var indexName = string.Format("{0}.{1}", _vacancyIndexAlias, scheduledDate.ToString("yyyy-MM-dd-HH"));
 
 #pragma warning disable 0618
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
@@ -77,7 +77,7 @@
         [Test, Category("Integration")]
         public void ShouldCreateIndexAndIndexDocument()
         {
-            var indexName = _vacancyIndexAlias + ".2000-01-01-00-00";
+            var indexName = _vacancyIndexAlias + ".2000-01-01-00";
             var scheduledDate = new DateTime(2000, 1, 1);
 #pragma warning disable 0618
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.

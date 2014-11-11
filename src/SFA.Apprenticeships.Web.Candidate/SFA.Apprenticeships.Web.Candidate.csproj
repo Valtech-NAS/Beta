@@ -361,6 +361,7 @@
     </None>
     <None Include="Web.Prod.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Sit.config">
       <DependentUpon>Web.config</DependentUpon>
