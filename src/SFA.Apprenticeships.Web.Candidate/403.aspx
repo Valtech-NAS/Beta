@@ -30,7 +30,7 @@
         <div class="global-header__wrapper">
             <div class="global-header__logo">
                 <a href="http://gov.uk" title="Go to the GOV.UK homepage" class="govuk-logo">
-                    <img src="/Content/_assets/img/gov.uk_logotype_crown.png" alt="Crown">
+                    <img src="//nascdn.blob.core.windows.net/prod/gov.uk_logotype_crown.png" alt="Crown">
                 GOV.UK
                 </a>
             </div>
@@ -64,7 +64,7 @@
                     <li class="footer__ogl"><a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2" class="ir ogl-logo">OGL</a>All content is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2">Open Government Licence v2.0</a>, except where otherwise stated</li>
                 </ul>
                 <a class="footer__copyright" href="http://www.nationalarchives.gov.uk/information-management/our-services/crown-copyright.htm" target="_blank">
-                    <img src="/Content/_assets/img/govuk-crest-2x.png" width="125" height="102" alt="Crown copyright logo">
+                    <img src="//nascdn.blob.core.windows.net/prod/govuk-crest-2x.png" width="125" height="102" alt="Crown copyright logo">
                     <p>&copy; Crown copyright</p>
                 </a>
             </div>
