@@ -39,6 +39,7 @@
             Assert.IsNotNull(template.Id);
         }
 
+        [Ignore("Email is per environment so this needs reviewed, also not allowd to send from noreply")]
         [TestCase(0, "donotreply@local.apprenticeships.gov.uk"), Category("Integration")]
         public void ShouldGetFromEmailConfiguration(int index, string expectedFromEmail)
         {
