@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
 using SpecBind.BrowserSupport;
 using TechTalk.SpecFlow;
 
@@ -19,6 +20,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
         {
             try
             {
+                _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(0));
                 var signoutLink = _driver.FindElement(By.Id("signout-link"));
                 signoutLink.Click();
             }
