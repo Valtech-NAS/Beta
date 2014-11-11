@@ -19,6 +19,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Repositories.Applications.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Users.IoC;
+    using SFA.Apprenticeships.Infrastructure.PerformanceCounters.IoC;
     using StructureMap;
     using UserDirectory.IoC;
     using VacancySearch.IoC;
@@ -80,6 +81,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                     x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<LegacyWebServicesRegistry>();
                     x.AddRegistry<MonitorRegistry>();
+                    x.AddRegistry<PerformanceCounterRegistry>();
                 });
 
                 Logger.Debug("Monitor Process IoC initialized");

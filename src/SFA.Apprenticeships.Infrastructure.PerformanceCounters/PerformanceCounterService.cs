@@ -31,17 +31,17 @@
             IncrementVacancyEtlCounter(VacancyIndexCounter);
         }
 
-        private static void IncrementWebRoleCounter(string performanceCounterName)
+        private void IncrementWebRoleCounter(string performanceCounterName)
         {
             IncrementCounter(WebRolePerformanceCounterCategory, performanceCounterName);
         }
 
-        private static void IncrementVacancyEtlCounter(string performanceCounterName)
+        private void IncrementVacancyEtlCounter(string performanceCounterName)
         {
             IncrementCounter(VacancyEtlPerformanceCounterCategory, performanceCounterName);
         }
 
-        private static void IncrementCounter(string categoryName, string performanceCounterName)
+        public void IncrementCounter(string categoryName, string performanceCounterName)
         {
             using (var counter = new PerformanceCounter(categoryName, performanceCounterName, false))
             {

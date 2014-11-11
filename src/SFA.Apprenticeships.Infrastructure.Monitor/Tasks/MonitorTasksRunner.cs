@@ -5,15 +5,22 @@
     using System.Linq;
     using System.Threading.Tasks;
     using NLog;
+    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
 
     public class MonitorTasksRunner : IMonitorTasksRunner
     {
+        private const string MonitorPerformanceCounterCategory = "SFA.Apprenticeships.WorkerRoles.Monitor";
+        private const string MonitorCounter = "MonitorExecutions";
+
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IEnumerable<IMonitorTask> _monitorTasks;
+        private readonly IPerformanceCounterService _performanceCounterService;
 
-        public MonitorTasksRunner(IEnumerable<IMonitorTask> monitorTasks)
+        public MonitorTasksRunner(IEnumerable<IMonitorTask> monitorTasks, 
+            IPerformanceCounterService performanceCounterService)
         {
             _monitorTasks = monitorTasks;
+            _performanceCounterService = performanceCounterService;
         }
 
         public void RunMonitorTasks()
@@ -39,6 +46,7 @@
 
             Task.WaitAll(tasks);
 
+            _performanceCounterService.IncrementCounter(MonitorPerformanceCounterCategory, MonitorCounter);
             Logger.Debug("Finished running monitor tasks");
         }
     }
