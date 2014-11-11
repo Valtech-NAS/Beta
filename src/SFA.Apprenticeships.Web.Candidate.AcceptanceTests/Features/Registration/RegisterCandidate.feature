@@ -179,8 +179,7 @@ Scenario: As a candidate I must confirm my password
 		| Text  | Equals | Sorry, your passwords don’t match |
 		| Href  | Equals | #Password                         |
 
-#Ignored due to roll back of date validation by Vicenç
-@SmokeTests @Ignore
+@SmokeTests
 Scenario: I cannot enter letters on day, month and year
 	Given I navigated to the RegisterCandidatePage page
 	When I am on the RegisterCandidatePage page

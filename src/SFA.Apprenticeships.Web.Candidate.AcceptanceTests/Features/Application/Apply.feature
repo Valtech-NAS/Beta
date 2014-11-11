@@ -232,8 +232,8 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| SubmittedApplicationsCount | Equals | 1     |
 
 
-@US509
-@ignore
+#Ignored as this is an extremely brittle test, heavily data dependant. It has questionable value for the effort required to maintain it
+@US509 @ignore
 Scenario: As a candidate I would like to preview a vacancy application via the employer site
 	Given I navigated to the VacancySearchPage page
 	When I select the first vacancy in location "N7 8LS" that I can apply via the employer site
@@ -336,7 +336,8 @@ Scenario: As a candidate I would like to see my application as unsuccessful
 		| Field                         | Rule   | Value |
 		| UnsuccessfulApplicationsCount | Equals | 1     |
 
-		
+
+#TODO: Document why ignored		
 @US154 @ignore
 Scenario: As a candidate I would like to see my application as withdrawn
 	Given I have registered a new candidate

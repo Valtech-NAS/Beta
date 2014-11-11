@@ -615,20 +615,18 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("I cannot enter letters on day, month and year")]
-        [NUnit.Framework.IgnoreAttribute()]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
         public virtual void ICannotEnterLettersOnDayMonthAndYear()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I cannot enter letters on day, month and year", new string[] {
-                        "SmokeTests",
-                        "Ignore"});
-#line 184
+                        "SmokeTests"});
+#line 183
 this.ScenarioSetup(scenarioInfo);
 #line 7
 this.FeatureBackground();
-#line 185
+#line 184
  testRunner.Given("I navigated to the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 186
+#line 185
  testRunner.When("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
@@ -643,11 +641,11 @@ this.FeatureBackground();
             table20.AddRow(new string[] {
                         "Year",
                         "aaaa"});
-#line 187
+#line 186
  testRunner.And("I enter data", ((string)(null)), table20, "And ");
-#line 192
+#line 191
  testRunner.And("I choose Phonenumber", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 193
+#line 192
  testRunner.Then("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
@@ -658,7 +656,7 @@ this.FeatureBackground();
                         "ValidationFieldErrorCount",
                         "Equals",
                         "3"});
-#line 194
+#line 193
  testRunner.And("I see", ((string)(null)), table21, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
@@ -669,9 +667,9 @@ this.FeatureBackground();
                         "Text",
                         "Equals",
                         "The field Day must be a number."});
-#line 197
+#line 196
  testRunner.And("I am on ValidationFieldErrorItems list item matching criteria", ((string)(null)), table22, "And ");
-#line 200
+#line 199
  testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
@@ -682,9 +680,9 @@ this.FeatureBackground();
                         "Text",
                         "Equals",
                         "The field Month must be a number."});
-#line 201
+#line 200
  testRunner.And("I am on ValidationFieldErrorItems list item matching criteria", ((string)(null)), table23, "And ");
-#line 204
+#line 203
   testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
@@ -695,7 +693,7 @@ this.FeatureBackground();
                         "Text",
                         "Equals",
                         "The field Year must be a number."});
-#line 205
+#line 204
  testRunner.And("I am on ValidationFieldErrorItems list item matching criteria", ((string)(null)), table24, "And ");
 #line hidden
             this.ScenarioCleanup();
