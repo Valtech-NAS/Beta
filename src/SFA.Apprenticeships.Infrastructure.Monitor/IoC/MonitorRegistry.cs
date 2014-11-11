@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
+﻿using SFA.Apprenticeships.Infrastructure.Mongo.Common;
+
+namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
 {
     using Consumers;
     using StructureMap.Configuration.DSL;
@@ -25,7 +27,10 @@
                     x.Type<CheckActiveDirectory>();
                     x.Type<CheckRabbitMessageQueue>();
                     x.Type<CheckNasGateway>();
+                    x.Type<CheckMongoReplicaSets>();
                 });
+
+            For<IMongoAdminClient>().Use<MongoAdminClient>();
         }
     }
 }

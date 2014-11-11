@@ -119,6 +119,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
+    <Reference Include="MongoDB.Bson, Version=1.9.2.235, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\mongocsharpdriver.1.9.2\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=1.9.2.235, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\mongocsharpdriver.1.9.2\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -164,6 +172,7 @@
     </Compile>
     <Compile Include="Consumers\MonitorControlQueueConsumer.cs" />
     <Compile Include="Tasks\CheckActiveDirectory.cs" />
+    <Compile Include="Tasks\CheckMongoReplicaSets.cs" />
     <Compile Include="Tasks\CheckNasGateway.cs" />
     <Compile Include="Tasks\CheckPostcodeService.cs" />
     <Compile Include="Tasks\CheckApplicationRepository.cs" />
