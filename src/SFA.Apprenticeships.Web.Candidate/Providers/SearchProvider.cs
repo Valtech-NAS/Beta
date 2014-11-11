@@ -259,7 +259,6 @@
             if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
                 && performanceCountersEnabled)
             {
-                _performanceCounterService.IncrementVacancySearchPerformanceCounter();
                 _performanceCounterService.IncrementCounter(WebRolePerformanceCounterCategory, VacancySearchCounter);
             }
         }

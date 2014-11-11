@@ -3,7 +3,5 @@
     public interface IPerformanceCounterService
     {
         void IncrementCounter(string categoryName, string performanceCounterName);
-
-        void IncrementVacancyIndexPerformanceCounter();
     }
 }
