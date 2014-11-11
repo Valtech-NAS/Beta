@@ -11,6 +11,9 @@
 
     public class VacancySummaryCompleteConsumerAsync : IConsumeAsync<VacancySummaryUpdateComplete>
     {
+        private const string VacancyEtlPerformanceCounterCategory = "SFA.Apprenticeships.WorkerRoles.VacancyEtl";
+        private const string VacancyIndexCounter = "VacancyEtlExecutions";
+
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IVacancyIndexerService _vacancyIndexer;
         private readonly IPerformanceCounterService _performanceCounterService;
@@ -56,7 +59,7 @@
             if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
                 && performanceCountersEnabled)
             {
-                _performanceCounterService.IncrementVacancyIndexPerformanceCounter();
+                _performanceCounterService.IncrementCounter(VacancyEtlPerformanceCounterCategory, VacancyIndexCounter);
             }
         }
     }

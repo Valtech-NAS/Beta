@@ -23,6 +23,8 @@
 
     public class SearchProvider : ISearchProvider
     {
+        private const string WebRolePerformanceCounterCategory = "SFA.Apprenticeships.Web.Candidate";
+        private const string VacancySearchCounter = "VacancySearch";
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IAddressSearchService _addressSearchService;
         private readonly ILocationSearchService _locationSearchService;
@@ -258,6 +260,7 @@
                 && performanceCountersEnabled)
             {
                 _performanceCounterService.IncrementVacancySearchPerformanceCounter();
+                _performanceCounterService.IncrementCounter(WebRolePerformanceCounterCategory, VacancySearchCounter);
             }
         }
     }

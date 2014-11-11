@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.WindowsAzure;
     using NLog;
     using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
 
@@ -46,8 +47,19 @@
 
             Task.WaitAll(tasks);
 
-            _performanceCounterService.IncrementCounter(MonitorPerformanceCounterCategory, MonitorCounter);
+            IncrementCounter();
             Logger.Debug("Finished running monitor tasks");
+        }
+
+        private void IncrementCounter()
+        {
+            bool performanceCountersEnabled;
+
+            if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
+                && performanceCountersEnabled)
+            {
+                _performanceCounterService.IncrementCounter(MonitorPerformanceCounterCategory, MonitorCounter);
+            }
         }
     }
 }

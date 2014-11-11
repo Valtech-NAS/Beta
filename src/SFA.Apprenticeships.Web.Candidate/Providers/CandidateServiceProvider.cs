@@ -23,6 +23,9 @@
 
     public class CandidateServiceProvider : ICandidateServiceProvider
     {
+        private const string WebRolePerformanceCounterCategory = "SFA.Apprenticeships.Web.Candidate";
+        private const string CandidateRegistrationCounter = "CandidateRegistration";
+
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IUserAccountService _userAccountService;
@@ -261,7 +264,7 @@
             if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
                 && performanceCountersEnabled)
             {
-                _performanceCounterService.IncrementCandidateRegistrationCounter();
+                _performanceCounterService.IncrementCounter(WebRolePerformanceCounterCategory, CandidateRegistrationCounter);
             }
         }
 
