@@ -213,12 +213,12 @@
       <DependentUpon>LoginCandidate.feature</DependentUpon>
     </Compile>
     <Compile Include="Bindings\Login\LoginCandidateDataBinding.cs" />
-    <Compile Include="Features\Registration\ForgottenPassword.feature.cs">
+    <Compile Include="Features\Login\Registration\ForgottenPassword.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ForgottenPassword.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Registration\RegisterCandidate.feature.cs">
+    <Compile Include="Features\Login\Registration\RegisterCandidate.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RegisterCandidate.feature</DependentUpon>
@@ -357,11 +357,11 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>LoginCandidate.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Registration\ForgottenPassword.feature">
+    <None Include="Features\Login\Registration\ForgottenPassword.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ForgottenPassword.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Registration\RegisterCandidate.feature">
+    <None Include="Features\Login\Registration\RegisterCandidate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RegisterCandidate.feature.cs</LastGenOutput>
     </None>
