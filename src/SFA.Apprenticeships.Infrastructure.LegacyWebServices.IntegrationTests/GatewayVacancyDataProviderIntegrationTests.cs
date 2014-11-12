@@ -33,7 +33,7 @@
         private IVacancyDataProvider _vacancyDataProvider;
         private IVacancyIndexDataProvider _vacancyIndexDataProvider;
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         [ExpectedException(typeof(CustomException))]
         public void ShouldNotReturnVacancyDetailsForInvalidVacancyId()
         {
@@ -42,7 +42,7 @@
             result.Should().BeNull();
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldReturnVacancyDetailsForValidVacancyId()
         {
             var response = _vacancyIndexDataProvider.GetVacancySummaries(1);

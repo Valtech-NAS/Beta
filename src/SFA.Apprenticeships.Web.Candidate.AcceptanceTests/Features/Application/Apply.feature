@@ -337,7 +337,7 @@ Scenario: As a candidate I would like to see my application as unsuccessful
 		| UnsuccessfulApplicationsCount | Equals | 1     |
 
 
-#TODO: Document why ignored		
+#Ignored as AsyncProcessorService does not support a Withdrawn application properly
 @US154 @ignore
 Scenario: As a candidate I would like to see my application as withdrawn
 	Given I have registered a new candidate

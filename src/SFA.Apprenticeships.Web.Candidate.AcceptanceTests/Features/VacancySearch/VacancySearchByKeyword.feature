@@ -57,8 +57,7 @@ Scenario: When searching by keywords the results are ordered by best match
         | SortOrderingDropDownItemsText  | Equals       | Best Match,Closing Date,Distance |
         | SortOrderingDropDown           | Equals       | Best Match                       |
 
-#DFSW - Need to find out if this is acceptable behaviour
-@US449 @SmokeTests @Ignore
+@US449 @SmokeTests
 Scenario: When searching by keyword then removing keyword and searching again the results are ordered by distance
 	Given I navigated to the VacancySearchPage page
 	When I enter data

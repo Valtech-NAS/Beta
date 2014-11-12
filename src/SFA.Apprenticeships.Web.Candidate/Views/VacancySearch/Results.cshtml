@@ -115,6 +115,8 @@
 
 @section scripts
 {
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+
     @Scripts.Render("~/bundles/nas/locationsearch")
     <script type="text/javascript">
 
@@ -142,7 +144,74 @@
                 $('#LocationType').val("NonNational");
             });
 
+            /*Show map with radius in results*/
+
+            var apprLatitude = Number($('#Latitude').val()),
+                apprLongitude = Number($('#Longitude').val()),
+                apprMiles = Number($('#loc-within').val()),
+                apprZoom = 9,
+                radiusCircle;
+
+            if (apprMiles <= 40) {
+                apprZoom = 7
+            }
+
+            if (apprMiles <= 30) {
+                apprZoom = 8
+            }
+
+            if (apprMiles < 20) {
+                apprZoom = 9
+            }
+
+            if (apprMiles < 10) {
+                apprZoom = 10
+            }
+
+            if (apprMiles < 5) {
+                apprZoom = 11
+            }
+
+            function initialize() {
+
+                var mapOptions = {
+                    center: { lat: apprLatitude, lng: apprLongitude },
+                    zoom: apprZoom,
+                    panControl: false,
+                    zoomControl: true,
+                    mapTypeControl: false,
+                    scaleControl: false,
+                    streetViewControl: false,
+                    overviewMapControl: false,
+                    scrollwheel: false
+                };
+
+                var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+                var distanceCircle = {
+                    strokeColor: '#005ea5',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#005ea5',
+                    fillOpacity: 0.25,
+                    map: map,
+                    center: mapOptions.center,
+                    radius: apprMiles * 1609.344
+                }
+
+                radiusCircle = new google.maps.Circle(distanceCircle);
+
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+
+            $('#editSearchToggle').on('click', function () {
+                initialize();
+            });
+
+            $(window).resize( function () {
+                initialize();
+            });
         });
 
-    </script>
+</script>
 }

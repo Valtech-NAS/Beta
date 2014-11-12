@@ -88,7 +88,7 @@
 
         </section>
         <section class="section-border grid-wrapper" id="course-info">
-            <h2 class="heading-large">Information for candidate</h2>
+            <h2 class="heading-large">Requirements and prospects</h2>
             <div class="grid grid-1-2">
                 <div class="inner-block-padr">
                     <div class="text">
@@ -109,7 +109,7 @@
                     }
                     @if (!string.IsNullOrWhiteSpace(Model.RealityCheck))
                     {
-                        <h3 class="heading-small">Reality check</h3>
+                        <h3 class="heading-small">Things to consider</h3>
                         <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.RealityCheck)</p>
                     }
                 </div>
@@ -127,8 +127,8 @@
             <div class="grid-wrapper">
                 <div class="grid grid-1-2">
                     <div class="inner-block-padr">
+                        <h3 class="heading-small">Employer</h3>
                         <ul class="list-text">
-                            <li class="bold-small">Contact</li>
                             <li id="vacancy-employer-name">@Model.EmployerName</li>
                             @if (!string.IsNullOrWhiteSpace(Model.EmployerWebsite))
                             {
@@ -138,6 +138,7 @@
                         @if (Model.VacancyLocationType != VacancyLocationType.National)
                         {
                             <div itemscope itemtype="http://schema.org/PostalAddress">
+                                <h3 class="heading-small">Address</h3>
                                 <ul class="list-text" itemprop="address">
                                     <li itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</li>
                                     <li itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</li>

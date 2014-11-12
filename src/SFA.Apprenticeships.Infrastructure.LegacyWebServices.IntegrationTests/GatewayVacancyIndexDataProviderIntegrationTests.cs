@@ -36,7 +36,7 @@
 #pragma warning restore 0618
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldReturnThePageCountForVacancies()
         {
             var result = _vacancyIndexDataProvider.GetVacancyPageCount();
@@ -45,7 +45,7 @@
             result.Should().BePositive();
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldReturnTheFirstPageResultForVacancies()
         {
             var response = _vacancyIndexDataProvider.GetVacancySummaries(1);

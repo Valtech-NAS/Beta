@@ -30,8 +30,7 @@
                     <h3 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker })</h3>
                     <h4 class="subtitle">@vacancy.EmployerName</h4>
                 </div>
-                <p class="search-shortdesc">@vacancy.Description</p>
-                <p>@Html.ActionLink("Read more", "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString, onlick = webTrendItemPositionTracker })</p>
+                <p>@vacancy.Description</p>
                 <ul class="list-text">
 
                     @if (vacancy.VacancyLocationType == VacancyLocationType.NonNational)
@@ -54,8 +53,6 @@
 </ul>
 
 @{ Html.RenderPartial("_pagination", Model); }
-
-@*TODO: needs Henry work -> put in partial view?*@
 
 <div class="form-group">
     <label for="results-per-page" class="heading-small inline">Display results</label>

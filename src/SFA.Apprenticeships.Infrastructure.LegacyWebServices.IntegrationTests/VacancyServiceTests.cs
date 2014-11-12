@@ -11,7 +11,7 @@
     [TestFixture]
     public class VacancyServiceTests
     {
-        [TestCase, Category("Integration")]
+        [TestCase, Category("Integration"), Category("SmokeTests")]
         public void ShouldReturnMappedCollectionFromGetVacancySummary()
         {
 #pragma warning disable 0618

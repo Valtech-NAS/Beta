@@ -45,6 +45,30 @@
         [ElementLocator(Id = "candidate-fullname")]
         public IWebElement FullnameReadOnly { get; set; }
 
+        [ElementLocator(Id = "candidate-email")]
+        public IWebElement EmailReadOnly { get; set; }
+
+        [ElementLocator(Id = "candidate-dob")]
+        public IWebElement DobReadOnly { get; set; }
+
+        [ElementLocator(Id = "candidate-phone")]
+        public IWebElement PhoneReadOnly { get; set; }
+
+        [ElementLocator(Id = "candidate-address-line1")]
+        public IWebElement AddressLine1ReadOnly { get; set; }
+
+        [ElementLocator(Id = "candidate-address-line2")]
+        public IWebElement AddressLine2ReadOnly { get; set; }
+
+        [ElementLocator(Id = "candidate-address-line3")]
+        public IWebElement AddressLine3ReadOnly { get; set; }
+
+        [ElementLocator(Id = "candidate-address-line4")]
+        public IWebElement AddressLine4ReadOnly { get; set; }
+
+        [ElementLocator(Id = "candidate-address-postcode")]
+        public IWebElement AddressPostcodeReadOnly { get; set; }
+
         [ElementLocator(Id = "EmailAddress")]
         public IWebElement EmailAddress { get; set; }
 
