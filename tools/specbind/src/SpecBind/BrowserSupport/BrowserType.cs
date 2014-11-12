@@ -55,5 +55,10 @@ namespace SpecBind.BrowserSupport
         /// </summary>
         // ReSharper disable once InconsistentNaming
         PhantomJS = 9,
+
+        /// <summary>
+        /// Chrome Canary Browser
+        /// </summary>
+        ChromeCanary = 10
 	}
 }

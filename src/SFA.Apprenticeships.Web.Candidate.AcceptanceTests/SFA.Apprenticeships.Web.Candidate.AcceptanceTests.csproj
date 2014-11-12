@@ -175,6 +175,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Apply.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Application\PrePopulate.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrePopulate.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Application\WarningWhenNavigatingOutOfApplyPage.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -326,6 +331,10 @@
     <None Include="Features\Application\Apply.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Apply.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Application\PrePopulate.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PrePopulate.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Application\WarningWhenNavigatingOutOfApplyPage.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

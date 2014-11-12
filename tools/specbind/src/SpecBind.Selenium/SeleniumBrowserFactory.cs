@@ -68,13 +68,16 @@ namespace SpecBind.Selenium
                         driver = GetFireFoxDriver(browserFactoryConfiguration);
                         break;
                     case BrowserType.Chrome:
-                        var chromeOptions = new ChromeOptions { LeaveBrowserRunning = false };
-                        if (browserFactoryConfiguration.EnsureCleanSession)
-                        {
-                            chromeOptions.AddArgument("--incognito");
-                        }
-
-                        driver = new ChromeDriver();
+                        var chromeOptions = GetChromeOptions(browserFactoryConfiguration);
+                        driver = new ChromeDriver(chromeOptions);
+                        break;
+                    case BrowserType.ChromeCanary:
+                        var chromeCanaryOptions = new ChromeOptions
+                                                  {
+                                                      LeaveBrowserRunning = false,
+                                                      BinaryLocation = GetChromeCanaryBinaryLocation()
+                                                  };
+                        driver = new ChromeDriver(chromeCanaryOptions);
                         break;
                     case BrowserType.PhantomJS:
                         driver = new PhantomJSDriver();
@@ -99,6 +102,23 @@ namespace SpecBind.Selenium
             managementSettings.Window.Maximize();
 
             return driver;
+        }
+
+        private static ChromeOptions GetChromeOptions(BrowserFactoryConfigurationElement browserFactoryConfiguration)
+        {
+            var chromeOptions = new ChromeOptions { LeaveBrowserRunning = false };
+            if (browserFactoryConfiguration.EnsureCleanSession)
+            {
+                chromeOptions.AddArgument("--incognito");
+            }
+            return chromeOptions;
+        }
+
+        private static string GetChromeCanaryBinaryLocation()
+        {
+            var localAppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var chromeCanaryBinaryLocation = localAppDataFolder + @"\Google\Chrome SxS\Application\chrome.exe";
+            return chromeCanaryBinaryLocation;
         }
 
         /// <summary>

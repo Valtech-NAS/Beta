@@ -1710,6 +1710,11 @@
             PhantomJS Browser
             </summary>
         </member>
+        <member name="F:SpecBind.BrowserSupport.BrowserType.ChromeCanary">
+            <summary>
+            Chrome Canary Browser
+            </summary>
+        </member>
         <member name="T:SpecBind.BrowserSupport.NullLogger">
             <summary>
             A logger class that does nothing.
