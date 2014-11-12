@@ -144,6 +144,8 @@
                 $('#LocationType').val("NonNational");
             });
 
+            /*Show map with radius in results*/
+
             var apprLatitude = Number($('#Latitude').val()),
                 apprLongitude = Number($('#Longitude').val()),
                 apprMiles = Number($('#loc-within').val()),
@@ -201,6 +203,13 @@
             }
             google.maps.event.addDomListener(window, 'load', initialize);
 
+            $('#editSearchToggle').on('click', function () {
+                initialize();
+            });
+
+            $(window).resize( function () {
+                initialize();
+            });
         });
 
 </script>

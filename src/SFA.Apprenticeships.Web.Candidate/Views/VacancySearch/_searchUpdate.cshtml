@@ -3,8 +3,8 @@
 <section class="grid grid-1-3">
     <fieldset class="search-filter">
 
-        <legend class="heading-medium mob-collpanel-trigger">Edit search</legend>
-        <div class="mob-collpanel toggle-content--mob">
+        <legend class="heading-medium mob-collpanel-trigger" id="editSearchToggle">Edit search</legend>
+        <div class="mob-collpanel toggle-content--mob" id="editSearchPanel">
 
             @Html.FormTextFor(m => m.Keywords, hintText: "")
             @Html.FormTextFor(m => m.Location, hintText: "")
@@ -28,7 +28,7 @@
                 @Html.DropDownListFor(m => m.WithinDistance, (SelectList)ViewBag.Distances, new { @id = "loc-within", @name = "WithinDistance" })
             </div>
             <div class="form-group map-container hide-nojs">
-                <div id="map-canvas" style="width: 100%; height: 200px"></div>
+                <div id="map-canvas" style="width: 100%; height: 250px"></div>
             </div>
 
             @Html.HiddenFor(m => m.Latitude)
