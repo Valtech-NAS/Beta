@@ -99,12 +99,14 @@
                 if (model.LocationType == VacancyLocationType.NonNational && model.SortType == VacancySortType.Relevancy &&
                     string.IsNullOrWhiteSpace(model.Keywords))
                 {
+                    ModelState.Remove("SortType");
                     model.SortType = VacancySortType.Distance;
                 }
 
                 if (model.LocationType == VacancyLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) &&
                     model.SortType != VacancySortType.ClosingDate)
                 {
+                    ModelState.Remove("SortType");
                     model.SortType = VacancySortType.ClosingDate;
                 }
 

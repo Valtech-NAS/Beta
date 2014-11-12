@@ -1,11 +1,12 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
+﻿@using SFA.Apprenticeships.Application.Interfaces.Vacancies
+@using SFA.Apprenticeships.Domain.Entities.Vacancies
 @model VacancySearchResponseViewModel
 
 @{
     ViewBag.Title = "Apprenticeships - Results";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    var locationTypeLink = Model.VacancySearch.LocationType == VacancyLocationType.National ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.NonNational, SearchAction = SearchAction.Sort, PageNumber = 1 }) : Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.National, SearchAction = SearchAction.Sort, PageNumber = 1 });
+    var locationTypeLink = Model.VacancySearch.LocationType == VacancyLocationType.National ? Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.NonNational, SearchAction = SearchAction.Sort, PageNumber = 1 }) : Url.Action("results", new VacancySearchViewModel(Model.VacancySearch) { LocationType = VacancyLocationType.National, SearchAction = SearchAction.Sort, SortType = VacancySortType.Distance, PageNumber = 1 });
 
     string resultMessage;
     string nationalResultsMessage;
@@ -135,6 +136,10 @@
             $('#results-per-page').change(function () {
                 $('#SearchAction').val("Sort");
                 $("form").submit();
+            });
+
+            $('#search-button').click(function() {
+                $('#LocationType').val("NonNational");
             });
 
         });
