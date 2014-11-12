@@ -54,7 +54,7 @@
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeFalse();
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("Is deleting index from environments, consider using different index name")]
         public void ShouldCreateScheduledIndexAndPublishWithAlias()
         {
             var scheduledDate = DateTime.Now; //new DateTime(2000, 1, 1);
@@ -104,12 +104,6 @@
             vis.Index(vacancySummary);
             
             _elasticClient.DeleteIndex(i => i.Index(indexName));
-        }
-
-        private void DeleteIndexIfExists(string indexName)
-        {
-            if ( _elasticClient.IndexExists(i => i.Index(indexName)).Exists)
-                _elasticClient.DeleteIndex(i => i.Index(indexName));
         }
     }
 }
