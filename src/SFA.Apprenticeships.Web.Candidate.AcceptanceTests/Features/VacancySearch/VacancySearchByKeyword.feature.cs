@@ -511,12 +511,12 @@ this.FeatureBackground();
         [NUnit.Framework.DescriptionAttribute("Nationwide apprenticeships are included in keyword search results")]
         [NUnit.Framework.IgnoreAttribute()]
         [NUnit.Framework.CategoryAttribute("US449")]
-        [NUnit.Framework.CategoryAttribute("SmokeTest")]
+        [NUnit.Framework.CategoryAttribute("SmokeTests")]
         public virtual void NationwideApprenticeshipsAreIncludedInKeywordSearchResults()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Nationwide apprenticeships are included in keyword search results", new string[] {
                         "US449",
-                        "SmokeTest",
+                        "SmokeTests",
                         "Ignore"});
 #line 136
 this.ScenarioSetup(scenarioInfo);

@@ -328,12 +328,12 @@ this.FeatureBackground();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Nationwide apprenticeships found by keyword can be ordered")]
         [NUnit.Framework.CategoryAttribute("US500")]
-        [NUnit.Framework.CategoryAttribute("SmokeTest")]
+        [NUnit.Framework.CategoryAttribute("SmokeTests")]
         public virtual void NationwideApprenticeshipsFoundByKeywordCanBeOrdered()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Nationwide apprenticeships found by keyword can be ordered", new string[] {
                         "US500",
-                        "SmokeTest"});
+                        "SmokeTests"});
 #line 89
 this.ScenarioSetup(scenarioInfo);
 #line 7

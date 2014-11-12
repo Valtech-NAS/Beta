@@ -85,7 +85,7 @@ Scenario: nationwide apprenticeships are in closing date order
         | Field                        | Rule           | Value |
         | ResultsAreInClosingDateOrder | Equals         | True  |
 
-@US500 @SmokeTest
+@US500 @SmokeTests
 Scenario: Nationwide apprenticeships found by keyword can be ordered
 	Given I navigated to the VacancySearchPage page
 	When I enter data
