@@ -1740,6 +1740,11 @@
             </summary>
             <param name="browser">The concrete IBrowser instance</param>
         </member>
+        <member name="T:SpecBind.BrowserSupport.TestRunContext">
+            <summary>
+            Spec Flow Context that survives the entire test run
+            </summary>
+        </member>
         <member name="T:SpecBind.Configuration.ApplicationConfigurationElement">
             <summary>
             A configuration element that handles settings for the application.

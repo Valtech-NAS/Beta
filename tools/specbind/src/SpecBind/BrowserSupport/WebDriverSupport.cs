@@ -107,9 +107,14 @@ namespace SpecBind.BrowserSupport
             // Check for an error and capture a screenshot
             this.CheckForScreenshot(browser);
 
-		    if (this.reuseBrowser)
+            if (this.reuseBrowser)
 		    {
-                if (this.ensureCleanSession)
+		        if (ScenarioHasErrors())
+		        {
+                    //In the event of an error, close and dispose of the browser instance as the test could have left it in an invalid state
+                    TearDownReusableBrowser(browser);
+		        }
+                else if (this.ensureCleanSession)
 		            browser.DeleteAllCookies();
 		    }
 		    else
@@ -118,6 +123,25 @@ namespace SpecBind.BrowserSupport
 		        browser.Close();
 		    }
 		}
+
+        private static void TearDownReusableBrowser(IBrowser browser)
+        {
+            try
+            {
+                browser.Close();
+                // ReSharper disable SuspiciousTypeConversion.Global
+                var dispoable = browser as IDisposable;
+                // ReSharper restore SuspiciousTypeConversion.Global
+                if (dispoable != null)
+                {
+                    dispoable.Dispose();
+                }
+            }
+            finally
+            {
+                TestRunContext.Current.Remove(browser);
+            }
+        }
 
         /// <summary>
         /// Tears down the web driver.
@@ -139,10 +163,7 @@ namespace SpecBind.BrowserSupport
         private void CheckForScreenshot(IBrowser browser)
         {
             var scenarioHelper = this.objectContainer.Resolve<IScenarioContextHelper>();
-            if (scenarioHelper.GetError() == null)
-            {
-                return;
-            }
+            if (!ScenarioHasErrors(scenarioHelper)) return;
             
             var fileName = scenarioHelper.GetStepFileName();
             var basePath = Directory.GetCurrentDirectory();
@@ -154,6 +175,17 @@ namespace SpecBind.BrowserSupport
             {
                 traceListener.WriteTestOutput("Created Error Screenshot: {0}", fullPath);       
             }
+        }
+
+        private bool ScenarioHasErrors()
+        {
+            var scenarioHelper = this.objectContainer.Resolve<IScenarioContextHelper>();
+            return ScenarioHasErrors(scenarioHelper);
+        }
+
+        private static bool ScenarioHasErrors(IScenarioContextHelper scenarioHelper)
+        {
+            return scenarioHelper.GetError() != null;
         }
 	}
 }
