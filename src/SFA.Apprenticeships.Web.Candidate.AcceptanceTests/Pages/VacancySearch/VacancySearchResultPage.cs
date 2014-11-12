@@ -85,6 +85,19 @@
         [ElementLocator(Class = "search-results")]
         public IElementList<IWebElement, SearchResultItem> SearchResultItems { get; set; }
 
+        public SearchResultItem FirstResultItem
+        {
+            get { return SearchResultItems.FirstOrDefault(); }
+        }
+
+        public SearchResultItem SecondResultItem
+        {
+            get
+            {
+                return SearchResultItems != null && SearchResultItems.Count() >= 2 ? SearchResultItems.Skip(1).First() : null;
+            }
+        }
+
         public string SearchResultItemsCount
         {
             get { return SearchResultItems.Count().ToString(); }

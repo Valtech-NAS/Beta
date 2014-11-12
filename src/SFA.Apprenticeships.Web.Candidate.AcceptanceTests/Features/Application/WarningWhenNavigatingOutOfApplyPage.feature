@@ -18,7 +18,7 @@ Scenario: Selecting No I will remain in the same page
 	#And I choose Search
 	#Then I am on the VacancySearchResultPage page
 	#When I choose FirstVacancyLink
-	When I select the first vacancy in location "N7 8LS" that can apply by this website
+	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -46,7 +46,7 @@ Scenario: Selecting yes will redirect me to another page
 	#And I choose Search
 	#Then I am on the VacancySearchResultPage page
 	#When I choose FirstVacancyLink
-	When I select the first vacancy in location "N7 8LS" that can apply by this website
+	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page

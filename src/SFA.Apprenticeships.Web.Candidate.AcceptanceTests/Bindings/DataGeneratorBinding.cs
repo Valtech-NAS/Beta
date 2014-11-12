@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
+﻿using System.Collections.Generic;
+
+namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
 {
     using System;
     using Domain.Interfaces.Repositories;
@@ -21,6 +23,11 @@
         private readonly ITokenManager _tokenManager;
         private readonly IUserReadRepository _userReadRepository;
         private readonly IWebDriver _driver;
+        private readonly Dictionary<string, int> _positions = new Dictionary<string, int>
+        {
+            {"first", 1},
+            {"second", 2}
+        };
         private string _email;
 
         public DataGeneratorBinding(ITokenManager tokenManager, IBrowser browser)
@@ -43,18 +50,17 @@
             _tokenManager.SetToken(InvalidPasswordTokenName, new string(Password.Reverse().ToArray()));
         }
 
-        [When(@"I select the first vacancy in location ""(.*)"" that can apply by this website")]
-        public void WhenISelectTheFirstVacancyThatCanApplyByThisWebsite(string location)
+        [When(@"I select the ""(.*)"" vacancy in location ""(.*)"" that can apply by this website")]
+        public void WhenISelectTheNthVacancyThatCanApplyByThisWebsite(string position, string location)
         {
+            var expectedPosition = _positions[position];
             SearchForAVacancyIn(location);
-
-            var isLocalVacancy = false;
 
             const int numResults = 50;
             var i = 0;
+            var validPositionCount = 0;
 
-
-            while (!isLocalVacancy)
+            while (validPositionCount != expectedPosition)
             {
                 if (i == numResults)
                 {
@@ -71,8 +77,9 @@
                 {
                     _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(0));
                     _driver.FindElement(By.Id("apply-button"));
-                    isLocalVacancy = true;
-                    
+                    validPositionCount++;
+                    if(validPositionCount != expectedPosition)
+                        _driver.Navigate().Back();
                 }
                 catch
                 {
@@ -92,17 +99,17 @@
             Then("I am on the VacancySearchResultPage page");
         }
 
-        [When(@"I select the first vacancy in location ""(.*)"" that I can apply via the employer site")]
-        public void WhenISelectTheFirstVacancyInLocationThatICanApplyViaTheEmployerSite(string location)
+        [When(@"I select the ""(.*)"" vacancy in location ""(.*)"" that I can apply via the employer site")]
+        public void WhenISelectTheNthVacancyInLocationThatICanApplyViaTheEmployerSite(string position, string location)
         {
+            var expectedPosition = _positions[position];
             SearchForAVacancyIn(location);
-
-            var isExternalVacancy = false;
 
             const int numResults = 50;
             var i = 0;
+            var validPositionCount = 0;
 
-            while (!isExternalVacancy)
+            while (validPositionCount != expectedPosition)
             {
                 if (i == numResults)
                 {
@@ -119,7 +126,9 @@
                 {
                     _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(0)); 
                     _driver.FindElement(By.Id("external-employer-website"));
-                    isExternalVacancy = true;
+                    validPositionCount++;
+                    if (validPositionCount != expectedPosition)
+                        _driver.Navigate().Back();
                 }
                 catch
                 {

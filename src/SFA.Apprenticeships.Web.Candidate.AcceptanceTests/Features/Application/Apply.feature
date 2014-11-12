@@ -12,7 +12,7 @@ Background:
 @US486 @US458 @US354 @US352
 Scenario: As a candidate I would like to preview a vacancy application
 	Given I have registered a new candidate
-	When I select the first vacancy in location "N7 8LS" that can apply by this website
+	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -36,7 +36,7 @@ Scenario: As a candidate I would like to preview a vacancy application
 @US461 @US154 @US458 @US464
 Scenario: As a candidate I want to save my application as a draft and be able to resume
 	Given I have registered a new candidate
-	When I select the first vacancy in location "N7 8LS" that can apply by this website
+	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -236,7 +236,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 @US509 @ignore
 Scenario: As a candidate I would like to preview a vacancy application via the employer site
 	Given I navigated to the VacancySearchPage page
-	When I select the first vacancy in location "N7 8LS" that I can apply via the employer site
+	When I select the "first" vacancy in location "N7 8LS" that I can apply via the employer site
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyExternalLink
 	Then Another browser window is opened
@@ -244,7 +244,7 @@ Scenario: As a candidate I would like to preview a vacancy application via the e
 @US154
 Scenario: As a candidate I would like to see my application as successful
 	Given I have registered a new candidate
-	When I select the first vacancy in location "London" that can apply by this website
+	When I select the "first" vacancy in location "London" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -275,7 +275,7 @@ Scenario: As a candidate I would like to see my application as successful
 @US154
 Scenario: As a candidate I would like to see my application as submitted
 	Given I have registered a new candidate
-	When I select the first vacancy in location "London" that can apply by this website
+	When I select the "first" vacancy in location "London" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -307,7 +307,7 @@ Scenario: As a candidate I would like to see my application as submitted
 @US154
 Scenario: As a candidate I would like to see my application as unsuccessful
 	Given I have registered a new candidate
-	When I select the first vacancy in location "London" that can apply by this website
+	When I select the "first" vacancy in location "London" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -341,7 +341,7 @@ Scenario: As a candidate I would like to see my application as unsuccessful
 @US154 @ignore
 Scenario: As a candidate I would like to see my application as withdrawn
 	Given I have registered a new candidate
-	When I select the first vacancy in location "London" that can apply by this website
+	When I select the "first" vacancy in location "London" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page

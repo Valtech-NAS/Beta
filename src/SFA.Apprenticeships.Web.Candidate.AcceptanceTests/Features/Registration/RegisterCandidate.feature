@@ -138,7 +138,7 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 	And I am on the ActivationPage page
 	And I choose ActivateButton
 	And I am on the VacancySearchPage page
-	When I select the first vacancy in location "N7 8LS" that can apply by this website
+	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page

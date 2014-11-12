@@ -12,7 +12,7 @@ Background:
 
 Scenario: Updating personal details will update draft applications
 	Given I have registered a new candidate
-	When I select the first vacancy in location "N7 8LS" that can apply by this website
+	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
@@ -58,7 +58,7 @@ Scenario: Updating personal details will update draft applications
 		| Field    | Rule     | Value |
 		| Fullname | Contains | Jane  |
 
-	When I select the first vacancy in location "London" that can apply by this website
+	When I select the "first" vacancy in location "London" that can apply by this website
 	Then I am on the VacancyDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
