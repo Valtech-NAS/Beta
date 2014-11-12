@@ -167,9 +167,9 @@ Scenario: User enters location manually then selects from autocomplete then chan
 	And I choose Search
 	Then I am on the VacancySearchResultPage page
 	And I see 
-        | Field                    | Rule         | Value           |
-        | Location                 | Equals       | Cove (Highland) |
-        | LocationSuggestionsCount | Greater Than | 0               |
+        | Field                    | Rule         | Value |
+        | Location                 | Starts With  | Cove  |
+        | LocationSuggestionsCount | Greater Than | 0     |
 	Then I clear the Location field
 	When I enter data
 		 | Field    | Value  |

@@ -634,8 +634,8 @@ this.FeatureBackground();
                         "Value"});
             table26.AddRow(new string[] {
                         "Location",
-                        "Equals",
-                        "Cove (Highland)"});
+                        "Starts With",
+                        "Cove"});
             table26.AddRow(new string[] {
                         "LocationSuggestionsCount",
                         "Greater Than",
