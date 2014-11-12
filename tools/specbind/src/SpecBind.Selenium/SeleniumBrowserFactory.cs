@@ -176,6 +176,9 @@ namespace SpecBind.Selenium
                         case BrowserType.Chrome:
                             DownloadChromeDriver();
                             break;
+                        case BrowserType.ChromeCanary:
+                            DownloadChromeDriver();
+                            break;
                         case BrowserType.PhantomJS:
                             DownloadPhantomJsDriver();
                             break;

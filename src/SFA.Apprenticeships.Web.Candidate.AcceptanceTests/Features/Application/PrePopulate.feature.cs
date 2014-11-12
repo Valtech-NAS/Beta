@@ -32,8 +32,8 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Application
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "PrePopulate", "In order to speed up the application process\nAs a candidate\nI want valid data I h" +
-                    "ave previously entered to pre populate the application form", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "PrePopulate", "In order to speed up the application process\r\nAs a candidate\r\nI want valid data I" +
+                    " have previously entered to pre populate the application form", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -100,6 +100,49 @@ this.FeatureBackground();
  testRunner.When("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 18
  testRunner.Then("I am on the ApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table1.AddRow(new string[] {
+                        "FullnameReadOnly",
+                        "Equals",
+                        "Firstname Lastname"});
+            table1.AddRow(new string[] {
+                        "EmailReadOnly",
+                        "Equals",
+                        "{EmailToken}"});
+            table1.AddRow(new string[] {
+                        "DobReadOnly",
+                        "Equals",
+                        "01/01/2000"});
+            table1.AddRow(new string[] {
+                        "PhoneReadOnly",
+                        "Equals",
+                        "07970523193"});
+            table1.AddRow(new string[] {
+                        "AddressLine1ReadOnly",
+                        "Equals",
+                        "Flat A"});
+            table1.AddRow(new string[] {
+                        "AddressLine2ReadOnly",
+                        "Equals",
+                        "6 Furlong Road"});
+            table1.AddRow(new string[] {
+                        "AddressLine3ReadOnly",
+                        "Equals",
+                        "London"});
+            table1.AddRow(new string[] {
+                        "AddressLine4ReadOnly",
+                        "Equals",
+                        "Islington"});
+            table1.AddRow(new string[] {
+                        "AddressPostcodeReadOnly",
+                        "Equals",
+                        "N7 8LS"});
+#line 19
+ testRunner.And("I see", ((string)(null)), table1, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
