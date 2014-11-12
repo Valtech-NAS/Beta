@@ -97,14 +97,14 @@
             };
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShoudConstructSendGridEmailDispatcher()
         {
             Assert.IsNotNull(_dispatcher);
             Assert.IsInstanceOf<SendGridEmailDispatcher>(_dispatcher);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldConstructVoidEmailDispatcher()
         {
             Assert.IsNotNull(_voidEmailDispatcher);
@@ -126,7 +126,7 @@
             _dispatcher.SendEmail(request);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShoudSendEmailWithFromEmailInTemplateConfiguration()
         {
             // NOTE: FromEmail is not set and is defined in SendGrid email template.
@@ -141,7 +141,7 @@
             _dispatcher.SendEmail(request);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShoudSendEmailWithSubjectInTemplate()
         {
             // NOTE: Subject is not set and is defined in SendGrid email template.
@@ -156,7 +156,7 @@
             _dispatcher.SendEmail(request);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldSendAccountUnlockCode()
         {
             var request = new EmailRequest
@@ -170,7 +170,7 @@
             _dispatcher.SendEmail(request);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldSendApplicationSubmittedEmail()
         {
             var request = new EmailRequest
@@ -184,7 +184,7 @@
             _dispatcher.SendEmail(request);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldSendPasswordResetCodeEmail()
         {
             var request = new EmailRequest
@@ -198,7 +198,7 @@
             _dispatcher.SendEmail(request);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldSendPasswordResetConfirmationEmail()
         {
             var request = new EmailRequest

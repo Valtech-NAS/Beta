@@ -7,19 +7,19 @@
     [TestFixture]
     public class SendGridConfigurationTests
     {
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetUserNameConfiguration()
         {
             Assert.IsNotNull(SendGridConfiguration.Instance.UserName);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetPasswordConfiguration()
         {
             Assert.IsNotNull(SendGridConfiguration.Instance.Password);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetMultipleTemplates()
         {
             var templates = SendGridConfiguration.Instance.Templates;
@@ -28,8 +28,8 @@
             Assert.IsTrue(templates.Count() > 1);
         }
 
-        [TestCase(0), Category("Integration")]
-        [TestCase(1), Category("Integration")]
+        [TestCase(0), Category("Integration"), Category("SmokeTests")]
+        [TestCase(1), Category("Integration"), Category("SmokeTests")]
         public void ShouldGetMultipleTemplateConfiguration(int index)
         {
             var template = SendGridConfiguration.Instance.Templates.ElementAt(index);

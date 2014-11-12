@@ -74,7 +74,7 @@
             _elasticClient.IndexExists(i => i.Index(_vacancyIndexAlias)).Exists.Should().BeFalse();
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldCreateIndexAndIndexDocument()
         {
             var indexName = _vacancyIndexAlias + ".2000-01-01-00";

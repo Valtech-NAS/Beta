@@ -55,7 +55,7 @@
             _legacyApplicationProviderProvider.CreateApplication(applicationDetail);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("SmokeTests")]
         [ExpectedException(Handler = "CheckForApplicationGatewayCreationException")]
         public void ShouldThrowAnErrorIfTheCandidateDoesntExistInNasGateway()
         {
