@@ -68,8 +68,11 @@ namespace SpecBind.Selenium
                         driver = GetFireFoxDriver(browserFactoryConfiguration);
                         break;
                     case BrowserType.Chrome:
+                        // ReSharper disable UnusedVariable
+                        //Not currently used as current Chrome stable (38) doesn't support automating incognito mode
                         var chromeOptions = GetChromeOptions(browserFactoryConfiguration);
-                        driver = new ChromeDriver(chromeOptions);
+                        // ReSharper restore UnusedVariable
+                        driver = new ChromeDriver();
                         break;
                     case BrowserType.ChromeCanary:
                         var chromeCanaryOptions = new ChromeOptions
