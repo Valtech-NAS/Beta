@@ -367,6 +367,9 @@ namespace SpecBind.Selenium
                 case BrowserType.Chrome:
                     capability = DesiredCapabilities.Chrome();
                     break;
+                case BrowserType.ChromeCanary:
+                    capability = DesiredCapabilities.Chrome();
+                    break;
                 case BrowserType.Safari:
                     capability = DesiredCapabilities.Safari();
                     break;
