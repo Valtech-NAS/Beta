@@ -27,7 +27,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
                 _verifyReplicaSetMembers = true;
                 Logger.Info("Replica set members will be verified");
             }
-            else if (_expectedReplicaSetCount == 0 && !isReplicaSet)
+            else if (_expectedReplicaSetCount == 1 && !isReplicaSet)
             {
                 _verifyReplicaSetMembers = false;
                 Logger.Info("Replica set members will not be verified");
