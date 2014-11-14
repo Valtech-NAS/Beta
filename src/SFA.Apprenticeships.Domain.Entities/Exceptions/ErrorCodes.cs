@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Exceptions
 {
+    //todo: should not be in the domain project - error codes belong to Application.Services
     public static class ErrorCodes
     {
         // User Exception Codes
@@ -24,7 +25,6 @@
         public const string ApplicationCreationError = "Application005";
         public const string ApplicationDuplicatedError = "Application006";
         public const string ApplicationGatewayCreationError = "Application007";
-
 
         // Vacancy Exception Codes
         public const string VacancyNotFoundError = "Vacancy001";
