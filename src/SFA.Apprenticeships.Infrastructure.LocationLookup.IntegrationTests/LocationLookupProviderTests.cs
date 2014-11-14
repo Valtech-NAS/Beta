@@ -22,7 +22,7 @@
 #pragma warning restore 0618
         }
 
-        [Test, Category("Integration"), Category("SmokeTests")]
+        [Test, Category("Integration")]
         public void ShouldMatchExactPlaceName()
         {
             // arrange
@@ -41,7 +41,7 @@
             Assert.AreEqual(term, results.First().Name);
         }
 
-        [Test, Category("Integration"), Category("SmokeTests")]
+        [Test, Category("Integration")]
         public void ShouldMatchFuzzyPlaceName()
         {
             // arrange
@@ -60,7 +60,7 @@
             Assert.AreEqual("Cheylesmore", results.First().Name);
         }
 
-        [Test, Category("Integration"), Category("SmokeTests")]
+        [Test, Category("Integration")]
         public void ShouldMatchPlaceNamesWithSamePrefix()
         {
             // arrange
@@ -85,7 +85,7 @@
             }
         }
 
-        [Test, Category("Integration"), Category("SmokeTests")]
+        [Test, Category("Integration")]
         public void ShouldMatchPlaceNameWithUniquePrefix()
         {
             // arrange
