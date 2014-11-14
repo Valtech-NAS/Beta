@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
-    using Application.Interfaces.Search;
-    using Application.Interfaces.Vacancies;
-    using Application.Vacancy;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
+    using SFA.Apprenticeships.Application.Interfaces.Search;
+    using SFA.Apprenticeships.Application.Interfaces.Vacancies;
+    using SFA.Apprenticeships.Application.Vacancy;
 
     public class CheckVacancySearch : IMonitorTask
     {

@@ -3,18 +3,19 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Vacancy;
-    using Application.VacancyEtl;
-    using Domain.Entities.Vacancies;
     using NLog;
+    using SFA.Apprenticeships.Application.Vacancy;
+    using SFA.Apprenticeships.Application.VacancyEtl;
+    using SFA.Apprenticeships.Domain.Entities.Vacancies;
 
     public class CheckNasGateway : IMonitorTask
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
         private readonly IVacancyDataProvider _vacancyDataProvider;
+        private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
 
-        public CheckNasGateway(IVacancyIndexDataProvider vacancyIndexDataProvider, IVacancyDataProvider vacancyDataProvider)
+        public CheckNasGateway(IVacancyIndexDataProvider vacancyIndexDataProvider,
+            IVacancyDataProvider vacancyDataProvider)
         {
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
             _vacancyDataProvider = vacancyDataProvider;
@@ -47,7 +48,7 @@
             catch (Exception exception)
             {
                 Logger.Error("Error connecting to NAS Gateway vacancy index", exception);
-            }           
+            }
         }
     }
 }

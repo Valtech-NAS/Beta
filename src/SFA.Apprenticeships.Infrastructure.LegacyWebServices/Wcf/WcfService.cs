@@ -61,7 +61,7 @@
                 Logger.Debug("Calling service {0}", factory.Endpoint.Address);
 
                 action(client);
-                ((IClientChannel) client).Close();
+                ((IClientChannel)client).Close();
                 factory.Close();
                 success = true;
                 Logger.Debug("Call succeeded and client is now closed");
@@ -85,7 +85,7 @@
             {
                 if (!success)
                 {
-                    ((IClientChannel) client).Abort();
+                    ((IClientChannel)client).Abort();
                     factory.Abort();
                     Logger.Error("WCF failed and client was aborted");
                 }

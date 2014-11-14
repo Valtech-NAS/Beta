@@ -151,6 +151,10 @@
       <HintPath>..\packages\ReadOnlyCollectionInterfaces.1.0.0\lib\NET45\ReadOnlyCollectionsInterfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RestSharp, Version=105.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -241,7 +245,9 @@
     <None Include="Configs\emailSettings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Startup\MonitorStartup.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
