@@ -4,9 +4,9 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 ## Web layer ##
 
+- some website URLs need to be reviewed to be more "friendly". e.g. vacancy detail should be /vacancy/12345 not /vacancysearch/details/446897
 - refactor: controllers should use providers to avoid containing orchestration logic
 - refactor: qualification types reference data should be read from configuration / provided by a configuration service
-- some website URLs need to be reviewed to be more "friendly"
 - validation messages should be parameterised where possible (e.g. max length). See AddressMessages.cs for an example.
 - check all messages starting with "TODO" and 'TODO' (C# and JavaScript).
 - usernamecheck should use remote validator
@@ -19,11 +19,11 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 ## Infrastructure layer ##
 
-- change to entity repos (re. Mark)
-- wrap ElasticSearchClient -> search into a new class to be able to rethrow WebException swallowed by Nest
 - replace AD with user auth repo
 - log request/response payloads for nas gateway calls
 - replace address lookup with public service
+- change to entity repos (re. Mark)
+- wrap ElasticSearchClient -> search into a new class to be able to rethrow WebException swallowed by Nest
 
 ## Cross cutting ##
 
