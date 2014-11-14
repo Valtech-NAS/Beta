@@ -1,20 +1,24 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
     using System;
+    using System.Linq;
     using Domain.Interfaces.Configuration;
     using EasyNetQ;
     using NLog;
 
     public class CheckRabbitMessageQueue : IMonitorTask
     {
-        private const string MonitorAppSetting = "Monitor.Rabbit";
+        private const string MonitorRabbitAppSetting = "Monitor.Rabbit";
+        private const string MonitorRelkAppSetting = "Monitor.Relk";
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly string _connectionString;
+        private readonly string _rabbitConnectionString;
+        private readonly string _relkConnectionString;
         private IBus _rabbitBus;
 
         public CheckRabbitMessageQueue(IConfigurationManager configurationManager)
         {
-            _connectionString = configurationManager.GetAppSetting(MonitorAppSetting);
+            _rabbitConnectionString = configurationManager.GetAppSetting(MonitorRabbitAppSetting);
+            _relkConnectionString = configurationManager.GetAppSetting(MonitorRelkAppSetting);
         }
 
         public string TaskName
@@ -24,25 +28,33 @@
 
         public void Run()
         {
-            _rabbitBus = RabbitHutch.CreateBus(_connectionString);
+            CheckRabbitQueue(_rabbitConnectionString);
+            CheckRabbitQueue(_relkConnectionString);
+        }
+
+        private void CheckRabbitQueue(string connectionString)
+        {
+            _rabbitBus = RabbitHutch.CreateBus(connectionString);
 
             try
             {
-                _rabbitBus.Publish(new MonitorMessage() );
+                _rabbitBus.Publish(new MonitorMessage());
             }
             catch (Exception ex)
             {
-                LogError(ex);
+                var host = connectionString.Split(new [] {';'}).First();
+                LogError(host, ex);
             }
             finally
             {
-                _rabbitBus.Dispose();
+                 _rabbitBus.Dispose();
             }
         }
 
-        private static void LogError(Exception exception)
+        private static void LogError(string host, Exception exception)
         {
-            Logger.Error("Error while connecting to Rabbit queue", exception);
+            var message = string.Format("Error while connecting to Rabbit queue on {0}", host);
+            Logger.Error(message, exception);
         }
     }
 

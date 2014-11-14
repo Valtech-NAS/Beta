@@ -14,26 +14,11 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IMongoAdminClient _mongoAdminClient;
         private readonly int _expectedReplicaSetCount;
-        private readonly bool _verifyReplicaSetMembers;
 
         public CheckMongoReplicaSets(IMongoAdminClient mongoAdminClient, IConfigurationManager configurationManager)
         {
             _mongoAdminClient = mongoAdminClient;
             _expectedReplicaSetCount = int.Parse(configurationManager.GetAppSetting(MonitorAppSetting));
-
-            var isReplicaSet = _mongoAdminClient.IsReplicaSet();
-            if (_expectedReplicaSetCount > 1 && isReplicaSet)
-            {
-                _verifyReplicaSetMembers = true;
-                Logger.Info("Replica set members will be verified");
-            }
-            else if (_expectedReplicaSetCount == 1 && !isReplicaSet)
-            {
-                _verifyReplicaSetMembers = false;
-                Logger.Info("Replica set members will not be verified");
-            }
-            else
-                throw new Exception(string.Format("{0} config is invalid. ExpectedReplicaSetCount: {1}, IsReplicaSet: {2}", TaskName, _expectedReplicaSetCount, isReplicaSet));
         }
 
         public string TaskName
@@ -43,7 +28,21 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 
         public void Run()
         {
-            if (_verifyReplicaSetMembers)
+            var verifyReplicaSets = false;
+            var isReplicaSet = _mongoAdminClient.IsReplicaSet();
+            if (_expectedReplicaSetCount > 1 && isReplicaSet)
+            {
+                verifyReplicaSets = true;
+                Logger.Info("Replica set members will be verified");
+            }
+            else if (_expectedReplicaSetCount == 1 && !isReplicaSet)
+            {
+                Logger.Info("Replica set members will not be verified");
+            }
+            else
+                Logger.Error("{0} config is invalid. ExpectedReplicaSetCount: {1}, IsReplicaSet: {2}", TaskName, _expectedReplicaSetCount, isReplicaSet);
+
+            if (verifyReplicaSets)
             {
                 var result = _mongoAdminClient.RunCommand(ReplicaSetGetStatusCommand);
                 var members = (BsonArray)result.Response["members"];
