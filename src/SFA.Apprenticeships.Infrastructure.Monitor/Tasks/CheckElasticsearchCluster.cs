@@ -93,7 +93,7 @@
         {
             get
             {
-                return int.Parse(_configurationManager.GetAppSetting(ExpectedNodeCountSettingName));
+                return _configurationManager.GetAppSetting<int>(ExpectedNodeCountSettingName);
             }
         }
 
