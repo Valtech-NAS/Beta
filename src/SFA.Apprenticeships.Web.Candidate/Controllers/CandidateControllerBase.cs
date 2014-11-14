@@ -89,17 +89,26 @@
         private void SetAbout()
         {
             var showAbout = bool.Parse(ConfigurationManager.AppSettings["ShowAbout"]);
+
             ViewBag.ShowAbout = showAbout;
 
             if (!showAbout) return;
 
-            if (!MappedDiagnosticsContext.Contains("version"))
+            const string versionKey = "version";
+
+            if (!GlobalDiagnosticsContext.Contains(versionKey))
             {
-                var version = FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof(CandidateControllerBase)).Location).FileVersion;
-                ViewBag.Version = version;
-                MappedDiagnosticsContext.Set("version", version);                    
+                GlobalDiagnosticsContext.Set(versionKey, GetVersion());
             }
+
+            ViewBag.Version = GlobalDiagnosticsContext.Get(versionKey);
             ViewBag.Environment = ConfigurationManager.AppSettings["Environment"];
+        }
+
+        private static string GetVersion()
+        {
+            return FileVersionInfo.GetVersionInfo(
+                Assembly.GetAssembly(typeof(CandidateControllerBase)).Location).FileVersion;
         }
 
         private void SetLoggingIds()
