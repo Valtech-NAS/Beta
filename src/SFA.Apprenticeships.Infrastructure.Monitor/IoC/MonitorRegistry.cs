@@ -29,6 +29,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
                     x.Type<CheckNasGateway>();
                     x.Type<CheckMongoReplicaSets>();
                     x.Type<CheckElasticsearchCluster>();
+                    x.Type<CheckElasticsearchIndexes>();
                 });
 
             For<IMongoAdminClient>().Use<MongoAdminClient>();
