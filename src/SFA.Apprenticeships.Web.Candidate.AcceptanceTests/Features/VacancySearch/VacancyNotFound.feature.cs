@@ -80,21 +80,21 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.VacancySear
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Add two numbers")]
-        [NUnit.Framework.IgnoreAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Vacancy not found should redirect to the error page")]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
-        public virtual void AddTwoNumbers()
+        public virtual void VacancyNotFoundShouldRedirectToTheErrorPage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add two numbers", new string[] {
-                        "SmokeTests",
-                        "ignore"});
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Vacancy not found should redirect to the error page", new string[] {
+                        "SmokeTests"});
 #line 11
 this.ScenarioSetup(scenarioInfo);
 #line 4
 this.FeatureBackground();
 #line 12
- testRunner.When("I navigate to the details of the vacancy 9999999999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("I am in the right environment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 13
+ testRunner.When("I navigate to the details of the vacancy 19999999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 14
  testRunner.Then("I am on the VacancyNotFound page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

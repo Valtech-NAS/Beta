@@ -226,6 +226,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RegisterCandidate.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\VacancySearch\VacancyNotFound.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VacancyNotFound.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\VacancySearch\VacancySearchByKeyword.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -263,6 +268,7 @@
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\BaseValidationPage.cs" />
     <Compile Include="Pages\Dashboard\MyApplicationsPage.cs" />
+    <Compile Include="Pages\VacancyNotFound.cs" />
     <Compile Include="Pages\Registration\ResetPasswordPage.cs" />
     <Compile Include="Pages\Registration\ForgottenPasswordPage.cs" />
     <Compile Include="Pages\Login\UnlockPage.cs" />
@@ -371,6 +377,10 @@
     <None Include="Features\Registration\RegisterCandidate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RegisterCandidate.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\VacancySearch\VacancyNotFound.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>VacancyNotFound.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\VacancySearch\VacancySearchByKeyword.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

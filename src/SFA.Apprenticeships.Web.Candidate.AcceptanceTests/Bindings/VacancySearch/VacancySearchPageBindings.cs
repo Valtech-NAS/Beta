@@ -4,6 +4,9 @@ using TechTalk.SpecFlow;
 
 namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings.VacancySearch
 {
+    using System.Configuration;
+    using NUnit.Framework;
+
     [Binding]
     public class VacancySearchPageBindings
     {
@@ -20,6 +23,13 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings.VacancySear
         {
             var location = _driver.FindElement(By.Id(fieldId));
             location.Clear();
+        }
+
+        [Given(@"I am in the right environment")]
+        public void GivenIAmInTheRightEnvironment()
+        {
+            if (! bool.Parse(ConfigurationManager.AppSettings["RunVacancyNotFoundTest"]))
+                Assert.Pass("This environment does not require this test.");
         }
     }
 }
