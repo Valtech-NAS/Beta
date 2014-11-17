@@ -51,6 +51,12 @@
             );
 
             routes.MapRoute(
+                name: RouteNames.VacancyDetails,
+                url: "vacancy/{id}",
+                defaults: new { controller = "VacancySearch", action = "Details", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
