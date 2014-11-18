@@ -180,6 +180,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PrePopulate.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Application\Validation.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Validation.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Application\WarningWhenNavigatingOutOfApplyPage.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -341,6 +346,10 @@
     <None Include="Features\Application\PrePopulate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>PrePopulate.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Application\Validation.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Validation.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Application\WarningWhenNavigatingOutOfApplyPage.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

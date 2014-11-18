@@ -91,6 +91,15 @@
 
         [ElementLocator(Id = "Candidate_Education_ToYear")]
         public IWebElement EducationToYear { get; set; }
+
+        [ElementLocator(Text = "Please enter name of most recent school or college")]
+        public IWebElement EducationNameOfSchoolError { get; set; }
+
+        [ElementLocator(Text = "Please enter year started")]
+        public IWebElement EducationFromYearError { get; set; }
+
+        [ElementLocator(Text = "Please enter year finished")]
+        public IWebElement EducationToYearError { get; set; }
         #endregion
         #endregion
 
