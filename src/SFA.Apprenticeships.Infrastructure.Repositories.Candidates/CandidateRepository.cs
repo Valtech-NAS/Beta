@@ -31,7 +31,7 @@
 
             LogOutcome(id, mongoEntity);
 
-            return mongoEntity == null ? null : _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
+            return CandidateOrNull(mongoEntity);
         }
 
         public Candidate Get(Guid id, bool errorIfNotFound)
@@ -50,7 +50,7 @@
 
             LogOutcome(id, mongoEntity);
 
-            return mongoEntity == null ? null : _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
+            return CandidateOrNull(mongoEntity);
         }
 
         public Candidate Get(string username, bool errorIfNotFound = true)
@@ -69,9 +69,9 @@
 
             LogOutcome(username, mongoEntity);
 
-            return mongoEntity == null ? null : _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
+            return CandidateOrNull(mongoEntity);
         }
-     
+
         public void Delete(Guid id)
         {
             Logger.Debug("Calling repository to delete candidate with Id={0}", id);
@@ -84,7 +84,10 @@
         public Candidate Save(Candidate entity)
         {
             Logger.Debug("Calling repository to save candidate with Id={0}, FirstName={1}, EmailAddress={2}", entity.EntityId, entity.RegistrationDetails.FirstName, entity.RegistrationDetails.EmailAddress);
-            
+
+            //todo: temp code to hardwire comm prefs until the UI supports editing them
+            entity.CommunicationPreferences = new CommunicationPreferences();
+
             var mongoEntity = _mapper.Map<Candidate, MongoCandidate>(entity);
 
             UpdateEntityTimestamps(mongoEntity);
@@ -116,5 +119,16 @@
             Logger.Debug(message, username);
         }
 
+        private Candidate CandidateOrNull(MongoCandidate mongoEntity)
+        {
+            if (mongoEntity == null) return null;
+
+            var entity = _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
+
+            //todo: temp code to hardwire comm prefs until the UI supports editing them
+            entity.CommunicationPreferences = new CommunicationPreferences();
+
+            return entity;
+        }
     }
 }
