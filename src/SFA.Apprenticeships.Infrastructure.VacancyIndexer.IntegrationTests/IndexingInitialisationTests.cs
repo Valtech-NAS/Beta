@@ -35,7 +35,7 @@
         [Test, Category("Integration")]
         public void ShouldCreateScheduledIndexAndMapping()
         {
-            var scheduledDate = DateTime.Now; //new DateTime(2000, 1, 1);
+            var scheduledDate = new DateTime(2000, 1, 1);
             var indexName = string.Format("{0}.{1}", _vacancyIndexAlias, scheduledDate.ToString("yyyy-MM-dd-HH"));
 
 #pragma warning disable 0618
@@ -43,6 +43,7 @@
             var vis = ObjectFactory.GetInstance<IVacancyIndexerService>();
 #pragma warning restore 0618
 
+            DeleteIndexIfExists(indexName);
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeFalse();
             vis.CreateScheduledIndex(scheduledDate);
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeTrue();
@@ -52,6 +53,15 @@
 
             _elasticClient.DeleteIndex(i => i.Index(indexName));
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeFalse();
+        }
+
+        private void DeleteIndexIfExists(string indexName)
+        {
+            var exists = _elasticClient.IndexExists(i => i.Index(indexName));
+            if (exists.Exists)
+            {
+                _elasticClient.DeleteIndex(i => i.Index(indexName));
+            }
         }
 
         [Test, Category("Integration"), Ignore("Is deleting index from environments, consider using different index name")]
