@@ -68,10 +68,5 @@
 
             return _mapper.Map<MongoUser, User>(mongoEntity);
         }
-
-        protected override void Initialise()
-        {
-            Collection.CreateIndex(new IndexKeysBuilder().Ascending("Username"), IndexOptions.SetUnique(true));
-        }
     }
 }

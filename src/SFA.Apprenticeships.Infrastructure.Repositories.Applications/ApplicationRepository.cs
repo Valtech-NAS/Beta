@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Linq.Expressions;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Configuration;
@@ -170,11 +169,6 @@
             Save(applicationDetail);
 
             Logger.Debug("Saved expired or withdrawn application for candidate with Id={0} and VacancyId={1}", applicationDetail.CandidateId, vacancyId);
-        }
-
-        protected override void Initialise()
-        {
-            Collection.CreateIndex(new IndexKeysBuilder().Ascending("CandidateId"), IndexOptions.SetUnique(false));
         }
     }
 }

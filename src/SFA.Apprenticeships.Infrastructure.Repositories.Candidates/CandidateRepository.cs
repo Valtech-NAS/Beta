@@ -99,12 +99,6 @@
             return _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
         }
 
-        protected override void Initialise()
-        {
-            //TODO: review the index
-            Collection.CreateIndex(new IndexKeysBuilder().Ascending("RegistrationDetails.EmailAddress"), IndexOptions.SetUnique(true));
-        }
-
         private static void LogOutcome(Guid id, MongoCandidate mongoEntity)
         {
             var message = mongoEntity == null ? "Found no candidate with Id={0}" : "Found candidate with Id={0}";

@@ -9,7 +9,6 @@
     {
         private MongoCollection<T> _collection;
 
-        private static bool _initialised;
         private readonly MongoDatabase _database;
         private readonly string _mongoCollectionName;
 
@@ -17,13 +16,6 @@
         {
             get
             {
-                if (!_initialised)
-                {
-                    _initialised = true;
-                    
-                    Initialise();
-                }
-
                 return _collection ?? (_collection = _database.GetCollection<T>(_mongoCollectionName));
             }
         }
