@@ -3,7 +3,7 @@
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
 
-    [PageNavigation("/vacancysearch/details")]
+    [PageNavigation("/vacancy")]
     [PageAlias("VacancyDetailsPage")]
     public class DetailsPage
     {
