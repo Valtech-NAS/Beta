@@ -10,7 +10,7 @@
         private MongoCollection<T> _collection;
 
         private static bool _initialised;
-        private MongoDatabase _database;
+        private readonly MongoDatabase _database;
         private readonly string _mongoCollectionName;
 
         protected MongoCollection<T> Collection
@@ -54,6 +54,6 @@
             }
         }
 
-        protected virtual void Initialise(){}
+        protected virtual void Initialise() {}
     }
 }
