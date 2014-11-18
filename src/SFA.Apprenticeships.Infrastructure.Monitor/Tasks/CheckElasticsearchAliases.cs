@@ -20,10 +20,7 @@
             _elasticsearchClientFactory = elasticsearchClientFactory;
         }
 
-        public string TaskName
-        {
-            get { return "Check Elasticsearch Aliases"; }
-        }
+        public string TaskName { get { return "Check Elasticsearch Aliases"; } }
 
         public void Run()
         {
@@ -36,7 +33,7 @@
         private static void EnsureExpectedAliasesExist(IElasticClient client, IEnumerable<string> expectedAliasNames)
         {
             var missingAliasNames = expectedAliasNames
-                .Where(aliasName => !client.AliasExists(aliasName).Exists)
+                .Where(aliasName => !(client.AliasExists(aliasName).Exists || client.IndexExists(aliasName).Exists))
                 .ToList();
 
             if (missingAliasNames.Count == 0)
