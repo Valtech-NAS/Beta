@@ -32,50 +32,39 @@
         {
             Log("Received", request);
 
-            return Task.Run(() =>
-            {
-                Log("Submitting", request);
-
-                CreateCandidate(request);
-
-                Log("Submitted", request);
-            });
+            return Task.Run(() => CreateCandidate(request));
         }
 
         private void CreateCandidate(CreateCandidateRequest request)
         {
-            var candidate = _candidateReadRepository.Get(request.CandidateId, true);
-            var user = _userReadRepository.Get(request.CandidateId);
-
-            //user.AssertState();
-            //EnsureApplicationCanBeCreated(candidate);
-
             try
             {
-                Log("Creating", request);
+                //todo: user account status check (should be active)
+                var user = _userReadRepository.Get(request.CandidateId);
+                user.AssertState("User is in invalid state for creation in legacy", UserStatuses.Active);
 
-                //candidate.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(candidate);
+                // TODO: check legacy id not already set, debug log and bail out if so
+                var candidate = _candidateReadRepository.Get(request.CandidateId, true);
 
-                Log("Created", request);
+                // TODO: invoke candidate creation on nas gateway
+                //var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
 
-                Log("Updating", request);
-
-                //candidate.SetStateSubmitted();
-                //_applicationWriteRepository.Save(candidate);
-
-                Log("Updated", request);
+                // TODO: update candidate
+                //candidate.LegacyCandidateId = legacyCandidateId;
+                //_candidateWriteRepository.Save(candidate);
             }
-            catch (CustomException ex)
+            catch (CustomException)
             {
+                // TODO: think about which exceptions should result in a re-queue
                 //if (ex.Code != ErrorCodes.ApplicationDuplicatedError)
-                //{
-                //    // re-queue application for submission
-                //    var message = new CreateCandidateRequest
-                //    {
-                //        ApplicationId = request.ApplicationId
-                //    };
-                //    _messageBus.PublishMessage(message); 
-                //}
+                {
+                    // re-queue
+                    var message = new CreateCandidateRequest
+                    {
+                        CandidateId = request.CandidateId
+                    };
+                    _messageBus.PublishMessage(message);
+                }
             }
         }
 

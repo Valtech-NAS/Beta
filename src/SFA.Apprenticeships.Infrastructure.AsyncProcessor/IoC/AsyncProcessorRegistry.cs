@@ -11,9 +11,9 @@
         {
             var emailDispatcher = CloudConfigurationManager.GetSetting("EmailDispatcher");
 
-            For<EmailRequestConsumerAsync>().Use<EmailRequestConsumerAsync>().
-                Ctor<IEmailDispatcher>().Named(emailDispatcher);
+            For<EmailRequestConsumerAsync>().Use<EmailRequestConsumerAsync>().Ctor<IEmailDispatcher>().Named(emailDispatcher);
             For<SubmitApplicationRequestConsumerAsync>().Use<SubmitApplicationRequestConsumerAsync>();
+            For<CreateCandidateRequestConsumerAsync>().Use<CreateCandidateRequestConsumerAsync>();
         }
     }
 }
