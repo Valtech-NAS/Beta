@@ -90,7 +90,7 @@ Scenario: As a candidate I want to be told quickly that my email/username is not
 	When I am on the RegisterCandidatePage page
 	And I enter data
 		| Field        | Value                |
-		| EmailAddress | nas.exemplar@gmail.com |
+		| EmailAddress | nas.exemplar+acceptancetests@gmail.com |
 	And I choose Phonenumber
 	Then I am on the RegisterCandidatePage page
 	Given I waited for 30 seconds to see EmailAddressAvailableMessage
