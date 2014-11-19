@@ -17,7 +17,8 @@
             {
                 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-                @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new { autofocus = "autofocus" })
+                @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new { autofocus = "autofocus", aria_describedby = "keywordsHint" })
+                <p class="visuallyhidden" id="keywordsHint">Try words that describe the type of apprenticeship you want, for example “carpentry” or “mechanics”.</p>
                 @Html.FormTextFor(m => m.Location)
 
                 <div class="form-group">

@@ -11,15 +11,17 @@
             
             @if (ViewBag.LocationSearches != null && ViewBag.LocationSearches.Length > 0)
             {
-                <div class="form-group form-group-compound">
-                    <ul id="location-suggestions" class="list-text list-max-11">
-                        <li>Did you mean: </li>
-                        @foreach (var locationSearch in ViewBag.LocationSearches)
-                        {
-                            <li><a href="@Url.Action("results", locationSearch)">@locationSearch.Location</a></li>
-                        }
-                    </ul>
-                </div>
+                <details open class="open form-group form-group-compound">
+                    <summary>Did you mean:</summary>
+                    <div class="detail-content panel-indent">
+                        <ul id="location-suggestions" class="list-text list-max-11">
+                            @foreach (var locationSearch in ViewBag.LocationSearches)
+                            {
+                                <li><a href="@Url.Action("results", locationSearch)">@locationSearch.Location</a></li>
+                            }
+                        </ul>
+                    </div>
+                </details>
             }
 
             @* TODO::Create a form control for this. *@

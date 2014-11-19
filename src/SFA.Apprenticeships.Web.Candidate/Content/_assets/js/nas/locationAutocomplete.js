@@ -2,9 +2,11 @@
 (function($) {
     $.fn.locationMatch = function(options) {
         var self = $(this);
-        var settings = $.extend({ delay: 300, minLength: 3, maxListSize: 25, url: '', longitude: null, latitude: null, latlonhash: null }, options);
+        var settings = $.extend({ delay: 200, minLength: 3, maxListSize: 25, url: '', longitude: null, latitude: null, latlonhash: null }, options);
         var tags = [];
         var locations;
+        var locationVal = $('#Location').val();
+
 
         var location = function(name) {
             this.Name = name;
@@ -38,6 +40,8 @@
         };
 
         self.keyup(function (event) {
+            locationVal = $('#Location').val();
+
             if (!isNavigationKeyCode(event.keyCode)) {
                 // Consider non-navigation keyCodes to be user input.
                 clearLatLonFields();
@@ -57,6 +61,15 @@
                 }
 
                 getLocationResults(response, request.term);
+            },
+            messages: {
+                noResults: function () {
+                    return "No places found with " + locationVal + " in their name";
+                },
+                results: function (amount) {
+                    return "We've found " + amount + (amount > 1 ? " places" : " place") +
+                        " with " + locationVal + " in the name. Use up and down arrow keys to navigate";
+                }
             },
             select: function(event, ui) {
                 this.value = ui.item.value;
