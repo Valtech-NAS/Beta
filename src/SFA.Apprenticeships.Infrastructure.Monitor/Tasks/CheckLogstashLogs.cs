@@ -3,11 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using Domain.Interfaces.Configuration;
     using Newtonsoft.Json;
     using NLog;
     using RestSharp;
     using RestSharp.Deserializers;
+    using RestSharp.Extensions;
 
     /// <summary>
     /// Checks that Logstash log entries are being created.
@@ -84,6 +86,10 @@
                 var request = CreateRestRequest(uri);
 
                 var response = client.Execute<dynamic>(request);
+
+                EnsureResponseStatusCodeIsOk(response);
+                EnsureResponseHasData(response);
+
                 var logEntries = response.Data.hits.hits;
 
                 foreach (var logEntry in logEntries)
@@ -101,6 +107,25 @@
             }
 
             return timestamps;
+        }
+
+        private static void EnsureResponseHasData(IRestResponse<dynamic> response)
+        {
+            if (response.Data == null || response.Data.hits == null || response.Data.hits.hits == null)
+            {
+                throw new Exception("Logstash query returned no log entry data.");
+            }
+        }
+
+        private static void EnsureResponseStatusCodeIsOk(IRestResponse<dynamic> response)
+        {
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                var message = string.Format(
+                    "Logstash query returned HTTP status code {0}.", response.StatusCode);
+
+                throw new Exception(message);
+            }
         }
 
         private static RestClient CreateRestClient()

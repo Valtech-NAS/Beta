@@ -166,6 +166,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Common.Tests", "SFA.Apprenticeships.Web.Common.Tests\SFA.Apprenticeships.Web.Common.Tests.csproj", "{3CA36139-BBDD-4305-B15A-E9500606B672}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Repositories.Authentication", "SFA.Apprenticeships.Infrastructure.Repositories.Authentication\SFA.Apprenticeships.Infrastructure.Repositories.Authentication.csproj", "{2D21EA2D-CE77-4795-B2F0-A172E59AC491}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1207,6 +1209,22 @@ Global
 		{3CA36139-BBDD-4305-B15A-E9500606B672}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3CA36139-BBDD-4305-B15A-E9500606B672}.Sit|Any CPU.ActiveCfg = Release|Any CPU
 		{3CA36139-BBDD-4305-B15A-E9500606B672}.Sit|Any CPU.Build.0 = Release|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Demo|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Demo|Any CPU.Build.0 = Debug|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Dev|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Dev|Any CPU.Build.0 = Debug|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Local|Any CPU.ActiveCfg = Release|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Local|Any CPU.Build.0 = Release|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Pre|Any CPU.ActiveCfg = Release|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Pre|Any CPU.Build.0 = Release|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Prod|Any CPU.ActiveCfg = Release|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Prod|Any CPU.Build.0 = Release|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Sit|Any CPU.ActiveCfg = Release|Any CPU
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491}.Sit|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1285,5 +1303,6 @@ Global
 		{21780C05-99C2-4C0B-9691-01C3CDA64470} = {37F78283-62CA-418D-9548-4EF7A6C126B7}
 		{AB4C03CD-F947-4CD5-BF12-8912E7FE97C3} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{3CA36139-BBDD-4305-B15A-E9500606B672} = {8B52C549-CC01-4411-B801-E09FDCCD54C8}
+		{2D21EA2D-CE77-4795-B2F0-A172E59AC491} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 	EndGlobalSection
 EndGlobal
