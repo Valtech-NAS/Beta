@@ -33,7 +33,7 @@
         }
 
         [Test, Category("Integration")]
-        public void ShouldCreateActiveDirectoryUser()
+        public void ShouldCreateUser()
         {
             string username = CreateUseId();
             bool succeeded = _service.CreateUser(username, Password);
@@ -41,7 +41,7 @@
         }
 
         [Test, Category("Integration")]
-        public void ShouldCreateActiveDirectoryUserAndAuthenticate()
+        public void ShouldCreateUserAndAuthenticate()
         {
             string username = Guid.NewGuid().ToString();
             bool succeeded = _service.CreateUser(username, Password);
@@ -52,7 +52,7 @@
         }
 
         [Test, Category("Integration")]
-        public void ShouldCreateActiveDirectoryUserAndChangePassword()
+        public void ShouldCreateUserAndChangePassword()
         {
             string username = Guid.NewGuid().ToString();
             bool succeeded = _service.CreateUser(username, Password);
