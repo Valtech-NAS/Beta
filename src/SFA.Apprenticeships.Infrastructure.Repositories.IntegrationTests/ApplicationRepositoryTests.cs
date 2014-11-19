@@ -36,7 +36,7 @@
             var application = CreateTestApplication();
 
             // act, assert
-            var savedApplication = writer.Save(application);
+            writer.Save(application);
         }
 
         #region Helpers
