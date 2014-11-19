@@ -141,7 +141,7 @@
             _dispatcher.SendEmail(request);
         }
 
-        [Test, Category("Integration"), Category("SmokeTests")]
+        [Test, Category("Integration")]
         public void ShoudSendEmailWithSubjectInTemplate()
         {
             // NOTE: Subject is not set and is defined in SendGrid email template.
@@ -156,7 +156,7 @@
             _dispatcher.SendEmail(request);
         }
 
-        [Test, Category("Integration"), Category("SmokeTests")]
+        [Test, Category("Integration")]
         public void ShouldSendAccountUnlockCode()
         {
             var request = new EmailRequest
@@ -170,7 +170,7 @@
             _dispatcher.SendEmail(request);
         }
 
-        [Test, Category("Integration"), Category("SmokeTests")]
+        [Test, Category("Integration")]
         public void ShouldSendApplicationSubmittedEmail()
         {
             var request = new EmailRequest
@@ -184,7 +184,7 @@
             _dispatcher.SendEmail(request);
         }
 
-        [Test, Category("Integration"), Category("SmokeTests")]
+        [Test, Category("Integration")]
         public void ShouldSendPasswordResetCodeEmail()
         {
             var request = new EmailRequest
@@ -198,7 +198,7 @@
             _dispatcher.SendEmail(request);
         }
 
-        [Test, Category("Integration"), Category("SmokeTests")]
+        [Test, Category("Integration")]
         public void ShouldSendPasswordResetConfirmationEmail()
         {
             var request = new EmailRequest
