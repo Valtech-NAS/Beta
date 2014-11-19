@@ -19,9 +19,9 @@
         <div class="text">
             <div class="hgroup-medium">
                 @Html.HiddenFor(m => m.VacancyDetail.Title)
-                <h3 class="heading-medium" id="vacancy-title">@Model.VacancyDetail.Title</h3>
+                <h2 class="heading-medium" id="vacancy-title">@Model.VacancyDetail.Title</h2>
                 @Html.HiddenFor(m => m.VacancyDetail.EmployerName)
-                <span class="subtitle" id="vacancy-employer">@Model.VacancyDetail.EmployerName</span>
+                <p class="subtitle" id="vacancy-employer">@Model.VacancyDetail.EmployerName</p>
             </div>
             @Html.HiddenFor(m => m.VacancyDetail.Description)
             <p id="vacancy-summary">@Model.VacancyDetail.Description</p>

@@ -27,11 +27,11 @@
             var webTrendItemPositionTracker = "Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/vacancysearch/results/itemposition/" + vacancy.Id + "', 'WT.dl', '99', 'WT.ti', 'Vacancy Search – Item Position Clicked', 'DCSext.ipos', '" + itemPosition + "'] })";
             <li class="search-results__item section-border">
                 <div class="hgroup-medium">
-                    <h3 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker })</h3>
-                    <h4 class="subtitle">@vacancy.EmployerName</h4>
+                    <h2 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker })</h2>
+                    <p class="subtitle">@vacancy.EmployerName</p>
                 </div>
                 <p>@vacancy.Description</p>
-                <ul class="list-text">
+                <ul class="list-text no-btm-margin">
 
                     @if (vacancy.VacancyLocationType == VacancyLocationType.NonNational)
                     {
