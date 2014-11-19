@@ -48,14 +48,16 @@
 
         public void CreateApplication(SubmitApplicationRequest request)
         {
-            var application = _applicationReadRepository.Get(request.ApplicationId, true);
-
-            EnsureApplicationCanBeCreated(application);
-
-            Log("Creating", request);
-
             try
             {
+                var application = _applicationReadRepository.Get(request.ApplicationId, true);
+
+                // TODO: retrieve associated candidate and check the legacy candidate ID is already set. if not then log warning, requeue and exit
+
+                EnsureApplicationCanBeCreated(application);
+
+                Log("Creating", request);
+
                 application.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(application);
 
                 Log("Created", request);
@@ -76,7 +78,7 @@
                     {
                         ApplicationId = request.ApplicationId
                     };
-                    _messageBus.PublishMessage(message); 
+                    _messageBus.PublishMessage(message);
                 }
             }
         }
