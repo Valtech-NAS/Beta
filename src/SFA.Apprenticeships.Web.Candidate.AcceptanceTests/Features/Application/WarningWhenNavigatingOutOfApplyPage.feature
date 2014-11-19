@@ -32,10 +32,8 @@ Scenario: Selecting No I will remain in the same page
 		| HobbiesAndInterests     | Hobbies and interests         |
 	And I choose MyApplicationsLink
 	When I see an alert box and select No
+	When I am on the ApplicationPage page
 	Then I am on the ApplicationPage page
-	When I choose MyApplicationsLink
-	And I see an alert box and select Yes
-	Then I am on the MyApplicationsPage page
 
 @US501
 Scenario: Selecting yes will redirect me to another page
@@ -60,4 +58,5 @@ Scenario: Selecting yes will redirect me to another page
 		| HobbiesAndInterests     | Hobbies and interests         |
 	And I choose MyApplicationsLink
 	When I see an alert box and select Yes
+	When I am on the MyApplicationsPage page
 	Then I am on the MyApplicationsPage page
