@@ -16,7 +16,7 @@ namespace SFA.Apprenticeships.Infrastructure.UserDirectory.IoC
             For<ActiveDirectoryConfiguration>().Singleton().Use(ActiveDirectoryConfiguration.Instance);
             For<IUserDirectoryProvider>().Use<ActiveDirectoryUserDirectoryProvider>();*/
             For<IUserDirectoryProvider>().Use<UserDirectoryProvider>();
-            For<IPasswordHash>().Use<DummyPasswordHash>();
+            For<IPasswordHash>().Use<PasswordHash>();
         }
     }
 }

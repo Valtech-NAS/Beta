@@ -37,7 +37,6 @@
                 throw new CustomException(message, ErrorCodes.UserDirectoryAccountDoesNotExistError);
             }
 
-
             return _passwordHash.Validate(userCredentials.PasswordHash, userId, password, SecretKey);
         }
 

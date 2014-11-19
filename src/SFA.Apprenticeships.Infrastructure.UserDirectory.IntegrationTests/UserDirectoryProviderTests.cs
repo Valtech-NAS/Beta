@@ -35,7 +35,7 @@
         [Test, Category("Integration")]
         public void ShouldCreateUser()
         {
-            string username = CreateUseId();
+            string username = CreateUserId();
             bool succeeded = _service.CreateUser(username, Password);
             succeeded.Should().BeTrue();
         }
@@ -65,7 +65,7 @@
             authenticationSucceeded.Should().BeTrue();
         }
 
-        private static string CreateUseId()
+        private static string CreateUserId()
         {
             return Guid.NewGuid().ToString();
         }
