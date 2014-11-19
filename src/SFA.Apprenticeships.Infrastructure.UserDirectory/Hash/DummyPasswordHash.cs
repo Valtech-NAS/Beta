@@ -4,12 +4,12 @@
     {
         public string Generate(string userId, string password, string secretKey)
         {
-            return userId + password;
+            return BCrypt.Net.BCrypt.HashPassword(password, userId + password + secretKey);
         }
 
         public bool Validate(string hash, string userId, string password, string secretKey)
         {
-            return userId + password == hash;
+            return hash == Generate(userId, password, secretKey);
         }
     }
 }
