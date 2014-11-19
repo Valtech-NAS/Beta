@@ -50,8 +50,8 @@
             //user.AssertState();
             //EnsureApplicationCanBeCreated(candidate);
 
-            try
-            {
+            //try
+            //{
                 Log("Creating", request);
 
                 //candidate.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(candidate);
@@ -64,9 +64,9 @@
                 //_applicationWriteRepository.Save(candidate);
 
                 Log("Updated", request);
-            }
-            catch (CustomException ex)
-            {
+            //}
+            //catch (CustomException ex)
+            //{
                 //if (ex.Code != ErrorCodes.ApplicationDuplicatedError)
                 //{
                 //    // re-queue application for submission
@@ -76,7 +76,7 @@
                 //    };
                 //    _messageBus.PublishMessage(message); 
                 //}
-            }
+            //}
         }
 
         private static void Log(string narrative, CreateCandidateRequest request)
