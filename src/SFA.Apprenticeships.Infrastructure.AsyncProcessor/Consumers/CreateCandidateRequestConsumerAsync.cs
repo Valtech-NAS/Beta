@@ -37,8 +37,8 @@
 
         private void CreateCandidate(CreateCandidateRequest request)
         {
-            try
-            {
+            //try
+            //{
                 //todo: user account status check (should be active)
                 var user = _userReadRepository.Get(request.CandidateId);
                 user.AssertState("User is in invalid state for creation in legacy", UserStatuses.Active);
@@ -52,9 +52,8 @@
                 // TODO: update candidate
                 //candidate.LegacyCandidateId = legacyCandidateId;
                 //_candidateWriteRepository.Save(candidate);
-            }
+            //{
             catch (CustomException)
-            {
                 // TODO: think about which exceptions should result in a re-queue
                 //if (ex.Code != ErrorCodes.ApplicationDuplicatedError)
                 {
@@ -65,7 +64,7 @@
                     };
                     _messageBus.PublishMessage(message);
                 }
-            }
+            //}
         }
 
         private static void Log(string narrative, CreateCandidateRequest request)

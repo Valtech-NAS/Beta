@@ -15,12 +15,28 @@ namespace SFA.Apprenticeships.Infrastructure.UserDirectory.Hash
         public const int SaltIndex = 1;
         public const int Pbkdf2Index = 2;
 
+        public static string CreateHash(string password, string secretKey)
+        {
+            var saltedPasswordHash = CreateHash(password);
+            var saltedPasswordHashComponents = GetSaltedPasswordHashComponents(saltedPasswordHash);
+            var iterations = Int32.Parse(saltedPasswordHashComponents[IterationIndex]);
+            var salt = Convert.FromBase64String(saltedPasswordHashComponents[SaltIndex]);
+            var saltedPasswordHashBytes = Convert.FromBase64String(saltedPasswordHashComponents[Pbkdf2Index]);
+            
+            var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
+            using (var hmac = new HMACSHA512(secretKeyBytes))
+            {
+                var secretKeyHash = hmac.ComputeHash(saltedPasswordHashBytes);
+                return FormatHash(iterations, salt, secretKeyHash);
+            }
+        }
+
         /// <summary>
         /// Creates a salted PBKDF2 hash of the password.
         /// </summary>
         /// <param name="password">The password to hash.</param>
         /// <returns>The hash of the password.</returns>
-        public static string CreateHash(string password)
+        private static string CreateHash(string password)
         {
             // Generate a random salt
             var csprng = new RNGCryptoServiceProvider();
@@ -37,22 +53,6 @@ namespace SFA.Apprenticeships.Infrastructure.UserDirectory.Hash
             return iterations + ":" +
                    Convert.ToBase64String(salt) + ":" +
                    Convert.ToBase64String(hash);
-        }
-
-        public static string CreateHash(string password, string secretKey)
-        {
-            var saltedPasswordHash = CreateHash(password);
-            var saltedPasswordHashComponents = GetSaltedPasswordHashComponents(saltedPasswordHash);
-            var iterations = Int32.Parse(saltedPasswordHashComponents[IterationIndex]);
-            var salt = Convert.FromBase64String(saltedPasswordHashComponents[SaltIndex]);
-            var saltedPasswordHashBytes = Convert.FromBase64String(saltedPasswordHashComponents[Pbkdf2Index]);
-            
-            var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
-            using (var hmac = new HMACSHA512(secretKeyBytes))
-            {
-                var secretKeyHash = hmac.ComputeHash(saltedPasswordHashBytes);
-                return FormatHash(iterations, salt, secretKeyHash);
-            }
         }
 
         /// <summary>

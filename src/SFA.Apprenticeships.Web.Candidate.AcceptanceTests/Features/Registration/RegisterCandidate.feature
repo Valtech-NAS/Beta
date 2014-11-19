@@ -46,7 +46,7 @@ Scenario: As a candidate on the registration page I want to be able to pick my a
 		 | Field          | Value  |
 		 | PostcodeSearch | N7 8LS |
 	And I choose FindAddresses
-	And I wait 1 seconds
+	And I wait 2 seconds
 	And I am on AddressDropdown list item matching criteria
 		| Field        | Rule   | Value                  |
 		| Text         | Equals | Flat A, 6 Furlong Road |
@@ -90,7 +90,7 @@ Scenario: As a candidate I want to be told quickly that my email/username is not
 	When I am on the RegisterCandidatePage page
 	And I enter data
 		| Field        | Value                |
-		| EmailAddress | nas.exemplar@gmail.com |
+		| EmailAddress | nas.exemplar+acceptancetests@gmail.com |
 	And I choose Phonenumber
 	Then I am on the RegisterCandidatePage page
 	Given I waited for 30 seconds to see EmailAddressAvailableMessage
@@ -107,7 +107,7 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 		 | Field          | Value  |
 		 | PostcodeSearch | N7 8LS |
 	And I choose FindAddresses
-	And I wait 1 seconds
+	And I wait 2 seconds
 	And I am on AddressDropdown list item matching criteria
 		| Field | Rule   | Value                  |
 		| Text  | Equals | Flat A, 6 Furlong Road |
@@ -153,7 +153,7 @@ Scenario: As a candidate I must confirm my password
 		 | Field          | Value  |
 		 | PostcodeSearch | N7 8LS |
 	And I choose FindAddresses
-	And I wait 1 seconds
+	And I wait 2 seconds
 	And I am on AddressDropdown list item matching criteria
 		| Field | Rule   | Value                  |
 		| Text  | Equals | Flat A, 6 Furlong Road |

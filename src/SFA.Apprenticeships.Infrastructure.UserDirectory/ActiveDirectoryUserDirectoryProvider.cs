@@ -68,7 +68,7 @@
                 {
                     var message = string.Format("LDAP account for user with Id={0} already exist", userId);
                     Logger.Debug(message);
-                    throw new CustomException(message, ErrorCodes.LdapAccountExistError);
+                    throw new CustomException(message, ErrorCodes.UserDirectoryAccountExistsError);
                 }
 
                 Logger.Debug("No LDAP account found for user with Id={0}", userId);
@@ -138,7 +138,7 @@
                     {
                         var message = string.Format("Set password failed for user {0}", userId);
                         Logger.Error(message, exception);
-                        throw new CustomException(message, exception, ErrorCodes.LdapSetPasswordError);
+                        throw new CustomException(message, exception, ErrorCodes.UserDirectorySetPasswordError);
                     }
                 }
             }
