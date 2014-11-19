@@ -12,5 +12,8 @@
 
         [ElementLocator(Id="external-employer-website")]
         public IWebElement ApplyExternalLink { get; set; }
+
+        [ElementLocator(TagName = "h1")]
+        public IWebElement ApprenticeshipNoLongerAvailableHeading { get; set; }
     }
 }

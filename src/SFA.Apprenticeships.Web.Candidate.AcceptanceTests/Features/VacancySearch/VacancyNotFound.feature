@@ -10,5 +10,9 @@ Background:
 @SmokeTests
 Scenario: Vacancy not found should redirect to the error page
 	Given I am in the right environment
-	When I navigate to the details of the vacancy 19999999
-	Then I am on the VacancyNotFound page
+	When I navigate to the details of the vacancy 199999
+	Then I am on the VacancyDetailsPage page
+	And I see
+		| Field                                  | Rule   | Value                              |
+		| ApprenticeshipNoLongerAvailableHeading | Exists |                                    |
+		| ApprenticeshipNoLongerAvailableHeading | Equals | Apprenticeship no longer available |

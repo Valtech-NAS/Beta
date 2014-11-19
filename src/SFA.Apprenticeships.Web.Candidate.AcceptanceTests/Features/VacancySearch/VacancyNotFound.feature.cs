@@ -93,9 +93,24 @@ this.FeatureBackground();
 #line 12
  testRunner.Given("I am in the right environment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 13
- testRunner.When("I navigate to the details of the vacancy 19999999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I navigate to the details of the vacancy 199999", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 14
- testRunner.Then("I am on the VacancyNotFound page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I am on the VacancyDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table1.AddRow(new string[] {
+                        "ApprenticeshipNoLongerAvailableHeading",
+                        "Exists",
+                        ""});
+            table1.AddRow(new string[] {
+                        "ApprenticeshipNoLongerAvailableHeading",
+                        "Equals",
+                        "Apprenticeship no longer available"});
+#line 15
+ testRunner.And("I see", ((string)(null)), table1, "And ");
 #line hidden
             this.ScenarioCleanup();
         }

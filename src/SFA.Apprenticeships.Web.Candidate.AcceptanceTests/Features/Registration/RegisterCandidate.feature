@@ -46,7 +46,7 @@ Scenario: As a candidate on the registration page I want to be able to pick my a
 		 | Field          | Value  |
 		 | PostcodeSearch | N7 8LS |
 	And I choose FindAddresses
-	And I wait 1 seconds
+	And I wait 2 seconds
 	And I am on AddressDropdown list item matching criteria
 		| Field        | Rule   | Value                  |
 		| Text         | Equals | Flat A, 6 Furlong Road |
@@ -107,7 +107,7 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 		 | Field          | Value  |
 		 | PostcodeSearch | N7 8LS |
 	And I choose FindAddresses
-	And I wait 1 seconds
+	And I wait 2 seconds
 	And I am on AddressDropdown list item matching criteria
 		| Field | Rule   | Value                  |
 		| Text  | Equals | Flat A, 6 Furlong Road |
@@ -153,7 +153,7 @@ Scenario: As a candidate I must confirm my password
 		 | Field          | Value  |
 		 | PostcodeSearch | N7 8LS |
 	And I choose FindAddresses
-	And I wait 1 seconds
+	And I wait 2 seconds
 	And I am on AddressDropdown list item matching criteria
 		| Field | Rule   | Value                  |
 		| Text  | Equals | Flat A, 6 Furlong Road |
