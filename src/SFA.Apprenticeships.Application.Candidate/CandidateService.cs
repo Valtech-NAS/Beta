@@ -82,6 +82,7 @@
 
             Logger.Debug("Calling CandidateService to activate the user {0}.", username);
 
+            //todo: this error "handling" block shouldn't be here
             try
             {
                 _activateCandidateStrategy.ActivateCandidate(username, activationCode);

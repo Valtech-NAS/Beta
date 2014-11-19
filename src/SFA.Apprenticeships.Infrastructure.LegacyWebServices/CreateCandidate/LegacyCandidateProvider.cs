@@ -23,6 +23,7 @@
         public int CreateCandidate(Candidate candidate)
         {
             Logger.Debug("CreateCandidate handled for EntityId={0}, EmailAddress={1}", candidate.EntityId, candidate.RegistrationDetails.EmailAddress);
+
             var request = new CreateCandidateRequest
             {
                 Candidate = new GatewayServiceProxy.Candidate
