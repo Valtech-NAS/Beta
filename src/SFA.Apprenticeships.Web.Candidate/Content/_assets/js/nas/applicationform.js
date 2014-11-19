@@ -5,7 +5,7 @@
     var validationMessageOtherQualificationContainsInvalidCharacters = "Other qualification can't contain invalid characters, eg '/'";
     var validationMessageQualificationYearRequired = "Please enter year of qualification";
     var validationMessageQualificationYearMustBeAFourDigitNumber = "Year must be 4 digits, eg 1990";
-    var validationMessageQualificationYearMustBeARange = "Year must must be 4 digits, between " + ( new Date().getFullYear() - 100 ) + " and " + ( new Date().getFullYear() );
+    var validationMessageQualificationYearMustBeARange = "Year must be 4 digits, between " + ( new Date().getFullYear() - 100 ) + " and " + ( new Date().getFullYear() );
     var validationMessageQualificationYearMustBeNumeric = "Year must be numeric";
     var validationMessageSubjectRequired = "Please enter subject";
     var validationMessageSubjectContainsInvalidCharacters = "Subject can't contain invalid characters, eg '/'";
