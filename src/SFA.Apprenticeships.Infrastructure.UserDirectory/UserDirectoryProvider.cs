@@ -3,7 +3,6 @@
     using System;
     using Application.Authentication;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Hash;
     using NLog;
@@ -30,8 +29,14 @@
 
         public bool AuthenticateUser(string userId, string password)
         {
-            // TODO: add conditions.    
             var userCredentials = _repository.Get(new Guid(userId));
+            if (userCredentials == null)
+            {
+                var message = string.Format("User directory account for user with Id = \"{0}\" doesn't exist", userId);
+                Logger.Debug(message);
+                throw new CustomException(message, ErrorCodes.UserDirectoryAccountDoesNotExistError);
+            }
+
 
             return _passwordHash.Validate(userCredentials.PasswordHash, userId, password, SecretKey);
         }
@@ -59,12 +64,21 @@
 
         public bool ResetPassword(string userId, string newpassword)
         {
-            throw new NotImplementedException();
+            return SetUserPassword(userId, newpassword);
         }
 
         public bool ChangePassword(string userId, string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            return AuthenticateUser(userId, oldPassword) && SetUserPassword(userId, newPassword);
+        }
+
+        private bool SetUserPassword(string userId, string newPassword)
+        {
+            var userCredentials = _repository.Get(new Guid(userId));
+            var hash = _passwordHash.Generate(userId, newPassword, SecretKey);
+            userCredentials.PasswordHash = hash;
+            _repository.Save(userCredentials);
+            return true;
         }
 
         private string SecretKey

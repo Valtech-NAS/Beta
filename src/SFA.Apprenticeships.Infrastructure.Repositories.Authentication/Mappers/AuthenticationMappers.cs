@@ -13,6 +13,7 @@
         private void InitialiseUserCredentialsMappers()
         {
             Mapper.CreateMap<MongoUserCredentials, UserCredentials>();
+            Mapper.CreateMap<UserCredentials, MongoUserCredentials>();
         }
     }
 }

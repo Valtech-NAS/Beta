@@ -1,10 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Authentication.IoC
 {
-    using System;
-    using Authentication;
-    using Domain.Interfaces.Mapping;
-    using Domain.Interfaces.Repositories;
-    using Mappers;
+    using SFA.Apprenticeships.Domain.Interfaces.Mapping;
+    using SFA.Apprenticeships.Infrastructure.Repositories.Authentication.Mappers;
     using StructureMap.Configuration.DSL;
 
     public class AuthenticationRepositoryRegistry : Registry

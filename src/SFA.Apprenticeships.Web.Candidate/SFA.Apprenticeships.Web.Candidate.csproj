@@ -630,6 +630,10 @@
       <Project>{91822365-711d-4976-ad7f-069063d8b487}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Applications</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Authentication\SFA.Apprenticeships.Infrastructure.Repositories.Authentication.csproj">
+      <Project>{2D21EA2D-CE77-4795-B2F0-A172E59AC491}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Authentication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Candidates\SFA.Apprenticeships.Infrastructure.Repositories.Candidates.csproj">
       <Project>{aa87bd85-5a33-46b8-b26f-c6b680876486}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>

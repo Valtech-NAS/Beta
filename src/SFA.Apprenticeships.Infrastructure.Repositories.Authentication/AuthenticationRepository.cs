@@ -16,7 +16,7 @@
         public AuthenticationRepository(
             IConfigurationManager configurationManager,
             IMapper mapper)
-            : base(configurationManager, "Authenticatino.mongoDB", "userCredentials")
+            : base(configurationManager, "Authentication.mongoDB", "userCredentials")
         {
             _mapper = mapper;
         }
