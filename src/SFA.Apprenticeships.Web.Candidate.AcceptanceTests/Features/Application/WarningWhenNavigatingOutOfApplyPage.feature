@@ -34,6 +34,10 @@ Scenario: Selecting No I will remain in the same page
 	When I see an alert box and select No
 	When I am on the ApplicationPage page
 	Then I am on the ApplicationPage page
+	#This is required cleanup for this test. Without it the next test run will fail when reusing the browser
+	When I choose MyApplicationsLink
+	And I see an alert box and select Yes
+	Then I am on the MyApplicationsPage page
 
 @US501
 Scenario: Selecting yes will redirect me to another page
