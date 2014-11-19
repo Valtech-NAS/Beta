@@ -124,7 +124,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ActiveDirectoryUserDirectoryProviderTests.cs" />
+    <Compile Include="UserDirectoryProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +138,14 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Authentication\SFA.Apprenticeships.Application.Authentication.csproj">
       <Project>{2752E3B6-358D-4C06-A31F-867304CAC53D}</Project>
       <Name>SFA.Apprenticeships.Application.Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Authentication\SFA.Apprenticeships.Infrastructure.Repositories.Authentication.csproj">
+      <Project>{2D21EA2D-CE77-4795-B2F0-A172E59AC491}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Authentication</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.UserDirectory\SFA.Apprenticeships.Infrastructure.UserDirectory.csproj">
       <Project>{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}</Project>
