@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
-    using System.Configuration;
     using System.Web;
     using Application.Address;
     using Application.ApplicationUpdate;
@@ -22,7 +21,6 @@
     using Mappers;
     using Microsoft.WindowsAzure;
     using Providers;
-    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
     using StructureMap.Configuration.DSL;
     using ISendPasswordResetCodeStrategy = Application.UserAccount.Strategies.ISendPasswordResetCodeStrategy;
 
@@ -37,7 +35,7 @@
             For<IVacancySearchService>().Use<VacancySearchService>();
 
             For<ICandidateService>().Use<CandidateService>();
-            For<IActivateCandidateStrategy>().Use<LegacyActivateCandidateStrategy>();
+            For<IActivateCandidateStrategy>().Use<QueuedLegacyActivateCandidateStrategy>();
             For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IRegisterUserStrategy>().Use<RegisterUserStrategy>();

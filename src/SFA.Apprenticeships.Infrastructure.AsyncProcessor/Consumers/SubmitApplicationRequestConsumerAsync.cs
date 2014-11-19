@@ -17,17 +17,20 @@
         private readonly ILegacyApplicationProvider _legacyApplicationProvider;
         private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly IApplicationWriteRepository _applicationWriteRepository;
+        private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IMessageBus _messageBus;
 
         public SubmitApplicationRequestConsumerAsync(
             ILegacyApplicationProvider legacyApplicationProvider,
             IApplicationReadRepository applicationReadRepository,
-            IApplicationWriteRepository applicationWriteRepository, 
+            IApplicationWriteRepository applicationWriteRepository,
+            ICandidateReadRepository candidateReadRepository,
             IMessageBus messageBus)
         {
             _legacyApplicationProvider = legacyApplicationProvider;
             _applicationReadRepository = applicationReadRepository;
             _applicationWriteRepository = applicationWriteRepository;
+            _candidateReadRepository = candidateReadRepository;
             _messageBus = messageBus;
         }
 
@@ -52,35 +55,47 @@
             {
                 var application = _applicationReadRepository.Get(request.ApplicationId, true);
 
-                // TODO: retrieve associated candidate and check the legacy candidate ID is already set. if not then log warning, requeue and exit
+                var candidate = _candidateReadRepository.Get(application.CandidateId, true);
+                if (candidate.LegacyCandidateId == 0)
+                {
+                    Logger.Warn(
+                        "Candidate with Id: {0} has not been created in the legacy system. Message will be requeued", application.CandidateId);
+                    Requeue(request);
+                }
+                else
+                {
+                    EnsureApplicationCanBeCreated(application);
 
-                EnsureApplicationCanBeCreated(application);
+                    Log("Creating", request);
 
-                Log("Creating", request);
+                    application.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(application);
 
-                application.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(application);
+                    Log("Created", request);
 
-                Log("Created", request);
+                    Log("Updating", request);
 
-                Log("Updating", request);
+                    application.SetStateSubmitted();
+                    _applicationWriteRepository.Save(application);
 
-                application.SetStateSubmitted();
-                _applicationWriteRepository.Save(application);
-
-                Log("Updated", request);
+                    Log("Updated", request);
+                }
             }
             catch (CustomException ex)
             {
                 if (ex.Code != ErrorCodes.ApplicationDuplicatedError)
                 {
-                    // re-queue application for submission
-                    var message = new SubmitApplicationRequest
-                    {
-                        ApplicationId = request.ApplicationId
-                    };
-                    _messageBus.PublishMessage(message);
+                    Requeue(request);
                 }
             }
+        }
+
+        private void Requeue(SubmitApplicationRequest request)
+        {
+            var message = new SubmitApplicationRequest
+            {
+                ApplicationId = request.ApplicationId
+            };
+            _messageBus.PublishMessage(message);
         }
 
         private static void EnsureApplicationCanBeCreated(ApplicationDetail applicationDetail)

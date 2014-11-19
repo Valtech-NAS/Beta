@@ -275,6 +275,10 @@
       <Project>{AA87BD85-5A33-46B8-B26F-C6B680876486}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">
+      <Project>{4696d786-2f3c-4a12-bd6b-38e2981d6df1}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Users</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configs\readme.txt">

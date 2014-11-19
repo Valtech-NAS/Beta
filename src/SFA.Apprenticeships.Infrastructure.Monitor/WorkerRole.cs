@@ -17,6 +17,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Postcode.IoC;
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
+    using Repositories.Authentication.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Users.IoC;
     using SFA.Apprenticeships.Infrastructure.PerformanceCounters.IoC;
@@ -73,6 +74,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                     x.AddRegistry<UserRepositoryRegistry>();
                     x.AddRegistry<CandidateRepositoryRegistry>();
                     x.AddRegistry<ApplicationRepositoryRegistry>();
+                    x.AddRegistry<AuthenticationRepositoryRegistry>();
                     x.AddRegistry<VacancySearchRegistry>();
                     x.AddRegistry<LocationLookupRegistry>();
                     x.AddRegistry<AddressRegistry>();

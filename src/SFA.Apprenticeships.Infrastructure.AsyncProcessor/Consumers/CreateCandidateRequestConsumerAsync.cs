@@ -1,8 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
 {
+    using System;
     using System.Threading.Tasks;
+    using Application.Candidate.Strategies;
     using Application.Interfaces.Messaging;
-    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
@@ -15,15 +16,21 @@
 
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IUserReadRepository _userReadRepository;
+        private readonly ILegacyCandidateProvider _legacyCandidateProvider;
+        private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly IMessageBus _messageBus;
 
         public CreateCandidateRequestConsumerAsync(
             ICandidateReadRepository candidateReadRepository,
             IUserReadRepository userReadRepository,
+            ILegacyCandidateProvider legacyCandidateProvider,
+            ICandidateWriteRepository candidateWriteRepository,
             IMessageBus messageBus)
         {
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
+            _legacyCandidateProvider = legacyCandidateProvider;
+            _candidateWriteRepository = candidateWriteRepository;
             _messageBus = messageBus;
         }
 
@@ -39,33 +46,35 @@
         {
             try
             {
-                //todo: user account status check (should be active)
                 var user = _userReadRepository.Get(request.CandidateId);
                 user.AssertState("User is in invalid state for creation in legacy", UserStatuses.Active);
 
-                // TODO: check legacy id not already set, debug log and bail out if so
-                //var candidate = _candidateReadRepository.Get(request.CandidateId, true);
-
-                // TODO: invoke candidate creation on nas gateway
-                //var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
-
-                // TODO: update candidate
-                //candidate.LegacyCandidateId = legacyCandidateId;
-                //_candidateWriteRepository.Save(candidate);
-            }
-            catch (CustomException)
-            {
-                // TODO: think about which exceptions should result in a re-queue
-                //if (ex.Code != ErrorCodes.ApplicationDuplicatedError)
+                var candidate = _candidateReadRepository.Get(request.CandidateId, true);
+                if (candidate.LegacyCandidateId == 0)
                 {
-                    // re-queue
-                    var message = new CreateCandidateRequest
-                    {
-                        CandidateId = request.CandidateId
-                    };
-                    _messageBus.PublishMessage(message);
+                    var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
+                    candidate.LegacyCandidateId = legacyCandidateId;
+                    _candidateWriteRepository.Save(candidate);
+                }
+                else
+                {
+                    Log("User has already been activated in legacy system", request);
                 }
             }
+            catch (Exception ex)
+            {
+                Logger.Error("Create candidate request async process failed", ex);
+                Requeue(request);
+            }
+        }
+
+        private void Requeue(CreateCandidateRequest request)
+        {
+            var message = new CreateCandidateRequest
+            {
+                CandidateId = request.CandidateId
+            };
+            _messageBus.PublishMessage(message);
         }
 
         private static void Log(string narrative, CreateCandidateRequest request)
