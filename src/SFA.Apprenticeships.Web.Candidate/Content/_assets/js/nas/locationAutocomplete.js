@@ -132,4 +132,8 @@
             return location(name);
         };
     };
+    if ($('#locationSuggestions').length) {
+        var numSuggestions = $('#location-suggestions li').length;
+        $('#locSuggestionsAria').text('There are ' + numSuggestions + ' locations with similar names, tab down to the suggestions, or collapse this panel');
+    }
 })(jQuery);

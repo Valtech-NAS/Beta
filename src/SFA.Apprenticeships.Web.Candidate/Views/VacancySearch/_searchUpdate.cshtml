@@ -11,8 +11,9 @@
             
             @if (ViewBag.LocationSearches != null && ViewBag.LocationSearches.Length > 0)
             {
-                <details open class="open form-group form-group-compound">
-                    <summary tabindex="0">Did you mean:</summary>
+                <details open class="open form-group form-group-compound" id="locationSuggestions">
+                    <summary tabindex="0" aria-describedby="locSuggestionsAria">Did you mean:</summary>
+                    <p class="visuallyhidden" aria-live="polite" id="locSuggestionsAria"></p>
                     <div class="detail-content panel-indent">
                         <ul id="location-suggestions" class="list-text list-max-11">
                             @foreach (var locationSearch in ViewBag.LocationSearches)
