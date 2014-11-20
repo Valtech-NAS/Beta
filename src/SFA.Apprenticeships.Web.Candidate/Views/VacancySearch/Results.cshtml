@@ -54,6 +54,8 @@
         else
         {
             nationalResultsMessage = "We've also found 1 apprenticeship nationwide.";
+            //TODO: fix to apply to avoid an error when we only have national results
+            // nationalResultsMessage = "We've found 1 apprenticeship nationwide.";
         }
     }
     else
@@ -66,6 +68,8 @@
         else
         {
             nationalResultsMessage = string.Format("We've also found {0} apprenticeships nationwide.", Model.TotalNationalHits);
+            //TODO: fix to apply to avoid an error when we only have national results
+            // nationalResultsMessage = string.Format("We've found {0} apprenticeships nationwide.", Model.TotalNationalHits);
         }
     }
 }
