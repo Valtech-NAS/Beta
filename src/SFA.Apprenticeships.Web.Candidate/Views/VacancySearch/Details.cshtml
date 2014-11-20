@@ -38,55 +38,40 @@
                 @Html.Partial("_Apply", Model, new ViewDataDictionary() { new KeyValuePair<string, object>("AnalyticsButtonPosition", "Top")})
             </div>
         </section>
-        <section class="section-border grid-wrapper" id="vacancy-info">
-            <h2 class="heading-large">Apprenticeship summary</h2>
-            <div class="grid grid-1-3">
-                <div class="inner-block-padr">
-                    <ul class="list-text">
-                        <li><h3 class="bold-small">Weekly wage</h3></li>
-                        <li id="vacancy-wage">@Model.Wage</li>
-                    </ul>
-                    <ul class="list-text">
-                        <li>
-                            <h3 class="bold-small">Working week</h3>
-                        </li>
-                        <li id="vacancy-working-week" itemprop="workHours">@Model.WorkingWeek</li>
-                    </ul>
-                    @if (!string.IsNullOrWhiteSpace(Model.ExpectedDuration))
-                    {
-                        <ul class="list-text">
-                            <li>
-                                <h3 class="bold-small">Expected duration</h3>
-                            </li>
-                            <li id="vacancy-expected-duration">@Model.ExpectedDuration</li>
-                        </ul>
-                    }
-                    @if (Model.VacancyLocationType != VacancyLocationType.National && ViewBag.Distance != null)
-                    {
-                        <ul class="list-text">
-                            <li class="bold-small">Distance</li>
-                            <li id="vacancy-distance">@ViewBag.Distance miles</li>
-                        </ul>
-                    }
-                    <ul class="list-text">
-                        <li>
-                            <h3 class="bold-small">Apprenticeship type</h3>
-                        </li>
-                        <li id="vacancy-type" itemprop="employmentType">@Model.VacancyType</li>
-                    </ul>
-                    <ul class="list-text">
-                        <li class="bold-small">Reference number</li>
-                        <li id="vacancy-reference-id">@Model.VacancyReference</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="grid grid-2-3">
-                <div class="text" itemprop="responsibilities">
-                    <p id="vacancy-full-descrpition">@Html.Raw(Model.FullDescription)</p>
-                </div>
-            </div>
+    <section class="section-border grid-wrapper" id="vacancy-info">
+        <h2 class="heading-large">Apprenticeship summary</h2>
+        <div class="grid grid-1-3">
+            <div class="inner-block-padr">
+                <h3 class="bold-small">Weekly wage</h3>
+                <p id="vacancy-wage">@Model.Wage</p>
 
-        </section>
+                <h3 class="bold-small">Working week</h3>
+                <p id="vacancy-working-week" itemprop="workHours">@Model.WorkingWeek</p>
+
+                @if (!string.IsNullOrWhiteSpace(Model.ExpectedDuration))
+                {
+                    <h3 class="bold-small">Expected duration</h3>
+                    <p id="vacancy-expected-duration">@Model.ExpectedDuration</p>           
+                }
+                @if (Model.VacancyLocationType != VacancyLocationType.National && ViewBag.Distance != null)
+                {
+                    <h3 class="bold-small">Distance</h3>
+                    <p id="vacancy-distance">@ViewBag.Distance miles</p>
+                }
+                <h3 class="bold-small">Apprenticeship type</h3>
+                <p id="vacancy-type" itemprop="employmentType">@Model.VacancyType</p>
+
+                <h3 class="bold-small">Reference number</h3>
+                <p id="vacancy-reference-id">@Model.VacancyReference</p>
+            </div>
+        </div>
+        <div class="grid grid-2-3">
+            <div class="text" itemprop="responsibilities">
+                <p id="vacancy-full-descrpition">@Html.Raw(Model.FullDescription)</p>
+            </div>
+        </div>
+
+    </section>
         <section class="section-border grid-wrapper" id="course-info">
             <h2 class="heading-large">Requirements and prospects</h2>
             <div class="grid grid-1-2">
@@ -127,25 +112,23 @@
             <div class="grid-wrapper">
                 <div class="grid grid-1-2">
                     <div class="inner-block-padr">
-                        <h3 class="heading-small">Employer</h3>
-                        <ul class="list-text">
-                            <li id="vacancy-employer-name">@Model.EmployerName</li>
+                        <h3 class="bold-small">Employer</h3>
+                            <p id="vacancy-employer-name" class="@(!string.IsNullOrWhiteSpace(Model.EmployerWebsite) ? "no-btm-margin" : "")">@Model.EmployerName</p>
                             @if (!string.IsNullOrWhiteSpace(Model.EmployerWebsite))
                             {
-                                <li><a itemprop="url" href="http://@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a></li>
+                                <p><a itemprop="url" href="http://@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a></p>
                             }
-                        </ul>
                         @if (Model.VacancyLocationType != VacancyLocationType.National)
                         {
                             <div itemscope itemtype="http://schema.org/PostalAddress">
-                                <h3 class="heading-small">Address</h3>
-                                <ul class="list-text" itemprop="address">
-                                    <li itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</li>
-                                    <li itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</li>
-                                    <li itemprop="addressLocality">@Model.VacancyAddress.AddressLine3</li>
-                                    <li itemprop="addressRegion">@Model.VacancyAddress.AddressLine4</li>
-                                    <li itemprop="postalCode">@Model.VacancyAddress.Postcode</li>
-                                </ul>
+                                <h3 class="bold-small">Address</h3>
+                                <div itemprop="address">
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</p>
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</p>
+                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.AddressLine3</p>
+                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.VacancyAddress.AddressLine4</p>
+                                    <p class="small-btm-margin" itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
+                                </div>
                             </div>
                         }
                     </div>
@@ -187,28 +170,18 @@
                     </div>
                 </div>
                 <div class="grid grid-1-3">
-                    <ul class="list-text">
-                        <li>
-                            <h3 class="bold-small">Training provider</h3>
-                        </li>
-                        <li id="vacancy-provider-name">@Model.ProviderName</li>
-                    </ul>
+                    <h3 class="bold-small">Training provider</h3>
+                    <p id="vacancy-provider-name">@Model.ProviderName</p>
                 
                     @if (!Model.IsRecruitmentAgencyAnonymous && !string.IsNullOrWhiteSpace(Model.RecruitmentAgency))
                     {
-                        <ul class="list-text">
-                            <li id="recruitment-agency-name">Applications for this apprenticeship are being processed by @Model.RecruitmentAgency</li>
-                        </ul>
+                       <p id="recruitment-agency-name">Applications for this apprenticeship are being processed by @Model.RecruitmentAgency</p>
                     }
 
                     @if (!string.IsNullOrWhiteSpace(Model.Contact))
                     {
-                        <ul class="list-text">
-                            <li>
-                                <h3 class="bold-small">Contact</h3>
-                            </li>
-                            <li id="vacancy-provider-contact">@Model.Contact</li>
-                        </ul>
+                        <h3 class="bold-small">Contact</h3>
+                        <p id="vacancy-provider-contact">@Model.Contact</p>
                     }
                 </div>
             }
