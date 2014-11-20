@@ -91,7 +91,7 @@
             {
                 return
                     string.Format(
-                        "host={0};virtualHost={1};username={2};password={3};requestedHeartbeat={4};prefetchcount={5}",
+                        "host={0};virtualHost={1};username={2};password={3};requestedHeartbeat={4};prefetchcount={5};timeout=30",
                         HostName, VirtualHost, UserName, Password, HeartBeatSeconds, PreFetchCount);
             }
         }
