@@ -44,6 +44,11 @@
 
                 if (tempApplicationDetail.Status == ApplicationStatuses.Draft)
                 {
+                    // update application status to "submitting"
+                    applicationDetail.SetStateSubmitting();
+
+                    _applicationWriteRepository.Save(applicationDetail);
+
                     // queue application for submission to legacy
                     var message = new SubmitApplicationRequest
                     {
@@ -51,11 +56,6 @@
                     };
 
                     _messageBus.PublishMessage(message);
-
-                    // update application status to "submitting"
-                    applicationDetail.SetStateSubmitting();
-
-                    _applicationWriteRepository.Save(applicationDetail);
 
                     // send email acknowledgement to candidate
                     NotifyCandidate(candidate.EntityId, applicationDetail.EntityId.ToString());
