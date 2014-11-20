@@ -29,14 +29,7 @@
         // Vacancy Exception Codes
         public const string VacancyNotFoundError = "Vacancy001";
         public const string VacancyExpired = "Vacancy002";
-
-        // User directory Exception Codes
-        public const string UserDirectoryAccountExistsError = "UD001";
-        public const string UserDirectoryAccountDoesNotExistError = "UD002";
-        public const string UserDirectoryEmptyNewPasswordError = "UD003";
-        public const string UserDirectoryChangePasswordError = "UD004";
-        public const string UserDirectorySetPasswordError = "UD005";
-
+        
         // Candidate Exception Codes
         public const string CandidateCreationError = "Candidate001";
 

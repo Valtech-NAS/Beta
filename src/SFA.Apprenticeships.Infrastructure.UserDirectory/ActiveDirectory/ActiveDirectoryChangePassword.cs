@@ -6,6 +6,7 @@
     using Configuration;
     using Domain.Entities.Exceptions;
     using NLog;
+    using UsersErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
     public class ActiveDirectoryChangePassword
     {
@@ -30,7 +31,7 @@
             if (string.IsNullOrWhiteSpace(newPassword))
             {
                 Logger.Debug("New password is empty, active directory server call cannot continue further.");
-                throw new CustomException("New password cannot be empty", ErrorCodes.UserDirectoryEmptyNewPasswordError);
+                throw new CustomException("New password cannot be empty", UsersErrorCodes.UserDirectoryEmptyNewPasswordError);
             }
 
             var distinguishedName = string.Format(@"CN={0},{1}", username, _server.DistinguishedName);
@@ -63,7 +64,7 @@
             catch (DirectoryOperationException e)
             {
                 Logger.Error("DirectoryOperationException with the following details was thrown: ", e);
-                throw new CustomException("Password modify request failed", e, ErrorCodes.UserDirectoryChangePasswordError);
+                throw new CustomException("Password modify request failed", e, UsersErrorCodes.UserDirectoryChangePasswordError);
             }
         }
 

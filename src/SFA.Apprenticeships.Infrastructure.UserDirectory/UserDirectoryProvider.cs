@@ -8,6 +8,7 @@
     using NLog;
     using Repositories.Authentication;
     using Repositories.Authentication.Entities;
+    using UsersErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
     public class UserDirectoryProvider : IUserDirectoryProvider
     {
@@ -34,7 +35,7 @@
             {
                 var message = string.Format("User directory account for user with Id = \"{0}\" doesn't exist", userId);
                 Logger.Debug(message);
-                throw new CustomException(message, ErrorCodes.UserDirectoryAccountDoesNotExistError);
+                throw new CustomException(message, UsersErrorCodes.UserDirectoryAccountDoesNotExistError);
             }
 
             return _passwordHash.Validate(userCredentials.PasswordHash, userId, password, SecretKey);
@@ -47,7 +48,7 @@
             {
                 var message = string.Format("User directory account for user with Id = \"{0}\" already exists", userId);
                 Logger.Debug(message);
-                throw new CustomException(message, ErrorCodes.UserDirectoryAccountExistsError);
+                throw new CustomException(message, UsersErrorCodes.UserDirectoryAccountExistsError);
             }
 
             var hash = _passwordHash.Generate(userId, password, SecretKey);

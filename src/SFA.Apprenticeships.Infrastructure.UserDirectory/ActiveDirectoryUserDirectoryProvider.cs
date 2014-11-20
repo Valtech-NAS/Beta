@@ -7,6 +7,7 @@
     using Configuration;
     using Domain.Entities.Exceptions;
     using NLog;
+    using UsersErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
     public class ActiveDirectoryUserDirectoryProvider : IUserDirectoryProvider
     {
@@ -68,7 +69,7 @@
                 {
                     var message = string.Format("LDAP account for user with Id={0} already exist", userId);
                     Logger.Debug(message);
-                    throw new CustomException(message, ErrorCodes.UserDirectoryAccountExistsError);
+                    throw new CustomException(message, UsersErrorCodes.UserDirectoryAccountExistsError);
                 }
 
                 Logger.Debug("No LDAP account found for user with Id={0}", userId);
@@ -138,7 +139,7 @@
                     {
                         var message = string.Format("Set password failed for user {0}", userId);
                         Logger.Error(message, exception);
-                        throw new CustomException(message, exception, ErrorCodes.UserDirectorySetPasswordError);
+                        throw new CustomException(message, exception, UsersErrorCodes.UserDirectorySetPasswordError);
                     }
                 }
             }
