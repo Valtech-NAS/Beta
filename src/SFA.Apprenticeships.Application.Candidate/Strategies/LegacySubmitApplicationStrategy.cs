@@ -31,25 +31,18 @@
 
         public void SubmitApplication(Guid applicationId)
         {
-            var applicationDetail = _applicationReadRepository.Get(applicationId, true);
-
-            // status check - should be in "draft" state
-            applicationDetail.AssertState("Application is not in the correct state to be submitted", ApplicationStatuses.Draft);
-
-            var candidate = _candidateReadRepository.Get(applicationDetail.CandidateId);
-
             try
             {
-                var tempApplicationDetail = _applicationReadRepository.Get(applicationId, true);
+                var applicationDetail = _applicationReadRepository.Get(applicationId, true);
 
-                if (tempApplicationDetail.Status == ApplicationStatuses.Draft)
+                applicationDetail.AssertState("Application is not in the correct state to be submitted", ApplicationStatuses.Draft);
+
+                if (applicationDetail.Status == ApplicationStatuses.Draft)
                 {
-                    // update application status to "submitting"
                     applicationDetail.SetStateSubmitting();
 
                     _applicationWriteRepository.Save(applicationDetail);
 
-                    // queue application for submission to legacy
                     var message = new SubmitApplicationRequest
                     {
                         ApplicationId = applicationDetail.EntityId
@@ -57,8 +50,7 @@
 
                     _messageBus.PublishMessage(message);
 
-                    // send email acknowledgement to candidate
-                    NotifyCandidate(candidate.EntityId, applicationDetail.EntityId.ToString());
+                    NotifyCandidate(applicationDetail.CandidateId, applicationDetail.EntityId.ToString());
                 }
             }
             catch (Exception ex)
