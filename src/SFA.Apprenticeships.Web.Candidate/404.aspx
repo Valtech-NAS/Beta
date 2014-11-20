@@ -48,7 +48,7 @@
             <h1 class="heading-xlarge">Page not found</h1>
             <div class="text">
                 <p>The page you were looking for couldn't be found. Make sure the URL is correct before you try again. </p>
-                <div class="get-started"><a href="/VacancySearch" class="button">Find an apprenticeship</a></div>
+                <div class="get-started"><a role="button" href="/VacancySearch" class="button">Find an apprenticeship</a></div>
             </div>
         </main>
     </div>
