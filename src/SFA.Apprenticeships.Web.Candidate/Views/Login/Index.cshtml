@@ -11,31 +11,29 @@
     <div class="grid grid-1-2">
         @using (Html.BeginForm("Index", "Login", FormMethod.Post))
         {
-            <fieldset>
-                <legend class="heading-large">Sign in</legend>
-                <p>
-                    Sign in or
-                    @Html.ActionLink("create an account", controllerName: "Register", actionName: "Index").
-                </p>
+            <h1 class="heading-large">Sign in</h1>
+            <p>
+                Sign in or
+                @Html.ActionLink("create an account", controllerName: "Register", actionName: "Index").
+            </p>
 
-                @Html.FormTextFor(
-                    m => m.EmailAddress,
-                    containerHtmlAttributes: new { @class = "form-group-compound" },
-                    controlHtmlAttributes: new { @class = "form-control-3-4", type = "email", autofocus = "autofocus" })
+            @Html.FormTextFor(
+                m => m.EmailAddress,
+                containerHtmlAttributes: new { @class = "form-group-compound" },
+                controlHtmlAttributes: new { @class = "form-control-3-4", type = "email", autofocus = "autofocus", spellcheck = "false" })
 
-                <div class="form-group">
-                    <a id="password"></a>
-                    @Html.LabelFor(m => m.Password, new { @class = "form-label" })
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-3-4" })
-                    @Html.ValidationMessageFor(m => m.Password, null)
+            <div class="form-group">
+                <a id="password"></a>
+                @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-3-4" })
+                @Html.ValidationMessageFor(m => m.Password, null)
 
-                    <a class="form-hint" href='@Url.Action("ForgottenPassword", "Register")'>Forgotten password?</a>
-                </div>
+                <a class="form-hint" href='@Url.Action("ForgottenPassword", "Register")'>Forgotten password?</a>
+            </div>
 
-                <div class="form-group">
-                    <button class="button" id="sign-in-button">Sign in</button>
-                </div>
-            </fieldset>
+            <div class="form-group">
+                <button class="button" id="sign-in-button">Sign in</button>
+            </div>
         }
     </div>
     <div class="grid grid-1-2">
