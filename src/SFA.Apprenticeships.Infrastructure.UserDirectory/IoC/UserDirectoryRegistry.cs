@@ -1,11 +1,9 @@
-﻿using SFA.Apprenticeships.Application.Authentication;
-
-namespace SFA.Apprenticeships.Infrastructure.UserDirectory.IoC
+﻿namespace SFA.Apprenticeships.Infrastructure.UserDirectory.IoC
 {
-    using Configuration;
-    using Hash;
+    using SFA.Apprenticeships.Application.Authentication;
+    using SFA.Apprenticeships.Infrastructure.UserDirectory.ActiveDirectory;
+    using SFA.Apprenticeships.Infrastructure.UserDirectory.Configuration;
     using StructureMap.Configuration.DSL;
-    using ActiveDirectory;
 
     public class UserDirectoryRegistry : Registry
     {
