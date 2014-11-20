@@ -30,13 +30,7 @@
 
         public bool AuthenticateUser(string userId, string password)
         {
-            var userCredentials = _repository.Get(new Guid(userId));
-            if (userCredentials == null)
-            {
-                var message = string.Format("User directory account for user with Id = \"{0}\" doesn't exist", userId);
-                Logger.Debug(message);
-                throw new CustomException(message, UsersErrorCodes.UserDirectoryAccountDoesNotExistError);
-            }
+            var userCredentials = _repository.Get(new Guid(userId), true);
 
             return _passwordHash.Validate(userCredentials.PasswordHash, userId, password, SecretKey);
         }
@@ -74,7 +68,7 @@
 
         private bool SetUserPassword(string userId, string newPassword)
         {
-            var userCredentials = _repository.Get(new Guid(userId));
+            var userCredentials = _repository.Get(new Guid(userId), true);
             var hash = _passwordHash.Generate(userId, newPassword, SecretKey);
             userCredentials.PasswordHash = hash;
             _repository.Save(userCredentials);
