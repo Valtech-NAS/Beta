@@ -176,6 +176,10 @@
                 apprZoom = 11
             }
 
+            if (apprLatitude == 0 || apprLongitude == 0) {
+                $('#map-canvas').parent().hide();
+            }
+
             function initialize() {
 
                 var mapOptions = {
