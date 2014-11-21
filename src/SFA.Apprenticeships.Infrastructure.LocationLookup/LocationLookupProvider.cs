@@ -61,6 +61,7 @@
             var results =
                 exactMatchResults.Documents
                 .Concat(prefixMatchResults.Documents)
+                //.Concat(prefixMatchResults.Documents.Where(l => l.Name.ToLower().StartsWith(term.ToLower())).OrderBy(l => l.Name).ThenBy(l => l.County))
                 .Concat(fuzzyMatchResults.Documents)
                 .Distinct((new LocationLookupComparer()))
                 .Take(maxResults)
