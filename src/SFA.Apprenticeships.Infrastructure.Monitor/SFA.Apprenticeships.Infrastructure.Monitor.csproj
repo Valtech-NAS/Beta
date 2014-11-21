@@ -184,6 +184,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Consumers\MonitorControlQueueConsumer.cs" />
+    <Compile Include="Tasks\CheckUserDirectory.cs" />
     <Compile Include="Tasks\CheckActiveDirectory.cs" />
     <Compile Include="Tasks\CheckElasticsearchAliases.cs" />
     <Compile Include="Tasks\CheckElasticsearchCluster.cs" />
