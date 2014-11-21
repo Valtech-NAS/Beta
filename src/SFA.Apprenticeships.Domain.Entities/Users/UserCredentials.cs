@@ -1,6 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Authentication.Entities
+﻿namespace SFA.Apprenticeships.Domain.Entities.Users
 {
-    using Domain.Entities;
+    using Entities;
 
     public class UserCredentials : BaseEntity
     {

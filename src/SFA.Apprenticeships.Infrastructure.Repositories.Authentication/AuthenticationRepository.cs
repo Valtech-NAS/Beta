@@ -1,13 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Authentication
 {
     using System;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
+    using Domain.Interfaces.Repositories;
     using Entities;
     using Mongo.Common;
     using NLog;
-    using SFA.Apprenticeships.Domain.Entities.Exceptions;
-    using UsersErrorCodes = SFA.Apprenticeships.Application.Interfaces.Users.ErrorCodes;
+    using Domain.Entities.Exceptions;
+    using UsersErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
     public class AuthenticationRepository : GenericMongoClient<MongoUserCredentials>, IAuthenticationRepository
     {
