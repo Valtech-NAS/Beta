@@ -150,3 +150,17 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the sort order
         | Field                      | Rule           | Value |
         | LocalLocationTypeLink      | Exists         |       |
         | NationwideLocationTypeLink | Does Not Exist |       |
+
+@SmokeTests
+Scenario: If there are only nationwide apprenticeships do not show any link
+	Given I navigated to the VacancySearchPage page
+	When I enter data
+		 | Field          | Value    |
+		 | Location       | Pickering   |
+		 | WithInDistance | 2 miles |
+	And I choose Search
+	Then I am on the VacancySearchResultPage page
+	When I am on the VacancySearchResultPage page
+	Then I see
+		| Field                      | Rule           | Value |
+        | NationwideLocationTypeLink | Does Not Exist |       |

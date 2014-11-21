@@ -546,6 +546,52 @@ this.FeatureBackground();
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("If there are only nationwide apprenticeships do not show any link")]
+        [NUnit.Framework.CategoryAttribute("SmokeTests")]
+        public virtual void IfThereAreOnlyNationwideApprenticeshipsDoNotShowAnyLink()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("If there are only nationwide apprenticeships do not show any link", new string[] {
+                        "SmokeTests"});
+#line 155
+this.ScenarioSetup(scenarioInfo);
+#line 7
+this.FeatureBackground();
+#line 156
+ testRunner.Given("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table19.AddRow(new string[] {
+                        "Location",
+                        "Pickering"});
+            table19.AddRow(new string[] {
+                        "WithInDistance",
+                        "2 miles"});
+#line 157
+ testRunner.When("I enter data", ((string)(null)), table19, "When ");
+#line 161
+ testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 162
+ testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 163
+ testRunner.When("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table20.AddRow(new string[] {
+                        "NationwideLocationTypeLink",
+                        "Does Not Exist",
+                        ""});
+#line 164
+ testRunner.Then("I see", ((string)(null)), table20, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
