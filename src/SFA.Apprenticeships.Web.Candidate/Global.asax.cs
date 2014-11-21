@@ -43,6 +43,9 @@
             {               
                 context.RewritePath("~/403.aspx", false);
             }
+
+            //Securing against "Click Jacking" http://stackoverflow.com/questions/20047086/securing-my-asp-net-mvc3-website-aganist-click-jacking
+            HttpContext.Current.Response.AddHeader("x-frame-options", "SAMEORIGIN");
         }
 
         protected void Application_Start()
