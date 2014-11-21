@@ -27,37 +27,41 @@
             // passed in (if they're different).
             foreach (var applicationStatus in applicationStatuses)
             {
-                var status = applicationStatus;
+                var legacyVacancyId  = applicationStatus.LegacyVacancyId;
 
                 var applicationDetail = _applicationReadRepository.GetForCandidate(
-                    candidate.EntityId, each => each.Vacancy.Id == status.LegacyVacancyId);
+                    candidate.EntityId, each => each.Vacancy.Id == legacyVacancyId);
 
                 if (applicationDetail != null)
                 {
                     var updated = false;
 
-                    // TODO: US154: do we need to check vacancy status too and then derive application status? 
-                    // ...or does the the app status already reflect the vacancy status? (e.g. if withdrawn, etc)
-                    // check with legacy team.
-                    if (applicationDetail.Status != status.ApplicationStatus)
+                    if (applicationDetail.Status != applicationStatus.ApplicationStatus)
                     {
-                        applicationDetail.Status = status.ApplicationStatus;
+                        applicationDetail.Status = applicationStatus.ApplicationStatus;
+                        
+                        // Application status has changed, ensure it appears on the candidate's dashboard.
                         applicationDetail.IsArchived = false;
-                        applicationDetail.LegacyApplicationId = status.LegacyApplicationId;
+
                         updated = true;
                     }
 
-                    // TODO: AG: added subject to review to ensure we have the latest view of the ClosingDate in Exemplar database.
-                    // TODO: AG: map other fields in ApplicationStatusSummary? E.g. UnsuccessfulReason, VacancyStatus?
-                    if (applicationDetail.Vacancy.ClosingDate != status.ClosingDate)
+                    if (applicationDetail.LegacyApplicationId != applicationStatus.LegacyApplicationId)
                     {
-                        applicationDetail.Vacancy.ClosingDate = status.ClosingDate;
+                        // Ensure the application is linked to the legacy application.
+                        applicationDetail.LegacyApplicationId = applicationStatus.LegacyApplicationId;
                         updated = true;
                     }
 
-                    if (applicationDetail.UnsuccessfulReason != status.UnsuccessfulReason)
+                    if (applicationDetail.Vacancy.ClosingDate != applicationStatus.ClosingDate)
                     {
-                        applicationDetail.UnsuccessfulReason = status.UnsuccessfulReason;
+                        applicationDetail.Vacancy.ClosingDate = applicationStatus.ClosingDate;
+                        updated = true;
+                    }
+
+                    if (applicationDetail.UnsuccessfulReason != applicationStatus.UnsuccessfulReason)
+                    {
+                        applicationDetail.UnsuccessfulReason = applicationStatus.UnsuccessfulReason;
                         updated = true;
                     }
 
@@ -68,8 +72,7 @@
                 }
                 else
                 {
-                    // log warning as we need to update an application that isn't in the repo
-                    Logger.Warn("Unable to find/update application with legacy ID \"{0}\".", status.LegacyApplicationId);
+                    Logger.Warn("Unable to find application with legacy ID \"{0}\".", applicationStatus.LegacyApplicationId);
                 }
             }
         }
