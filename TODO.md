@@ -11,6 +11,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - usernamecheck should use remote validator
 - write bundle orderer for bundle.config
 - review ApplyWebTrends attribute - use on controller or apply globally  
+- increase the HSTS header to months or years in line with GDS recommendations when we're confident it works https://www.gov.uk/service-manual/operations/operating-servicegovuk-subdomains#transport-layer-security
 
 ## Service layer ##
 
