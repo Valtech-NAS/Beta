@@ -4,7 +4,6 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 ## Web layer ##
 
-- some website URLs need to be reviewed to be more "friendly". e.g. vacancy detail should be /vacancy/12345 not /vacancysearch/details/446897
 - refactor: controllers should use providers to avoid containing orchestration logic
 - refactor: qualification types reference data should be read from configuration / provided by a configuration service
 - validation messages should be parameterised where possible (e.g. max length). See AddressMessages.cs for an example.
@@ -15,11 +14,10 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 ## Service layer ##
 
-- candidate registration should be queued (need to consider applying if not registered)
+- 
 
 ## Infrastructure layer ##
 
-- replace AD with user auth repo
 - log request/response payloads for nas gateway calls
 - replace address lookup with public service
 - change to entity repos (re. Mark). E.g. Consider renaming GenericMongoClient to MongoRepositoryBase; move MongoDB code out of into new MongoClient class; MongoRepositoryBase (and other future repos that may not be based on Domain EntityBase) would consume MongoClient (via IoC).
@@ -33,6 +31,9 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 # Done #
 
+- candidate registration should be queued (need to consider applying if not registered)
+- replace AD with user auth repo
+- some website URLs need to be reviewed to be more "friendly". e.g. vacancy detail should be /vacancy/12345 not /vacancysearch/details/446897
 - controller actions should provide caching hints
 - refactor azure message queue types
 - integrate revised vacancy summary service
