@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Services
 {
+    using System;
     using System.Web;
     using System.Web.Security;
 
@@ -14,5 +15,7 @@
         void Clear(HttpCookieCollection cookies);
 
         void SetAuthenticationCookie(HttpCookieCollection cookies, string userName, params string[] claims);
+
+        DateTime GetExpirationTimeFrom(FormsAuthenticationTicket ticket);
     }
 }
