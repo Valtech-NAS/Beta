@@ -63,7 +63,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Error("Create candidate request async process failed", ex);
+                Logger.Error("Create candidate with id {0} request async process failed", request.CandidateId, ex);
                 Requeue(request);
             }
         }
