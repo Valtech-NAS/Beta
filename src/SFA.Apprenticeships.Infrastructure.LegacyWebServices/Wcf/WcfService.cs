@@ -68,12 +68,12 @@
             }
             catch (CommunicationException ex)
             {
-                Logger.Fatal("WCF CommunicationException ", ex);
+                Logger.Error("WCF CommunicationException ", ex);
                 throw; // handle WCF CommunicationException
             }
             catch (TimeoutException ex)
             {
-                Logger.Fatal("WCF TimeoutException ", ex);
+                Logger.Error("WCF TimeoutException ", ex);
                 throw; // handle WCF TimeoutException
             }
             catch (Exception exception)

@@ -58,7 +58,7 @@
                 }
                 else
                 {
-                    Log("User has already been activated in legacy system", request);
+                    Logger.Warn("User has already been activated in legacy system: Candidate Id: \"{0}\"", request.CandidateId);
                 }
             }
             catch (Exception ex)

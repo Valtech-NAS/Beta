@@ -84,7 +84,12 @@
             {
                 if (ex.Code != ErrorCodes.ApplicationDuplicatedError)
                 {
+                    Logger.Error("Submit application with Id = {0} request async process failed.", request.ApplicationId);
                     Requeue(request);
+                }
+                else
+                {
+                    Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"", request.ApplicationId);
                 }
             }
         }
