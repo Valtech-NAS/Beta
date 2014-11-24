@@ -11,7 +11,7 @@
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            var redirectUrl = ConfigurationManager.TryGetAppSetting("SiteRootRedirect");
+            var redirectUrl = ConfigurationManager.TryGetAppSetting("SiteRootRedirectUrl");
 
             if (!string.IsNullOrEmpty(redirectUrl))
             {
