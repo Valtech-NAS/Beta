@@ -85,9 +85,9 @@
             {
                 if (!success)
                 {
+                    Logger.Error(string.Format("WCF failed and client was aborted. StackTrace = {0}", Environment.StackTrace));
                     ((IClientChannel)client).Abort();
                     factory.Abort();
-                    Logger.Error("WCF failed and client was aborted. StackTrace = {0}", Environment.StackTrace);
                 }
             }
         }
