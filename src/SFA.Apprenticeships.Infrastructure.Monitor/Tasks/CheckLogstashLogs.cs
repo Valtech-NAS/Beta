@@ -9,7 +9,6 @@
     using NLog;
     using RestSharp;
     using RestSharp.Deserializers;
-    using RestSharp.Extensions;
 
     /// <summary>
     /// Checks that Logstash log entries are being created.

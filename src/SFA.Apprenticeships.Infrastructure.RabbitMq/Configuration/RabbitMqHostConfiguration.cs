@@ -14,6 +14,8 @@
         private const string HeartBeatSecondsConst = "HeartBeatSeconds";
         private const string PreFetchCountConst = "PreFetchCount";
         private const string OutputEasyNetQLogsToNLogInternalConst = "OutputEasyNetQLogsToNLogInternal";
+        private const string NodeCountConst = "NodeCount";
+        private const string QueueWarningLimitConst = "QueueWarningLimitCount";
 
         [ConfigurationProperty(NameConst, IsRequired = true, IsKey = true)]
         public string Name
@@ -83,6 +85,20 @@
         {
             get { return (bool)this[OutputEasyNetQLogsToNLogInternalConst]; }
             set { this[OutputEasyNetQLogsToNLogInternalConst] = value; }
+        }
+
+        [ConfigurationProperty(NodeCountConst, IsRequired = false, IsKey = false, DefaultValue = 1)]
+        public int NodeCount
+        {
+            get { return (int)this[NodeCountConst]; }
+            set { this[NodeCountConst] = value; }
+        }
+
+        [ConfigurationProperty(QueueWarningLimitConst, IsRequired = false, IsKey = false, DefaultValue = 500)]
+        public int QueueWarningLimit
+        {
+            get { return (int)this[QueueWarningLimitConst]; }
+            set { this[QueueWarningLimitConst] = value; }
         }
 
         public string ConnectionString

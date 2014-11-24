@@ -69,6 +69,16 @@
         bool OutputEasyNetQLogsToNLogInternal { get; set; }
 
         /// <summary>
+        /// The number of participating nodes
+        /// </summary>
+        int NodeCount { get; set; }
+
+        /// <summary>
+        /// The number items that can be listed on a queue before a warning is raised
+        /// </summary>
+        int QueueWarningLimit { get; set; }
+
+        /// <summary>
         /// Connection string to connect to RabbitMQ.
         /// </summary>
         string ConnectionString { get; }
