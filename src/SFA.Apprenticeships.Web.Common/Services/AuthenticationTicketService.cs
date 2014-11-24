@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Services
 {
     using System;
+    using System.Globalization;
     using System.Linq;
     using System.Web;
     using System.Web.Security;
@@ -98,13 +99,13 @@
 
         private static FormsAuthenticationTicket CreateTicket(string userName, params string[] claims)
         {
-            var ticket = new FormsAuthenticationTicket(
+            var expiration = DateTime.Now.AddSeconds(FormsAuthentication.Timeout.TotalSeconds); var ticket = new FormsAuthenticationTicket(
                 version: 1,
                 name: userName,
                 issueDate: DateTime.Now,
-                expiration: DateTime.Now.AddSeconds(FormsAuthentication.Timeout.TotalSeconds),
+                expiration: expiration,
                 isPersistent: false,
-                userData: StringifyClaims(claims));
+                userData: StringifyUserData(claims, expiration));
 
             Logger.Debug("Ticket created for {0} with {1} at {2} expires {3}",
                 ticket.Name, ticket.UserData, ticket.IssueDate, ticket.Expiration);
@@ -112,9 +113,10 @@
             return ticket;
         }
 
-        private static string StringifyClaims(string[] claims)
+        private static string StringifyUserData(string[] claims, DateTime expiration)
         {
-            return string.Join(",", claims);
+            var stringifiedClaims = string.Join(",", claims);
+            return stringifiedClaims + ";" + expiration.ToString(CultureInfo.InvariantCulture);
         }
 
         private static string[] ArrayifyClaims(FormsAuthenticationTicket ticket)
@@ -124,7 +126,23 @@
                 return new string[] { };
             }
 
-            return ticket.UserData.Split(new[] { ',' });
+            var claims = ticket.UserData.Split(new[] { ';' });
+
+            return claims.First().Split(new[] { ',' });
+        }
+
+        public DateTime GetExpirationTimeFrom(FormsAuthenticationTicket ticket)
+        {
+            if (ticket.UserData == null)
+            {
+                return DateTime.MinValue;
+            }
+
+            var expirationTimeString = ticket.UserData.Split(new[] { ';' }).Last();
+// ReSharper disable once RedundantAssignment
+            var expirationTime = DateTime.MinValue;
+            DateTime.TryParse(expirationTimeString, CultureInfo.InvariantCulture, DateTimeStyles.None, out expirationTime);
+            return expirationTime;
         }
         #endregion
     }

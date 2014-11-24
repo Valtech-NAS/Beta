@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Attributes
 {
+    using System;
     using System.Security.Principal;
     using System.Web.Mvc;
     using System.Web.Mvc.Filters;
+    using System.Web.Routing;
     using System.Web.Security;
     using Constants;
     using NLog;
@@ -27,6 +29,13 @@
                 return;
             }
 
+            if (IsCookieExpired(filterContext, service, ticket))
+            {
+                Logger.Debug("User cookie is expired.");
+
+                filterContext.Result = new RedirectToRouteResult(RouteNames.SignOut, new RouteValueDictionary());
+            }
+
             var claims = service.GetClaims(ticket);
 
             httpContext.User = new GenericPrincipal(new FormsIdentity(ticket), claims);
@@ -40,6 +49,19 @@
 
         public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)
         {
+        }
+
+        private static bool IsCookieExpired(AuthenticationContext filterContext, AuthenticationTicketService service,
+            FormsAuthenticationTicket ticket)
+        {
+            var expirationTime = service.GetExpirationTimeFrom(ticket);
+            return (expirationTime < DateTime.Now && !SigningOut(filterContext));
+        }
+
+        private static bool SigningOut(AuthenticationContext filterContext)
+        {
+            return filterContext.ActionDescriptor.ActionName == "SignOut" &&
+                   filterContext.ActionDescriptor.ControllerDescriptor.ControllerName == "Login";
         }
     }
 }
