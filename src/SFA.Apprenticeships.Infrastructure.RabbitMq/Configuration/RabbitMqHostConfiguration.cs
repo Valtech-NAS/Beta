@@ -15,7 +15,7 @@
         private const string PreFetchCountConst = "PreFetchCount";
         private const string OutputEasyNetQLogsToNLogInternalConst = "OutputEasyNetQLogsToNLogInternal";
         private const string NodeCountConst = "NodeCount";
-        private const string QueueWarningLimitConst = "QueueWarningLimitCount";
+        private const string QueueWarningLimitConst = "QueueWarningLimit";
 
         [ConfigurationProperty(NameConst, IsRequired = true, IsKey = true)]
         public string Name
