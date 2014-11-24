@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Microsoft.WindowsAzure;
     using NLog;
-    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
+    using PerformanceCounters;
 
     public class MonitorTasksRunner : IMonitorTasksRunner
     {
@@ -26,6 +26,8 @@
 
         public void RunMonitorTasks()
         {
+            if (!IsMonitorEnabled()) return;
+
             Logger.Debug("Starting to run monitor tasks");
 
             var tasks = _monitorTasks.Select(mt => Task.Factory
@@ -49,6 +51,12 @@
 
             IncrementCounter();
             Logger.Debug("Finished running monitor tasks");
+        }
+
+        private static bool IsMonitorEnabled()
+        {
+            //todo: check settings to see if monitor is enable
+            return true;
         }
 
         private void IncrementCounter()

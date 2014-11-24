@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
     using System;
-    using SFA.Apprenticeships.Application.Authentication;
-    using SFA.Apprenticeships.Domain.Entities.Exceptions;
+    using Apprenticeships.Application.Authentication;
+    using Domain.Entities.Exceptions;
 
     public class CheckUserDirectory : IMonitorTask
     {
@@ -15,7 +15,7 @@
 
         public string TaskName
         {
-            get { return "Check Active Directory"; }
+            get { return "Check user directory"; }
         }
 
         public void Run()

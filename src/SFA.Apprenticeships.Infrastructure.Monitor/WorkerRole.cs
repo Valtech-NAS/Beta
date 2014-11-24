@@ -20,7 +20,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Repositories.Authentication.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Users.IoC;
-    using SFA.Apprenticeships.Infrastructure.PerformanceCounters.IoC;
+    using PerformanceCounters.IoC;
     using StructureMap;
     using UserDirectory.IoC;
     using VacancySearch.IoC;
