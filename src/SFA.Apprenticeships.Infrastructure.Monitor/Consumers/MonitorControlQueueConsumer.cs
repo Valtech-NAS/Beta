@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Consumers
+﻿using System;
+
+namespace SFA.Apprenticeships.Infrastructure.Monitor.Consumers
 {
     using System.Threading.Tasks;
     using Microsoft.WindowsAzure;
@@ -20,12 +22,14 @@
         {
             return Task.Run(() =>
             {
-                if (GetLatestQueueMessage() != null)
+                var monitorScheduleMessage = GetLatestQueueMessage();
+                if (monitorScheduleMessage != null)
                 {
                     if (IsMonitorEnabled())
                     {
                         _monitorTasksRunner.RunMonitorTasks();
                     }
+                    _messageService.DeleteMessage(monitorScheduleMessage.MessageId, monitorScheduleMessage.PopReceipt);
                 }
             });
         }
