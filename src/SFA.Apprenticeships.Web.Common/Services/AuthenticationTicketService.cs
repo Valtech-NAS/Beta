@@ -99,7 +99,8 @@
 
         private static FormsAuthenticationTicket CreateTicket(string userName, params string[] claims)
         {
-            var expiration = DateTime.Now.AddSeconds(FormsAuthentication.Timeout.TotalSeconds); var ticket = new FormsAuthenticationTicket(
+            var expiration = DateTime.Now.AddSeconds(FormsAuthentication.Timeout.TotalSeconds); 
+            var ticket = new FormsAuthenticationTicket(
                 version: 1,
                 name: userName,
                 issueDate: DateTime.Now,
