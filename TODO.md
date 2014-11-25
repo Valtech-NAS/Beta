@@ -28,7 +28,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 ## Cross cutting ##
 
-- 
+- lots of redundancy in settings.config file e.g. Monitor.Elasticsearch.ExpectedAliasNames could be created from ElasticsearchConfiguration as could node count
 
 ----------
 
