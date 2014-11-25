@@ -115,7 +115,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Configuration\LegacyServicesConfigurationTests.cs" />
     <Compile Include="GatewayVacancySummaryMapperTests.cs" />
     <Compile Include="GatewayVacancyDetailMapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -5,7 +5,6 @@
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Application.VacancyEtl;
-    using Configuration;
     using CreateApplication;
     using CreateCandidate;
     using Domain.Interfaces.Mapping;
@@ -21,14 +20,12 @@
     {
         public LegacyWebServicesRegistry(): this(false)
         {
-            
         }
 
         public LegacyWebServicesRegistry(bool useCache)
         {
             For<IMapper>().Use<LegacyVacancySummaryMapper>().Name = "LegacyWebServices.LegacyVacancySummaryMapper";
             For<IMapper>().Use<LegacyVacancyDetailMapper>().Name = "LegacyWebServices.LegacyVacancyDetailMapper";
-            For<ILegacyServicesConfiguration>().Singleton().Use(LegacyServicesConfiguration.Instance);
             For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
 
             For<IVacancyIndexDataProvider>()
