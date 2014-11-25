@@ -86,7 +86,7 @@
 
             if (application == null)
             {
-                Logger.Warn("Unable to find/update application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
+                Logger.Info("Unable to find/update application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
                 return;
             }
 
