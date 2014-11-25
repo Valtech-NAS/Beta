@@ -3,20 +3,17 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Interfaces.Configuration;
     using Elastic.Common.Configuration;
     using Nest;
 
     internal class CheckElasticsearchAliases : IMonitorTask
     {
-        private const string ExpectedAliasNamesSettingName = "Monitor.Elasticsearch.ExpectedAliasNames";
-
+        private readonly ElasticsearchConfiguration _elasticsearchConfiguration;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
-        private readonly IConfigurationManager _configurationManager;
 
-        public CheckElasticsearchAliases(IConfigurationManager configurationManager, IElasticsearchClientFactory elasticsearchClientFactory)
+        public CheckElasticsearchAliases(ElasticsearchConfiguration elasticsearchConfiguration, IElasticsearchClientFactory elasticsearchClientFactory)
         {
-            _configurationManager = configurationManager;
+            _elasticsearchConfiguration = elasticsearchConfiguration;
             _elasticsearchClientFactory = elasticsearchClientFactory;
         }
 
@@ -50,10 +47,7 @@
 
         private IEnumerable<string> GetExpectedAliasNames()
         {
-            return _configurationManager
-                .GetAppSetting(ExpectedAliasNamesSettingName)
-                .Split(new[] { ';', ',' })
-                .Select(each => each.Trim().ToLower());
+            return _elasticsearchConfiguration.Indexes.Select(i => i.Name.Trim().ToLower());
         }
 
         private static string ToCommaSeparatedString(IEnumerable<string> names)
