@@ -69,7 +69,6 @@
         private static string DefaultSubject(EmailRequest request)
         {
             const string emptySubject = " "; // CRITICAL: must be a single space.
-
             return string.IsNullOrWhiteSpace(request.Subject) ? emptySubject : request.Subject;
         }
 

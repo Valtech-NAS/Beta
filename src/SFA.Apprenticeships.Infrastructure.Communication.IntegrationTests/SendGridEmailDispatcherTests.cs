@@ -9,7 +9,7 @@
     using NUnit.Framework;
     using StructureMap;
 
-    [TestFixture]
+    [TestFixture, Ignore]
     public class SendGridEmailDispatcherTests
     {
         [SetUp]
