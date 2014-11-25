@@ -79,7 +79,7 @@
                     if (rabbitQueue.Messages > rabbitConfiguration.QueueWarningLimit)
                     {
                         Logger.Warn(
-                            "Queue '{0}' on node '{1}' has exceeded the queue item limit threshold of {2} and currrently has {3} messages queued, please check queue is processing as excpected",
+                            "Queue '{0}' on node '{1}' has exceeded the queue item limit threshold of {2} and currrently has {3} messages queued, please check queue is processing as expected",
                             rabbitQueue.Name, rabbitQueue.Node, rabbitConfiguration.QueueWarningLimit, rabbitQueue.Messages);
                     }
                 }
