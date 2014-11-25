@@ -9,7 +9,7 @@
     using NUnit.Framework;
     using StructureMap;
 
-    [TestFixture, Ignore]
+    [TestFixture]
     public class SendGridEmailDispatcherTests
     {
         [SetUp]
@@ -24,12 +24,10 @@
             });
 #pragma warning restore 0618
 
-            _configManager = ObjectFactory.GetInstance<IConfigurationManager>();
             _dispatcher = ObjectFactory.GetNamedInstance<IEmailDispatcher>("SendGridEmailDispatcher");
             _voidEmailDispatcher = ObjectFactory.GetNamedInstance<IEmailDispatcher>("VoidEmailDispatcher");
         }
 
-        private IConfigurationManager _configManager;
         private IEmailDispatcher _dispatcher;
         private IEmailDispatcher _voidEmailDispatcher;
 
