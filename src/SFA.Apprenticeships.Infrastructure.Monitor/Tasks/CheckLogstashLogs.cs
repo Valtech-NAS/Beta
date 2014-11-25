@@ -86,7 +86,9 @@
 
                 var response = client.Execute<dynamic>(request);
                 if (response == null)
+                {
                     throw new Exception("Logstash query returned a null response");
+                }
                 
                 EnsureResponseStatusCodeIsOk(response);
                 EnsureResponseHasData(response);
