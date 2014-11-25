@@ -18,11 +18,10 @@
 
         public void Run()
         {
-            var rabbitConfig = RabbitMqHostsConfiguration.Instance.RabbitHosts[RabbitMqHostsConfiguration.Instance.DefaultHost];
-            var relkConfig = RabbitMqHostsConfiguration.Instance.RabbitHosts["Logging"];
-
-            CheckRabbitHealth(rabbitConfig);
-            CheckRabbitHealth(relkConfig);
+            foreach (IRabbitMqHostConfiguration rabbitHost in RabbitMqHostsConfiguration.Instance.RabbitHosts)
+            {
+                CheckRabbitHealth(rabbitHost);    
+            }            
         }
 
         private void CheckRabbitHealth(IRabbitMqHostConfiguration rabbitConfiguration)
