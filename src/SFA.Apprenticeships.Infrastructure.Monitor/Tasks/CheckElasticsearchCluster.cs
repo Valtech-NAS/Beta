@@ -83,8 +83,12 @@
                 return;
             }
 
-            var message = string.Format(
-                "Cluster is unhealthy: \"{0}\".", health.Status);
+            if (health.Status == "yellow" && health.NumberOfNodes == 1 && ExpectedNodeCount == health.NumberOfNodes)
+            {
+                return;
+            }
+
+            var message = string.Format("Cluster is unhealthy: \"{0}\".", health.Status);
 
             Logger.Warn(message);
         }
