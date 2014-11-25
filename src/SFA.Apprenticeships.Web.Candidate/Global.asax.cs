@@ -43,11 +43,6 @@
             {               
                 context.RewritePath("~/403.aspx", false);
             }
-
-            //Securing against "Click Jacking" http://stackoverflow.com/questions/20047086/securing-my-asp-net-mvc3-website-aganist-click-jacking
-            HttpContext.Current.Response.AddHeader("x-frame-options", "SAMEORIGIN");
-            //HSTS header for GDS https://www.gov.uk/service-manual/operations/operating-servicegovuk-subdomains#transport-layer-security
-            HttpContext.Current.Response.AddHeader("Strict-Transport-Security", "max-age=1209600, includeSubDomains;");
         }
 
         protected void Application_Start()
