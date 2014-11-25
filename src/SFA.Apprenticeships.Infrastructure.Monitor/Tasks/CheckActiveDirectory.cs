@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
-    using SFA.Apprenticeships.Application.Authentication;
+    using Apprenticeships.Application.Authentication;
 
     public class CheckActiveDirectory : IMonitorTask
     {

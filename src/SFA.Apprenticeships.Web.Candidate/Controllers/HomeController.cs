@@ -9,6 +9,7 @@
     {
         [OutputCache(CacheProfile = CacheProfiles.Long)]
         [ApplyWebTrends]
+        [SiteRootRedirect]
         public async Task<ActionResult> Index()
         {
             return await Task.Run<ActionResult>(() => View());

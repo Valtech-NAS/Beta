@@ -68,12 +68,12 @@
             }
             catch (CommunicationException ex)
             {
-                Logger.Fatal("WCF CommunicationException ", ex);
+                Logger.Error("WCF CommunicationException ", ex);
                 throw; // handle WCF CommunicationException
             }
             catch (TimeoutException ex)
             {
-                Logger.Fatal("WCF TimeoutException ", ex);
+                Logger.Error("WCF TimeoutException ", ex);
                 throw; // handle WCF TimeoutException
             }
             catch (Exception exception)
@@ -85,9 +85,9 @@
             {
                 if (!success)
                 {
+                    Logger.Error(string.Format("WCF failed and client was aborted. StackTrace = {0}", Environment.StackTrace));
                     ((IClientChannel)client).Abort();
                     factory.Abort();
-                    Logger.Error("WCF failed and client was aborted");
                 }
             }
         }

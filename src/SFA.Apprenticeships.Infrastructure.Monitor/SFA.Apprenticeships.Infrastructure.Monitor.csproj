@@ -92,6 +92,9 @@
       <HintPath>..\packages\EasyNetQ.0.37.2.321\lib\net40\EasyNetQ.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EasyNetQ.Management.Client">
+      <HintPath>..\packages\EasyNetQ.Management.Client.0.37.2.321\lib\net40\EasyNetQ.Management.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Elasticsearch.Net, Version=1.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Elasticsearch.Net.1.2.1\lib\Elasticsearch.Net.dll</HintPath>
@@ -184,6 +187,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Consumers\MonitorControlQueueConsumer.cs" />
+    <Compile Include="Tasks\CheckUserDirectory.cs" />
     <Compile Include="Tasks\CheckActiveDirectory.cs" />
     <Compile Include="Tasks\CheckElasticsearchAliases.cs" />
     <Compile Include="Tasks\CheckElasticsearchCluster.cs" />

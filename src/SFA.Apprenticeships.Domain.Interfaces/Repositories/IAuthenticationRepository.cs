@@ -1,15 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
-    /*
     using System;
+    using Entities.Users;
 
-    public interface IAuthenticationReadRepository : IReadRepository<MongoUserCredentials>
+    public interface IAuthenticationRepository : IReadRepository<UserCredentials>, IWriteRepository<UserCredentials>
     {
-        MongoUserCredentials Get(Guid id);
+        UserCredentials Get(Guid id, bool errorIfNotFound);
     }
-
-    public interface IAuthenticationWriteRepository : IWriteRepository<UserCredentials>
-    {
-    }
-    */
 }

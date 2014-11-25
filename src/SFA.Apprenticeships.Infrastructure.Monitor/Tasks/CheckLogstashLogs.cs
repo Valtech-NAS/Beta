@@ -9,7 +9,6 @@
     using NLog;
     using RestSharp;
     using RestSharp.Deserializers;
-    using RestSharp.Extensions;
 
     /// <summary>
     /// Checks that Logstash log entries are being created.
@@ -86,7 +85,9 @@
                 var request = CreateRestRequest(uri);
 
                 var response = client.Execute<dynamic>(request);
-
+                if (response == null)
+                    throw new Exception("Logstash query returned a null response");
+                
                 EnsureResponseStatusCodeIsOk(response);
                 EnsureResponseHasData(response);
 

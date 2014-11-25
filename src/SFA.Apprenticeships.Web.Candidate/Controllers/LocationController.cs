@@ -26,7 +26,6 @@
         [HttpGet]
         [AllowCrossSiteJson]
         [OutputCache(CacheProfile = CacheProfiles.Data, VaryByParam = "term")]
-        [ApplyWebTrends]
         public async Task<ActionResult> Location(string term)
         {
             return await Task.Run<ActionResult>(() =>
@@ -45,7 +44,6 @@
         [HttpGet]
         [AllowCrossSiteJson]
         [OutputCache(CacheProfile = CacheProfiles.Data, VaryByParam = "postcode")]
-        [ApplyWebTrends]
         public async Task<ActionResult> Addresses(string postcode)
         {
             return await Task.Run<ActionResult>(() =>

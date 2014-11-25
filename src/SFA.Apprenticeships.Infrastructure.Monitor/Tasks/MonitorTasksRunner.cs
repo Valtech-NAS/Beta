@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Microsoft.WindowsAzure;
     using NLog;
-    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
+    using PerformanceCounters;
 
     public class MonitorTasksRunner : IMonitorTasksRunner
     {

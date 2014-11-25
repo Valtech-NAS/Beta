@@ -35,8 +35,7 @@
             For<IVacancySearchService>().Use<VacancySearchService>();
 
             For<ICandidateService>().Use<CandidateService>();
-            For<IActivateCandidateStrategy>().Use<LegacyActivateCandidateStrategy>();
-            //For<IActivateCandidateStrategy>().Use<QueuedLegacyActivateCandidateStrategy>();
+            For<IActivateCandidateStrategy>().Use<QueuedLegacyActivateCandidateStrategy>();
             For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IRegisterUserStrategy>().Use<RegisterUserStrategy>();

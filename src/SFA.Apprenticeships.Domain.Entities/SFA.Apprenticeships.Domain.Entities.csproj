@@ -99,6 +99,7 @@
     <Compile Include="Candidates\CommunicationPreferences.cs" />
     <Compile Include="Exceptions\CustomException.cs" />
     <Compile Include="Exceptions\ErrorCodes.cs" />
+    <Compile Include="Users\UserCredentials.cs" />
     <Compile Include="Vacancies\VacancyStatuses.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Candidates\AboutYou.cs" />

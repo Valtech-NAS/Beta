@@ -24,7 +24,8 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
                     x.Type<CheckLocationLookup>();
                     x.Type<CheckAddressSearch>();
                     x.Type<CheckPostcodeService>();
-                    x.Type<CheckActiveDirectory>();
+                    //x.Type<CheckActiveDirectory>();
+                    x.Type<CheckUserDirectory>();
                     x.Type<CheckRabbitMessageQueue>();
                     x.Type<CheckNasGateway>();
                     x.Type<CheckMongoReplicaSets>();

@@ -6,7 +6,7 @@
     public abstract class AzureControlQueueConsumer
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IProcessControlQueue<StorageQueueMessage> _messageService;
+        protected readonly IProcessControlQueue<StorageQueueMessage> _messageService;
         private readonly string _processName;
 
         protected AzureControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService, string processName)

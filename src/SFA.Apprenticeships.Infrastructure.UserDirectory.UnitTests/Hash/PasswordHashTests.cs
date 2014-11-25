@@ -3,7 +3,7 @@
     using System;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Infrastructure.UserDirectory.Hash;
+    using UserDirectory.Hash;
 
     [TestFixture]
     public class PasswordHashTests

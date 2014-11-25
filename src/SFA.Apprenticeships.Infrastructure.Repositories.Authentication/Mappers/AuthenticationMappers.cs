@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Authentication.Mappers
 {
     using Common.Mappers;
+    using Domain.Entities.Users;
     using Entities;
 
     public class AuthenticationMappers : MapperEngine

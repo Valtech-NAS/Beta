@@ -307,7 +307,6 @@
 
         [AllowCrossSiteJson]
         [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
         public async Task<ActionResult> CheckUsername(string username)
         {
             return await Task.Run(() =>
