@@ -20,9 +20,11 @@
         {
             return Task.Run(() =>
             {
-                if (GetLatestQueueMessage() != null)
+                var scheduleerNotification = GetLatestQueueMessage();
+                if (scheduleerNotification != null)
                 {
                     _applicationStatusProcessor.QueueApplicationStatusesPages();
+                    _messageService.DeleteMessage(scheduleerNotification.MessageId, scheduleerNotification.PopReceipt);
                 }
             });
         }
