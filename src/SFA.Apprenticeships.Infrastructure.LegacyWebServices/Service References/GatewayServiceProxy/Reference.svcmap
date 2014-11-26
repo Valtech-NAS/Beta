@@ -19,10 +19,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://sfacapvm1.cloudapp.net/NASGatewayService/GatewayService.svc?singleWsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="C:\Projects\SFA\Apprenticeships\LegacyServices\Wsdl\GatewayService-20141126.wsdl" Protocol="file" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="GatewayService1.wsdl" MetadataType="Wsdl" ID="5cfd9d7b-7fa3-4185-a1df-2f90366c726c" SourceId="1" SourceUrl="http://sfacapvm1.cloudapp.net/NASGatewayService/GatewayService.svc?singleWsdl" />
+    <MetadataFile FileName="GatewayService.wsdl" MetadataType="Wsdl" ID="34cfc296-1bf2-4431-b5eb-0be7082308f1" SourceId="1" SourceUrl="file:///C:/Projects/SFA/Apprenticeships/LegacyServices/Wsdl/GatewayService-20141126.wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

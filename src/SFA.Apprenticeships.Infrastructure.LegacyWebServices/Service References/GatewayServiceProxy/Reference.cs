@@ -97,7 +97,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -119,6 +119,16 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
         private string additionalQuestion1AnswerField;
         
         private string additionalQuestion2AnswerField;
+        
+        private string strengthsField;
+        
+        private string improvementsField;
+        
+        private string hobbiesAndInterestsField;
+        
+        private string interviewSupportField;
+        
+        private string otherQualificationsField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
@@ -218,6 +228,66 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
             }
         }
         
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=8)]
+        public string Strengths {
+            get {
+                return this.strengthsField;
+            }
+            set {
+                this.strengthsField = value;
+                this.RaisePropertyChanged("Strengths");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=9)]
+        public string Improvements {
+            get {
+                return this.improvementsField;
+            }
+            set {
+                this.improvementsField = value;
+                this.RaisePropertyChanged("Improvements");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
+        public string HobbiesAndInterests {
+            get {
+                return this.hobbiesAndInterestsField;
+            }
+            set {
+                this.hobbiesAndInterestsField = value;
+                this.RaisePropertyChanged("HobbiesAndInterests");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=11)]
+        public string InterviewSupport {
+            get {
+                return this.interviewSupportField;
+            }
+            set {
+                this.interviewSupportField = value;
+                this.RaisePropertyChanged("InterviewSupport");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=12)]
+        public string OtherQualifications {
+            get {
+                return this.otherQualificationsField;
+            }
+            set {
+                this.otherQualificationsField = value;
+                this.RaisePropertyChanged("OtherQualifications");
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -229,7 +299,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -303,7 +373,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -545,7 +615,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -955,7 +1025,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1015,7 +1085,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1103,7 +1173,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1401,7 +1471,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1573,7 +1643,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1857,7 +1927,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1917,7 +1987,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3476,7 +3546,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3522,7 +3592,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3680,7 +3750,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3894,7 +3964,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3954,7 +4024,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4056,7 +4126,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4243,11 +4313,15 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1", Order=0)]
         public int PageNumber;
         
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1", Order=1)]
+        public int PreferredPageSize;
+        
         public GetApplicationsStatusRequest() {
         }
         
-        public GetApplicationsStatusRequest(int PageNumber) {
+        public GetApplicationsStatusRequest(int PageNumber, int PreferredPageSize) {
             this.PageNumber = PageNumber;
+            this.PreferredPageSize = PreferredPageSize;
         }
     }
     
@@ -4282,7 +4356,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4364,7 +4438,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.33440")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4452,11 +4526,15 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1", Order=0)]
         public int PageNumber;
         
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1", Order=1)]
+        public int PreferredPageSize;
+        
         public GetVacancySummaryRequest() {
         }
         
-        public GetVacancySummaryRequest(int PageNumber) {
+        public GetVacancySummaryRequest(int PageNumber, int PreferredPageSize) {
             this.PageNumber = PageNumber;
+            this.PreferredPageSize = PreferredPageSize;
         }
     }
     
@@ -4577,9 +4655,10 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
             return base.Channel.GetApplicationsStatus(request);
         }
         
-        public SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.CandidateApplication[] GetApplicationsStatus(ref int PageNumber, out int PageSize, out int TotalPages) {
+        public SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.CandidateApplication[] GetApplicationsStatus(ref int PageNumber, int PreferredPageSize, out int PageSize, out int TotalPages) {
             SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetApplicationsStatusRequest inValue = new SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetApplicationsStatusRequest();
             inValue.PageNumber = PageNumber;
+            inValue.PreferredPageSize = PreferredPageSize;
             SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetApplicationsStatusResponse retVal = ((SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract)(this)).GetApplicationsStatus(inValue);
             PageNumber = retVal.PageNumber;
             PageSize = retVal.PageSize;
@@ -4642,9 +4721,10 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
             return base.Channel.GetVacancySummaries(request);
         }
         
-        public int GetVacancySummaries(ref int PageNumber, out int TotalPages, out SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.VacancySummary[] VacancySummaries) {
+        public int GetVacancySummaries(ref int PageNumber, int PreferredPageSize, out int TotalPages, out SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.VacancySummary[] VacancySummaries) {
             SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancySummaryRequest inValue = new SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancySummaryRequest();
             inValue.PageNumber = PageNumber;
+            inValue.PreferredPageSize = PreferredPageSize;
             SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancySummaryResponse retVal = ((SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract)(this)).GetVacancySummaries(inValue);
             PageNumber = retVal.PageNumber;
             TotalPages = retVal.TotalPages;
