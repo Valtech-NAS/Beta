@@ -55,7 +55,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Debug("SubmitApplicationRequest could not be queued for ApplicationId={0}", applicationId);
+                Logger.Error("SubmitApplicationRequest could not be queued for ApplicationId={0}", applicationId);
                 throw new CustomException("SubmitApplicationRequest could not be queued", ex,
                     ErrorCodes.ApplicationQueuingError);
             }
