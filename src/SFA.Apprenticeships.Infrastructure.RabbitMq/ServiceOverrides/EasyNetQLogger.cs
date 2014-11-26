@@ -20,7 +20,15 @@
 
         public void ErrorWrite(string format, params object[] args)
         {
-            Logger.Error(format, args);
+            const string exceptionSubscriptionCallbackMessage = "Exception thrown by subscription callback";
+            if (format.ToLowerInvariant().StartsWith(exceptionSubscriptionCallbackMessage.ToLowerInvariant()))
+            {
+                Logger.Error(exceptionSubscriptionCallbackMessage, new Exception(format));
+            }
+            else
+            {
+                Logger.Error(format, args);
+            }
         }
 
         public void ErrorWrite(Exception exception)

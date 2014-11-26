@@ -1,24 +1,23 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GetCandidateApplicationStatuses
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.ApplicationUpdate;
-    using Domain.Entities.Applications;
-    using Domain.Entities.Exceptions;
-    using Domain.Interfaces.Mapping;
-    using GatewayServiceProxy;
     using Newtonsoft.Json;
     using NLog;
-    using Wcf;
-    using Candidate = Domain.Entities.Candidates.Candidate;
-    using ErrorCodes = Application.VacancyEtl.ErrorCodes;
+    using SFA.Apprenticeships.Application.ApplicationUpdate;
+    using SFA.Apprenticeships.Domain.Entities.Applications;
+    using SFA.Apprenticeships.Domain.Entities.Exceptions;
+    using SFA.Apprenticeships.Domain.Interfaces.Mapping;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.Wcf;
+    using Candidate = SFA.Apprenticeships.Domain.Entities.Candidates.Candidate;
+    using ErrorCodes = SFA.Apprenticeships.Application.VacancyEtl.ErrorCodes;
 
     public class LegacyCandidateApplicationStatusesProvider : ILegacyApplicationStatusesProvider
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IWcfService<GatewayServiceContract> _service;
         private readonly IMapper _mapper;
+        private readonly IWcfService<GatewayServiceContract> _service;
 
         public LegacyCandidateApplicationStatusesProvider
             (IWcfService<GatewayServiceContract> service, IMapper mapper)
@@ -29,7 +28,8 @@
 
         public IEnumerable<ApplicationStatusSummary> GetCandidateApplicationStatuses(Candidate candidate)
         {
-            Logger.Debug("GetCandidateApplications handled for EntityId={0}, EmailAddress={1}", candidate.EntityId, candidate.RegistrationDetails.EmailAddress);
+            Logger.Debug("GetCandidateApplications handled for EntityId={0}, EmailAddress={1}", candidate.EntityId,
+                candidate.RegistrationDetails.EmailAddress);
 
             var request = new GetCandidateInfoRequest
             {
@@ -61,9 +61,12 @@
                 throw new CustomException(message, ErrorCodes.GatewayServiceFailed);
             }
 
-            Logger.Debug("Candidate applications were successfully retrieved from Legacy web service ({0})", response.CandidateApplications.Count());
+            Logger.Debug("Candidate applications were successfully retrieved from Legacy web service ({0})",
+                response.CandidateApplications.Count());
 
-            return _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications);
+            return
+                _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(
+                    response.CandidateApplications);
         }
 
         public int GetApplicationStatusesPageCount()
@@ -85,7 +88,8 @@
             {
                 Logger.Error("Legacy GetAllApplicationStatuses for page count did not respond");
 
-                throw new CustomException("Failed to retrieve application statuses page count in legacy system", ErrorCodes.GatewayServiceFailed);
+                throw new CustomException("Failed to retrieve application statuses page count in legacy system",
+                    ErrorCodes.GatewayServiceFailed);
             }
 
             Logger.Debug("Application statuses page count returned {0}", response.TotalPages);
@@ -112,13 +116,16 @@
             {
                 Logger.Error("Legacy GetAllApplicationStatuses did not respond");
 
-                throw new CustomException("Failed to retrieve application statuses in legacy system", ErrorCodes.GatewayServiceFailed);
+                throw new CustomException("Failed to retrieve application statuses in legacy system",
+                    ErrorCodes.GatewayServiceFailed);
             }
 
-            Logger.Debug("Application statuses (page {0}) were successfully retrieved from Legacy web service ({1})", 
+            Logger.Debug("Application statuses (page {0}) were successfully retrieved from Legacy web service ({1})",
                 pageNumber, response.CandidateApplications.Count());
 
-            return _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications);
+            return
+                _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(
+                    response.CandidateApplications);
         }
     }
 }
