@@ -38,5 +38,13 @@
                     : string.Format("£{0:N2}", vacancyDetail.Wage);
             }
         }
+
+        public class EmployerWebsiteResolver : ValueResolver<string, string>
+        {
+            protected override string ResolveCore(string source)
+            {
+                return string.IsNullOrEmpty(source) ? string.Empty : new UriBuilder(source).Uri.ToString();
+            }
+        }
     }
 }
