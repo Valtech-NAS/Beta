@@ -49,7 +49,8 @@
                 return AllApplications
                     .Where(each =>
                         each.ApplicationStatus == ApplicationStatuses.Draft ||
-                        (each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && !each.DateApplied.HasValue));
+                        (each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && !each.DateApplied.HasValue))
+                     .OrderByDescending(app => app.ClosingDate);
             }
         }
     }
