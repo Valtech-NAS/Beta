@@ -27,6 +27,9 @@
                 <label for="loc-within" class="form-label">Within</label>
                 @Html.DropDownListFor(m => m.WithinDistance, (SelectList)ViewBag.Distances, new { @id = "loc-within", @name = "WithinDistance" })
             </div>
+            <div class="form-group">
+                <button class="button" id="search-button" name="SearchAction" value="Search">Update results</button>
+            </div>
             <div class="form-group map-container hide-nojs">
                 <div id="map-canvas" style="width: 100%; height: 250px"></div>
             </div>
@@ -35,9 +38,7 @@
             @Html.HiddenFor(m => m.Longitude)
             @Html.Hidden("Hash", Model.LatLonLocHash())
            
-            <div class="form-group">
-                <button class="button" id="search-button" name="SearchAction" value="Search">Update results</button>
-            </div>
+            
         </div>
     </fieldset>
 
