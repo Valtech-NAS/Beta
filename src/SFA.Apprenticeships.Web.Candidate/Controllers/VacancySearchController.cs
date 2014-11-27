@@ -210,10 +210,10 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                UserData.Push(UserDataItemNames.VacancyDistance, distance.ToString(CultureInfo.InvariantCulture));
+                UserData.Push(UserDataItemNames.VacancyDistance, distance);
                 UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToString(CultureInfo.InvariantCulture));
 
-                return RedirectToAction("Details", new {id});
+                return RedirectToAction("Details", new { id });
             });
         }
 
