@@ -41,8 +41,8 @@
             For<IRegisterUserStrategy>().Use<RegisterUserStrategy>();
             For<IActivateUserStrategy>().Use<ActivateUserStrategy>();
 
-            For<ICodeGenerator>().Use<CodeGenerator>().Name = "RandomCodeGenerator";
-            For<ICodeGenerator>().Use<DefaultCodeGenerator>().Name = "DefaultCodeGenerator";
+            For<ICodeGenerator>().Use<RandomCodeGenerator>().Name = "RandomCodeGenerator";
+            For<ICodeGenerator>().Use<StaticCodeGenerator>().Name = "StaticCodeGenerator";
 
             For<IResetForgottenPasswordStrategy>()
                 .Use<ResetForgottenPasswordStrategy>()

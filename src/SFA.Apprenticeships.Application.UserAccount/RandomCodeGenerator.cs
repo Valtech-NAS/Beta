@@ -5,7 +5,7 @@
     using Interfaces.Users;
     using NLog;
 
-    public class CodeGenerator : ICodeGenerator
+    public class RandomCodeGenerator : ICodeGenerator
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public const int CodeLength = 6;

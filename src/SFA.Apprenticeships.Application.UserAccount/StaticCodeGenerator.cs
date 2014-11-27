@@ -3,7 +3,7 @@
     using Interfaces.Users;
     using NLog;
 
-    public class DefaultCodeGenerator : ICodeGenerator
+    public class StaticCodeGenerator : ICodeGenerator
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private const string DefaultCode = "ABC123";
