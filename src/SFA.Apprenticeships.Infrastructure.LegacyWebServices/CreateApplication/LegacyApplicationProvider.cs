@@ -89,7 +89,11 @@
                     EducationResults = MapQualifications(applicationDetail.CandidateInformation.Qualifications),
                     WorkExperiences = MapWorkExperience(applicationDetail.CandidateInformation.WorkExperience),
                     AdditionalQuestion1Answer = applicationDetail.AdditionalQuestion1Answer ?? string.Empty,
-                    AdditionalQuestion2Answer = applicationDetail.AdditionalQuestion2Answer ?? string.Empty
+                    AdditionalQuestion2Answer = applicationDetail.AdditionalQuestion2Answer ?? string.Empty,
+                    Strengths = applicationDetail.CandidateInformation.AboutYou.Strengths ?? String.Empty,
+                    Improvements = applicationDetail.CandidateInformation.AboutYou.Improvements ?? String.Empty,
+                    HobbiesAndInterests = applicationDetail.CandidateInformation.AboutYou.HobbiesAndInterests ?? String.Empty,
+                    InterviewSupport = applicationDetail.CandidateInformation.AboutYou.Support ?? String.Empty
                 }
             };
         }
