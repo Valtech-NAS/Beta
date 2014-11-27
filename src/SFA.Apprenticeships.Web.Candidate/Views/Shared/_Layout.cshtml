@@ -19,8 +19,8 @@
     <meta name="format-detection" content="address=no">
     <meta name="DCSext.Authenticated" content="@(Request.IsAuthenticated ? "Yes" : "No")" />
     @RenderSection("metatags", false)
-    <!--[if gt IE 8]><!-->@Styles.Render(Url.CdnContent("main.css?=Sprint19", "~/Content/_assets/css"))<!--<![endif]-->
-    <!--[if lte IE 8]>@Styles.Render(Url.CdnContent("main-ie8.css?=Sprint19", "~/Content/_assets/css"))<![endif]-->
+    <!--[if gt IE 8]><!-->@Styles.Render(Url.CdnContent("main.css", "~/Content/_assets/css"))<!--<![endif]-->
+    <!--[if lte IE 8]>@Styles.Render(Url.CdnContent("main-ie8.css", "~/Content/_assets/css"))<![endif]-->
     <!--[if lte IE 8]>@Styles.Render(Url.CdnContent("fonts-ie8.css", "~/Content/_assets/css"))<![endif]-->
     <!--[if gte IE 9]><!-->@Styles.Render(Url.CdnContent("fonts.css", "~/Content/_assets/css"))<!--<![endif]-->
     <link rel="shortcut icon" href="@Url.CdnContent("favicon.ico", "~/Content/_assets/img")" type="image/x-icon">
