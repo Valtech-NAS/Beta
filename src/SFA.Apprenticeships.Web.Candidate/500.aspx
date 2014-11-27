@@ -12,8 +12,8 @@
     <title>Apprenticeships - 500</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--[if gt IE 8]><!--><link href="//az695207.vo.msecnd.net/prod/css/main.css" rel="stylesheet" /><!--<![endif]-->
-    <!--[if lte IE 8]><link href="/Content/_assets/css/main-ie8.css" rel="stylesheet" /><![endif]-->
-    <!--[if lte IE 8]><link href="/Content/_assets/css/fonts-ie8.css" rel="stylesheet" /><![endif]-->
+    <!--[if lte IE 8]><link href="//az695207.vo.msecnd.net/prod/css/main-ie8.css" rel="stylesheet" /><![endif]-->
+    <!--[if lte IE 8]><link href="//az695207.vo.msecnd.net/prod/css/fonts-ie8.css" rel="stylesheet" /><![endif]-->
     <!--[if gte IE 9]><!--><link href="//az695207.vo.msecnd.net/prod/css/fonts.css" rel="stylesheet" /><!--<![endif]-->
     <link rel="shortcut icon" href="//az695207.vo.msecnd.net/prod/favicon.ico" type="image/x-icon">
     <link href="//az695207.vo.msecnd.net/prod/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
