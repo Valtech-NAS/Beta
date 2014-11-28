@@ -96,7 +96,7 @@
                 }
                 else if (ex.Code == ErrorCodes.ApplicationNotFoundError)
                 {
-                    Logger.Warn("Application not found. Likely data has been cleared down in mongo: Application Id: \"{0}\"", request.ApplicationId);
+                    Logger.Warn("Application not found. Likely data has been cleared down in repositories: Application Id: \"{0}\"", request.ApplicationId);
                 }
                 else
                 {
