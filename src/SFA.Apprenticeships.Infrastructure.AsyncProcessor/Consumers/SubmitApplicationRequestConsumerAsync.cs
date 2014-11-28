@@ -66,12 +66,6 @@
                 }
                 else
                 {
-                    if (application.Status == ApplicationStatuses.Submitted && application.LegacyApplicationId != 0)
-                    {
-                        LogAlreadySubmitted(request);
-                        return;
-                    }
-
                     EnsureApplicationCanBeCreated(application);
 
                     Log("Creating", request);
@@ -90,18 +84,15 @@
             }
             catch (CustomException ex)
             {
-                if (ex.Code == ErrorCodes.ApplicationDuplicatedError)
-                {
-                    LogAlreadySubmitted(request);
-                }
-                else if (ex.Code == ErrorCodes.ApplicationNotFoundError)
-                {
-                    Logger.Warn("Application not found. Likely data has been cleared down in repositories: Application Id: \"{0}\"", request.ApplicationId);
-                }
-                else
+                if (ex.Code != ErrorCodes.ApplicationDuplicatedError)
                 {
                     Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
                     Requeue(request);
+                }
+                else
+                {
+                    Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"",
+                        request.ApplicationId);   
                 }
             }
             catch (Exception ex)
@@ -109,12 +100,6 @@
                 Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
                 throw;
             }
-        }
-
-        private static void LogAlreadySubmitted(SubmitApplicationRequest request)
-        {
-            Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"",
-                request.ApplicationId);
         }
 
         private void Requeue(SubmitApplicationRequest request)
