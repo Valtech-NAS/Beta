@@ -66,6 +66,12 @@
                 }
                 else
                 {
+                    if (application.Status == ApplicationStatuses.Submitted && application.LegacyApplicationId != 0)
+                    {
+                        LogAlreadySubmitted(request);
+                        return;
+                    }
+
                     EnsureApplicationCanBeCreated(application);
 
                     Log("Creating", request);
@@ -84,15 +90,14 @@
             }
             catch (CustomException ex)
             {
-                if (ex.Code != ErrorCodes.ApplicationDuplicatedError)
+                if (ex.Code == ErrorCodes.ApplicationDuplicatedError)
                 {
-                    Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
-                    Requeue(request);
+                    LogAlreadySubmitted(request);
                 }
                 else
                 {
-                    Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"",
-                        request.ApplicationId);
+                    Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
+                    Requeue(request);
                 }
             }
             catch (Exception ex)
@@ -100,6 +105,12 @@
                 Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
                 throw;
             }
+        }
+
+        private static void LogAlreadySubmitted(SubmitApplicationRequest request)
+        {
+            Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"",
+                request.ApplicationId);
         }
 
         private void Requeue(SubmitApplicationRequest request)
