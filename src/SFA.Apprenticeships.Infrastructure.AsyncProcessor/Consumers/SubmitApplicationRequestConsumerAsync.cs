@@ -94,6 +94,10 @@
                 {
                     LogAlreadySubmitted(request);
                 }
+                else if (ex.Code == ErrorCodes.ApplicationNotFoundError)
+                {
+                    Logger.Warn("Application not found. Likely data has been cleared down in mongo: Application Id: \"{0}\"", request.ApplicationId);
+                }
                 else
                 {
                     Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
