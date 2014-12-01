@@ -81,20 +81,7 @@
             }
             catch (CustomException ex)
             {
-                if (ex.Code != ErrorCodes.ApplicationDuplicatedError)
-                {
-                    Logger.Error(
-                        string.Format("Submit application with Id = {0} request async process failed.",
-                            request.ApplicationId), ex);
-                    Requeue(request);
-                }
-                else
-                {
-                    Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"",
-                        request.ApplicationId);   
-
-                    SetApplicationStateSubmitted(application, request);
-                }
+                HandleCustomException(request, ex, application);
             }
             catch (TimeoutException ex)
             {
@@ -112,6 +99,31 @@
             {
                 Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
                 throw;
+            }
+        }
+
+        private void HandleCustomException(SubmitApplicationRequest request, CustomException ex, ApplicationDetail application)
+        {
+            switch (ex.Code)
+            {
+                case ErrorCodes.ApplicationDuplicatedError:
+                    Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"",
+                        request.ApplicationId);
+                    SetApplicationStateSubmitted(application, request);
+                    break;
+
+                case ErrorCodes.LegacyCandidateStateError:
+                    // TODO: need to consider what else we would do in this event.
+                    Logger.Warn("Legacy candidate is in an invalid state: Application Id: \"{0}\"",
+                        request.ApplicationId);
+                    break;
+
+                default:
+                    Logger.Error(
+                        string.Format("Submit application with Id = {0} request async process failed.",
+                            request.ApplicationId), ex);
+                    Requeue(request);
+                    break;
             }
         }
 
