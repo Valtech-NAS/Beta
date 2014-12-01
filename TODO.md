@@ -12,6 +12,9 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - write bundle orderer for bundle.config
 - review ApplyWebTrends attribute - use on controller or apply globally  
 - increase the HSTS header to months or years in line with GDS recommendations when we're confident it works https://www.gov.uk/service-manual/operations/operating-servicegovuk-subdomains#transport-layer-security
+- CDN changes:
+    - fix links to CDN to use "assets" sub-domain in production
+    - solve issue with custom domain name being used with an Azure CDN over HTTPS (may move CDN off Azure or use 3rd party CDN)
 
 ## Service layer ##
 
