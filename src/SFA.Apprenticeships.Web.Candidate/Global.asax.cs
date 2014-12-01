@@ -68,6 +68,8 @@
                     (metadata, context, description, validator) =>
                         new EqualToValueFluentValidationPropertyValidator(metadata, context, description, validator));
             });
+
+            MvcHandler.DisableMvcResponseHeader = true;
         }
 
         protected void Application_Error(object sender, EventArgs e)
