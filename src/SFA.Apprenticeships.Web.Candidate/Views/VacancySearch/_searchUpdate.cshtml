@@ -28,7 +28,7 @@
                 @Html.DropDownListFor(m => m.WithinDistance, (SelectList)ViewBag.Distances, new { @id = "loc-within", @name = "WithinDistance" })
             </div>
             <div class="form-group">
-                <button class="button" id="search-button" name="SearchAction" value="Search">Update results</button>
+                <button class="button no-btm-margin" id="search-button" name="SearchAction" value="Search">Update results</button>
             </div>
             <div class="form-group map-container hide-nojs">
                 <div id="map-canvas" style="width: 100%; height: 250px"></div>
