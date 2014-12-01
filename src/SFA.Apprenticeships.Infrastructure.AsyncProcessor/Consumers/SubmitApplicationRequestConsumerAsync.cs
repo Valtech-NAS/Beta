@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
 {
     using System;
+    using System.ServiceModel;
     using System.Threading.Tasks;
     using Application.Candidate.Strategies;
     using Application.Interfaces.Messaging;
@@ -52,14 +53,15 @@
 
         public void CreateApplication(SubmitApplicationRequest request)
         {
+            var application = _applicationReadRepository.Get(request.ApplicationId, true);
+
             try
             {
-                var application = _applicationReadRepository.Get(request.ApplicationId, true);
-
                 var candidate = _candidateReadRepository.Get(application.CandidateId, true);
+
                 if (candidate.LegacyCandidateId == 0)
                 {
-                    Logger.Warn(
+                    Logger.Info(
                         "Candidate with Id: {0} has not been created in the legacy system. Message will be requeued",
                         application.CandidateId);
                     Requeue(request);
@@ -74,32 +76,56 @@
 
                     Log("Created", request);
 
-                    Log("Updating", request);
-
-                    application.SetStateSubmitted();
-                    _applicationWriteRepository.Save(application);
-
-                    Log("Updated", request);
+                    SetApplicationStateSubmitted(application, request);
                 }
             }
             catch (CustomException ex)
             {
                 if (ex.Code != ErrorCodes.ApplicationDuplicatedError)
                 {
-                    Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
+                    Logger.Error(
+                        string.Format("Submit application with Id = {0} request async process failed.",
+                            request.ApplicationId), ex);
                     Requeue(request);
                 }
                 else
                 {
                     Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"",
                         request.ApplicationId);   
+
+                    SetApplicationStateSubmitted(application, request);
                 }
+            }
+            catch (TimeoutException ex)
+            {
+                LogAndRequeue(request, ex);
+            }
+            catch (FaultException ex)
+            {
+                LogAndRequeue(request, ex);
             }
             catch (Exception ex)
             {
                 Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
                 throw;
             }
+        }
+
+        private void LogAndRequeue(SubmitApplicationRequest request, Exception ex)
+        {
+            Logger.Error(
+                string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
+            Requeue(request);
+        }
+
+        private void SetApplicationStateSubmitted(ApplicationDetail application, SubmitApplicationRequest request)
+        {
+            Log("Updating", request);
+
+            application.SetStateSubmitted();
+            _applicationWriteRepository.Save(application);
+
+            Log("Updated", request);
         }
 
         private void Requeue(SubmitApplicationRequest request)
