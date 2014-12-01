@@ -104,6 +104,10 @@
             {
                 LogAndRequeue(request, ex);
             }
+            catch (CommunicationException ex)
+            {
+                LogAndRequeue(request, ex);
+            }
             catch (Exception ex)
             {
                 Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
