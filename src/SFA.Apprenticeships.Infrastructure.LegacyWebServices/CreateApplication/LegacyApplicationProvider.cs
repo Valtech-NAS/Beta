@@ -20,6 +20,12 @@
         private readonly IWcfService<GatewayServiceContract> _service;
         private readonly ICandidateReadRepository _candidateReadRepository;
 
+        private static class ValidationErrorCodes
+        {
+            public const string InvalidCandidateState = "INVALID_CANDIDATE_STATE";
+            public const string DuplicateApplication = "DUPLICATE_APPLICATION";
+        }
+
         public LegacyApplicationProvider(
             IWcfService<GatewayServiceContract> service,
             ICandidateReadRepository candidateReadRepository)
@@ -48,12 +54,27 @@
 
             if (response != null)
             {
-                if (response.ValidationErrors.Any(e => e.ErrorCode == "DUPLICATE_APPLICATION"))
+                if (response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.DuplicateApplication))
                 {
                     var warnMessage = string.Format("Duplicate application {0} for candidate {1} in legacy system",
                         applicationDetail.Vacancy.Id, applicationDetail.CandidateId);
+
                     Logger.Warn(warnMessage);
+
                     throw new CustomException(warnMessage, ErrorCodes.ApplicationDuplicatedError);
+                }
+
+                if (response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.InvalidCandidateState))
+                {
+                    var validationError = response.ValidationErrors
+                        .First(e => e.ErrorCode == ValidationErrorCodes.InvalidCandidateState);
+
+                    var warnMessage = string.Format("Unable to create application {0} for candidate {1} in legacy system: \"{2}\".",
+                        applicationDetail.Vacancy.Id, applicationDetail.CandidateId, validationError.Message);
+
+                    Logger.Warn(warnMessage);
+
+                    throw new CustomException(warnMessage, ErrorCodes.LegacyCandidateStateError);
                 }
 
                 var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
