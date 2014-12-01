@@ -76,5 +76,14 @@
         {
             Server.HandleError<ErrorController>(((MvcApplication) sender).Context);
         }
+
+        protected void Application_PreSendRequestHeaders(object sender, EventArgs e)
+        {
+            var application = sender as HttpApplication;
+            if (application != null && application.Context != null)
+            {
+                application.Context.Response.Headers.Remove("Server");
+            }
+        }
     }
 }
