@@ -35,7 +35,9 @@
             {
                 if (_instance == null)
                 {
+// ReSharper disable UnusedVariable
                     var initialiser = new T(); //note: do not remove... required to initialise string fields
+// ReSharper restore UnusedVariable
                     var configMap = new ExeConfigurationFileMap {ExeConfigFilename = _configFile};
                     var config = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
 

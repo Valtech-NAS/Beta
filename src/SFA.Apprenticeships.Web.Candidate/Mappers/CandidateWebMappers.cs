@@ -50,7 +50,9 @@
                 .ForMember(d => d.IsEmployerAnonymous,
                     opt => opt.MapFrom(src => src.IsEmployerAnonymous))
                 .ForMember(d => d.IsNasProvider,
-                    opt => opt.MapFrom(src => src.IsNasProvider));
+                    opt => opt.MapFrom(src => src.IsNasProvider))
+                .ForMember(d => d.EmployerWebsite, opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerWebsiteResolver>()
+                .FromMember(src => src.EmployerWebsite));
 
             Mapper.CreateMap<VacancySummaryResponse, VacancySummaryViewModel>();
             

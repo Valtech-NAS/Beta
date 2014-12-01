@@ -92,5 +92,47 @@
             model.Should().NotBeNull();
             model.Wage.Should().Be(vacancyDetail.WageDescription);
         }
+
+        [Test]
+        public void ShouldReturnTheEmployerWebsiteWithHttpIfItAlreadyHasIt()
+        {
+            var vacancyDetail = new VacancyDetail
+            {
+                EmployerWebsite = "http://wwww.someweb.com"
+            };
+
+            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+
+            model.Should().NotBeNull();
+            model.EmployerWebsite.Should().StartWith("http://");
+        }
+
+        [Test]
+        public void ShouldReturnTheEmployerWebsiteWithHttpIfItDoesntHaveIt()
+        {
+            var vacancyDetail = new VacancyDetail
+            {
+                EmployerWebsite = "wwww.someweb.com"
+            };
+
+            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+
+            model.Should().NotBeNull();
+            model.EmployerWebsite.Should().StartWith("http://");
+        }
+
+        [Test]
+        public void ShouldReturnTheEmployerWebsiteWithHttpsIfItStartsWithIt()
+        {
+            var vacancyDetail = new VacancyDetail
+            {
+                EmployerWebsite = "https://wwww.someweb.com"
+            };
+
+            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+
+            model.Should().NotBeNull();
+            model.EmployerWebsite.Should().StartWith("https://");
+        }
     }
 }

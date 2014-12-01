@@ -18,7 +18,7 @@
             {
                 _candidateInformation = new ApplicationTemplate
                 {
-                    AboutYou = null,
+                    AboutYou = new AboutYou(),
                     EducationHistory = null,
                     Qualifications = new Qualification[]
                     {

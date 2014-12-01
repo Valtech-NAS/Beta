@@ -31,12 +31,12 @@
 
         public void SubmitApplication(Guid applicationId)
         {
+            var applicationDetail = _applicationReadRepository.Get(applicationId, true);
+
+            applicationDetail.AssertState("Application is not in the correct state to be submitted", ApplicationStatuses.Draft);
+
             try
             {
-                var applicationDetail = _applicationReadRepository.Get(applicationId, true);
-
-                applicationDetail.AssertState("Application is not in the correct state to be submitted", ApplicationStatuses.Draft);
-
                 if (applicationDetail.Status == ApplicationStatuses.Draft)
                 {
                     applicationDetail.SetStateSubmitting();

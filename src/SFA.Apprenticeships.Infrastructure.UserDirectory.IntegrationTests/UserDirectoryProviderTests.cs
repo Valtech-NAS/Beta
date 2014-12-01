@@ -5,8 +5,8 @@
     using FluentAssertions;
     using IoC;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Infrastructure.Common.IoC;
-    using SFA.Apprenticeships.Infrastructure.Repositories.Authentication.IoC;
+    using Common.IoC;
+    using Repositories.Authentication.IoC;
     using StructureMap;
 
     public class UserDirectoryProviderTests

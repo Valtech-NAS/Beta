@@ -86,7 +86,8 @@
 
             if (application == null)
             {
-                Logger.Warn("Unable to find/update application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
+                // TODO: AG: set to Info to support load testing. Should be set back to Warn for production.
+                Logger.Info("Unable to find/update application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
                 return;
             }
 

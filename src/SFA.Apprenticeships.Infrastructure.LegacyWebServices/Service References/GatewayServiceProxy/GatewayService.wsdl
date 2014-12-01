@@ -39,6 +39,7 @@
         <xs:complexType>
           <xs:sequence>
             <xs:element minOccurs="0" name="PageNumber" type="xs:int" />
+            <xs:element minOccurs="0" name="PreferredPageSize" type="xs:int" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -74,6 +75,7 @@
         <xs:complexType>
           <xs:sequence>
             <xs:element minOccurs="0" name="PageNumber" type="xs:int" />
+            <xs:element minOccurs="0" name="PreferredPageSize" type="xs:int" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -141,6 +143,11 @@
           <xs:element xmlns:q3="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="WorkExperiences" nillable="true" type="q3:WorkExperiences" />
           <xs:element minOccurs="0" name="AdditionalQuestion1Answer" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="AdditionalQuestion2Answer" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Strengths" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Improvements" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="HobbiesAndInterests" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="InterviewSupport" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OtherQualifications" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:complexType>
       <xs:element name="Application" nillable="true" type="tns:Application" />
@@ -606,7 +613,7 @@
   </wsdl:binding>
   <wsdl:service name="GatewayService">
     <wsdl:port name="DefaultEndpoint" binding="tns:DefaultEndpoint">
-      <soap:address location="http://sfacapvm1.cloudapp.net/NASGatewayService/GatewayService.svc" />
+      <soap:address location="http://sfacapvm0.cloudapp.net/NASGatewayService/GatewayService.svc" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

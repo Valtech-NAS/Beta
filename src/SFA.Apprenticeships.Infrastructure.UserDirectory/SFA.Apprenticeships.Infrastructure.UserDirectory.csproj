@@ -103,17 +103,11 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.DirectoryServices.AccountManagement" />
-    <Reference Include="System.DirectoryServices.Protocols" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ActiveDirectoryUserDirectoryProvider.cs" />
-    <Compile Include="ActiveDirectory\ActiveDirectoryChangePassword.cs" />
-    <Compile Include="Configuration\ActiveDirectoryConfiguration.cs" />
-    <Compile Include="ActiveDirectory\ActiveDirectoryServer.cs" />
     <Compile Include="Hash\PasswordHash.cs" />
     <Compile Include="Hash\IPasswordHash.cs" />
     <Compile Include="IoC\UserDirectoryRegistry.cs" />

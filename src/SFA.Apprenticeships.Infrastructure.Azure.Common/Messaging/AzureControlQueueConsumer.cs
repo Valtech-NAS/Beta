@@ -25,6 +25,8 @@
                 return null;
             }
 
+            var foundSurplusMessages = false;
+
             while (true)
             {
                 var nextQueueMessage = _messageService.GetMessage();
@@ -34,9 +36,14 @@
                     break;
                 }
 
-                Logger.Warn("Found more than 1 control message for " + _processName + " process");
                 _messageService.DeleteMessage(queueMessage.MessageId, queueMessage.PopReceipt);
                 queueMessage = nextQueueMessage;
+                foundSurplusMessages = true;
+            }
+
+            if (foundSurplusMessages)
+            {
+                Logger.Warn("Found more than 1 control message for " + _processName + " process");
             }
 
             Logger.Info("Found valid control message to start " + _processName + " process");

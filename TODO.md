@@ -25,6 +25,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - wrap ElasticSearchClient -> search into a new class to be able to rethrow WebException swallowed by Nest
 - agree on and implement location search behaviour fix for prefix sorting on different servers
 - refactor: vacancy ETL process (simplify to process pages immediately? TBD)
+- additional mongo indexes for app status and date updated (TBC: not sure how effective this would be - re. Alan)
 
 ## Cross cutting ##
 

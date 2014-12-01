@@ -15,6 +15,8 @@
 
             config.Should().NotBeNull();
             config.DefaultHost.OriginalString.Should().Be("http://someserver:1234");
+            config.NodeCount = 1;
+            config.Timeout = 30;
 
             var index1 = config.Indexes["VacancySummaryIndex"];
             index1.Should().NotBeNull();

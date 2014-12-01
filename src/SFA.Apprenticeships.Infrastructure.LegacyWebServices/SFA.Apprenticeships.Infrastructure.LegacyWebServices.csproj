@@ -120,8 +120,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Configuration\ILegacyServicesConfiguration.cs" />
-    <Compile Include="Configuration\LegacyServicesConfiguration.cs" />
     <Compile Include="CreateApplication\LegacyApplicationProvider.cs" />
     <Compile Include="CreateCandidate\LegacyCandidateProvider.cs" />
     <Compile Include="GetCandidateApplicationStatuses\LegacyCandidateApplicationStatusesProvider.cs" />
@@ -153,7 +151,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Service References\GatewayServiceProxy\GatewayService1.wsdl" />
+    <None Include="Service References\GatewayServiceProxy\GatewayService.wsdl" />
     <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.CandidateApplication.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

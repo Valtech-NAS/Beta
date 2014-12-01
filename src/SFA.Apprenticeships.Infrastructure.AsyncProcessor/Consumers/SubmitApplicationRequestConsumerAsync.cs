@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
 {
+    using System;
     using System.Threading.Tasks;
     using Application.Candidate.Strategies;
     using Application.Interfaces.Messaging;
@@ -59,7 +60,8 @@
                 if (candidate.LegacyCandidateId == 0)
                 {
                     Logger.Warn(
-                        "Candidate with Id: {0} has not been created in the legacy system. Message will be requeued", application.CandidateId);
+                        "Candidate with Id: {0} has not been created in the legacy system. Message will be requeued",
+                        application.CandidateId);
                     Requeue(request);
                 }
                 else
@@ -84,13 +86,19 @@
             {
                 if (ex.Code != ErrorCodes.ApplicationDuplicatedError)
                 {
-                    Logger.Error("Submit application with Id = {0} request async process failed.", request.ApplicationId);
+                    Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
                     Requeue(request);
                 }
                 else
                 {
-                    Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"", request.ApplicationId);
+                    Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"",
+                        request.ApplicationId);   
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
+                throw;
             }
         }
 

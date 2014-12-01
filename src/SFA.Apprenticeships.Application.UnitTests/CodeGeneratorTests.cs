@@ -18,15 +18,15 @@
             for (var i = 0; i < sampleSize; i++)
             {
                 // Arrange.
-                var generator = new CodeGenerator();
+                var generator = new RandomCodeGenerator();
 
                 // Act.
                 var code = generator.Generate();
 
                 // Assert.
                 Assert.IsFalse(String.IsNullOrWhiteSpace(code));
-                Assert.AreEqual(CodeGenerator.CodeLength, code.Length);
-                Assert.IsTrue(code.All(c => CodeGenerator.Alphanumerics.Contains(c)));
+                Assert.AreEqual(RandomCodeGenerator.CodeLength, code.Length);
+                Assert.IsTrue(code.All(c => RandomCodeGenerator.Alphanumerics.Contains(c)));
 
                 CollectionAssert.DoesNotContain(sampleCodes, code);
 

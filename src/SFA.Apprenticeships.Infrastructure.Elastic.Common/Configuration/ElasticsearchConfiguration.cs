@@ -8,6 +8,8 @@
     public class ElasticsearchConfiguration : SecureConfigurationSection<ElasticsearchConfiguration>
     {
         private const string DefaultHostConst = "DefaultHost";
+        private const string NodeCountConst = "NodeCount";
+        private const string TimeoutConst = "Timeout";
         public ElasticsearchConfiguration() : base("ElasticsearchConfiguration")
         {    
         }
@@ -24,6 +26,20 @@
         {
             get { return (Uri)this[DefaultHostConst]; }
             set { this[DefaultHostConst] = value; }
+        }
+
+        [ConfigurationProperty(NodeCountConst, IsRequired = true)]
+        public int NodeCount
+        {
+            get { return (int)this[NodeCountConst]; }
+            set { this[NodeCountConst] = value; }
+        }
+
+        [ConfigurationProperty(TimeoutConst, IsRequired = true)]
+        public int Timeout
+        {
+            get { return (int)this[TimeoutConst]; }
+            set { this[TimeoutConst] = value; }
         }
     }
 
