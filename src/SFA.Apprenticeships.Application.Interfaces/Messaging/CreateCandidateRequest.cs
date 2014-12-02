@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class CreateCandidateRequest
+    public class CreateCandidateRequest : BaseRequest
     {
         public Guid CandidateId { get; set; }
     }

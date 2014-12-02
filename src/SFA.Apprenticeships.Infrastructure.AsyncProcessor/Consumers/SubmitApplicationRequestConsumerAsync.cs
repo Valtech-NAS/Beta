@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
 {
     using System;
-    using System.ServiceModel;
     using System.Threading.Tasks;
     using Application.Candidate.Strategies;
     using Application.Interfaces.Messaging;
@@ -39,15 +38,17 @@
         [AutoSubscriberConsumer(SubscriptionId = "SubmitApplicationRequestConsumerAsync")]
         public Task Consume(SubmitApplicationRequest request)
         {
-            Log("Received", request);
-
             return Task.Run(() =>
             {
+                if (request.ProcessTime.HasValue && request.ProcessTime > DateTime.Now)
+                {
+                    _messageBus.PublishMessage(request);
+                    return;
+                }
+                
                 Log("Submitting", request);
 
                 CreateApplication(request);
-
-                Log("Submitted", request);
             });
         }
 
@@ -70,35 +71,19 @@
                 {
                     EnsureApplicationCanBeCreated(application);
 
-                    Log("Creating", request);
-
                     application.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(application);
 
-                    Log("Created", request);
-
-                    SetApplicationStateSubmitted(application, request);
+                    SetApplicationStateSubmitted(application);
                 }
             }
             catch (CustomException ex)
             {
                 HandleCustomException(request, ex, application);
             }
-            catch (TimeoutException ex)
-            {
-                LogAndRequeue(request, ex);
-            }
-            catch (FaultException ex)
-            {
-                LogAndRequeue(request, ex);
-            }
-            catch (CommunicationException ex)
-            {
-                LogAndRequeue(request, ex);
-            }
             catch (Exception ex)
             {
                 Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
-                throw;
+                Requeue(request);
             }
         }
 
@@ -107,50 +92,36 @@
             switch (ex.Code)
             {
                 case ErrorCodes.ApplicationDuplicatedError:
-                    Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"",
-                        request.ApplicationId);
-                    SetApplicationStateSubmitted(application, request);
+                    Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"", request.ApplicationId);
+                    SetApplicationStateSubmitted(application);
                     break;
 
                 case ErrorCodes.LegacyCandidateStateError:
                     // TODO: need to consider what else we would do in this event.
-                    Logger.Warn("Legacy candidate is in an invalid state: Application Id: \"{0}\"",
-                        request.ApplicationId);
+                    Logger.Error("Legacy candidate is in an invalid state: Application Id: \"{0}\"", request.ApplicationId);
+                    break;
+
+                case ErrorCodes.ApplicationInIncorrectStateError:
+                    Logger.Error(string.Format("Application is in an invalid state: Application Id: \"{0}\"", request.ApplicationId), ex);
                     break;
 
                 default:
-                    Logger.Error(
-                        string.Format("Submit application with Id = {0} request async process failed.",
-                            request.ApplicationId), ex);
+                    Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
                     Requeue(request);
                     break;
             }
         }
 
-        private void LogAndRequeue(SubmitApplicationRequest request, Exception ex)
+        private void SetApplicationStateSubmitted(ApplicationDetail application)
         {
-            Logger.Error(
-                string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
-            Requeue(request);
-        }
-
-        private void SetApplicationStateSubmitted(ApplicationDetail application, SubmitApplicationRequest request)
-        {
-            Log("Updating", request);
-
             application.SetStateSubmitted();
             _applicationWriteRepository.Save(application);
-
-            Log("Updated", request);
         }
 
         private void Requeue(SubmitApplicationRequest request)
         {
-            var message = new SubmitApplicationRequest
-            {
-                ApplicationId = request.ApplicationId
-            };
-            _messageBus.PublishMessage(message);
+            request.ProcessTime = request.ProcessTime.HasValue ? DateTime.Now.AddMinutes(5) : DateTime.Now.AddSeconds(30);
+            _messageBus.PublishMessage(request);
         }
 
         private static void EnsureApplicationCanBeCreated(ApplicationDetail applicationDetail)
