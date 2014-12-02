@@ -72,7 +72,16 @@
             Parallel.ForEach(
                 applicationStatusSummaries,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
-                applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
+                applicationStatusSummary =>
+                {
+                    var applicationDetail = _applicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
+
+                    // If the application status has not changed, there's no work to do.
+                    if (applicationDetail.Status != applicationStatusSummary.ApplicationStatus)
+                    {
+                        _messageBus.PublishMessage(applicationStatusSummary);
+                    }
+                });
 
             Logger.Debug("Queued {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
         }
@@ -86,8 +95,7 @@
 
             if (application == null)
             {
-                // TODO: AG: set to Info to support load testing. Should be set back to Warn for production.
-                Logger.Info("Unable to find/update application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
+                Logger.Warn("Unable to find/update application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
                 return;
             }
 

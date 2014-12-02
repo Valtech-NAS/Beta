@@ -68,11 +68,24 @@
                     (metadata, context, description, validator) =>
                         new EqualToValueFluentValidationPropertyValidator(metadata, context, description, validator));
             });
+
+            // This header cannot be removed using web.config --> http://www.codeproject.com/Tips/785867/ASP-NET-MVC-Remove-IIS-Header-Bloat
+            MvcHandler.DisableMvcResponseHeader = true;
         }
 
         protected void Application_Error(object sender, EventArgs e)
         {
             Server.HandleError<ErrorController>(((MvcApplication) sender).Context);
+        }
+
+        protected void Application_PreSendRequestHeaders(object sender, EventArgs e)
+        {
+            // This header cannot be removed using web.config --> http://www.codeproject.com/Tips/785867/ASP-NET-MVC-Remove-IIS-Header-Bloat
+            var application = sender as HttpApplication;
+            if (application != null && application.Context != null)
+            {
+                application.Context.Response.Headers.Remove("Server");
+            }
         }
     }
 }

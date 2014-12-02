@@ -113,15 +113,6 @@
                 PopulateDistances(model.WithinDistance);
                 PopulateResultsPerPage(model.ResultsPerPage);
 
-                if (model.LocationType == VacancyLocationType.National)
-                {
-                    PopulateSortType(model.SortType, model.Keywords, false);
-                }
-                else
-                {
-                    PopulateSortType(model.SortType, model.Keywords);
-                }
-
                 var clientResult = _searchRequestValidator.Validate(model);
 
                 if (!clientResult.IsValid)
@@ -198,6 +189,15 @@
                 if (model.SearchAction == SearchAction.Search && results.TotalLocalHits != 0)
                 {
                     results.VacancySearch.LocationType = VacancyLocationType.NonNational;
+                }
+
+                if (results.VacancySearch.LocationType == VacancyLocationType.National)
+                {
+                    PopulateSortType(model.SortType, model.Keywords, false);
+                }
+                else
+                {
+                    PopulateSortType(model.SortType, model.Keywords);
                 }
 
                 return View("results", results);
@@ -320,6 +320,8 @@
             {
                 sortTypeOptions.Add(new { SortType = VacancySortType.Distance, Name = "Distance" });
             }
+
+            ModelState.Remove("SortType");
 
             var sortTypes = new SelectList(
                 sortTypeOptions,

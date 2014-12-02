@@ -148,9 +148,9 @@
                     if (i > 0)
                     {
                         var currentItem = SearchResultItems.ElementAt(i);
-                        var currentDistance = DateTime.Parse(currentItem.ClosingDate.Text);
-                        var previousDistance = DateTime.Parse(previousItem.ClosingDate.Text);
-                        result = result & currentDistance >= previousDistance;
+                        var currrentClosingDate = DateTime.Parse(currentItem.ClosingDate.Text);
+                        var previousClosingDate = DateTime.Parse(previousItem.ClosingDate.Text);
+                        result = result & currrentClosingDate >= previousClosingDate;
                     }
                     previousItem = SearchResultItems.ElementAt(i);
                 }

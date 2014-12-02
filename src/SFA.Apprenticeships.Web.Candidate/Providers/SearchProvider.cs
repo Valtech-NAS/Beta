@@ -133,7 +133,6 @@
                     if (nonNationalResults.Total == 0 && nationalResults.Total != 0)
                     {
                         nonNationlResponse.Vacancies = nationalResponse.Vacancies;
-                        nonNationlResponse.VacancySearch.SortType = VacancySortType.ClosingDate;
                         nonNationlResponse.VacancySearch.LocationType = VacancyLocationType.National;
                     }
 

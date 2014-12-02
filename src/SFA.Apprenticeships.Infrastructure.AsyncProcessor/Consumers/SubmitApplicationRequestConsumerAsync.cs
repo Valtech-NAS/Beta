@@ -38,28 +38,31 @@
         [AutoSubscriberConsumer(SubscriptionId = "SubmitApplicationRequestConsumerAsync")]
         public Task Consume(SubmitApplicationRequest request)
         {
-            Log("Received", request);
-
             return Task.Run(() =>
             {
+                if (request.ProcessTime.HasValue && request.ProcessTime > DateTime.Now)
+                {
+                    _messageBus.PublishMessage(request);
+                    return;
+                }
+                
                 Log("Submitting", request);
 
                 CreateApplication(request);
-
-                Log("Submitted", request);
             });
         }
 
         public void CreateApplication(SubmitApplicationRequest request)
         {
+            var application = _applicationReadRepository.Get(request.ApplicationId, true);
+
             try
             {
-                var application = _applicationReadRepository.Get(request.ApplicationId, true);
-
                 var candidate = _candidateReadRepository.Get(application.CandidateId, true);
+
                 if (candidate.LegacyCandidateId == 0)
                 {
-                    Logger.Warn(
+                    Logger.Info(
                         "Candidate with Id: {0} has not been created in the legacy system. Message will be requeued",
                         application.CandidateId);
                     Requeue(request);
@@ -68,47 +71,57 @@
                 {
                     EnsureApplicationCanBeCreated(application);
 
-                    Log("Creating", request);
-
                     application.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(application);
 
-                    Log("Created", request);
-
-                    Log("Updating", request);
-
-                    application.SetStateSubmitted();
-                    _applicationWriteRepository.Save(application);
-
-                    Log("Updated", request);
+                    SetApplicationStateSubmitted(application);
                 }
             }
             catch (CustomException ex)
             {
-                if (ex.Code != ErrorCodes.ApplicationDuplicatedError)
-                {
-                    Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
-                    Requeue(request);
-                }
-                else
-                {
-                    Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"",
-                        request.ApplicationId);   
-                }
+                HandleCustomException(request, ex, application);
             }
             catch (Exception ex)
             {
                 Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
-                throw;
+                Requeue(request);
             }
+        }
+
+        private void HandleCustomException(SubmitApplicationRequest request, CustomException ex, ApplicationDetail application)
+        {
+            switch (ex.Code)
+            {
+                case ErrorCodes.ApplicationDuplicatedError:
+                    Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"", request.ApplicationId);
+                    SetApplicationStateSubmitted(application);
+                    break;
+
+                case ErrorCodes.LegacyCandidateStateError:
+                    // TODO: need to consider what else we would do in this event.
+                    Logger.Error("Legacy candidate is in an invalid state: Application Id: \"{0}\"", request.ApplicationId);
+                    break;
+
+                case ErrorCodes.ApplicationInIncorrectStateError:
+                    Logger.Error(string.Format("Application is in an invalid state: Application Id: \"{0}\"", request.ApplicationId), ex);
+                    break;
+
+                default:
+                    Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
+                    Requeue(request);
+                    break;
+            }
+        }
+
+        private void SetApplicationStateSubmitted(ApplicationDetail application)
+        {
+            application.SetStateSubmitted();
+            _applicationWriteRepository.Save(application);
         }
 
         private void Requeue(SubmitApplicationRequest request)
         {
-            var message = new SubmitApplicationRequest
-            {
-                ApplicationId = request.ApplicationId
-            };
-            _messageBus.PublishMessage(message);
+            request.ProcessTime = request.ProcessTime.HasValue ? DateTime.Now.AddMinutes(5) : DateTime.Now.AddSeconds(30);
+            _messageBus.PublishMessage(request);
         }
 
         private static void EnsureApplicationCanBeCreated(ApplicationDetail applicationDetail)
