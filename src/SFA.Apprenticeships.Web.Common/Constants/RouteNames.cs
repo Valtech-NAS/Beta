@@ -9,5 +9,6 @@
         public const string Terms = "Terms";
         public const string Maintenance = "Maintenance";
         public const string VacancyDetails = "VacancyDetails";
+        public const string Search = "Search";
     }
 }
