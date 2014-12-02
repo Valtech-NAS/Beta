@@ -95,6 +95,7 @@
     <Compile Include="Candidates\ErrorCodes.cs" />
     <Compile Include="Locations\ErrorCodes.cs" />
     <Compile Include="Locations\IAddressSearchProvider.cs" />
+    <Compile Include="Messaging\BaseRequest.cs" />
     <Compile Include="Messaging\CreateCandidateRequest.cs" />
     <Compile Include="Messaging\SubmitApplicationRequest.cs" />
     <Compile Include="Messaging\CandidateMessageTypes.cs" />
