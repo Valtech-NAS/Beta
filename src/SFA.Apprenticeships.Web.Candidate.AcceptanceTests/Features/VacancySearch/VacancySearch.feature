@@ -174,7 +174,7 @@ Scenario: Different results per page
         | Field                  | Rule   | Value |
         | SearchResultItemsCount | Equals | 50    |
 
-@US528 @SmokeTests @ignore
+@US528 @SmokeTests
 Scenario: Return to search results link appears if arriving from search results page
 	Given I select the "first" vacancy in location "N7 8LS" that can apply by this website
 	When I am on the VacancyDetailsPage page
@@ -191,7 +191,7 @@ Scenario: Return to find apprenticeship link appears if not arriving from search
 		 | WithInDistance | 40 miles |
 	And I choose Search
 	And I am on the VacancySearchResultPage page
-	And I set token VacancyId with the value of FirstVacacnyId
+	And I set token VacancyId with the value of FirstVacancyId
 	And I navigate to the HomePage page
 	And I navigate to the VacancyDetailsPage page with parameters
 		| VacancyId   |

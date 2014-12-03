@@ -593,15 +593,13 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Return to search results link appears if arriving from search results page")]
-        [NUnit.Framework.IgnoreAttribute()]
         [NUnit.Framework.CategoryAttribute("US528")]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
         public virtual void ReturnToSearchResultsLinkAppearsIfArrivingFromSearchResultsPage()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Return to search results link appears if arriving from search results page", new string[] {
                         "US528",
-                        "SmokeTests",
-                        "ignore"});
+                        "SmokeTests"});
 #line 178
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -661,7 +659,7 @@ this.FeatureBackground();
 #line 193
  testRunner.And("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 194
- testRunner.And("I set token VacancyId with the value of FirstVacacnyId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I set token VacancyId with the value of FirstVacancyId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 195
  testRunner.And("I navigate to the HomePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
