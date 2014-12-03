@@ -98,7 +98,12 @@
 
                 case ErrorCodes.LegacyCandidateStateError:
                     // TODO: need to consider what else we would do in this event.
-                    Logger.Error("Legacy candidate is in an invalid state: Application Id: \"{0}\"", request.ApplicationId);
+                    Logger.Error("Legacy candidate is in an invalid state. Application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
+                    break;
+
+                case ErrorCodes.LegacyCandidateNotFoundError:
+                    // TODO: need to consider what else we would do in this event.
+                    Logger.Error("Legacy candidate was not found. Application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
                 case ErrorCodes.ApplicationInIncorrectStateError:
