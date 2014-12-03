@@ -24,6 +24,7 @@
         {
             public const string InvalidCandidateState = "INVALID_CANDIDATE_STATE";
             public const string DuplicateApplication = "DUPLICATE_APPLICATION";
+            public const string CandidateNotFound = "CANDIDATE_NOT_FOUND";
         }
 
         public LegacyApplicationProvider(
@@ -64,18 +65,9 @@
                     throw new CustomException(warnMessage, ErrorCodes.ApplicationDuplicatedError);
                 }
 
-                if (response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.InvalidCandidateState))
-                {
-                    var validationError = response.ValidationErrors
-                        .First(e => e.ErrorCode == ValidationErrorCodes.InvalidCandidateState);
+                CheckValidationErrors(applicationDetail, response, ValidationErrorCodes.InvalidCandidateState, ErrorCodes.LegacyCandidateStateError);
 
-                    var warnMessage = string.Format("Unable to create application {0} for candidate {1} in legacy system: \"{2}\".",
-                        applicationDetail.Vacancy.Id, applicationDetail.CandidateId, validationError.Message);
-
-                    Logger.Warn(warnMessage);
-
-                    throw new CustomException(warnMessage, ErrorCodes.LegacyCandidateStateError);
-                }
+                CheckValidationErrors(applicationDetail, response, ValidationErrorCodes.CandidateNotFound, ErrorCodes.LegacyCandidateNotFoundError);
 
                 var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
@@ -92,6 +84,22 @@
             throw new CustomException(
                 string.Format("Failed to create application of candidate {0} to vacancy {1} in legacy system",
                     applicationDetail.CandidateId, applicationDetail.Vacancy.Id), ErrorCodes.ApplicationGatewayCreationError);
+        }
+
+        private static void CheckValidationErrors(ApplicationDetail applicationDetail, CreateApplicationResponse response, string validationErrorCode, string errorCode)
+        {
+            if (response.ValidationErrors.Any(e => e.ErrorCode == validationErrorCode))
+            {
+                var validationError = response.ValidationErrors
+                    .First(e => e.ErrorCode == validationErrorCode);
+
+                var warnMessage = string.Format("Unable to create application {0} for candidate {1} in legacy system: \"{2}\".",
+                    applicationDetail.Vacancy.Id, applicationDetail.CandidateId, validationError.Message);
+
+                Logger.Warn(warnMessage);
+
+                throw new CustomException(warnMessage, errorCode);
+            }
         }
 
         private static CreateApplicationRequest MapApplicationToLegacyRequest(
