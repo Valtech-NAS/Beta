@@ -52,7 +52,7 @@
         public static class PhoneNumberWhitelist
         {
             public const string RegularExpression = @"^[0-9+\s-()]{8,16}$";
-            public const string ErrorText = @"must only contain numbers";
+            public const string ErrorText = @"must only contain digits, and at most 16 digits";
         }
 
         public static class PasswordWhitelist
