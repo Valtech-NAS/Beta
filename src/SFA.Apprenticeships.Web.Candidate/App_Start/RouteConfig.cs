@@ -21,7 +21,7 @@
                 );
 
             routes.MapRoute(
-                name: RouteNames.Settings,
+                name: CandidateRouteNames.Settings,
                 url: "settings",
                 defaults: new { controller = "Account", action = "Index" }
             );
@@ -33,31 +33,31 @@
             );
 
             routes.MapRoute(
-                name: RouteNames.Privacy,
+                name: CandidateRouteNames.Privacy,
                 url: "privacy",
                 defaults: new { controller = "Home", action = "Privacy" }
             );
 
             routes.MapRoute(
-                name: RouteNames.Helpdesk,
+                name: CandidateRouteNames.Helpdesk,
                 url: "helpdesk",
                 defaults: new { controller = "Home", action = "Helpdesk" }
             );
 
             routes.MapRoute(
-                name: RouteNames.Terms,
+                name: CandidateRouteNames.Terms,
                 url: "terms",
                 defaults: new { controller = "Home", action = "Terms" }
             );
 
             routes.MapRoute(
-                name: RouteNames.Search,
+                name: CandidateRouteNames.Search,
                 url: "vacancysearch",
                 defaults: new { controller = "VacancySearch", action = "Index" }
             );
 
             routes.MapRoute(
-                name: RouteNames.VacancyDetails,
+                name: CandidateRouteNames.VacancyDetails,
                 url: "vacancy/{id}",
                 defaults: new { controller = "VacancySearch", action = "Details" }
             );
@@ -69,7 +69,7 @@
             );
 
             routes.MapRoute(
-                name: RouteNames.Maintenance,
+                name: CandidateRouteNames.Maintenance,
                 url: "maintenance",
                 defaults: "~/403.aspx");
 

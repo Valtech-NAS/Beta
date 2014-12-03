@@ -1,4 +1,5 @@
-﻿@using SFA.Apprenticeships.Web.Candidate.Controllers
+﻿@using SFA.Apprenticeships.Web.Candidate.Constants
+@using SFA.Apprenticeships.Web.Candidate.Controllers
 @using SFA.Apprenticeships.Web.Common.Framework
 
 <!DOCTYPE html>
@@ -52,7 +53,7 @@
     {
         <div id="global-cookie-message" class="cookie-banner">
             <div class="content-container" role="alert">
-                <span class="copy-16">GOV.UK uses cookies to make the site simpler. <a href='@Url.RouteUrl(RouteNames.Privacy)'>Find out more about cookies</a></span>
+                <span class="copy-16">GOV.UK uses cookies to make the site simpler. <a href='@Url.RouteUrl(CandidateRouteNames.Privacy)'>Find out more about cookies</a></span>
             </div>
         </div>
     }
@@ -71,7 +72,7 @@
                 </a>
             </div>
             <div class="global-header__nav">
-                <div class="global-header__title"><a href="@Url.RouteUrl(RouteNames.Search)">Find an apprenticeship</a></div>
+                <div class="global-header__title"><a href="@Url.RouteUrl(CandidateRouteNames.Search)">Find an apprenticeship</a></div>
             </div>
         </div>
     </header>
@@ -133,9 +134,9 @@
         <div class="footer__wrapper">
             <div class="footer__meta">
                 <ul class="footer__nav">
-                    <li class="small-btm-margin"><a class="bold-medium" href='@Url.RouteUrl(RouteNames.Helpdesk)'>Contact us</a></li>
-                    <li class="footer__link"><a href='@Url.RouteUrl(RouteNames.Privacy)'>Privacy and cookies</a></li>
-                    <li class="footer__link"><a href='@Url.RouteUrl(RouteNames.Terms)'>Terms and conditions</a></li>
+                    <li class="small-btm-margin"><a class="bold-medium" href='@Url.RouteUrl(CandidateRouteNames.Helpdesk)'>Contact us</a></li>
+                    <li class="footer__link"><a href='@Url.RouteUrl(CandidateRouteNames.Privacy)'>Privacy and cookies</a></li>
+                    <li class="footer__link"><a href='@Url.RouteUrl(CandidateRouteNames.Terms)'>Terms and conditions</a></li>
                     <li class="footer__link">Built by <a href="http://gov.uk/sfa" target="_blank">Skills Funding Agency</a></li>
                     <li class="footer__ogl"><a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2" class="ir ogl-logo">OGL</a>All content is available under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2">Open Government Licence v2.0</a>, except where otherwise stated</li>
                 </ul>
