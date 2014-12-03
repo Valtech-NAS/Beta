@@ -2,7 +2,6 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Application.Interfaces.Vacancies;
-    using Common.Models.Common;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies;
     using FluentValidation.Attributes;
@@ -13,7 +12,7 @@
     {
         private int _pageNumber = 1;
 
-        public VacancySearchViewModel()
+        public VacancySearchViewModel() 
         {
         }
 

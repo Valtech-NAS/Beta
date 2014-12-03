@@ -62,18 +62,6 @@
             });
         }
 
-        private int GetResultsPerPage()
-        {
-            int resultsPerPage;
-            if (!int.TryParse(UserData.Get(UserDataItemNames.ResultsPerPage), out resultsPerPage))
-            {
-                resultsPerPage = _vacancyResultsPerPage;
-            }
-
-
-            return resultsPerPage;
-        }
-
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [ApplyWebTrends]
@@ -264,6 +252,17 @@
         }
 
         #region Helpers
+        private int GetResultsPerPage()
+        {
+            int resultsPerPage;
+            if (!int.TryParse(UserData.Get(UserDataItemNames.ResultsPerPage), out resultsPerPage))
+            {
+                resultsPerPage = _vacancyResultsPerPage;
+            }
+
+
+            return resultsPerPage;
+        }
 
         private void PopulateResultsPerPage(int selectedValue)
         {
