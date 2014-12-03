@@ -243,7 +243,6 @@
     <Content Include="404.html" />
     <Content Include="500.aspx" />
     <Content Include="500.html" />
-    <Content Include="App_Data\Lookups.xml" />
     <Content Include="Configs\settings.config" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.ttf" />
@@ -541,7 +540,9 @@
     <Compile Include="ViewModels\VacancySearch\VacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Address\SFA.Apprenticeships.Application.Address.csproj">
       <Project>{1B386440-4479-4A2C-93CA-42A98426019F}</Project>

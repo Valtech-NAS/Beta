@@ -47,7 +47,7 @@
                     return RedirectToRoute(CandidateRouteNames.MyApplications);
                 }
 
-                _authenticationTicketService.Clear(HttpContext.Request.Cookies); //todo: yuk
+                _authenticationTicketService.Clear(HttpContext.Request.Cookies);
 
                 if (!string.IsNullOrWhiteSpace(returnUrl))
                 {
@@ -145,14 +145,17 @@
                         UserData.Pop(UserDataItemNames.EmailAddress);
                         SetUserMessage(AccountUnlockPageMessages.AccountUnlockedText);
                         return RedirectToAction("Index");
+
                     case AccountUnlockState.UserInIncorrectState:
                         return RedirectToAction("Index");
                     case AccountUnlockState.AccountEmailAddressOrUnlockCodeInvalid:
                         SetUserMessage(AccountUnlockPageMessages.WrongEmailAddressOrAccountUnlockCodeErrorText, UserMessageLevel.Error);
                         return View(model);
+
                     case AccountUnlockState.AccountUnlockCodeExpired:
                         SetUserMessage(AccountUnlockPageMessages.AccountUnlockCodeExpired, UserMessageLevel.Warning);
                         return View(model);
+
                     default:
                         SetUserMessage(AccountUnlockPageMessages.AccountUnlockFailed, UserMessageLevel.Warning);
                         return View(model);
@@ -271,7 +274,7 @@
                     return RedirectToAction("Apply", "Application", new { id = lastViewedVacancyId });
                 }
 
-                return RedirectToAction("Details", "VacancySearch", new { id = lastViewedVacancyId });
+                return RedirectToRoute(CandidateRouteNames.Details, new { id = lastViewedVacancyId });
             }
 
             return RedirectToRoute(CandidateRouteNames.MyApplications);
