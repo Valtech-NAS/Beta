@@ -56,7 +56,7 @@
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
-        [ExpectedException(Handler = "CheckForApplicationGatewayCreationException")]
+        [ExpectedException(Handler = "CheckForLegacyCandidateNotFoundErrorException")]
         public void ShouldThrowAnErrorIfTheCandidateDoesntExistInNasGateway()
         {
             _candidateRepositoryMock.ResetCalls();
@@ -142,6 +142,15 @@
             var cex = ex as CustomException;
 // ReSharper disable once PossibleNullReferenceException
             cex.Code.Should().Be(ErrorCodes.ApplicationGatewayCreationError);
+        }
+
+        public void CheckForLegacyCandidateNotFoundErrorException(Exception ex)
+        {
+            ex.Should().BeOfType<CustomException>();
+
+            var cex = ex as CustomException;
+// ReSharper disable once PossibleNullReferenceException
+            cex.Code.Should().Be(ErrorCodes.LegacyCandidateNotFoundError);
         }
 
         private int CreateLegacyCandidateId()

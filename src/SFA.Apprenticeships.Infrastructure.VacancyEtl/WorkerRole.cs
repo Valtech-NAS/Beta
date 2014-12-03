@@ -16,7 +16,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using NLog;
     using RabbitMq.Interfaces;
     using RabbitMq.IoC;
-    using SFA.Apprenticeships.Infrastructure.PerformanceCounters.IoC;
+    using PerformanceCounters.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
 
@@ -51,7 +51,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                     Logger.Error("Exception from VacancySchedulerConsumer", ex);
                 }
 
-                Thread.Sleep(TimeSpan.FromMinutes(5));
+                Thread.Sleep(TimeSpan.FromMinutes(1));
             }
         }
 

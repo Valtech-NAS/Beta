@@ -49,7 +49,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                     Logger.Error("Exception from ApplicationSchedulerConsumer", ex);
                 }
 
-                Thread.Sleep(TimeSpan.FromMinutes(5));
+                Thread.Sleep(TimeSpan.FromMinutes(1));
             }
         }
 

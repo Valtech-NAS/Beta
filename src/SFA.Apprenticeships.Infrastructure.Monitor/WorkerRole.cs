@@ -55,7 +55,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                     Logger.Error("Exception from MonitorSchedulerConsumer", ex);
                 }
 
-                Thread.Sleep(TimeSpan.FromMinutes(5));
+                Thread.Sleep(TimeSpan.FromMinutes(1));
             }
         }
 
