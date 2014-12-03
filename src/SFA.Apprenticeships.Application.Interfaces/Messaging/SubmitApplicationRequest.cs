@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class SubmitApplicationRequest
+    public class SubmitApplicationRequest : BaseRequest
     {
         public Guid ApplicationId { get; set; }
     }

@@ -145,7 +145,6 @@
     <Compile Include="Consumers\TestMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BootstrapSubscribersTests.cs" />
-    <Compile Include="SubmitApplicationRequestTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

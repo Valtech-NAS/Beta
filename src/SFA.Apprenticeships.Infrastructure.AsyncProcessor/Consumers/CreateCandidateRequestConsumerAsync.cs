@@ -37,9 +37,18 @@
         [AutoSubscriberConsumer(SubscriptionId = "CreateCandidateRequestConsumerAsync")]
         public Task Consume(CreateCandidateRequest request)
         {
-            Log("Received", request);
+            return Task.Run(() =>
+            {
+                if (request.ProcessTime.HasValue && request.ProcessTime > DateTime.Now)
+                {
+                    _messageBus.PublishMessage(request);
+                    return;
+                }
 
-            return Task.Run(() => CreateCandidate(request));
+                Log("Creating", request);
+
+                CreateCandidate(request);
+            });
         }
 
         private void CreateCandidate(CreateCandidateRequest request)
@@ -70,11 +79,8 @@
 
         private void Requeue(CreateCandidateRequest request)
         {
-            var message = new CreateCandidateRequest
-            {
-                CandidateId = request.CandidateId
-            };
-            _messageBus.PublishMessage(message);
+            request.ProcessTime = request.ProcessTime.HasValue ? DateTime.Now.AddMinutes(5) : DateTime.Now.AddSeconds(30);
+            _messageBus.PublishMessage(request);
         }
 
         private static void Log(string narrative, CreateCandidateRequest request)

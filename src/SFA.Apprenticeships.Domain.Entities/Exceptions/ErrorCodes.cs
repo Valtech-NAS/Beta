@@ -16,6 +16,7 @@
 
         // Candidate Exception Codes
         public const string UnknownCandidateError = "Candidate001";
+        public const string LegacyCandidateStateError = "Candidate002";
 
         // Application Exception Codes
         public const string ApplicationNotFoundError = "Application001";
