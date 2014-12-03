@@ -1,4 +1,5 @@
-﻿@model VacancySearchViewModel
+﻿@using SFA.Apprenticeships.Web.Candidate.Constants
+@model VacancySearchViewModel
 
 @{
     ViewBag.Title = "Apprenticeships - Find an apprenticeship";
@@ -46,7 +47,7 @@
                     </ul>
                     <ul class="list-text">
                         <li>
-                            <a href="@Url.RouteUrl(RouteNames.Helpdesk)">About apprenticeships</a>
+                            <a href="@Url.RouteUrl(CandidateRouteNames.Helpdesk)">About apprenticeships</a>
                         </li>
                     </ul>
                 </div>
