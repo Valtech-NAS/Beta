@@ -342,10 +342,10 @@
 
             if (lastViewedVacancyId != null)
             {
-                return RedirectToAction("Details", "VacancySearch", new {id = int.Parse(lastViewedVacancyId)});
+                return RedirectToRoute(CandidateRouteNames.Details, new {id = int.Parse(lastViewedVacancyId)});
             }
 
-            return RedirectToAction("Index", "VacancySearch");
+            return RedirectToRoute(CandidateRouteNames.Search);
         }
 
         #endregion
