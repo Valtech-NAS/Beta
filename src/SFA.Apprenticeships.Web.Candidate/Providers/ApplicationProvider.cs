@@ -10,6 +10,7 @@
     using Constants.Pages;
     using Microsoft.WindowsAzure;
     using NLog;
+    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
     using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
@@ -26,17 +27,23 @@
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
         private readonly IPerformanceCounterService _performanceCounterService;
+        private readonly IConfigurationManager _configurationManager;
+        private readonly IFeatureToggle _featureToggle;
 
         public ApplicationProvider(
             IVacancyDetailProvider vacancyDetailProvider,
             ICandidateService candidateService,
             IMapper mapper, 
-            IPerformanceCounterService performanceCounterService)
+            IPerformanceCounterService performanceCounterService,
+            IConfigurationManager configurationManager, 
+            IFeatureToggle featureToggle)
         {
             _vacancyDetailProvider = vacancyDetailProvider;
             _candidateService = candidateService;
             _mapper = mapper;
             _performanceCounterService = performanceCounterService;
+            _configurationManager = configurationManager;
+            _featureToggle = featureToggle;
         }
 
         public ApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
@@ -332,7 +339,12 @@
                     })
                     .ToList();
 
-                return new MyApplicationsViewModel(applications);
+                var unsuccessfulApplicationsToShowTraineeshipsPrompt =
+                    _configurationManager.GetAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt");
+
+                var traineeshiptsActive = _featureToggle.IsActive("Traineeships");
+
+                return new MyApplicationsViewModel(applications, unsuccessfulApplicationsToShowTraineeshipsPrompt, traineeshiptsActive);
             }
             catch (Exception e)
             {

@@ -151,6 +151,9 @@
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="TestStack.FluentMVCTesting">
+      <HintPath>..\packages\TestStack.FluentMVCTesting.2.2.0\lib\NET45\TestStack.FluentMVCTesting.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\RegisterControllerTests\GivenAFaultedServer.cs" />
@@ -158,6 +161,7 @@
     <Compile Include="Helpers\FormTextForTests.cs" />
     <Compile Include="Mappers\VacancyDetailViewModelMapperTests.cs" />
     <Compile Include="Mocks\HttpContextFactory.cs" />
+    <Compile Include="Providers\ApplicationProvider\ShowTraineeshipsPrompt.cs" />
     <Compile Include="Providers\SearchProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\PasswordResetViewModelValidatorTests.cs" />

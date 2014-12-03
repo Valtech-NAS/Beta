@@ -149,6 +149,114 @@ this.FeatureBackground();
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("As a candidate I want to see the traineeships prompt if I have more than three un" +
+            "successful applications")]
+        [NUnit.Framework.CategoryAttribute("US366")]
+        public virtual void AsACandidateIWantToSeeTheTraineeshipsPromptIfIHaveMoreThanThreeUnsuccessfulApplications()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to see the traineeships prompt if I have more than three un" +
+                    "successful applications", new string[] {
+                        "US366"});
+#line 37
+this.ScenarioSetup(scenarioInfo);
+#line 8
+this.FeatureBackground();
+#line 38
+testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 39
+ testRunner.And("I add 4 applications in \"Unsuccessful\" state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 40
+ testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 41
+ testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table3.AddRow(new string[] {
+                        "EmailAddress",
+                        "{EmailAddressToken}"});
+            table3.AddRow(new string[] {
+                        "Password",
+                        "{PasswordToken}"});
+#line 42
+ testRunner.And("I enter data", ((string)(null)), table3, "And ");
+#line 46
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 47
+ testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table4.AddRow(new string[] {
+                        "TraineeshipsPromptDisplayed",
+                        "Equals",
+                        "True"});
+#line 48
+ testRunner.And("I see", ((string)(null)), table4, "And ");
+#line 51
+ testRunner.When("I choose TraineeshipOverviewLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 52
+ testRunner.Then("I am on the TraineeshipOverviewPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("As a candidate I dont want to see the traineeships prompt if I have less than thr" +
+            "ee unsuccessful applications")]
+        [NUnit.Framework.CategoryAttribute("US366")]
+        public virtual void AsACandidateIDontWantToSeeTheTraineeshipsPromptIfIHaveLessThanThreeUnsuccessfulApplications()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I dont want to see the traineeships prompt if I have less than thr" +
+                    "ee unsuccessful applications", new string[] {
+                        "US366"});
+#line 55
+this.ScenarioSetup(scenarioInfo);
+#line 8
+this.FeatureBackground();
+#line 56
+testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 57
+ testRunner.And("I add 2 applications in \"Unsuccessful\" state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 58
+ testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 59
+ testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table5.AddRow(new string[] {
+                        "EmailAddress",
+                        "{EmailAddressToken}"});
+            table5.AddRow(new string[] {
+                        "Password",
+                        "{PasswordToken}"});
+#line 60
+ testRunner.And("I enter data", ((string)(null)), table5, "And ");
+#line 64
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 65
+ testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table6.AddRow(new string[] {
+                        "TraineeshipsPrompt",
+                        "Does Not Exist",
+                        ""});
+#line 66
+ testRunner.And("I see", ((string)(null)), table6, "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
