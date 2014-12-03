@@ -77,7 +77,8 @@
                     var applicationDetail = _applicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
 
                     // If the application status has not changed, there's no work to do.
-                    if (applicationDetail.Status != applicationStatusSummary.ApplicationStatus)
+                    //TODO: Should we be doing anything in the event of applicationDetail being null? This happens because we're sharing the nas preprod gateway with four environments
+                    if (applicationDetail != null && applicationDetail.Status != applicationStatusSummary.ApplicationStatus)
                     {
                         _messageBus.PublishMessage(applicationStatusSummary);
                     }
