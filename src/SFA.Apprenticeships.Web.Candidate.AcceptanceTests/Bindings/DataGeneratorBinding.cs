@@ -149,8 +149,8 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
         public void WhenINavigateToTheDetailsOfTheVacancy(int vacancyid)
         {
             var vacancySearchUri = new Uri(_driver.Url);
-            var vacancyDetailsUri = 
-                string.Format("{0}://{1}:{2}/vacancysearch/details/{3}", 
+            var vacancyDetailsUri =
+                string.Format("{0}://{1}:{2}/apprenticeship/{3}", 
                 vacancySearchUri.Scheme, vacancySearchUri.Host, vacancySearchUri.Port, vacancyid);
             _driver.Navigate().GoToUrl(vacancyDetailsUri);
         }
