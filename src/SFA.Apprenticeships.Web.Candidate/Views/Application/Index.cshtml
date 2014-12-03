@@ -17,6 +17,21 @@
     </div>
 }
 
+@if (ViewBag.RenderTraineeshipsPrompt != null && ViewBag.RenderTraineeshipsPrompt)
+{
+    <div role="alert" aria-live="assertive" id="tshipPrompt" class="toggle-content panel-info" style="display: block;">
+        <div class="text">
+            <p>
+                Have you considered a traineeship? Traineeships are courses designed
+                to get someone ready for an apprenticeship.
+            </p>
+            <p>
+                <a id="traineeship-overview-link" href=@Url.Action("Overview", "Traineeship")>More about traineeships</a>
+            </p>
+        </div>
+    </div>
+}
+
 <div class="grid-wrapper">
     <div class="grid grid-1-2">
         <h1 class="heading-xlarge">My applications</h1>

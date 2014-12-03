@@ -7,20 +7,20 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using System.Web.Security;
-    using ActionResults;
-    using Attributes;
-    using Common.Attributes;
-    using Common.Constants;
-    using Common.Models.Application;
-    using Constants;
-    using Constants.Pages;
-    using Domain.Entities.Applications;
     using FluentValidation.Mvc;
-    using Helpers;
-    using Providers;
-    using Validators;
-    using ViewModels.Applications;
-    using ViewModels.Candidate;
+    using SFA.Apprenticeships.Domain.Entities.Applications;
+    using SFA.Apprenticeships.Web.Candidate.ActionResults;
+    using SFA.Apprenticeships.Web.Candidate.Attributes;
+    using SFA.Apprenticeships.Web.Candidate.Constants;
+    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
+    using SFA.Apprenticeships.Web.Candidate.Helpers;
+    using SFA.Apprenticeships.Web.Candidate.Providers;
+    using SFA.Apprenticeships.Web.Candidate.Validators;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
+    using SFA.Apprenticeships.Web.Common.Attributes;
+    using SFA.Apprenticeships.Web.Common.Constants;
+    using SFA.Apprenticeships.Web.Common.Models.Application;
 
     public class ApplicationController : CandidateControllerBase
     {
@@ -60,6 +60,11 @@
                 }
 
                 var model = _applicationProvider.GetMyApplications(UserContext.CandidateId);
+
+                if (model.ShouldShowTraineeshipsPrompt)
+                {
+                    ViewBag.RenderTraineeshipsPrompt = true;
+                }
 
                 return View(model);
             });
@@ -452,6 +457,7 @@
         }
 
         #region Helpers
+
         private static ApplicationViewModel StripApplicationViewModelBeforeValidation(ApplicationViewModel model)
         {
             model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);

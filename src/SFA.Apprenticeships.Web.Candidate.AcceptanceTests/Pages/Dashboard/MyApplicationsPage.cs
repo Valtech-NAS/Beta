@@ -37,5 +37,16 @@
 
         [ElementLocator(Id = "empty-application-history-text")]
         public IWebElement EmptyApplicationHistoryText { get; set; }
+
+        [ElementLocator(Id = "tshipPrompt")]
+        public IWebElement TraineeshipsPrompt { get; set; }
+
+        public string TraineeshipsPromptDisplayed
+        {
+            get { return TraineeshipsPrompt.Displayed.ToString(); }
+        }
+
+        [ElementLocator(Id="traineeship-overview-link")]
+        public IWebElement TraineeshipOverviewLink { get; set; }
     }
 }

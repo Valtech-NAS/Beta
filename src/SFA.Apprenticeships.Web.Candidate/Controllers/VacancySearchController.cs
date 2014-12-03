@@ -245,6 +245,13 @@
                     UserData.Push(UserDataItemNames.VacancyDistance, distance);
                 }
 
+                var urlHelper = new UrlHelper(ControllerContext.RequestContext);
+                var url = urlHelper.Action("Results", "VacancySearch", null);
+                if (Request != null && Request.UrlReferrer != null && Request.UrlReferrer.AbsolutePath == url)
+                {
+                    ViewBag.SearchReturnUrl = Request.UrlReferrer.PathAndQuery;
+                }
+
                 UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToStringInvariant());
 
                 return View(vacancy);

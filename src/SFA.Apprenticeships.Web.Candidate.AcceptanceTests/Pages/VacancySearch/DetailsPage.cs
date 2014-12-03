@@ -3,10 +3,16 @@
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
 
-    [PageNavigation("/vacancy")]
+    [PageNavigation("/vacancy/[0-9]+")]
     [PageAlias("VacancyDetailsPage")]
     public class DetailsPage
     {
+        [ElementLocator(Id = "lnk-return-search-results")]
+        public IWebElement ReturnToSearchResultsLink { get; set; }
+
+        [ElementLocator(Id = "lnk-find-apprenticeship")]
+        public IWebElement FindApprenticeshipLink { get; set; }
+
         [ElementLocator(Id = "apply-button")]
         public IWebElement ApplyButton { get; set; }
 

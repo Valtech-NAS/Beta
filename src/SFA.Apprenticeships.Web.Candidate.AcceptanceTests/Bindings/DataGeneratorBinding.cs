@@ -50,6 +50,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             _tokenManager.SetToken(InvalidPasswordTokenName, new string(Password.Reverse().ToArray()));
         }
 
+        [Given(@"I select the ""(.*)"" vacancy in location ""(.*)"" that can apply by this website")]
         [When(@"I select the ""(.*)"" vacancy in location ""(.*)"" that can apply by this website")]
         public void WhenISelectTheNthVacancyThatCanApplyByThisWebsite(string position, string location)
         {

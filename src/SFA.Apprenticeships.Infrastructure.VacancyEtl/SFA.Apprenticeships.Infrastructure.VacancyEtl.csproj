@@ -220,6 +220,7 @@
     </None>
     <Content Include="Configs\settings.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configs\emailSettings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

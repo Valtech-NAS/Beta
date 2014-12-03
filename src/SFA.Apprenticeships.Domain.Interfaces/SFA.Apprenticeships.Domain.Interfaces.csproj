@@ -94,6 +94,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\IConfigurationManager.cs" />
+    <Compile Include="Configuration\IFeatureToggle.cs" />
     <Compile Include="Messaging\IMessageBus.cs" />
     <Compile Include="Messaging\IProcessControlQueue.cs" />
     <Compile Include="Messaging\StorageQueueMessage.cs" />

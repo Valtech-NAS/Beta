@@ -16,7 +16,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using NLog;
     using RabbitMq.Interfaces;
     using RabbitMq.IoC;
-    using SFA.Apprenticeships.Infrastructure.PerformanceCounters.IoC;
+    using PerformanceCounters.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
 

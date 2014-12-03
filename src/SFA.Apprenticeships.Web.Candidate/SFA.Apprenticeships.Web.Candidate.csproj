@@ -346,6 +346,7 @@
     <None Include="Startup\startup.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Views\Traineeship\Overview.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -458,6 +459,7 @@
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\CandidateControllerBase.cs" />
+    <Compile Include="Controllers\TraineeshipController.cs" />
     <Compile Include="Controllers\VacancySearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
