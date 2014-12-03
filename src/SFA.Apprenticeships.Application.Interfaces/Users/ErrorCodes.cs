@@ -5,6 +5,7 @@
         public const string ActivationCodeResendingFailed = "ActivationCodeResending.Failed";
         public const string AccountUnlockCodeExpired = "AccountUnlockCode.Expired";
         public const string AccountUnlockCodeInvalid = "AccountUnlockCode.Invalid";
+        public const string UnknownUserError = "UserRepository.UserNotFound";
 
         // User directory Exception Codes
         public const string UserDirectoryAccountExistsError = "UserDirectory.AccountExists";

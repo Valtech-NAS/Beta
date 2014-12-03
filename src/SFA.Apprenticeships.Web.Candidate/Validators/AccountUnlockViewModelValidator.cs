@@ -29,6 +29,10 @@
                 .WithMessage(AccountUnlockViewModelMessages.AccountUnlockCodeMessages.RequiredErrorText)
                 .Length(6, 6)
                 .WithMessage(ActivationCodeMessages.ActivationCode.LengthErrorText);
+
+            validator.RuleFor(model => model.EmailAddress)
+                .NotEmpty()
+                .WithMessage(ActivationCodeMessages.EmailAddressMessages.RequiredErrorText);
         }
     }
 }

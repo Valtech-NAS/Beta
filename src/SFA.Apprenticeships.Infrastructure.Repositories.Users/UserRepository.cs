@@ -43,7 +43,7 @@
                 var message = string.Format("Unknown username={0}", username);
                 Logger.Debug(message, username);
 
-                throw new CustomException(message, ErrorCodes.UnknownUserError);
+                throw new CustomException(message, Application.Interfaces.Users.ErrorCodes.UnknownUserError);
             }
 
             return mongoEntity == null ? null : _mapper.Map<MongoUser, User>(mongoEntity);

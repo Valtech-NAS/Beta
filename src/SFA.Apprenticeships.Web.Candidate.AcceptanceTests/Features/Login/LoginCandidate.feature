@@ -134,7 +134,7 @@ Scenario: Reset password after locking an account does not have to unlock the ac
 	And I get the account unlock code
 	And I see
          | Field             | Rule   | Value        |
-         | EmailAddressText  | Equals | {EmailToken} |
+         | EmailAddress      | Equals | {EmailToken} |
          | AccountUnlockCode | Exists |              |
 	And the user login incorrect attempts should be three
 	When I navigate to the ForgottenPasswordPage page

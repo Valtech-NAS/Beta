@@ -17,6 +17,7 @@
         {
         }
 
+        [Display(Name = AccountUnlockViewModelMessages.AccountUnlockCodeMessages.EmailLabelText)]
         public string EmailAddress { get; set; }
 
         [Display(Name = AccountUnlockViewModelMessages.AccountUnlockCodeMessages.LabelText)]

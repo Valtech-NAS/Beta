@@ -121,7 +121,7 @@ this.FeatureBackground();
                         "Rule",
                         "Value"});
             table2.AddRow(new string[] {
-                        "EmailAddressText",
+                        "EmailAddress",
                         "Equals",
                         "{EmailAddressToken}"});
             table2.AddRow(new string[] {

@@ -22,7 +22,7 @@ Scenario: Account is locked after three unsuccesful login attempts
 	Then I am on the UnlockPage page
 	And I see
          | Field             | Rule   | Value               |
-         | EmailAddressText  | Equals | {EmailAddressToken} |
+         | EmailAddress      | Equals | {EmailAddressToken} |
          | AccountUnlockCode | Exists |                     |
 
 Scenario: Account can be unlocked with a valid, non-expired account unlock code

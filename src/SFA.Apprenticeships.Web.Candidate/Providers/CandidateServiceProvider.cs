@@ -337,11 +337,12 @@
                 UserStatus = model.UserStatus,
                 IsPasswordResetCodeValid = false
             };
-
+            
             try
             {
                 _candidateService.ResetForgottenPassword(result.EmailAddress, result.PasswordResetCode, result.Password);
                 result.IsPasswordResetCodeValid = true;
+                result.UserStatus = _userAccountService.GetUserStatus(result.EmailAddress);
             }
             catch (CustomException e)
             {
@@ -400,8 +401,9 @@
                         Logger.Warn(e.Message, e);
                         return new AccountUnlockViewModel {Status = AccountUnlockState.AccountUnlockCodeExpired};
                     case Application.Interfaces.Users.ErrorCodes.AccountUnlockCodeInvalid:
+                    case Application.Interfaces.Users.ErrorCodes.UnknownUserError:
                         Logger.Info(e.Message, e);
-                        return new AccountUnlockViewModel {Status = AccountUnlockState.AccountUnlockCodeInvalid};
+                        return new AccountUnlockViewModel {Status = AccountUnlockState.AccountEmailAddressOrUnlockCodeInvalid};
                     default:
                         Logger.Error(e.Message,e);
                         return new AccountUnlockViewModel { Status = AccountUnlockState.Error };

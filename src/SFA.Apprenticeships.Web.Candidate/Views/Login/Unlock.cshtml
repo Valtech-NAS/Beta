@@ -8,17 +8,24 @@
 <h1 id="account-unlock-h1" class="heading-large">Account locked</h1>
 <p class="text">You should receive a 6-character code in your email. Enter the code to unlock your account.</p>
 
+@Html.Partial("ValidationSummary", ViewData.ModelState)
+
 @using (Html.BeginForm("Unlock", "Login", FormMethod.Post, new { @id = "account-unlock-form" }))
 {
     <div class="form-group">
-        <p class="form-label">Email address</p>
-        <span id="EmailAddressText" class="form-prepopped">@Html.DisplayFor(m => m.EmailAddress)</span>
+        @Html.FormTextFor(
+                m => m.EmailAddress,
+                containerHtmlAttributes: new { @class = "form-group-withlink" },
+                controlHtmlAttributes: new { type = "email", autofocus = "autofocus", spellcheck = "false" })
+
+
     </div>
 
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
-
-    @Html.FormTextFor(m => m.AccountUnlockCode, controlHtmlAttributes: new { @maxlength = "6" }, containerHtmlAttributes: new { @class = "form-group-withlink" })
-
+    @Html.FormTextFor(
+        m => m.AccountUnlockCode, 
+        controlHtmlAttributes: new { @maxlength = "6" }, 
+        containerHtmlAttributes: new { @class = "form-group-withlink" })
+    
     <div class="form-group">
         <p>
             @Html.ActionLink(

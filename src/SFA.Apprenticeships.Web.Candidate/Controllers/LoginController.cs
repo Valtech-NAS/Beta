@@ -115,23 +115,6 @@
             {
                 var emailAddress = UserData.Get(UserDataItemNames.EmailAddress);
 
-                if (string.IsNullOrWhiteSpace(emailAddress))
-                {
-                    return RedirectToAction("Index");
-                }
-
-                var userStatusViewModel = _candidateServiceProvider.GetUserStatus(emailAddress);
-
-                if (userStatusViewModel.HasError())
-                {
-                    return ViewAccountUnlock(emailAddress);
-                }
-
-                if (userStatusViewModel.UserStatus != UserStatuses.Locked)
-                {
-                    return RedirectToAction("Index");
-                }
-
                 return ViewAccountUnlock(emailAddress);
             });
         }
@@ -164,10 +147,8 @@
                         return RedirectToAction("Index");
                     case AccountUnlockState.UserInIncorrectState:
                         return RedirectToAction("Index");
-                    case AccountUnlockState.AccountUnlockCodeInvalid:
-                        ModelState.Clear();
-                        ModelState.AddModelError("AccountUnlockCode",
-                            AccountUnlockPageMessages.WrongAccountUnlockCodeErrorText);
+                    case AccountUnlockState.AccountEmailAddressOrUnlockCodeInvalid:
+                        SetUserMessage(AccountUnlockPageMessages.WrongEmailAddressOrAccountUnlockCodeErrorText, UserMessageLevel.Error);
                         return View(model);
                     case AccountUnlockState.AccountUnlockCodeExpired:
                         SetUserMessage(AccountUnlockPageMessages.AccountUnlockCodeExpired, UserMessageLevel.Warning);

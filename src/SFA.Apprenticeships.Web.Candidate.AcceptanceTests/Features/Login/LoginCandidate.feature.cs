@@ -473,7 +473,7 @@ this.FeatureBackground();
                         "Rule",
                         "Value"});
             table17.AddRow(new string[] {
-                        "EmailAddressText",
+                        "EmailAddress",
                         "Equals",
                         "{EmailToken}"});
             table17.AddRow(new string[] {

@@ -5,7 +5,7 @@
         Ok,
         UserInIncorrectState,
         AccountUnlockCodeExpired,
-        AccountUnlockCodeInvalid,
+        AccountEmailAddressOrUnlockCodeInvalid,
         Error
     }
 }
