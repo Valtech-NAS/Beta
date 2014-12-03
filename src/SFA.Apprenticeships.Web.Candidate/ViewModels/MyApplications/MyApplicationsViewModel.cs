@@ -50,7 +50,7 @@
                     .Where(each =>
                         each.ApplicationStatus == ApplicationStatuses.Draft ||
                         (each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && !each.DateApplied.HasValue))
-                     .OrderByDescending(app => app.ClosingDate);
+                     .OrderBy(app => app.ClosingDate);
             }
         }
     }
