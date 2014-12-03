@@ -51,13 +51,13 @@
             );
 
             routes.MapRoute(
-                name: CandidateRouteNames.Search,
+                name: CandidateRouteNames.Results,
                 url: "apprenticeships",
                 defaults: new { controller = "VacancySearch", action = "Results" }
             );
 
             routes.MapRoute(
-                name: CandidateRouteNames.Results,
+                name: CandidateRouteNames.Search,
                 url: "apprenticeshipsearch",
                 defaults: new {controller = "VacancySearch", action = "Index"}
                 );
