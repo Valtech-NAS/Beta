@@ -205,6 +205,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DeleteADraft.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Gds\GdsRedirect.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GdsRedirect.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\HomePage.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -273,6 +278,7 @@
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\BaseValidationPage.cs" />
     <Compile Include="Pages\Dashboard\MyApplicationsPage.cs" />
+    <Compile Include="Pages\Gds\GdsStartPage.cs" />
     <Compile Include="Pages\Traineeship\Overview.cs" />
     <Compile Include="Pages\VacancyNotFound.cs" />
     <Compile Include="Pages\Registration\ResetPasswordPage.cs" />
@@ -367,6 +373,10 @@
     <None Include="Features\Dashboard\DeleteADraft.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>DeleteADraft.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Gds\GdsRedirect.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>GdsRedirect.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\HomePage.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
