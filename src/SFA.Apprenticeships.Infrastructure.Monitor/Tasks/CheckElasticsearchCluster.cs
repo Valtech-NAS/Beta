@@ -84,7 +84,7 @@
                 return;
             }
 
-            var message = string.Format("Cluster is unhealthy: \"{0}\".", health.Status);
+            var message = string.Format("Cluster is unhealthy: \"{0}\", cluster should contain {1} nodes, but only has {2}.", health.Status, ExpectedNodeCount, health.NumberOfNodes);
 
             Logger.Warn(message);
         }
