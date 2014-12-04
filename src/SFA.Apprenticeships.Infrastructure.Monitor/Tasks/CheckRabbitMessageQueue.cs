@@ -54,7 +54,7 @@
             try
             {
                 var nodes = managementClient.GetNodes();
-                int nodeCount = nodes.Count();
+                int nodeCount = nodes.Count(n => n.Running);
                 if (nodeCount != rabbitConfiguration.NodeCount)
                 {
                     Logger.Error("Node count in {0} is incorrect. Expecting {1} but was {2}", managementClient.HostUrl,
