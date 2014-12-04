@@ -171,8 +171,8 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the sort order
 Scenario: If there are only nationwide apprenticeships do not show any link
 	Given I navigated to the VacancySearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | Pickering   |
+		 | Field          | Value   |
+		 | Location       | Stanton |
 		 | WithInDistance | 2 miles |
 	And I choose Search
 	Then I am on the VacancySearchResultPage page

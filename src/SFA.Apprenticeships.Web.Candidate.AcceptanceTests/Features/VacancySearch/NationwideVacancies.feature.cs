@@ -617,7 +617,7 @@ this.FeatureBackground();
                         "Value"});
             table21.AddRow(new string[] {
                         "Location",
-                        "Pickering"});
+                        "Stanton"});
             table21.AddRow(new string[] {
                         "WithInDistance",
                         "2 miles"});

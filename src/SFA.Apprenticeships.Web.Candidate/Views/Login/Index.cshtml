@@ -28,12 +28,9 @@
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-3-4" })
                 @Html.ValidationMessageFor(m => m.Password, null)
                 
-
-            </div>
-
-            <div class="form-group">
                 <a class="form-hint" href='@Url.Action("ForgottenPassword", "Register")'>I can't access my account</a>
             </div>
+
             <div class="form-group">
                 <button class="button" id="sign-in-button">Sign in</button>
             </div>
