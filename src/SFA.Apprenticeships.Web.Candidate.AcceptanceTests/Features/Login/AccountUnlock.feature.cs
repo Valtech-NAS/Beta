@@ -353,6 +353,140 @@ this.FeatureBackground();
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Reset password after locking an account unlocks the account")]
+        [NUnit.Framework.CategoryAttribute("US491")]
+        [NUnit.Framework.CategoryAttribute("AC8")]
+        public virtual void ResetPasswordAfterLockingAnAccountUnlocksTheAccount()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Reset password after locking an account unlocks the account", new string[] {
+                        "US491",
+                        "AC8"});
+#line 101
+this.ScenarioSetup(scenarioInfo);
+#line 7
+this.FeatureBackground();
+#line 102
+ testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 103
+ testRunner.When("I choose SignoutLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 104
+ testRunner.Then("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table13.AddRow(new string[] {
+                        "EmailAddress",
+                        "{EmailToken}"});
+            table13.AddRow(new string[] {
+                        "Password",
+                        "{InvalidPasswordToken}"});
+#line 105
+ testRunner.When("I enter data", ((string)(null)), table13, "When ");
+#line 109
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 110
+ testRunner.And("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table14.AddRow(new string[] {
+                        "Password",
+                        "{InvalidPasswordToken}"});
+#line 111
+ testRunner.When("I enter data", ((string)(null)), table14, "When ");
+#line 114
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 115
+ testRunner.And("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table15.AddRow(new string[] {
+                        "Password",
+                        "{InvalidPasswordToken}"});
+#line 116
+ testRunner.When("I enter data", ((string)(null)), table15, "When ");
+#line 119
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 120
+ testRunner.Then("I wait 180 second for the UnlockPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 121
+ testRunner.And("I get the account unlock code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table16.AddRow(new string[] {
+                        "EmailAddress",
+                        "Equals",
+                        "{EmailToken}"});
+            table16.AddRow(new string[] {
+                        "AccountUnlockCode",
+                        "Exists",
+                        ""});
+#line 122
+ testRunner.And("I see", ((string)(null)), table16, "And ");
+#line 126
+ testRunner.And("the user login incorrect attempts should be 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 127
+ testRunner.When("I navigate to the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 128
+ testRunner.Then("I am on the ForgottenPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table17.AddRow(new string[] {
+                        "EmailAddress",
+                        "{EmailToken}"});
+#line 129
+ testRunner.And("I enter data", ((string)(null)), table17, "And ");
+#line 132
+ testRunner.When("I choose SendCodeButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 133
+ testRunner.Then("I am on the ResetPasswordPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 134
+ testRunner.And("the user login incorrect attempts should be 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 135
+ testRunner.And("the account unlock code and date should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 136
+ testRunner.And("the password reset code and date should be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 137
+ testRunner.Then("I get the password reset code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table18.AddRow(new string[] {
+                        "PasswordResetCode",
+                        "{PasswordResetCodeToken}"});
+            table18.AddRow(new string[] {
+                        "Password",
+                        "?NewPassword02!"});
+            table18.AddRow(new string[] {
+                        "ConfirmPassword",
+                        "?NewPassword02!"});
+#line 138
+ testRunner.And("I enter data", ((string)(null)), table18, "And ");
+#line 143
+ testRunner.When("I choose ResetPasswordButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 144
+ testRunner.Then("I am on the HomePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 145
+ testRunner.And("the user login incorrect attempts should be 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 146
+ testRunner.And("the account unlock code and date should not be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 147
+ testRunner.And("the password reset code and date should not be set", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

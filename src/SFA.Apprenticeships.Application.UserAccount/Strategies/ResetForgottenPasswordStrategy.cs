@@ -53,14 +53,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
                 _authenticationService.ResetUserPassword(user.EntityId, newPassword);
 
-                if (user.Status != UserStatuses.Locked)
-                {
-                    user.SetStateActive();
-                }
-                else
-                {
-                    user.SetStateLocked(user.AccountUnlockCode, user.AccountUnlockCodeExpiry.Value);
-                }
+                user.SetStateActive();
 
                 _userWriteRepository.Save(user);
 

@@ -26,6 +26,7 @@
         private const string ActivationCode = "ACTIV1";
         private const string AccountUnlockCodeTokenName = "AccountUnlockCodeToken";
         private const string AccountUnlockCode = "UNLCK1";
+        private const string PasswordResetCodeTokenName = "PasswordResetCodeToken";
         private readonly ITokenManager _tokenManager;
 
         private readonly IUserReadRepository _userReadRepository;
@@ -129,13 +130,13 @@
             user.AccountUnlockCodeExpiry.Should().BeAfter(DateTime.Now);
         }
 
-        [Then(@"the user login incorrect attempts should be three")]
-        public void ThenTheUserLoginIncorrectAttemptsShouldBeThree()
+        [Then(@"the user login incorrect attempts should be (.*)")]
+        public void ThenTheUserLoginIncorrectAttemptsShouldBeX(int numLoginIncorrectAttempts)
         {
             var email = _tokenManager.GetTokenByKey(EmailTokenName);
             var user = _userReadRepository.Get(email);
 
-            user.LoginIncorrectAttempts.Should().Be(3);
+            user.LoginIncorrectAttempts.Should().Be(numLoginIncorrectAttempts);
         }
 
         [Then(@"the account unlock code and date should be set")]
@@ -148,6 +149,16 @@
             user.AccountUnlockCodeExpiry.Should().HaveValue();
         }
 
+        [Then(@"the account unlock code and date should not be set")]
+        public void ThenTheAccountUnlockCodeAndDateShouldNotBeSet()
+        {
+            var email = _tokenManager.GetTokenByKey(EmailTokenName);
+            var user = _userReadRepository.Get(email);
+
+            user.AccountUnlockCode.Should().BeNullOrWhiteSpace();
+            user.AccountUnlockCodeExpiry.Should().NotHaveValue();
+        }
+
         [Then(@"the password reset code and date should be set")]
         public void ThenThePasswordResetCodeAndDateShouldBeSet()
         {
@@ -156,6 +167,16 @@
 
             user.PasswordResetCode.Should().NotBeNullOrWhiteSpace();
             user.PasswordResetCodeExpiry.Should().HaveValue();
+        }
+
+        [Then(@"the password reset code and date should not be set")]
+        public void ThenThePasswordResetCodeAndDateShouldNotBeSet()
+        {
+            var email = _tokenManager.GetTokenByKey(EmailTokenName);
+            var user = _userReadRepository.Get(email);
+
+            user.PasswordResetCode.Should().BeNullOrWhiteSpace();
+            user.PasswordResetCodeExpiry.Should().NotHaveValue();
         }
 
         [Then(@"I get the account unlock code")]
@@ -184,7 +205,17 @@
             accountUnlockCode.Should().Be(user.AccountUnlockCode);
         }
 
+        [Then(@"I get the password reset code")]
+        public void ThenIGetThePasswordResetCode()
+        {
+            var email = _tokenManager.GetTokenByKey(EmailTokenName);
+            var user = _userReadRepository.Get(email);
 
+            if (user != null)
+            {
+                _tokenManager.SetToken(PasswordResetCodeTokenName, user.PasswordResetCode);
+            }
+        }
 
         #region Helpers
 

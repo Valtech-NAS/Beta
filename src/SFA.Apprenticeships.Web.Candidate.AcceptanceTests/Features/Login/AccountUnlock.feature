@@ -96,3 +96,52 @@ Scenario: Account unlock code is renewed before being resent if it has expired
          | Field                       | Rule   | Value |
          | ResentCodeText | Exists |       |
 	And my account unlock code has been renewed
+
+@US491 @AC8
+Scenario: Reset password after locking an account unlocks the account
+	Given I have registered a new candidate
+	When I choose SignoutLink
+	Then I am on the LoginPage page
+	When I enter data
+		| Field        | Value                  |
+		| EmailAddress | {EmailToken}           |
+		| Password     | {InvalidPasswordToken} |
+	And I choose SignInButton
+	And I am on the LoginPage page
+	When I enter data
+		| Field        | Value                  |
+		| Password     | {InvalidPasswordToken} |
+	And I choose SignInButton
+	And I am on the LoginPage page
+	When I enter data
+		| Field        | Value                  |
+		| Password     | {InvalidPasswordToken} |
+	And I choose SignInButton
+	Then I wait 180 second for the UnlockPage page
+	And I get the account unlock code
+	And I see
+         | Field             | Rule   | Value        |
+         | EmailAddress      | Equals | {EmailToken} |
+         | AccountUnlockCode | Exists |              |
+	And the user login incorrect attempts should be 3
+	When I navigate to the ForgottenPasswordPage page
+	Then I am on the ForgottenPasswordPage page
+	And I enter data
+		| Field        | Value        |
+		| EmailAddress | {EmailToken} |
+	When I choose SendCodeButton
+	Then I am on the ResetPasswordPage page
+	And the user login incorrect attempts should be 3
+	And the account unlock code and date should be set
+	And the password reset code and date should be set	
+	Then I get the password reset code
+	And I enter data
+		| Field             | Value                    |
+		| PasswordResetCode | {PasswordResetCodeToken} |
+		| Password          | ?NewPassword02!          |
+		| ConfirmPassword   | ?NewPassword02!          |
+	When I choose ResetPasswordButton
+	Then I am on the HomePage page
+	And the user login incorrect attempts should be 0
+	And the account unlock code and date should not be set
+	And the password reset code and date should not be set
