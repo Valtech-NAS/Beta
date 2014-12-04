@@ -16,6 +16,7 @@
                 case "Sent":
                 case "New":
                 case "In progress":
+                case "Unsent":
                     return ApplicationStatuses.Submitted;
 
                 case "Successful":
