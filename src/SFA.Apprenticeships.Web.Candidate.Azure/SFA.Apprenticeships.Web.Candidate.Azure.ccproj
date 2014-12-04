@@ -13,6 +13,7 @@
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
     <Name>SFA.Apprenticeships.Web.Candidate.Azure</Name>
     <UseWebProjectPorts>False</UseWebProjectPorts>
+    <ValidationIssuesAreErrors>False</ValidationIssuesAreErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Local|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

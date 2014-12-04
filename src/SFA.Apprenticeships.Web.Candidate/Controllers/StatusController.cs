@@ -35,7 +35,9 @@
 
             Task.WaitAll(statusTasks);
 
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
+            // GDS Performance platform (Pingdom) is configured to look for the following text
+            // in a 200 response. Anything other than this will register the site as down.
+            return Content("System healthy.");
         }
     }
 }
