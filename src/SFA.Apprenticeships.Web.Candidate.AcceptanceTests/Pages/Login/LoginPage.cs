@@ -22,5 +22,8 @@
 
         [ElementLocator(Id = "create-account-link")]
         public IWebElement CreateAccountLink { get; set; }
+
+        [ElementLocator(Text = "I can't access my account")]
+        public IWebElement CannotAccessMyAccountLink { get; set; }
     }
 }

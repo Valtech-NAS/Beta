@@ -75,7 +75,7 @@
 
             _httpDataCookie.Values.Remove(key);
 
-            return _httpContext.Server.UrlDecode(value);
+            return value;
         }
 
         private HttpCookie GetOrCreateDataCookie()

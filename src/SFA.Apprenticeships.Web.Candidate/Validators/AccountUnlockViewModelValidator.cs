@@ -20,7 +20,15 @@
         }
     }
 
-    internal static class AccountUnlockValidaitonRules
+    public class ResendAccountUnlockCodeViewModelServerValidator : AbstractValidator<AccountUnlockViewModel>
+    {
+        public ResendAccountUnlockCodeViewModelServerValidator()
+        {
+            this.AddEmailRules();
+        }
+    }
+
+    internal static class AccountUnlockValidationRules
     {
         internal static void AddCommonRules(this AbstractValidator<AccountUnlockViewModel> validator)
         {
@@ -30,6 +38,11 @@
                 .Length(6, 6)
                 .WithMessage(ActivationCodeMessages.ActivationCode.LengthErrorText);
 
+            AddEmailRules(validator);
+        }
+
+        internal static void AddEmailRules(this AbstractValidator<AccountUnlockViewModel> validator)
+        {
             validator.RuleFor(model => model.EmailAddress)
                 .NotEmpty()
                 .WithMessage(ActivationCodeMessages.EmailAddressMessages.RequiredErrorText);

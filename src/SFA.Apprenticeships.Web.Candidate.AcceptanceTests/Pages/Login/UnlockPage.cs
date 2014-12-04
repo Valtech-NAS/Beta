@@ -12,9 +12,6 @@
         {
         }
 
-        [ElementLocator(Id = "EmailAddressText")]
-        public IWebElement EmailAddressText { get; set; }
-
         [ElementLocator(Id = "EmailAddress")]
         public IWebElement EmailAddress { get; set; }
 

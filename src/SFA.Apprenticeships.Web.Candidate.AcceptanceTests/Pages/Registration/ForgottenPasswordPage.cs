@@ -17,5 +17,8 @@
 
         [ElementLocator(Id = "forgottenpassword-button")]
         public IWebElement SendCodeButton { get; set; }
+
+        [ElementLocator(Text = "enter it")]
+        public IWebElement UnlockAccountLink { get; set; }
     }
 }

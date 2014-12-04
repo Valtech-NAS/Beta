@@ -19,17 +19,20 @@
     public class LoginController : CandidateControllerBase
     {
         private readonly AccountUnlockViewModelServerValidator _accountUnlockViewModelServerValidator;
+        private readonly ResendAccountUnlockCodeViewModelServerValidator _resendAccountUnlockCodeViewModelServerValidator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly LoginViewModelServerValidator _loginViewModelServerValidator;
 
         public LoginController(LoginViewModelServerValidator loginViewModelServerValidator,
             AccountUnlockViewModelServerValidator accountUnlockViewModelServerValidator,
+            ResendAccountUnlockCodeViewModelServerValidator resendAccountUnlockCodeViewModelServerValidator,
             ICandidateServiceProvider candidateServiceProvider,
             IAuthenticationTicketService authenticationTicketService)
         {
             _loginViewModelServerValidator = loginViewModelServerValidator;
             _accountUnlockViewModelServerValidator = accountUnlockViewModelServerValidator;
+            _resendAccountUnlockCodeViewModelServerValidator = resendAccountUnlockCodeViewModelServerValidator;
             _candidateServiceProvider = candidateServiceProvider;
             _authenticationTicketService = authenticationTicketService; //todo: shouldn't be in here, move to Provider layer
         }
@@ -86,7 +89,7 @@
 
                 if (result.UserStatus == UserStatuses.Locked)
                 {
-                    UserData.Push(UserDataItemNames.EmailAddress, result.EmailAddress);
+                    UserData.Push(UserDataItemNames.UnlockEmailAddress, result.EmailAddress);
 
                     return RedirectToAction("Unlock");
                 }
@@ -113,8 +116,7 @@
         {
             return await Task.Run(() =>
             {
-                //TODO: Should be blank UNLESS you have logged in with valid credentials but we have detected that your account is locked or at the moment when you have locked your account
-                var emailAddress = UserData.Get(UserDataItemNames.EmailAddress);
+                var emailAddress = UserData.Pop(UserDataItemNames.UnlockEmailAddress);
 
                 return ViewAccountUnlock(emailAddress);
             });
@@ -123,6 +125,7 @@
 
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [MultipleFormActionsButton(Name = "LoginAction", Argument = "Unlock")]
         [ApplyWebTrends]
         public async Task<ActionResult> Unlock(AccountUnlockViewModel model)
         {
@@ -164,17 +167,27 @@
             });
         }
 
+        [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
+        [MultipleFormActionsButton(Name = "LoginAction", Argument = "Resend")]
         [ApplyWebTrends]
-        public async Task<ActionResult> ResendAccountUnlockCode(string emailAddress)
+        public async Task<ActionResult> Resend(AccountUnlockViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = new AccountUnlockViewModel
+                // todo: refactor - too much going on here Provider layer
+                var validationResult = _resendAccountUnlockCodeViewModelServerValidator.Validate(model);
+
+                if (!validationResult.IsValid)
                 {
-                    EmailAddress = emailAddress
-                };
+                    ModelState.Clear();
+                    validationResult.AddToModelState(ModelState, string.Empty);
+
+                    return View(model);
+                }
+
+                var emailAddress = model.EmailAddress;
 
                 //TODO: make different things if we have an error or a user with an invalid state
 
