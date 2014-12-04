@@ -3,7 +3,7 @@
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
 
-    [PageNavigation("/vacancysearch")]
+    [PageNavigation("/apprenticeshipsearch")]
     [PageAlias("VacancySearchPage")]
     public class VacancySearchPage : BaseValidationPage
     {

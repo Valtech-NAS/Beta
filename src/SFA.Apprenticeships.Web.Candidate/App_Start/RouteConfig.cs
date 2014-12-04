@@ -52,13 +52,25 @@
 
             routes.MapRoute(
                 name: CandidateRouteNames.Search,
-                url: "vacancysearch",
-                defaults: new { controller = "VacancySearch", action = "Index" }
+                url: "apprenticeships",
+                defaults: new { controller = "VacancySearch", action = "Results" }
             );
 
             routes.MapRoute(
-                name: CandidateRouteNames.VacancyDetails,
-                url: "vacancy/{id}",
+                name: CandidateRouteNames.Results,
+                url: "apprenticeshipsearch",
+                defaults: new {controller = "VacancySearch", action = "Index"}
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.DetailsWithDistance,
+                url: "apprenticeshipdetail/{id}/{distance}",
+                defaults: new { controller = "VacancySearch", action = "DetailsWithDistance" }
+            );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.Details,
+                url: "apprenticeship/{id}",
                 defaults: new { controller = "VacancySearch", action = "Details" }
             );
 
