@@ -10,9 +10,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SFA.Apprenticeships.Web.Candidate.Azure</RootNamespace>
     <AssemblyName>SFA.Apprenticeships.Web.Candidate.Azure</AssemblyName>
-    <StartDevelopmentStorage>True</StartDevelopmentStorage>
+    <StartDevelopmentStorage>False</StartDevelopmentStorage>
     <Name>SFA.Apprenticeships.Web.Candidate.Azure</Name>
-    <UseWebProjectPorts>False</UseWebProjectPorts>
+    <UseWebProjectPorts>True</UseWebProjectPorts>
+    <ValidationIssuesAreErrors>True</ValidationIssuesAreErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Local|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
