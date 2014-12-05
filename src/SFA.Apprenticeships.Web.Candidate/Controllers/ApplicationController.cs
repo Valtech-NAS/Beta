@@ -111,7 +111,6 @@
             });
         }
 
-
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ApplyWebTrends]
@@ -254,8 +253,7 @@
 
                 var result = _applicationViewModelSaveValidator.Validate(model);
 
-                model = _applicationProvider.PatchApplicationViewModel(
-                    UserContext.CandidateId, savedModel, model);
+                model = _applicationProvider.PatchApplicationViewModel(UserContext.CandidateId, savedModel, model);
 
                 if (!result.IsValid)
                 {
