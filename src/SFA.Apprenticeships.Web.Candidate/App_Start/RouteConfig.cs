@@ -75,6 +75,24 @@
             );
 
             routes.MapRoute(
+                name: CandidateRouteNames.Apply,
+                url: "apprenticeship/apply/{id}",
+                defaults: new {controller = "Application", action = "Apply"}
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.Preview,
+                url: "apprenticeship/preview/{id}",
+                defaults: new { controller = "Application", action = "Preview" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.WhatNext,
+                url: "apprenticeship/whatnext/{id}",
+                defaults: new { controller = "Application", action = "WhatHappensNext" }
+                );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
