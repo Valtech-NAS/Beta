@@ -5,10 +5,10 @@ Feature: Account Lock
 	so that I can be assured that the candidate is legitimate.
 
 Background: 
-	Given I navigated to the HomePage page
+	Given I navigated to the VacancySearchPage page
 	And I am logged out
-	And I navigated to the HomePage page
-	Then I am on the HomePage page
+	And I navigated to the VacancySearchPage page
+	Then I am on the VacancySearchPage page
 
 @US491 @AC1
 Scenario: I have the option 'I can't access my account'
@@ -291,7 +291,7 @@ Scenario: Reset password after locking an account unlocks the account
 		| Password          | ?NewPassword02!          |
 		| ConfirmPassword   | ?NewPassword02!          |
 	When I choose ResetPasswordButton
-	Then I am on the HomePage page
+	Then I am on the VacancySearchPage page
 	And the user login incorrect attempts should be 0
 	And the account unlock code and date should not be set
 	And the password reset code and date should not be set

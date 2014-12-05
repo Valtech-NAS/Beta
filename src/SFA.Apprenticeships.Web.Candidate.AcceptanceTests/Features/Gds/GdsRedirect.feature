@@ -5,5 +5,5 @@
 
 @SmokeTestsProd
 Scenario: As a Production user I am redirected to GDS Start Page from Apprenticeships home page 
-	Given I navigated to the HomePage page
+	Given I navigated to the VacancySearchPage page
 	Then I am on the GdsStartPage page

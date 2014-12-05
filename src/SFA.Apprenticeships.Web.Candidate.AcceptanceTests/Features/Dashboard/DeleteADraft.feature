@@ -4,10 +4,10 @@
 	so that I can remove any applications that I no longer need.
 
 Background: 
-	Given I navigated to the HomePage page
+	Given I navigated to the VacancySearchPage page
 	And I am logged out
-	And I navigated to the HomePage page
-	Then I am on the HomePage page
+	And I navigated to the VacancySearchPage page
+	Then I am on the VacancySearchPage page
 
 @US464
 Scenario: As an candidate I want to be able to delete draft applications 

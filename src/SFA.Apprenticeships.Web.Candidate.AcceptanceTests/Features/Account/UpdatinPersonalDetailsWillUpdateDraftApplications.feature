@@ -5,10 +5,10 @@ Feature: Show my up-to-date details
 	so that when I submit my application it contains my most recent personal details
 
 Background: 
-	Given I navigated to the HomePage page
+	Given I navigated to the VacancySearchPage page
 	And I am logged out
-	And I navigated to the HomePage page
-	Then I am on the HomePage page
+	And I navigated to the VacancySearchPage page
+	Then I am on the VacancySearchPage page
 
 Scenario: Updating personal details will update draft applications
 	Given I have registered a new candidate

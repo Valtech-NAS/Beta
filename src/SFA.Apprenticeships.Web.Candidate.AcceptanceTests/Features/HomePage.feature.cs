@@ -82,12 +82,10 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Home Page Test Scenario")]
         [NUnit.Framework.CategoryAttribute("pageload")]
-        [NUnit.Framework.CategoryAttribute("SmokeTests")]
         public virtual void HomePageTestScenario()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Home Page Test Scenario", new string[] {
-                        "pageload",
-                        "SmokeTests"});
+                        "pageload"});
 #line 13
 this.ScenarioSetup(scenarioInfo);
 #line 6
@@ -101,12 +99,10 @@ this.FeatureBackground();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Vacancy Search Navigation Test")]
         [NUnit.Framework.CategoryAttribute("pagenavigation")]
-        [NUnit.Framework.CategoryAttribute("SmokeTests")]
         public virtual void VacancySearchNavigationTest()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Vacancy Search Navigation Test", new string[] {
-                        "pagenavigation",
-                        "SmokeTests"});
+                        "pagenavigation"});
 #line 17
 this.ScenarioSetup(scenarioInfo);
 #line 6
