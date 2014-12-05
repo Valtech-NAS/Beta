@@ -182,16 +182,10 @@ Scenario: Return to search results link appears if arriving from search results 
 		| Field                     | Rule   | Value |
 		| ReturnToSearchResultsLink | Exists |       |
 
-@US528 @SmokeTests @ignore
+@US528 @SmokeTests
 Scenario: Return to find apprenticeship link appears if not arriving from search results page
-	Given I navigated to the VacancySearchPage page
-	When I enter data
-		 | Field          | Value    |
-		 | Location       | Coventry |
-		 | WithInDistance | 40 miles |
-	And I choose Search
-	And I am on the VacancySearchResultPage page
-	And I set token VacancyId with the value of FirstVacancyId
+	Given I select the "first" vacancy in location "N7 8LS" that can apply by this website
+	When I am on the VacancyDetailsPage page
 	And I navigate to the HomePage page
 	And I navigate to the VacancyDetailsPage page with parameters
 		| VacancyId   |

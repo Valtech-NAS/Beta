@@ -3,7 +3,7 @@
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
 
-    [PageNavigation("/apprenticeship/[0-9]+")]
+    [PageNavigation("/apprenticeship/[0-9]+", UrlTemplate = "/apprenticeship/{VacancyId}")]
     [PageAlias("VacancyDetailsPage")]
     public class DetailsPage
     {

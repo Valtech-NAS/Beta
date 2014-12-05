@@ -195,12 +195,12 @@
             }
         }
 
-        public string FirstVacancyId
+        public IWebElement FirstVacancyId
         {
             get
             {
                 var item = SearchResultItems.First();
-                return item.VacancyId;
+                return item;
             }
         }
     }
@@ -214,7 +214,7 @@
 
         public string VacancyId
         {
-            get { return VacancyLink.GetAttribute("data-vacancy-userId"); }
+            get { return VacancyLink.GetAttribute("data-vacancy-id"); }
         }
 
         [ElementLocator(Class = "vacancy-link")]
@@ -237,5 +237,10 @@
 
         [ElementLocator(Class = "best-match-score")]
         public IWebElement BestMatchScore { get; set; }
+
+        public override string Text
+        {
+            get { return VacancyId; }
+        }
     }
 }

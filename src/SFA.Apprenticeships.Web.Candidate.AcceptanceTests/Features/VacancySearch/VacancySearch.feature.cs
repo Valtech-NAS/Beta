@@ -626,7 +626,6 @@ this.FeatureBackground();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Return to find apprenticeship link appears if not arriving from search results pa" +
             "ge")]
-        [NUnit.Framework.IgnoreAttribute()]
         [NUnit.Framework.CategoryAttribute("US528")]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
         public virtual void ReturnToFindApprenticeshipLinkAppearsIfNotArrivingFromSearchResultsPage()
@@ -634,52 +633,35 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Return to find apprenticeship link appears if not arriving from search results pa" +
                     "ge", new string[] {
                         "US528",
-                        "SmokeTests",
-                        "ignore"});
+                        "SmokeTests"});
 #line 186
 this.ScenarioSetup(scenarioInfo);
 #line 7
 this.FeatureBackground();
 #line 187
- testRunner.Given("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-            TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
-                        "Value"});
-            table29.AddRow(new string[] {
-                        "Location",
-                        "Coventry"});
-            table29.AddRow(new string[] {
-                        "WithInDistance",
-                        "40 miles"});
+ testRunner.Given("I select the \"first\" vacancy in location \"N7 8LS\" that can apply by this website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 188
- testRunner.When("I enter data", ((string)(null)), table29, "When ");
-#line 192
- testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 193
- testRunner.And("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 194
- testRunner.And("I set token VacancyId with the value of FirstVacancyId", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 195
+ testRunner.When("I am on the VacancyDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 189
  testRunner.And("I navigate to the HomePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
                         "VacancyId"});
-            table30.AddRow(new string[] {
+            table29.AddRow(new string[] {
                         "{VacancyId}"});
-#line 196
- testRunner.And("I navigate to the VacancyDetailsPage page with parameters", ((string)(null)), table30, "And ");
+#line 190
+ testRunner.And("I navigate to the VacancyDetailsPage page with parameters", ((string)(null)), table29, "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table31 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
-            table31.AddRow(new string[] {
+            table30.AddRow(new string[] {
                         "FindApprenticeshipLink",
                         "Exists",
                         ""});
-#line 199
- testRunner.Then("I see", ((string)(null)), table31, "Then ");
+#line 193
+ testRunner.Then("I see", ((string)(null)), table30, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

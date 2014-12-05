@@ -38,19 +38,21 @@ namespace SpecBind
         private const string GivenWaitForPageWithTimeoutStepRegex = @"I waited (\d+) seconds? for the (.+) page";
 		
 	    private readonly IActionPipelineService actionPipelineService;
+	    private readonly ITokenManager tokenManager;
 
 	    /// <summary>
 	    /// Initializes a new instance of the <see cref="PageNavigationSteps" /> class.
 	    /// </summary>
 	    /// <param name="scenarioContext">The scenario context.</param>
 	    /// <param name="actionPipelineService">The action pipeline service.</param>
-	    public PageNavigationSteps(IScenarioContextHelper scenarioContext, IActionPipelineService actionPipelineService)
+        public PageNavigationSteps(IScenarioContextHelper scenarioContext, IActionPipelineService actionPipelineService, ITokenManager tokenManager)
             : base(scenarioContext)
-		{
-			this.actionPipelineService = actionPipelineService;
-		}
+	    {
+	        this.actionPipelineService = actionPipelineService;
+	        this.tokenManager = tokenManager;
+	    }
 
-		/// <summary>
+	    /// <summary>
 		/// A Given step for ensuring the browser is on the page with the specified name.
 		/// </summary>
 		/// <param name="pageName">The page name.</param>
@@ -113,7 +115,8 @@ namespace SpecBind
 				var row = pageArguments.Rows[0];
 				foreach (var header in pageArguments.Header.Where(h => !args.ContainsKey(h)))
 				{
-					args.Add(header, row[header]);
+				    var value = tokenManager.GetToken(row[header]);
+				    args.Add(header, value);
 				}
 			}
 

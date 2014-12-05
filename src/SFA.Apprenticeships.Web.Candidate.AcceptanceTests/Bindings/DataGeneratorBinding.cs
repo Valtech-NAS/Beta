@@ -19,6 +19,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
         private const string EmailTokenId = "EmailToken";
         private const string ActivationTokenId = "ActivationToken";
         private const string InvalidPasswordTokenName = "InvalidPasswordToken";
+        private const string VacancyIdToken = "VacancyId";
         private const string Password = "?Password01!"; //TODO: remove duplication?
         private readonly ITokenManager _tokenManager;
         private readonly IUserReadRepository _userReadRepository;
@@ -70,9 +71,12 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
 
                 // Click on the i-th search result
                 _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(180));
-                _driver.FindElements(
+                var searchResult = _driver.FindElements(
                     By.CssSelector(".search-results__item .vacancy-link"))
-                    .Skip(i++).First().Click();
+                    .Skip(i++).First();
+                var vacancyId = searchResult.GetAttribute("data-vacancy-id");
+                _tokenManager.SetToken(VacancyIdToken, vacancyId);
+                searchResult.Click();
 
                 try
                 {
@@ -119,9 +123,12 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
 
                 // Click on the i-th search result
                 _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(180));
-                _driver.FindElements(
+                var searchResult = _driver.FindElements(
                     By.CssSelector(".search-results__item .vacancy-link"))
-                    .Skip(i++).First().Click();
+                    .Skip(i++).First();
+                searchResult.Click();
+                var vacancyId = searchResult.GetAttribute("data-vacancy-id");
+                _tokenManager.SetToken(VacancyIdToken, vacancyId);
 
                 try
                 {

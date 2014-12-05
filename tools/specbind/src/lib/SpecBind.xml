@@ -3194,7 +3194,7 @@
             A set of common step bindings that drive the underlying fixtures.
             </summary>
         </member>
-        <member name="M:SpecBind.PageNavigationSteps.#ctor(SpecBind.Helpers.IScenarioContextHelper,SpecBind.ActionPipeline.IActionPipelineService)">
+        <member name="M:SpecBind.PageNavigationSteps.#ctor(SpecBind.Helpers.IScenarioContextHelper,SpecBind.ActionPipeline.IActionPipelineService,SpecBind.Helpers.ITokenManager)">
             <summary>
             Initializes a new instance of the <see cref="T:SpecBind.PageNavigationSteps"/> class.
             </summary>
