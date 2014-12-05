@@ -1,16 +1,15 @@
-﻿using System.Net;
-using System.Threading;
-using EasyNetQ;
-using SFA.Apprenticeships.Infrastructure.Common.IoC;
-using SFA.Apprenticeships.Infrastructure.Communication.IoC;
-using SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC;
-using SFA.Apprenticeships.Infrastructure.RabbitMq.Interfaces;
-using SFA.Apprenticeships.Infrastructure.RabbitMq.IoC;
-using SFA.Apprenticeships.Infrastructure.Repositories.Applications.IoC;
-using SFA.Apprenticeships.Infrastructure.Repositories.Candidates.IoC;
-
-namespace SFA.Apprenticeships.CustomHosts.AsyncProcessorService
+﻿namespace SFA.Apprenticeships.CustomHosts.AsyncProcessorService
 {
+    using System.Net;
+    using System.Threading;
+    using EasyNetQ;
+    using Infrastructure.Common.IoC;
+    using Infrastructure.Communication.IoC;
+    using Infrastructure.LegacyWebServices.IoC;
+    using Infrastructure.RabbitMq.Interfaces;
+    using Infrastructure.RabbitMq.IoC;
+    using Infrastructure.Repositories.Applications.IoC;
+    using Infrastructure.Repositories.Candidates.IoC;
     using System;
     using System.Reflection;
     using System.ServiceProcess;
@@ -20,11 +19,11 @@ namespace SFA.Apprenticeships.CustomHosts.AsyncProcessorService
     using Infrastructure.AsyncProcessor.IoC;
     using StructureMap;
 
-    public partial class AsyncProecessorService : ServiceBase
+    public partial class AsyncProcessorService : ServiceBase
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public AsyncProecessorService()
+        public AsyncProcessorService()
         {
             InitializeComponent();
         }

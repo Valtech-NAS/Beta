@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SFA.Apprenticeships.CustomHosts.AsyncProcessorService
+﻿namespace SFA.Apprenticeships.CustomHosts.AsyncProcessorService
 {
+    using System.ServiceProcess;
+
     static class Program
     {
         /// <summary>
@@ -14,12 +9,11 @@ namespace SFA.Apprenticeships.CustomHosts.AsyncProcessorService
         /// </summary>
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[] 
+            var servicesToRun = new ServiceBase[] 
             { 
-                new AsyncProecessorService() 
+                new AsyncProcessorService() 
             };
-            ServiceBase.Run(ServicesToRun);
+            ServiceBase.Run(servicesToRun);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.CustomHosts.AsyncProcessorService
 {
-    partial class AsyncProecessorService
+    partial class AsyncProcessorService
     {
         /// <summary> 
         /// Required designer variable.
