@@ -38,6 +38,8 @@
             var request = new ClusterHealthRequest
             {
                 Level = Level.Cluster,
+                //http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-health.html
+                WaitForStatus = WaitForStatus.Yellow,
                 Timeout = Timeout
             };
 
