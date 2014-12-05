@@ -187,6 +187,10 @@
       <Project>{AA87BD85-5A33-46B8-B26F-C6B680876486}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">
+      <Project>{4696D786-2F3C-4A12-BD6B-38E2981D6DF1}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Users</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">

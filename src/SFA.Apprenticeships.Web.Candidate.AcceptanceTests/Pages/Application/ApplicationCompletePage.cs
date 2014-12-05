@@ -3,7 +3,7 @@
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
 
-    [PageNavigation("/application/whathappensnext/[0-9]+")]
+    [PageNavigation("/apprenticeship/whatnext/[0-9]+")]
     [PageAlias("ApplicationCompletePage")]
     public class ApplicationCompletePage : BasePage
     {

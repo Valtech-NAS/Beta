@@ -7,7 +7,7 @@
     using System.Linq;
     using SummaryItems;
 
-    [PageNavigation("/application/apply/[0-9]+")]
+    [PageNavigation("/apprenticeship/apply/[0-9]+")]
     [PageAlias("ApplicationPage")]
     public class ApplicationPage : BaseValidationPage
     {

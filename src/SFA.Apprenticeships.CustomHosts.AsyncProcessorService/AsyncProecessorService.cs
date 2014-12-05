@@ -14,6 +14,7 @@ namespace SFA.Apprenticeships.CustomHosts.AsyncProcessorService
     using System;
     using System.Reflection;
     using System.ServiceProcess;
+    using Infrastructure.Repositories.Users.IoC;
     using NLog;
     using Infrastructure.AsyncProcessor.Consumers;
     using Infrastructure.AsyncProcessor.IoC;
@@ -99,6 +100,7 @@ namespace SFA.Apprenticeships.CustomHosts.AsyncProcessorService
                 x.AddRegistry<CommunicationRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
+                x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<AsyncProcessorRegistry>();
             });
