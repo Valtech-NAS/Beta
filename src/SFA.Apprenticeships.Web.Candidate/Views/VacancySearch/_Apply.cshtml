@@ -10,7 +10,7 @@
 @if (@Model.ApplyViaEmployerWebsite)
 {
     <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
-    <a id="external-employer-website" rel="external" href="@Model.VacancyUrl" target="_blank" @Html.Raw(string.Format(AnalyticsTag, "/application/apply/offline/", "Application – Apply Offline", ViewData["AnalyticsButtonPosition"]))>Apply now</a>
+    <a id="external-employer-website" rel="external" href="@Model.VacancyUrl" target="_blank" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/offline/", "Apprenticeship – Apply Offline", ViewData["AnalyticsButtonPosition"]))>Apply now</a>
 }
 else if (Request.IsAuthenticated)
 {
@@ -20,7 +20,7 @@ else if (Request.IsAuthenticated)
         switch (Model.CandidateApplicationStatus.Value)
         {
             case ApplicationStatuses.Draft:
-                <a id="apply-button" class="button button-with-hint" title="Resume application" href="@Url.Action("Apply", "Application", new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/application/apply/resume/", "Application – Resume Application", ViewData["AnalyticsButtonPosition"]))>Resume application</a>
+                <a id="apply-button" class="button button-with-hint" title="Resume application" href="@Url.Action("Apply", "Application", new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/resume/", "Apprenticeship – Resume Application", ViewData["AnalyticsButtonPosition"]))>Resume application</a>
                 break;
 
             case ApplicationStatuses.Submitting:
@@ -36,12 +36,12 @@ else if (Request.IsAuthenticated)
     else
     {
         // Candidate has not applied for this vacancy.
-        <a id="apply-button" class="button button-with-hint" title="Apply for apprenticeship" href="@Url.Action("Apply", "Application", new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/application/apply/signedin/", "Application – Signed In Apply", ViewData["AnalyticsButtonPosition"]))>Apply for apprenticeship</a>
+        <a id="apply-button" class="button button-with-hint" title="Apply for apprenticeship" href="@Url.Action("Apply", "Application", new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signedin/", "Apprenticeship – Signed In Apply", ViewData["AnalyticsButtonPosition"]))>Apply for apprenticeship</a>
     }
 }
 else
 { 
     // Vacancy is not being viewed by a signed-in candidate.
-    <a id="apply-button" class="button button-with-hint" title="Sign in to apply" href="@Url.Action("Apply", "Application", new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/application/apply/signin/", "Application – Sign In to Apply", ViewData["AnalyticsButtonPosition"]))>Sign in to apply</a>
+    <a id="apply-button" class="button button-with-hint" title="Sign in to apply" href="@Url.Action("Apply", "Application", new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signin/", "Apprenticeship – Sign In to Apply", ViewData["AnalyticsButtonPosition"]))>Sign in to apply</a>
 }
 <p class="copy-16">Closing date: @Html.DisplayFor(m => m.ClosingDate, "Date")</p>
