@@ -12,6 +12,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
     using EasyNetQ;
     using IoC;
     using LegacyWebServices.IoC;
+    using Logging;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
     using RabbitMq.Interfaces;
@@ -55,6 +56,8 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
 
         private void Initialise()
         {
+            VersionLogging.SetVersion();
+
             try
             {
 #pragma warning disable 0618

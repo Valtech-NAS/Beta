@@ -12,6 +12,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using Elastic.Common.IoC;
     using IoC;
     using LegacyWebServices.IoC;
+    using Logging;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
     using RabbitMq.Interfaces;
@@ -57,6 +58,8 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
         private void Initialise()
         {
+            VersionLogging.SetVersion();
+
             try
             {
 #pragma warning disable 0618

@@ -12,6 +12,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using IoC;
     using LegacyWebServices.IoC;
     using LocationLookup.IoC;
+    using Logging;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
     using Postcode.IoC;
@@ -62,6 +63,8 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
         #region Helpers
         private void Initialise()
         {
+            VersionLogging.SetVersion();
+
             try
             {
 #pragma warning disable 0618

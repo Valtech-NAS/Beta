@@ -10,6 +10,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
     using EasyNetQ;
     using IoC;
     using LegacyWebServices.IoC;
+    using Logging;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
     using RabbitMq.Interfaces;
@@ -68,6 +69,8 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
 
         private static void Initialise()
         {
+            VersionLogging.SetVersion();
+
             try
             {
                 Logger.Debug("AsyncProcessor Initialising...");
