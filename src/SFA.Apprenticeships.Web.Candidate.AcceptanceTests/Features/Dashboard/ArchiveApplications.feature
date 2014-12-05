@@ -4,10 +4,10 @@
 	so that I can track the progress of my application(s) 
 
 Background: 
-	Given I navigated to the HomePage page
+	Given I navigated to the VacancySearchPage page
 	And I am logged out
-	And I navigated to the HomePage page
-	Then I am on the HomePage page
+	And I navigated to the VacancySearchPage page
+	Then I am on the VacancySearchPage page
 
 @US154
 Scenario: As an candidate I want to be able to archive succesful applications 

@@ -5,10 +5,10 @@ Feature: Register Candidate
 	I want to be able to register for the service
 
 Background: 
-	Given I navigated to the HomePage page
+	Given I navigated to the VacancySearchPage page
 	And I am logged out
-	And I navigated to the HomePage page
-	Then I am on the HomePage page
+	And I navigated to the VacancySearchPage page
+	Then I am on the VacancySearchPage page
 
 @SmokeTests
 Scenario: As a candidate I am on the registration page and all required fields are present and all validators show
