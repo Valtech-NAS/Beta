@@ -26,7 +26,7 @@
 
         public void RunMonitorTasks()
         {
-            Logger.Debug("Starting to run monitor tasks");
+            Logger.Info("Starting to run monitor tasks");
 
             var tasks = _monitorTasks.Select(mt => Task.Factory
                 .StartNew(() =>
