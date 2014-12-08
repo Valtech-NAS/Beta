@@ -226,35 +226,42 @@
         {
             return await Task.Run(() =>
             {
-                var result = _candidateServiceProvider.VerifyPasswordReset(model);
+                //Password Reset Code is verified in VerifyPasswordReset. Initially assume the reset code is valid as a full check requires hitting the repo.
+                model.IsPasswordResetCodeValid = true;
 
-                if (result.HasError())
-                {
-                    SetUserMessage(result.ViewModelMessage, UserMessageLevel.Warning);
-                    return View(result);
-                }
-
-                if (result.UserStatus == UserStatuses.Locked)
-                {
-                    UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
-                    return RedirectToAction("Unlock", "Login");
-                }
-
-                var validationResult = _passwordResetViewModelServerValidator.Validate(result);
+                var validationResult = _passwordResetViewModelServerValidator.Validate(model);
 
                 if (validationResult.IsValid)
                 {
-                    var candidate = _candidateServiceProvider.GetCandidate(result.EmailAddress);
+                    model = _candidateServiceProvider.VerifyPasswordReset(model);
 
-                    SetUserMessage(PasswordResetPageMessages.SuccessfulPasswordReset);
+                    if (model.HasError())
+                    {
+                        SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
+                        return View(model);
+                    }
 
-                    return SetAuthenticationCookieAndRedirectToAction(candidate);
+                    if (model.UserStatus == UserStatuses.Locked)
+                    {
+                        UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
+                        return RedirectToAction("Unlock", "Login");
+                    }
+
+                    validationResult = _passwordResetViewModelServerValidator.Validate(model);
+                    if (validationResult.IsValid)
+                    {
+                        var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
+
+                        SetUserMessage(PasswordResetPageMessages.SuccessfulPasswordReset);
+
+                        return SetAuthenticationCookieAndRedirectToAction(candidate);
+                    }
                 }
 
                 ModelState.Clear();
                 validationResult.AddToModelState(ModelState, string.Empty);
 
-                return View(result);
+                return View(model);
             });
         }
 
