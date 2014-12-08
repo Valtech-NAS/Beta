@@ -15,18 +15,15 @@
         private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly IApplicationWriteRepository _applicationWriteRepository;
         private readonly IMessageBus _messageBus;
-        private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICommunicationService _communicationService;
 
         public LegacySubmitApplicationStrategy(IMessageBus messageBus, IApplicationReadRepository applicationReadRepository,
-            IApplicationWriteRepository applicationWriteRepository, ICommunicationService communicationService,
-            ICandidateReadRepository candidateReadRepository)
+            IApplicationWriteRepository applicationWriteRepository, ICommunicationService communicationService)
         {
             _messageBus = messageBus;
             _applicationReadRepository = applicationReadRepository;
             _applicationWriteRepository = applicationWriteRepository;
             _communicationService = communicationService;
-            _candidateReadRepository = candidateReadRepository;
         }
 
         public void SubmitApplication(Guid applicationId)
@@ -39,16 +36,15 @@
             {
                 if (applicationDetail.Status == ApplicationStatuses.Draft)
                 {
-                    applicationDetail.SetStateSubmitting();
-
-                    _applicationWriteRepository.Save(applicationDetail);
-
                     var message = new SubmitApplicationRequest
                     {
                         ApplicationId = applicationDetail.EntityId
                     };
 
                     _messageBus.PublishMessage(message);
+
+                    applicationDetail.SetStateSubmitting();
+                    _applicationWriteRepository.Save(applicationDetail);
 
                     NotifyCandidate(applicationDetail.CandidateId, applicationDetail.EntityId.ToString());
                 }
