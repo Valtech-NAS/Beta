@@ -78,35 +78,26 @@
             var client = CreateRestClient();
             var timestamps = new List<DateTime>();
 
-            // Look for log entries for today and yesterday to handle midnight boundary.
-            foreach (var indexDate in new[] { DateTime.Today, DateTime.Today.AddDays(-1) })
+            var indexDate = DateTime.Now.AddMinutes(-30);
+            var uri = BuildUri(indexDate);
+            var request = CreateRestRequest(uri);
+
+            var response = client.Execute<dynamic>(request);
+            if (response == null)
             {
-                var uri = BuildUri(indexDate);
-                var request = CreateRestRequest(uri);
-
-                var response = client.Execute<dynamic>(request);
-                if (response == null)
-                {
-                    throw new Exception("Logstash query returned a null response");
-                }
+                throw new Exception("Logstash query returned a null response");
+            }
                 
-                EnsureResponseStatusCodeIsOk(response);
-                EnsureResponseHasData(response);
+            EnsureResponseStatusCodeIsOk(response);
+            EnsureResponseHasData(response);
 
-                var logEntries = response.Data.hits.hits;
+            var logEntries = response.Data.hits.hits;
 
-                foreach (var logEntry in logEntries)
-                {
-                    // It's whacky but the JSON 'path' to a timestamp value looks like this:
-                    // response.Data.hits.hits[0].fields["@timestamp"][0].Value
-                    timestamps.Add(logEntry.fields["@timestamp"][0].Value);
-                }
-
-                if (timestamps.Count >= ExpectedMinimumLogCount)
-                {
-                    // We have enough log entries to check.
-                    break;
-                }
+            foreach (var logEntry in logEntries)
+            {
+                // It's whacky but the JSON 'path' to a timestamp value looks like this:
+                // response.Data.hits.hits[0].fields["@timestamp"][0].Value
+                timestamps.Add(logEntry.fields["@timestamp"][0].Value);
             }
 
             return timestamps;

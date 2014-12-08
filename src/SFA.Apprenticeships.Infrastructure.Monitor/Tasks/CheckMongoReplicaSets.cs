@@ -33,11 +33,11 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
             if (_expectedReplicaSetCount > 1 && isReplicaSet)
             {
                 verifyReplicaSets = true;
-                Logger.Info("Replica set members will be verified");
+                Logger.Debug("Replica set members will be verified");
             }
             else if (_expectedReplicaSetCount == 1 && !isReplicaSet)
             {
-                Logger.Info("Replica set members will not be verified");
+                Logger.Debug("Replica set members will not be verified");
             }
             else
                 Logger.Error("{0} config is invalid. ExpectedReplicaSetCount: {1}, IsReplicaSet: {2}", TaskName, _expectedReplicaSetCount, isReplicaSet);
