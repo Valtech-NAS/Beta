@@ -173,7 +173,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="SFA.Apprenticeships.CustomHosts.AsyncProcessorService_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.AsyncProcessor\SFA.Apprenticeships.Infrastructure.AsyncProcessor.csproj">
