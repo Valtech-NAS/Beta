@@ -13,6 +13,7 @@
     using FluentValidation.Mvc;
     using FluentValidation.Validators;
     using Microsoft.WindowsAzure;
+    using Infrastructure.Logging;
 
     public class MvcApplication : HttpApplication
     {
@@ -26,7 +27,7 @@
             }
 
             var context = HttpContext.Current;
-            var path = context.Request.Path.ToLower();       
+            var path = context.Request.Path.ToLower();
 
             var lastExtension = path.LastIndexOf(".aspx", StringComparison.Ordinal);
             if (lastExtension != -1)
@@ -47,6 +48,7 @@
 
         protected void Application_Start()
         {
+            VersionLogging.SetVersion();
             RuntimeHelper.SetRuntimeName("SFA.Apprenticeships.Web.Candidate");
 
             AreaRegistration.RegisterAllAreas();

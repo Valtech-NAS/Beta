@@ -1,9 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
+﻿
+namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
     using System.Configuration;
-    using System.Diagnostics;
-    using System.Reflection;
     using System.Web.Mvc;
     using Common.Attributes;
     using Common.Constants;
@@ -14,6 +13,7 @@
     using NLog;
     using Providers;
     using StructureMap;
+    using Infrastructure.Logging;
 
     [SessionTimeout, CookiesEnabled, AllowReturnUrl(Allow = true)]
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
@@ -94,21 +94,8 @@
 
             if (!showAbout) return;
 
-            const string versionKey = "version";
-
-            if (!GlobalDiagnosticsContext.Contains(versionKey))
-            {
-                GlobalDiagnosticsContext.Set(versionKey, GetVersion());
-            }
-
-            ViewBag.Version = GlobalDiagnosticsContext.Get(versionKey);
+            ViewBag.Version = VersionLogging.GetVersion();
             ViewBag.Environment = ConfigurationManager.AppSettings["Environment"];
-        }
-
-        private static string GetVersion()
-        {
-            return FileVersionInfo.GetVersionInfo(
-                Assembly.GetAssembly(typeof(CandidateControllerBase)).Location).FileVersion;
         }
 
         private void SetLoggingIds()
