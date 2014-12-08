@@ -132,21 +132,21 @@ Scenario: When searching by location then adding keyword and searching again the
         | SortOrderingDropDown           | Equals       | Distance                         |
 
 #Inclusion of nationwide vacancies in results superceeded by US500
-@US449 @SmokeTests @Ignore
+@US449 @SmokeTests
 Scenario: Nationwide apprenticeships are included in keyword search results
 	Given I navigated to the VacancySearchPage page
 	When I enter data
-		 | Field          | Value       |
-		 | Keywords       | bricklaying |
-		 | Location       | Birmingham  |
-		 | WithInDistance | 40 miles    |
+		 | Field          | Value    |
+		 | Keywords       | it       |
+		 | Location       | London   |
+		 | WithInDistance | 40 miles |
 	And I choose Search
 	And I am on the VacancySearchResultPage page
 	Then I see 
-        | Field                      | Rule           | Value      |
-        | SearchResultItemsCount     | Greater Than   | 0          |
-        | SortOrderingDropDown       | Equals         | Best Match |
-        | NationwideLocationTypeLink | Does Not Exist |            |
+        | Field                      | Rule         | Value      |
+        | SearchResultItemsCount     | Greater Than | 0          |
+        | SortOrderingDropDown       | Equals       | Best Match |
+        | NationwideLocationTypeLink | Exists       |            |
 
 @SmokeTests
 Scenario: Find apprenticeships by keyword and change ordering to distance

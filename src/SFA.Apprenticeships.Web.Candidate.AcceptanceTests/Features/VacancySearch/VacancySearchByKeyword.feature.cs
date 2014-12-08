@@ -509,15 +509,13 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Nationwide apprenticeships are included in keyword search results")]
-        [NUnit.Framework.IgnoreAttribute()]
         [NUnit.Framework.CategoryAttribute("US449")]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
         public virtual void NationwideApprenticeshipsAreIncludedInKeywordSearchResults()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Nationwide apprenticeships are included in keyword search results", new string[] {
                         "US449",
-                        "SmokeTests",
-                        "Ignore"});
+                        "SmokeTests"});
 #line 136
 this.ScenarioSetup(scenarioInfo);
 #line 6
@@ -530,10 +528,10 @@ this.FeatureBackground();
                         "Value"});
             table18.AddRow(new string[] {
                         "Keywords",
-                        "bricklaying"});
+                        "it"});
             table18.AddRow(new string[] {
                         "Location",
-                        "Birmingham"});
+                        "London"});
             table18.AddRow(new string[] {
                         "WithInDistance",
                         "40 miles"});
@@ -558,7 +556,7 @@ this.FeatureBackground();
                         "Best Match"});
             table19.AddRow(new string[] {
                         "NationwideLocationTypeLink",
-                        "Does Not Exist",
+                        "Exists",
                         ""});
 #line 145
  testRunner.Then("I see", ((string)(null)), table19, "Then ");
