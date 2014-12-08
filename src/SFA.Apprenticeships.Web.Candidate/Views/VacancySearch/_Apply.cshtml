@@ -19,17 +19,16 @@ else if (Request.IsAuthenticated)
         // Candidate has applied for this vacancy.
         switch (Model.CandidateApplicationStatus.Value)
         {
+            case ApplicationStatuses.Unknown:
+                break;
+                
             case ApplicationStatuses.Draft:
                 <a role="button" id="apply-button" class="button button-with-hint" title="Resume application" href="@Url.Action("Apply", "Application", new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/resume/", "Apprenticeship – Resume Application", ViewData["AnalyticsButtonPosition"]))>Resume application</a>
                 break;
 
-            case ApplicationStatuses.Submitting:
-            case ApplicationStatuses.Submitted:
-            case ApplicationStatuses.InProgress:
-            case ApplicationStatuses.Successful:
-            case ApplicationStatuses.Unsuccessful:
-            <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
-            <a href='@Url.RouteUrl(CandidateRouteNames.MyApplications)'>Track application status</a>
+            default:
+                <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
+                <a href='@Url.RouteUrl(CandidateRouteNames.MyApplications)'>Track application status</a>
                 break;
         }
     }
