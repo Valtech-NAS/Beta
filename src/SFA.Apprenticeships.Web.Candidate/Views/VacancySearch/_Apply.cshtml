@@ -14,14 +14,11 @@
 }
 else if (Request.IsAuthenticated)
 {
-    if (Model.CandidateApplicationStatus.HasValue)
+    if (Model.CandidateApplicationStatus.HasValue && Model.CandidateApplicationStatus.Value != ApplicationStatuses.Unknown)
     {
         // Candidate has applied for this vacancy.
         switch (Model.CandidateApplicationStatus.Value)
         {
-            case ApplicationStatuses.Unknown:
-                break;
-                
             case ApplicationStatuses.Draft:
                 <a role="button" id="apply-button" class="button button-with-hint" title="Resume application" href="@Url.Action("Apply", "Application", new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/resume/", "Apprenticeship – Resume Application", ViewData["AnalyticsButtonPosition"]))>Resume application</a>
                 break;
