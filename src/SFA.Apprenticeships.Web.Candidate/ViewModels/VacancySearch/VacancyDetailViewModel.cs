@@ -50,6 +50,8 @@
 
         public string EmployerWebsite { get; set; }
 
+        public bool IsWellFormedEmployerWebsiteUrl { get; set; }
+
         public string ExpectedDuration { get; set; }
 
         public AddressViewModel VacancyAddress { get; set; }
@@ -95,6 +97,8 @@
         public bool ApplyViaEmployerWebsite { get; set; }
 
         public string ApplicationInstructions { get; set; }
+
+        public bool IsWellFormedVacancyUrl { get; set; }
 
         public string VacancyUrl { get; set; }
 

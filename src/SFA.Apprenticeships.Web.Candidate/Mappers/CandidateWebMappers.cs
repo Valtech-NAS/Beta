@@ -32,7 +32,8 @@
             Mapper.CreateMap<VacancyDetail, VacancyDetailViewModel>()
                 .ForMember(d => d.EmployerName,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
-                .ForMember(d => d.Wage, opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.WageResolver>())
+                .ForMember(d => d.Wage,
+                    opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.WageResolver>())
                 .ForMember(d => d.RealityCheck,
                     opt => opt.MapFrom(src => src.RealityCheck))
                 .ForMember(d => d.OtherInformation,
@@ -40,7 +41,11 @@
                 .ForMember(d => d.ApplyViaEmployerWebsite,
                     opt => opt.MapFrom(src => src.ApplyViaEmployerWebsite))
                 .ForMember(d => d.VacancyUrl,
-                    opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.VacancyUrlResolver>())
+                    opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.UrlResolver>()
+                        .FromMember(src => src.VacancyUrl))
+                .ForMember(d => d.IsWellFormedVacancyUrl,
+                    opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.IsWellFormedUrlResolver>()
+                        .FromMember(src => src.VacancyUrl))
                 .ForMember(d => d.ApplicationInstructions,
                     opt => opt.MapFrom(src => src.ApplicationInstructions))
                 .ForMember(d => d.IsRecruitmentAgencyAnonymous,
@@ -51,8 +56,12 @@
                     opt => opt.MapFrom(src => src.IsEmployerAnonymous))
                 .ForMember(d => d.IsNasProvider,
                     opt => opt.MapFrom(src => src.IsNasProvider))
-                .ForMember(d => d.EmployerWebsite, opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerWebsiteResolver>()
-                .FromMember(src => src.EmployerWebsite));
+                .ForMember(d => d.EmployerWebsite,
+                    opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.UrlResolver>()
+                        .FromMember(src => src.EmployerWebsite))
+                .ForMember(d => d.IsWellFormedEmployerWebsiteUrl,
+                    opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.IsWellFormedUrlResolver>()
+                        .FromMember(src => src.EmployerWebsite));
 
             Mapper.CreateMap<VacancySummaryResponse, VacancySummaryViewModel>();
             
