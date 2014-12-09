@@ -120,10 +120,14 @@
                 <div class="grid grid-1-2">
                     <div class="inner-block-padr">
                         <h3 class="bold-small">Employer</h3>
-                            <p id="vacancy-employer-name" class="@(!string.IsNullOrWhiteSpace(Model.EmployerWebsite) ? "no-btm-margin" : "")">@Model.EmployerName</p>
-                            @if (!string.IsNullOrWhiteSpace(Model.EmployerWebsite))
+                            <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : "")">@Model.EmployerName</p>
+                            @if (Model.IsWellFormedEmployerWebsiteUrl)
                             {
-                                <p><a itemprop="url" href="http://@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a></p>
+                                <p><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a></p>
+                            }
+                            else
+                            {
+                                <p>@Model.EmployerWebsite</p>
                             }
                         @if (Model.VacancyLocationType != VacancyLocationType.National)
                         {

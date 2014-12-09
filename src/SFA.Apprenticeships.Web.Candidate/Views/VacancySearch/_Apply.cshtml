@@ -10,7 +10,15 @@
 @if (@Model.ApplyViaEmployerWebsite)
 {
     <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
-    <a id="external-employer-website" rel="external" href="@Model.VacancyUrl" target="_blank" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/offline/", "Apprenticeship – Apply Offline", ViewData["AnalyticsButtonPosition"]))>Apply now</a>
+
+    if (Model.IsWellFormedVacancyUrl)
+    {
+        <a id="external-employer-website" rel="external" href="@Model.VacancyUrl" target="_blank" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/offline/", "Apprenticeship – Apply Offline", ViewData["AnalyticsButtonPosition"]))>Apply now</a>
+    }
+    else
+    {
+        <p>@Model.VacancyUrl</p>
+    }
 }
 else if (Request.IsAuthenticated)
 {
