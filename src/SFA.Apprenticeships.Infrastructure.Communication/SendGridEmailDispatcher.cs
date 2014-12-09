@@ -135,7 +135,7 @@
 
                 Logger.Debug("Dispatching email: {0}", LogSendGridMessage(message));
                 web.Deliver(message);
-                Logger.Info("Dispatched email: {0} to {1}", message.Subject, message.To);
+                Logger.Info("Dispatched email: {0} to {1}", message.Subject, string.Join(", ", message.To.Select(a => a.Address)));
             }
             catch (Exception e)
             {
