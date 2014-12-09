@@ -2,7 +2,7 @@
 {
     using SpecBind.Pages;
 
-    [PageNavigation("https://www.gov.uk/findapprenticeship", IsAbsoluteUrl = true)]
+    [PageNavigation("https://www.gov.uk/apply-apprenticeship", IsAbsoluteUrl = true)]
     [PageAlias("GdsStartPage")]
     public class GdsStartPage
     {
