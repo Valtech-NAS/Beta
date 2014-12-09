@@ -85,9 +85,8 @@
             }
             else
             {
-                Logger.Error(
-                    string.Format("Legacy CreateApplication of candidate {0} to vacancy {1} did not respond.",
-                        applicationDetail.CandidateId, applicationDetail.Vacancy.Id));
+                Logger.Error("Legacy CreateApplication of candidate {0} to vacancy {1} did not respond.",
+                        applicationDetail.CandidateId, applicationDetail.Vacancy.Id);
             }
 
             throw new CustomException(

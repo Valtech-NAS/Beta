@@ -218,15 +218,18 @@ $(document).ready(function () {
 
         self.focusout(function () {
             var username = $(this).val();
-            cleanErrorMessage();
 
-            $.ajax({
-                url: apiurl,
-                type: 'GET',
-                data: { username: username },
-                success: handleSucess,
-                error: handleError
-            });
+            if (username != null && username.length !== 0) {
+                cleanErrorMessage();
+
+                $.ajax({
+                    url: apiurl,
+                    type: 'GET',
+                    data: { username: username },
+                    success: handleSucess,
+                    error: handleError
+                });
+            }
         });
 
         self.focusin(function() {
