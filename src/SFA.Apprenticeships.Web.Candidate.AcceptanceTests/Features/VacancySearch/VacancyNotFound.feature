@@ -2,10 +2,10 @@
 	As an administrator I want to check that the error pages are configured correctly
 	
 Background: 
-	Given I navigated to the HomePage page
+	Given I navigated to the VacancySearchPage page
 	And I am logged out
-	And I navigated to the HomePage page
-	Then I am on the HomePage page
+	And I navigated to the VacancySearchPage page
+	Then I am on the VacancySearchPage page
 
 @SmokeTests
 Scenario: Vacancy not found should redirect to the error page

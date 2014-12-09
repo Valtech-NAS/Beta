@@ -9,11 +9,11 @@ Background:
 	And I navigated to the HomePage page
 	Then I am on the HomePage page
 
-@pageload @SmokeTests
+@pageload
 Scenario: Home Page Test Scenario
 	Then I wait to see Header
 
-@pagenavigation @SmokeTests
+@pagenavigation
 Scenario: Vacancy Search Navigation Test
 	Given I navigated to the HomePage page
 	When I choose VacancySearchLink

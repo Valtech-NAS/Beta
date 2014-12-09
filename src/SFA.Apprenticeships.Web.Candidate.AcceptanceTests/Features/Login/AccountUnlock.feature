@@ -5,10 +5,10 @@ Feature: Account Lock
 	so that I can be assured that the candidate is legitimate.
 
 Background: 
-	Given I navigated to the HomePage page
+	Given I navigated to the VacancySearchPage page
 	And I am logged out
-	And I navigated to the HomePage page
-	Then I am on the HomePage page
+	And I navigated to the VacancySearchPage page
+	Then I am on the VacancySearchPage page
 
 Scenario: Account is locked after three unsuccesful login attempts
 	Given I made two unsuccessful login attempts
