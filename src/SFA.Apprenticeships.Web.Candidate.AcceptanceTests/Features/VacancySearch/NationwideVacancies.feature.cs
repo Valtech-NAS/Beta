@@ -558,15 +558,18 @@ this.FeatureBackground();
             table18.AddRow(new string[] {
                         "Location",
                         "London"});
+            table18.AddRow(new string[] {
+                        "WithInDistance",
+                        "40 miles"});
 #line 153
  testRunner.When("I enter data", ((string)(null)), table18, "When ");
-#line 157
- testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 158
- testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 159
- testRunner.When("I choose NationwideLocationTypeLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 160
+ testRunner.When("I choose NationwideLocationTypeLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 161
  testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
@@ -575,9 +578,9 @@ this.FeatureBackground();
             table19.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Closing Date"});
-#line 161
+#line 162
  testRunner.When("I enter data", ((string)(null)), table19, "When ");
-#line 164
+#line 165
  testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
@@ -592,7 +595,7 @@ this.FeatureBackground();
                         "NationwideLocationTypeLink",
                         "Does Not Exist",
                         ""});
-#line 165
+#line 166
  testRunner.And("I see", ((string)(null)), table20, "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -605,11 +608,11 @@ this.FeatureBackground();
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("If there are only nationwide apprenticeships do not show any link", new string[] {
                         "SmokeTests"});
-#line 171
+#line 172
 this.ScenarioSetup(scenarioInfo);
 #line 7
 this.FeatureBackground();
-#line 172
+#line 173
  testRunner.Given("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
@@ -621,13 +624,13 @@ this.FeatureBackground();
             table21.AddRow(new string[] {
                         "WithInDistance",
                         "2 miles"});
-#line 173
+#line 174
  testRunner.When("I enter data", ((string)(null)), table21, "When ");
-#line 177
- testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 178
- testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 179
+ testRunner.Then("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 180
  testRunner.When("I am on the VacancySearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
@@ -638,7 +641,7 @@ this.FeatureBackground();
                         "NationwideLocationTypeLink",
                         "Does Not Exist",
                         ""});
-#line 180
+#line 181
  testRunner.Then("I see", ((string)(null)), table22, "Then ");
 #line hidden
             this.ScenarioCleanup();

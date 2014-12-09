@@ -151,9 +151,10 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the results pe
 Scenario: When I'm seeing nationwide apprenticeships and I change the sort order I remain there
 	Given I navigated to the VacancySearchPage page
 	When I enter data
-		 | Field    | Value        |
-		 | Keywords | Construction |
-		 | Location | London       |
+		 | Field          | Value        |
+		 | Keywords       | Construction |
+		 | Location       | London       |
+		 | WithInDistance | 40 miles     |
 	And I choose Search
 	Then I am on the VacancySearchResultPage page
 	When I choose NationwideLocationTypeLink
