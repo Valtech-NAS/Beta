@@ -94,38 +94,6 @@
             return exchange;
         }
 
-        [TestCase, Category("Integration"), Ignore("Has this test value?")]
-        public void AutoBindsSubscriptions()
-        {
-            var exchange = GetExchange(ExchangeName);
-            exchange.Should().NotBeNull();
-            exchange.Durable.Should().Be(true);
-
-            var syncQueue = GetQueue(QueueNameSync);
-            syncQueue.Should().NotBeNull();
-            syncQueue.Durable.Should().Be(true);
-            syncQueue.AutoDelete.Should().Be(false);
-
-            var syncBindings = _managementClient.GetBindingsForQueue(syncQueue);
-            syncBindings.Count().Should().Be(2);
-            var syncBindingToSelf = syncBindings.SingleOrDefault(b => b.RoutingKey == QueueNameSync);
-            syncBindingToSelf.Should().NotBeNull();
-            var syncBindingToExchange = syncBindings.SingleOrDefault(b => b.RoutingKey == "#");
-            syncBindingToExchange.Should().NotBeNull();
-
-            var asyncQueue = GetQueue(QueueNameAsync);
-            asyncQueue.Should().NotBeNull();
-            asyncQueue.Durable.Should().Be(true);
-            asyncQueue.AutoDelete.Should().Be(false);
-
-            var asyncBindings = _managementClient.GetBindingsForQueue(asyncQueue);
-            asyncBindings.Count().Should().Be(4);
-            var asyncBindingToSelf = asyncBindings.SingleOrDefault(b => b.RoutingKey == QueueNameAsync);
-            asyncBindingToSelf.Should().NotBeNull();
-            var asyncBindingToExchange = asyncBindings.SingleOrDefault(b => b.RoutingKey == "#");
-            asyncBindingToExchange.Should().NotBeNull();
-        }
-
         [Test, Category("Integration")]
         public void ConsumesSyncAndAsyncMessagesFromQueue()
         {
