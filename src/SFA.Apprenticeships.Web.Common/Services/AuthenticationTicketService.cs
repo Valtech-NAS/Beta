@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
     using System.Linq;
+    using System.Security.Cryptography;
     using System.Web;
     using System.Web.Security;
     using NLog;
@@ -31,10 +32,28 @@
 
                 return FormsAuthentication.Decrypt(cookie.Value);
             }
+            catch (CryptographicException ex)
+            {
+                Logger.Debug("Error decrypting ticket from cookie. Cookie is no longer valid and will be removed.", (Exception)ex);
+                RemoveCookie(cookies);
+                return null;
+            }
             catch (Exception ex)
             {
-                Logger.Error("Error getting/decrypting ticket from cookies", ex);
+                Logger.Error("Error getting/decrypting ticket from cookie. Cookie is no longer valid and will be removed.", ex);
                 return null;
+            }
+        }
+
+        private static void RemoveCookie(HttpCookieCollection cookies)
+        {
+            try
+            {
+                cookies.Remove(CookieName);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(string.Format("Error removing cookie {0}", CookieName), ex);
             }
         }
 
@@ -99,7 +118,7 @@
 
         private static FormsAuthenticationTicket CreateTicket(string userName, params string[] claims)
         {
-            var expiration = DateTime.Now.AddSeconds(FormsAuthentication.Timeout.TotalSeconds); 
+            var expiration = DateTime.Now.AddSeconds(FormsAuthentication.Timeout.TotalSeconds);
             var ticket = new FormsAuthenticationTicket(
                 version: 1,
                 name: userName,
@@ -140,7 +159,7 @@
             }
 
             var expirationTimeString = ticket.UserData.Split(new[] { ';' }).Last();
-// ReSharper disable once RedundantAssignment
+            // ReSharper disable once RedundantAssignment
             var expirationTime = DateTime.MinValue;
             DateTime.TryParse(expirationTimeString, CultureInfo.InvariantCulture, DateTimeStyles.None, out expirationTime);
             return expirationTime;
