@@ -77,7 +77,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Gds
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 8
- testRunner.Given("I navigated to the VacancySearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I navigated to the HomePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
  testRunner.Then("I am on the GdsStartPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
