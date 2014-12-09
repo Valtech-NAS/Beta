@@ -43,7 +43,14 @@
         {
             protected override string ResolveCore(string source)
             {
-                return string.IsNullOrEmpty(source) ? string.Empty : new UriBuilder(source).Uri.ToString();
+                try
+                {
+                    return string.IsNullOrEmpty(source) ? string.Empty : new UriBuilder(source).Uri.ToString();
+                }
+                catch
+                {
+                    return source;
+                }
             }
         }
     }
