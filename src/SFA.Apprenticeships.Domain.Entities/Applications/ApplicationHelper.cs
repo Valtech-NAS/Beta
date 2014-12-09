@@ -10,7 +10,9 @@
         {
             if (!allowedUserStatuses.Contains(applicationDetail.Status))
             {
-                throw new CustomException(errorMessage, ErrorCodes.ApplicationInIncorrectStateError);
+                var message = string.Format("{0} (id: {1}, status: {2})", errorMessage, applicationDetail.EntityId, applicationDetail.Status);
+
+                throw new CustomException(message, ErrorCodes.ApplicationInIncorrectStateError);
             }
         }
 
