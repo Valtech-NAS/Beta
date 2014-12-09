@@ -25,7 +25,14 @@
 
             private static string GetUri(string s)
             {
-                return string.IsNullOrEmpty(s) ? string.Empty : new UriBuilder(s).Uri.ToString();
+                try
+                {
+                    return string.IsNullOrEmpty(s) ? string.Empty : new UriBuilder(s).Uri.ToString();
+                }
+                catch
+                {
+                    return s;
+                }
             }
         }
 
