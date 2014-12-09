@@ -65,7 +65,7 @@
             result.Count().Should().Be(0);
         }
 
-        [Test, Category("Integration"), Ignore("To be reviewed, failing using test service endpoint/mock, works locally")]
+        [Test, Category("Integration")]
         public void ShouldGetOneApplicationStatusForCandidateWithOneSubmittedApplication()
         {
             // Arrange.

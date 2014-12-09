@@ -39,7 +39,7 @@
 #pragma warning restore 0618
         }
 
-        [Test, Category("Integration"), Ignore("To be reviewed, failing using test service endpoint/mock, works locally")]
+        [Test, Category("Integration")]
         public void ShouldCreateApplicationForAValidApplication()
         {
             _candidateRepositoryMock.ResetCalls();
@@ -93,7 +93,7 @@
             _legacyApplicationProviderProvider.CreateApplication(applicationDetail);
         }
 
-        [Test, Category("Integration"), Ignore("To be reviewed, failing using test service endpoint/mock, works locally")]
+        [Test, Category("Integration")]
         [ExpectedException(Handler = "CheckForDuplicatedApplicationException")]
         public void ShouldGetACustomExceptionWhenResubmittingAnApplication()
         {

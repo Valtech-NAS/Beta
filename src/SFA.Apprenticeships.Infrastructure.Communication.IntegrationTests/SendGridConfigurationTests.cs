@@ -39,11 +39,13 @@
             Assert.IsNotNull(template.Id);
         }
 
-        [Ignore("Email is per environment so this needs reviewed, also not allowd to send from noreply")]
-        [TestCase(0, "donotreply@local.apprenticeships.gov.uk"), Category("Integration")]
-        public void ShouldGetFromEmailConfiguration(int index, string expectedFromEmail)
+        [Test, Category("IntegrationProd"), Ignore("Ignore until deciding how to deal with these kind of integration tests.")]
+        public void ShouldGetFromEmailConfiguration()
         {
-            var template = SendGridConfiguration.Instance.Templates.ElementAt(index);
+            const int templateIndex = 0;
+            const string expectedFromEmail = "nationalhelpdesk@findapprenticeship.service.gov.uk";
+
+            var template = SendGridConfiguration.Instance.Templates.ElementAt(templateIndex);
 
             Assert.AreEqual(expectedFromEmail, template.FromEmail);
         }
