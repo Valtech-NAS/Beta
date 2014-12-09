@@ -217,19 +217,21 @@ $(document).ready(function () {
         };
 
         self.focusout(function () {
-            var username = $(this).val();
+            var username = $(this).val().trim();
 
-            if (username != null && username.length !== 0) {
-                cleanErrorMessage();
-
-                $.ajax({
-                    url: apiurl,
-                    type: 'GET',
-                    data: { username: username },
-                    success: handleSucess,
-                    error: handleError
-                });
+            if (!username) {
+                return;
             }
+            
+            cleanErrorMessage();
+
+            $.ajax({
+                url: apiurl,
+                type: 'GET',
+                data: { username: username },
+                success: handleSucess,
+                error: handleError
+            });
         });
 
         self.focusin(function() {
