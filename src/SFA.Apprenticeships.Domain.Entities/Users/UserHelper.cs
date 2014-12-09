@@ -41,7 +41,9 @@
         {
             if (!allowedUserStatuses.Contains(user.Status))
             {
-                throw new CustomException(errorMessage, ErrorCodes.UserInIncorrectStateError);
+                var message = string.Format("{0} (id: {1}, status: {2})", errorMessage, user.EntityId, user.Status);
+
+                throw new CustomException(message, ErrorCodes.UserInIncorrectStateError);
             }
         }
 
