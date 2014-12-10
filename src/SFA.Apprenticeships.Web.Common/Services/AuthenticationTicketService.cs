@@ -41,6 +41,7 @@
             catch (Exception ex)
             {
                 Logger.Error("Error getting/decrypting ticket from cookie. Cookie is no longer valid and will be removed.", ex);
+                RemoveCookie(cookies);
                 return null;
             }
         }
@@ -57,9 +58,9 @@
             }
         }
 
-        public void RefreshTicket(HttpCookieCollection cookies)
+        public void RefreshTicket(HttpContextBase httpContext)
         {
-            var ticket = GetTicket(cookies);
+            var ticket = GetTicket(httpContext.Request.Cookies);
 
             if (ticket == null)
             {
@@ -78,7 +79,7 @@
 
             var newTicket = CreateTicket(ticket.Name, ArrayifyClaims(ticket));
 
-            AddTicket(cookies, newTicket);
+            AddTicket(httpContext.Response.Cookies, newTicket);
 
             Logger.Debug("Ticket issued for {0} because it only had {1}s to expire and the update window is {2}s",
                 ticket.Name, timeToExpiry, (FormsAuthentication.Timeout.TotalSeconds / 2));

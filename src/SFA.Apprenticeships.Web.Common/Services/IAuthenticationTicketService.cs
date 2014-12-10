@@ -8,7 +8,7 @@
     {
         FormsAuthenticationTicket GetTicket(HttpCookieCollection cookies);
 
-        void RefreshTicket(HttpCookieCollection cookies);
+        void RefreshTicket(HttpContextBase httpContext);
 
         string[] GetClaims(FormsAuthenticationTicket ticket);
 
