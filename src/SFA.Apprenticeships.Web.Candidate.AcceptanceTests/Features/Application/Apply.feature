@@ -338,7 +338,7 @@ Scenario: As a candidate I would like to see my application as unsuccessful
 
 
 #Ignored as AsyncProcessorService does not support a Withdrawn application properly
-@US154 @ignore
+@US154
 Scenario: As a candidate I would like to see my application as withdrawn
 	Given I have registered a new candidate
 	When I select the "first" vacancy in location "London" that can apply by this website
@@ -367,5 +367,6 @@ Scenario: As a candidate I would like to see my application as withdrawn
 	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
 	And I see
-		| Field                  | Rule   | Value |
-		| DraftApplicationsCount | Equals | 1     |
+		| Field                         | Rule   | Value                |
+		| UnsuccessfulApplicationsCount | Equals | 1                    |
+		| ApplicationStatusDescription  | Equals | Expired or Withdrawn |

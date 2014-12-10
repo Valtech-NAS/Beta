@@ -41,6 +41,9 @@
         [ElementLocator(Id = "tshipPrompt")]
         public IWebElement TraineeshipsPrompt { get; set; }
 
+        [ElementLocator(Id = "application-status-description")]
+        public IWebElement ApplicationStatusDescription { get; set; }
+
         public string TraineeshipsPromptDisplayed
         {
             get { return TraineeshipsPrompt.Displayed.ToString(); }

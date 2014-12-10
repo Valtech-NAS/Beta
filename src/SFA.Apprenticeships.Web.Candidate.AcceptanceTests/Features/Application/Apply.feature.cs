@@ -1087,13 +1087,11 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("As a candidate I would like to see my application as withdrawn")]
-        [NUnit.Framework.IgnoreAttribute()]
         [NUnit.Framework.CategoryAttribute("US154")]
         public virtual void AsACandidateIWouldLikeToSeeMyApplicationAsWithdrawn()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I would like to see my application as withdrawn", new string[] {
-                        "US154",
-                        "ignore"});
+                        "US154"});
 #line 342
 this.ScenarioSetup(scenarioInfo);
 #line 6
@@ -1169,9 +1167,13 @@ this.FeatureBackground();
                         "Rule",
                         "Value"});
             table42.AddRow(new string[] {
-                        "DraftApplicationsCount",
+                        "UnsuccessfulApplicationsCount",
                         "Equals",
                         "1"});
+            table42.AddRow(new string[] {
+                        "ApplicationStatusDescription",
+                        "Equals",
+                        "Expired or Withdrawn"});
 #line 369
  testRunner.And("I see", ((string)(null)), table42, "And ");
 #line hidden

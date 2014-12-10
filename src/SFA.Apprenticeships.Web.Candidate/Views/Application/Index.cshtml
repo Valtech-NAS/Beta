@@ -175,7 +175,7 @@ else
                                     {
                                         <tr>
                                             <td>@application.Title with @application.EmployerName</td>
-                                            <td class="ta-center">@application.ApplicationStatusDescription</td>
+                                            <td id="application-status-description" class="ta-center">@application.ApplicationStatusDescription</td>
                                             <td class="ta-center">
                                                 <a class="icon-black archive-unsuccessful" href="@Url.Action("Archive", "Application", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                             </td>
