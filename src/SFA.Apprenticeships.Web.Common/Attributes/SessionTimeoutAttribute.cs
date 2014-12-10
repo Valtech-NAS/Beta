@@ -39,7 +39,7 @@
                 }
             }
 
-            controller.AuthenticationTicketService.RefreshTicket(filterContext.Controller.ControllerContext.HttpContext.Response.Cookies);
+            controller.AuthenticationTicketService.RefreshTicket(filterContext.Controller.ControllerContext.HttpContext);
             base.OnActionExecuted(filterContext);
         }
 

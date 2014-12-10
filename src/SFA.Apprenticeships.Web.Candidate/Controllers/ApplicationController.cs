@@ -272,6 +272,9 @@
         }
 
         [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ValidateInput(false)]
         public async Task<JsonResult> AutoSave(int id, ApplicationViewModel model)
         {
             return await Task.Run(() =>
