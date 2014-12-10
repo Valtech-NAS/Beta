@@ -39,7 +39,7 @@
             Assert.IsNotNull(template.Id);
         }
 
-        [Test, Category("Integration"), Category("SmokeTests")]
+        [Test, Category("IntegrationProd"), Category("SmokeTests")]
         public void ShouldGetFromEmailConfiguration()
         {
             const int templateIndex = 0;
