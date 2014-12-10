@@ -16,7 +16,7 @@
     using Domain.Interfaces.Mapping;
     using Microsoft.WindowsAzure;
     using NLog;
-    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
+    using Infrastructure.PerformanceCounters;
     using ViewModels.Locations;
     using ViewModels.VacancySearch;
     using ErrorCodes = Application.Interfaces.Locations.ErrorCodes;
@@ -130,7 +130,7 @@
                     nonNationlResponse.PageSize = search.ResultsPerPage;
                     nonNationlResponse.VacancySearch = search;
 
-                    if (nonNationalResults.Total == 0 && nationalResults.Total != 0)
+                    if (nonNationalResults.Total == 0 && nationalResults.Total > 0)
                     {
                         nonNationlResponse.Vacancies = nationalResponse.Vacancies;
                         nonNationlResponse.VacancySearch.LocationType = VacancyLocationType.National;

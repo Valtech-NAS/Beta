@@ -174,7 +174,7 @@
                     return View("results", new VacancySearchResponseViewModel {VacancySearch = model});
                 }
 
-                if (model.SearchAction == SearchAction.Search && results.TotalLocalHits != 0)
+                if (model.SearchAction == SearchAction.Search && results.TotalLocalHits > 0)
                 {
                     results.VacancySearch.LocationType = VacancyLocationType.NonNational;
                 }

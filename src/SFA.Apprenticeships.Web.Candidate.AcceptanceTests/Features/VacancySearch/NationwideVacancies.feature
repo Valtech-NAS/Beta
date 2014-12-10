@@ -85,7 +85,7 @@ Scenario: nationwide apprenticeships are in closing date order
         | Field                        | Rule   | Value |
         | ResultsAreInClosingDateOrder | Equals | True  |
 
-		@SmokeTests
+@SmokeTests
 Scenario: nationwide apprenticeships found by keyword are in best match order
 	Given I navigated to the VacancySearchPage page
 	When I enter data
@@ -101,7 +101,7 @@ Scenario: nationwide apprenticeships found by keyword are in best match order
         | Field                        | Rule   | Value |
         | ResultsAreInClosingDateOrder | Equals | False |
 
-@US500 @SmokeTests
+@SmokeTests
 Scenario: Nationwide apprenticeships found by keyword can be ordered
 	Given I navigated to the VacancySearchPage page
 	When I enter data
