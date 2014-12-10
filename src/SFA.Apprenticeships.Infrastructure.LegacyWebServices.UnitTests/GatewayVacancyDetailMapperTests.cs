@@ -186,13 +186,13 @@
         }
 
         [TestCase]
-        public void ShouldMappLearningProviderSectorPassRateSpecifiedWhenNotSpecified()
+        public void ShouldMapApprFrameworkSuccessRateWhenNotSpecified()
         {
             // Arrange.
             var src = new Vacancy
             {
-                LearningProviderSectorPassRate = 42,
-                LearningProviderSectorPassRateSpecified = false,
+                ApprFrameworkSuccessRate = 42,
+                ApprFrameworkSuccessRateSpecified = false
             };
 
             // Act.
@@ -204,13 +204,13 @@
         }
 
         [TestCase]
-        public void ShouldMappLearningProviderSectorPassRateSpecifiedWhenSpecified()
+        public void ShouldMapApprFrameworkSuccessRateWhenSpecified()
         {
             // Arrange.
             var src = new Vacancy
             {
-                LearningProviderSectorPassRate = 42,
-                LearningProviderSectorPassRateSpecified = true,
+                ApprFrameworkSuccessRate = 42,
+                ApprFrameworkSuccessRateSpecified = true
             };
 
             // Act.

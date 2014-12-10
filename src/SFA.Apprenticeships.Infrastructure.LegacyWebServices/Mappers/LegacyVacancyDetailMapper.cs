@@ -81,9 +81,10 @@
                 .ForMember(dest => dest.IsSmallEmployerWageIncentive,
                     opt => opt.MapFrom(src => src.IsSmallEmployerWageIncentiveSpecified && src.IsSmallEmployerWageIncentive))
 
+                // TODO: there is also a Gateway field called LearningProviderSectorPassRate. We are mapping from ApprFrameworkSuccessRate deliberately here.
                 .ForMember(d => d.ProviderSectorPassRate,
-                    opt => opt.MapFrom(src => src.LearningProviderSectorPassRateSpecified
-                        ? src.LearningProviderSectorPassRate
+                    opt => opt.MapFrom(src => src.ApprFrameworkSuccessRateSpecified
+                        ? src.ApprFrameworkSuccessRate
                         : default(int?)))
 
                 .ForMember(dest => dest.NumberOfPositions,
