@@ -231,16 +231,6 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| Field                      | Rule   | Value |
 		| SubmittedApplicationsCount | Equals | 1     |
 
-
-#Ignored as this is an extremely brittle test, heavily data dependant. It has questionable value for the effort required to maintain it
-@US509 @ignore
-Scenario: As a candidate I would like to preview a vacancy application via the employer site
-	Given I navigated to the VacancySearchPage page
-	When I select the "first" vacancy in location "N7 8LS" that I can apply via the employer site
-	Then I am on the VacancyDetailsPage page
-	When I choose ApplyExternalLink
-	Then Another browser window is opened
-
 @US154
 Scenario: As a candidate I would like to see my application as successful
 	Given I have registered a new candidate
