@@ -26,6 +26,7 @@
             public const string DuplicateApplication = "DUPLICATE_APPLICATION";
             public const string CandidateNotFound = "CANDIDATE_NOT_FOUND";
             public const string UnknownCandidate = "UNKNOWN_CANDIDATE";
+            public const string InvalidVacancyState = "INVALID_VACANCY_STATE";
         }
 
         public LegacyApplicationProvider(
@@ -70,6 +71,8 @@
 
                 CheckValidationErrors(applicationDetail, response, ValidationErrorCodes.CandidateNotFound, ErrorCodes.LegacyCandidateNotFoundError);
                 CheckValidationErrors(applicationDetail, response, ValidationErrorCodes.UnknownCandidate, ErrorCodes.LegacyCandidateNotFoundError);
+
+                CheckValidationErrors(applicationDetail, response, ValidationErrorCodes.InvalidVacancyState, ErrorCodes.LegacyVacancyStateError);
 
                 var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 

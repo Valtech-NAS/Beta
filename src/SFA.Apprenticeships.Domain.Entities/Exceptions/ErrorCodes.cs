@@ -31,6 +31,7 @@
         // Vacancy Exception Codes
         public const string VacancyNotFoundError = "Vacancy001";
         public const string VacancyExpired = "Vacancy002";
+        public const string LegacyVacancyStateError = "Vacancy003";
         
         // Candidate Exception Codes
         public const string CandidateCreationError = "Candidate001";
