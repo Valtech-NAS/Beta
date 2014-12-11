@@ -77,7 +77,7 @@
             dest.Id.Should().Be(src.VacancyId);
             dest.ApplicationInstructions.Should().Be(src.ApplicationInstructions);
             dest.ClosingDate.Should().Be(src.ClosingDate);
-            dest.Contact.Should().Be(src.ContactPerson);
+            dest.Contact.Should().Be(src.ContactForCandidate);
             dest.ProviderName.Should().Be(src.ContractedProviderName);
             dest.ContractOwner.Should().Be(src.ContractOwner);
             dest.DeliveryOrganisation.Should().Be(src.DeliveryOrganisation);
