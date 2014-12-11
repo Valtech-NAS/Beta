@@ -27,6 +27,7 @@
     var validationMessageFromYearMustBeNumeric = "Year started must contain 4 digits, eg 1990";
     var validationMessageFromYearMustNotBeInFuture = "Year started can't be in the future";
     var validationMessageFromYearMustBeFourDigits = "Year started must be 4 digits, eg 1990";
+    var validationMessageYearMustBeARange = "Year must be 4 digits, between " + (new Date().getFullYear() - 100) + " and " + (new Date().getFullYear());
     var validationMessageToMonthRequired = "Please enter month you finished";
     var validationMessageToYearRequired = "Please enter year you finished";
     var validationMessageToYearMustBeNumeric = "Year finished must be 4 digits, eg 1990";
@@ -421,7 +422,7 @@
             }
         }).extend({
             pattern: {               
-                message: validationMessageFromYearMustBeFourDigits,
+                message: validationMessageYearMustBeARange,
                 params: self.itemYearRegexPattern,
             }
         });
@@ -446,7 +447,7 @@
             }
         }).extend({
             pattern: {
-                message: validationMessageToYearMustBeFourDigits,
+                message:validationMessageYearMustBeARange,
                 params: self.itemYearRegexPattern,
                 onlyIf: function () {
                     return (self.itemIsCurrentEmployment() === false);
@@ -593,7 +594,7 @@
             }
         }).extend({
             pattern: {
-                message: validationMessageFromYearMustBeFourDigits,
+                message: validationMessageYearMustBeARange,
                 params: self.yearRegexPattern
             }
         });
@@ -623,7 +624,7 @@
             }
         }).extend({
             pattern: {
-                message: validationMessageToYearMustBeFourDigits,
+                message: validationMessageYearMustBeARange,
                 params: self.yearRegexPattern,
                 onlyIf: function () { return (self.isCurrentEmployment() === false); }
             }
