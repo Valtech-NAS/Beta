@@ -26,7 +26,7 @@
                     opt => opt.MapFrom(src => src.ClosingDate))
 
                 .ForMember(dest => dest.Contact,
-                    opt => opt.MapFrom(src => src.ContactPerson))
+                    opt => opt.MapFrom(src => src.ContactForCandidate))
 
                 .ForMember(dest => dest.ProviderName,
                     opt => opt.MapFrom(src => src.ContractedProviderName))
