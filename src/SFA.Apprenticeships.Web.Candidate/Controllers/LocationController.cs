@@ -1,16 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Attributes;
-    using Common.Attributes;
-    using Constants;
-    using Constants.ViewModels;
-    using Domain.Interfaces.Configuration;
-    using Providers;
-    using ViewModels.VacancySearch;
+    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
+    using SFA.Apprenticeships.Web.Candidate.Constants;
+    using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
+    using SFA.Apprenticeships.Web.Candidate.Providers;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using SFA.Apprenticeships.Web.Common.Attributes;
 
     public class LocationController : Controller
     {
@@ -30,7 +30,9 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                LocationsViewModel result = _searchProvider.FindLocation(term);
+                var result = string.IsNullOrWhiteSpace(term)
+                    ? new LocationsViewModel(new List<LocationViewModel>())
+                    : _searchProvider.FindLocation(term);
 
                 if (Request.IsAjaxRequest())
                 {
