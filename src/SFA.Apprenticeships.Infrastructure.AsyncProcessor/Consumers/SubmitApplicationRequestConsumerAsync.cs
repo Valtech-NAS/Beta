@@ -97,13 +97,17 @@
                     break;
 
                 case ErrorCodes.LegacyCandidateStateError:
-                    // TODO: need to consider what else we would do in this event.
                     Logger.Error("Legacy candidate is in an invalid state. Application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
                 case ErrorCodes.LegacyCandidateNotFoundError:
-                    // TODO: need to consider what else we would do in this event.
                     Logger.Error("Legacy candidate was not found. Application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
+                    break;
+
+                case ErrorCodes.LegacyVacancyStateError:
+                    Logger.Warn("Legacy Vacancy was in an invalid state. Application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
+                    //TODO: Check that the returned state is expired or withdrawn
+                    SetStateExpiredOrWithdrawn(application);
                     break;
 
                 case ErrorCodes.ApplicationInIncorrectStateError:
@@ -111,7 +115,7 @@
                     break;
 
                 default:
-                    Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
+                    Logger.Warn(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
                     Requeue(request);
                     break;
             }
@@ -120,6 +124,12 @@
         private void SetApplicationStateSubmitted(ApplicationDetail application)
         {
             application.SetStateSubmitted();
+            _applicationWriteRepository.Save(application);
+        }
+
+        private void SetStateExpiredOrWithdrawn(ApplicationDetail application)
+        {
+            application.SetStateExpiredOrWithdrawn();
             _applicationWriteRepository.Save(application);
         }
 
