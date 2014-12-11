@@ -65,6 +65,7 @@
         var self = this;
         self.itemIndex = ko.observable(0);
         self.itemRegexPattern = ko.observable(itemRegexPattern);
+        self.qualificationPredicted = ko.observable(itemPredicted);
         self.itemYearRegexPattern = ko.observable(itemYearRegexPattern);
         self.qualificationType = ko.observable(itemType).extend({
             required: { message: validationMessageSelectQualificationType }
@@ -84,8 +85,9 @@
             }
         }).extend({
             pattern: {
-                message: validationMessageQualificationYearMustBeAFourDigitNumber,
-                params: self.itemYearRegexPattern
+                message: validationMessageQualificationYearMustBeARange,
+                params: self.itemYearRegexPattern,
+                onlyIf: function () { return (self.qualificationPredicted() === false); }
             }
         });
 
@@ -105,7 +107,7 @@
                 params: self.itemRegexPattern
             }
         });
-        self.qualificationPredicted = ko.observable(itemPredicted);
+        
         self.readOnly = ko.observable("readonly");
         self.showEditButton = ko.observable(true);
 
@@ -204,7 +206,8 @@
         }).extend({
             pattern: {
                 message: validationMessageQualificationYearMustBeARange,
-                params: self.yearRegexPattern
+                params: self.yearRegexPattern,
+                onlyIf: function () { return (self.predicted() === false); }
             }
         });
 
