@@ -1,4 +1,8 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
+﻿using EasyNetQ.Management.Client.Model;
+using Elasticsearch.Net;
+using Nest;
+
+namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
     using System;
     using System.Collections.Generic;
@@ -19,6 +23,7 @@
         private const string ExpectedLogTimeframeInMinutesSettingName = "Monitor.Logstash.ExpectedLogTimeframeInMinutes";
         private const string TimeoutSettingName = "Monitor.Logstash.Timeout";
         private const string BaseUrlSettingName = "Monitor.Logstash.BaseUrl";
+        private const string NodeCountSettingName = "Monitor.Logstash.NodeCount";
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -48,8 +53,11 @@
 
         public void Run()
         {
-            EnsureExpectedNumberOfMessagesLoggedInTimeframe();
+            EnsureClusterIsHealthy();
+            EnsureExpectedNumberOfMessagesLoggedInTimeframe();            
         }
+
+        #region Querying Logstash Tests
 
         private void EnsureExpectedNumberOfMessagesLoggedInTimeframe()
         {
@@ -115,8 +123,7 @@
         {
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                var message = string.Format(
-                    "Logstash query returned HTTP status code {0}.", response.StatusCode);
+                var message = string.Format("Logstash query returned HTTP status code {0}.", response.StatusCode);
 
                 throw new Exception(message);
             }
@@ -152,6 +159,69 @@
             return uri;
         }
 
+        #endregion
+
+        #region Query Elasticsearch Management API Tests
+
+        private void EnsureClusterIsHealthy()
+        {
+            var health = GetClusterHealth();
+            EnsureNoTimeout(health);
+            EnsureExpectedNumberOfNodes(health);
+            EnsureClusterIsHealthy(health);
+        }
+
+        private void EnsureNoTimeout(IHealthResponse health)
+        {
+            if (!health.TimedOut)
+            {
+                return;
+            }
+
+            var message = string.Format("Logstash elastic cluster health check timed out ({0}).", Timeout);
+
+            throw new Exception(message);
+        }
+
+        private void EnsureExpectedNumberOfNodes(IHealthResponse response)
+        {
+            if (NodeCount == response.NumberOfNodes) { return; }
+            var message = string.Format("Expected {0} Elasticsearch node(s), saw {1}.", NodeCount, response.NumberOfNodes);
+            throw new Exception(message);
+        }
+
+        private void EnsureClusterIsHealthy(IHealthResponse health)
+        {
+            if (health.Status == "green") { return; }
+
+            if (health.Status == "yellow" && health.NumberOfNodes == 1 && NodeCount == health.NumberOfNodes)
+            {
+                return;
+            }
+
+            var message = string.Format("Cluster is unhealthy: \"{0}\", cluster should contain {1} nodes, but only has {2}.", health.Status, NodeCount, health.NumberOfNodes);
+
+            Logger.Warn(message);
+        }
+
+        private IHealthResponse GetClusterHealth()
+        {
+            var request = new ClusterHealthRequest
+            {
+                Level = Level.Cluster,
+                //http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-health.html
+                WaitForStatus = WaitForStatus.Yellow,
+                Timeout = Timeout.ToString()
+            };
+
+            var client = new ElasticClient(new ConnectionSettings(new Uri(BaseUrl)));
+            return client.ClusterHealth(request);
+        }
+
+        #endregion
+
+        #region Settings
+
         private int ExpectedMinimumLogCount
         {
             get
@@ -183,5 +253,15 @@
                 return _configurationManager.GetAppSetting(BaseUrlSettingName);
             }
         }
+
+        private int NodeCount
+        {
+            get
+            {
+                return _configurationManager.GetAppSetting<int>(NodeCountSettingName);
+            }
+        }
+
+        #endregion
     }
 }
