@@ -30,5 +30,10 @@
             public const string WhiteListRegularExpression = Whitelists.PhoneNumberWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Phone number " + Whitelists.PhoneNumberWhitelist.ErrorText;
         }
+
+        public static class AllowEmailCommsMessages
+        {
+            public const string LabelText = "Receive notifications by email";
+        }
     }
 }

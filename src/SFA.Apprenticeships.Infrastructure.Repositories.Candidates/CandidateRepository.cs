@@ -85,9 +85,6 @@
         {
             Logger.Debug("Calling repository to save candidate with Id={0}, FirstName={1}, EmailAddress={2}", entity.EntityId, entity.RegistrationDetails.FirstName, entity.RegistrationDetails.EmailAddress);
 
-            //todo: temp code to hardwire comm prefs until the UI supports editing them
-            entity.CommunicationPreferences = new CommunicationPreferences();
-
             var mongoEntity = _mapper.Map<Candidate, MongoCandidate>(entity);
 
             UpdateEntityTimestamps(mongoEntity);
@@ -118,9 +115,6 @@
             if (mongoEntity == null) return null;
 
             var entity = _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
-
-            //todo: temp code to hardwire comm prefs until the UI supports editing them
-            entity.CommunicationPreferences = new CommunicationPreferences();
 
             return entity;
         }

@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Account
+﻿using System;
+
+namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Account
 {
     using OpenQA.Selenium;
     using Registration;
@@ -97,5 +99,30 @@
         #endregion
 
         #endregion
+
+        [ElementLocator(Id = "AllowEmailComms-yes")]
+        public IWebElement AllowEmailCommsYes { get; set; }
+
+        [ElementLocator(Id = "AllowEmailComms-no")]
+        public IWebElement AllowEmailCommsNo { get; set; }
+
+        public string IsAllowEmailComms
+        {
+            get
+            {
+                if (AllowEmailCommsYes.GetAttribute("checked") != null &&
+                    AllowEmailCommsNo.GetAttribute("checked") == null)
+                {
+                    return bool.TrueString;
+                }
+                if (AllowEmailCommsNo.GetAttribute("checked") != null &&
+                    AllowEmailCommsYes.GetAttribute("checked") == null)
+                {
+                    return bool.FalseString;
+                }
+
+                throw new Exception("Invalid checked state on Allow Email Communication preference");
+            }
+        }
     }
 }

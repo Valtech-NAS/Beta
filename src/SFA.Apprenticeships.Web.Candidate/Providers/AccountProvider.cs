@@ -31,8 +31,9 @@
                 Logger.Debug("Calling AccountProvider to get Settings View Model for candidate with Id={0}", candidateId);
                 
                 var candidate = _candidateService.GetCandidate(candidateId);
-
-                return _mapper.Map<RegistrationDetails, SettingsViewModel>(candidate.RegistrationDetails);
+                var settings = _mapper.Map<RegistrationDetails, SettingsViewModel>(candidate.RegistrationDetails);
+                settings.AllowEmailComms = candidate.CommunicationPreferences.AllowEmail;
+                return settings;
             }
             catch (Exception e)
             {
@@ -52,6 +53,7 @@
                 Logger.Debug("Calling AccountProvider to save the settings for candidate with Id={0}", candidateId);
                 var candidate = _candidateService.GetCandidate(candidateId);
 
+                candidate.CommunicationPreferences.AllowEmail = model.AllowEmailComms;
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
                 _candidateService.SaveCandidate(candidate);
                 Logger.Debug("Settings saved for candidate with Id={0}", candidateId);

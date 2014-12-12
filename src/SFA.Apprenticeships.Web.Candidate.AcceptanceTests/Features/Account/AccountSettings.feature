@@ -2,7 +2,7 @@
 Feature: Account Settings - Personal Details
 	As a candidate 
 	I want to be able to make amendments to my first name, last name, date of birth, address and mobile phone number
-	so that I can manage my personal details and make sure they are correct
+	and communication preferences so that I can manage my personal details and make sure they are correct
 
 Background: 
 	Given I navigated to the VacancySearchPage page
@@ -20,6 +20,7 @@ Background:
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 
+@US532
 Scenario: As a candidate I can change my personal settings
 
 	Given I navigated to the SettingsPage page
@@ -42,6 +43,9 @@ Scenario: As a candidate I can change my personal settings
 	And I wait to see AddressLine4
 	And I wait to see Postcode
 
+	And I wait to see AllowEmailCommsYes
+	And I wait to see AllowEmailCommsNo
+
 	And I wait to see UpdateDetailsButton
 
 	Then I see
@@ -62,6 +66,8 @@ Scenario: As a candidate I can change my personal settings
 	| AddressLine4 | England             |
 	| Postcode     | SW1A 2AA            |
 
+	And I choose AllowEmailCommsNo
+
 	And I choose UpdateDetailsButton
 	Then I am on the SettingsPage page
 
@@ -70,19 +76,20 @@ Scenario: As a candidate I can change my personal settings
 	| ValidationSummary | Does Not Exist |       |
 
 	And I see
-	| Field          | Rule   | Value               |
-	| Firstname      | Equals | Jane                |
-	| Lastname       | Equals | Dovedale            |
-	| Day            | Equals | 31                  |
-	| Month          | Equals | 1                   |
-	| Year           | Equals | 1994                |
-	| Phonenumber    | Equals | 07123000099         |
-	| AddressLine1   | Equals | 10 Downing Street   |
-	| AddressLine2   | Equals | City of Westminster |
-	| AddressLine3   | Equals | London              |
-	| AddressLine4   | Equals | England             |
-	| Postcode       | Equals | SW1A 2AA            |
-	| BannerUserName | Equals | Jane Dovedale       |
+	| Field             | Rule   | Value               |
+	| Firstname         | Equals | Jane                |
+	| Lastname          | Equals | Dovedale            |
+	| Day               | Equals | 31                  |
+	| Month             | Equals | 1                   |
+	| Year              | Equals | 1994                |
+	| Phonenumber       | Equals | 07123000099         |
+	| AddressLine1      | Equals | 10 Downing Street   |
+	| AddressLine2      | Equals | City of Westminster |
+	| AddressLine3      | Equals | London              |
+	| AddressLine4      | Equals | England             |
+	| Postcode          | Equals | SW1A 2AA            |
+	| BannerUserName    | Equals | Jane Dovedale       |
+	| IsAllowEmailComms | Equals | False               |
 
 	And I see
 	| Field              | Rule   | Value                                     |

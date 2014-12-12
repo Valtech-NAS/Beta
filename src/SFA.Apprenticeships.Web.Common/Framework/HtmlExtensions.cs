@@ -106,10 +106,10 @@
             Condition.Requires(expression, "expression").IsNotNull();
 
             var validationError = HasValidationError(helper, expression);
-            RouteValueDictionary containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
-            RouteValueDictionary controlAttributes = MergeAttributes("form-control", controlHtmlAttributes);
-            RouteValueDictionary labelAttributes = MergeAttributes("form-label", labelHtmlAttributes);
-            RouteValueDictionary hintAttributes = MergeAttributes("form-hint", hintHtmlAttributes);
+            var containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
+            var controlAttributes = MergeAttributes("form-control", controlHtmlAttributes);
+            var labelAttributes = MergeAttributes("form-label", labelHtmlAttributes);
+            var hintAttributes = MergeAttributes("form-hint", hintHtmlAttributes);
 
             var validator = helper.ValidationMessageFor(expression, null);
 
@@ -171,10 +171,10 @@
             var container = new TagBuilder("div");
             var label = new TagBuilder("label");
 
-            RouteValueDictionary containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
-            RouteValueDictionary controlAttributes = MergeAttributes("", controlHtmlAttributes);
-            RouteValueDictionary labelAttributes = MergeAttributes("", labelHtmlAttributes);
-            //RouteValueDictionary hintAttributes = MergeAttributes("form-hint", hintHtmlAttributes);
+            var containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
+            var controlAttributes = MergeAttributes("", controlHtmlAttributes);
+            var labelAttributes = MergeAttributes("", labelHtmlAttributes);
+            //var hintAttributes = MergeAttributes("form-hint", hintHtmlAttributes);
             
             var validationError = HasValidationError(helper, expression);
             var validator = helper.ValidationMessageFor(expression, null);
@@ -195,6 +195,68 @@
             container.InnerHtml += string.Concat(anchorTag, label.ToString(), validator);
 
             return MvcHtmlString.Create(container.ToString());
+        }
+
+        #endregion
+
+        #region Radio Buttons
+
+        /// <summary>
+        /// Creates the NAS form element with the appropriate classes.
+        /// </summary>
+        /// <returns>The html to render</returns>
+        public static MvcHtmlString FormRadioButtonsYesNo<TModel>(
+                    this HtmlHelper<TModel> helper,
+                    Expression<Func<TModel, bool>> expression,
+                    string labelText = null,
+                    object containerHtmlAttributes = null,
+                    object subContainerHtmlAttributes = null,
+                    object labelHtmlAttributes = null)
+        {
+            var container = new TagBuilder("div");
+            var subContainer = new TagBuilder("div");
+            var titleLabel = new TagBuilder("p");
+            var yesLabel = new TagBuilder("label");
+            var noLabel = new TagBuilder("label");
+
+            var value = bool.Parse(helper.ValueFor(expression).ToString());
+
+            var containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
+            var subContainerAttributes = MergeAttributes("form-group form-group-compound", subContainerHtmlAttributes);
+            var labelAttributes = MergeAttributes("form-label", labelHtmlAttributes);
+            
+            var yesLabelAttributes = MergeAttributes("block-label" + (value ? " selected" : ""), labelHtmlAttributes);
+            var noLabelAttributes = MergeAttributes("block-label" + (!value ? " selected" : ""), labelHtmlAttributes);
+
+            container.MergeAttributes(containerAttributes);
+            subContainer.MergeAttributes(subContainerAttributes);
+            titleLabel.MergeAttributes(labelAttributes);
+
+            titleLabel.InnerHtml = GetDisplayName(helper, expression, labelText).ToString();
+
+            var fieldId = helper.ViewData.TemplateInfo.GetFullHtmlFieldId(ExpressionHelper.GetExpressionText(expression));
+            var yesRadio = helper.RadioButtonFor(expression, true, GetCheckedAttribute(fieldId + "-yes", value, true)) + "Yes";
+            var noRadio = helper.RadioButtonFor(expression, false, GetCheckedAttribute(fieldId + "-no", value, false)) + "No";
+
+            yesLabel.MergeAttributes(yesLabelAttributes);
+            noLabel.MergeAttributes(noLabelAttributes);
+
+            yesLabel.InnerHtml += yesRadio;
+            noLabel.InnerHtml += noRadio;
+
+            subContainer.InnerHtml += string.Format("{0}{1}{2}", titleLabel, yesLabel, noLabel);
+            container.InnerHtml += subContainer.ToString();
+
+            return MvcHtmlString.Create(container.ToString());
+        }
+
+        private static object GetCheckedAttribute(string id, bool value, bool field)
+        {
+            if (value == field)
+            {
+                return new {id, @checked = "checked"};
+            }
+            return new {id};
         }
 
         #endregion
