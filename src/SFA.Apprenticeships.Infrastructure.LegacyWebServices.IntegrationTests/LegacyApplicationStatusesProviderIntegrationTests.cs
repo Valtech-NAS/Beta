@@ -113,9 +113,6 @@
 
             var legacyApplicationId = _legacyApplicationProvider.CreateApplication(applicationDetail);
 
-            //Give legacy service time to create the application. Required for SIT
-            Thread.Sleep(2000);
-
             applicationDetail.LegacyApplicationId = legacyApplicationId;
 
             return applicationDetail;
