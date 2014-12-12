@@ -6,20 +6,20 @@
 
     public interface IApplicationProvider
     {
-        ApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId);
+        ApprenticheshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId);
 
-        ApplicationViewModel PatchApplicationViewModel(Guid candidateId, ApplicationViewModel savedModel, ApplicationViewModel submittedModel);
+        ApprenticheshipApplicationViewModel PatchApplicationViewModel(Guid candidateId, ApprenticheshipApplicationViewModel savedModel, ApprenticheshipApplicationViewModel submittedModel);
 
         MyApplicationsViewModel GetMyApplications(Guid candidateId);
 
-        void SaveApplication(Guid candidateId, int vacancyId, ApplicationViewModel applicationViewModel);
+        void SaveApplication(Guid candidateId, int vacancyId, ApprenticheshipApplicationViewModel apprenticheshipApplicationViewModel);
 
-        ApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId);
+        ApprenticheshipApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId);
 
         WhatHappensNextViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId);
 
-        ApplicationViewModel ArchiveApplication(Guid candidateId, int vacancyId);
+        ApprenticheshipApplicationViewModel ArchiveApplication(Guid candidateId, int vacancyId);
 
-        ApplicationViewModel DeleteApplication(Guid candidateId, int vacancyId);
+        ApprenticheshipApplicationViewModel DeleteApplication(Guid candidateId, int vacancyId);
     }
 }

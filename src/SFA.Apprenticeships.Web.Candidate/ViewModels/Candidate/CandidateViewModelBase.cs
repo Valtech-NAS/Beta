@@ -5,9 +5,8 @@
     using Locations;
 
     [Serializable]
-    public class CandidateViewModel
+    public abstract class CandidateViewModelBase
     {
-      
         public Guid Id { get; set; }
 
         public string FullName
@@ -34,8 +33,6 @@
 
         public string PhoneNumber { get; set; }
 
-        public EducationViewModel Education { get; set; }
-
         public bool HasQualifications { get; set; }
 
         public IEnumerable<QualificationsViewModel> Qualifications { get; set; }
@@ -44,9 +41,6 @@
 
         public IEnumerable<WorkExperienceViewModel> WorkExperience { get; set; }
 
-        public AboutYouViewModel AboutYou { get; set; }
-
         public EmployerQuestionAnswersViewModel  EmployerQuestionAnswers { get; set; }
-
     }
 }

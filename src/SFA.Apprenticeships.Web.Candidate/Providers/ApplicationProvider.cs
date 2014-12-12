@@ -46,7 +46,7 @@
             _featureToggle = featureToggle;
         }
 
-        public ApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
+        public ApprenticheshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
         {
             Logger.Debug("Calling ApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
@@ -54,7 +54,7 @@
             try
             {
                 var applicationDetails = _candidateService.CreateApplication(candidateId, vacancyId);
-                var applicationViewModel = _mapper.Map<ApplicationDetail, ApplicationViewModel>(applicationDetails);
+                var applicationViewModel = _mapper.Map<ApplicationDetail, ApprenticheshipApplicationViewModel>(applicationDetails);
 
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
@@ -63,7 +63,7 @@
                 if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
                 {
                     Logger.Info(e.Message, e);
-                    return new ApplicationViewModel(MyApplicationsPageMessages.ApplicationInIncorrectState,
+                    return new ApprenticheshipApplicationViewModel(MyApplicationsPageMessages.ApplicationInIncorrectState,
                         ApplicationViewModelStatus.ApplicationInIncorrectState);
                 }
 
@@ -72,7 +72,7 @@
                         "Unhandled custom exception while getting the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
                 Logger.Error(message, e);
-                return new ApplicationViewModel("Unhandled error", ApplicationViewModelStatus.Error);
+                return new ApprenticheshipApplicationViewModel("Unhandled error", ApplicationViewModelStatus.Error);
             }
             catch (Exception e)
             {
@@ -81,12 +81,12 @@
 
                 Logger.Error(message, e);
 
-                return new ApplicationViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed,
+                return new ApprenticheshipApplicationViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed,
                     ApplicationViewModelStatus.Error);
             }
         }
 
-        public ApplicationViewModel PatchApplicationViewModel(Guid candidateId, ApplicationViewModel savedModel, ApplicationViewModel submittedModel)
+        public ApprenticheshipApplicationViewModel PatchApplicationViewModel(Guid candidateId, ApprenticheshipApplicationViewModel savedModel, ApprenticheshipApplicationViewModel submittedModel)
         {
             Logger.Debug("Calling ApplicationProvider to patch the Application View Model for candidate ID: {0}.",
                 candidateId);
@@ -118,14 +118,14 @@
             }
         }
 
-        public void SaveApplication(Guid candidateId, int vacancyId, ApplicationViewModel applicationViewModel)
+        public void SaveApplication(Guid candidateId, int vacancyId, ApprenticheshipApplicationViewModel apprenticheshipApplicationViewModel)
         {
             Logger.Debug("Calling ApplicationProvider to save the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
             {
-                var application = _mapper.Map<ApplicationViewModel, ApplicationDetail>(applicationViewModel);
+                var application = _mapper.Map<ApprenticheshipApplicationViewModel, ApplicationDetail>(apprenticheshipApplicationViewModel);
 
                 _candidateService.SaveApplication(candidateId, vacancyId, application);
                 Logger.Debug("Application View Model saved for candidate ID: {0}, vacancy ID: {1}.",
@@ -142,12 +142,12 @@
             }
         }
 
-        public ApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId)
+        public ApprenticheshipApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId)
         {
             Logger.Debug("Calling ApplicationProvider to submit the Application for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
-            var model = new ApplicationViewModel();
+            var model = new ApprenticheshipApplicationViewModel();
 
             try
             {
@@ -173,7 +173,7 @@
                 if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
                 {
                     Logger.Info(e.Message, e);
-                    return new ApplicationViewModel(ApplicationViewModelStatus.ApplicationInIncorrectState)
+                    return new ApprenticheshipApplicationViewModel(ApplicationViewModelStatus.ApplicationInIncorrectState)
                     {
                         Status = model.Status
                     };
@@ -212,7 +212,7 @@
             }
         }
 
-        public ApplicationViewModel ArchiveApplication(Guid candidateId, int vacancyId)
+        public ApprenticheshipApplicationViewModel ArchiveApplication(Guid candidateId, int vacancyId)
         {
             Logger.Debug("Calling ApplicationProvider to archive the Application for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
@@ -235,10 +235,10 @@
                     ApplicationPageMessages.ArchiveFailed, e);
             }
 
-            return new ApplicationViewModel();
+            return new ApprenticheshipApplicationViewModel();
         }
 
-        public ApplicationViewModel DeleteApplication(Guid candidateId, int vacancyId)
+        public ApprenticheshipApplicationViewModel DeleteApplication(Guid candidateId, int vacancyId)
         {
             Logger.Debug("Calling ApplicationProvider to delete the Application for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
@@ -254,7 +254,7 @@
                 if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
                 {
                     Logger.Info(e.Message, e);
-                    return new ApplicationViewModel();
+                    return new ApprenticheshipApplicationViewModel();
                 }
 
                 var message =
@@ -278,7 +278,7 @@
                     ApplicationPageMessages.DeleteFailed, e);
             }
 
-            return new ApplicationViewModel();
+            return new ApprenticheshipApplicationViewModel();
         }
 
         public WhatHappensNextViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId)
@@ -289,7 +289,7 @@
             try
             {
                 var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
-                var model = _mapper.Map<ApplicationDetail, ApplicationViewModel>(applicationDetails);
+                var model = _mapper.Map<ApplicationDetail, ApprenticheshipApplicationViewModel>(applicationDetails);
                 var patchedModel = PatchWithVacancyDetail(candidateId, vacancyId, model);
 
                 if (patchedModel.HasError())
@@ -358,39 +358,39 @@
 
         #region Helpers
 
-        private static ApplicationViewModel FailedApplicationViewModel(int vacancyId, Guid candidateId, string failure,
+        private static ApprenticheshipApplicationViewModel FailedApplicationViewModel(int vacancyId, Guid candidateId, string failure,
             string failMessage, Exception e)
         {
             var message = string.Format("{0} {1} failed for user {2}", failure, vacancyId, candidateId);
             Logger.Error(message, e);
-            return new ApplicationViewModel(failMessage, ApplicationViewModelStatus.Error);
+            return new ApprenticheshipApplicationViewModel(failMessage, ApplicationViewModelStatus.Error);
         }
 
-        private ApplicationViewModel PatchWithVacancyDetail(Guid candidateId, int vacancyId, ApplicationViewModel applicationViewModel)
+        private ApprenticheshipApplicationViewModel PatchWithVacancyDetail(Guid candidateId, int vacancyId, ApprenticheshipApplicationViewModel apprenticheshipApplicationViewModel)
         {
             // TODO: why have a patch method like this? should be done in mapper.
             var vacancyDetailViewModel = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null)
             {
-                applicationViewModel.ViewModelMessage = MyApplicationsPageMessages.DraftExpired;
-                applicationViewModel.Status = ApplicationStatuses.ExpiredOrWithdrawn;
+                apprenticheshipApplicationViewModel.ViewModelMessage = MyApplicationsPageMessages.DraftExpired;
+                apprenticheshipApplicationViewModel.Status = ApplicationStatuses.ExpiredOrWithdrawn;
 
-                return applicationViewModel;
+                return apprenticheshipApplicationViewModel;
             }
 
             if (vacancyDetailViewModel.HasError())
             {
-                applicationViewModel.ViewModelMessage = vacancyDetailViewModel.ViewModelMessage;
+                apprenticheshipApplicationViewModel.ViewModelMessage = vacancyDetailViewModel.ViewModelMessage;
 
-                return applicationViewModel;
+                return apprenticheshipApplicationViewModel;
             }
 
-            applicationViewModel.VacancyDetail = vacancyDetailViewModel;
-            applicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 = vacancyDetailViewModel.SupplementaryQuestion1;
-            applicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = vacancyDetailViewModel.SupplementaryQuestion2;
+            apprenticheshipApplicationViewModel.VacancyDetail = vacancyDetailViewModel;
+            apprenticheshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 = vacancyDetailViewModel.SupplementaryQuestion1;
+            apprenticheshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = vacancyDetailViewModel.SupplementaryQuestion2;
 
-            return applicationViewModel;
+            return apprenticheshipApplicationViewModel;
         }
 
         #endregion

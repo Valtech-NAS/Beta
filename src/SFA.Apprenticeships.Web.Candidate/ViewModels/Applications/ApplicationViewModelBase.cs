@@ -2,43 +2,42 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Web.Mvc;
-    using Candidate;
-    using Common.Constants;
-    using Common.Models.Application;
-    using Constants.Pages;
-    using Domain.Entities.Applications;
-    using VacancySearch;
+    using SFA.Apprenticeships.Domain.Entities.Applications;
+    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using SFA.Apprenticeships.Web.Common.Constants;
+    using SFA.Apprenticeships.Web.Common.Models.Application;
 
     [Serializable]
-    public class ApplicationViewModel : ViewModelBase
+    public abstract class ApplicationViewModelBase : ViewModelBase
     {
         //Constants used on application form
+        public string ConfirmationMessage = ApplicationPageMessages.LeavingPageMessage;
+        public int CurrentYear = DateTime.Now.Year;
         public int DefaultQualificationRows = 5;
         public int DefaultWorkExperienceRows = 3;
-        public int CurrentYear = DateTime.Now.Year;
-        public double SessionTimeout;
-        public string ConfirmationMessage = ApplicationPageMessages.LeavingPageMessage;
-        public string WhiteListRegex = Whitelists.FreetextWhitelist.RegularExpression;
         public string FourDigitYearRegex = Whitelists.YearRangeWhiteList.RegularExpression();
-        public string AutoSaveTimeInMiutes = ConfigurationManager.AppSettings["AutoSaveTimeInMinutes"];
+        public double SessionTimeout;
+        public string WhiteListRegex = Whitelists.FreetextWhitelist.RegularExpression;
 
-        public ApplicationViewModel(string message, ApplicationViewModelStatus viewModelStatus) : base(message)
-        {
-            ViewModelStatus = viewModelStatus;
-        }
-        public ApplicationViewModel(string message) : base(message)
-        {
-
-        }
-
-        public ApplicationViewModel(ApplicationViewModelStatus viewModelStatus)
+        protected ApplicationViewModelBase(string message, ApplicationViewModelStatus viewModelStatus) : base(message)
         {
             ViewModelStatus = viewModelStatus;
         }
 
-        public ApplicationViewModel()
+        protected ApplicationViewModelBase(string message)
+            : base(message)
+        {
+        }
+
+        protected ApplicationViewModelBase(ApplicationViewModelStatus viewModelStatus)
+        {
+            ViewModelStatus = viewModelStatus;
+        }
+
+        protected ApplicationViewModelBase()
         {
         }
 
@@ -68,11 +67,12 @@
 
         public VacancyDetailViewModel VacancyDetail { get; set; }
         //TODO Make this the summary info as don't need all details
-        public CandidateViewModel Candidate { get; set; }
+        //TODO: Keep this here?
+        //public CandidateViewModelBase Candidate { get; set; }
         public ApplicationStatuses Status { get; set; }
         public DateTime? DateUpdated { get; set; }
         public int VacancyId { get; set; }
-        public bool IsJavascript  { get; set; }
+        public bool IsJavascript { get; set; }
 
         public ApplicationViewModelStatus ViewModelStatus { get; set; }
     }

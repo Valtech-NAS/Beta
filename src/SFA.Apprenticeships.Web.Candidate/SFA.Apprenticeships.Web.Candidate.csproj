@@ -458,6 +458,7 @@
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\CandidateControllerBase.cs" />
+    <Compile Include="Controllers\TraineeshipApplicationController.cs" />
     <Compile Include="Controllers\TraineeshipController.cs" />
     <Compile Include="Controllers\VacancySearchController.cs" />
     <Compile Include="Global.asax.cs">
@@ -467,8 +468,11 @@
     <Compile Include="Helpers\PreviewExtensions.cs" />
     <Compile Include="IoC\CandidateWebRegistry.cs" />
     <Compile Include="Mappers\Helpers\ApplicationConverter.cs" />
-    <Compile Include="Mappers\Resolvers\ApplicationDetailToApplicationViewModelResolver.cs" />
-    <Compile Include="Mappers\Resolvers\ApplicationViewModelToApplicationDetailResolver.cs" />
+    <Compile Include="Mappers\Resolvers\TraineeshipApplicationViewModelToTraineeshipApplicationDetailResolver.cs" />
+    <Compile Include="Mappers\Resolvers\CandidateViewModelResolver.cs" />
+    <Compile Include="Mappers\Resolvers\TraineeshipApplicationDetailToTraineeshipApplicationViewModelResolver.cs" />
+    <Compile Include="Mappers\Resolvers\ApprenticeshipApplicationDetailToApprenticeshipApplicationViewModelResolver.cs" />
+    <Compile Include="Mappers\Resolvers\ApprenticeshipApplicationViewModelToApprenticeshipApplicationDetailResolver.cs" />
     <Compile Include="Mappers\Resolvers\CandidateResolver.cs" />
     <Compile Include="Mappers\CandidateWebMappers.cs" />
     <Compile Include="Constants\ViewModels\AboutYouViewModelMessages.cs" />
@@ -492,7 +496,9 @@
     <Compile Include="Providers\VacancyDetailProvider.cs" />
     <Compile Include="Validators\AddressViewModelValidator.cs" />
     <Compile Include="Validators\ActivationViewModelValidator.cs" />
-    <Compile Include="Validators\ApplicationViewModelValidator.cs" />
+    <Compile Include="Validators\TraineeshipApplicationViewModelValidator.cs" />
+    <Compile Include="Validators\ApprenticeshipApplicationViewModelValidator.cs" />
+    <Compile Include="Validators\ApprenticeshipViewModelValidator.cs" />
     <Compile Include="Validators\DateOfBirthViewModelValidator.cs" />
     <Compile Include="Validators\ForgottenPasswordViewModelValidator.cs" />
     <Compile Include="Validators\LoginViewModelValidator.cs" />
@@ -501,16 +507,21 @@
     <Compile Include="Validators\QualificationViewModelValidator.cs" />
     <Compile Include="Validators\RegisterViewModelValidator.cs" />
     <Compile Include="Validators\EducationViewModelValidator.cs" />
-    <Compile Include="Validators\CandidateViewModelValidator.cs" />
+    <Compile Include="Validators\CandidateViewModelValidatorBase.cs" />
     <Compile Include="Validators\EmployerQuestionAnswersViewModelValidator.cs" />
     <Compile Include="Validators\AboutYouViewModelClientValidator.cs" />
     <Compile Include="Validators\SettingsViewModelValidator.cs" />
+    <Compile Include="Validators\TraineeshipViewModelValidator.cs" />
     <Compile Include="Validators\VacancySearchViewModelValidator.cs" />
     <Compile Include="Validators\Helpers\ValidatorsHelper.cs" />
     <Compile Include="Validators\WorkExperienceViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\Applications\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Applications\ApplicationViewModelBase.cs" />
+    <Compile Include="ViewModels\Applications\ApprenticheshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Applications\AutoSaveResultViewModel.cs" />
+    <Compile Include="ViewModels\Applications\TraineeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\ApprenticeshipCandidateViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\TraineeshipCandidateViewModel.cs" />
     <Compile Include="ViewModels\Login\AccountUnlockState.cs" />
     <Compile Include="ViewModels\Login\LoginResultViewModel.cs" />
     <Compile Include="ViewModels\Login\UserStatusesViewModel.cs" />
@@ -520,7 +531,7 @@
     <Compile Include="ViewModels\Candidate\EducationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EmployerQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Candidate\AboutYouViewModel.cs" />
-    <Compile Include="ViewModels\Candidate\CandidateViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\CandidateViewModelBase.cs" />
     <Compile Include="ViewModels\Candidate\WorkExperienceViewModel.cs" />
     <Compile Include="ViewModels\Candidate\QualificationsViewModel.cs" />
     <Compile Include="ViewModels\DateViewModel.cs" />
@@ -542,6 +553,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\TraineeshipApplicationController\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Address\SFA.Apprenticeships.Application.Address.csproj">

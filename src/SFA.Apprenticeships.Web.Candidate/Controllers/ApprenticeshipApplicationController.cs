@@ -24,17 +24,17 @@
     public class ApprenticeshipApplicationController : CandidateControllerBase
     {
         private readonly IApplicationProvider _applicationProvider;
-        private readonly ApplicationViewModelServerValidator _applicationViewModelFullValidator;
-        private readonly ApplicationViewModelSaveValidator _applicationViewModelSaveValidator;
+        private readonly ApprenticeshipApplicationViewModelServerValidator _apprenticeshipApplicationViewModelFullValidator;
+        private readonly ApprenticeshipApplicationViewModelSaveValidator _apprenticeshipApplicationViewModelSaveValidator;
 
         public ApprenticeshipApplicationController(
             IApplicationProvider applicationProvider,
-            ApplicationViewModelServerValidator applicationViewModelFullValidator,
-            ApplicationViewModelSaveValidator applicationViewModelSaveValidator)
+            ApprenticeshipApplicationViewModelServerValidator apprenticeshipApplicationViewModelFullValidator,
+            ApprenticeshipApplicationViewModelSaveValidator apprenticeshipApplicationViewModelSaveValidator)
         {
             _applicationProvider = applicationProvider;
-            _applicationViewModelFullValidator = applicationViewModelFullValidator;
-            _applicationViewModelSaveValidator = applicationViewModelSaveValidator;
+            _apprenticeshipApplicationViewModelFullValidator = apprenticeshipApplicationViewModelFullValidator;
+            _apprenticeshipApplicationViewModelSaveValidator = apprenticeshipApplicationViewModelSaveValidator;
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -87,7 +87,7 @@
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Preview")]
         [ApplyWebTrends]
         [ValidateInput(false)]
-        public async Task<ActionResult> Apply(int id, ApplicationViewModel model)
+        public async Task<ActionResult> Apply(int id, ApprenticheshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
@@ -115,7 +115,7 @@
                     return View("Apply", model);
                 }
 
-                var result = _applicationViewModelFullValidator.Validate(model);
+                var result = _apprenticeshipApplicationViewModelFullValidator.Validate(model);
 
                 model = _applicationProvider.PatchApplicationViewModel(
                     UserContext.CandidateId, savedModel, model);
@@ -139,7 +139,7 @@
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Save")]
         [ApplyWebTrends]
         [ValidateInput(false)]
-        public async Task<ActionResult> Save(int id, ApplicationViewModel model)
+        public async Task<ActionResult> Save(int id, ApprenticheshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
@@ -163,7 +163,7 @@
                     return View("Apply", model);
                 }
 
-                var result = _applicationViewModelSaveValidator.Validate(model);
+                var result = _apprenticeshipApplicationViewModelSaveValidator.Validate(model);
 
                 model = _applicationProvider.PatchApplicationViewModel(UserContext.CandidateId, savedModel, model);
 
@@ -187,7 +187,7 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ValidateInput(false)]
-        public async Task<JsonResult> AutoSave(int id, ApplicationViewModel model)
+        public async Task<JsonResult> AutoSave(int id, ApprenticheshipApplicationViewModel model)
         {
             return await Task.Run(() =>
             {
@@ -213,7 +213,7 @@
                     return new JsonResult {Data = autoSaveResult};
                 }
 
-                var result = _applicationViewModelSaveValidator.Validate(model);
+                var result = _apprenticeshipApplicationViewModelSaveValidator.Validate(model);
 
                 model = _applicationProvider.PatchApplicationViewModel(
                     UserContext.CandidateId, savedModel, model);
@@ -248,7 +248,7 @@
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyQualificationRows")]
         [ApplyWebTrends]
         [ValidateInput(false)]
-        public async Task<ActionResult> AddEmptyQualificationRows(int id, ApplicationViewModel model)
+        public async Task<ActionResult> AddEmptyQualificationRows(int id, ApprenticheshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
@@ -269,7 +269,7 @@
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyWorkExperienceRows")]
         [ApplyWebTrends]
         [ValidateInput(false)]
-        public async Task<ActionResult> AddEmptyWorkExperienceRows(int id, ApplicationViewModel model)
+        public async Task<ActionResult> AddEmptyWorkExperienceRows(int id, ApprenticheshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
@@ -371,7 +371,7 @@
 
         #region Helpers
 
-        private static ApplicationViewModel StripApplicationViewModelBeforeValidation(ApplicationViewModel model)
+        private static ApprenticheshipApplicationViewModel StripApplicationViewModelBeforeValidation(ApprenticheshipApplicationViewModel model)
         {
             model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
             model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);

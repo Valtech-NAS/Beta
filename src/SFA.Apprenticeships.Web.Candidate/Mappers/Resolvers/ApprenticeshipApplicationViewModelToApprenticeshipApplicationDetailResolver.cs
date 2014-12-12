@@ -12,12 +12,12 @@
     using ViewModels.Candidate;
     using ViewModels.VacancySearch;
 
-    public class ApplicationViewModelToApplicationDetailResolver :
-        ITypeConverter<ApplicationViewModel, ApplicationDetail>
+    public class ApprenticeshipApplicationViewModelToApprenticeshipApplicationDetailResolver :
+        ITypeConverter<ApprenticheshipApplicationViewModel, ApplicationDetail>
     {
         public ApplicationDetail Convert(ResolutionContext context)
         {
-            var model = (ApplicationViewModel) context.SourceValue;
+            var model = (ApprenticheshipApplicationViewModel) context.SourceValue;
 
             var application = new ApplicationDetail
             {
@@ -32,27 +32,27 @@
             return application;
         }
 
-        private static ApplicationTemplate GetCandidateInformation(CandidateViewModel model)
+        private static ApplicationTemplate GetCandidateInformation(ApprenticeshipCandidateViewModel modelBase)
         {
             return new ApplicationTemplate
             {
-                AboutYou = ApplicationConverter.GetAboutYou(model.AboutYou),
-                EducationHistory = ApplicationConverter.GetEducation(model.Education),
-                Qualifications = model.HasQualifications ? ApplicationConverter.GetQualifications(model.Qualifications) : new List<Qualification>(),
-                WorkExperience = model.HasWorkExperience ? ApplicationConverter.GetWorkExperiences(model.WorkExperience) : new List<WorkExperience>(),
+                AboutYou = ApplicationConverter.GetAboutYou(modelBase.AboutYou),
+                EducationHistory = ApplicationConverter.GetEducation(modelBase.Education),
+                Qualifications = modelBase.HasQualifications ? ApplicationConverter.GetQualifications(modelBase.Qualifications) : new List<Qualification>(),
+                WorkExperience = modelBase.HasWorkExperience ? ApplicationConverter.GetWorkExperiences(modelBase.WorkExperience) : new List<WorkExperience>(),
             };
         }
 
-        private static RegistrationDetails GetCandidateDetails(CandidateViewModel model)
+        private static RegistrationDetails GetCandidateDetails(CandidateViewModelBase modelBase)
         {
             return new RegistrationDetails
             {
-                EmailAddress = model.EmailAddress,
-                Address = ApplicationConverter.GetAddress(model.Address),
-                DateOfBirth = model.DateOfBirth,
-                PhoneNumber = model.PhoneNumber,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
+                EmailAddress = modelBase.EmailAddress,
+                Address = ApplicationConverter.GetAddress(modelBase.Address),
+                DateOfBirth = modelBase.DateOfBirth,
+                PhoneNumber = modelBase.PhoneNumber,
+                FirstName = modelBase.FirstName,
+                LastName = modelBase.LastName,
             };
         }
 
