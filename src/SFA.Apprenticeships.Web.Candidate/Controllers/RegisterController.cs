@@ -349,10 +349,10 @@
 
             if (lastViewedVacancyId != null)
             {
-                return RedirectToRoute(CandidateRouteNames.Details, new {id = int.Parse(lastViewedVacancyId)});
+                return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new {id = int.Parse(lastViewedVacancyId)});
             }
 
-            return RedirectToRoute(CandidateRouteNames.Search);
+            return RedirectToRoute(CandidateRouteNames.ApprenticeshipSearch);
         }
 
         #endregion

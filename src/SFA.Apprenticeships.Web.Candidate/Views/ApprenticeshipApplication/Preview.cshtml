@@ -1,5 +1,4 @@
-﻿@using SFA.Apprenticeships.Web.Candidate.Helpers
-@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApplicationViewModel
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApplicationViewModel
 
 @{
     ViewBag.Title = "Apprenticeships - Preview your application";
@@ -9,7 +8,7 @@
 @if (Model.DateUpdated.HasValue)
 {
     <div class="panel-info">
-        <p id="applicationSavedTopMessage">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
+        <p id="applicationSavedTopMessage">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" title="My Applications">my applications</a></p>
     </div>
 }
 
@@ -23,7 +22,7 @@
         Qualifications
         @if (ViewBag.VacancyId != null)
         {
-            <a class="icon-with-text" href="@Url.Action("Apply", "Application", new {id = ViewBag.VacancyId})#applyQualifications">
+            <a class="icon-with-text" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})#applyQualifications">
                 <i class="the-icon fa fa-pencil"></i><span class="the-text">Change details</span>
             </a>
         }
@@ -85,7 +84,7 @@
         Work experience
         @if (ViewBag.VacancyId != null)
         {
-            <a class="icon-with-text" href="@Url.Action("Apply", "Application", new {id = ViewBag.VacancyId})#applyWorkExperience">
+            <a class="icon-with-text" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})#applyWorkExperience">
                 <i class="the-icon fa fa-pencil"></i><span class="the-text">Change details</span>
             </a>
         }
@@ -187,7 +186,7 @@
 
     @if (Model.DateUpdated.HasValue)
     {
-        <p id="applicationSavedBottomMessage">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.Action("Index", "Application")" title="My Applications">my applications</a></p>
+        <p id="applicationSavedBottomMessage">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" title="My Applications">my applications</a></p>
     }
 </div>
 

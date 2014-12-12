@@ -7,13 +7,13 @@
         public const string Helpdesk = "Helpdesk";
         public const string Terms = "Terms";
         public const string Maintenance = "Maintenance";
-        public const string Search = "Search";
-        public const string Results = "Results";
-        public const string Details = "Details";
-        public const string Apply = "Apply";
-        public const string Preview = "Preview";
-        public const string WhatNext = "WhatNext";
-        public const string DetailsWithDistance = "DetailsWithDistance";
+        public const string ApprenticeshipSearch = "ApprenticeshipSearch";
+        public const string ApprenticeshipResults = "ApprenticeshipResults";
+        public const string ApprenticeshipDetails = "ApprenticeshipDetails";
+        public const string ApprenticeshipDetailsWithDistance = "ApprenticeshipDetailsWithDistance";
+        public const string ApprenticeshipApply = "ApprenticeshipApply";
+        public const string ApprenticeshipPreview = "ApprenticeshipPreview";
+        public const string ApprenticeshipWhatNext = "ApprenticeshipWhatNext";
         public const string MyApplications = "MyApplications";
     }
 }

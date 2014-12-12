@@ -201,7 +201,7 @@
                 UserData.Push(UserDataItemNames.VacancyDistance, distance);
                 UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToString(CultureInfo.InvariantCulture));
 
-                return RedirectToAction("Details", new { id });
+                return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
             });
         }
 

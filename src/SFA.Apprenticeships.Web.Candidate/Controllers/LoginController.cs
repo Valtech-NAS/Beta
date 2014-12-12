@@ -285,10 +285,10 @@
 
                 if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
                 {
-                    return RedirectToAction("Apply", "Application", new { id = lastViewedVacancyId });
+                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipApply, new { id = lastViewedVacancyId });
                 }
 
-                return RedirectToRoute(CandidateRouteNames.Details, new { id = lastViewedVacancyId });
+                return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id = lastViewedVacancyId });
             }
 
             return RedirectToRoute(CandidateRouteNames.MyApplications);

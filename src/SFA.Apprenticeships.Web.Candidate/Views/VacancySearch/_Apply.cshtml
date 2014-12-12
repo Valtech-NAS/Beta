@@ -1,10 +1,8 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Applications
-@using SFA.Apprenticeships.Web.Candidate.Constants
-
 @model VacancyDetailViewModel
 
 @{
-    string AnalyticsTag = "onclick=\"Webtrends.multiTrack({{ element: this, argsa: ['DCS.dcsuri', '{0}" + Model.Id + "', 'WT.dl', '99', 'WT.ti', '{1}', 'DCSext.buttonPos', '{2}'] }});\"";
+    var AnalyticsTag = "onclick=\"Webtrends.multiTrack({{ element: this, argsa: ['DCS.dcsuri', '{0}" + Model.Id + "', 'WT.dl', '99', 'WT.ti', '{1}', 'DCSext.buttonPos', '{2}'] }});\"";
 }
 
 @if (@Model.ApplyViaEmployerWebsite)
@@ -28,7 +26,7 @@ else if (Request.IsAuthenticated)
         switch (Model.CandidateApplicationStatus.Value)
         {
             case ApplicationStatuses.Draft:
-                <a role="button" id="apply-button" class="button button-with-hint" title="Resume application" href="@Url.Action("Apply", "Application", new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/resume/", "Apprenticeship – Resume Application", ViewData["AnalyticsButtonPosition"]))>Resume application</a>
+                <a role="button" id="apply-button" class="button button-with-hint" title="Resume application" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/resume/", "Apprenticeship – Resume Application", ViewData["AnalyticsButtonPosition"]))>Resume application</a>
                 break;
 
             default:
@@ -40,12 +38,12 @@ else if (Request.IsAuthenticated)
     else
     {
         // Candidate has not applied for this vacancy.
-        <a role="button" id="apply-button" class="button button-with-hint" title="Apply for apprenticeship" href="@Url.Action("Apply", "Application", new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signedin/", "Apprenticeship – Signed In Apply", ViewData["AnalyticsButtonPosition"]))>Apply for apprenticeship</a>
+        <a role="button" id="apply-button" class="button button-with-hint" title="Apply for apprenticeship" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signedin/", "Apprenticeship – Signed In Apply", ViewData["AnalyticsButtonPosition"]))>Apply for apprenticeship</a>
     }
 }
 else
-{ 
+{
     // Vacancy is not being viewed by a signed-in candidate.
-    <a role="button" id="apply-button" class="button button-with-hint" title="Sign in to apply" href="@Url.Action("Apply", "Application", new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signin/", "Apprenticeship – Sign In to Apply", ViewData["AnalyticsButtonPosition"]))>Sign in to apply</a>
+    <a role="button" id="apply-button" class="button button-with-hint" title="Sign in to apply" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signin/", "Apprenticeship – Sign In to Apply", ViewData["AnalyticsButtonPosition"]))>Sign in to apply</a>
 }
 <p class="copy-16">Closing date: @Html.DisplayFor(m => m.ClosingDate, "Date")</p>

@@ -2,33 +2,32 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using System.Web.Security;
     using FluentValidation.Mvc;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Web.Candidate.ActionResults;
-    using SFA.Apprenticeships.Web.Candidate.Attributes;
-    using SFA.Apprenticeships.Web.Candidate.Constants;
-    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
-    using SFA.Apprenticeships.Web.Candidate.Helpers;
-    using SFA.Apprenticeships.Web.Candidate.Providers;
-    using SFA.Apprenticeships.Web.Candidate.Validators;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
-    using SFA.Apprenticeships.Web.Common.Attributes;
-    using SFA.Apprenticeships.Web.Common.Constants;
-    using SFA.Apprenticeships.Web.Common.Models.Application;
+    using Domain.Entities.Applications;
+    using ActionResults;
+    using Attributes;
+    using Constants;
+    using Constants.Pages;
+    using Helpers;
+    using Providers;
+    using Validators;
+    using ViewModels.Applications;
+    using ViewModels.Candidate;
+    using Common.Attributes;
+    using Common.Constants;
+    using Common.Models.Application;
 
-    public class ApplicationController : CandidateControllerBase
+    public class ApprenticeshipApplicationController : CandidateControllerBase
     {
         private readonly IApplicationProvider _applicationProvider;
         private readonly ApplicationViewModelServerValidator _applicationViewModelFullValidator;
         private readonly ApplicationViewModelSaveValidator _applicationViewModelSaveValidator;
 
-        public ApplicationController(
+        public ApprenticeshipApplicationController(
             IApplicationProvider applicationProvider,
             ApplicationViewModelServerValidator applicationViewModelFullValidator,
             ApplicationViewModelSaveValidator applicationViewModelSaveValidator)
@@ -36,38 +35,6 @@
             _applicationProvider = applicationProvider;
             _applicationViewModelFullValidator = applicationViewModelFullValidator;
             _applicationViewModelSaveValidator = applicationViewModelSaveValidator;
-        }
-
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
-        public async Task<ActionResult> Index()
-        {
-            return await Task.Run<ActionResult>(() =>
-            {
-                var deletedVacancyId = UserData.Pop(UserDataItemNames.DeletedVacancyId);
-
-                if (!string.IsNullOrEmpty(deletedVacancyId))
-                {
-                    ViewBag.VacancyId = deletedVacancyId;
-                }
-
-                var deletedVacancyTitle = UserData.Pop(UserDataItemNames.DeletedVacancyTitle);
-
-                if (!string.IsNullOrEmpty(deletedVacancyTitle))
-                {
-                    ViewBag.VacancyTitle = deletedVacancyTitle;
-                }
-
-                var model = _applicationProvider.GetMyApplications(UserContext.CandidateId);
-
-                if (model.ShouldShowTraineeshipsPrompt)
-                {
-                    ViewBag.RenderTraineeshipsPrompt = true;
-                }
-
-                return View(model);
-            });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -82,65 +49,10 @@
                 if (model.HasError())
                 {
                     SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
-                    return RedirectToAction("Index");
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
                 }
 
                 return RedirectToAction("Apply", new {id});
-            });
-        }
-
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
-        public async Task<ActionResult> Archive(int id)
-        {
-            return await Task.Run<ActionResult>(() =>
-            {
-                var applicationViewModel = _applicationProvider.ArchiveApplication(UserContext.CandidateId, id);
-
-                if (applicationViewModel.HasError())
-                {
-                    SetUserMessage(applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
-
-                    return RedirectToAction("Index");
-                }
-
-                SetUserMessage(MyApplicationsPageMessages.ApplicationArchived);
-
-                return RedirectToAction("Index");
-            });
-        }
-
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
-        public async Task<ActionResult> Delete(int id)
-        {
-            return await Task.Run<ActionResult>(() =>
-            {
-                var viewModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
-                var applicationViewModel = _applicationProvider.DeleteApplication(UserContext.CandidateId, id);
-
-                if (applicationViewModel.HasError())
-                {
-                    SetUserMessage(applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
-
-                    return RedirectToAction("Index");
-                }
-
-                if (viewModel.HasError())
-                {
-                    SetUserMessage(MyApplicationsPageMessages.ApplicationDeleted);
-                }
-                else
-                {
-                    UserData.Push(UserDataItemNames.DeletedVacancyId,
-                        viewModel.VacancyDetail.Id.ToString(CultureInfo.InvariantCulture));
-                    UserData.Push(UserDataItemNames.DeletedVacancyTitle, viewModel.VacancyDetail.Title);
-                }
-
-                return RedirectToAction("Index");
             });
         }
 
@@ -160,7 +72,7 @@
 
                 if (model.HasError())
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
                 }
 
                 model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
@@ -189,7 +101,7 @@
                 }
                 if (savedModel.Status != ApplicationStatuses.Draft)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
                 }
 
                 ModelState.Clear();
@@ -389,7 +301,7 @@
 
                 if (model.HasError())
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
                 }
 
                 // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
@@ -415,7 +327,7 @@
 
                 if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
                 }
                 if (model.ViewModelStatus == ApplicationViewModelStatus.Error)
                 {
