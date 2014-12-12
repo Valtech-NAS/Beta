@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Threading;
     using Application.ApplicationUpdate;
     using Application.Candidate.Strategies;
     using Common.IoC;
@@ -111,6 +112,9 @@
             applicationDetail.CandidateId = candidate.EntityId;
 
             var legacyApplicationId = _legacyApplicationProvider.CreateApplication(applicationDetail);
+
+            //Give legacy service time to create the application. Required for SIT
+            Thread.Sleep(2000);
 
             applicationDetail.LegacyApplicationId = legacyApplicationId;
 
