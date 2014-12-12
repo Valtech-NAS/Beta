@@ -34,9 +34,9 @@ Scenario: As a candidate I want to see the applications in my dashbord grouped b
 		| UnsuccessfulApplicationsCount | Equals | 4     |
 
 @US366
-Scenario: As a candidate I want to see the traineeships prompt if I have more than three unsuccessful applications
+Scenario: As a candidate I want to see the traineeships prompt if I have three or more unsuccessful applications
 Given I have an empty dashboard
-	And I add 4 applications in "Unsuccessful" state
+	And I add 3 applications in "Unsuccessful" state
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
