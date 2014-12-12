@@ -47,7 +47,7 @@
         {
             var response = _vacancyIndexDataProvider.GetVacancySummaries(1);
 
-            var firstOrDefault = response.FirstOrDefault();
+            var firstOrDefault = response.ApprenticeshipSummaries.FirstOrDefault();
 
             if (firstOrDefault == null) return;
 

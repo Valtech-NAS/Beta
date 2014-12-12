@@ -2,8 +2,12 @@
 {
     using System;
     using Application.VacancyEtl.Entities;
+    using Domain.Entities.Vacancies;
+    using Elastic.Common.Entities;
 
-    public interface IVacancyIndexerService
+    public interface IVacancyIndexerService<in TSourceSummary, in TDestinationSummary>
+        where TSourceSummary : VacancySummary, IVacancyUpdate
+        where TDestinationSummary : class, IVacancySummary
     {
         /// <summary>
         /// Indexes the vacancy summary to an elasticsearch index.
@@ -11,7 +15,7 @@
         /// See <see cref="SwapIndex"/> for more details.
         /// </summary>
         /// <param name="vacancySummaryToIndex"></param>
-        void Index(VacancySummaryUpdate vacancySummaryToIndex);
+        void Index(TSourceSummary vacancySummaryToIndex);
 
         /// <summary>
         /// Creates an index to be used for the latest update 

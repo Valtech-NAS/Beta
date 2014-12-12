@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+
+namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
 {
     using System.Collections.Generic;
     using AutoMapper;
@@ -56,9 +58,9 @@
             };
         }
 
-        private static VacancySummary GetVacancy(VacancyDetailViewModel model)
+        private static ApprenticeshipSummary GetVacancy(VacancyDetailViewModel model)
         {
-            return new VacancySummary
+            return new ApprenticeshipSummary
             {
                 Id = model.Id,
                 ClosingDate = model.ClosingDate,

@@ -13,7 +13,9 @@
     using NLog;
     using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
 
-    public class VacancyIndexerService : IVacancyIndexerService
+    public class VacancyIndexerService<TSourceSummary, TDestinationSummary> : IVacancyIndexerService<TSourceSummary, TDestinationSummary>
+        where TSourceSummary : Domain.Entities.Vacancies.VacancySummary, IVacancyUpdate
+        where TDestinationSummary : class, IVacancySummary
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private const int PageSize = 5;
@@ -30,20 +32,18 @@
             _mapper = mapper;
         }
 
-        public void Index(VacancySummaryUpdate vacancySummaryToIndex)
+        public void Index(TSourceSummary vacancySummaryToIndex)
         {
-            //Logger.Debug("Indexing vacancy item");
+            Logger.Trace("Indexing vacancy item : {0} ({1})", vacancySummaryToIndex.Title, vacancySummaryToIndex.Id);
             
             var indexAlias = GetIndexAlias();
             var newIndexName = GetIndexNameAndDateExtension(indexAlias, vacancySummaryToIndex.ScheduledRefreshDateTime);
-            var vacancySummaryElastic = _mapper.Map<VacancySummaryUpdate, VacancySummary>(vacancySummaryToIndex);
-
-            //Logger.Debug("Indexing vacancy item to index: {0}", newIndexName);
+            var vacancySummaryElastic = _mapper.Map<TSourceSummary, TDestinationSummary>(vacancySummaryToIndex);
 
             var client = _elasticsearchClientFactory.GetElasticClient();
             client.Index(vacancySummaryElastic, f => f.Index(newIndexName));
 
-            //Logger.Debug("Indexed vacancy item");
+            Logger.Trace("Indexed vacancy item : {0} ({1})", vacancySummaryToIndex.Title, vacancySummaryToIndex.Id);
         }
 
         public void CreateScheduledIndex(DateTime scheduledRefreshDateTime)
@@ -59,7 +59,7 @@
             if (indexExistsResponse.Exists)
             {
                 // If it already exists and is empty, let's delete it and recreate it.
-                var totalResults = client.Count<VacancySummary>(c =>
+                var totalResults = client.Count<TDestinationSummary>(c =>
                 {
                     c.Index(newIndexName);
                     return c;
@@ -85,9 +85,8 @@
                 indexSettings.Analysis.Analyzers.Add("snowball", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "snowball" } });
 
                 client.CreateIndex(i => i.Index(newIndexName).InitializeUsing(indexSettings));
-                // client.Map<VacancySummary>(p => p.Index(newIndexName).MapFromAttributes());
 
-                client.Map<VacancySummary>(p => p.Index(newIndexName).MapFromAttributes().Properties(prop =>
+                client.Map<TDestinationSummary>(p => p.Index(newIndexName).MapFromAttributes().Properties(prop =>
                     prop.GeoPoint(g => g.Name(n => n.Location))));
                 Logger.Debug("Created new vacancy search index named: {0}", newIndexName);
             }
@@ -129,7 +128,7 @@
             var indexAlias = GetIndexAlias();
             var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
             var client = _elasticsearchClientFactory.GetElasticClient();
-            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (VacancySummary));
+            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (TDestinationSummary));
 
             var search = client.Search<VacancySummaryResponse>(s =>
             {
@@ -168,7 +167,7 @@
 
         private string GetIndexAlias()
         {
-            return _elasticsearchClientFactory.GetIndexNameForType(typeof(VacancySummary));
+            return _elasticsearchClientFactory.GetIndexNameForType(typeof(TDestinationSummary));
         }
 
         private static string GetIndexNameAndDateExtension(string indexAlias, DateTime dateTime)

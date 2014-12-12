@@ -29,7 +29,7 @@
             _elasticsearchClientFactory = ObjectFactory.GetInstance<IElasticsearchClientFactory>();
 #pragma warning restore 0618
 
-            _vacancyIndexAlias = _elasticsearchClientFactory.GetIndexNameForType(typeof(VacancySummary));
+            _vacancyIndexAlias = _elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary));
         }
 
         [Test, Category("Integration")]
@@ -40,7 +40,7 @@
 
 #pragma warning disable 0618
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var vis = ObjectFactory.GetInstance<IVacancyIndexerService>();
+            var vis = ObjectFactory.GetInstance<IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>>();
 #pragma warning restore 0618
 
             DeleteIndexIfExists(indexName);
@@ -48,7 +48,7 @@
             vis.CreateScheduledIndex(scheduledDate);
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeTrue();
 
-            var mapping = _elasticClient.GetMapping<VacancySummary>(i => i.Index(indexName));
+            var mapping = _elasticClient.GetMapping<ApprenticeshipSummary>(i => i.Index(indexName));
             mapping.Should().NotBeNull();
 
             _elasticClient.DeleteIndex(i => i.Index(indexName));

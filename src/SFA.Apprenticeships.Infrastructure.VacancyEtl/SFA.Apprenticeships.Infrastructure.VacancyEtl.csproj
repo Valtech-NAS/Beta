@@ -175,9 +175,10 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Consumers\TraineeshipsSummaryConsumerAsync.cs" />
     <Compile Include="Consumers\VacancyEtlControlQueueConsumer.cs" />
     <Compile Include="Consumers\VacancySummaryCompleteConsumerAsync.cs" />
-    <Compile Include="Consumers\VacancySummaryConsumerAsync.cs" />
+    <Compile Include="Consumers\ApprenticeshipSummaryConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryPageConsumerAsync.cs" />
     <Compile Include="IoC\GatewayVacancyEtlRegistry.cs" />
     <Compile Include="Mappers\VacancyEtlMapper.cs" />

@@ -45,8 +45,6 @@
 
         public VacancyLocationType VacancyLocationType { get; set; }
 
-        public VacancyType VacancyType { get; set; }
-
         public string LocalAuthority { get; set; }
 
         public int NumberOfPositions { get; set; }

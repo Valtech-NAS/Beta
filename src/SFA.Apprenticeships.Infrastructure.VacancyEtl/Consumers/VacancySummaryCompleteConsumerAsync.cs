@@ -4,9 +4,10 @@
     using System.Threading.Tasks;
     using EasyNetQ.AutoSubscribe;
     using Application.VacancyEtl.Entities;
+    using Elastic.Common.Entities;
     using Microsoft.WindowsAzure;
     using NLog;
-    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
+    using PerformanceCounters;
     using VacancyIndexer;
 
     public class VacancySummaryCompleteConsumerAsync : IConsumeAsync<VacancySummaryUpdateComplete>
@@ -15,13 +16,16 @@
         private const string VacancyIndexCounter = "VacancyEtlExecutions";
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IVacancyIndexerService _vacancyIndexer;
+        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> _apprenticeshipIndexer;
+        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _trainseeshipIndexer;
         private readonly IPerformanceCounterService _performanceCounterService;
 
-        public VacancySummaryCompleteConsumerAsync(IVacancyIndexerService vacancyIndexer, 
+        public VacancySummaryCompleteConsumerAsync(IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> apprenticeshipIndexer, 
+            IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> trainseeshipIndexer,
             IPerformanceCounterService performanceCounterService)
         {
-            _vacancyIndexer = vacancyIndexer;
+            _apprenticeshipIndexer = apprenticeshipIndexer;
+            _trainseeshipIndexer = trainseeshipIndexer;
             _performanceCounterService = performanceCounterService;
         }
 
@@ -32,24 +36,30 @@
 
             return Task.Run(() =>
             {
-                if (IndexIsCorrectlyCreated(updateComplete.ScheduledRefreshDateTime))
+                if (_apprenticeshipIndexer.IsIndexCorrectlyCreated(updateComplete.ScheduledRefreshDateTime))
                 {
-                    Logger.Debug("Swapping index alias after vacancy summary update completed");
-                    _vacancyIndexer.SwapIndex(updateComplete.ScheduledRefreshDateTime);
-                    Logger.Debug("Index swapped after vacancy summary update completed");
-
+                    Logger.Debug("Swapping apprenticeship index alias after vacancy summary update completed");
+                    _apprenticeshipIndexer.SwapIndex(updateComplete.ScheduledRefreshDateTime);
+                    Logger.Debug("Index apprenticeship swapped after vacancy summary update completed");
                     IncrementVacancyIndexPerformanceCounter();
                 }
                 else
                 {
-                    Logger.Error("The new index is not correctly created. Aborting swap.");
+                    Logger.Error("The new apprenticeship index is not correctly created. Aborting swap.");
+                }
+
+                if (_trainseeshipIndexer.IsIndexCorrectlyCreated(updateComplete.ScheduledRefreshDateTime))
+                {
+                    Logger.Debug("Swapping traineeship index alias after vacancy summary update completed");
+                    _trainseeshipIndexer.SwapIndex(updateComplete.ScheduledRefreshDateTime);
+                    Logger.Debug("Index traineeship swapped after vacancy summary update completed");
+                    IncrementVacancyIndexPerformanceCounter();
+                }
+                else
+                {
+                    Logger.Error("The new traineeship index is not correctly created. Aborting swap.");
                 }
             });
-        }
-
-        private bool IndexIsCorrectlyCreated(DateTime scheduledRefreshDateTime)
-        {
-            return _vacancyIndexer.IsIndexCorrectlyCreated(scheduledRefreshDateTime);
         }
 
         private void IncrementVacancyIndexPerformanceCounter()

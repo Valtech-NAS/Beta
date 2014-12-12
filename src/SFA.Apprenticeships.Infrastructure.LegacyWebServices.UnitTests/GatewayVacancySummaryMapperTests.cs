@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+
+namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
 {
     using System;
     using FluentAssertions;
@@ -36,7 +38,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, Domain.Entities.Vacancies.VacancySummary>(src);
+            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -57,7 +59,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, Domain.Entities.Vacancies.VacancySummary>(src);
+            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -74,7 +76,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, Domain.Entities.Vacancies.VacancySummary>(src);
+            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -91,7 +93,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, Domain.Entities.Vacancies.VacancySummary>(src);
+            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -112,7 +114,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, Domain.Entities.Vacancies.VacancySummary>(src);
+            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -131,7 +133,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, Domain.Entities.Vacancies.VacancySummary>(src);
+            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
 
             // Assert.
             dest.Should().NotBeNull();

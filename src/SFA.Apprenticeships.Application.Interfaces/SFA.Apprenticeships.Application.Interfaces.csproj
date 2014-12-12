@@ -123,6 +123,7 @@
     <Compile Include="Vacancies\VacancySortType.cs" />
     <Compile Include="Vacancies\IVacancyDataService.cs" />
     <Compile Include="Vacancies\IVacancySearchService.cs" />
+    <Compile Include="Vacancies\TraineeshipSummaryResponse.cs" />
     <Compile Include="Vacancies\VacancySummaryResponse.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -12,13 +12,13 @@
     using Newtonsoft.Json.Linq;
     using NLog;
 
-    public class VacancySearchProvider : IVacancySearchProvider
+    public class ApprenticeshipsSearchProvider : IVacancySearchProvider<VacancySummaryResponse>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
         private readonly SearchConfiguration _searchConfiguration;
 
-        public VacancySearchProvider(IElasticsearchClientFactory elasticsearchClientFactory,
+        public ApprenticeshipsSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory,
             SearchConfiguration searchConfiguration)
         {
             _elasticsearchClientFactory = elasticsearchClientFactory;
@@ -28,8 +28,8 @@
         public SearchResults<VacancySummaryResponse> FindVacancies(SearchParameters parameters)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
-            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (VacancySummary));
-            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (VacancySummary));
+            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (ApprenticeshipSummary));
+            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (ApprenticeshipSummary));
 
             Logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
                 indexName);

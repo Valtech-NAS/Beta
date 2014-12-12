@@ -1,8 +1,11 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+
+namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Domain.Entities.Vacancies.Traineeships;
     using NLog;
     using SFA.Apprenticeships.Application.Vacancy;
     using SFA.Apprenticeships.Application.VacancyEtl;
@@ -32,17 +35,18 @@
             {
                 var summaries = _vacancyIndexDataProvider.GetVacancySummaries(1);
 
-                var vacancySummaries = summaries as IList<VacancySummary> ?? summaries.ToList();
+                var apprenticeshipSummaries = summaries as IList<ApprenticeshipSummary> ?? summaries.ApprenticeshipSummaries;
+                var traineeshipSummaries = summaries as IList<TraineeshipSummary> ?? summaries.TraineeshipSummaries;
 
-                var summary = vacancySummaries.ToList().FirstOrDefault();
+                var summary = apprenticeshipSummaries.ToList().FirstOrDefault();
 
                 if (summary != null)
                 {
-                    var vacancyDetail = _vacancyDataProvider.GetVacancyDetails(summary.Id);
+                    var apprenticeshipDetail = _vacancyDataProvider.GetVacancyDetails(summary.Id);
                 }
                 else
                 {
-                    Logger.Error("Monitor get vacancy summary returned {0} records", vacancySummaries.Count());
+                    Logger.Error("Monitor get vacancy summary returned {0} records", apprenticeshipSummaries.Count() + traineeshipSummaries.Count());
                 }
             }
             catch (Exception exception)

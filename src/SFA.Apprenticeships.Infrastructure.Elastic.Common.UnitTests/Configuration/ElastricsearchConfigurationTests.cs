@@ -20,7 +20,7 @@
 
             var index1 = config.Indexes["VacancySummaryIndex"];
             index1.Should().NotBeNull();
-            index1.MappingType.Should().Be(typeof (VacancySummary));
+            index1.MappingType.Should().Be(typeof (ApprenticeshipSummary));
 
             var index2 = config.Indexes["TestMappingClassIndex"];
             index2.Should().NotBeNull();

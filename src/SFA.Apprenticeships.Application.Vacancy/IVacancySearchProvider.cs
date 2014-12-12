@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancy
 {
     using Interfaces.Search;
-    using Interfaces.Vacancies;
-
-    public interface IVacancySearchProvider
+    
+    public interface IVacancySearchProvider<TVacancySummaryResponse> where TVacancySummaryResponse : class
     {
-        SearchResults<VacancySummaryResponse> FindVacancies(SearchParameters parameters);
+        SearchResults<TVacancySummaryResponse> FindVacancies(SearchParameters parameters);
     }
 }

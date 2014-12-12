@@ -4,11 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Messaging;
     using Entities;
     using NLog;
+    using Domain.Entities.Vacancies.Apprenticeships;
 
     public class GatewayVacancySummaryProcessor : IVacancySummaryProcessor
     {
@@ -35,6 +36,7 @@
             Logger.Debug("Retrieving vacancy summary page count");
 
             var vacancyPageCount = _vacancyIndexDataProvider.GetVacancyPageCount();
+
             Logger.Debug("Retrieved vacancy summary page count of {0}", vacancyPageCount);
          
             var vacancySumaries = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, vacancyPageCount).ToList();
@@ -54,18 +56,28 @@
         {
             Logger.Debug("Retrieving vacancy search page number: {0}/{1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
 
-            var vacancies = _vacancyIndexDataProvider.GetVacancySummaries(vacancySummaryPage.PageNumber).ToList();
-            var vacanciesExtended = _mapper.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(vacancies);
+            var vacancies = _vacancyIndexDataProvider.GetVacancySummaries(vacancySummaryPage.PageNumber);
+            var apprenticeshipsExtended = _mapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryUpdate>>(vacancies.ApprenticeshipSummaries).ToList();
+            var traineeshipsExtended = _mapper.Map<IEnumerable<TraineeshipSummary>, IEnumerable<TraineeshipSummaryUpdate>>(vacancies.TraineeshipSummaries).ToList();
 
-            Logger.Debug("Retrieved vacancy search page number: {0}/{1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
+            Logger.Debug("Retrieved vacancy search page number: {0}/{1} with {2} apprenticeships and {3} traineeships", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages, apprenticeshipsExtended.Count(), traineeshipsExtended.Count());
 
             Parallel.ForEach(
-                vacanciesExtended,
+                apprenticeshipsExtended,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
-                vacancySummaryExtended =>
+                apprenticeshipExtended =>
                 {
-                    vacancySummaryExtended.ScheduledRefreshDateTime = vacancySummaryPage.ScheduledRefreshDateTime;
-                    _messageBus.PublishMessage(vacancySummaryExtended);
+                    apprenticeshipExtended.ScheduledRefreshDateTime = vacancySummaryPage.ScheduledRefreshDateTime;
+                    _messageBus.PublishMessage(apprenticeshipExtended);
+                });
+
+            Parallel.ForEach(
+                traineeshipsExtended,
+                new ParallelOptions { MaxDegreeOfParallelism = 5 },
+                traineeshipExtended =>
+                {
+                    traineeshipExtended.ScheduledRefreshDateTime = vacancySummaryPage.ScheduledRefreshDateTime;
+                    _messageBus.PublishMessage(traineeshipExtended);
                 });
         }
 

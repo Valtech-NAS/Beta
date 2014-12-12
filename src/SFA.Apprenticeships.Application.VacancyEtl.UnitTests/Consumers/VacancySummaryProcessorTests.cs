@@ -1,10 +1,13 @@
-﻿namespace SFA.Apprenticeships.Application.VacancyEtl.UnitTests.Consumers
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+
+namespace SFA.Apprenticeships.Application.VacancyEtl.UnitTests.Consumers
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Messaging;
     using Moq;
     using NUnit.Framework;
@@ -64,26 +67,28 @@
             _vacancyProviderMock.Setup(x => x.GetVacancySummaries(vacanciesReturned))
                 .Returns((int vr) =>
                 {
-                    var sumaries = new List<VacancySummary>(vr);
+
+                    var traineeshipSummaries = new List<TraineeshipSummary>(vr);
+                    var apprenticeshipSummaries = new List<ApprenticeshipSummary>(vr);
                     for (int i = 1; i <= vr; i++)
                     {
-                        var summary = new VacancySummary { Id = i };
-                        sumaries.Add(summary);
+                        var apprenticeshipSummary = new ApprenticeshipSummary { Id = i };
+                        apprenticeshipSummaries.Add(apprenticeshipSummary);
                     }
-                    return sumaries;
+                    return new VacancySummaries(apprenticeshipSummaries, traineeshipSummaries);
                 });
 
             _mapperMock.Setup(
                 x =>
-                    x.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(
-                        It.IsAny<IEnumerable<VacancySummary>>()))
-                .Returns((IEnumerable<VacancySummary> vacancies) =>
+                    x.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryUpdate>>(
+                        It.IsAny<IEnumerable<ApprenticeshipSummary>>()))
+                .Returns((IEnumerable<ApprenticeshipSummary> vacancies) =>
                 {
-                    var vacUpdates = new List<VacancySummaryUpdate>(vacancies.Count());
+                    var vacUpdates = new List<ApprenticeshipSummaryUpdate>(vacancies.Count());
                     vacancies.ToList()
                         .ForEach(
                             v =>
-                                vacUpdates.Add(new VacancySummaryUpdate
+                                vacUpdates.Add(new ApprenticeshipSummaryUpdate
                                 {
                                     Id = v.Id,
                                     ScheduledRefreshDateTime = summaryPage.ScheduledRefreshDateTime
@@ -98,8 +103,8 @@
             _vacancyProviderMock.Verify(x => x.GetVacancySummaries(
                                                 It.Is<int>(pn => pn == vacanciesReturned)), 
                                                 Times.Once);
-            _mapperMock.Verify(x => x.Map<IEnumerable<VacancySummary>, IEnumerable<VacancySummaryUpdate>>(It.Is<IEnumerable<VacancySummary>>(vc => vc.Count() == vacanciesReturned)), Times.Once);
-            _busMock.Verify(x => x.PublishMessage(It.IsAny<VacancySummary>()), Times.Exactly(vacanciesReturned));
+            _mapperMock.Verify(x => x.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryUpdate>>(It.Is<IEnumerable<ApprenticeshipSummary>>(vc => vc.Count() == vacanciesReturned)), Times.Once);
+            _busMock.Verify(x => x.PublishMessage(It.IsAny<ApprenticeshipSummary>()), Times.Exactly(vacanciesReturned));
         }
     }
 }
