@@ -34,26 +34,37 @@
 
             try
             {
-                if (applicationDetail.Status == ApplicationStatuses.Draft)
-                {
-                    var message = new SubmitApplicationRequest
-                    {
-                        ApplicationId = applicationDetail.EntityId
-                    };
+                applicationDetail.SetStateSubmitting();
+                _applicationWriteRepository.Save(applicationDetail);
 
-                    _messageBus.PublishMessage(message);
-
-                    applicationDetail.SetStateSubmitting();
-                    _applicationWriteRepository.Save(applicationDetail);
-
-                    NotifyCandidate(applicationDetail.CandidateId, applicationDetail.EntityId.ToString());
-                }
+                PublishMessage(applicationDetail);
+                NotifyCandidate(applicationDetail.CandidateId, applicationDetail.EntityId.ToString());
             }
             catch (Exception ex)
             {
                 Logger.Debug("SubmitApplicationRequest could not be queued for ApplicationId={0}", applicationId);
+
                 throw new CustomException("SubmitApplicationRequest could not be queued", ex,
                     ErrorCodes.ApplicationQueuingError);
+            }
+        }
+
+        private void PublishMessage(ApplicationDetail applicationDetail)
+        {
+            try
+            {
+                var message = new SubmitApplicationRequest
+                {
+                    ApplicationId = applicationDetail.EntityId
+                };
+
+                _messageBus.PublishMessage(message);
+            }
+            catch
+            {
+                applicationDetail.RevertStateToDraft();
+                _applicationWriteRepository.Save(applicationDetail);
+                throw;
             }
         }
 

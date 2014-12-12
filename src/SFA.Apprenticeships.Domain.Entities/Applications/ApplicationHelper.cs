@@ -26,10 +26,16 @@
         {
             applicationDetail.Status = ApplicationStatuses.Submitted;
         }
-
+        
         public static void SetStateExpiredOrWithdrawn(this ApplicationDetail applicationDetail)
         {
             applicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;
+        }
+
+        public static void RevertStateToDraft(this ApplicationDetail applicationDetail)
+        {
+            applicationDetail.Status = ApplicationStatuses.Draft;
+            applicationDetail.DateApplied = null;
         }
     }
 }
