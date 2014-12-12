@@ -21,5 +21,8 @@
 
         [ElementLocator(TagName = "h1")]
         public IWebElement ApprenticeshipNoLongerAvailableHeading { get; set; }
+
+        [ElementLocator(Text = "Track application status")]
+        public IWebElement TrackApplicationStatusLink { get; set; }
     }
 }
