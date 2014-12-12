@@ -47,7 +47,7 @@
         {
             var routeValues = new RouteValueDictionary
             {
-                {"Controller", "VacancySearch"},
+                {"Controller", "ApprenticeshipSearch"},
                 {"Action", "Index"}
             };
 

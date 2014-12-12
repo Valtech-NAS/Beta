@@ -21,6 +21,12 @@
                 );
 
             routes.MapRoute(
+                name: RouteNames.SignIn,
+                url: "signin",
+                defaults: new { controller = "Login", action = "Index" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.Settings,
                 url: "settings",
                 defaults: new { controller = "Account", action = "Settings" }
@@ -53,25 +59,25 @@
             routes.MapRoute(
                 name: CandidateRouteNames.ApprenticeshipResults,
                 url: "apprenticeships",
-                defaults: new { controller = "VacancySearch", action = "Results" }
+                defaults: new { controller = "ApprenticeshipSearch", action = "Results" }
             );
 
             routes.MapRoute(
                 name: CandidateRouteNames.ApprenticeshipSearch,
                 url: "apprenticeshipsearch",
-                defaults: new {controller = "VacancySearch", action = "Index"}
+                defaults: new { controller = "ApprenticeshipSearch", action = "Index" }
                 );
 
             routes.MapRoute(
                 name: CandidateRouteNames.ApprenticeshipDetailsWithDistance,
                 url: "apprenticeshipdetail/{id}/{distance}",
-                defaults: new { controller = "VacancySearch", action = "DetailsWithDistance" }
+                defaults: new { controller = "ApprenticeshipSearch", action = "DetailsWithDistance" }
             );
 
             routes.MapRoute(
                 name: CandidateRouteNames.ApprenticeshipDetails,
                 url: "apprenticeship/{id}",
-                defaults: new { controller = "VacancySearch", action = "Details" }
+                defaults: new { controller = "ApprenticeshipSearch", action = "Details" }
             );
 
             routes.MapRoute(
@@ -90,6 +96,12 @@
                 name: CandidateRouteNames.ApprenticeshipWhatNext,
                 url: "apprenticeship/whatnext/{id}",
                 defaults: new { controller = "ApprenticeshipApplication", action = "WhatHappensNext" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.TraineeshipOverview,
+                url: "traineeships/about",
+                defaults: new { controller = "TraineeshipSearch", action = "Overview" }
                 );
 
             routes.MapRoute(

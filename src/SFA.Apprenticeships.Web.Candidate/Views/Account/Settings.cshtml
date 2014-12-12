@@ -10,7 +10,7 @@
     </div>
     <div class="grid grid-1-2">
         <p>
-            @Html.ActionLink("Find an apprenticeship", "Index", "VacancySearch", null, new { @class = "page-link" })
+            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { @class = "page-link" })
         </p>
     </div>
 </div>
@@ -19,7 +19,7 @@
     <p class="text">Your changes will be seen on any draft or new applications. Submitted applications will continue to show your old details.</p>
 </div>
 
-@using (Html.BeginForm("Settings", "Account", FormMethod.Post))
+@using (Html.BeginRouteForm(CandidateRouteNames.Settings, FormMethod.Post))
 {
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 

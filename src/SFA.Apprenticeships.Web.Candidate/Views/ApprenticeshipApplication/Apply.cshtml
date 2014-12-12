@@ -26,7 +26,7 @@
             @Html.HiddenFor(m => m.VacancyDetail.Description)
             <p id="vacancy-summary">@Model.VacancyDetail.Description</p>
             <p>
-                <a href="@Url.Action("Details", "VacancySearch", new { id = Model.VacancyId })">View apprenticeship</a>
+                <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new { id = Model.VacancyId })">View apprenticeship</a>
             </p>
         </div>
     </section>

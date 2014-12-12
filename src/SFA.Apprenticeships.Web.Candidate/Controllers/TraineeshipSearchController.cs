@@ -2,9 +2,8 @@
 {
     using System.Web.Mvc;
 
-    public class TraineeshipController : CandidateControllerBase
+    public class TraineeshipSearchController : CandidateControllerBase
     {
-        // GET: Traineeship
         public ActionResult Overview()
         {
             return View();

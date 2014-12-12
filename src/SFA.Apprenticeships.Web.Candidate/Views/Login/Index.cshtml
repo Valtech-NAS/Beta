@@ -9,7 +9,7 @@
 
 <div class="grid-wrapper">
     <div class="grid grid-1-2">
-        @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+        @using (Html.BeginRouteForm(RouteNames.SignIn, FormMethod.Post))
         {
             <h1 class="heading-large">Sign in</h1>
             <p>

@@ -19,7 +19,7 @@
     using Validators;
     using ViewModels.VacancySearch;
 
-    public class VacancySearchController : CandidateControllerBase //todo: rename
+    public class ApprenticeshipSearchController : CandidateControllerBase
     {
         private readonly VacancySearchViewModelLocationValidator _searchLocationValidator;
         private readonly ISearchProvider _searchProvider;
@@ -27,7 +27,7 @@
         private readonly IVacancyDetailProvider _vacancyDetailProvider;
         private readonly int _vacancyResultsPerPage;
 
-        public VacancySearchController(IConfigurationManager configManager,
+        public ApprenticeshipSearchController(IConfigurationManager configManager,
             ISearchProvider searchProvider,
             VacancySearchViewModelClientValidator searchRequestValidator,
             VacancySearchViewModelLocationValidator searchLocationValidator,
@@ -246,7 +246,7 @@
                 }
 
                 var urlHelper = new UrlHelper(ControllerContext.RequestContext);
-                var url = urlHelper.Action("Results", "VacancySearch", null);
+                var url = urlHelper.RouteUrl(CandidateRouteNames.ApprenticeshipResults, null);
                 if (Request != null && Request.UrlReferrer != null && Request.UrlReferrer.AbsolutePath == url)
                 {
                     ViewBag.SearchReturnUrl = Request.UrlReferrer.PathAndQuery;
