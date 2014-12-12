@@ -9,7 +9,7 @@
 @if (ViewBag.VacancyId != null && ViewBag.VacancyTitle != null)
 {
     const string deleteMessage = "You’ve successfully deleted your draft for the <a id='vacancyDeletedLink' href={0}>{1}</a> apprenticeship";
-    var deletedMessageWithLink = string.Format(deleteMessage, Url.Action("Details", "VacancySearch", new {id = ViewBag.VacancyId}), ViewBag.VacancyTitle);
+    var deletedMessageWithLink = string.Format(deleteMessage, Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new {id = ViewBag.VacancyId}), ViewBag.VacancyTitle);
      
     <div role="alert" aria-live="assertive" class="panel-info">
         <p id="VacancyDeletedInfoMessageText">@Html.Raw(deletedMessageWithLink)</p>
@@ -25,7 +25,7 @@
                 to get someone ready for an apprenticeship.
             </p>
             <p>
-                <a id="traineeship-overview-link" href=@Url.Action("Overview", "Traineeship")>More about traineeships</a>
+                <a id="traineeship-overview-link" href=@Url.RouteUrl(CandidateRouteNames.TraineeshipOverview)>More about traineeships</a>
             </p>
         </div>
     </div>
@@ -40,7 +40,7 @@
         )
     {
         <div class="grid grid-1-2">
-            @Html.ActionLink("Find an apprenticeship", "Index", "VacancySearch", null, new { @class = "page-link" })
+            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { @class = "page-link" })
         </div>
     }
 </div>
@@ -51,7 +51,7 @@
     <div class="text">
         <p id="empty-application-history-text">Your application history is currently empty. This is because you haven’t submitted or saved any apprenticeship applications yet.</p>
         <p>Once you start, applications will be recorded and you’ll be able to track your progress</p>
-        <div class="get-started">@Html.ActionLink("Find an apprenticeship", "Index", "VacancySearch", null, new { @class = "button" })</div>
+        <div class="get-started">@Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { @class = "button" })</div>
     </div>
 }
 else

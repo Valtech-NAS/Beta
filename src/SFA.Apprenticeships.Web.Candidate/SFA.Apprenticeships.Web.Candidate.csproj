@@ -292,11 +292,11 @@
     <Content Include="Views\Shared\_ErrorLayout.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ReferenceDataViewModel.cshtml" />
-    <Content Include="Views\VacancySearch\Index.cshtml" />
-    <Content Include="Views\VacancySearch\Results.cshtml" />
-    <Content Include="Views\VacancySearch\_searchResults.cshtml" />
-    <Content Include="Views\VacancySearch\_pagination.cshtml" />
-    <Content Include="Views\VacancySearch\Details.cshtml" />
+    <Content Include="Views\ApprenticeshipSearch\Index.cshtml" />
+    <Content Include="Views\ApprenticeshipSearch\Results.cshtml" />
+    <Content Include="Views\ApprenticeshipSearch\_searchResults.cshtml" />
+    <Content Include="Views\ApprenticeshipSearch\_pagination.cshtml" />
+    <Content Include="Views\ApprenticeshipSearch\Details.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\Apply.cshtml" />
@@ -321,14 +321,14 @@
     <Content Include="Views\Login\Unlock.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\WhatHappensNext.cshtml" />
-    <Content Include="Views\VacancySearch\_Apply.cshtml" />
+    <Content Include="Views\ApprenticeshipSearch\_Apply.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Settings.cshtml" />
     <Content Include="Views\Home\Privacy.cshtml" />
     <Content Include="Views\Home\Cookies.cshtml" />
     <Content Include="Views\Home\Helpdesk.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTimeSaved.cshtml" />
-    <Content Include="Views\VacancySearch\_searchUpdate.cshtml" />
+    <Content Include="Views\ApprenticeshipSearch\_searchUpdate.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\_qualificationsJS.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\_workExperiencesJS.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\_qualificationsNonJS.cshtml" />
@@ -345,7 +345,7 @@
     <None Include="Startup\startup.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="Views\Traineeship\Overview.cshtml" />
+    <Content Include="Views\TraineeshipSearch\Overview.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -458,8 +458,8 @@
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\CandidateControllerBase.cs" />
-    <Compile Include="Controllers\TraineeshipController.cs" />
-    <Compile Include="Controllers\VacancySearchController.cs" />
+    <Compile Include="Controllers\TraineeshipSearchController.cs" />
+    <Compile Include="Controllers\ApprenticeshipSearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
