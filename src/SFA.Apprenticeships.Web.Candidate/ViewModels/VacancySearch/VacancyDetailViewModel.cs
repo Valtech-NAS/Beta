@@ -54,6 +54,10 @@
 
         public string ExpectedDuration { get; set; }
 
+        [UIHint("Date")]
+        [DataType(DataType.DateTime)]
+        public DateTime StartDate { get; set; }
+
         public AddressViewModel VacancyAddress { get; set; }
 
         public string SupplementaryQuestion1 { get; set; }
