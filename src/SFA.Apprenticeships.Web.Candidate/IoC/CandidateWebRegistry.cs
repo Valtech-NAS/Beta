@@ -92,16 +92,16 @@
             For<IGetCandidateApplicationsStrategy>().Use<LegacyGetCandidateApplicationsStrategy>();
             For<IApplicationStatusUpdater>().Use<ApplicationStatusUpdater>();
 
-            // providers (web)
-            For<IMapper>().Singleton().Use<CandidateWebMappers>().Name = "CandidateWebMappers";
-            For<ISearchProvider>().Use<SearchProvider>().Ctor<IMapper>().Named("CandidateWebMappers");
-            For<IVacancyDetailProvider>().Use<VacancyDetailProvider>().Ctor<IMapper>().Named("CandidateWebMappers");
+            // Apprenticeship providers (web)
+            For<IMapper>().Singleton().Use<ApprenticeshipCandidateWebMappers>().Name = "ApprenticeshipCandidateWebMappers";
+            For<ISearchProvider>().Use<SearchProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
+            For<IVacancyDetailProvider>().Use<VacancyDetailProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<IApplicationProvider>().Use<ApplicationProvider>();
             For<IAccountProvider>().Use<AccountProvider>();
             For<ICandidateServiceProvider>()
                 .Use<CandidateServiceProvider>()
                 .Ctor<IMapper>()
-                .Named("CandidateWebMappers");
+                .Named("ApprenticeshipCandidateWebMappers");
 
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
 

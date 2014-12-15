@@ -2,7 +2,7 @@
 {
     using SpecBind.Pages;
 
-    [PageNavigation("/traineeship/overview")]
+    [PageNavigation("/traineeship/about")]
     [PageAlias("TraineeshipOverviewPage")]
     public class Overview
     {

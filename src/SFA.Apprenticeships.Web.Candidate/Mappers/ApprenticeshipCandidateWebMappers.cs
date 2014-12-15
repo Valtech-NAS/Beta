@@ -15,7 +15,7 @@
     using ViewModels.Register;
     using ViewModels.VacancySearch;
 
-    public class CandidateWebMappers : MapperEngine
+    public class ApprenticeshipCandidateWebMappers : MapperEngine
     {
         public override void Initialise()
         {
@@ -78,7 +78,7 @@
                 .ConvertUsing<ApprenticeshipApplicationViewModelToApprenticeshipApplicationDetailResolver>();
 
             Mapper.CreateMap<ApplicationDetail, ApprenticheshipApplicationViewModel>()
-                .ConvertUsing<ApplicationDetailToApplicationViewModelResolverBase>();
+                .ConvertUsing<ApprenticeshipApplicationDetailToApprenticeshipApplicationViewModelResolver>();
 
             Mapper.CreateMap<RegistrationDetails, SettingsViewModel>()
                 .ConvertUsing<SettingsViewModelResolvers.RegistrationDetailsToSettingsViewModelResolver>();

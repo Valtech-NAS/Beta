@@ -23,7 +23,7 @@
         private Mock<IAddressSearchService> _addressSearchService;
         private Mock<IPerformanceCounterService> _performanceCounterService;
 
-        private CandidateWebMappers _mapper;
+        private ApprenticeshipCandidateWebMappers _mapper;
         
         [SetUp]
         public void Setup()
@@ -33,7 +33,7 @@
             _addressSearchService = new Mock<IAddressSearchService>();
             _performanceCounterService = new Mock<IPerformanceCounterService>();
             
-            _mapper = new CandidateWebMappers();
+            _mapper = new ApprenticeshipCandidateWebMappers();
         }
 
         [TestCase]

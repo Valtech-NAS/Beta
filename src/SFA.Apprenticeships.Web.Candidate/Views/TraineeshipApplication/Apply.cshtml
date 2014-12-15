@@ -1,0 +1,120 @@
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.TraineeshipApplicationViewModel
+
+@{
+    ViewBag.Title = "Traineeships - Application form";
+    Layout = "~/Views/Shared/_Layout.cshtml";   
+}
+
+@using (Html.BeginForm(null, "TraineeshipApplication", new { id = Model.VacancyId }, FormMethod.Post, new { id = "application-form" }))
+{
+    <h1 class="heading-xlarge">Application form</h1>
+    <section class="section-border">
+        <div class="text">
+            <div class="hgroup-medium">
+                @Html.HiddenFor(m => m.VacancyDetail.Title)
+                <h2 class="heading-medium" id="vacancy-title">@Model.VacancyDetail.Title</h2>
+                @Html.HiddenFor(m => m.VacancyDetail.EmployerName)
+                <p class="subtitle" id="vacancy-employer">@Model.VacancyDetail.EmployerName</p>
+            </div>
+            @Html.HiddenFor(m => m.VacancyDetail.Description)
+            <p id="vacancy-summary">@Model.VacancyDetail.Description</p>
+            <p>
+                <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new { id = Model.VacancyId })">View opportunity</a>
+            </p>
+        </div>
+    </section>
+
+
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+
+    @Html.DisplayFor(m => m.Candidate)
+    @Html.HiddenFor(m => m.VacancyId)
+    @Html.HiddenFor(m => m.IsJavascript, new{ @id="hidden-flag-javascript"})
+
+    Html.RenderPartial("_qualificationsJS", Model);    
+    
+    Html.RenderPartial("_qualificationsNonJS", Model);
+    
+    Html.RenderPartial("_workExperiencesJS", Model);   
+
+    Html.RenderPartial("_workExperiencesNonJS", Model);
+    
+    @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)
+
+    <div class="form-group">
+        @*The buttons below need the values so the controller knows what action to perform if restyling*@
+        <button id="apply-button" type="submit" name="ApplicationAction:Submit" class="button no-check-for-dirty-form" value="Preview">Submit application</button>
+    </div>
+}
+
+@section scripts {
+
+    @Scripts.Render("~/bundles/knockout")
+
+    <script type="text/javascript">
+
+    var qualificationData = null;
+    var workExperienceData = null;
+    var currentYear = null;
+    var whitelistregex = null;
+    var yearRegex = null;
+    var autoSaveTimeout = null;
+
+    $(function() {
+
+        document.getElementById("hidden-flag-javascript").value = "True";
+
+        qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
+        workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
+        currentYear = @Html.Raw(Model.CurrentYear);
+        whitelistregex =  @Html.Raw(Json.Encode(Model.WhiteListRegex));
+        yearRegex =  @Html.Raw(Json.Encode(Model.FourDigitYearRegex));
+
+        $(window).on('load', function (){
+            dirtyFormDialog.initialise({
+                formSelector: "form",
+                classToExclude: "no-check-for-dirty-form",
+                timeout: @Model.SessionTimeout * 1000,
+                confirmationMessage: '@Model.ConfirmationMessage'
+            });
+        });
+    });
+
+    function getCurrentYear() {
+        return currentYear;
+    }
+
+    function getQualificationData() {
+        return qualificationData;
+    }
+
+    function getWorkExperienceData() {
+        return workExperienceData;
+    }
+
+    function getWhiteListRegex() {
+        return whitelistregex;
+    }
+
+    function getYearRegex() {
+        return yearRegex;
+    }
+
+    function getMonthLabel(index) {
+        var month = "";
+
+        if (index === 0) {
+
+        } else {
+            var mths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+            month = mths[index - 1];
+        }
+
+        return month;
+    }
+
+</script>
+        
+    @Scripts.Render("~/bundles/nas/applicationform")
+}

@@ -3,39 +3,43 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using System.Web.Security;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Web.Candidate.ActionResults;
     using SFA.Apprenticeships.Web.Candidate.Attributes;
     using SFA.Apprenticeships.Web.Candidate.Constants;
+    using SFA.Apprenticeships.Web.Candidate.Providers;
     using SFA.Apprenticeships.Web.Common.Constants;
 
     public class TraineeshipApplicationController : CandidateControllerBase
     {
-        //[OutputCache(CacheProfile = CacheProfiles.None)]
-        //[AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        //[ApplyWebTrends]
-        //public async Task<ActionResult> Apply(int id)
-        //{
-        //    return await Task.Run<ActionResult>(() =>
-        //    {
-        //        //var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+        private readonly ITraineeshipApplicationProvider _traineeshipApplicationProvider;
 
-        //        //if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
-        //        //{
-        //        //    return new VacancyNotFoundResult();
-        //        //}
+        public TraineeshipApplicationController(ITraineeshipApplicationProvider traineeshipApplicationProvider)
+        {
+            _traineeshipApplicationProvider = traineeshipApplicationProvider;
+        }
 
-        //        //if (model.HasError())
-        //        //{
-        //        //    return RedirectToRoute(CandidateRouteNames.MyApplications);
-        //        //}
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
+        public async Task<ActionResult> Apply(int id)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var model = _traineeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-        //        //model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+                //if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                //{
+                //    return new VacancyNotFoundResult();
+                //}
 
-        //        var model = 
+                //if (model.HasError())
+                //{
+                //    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                //}
 
-        //        return View(model);
-        //    });
-        //}
+                model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
+
+                return View(model);
+            });
+        }
     }
 }

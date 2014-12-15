@@ -300,7 +300,7 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\Apply.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\DisplayTemplates\CandidateViewModel.cshtml" />
+    <Content Include="Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\EditorTemplates\AboutYouViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Date.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\Preview.cshtml" />
@@ -346,6 +346,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="Views\TraineeshipSearch\Overview.cshtml" />
+    <Content Include="Views\TraineeshipApplication\Apply.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -474,7 +475,7 @@
     <Compile Include="Mappers\Resolvers\ApprenticeshipApplicationDetailToApprenticeshipApplicationViewModelResolver.cs" />
     <Compile Include="Mappers\Resolvers\ApprenticeshipApplicationViewModelToApprenticeshipApplicationDetailResolver.cs" />
     <Compile Include="Mappers\Resolvers\CandidateResolver.cs" />
-    <Compile Include="Mappers\CandidateWebMappers.cs" />
+    <Compile Include="Mappers\ApprenticeshipCandidateWebMappers.cs" />
     <Compile Include="Constants\ViewModels\AboutYouViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerQuestionAnswersViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancySearchViewModelMessages.cs" />
@@ -491,8 +492,10 @@
     <Compile Include="Providers\IApplicationProvider.cs" />
     <Compile Include="Providers\ICandidateServiceProvider.cs" />
     <Compile Include="Providers\ISearchProvider.cs" />
+    <Compile Include="Providers\ITraineeshipApplicationProvider.cs" />
     <Compile Include="Providers\IVacancyDetailProvider.cs" />
     <Compile Include="Providers\SearchProvider.cs" />
+    <Compile Include="Providers\TraineeshipApplicationProvider.cs" />
     <Compile Include="Providers\VacancyDetailProvider.cs" />
     <Compile Include="Validators\AddressViewModelValidator.cs" />
     <Compile Include="Validators\ActivationViewModelValidator.cs" />
@@ -553,7 +556,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\TraineeshipApplicationController\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Address\SFA.Apprenticeships.Application.Address.csproj">
