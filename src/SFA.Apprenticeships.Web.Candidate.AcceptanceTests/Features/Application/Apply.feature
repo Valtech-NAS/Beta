@@ -232,6 +232,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| SubmittedApplicationsCount | Equals | 1     |
 
 @US154
+@RequiresStubGateway
 Scenario: As a candidate I would like to see my application as successful
 	Given I have registered a new candidate
 	When I select the "first" vacancy in location "London" that can apply by this website
@@ -313,6 +314,7 @@ Scenario: As a candidate I would like to see my application as submitted
 	Then I am on the MyApplicationsPage page
 
 @US154
+@RequiresStubGateway
 Scenario: As a candidate I would like to see my application as unsuccessful
 	Given I have registered a new candidate
 	When I select the "first" vacancy in location "London" that can apply by this website
@@ -355,6 +357,7 @@ Scenario: As a candidate I would like to see my application as unsuccessful
 
 #Ignored as AsyncProcessorService does not support a Withdrawn application properly
 @US154
+@RequiresStubGateway
 Scenario: As a candidate I would like to see my application as withdrawn
 	Given I have registered a new candidate
 	When I select the "first" vacancy in location "London" that can apply by this website
