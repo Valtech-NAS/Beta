@@ -18,13 +18,17 @@
             config.NodeCount = 1;
             config.Timeout = 30;
 
-            var index1 = config.Indexes["VacancySummaryIndex"];
+            var index1 = config.Indexes["TestMappingClassIndex"];
             index1.Should().NotBeNull();
-            index1.MappingType.Should().Be(typeof (ApprenticeshipSummary));
+            index1.MappingType.Should().Be(typeof(TestMappingClass));
 
-            var index2 = config.Indexes["TestMappingClassIndex"];
+            var index2 = config.Indexes["ApprenticeshipIndex"];
             index2.Should().NotBeNull();
-            index2.MappingType.Should().Be(typeof(TestMappingClass));
+            index2.MappingType.Should().Be(typeof(ApprenticeshipSummary));
+
+            var index3 = config.Indexes["TraineeshipIndex"];
+            index3.Should().NotBeNull();
+            index3.MappingType.Should().Be(typeof(TraineeshipSummary));
         }
     }
 }

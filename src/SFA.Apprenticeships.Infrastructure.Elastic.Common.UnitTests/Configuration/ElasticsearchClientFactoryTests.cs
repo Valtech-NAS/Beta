@@ -23,8 +23,8 @@
         {
             var clientFactory = new ElasticsearchClientFactory(ElasticsearchConfiguration.Instance, false);
 
-            clientFactory.GetDocumentNameForType(typeof(ApprenticeshipSummary)).Should().Be("apprenticeships");
-            clientFactory.GetDocumentNameForType(typeof(TraineeshipSummary)).Should().Be("trainseeships");
+            clientFactory.GetDocumentNameForType(typeof(ApprenticeshipSummary)).Should().Be("apprenticeship");
+            clientFactory.GetDocumentNameForType(typeof(TraineeshipSummary)).Should().Be("traineeship");
             clientFactory.GetDocumentNameForType(typeof(TestMappingClass)).Should().Be("test_mapping_class");
         }
     }

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
+    using System;
     using Common.Mappers;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -25,6 +26,12 @@
 
                 //.ForMember(dest => dest.StartDate,
                 //    opt => opt.MapFrom(src => src.StartDate))
+
+                .ForMember(dest => dest.VacancyReference,
+                    opt => opt.UseValue(null))
+
+                .ForMember(dest => dest.StartDate,
+                    opt => opt.UseValue(DateTime.MinValue))
 
                 .ForMember(dest => dest.ClosingDate,
                     opt => opt.MapFrom(src => src.ClosingDate))
