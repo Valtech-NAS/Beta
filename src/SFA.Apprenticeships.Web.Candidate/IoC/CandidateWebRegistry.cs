@@ -104,8 +104,8 @@
                 .Named("ApprenticeshipCandidateWebMappers");
 
             // Traineeship providers (web)
-            For<IMapper>().Singleton().Use<TraineeshipCandidateWebMappers>().Name = "TraineeshipCandidateWebMappers";
-            For<ITraineeshipApplicationProvider>().Use<TraineeshipApplicationProvider>();
+            //For<IMapper>().Singleton().Use<TraineeshipCandidateWebMappers>().Name = "TraineeshipCandidateWebMappers";
+            //For<ITraineeshipApplicationProvider>().Use<TraineeshipApplicationProvider>();
 
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
 

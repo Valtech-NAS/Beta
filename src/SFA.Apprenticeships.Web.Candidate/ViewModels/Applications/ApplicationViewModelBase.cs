@@ -5,7 +5,6 @@
     using System.Web.Mvc;
     using SFA.Apprenticeships.Domain.Entities.Applications;
     using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Models.Application;

@@ -6,6 +6,7 @@
     using FluentAssertions;
     using IoC;
     using NUnit.Framework;
+    using SFA.Apprenticeships.Web.Candidate.Mappers;
     using StructureMap;
 
 
@@ -29,6 +30,18 @@
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             _mapper = ObjectFactory.GetInstance<IMapper>();
 #pragma warning restore 0618
+        }
+
+        [Test]
+        public void ShouldCreateMap()
+        {
+            var apprenticeshipCandidateWebMappers = new ApprenticeshipCandidateWebMappers();
+
+            apprenticeshipCandidateWebMappers.Mapper.AssertConfigurationIsValid();
+
+            var traineeshipCandidateWebMappers = new TraineeshipCandidateWebMappers();
+
+            traineeshipCandidateWebMappers.Mapper.AssertConfigurationIsValid();
         }
 
         [Test]

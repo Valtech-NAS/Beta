@@ -61,7 +61,17 @@
                         .FromMember(src => src.EmployerWebsite))
                 .ForMember(d => d.IsWellFormedEmployerWebsiteUrl,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.IsWellFormedUrlResolver>()
-                        .FromMember(src => src.EmployerWebsite));
+                        .FromMember(src => src.EmployerWebsite))
+
+                        // TODO: review this ignored fields
+                 .ForMember(d => d.VacancyType,
+                        opt => opt.Ignore())
+                .ForMember(d => d.CandidateApplicationStatus,
+                        opt => opt.Ignore())
+                .ForMember(d => d.DateApplied,
+                        opt => opt.Ignore())
+                .ForMember(d => d.ViewModelMessage,
+                        opt => opt.Ignore());
 
             Mapper.CreateMap<VacancySummaryResponse, VacancySummaryViewModel>();
             
