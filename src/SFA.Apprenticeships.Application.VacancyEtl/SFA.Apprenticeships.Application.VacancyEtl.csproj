@@ -97,9 +97,12 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Entities\IVacancyUpdate.cs" />
+    <Compile Include="Entities\TraineeshipSummaryUpdate.cs" />
+    <Compile Include="Entities\VacancySummaries.cs" />
     <Compile Include="Entities\VacancySummaryPage.cs" />
     <Compile Include="Entities\VacancySummaryPageComplete.cs" />
-    <Compile Include="Entities\VacancySummaryUpdate.cs" />
+    <Compile Include="Entities\ApprenticeshipSummaryUpdate.cs" />
     <Compile Include="ErrorCodes.cs" />
     <Compile Include="GatewayVacancySummaryProcessor.cs" />
     <Compile Include="IVacancyIndexDataProvider.cs" />

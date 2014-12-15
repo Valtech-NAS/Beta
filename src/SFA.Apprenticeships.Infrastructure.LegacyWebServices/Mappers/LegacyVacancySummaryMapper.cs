@@ -1,14 +1,30 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
     using Common.Mappers;
+    using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.Traineeships;
 
     public class LegacyVacancySummaryMapper : MapperEngine
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<GatewayServiceProxy.VacancySummary, Domain.Entities.Vacancies.VacancySummary>()
+            CreateSummaryMap<ApprenticeshipSummary>();
+            CreateSummaryMap<TraineeshipSummary>();
+        }
+
+        private void CreateSummaryMap<T>() where T : VacancySummary
+        {
+            Mapper.CreateMap<GatewayServiceProxy.VacancySummary, T>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom(src => src.VacancyId))
+
+                //TODO: Change needed on gateway for future requirements
+                //.ForMember(dest => dest.VacancyReference,
+                //    opt => opt.MapFrom(src => src.VacancyReference))
+
+                //.ForMember(dest => dest.StartDate,
+                //    opt => opt.MapFrom(src => src.StartDate))
 
                 .ForMember(dest => dest.ClosingDate,
                     opt => opt.MapFrom(src => src.ClosingDate))
@@ -27,10 +43,7 @@
                     opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
 
                 .ForMember(dest => dest.Title,
-                    opt => opt.MapFrom(src => src.VacancyTitle))
-
-                .ForMember(dest => dest.VacancyType,
-                    opt => opt.ResolveUsing<VacancyTypeResolver>().FromMember(src => src.VacancyType));
+                    opt => opt.MapFrom(src => src.VacancyTitle));            
         }
     }
 }

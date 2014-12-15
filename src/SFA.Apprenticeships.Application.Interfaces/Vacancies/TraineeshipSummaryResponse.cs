@@ -1,9 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
 {
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.Traineeships;
 
-    //TODO: Rename to ApprenticeshipSummaryResponse.
-    public class VacancySummaryResponse : ApprenticeshipSummary
+    public class TraineeshipSummaryResponse : TraineeshipSummary
     {
         public double Distance { get; set; }
 

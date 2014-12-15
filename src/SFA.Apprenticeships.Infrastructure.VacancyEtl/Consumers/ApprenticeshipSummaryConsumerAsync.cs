@@ -5,28 +5,28 @@
     using Domain.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
     using Application.VacancyEtl.Entities;
+    using Elastic.Common.Entities;
     using NLog;
     using VacancyIndexer;
 
-    public class VacancySummaryConsumerAsync : IConsumeAsync<VacancySummaryUpdate>
+    public class ApprenticeshipSummaryConsumerAsync : IConsumeAsync<ApprenticeshipSummaryUpdate>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IVacancyIndexerService _vacancyIndexer;
+        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> _vacancyIndexer;
         private readonly IMessageBus _messageBus;
 
-        public VacancySummaryConsumerAsync(IVacancyIndexerService vacancyIndexer, 
+        public ApprenticeshipSummaryConsumerAsync(IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> vacancyIndexer, 
             IMessageBus messageBus)
         {
             _vacancyIndexer = vacancyIndexer;
             _messageBus = messageBus;
         }
 
-        [AutoSubscriberConsumer(SubscriptionId = "VacancySummaryConsumerAsync")]
-        public Task Consume(VacancySummaryUpdate vacancySummaryToIndex)
+        [AutoSubscriberConsumer(SubscriptionId = "ApprenticeshipSummaryConsumerAsync")]
+        public Task Consume(ApprenticeshipSummaryUpdate vacancySummaryToIndex)
         {
             return Task.Run(() =>
             {
-                //Logger.Debug("Vacancy summary update calling vacancy indexer index VacancyId={0}", vacancySummaryToIndex.Id);
                 try
                 {
                     _vacancyIndexer.Index(vacancySummaryToIndex);
@@ -39,8 +39,6 @@
 
                     _messageBus.PublishMessage(vacancySummaryToIndex);
                 }
-
-                //Logger.Debug("Vacancy summary update indexed VacancyId={0}", vacancySummaryToIndex.Id);
             });
         }
     }

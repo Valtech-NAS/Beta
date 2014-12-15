@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+
+namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using System;
     using AutoMapper;
@@ -39,7 +41,7 @@
                 return CreateNewApplication(candidateId, vacancyId);
             }
 
-            applicationDetail.AssertState("Application should be in draft", ApplicationStatuses.Draft);
+            applicationDetail.AssertState("Create application", ApplicationStatuses.Draft);
 
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
@@ -97,7 +99,7 @@
                 CandidateId = candidate.EntityId,
                 // TODO: US354: AG: better way to clone? http://stackoverflow.com/questions/5713556/copy-object-to-object-with-automapper
                 CandidateDetails = Mapper.Map<RegistrationDetails, RegistrationDetails>(candidate.RegistrationDetails),
-                Vacancy = new VacancySummary
+                Vacancy = new ApprenticeshipSummary
                 {
                     Id = vacancyDetails.Id,
                     Title = vacancyDetails.Title,

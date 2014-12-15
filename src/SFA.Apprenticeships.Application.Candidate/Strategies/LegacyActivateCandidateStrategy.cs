@@ -27,7 +27,7 @@
         {
             var user = _userReadRepository.Get(username);
 
-            user.AssertState("User is in invalid state for activation", UserStatuses.PendingActivation);
+            user.AssertState("Activate user", UserStatuses.PendingActivation);
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
 

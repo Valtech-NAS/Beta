@@ -1,14 +1,11 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies;
-
-namespace SFA.Apprenticeships.Application.VacancyEtl
+﻿namespace SFA.Apprenticeships.Application.VacancyEtl
 {
-    using System;
-    using System.Collections.Generic;
+    using Entities;
 
     public interface IVacancyIndexDataProvider
     {
         int GetVacancyPageCount();
 
-        IEnumerable<VacancySummary> GetVacancySummaries(int page);
+        VacancySummaries GetVacancySummaries(int page);
     }
 }

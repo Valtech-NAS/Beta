@@ -23,17 +23,19 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 ## Infrastructure layer ##
 
 - log request/response payloads for nas gateway calls
-- replace address lookup with public service
+- replace address lookup with public service. No longer available - need to investigate other options with the agency
 - change to entity repos (re. Mark). E.g. Consider renaming GenericMongoClient to MongoRepositoryBase; move MongoDB code out of into new MongoClient class; MongoRepositoryBase (and other future repos that may not be based on Domain EntityBase) would consume MongoClient (via IoC).
 - wrap ElasticSearchClient -> search into a new class to be able to rethrow WebException swallowed by Nest
 - agree on and implement location search behaviour fix for prefix sorting on different servers
-- refactor: vacancy ETL process (simplify to process pages immediately? TBD)
+- refactor: vacancy ETL process (simplify to process pages immediately? TBD. current approach facilitates multiple data sources)
 - additional mongo indexes for app status and date updated (TBC: not sure how effective this would be - re. Alan)
 
 ## Cross cutting ##
 
+- Error logging is inconsistent between layers which leads to double logging/counting some errors/warnings. Need to decide on a consistent approach
 
 ## WebOps
+
 - Configure remote powershell from Build Servers to Deployment Server to use Certificates over file system stored encrypted user details.   
 - Merge build and management networks (See Simon)
 

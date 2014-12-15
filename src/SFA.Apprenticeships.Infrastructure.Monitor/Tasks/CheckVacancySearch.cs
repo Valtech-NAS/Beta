@@ -2,15 +2,15 @@
 {
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
-    using SFA.Apprenticeships.Application.Interfaces.Search;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancies;
-    using SFA.Apprenticeships.Application.Vacancy;
+    using Application.Interfaces.Search;
+    using Application.Interfaces.Vacancies;
+    using Application.Vacancy;
 
     public class CheckVacancySearch : IMonitorTask
     {
-        private readonly IVacancySearchProvider _vacancySearchProvider;
+        private readonly IVacancySearchProvider<VacancySummaryResponse> _vacancySearchProvider;
 
-        public CheckVacancySearch(IVacancySearchProvider vacancySearchProvider)
+        public CheckVacancySearch(IVacancySearchProvider<VacancySummaryResponse> vacancySearchProvider)
         {
             _vacancySearchProvider = vacancySearchProvider;
         }

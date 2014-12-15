@@ -23,7 +23,7 @@
         {
             var user = _userReadRepository.Get(username);
 
-            user.AssertState("User is in invalid state for activation", UserStatuses.PendingActivation);
+            user.AssertState("Activate candidate", UserStatuses.PendingActivation);
 
             // Activate user before message submission so that they can continue using the site
             _registrationService.Activate(username, activationCode);

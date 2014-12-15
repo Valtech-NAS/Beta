@@ -2,23 +2,28 @@
 {
     using System.Threading.Tasks;
     using Application.VacancyEtl;
+    using Application.VacancyEtl.Entities;
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;
+    using Elastic.Common.Entities;
     using NLog;
     using VacancyIndexer;
 
     public class VacancyEtlControlQueueConsumer : AzureControlQueueConsumer
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IVacancyIndexerService _vacancyIndexerService;
+        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> _apprenticeshipIndexer;
+        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _trainseeshipIndexer;
         private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
 
         public VacancyEtlControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService,
             IVacancySummaryProcessor vacancySummaryProcessor,
-            IVacancyIndexerService vacancyIndexerService) : base(messageService, "Vacancy ETL")
+            IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> apprenticeshipIndexer, 
+            IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> trainseeshipIndexer) : base(messageService, "Vacancy ETL")
         {
             _vacancySummaryProcessor = vacancySummaryProcessor;
-            _vacancyIndexerService = vacancyIndexerService;
+            _apprenticeshipIndexer = apprenticeshipIndexer;
+            _trainseeshipIndexer = trainseeshipIndexer;
         }
 
         public Task CheckScheduleQueue()
@@ -35,7 +40,8 @@
 
                 Logger.Debug("Calling vacancy indexer service to create scheduled index");
 
-                _vacancyIndexerService.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
+                _apprenticeshipIndexer.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
+                _trainseeshipIndexer.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
 
                 Logger.Debug("Calling vacancy summary processor to queue vacancy pages");
 

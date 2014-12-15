@@ -33,7 +33,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         {
             var user = _userReadRepository.Get(username);
 
-            user.AssertState("Cannot send unlock code if user is not locked.", UserStatuses.Locked);
+            user.AssertState("Send unlock code", UserStatuses.Locked);
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
 

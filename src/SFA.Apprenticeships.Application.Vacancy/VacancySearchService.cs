@@ -20,9 +20,9 @@
             "Vacancy search failed for the following parameters; " + MessageFormat;
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IVacancySearchProvider _vacancySearchProvider;
+        private readonly IVacancySearchProvider<VacancySummaryResponse> _vacancySearchProvider;
 
-        public VacancySearchService(IVacancySearchProvider vacancySearchProvider)
+        public VacancySearchService(IVacancySearchProvider<VacancySummaryResponse> vacancySearchProvider)
         {
             _vacancySearchProvider = vacancySearchProvider;
         }

@@ -20,7 +20,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         {
             var user = _userReadRepository.Get(username);
 
-            user.AssertState("Only users in a Pending Activation state can activate this account", UserStatuses.PendingActivation);
+            user.AssertState("Activate user", UserStatuses.PendingActivation);
 
             if (!user.ActivationCode.Equals(activationCode, StringComparison.InvariantCultureIgnoreCase))
                 throw new CustomException("Invalid activation code", ErrorCodes.UserActivationCodeError); 

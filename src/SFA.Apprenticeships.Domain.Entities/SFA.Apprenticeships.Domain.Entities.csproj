@@ -121,14 +121,16 @@
     <Compile Include="Users\UserRoles.cs" />
     <Compile Include="Vacancies\VacancyDetail.cs" />
     <Compile Include="Vacancies\VacancyLocationType.cs" />
-    <Compile Include="Vacancies\VacancySummary.cs" />
+    <Compile Include="Vacancies\Traineeships\TraineeshipSummary.cs" />
+    <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSummary.cs" />
     <Compile Include="Vacancies\VacancyLevel.cs" />
-    <Compile Include="Vacancies\VacancyType.cs" />
+    <Compile Include="Vacancies\VacancySummary.cs" />
     <Compile Include="Vacancies\WageType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Apprenticeships.cd" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

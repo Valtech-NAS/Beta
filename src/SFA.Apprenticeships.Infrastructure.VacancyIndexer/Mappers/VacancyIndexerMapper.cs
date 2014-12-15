@@ -8,11 +8,17 @@
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<VacancySummaryUpdate, VacancySummary>()
+            Mapper.CreateMap<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>()
                 .ForMember(d => d.Location,
                     opt => opt.ResolveUsing<GeoPointDomainToElasticResolver>().FromMember(src => src.Location));
 
-            Mapper.CreateMap<Domain.Entities.Vacancies.VacancySummary, VacancySummaryUpdate>();
+            Mapper.CreateMap<ApprenticeshipSummary, ApprenticeshipSummaryUpdate>();
+
+            Mapper.CreateMap<TraineeshipSummaryUpdate, TraineeshipSummary>()
+                .ForMember(d => d.Location,
+                    opt => opt.ResolveUsing<GeoPointDomainToElasticResolver>().FromMember(src => src.Location));
+
+            Mapper.CreateMap<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>();
         }
     }
 }

@@ -262,6 +262,16 @@ Scenario: As a candidate I would like to see my application as successful
 	And I see
 		| Field                       | Rule   | Value |
 		| SuccessfulApplicationsCount | Equals | 1     |
+	And I navigate to the VacancyDetailsPage page with parameters
+		| VacancyId   |
+		| {VacancyId} |
+	Then I see
+		| Field                      | Rule   | Value |
+		| TrackApplicationStatusLink | Exists |       |
+	When I choose TrackApplicationStatusLink
+	Then I am on the MyApplicationsPage page
+
+
 @US154
 Scenario: As a candidate I would like to see my application as submitted
 	Given I have registered a new candidate
@@ -293,6 +303,14 @@ Scenario: As a candidate I would like to see my application as submitted
 	And I see
 		| Field                      | Rule   | Value |
 		| SubmittedApplicationsCount | Equals | 1     |
+	And I navigate to the VacancyDetailsPage page with parameters
+		| VacancyId   |
+		| {VacancyId} |
+	Then I see
+		| Field                      | Rule   | Value |
+		| TrackApplicationStatusLink | Exists |       |
+	When I choose TrackApplicationStatusLink
+	Then I am on the MyApplicationsPage page
 
 @US154
 Scenario: As a candidate I would like to see my application as unsuccessful
@@ -325,6 +343,14 @@ Scenario: As a candidate I would like to see my application as unsuccessful
 	And I see
 		| Field                         | Rule   | Value |
 		| UnsuccessfulApplicationsCount | Equals | 1     |
+	And I navigate to the VacancyDetailsPage page with parameters
+		| VacancyId   |
+		| {VacancyId} |
+	Then I see
+		| Field                      | Rule   | Value |
+		| TrackApplicationStatusLink | Exists |       |
+	When I choose TrackApplicationStatusLink
+	Then I am on the MyApplicationsPage page
 
 
 #Ignored as AsyncProcessorService does not support a Withdrawn application properly
@@ -360,3 +386,11 @@ Scenario: As a candidate I would like to see my application as withdrawn
 		| Field                         | Rule   | Value                |
 		| UnsuccessfulApplicationsCount | Equals | 1                    |
 		| ApplicationStatusDescription  | Equals | Expired or Withdrawn |
+	And I navigate to the VacancyDetailsPage page with parameters
+		| VacancyId   |
+		| {VacancyId} |
+	Then I see
+		| Field                      | Rule   | Value |
+		| TrackApplicationStatusLink | Exists |       |
+	When I choose TrackApplicationStatusLink
+	Then I am on the MyApplicationsPage page

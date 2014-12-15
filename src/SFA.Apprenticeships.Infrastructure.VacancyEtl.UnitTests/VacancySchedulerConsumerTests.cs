@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using Domain.Interfaces.Messaging;
+    using Elastic.Common.Entities;
     using Moq;
     using NUnit.Framework;
     using Application.VacancyEtl;
@@ -16,14 +17,16 @@
     {
         private Mock<IProcessControlQueue<StorageQueueMessage>> _messageServiceMock;
         private Mock<IVacancySummaryProcessor> _vacancySummaryProcessorMock;
-        private Mock<IVacancyIndexerService> _vacancyIndexerService;
+        private Mock<IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>> _apprenticeshipIndexerService;
+        private Mock<IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary>> _traineeshipsIndexerService;
 
         [SetUp]
         public void SetUp()
         {
             _messageServiceMock = new Mock<IProcessControlQueue<StorageQueueMessage>>();
             _vacancySummaryProcessorMock = new Mock<IVacancySummaryProcessor>();
-            _vacancyIndexerService = new Mock<IVacancyIndexerService>();
+            _apprenticeshipIndexerService = new Mock<IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>>();
+            _traineeshipsIndexerService = new Mock<IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary>>();
         }
 
         [TestCase(0)]
@@ -33,13 +36,13 @@
         {
             var scheduledMessageQueue = GetScheduledMessagesQueue(queuedScheduledMessages);
             _messageServiceMock.Setup(x => x.GetMessage()).Returns(scheduledMessageQueue.Dequeue);
-            var vacancyConsumer = new VacancyEtlControlQueueConsumer(_messageServiceMock.Object, _vacancySummaryProcessorMock.Object, _vacancyIndexerService.Object);
+            var vacancyConsumer = new VacancyEtlControlQueueConsumer(_messageServiceMock.Object, _vacancySummaryProcessorMock.Object, _apprenticeshipIndexerService.Object, _traineeshipsIndexerService.Object);
             var task = vacancyConsumer.CheckScheduleQueue();
             task.Wait();
 
             _messageServiceMock.Verify(x => x.GetMessage(), Times.Exactly(queuedScheduledMessages + 1));
             _messageServiceMock.Verify(x => x.DeleteMessage(It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(queuedScheduledMessages == 0 ? 0 : queuedScheduledMessages - 1));
-            _vacancyIndexerService.Verify(x => x.CreateScheduledIndex(It.Is<DateTime>(d => d == DateTime.Today)), Times.Exactly(queuedScheduledMessages > 0 ? 1 : 0));
+            _apprenticeshipIndexerService.Verify(x => x.CreateScheduledIndex(It.Is<DateTime>(d => d == DateTime.Today)), Times.Exactly(queuedScheduledMessages > 0 ? 1 : 0));
             _vacancySummaryProcessorMock.Verify(x => x.QueueVacancyPages(It.IsAny<StorageQueueMessage>()), Times.Exactly(queuedScheduledMessages == 0 ? 0 : 1));
         }
 

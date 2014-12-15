@@ -3,8 +3,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.VacancyEtl;
+    using Application.VacancyEtl.Entities;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
     using NLog;
@@ -49,7 +51,7 @@
             return response.TotalPages;
         }
 
-        public IEnumerable<Domain.Entities.Vacancies.VacancySummary> GetVacancySummaries(int page)
+        public VacancySummaries GetVacancySummaries(int page)
         {
             var request = new GetVacancySummaryRequest { PageNumber = page };
 
@@ -69,10 +71,15 @@
                     ErrorCodes.GatewayServiceFailed);
             }
 
-            var results = _mapper.Map<GatewayServiceProxy.VacancySummary[], IEnumerable<Domain.Entities.Vacancies.VacancySummary>>(
-                response.VacancySummaries);
+            var apprenticeshipTypes = new[] {"IntermediateLevelApprenticeship", "AdvancedLevelApprenticeship", "HigherApprenticeship"};
 
-            return results.Where(r => r.VacancyType == VacancyType.Apprenticeship);
+            var apprenticeshipSummaries = _mapper.Map<GatewayServiceProxy.VacancySummary[], IEnumerable<ApprenticeshipSummary>>(
+                                response.VacancySummaries.Where(v => apprenticeshipTypes.Contains(v.VacancyType)).ToArray());
+
+            var traineeshipsSummaries = _mapper.Map<GatewayServiceProxy.VacancySummary[], IEnumerable<TraineeshipSummary>>(
+                                response.VacancySummaries.Where(v => v.VacancyType == "Traineeship").ToArray());
+
+            return new VacancySummaries(apprenticeshipSummaries, traineeshipsSummaries);
         }
     }
 }

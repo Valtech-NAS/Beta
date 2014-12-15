@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Applications
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+
+namespace SFA.Apprenticeships.Domain.Entities.Applications
 {
     using System;
     using Candidates;
@@ -9,7 +11,7 @@
     {
         public ApplicationDetail()
         {
-            Vacancy = new VacancySummary();
+            Vacancy = new ApprenticeshipSummary();
             CandidateDetails = new RegistrationDetails();
             CandidateInformation = new ApplicationTemplate();
             Status = ApplicationStatuses.Unknown;
@@ -29,7 +31,7 @@
 
         public int LegacyApplicationId { get; set; } // temporary "weak link" to legacy application record (could be via an index)
 
-        public VacancySummary Vacancy { get; set; }
+        public ApprenticeshipSummary Vacancy { get; set; }
 
         public RegistrationDetails CandidateDetails { get; set; }
 

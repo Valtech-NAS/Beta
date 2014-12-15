@@ -54,7 +54,7 @@
                 return SaveAndNotifyCandidate(newCandidateId, newCandidate, activationCode);
             }
 
-            user.AssertState("Username registered and not in pending activation state", UserStatuses.PendingActivation);
+            user.AssertState("Register candidate", UserStatuses.PendingActivation);
 
             if (user.ActivateCodeExpiry != null && user.ActivateCodeExpiry > DateTime.Now)
             {

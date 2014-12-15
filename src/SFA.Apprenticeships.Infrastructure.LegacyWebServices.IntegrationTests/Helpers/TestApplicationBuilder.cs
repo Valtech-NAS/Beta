@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests.Helpers
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+
+namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests.Helpers
 {
     using System;
     using System.Collections.Generic;
@@ -31,7 +33,7 @@
             return new ApplicationDetail
             {
                 EntityId = _entityid,
-                Vacancy = new VacancySummary
+                Vacancy = new ApprenticeshipSummary
                 {
                     Id = _vacancyId
                 },
@@ -63,7 +65,7 @@
             return new ApplicationDetail
             {
                 EntityId = Guid.NewGuid(),
-                Vacancy = new VacancySummary
+                Vacancy = new ApprenticeshipSummary
                 {
                     Id = 12345 // legacy vacancy id
                 },
@@ -82,7 +84,7 @@
             return new ApplicationDetail
             {
                 EntityId = Guid.NewGuid(),
-                Vacancy = new VacancySummary
+                Vacancy = new ApprenticeshipSummary
                 {
                     Id = 12345 // legacy vacancy id
                 },

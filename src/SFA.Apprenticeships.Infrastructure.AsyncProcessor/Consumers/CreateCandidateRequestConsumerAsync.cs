@@ -56,7 +56,7 @@
             try
             {
                 var user = _userReadRepository.Get(request.CandidateId);
-                user.AssertState("User is in invalid state for creation in legacy", UserStatuses.Active);
+                user.AssertState("Create legacy user", UserStatuses.Active);
 
                 var candidate = _candidateReadRepository.Get(request.CandidateId, true);
                 if (candidate.LegacyCandidateId == 0)

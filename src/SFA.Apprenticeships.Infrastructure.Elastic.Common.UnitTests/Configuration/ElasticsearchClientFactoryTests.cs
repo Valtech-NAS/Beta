@@ -12,8 +12,9 @@
         public void ShouldReturnIndexNamesFromConfigurationForMappedObjectType()
         {
             var clientFactory = new ElasticsearchClientFactory(ElasticsearchConfiguration.Instance, false);
-            
-            clientFactory.GetIndexNameForType(typeof(VacancySummary)).Should().Be("VacancySummaryIndex");
+
+            clientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary)).Should().Be("ApprenticeshipIndex");
+            clientFactory.GetIndexNameForType(typeof(TraineeshipSummary)).Should().Be("TraineeshipIndex");
             clientFactory.GetIndexNameForType(typeof(TestMappingClass)).Should().Be("TestMappingClassIndex");
         }
 
@@ -22,7 +23,8 @@
         {
             var clientFactory = new ElasticsearchClientFactory(ElasticsearchConfiguration.Instance, false);
 
-            clientFactory.GetDocumentNameForType(typeof(VacancySummary)).Should().Be("vacancy");
+            clientFactory.GetDocumentNameForType(typeof(ApprenticeshipSummary)).Should().Be("apprenticeships");
+            clientFactory.GetDocumentNameForType(typeof(TraineeshipSummary)).Should().Be("trainseeships");
             clientFactory.GetDocumentNameForType(typeof(TestMappingClass)).Should().Be("test_mapping_class");
         }
     }

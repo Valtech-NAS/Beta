@@ -80,7 +80,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 Logger.Debug("Vacancy Etl Process IoC initialized");
 
                 var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
-                subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(VacancySummaryConsumerAsync)),
+                subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(VacancySummaryPageConsumerAsync)),
                     "VacancyEtl");
                 Logger.Debug("Rabbit subscriptions setup");
 

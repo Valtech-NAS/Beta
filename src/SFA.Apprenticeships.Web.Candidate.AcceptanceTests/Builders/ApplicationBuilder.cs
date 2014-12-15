@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+
+namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
 {
     using System;
     using System.Linq;
@@ -54,7 +56,7 @@
                 CandidateInformation = new ApplicationTemplate(),
                 Status = _applicationStatus,
                 DateApplied = _dateApplied,
-                Vacancy = new VacancySummary
+                Vacancy = new ApprenticeshipSummary
                 {
                     ClosingDate = _expirationDate
                 }

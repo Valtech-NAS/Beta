@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+
+namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -19,10 +21,10 @@
             var service = ObjectFactory.GetInstance<IVacancyIndexDataProvider>();
 #pragma warning restore 0618
 
-            List<VacancySummary> result = service.GetVacancySummaries(1).ToList();
+            var result = service.GetVacancySummaries(1);
 
-            result.Should().NotBeNullOrEmpty();
-            result.ForEach(r => r.VacancyType.Should().Be(VacancyType.Apprenticeship));
+            result.ApprenticeshipSummaries.Should().NotBeNullOrEmpty();
+            result.TraineeshipSummaries.Should().NotBeNullOrEmpty();
         }
     }
 }

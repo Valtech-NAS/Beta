@@ -58,9 +58,17 @@
                     _sendAccountUnlockCodeStrategy.Send(candidate, messageType, tokens);
                     break;
                 case CandidateMessageTypes.ApplicationSubmitted:
-                    var application = GetApplicationDetail(tokens);
+                    if (candidate.CommunicationPreferences.AllowEmail)
+                    {
+                        var application = GetApplicationDetail(tokens);
 
-                    _sendApplicationSubmittedStrategy.Send(candidate, application, messageType, tokens);
+                        _sendApplicationSubmittedStrategy.Send(candidate, application, messageType, tokens);
+                    }
+                    else
+                    {
+                        Logger.Debug("NOT calling CommunicationService to send a message of type {0} to candidate with Id={1} (candidate has AllowEmail = false set)",
+                            messageType.ToString(), candidateId);
+                    }
                     break;
 
                 case CandidateMessageTypes.PasswordChanged:

@@ -10,7 +10,12 @@
         {
             if (!allowedUserStatuses.Contains(applicationDetail.Status))
             {
-                var message = string.Format("{0} (id: {1}, status: {2})", errorMessage, applicationDetail.EntityId, applicationDetail.Status);
+                var expectedStatuses = string.Join(", ", allowedUserStatuses);
+                var message = string.Format("Application in invalid state for '{0}' (id: {1}, current: {2}, expected: '{3}')", 
+                    errorMessage, 
+                    applicationDetail.EntityId, 
+                    applicationDetail.Status,
+                    expectedStatuses);
 
                 throw new CustomException(message, ErrorCodes.ApplicationInIncorrectStateError);
             }

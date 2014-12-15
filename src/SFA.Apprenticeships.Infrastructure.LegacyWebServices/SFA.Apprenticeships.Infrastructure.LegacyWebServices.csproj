@@ -133,7 +133,6 @@
     <Compile Include="Mappers\VacancyStatusResolver.cs" />
     <Compile Include="Mappers\VacancyLevelResolver.cs" />
     <Compile Include="Mappers\VacancyLocationTypeResolver.cs" />
-    <Compile Include="Mappers\VacancyTypeResolver.cs" />
     <Compile Include="Mappers\WageTypeResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\GatewayServiceProxy\Reference.cs">

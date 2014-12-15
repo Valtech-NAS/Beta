@@ -10,7 +10,8 @@
     {
         public GatewayVacancyEtlRegistry()
         {
-            For<VacancySummaryConsumerAsync>().Use<VacancySummaryConsumerAsync>();
+            For<ApprenticeshipSummaryConsumerAsync>().Use<ApprenticeshipSummaryConsumerAsync>();
+            For<TraineeshipsSummaryConsumerAsync>().Use<TraineeshipsSummaryConsumerAsync>();
             For<IMapper>().Singleton().Use<VacancyEtlMapper>().Name = "VacancyEtlMapper";
             For<IVacancySummaryProcessor>().Use<GatewayVacancySummaryProcessor>().Ctor<IMapper>().Named("VacancyEtlMapper");
             For<VacancyEtlControlQueueConsumer>().Use<VacancyEtlControlQueueConsumer>();
