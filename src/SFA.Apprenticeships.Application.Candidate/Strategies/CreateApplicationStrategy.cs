@@ -39,7 +39,7 @@
                 return CreateNewApplication(candidateId, vacancyId);
             }
 
-            applicationDetail.AssertState("Application should be in draft", ApplicationStatuses.Draft);
+            applicationDetail.AssertState("Create application", ApplicationStatuses.Draft);
 
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 

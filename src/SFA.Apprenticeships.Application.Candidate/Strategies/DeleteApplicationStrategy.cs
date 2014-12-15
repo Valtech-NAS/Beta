@@ -20,7 +20,7 @@
         {
             var applicationDetail = _applicationReadRepository.Get(applicationId, true);
 
-            applicationDetail.AssertState("Application should not be deleted", ApplicationStatuses.Draft, ApplicationStatuses.ExpiredOrWithdrawn);
+            applicationDetail.AssertState("Delete application", ApplicationStatuses.Draft, ApplicationStatuses.ExpiredOrWithdrawn);
 
             _applicationWriteRepository.Delete(applicationDetail.EntityId);
         }

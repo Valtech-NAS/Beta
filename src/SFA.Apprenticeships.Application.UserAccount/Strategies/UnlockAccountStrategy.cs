@@ -26,7 +26,7 @@
         {
             var user = _userReadRepository.Get(username);
 
-            user.AssertState("Cannot unlock an account that is not locked.", UserStatuses.Locked);
+            user.AssertState("Unlock user account", UserStatuses.Locked);
 
             if (user.AccountUnlockCodeExpiry < DateTime.Now)
             {

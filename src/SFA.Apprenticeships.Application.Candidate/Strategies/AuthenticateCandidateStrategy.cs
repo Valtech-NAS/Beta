@@ -38,9 +38,7 @@
 
             if (user != null)
             {
-                user.AssertState(
-                    string.Format("Cannot authenticate user in state: {0}.", user.Status),
-                    UserStatuses.Active, UserStatuses.PendingActivation, UserStatuses.Locked);
+                user.AssertState("Authenticate user", UserStatuses.Active, UserStatuses.PendingActivation, UserStatuses.Locked);
 
                 if (_authenticationService.AuthenticateUser(user.EntityId, password))
                 {

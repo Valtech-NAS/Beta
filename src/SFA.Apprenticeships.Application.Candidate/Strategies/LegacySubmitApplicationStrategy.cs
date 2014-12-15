@@ -30,7 +30,7 @@
         {
             var applicationDetail = _applicationReadRepository.Get(applicationId, true);
 
-            applicationDetail.AssertState("Application is not in the correct state to be submitted", ApplicationStatuses.Draft);
+            applicationDetail.AssertState("Submit application", ApplicationStatuses.Draft);
 
             try
             {

@@ -25,7 +25,7 @@
         {
             var applicationDetail = _applicationReadRepository.Get(application.EntityId, true);
 
-            applicationDetail.AssertState("Application should not be submitted", ApplicationStatuses.Draft);
+            applicationDetail.AssertState("Save application", ApplicationStatuses.Draft);
 
             applicationDetail.CandidateInformation = application.CandidateInformation;
             applicationDetail.AdditionalQuestion1Answer = application.AdditionalQuestion1Answer;

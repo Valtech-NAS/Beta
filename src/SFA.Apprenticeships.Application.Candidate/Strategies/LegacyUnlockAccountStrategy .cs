@@ -31,7 +31,7 @@
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
 
-            user.AssertState("User should be a locked state", UserStatuses.Locked);
+            user.AssertState("Unlock account", UserStatuses.Locked);
 
             if (candidate.LegacyCandidateId > 0)
             {
