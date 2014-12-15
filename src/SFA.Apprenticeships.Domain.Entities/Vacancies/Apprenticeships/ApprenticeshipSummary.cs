@@ -5,7 +5,7 @@
     public class ApprenticeshipSummary : VacancySummary
     {
         [Obsolete("Required for backward compatibility with previous document version that has this field.")]
-        public string VacancyType {
+        public int? VacancyType {
             get { return null; }
             set { }
         }
