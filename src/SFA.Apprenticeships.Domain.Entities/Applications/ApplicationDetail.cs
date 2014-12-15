@@ -1,17 +1,13 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
-
-namespace SFA.Apprenticeships.Domain.Entities.Applications
+﻿namespace SFA.Apprenticeships.Domain.Entities.Applications
 {
     using System;
-    using Candidates;
-    using Users;
-    using Vacancies;
+    using SFA.Apprenticeships.Domain.Entities.Candidates;
+    using SFA.Apprenticeships.Domain.Entities.Users;
 
-    public class ApplicationDetail : BaseEntity
+    public abstract class ApplicationDetail : BaseEntity
     {
-        public ApplicationDetail()
+        protected ApplicationDetail()
         {
-            Vacancy = new ApprenticeshipSummary();
             CandidateDetails = new RegistrationDetails();
             CandidateInformation = new ApplicationTemplate();
             Status = ApplicationStatuses.Unknown;
@@ -29,9 +25,8 @@ namespace SFA.Apprenticeships.Domain.Entities.Applications
 
         public Guid CandidateId { get; set; }
 
-        public int LegacyApplicationId { get; set; } // temporary "weak link" to legacy application record (could be via an index)
-
-        public ApprenticeshipSummary Vacancy { get; set; }
+        public int LegacyApplicationId { get; set; }
+        // temporary "weak link" to legacy application record (could be via an index)
 
         public RegistrationDetails CandidateDetails { get; set; }
 

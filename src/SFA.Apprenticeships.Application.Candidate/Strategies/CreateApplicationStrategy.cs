@@ -30,7 +30,7 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
             _candidateReadRepository = candidateReadRepository;
         }
 
-        public ApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
+        public ApprenticeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
         {
             var applicationDetail = _applicationReadRepository.GetForCandidate(
                 candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
@@ -41,13 +41,13 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
                 return CreateNewApplication(candidateId, vacancyId);
             }
 
-            applicationDetail.AssertState("Create application", ApplicationStatuses.Draft);
+            applicationDetail.AssertState("Create apprenticeshipApplication", ApplicationStatuses.Draft);
 
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
             if (vacancyDetails == null)
             {
-                // Update application status.
+                // Update apprenticeshipApplication status.
                 _applicationWriteRepository.ExpireOrWithdrawForCandidate(candidateId, vacancyId);
 
                 return _applicationReadRepository.Get(applicationDetail.EntityId);
@@ -61,21 +61,21 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
             return applicationDetail;
         }
 
-        private ApplicationDetail UnarchiveApplication(ApplicationDetail applicationDetail)
+        private ApprenticeshipApplicationDetail UnarchiveApplication(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
         {
-            applicationDetail.IsArchived = false;
-            _applicationWriteRepository.Save(applicationDetail);
+            apprenticeshipApplicationDetail.IsArchived = false;
+            _applicationWriteRepository.Save(apprenticeshipApplicationDetail);
 
-            return _applicationReadRepository.Get(applicationDetail.EntityId);
+            return _applicationReadRepository.Get(apprenticeshipApplicationDetail.EntityId);
         }
 
-        private ApplicationDetail CreateNewApplication(Guid candidateId, int vacancyId)
+        private ApprenticeshipApplicationDetail CreateNewApplication(Guid candidateId, int vacancyId)
         {
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
             if (vacancyDetails == null)
             {
-                return new ApplicationDetail
+                return new ApprenticeshipApplicationDetail
                 {
                     Status = ApplicationStatuses.ExpiredOrWithdrawn
                 };
@@ -89,9 +89,9 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
             return applicationDetail;
         }
 
-        private static ApplicationDetail CreateApplicationDetail(Candidate candidate, VacancyDetail vacancyDetails)
+        private static ApprenticeshipApplicationDetail CreateApplicationDetail(Candidate candidate, VacancyDetail vacancyDetails)
         {
-            return new ApplicationDetail
+            return new ApprenticeshipApplicationDetail
             {
                 EntityId = Guid.NewGuid(),
                 Status = ApplicationStatuses.Draft,
@@ -110,7 +110,7 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
                     Location = null, // NOTE: no equivalent in legacy vacancy details.
                     VacancyLocationType = vacancyDetails.VacancyLocationType
                 },
-                // Populate application template with candidate's most recent information.
+                // Populate apprenticeshipApplication template with candidate's most recent information.
                 CandidateInformation = new ApplicationTemplate
                 {
                     EducationHistory = candidate.ApplicationTemplate.EducationHistory,

@@ -15,13 +15,13 @@ namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
     using ViewModels.VacancySearch;
 
     public class ApprenticeshipApplicationViewModelToApprenticeshipApplicationDetailResolver :
-        ITypeConverter<ApprenticheshipApplicationViewModel, ApplicationDetail>
+        ITypeConverter<ApprenticheshipApplicationViewModel, ApprenticeshipApplicationDetail>
     {
-        public ApplicationDetail Convert(ResolutionContext context)
+        public ApprenticeshipApplicationDetail Convert(ResolutionContext context)
         {
             var model = (ApprenticheshipApplicationViewModel) context.SourceValue;
 
-            var application = new ApplicationDetail
+            var application = new ApprenticeshipApplicationDetail
             {
                 CandidateId = model.Candidate.Id,
                 Vacancy = GetVacancy(model.VacancyDetail),

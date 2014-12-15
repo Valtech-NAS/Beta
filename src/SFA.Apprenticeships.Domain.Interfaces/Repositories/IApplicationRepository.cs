@@ -4,18 +4,18 @@
     using System.Collections.Generic;
     using Entities.Applications;
 
-    public interface IApplicationReadRepository : IReadRepository<ApplicationDetail>
+    public interface IApplicationReadRepository : IReadRepository<ApprenticeshipApplicationDetail>
     {
-        ApplicationDetail Get(Guid id, bool errerrorIfNotFound);
+        ApprenticeshipApplicationDetail Get(Guid id, bool errerrorIfNotFound);
 
-        ApplicationDetail Get(int legacyApplicationId);
+        ApprenticeshipApplicationDetail Get(int legacyApplicationId);
 
         IList<ApplicationSummary> GetForCandidate(Guid candidateId);
 
-        ApplicationDetail GetForCandidate(Guid candidateId, Func<ApplicationDetail, bool> filter);
+        ApprenticeshipApplicationDetail GetForCandidate(Guid candidateId, Func<ApprenticeshipApplicationDetail, bool> filter);
     }
 
-    public interface IApplicationWriteRepository : IWriteRepository<ApplicationDetail> {
+    public interface IApplicationWriteRepository : IWriteRepository<ApprenticeshipApplicationDetail> {
         void ExpireOrWithdrawForCandidate(Guid value, int vacancyId);
     }
 }

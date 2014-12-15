@@ -22,13 +22,13 @@
 
         Candidate SaveCandidate(Candidate candidate);
 
-        ApplicationDetail CreateApplication(Guid candidateId, int vacancyId); // note: only an int due to legacy - will be a Guid
+        ApprenticeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId); // note: only an int due to legacy - will be a Guid
 
-        ApplicationDetail GetApplication(Guid candidateId, int vacancyId);
+        ApprenticeshipApplicationDetail GetApplication(Guid candidateId, int vacancyId);
 
         void ArchiveApplication(Guid candidateId, int vacancyId);
 
-        void SaveApplication(Guid candidateId, int vacancyId, ApplicationDetail application);
+        void SaveApplication(Guid candidateId, int vacancyId, ApprenticeshipApplicationDetail apprenticeshipApplication);
 
         IList<ApplicationSummary> GetApplications(Guid candidateId);
 

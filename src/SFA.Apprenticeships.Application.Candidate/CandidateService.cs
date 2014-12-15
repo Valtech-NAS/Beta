@@ -156,23 +156,23 @@
             _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
         }
 
-        public ApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
+        public ApprenticeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
 
             Logger.Debug(
-                "Calling CandidateService to create an application of the user with Id={0} to the application with Id={1}.",
+                "Calling CandidateService to create an apprenticeshipApplication of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
             return _createApplicationStrategy.CreateApplication(candidateId, vacancyId);
         }
 
-        public ApplicationDetail GetApplication(Guid candidateId, int vacancyId)
+        public ApprenticeshipApplicationDetail GetApplication(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
 
             Logger.Debug(
-                "Calling CandidateService to get the application of the user with Id={0} to the application with Id={1}.",
+                "Calling CandidateService to get the apprenticeshipApplication of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
             var applicationId = GetApplicationId(candidateId, vacancyId);
@@ -185,7 +185,7 @@
             Condition.Requires(candidateId);
 
             Logger.Debug(
-                "Calling CandidateService to archive the application of the user with Id={0} to the application with Id={1}.",
+                "Calling CandidateService to archive the apprenticeshipApplication of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
             var applicationId = GetApplicationId(candidateId, vacancyId);
@@ -198,25 +198,25 @@
             Condition.Requires(candidateId);
 
             Logger.Debug(
-                "Calling CandidateService to delete the application of the user with Id={0} to the application with Id={1}.",
+                "Calling CandidateService to delete the apprenticeshipApplication of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
             var applicationId = GetApplicationId(candidateId, vacancyId);
             _deleteApplicationStrategy.DeleteApplication(applicationId);
         }
 
-        public void SaveApplication(Guid candidateId, int vacancyId, ApplicationDetail application)
+        public void SaveApplication(Guid candidateId, int vacancyId, ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
-            Condition.Requires(application);
+            Condition.Requires(apprenticeshipApplication);
 
             Logger.Debug(
-                "Calling CandidateService to save the application of the user with Id={0} to the application with Id={1}.",
+                "Calling CandidateService to save the apprenticeshipApplication of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
             var applicationId = GetApplicationId(candidateId, vacancyId);
-            application.EntityId = applicationId;
+            apprenticeshipApplication.EntityId = applicationId;
 
-            _saveApplicationStrategy.SaveApplication(application);
+            _saveApplicationStrategy.SaveApplication(apprenticeshipApplication);
         }
 
         public IList<ApplicationSummary> GetApplications(Guid candidateId)
@@ -235,7 +235,7 @@
             Condition.Requires(candidateId);
 
             Logger.Debug(
-                "Calling CandidateService to submit the application of the user with Id={0} to the application with Id={1}.",
+                "Calling CandidateService to submit the apprenticeshipApplication of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
             var applicationId = GetApplicationId(candidateId, vacancyId);

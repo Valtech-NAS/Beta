@@ -20,7 +20,7 @@
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
 
             applicationReadRepository.Setup(arr => arr.GetForCandidate(It.IsAny<Guid>(),
-                It.IsAny<Func<ApplicationDetail, bool>>())).Throws<Exception>();
+                It.IsAny<Func<ApprenticeshipApplicationDetail, bool>>())).Throws<Exception>();
 
             var createApplicationStrategy = new CreateApplicationStrategy(vacancyDataProvider.Object,
                 applicationReadRepository.Object, applicationWriteRepository.Object,

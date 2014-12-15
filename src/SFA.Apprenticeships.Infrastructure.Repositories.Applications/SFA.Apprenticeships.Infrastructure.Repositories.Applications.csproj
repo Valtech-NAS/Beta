@@ -121,7 +121,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ApplicationRepository.cs" />
-    <Compile Include="Entities\MongoApplicationDetail.cs" />
+    <Compile Include="Entities\MongoApprenticeshipApplicationDetail.cs" />
     <Compile Include="IoC\ApplicationRepositoryRegistry.cs" />
     <Compile Include="Mappers\ApplicationMappers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

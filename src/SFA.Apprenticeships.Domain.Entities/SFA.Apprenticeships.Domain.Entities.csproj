@@ -95,6 +95,8 @@
     <Compile Include="Applications\ApplicationStatusSummary.cs" />
     <Compile Include="Applications\ApplicationSummary.cs" />
     <Compile Include="Applications\ApplicationDetail.cs" />
+    <Compile Include="Applications\TraineeshipApplicationDetail.cs" />
+    <Compile Include="Applications\ApprenticeshipApplicationDetail.cs" />
     <Compile Include="Applications\ApplicationStatuses.cs" />
     <Compile Include="Candidates\CommunicationPreferences.cs" />
     <Compile Include="Exceptions\CustomException.cs" />

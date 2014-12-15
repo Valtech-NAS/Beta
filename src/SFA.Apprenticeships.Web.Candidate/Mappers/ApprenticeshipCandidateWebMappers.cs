@@ -74,10 +74,10 @@
             Mapper.CreateMap<RegisterViewModel, Candidate>()
                 .ConvertUsing<CandidateResolver>();
 
-            Mapper.CreateMap<ApprenticheshipApplicationViewModel, ApplicationDetail>()
+            Mapper.CreateMap<ApprenticheshipApplicationViewModel, ApprenticeshipApplicationDetail>()
                 .ConvertUsing<ApprenticeshipApplicationViewModelToApprenticeshipApplicationDetailResolver>();
 
-            Mapper.CreateMap<ApplicationDetail, ApprenticheshipApplicationViewModel>()
+            Mapper.CreateMap<ApprenticeshipApplicationDetail, ApprenticheshipApplicationViewModel>()
                 .ConvertUsing<ApprenticeshipApplicationDetailToApprenticeshipApplicationViewModelResolver>();
 
             Mapper.CreateMap<RegistrationDetails, SettingsViewModel>()

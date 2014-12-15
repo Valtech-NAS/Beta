@@ -4,6 +4,6 @@
 
     public interface ISaveApplicationStrategy
     {
-        ApplicationDetail SaveApplication(ApplicationDetail application);
+        ApprenticeshipApplicationDetail SaveApplication(ApprenticeshipApplicationDetail apprenticeshipApplication);
     }
 }

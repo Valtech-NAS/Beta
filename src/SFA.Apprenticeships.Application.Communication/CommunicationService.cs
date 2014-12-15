@@ -80,7 +80,7 @@
             }
         }
 
-        private ApplicationDetail GetApplicationDetail(IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
+        private ApprenticeshipApplicationDetail GetApplicationDetail(IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
         {
             var applicationId = Guid.Parse(tokens.First(m => m.Key == CommunicationTokens.ApplicationId).Value);
 

@@ -54,7 +54,7 @@
             try
             {
                 var applicationDetails = _candidateService.CreateApplication(candidateId, vacancyId);
-                var applicationViewModel = _mapper.Map<ApplicationDetail, ApprenticheshipApplicationViewModel>(applicationDetails);
+                var applicationViewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticheshipApplicationViewModel>(applicationDetails);
 
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
@@ -125,7 +125,7 @@
 
             try
             {
-                var application = _mapper.Map<ApprenticheshipApplicationViewModel, ApplicationDetail>(apprenticheshipApplicationViewModel);
+                var application = _mapper.Map<ApprenticheshipApplicationViewModel, ApprenticeshipApplicationDetail>(apprenticheshipApplicationViewModel);
 
                 _candidateService.SaveApplication(candidateId, vacancyId, application);
                 Logger.Debug("Application View Model saved for candidate ID: {0}, vacancy ID: {1}.",
@@ -289,7 +289,7 @@
             try
             {
                 var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
-                var model = _mapper.Map<ApplicationDetail, ApprenticheshipApplicationViewModel>(applicationDetails);
+                var model = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticheshipApplicationViewModel>(applicationDetails);
                 var patchedModel = PatchWithVacancyDetail(candidateId, vacancyId, model);
 
                 if (patchedModel.HasError())

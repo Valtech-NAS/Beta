@@ -37,14 +37,14 @@
             _candidateReadRepository = candidateReadRepository;
         }
 
-        public int CreateApplication(ApplicationDetail applicationDetail)
+        public int CreateApplication(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
         {
             var message = string.Format("Legacy CreateApplication of candidate {0} to vacancy {1}",
-                applicationDetail.CandidateId, applicationDetail.Vacancy.Id);
+                apprenticeshipApplicationDetail.CandidateId, apprenticeshipApplicationDetail.Vacancy.Id);
             Logger.Debug(message);
 
-            var candidate = _candidateReadRepository.Get(applicationDetail.CandidateId);
-            var legacyRequest = MapApplicationToLegacyRequest(applicationDetail, candidate);
+            var candidate = _candidateReadRepository.Get(apprenticeshipApplicationDetail.CandidateId);
+            var legacyRequest = MapApplicationToLegacyRequest(apprenticeshipApplicationDetail, candidate);
 
             CreateApplicationResponse response = null;
 
@@ -59,47 +59,47 @@
             {
                 if (response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.DuplicateApplication))
                 {
-                    var warnMessage = string.Format("Duplicate application {0} for candidate {1} in legacy system",
-                        applicationDetail.Vacancy.Id, applicationDetail.CandidateId);
+                    var warnMessage = string.Format("Duplicate apprenticeshipApplication {0} for candidate {1} in legacy system",
+                        apprenticeshipApplicationDetail.Vacancy.Id, apprenticeshipApplicationDetail.CandidateId);
 
                     Logger.Warn(warnMessage);
 
                     throw new CustomException(warnMessage, ErrorCodes.ApplicationDuplicatedError);
                 }
 
-                CheckValidationErrors(applicationDetail, response, ValidationErrorCodes.InvalidCandidateState, ErrorCodes.LegacyCandidateStateError);
+                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.InvalidCandidateState, ErrorCodes.LegacyCandidateStateError);
 
-                CheckValidationErrors(applicationDetail, response, ValidationErrorCodes.CandidateNotFound, ErrorCodes.LegacyCandidateNotFoundError);
-                CheckValidationErrors(applicationDetail, response, ValidationErrorCodes.UnknownCandidate, ErrorCodes.LegacyCandidateNotFoundError);
+                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.CandidateNotFound, ErrorCodes.LegacyCandidateNotFoundError);
+                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.UnknownCandidate, ErrorCodes.LegacyCandidateNotFoundError);
 
-                CheckValidationErrors(applicationDetail, response, ValidationErrorCodes.InvalidVacancyState, ErrorCodes.LegacyVacancyStateError);
+                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.InvalidVacancyState, ErrorCodes.LegacyVacancyStateError);
 
                 var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
                 Logger.Error(
-                    "Legacy CreateApplication reported {0} validation error(s): {1} when creating application of candidate {2} to vacancy {3}",
-                    response.ValidationErrors.Count(), responseAsJson, applicationDetail.CandidateId, applicationDetail.Vacancy.Id);
+                    "Legacy CreateApplication reported {0} validation error(s): {1} when creating apprenticeshipApplication of candidate {2} to vacancy {3}",
+                    response.ValidationErrors.Count(), responseAsJson, apprenticeshipApplicationDetail.CandidateId, apprenticeshipApplicationDetail.Vacancy.Id);
             }
             else
             {
                 Logger.Error("Legacy CreateApplication of candidate {0} to vacancy {1} did not respond.",
-                        applicationDetail.CandidateId, applicationDetail.Vacancy.Id);
+                        apprenticeshipApplicationDetail.CandidateId, apprenticeshipApplicationDetail.Vacancy.Id);
             }
 
             throw new CustomException(
-                string.Format("Failed to create application of candidate {0} to vacancy {1} in legacy system",
-                    applicationDetail.CandidateId, applicationDetail.Vacancy.Id), ErrorCodes.ApplicationGatewayCreationError);
+                string.Format("Failed to create apprenticeshipApplication of candidate {0} to vacancy {1} in legacy system",
+                    apprenticeshipApplicationDetail.CandidateId, apprenticeshipApplicationDetail.Vacancy.Id), ErrorCodes.ApplicationGatewayCreationError);
         }
 
-        private static void CheckValidationErrors(ApplicationDetail applicationDetail, CreateApplicationResponse response, string validationErrorCode, string errorCode)
+        private static void CheckValidationErrors(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail, CreateApplicationResponse response, string validationErrorCode, string errorCode)
         {
             if (response.ValidationErrors.Any(e => e.ErrorCode == validationErrorCode))
             {
                 var validationError = response.ValidationErrors
                     .First(e => e.ErrorCode == validationErrorCode);
 
-                var warnMessage = string.Format("Unable to create application {0} for candidate {1} in legacy system: \"{2}\".",
-                    applicationDetail.Vacancy.Id, applicationDetail.CandidateId, validationError.Message);
+                var warnMessage = string.Format("Unable to create apprenticeshipApplication {0} for candidate {1} in legacy system: \"{2}\".",
+                    apprenticeshipApplicationDetail.Vacancy.Id, apprenticeshipApplicationDetail.CandidateId, validationError.Message);
 
                 Logger.Warn(warnMessage);
 
@@ -108,32 +108,32 @@
         }
 
         private static CreateApplicationRequest MapApplicationToLegacyRequest(
-            ApplicationDetail applicationDetail,
+            ApprenticeshipApplicationDetail apprenticeshipApplicationDetail,
             Domain.Entities.Candidates.Candidate candidate)
         {
             return new CreateApplicationRequest
             {
                 Application = new Application
                 {
-                    VacancyId = applicationDetail.Vacancy.Id,
+                    VacancyId = apprenticeshipApplicationDetail.Vacancy.Id,
                     VacancyRef = null, // not required if VacancyId is supplied.
                     CandidateId = candidate.LegacyCandidateId,
-                    School = MapSchool(applicationDetail),
-                    EducationResults = MapQualifications(applicationDetail.CandidateInformation.Qualifications),
-                    WorkExperiences = MapWorkExperience(applicationDetail.CandidateInformation.WorkExperience),
-                    AdditionalQuestion1Answer = applicationDetail.AdditionalQuestion1Answer ?? string.Empty,
-                    AdditionalQuestion2Answer = applicationDetail.AdditionalQuestion2Answer ?? string.Empty,
-                    Strengths = applicationDetail.CandidateInformation.AboutYou.Strengths ?? String.Empty,
-                    Improvements = applicationDetail.CandidateInformation.AboutYou.Improvements ?? String.Empty,
-                    HobbiesAndInterests = applicationDetail.CandidateInformation.AboutYou.HobbiesAndInterests ?? String.Empty,
-                    InterviewSupport = applicationDetail.CandidateInformation.AboutYou.Support ?? String.Empty
+                    School = MapSchool(apprenticeshipApplicationDetail),
+                    EducationResults = MapQualifications(apprenticeshipApplicationDetail.CandidateInformation.Qualifications),
+                    WorkExperiences = MapWorkExperience(apprenticeshipApplicationDetail.CandidateInformation.WorkExperience),
+                    AdditionalQuestion1Answer = apprenticeshipApplicationDetail.AdditionalQuestion1Answer ?? string.Empty,
+                    AdditionalQuestion2Answer = apprenticeshipApplicationDetail.AdditionalQuestion2Answer ?? string.Empty,
+                    Strengths = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.Strengths ?? String.Empty,
+                    Improvements = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.Improvements ?? String.Empty,
+                    HobbiesAndInterests = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.HobbiesAndInterests ?? String.Empty,
+                    InterviewSupport = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.Support ?? String.Empty
                 }
             };
         }
 
-        private static School MapSchool(ApplicationDetail applicationDetail)
+        private static School MapSchool(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
         {
-            var educationHistory = applicationDetail.CandidateInformation.EducationHistory;
+            var educationHistory = apprenticeshipApplicationDetail.CandidateInformation.EducationHistory;
 
             if (educationHistory == null)
             {

@@ -30,7 +30,7 @@
         {
             var applicationDetail = _applicationReadRepository.Get(applicationId, true);
 
-            applicationDetail.AssertState("Submit application", ApplicationStatuses.Draft);
+            applicationDetail.AssertState("Submit apprenticeshipApplication", ApplicationStatuses.Draft);
 
             try
             {
@@ -49,21 +49,21 @@
             }
         }
 
-        private void PublishMessage(ApplicationDetail applicationDetail)
+        private void PublishMessage(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
         {
             try
             {
                 var message = new SubmitApplicationRequest
                 {
-                    ApplicationId = applicationDetail.EntityId
+                    ApplicationId = apprenticeshipApplicationDetail.EntityId
                 };
 
                 _messageBus.PublishMessage(message);
             }
             catch
             {
-                applicationDetail.RevertStateToDraft();
-                _applicationWriteRepository.Save(applicationDetail);
+                apprenticeshipApplicationDetail.RevertStateToDraft();
+                _applicationWriteRepository.Save(apprenticeshipApplicationDetail);
                 throw;
             }
         }

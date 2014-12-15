@@ -52,9 +52,9 @@
                     VacancyDetail vacancyDetails =
                         _vacancyDataProvider.GetVacancyDetails(candidateApplication.LegacyVacancyId);
                     Candidate reloadedCandidate = _candidateReadRepository.Get(candidate.EntityId);
-                    ApplicationDetail applicationDetail = UpdateApplicationDetail(reloadedCandidate, vacancyDetails);
+                    ApprenticeshipApplicationDetail apprenticeshipApplicationDetail = UpdateApplicationDetail(reloadedCandidate, vacancyDetails);
 
-                    _applicationWriteRepository.Save(applicationDetail);
+                    _applicationWriteRepository.Save(apprenticeshipApplicationDetail);
                 }
                 catch (Exception e)
                 {
@@ -70,14 +70,14 @@
             return result;
         }
 
-        private ApplicationDetail UpdateApplicationDetail(Candidate candidate, VacancyDetail vacancyDetails)
+        private ApprenticeshipApplicationDetail UpdateApplicationDetail(Candidate candidate, VacancyDetail vacancyDetails)
         {
-            ApplicationDetail currentApplicationDetail =
+            ApprenticeshipApplicationDetail currentApprenticeshipApplicationDetail =
                 _applicationReadRepository.GetForCandidate(candidate.EntityId, a => a.Vacancy.Id == vacancyDetails.Id);
 
-            currentApplicationDetail.CandidateDetails = candidate.RegistrationDetails;
+            currentApprenticeshipApplicationDetail.CandidateDetails = candidate.RegistrationDetails;
 
-            return currentApplicationDetail;
+            return currentApprenticeshipApplicationDetail;
         }
     }
 }

@@ -14,7 +14,7 @@
     using MongoDB.Driver.Linq;
     using NLog;
 
-    public class ApplicationRepository : GenericMongoClient<MongoApplicationDetail>, IApplicationReadRepository,
+    public class ApplicationRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApplicationReadRepository,
         IApplicationWriteRepository
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -31,31 +31,31 @@
 
         public void Delete(Guid id)
         {
-            Logger.Debug("Calling repository to delete ApplicationDetail with Id={0}", id);
+            Logger.Debug("Calling repository to delete ApprenticeshipApplicationDetail with Id={0}", id);
 
-            Collection.Remove(Query<MongoApplicationDetail>.EQ(o => o.Id, id));
+            Collection.Remove(Query<MongoApprenticeshipApplicationDetail>.EQ(o => o.Id, id));
 
-            Logger.Debug("Deleted ApplicationDetail with Id={0}", id);
+            Logger.Debug("Deleted ApprenticeshipApplicationDetail with Id={0}", id);
         }
 
-        public ApplicationDetail Save(ApplicationDetail entity)
+        public ApprenticeshipApplicationDetail Save(ApprenticeshipApplicationDetail entity)
         {
-            Logger.Debug("Calling repository to save ApplicationDetail Id={0}, Status={1}", entity.EntityId, entity.Status);
+            Logger.Debug("Calling repository to save ApprenticeshipApplicationDetail Id={0}, Status={1}", entity.EntityId, entity.Status);
 
-            var mongoEntity = _mapper.Map<ApplicationDetail, MongoApplicationDetail>(entity);
+            var mongoEntity = _mapper.Map<ApprenticeshipApplicationDetail, MongoApprenticeshipApplicationDetail>(entity);
 
             UpdateEntityTimestamps(mongoEntity);
 
             Collection.Save(mongoEntity);
 
-            Logger.Debug("Saved ApplicationDetail to repository with Id={0}", entity.EntityId);
+            Logger.Debug("Saved ApprenticeshipApplicationDetail to repository with Id={0}", entity.EntityId);
 
-            return _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
+            return _mapper.Map<MongoApprenticeshipApplicationDetail, ApprenticeshipApplicationDetail>(mongoEntity);
         }
 
-        public ApplicationDetail Get(Guid id, bool errorIfNotFound)
+        public ApprenticeshipApplicationDetail Get(Guid id, bool errorIfNotFound)
         {
-            Logger.Debug("Calling repository to get ApplicationDetail with Id={0}", id);
+            Logger.Debug("Calling repository to get ApprenticeshipApplicationDetail with Id={0}", id);
 
             var mongoEntity = Collection.FindOneById(id);
 
@@ -63,46 +63,46 @@
 
             if (mongoEntity == null && errorIfNotFound)
             {
-                 message = string.Format("Unknown ApplicationDetail with Id={0}", id);
+                 message = string.Format("Unknown ApprenticeshipApplicationDetail with Id={0}", id);
 
                 throw new CustomException(message, ErrorCodes.ApplicationNotFoundError);
             }
 
-            message = mongoEntity == null ? "Found no ApplicationDetail with Id={0}" : "Found ApplicationDetail with Id={0}";
+            message = mongoEntity == null ? "Found no ApprenticeshipApplicationDetail with Id={0}" : "Found ApprenticeshipApplicationDetail with Id={0}";
 
             Logger.Debug(message, id);
 
-            return mongoEntity == null ? null : _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
+            return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipApplicationDetail, ApprenticeshipApplicationDetail>(mongoEntity);
         }
 
-        public ApplicationDetail Get(int legacyApplicationId)
+        public ApprenticeshipApplicationDetail Get(int legacyApplicationId)
         {
-            Logger.Debug("Calling repository to get ApplicationDetail with legacy Id={0}", legacyApplicationId);
+            Logger.Debug("Calling repository to get ApprenticeshipApplicationDetail with legacy Id={0}", legacyApplicationId);
 
             var mongoEntity = Collection.AsQueryable().FirstOrDefault(a => a.LegacyApplicationId == legacyApplicationId);
 
-            var message = mongoEntity == null ? "Found no ApplicationDetail with legacy Id={0}" : "Found ApplicationDetail with legacy Id={0}";
+            var message = mongoEntity == null ? "Found no ApprenticeshipApplicationDetail with legacy Id={0}" : "Found ApprenticeshipApplicationDetail with legacy Id={0}";
 
             Logger.Debug(message, legacyApplicationId);
 
-            return mongoEntity == null ? null : _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
+            return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipApplicationDetail, ApprenticeshipApplicationDetail>(mongoEntity);
         }
 
         public IList<ApplicationSummary> GetForCandidate(Guid candidateId)
         {
             Logger.Debug("Calling repository to get ApplicationSummary list for candidate with Id={0}", candidateId);
-            // Get application summaries for the specified candidate, excluding any that are archived.
+            // Get apprenticeshipApplication summaries for the specified candidate, excluding any that are archived.
             var mongoApplicationDetailsList = Collection
                 .AsQueryable()
                 .Where(each => each.CandidateId == candidateId)
                 .ToArray();
 
-            Logger.Debug("{0} MongoApplicationDetail items returned in collection for candidate with Id={1}", mongoApplicationDetailsList.Count(), candidateId);
+            Logger.Debug("{0} MongoApprenticeshipApplicationDetail items returned in collection for candidate with Id={1}", mongoApplicationDetailsList.Count(), candidateId);
 
-            Logger.Debug("Mapping MongoApplicationDetail items to ApplicationSummary list for candidate with Id={0}", candidateId);
+            Logger.Debug("Mapping MongoApprenticeshipApplicationDetail items to ApplicationSummary list for candidate with Id={0}", candidateId);
 
             var applicationDetailsList = _mapper
-                .Map<MongoApplicationDetail[], IEnumerable<ApplicationSummary>>(mongoApplicationDetailsList)
+                .Map<MongoApprenticeshipApplicationDetail[], IEnumerable<ApplicationSummary>>(mongoApplicationDetailsList)
                 .ToList();
 
             Logger.Debug("{0} ApplicationSummary items returned for candidate with Id={1}", applicationDetailsList.Count(), candidateId);
@@ -110,7 +110,7 @@
             return applicationDetailsList;
         }
 
-        public ApplicationDetail GetForCandidate(Guid candidateId, Func<ApplicationDetail, bool> filter)
+        public ApprenticeshipApplicationDetail GetForCandidate(Guid candidateId, Func<ApprenticeshipApplicationDetail, bool> filter)
         {
             Logger.Debug("Calling repository to get ApplicationSummary list for candidate with Id={0}", candidateId);
 
@@ -119,14 +119,14 @@
                 .Where(each => each.CandidateId == candidateId)
                 .ToArray();
 
-            Logger.Debug("{0} MongoApplicationDetail items returned in collection for candidate with Id={1}", mongoApplicationDetailsList.Count(), candidateId);
+            Logger.Debug("{0} MongoApprenticeshipApplicationDetail items returned in collection for candidate with Id={1}", mongoApplicationDetailsList.Count(), candidateId);
 
-            Logger.Debug("Mapping MongoApplicationDetail items to ApplicationSummary list for candidate with Id={0}", candidateId);
+            Logger.Debug("Mapping MongoApprenticeshipApplicationDetail items to ApplicationSummary list for candidate with Id={0}", candidateId);
 
-            var applicationDetailsList = _mapper.Map<MongoApplicationDetail[], IEnumerable<ApplicationDetail>>(
+            var applicationDetailsList = _mapper.Map<MongoApprenticeshipApplicationDetail[], IEnumerable<ApprenticeshipApplicationDetail>>(
                 mongoApplicationDetailsList);
 
-            var applicationDetails = applicationDetailsList as IList<ApplicationDetail> ?? applicationDetailsList.ToList();
+            var applicationDetails = applicationDetailsList as IList<ApprenticeshipApplicationDetail> ?? applicationDetailsList.ToList();
 
             Logger.Debug("{0} ApplicationSummary items returned for candidate with Id={1}", applicationDetails.Count(), candidateId);
 
@@ -135,22 +135,22 @@
                 .FirstOrDefault(); // we expect zero or 1
         }
 
-        public ApplicationDetail Get(Guid id)
+        public ApprenticeshipApplicationDetail Get(Guid id)
         {
-            Logger.Debug("Calling repository to get ApplicationDetail with Id={0}", id);
+            Logger.Debug("Calling repository to get ApprenticeshipApplicationDetail with Id={0}", id);
 
             var mongoEntity = Collection.FindOneById(id);
 
-            var message = mongoEntity == null ? "Found no ApplicationDetail with Id={0}" : "Found ApplicationDetail with Id={0}";
+            var message = mongoEntity == null ? "Found no ApprenticeshipApplicationDetail with Id={0}" : "Found ApprenticeshipApplicationDetail with Id={0}";
 
             Logger.Debug(message, id);
 
-            return mongoEntity == null ? null : _mapper.Map<MongoApplicationDetail, ApplicationDetail>(mongoEntity);
+            return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipApplicationDetail, ApprenticeshipApplicationDetail>(mongoEntity);
         }
 
         public void ExpireOrWithdrawForCandidate(Guid candidateId, int vacancyId)
         {
-            Logger.Debug("Calling repository to expire or withdraw application for candidate with Id={0} and VacancyId={1}", candidateId, vacancyId);
+            Logger.Debug("Calling repository to expire or withdraw apprenticeshipApplication for candidate with Id={0} and VacancyId={1}", candidateId, vacancyId);
 
             var applicationDetail = GetForCandidate(
                 candidateId, each => each.Vacancy.Id == vacancyId);
@@ -162,13 +162,13 @@
                 return;
             }
 
-            Logger.Debug("Found application to be expired or withdrawn with Id={0}, Status={1}", applicationDetail.EntityId, applicationDetail.Status);
+            Logger.Debug("Found apprenticeshipApplication to be expired or withdrawn with Id={0}, Status={1}", applicationDetail.EntityId, applicationDetail.Status);
 
             applicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;
 
             Save(applicationDetail);
 
-            Logger.Debug("Saved expired or withdrawn application for candidate with Id={0} and VacancyId={1}", applicationDetail.CandidateId, vacancyId);
+            Logger.Debug("Saved expired or withdrawn apprenticeshipApplication for candidate with Id={0} and VacancyId={1}", applicationDetail.CandidateId, vacancyId);
         }
     }
 }

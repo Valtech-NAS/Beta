@@ -4,6 +4,6 @@
 
     public interface IApplicationStatusUpdateStrategy
     {
-        void Update(ApplicationDetail application, ApplicationStatusSummary applicationStatus);
+        void Update(ApprenticeshipApplicationDetail apprenticeshipApplication, ApplicationStatusSummary applicationStatus);
     }
 }

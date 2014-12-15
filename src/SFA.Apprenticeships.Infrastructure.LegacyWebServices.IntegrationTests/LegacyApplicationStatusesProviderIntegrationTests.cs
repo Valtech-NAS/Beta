@@ -101,7 +101,7 @@
             return candidate;
         }
 
-        private ApplicationDetail CreateApplicationForCandidate(Candidate candidate)
+        private ApprenticeshipApplicationDetail CreateApplicationForCandidate(Candidate candidate)
         {
             // Create a new application for candidate in legacy and repo.
             var applicationDetail = new TestApplicationBuilder()

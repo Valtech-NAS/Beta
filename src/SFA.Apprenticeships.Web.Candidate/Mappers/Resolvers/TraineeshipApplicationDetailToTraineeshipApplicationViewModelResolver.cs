@@ -8,11 +8,11 @@
     using ViewModels.Candidate;
 
     public class TraineeshipApplicationDetailToTraineeshipApplicationViewModelResolver :
-        ITypeConverter<ApplicationDetail, TraineeshipApplicationViewModel>
+        ITypeConverter<ApprenticeshipApplicationDetail, TraineeshipApplicationViewModel>
     {
         public TraineeshipApplicationViewModel Convert(ResolutionContext context)
         {
-            var application = (ApplicationDetail) context.SourceValue;
+            var application = (ApprenticeshipApplicationDetail) context.SourceValue;
 
             var model = new TraineeshipApplicationViewModel
             {

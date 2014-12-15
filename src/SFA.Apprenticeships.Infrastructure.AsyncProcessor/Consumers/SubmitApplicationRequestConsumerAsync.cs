@@ -82,18 +82,18 @@
             }
             catch (Exception ex)
             {
-                Logger.Error(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
+                Logger.Error(string.Format("Submit apprenticeshipApplication with Id = {0} request async process failed.", request.ApplicationId), ex);
                 Requeue(request);
             }
         }
 
-        private void HandleCustomException(SubmitApplicationRequest request, CustomException ex, ApplicationDetail application)
+        private void HandleCustomException(SubmitApplicationRequest request, CustomException ex, ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
             switch (ex.Code)
             {
                 case ErrorCodes.ApplicationDuplicatedError:
                     Logger.Warn("Application has already been submitted to legacy system: Application Id: \"{0}\"", request.ApplicationId);
-                    SetApplicationStateSubmitted(application);
+                    SetApplicationStateSubmitted(apprenticeshipApplication);
                     break;
 
                 case ErrorCodes.LegacyCandidateStateError:
@@ -107,7 +107,7 @@
                 case ErrorCodes.LegacyVacancyStateError:
                     Logger.Warn("Legacy Vacancy was in an invalid state. Application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     //TODO: Check that the returned state is expired or withdrawn
-                    SetStateExpiredOrWithdrawn(application);
+                    SetStateExpiredOrWithdrawn(apprenticeshipApplication);
                     break;
 
                 case ErrorCodes.ApplicationInIncorrectStateError:
@@ -115,22 +115,22 @@
                     break;
 
                 default:
-                    Logger.Warn(string.Format("Submit application with Id = {0} request async process failed.", request.ApplicationId), ex);
+                    Logger.Warn(string.Format("Submit apprenticeshipApplication with Id = {0} request async process failed.", request.ApplicationId), ex);
                     Requeue(request);
                     break;
             }
         }
 
-        private void SetApplicationStateSubmitted(ApplicationDetail application)
+        private void SetApplicationStateSubmitted(ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
-            application.SetStateSubmitted();
-            _applicationWriteRepository.Save(application);
+            apprenticeshipApplication.SetStateSubmitted();
+            _applicationWriteRepository.Save(apprenticeshipApplication);
         }
 
-        private void SetStateExpiredOrWithdrawn(ApplicationDetail application)
+        private void SetStateExpiredOrWithdrawn(ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
-            application.SetStateExpiredOrWithdrawn();
-            _applicationWriteRepository.Save(application);
+            apprenticeshipApplication.SetStateExpiredOrWithdrawn();
+            _applicationWriteRepository.Save(apprenticeshipApplication);
         }
 
         private void Requeue(SubmitApplicationRequest request)
@@ -139,9 +139,9 @@
             _messageBus.PublishMessage(request);
         }
 
-        private static void EnsureApplicationCanBeCreated(ApplicationDetail applicationDetail)
+        private static void EnsureApplicationCanBeCreated(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
         {
-            applicationDetail.AssertState(string.Format("Create application for candidate '{0}'", applicationDetail.CandidateId), ApplicationStatuses.Submitting);
+            apprenticeshipApplicationDetail.AssertState(string.Format("Create apprenticeshipApplication for candidate '{0}'", apprenticeshipApplicationDetail.CandidateId), ApplicationStatuses.Submitting);
         }
 
         private static void Log(string narrative, SubmitApplicationRequest request)

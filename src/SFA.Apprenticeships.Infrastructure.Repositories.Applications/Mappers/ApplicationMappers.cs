@@ -14,13 +14,13 @@
 
         private void InitialiseApplicationDetailMappers()
         {
-            Mapper.CreateMap<ApplicationDetail, MongoApplicationDetail>();
-            Mapper.CreateMap<MongoApplicationDetail, ApplicationDetail>();
+            Mapper.CreateMap<ApprenticeshipApplicationDetail, MongoApprenticeshipApplicationDetail>();
+            Mapper.CreateMap<MongoApprenticeshipApplicationDetail, ApprenticeshipApplicationDetail>();
         }
 
         private void InitialiseApplicationSummaryMappers()
         {
-            Mapper.CreateMap<MongoApplicationDetail, ApplicationSummary>()
+            Mapper.CreateMap<MongoApprenticeshipApplicationDetail, ApplicationSummary>()
                 .ForMember(x => x.ApplicationId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(x => x.LegacyVacancyId, opt => opt.MapFrom(src => src.Vacancy.Id))
                 .ForMember(x => x.Title, opt => opt.MapFrom(src => src.Vacancy.Title))

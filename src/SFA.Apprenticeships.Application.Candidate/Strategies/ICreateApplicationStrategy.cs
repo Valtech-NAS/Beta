@@ -5,6 +5,6 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
 
     public interface ICreateApplicationStrategy
     {
-        ApplicationDetail CreateApplication(Guid candidateId, int vacancyId);
+        ApprenticeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId);
     }
 }

@@ -19,16 +19,16 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
             _vacancyDataProvider = vacancyDataProvider;
         }
 
-        public void Send(Candidate candidate, ApplicationDetail applicationDetail, CandidateMessageTypes messageType,
+        public void Send(Candidate candidate, ApprenticeshipApplicationDetail apprenticeshipApplicationDetail, CandidateMessageTypes messageType,
             IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
         {
-            var reference = GetVacancyReference(applicationDetail.Vacancy.Id);
+            var reference = GetVacancyReference(apprenticeshipApplicationDetail.Vacancy.Id);
 
             var applicationTokens = new[]
             {
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName), 
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyTitle,
-                    applicationDetail.Vacancy.Title),
+                    apprenticeshipApplicationDetail.Vacancy.Title),
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference, reference)
             };
 

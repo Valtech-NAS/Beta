@@ -42,15 +42,15 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
             return this;
         }
 
-        public ApplicationDetail ApplicationDetail { get; private set; }
+        public ApprenticeshipApplicationDetail ApprenticeshipApplicationDetail { get; private set; }
 
         public RegistrationBuilder RegistrationBuilder { get; private set; }
 
-        public ApplicationDetail Build()
+        public ApprenticeshipApplicationDetail Build()
         {
             RegistrationBuilder = new RegistrationBuilder(_emailAddress);
 
-            ApplicationDetail = new ApplicationDetail
+            ApprenticeshipApplicationDetail = new ApprenticeshipApplicationDetail
             {
                 CandidateId = _candidateId,
                 CandidateInformation = new ApplicationTemplate(),
@@ -67,11 +67,11 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
             var repo = ObjectFactory.GetInstance<IApplicationWriteRepository>();
 #pragma warning restore 0618
 
-            ApplicationDetail.CandidateDetails = RegistrationBuilder.Build();
+            ApprenticeshipApplicationDetail.CandidateDetails = RegistrationBuilder.Build();
 
-            repo.Save(ApplicationDetail);
+            repo.Save(ApprenticeshipApplicationDetail);
 
-            return ApplicationDetail;
+            return ApprenticeshipApplicationDetail;
         }
 
         public void DeleteApplications(Guid userCandidateId)

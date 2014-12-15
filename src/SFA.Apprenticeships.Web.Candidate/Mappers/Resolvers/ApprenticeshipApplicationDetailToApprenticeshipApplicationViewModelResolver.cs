@@ -7,11 +7,11 @@
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
 
     public class ApprenticeshipApplicationDetailToApprenticeshipApplicationViewModelResolver :
-        ITypeConverter<ApplicationDetail, ApprenticheshipApplicationViewModel>
+        ITypeConverter<ApprenticeshipApplicationDetail, ApprenticheshipApplicationViewModel>
     {
         public ApprenticheshipApplicationViewModel Convert(ResolutionContext context)
         {
-            var application = (ApplicationDetail) context.SourceValue;
+            var application = (ApprenticeshipApplicationDetail) context.SourceValue;
 
             var model = new ApprenticheshipApplicationViewModel
             {

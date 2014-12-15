@@ -29,7 +29,7 @@
             {
                 // var applicationDetails = _candidateService.CreateApplication(candidateId, vacancyId);
                 var applicationDetails = CreateDummyApplicationDetail();
-                var applicationViewModel = _mapper.Map<ApplicationDetail, TraineeshipApplicationViewModel>(applicationDetails);
+                var applicationViewModel = _mapper.Map<ApprenticeshipApplicationDetail, TraineeshipApplicationViewModel>(applicationDetails);
 
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
@@ -61,9 +61,9 @@
             }
         }
 
-        private ApplicationDetail CreateDummyApplicationDetail()
+        private ApprenticeshipApplicationDetail CreateDummyApplicationDetail()
         {
-            return new ApplicationDetail
+            return new ApprenticeshipApplicationDetail
             {
                 DateCreated = DateTime.Now.AddDays(-15),
                 Status = ApplicationStatuses.Draft

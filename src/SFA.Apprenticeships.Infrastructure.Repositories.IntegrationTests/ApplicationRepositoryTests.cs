@@ -40,9 +40,9 @@
         }
 
         #region Helpers
-        private static ApplicationDetail CreateTestApplication()
+        private static ApprenticeshipApplicationDetail CreateTestApplication()
         {
-            return new ApplicationDetail
+            return new ApprenticeshipApplicationDetail
             {
                 EntityId = Guid.NewGuid(),
                 CandidateId = Guid.NewGuid(),

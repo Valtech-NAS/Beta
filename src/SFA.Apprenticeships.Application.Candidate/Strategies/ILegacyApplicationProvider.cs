@@ -4,6 +4,6 @@
 
     public interface ILegacyApplicationProvider
     {
-        int CreateApplication(ApplicationDetail applicationDetail);
+        int CreateApplication(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail);
     }
 }

@@ -7,7 +7,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
 
     public interface ISendApplicationSubmittedStrategy
     {
-        void Send(Candidate candidate, ApplicationDetail applicationDetail, CandidateMessageTypes messageType,
+        void Send(Candidate candidate, ApprenticeshipApplicationDetail apprenticeshipApplicationDetail, CandidateMessageTypes messageType,
             IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens);
     }
 }

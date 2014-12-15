@@ -14,7 +14,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests.
         private int _vacancyId = 12345;
         private ApplicationTemplate _candidateInformation;
 
-        public ApplicationDetail Build()
+        public ApprenticeshipApplicationDetail Build()
         {
             if (_candidateInformation == null)
             {
@@ -30,7 +30,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests.
                     }
                 };
             }
-            return new ApplicationDetail
+            return new ApprenticeshipApplicationDetail
             {
                 EntityId = _entityid,
                 Vacancy = new ApprenticeshipSummary
@@ -60,9 +60,9 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests.
             return this;
         }
 
-        public static ApplicationDetail CreateFakeApplicationDetail()
+        public static ApprenticeshipApplicationDetail CreateFakeApplicationDetail()
         {
-            return new ApplicationDetail
+            return new ApprenticeshipApplicationDetail
             {
                 EntityId = Guid.NewGuid(),
                 Vacancy = new ApprenticeshipSummary
@@ -79,9 +79,9 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests.
             };
         }
 
-        public static ApplicationDetail CreateFakeMinimalApplicationDetail()
+        public static ApprenticeshipApplicationDetail CreateFakeMinimalApplicationDetail()
         {
-            return new ApplicationDetail
+            return new ApprenticeshipApplicationDetail
             {
                 EntityId = Guid.NewGuid(),
                 Vacancy = new ApprenticeshipSummary

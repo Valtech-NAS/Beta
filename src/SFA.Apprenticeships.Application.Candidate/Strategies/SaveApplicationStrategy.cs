@@ -21,15 +21,15 @@
             _candidateWriteRepository = candidateWriteRepository;
         }
 
-        public ApplicationDetail SaveApplication(ApplicationDetail application)
+        public ApprenticeshipApplicationDetail SaveApplication(ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
-            var applicationDetail = _applicationReadRepository.Get(application.EntityId, true);
+            var applicationDetail = _applicationReadRepository.Get(apprenticeshipApplication.EntityId, true);
 
-            applicationDetail.AssertState("Save application", ApplicationStatuses.Draft);
+            applicationDetail.AssertState("Save apprenticeshipApplication", ApplicationStatuses.Draft);
 
-            applicationDetail.CandidateInformation = application.CandidateInformation;
-            applicationDetail.AdditionalQuestion1Answer = application.AdditionalQuestion1Answer;
-            applicationDetail.AdditionalQuestion2Answer = application.AdditionalQuestion2Answer;
+            applicationDetail.CandidateInformation = apprenticeshipApplication.CandidateInformation;
+            applicationDetail.AdditionalQuestion1Answer = apprenticeshipApplication.AdditionalQuestion1Answer;
+            applicationDetail.AdditionalQuestion2Answer = apprenticeshipApplication.AdditionalQuestion2Answer;
 
             var savedApplication = _applicationWriteRepository.Save(applicationDetail);
 
@@ -38,16 +38,16 @@
             return savedApplication;
         }
 
-        private void SyncToCandidatesApplicationTemplate(ApplicationDetail applicationDetail)
+        private void SyncToCandidatesApplicationTemplate(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
         {
-            var candidate = _candidateReadRepository.Get(applicationDetail.CandidateId);
+            var candidate = _candidateReadRepository.Get(apprenticeshipApplicationDetail.CandidateId);
 
             candidate.ApplicationTemplate = new ApplicationTemplate
             {
-                AboutYou = applicationDetail.CandidateInformation.AboutYou,
-                EducationHistory = applicationDetail.CandidateInformation.EducationHistory,
-                Qualifications = applicationDetail.CandidateInformation.Qualifications,
-                WorkExperience = applicationDetail.CandidateInformation.WorkExperience
+                AboutYou = apprenticeshipApplicationDetail.CandidateInformation.AboutYou,
+                EducationHistory = apprenticeshipApplicationDetail.CandidateInformation.EducationHistory,
+                Qualifications = apprenticeshipApplicationDetail.CandidateInformation.Qualifications,
+                WorkExperience = apprenticeshipApplicationDetail.CandidateInformation.WorkExperience
             };
 
             _candidateWriteRepository.Save(candidate);
