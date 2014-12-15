@@ -25,7 +25,7 @@
         {
             var applicationDetail = _applicationReadRepository.Get(apprenticeshipApplication.EntityId, true);
 
-            applicationDetail.AssertState("Save apprenticeshipApplication", ApplicationStatuses.Draft);
+            applicationDetail.AssertState("Save apprenticeship application", ApplicationStatuses.Draft);
 
             applicationDetail.CandidateInformation = apprenticeshipApplication.CandidateInformation;
             applicationDetail.AdditionalQuestion1Answer = apprenticeshipApplication.AdditionalQuestion1Answer;

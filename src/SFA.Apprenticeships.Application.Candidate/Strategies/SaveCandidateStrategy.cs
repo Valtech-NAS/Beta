@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -38,9 +37,9 @@
 
         public Candidate SaveCandidate(Candidate candidate)
         {
-            Candidate result = _candidateWriteRepository.Save(candidate);
+            var result = _candidateWriteRepository.Save(candidate);
 
-            List<ApplicationSummary> candidateApplications = _getCandidateApplicationsStrategy
+            var candidateApplications = _getCandidateApplicationsStrategy
                 .GetApplications(candidate.EntityId)
                 .Where(a => a.Status == ApplicationStatuses.Draft)
                 .ToList();
@@ -49,10 +48,10 @@
             {
                 try
                 {
-                    VacancyDetail vacancyDetails =
+                    var vacancyDetails =
                         _vacancyDataProvider.GetVacancyDetails(candidateApplication.LegacyVacancyId);
-                    Candidate reloadedCandidate = _candidateReadRepository.Get(candidate.EntityId);
-                    ApprenticeshipApplicationDetail apprenticeshipApplicationDetail = UpdateApplicationDetail(reloadedCandidate, vacancyDetails);
+                    var reloadedCandidate = _candidateReadRepository.Get(candidate.EntityId);
+                    var apprenticeshipApplicationDetail = UpdateApplicationDetail(reloadedCandidate, vacancyDetails);
 
                     _applicationWriteRepository.Save(apprenticeshipApplicationDetail);
                 }
@@ -72,7 +71,7 @@
 
         private ApprenticeshipApplicationDetail UpdateApplicationDetail(Candidate candidate, VacancyDetail vacancyDetails)
         {
-            ApprenticeshipApplicationDetail currentApprenticeshipApplicationDetail =
+            var currentApprenticeshipApplicationDetail =
                 _applicationReadRepository.GetForCandidate(candidate.EntityId, a => a.Vacancy.Id == vacancyDetails.Id);
 
             currentApprenticeshipApplicationDetail.CandidateDetails = candidate.RegistrationDetails;
