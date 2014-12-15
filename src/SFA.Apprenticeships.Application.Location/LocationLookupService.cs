@@ -3,9 +3,11 @@
     using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Interfaces.Locations;
     using NLog;
+    using ErrorCodes = Interfaces.Locations.ErrorCodes;
 
     public class LocationSearchService : ILocationSearchService
     {
@@ -38,8 +40,7 @@
                 {
                     var message = string.Format("Postcode lookup failed for postcode {0}.", placeNameOrPostcode);
                     Logger.Debug(message, e);
-                    throw new Domain.Entities.Exceptions.CustomException(
-                        message, e, ErrorCodes.PostcodeLookupFailed);
+                    throw new CustomException(message, e, ErrorCodes.PostcodeLookupFailed);
                 }
 
                 if (location == null)
@@ -66,7 +67,7 @@
             {
                 const string message = "Location lookup failed.";
                 Logger.Debug(message, e);
-                throw new Domain.Entities.Exceptions.CustomException(
+                throw new CustomException(
                     message, e, ErrorCodes.LocationLookupFailed);
             }
         }
