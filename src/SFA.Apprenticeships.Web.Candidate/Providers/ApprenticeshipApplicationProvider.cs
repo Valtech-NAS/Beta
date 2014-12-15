@@ -16,7 +16,7 @@
     using ViewModels.MyApplications;
     using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
 
-    public class ApplicationProvider : IApplicationProvider
+    public class ApprenticeshipApplicationProvider : IApprenticeshipApplicationProvider
     {
         private const string WebRolePerformanceCounterCategory = "SFA.Apprenticeships.Web.Candidate";
         private const string ApplicationSubmissionCounter = "ApplicationSubmission";
@@ -30,7 +30,7 @@
         private readonly IConfigurationManager _configurationManager;
         private readonly IFeatureToggle _featureToggle;
 
-        public ApplicationProvider(
+        public ApprenticeshipApplicationProvider(
             IVacancyDetailProvider vacancyDetailProvider,
             ICandidateService candidateService,
             IMapper mapper, 
@@ -48,7 +48,7 @@
 
         public ApprenticheshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
         {
-            Logger.Debug("Calling ApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
+            Logger.Debug("Calling ApprenticeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
@@ -88,7 +88,7 @@
 
         public ApprenticheshipApplicationViewModel PatchApplicationViewModel(Guid candidateId, ApprenticheshipApplicationViewModel savedModel, ApprenticheshipApplicationViewModel submittedModel)
         {
-            Logger.Debug("Calling ApplicationProvider to patch the Application View Model for candidate ID: {0}.",
+            Logger.Debug("Calling ApprenticeshipApplicationProvider to patch the Application View Model for candidate ID: {0}.",
                 candidateId);
 
             try
@@ -120,7 +120,7 @@
 
         public void SaveApplication(Guid candidateId, int vacancyId, ApprenticheshipApplicationViewModel apprenticheshipApplicationViewModel)
         {
-            Logger.Debug("Calling ApplicationProvider to save the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
+            Logger.Debug("Calling ApprenticeshipApplicationProvider to save the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
@@ -144,7 +144,7 @@
 
         public ApprenticheshipApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId)
         {
-            Logger.Debug("Calling ApplicationProvider to submit the Application for candidate ID: {0}, vacancy ID: {1}.",
+            Logger.Debug("Calling ApprenticeshipApplicationProvider to submit the Application for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             var model = new ApprenticheshipApplicationViewModel();
@@ -214,7 +214,7 @@
 
         public ApprenticheshipApplicationViewModel ArchiveApplication(Guid candidateId, int vacancyId)
         {
-            Logger.Debug("Calling ApplicationProvider to archive the Application for candidate ID: {0}, vacancy ID: {1}.",
+            Logger.Debug("Calling ApprenticeshipApplicationProvider to archive the Application for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
@@ -240,7 +240,7 @@
 
         public ApprenticheshipApplicationViewModel DeleteApplication(Guid candidateId, int vacancyId)
         {
-            Logger.Debug("Calling ApplicationProvider to delete the Application for candidate ID: {0}, vacancy ID: {1}.",
+            Logger.Debug("Calling ApprenticeshipApplicationProvider to delete the Application for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
@@ -283,7 +283,7 @@
 
         public WhatHappensNextViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId)
         {
-            Logger.Debug("Calling ApplicationProvider to get the What Happens Next data for candidate ID: {0}, vacancy ID: {1}.",
+            Logger.Debug("Calling ApprenticeshipApplicationProvider to get the What Happens Next data for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
@@ -318,7 +318,7 @@
 
         public MyApplicationsViewModel GetMyApplications(Guid candidateId)
         {
-            Logger.Debug("Calling ApplicationProvider to get the applications for candidate ID: {0}.", candidateId);
+            Logger.Debug("Calling ApprenticeshipApplicationProvider to get the applications for candidate ID: {0}.", candidateId);
 
             try
             {

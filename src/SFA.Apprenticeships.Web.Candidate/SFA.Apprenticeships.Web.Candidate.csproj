@@ -347,6 +347,14 @@
     </None>
     <Content Include="Views\TraineeshipSearch\Overview.cshtml" />
     <Content Include="Views\TraineeshipApplication\Apply.cshtml" />
+    <Content Include="Views\TraineeshipApplication\_qualificationsJS.cshtml" />
+    <Content Include="Views\TraineeshipApplication\_qualificationsNonJS.cshtml" />
+    <Content Include="Views\TraineeshipApplication\_workExperiencesJS.cshtml" />
+    <Content Include="Views\TraineeshipApplication\_workExperiencesNonJS.cshtml" />
+    <Content Include="Views\TraineeshipApplication\DisplayTemplates\TraineeshipCandidateViewModel.cshtml" />
+    <Content Include="Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml" />
+    <Content Include="Views\TraineeshipApplication\EditorTemplates\EmployerQuestionAnswersViewModel.cshtml" />
+    <Content Include="Views\TraineeshipApplication\WhatHappensNext.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -468,6 +476,7 @@
     <Compile Include="Helpers\AutoSaveDateTimeHelper.cs" />
     <Compile Include="Helpers\PreviewExtensions.cs" />
     <Compile Include="IoC\CandidateWebRegistry.cs" />
+    <Compile Include="Mappers\TraineeshipCandidateWebMappers.cs" />
     <Compile Include="Mappers\Helpers\ApplicationConverter.cs" />
     <Compile Include="Mappers\Resolvers\TraineeshipApplicationViewModelToTraineeshipApplicationDetailResolver.cs" />
     <Compile Include="Mappers\Resolvers\CandidateViewModelResolver.cs" />
@@ -485,11 +494,11 @@
     <Compile Include="Mappers\Resolvers\VacancyDetailViewModelResolvers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\AccountProvider.cs" />
-    <Compile Include="Providers\ApplicationProvider.cs" />
+    <Compile Include="Providers\ApprenticeshipApplicationProvider.cs" />
     <Compile Include="Providers\CandidateServiceProvider.cs" />
     <Compile Include="Providers\CandidateUserContext.cs" />
     <Compile Include="Providers\IAccountProvider.cs" />
-    <Compile Include="Providers\IApplicationProvider.cs" />
+    <Compile Include="Providers\IApprenticeshipApplicationProvider.cs" />
     <Compile Include="Providers\ICandidateServiceProvider.cs" />
     <Compile Include="Providers\ISearchProvider.cs" />
     <Compile Include="Providers\ITraineeshipApplicationProvider.cs" />

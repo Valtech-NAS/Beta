@@ -1,0 +1,21 @@
+﻿@model EmployerQuestionAnswersViewModel
+
+@if (Model != null && (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1) || !string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1)))
+{
+    <fieldset id="applyEmployerQuestionAnswers" class="fieldset-with-border">
+        <legend class="heading-large">Additional questions</legend>
+
+        @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1))
+        {
+            @Html.HiddenFor(m => m.SupplementaryQuestion1)
+            @Html.FormTextAreaFor(m => m.CandidateAnswer1, labelText: Model.SupplementaryQuestion1, controlHtmlAttributes: new { rows = "4", role = "textbox", aria_multiline = "true" }, hintHtmlAttributes: new { @class = "text" }, labelHtmlAttributes: new { @class = "text" })
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion2))
+        {
+            @Html.HiddenFor(m => m.SupplementaryQuestion2)
+            @Html.FormTextAreaFor(m => m.CandidateAnswer2, labelText: Model.SupplementaryQuestion2, controlHtmlAttributes: new { rows = "4", role = "textbox", aria_multiline = "true" }, hintHtmlAttributes: new { @class = "text" }, labelHtmlAttributes: new { @class = "text" })
+        }
+
+    </fieldset>
+}

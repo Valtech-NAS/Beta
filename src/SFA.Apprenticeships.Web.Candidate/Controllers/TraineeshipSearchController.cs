@@ -8,5 +8,15 @@
         {
             return View();
         }
+
+        public ActionResult Search()
+        {
+            return RedirectToAction("Overview");
+        }
+
+        public ActionResult Details()
+        {
+            return RedirectToAction("Overview");
+        }
     }
 }

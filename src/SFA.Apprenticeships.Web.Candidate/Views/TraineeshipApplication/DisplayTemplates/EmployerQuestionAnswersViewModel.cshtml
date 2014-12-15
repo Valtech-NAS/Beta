@@ -1,0 +1,31 @@
+﻿@model EmployerQuestionAnswersViewModel
+
+@if (Model != null && (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1) || !string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1)))
+{
+    <section class="section-border">
+        <h2 class="heading-large">
+            Employer questions
+            @if (ViewBag.VacancyId != null)
+            {
+                <a class="icon-with-text" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})#applyEmployerQuestionAnswers">
+                    <i class="the-icon fa fa-pencil"></i><span class="the-text">Change details</span>
+                </a>
+            }           
+        </h2>
+
+        @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1))
+        {
+            <div class="form-group">
+                <p class="form-label text">@Html.Raw(Model.SupplementaryQuestion1)</p>
+                <span class="form-prepopped prewrap">@Html.Raw(Model.CandidateAnswer1)</span>
+            </div>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion2))
+        {
+            <div class="form-group">
+                <p class="form-label text">@Html.Raw(Model.SupplementaryQuestion2)</p>
+                <span class="form-prepopped prewrap">@Html.Raw(Model.CandidateAnswer2)</span>
+            </div>
+        }
+    </section>
+}

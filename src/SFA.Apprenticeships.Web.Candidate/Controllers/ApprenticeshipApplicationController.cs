@@ -23,16 +23,16 @@
 
     public class ApprenticeshipApplicationController : CandidateControllerBase
     {
-        private readonly IApplicationProvider _applicationProvider;
+        private readonly IApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
         private readonly ApprenticeshipApplicationViewModelServerValidator _apprenticeshipApplicationViewModelFullValidator;
         private readonly ApprenticeshipApplicationViewModelSaveValidator _apprenticeshipApplicationViewModelSaveValidator;
 
         public ApprenticeshipApplicationController(
-            IApplicationProvider applicationProvider,
+            IApprenticeshipApplicationProvider apprenticeshipApplicationProvider,
             ApprenticeshipApplicationViewModelServerValidator apprenticeshipApplicationViewModelFullValidator,
             ApprenticeshipApplicationViewModelSaveValidator apprenticeshipApplicationViewModelSaveValidator)
         {
-            _applicationProvider = applicationProvider;
+            _apprenticeshipApplicationProvider = apprenticeshipApplicationProvider;
             _apprenticeshipApplicationViewModelFullValidator = apprenticeshipApplicationViewModelFullValidator;
             _apprenticeshipApplicationViewModelSaveValidator = apprenticeshipApplicationViewModelSaveValidator;
         }
@@ -44,7 +44,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
                 if (model.HasError())
                 {
@@ -63,7 +63,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
                 if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
                 {
@@ -93,7 +93,7 @@
             {
                 model = StripApplicationViewModelBeforeValidation(model);
 
-                var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
                 if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
                 {
@@ -117,7 +117,7 @@
 
                 var result = _apprenticeshipApplicationViewModelFullValidator.Validate(model);
 
-                model = _applicationProvider.PatchApplicationViewModel(
+                model = _apprenticeshipApplicationProvider.PatchApplicationViewModel(
                     UserContext.CandidateId, savedModel, model);
 
                 if (!result.IsValid)
@@ -127,7 +127,7 @@
                     return View("Apply", model);
                 }
 
-                _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
+                _apprenticeshipApplicationProvider.SaveApplication(UserContext.CandidateId, id, model);
 
                 return RedirectToAction("Preview", new {id});
             });
@@ -145,7 +145,7 @@
             {
                 model = StripApplicationViewModelBeforeValidation(model);
 
-                var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
                 if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
                 {
@@ -165,7 +165,7 @@
 
                 var result = _apprenticeshipApplicationViewModelSaveValidator.Validate(model);
 
-                model = _applicationProvider.PatchApplicationViewModel(UserContext.CandidateId, savedModel, model);
+                model = _apprenticeshipApplicationProvider.PatchApplicationViewModel(UserContext.CandidateId, savedModel, model);
 
                 if (!result.IsValid)
                 {
@@ -174,9 +174,9 @@
                     return View("Apply", model);
                 }
 
-                _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
+                _apprenticeshipApplicationProvider.SaveApplication(UserContext.CandidateId, id, model);
 
-                model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                model = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
                 model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
                 return View("Apply", model);
@@ -193,7 +193,7 @@
             {
                 var autoSaveResult = new AutoSaveResultViewModel();
 
-                var savedModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
                 if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
                 {
@@ -215,7 +215,7 @@
 
                 var result = _apprenticeshipApplicationViewModelSaveValidator.Validate(model);
 
-                model = _applicationProvider.PatchApplicationViewModel(
+                model = _apprenticeshipApplicationProvider.PatchApplicationViewModel(
                     UserContext.CandidateId, savedModel, model);
 
                 if (!result.IsValid)
@@ -225,9 +225,9 @@
                     return new JsonResult {Data = autoSaveResult};
                 }
 
-                _applicationProvider.SaveApplication(UserContext.CandidateId, id, model);
+                _apprenticeshipApplicationProvider.SaveApplication(UserContext.CandidateId, id, model);
 
-                model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                model = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
                 model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
                 autoSaveResult.Status = "succeeded";
@@ -292,7 +292,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
                 if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
                 {
@@ -318,7 +318,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = _applicationProvider.SubmitApplication(UserContext.CandidateId, id);
+                var model = _apprenticeshipApplicationProvider.SubmitApplication(UserContext.CandidateId, id);
 
                 if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
                 {
@@ -352,7 +352,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = _applicationProvider.GetWhatHappensNextViewModel(UserContext.CandidateId, id);
+                var model = _apprenticeshipApplicationProvider.GetWhatHappensNextViewModel(UserContext.CandidateId, id);
 
                 if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
                 {

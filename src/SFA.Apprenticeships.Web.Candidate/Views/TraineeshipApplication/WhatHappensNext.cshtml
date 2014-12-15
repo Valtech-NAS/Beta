@@ -1,0 +1,28 @@
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.WhatHappensNextViewModel
+@{
+    ViewBag.Title = "Traineeships - Traineeship application submitted";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="success-banner" role="alert" aria-live="assertive">
+    <h1 class="heading-large"><i class="fa fa-check"></i>Traineeship application submitted</h1>
+    <div>
+        You've applied for:
+        <h2 class="heading-medium">@Html.DisplayFor(m => m.VacancyTitle)</h2>
+    </div>
+</div>
+<section class="section-border">
+    <p>
+        <i class="fa fa-envelope-o"></i>We have sent you an email confirming
+        your application
+    </p>
+</section>
+<h2 class="heading-medium">What happens next</h2>
+<div class="text form-group">
+    <p>
+        You’ll be contacted if you’re eligible for a traineeship. You can see the applications you've made by visiting <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">my applications</a>.
+    </p>
+</div>
+<div class="form-group get-started">
+    <a role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)'>Find a traineeship</a>
+</div>

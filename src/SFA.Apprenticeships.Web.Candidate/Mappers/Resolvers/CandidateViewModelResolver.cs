@@ -7,7 +7,7 @@
 
     public static class CandidateViewModelResolver
     {
-        public static T Resolve<T>(this T candidateViewModel, ApprenticeshipApplicationDetail apprenticeshipApplicationDetail) 
+        public static T Resolve<T>(this T candidateViewModel, ApplicationDetail apprenticeshipApplicationDetail) 
             where T : CandidateViewModelBase
         {
             candidateViewModel.Id = apprenticeshipApplicationDetail.CandidateId;

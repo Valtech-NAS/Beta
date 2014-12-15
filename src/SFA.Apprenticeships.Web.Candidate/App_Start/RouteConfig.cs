@@ -105,6 +105,24 @@
                 );
 
             routes.MapRoute(
+                name: CandidateRouteNames.TraineeshipApply,
+                url: "traineeship/apply/{id}",
+                defaults: new { controller = "TraineeshipApplication", action = "Apply" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.TraineeshipSearch,
+                url: "traineeships/search",
+                defaults: new { controller = "TraineeshipSearch", action = "Search" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.TraineeshipDetails,
+                url: "traineeship/{id}",
+                defaults: new { controller = "TraineeshipSearch", action = "Details" }
+                );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

@@ -1,0 +1,98 @@
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.TraineeshipApplicationViewModel
+<noscript>
+    <fieldset class="fieldset-with-border" id="applyQualifications">
+        <legend class="heading-large">Qualifications</legend>
+        <div class="clearfix"></div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <span class="heading-span">Subject</span>
+                        </th>
+                        <th>
+                            <span class="heading-span">Qualification</span>
+                        </th>
+                        <th>
+                            <span class="heading-span">Year</span>
+                        </th>
+                        <th>
+                            <span class="heading-span">Grade</span>
+                        </th>
+                        <th>
+                            <span class="heading-span">Predicted?</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @for (var i = 0; i < Model.Candidate.Qualifications.Count() + Model.DefaultQualificationRows; i++)
+                    {                        
+                        if (i < Model.Candidate.Qualifications.Count())
+                        {
+                            <tr>
+                                <td>
+                               
+                                    @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Subject, new {@id = "candidate_qualifications_" + i + "__subject", Name = "Candidate.Qualifications[" + i + "].Subject", @class = "form-control qual-input-edit", @maxlength = 50})
+                                   @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Subject")
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].QualificationType, new {@id = "candidate_qualifications_" + i + "__qualificationtype", Name = "Candidate.Qualifications[" + i + "].QualificationType", @class = "form-control qual-input-edit", @maxlength = 50})
+                                   @Html.ValidationMessage("Candidate.Qualifications[" + i + "].QualificationType")                                   
+                                </td>
+
+                                <td>
+                                    @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Year, new { @id = "candidate_qualifications_" + i + "__year", Name = "Candidate.Qualifications[" + i + "].Year", @class = "form-control qual-input-edit", @maxlength = 4 })
+                                    @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Year")
+                                </td>
+                                <td>
+                                    <div class="small-btm-margin">
+                                        @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Grade, new {@id = "candidate_qualifications_" + i + "__grade", Name = "Candidate.Qualifications[" + i + "].Grade", @class = "form-control qual-input-edit", @maxlength = 11})
+                                        @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Grade") 
+                                    </div>
+                                </td>
+                                <td class="ta-center">
+                                    @Html.CheckBoxFor(m => Model.Candidate.Qualifications.ToList()[i].IsPredicted, new {@id = "candidate_qualifications_" + i + "__ispredicted", Name = "Candidate.Qualifications[" + i + "].IsPredicted"})
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    @Html.TextBox("Candidate.Qualifications[" + i + "].Subject", "", new {@id = "candidate_qualifications_" + i + "__subject", Name = "Candidate.Qualifications[" + i + "].Subject", @class = "form-control qual-input-edit", @maxlength = 50})
+                                    @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Subject")
+                                </td>
+                                <td>
+                                    @Html.TextBox("Candidate.Qualifications[" + i + "].QualificationType", "", new {@id = "candidate_qualifications_" + i + "__qualificationtype", Name = "Candidate.Qualifications[" + i + "].QualificationType", @class = "form-control qual-input-edit", @maxlength = 50})
+                                    @Html.ValidationMessage("Candidate.Qualifications[" + i + "].QualificationType")
+                                    
+                                </td>
+
+                                <td>
+                                    @Html.TextBox("Candidate.Qualifications[" + i + "].Year", "", new {@id = "candidate_qualifications_" + i + "__year", Name = "Candidate.Qualifications[" + i + "].Year", @class = "form-control qual-input-edit", @maxlength = 4})
+                                    @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Year")
+                                </td>
+                                <td>
+                                    <div class="small-btm-margin">
+                                        @Html.TextBox("Candidate.Qualifications[" + i + "].Grade", "", new {@id = "candidate_qualifications_" + i + "__grade", Name = "Candidate.Qualifications[" + i + "].Grade", @class = "form-control qual-input-edit", @maxlength = 11})
+                                        @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Grade")
+                                        
+                                    </div>
+                                </td>
+                                <td class="ta-center">
+                                    @Html.CheckBox("Candidate.Qualifications[" + i + "].IsPredicted", new {@id = "candidate_qualifications_" + i + "__ispredicted", Name = "Candidate.Qualifications[" + i + "].IsPredicted"})
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+            <div class="form-group">
+                <button id="add-qualification-rows-button" class="button" type="submit" name="ApplicationAction:AddEmptyQualificationRows">Add 5 more qualifications</button>
+            </div>
+        </div>
+
+    </fieldset>
+</noscript>

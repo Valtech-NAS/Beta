@@ -4,7 +4,7 @@
     using ViewModels.Applications;
     using ViewModels.MyApplications;
 
-    public interface IApplicationProvider
+    public interface IApprenticeshipApplicationProvider
     {
         ApprenticheshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId);
 

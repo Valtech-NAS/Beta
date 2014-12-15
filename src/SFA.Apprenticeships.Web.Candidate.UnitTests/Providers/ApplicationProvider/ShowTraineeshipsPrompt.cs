@@ -18,7 +18,7 @@
         private Mock<IConfigurationManager> _configurationManager;
         private Mock<IFeatureToggle> _featureToggle;
         const int UnsuccessfulApplications = 3;
-        private ApplicationProvider _applicationProvider;
+        private ApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
 
         [SetUp]
         public void SetUp()
@@ -33,7 +33,7 @@
 
             _featureToggle.Setup(ft => ft.IsActive("Traineeships")).Returns(true);
 
-            _applicationProvider = new ApplicationProvider(null, _candidateService.Object, null, null, _configurationManager.Object, _featureToggle.Object);
+            _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object, null, null, _configurationManager.Object, _featureToggle.Object);
         }
 
         [Test]
@@ -44,7 +44,7 @@
                 Returns(GetApplicationSummaries(UnsuccessfulApplications));
 
             //Act
-            var results = _applicationProvider.GetMyApplications(Guid.NewGuid());
+            var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
 
             //Assert
             results.ShouldShowTraineeshipsPrompt.Should().BeTrue();
@@ -60,7 +60,7 @@
                 Returns(GetApplicationSummaries(unsuccessfulApplicationsThreshold));
 
             //Act
-            var results = _applicationProvider.GetMyApplications(Guid.NewGuid());
+            var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
 
             //Assert
             results.ShouldShowTraineeshipsPrompt.Should().BeFalse();
@@ -77,7 +77,7 @@
 
 
             //Act
-            var results = _applicationProvider.GetMyApplications(Guid.NewGuid());
+            var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
 
             //Assert
             results.ShouldShowTraineeshipsPrompt.Should().BeFalse();

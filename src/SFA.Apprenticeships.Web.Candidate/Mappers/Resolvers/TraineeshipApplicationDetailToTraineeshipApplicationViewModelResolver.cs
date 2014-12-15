@@ -1,18 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
 {
-    using System.Linq;
     using AutoMapper;
-    using Domain.Entities.Applications;
-    using Helpers;
-    using ViewModels.Applications;
-    using ViewModels.Candidate;
+    using SFA.Apprenticeships.Domain.Entities.Applications;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
 
     public class TraineeshipApplicationDetailToTraineeshipApplicationViewModelResolver :
-        ITypeConverter<ApprenticeshipApplicationDetail, TraineeshipApplicationViewModel>
+        ITypeConverter<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>
     {
         public TraineeshipApplicationViewModel Convert(ResolutionContext context)
         {
-            var application = (ApprenticeshipApplicationDetail) context.SourceValue;
+            var application = (TraineeshipApplicationDetail) context.SourceValue;
 
             var model = new TraineeshipApplicationViewModel
             {

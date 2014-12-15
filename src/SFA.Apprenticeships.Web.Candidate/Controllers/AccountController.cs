@@ -14,17 +14,17 @@
 
     public class AccountController : CandidateControllerBase
     {
-        private readonly IApplicationProvider _applicationProvider;
+        private readonly IApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
         private readonly IAccountProvider _accountProvider;
         private readonly SettingsViewModelServerValidator _settingsViewModelServerValidator;
 
         public AccountController(
             IAccountProvider accountProvider,
-            SettingsViewModelServerValidator settingsViewModelServerValidator, IApplicationProvider applicationProvider)
+            SettingsViewModelServerValidator settingsViewModelServerValidator, IApprenticeshipApplicationProvider apprenticeshipApplicationProvider)
         {
             _accountProvider = accountProvider;
             _settingsViewModelServerValidator = settingsViewModelServerValidator;
-            _applicationProvider = applicationProvider;
+            _apprenticeshipApplicationProvider = apprenticeshipApplicationProvider;
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -96,7 +96,7 @@
                     ViewBag.VacancyTitle = deletedVacancyTitle;
                 }
 
-                var model = _applicationProvider.GetMyApplications(UserContext.CandidateId);
+                var model = _apprenticeshipApplicationProvider.GetMyApplications(UserContext.CandidateId);
 
                 if (model.ShouldShowTraineeshipsPrompt)
                 {
@@ -114,7 +114,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var applicationViewModel = _applicationProvider.ArchiveApplication(UserContext.CandidateId, id);
+                var applicationViewModel = _apprenticeshipApplicationProvider.ArchiveApplication(UserContext.CandidateId, id);
 
                 if (applicationViewModel.HasError())
                 {
@@ -136,9 +136,9 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var viewModel = _applicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                var viewModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-                var applicationViewModel = _applicationProvider.DeleteApplication(UserContext.CandidateId, id);
+                var applicationViewModel = _apprenticeshipApplicationProvider.DeleteApplication(UserContext.CandidateId, id);
 
                 if (applicationViewModel.HasError())
                 {

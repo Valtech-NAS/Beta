@@ -96,12 +96,16 @@
             For<IMapper>().Singleton().Use<ApprenticeshipCandidateWebMappers>().Name = "ApprenticeshipCandidateWebMappers";
             For<ISearchProvider>().Use<SearchProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<IVacancyDetailProvider>().Use<VacancyDetailProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
-            For<IApplicationProvider>().Use<ApplicationProvider>();
+            For<IApprenticeshipApplicationProvider>().Use<ApprenticeshipApplicationProvider>();
             For<IAccountProvider>().Use<AccountProvider>();
             For<ICandidateServiceProvider>()
                 .Use<CandidateServiceProvider>()
                 .Ctor<IMapper>()
                 .Named("ApprenticeshipCandidateWebMappers");
+
+            // Traineeship providers (web)
+            For<IMapper>().Singleton().Use<TraineeshipCandidateWebMappers>().Name = "TraineeshipCandidateWebMappers";
+            For<ITraineeshipApplicationProvider>().Use<TraineeshipApplicationProvider>();
 
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
 
