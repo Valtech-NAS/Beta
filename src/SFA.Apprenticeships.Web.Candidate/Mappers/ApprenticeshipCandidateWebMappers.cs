@@ -62,9 +62,7 @@
                 .ForMember(d => d.IsWellFormedEmployerWebsiteUrl,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.IsWellFormedUrlResolver>()
                         .FromMember(src => src.EmployerWebsite))
-
-                        // TODO: review this ignored fields
-                 .ForMember(d => d.VacancyType,
+                .ForMember(d => d.VacancyType,
                         opt => opt.Ignore())
                 .ForMember(d => d.CandidateApplicationStatus,
                         opt => opt.Ignore())
