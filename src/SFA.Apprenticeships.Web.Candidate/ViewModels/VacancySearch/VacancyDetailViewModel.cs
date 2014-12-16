@@ -72,6 +72,8 @@
 
         public string ProviderName { get; set; }
 
+        public string ProviderDescription { get; set; }
+
         public string Contact { get; set; }
 
         public int? ProviderSectorPassRate { get; set; }
@@ -83,6 +85,8 @@
         #endregion
 
         #region Candidate
+
+        public string PersonalQualities { get; set; }
 
         public string QualificationRequired { get; set; }
 

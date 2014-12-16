@@ -38,7 +38,8 @@
             <div class="grid grid-2-3">
                 <div class="inner-block-padr">
                     <div class="text">
-                        <p>@Html.Raw(Model.FullDescription)</p>
+                        <p>@Html.Raw(Model.TrainingToBeProvided)</p>
+                        <p>@Html.Raw(Model.ProviderDescription)</p>
                     </div>
                 </div>
             </div>
@@ -46,9 +47,7 @@
                 <h3 class="bold-small">Training provider</h3>
                 <p>@Model.ProviderName</p>
                 <h3 class="bold-small">Contact</h3>
-                <p>
-                    Adrian Hunt | Business Development Manager | 0121 236 2634 <a href="mailto:ahunt@protocolgroup.co.uk">ahunt@protocolgroup.co.uk</a>
-                </p>
+                <p>@Model.Contact</p>
                 <h3 class="bold-small">Expected duration</h3>
                 <p>@Model.ExpectedDuration</p>
                 @if (ViewBag.Distance != null)
@@ -64,7 +63,7 @@
         <section class="section-border grid-wrapper" id="vacancy-info">
             <h2 class="heading-large">Work experience</h2>
             <div class="text">
-                <p>@Html.Raw(Model.EmployerDescription)</p>
+                <p>@Html.Raw(Model.Description)</p>
             </div>
             <div class="grid-wrapper">
                 <div class="grid grid-1-2">
@@ -73,11 +72,11 @@
                         <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : "")">@Model.EmployerName</p>
                         @if (Model.IsWellFormedEmployerWebsiteUrl)
                         {
-                        <p><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a></p>
+                            <p><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a></p>
                         }
                         else
                         {
-                        <p>@Model.EmployerWebsite</p>
+                            <p>@Model.EmployerWebsite</p>
                         }
                         <div itemscope itemtype="http://schema.org/PostalAddress">
                             <h3 class="bold-small">Address</h3>
@@ -105,6 +104,7 @@
             <div class="text">
                 <h3 class="heading-small">Desired skills</h3>
                 @Html.Raw(Model.SkillsRequired)
+                @Html.Raw(Model.PersonalQualities)
                 <h3 class="heading-small">What this will lead to</h3>
                 @Html.Raw(Model.FutureProspects)
             </div>

@@ -26,7 +26,7 @@
     else
     {
         // Candidate has not applied for this vacancy.
-        <a role="button" id="apply-button" class="button button-with-hint" title="Apply for traineeship" href="@Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/traineeship/apply/signedin/", "Traineeship – Signed In Apply", ViewData["AnalyticsButtonPosition"]))>Apply for apprenticeship</a>
+        <a role="button" id="apply-button" class="button button-with-hint" title="Apply for traineeship" href="@Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/traineeship/apply/signedin/", "Traineeship – Signed In Apply", ViewData["AnalyticsButtonPosition"]))>Apply for traineeship</a>
     }
 }
 else
