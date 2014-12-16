@@ -5,10 +5,10 @@ Feature: Forgotten Password
 	so that I can sign in to my account
 
 Background: 
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	And I am logged out
-	And I navigated to the VacancySearchPage page
-	Then I am on the VacancySearchPage page
+	And I navigated to the ApprenticeshipSearchPage page
+	Then I am on the ApprenticeshipSearchPage page
 
 Scenario: Reset password successful
 	Given I have registered a new candidate
@@ -34,7 +34,7 @@ Scenario: Reset password successful
 		| Password          | {NewPasswordToken}       |
 		| ConfirmPassword   | {NewPasswordToken}       |
 	And I choose ResetPasswordButton
-	Then I am on the VacancySearchPage page
+	Then I am on the ApprenticeshipSearchPage page
 	And I see
 		| Field              | Rule   | Value                                   |
 		| SuccessMessageText | Equals | You've successfully reset your password |
@@ -127,7 +127,7 @@ Scenario: Reset password in an unactivated account
 		| Password          | {NewPasswordToken}       |
 		| ConfirmPassword   | {NewPasswordToken}       |
 	And I choose ResetPasswordButton
-	Then I am on the VacancySearchPage page
+	Then I am on the ApprenticeshipSearchPage page
 	And I see
 		| Field              | Rule   | Value                                   |
 		| SuccessMessageText | Equals | You've successfully reset your password |

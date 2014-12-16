@@ -4,16 +4,16 @@
 	so that it can be reviewed by a Vacancy Manager
 
 Background: 
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	And I am logged out
-	And I navigated to the VacancySearchPage page
-	Then I am on the VacancySearchPage page
+	And I navigated to the ApprenticeshipSearchPage page
+	Then I am on the ApprenticeshipSearchPage page
 
 @US486 @US458 @US354 @US352
 Scenario: As a candidate I would like to preview a vacancy application
 	Given I have registered a new candidate
-	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	When I choose SupportMeYes
@@ -36,8 +36,8 @@ Scenario: As a candidate I would like to preview a vacancy application
 @US461 @US154 @US458 @US464
 Scenario: As a candidate I want to save my application as a draft and be able to resume
 	Given I have registered a new candidate
-	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	When I enter data
@@ -76,7 +76,7 @@ Scenario: As a candidate I want to save my application as a draft and be able to
 Scenario: As a candidate I want to enter my qualifications and work experience
 	Given I have registered a new candidate
 	When I navigate to the details of the vacancy 445650
-	Then I am on the VacancyDetailsPage page
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	When I choose QualificationsYes
@@ -234,8 +234,8 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 @US154
 Scenario: As a candidate I would like to see my application as successful
 	Given I have registered a new candidate
-	When I select the "first" vacancy in location "London" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	When I select the "first" apprenticeship vacancy in location "London" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	When I choose SupportMeYes
@@ -262,7 +262,7 @@ Scenario: As a candidate I would like to see my application as successful
 	And I see
 		| Field                       | Rule   | Value |
 		| SuccessfulApplicationsCount | Equals | 1     |
-	And I navigate to the VacancyDetailsPage page with parameters
+	And I navigate to the ApprenticeshipDetailsPage page with parameters
 		| VacancyId   |
 		| {VacancyId} |
 	Then I see
@@ -275,8 +275,8 @@ Scenario: As a candidate I would like to see my application as successful
 @US154
 Scenario: As a candidate I would like to see my application as submitted
 	Given I have registered a new candidate
-	When I select the "first" vacancy in location "London" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	When I select the "first" apprenticeship vacancy in location "London" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	When I choose SupportMeYes
@@ -303,7 +303,7 @@ Scenario: As a candidate I would like to see my application as submitted
 	And I see
 		| Field                      | Rule   | Value |
 		| SubmittedApplicationsCount | Equals | 1     |
-	And I navigate to the VacancyDetailsPage page with parameters
+	And I navigate to the ApprenticeshipDetailsPage page with parameters
 		| VacancyId   |
 		| {VacancyId} |
 	Then I see
@@ -315,8 +315,8 @@ Scenario: As a candidate I would like to see my application as submitted
 @US154
 Scenario: As a candidate I would like to see my application as unsuccessful
 	Given I have registered a new candidate
-	When I select the "first" vacancy in location "London" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	When I select the "first" apprenticeship vacancy in location "London" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	When I choose SupportMeYes
@@ -343,7 +343,7 @@ Scenario: As a candidate I would like to see my application as unsuccessful
 	And I see
 		| Field                         | Rule   | Value |
 		| UnsuccessfulApplicationsCount | Equals | 1     |
-	And I navigate to the VacancyDetailsPage page with parameters
+	And I navigate to the ApprenticeshipDetailsPage page with parameters
 		| VacancyId   |
 		| {VacancyId} |
 	Then I see
@@ -357,8 +357,8 @@ Scenario: As a candidate I would like to see my application as unsuccessful
 @US154
 Scenario: As a candidate I would like to see my application as withdrawn
 	Given I have registered a new candidate
-	When I select the "first" vacancy in location "London" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	When I select the "first" apprenticeship vacancy in location "London" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	When I choose SupportMeYes
@@ -386,7 +386,7 @@ Scenario: As a candidate I would like to see my application as withdrawn
 		| Field                         | Rule   | Value                |
 		| UnsuccessfulApplicationsCount | Equals | 1                    |
 		| ApplicationStatusDescription  | Equals | Expired or Withdrawn |
-	And I navigate to the VacancyDetailsPage page with parameters
+	And I navigate to the ApprenticeshipDetailsPage page with parameters
 		| VacancyId   |
 		| {VacancyId} |
 	Then I see

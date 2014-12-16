@@ -261,10 +261,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NationwideVacancies.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\VacancySearch\VacancySearch.feature.cs">
+    <Compile Include="Features\VacancySearch\ApprenticeshipSearch.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>VacancySearch.feature</DependentUpon>
+      <DependentUpon>ApprenticeshipSearch.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\VacancySearch\VacancySearchValidation.feature.cs">
       <AutoGen>True</AutoGen>
@@ -295,13 +295,13 @@
     <Compile Include="Pages\Login\LoginPage.cs" />
     <Compile Include="Pages\Registration\ActivationPage.cs" />
     <Compile Include="Pages\Registration\RegisterCandidatePage.cs" />
-    <Compile Include="Pages\VacancySearch\DetailsPage.cs" />
-    <Compile Include="Pages\VacancySearch\LocationAutoCompleteItem.cs" />
-    <Compile Include="Pages\VacancySearch\LocationSuggestion.cs" />
-    <Compile Include="Pages\VacancySearch\SearchResultsItem.cs" />
-    <Compile Include="Pages\VacancySearch\SortOrderingDropDownItem.cs" />
-    <Compile Include="Pages\VacancySearch\VacancySearchResultPage.cs" />
-    <Compile Include="Pages\VacancySearch\VacancySearchPage.cs" />
+    <Compile Include="Pages\ApprenticeshipSearch\ApprenticeshipDetailsPage.cs" />
+    <Compile Include="Pages\ApprenticeshipSearch\LocationAutoCompleteItem.cs" />
+    <Compile Include="Pages\ApprenticeshipSearch\LocationSuggestion.cs" />
+    <Compile Include="Pages\ApprenticeshipSearch\ApprenticeshipSearchResultsItem.cs" />
+    <Compile Include="Pages\ApprenticeshipSearch\SortOrderingDropDownItem.cs" />
+    <Compile Include="Pages\ApprenticeshipSearch\ApprenticeshipSearchResultPage.cs" />
+    <Compile Include="Pages\ApprenticeshipSearch\ApprenticeshipSearchPage.cs" />
     <Compile Include="Pages\HomePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Templates\EditorFor\AddressTemplate.cs" />
@@ -426,9 +426,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>NationwideVacancies.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\VacancySearch\VacancySearch.feature">
+    <None Include="Features\VacancySearch\ApprenticeshipSearch.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>VacancySearch.feature.cs</LastGenOutput>
+      <LastGenOutput>ApprenticeshipSearch.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\VacancySearch\VacancySearchValidation.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

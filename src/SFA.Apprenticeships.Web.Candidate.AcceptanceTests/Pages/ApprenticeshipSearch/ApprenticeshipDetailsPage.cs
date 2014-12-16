@@ -4,8 +4,8 @@
     using OpenQA.Selenium;
 
     [PageNavigation("/apprenticeship/[0-9]+", UrlTemplate = "/apprenticeship/{VacancyId}")]
-    [PageAlias("VacancyDetailsPage")]
-    public class DetailsPage
+    [PageAlias("ApprenticeshipDetailsPage")]
+    public class ApprenticeshipDetailsPage
     {
         [ElementLocator(Id = "lnk-return-search-results")]
         public IWebElement ReturnToSearchResultsLink { get; set; }

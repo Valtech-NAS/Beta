@@ -6,8 +6,8 @@
 @US461
 Scenario: Complete validation path
 	Given I have registered a new candidate
-	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	When I choose ApplyButton

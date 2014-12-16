@@ -5,10 +5,10 @@ Feature: Account Settings - Personal Details
 	and communication preferences so that I can manage my personal details and make sure they are correct
 
 Background: 
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	And I am logged out
-	And I navigated to the VacancySearchPage page
-	Then I am on the VacancySearchPage page
+	And I navigated to the ApprenticeshipSearchPage page
+	Then I am on the ApprenticeshipSearchPage page
 
 	Given I registered an account and activated it
 	And I navigated to the LoginPage page

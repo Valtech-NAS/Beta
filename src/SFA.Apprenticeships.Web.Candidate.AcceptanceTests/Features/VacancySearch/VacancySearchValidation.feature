@@ -1,18 +1,18 @@
 ﻿@US496 @US449
 Feature: Vacancy Search Validation
-	In order to find a vacancy apprenticeship quickly
+	In order to find a apprenticeship vacancy quickly
 	As a candidate
 	I want invalid inputs to be highlighted before searching
 
 Background: 
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	And I am logged out
-	And I navigated to the VacancySearchPage page
-	Then I am on the VacancySearchPage page
+	And I navigated to the ApprenticeshipSearchPage page
+	Then I am on the ApprenticeshipSearchPage page
 
 @SmokeTests
 Scenario: Show validation error message when no location entered
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field          | Value    |
 		 | WithInDistance | 40 miles |

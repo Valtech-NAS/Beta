@@ -5,15 +5,15 @@ Feature: Show my up-to-date details
 	so that when I submit my application it contains my most recent personal details
 
 Background: 
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	And I am logged out
-	And I navigated to the VacancySearchPage page
-	Then I am on the VacancySearchPage page
+	And I navigated to the ApprenticeshipSearchPage page
+	Then I am on the ApprenticeshipSearchPage page
 
 Scenario: Updating personal details will update draft applications
 	Given I have registered a new candidate
-	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	When I choose SupportMeYes
@@ -58,8 +58,8 @@ Scenario: Updating personal details will update draft applications
 		| Field    | Rule     | Value |
 		| Fullname | Contains | Jane  |
 
-	When I select the "first" vacancy in location "London" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	When I select the "first" apprenticeship vacancy in location "London" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	And I see

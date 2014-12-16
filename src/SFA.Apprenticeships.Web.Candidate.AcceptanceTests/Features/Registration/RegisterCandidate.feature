@@ -5,10 +5,10 @@ Feature: Register Candidate
 	I want to be able to register for the service
 
 Background: 
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	And I am logged out
-	And I navigated to the VacancySearchPage page
-	Then I am on the VacancySearchPage page
+	And I navigated to the ApprenticeshipSearchPage page
+	Then I am on the ApprenticeshipSearchPage page
 
 @SmokeTests
 Scenario: As a candidate I am on the registration page and all required fields are present and all validators show
@@ -137,9 +137,9 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 		| ActivationCode | {ActivationToken} |
 	And I am on the ActivationPage page
 	And I choose ActivateButton
-	And I am on the VacancySearchPage page
-	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	And I am on the ApprenticeshipSearchPage page
+	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	When I choose MyApplicationsLink

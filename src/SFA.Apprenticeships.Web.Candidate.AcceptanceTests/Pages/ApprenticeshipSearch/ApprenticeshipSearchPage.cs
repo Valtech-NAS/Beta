@@ -4,12 +4,12 @@
     using OpenQA.Selenium;
 
     [PageNavigation("/apprenticeshipsearch")]
-    [PageAlias("VacancySearchPage")]
-    public class VacancySearchPage : BaseValidationPage
+    [PageAlias("ApprenticeshipSearchPage")]
+    public class ApprenticeshipSearchPage : BaseValidationPage
     {
         private IWebElement _locationAutoComplete;
 
-        public VacancySearchPage(ISearchContext context) : base(context)
+        public ApprenticeshipSearchPage(ISearchContext context) : base(context)
         {
         }
 

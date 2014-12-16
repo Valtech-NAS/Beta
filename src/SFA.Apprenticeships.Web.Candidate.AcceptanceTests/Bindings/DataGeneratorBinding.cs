@@ -51,9 +51,9 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             _tokenManager.SetToken(InvalidPasswordTokenName, new string(Password.Reverse().ToArray()));
         }
 
-        [Given(@"I select the ""(.*)"" vacancy in location ""(.*)"" that can apply by this website")]
-        [When(@"I select the ""(.*)"" vacancy in location ""(.*)"" that can apply by this website")]
-        public void WhenISelectTheNthVacancyThatCanApplyByThisWebsite(string position, string location)
+        [Given(@"I select the ""(.*)"" apprenticeship vacancy in location ""(.*)"" that can apply by this website")]
+        [When(@"I select the ""(.*)"" apprenticeship vacancy in location ""(.*)"" that can apply by this website")]
+        public void WhenISelectTheNthApprenticeshipVacancyThatCanApplyByThisWebsite(string position, string location)
         {
             var expectedPosition = _positions[position];
             SearchForAVacancyIn(location);
@@ -66,7 +66,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             {
                 if (i == numResults)
                 {
-                    throw new Exception("Can't find any suitable vacancy.");
+                    throw new Exception("Can't find any suitable apprenticeship vacancy.");
                 }
 
                 // Click on the i-th search result
@@ -96,15 +96,15 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
 
         private void SearchForAVacancyIn(string location)
         {
-            Given("I navigated to the VacancySearchPage page");
+            Given("I navigated to the ApprenticeshipSearchPage page");
             When("I enter data", GetVacancySearchData(location));
             And("I choose Search");
-            Then("I am on the VacancySearchResultPage page");
+            Then("I am on the ApprenticeshipSearchResultPage page");
             When("I enter data", Get50ResultsPerPage());
-            Then("I am on the VacancySearchResultPage page");
+            Then("I am on the ApprenticeshipSearchResultPage page");
         }
 
-        [When(@"I select the ""(.*)"" vacancy in location ""(.*)"" that I can apply via the employer site")]
+        [When(@"I select the ""(.*)"" apprenticeship vacancy in location ""(.*)"" that I can apply via the employer site")]
         public void WhenISelectTheNthVacancyInLocationThatICanApplyViaTheEmployerSite(string position, string location)
         {
             var expectedPosition = _positions[position];
@@ -200,8 +200,8 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             When("I get the token for my newly created account");
             And("I enter data", GetActivationCodeData());
             And("I choose ActivateButton");
-            Then("I wait 120 second for the VacancySearchPage page");
-            And("I am on the VacancySearchPage page");
+            Then("I wait 120 second for the ApprenticeshipSearchPage page");
+            And("I am on the ApprenticeshipSearchPage page");
         }
 
         private Table GetRegistrationData()

@@ -4,16 +4,16 @@
 	I want valid data I have previously entered to pre populate the application form
 
 Background: 
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	And I am logged out
-	And I navigated to the VacancySearchPage page
-	Then I am on the VacancySearchPage page
+	And I navigated to the ApprenticeshipSearchPage page
+	Then I am on the ApprenticeshipSearchPage page
 
 @US461
 Scenario: Pre-populate my personal and contact details
 	Given I have registered a new candidate
-	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	And I see
@@ -39,8 +39,8 @@ Scenario: Pre-populate my personal and contact details
 @US461
 Scenario: Pre-populate my Education Qualifications Work Experience About You details
 	Given I have registered a new candidate
-	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	When I enter data
@@ -56,8 +56,8 @@ Scenario: Pre-populate my Education Qualifications Work Experience About You det
 	And I see
 		| Field                   | Rule      | Value           |
 		| ApplicationSavedMessage | Ends With | my applications |
-	When I select the "second" vacancy in location "N7 8LS" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	When I select the "second" apprenticeship vacancy in location "N7 8LS" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	And I see

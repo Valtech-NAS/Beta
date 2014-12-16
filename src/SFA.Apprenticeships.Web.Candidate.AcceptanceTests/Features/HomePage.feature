@@ -17,4 +17,4 @@ Scenario: Home Page Test Scenario
 Scenario: Vacancy Search Navigation Test
 	Given I navigated to the HomePage page
 	When I choose VacancySearchLink
-	Then I wait for the VacancySearchPage page
+	Then I wait for the ApprenticeshipSearchPage page

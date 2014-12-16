@@ -5,20 +5,20 @@ Feature: Nationwide apprenticeships
 	so that I can see opportunities that may be of interest to me irrespective of my location
 
 Background: 
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	And I am logged out
-	And I navigated to the VacancySearchPage page
-	Then I am on the VacancySearchPage page
+	And I navigated to the ApprenticeshipSearchPage page
+	Then I am on the ApprenticeshipSearchPage page
 
 @SmokeTests
 Scenario: After search I see the local apprenticeships
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field          | Value    |
 		 | Location       | London   |
 		 | WithInDistance | 40 miles |
 	And I choose Search
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                      | Rule           | Value |
         | LocalLocationTypeLink      | Does Not Exist |       |
@@ -26,15 +26,15 @@ Scenario: After search I see the local apprenticeships
 
 @SmokeTests
 Scenario: After clicking on nationwide apprenticeships I see them
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field          | Value    |
 		 | Location       | London   |
 		 | WithInDistance | 40 miles |
 	And I choose Search
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                        | Rule           | Value |
         | LocalLocationTypeLink        | Exists         |       |
@@ -42,28 +42,28 @@ Scenario: After clicking on nationwide apprenticeships I see them
 
 @SmokeTests
 Scenario: Nationwide apprenticeships cannot have their sort order changed
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field          | Value    |
 		 | Location       | London   |
 		 | WithInDistance | 40 miles |
 	And I choose Search
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	Then I wait 0 seconds for SortOrderingDropDown to become disabled
 
 @SmokeTests
 Scenario: Nationwide apprenticeships do not show distance
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field          | Value    |
 		 | Location       | London   |
 		 | WithInDistance | 40 miles |
 	And I choose Search
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	Then I see SearchResults list contains
         | Field                | Rule   | Value |
         | DistanceDisplayed    | Equals | False |
@@ -72,52 +72,52 @@ Scenario: Nationwide apprenticeships do not show distance
 
 @SmokeTests
 Scenario: nationwide apprenticeships are in closing date order
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field          | Value    |
 		 | Location       | London   |
 		 | WithInDistance | 40 miles |
 	And I choose Search
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                        | Rule   | Value |
         | ResultsAreInClosingDateOrder | Equals | True  |
 
 @SmokeTests
 Scenario: nationwide apprenticeships found by keyword are in best match order
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field          | Value    |
 		 | Keywords       | it       |
 		 | Location       | London   |
 		 | WithInDistance | 40 miles |
 	And I choose Search
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                        | Rule   | Value |
         | ResultsAreInClosingDateOrder | Equals | False |
 
 @SmokeTests
 Scenario: Nationwide apprenticeships found by keyword can be ordered
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field          | Value    |
 		 | Keywords       | it       |
 		 | Location       | London   |
 		 | WithInDistance | 40 miles |
 	And I choose Search
-	And I am on the VacancySearchResultPage page
+	And I am on the ApprenticeshipSearchResultPage page
 	Then I see 
         | Field                      | Rule         | Value        |
         | SearchResultItemsCount     | Greater Than | 0            |
         | SortOrderingDropDown       | Equals       | Best Match   |
         | NationwideLocationTypeLink | Exists       |              |
 	When I choose NationwideLocationTypeLink
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                          | Rule           | Value                   |
         | LocalLocationTypeLink          | Exists         |                         |
@@ -129,19 +129,19 @@ Scenario: Nationwide apprenticeships found by keyword can be ordered
 
 @SmokeTests
 Scenario: When I'm seeing nationwide apprenticeships and I change the results per page I remain there
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field          | Value    |
 		 | Location       | London   |
 		 | WithInDistance | 40 miles |
 	And I choose Search
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	When I enter data
 		| Field                  | Value       |
 		| ResultsPerPageDropDown | 25 per page |
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                      | Rule           | Value |
         | LocalLocationTypeLink      | Exists         |       |
@@ -149,20 +149,20 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the results pe
 
 @SmokeTests
 Scenario: When I'm seeing nationwide apprenticeships and I change the sort order I remain there
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field          | Value        |
 		 | Keywords       | Construction |
 		 | Location       | London       |
 		 | WithInDistance | 40 miles     |
 	And I choose Search
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	When I enter data
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing Date |
-	Then I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                      | Rule           | Value |
         | LocalLocationTypeLink      | Exists         |       |
@@ -170,14 +170,14 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the sort order
 
 @SmokeTests
 Scenario: If there are only nationwide apprenticeships do not show any link
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field          | Value   |
 		 | Location       | Stanton |
 		 | WithInDistance | 2 miles |
 	And I choose Search
-	Then I am on the VacancySearchResultPage page
-	When I am on the VacancySearchResultPage page
+	Then I am on the ApprenticeshipSearchResultPage page
+	When I am on the ApprenticeshipSearchResultPage page
 	Then I see
 		| Field                      | Rule           | Value |
         | NationwideLocationTypeLink | Does Not Exist |       |

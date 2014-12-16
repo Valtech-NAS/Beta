@@ -7,12 +7,12 @@
     using OpenQA.Selenium;
 
     [PageNavigation("/apprenticeships")]
-    [PageAlias("VacancySearchResultPage")]
-    public class VacancySearchResultPage : BaseValidationPage
+    [PageAlias("ApprenticeshipSearchResultPage")]
+    public class ApprenticeshipSearchResultPage : BaseValidationPage
     {
         private IWebElement _locationAutoComplete;
 
-        public VacancySearchResultPage(ISearchContext context) : base(context)
+        public ApprenticeshipSearchResultPage(ISearchContext context) : base(context)
         {
         }
         
@@ -54,7 +54,7 @@
         public IWebElement ResultsPerPageDropDown { get; set; }
 
         [ElementLocator(Class = "search-results")]
-        public IElementList<IWebElement, SearchResultsItem> SearchResults { get; set; }
+        public IElementList<IWebElement, ApprenticeshipSearchResultsItem> SearchResults { get; set; }
 
         [ElementLocator(Class = "next")]
         public IWebElement NextPage { get; set; }

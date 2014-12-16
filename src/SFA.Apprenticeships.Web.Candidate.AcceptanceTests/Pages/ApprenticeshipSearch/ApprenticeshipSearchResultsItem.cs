@@ -6,9 +6,9 @@ using SpecBind.Selenium;
 namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.VacancySearch
 {
     [ElementLocator(Class = "search-results__item")]
-    public class SearchResultsItem : WebElement
+    public class ApprenticeshipSearchResultsItem : WebElement
     {
-        protected internal SearchResultsItem(ISearchContext searchContext) : base(searchContext)
+        protected internal ApprenticeshipSearchResultsItem(ISearchContext searchContext) : base(searchContext)
         {
         }
 

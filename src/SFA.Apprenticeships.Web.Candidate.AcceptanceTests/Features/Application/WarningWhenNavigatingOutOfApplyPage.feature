@@ -4,10 +4,10 @@
 	so that I don't lose any changes I have made without consciously deciding to do so
 
 Background: 
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	And I am logged out
-	And I navigated to the VacancySearchPage page
-	Then I am on the VacancySearchPage page
+	And I navigated to the ApprenticeshipSearchPage page
+	Then I am on the ApprenticeshipSearchPage page
 
 @US501
 Scenario: Selecting No I will remain in the same page
@@ -16,10 +16,10 @@ Scenario: Selecting No I will remain in the same page
 	#	| Field    | Value  |
 	#	| Location | N7 8LS |
 	#And I choose Search
-	#Then I am on the VacancySearchResultPage page
+	#Then I am on the ApprenticeshipSearchResultPage page
 	#When I choose FirstVacancyLink
-	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	When I enter data
@@ -46,10 +46,10 @@ Scenario: Selecting yes will redirect me to another page
 	#	| Field    | Value  |
 	#	| Location | N7 8LS |
 	#And I choose Search
-	#Then I am on the VacancySearchResultPage page
+	#Then I am on the ApprenticeshipSearchResultPage page
 	#When I choose FirstVacancyLink
-	When I select the "first" vacancy in location "N7 8LS" that can apply by this website
-	Then I am on the VacancyDetailsPage page
+	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApplicationPage page
 	When I enter data

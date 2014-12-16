@@ -6,10 +6,10 @@ Feature: Login Candidate
 	apply for apprenticeships etc.
 
 Background: 
-	Given I navigated to the VacancySearchPage page
+	Given I navigated to the ApprenticeshipSearchPage page
 	And I am logged out
-	And I navigated to the VacancySearchPage page
-	Then I am on the VacancySearchPage page
+	And I navigated to the ApprenticeshipSearchPage page
+	Then I am on the ApprenticeshipSearchPage page
 
 @US415 @SmokeTests
 Scenario: As a candidate all required fields are present
@@ -45,7 +45,7 @@ Scenario: As a candidate I must provide an email address and password
 @US415
 Scenario: As a candidate I want to be redirected to the previous page when I login
 	Given I registered an account and activated it
-	And I navigated to the VacancySearchPage page
+	And I navigated to the ApprenticeshipSearchPage page
 	When I choose SignInLink
 	And I am on the LoginPage page
 	And I enter data
@@ -53,7 +53,7 @@ Scenario: As a candidate I want to be redirected to the previous page when I log
 		| EmailAddress | {EmailAddressToken} |
 		| Password     | {PasswordToken}     |
 	And I choose SignInButton
-	Then I am on the VacancySearchPage page
+	Then I am on the ApprenticeshipSearchPage page
 
 @US415
 Scenario: As a candidate I cannot login with an invalid password
@@ -88,4 +88,4 @@ Scenario: As a candidate I can login with a registered but unactivated account a
 		| Field          | Value                 |
 		| ActivationCode | {ActivationCodeToken} |
 	And I choose ActivateButton
-	Then I am on the VacancySearchPage page
+	Then I am on the ApprenticeshipSearchPage page
