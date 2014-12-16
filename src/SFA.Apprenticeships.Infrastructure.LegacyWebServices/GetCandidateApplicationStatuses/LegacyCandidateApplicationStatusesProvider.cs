@@ -45,9 +45,9 @@
                 {
                     var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
-                    Logger.Error(
-                        "Legacy.GetCandidateInfo reported {0} validation error(s): {1}",
-                        response.ValidationErrors.Count(), responseAsJson);
+                    Logger.Error("Legacy.GetCandidateInfo reported {0} validation error(s): {1}",
+                        response.ValidationErrors.Count(), 
+                        responseAsJson);
                 }
                 else
                 {
@@ -64,8 +64,7 @@
             Logger.Debug("Candidate applications were successfully retrieved from Legacy.GetCandidateInfo ({0})",
                 response.CandidateApplications.Count());
 
-            return
-                _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications);
+            return _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications);
         }
 
         public int GetApplicationStatusesPageCount()
@@ -79,7 +78,7 @@
 
             var response = default(GetApplicationsStatusResponse);
 
-            Logger.Debug("Calling Legacy.GetApplicationsStatus to find page count");
+            Logger.Debug("Calling Legacy.GetApplicationsStatus for page count");
 
             _service.Use("SecureService", client => response = client.GetApplicationsStatus(request));
 
@@ -108,7 +107,7 @@
 
             var response = default(GetApplicationsStatusResponse);
 
-            Logger.Debug("Calling Legacy.GetApplicationsStatus (page {0})", pageNumber);
+            Logger.Debug("Calling Legacy.GetApplicationsStatus for page {0}", pageNumber);
 
             _service.Use("SecureService", client => response = client.GetApplicationsStatus(request));
 
@@ -123,9 +122,7 @@
             Logger.Debug("Application statuses (page {0}) were successfully retrieved from Legacy.GetApplicationsStatus ({1})",
                 pageNumber, response.CandidateApplications.Count());
 
-            return
-                _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(
-                    response.CandidateApplications);
+            return _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications);
         }
     }
 }

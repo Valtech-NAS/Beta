@@ -22,8 +22,6 @@
 
         public int CreateCandidate(Candidate candidate)
         {
-            Logger.Debug("CreateCandidate handled for EntityId={0}, EmailAddress={1}", candidate.EntityId, candidate.RegistrationDetails.EmailAddress);
-
             var request = new CreateCandidateRequest
             {
                 Candidate = new GatewayServiceProxy.Candidate
@@ -45,6 +43,9 @@
             };
 
             var response = default(CreateCandidateResponse);
+
+            Logger.Debug("Calling Legacy.CreateCandidate for candidate '{0}'", candidate.EntityId);
+
             _service.Use("SecureService", client => response = client.CreateCandidate(request));
 
             if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
@@ -53,18 +54,20 @@
                 {
                     var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
-                    Logger.Error("Legacy CreateCandidate reported {0} validation error(s): {1}", response.ValidationErrors.Count(), responseAsJson);
+                    Logger.Error("Legacy.CreateCandidate reported {0} validation error(s): {1}", 
+                        response.ValidationErrors.Count(), 
+                        responseAsJson);
                 }
                 else
                 {
-                    Logger.Error("Legacy CreateCandidate did not respond");
+                    Logger.Error("Legacy.CreateCandidate did not respond");
                 }
-                throw new CustomException("Failed to create candidate in legacy system", ErrorCodes.CandidateCreationError);
+                throw new CustomException("Failed to create candidate in Legacy.CreateCandidate", ErrorCodes.CandidateCreationError);
             }
 
             var legacyCandidateId = response.CandidateId;
 
-            Logger.Debug("Candidate was successfully created on Legacy web service. LegacyCandidateId={0} ", legacyCandidateId);
+            Logger.Debug("Candidate created in Legacy.CreateCandidate (candidate '{0}'/'{1}')", candidate.EntityId, legacyCandidateId);
 
             return legacyCandidateId;
         }
