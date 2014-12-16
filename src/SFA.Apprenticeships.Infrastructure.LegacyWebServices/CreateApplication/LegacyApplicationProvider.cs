@@ -59,8 +59,8 @@
             {
                 if (response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.DuplicateApplication))
                 {
-                    var warnMessage = string.Format("Duplicate apprenticeshipApplication {0} for candidate {1} in legacy system",
-                        apprenticeshipApplicationDetail.Vacancy.Id, apprenticeshipApplicationDetail.CandidateId);
+                    var warnMessage = string.Format("Duplicate apprenticeship application {0} for candidate {1} in legacy system",
+                        apprenticeshipApplicationDetail.EntityId, apprenticeshipApplicationDetail.Vacancy.Id, apprenticeshipApplicationDetail.CandidateId);
 
                     Logger.Warn(warnMessage);
 
@@ -98,7 +98,7 @@
                 var validationError = response.ValidationErrors
                     .First(e => e.ErrorCode == validationErrorCode);
 
-                var warnMessage = string.Format("Unable to create apprenticeshipApplication {0} for candidate {1} in legacy system: \"{2}\".",
+                var warnMessage = string.Format("Unable to create apprenticeship application {0} for candidate {1} in legacy system: \"{2}\".",
                     apprenticeshipApplicationDetail.Vacancy.Id, apprenticeshipApplicationDetail.CandidateId, validationError.Message);
 
                 Logger.Warn(warnMessage);

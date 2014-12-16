@@ -18,8 +18,9 @@
         public void Update(ApprenticeshipApplicationDetail apprenticeshipApplication, ApplicationStatusSummary applicationStatusSummary)
         {
             // invoked because the status of the apprenticeshipApplication / vacancy has changed
-            Logger.Info("Updating status of apprenticeshipApplication '{0}' from '{1}' to '{2}' for candidate {3}", 
+            Logger.Info("Updating status of apprenticeship application '{0}' for vacancy '{1}' from '{2}' to '{3}' for candidate {4}", 
                 applicationStatusSummary.ApplicationId, 
+                applicationStatusSummary.LegacyVacancyId,
                 apprenticeshipApplication.Status, 
                 applicationStatusSummary.ApplicationStatus, 
                 apprenticeshipApplication.CandidateDetails.EmailAddress);
