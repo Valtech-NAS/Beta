@@ -26,6 +26,8 @@
 
         ApprenticeshipApplicationDetail GetApplication(Guid candidateId, int vacancyId);
 
+        TraineeshipApplicationDetail CreateTraineeshipApplication(Guid candidateId, int traineeshipVacancyId);
+
         void ArchiveApplication(Guid candidateId, int vacancyId);
 
         void SaveApplication(Guid candidateId, int vacancyId, ApprenticeshipApplicationDetail apprenticeshipApplication);

@@ -82,6 +82,7 @@
             For<ILockAccountStrategy>().Use<LockAccountStrategy>();
             For<ILockUserStrategy>().Use<LockUserStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ICreateApplicationStrategy>().Use<CreateApplicationStrategy>();
+            For<ICreateTraineeshipApplicationStrategy>().Use<CreateTraineeshipApplicationStrategy>();
             For<ISaveApplicationStrategy>().Use<SaveApplicationStrategy>();
             For<IArchiveApplicationStrategy>().Use<ArchiveApplicationStrategy>();
             For<IDeleteApplicationStrategy>().Use<DeleteApplicationStrategy>();

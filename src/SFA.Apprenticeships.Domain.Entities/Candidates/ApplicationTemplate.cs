@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Candidates
 {
-    using System;
     using System.Collections.Generic;
 
     public class ApplicationTemplate

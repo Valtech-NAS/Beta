@@ -2,6 +2,8 @@
 {
     using System;
     using NLog;
+    using SFA.Apprenticeships.Application.Candidate;
+    using SFA.Apprenticeships.Application.Interfaces.Candidates;
     using SFA.Apprenticeships.Domain.Entities.Applications;
     using SFA.Apprenticeships.Domain.Entities.Exceptions;
     using SFA.Apprenticeships.Domain.Entities.Locations;
@@ -12,15 +14,22 @@
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
     using SFA.Apprenticeships.Web.Common.Models.Application;
+    using ErrorCodes = SFA.Apprenticeships.Domain.Entities.Exceptions.ErrorCodes;
 
     public class TraineeshipApplicationProvider : ITraineeshipApplicationProvider
     {
         private readonly IMapper _mapper;
+        private readonly ICandidateService _candidateService;
+        private readonly IVacancyDetailProvider _vacancyDetailProvider;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public TraineeshipApplicationProvider(IMapper mapper)
+        public TraineeshipApplicationProvider(IMapper mapper, 
+            ICandidateService candidateService, 
+            IVacancyDetailProvider vacancyDetailProvider)
         {
             _mapper = mapper;
+            _candidateService = candidateService;
+            _vacancyDetailProvider = vacancyDetailProvider;
         }
 
         public TraineeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
@@ -30,8 +39,8 @@
 
             try
             {
-                // var applicationDetails = _candidateService.CreateApplication(candidateId, vacancyId);
-                var applicationDetails = CreateDummyApplicationDetail(vacancyId);
+                var applicationDetails = _candidateService.CreateTraineeshipApplication(candidateId, vacancyId);
+                //var applicationDetails = CreateDummyApplicationDetail(vacancyId);
                 var applicationViewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(applicationDetails);
 
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
@@ -198,8 +207,8 @@
         private TraineeshipApplicationViewModel PatchWithVacancyDetail(Guid candidateId, int vacancyId, TraineeshipApplicationViewModel apprenticheshipApplicationViewModel)
         {
             // TODO: why have a patch method like this? should be done in mapper.
-            // var vacancyDetailViewModel = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
-            var vacancyDetailViewModel = CreateDummyVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            //var vacancyDetailViewModel = CreateDummyVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null)
             {
