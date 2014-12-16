@@ -32,6 +32,7 @@
                 var applicationDetail = _applicationReadRepository.GetForCandidate(
                     candidate.EntityId, each => each.Vacancy.Id == legacyVacancyId);
 
+                // TODO: DEBT: AG: this block of code is duplicated in ApplicationStatusUpdateStrategy.
                 if (applicationDetail != null)
                 {
                     var updated = false;
