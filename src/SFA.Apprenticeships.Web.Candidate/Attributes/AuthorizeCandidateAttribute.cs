@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using System.Web.Routing;
     using Common.Constants;
+    using Common.Controllers;
 
     public class AuthorizeCandidateAttribute : AuthorizeAttribute
     {
@@ -30,13 +31,39 @@
 
                 OnUnauthorizedActivated(filterContext);
             }
+            else
+            {
+                var controller = filterContext.Controller as IUserController;
+                if (controller != null)
+                {
+                    var userContext = controller.UserData.GetUserContext();
+                    if (userContext != null)
+                    {
+                        //User was logged in but their authentication cookie has expired
+                        OnUnauthorizedSessionExpired(filterContext);
+                    }
+                }
+            }
         }
+
         private void OnUnauthorizedUnactivated(AuthorizationContext filterContext)
         {
             var routeValues = new RouteValueDictionary
             {
                 {"Controller", "Register"},
                 {"Action", "Activation"},
+                {"ReturnUrl", GetReturnUrl(filterContext)}
+            };
+
+            filterContext.Result = new RedirectToRouteResult(routeValues);
+        }
+
+        private void OnUnauthorizedSessionExpired(AuthorizationContext filterContext)
+        {
+            var routeValues = new RouteValueDictionary
+            {
+                {"Controller", "Login"},
+                {"Action", "SessionTimeout"},
                 {"ReturnUrl", GetReturnUrl(filterContext)}
             };
 

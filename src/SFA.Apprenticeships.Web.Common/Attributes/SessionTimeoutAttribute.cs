@@ -30,20 +30,20 @@
             if (!controllerName.Equals("Login", StringComparison.InvariantCultureIgnoreCase))
             {
                 controller.UserData.Pop(UserDataItemNames.SessionReturnUrl);
-                var userContext = controller.UserData.GetUserContext();
+            }
 
-                if (userContext != null)
-                {
-                    // They are logged in, set the timeout.
-                    AddMetaRefreshTimeout(filterContext);
+            var httpContext = filterContext.Controller.ControllerContext.HttpContext;
+            if (httpContext.User.Identity.IsAuthenticated)
+            {
+                // They are logged in, set the timeout.
+                AddMetaRefreshTimeout(filterContext);
 
-                    // Additionally refresh the authentication ticket to extend the session is appropriate.
-                    controller.AuthenticationTicketService.RefreshTicket(filterContext.Controller.ControllerContext.HttpContext);
-                }
-                else
-                {
-                    filterContext.Controller.ViewBag.EnableSessionTimeout = false;
-                }
+                // And refresh authentication ticket if required
+                controller.AuthenticationTicketService.RefreshTicket(httpContext);
+            }
+            else
+            {
+                filterContext.Controller.ViewBag.EnableSessionTimeout = false;
             }
 
             base.OnActionExecuted(filterContext);
