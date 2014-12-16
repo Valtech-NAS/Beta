@@ -60,6 +60,10 @@
 
         public void RefreshTicket(HttpContextBase httpContext)
         {
+            //Only extend the ticket if the cookie has not been set by a prior action or attribute
+            if (httpContext.Response.Cookies.AllKeys.Contains(CookieName))
+                return;
+
             var ticket = GetTicket(httpContext.Request.Cookies);
 
             if (ticket == null)
