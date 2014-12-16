@@ -39,14 +39,14 @@
 
         public int CreateApplication(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
         {
-            var message = string.Format("Legacy CreateApplication of candidate {0} to vacancy {1}",
-                apprenticeshipApplicationDetail.CandidateId, apprenticeshipApplicationDetail.Vacancy.Id);
-            Logger.Debug(message);
-
             var candidate = _candidateReadRepository.Get(apprenticeshipApplicationDetail.CandidateId);
             var legacyRequest = MapApplicationToLegacyRequest(apprenticeshipApplicationDetail, candidate);
 
             CreateApplicationResponse response = null;
+
+            Logger.Debug("Calling Legacy.CreateApplication for candidate '{0}' and vacancy '{1}'",
+                apprenticeshipApplicationDetail.CandidateId,
+                apprenticeshipApplicationDetail.Vacancy.Id);
 
             _service.Use("SecureService", client => response = client.CreateApplication(legacyRequest));
 
@@ -59,8 +59,9 @@
             {
                 if (response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.DuplicateApplication))
                 {
-                    var warnMessage = string.Format("Duplicate apprenticeship application {0} for candidate {1} in legacy system",
-                        apprenticeshipApplicationDetail.EntityId, apprenticeshipApplicationDetail.Vacancy.Id, apprenticeshipApplicationDetail.CandidateId);
+                    var warnMessage = string.Format("Duplicate application for candidate '{0}' and vacancy '{1}'",
+                        apprenticeshipApplicationDetail.Vacancy.Id, 
+                        apprenticeshipApplicationDetail.EntityId);
 
                     Logger.Warn(warnMessage);
 
@@ -76,19 +77,20 @@
 
                 var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
-                Logger.Error(
-                    "Legacy CreateApplication reported {0} validation error(s): {1} when creating apprenticeshipApplication of candidate {2} to vacancy {3}",
-                    response.ValidationErrors.Count(), responseAsJson, apprenticeshipApplicationDetail.CandidateId, apprenticeshipApplicationDetail.Vacancy.Id);
+                Logger.Error("Legacy CreateApplication reported {0} validation error(s): {1}",
+                    response.ValidationErrors.Count(),
+                    responseAsJson);
             }
             else
             {
-                Logger.Error("Legacy CreateApplication of candidate {0} to vacancy {1} did not respond.",
-                        apprenticeshipApplicationDetail.CandidateId, apprenticeshipApplicationDetail.Vacancy.Id);
+                Logger.Error("Legacy.CreateApplication did not respond");
             }
 
             throw new CustomException(
-                string.Format("Failed to create apprenticeshipApplication of candidate {0} to vacancy {1} in legacy system",
-                    apprenticeshipApplicationDetail.CandidateId, apprenticeshipApplicationDetail.Vacancy.Id), ErrorCodes.ApplicationGatewayCreationError);
+                string.Format("Failed to create apprenticeship application for candidate '{0}' and vacancy '{1}' in Legacy.CreateApplication",
+                    apprenticeshipApplicationDetail.CandidateId, 
+                    apprenticeshipApplicationDetail.Vacancy.Id), 
+                    ErrorCodes.ApplicationGatewayCreationError);
         }
 
         private static void CheckValidationErrors(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail, CreateApplicationResponse response, string validationErrorCode, string errorCode)

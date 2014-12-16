@@ -62,6 +62,7 @@
                 {
                     Logger.Error("Legacy.CreateCandidate did not respond");
                 }
+
                 throw new CustomException("Failed to create candidate in Legacy.CreateCandidate", ErrorCodes.CandidateCreationError);
             }
 
