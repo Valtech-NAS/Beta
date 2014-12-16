@@ -236,6 +236,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RegisterCandidate.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\TraineeshipApplication\ApplyForTraineeship.feature.cs">
+      <DependentUpon>ApplyForTraineeship.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Features\TraineeshipSearch\TraineeshipSearchValidation.feature.cs">
       <DependentUpon>TraineeshipSearchValidation.feature</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -294,6 +299,9 @@
     <Compile Include="Pages\BaseValidationPage.cs" />
     <Compile Include="Pages\Dashboard\MyApplicationsPage.cs" />
     <Compile Include="Pages\Gds\GdsStartPage.cs" />
+    <Compile Include="Pages\TraineeshipApplication\TraineeshipWhatsNextPage.cs" />
+    <Compile Include="Pages\TraineeshipApplication\TraineeshipApplicationPage.cs" />
+    <Compile Include="Pages\TraineeshipSearch\TraineeshipDetailsPage.cs" />
     <Compile Include="Pages\TraineeshipSearch\TraineeshipSearchResultsItem.cs" />
     <Compile Include="Pages\TraineeshipSearch\TraineeshipSearchPage.cs" />
     <Compile Include="Pages\TraineeshipSearch\TraineeshipSearchResultPage.cs" />
@@ -415,6 +423,10 @@
     <None Include="Features\Registration\RegisterCandidate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RegisterCandidate.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\TraineeshipApplication\ApplyForTraineeship.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ApplyForTraineeship.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\TraineeshipSearch\TraineeshipSearchValidation.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

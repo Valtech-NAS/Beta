@@ -129,6 +129,12 @@
                 );
 
             routes.MapRoute(
+                name: CandidateRouteNames.TraineeshipWhatNext,
+                url: "traineeship/whatnext/{id}",
+                defaults: new { controller = "TraineeshipApplication", action = "WhatHappensNext" }
+                );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

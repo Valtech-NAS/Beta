@@ -56,8 +56,23 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
         public void WhenISelectTheNthApprenticeshipVacancyThatCanApplyByThisWebsite(string position, string location)
         {
             var expectedPosition = _positions[position];
-            SearchForAVacancyIn(location);
+            SearchForAnApprenticeshipVacancyIn(location);
 
+            SelectVacanyApplicableViaThisWebsiteInPosition(expectedPosition);
+        }
+
+        [Given(@"I select the ""(.*)"" traineeship vacancy in location ""(.*)"" that can apply by this website")]
+        [When(@"I select the ""(.*)"" traineeship vacancy in location ""(.*)"" that can apply by this website")]
+        public void WhenISelectTheNthTraineeshipVacancyThatCanApplyByThisWebsite(string position, string location)
+        {
+            var expectedPosition = _positions[position];
+            SearchForATraineeshipVacancyIn(location);
+
+            SelectVacanyApplicableViaThisWebsiteInPosition(expectedPosition);
+        }
+
+        private void SelectVacanyApplicableViaThisWebsiteInPosition(int expectedPosition)
+        {
             const int numResults = 50;
             var i = 0;
             var validPositionCount = 0;
@@ -83,7 +98,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
                     _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(0));
                     _driver.FindElement(By.Id("apply-button"));
                     validPositionCount++;
-                    if(validPositionCount != expectedPosition)
+                    if (validPositionCount != expectedPosition)
                         _driver.Navigate().Back();
                 }
                 catch
@@ -94,21 +109,11 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             }
         }
 
-        private void SearchForAVacancyIn(string location)
-        {
-            Given("I navigated to the ApprenticeshipSearchPage page");
-            When("I enter data", GetVacancySearchData(location));
-            And("I choose Search");
-            Then("I am on the ApprenticeshipSearchResultPage page");
-            When("I enter data", Get50ResultsPerPage());
-            Then("I am on the ApprenticeshipSearchResultPage page");
-        }
-
         [When(@"I select the ""(.*)"" apprenticeship vacancy in location ""(.*)"" that I can apply via the employer site")]
         public void WhenISelectTheNthVacancyInLocationThatICanApplyViaTheEmployerSite(string position, string location)
         {
             var expectedPosition = _positions[position];
-            SearchForAVacancyIn(location);
+            SearchForAnApprenticeshipVacancyIn(location);
 
             const int numResults = 50;
             var i = 0;
@@ -144,6 +149,27 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
                     _driver.Navigate().Back();
                 }
             }
+        }
+
+
+        private void SearchForAnApprenticeshipVacancyIn(string location)
+        {
+            Given("I navigated to the ApprenticeshipSearchPage page");
+            When("I enter data", GetVacancySearchData(location));
+            And("I choose Search");
+            Then("I am on the ApprenticeshipSearchResultPage page");
+            When("I enter data", Get50ResultsPerPage());
+            Then("I am on the ApprenticeshipSearchResultPage page");
+        }
+
+        private void SearchForATraineeshipVacancyIn(string location)
+        {
+            Given("I navigated to the TraineeshipSearchPage page");
+            When("I enter data", GetVacancySearchData(location));
+            And("I choose Search");
+            Then("I am on the TraineeshipSearchResultPage page");
+            When("I enter data", Get50ResultsPerPage());
+            Then("I am on the TraineeshipSearchResultPage page");
         }
 
         [Then(@"Another browser window is opened")]
