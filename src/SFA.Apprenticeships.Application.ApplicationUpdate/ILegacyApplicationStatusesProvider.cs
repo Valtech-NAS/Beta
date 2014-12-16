@@ -11,6 +11,6 @@
 
         int GetApplicationStatusesPageCount();
 
-        IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses(int pageNumber);
+        IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses(int page);
     }
 }

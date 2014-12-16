@@ -90,24 +90,23 @@
                     ErrorCodes.GatewayServiceFailed);
             }
 
-            Logger.Debug("Application statuses were successfully retrieved from Legacy.GetApplicationsStatus ({0})", 
-                response.TotalPages);
+            Logger.Debug("Application statuses page count retrieved from Legacy.GetApplicationsStatus ({0})", response.TotalPages);
 
             return response.TotalPages;
         }
 
-        public IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses(int pageNumber)
+        public IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses(int page)
         {
             // retrieve application statuses for ALL candidates (used in application ETL process)
 
             var request = new GetApplicationsStatusRequest
             {
-                PageNumber = pageNumber
+                PageNumber = page
             };
 
             var response = default(GetApplicationsStatusResponse);
 
-            Logger.Debug("Calling Legacy.GetApplicationsStatus for page {0}", pageNumber);
+            Logger.Debug("Calling Legacy.GetApplicationsStatus for page {0}", page);
 
             _service.Use("SecureService", client => response = client.GetApplicationsStatus(request));
 
@@ -115,12 +114,12 @@
             {
                 Logger.Error("Legacy.GetApplicationsStatus did not respond");
 
-                throw new CustomException("Failed to retrieve application statuses from Legacy.GetApplicationsStatus",
+                throw new CustomException("Failed to retrieve page '" + page + "' from Legacy.GetApplicationsStatus",
                     ErrorCodes.GatewayServiceFailed);
             }
 
             Logger.Debug("Application statuses (page {0}) were successfully retrieved from Legacy.GetApplicationsStatus ({1})",
-                pageNumber, response.CandidateApplications.Count());
+                page, response.CandidateApplications.Count());
 
             return _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications);
         }

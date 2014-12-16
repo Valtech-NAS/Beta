@@ -32,52 +32,56 @@
         {
             var request = new GetVacancySummaryRequest { PageNumber = 1 };
 
-            Logger.Debug("Calling Gateway GetVacancySummaries webservice for vacancy index page count");
-
             var response = default(GetVacancySummaryResponse);
 
-            //todo: remove endpoint config name once all new service operations integrated
+            Logger.Debug("Calling Legyacy.GetVacancySummaries for page count");
+
             _service.Use("SecureService", client => response = client.GetVacancySummaries(request));
 
             if (response == null)
             {
-                Logger.Error("Gateway GetVacancySummaries did not respond");
+                Logger.Error("Legacy.GetVacancySummaries for page count did not respond");
 
-                throw new CustomException(
-                    "Gateway GetVacancySummaries failed to retrieve page count from legacy system.",
+                throw new CustomException("Failed to retrieve application status pages from Legacy.GetVacancySummaries",
                     ErrorCodes.GatewayServiceFailed);
             }
+
+            Logger.Debug("Vacancy summary page count retrieved from Legacy.GetApplicationsStatus ({0})", response.TotalPages);
 
             return response.TotalPages;
         }
 
         public VacancySummaries GetVacancySummaries(int page)
         {
-            var request = new GetVacancySummaryRequest { PageNumber = page };
-
-            Logger.Debug("Calling Gateway GetVacancySummaries webservice for vacancy data page {0}", page);
+            var request = new GetVacancySummaryRequest {PageNumber = page};
 
             var response = default(GetVacancySummaryResponse);
 
-            //todo: remove endpoint config name once all new service operations integrated
+            Logger.Debug("Calling Legacy.GetVacancySummaries for page {0}", page);
+
             _service.Use("SecureService", client => response = client.GetVacancySummaries(request));
 
             if (response == null)
             {
-                Logger.Error("Gateway GetVacancySummaries did not respond");
+                Logger.Error("Legacy.GetVacancySummaries did not respond");
 
-                throw new CustomException(
-                    "Gateway GetVacancySummaries failed to retrieve page '" + page + "' from legacy system.",
+                throw new CustomException("Failed to retrieve page '" + page + "' from Legacy.GetVacancySummaries",
                     ErrorCodes.GatewayServiceFailed);
             }
 
-            var apprenticeshipTypes = new[] {"IntermediateLevelApprenticeship", "AdvancedLevelApprenticeship", "HigherApprenticeship"};
+            var apprenticeshipTypes = new[]
+            {
+                "IntermediateLevelApprenticeship", "AdvancedLevelApprenticeship", "HigherApprenticeship"
+            };
 
-            var apprenticeshipSummaries = _mapper.Map<GatewayServiceProxy.VacancySummary[], IEnumerable<ApprenticeshipSummary>>(
-                                response.VacancySummaries.Where(v => apprenticeshipTypes.Contains(v.VacancyType)).ToArray());
+            var apprenticeshipSummaries = _mapper.Map<VacancySummary[], IEnumerable<ApprenticeshipSummary>>(
+                response.VacancySummaries.Where(v => apprenticeshipTypes.Contains(v.VacancyType)).ToArray());
 
-            var traineeshipsSummaries = _mapper.Map<GatewayServiceProxy.VacancySummary[], IEnumerable<TraineeshipSummary>>(
-                                response.VacancySummaries.Where(v => v.VacancyType == "Traineeship").ToArray());
+            var traineeshipsSummaries = _mapper.Map<VacancySummary[], IEnumerable<TraineeshipSummary>>(
+                response.VacancySummaries.Where(v => v.VacancyType == "Traineeship").ToArray());
+
+            Logger.Debug("Vacancy summaries (page {0}) were successfully retrieved from Legacy.GetVacancySummaries ({1})",
+                page, response.VacancySummaries.Count());
 
             return new VacancySummaries(apprenticeshipSummaries, traineeshipsSummaries);
         }
