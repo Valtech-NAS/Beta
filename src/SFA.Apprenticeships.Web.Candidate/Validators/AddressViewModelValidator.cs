@@ -35,6 +35,8 @@
                 .WithMessage(AddressViewModelMessages.AddressLine4.WhiteListErrorText);
 
             RuleFor(x => x.Postcode)
+                .Length(0, 8)
+                .WithMessage(AddressViewModelMessages.Postcode.TooLongErrorText)
                 .NotEmpty()
                 .WithMessage(AddressViewModelMessages.Postcode.RequiredErrorText)
                 .Matches(AddressViewModelMessages.Postcode.WhiteListRegularExpression)

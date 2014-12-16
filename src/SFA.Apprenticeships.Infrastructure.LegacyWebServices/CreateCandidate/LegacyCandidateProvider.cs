@@ -54,9 +54,10 @@
                 {
                     var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
-                    Logger.Error("Legacy.CreateCandidate reported {0} validation error(s): {1}", 
+                    Logger.Error("Legacy.CreateCandidate reported {0} validation error(s): {1} for NAS candidate id: {2}", 
                         response.ValidationErrors.Count(), 
-                        responseAsJson);
+                        responseAsJson,
+                        candidate.EntityId);
                 }
                 else
                 {

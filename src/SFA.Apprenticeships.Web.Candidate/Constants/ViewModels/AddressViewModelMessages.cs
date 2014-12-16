@@ -41,6 +41,7 @@
         {
             public const string LabelText = "Postcode";
             public const string RequiredErrorText = "Please enter your postcode";
+            public const string TooLongErrorText = "Postcode mustn’t exceed 8 characters";
             public const string WhiteListRegularExpression = Whitelists.PostcodeWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'Postcode' " + Whitelists.PostcodeWhitelist.ErrorText;
         }
