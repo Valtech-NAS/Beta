@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.VacancySearch
+namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.ApprenticeshipSearch
 {
     using TechTalk.SpecFlow;
     
@@ -19,21 +19,21 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.VacancySear
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("VacancySearchByKeyword")]
-    public partial class VacancySearchByKeywordFeature
+    [NUnit.Framework.DescriptionAttribute("ApprenticeshipSearchByKeyword")]
+    public partial class ApprenticeshipSearchByKeywordFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "VacancySearchByKeyword.feature"
+#line 1 "ApprenticeshipSearchByKeyword.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "VacancySearchByKeyword", "In order to quickly find a suitable apprenticeship vacancy\r\nAs a candidate\r\nI wan" +
-                    "t to be able to find and refine vacancies by keyword", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "ApprenticeshipSearchByKeyword", "In order to quickly find a suitable apprenticeship vacancy\r\nAs a candidate\r\nI wan" +
+                    "t to be able to find and refine apprenticeship vacancies by keyword", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         

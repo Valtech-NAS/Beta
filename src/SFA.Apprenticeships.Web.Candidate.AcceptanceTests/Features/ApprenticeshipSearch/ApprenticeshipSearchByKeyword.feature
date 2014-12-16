@@ -1,7 +1,7 @@
-﻿Feature: VacancySearchByKeyword
+﻿Feature: ApprenticeshipSearchByKeyword
 	In order to quickly find a suitable apprenticeship vacancy
 	As a candidate
-	I want to be able to find and refine vacancies by keyword
+	I want to be able to find and refine apprenticeship vacancies by keyword
 
 Background: 
 	Given I navigated to the ApprenticeshipSearchPage page

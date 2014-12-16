@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.VacancySearch
+namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.ApprenticeshipSearch
 {
     using TechTalk.SpecFlow;
     
@@ -19,21 +19,21 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.VacancySear
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Vacancy Search by Location")]
-    public partial class VacancySearchByLocationFeature
+    [NUnit.Framework.DescriptionAttribute("Apprenticeship Search by Location")]
+    public partial class ApprenticeshipSearchByLocationFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "VacancySearchByLocation.feature"
+#line 1 "ApprenticeshipSearchByLocation.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Vacancy Search by Location", "In order to find a georgraphically suitable vacancy\r\nAs a candidate\r\nI want to be" +
-                    " able to find and refine vacancies by location", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Apprenticeship Search by Location", "In order to find a georgraphically suitable apprenticeship vacancy\r\nAs a candidat" +
+                    "e\r\nI want to be able to find and refine apprenticeship vacancies by location", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         

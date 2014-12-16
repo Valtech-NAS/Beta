@@ -1,5 +1,5 @@
 ﻿@US496 @US449
-Feature: Vacancy Search Validation
+Feature: Apprenticeship Search Validation
 	In order to find a apprenticeship vacancy quickly
 	As a candidate
 	I want invalid inputs to be highlighted before searching

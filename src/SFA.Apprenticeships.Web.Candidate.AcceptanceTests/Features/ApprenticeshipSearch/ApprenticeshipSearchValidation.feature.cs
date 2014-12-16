@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.VacancySearch
+namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.ApprenticeshipSearch
 {
     using TechTalk.SpecFlow;
     
@@ -19,22 +19,22 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.VacancySear
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Vacancy Search Validation")]
+    [NUnit.Framework.DescriptionAttribute("Apprenticeship Search Validation")]
     [NUnit.Framework.CategoryAttribute("US496")]
     [NUnit.Framework.CategoryAttribute("US449")]
-    public partial class VacancySearchValidationFeature
+    public partial class ApprenticeshipSearchValidationFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "VacancySearchValidation.feature"
+#line 1 "ApprenticeshipSearchValidation.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Vacancy Search Validation", "In order to find a apprenticeship vacancy quickly\r\nAs a candidate\r\nI want invalid" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Apprenticeship Search Validation", "In order to find a apprenticeship vacancy quickly\r\nAs a candidate\r\nI want invalid" +
                     " inputs to be highlighted before searching", ProgrammingLanguage.CSharp, new string[] {
                         "US496",
                         "US449"});
