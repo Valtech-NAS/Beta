@@ -20,6 +20,10 @@
             setKeyUpEvent(settings.formSelector);
             setClickEvent(settings.classToExclude);
         },
+        isFormDirty = function(formSelector) {
+            var actualFormValue = $(formSelector).serialize();
+            return initialFormValue !== actualFormValue;
+        },
         resetDirtyForm = function(settings) {
             initialFormValue = $(settings.formSelector).serialize();
         },
@@ -30,9 +34,7 @@
                 } else {
                     //https://developer.mozilla.org/en-US/docs/Web/Events/beforeunload
 
-                    var actualFormValue = $(formSelector).serialize();
-
-                    if (initialFormValue !== actualFormValue) {
+                    if (isFormDirty(formSelector)) {
                         (e || window.event).returnValue = confirmationMessage; //Gecko + IE
                         return confirmationMessage; //Webkit, Safari, Chrome etc.
                     }
@@ -58,6 +60,7 @@
 
     return {
         initialise: initialise,
+        isFormDirty: isFormDirty,
         resetDirtyForm: resetDirtyForm
     };
 })();

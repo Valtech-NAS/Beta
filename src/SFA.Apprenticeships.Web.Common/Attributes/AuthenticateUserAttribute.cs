@@ -60,7 +60,7 @@
 
         private static bool SigningOut(AuthenticationContext filterContext)
         {
-            return filterContext.ActionDescriptor.ActionName == "SignOut" &&
+            return filterContext.ActionDescriptor.ActionName == RouteNames.SignOut &&
                    filterContext.ActionDescriptor.ControllerDescriptor.ControllerName == "Login";
         }
     }
