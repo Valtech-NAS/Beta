@@ -89,9 +89,7 @@
                     GOV.UK
                 </a>
             </div>
-            <div class="global-header__nav">
-                <div class="global-header__title"><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)">Find an apprenticeship</a></div>
-            </div>
+            @RenderSection("TitleLink", true)
         </div>
     </header>
     <div class="content-container">
