@@ -1,23 +1,22 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.VacancySearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.TraineeshipSearch
 {
     using System;
     using System.Linq;
-    using global::SpecBind.Pages;
-    using global::SpecBind.Selenium;
     using OpenQA.Selenium;
+    using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.VacancySearch;
+    using SpecBind.Pages;
+    using SpecBind.Selenium;
 
-    [PageNavigation("/apprenticeships")]
-    [PageAlias("VacancySearchResultPage")]
-    public class VacancySearchResultPage : BaseValidationPage
+    [PageNavigation("/traineeships")]
+    [PageAlias("TraineeshipSearchResultPage")]
+    public class TraineeshipSearchResultPage : BaseValidationPage
     {
         private IWebElement _locationAutoComplete;
 
-        public VacancySearchResultPage(ISearchContext context) : base(context)
+        public TraineeshipSearchResultPage(ISearchContext context)
+            : base(context)
         {
         }
-        
-        [ElementLocator(Id = "Keywords")]
-        public IWebElement Keywords { get; set; }
 
         [ElementLocator(Id = "Location")]
         public IWebElement Location { get; set; }
@@ -54,7 +53,7 @@
         public IWebElement ResultsPerPageDropDown { get; set; }
 
         [ElementLocator(Class = "search-results")]
-        public IElementList<IWebElement, SearchResultsItem> SearchResults { get; set; }
+        public IElementList<IWebElement, TraineeshipSearchResultsItem> SearchResults { get; set; }
 
         [ElementLocator(Class = "next")]
         public IWebElement NextPage { get; set; }
@@ -82,14 +81,14 @@
         public IElementList<IWebElement, LocationAutoCompleteItem> LocationAutoCompletItems { get; set; }
 
         [ElementLocator(Class = "search-results")]
-        public IElementList<IWebElement, SearchResultItem> SearchResultItems { get; set; }
+        public IElementList<IWebElement, TraineeshipSearchResultItem> SearchResultItems { get; set; }
 
-        public SearchResultItem FirstResultItem
+        public TraineeshipSearchResultItem FirstResultItem
         {
             get { return SearchResultItems.FirstOrDefault(); }
         }
 
-        public SearchResultItem SecondResultItem
+        public TraineeshipSearchResultItem SecondResultItem
         {
             get
             {
@@ -118,7 +117,7 @@
             get
             {
                 bool result = true;
-                SearchResultItem previousItem = null;
+                TraineeshipSearchResultItem previousItem = null;
                 for (int i = 0; i < SearchResultItems.Count(); i++)
                 {
                     if (i > 0)
@@ -141,7 +140,7 @@
             get
             {
                 bool result = true;
-                SearchResultItem previousItem = null;
+                TraineeshipSearchResultItem previousItem = null;
                 for (int i = 0; i < SearchResultItems.Count(); i++)
                 {
                     if (i > 0)
@@ -163,8 +162,8 @@
             get
             {
                 bool result = true;
-                SearchResultItem previousItem = null;
-                for (int i = 0; i < SearchResultItems.Count(); i++)
+                TraineeshipSearchResultItem previousItem = null;
+                for (var i = 0; i < SearchResultItems.Count(); i++)
                 {
                     if (i > 0)
                     {
@@ -205,9 +204,10 @@
     }
 
     [ElementLocator(Class = "search-results__item")]
-    public class SearchResultItem : WebElement
+    public class TraineeshipSearchResultItem : WebElement
     {
-        public SearchResultItem(ISearchContext parent) : base(parent)
+        public TraineeshipSearchResultItem(ISearchContext parent)
+            : base(parent)
         {
         }
 

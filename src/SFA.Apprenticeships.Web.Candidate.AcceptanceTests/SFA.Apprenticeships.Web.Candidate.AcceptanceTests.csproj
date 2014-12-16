@@ -236,6 +236,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RegisterCandidate.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\TraineeshipSearch\TraineeshipSearch.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TraineeshipSearch.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\VacancySearch\VacancyNotFound.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -279,6 +284,9 @@
     <Compile Include="Pages\BaseValidationPage.cs" />
     <Compile Include="Pages\Dashboard\MyApplicationsPage.cs" />
     <Compile Include="Pages\Gds\GdsStartPage.cs" />
+    <Compile Include="Pages\TraineeshipSearch\TraineeshipSearchResultsItem.cs" />
+    <Compile Include="Pages\TraineeshipSearch\TraineeshipSearchPage.cs" />
+    <Compile Include="Pages\TraineeshipSearch\TraineeshipSearchResultPage.cs" />
     <Compile Include="Pages\Traineeship\Overview.cs" />
     <Compile Include="Pages\VacancyNotFound.cs" />
     <Compile Include="Pages\Registration\ResetPasswordPage.cs" />
@@ -397,6 +405,10 @@
     <None Include="Features\Registration\RegisterCandidate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RegisterCandidate.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\TraineeshipSearch\TraineeshipSearch.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>TraineeshipSearch.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\VacancySearch\VacancyNotFound.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
