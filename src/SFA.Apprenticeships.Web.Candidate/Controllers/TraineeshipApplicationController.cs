@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using System.Web.Security;
     using SFA.Apprenticeships.Domain.Entities.Applications;
+    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
     using SFA.Apprenticeships.Web.Candidate.ActionResults;
     using SFA.Apprenticeships.Web.Candidate.Attributes;
     using SFA.Apprenticeships.Web.Candidate.Constants;
@@ -19,11 +20,25 @@
 
     public class TraineeshipApplicationController : CandidateControllerBase
     {
+        private readonly IFeatureToggle _featureToggle;
         private readonly ITraineeshipApplicationProvider _traineeshipApplicationProvider;
 
-        public TraineeshipApplicationController(ITraineeshipApplicationProvider traineeshipApplicationProvider)
+        public TraineeshipApplicationController(ITraineeshipApplicationProvider traineeshipApplicationProvider,
+            IFeatureToggle featureToggle)
         {
             _traineeshipApplicationProvider = traineeshipApplicationProvider;
+            _featureToggle = featureToggle;
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (!_featureToggle.IsActive(Feature.Traineeships))
+            {
+                filterContext.Result = HttpNotFound();
+                return;
+            }
+
+            base.OnActionExecuting(filterContext);
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -62,7 +77,7 @@
             return await Task.Run<ActionResult>(() =>
             {
                 model = StripApplicationViewModelBeforeValidation(model);
-                
+
                 var submittedApplicationModel =
                     _traineeshipApplicationProvider.SubmitApplication(UserContext.CandidateId, id);
 
@@ -98,7 +113,7 @@
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyQualificationRows")]
         [ApplyWebTrends]
         [ValidateInput(false)]
-        public async Task<ActionResult> AddEmptyQualificationRows(int id, ApprenticheshipApplicationViewModel model)
+        public async Task<ActionResult> AddEmptyQualificationRows(int id, TraineeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {

@@ -7,24 +7,22 @@
 
     public class FeatureToggle : IFeatureToggle
     {
-        private readonly Dictionary<string, string> _featureToggleKeys = new Dictionary<string, string>
+        private readonly Dictionary<Feature, string> _featureToggleKeys = new Dictionary<Feature, string>
         {
-            {"Traineeships", "TraineeshipsEnabled"}
+            {Feature.Traineeships, "TraineeshipsEnabled"}
         };
 
-        public bool IsActive(string featureName)
+        public bool IsActive(Feature feature)
         {
-            Condition.Ensures(featureName).IsNotNullOrWhiteSpace();
-
-            if (!_featureToggleKeys.ContainsKey(featureName))
+            if (!_featureToggleKeys.ContainsKey(feature))
             {
                 throw new KeyNotFoundException(string.Format("{0} was not found in feature toggle dictionary.",
-                    featureName));
+                    feature));
             }
 
             bool isActive;
 
-            var settingValue = CloudConfigurationManager.GetSetting(_featureToggleKeys[featureName]);
+            var settingValue = CloudConfigurationManager.GetSetting(_featureToggleKeys[feature]);
             bool.TryParse(settingValue, out isActive);
             return isActive;
         }

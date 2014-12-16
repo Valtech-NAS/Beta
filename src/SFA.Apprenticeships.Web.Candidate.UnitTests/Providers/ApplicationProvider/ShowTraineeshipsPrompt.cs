@@ -31,7 +31,7 @@
             _configurationManager.Setup(cm => cm.GetAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt"))
                 .Returns(UnsuccessfulApplications);
 
-            _featureToggle.Setup(ft => ft.IsActive("Traineeships")).Returns(true);
+            _featureToggle.Setup(ft => ft.IsActive(Feature.Traineeships)).Returns(true);
 
             _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object, null, null, _configurationManager.Object, _featureToggle.Object);
         }
@@ -73,7 +73,7 @@
             _candidateService.Setup(cs => cs.GetApplications(It.IsAny<Guid>())).
                 Returns(GetApplicationSummaries(UnsuccessfulApplications));
 
-            _featureToggle.Setup(ft => ft.IsActive("Traineeships")).Returns(false);
+            _featureToggle.Setup(ft => ft.IsActive(Feature.Traineeships)).Returns(false);
 
 
             //Act

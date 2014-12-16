@@ -2,6 +2,11 @@
 {
     public interface IFeatureToggle
     {
-        bool IsActive(string featureName);
+        bool IsActive(Feature feature);
+    }
+
+    public enum Feature
+    {
+        Traineeships
     }
 }

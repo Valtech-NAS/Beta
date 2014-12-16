@@ -342,7 +342,7 @@
                 var unsuccessfulApplicationsToShowTraineeshipsPrompt =
                     _configurationManager.GetAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt");
 
-                var traineeshiptsActive = _featureToggle.IsActive("Traineeships");
+                var traineeshiptsActive = _featureToggle.IsActive(Feature.Traineeships);
 
                 return new MyApplicationsViewModel(applications, unsuccessfulApplicationsToShowTraineeshipsPrompt, traineeshiptsActive);
             }
