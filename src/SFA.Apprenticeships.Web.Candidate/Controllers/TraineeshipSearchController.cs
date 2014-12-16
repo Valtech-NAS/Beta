@@ -1,16 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using ActionResults;
     using Application.Interfaces.Vacancies;
     using Attributes;
     using Common.Constants;
     using Constants;
-    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
+    using Microsoft.Ajax.Utilities;
     using Providers;
     using Validators;
     using ViewModels.VacancySearch;
@@ -149,9 +151,71 @@
 
         }
 
-        public ActionResult Details()
+        [HttpGet]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        public async Task<ActionResult> DetailsWithDistance(int id, string distance)
         {
-            return RedirectToAction("Index");
+            return await Task.Run<ActionResult>(() =>
+            {
+                UserData.Push(UserDataItemNames.VacancyDistance, distance);
+                UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToString(CultureInfo.InvariantCulture));
+
+                return RedirectToRoute(CandidateRouteNames.TraineeshipDetails, new { id });
+            });
         }
+
+        [HttpGet]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
+        public async Task<ActionResult> Details(int id)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                Guid? candidateId = null;
+
+                if (Request.IsAuthenticated)
+                {
+                    candidateId = UserContext.CandidateId;
+                }
+
+                var vacancy = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
+
+                if (vacancy == null)
+                {
+                    return new VacancyNotFoundResult();
+                }
+
+                if (vacancy.HasError())
+                {
+                    ModelState.Clear();
+                    SetUserMessage(vacancy.ViewModelMessage, UserMessageLevel.Warning);
+
+                    return View(vacancy);
+                }
+
+                var distance = UserData.Pop(UserDataItemNames.VacancyDistance);
+                var lastVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
+
+                if (!string.IsNullOrWhiteSpace(distance)
+                    && !string.IsNullOrWhiteSpace(lastVacancyId)
+                    && int.Parse(lastVacancyId) == id)
+                {
+                    ViewBag.Distance = distance;
+                    UserData.Push(UserDataItemNames.VacancyDistance, distance);
+                }
+
+                var urlHelper = new UrlHelper(ControllerContext.RequestContext);
+                var url = urlHelper.RouteUrl(CandidateRouteNames.ApprenticeshipResults, null);
+                if (Request != null && Request.UrlReferrer != null && Request.UrlReferrer.AbsolutePath == url)
+                {
+                    ViewBag.SearchReturnUrl = Request.UrlReferrer.PathAndQuery;
+                }
+
+                UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToStringInvariant());
+
+                return View(vacancy);
+            });
+        }
+
     }
 }

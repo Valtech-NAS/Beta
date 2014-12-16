@@ -5,17 +5,17 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using System.Web.Security;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Web.Candidate.ActionResults;
-    using SFA.Apprenticeships.Web.Candidate.Attributes;
-    using SFA.Apprenticeships.Web.Candidate.Constants;
-    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
-    using SFA.Apprenticeships.Web.Candidate.Providers;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
-    using SFA.Apprenticeships.Web.Common.Attributes;
-    using SFA.Apprenticeships.Web.Common.Constants;
-    using SFA.Apprenticeships.Web.Common.Models.Application;
+    using Domain.Entities.Applications;
+    using ActionResults;
+    using Attributes;
+    using Constants;
+    using Constants.Pages;
+    using Providers;
+    using ViewModels.Applications;
+    using ViewModels.Candidate;
+    using Common.Attributes;
+    using Common.Constants;
+    using Common.Models.Application;
 
     [TraineeshipsToggle]
     public class TraineeshipApplicationController : CandidateControllerBase

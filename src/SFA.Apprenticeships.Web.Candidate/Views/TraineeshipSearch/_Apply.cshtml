@@ -1,0 +1,37 @@
+﻿@using SFA.Apprenticeships.Domain.Entities.Applications
+@model VacancyDetailViewModel
+
+@{
+    var AnalyticsTag = "onclick=\"Webtrends.multiTrack({{ element: this, argsa: ['DCS.dcsuri', '{0}" + Model.Id + "', 'WT.dl', '99', 'WT.ti', '{1}', 'DCSext.buttonPos', '{2}'] }});\"";
+}
+
+@if (Request.IsAuthenticated)
+{
+    if (Model.CandidateApplicationStatus.HasValue && Model.CandidateApplicationStatus.Value != ApplicationStatuses.Unknown)
+    {
+        // Candidate has applied for this vacancy.
+        // Can't do this yet, but leaving it in here
+        switch (Model.CandidateApplicationStatus.Value)
+        {
+            case ApplicationStatuses.Draft:
+                <a role="button" id="apply-button" class="button button-with-hint" title="Resume application" href="@Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/traineeship/apply/resume/", "Traineeship – Resume Application", ViewData["AnalyticsButtonPosition"]))>Resume application</a>
+                break;
+
+            default:
+                <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
+                <a href='@Url.RouteUrl(CandidateRouteNames.MyApplications)'>Track application status</a>
+                break;
+        }
+    }
+    else
+    {
+        // Candidate has not applied for this vacancy.
+        <a role="button" id="apply-button" class="button button-with-hint" title="Apply for traineeship" href="@Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/traineeship/apply/signedin/", "Traineeship – Signed In Apply", ViewData["AnalyticsButtonPosition"]))>Apply for apprenticeship</a>
+    }
+}
+else
+{
+    // Vacancy is not being viewed by a signed-in candidate.
+    <a role="button" id="apply-button" class="button button-with-hint" title="Sign in to apply" href="@Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/traineeship/apply/signin/", "Traineeship – Sign In to Apply", ViewData["AnalyticsButtonPosition"]))>Sign in to apply</a>
+}
+<p class="copy-16">Closing date: @Html.DisplayFor(m => m.ClosingDate, "Date")</p>

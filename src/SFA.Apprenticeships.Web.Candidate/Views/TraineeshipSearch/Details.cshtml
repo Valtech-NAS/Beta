@@ -1,0 +1,119 @@
+﻿@using VacancyLocationType = SFA.Apprenticeships.Domain.Entities.Vacancies.VacancyLocationType
+
+@model VacancyDetailViewModel
+@{
+    ViewBag.Title = "Apprenticeships - " + Model.Title;
+    Layout = "~/Views/Shared/_TraineeshipLayout.cshtml";
+}
+
+@section metatags
+{
+    <meta name="DCSext.Days2Close" content="@((Model.ClosingDate - DateTime.Now).Days)"/>
+}
+
+<div itemscope itemtype="http://schema.org/JobPosting">
+    <div class="grid-wrapper">
+        <div class="grid grid-2-3">
+            <div class="hgroup text">
+                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.Title</h1>
+                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
+            </div>
+        </div>
+        <div class="grid grid-1-3">
+            @if (ViewBag.SearchReturnUrl != null)
+            {
+                <a href="@ViewBag.SearchReturnUrl" title="Return to search results" class="page-link" id="lnk-return-search-results">Return to search results</a>
+            }
+            else
+            {
+                @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { @id="lnk-find-apprenticeship", @class = "page-link" })
+            }
+        </div>
+    </div>
+
+    @if (!Model.HasError())
+    {
+
+        <section class="section-border grid-wrapper">
+            <div class="grid grid-2-3">
+                <div class="inner-block-padr">
+                    <div class="text">
+                        <p>@Html.Raw(Model.FullDescription)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-1-3">
+                <h3 class="bold-small">Training provider</h3>
+                <p>@Model.ProviderName</p>
+                <h3 class="bold-small">Contact</h3>
+                <p>
+                    Adrian Hunt | Business Development Manager | 0121 236 2634 <a href="mailto:ahunt@protocolgroup.co.uk">ahunt@protocolgroup.co.uk</a>
+                </p>
+                <h3 class="bold-small">Expected duration</h3>
+                <p>@Model.ExpectedDuration</p>
+                @if (ViewBag.Distance != null)
+                {
+                    <h3 class="bold-small">Distance</h3>
+                    <p id="vacancy-distance">@ViewBag.Distance miles</p>
+                }
+                <h3 class="bold-small">Reference number</h3>
+                <p>@Model.VacancyReference</p>
+                @Html.Partial("_Apply", Model, new ViewDataDictionary() { new KeyValuePair<string, object>("AnalyticsButtonPosition", "Top")})
+            </div>
+        </section>
+        <section class="section-border grid-wrapper" id="vacancy-info">
+            <h2 class="heading-large">Work experience</h2>
+            <div class="text">
+                <p>@Html.Raw(Model.EmployerDescription)</p>
+            </div>
+            <div class="grid-wrapper">
+                <div class="grid grid-1-2">
+                    <div class="inner-block-padr">
+                        <h3 class="bold-small">Employer</h3>
+                        <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : "")">@Model.EmployerName</p>
+                        @if (Model.IsWellFormedEmployerWebsiteUrl)
+                        {
+                        <p><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a></p>
+                        }
+                        else
+                        {
+                        <p>@Model.EmployerWebsite</p>
+                        }
+                        <div itemscope itemtype="http://schema.org/PostalAddress">
+                            <h3 class="bold-small">Address</h3>
+                            <div itemprop="address">
+                                <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</p>
+                                <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</p>
+                                <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.AddressLine3</p>
+                                <p class="small-btm-margin" itemprop="addressRegion">@Model.VacancyAddress.AddressLine4</p>
+                                <p class="small-btm-margin" itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-1-2">
+                    <div class="ad-details__map">
+                        <div class="map-overlay" onclick="style.pointerEvents='none'"></div>
+                        <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                        <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-border grid-wrapper" id="course-info">
+            <h2 class="heading-large">Desired skills and what this will lead to</h2>
+            <div class="text">
+                <h3 class="heading-small">Desired skills</h3>
+                @Html.Raw(Model.SkillsRequired)
+                <h3 class="heading-small">What this will lead to</h3>
+                @Html.Raw(Model.FutureProspects)
+            </div>
+        </section>
+        <section class="section-border grid-wrapper">
+            <h2 class="heading-large">Other information</h2>
+            <div class="text">
+                <p>@Html.Raw(Model.OtherInformation)</p>
+            </div>
+        </section>
+    }
+</div>
