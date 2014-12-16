@@ -1,18 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers
 {
-    using SFA.Apprenticeships.Application.Interfaces.Search;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancies;
     using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Domain.Entities.Candidates;
     using SFA.Apprenticeships.Domain.Entities.Locations;
-    using SFA.Apprenticeships.Domain.Entities.Users;
     using SFA.Apprenticeships.Domain.Entities.Vacancies;
     using SFA.Apprenticeships.Infrastructure.Common.Mappers;
     using SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Account;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Locations;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
 
     public class TraineeshipCandidateWebMappers : MapperEngine
@@ -53,13 +47,13 @@
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.IsWellFormedUrlResolver>()
                         .FromMember(src => src.EmployerWebsite))
                 .ForMember(d => d.VacancyType,
-                        opt => opt.Ignore())
+                    opt => opt.Ignore())
                 .ForMember(d => d.CandidateApplicationStatus,
-                        opt => opt.Ignore())
+                    opt => opt.Ignore())
                 .ForMember(d => d.DateApplied,
-                        opt => opt.Ignore())
+                    opt => opt.Ignore())
                 .ForMember(d => d.ViewModelMessage,
-                        opt => opt.Ignore());
+                    opt => opt.Ignore());
 
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<AddressViewModel, Address>();

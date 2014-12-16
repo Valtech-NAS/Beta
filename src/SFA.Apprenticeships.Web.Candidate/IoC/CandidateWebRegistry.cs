@@ -97,7 +97,7 @@
             For<ISearchProvider>().Use<SearchProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<IVacancyDetailProvider>().Use<VacancyDetailProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<IApprenticeshipApplicationProvider>().Use<ApprenticeshipApplicationProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
-            For<IAccountProvider>().Use<AccountProvider>();
+            For<IAccountProvider>().Use<AccountProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<ICandidateServiceProvider>()
                 .Use<CandidateServiceProvider>()
                 .Ctor<IMapper>()
