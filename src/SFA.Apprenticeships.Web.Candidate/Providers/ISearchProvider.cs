@@ -9,7 +9,9 @@
 
         AddressSearchResult FindAddresses(string postcode);
 
-        VacancySearchResponseViewModel FindVacancies(VacancySearchViewModel search);
+        ApprenticeshipSearchResponseViewModel FindVacancies(ApprenticeshipSearchViewModel search);
+
+        TraineeshipSearchResponseViewModel FindVacancies(TraineeshipSearchViewModel search);
 
         bool IsValidPostcode(string postcode);
     }

@@ -8,9 +8,9 @@
 
     public class CheckVacancySearch : IMonitorTask
     {
-        private readonly IVacancySearchProvider<VacancySummaryResponse> _vacancySearchProvider;
+        private readonly IVacancySearchProvider<ApprenticeshipSummaryResponse> _vacancySearchProvider;
 
-        public CheckVacancySearch(IVacancySearchProvider<VacancySummaryResponse> vacancySearchProvider)
+        public CheckVacancySearch(IVacancySearchProvider<ApprenticeshipSummaryResponse> vacancySearchProvider)
         {
             _vacancySearchProvider = vacancySearchProvider;
         }

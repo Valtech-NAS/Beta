@@ -1,38 +1,32 @@
-﻿@model ApprenticeshipSearchViewModel
+﻿@model TraineeshipSearchViewModel
 @{
-    ViewBag.Title = "Apprenticeships - Find an apprenticeship";
+    ViewBag.Title = "Apprenticeships - Find an traineeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="hgroup">
-    <h1 class="heading-xlarge">Find an apprenticeship</h1>
-    <p class="subtitle">Search and apply for an apprenticeship in England</p>
+    <h1 class="heading-xlarge">Find a traineeship</h1>
+    <p class="subtitle">Search and apply for a traineeship in England</p>
 </div>
 <div class="grid-wrapper">
 
     <div class="grid-wrapper controls-3-4">
         <section class="grid grid-2-3">
-            @using (Html.BeginRouteForm(CandidateRouteNames.ApprenticeshipResults, FormMethod.Get, new { @id = "#searchForm" }))
+            @using (Html.BeginRouteForm(CandidateRouteNames.TraineeshipResults, FormMethod.Get, new { @id = "#searchForm" }))
             {
                 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-                @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new { autofocus = "autofocus", aria_describedby = "keywordsHint" })
-                <p class="visuallyhidden" id="keywordsHint">Try words that describe the type of apprenticeship you want, for example “carpentry” or “mechanics”.</p>
                 @Html.FormTextFor(m => m.Location)
-
-                <div class="form-group">
-                    <label for="loc-within" class="form-label">Within</label>
-                    @Html.DropDownListFor(m => m.WithinDistance, (SelectList)ViewBag.Distances, new { @id = "loc-within", @name = "WithinDistance" })
-                </div>
 
                 <div class="form-group">
                     <button class="button" id="search-button">Search</button>
                 </div>
 
+                @Html.HiddenFor(m => m.WithinDistance);
+                @Html.HiddenFor(m => m.SortType);
                 @Html.HiddenFor(m => m.Latitude)
                 @Html.HiddenFor(m => m.Longitude)
                 @Html.Hidden("Hash", Model.LatLonLocHash())
-                @Html.HiddenFor(m => m.LocationType)
                 @Html.HiddenFor(m=> m.ResultsPerPage);
             }
         </section>
@@ -46,7 +40,7 @@
                     </ul>
                     <ul class="list-text">
                         <li>
-                            <a href="@Url.RouteUrl(CandidateRouteNames.Helpdesk)">About apprenticeships</a>
+                            <a href="@Url.RouteUrl(CandidateRouteNames.Helpdesk)">About traineeships</a>
                         </li>
                     </ul>
                 </div>

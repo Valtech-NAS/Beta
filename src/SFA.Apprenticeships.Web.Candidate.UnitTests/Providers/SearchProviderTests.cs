@@ -19,21 +19,25 @@
     public class SearchProviderTests
     {
         private Mock<ILocationSearchService> _locationSearchService;
-        private Mock<IVacancySearchService> _vacancySearchService;
+        private Mock<IVacancySearchService<ApprenticeshipSummaryResponse>> _apprenticeshipSearchService;
+        private Mock<IVacancySearchService<TraineeshipSummaryResponse>> _traineeshipSearchService;
         private Mock<IAddressSearchService> _addressSearchService;
         private Mock<IPerformanceCounterService> _performanceCounterService;
 
-        private ApprenticeshipCandidateWebMappers _mapper;
+        private ApprenticeshipCandidateWebMappers _apprenticeshipMapper;
+        private TraineeshipCandidateWebMappers _traineeeshipMapper;
         
         [SetUp]
         public void Setup()
         {
             _locationSearchService = new Mock<ILocationSearchService>();
-            _vacancySearchService = new Mock<IVacancySearchService>();
+            _apprenticeshipSearchService = new Mock<IVacancySearchService<ApprenticeshipSummaryResponse>>();
+            _traineeshipSearchService = new Mock<IVacancySearchService<TraineeshipSummaryResponse>>();
             _addressSearchService = new Mock<IAddressSearchService>();
             _performanceCounterService = new Mock<IPerformanceCounterService>();
             
-            _mapper = new ApprenticeshipCandidateWebMappers();
+            _apprenticeshipMapper = new ApprenticeshipCandidateWebMappers();
+            _traineeeshipMapper = new TraineeshipCandidateWebMappers();
         }
 
         [TestCase]
@@ -46,8 +50,14 @@
 
             _locationSearchService.Setup(x => x.FindLocation("Location1")).Returns(locations);
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object,
-                _addressSearchService.Object, _mapper, _performanceCounterService.Object);
+            var searchProvider = new SearchProvider(_locationSearchService.Object, 
+                _apprenticeshipSearchService.Object,
+                _traineeshipSearchService.Object,
+                _addressSearchService.Object, 
+                _apprenticeshipMapper, 
+                _traineeeshipMapper,
+                _performanceCounterService.Object);
+
             var results = searchProvider.FindLocation("Location1");
             var result = results.Locations.First();
 
@@ -62,8 +72,14 @@
             _locationSearchService.Setup(x => x.FindLocation(It.IsAny<string>()))
                 .Returns(default(IEnumerable<Location>));
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object,
-                _addressSearchService.Object, _mapper, _performanceCounterService.Object);
+            var searchProvider = new SearchProvider(_locationSearchService.Object,
+                _apprenticeshipSearchService.Object,
+                _traineeshipSearchService.Object,
+                _addressSearchService.Object,
+                _apprenticeshipMapper,
+                _traineeeshipMapper,
+                _performanceCounterService.Object);
+
             var results = searchProvider.FindLocation(string.Empty);
 
             results.Locations.Should().BeEmpty();
@@ -74,18 +90,18 @@
         {
             const int pageSize = 10;
             var results = new 
-                SearchResults<VacancySummaryResponse>(100, 1, new List<VacancySummaryResponse>
+                SearchResults<ApprenticeshipSummaryResponse>(100, 1, new List<ApprenticeshipSummaryResponse>
             {
-                new VacancySummaryResponse
+                new ApprenticeshipSummaryResponse
                 {
                     VacancyLocationType = VacancyLocationType.National
                 }
             });
 
-            _vacancySearchService.Setup(
+            _apprenticeshipSearchService.Setup(
                 x => x.Search(It.IsAny<SearchParameters>())).Returns(results);          
 
-            var search = new VacancySearchViewModel
+            var search = new ApprenticeshipSearchViewModel
             {
                 Location = "Test",
                 Longitude = 0d,
@@ -96,8 +112,14 @@
                 LocationType = VacancyLocationType.National
             };
 
-            var searchProvider = new SearchProvider(_locationSearchService.Object, _vacancySearchService.Object,
-                _addressSearchService.Object, _mapper, _performanceCounterService.Object);
+            var searchProvider = new SearchProvider(_locationSearchService.Object,
+                _apprenticeshipSearchService.Object,
+                _traineeshipSearchService.Object,
+                _addressSearchService.Object,
+                _apprenticeshipMapper,
+                _traineeeshipMapper,
+                _performanceCounterService.Object);
+
             var test = searchProvider.FindVacancies(search);
 
             test.Should().NotBeNull();

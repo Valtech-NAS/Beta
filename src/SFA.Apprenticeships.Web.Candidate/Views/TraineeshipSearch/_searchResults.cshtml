@@ -1,15 +1,13 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
-@model ApprenticeshipSearchResponseViewModel
+﻿@model TraineeshipSearchResponseViewModel
 
-@if (Model.TotalLocalHits > 0 || Model.TotalNationalHits > 0)
+@if (Model.TotalHits > 0 )
 {
-    var disableSortDropdownList = string.IsNullOrEmpty(Model.VacancySearch.Keywords) && Model.VacancySearch.LocationType == VacancyLocationType.National ? true : false;
     <fieldset>
         <legend class="visuallyhidden">Search items</legend>
         <div class="float-right-wrap">
             <div class="form-group form-group-compound">
                 <label for="sort-results" class="heading-medium inline">Sort results</label>
-                @Html.DropDownList("sortType", (SelectList)ViewBag.SortTypes, disableSortDropdownList ? new { @id = "sort-results", @disabled = "disabled" } as object : new { @id = "sort-results" })
+                @Html.DropDownList("sortType", (SelectList)ViewBag.SortTypes, new { @id = "sort-results" })
                 <noscript>
                     <button class="button show-nojs" name="SearchAction" value="Sort">Sort</button>
                 </noscript>
@@ -24,7 +22,7 @@
         var itemPosition = 1 + (Model.PageSize * Model.PrevPage);
         foreach (var vacancy in Model.Vacancies)
         {
-            var webTrendItemPositionTracker = "Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/apprenticeships/results/itemposition/" + vacancy.Id + "', 'WT.dl', '99', 'WT.ti', 'Apprenticeships Search – Item Position Clicked', 'DCSext.ipos', '" + itemPosition + "'] })";
+            var webTrendItemPositionTracker = "Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/traineeships/results/itemposition/" + vacancy.Id + "', 'WT.dl', '99', 'WT.ti', 'Traineeships Search – Item Position Clicked', 'DCSext.ipos', '" + itemPosition + "'] })";
             <li class="search-results__item section-border">
                 <div class="hgroup-medium">
                     <h2 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker })</h2>
@@ -32,19 +30,8 @@
                 </div>
                 <p>@vacancy.Description</p>
                 <ul class="list-text no-btm-margin">
-
-                    @if (vacancy.VacancyLocationType == VacancyLocationType.NonNational)
-                    {
-                        <li><b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles</li>
-                    }
-
+                    <li><b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles</li>
                     <li><b>Closing date:</b> <span class="closing-date-value">@Html.DisplayFor(m => vacancy.ClosingDate, "Date")</span></li>
-
-                    @if (vacancy.VacancyLocationType == VacancyLocationType.National)
-                    {
-                        <li>This apprenticeship has multiple positions nationwide.</li>
-                    }
-
                 </ul>
             </li>
             itemPosition++;
@@ -54,7 +41,7 @@
 
 @{ Html.RenderPartial("_pagination", Model); }
 
-@if (Model.TotalLocalHits > 5)
+@if (Model.TotalHits > 5)
 {
 <div class="form-group">
     <label for="results-per-page" class="heading-small inline">Display results</label>

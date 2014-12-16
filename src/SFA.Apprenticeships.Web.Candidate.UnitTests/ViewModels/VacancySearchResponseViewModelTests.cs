@@ -15,9 +15,9 @@
         [TestCase(105, 10, 11)]
         public void ShouldReturnTheNumberOfPagesGivenThePageSize(int hits, int pageSize, int expected)
         {
-            var test = new VacancySearchResponseViewModel
+            var test = new ApprenticeshipSearchResponseViewModel
             {
-                VacancySearch = new VacancySearchViewModel {LocationType = VacancyLocationType.NonNational},
+                VacancySearch = new ApprenticeshipSearchViewModel {LocationType = VacancyLocationType.NonNational},
                 TotalLocalHits = hits,
                 PageSize = pageSize
             };
@@ -29,11 +29,11 @@
         [TestCase(11, 11)]
         public void ShouldReturnNextPageNUmberGivenStartPage(int startPage, int expected)
         {
-            var test = new VacancySearchResponseViewModel
+            var test = new ApprenticeshipSearchResponseViewModel
             {
                 TotalLocalHits = 101,
                 PageSize = 10,
-                VacancySearch = new VacancySearchViewModel { PageNumber = startPage, LocationType = VacancyLocationType.NonNational }
+                VacancySearch = new ApprenticeshipSearchViewModel { PageNumber = startPage, LocationType = VacancyLocationType.NonNational }
             };
 
             test.NextPage.Should().Be(expected);
@@ -42,7 +42,7 @@
         [TestCase()]
         public void ShouldReturnNextPageIfNoStartPage()
         {
-            var test = new VacancySearchResponseViewModel
+            var test = new ApprenticeshipSearchResponseViewModel
             {
                 TotalLocalHits = 101,
                 PageSize = 10
@@ -54,7 +54,7 @@
         [TestCase(11, 10)]
         public void ShouldReturnPrevPageNUmberGivenStartPage(int startPage, int expected)
         {
-            var test = new VacancySearchResponseViewModel { TotalLocalHits = 101, PageSize = 10, VacancySearch = new VacancySearchViewModel { PageNumber = startPage, LocationType = VacancyLocationType.NonNational } };
+            var test = new ApprenticeshipSearchResponseViewModel { TotalLocalHits = 101, PageSize = 10, VacancySearch = new ApprenticeshipSearchViewModel { PageNumber = startPage, LocationType = VacancyLocationType.NonNational } };
 
             test.PrevPage.Should().Be(expected);
         }
@@ -62,11 +62,11 @@
         [TestCase()]
         public void ShouldReturnPrevPageIfNoStartPage()
         {
-            var test = new VacancySearchResponseViewModel
+            var test = new ApprenticeshipSearchResponseViewModel
             {
                 TotalLocalHits = 101,
                 PageSize = 10,
-                VacancySearch = new VacancySearchViewModel {LocationType = VacancyLocationType.NonNational}
+                VacancySearch = new ApprenticeshipSearchViewModel {LocationType = VacancyLocationType.NonNational}
             };
             test.PrevPage.Should().Be(0);
         }

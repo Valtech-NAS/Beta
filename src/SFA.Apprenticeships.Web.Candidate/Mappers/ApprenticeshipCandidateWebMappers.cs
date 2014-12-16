@@ -19,10 +19,10 @@
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>()
-                .ConvertUsing<SearchResultsResolver>();
+            Mapper.CreateMap<SearchResults<ApprenticeshipSummaryResponse>, ApprenticeshipSearchResponseViewModel>()
+                .ConvertUsing<ApprenticeshipSearchResultsResolver>();
 
-            Mapper.CreateMap<VacancySearchViewModel, Location>()
+            Mapper.CreateMap<ApprenticeshipSearchViewModel, Location>()
                 .ConvertUsing<LocationResolver>();
 
             Mapper.CreateMap<Location, LocationViewModel>()
@@ -71,7 +71,7 @@
                 .ForMember(d => d.ViewModelMessage,
                         opt => opt.Ignore());
 
-            Mapper.CreateMap<VacancySummaryResponse, VacancySummaryViewModel>();
+            Mapper.CreateMap<ApprenticeshipSummaryResponse, VacancySummaryViewModel>();
             
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<AddressViewModel, Address>();

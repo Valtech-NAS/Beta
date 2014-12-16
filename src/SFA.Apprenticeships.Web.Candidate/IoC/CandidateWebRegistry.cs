@@ -32,7 +32,8 @@
 
             // services (app)
             For<ILocationSearchService>().Use<LocationSearchService>();
-            For<IVacancySearchService>().Use<VacancySearchService>();
+            For<IVacancySearchService<ApprenticeshipSummaryResponse>>().Use<VacancySearchService<ApprenticeshipSummaryResponse>>();
+            For<IVacancySearchService<TraineeshipSummaryResponse>>().Use<VacancySearchService<TraineeshipSummaryResponse>>();
 
             For<ICandidateService>().Use<CandidateService>();
             For<IActivateCandidateStrategy>().Use<QueuedLegacyActivateCandidateStrategy>();
@@ -94,7 +95,12 @@
 
             // Apprenticeship providers (web)
             For<IMapper>().Singleton().Use<ApprenticeshipCandidateWebMappers>().Name = "ApprenticeshipCandidateWebMappers";
-            For<ISearchProvider>().Use<SearchProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
+            For<IMapper>().Singleton().Use<TraineeshipCandidateWebMappers>().Name = "TraineeshipCandidateWebMappers";
+
+            For<ISearchProvider>().Use<SearchProvider>()
+                .Ctor<IMapper>("apprenticeshipSearchMapper").Named("ApprenticeshipCandidateWebMappers")
+                .Ctor<IMapper>("traineeshipSearchMapper").Named("TraineeshipCandidateWebMappers"); 
+            
             For<IVacancyDetailProvider>().Use<VacancyDetailProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<IApprenticeshipApplicationProvider>().Use<ApprenticeshipApplicationProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<IAccountProvider>().Use<AccountProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");

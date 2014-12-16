@@ -124,7 +124,7 @@
     <Compile Include="Vacancies\IVacancyDataService.cs" />
     <Compile Include="Vacancies\IVacancySearchService.cs" />
     <Compile Include="Vacancies\TraineeshipSummaryResponse.cs" />
-    <Compile Include="Vacancies\VacancySummaryResponse.cs" />
+    <Compile Include="Vacancies\ApprenticeshipSummaryResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
