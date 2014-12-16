@@ -425,6 +425,7 @@
     <Compile Include="App_Start\WebApiConfig.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Attributes\TraineeshipsToggle.cs" />
     <Compile Include="Attributes\SiteRootRedirect.cs" />
     <Compile Include="Attributes\ApplyWebTrendsAttribute.cs" />
     <Compile Include="Attributes\AuthorizeCandidateAttribute.cs" />
