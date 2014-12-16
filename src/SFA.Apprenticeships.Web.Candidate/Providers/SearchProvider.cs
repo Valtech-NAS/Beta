@@ -28,20 +28,26 @@
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IAddressSearchService _addressSearchService;
         private readonly ILocationSearchService _locationSearchService;
-        private readonly IMapper _mapper;
-        private readonly IVacancySearchService _vacancySearchService;
+        private readonly IMapper _apprenticeshipSearchMapper;
+        private readonly IMapper _traineeshipSearchMapper;
+        private readonly IVacancySearchService<ApprenticeshipSummaryResponse> _apprenticeshipSearchService;
+        private readonly IVacancySearchService<TraineeshipSummaryResponse> _traineeshipSearchService;
         private readonly IPerformanceCounterService _performanceCounterService;
 
         public SearchProvider(ILocationSearchService locationSearchService,
-            IVacancySearchService vacancySearchService,
+            IVacancySearchService<ApprenticeshipSummaryResponse> apprenticeshipSearchService,
+            IVacancySearchService<TraineeshipSummaryResponse> traineeshipSearchService,
             IAddressSearchService addressSearchService,
-            IMapper mapper, 
+            IMapper apprenticeshipSearchMapper,
+            IMapper traineeshipSearchMapper, 
             IPerformanceCounterService performanceCounterService)
         {
             _locationSearchService = locationSearchService;
-            _vacancySearchService = vacancySearchService;
+            _apprenticeshipSearchService = apprenticeshipSearchService;
+            _traineeshipSearchService = traineeshipSearchService;
             _addressSearchService = addressSearchService;
-            _mapper = mapper;
+            _apprenticeshipSearchMapper = apprenticeshipSearchMapper;
+            _traineeshipSearchMapper = traineeshipSearchMapper;
             _performanceCounterService = performanceCounterService;
         }
 
@@ -60,7 +66,7 @@
                 }
 
                 return new LocationsViewModel(
-                    _mapper.Map<IEnumerable<Location>, IEnumerable<LocationViewModel>>(locations));
+                    _apprenticeshipSearchMapper.Map<IEnumerable<Location>, IEnumerable<LocationViewModel>>(locations));
             }
             catch (CustomException e)
             {
@@ -90,11 +96,11 @@
             }
         }
 
-        public VacancySearchResponseViewModel FindVacancies(VacancySearchViewModel search)
+        public ApprenticeshipSearchResponseViewModel FindVacancies(ApprenticeshipSearchViewModel search)
         {
-            Logger.Debug("Calling SearchProvider to find vacancies.");
+            Logger.Debug("Calling SearchProvider to find apprenticeship vacancies.");
 
-            var searchLocation = _mapper.Map<VacancySearchViewModel, Location>(search);
+            var searchLocation = _apprenticeshipSearchMapper.Map<ApprenticeshipSearchViewModel, Location>(search);
 
             try
             {
@@ -102,25 +108,25 @@
 
                 if (IsANewSearch(search))
                 {
-                    IncrementVacancySearchPerformanceCounter();    
+                    IncrementVacancySearchPerformanceCounter();
                 }
 
                 var nationalResults =
                     results[0].Results.Any(x => x.VacancyLocationType == VacancyLocationType.National)
                     ? results[0]
-                    : results[1].Results.Any(x => x.VacancyLocationType == VacancyLocationType.National) ? results[1] : new SearchResults<VacancySummaryResponse>(0, 1, null);
+                    : results[1].Results.Any(x => x.VacancyLocationType == VacancyLocationType.National) ? results[1] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null);
 
                 var nonNationalResults = 
                     results[1].Results.Any(x => x.VacancyLocationType == VacancyLocationType.NonNational) 
                     ? results[1]
-                    : results[0].Results.Any(x => x.VacancyLocationType == VacancyLocationType.NonNational) ? results[0] : new SearchResults<VacancySummaryResponse>(0, 1, null);
+                    : results[0].Results.Any(x => x.VacancyLocationType == VacancyLocationType.NonNational) ? results[0] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null);
 
                 var nationalResponse =
-                    _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(
+                    _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse>, ApprenticeshipSearchResponseViewModel>(
                         nationalResults);
 
                 var nonNationlResponse =
-                    _mapper.Map<SearchResults<VacancySummaryResponse>, VacancySearchResponseViewModel>(
+                    _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse>, ApprenticeshipSearchResponseViewModel>(
                         nonNationalResults);
 
                 if (search.LocationType == VacancyLocationType.NonNational)
@@ -154,14 +160,63 @@
             catch (CustomException ex)
             {
 // ReSharper disable once FormatStringProblem
-                Logger.Error("Find vacancies failed. Check inner details for more info", ex);
-                return new VacancySearchResponseViewModel(VacancySearchResultsPageMessages.VacancySearchFailed);
+                Logger.Error("Find apprenticeship vacancies failed. Check inner details for more info", ex);
+                return new ApprenticeshipSearchResponseViewModel(VacancySearchResultsPageMessages.VacancySearchFailed);
             }
             catch (Exception e)
             {
-                Logger.Error("Find vacancies failed. Check inner details for more info", e);
+                Logger.Error("Find apprenticeship vacancies failed. Check inner details for more info", e);
                 throw;
             }
+        }
+
+        public TraineeshipSearchResponseViewModel FindVacancies(TraineeshipSearchViewModel search)
+        {
+            Logger.Debug("Calling SearchProvider to find traineeship vacancies.");
+
+            var searchLocation = _traineeshipSearchMapper.Map<TraineeshipSearchViewModel, Location>(search);
+
+            try
+            {
+                var searchRequest = new SearchParameters
+                {
+                    Location = searchLocation,
+                    PageNumber = search.PageNumber,
+                    PageSize = search.ResultsPerPage,
+                    SearchRadius = search.WithinDistance,
+                    SortType = search.SortType,
+                    VacancyLocationType = VacancyLocationType.NonNational
+                };
+
+                var searchResults = _traineeshipSearchService.Search(searchRequest);
+
+                if (IsANewSearch(search))
+                {
+                    IncrementVacancySearchPerformanceCounter();
+                }
+
+                var searchResponse =
+                    _traineeshipSearchMapper.Map<SearchResults<TraineeshipSummaryResponse>, TraineeshipSearchResponseViewModel>(
+                        searchResults);
+
+                searchResponse.TotalHits = searchResults.Total;
+                searchResponse.PageSize = search.ResultsPerPage;
+                searchResponse.VacancySearch = search;
+
+                return searchResponse;
+            }
+            catch (CustomException ex)
+            {
+                // ReSharper disable once FormatStringProblem
+                Logger.Error("Find traineeship vacancies failed. Check inner details for more info", ex);
+                return new TraineeshipSearchResponseViewModel(VacancySearchResultsPageMessages.VacancySearchFailed);
+            }
+            catch (Exception e)
+            {
+                Logger.Error("Find traineeship vacancies failed. Check inner details for more info", e);
+                throw;
+            }
+
         }
 
         public bool IsValidPostcode(string postcode)
@@ -189,7 +244,7 @@
             try
             {
                 IEnumerable<Address> addresses = _addressSearchService.FindAddress(postcode).OrderBy(x => x.Uprn);
-                addressSearchViewModel.Addresses = _mapper.Map<IEnumerable<Address>, IEnumerable<AddressViewModel>>(addresses);
+                addressSearchViewModel.Addresses = _apprenticeshipSearchMapper.Map<IEnumerable<Address>, IEnumerable<AddressViewModel>>(addresses);
             }
             catch (CustomException e)
             {
@@ -208,8 +263,8 @@
             return addressSearchViewModel;
         }
 
-        private SearchResults<VacancySummaryResponse>[] ProcessNationalAndNonNationalSearches(
-            VacancySearchViewModel search, Location searchLocation)
+        private SearchResults<ApprenticeshipSummaryResponse>[] ProcessNationalAndNonNationalSearches(
+            ApprenticeshipSearchViewModel search, Location searchLocation)
         {
             var searchparameters = new List<SearchParameters>
             {
@@ -235,11 +290,11 @@
                 }
             };
 
-            var resultCollection = new ConcurrentBag<SearchResults<VacancySummaryResponse>>();
+            var resultCollection = new ConcurrentBag<SearchResults<ApprenticeshipSummaryResponse>>();
             Parallel.ForEach(searchparameters,
                 parameters =>
                 {
-                    var searchResults = _vacancySearchService.Search(parameters);
+                    var searchResults = _apprenticeshipSearchService.Search(parameters);
                     resultCollection.Add(searchResults);
                 });
 

@@ -10,7 +10,7 @@
         public VacancySearchRegistry()
         {
             For<SearchConfiguration>().Singleton().Use(SearchConfiguration.Instance);
-            For<IVacancySearchProvider<VacancySummaryResponse>>().Use<ApprenticeshipsSearchProvider>();
+            For<IVacancySearchProvider<ApprenticeshipSummaryResponse>>().Use<ApprenticeshipsSearchProvider>();
             For<IVacancySearchProvider<TraineeshipSummaryResponse>>().Use<TraineeshipsSearchProvider>();
         }
     }

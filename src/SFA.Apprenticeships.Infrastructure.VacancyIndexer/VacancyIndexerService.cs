@@ -130,7 +130,7 @@
             var client = _elasticsearchClientFactory.GetElasticClient();
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (TDestinationSummary));
 
-            var search = client.Search<VacancySummaryResponse>(s =>
+            var search = client.Search<ApprenticeshipSummaryResponse>(s =>
             {
                 s.Index(newIndexName);
                 s.Type(documentTypeName);

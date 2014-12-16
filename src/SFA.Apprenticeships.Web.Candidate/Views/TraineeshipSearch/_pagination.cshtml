@@ -1,12 +1,12 @@
-﻿@model ApprenticeshipSearchResponseViewModel
+﻿@model TraineeshipSearchResponseViewModel
 
 @{
     var pages = Model.Pages;
-    var prevLink = Model.VacancySearch.PageNumber > 1 ? Url.Action("results", new ApprenticeshipSearchViewModel(Model.VacancySearch) {PageNumber = Model.PrevPage, LocationType = Model.VacancySearch.LocationType, SearchAction = SearchAction.Sort}) : "#";
-    var nextLink = Model.VacancySearch.PageNumber < pages ? Url.Action("results", new ApprenticeshipSearchViewModel(Model.VacancySearch) { PageNumber = Model.NextPage, LocationType = Model.VacancySearch.LocationType, SearchAction = SearchAction.Sort }) : "#";
+    var prevLink = Model.VacancySearch.PageNumber > 1 ? Url.Action("results", new TraineeshipSearchViewModel(Model.VacancySearch) {PageNumber = Model.PrevPage, SearchAction = SearchAction.Sort}) : "#";
+    var nextLink = Model.VacancySearch.PageNumber < pages ? Url.Action("results", new TraineeshipSearchViewModel(Model.VacancySearch) { PageNumber = Model.NextPage, SearchAction = SearchAction.Sort }) : "#";
 }
 
-@if (Model.TotalLocalHits > 0 || Model.TotalNationalHits > 0 )
+@if (Model.TotalHits > 0)
 {
     <div class="page-navigation">
         <a href="@prevLink"

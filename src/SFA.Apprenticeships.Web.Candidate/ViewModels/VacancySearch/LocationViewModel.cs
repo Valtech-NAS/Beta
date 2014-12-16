@@ -7,7 +7,7 @@
     {
         public LocationViewModel() { }
 
-        public LocationViewModel(VacancySearchViewModel model)
+        public LocationViewModel(ApprenticeshipSearchViewModel model)
         {
             if (model != null)
             {

@@ -12,7 +12,7 @@
     using Newtonsoft.Json.Linq;
     using NLog;
 
-    public class ApprenticeshipsSearchProvider : IVacancySearchProvider<VacancySummaryResponse>
+    public class ApprenticeshipsSearchProvider : IVacancySearchProvider<ApprenticeshipSummaryResponse>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
@@ -25,7 +25,7 @@
             _searchConfiguration = searchConfiguration;
         }
 
-        public SearchResults<VacancySummaryResponse> FindVacancies(SearchParameters parameters)
+        public SearchResults<ApprenticeshipSummaryResponse> FindVacancies(SearchParameters parameters)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (ApprenticeshipSummary));
@@ -63,20 +63,20 @@
 
             Logger.Debug("{0} search results returned", search.Total);
 
-            var results = new SearchResults<VacancySummaryResponse>(search.Total, parameters.PageNumber, responses);
+            var results = new SearchResults<ApprenticeshipSummaryResponse>(search.Total, parameters.PageNumber, responses);
 
             return results;
         }
 
-        private ISearchResponse<VacancySummaryResponse> PerformNationalSearch(SearchParameters parameters, ElasticClient client, string indexName, string documentTypeName)
+        private ISearchResponse<ApprenticeshipSummaryResponse> PerformNationalSearch(SearchParameters parameters, ElasticClient client, string indexName, string documentTypeName)
         {
             throw new System.NotImplementedException();
         }
 
-        private ISearchResponse<VacancySummaryResponse> PerformSearch(SearchParameters parameters, ElasticClient client, string indexName,
+        private ISearchResponse<ApprenticeshipSummaryResponse> PerformSearch(SearchParameters parameters, ElasticClient client, string indexName,
             string documentTypeName)
         {
-            var search = client.Search<VacancySummaryResponse>(s =>
+            var search = client.Search<ApprenticeshipSummaryResponse>(s =>
             {
                 s.Index(indexName);
                 s.Type(documentTypeName);
@@ -214,7 +214,7 @@
             return queryContainer;
         }
 
-        private static void BuildFieldQuery(MatchQueryDescriptor<VacancySummaryResponse> queryDescriptor,
+        private static void BuildFieldQuery(MatchQueryDescriptor<ApprenticeshipSummaryResponse> queryDescriptor,
             ISearchTermFactorsConfiguration searchFactors)
         {
             if (searchFactors.Boost.HasValue)

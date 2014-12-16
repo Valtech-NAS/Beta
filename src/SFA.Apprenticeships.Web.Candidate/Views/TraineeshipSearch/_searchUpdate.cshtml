@@ -1,4 +1,4 @@
-﻿@model ApprenticeshipSearchViewModel
+﻿@model TraineeshipSearchViewModel
 
 <section class="grid grid-1-3">
     <fieldset class="search-filter">
@@ -6,7 +6,6 @@
         <legend class="heading-medium mob-collpanel-trigger" id="editSearchToggle">Edit search</legend>
         <div class="mob-collpanel toggle-content--mob" id="editSearchPanel">
 
-            @Html.FormTextFor(m => m.Keywords, hintText: "")
             @Html.FormTextFor(m => m.Location, hintText: "")
             
             @if (ViewBag.LocationSearches != null && ViewBag.LocationSearches.Length > 0)

@@ -2,7 +2,6 @@
 {
     using System;
     using System.Globalization;
-    using Common.Models.Common;
     using Domain.Entities.Vacancies;
     using Locations;
 

@@ -76,19 +76,6 @@
 
                 s.TrackScores();
 
-                s.Query(q =>
-                {
-                    QueryContainer queryVacancyLocation = null;
-                    QueryContainer query = null;
-
-                    queryVacancyLocation =
-                        q.Match(
-                            m => m.OnField(f => f.VacancyLocationType).Query(parameters.VacancyLocationType.ToString()));
-                    query = query && queryVacancyLocation;
-
-                    return query;
-                });
-
                 switch (parameters.SortType)
                 {
                     case VacancySortType.Distance:

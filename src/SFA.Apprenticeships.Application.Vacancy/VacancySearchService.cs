@@ -3,12 +3,14 @@
     using System;
     using CuttingEdge.Conditions;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Vacancies;
     using Interfaces.Search;
     using Interfaces.Vacancies;
     using NLog;
     using ErrorCodes = Interfaces.Vacancies.ErrorCodes;
 
-    public class VacancySearchService : IVacancySearchService
+    public class VacancySearchService<TVacancySummaryResponse> : IVacancySearchService<TVacancySummaryResponse>
+        where TVacancySummaryResponse : VacancySummary
     {
         private const string MessageFormat =
             "Keywords:{0}, Location:{1}, PageNumber:{2}, PageSize{3}, SearchRadius:{4}, SortType:{5}, LocationType:{6}";
@@ -20,14 +22,14 @@
             "Vacancy search failed for the following parameters; " + MessageFormat;
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IVacancySearchProvider<VacancySummaryResponse> _vacancySearchProvider;
+        private readonly IVacancySearchProvider<TVacancySummaryResponse> _vacancySearchProvider;
 
-        public VacancySearchService(IVacancySearchProvider<VacancySummaryResponse> vacancySearchProvider)
+        public VacancySearchService(IVacancySearchProvider<TVacancySummaryResponse> vacancySearchProvider)
         {
             _vacancySearchProvider = vacancySearchProvider;
         }
 
-        public SearchResults<VacancySummaryResponse> Search(SearchParameters parameters)
+        public SearchResults<TVacancySummaryResponse> Search(SearchParameters parameters)
         {
             Condition.Requires(parameters).IsNotNull();
             Condition.Requires(parameters.SearchRadius).IsGreaterOrEqual(0);

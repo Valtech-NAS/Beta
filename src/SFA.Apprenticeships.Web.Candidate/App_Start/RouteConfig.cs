@@ -111,9 +111,9 @@
                 );
 
             routes.MapRoute(
-                name: CandidateRouteNames.TraineeshipSearch,
+                name: CandidateRouteNames.TraineeshipResults,
                 url: "traineeships/search",
-                defaults: new { controller = "TraineeshipSearch", action = "Search" }
+                defaults: new { controller = "TraineeshipSearch", action = "Results" }
                 );
 
             routes.MapRoute(

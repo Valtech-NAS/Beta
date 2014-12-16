@@ -66,7 +66,7 @@
             if (vacancyDetail.ClosingDate < DateTime.Today.ToUniversalTime())
             {
                 // Vacancy has expired.
-                Logger.Debug("Vacancy has expired. Returning null.");
+                Logger.Info("Vacancy ({0}) closing date has expired. Returning null.", vacancyId);
                 return null;
             }
 

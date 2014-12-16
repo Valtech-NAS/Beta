@@ -2,8 +2,7 @@
 {
     using Domain.Entities.Vacancies.Apprenticeships;
 
-    //TODO: Rename to ApprenticeshipSummaryResponse.
-    public class VacancySummaryResponse : ApprenticeshipSummary
+    public class ApprenticeshipSummaryResponse : ApprenticeshipSummary
     {
         public double Distance { get; set; }
 

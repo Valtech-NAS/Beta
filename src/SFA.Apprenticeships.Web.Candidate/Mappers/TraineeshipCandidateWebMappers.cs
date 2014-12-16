@@ -1,24 +1,31 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers
 {
-    using SFA.Apprenticeships.Application.Interfaces.Search;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancies;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Domain.Entities.Candidates;
-    using SFA.Apprenticeships.Domain.Entities.Locations;
-    using SFA.Apprenticeships.Domain.Entities.Users;
-    using SFA.Apprenticeships.Domain.Entities.Vacancies;
-    using SFA.Apprenticeships.Infrastructure.Common.Mappers;
-    using SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Account;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Locations;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using Application.Interfaces.Search;
+    using Domain.Entities.Locations;
+    using Domain.Entities.Vacancies;
+    using Application.Interfaces.Vacancies;
+    using Domain.Entities.Applications;
+    using Infrastructure.Common.Mappers;
+    using Resolvers;
+    using ViewModels.Locations;
+    using ViewModels.VacancySearch;
+    using ViewModels.Applications;
 
     public class TraineeshipCandidateWebMappers : MapperEngine
     {
         public override void Initialise()
         {
+            Mapper.CreateMap<SearchResults<TraineeshipSummaryResponse>, TraineeshipSearchResponseViewModel>()
+                .ConvertUsing<TraineeshipSearchResultsResolver>();
+
+            Mapper.CreateMap<TraineeshipSummaryResponse, VacancySummaryViewModel>();
+
+            Mapper.CreateMap<TraineeshipSearchViewModel, Location>()
+                .ConvertUsing<LocationResolver>();
+
+            Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
+            Mapper.CreateMap<GeoPointViewModel, GeoPoint>();
+
             Mapper.CreateMap<VacancyDetail, VacancyDetailViewModel>()
                 .ForMember(d => d.EmployerName,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
@@ -53,13 +60,13 @@
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.IsWellFormedUrlResolver>()
                         .FromMember(src => src.EmployerWebsite))
                 .ForMember(d => d.VacancyType,
-                        opt => opt.Ignore())
+                    opt => opt.Ignore())
                 .ForMember(d => d.CandidateApplicationStatus,
-                        opt => opt.Ignore())
+                    opt => opt.Ignore())
                 .ForMember(d => d.DateApplied,
-                        opt => opt.Ignore())
+                    opt => opt.Ignore())
                 .ForMember(d => d.ViewModelMessage,
-                        opt => opt.Ignore());
+                    opt => opt.Ignore());
 
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<AddressViewModel, Address>();

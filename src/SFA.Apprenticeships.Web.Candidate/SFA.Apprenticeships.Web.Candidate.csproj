@@ -355,6 +355,11 @@
     <Content Include="Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml" />
     <Content Include="Views\TraineeshipApplication\EditorTemplates\EmployerQuestionAnswersViewModel.cshtml" />
     <Content Include="Views\TraineeshipApplication\WhatHappensNext.cshtml" />
+    <Content Include="Views\TraineeshipSearch\Index.cshtml" />
+    <Content Include="Views\TraineeshipSearch\Results.cshtml" />
+    <Content Include="Views\TraineeshipSearch\_searchResults.cshtml" />
+    <Content Include="Views\TraineeshipSearch\_pagination.cshtml" />
+    <Content Include="Views\TraineeshipSearch\_searchUpdate.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -425,6 +430,7 @@
     <Compile Include="App_Start\WebApiConfig.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Attributes\TraineeshipsToggle.cs" />
     <Compile Include="Attributes\SiteRootRedirect.cs" />
     <Compile Include="Attributes\ApplyWebTrendsAttribute.cs" />
     <Compile Include="Attributes\AuthorizeCandidateAttribute.cs" />
@@ -442,6 +448,7 @@
     <Compile Include="Constants\Pages\VacancySearchResultsPageMessages.cs" />
     <Compile Include="Constants\ViewModels\AddressSearchResult.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\TraineeshipSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ActivationCodeMessages.cs" />
     <Compile Include="Constants\ViewModels\ForgottenPasswordViewModelMessages.cs" />
@@ -459,6 +466,7 @@
     <Compile Include="Constants\ViewModels\ViewModelStates.cs" />
     <Compile Include="Constants\ViewModels\WorkExperienceViewModelMessages.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
+    <Compile Include="Controllers\VacancySearchController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
@@ -476,6 +484,7 @@
     <Compile Include="Helpers\AutoSaveDateTimeHelper.cs" />
     <Compile Include="Helpers\PreviewExtensions.cs" />
     <Compile Include="IoC\CandidateWebRegistry.cs" />
+    <Compile Include="Mappers\Resolvers\TraineeshipSearchResultsResolver.cs" />
     <Compile Include="Mappers\TraineeshipCandidateWebMappers.cs" />
     <Compile Include="Mappers\Helpers\ApplicationConverter.cs" />
     <Compile Include="Mappers\Resolvers\TraineeshipApplicationViewModelToTraineeshipApplicationDetailResolver.cs" />
@@ -487,9 +496,9 @@
     <Compile Include="Mappers\ApprenticeshipCandidateWebMappers.cs" />
     <Compile Include="Constants\ViewModels\AboutYouViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerQuestionAnswersViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\VacancySearchViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\ApprenticeshipSearchViewModelMessages.cs" />
     <Compile Include="Mappers\Resolvers\LocationResolver.cs" />
-    <Compile Include="Mappers\Resolvers\SearchResultsResolver.cs" />
+    <Compile Include="Mappers\Resolvers\ApprenticeshipSearchResultsResolver.cs" />
     <Compile Include="Mappers\Resolvers\SettingsViewModelResolvers.cs" />
     <Compile Include="Mappers\Resolvers\VacancyDetailViewModelResolvers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -508,6 +517,7 @@
     <Compile Include="Providers\VacancyDetailProvider.cs" />
     <Compile Include="Validators\AddressViewModelValidator.cs" />
     <Compile Include="Validators\ActivationViewModelValidator.cs" />
+    <Compile Include="Validators\TraineeshipSearchViewModelValidator.cs" />
     <Compile Include="Validators\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\ApprenticeshipViewModelValidator.cs" />
@@ -524,7 +534,7 @@
     <Compile Include="Validators\AboutYouViewModelClientValidator.cs" />
     <Compile Include="Validators\SettingsViewModelValidator.cs" />
     <Compile Include="Validators\TraineeshipViewModelValidator.cs" />
-    <Compile Include="Validators\VacancySearchViewModelValidator.cs" />
+    <Compile Include="Validators\ApprenticeshipSearchViewModelValidator.cs" />
     <Compile Include="Validators\Helpers\ValidatorsHelper.cs" />
     <Compile Include="Validators\WorkExperienceViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SettingsViewModel.cs" />
@@ -555,11 +565,14 @@
     <Compile Include="ViewModels\Register\ActivationViewModel.cs" />
     <Compile Include="ViewModels\Register\PasswordResetViewModel.cs" />
     <Compile Include="ViewModels\Register\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\TraineeshipSearchResponseViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\TraineeshipSearchViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\VacancySearchViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationsViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\LocationViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancyDetailViewModel.cs" />
-    <Compile Include="ViewModels\VacancySearch\VacancySearchResponseViewModel.cs" />
-    <Compile Include="ViewModels\VacancySearch\VacancySearchViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\ApprenticeshipSearchResponseViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\ApprenticeshipSearchViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>

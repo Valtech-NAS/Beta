@@ -17,6 +17,7 @@
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Models.Application;
 
+    [TraineeshipsToggle]
     public class TraineeshipApplicationController : CandidateControllerBase
     {
         private readonly ITraineeshipApplicationProvider _traineeshipApplicationProvider;
@@ -62,7 +63,7 @@
             return await Task.Run<ActionResult>(() =>
             {
                 model = StripApplicationViewModelBeforeValidation(model);
-                
+
                 var submittedApplicationModel =
                     _traineeshipApplicationProvider.SubmitApplication(UserContext.CandidateId, id);
 
@@ -98,7 +99,7 @@
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyQualificationRows")]
         [ApplyWebTrends]
         [ValidateInput(false)]
-        public async Task<ActionResult> AddEmptyQualificationRows(int id, ApprenticheshipApplicationViewModel model)
+        public async Task<ActionResult> AddEmptyQualificationRows(int id, TraineeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {

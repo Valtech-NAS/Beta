@@ -1,24 +1,23 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
-    using System.ComponentModel.DataAnnotations;
     using Application.Interfaces.Vacancies;
-    using Constants.ViewModels;
-    using Domain.Entities.Vacancies;
-    using FluentValidation.Attributes;
-    using Validators;
+    
+    public enum SearchAction
+    {
+        Search,
+        Sort
+    }
 
-    [Validator(typeof (VacancySearchViewModelClientValidator))]
-    public class VacancySearchViewModel
+    public abstract class VacancySearchViewModel
     {
         private int _pageNumber = 1;
 
-        public VacancySearchViewModel() 
+        protected VacancySearchViewModel() 
         {
         }
 
-        public VacancySearchViewModel(VacancySearchViewModel viewModel)
+        protected VacancySearchViewModel(VacancySearchViewModel viewModel)
         {
-            Keywords = viewModel.Keywords;
             Location = viewModel.Location;
             Longitude = viewModel.Longitude;
             Latitude = viewModel.Latitude;
@@ -29,11 +28,7 @@
             ResultsPerPage = viewModel.ResultsPerPage;
         }
 
-        [Display(Name = VacancySearchViewModelMessages.KeywordMessages.LabelText, Description = VacancySearchViewModelMessages.KeywordMessages.HintText)]
-        public string Keywords { get; set; }
-
-        [Display(Name = VacancySearchViewModelMessages.LocationMessages.LabelText, Description = VacancySearchViewModelMessages.LocationMessages.HintText)]
-        public string Location { get; set; }
+        public abstract string Location { get; set; }
 
         public double? Longitude { get; set; }
 
@@ -74,16 +69,8 @@
             }
         }
 
-        public VacancyLocationType LocationType { get; set; }
-
         public SearchAction SearchAction { get; set; }
 
         public int ResultsPerPage { get; set; }
-    }
-
-    public enum SearchAction
-    {
-        Search,
-        Sort
     }
 }
