@@ -326,7 +326,7 @@
             var metadata = ModelMetadata.FromLambdaExpression(expression, helper.ViewData);
 
             var tag = new TagBuilder("span");
-            tag.Attributes.Add("class", "form-hint maxchar-count");
+            tag.Attributes.Add("class", "form-hint maxchar-count alwayshidden");
 
             // TODO: NOTIMPL: This needs to be calculated dyamically either by refelction from from the generated HTML of the control.
             tag.SetInnerText("4000");
