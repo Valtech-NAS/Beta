@@ -46,6 +46,25 @@
     {
         @Scripts.Render("~/Content/_assets/js/webtrends/webtrends.stub.js")
     }
+
+    @if (ViewBag.EnableSessionTimeout != null && ViewBag.EnableSessionTimeout == true)
+    {
+        <script>
+            var sessionTimeout;
+            function resetSessionTimeout() {
+                clearTimeout(sessionTimeout);
+                sessionTimeout = setTimeout(onSessionTimeout, @ViewBag.SessionTimeout * 1000);
+            }
+            resetSessionTimeout();
+
+            function onSessionTimeout() {
+                window.location = "@ViewBag.SessionTimeoutUrl";
+            }
+        </script>
+        <noscript>
+            <meta http-equiv="refresh" content="@string.Format("{0};{1}", ViewBag.SessionTimeout, ViewBag.SessionTimeoutUrl)">
+        </noscript>
+    }
 </head>
 <body>
     @if (ViewBag.ShowEuCookieDirective == true)

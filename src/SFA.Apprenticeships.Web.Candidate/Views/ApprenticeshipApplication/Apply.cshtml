@@ -112,29 +112,34 @@
 
     function timeout_trigger() {
 
-        Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", "/apprenticeship/apply/autosavedraft/@Model.VacancyId", "WT.dl", "99", "WT.ti", "Apprenticeship – Auto Save Draft Form"] });
-        var request = $.ajax({
-            type: "POST",
-            url: '@Url.Action("AutoSave","ApprenticeshipApplication", new { id = Model.VacancyId })',
-            data: $("#application-form").serialize()
-        });
+        if(dirtyFormDialog.isFormDirty("form"))
+        {
+            Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", "/apprenticeship/apply/autosavedraft/@Model.VacancyId", "WT.dl", "99", "WT.ti", "Apprenticeship – Auto Save Draft Form"] });
+            var request = $.ajax({
+                type: "POST",
+                url: '@Url.Action("AutoSave","ApprenticeshipApplication", new { id = Model.VacancyId })',
+                data: $("#application-form").serialize()
+            });
 
-        request.done(function(result) {
+            request.done(function(result) {
 
-            if (result.Status == "succeeded") {
-                var savedMessage = 'Last saved at ' + result.DateTimeMessage + ' to ' + '<a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" title="My Applications">my applications</a>';
-                $("p.autosave").html(savedMessage);
+                if (result.Status == "succeeded") {
+                    var savedMessage = 'Last saved at ' + result.DateTimeMessage + ' to ' + '<a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" title="My Applications">my applications</a>';
+                    $("p.autosave").html(savedMessage);
 
-                dirtyFormDialog.resetDirtyForm({
-                    formSelector: "form"
-                });
-            }
+                    dirtyFormDialog.resetDirtyForm({
+                        formSelector: "form"
+                    });
 
-        });
+                    document.resetSessionTimeout();
+                }
 
-        request.fail(function(jqXHR, textStatus) {
+            });
 
-        });
+            request.fail(function(jqXHR, textStatus) {
+
+            });
+        }
 
         timeout_reset();
     }

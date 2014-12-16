@@ -36,10 +36,16 @@
                 {
                     // They are logged in, set the timeout.
                     AddMetaRefreshTimeout(filterContext);
+
+                    // Additionally refresh the authentication ticket to extend the session is appropriate.
+                    controller.AuthenticationTicketService.RefreshTicket(filterContext.Controller.ControllerContext.HttpContext);
+                }
+                else
+                {
+                    filterContext.Controller.ViewBag.EnableSessionTimeout = false;
                 }
             }
 
-            controller.AuthenticationTicketService.RefreshTicket(filterContext.Controller.ControllerContext.HttpContext);
             base.OnActionExecuted(filterContext);
         }
 
@@ -49,7 +55,9 @@
             var returnUrl = request != null && request.Url != null ? request.Url.PathAndQuery : "/";
             var helper = new UrlHelper(filterContext.RequestContext);
             var sessionTimeoutUrl = helper.Action("SessionTimeout", "Login", new { ReturnUrl = returnUrl });
-            filterContext.RequestContext.HttpContext.Response.AppendHeader("Refresh", FormsAuthentication.Timeout.TotalSeconds + ";url=" + sessionTimeoutUrl);
+            filterContext.Controller.ViewBag.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds;
+            filterContext.Controller.ViewBag.SessionTimeoutUrl = sessionTimeoutUrl;
+            filterContext.Controller.ViewBag.EnableSessionTimeout = true;
         }
     }
 }
