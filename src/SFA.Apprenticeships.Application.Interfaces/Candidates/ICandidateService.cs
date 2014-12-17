@@ -32,7 +32,7 @@
 
         void SaveApplication(Guid candidateId, int vacancyId, ApprenticeshipApplicationDetail apprenticeshipApplication);
 
-        IList<ApplicationSummary> GetApplications(Guid candidateId);
+        IList<ApprenticeshipApplicationSummary> GetApplications(Guid candidateId);
 
         void SubmitApplication(Guid candidateId, int vacancyId);
 

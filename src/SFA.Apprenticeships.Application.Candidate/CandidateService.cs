@@ -233,7 +233,7 @@
             _saveApplicationStrategy.SaveApplication(apprenticeshipApplication);
         }
 
-        public IList<ApplicationSummary> GetApplications(Guid candidateId)
+        public IList<ApprenticeshipApplicationSummary> GetApplications(Guid candidateId)
         {
             Condition.Requires(candidateId);
 

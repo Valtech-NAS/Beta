@@ -97,6 +97,7 @@
     <Compile Include="Locations\IAddressSearchProvider.cs" />
     <Compile Include="Messaging\BaseRequest.cs" />
     <Compile Include="Messaging\CreateCandidateRequest.cs" />
+    <Compile Include="Messaging\SubmitTraineeshipApplicationRequest.cs" />
     <Compile Include="Messaging\SubmitApplicationRequest.cs" />
     <Compile Include="Messaging\CandidateMessageTypes.cs" />
     <Compile Include="Messaging\CommunicationTokens.cs" />

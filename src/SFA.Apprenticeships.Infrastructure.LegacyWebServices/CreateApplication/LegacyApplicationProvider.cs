@@ -44,7 +44,7 @@
 
             CreateApplicationResponse response = null;
 
-            Logger.Debug("Calling Legacy.CreateApplication for candidate '{0}' and vacancy '{1}'",
+            Logger.Debug("Calling Legacy.CreateApplication for candidate '{0}' and apprenticeship vacancy '{1}'",
                 apprenticeshipApplicationDetail.CandidateId,
                 apprenticeshipApplicationDetail.Vacancy.Id);
 
@@ -57,27 +57,15 @@
 
             if (response != null)
             {
-                if (response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.DuplicateApplication))
-                {
-                    var warnMessage = string.Format("Duplicate application for candidate '{0}' and vacancy '{1}'",
-                        apprenticeshipApplicationDetail.Vacancy.Id, 
-                        apprenticeshipApplicationDetail.EntityId);
-
-                    Logger.Warn(warnMessage);
-
-                    throw new CustomException(warnMessage, ErrorCodes.ApplicationDuplicatedError);
-                }
-
+                CheckDuplicateError(apprenticeshipApplicationDetail, apprenticeshipApplicationDetail.Vacancy.Id, response);
                 CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.InvalidCandidateState, ErrorCodes.LegacyCandidateStateError);
-
                 CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.CandidateNotFound, ErrorCodes.LegacyCandidateNotFoundError);
                 CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.UnknownCandidate, ErrorCodes.LegacyCandidateNotFoundError);
-
                 CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.InvalidVacancyState, ErrorCodes.LegacyVacancyStateError);
 
                 var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
-                Logger.Error("Legacy CreateApplication reported {0} validation error(s): {1}",
+                Logger.Error("Legacy CreateApplication for apprenticeship reported {0} validation error(s): {1}",
                     response.ValidationErrors.Count(),
                     responseAsJson);
             }
@@ -93,15 +81,73 @@
                     ErrorCodes.ApplicationGatewayCreationError);
         }
 
-        private static void CheckValidationErrors(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail, CreateApplicationResponse response, string validationErrorCode, string errorCode)
+        public int CreateApplication(TraineeshipApplicationDetail traineeshipApplicationDetail)
+        {
+            var candidate = _candidateReadRepository.Get(traineeshipApplicationDetail.CandidateId);
+            var legacyRequest = MapApplicationToLegacyRequest(traineeshipApplicationDetail, candidate);
+
+            CreateApplicationResponse response = null;
+
+            Logger.Debug("Calling Legacy.CreateApplication for candidate '{0}' and traineeship vacancy '{1}'",
+                traineeshipApplicationDetail.CandidateId,
+                traineeshipApplicationDetail.Vacancy.Id);
+
+            _service.Use("SecureService", client => response = client.CreateApplication(legacyRequest));
+
+            if (response != null && (response.ValidationErrors == null || !response.ValidationErrors.Any()))
+            {
+                return response.ApplicationId;
+            }
+
+            if (response != null)
+            {
+                CheckDuplicateError(traineeshipApplicationDetail, traineeshipApplicationDetail.Vacancy.Id, response);
+                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.InvalidCandidateState, ErrorCodes.LegacyCandidateStateError);
+                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.CandidateNotFound, ErrorCodes.LegacyCandidateNotFoundError);
+                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.UnknownCandidate, ErrorCodes.LegacyCandidateNotFoundError);
+                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.InvalidVacancyState, ErrorCodes.LegacyVacancyStateError);
+
+                var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
+
+                Logger.Error("Legacy CreateApplication for traineeship reported {0} validation error(s): {1}",
+                    response.ValidationErrors.Count(),
+                    responseAsJson);
+            }
+            else
+            {
+                Logger.Error("Legacy.CreateApplication did not respond");
+            }
+
+            throw new CustomException(
+                string.Format("Failed to create traineeship application for candidate '{0}' and vacancy '{1}' in Legacy.CreateApplication",
+                    traineeshipApplicationDetail.CandidateId,
+                    traineeshipApplicationDetail.Vacancy.Id),
+                    ErrorCodes.ApplicationGatewayCreationError);
+        }
+
+        private static void CheckDuplicateError(ApplicationDetail applicationDetail,
+            int vacancyId, CreateApplicationResponse response)
+        {
+            if (response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.DuplicateApplication))
+            {
+                var warnMessage = string.Format("Duplicate application for candidate '{0}' and vacancy '{1}'",
+                    applicationDetail.CandidateId, vacancyId);
+
+                Logger.Warn(warnMessage);
+
+                throw new CustomException(warnMessage, ErrorCodes.ApplicationDuplicatedError);
+            }
+        }
+
+        private static void CheckValidationErrors(ApplicationDetail apprenticeshipApplicationDetail, CreateApplicationResponse response, string validationErrorCode, string errorCode)
         {
             if (response.ValidationErrors.Any(e => e.ErrorCode == validationErrorCode))
             {
                 var validationError = response.ValidationErrors
                     .First(e => e.ErrorCode == validationErrorCode);
 
-                var warnMessage = string.Format("Unable to create apprenticeship application {0} for candidate {1} in legacy system: \"{2}\".",
-                    apprenticeshipApplicationDetail.Vacancy.Id, apprenticeshipApplicationDetail.CandidateId, validationError.Message);
+                var warnMessage = string.Format("Unable to create application {0} for candidate {1} in legacy system: \"{2}\".",
+                    apprenticeshipApplicationDetail.EntityId, apprenticeshipApplicationDetail.CandidateId, validationError.Message);
 
                 Logger.Warn(warnMessage);
 
@@ -125,10 +171,30 @@
                     WorkExperiences = MapWorkExperience(apprenticeshipApplicationDetail.CandidateInformation.WorkExperience),
                     AdditionalQuestion1Answer = apprenticeshipApplicationDetail.AdditionalQuestion1Answer ?? string.Empty,
                     AdditionalQuestion2Answer = apprenticeshipApplicationDetail.AdditionalQuestion2Answer ?? string.Empty,
-                    Strengths = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.Strengths ?? String.Empty,
-                    Improvements = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.Improvements ?? String.Empty,
-                    HobbiesAndInterests = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.HobbiesAndInterests ?? String.Empty,
-                    InterviewSupport = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.Support ?? String.Empty
+                    Strengths = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.Strengths ?? string.Empty,
+                    Improvements = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.Improvements ?? string.Empty,
+                    HobbiesAndInterests = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.HobbiesAndInterests ?? string.Empty,
+                    InterviewSupport = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.Support ?? string.Empty
+                }
+            };
+        }
+
+        private static CreateApplicationRequest MapApplicationToLegacyRequest(
+            TraineeshipApplicationDetail traineeshipApplicationDetail,
+            Domain.Entities.Candidates.Candidate candidate)
+        {
+            return new CreateApplicationRequest
+            {
+                Application = new Application
+                {
+                    VacancyId = traineeshipApplicationDetail.Vacancy.Id,
+                    VacancyRef = null, // not required if VacancyId is supplied.
+                    CandidateId = candidate.LegacyCandidateId,
+                    School = MapSchool(traineeshipApplicationDetail),
+                    EducationResults = MapQualifications(traineeshipApplicationDetail.CandidateInformation.Qualifications),
+                    WorkExperiences = MapWorkExperience(traineeshipApplicationDetail.CandidateInformation.WorkExperience),
+                    AdditionalQuestion1Answer = traineeshipApplicationDetail.AdditionalQuestion1Answer ?? string.Empty,
+                    AdditionalQuestion2Answer = traineeshipApplicationDetail.AdditionalQuestion2Answer ?? string.Empty
                 }
             };
         }
@@ -148,6 +214,18 @@
                 Town = null,
                 AttendedFrom = MapYearToDate(educationHistory.FromYear),
                 AttendedTo = MapYearToDate(educationHistory.ToYear)
+            };
+        }
+
+        private static School MapSchool(TraineeshipApplicationDetail traineeshipApplicationDetail)
+        {
+            var fakeAttendanceYear = MapYearToDate(2000);
+
+            return new School
+            {
+                Name = "Bash St",
+                AttendedFrom = fakeAttendanceYear,
+                AttendedTo = fakeAttendanceYear
             };
         }
 

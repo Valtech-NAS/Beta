@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Applications.IoC
 {
-    using System;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Mappers;
@@ -10,16 +9,29 @@
     {
         public ApplicationRepositoryRegistry()
         {
-            For<IMapper>().Use<ApplicationMappers>().Name = "ApplicationDetailMapper";
+            // Apprenticeships.
+            For<IMapper>().Use<ApprenticeshipApplicationMappers>().Name = "ApplicationDetailMapper";
 
-            For<IApplicationWriteRepository>().Use<ApplicationRepository>()
+            For<IApplicationWriteRepository>().Use<ApprenticeshipApplicationRepository>()
                 .Ctor<IMapper>()
                 .Named("ApplicationDetailMapper");
 
             For<IApplicationReadRepository>()
-                .Use<ApplicationRepository>()
+                .Use<ApprenticeshipApplicationRepository>()
                 .Ctor<IMapper>()
                 .Named("ApplicationDetailMapper");
+
+            // Traineeships.
+            For<IMapper>().Use<TraineeshipApplicationMappers>().Name = "TraineeshipApplicationDetailMapper";
+
+            For<ITraineeshipApplicationWriteRepository>().Use<TraineeshipApplicationRepository>()
+                .Ctor<IMapper>()
+                .Named("TraineeshipApplicationDetailMapper");
+
+            For<ITraineeshipApplicationReadRepository>()
+                .Use<TraineeshipApplicationRepository>()
+                .Ctor<IMapper>()
+                .Named("TraineeshipApplicationDetailMapper");
         }
     }
 }

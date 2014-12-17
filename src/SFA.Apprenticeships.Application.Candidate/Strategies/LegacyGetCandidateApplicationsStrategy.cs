@@ -29,7 +29,7 @@
             _applicationReadRepository = applicationReadRepository;
         }
 
-        public IList<ApplicationSummary> GetApplications(Guid candidateId)
+        public IList<ApprenticeshipApplicationSummary> GetApplications(Guid candidateId)
         {
             // try to get the latest status of apps for the specified candidate from legacy
             try

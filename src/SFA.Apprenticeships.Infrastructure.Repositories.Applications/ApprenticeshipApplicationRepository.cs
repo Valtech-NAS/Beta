@@ -14,14 +14,14 @@
     using MongoDB.Driver.Linq;
     using NLog;
 
-    public class ApplicationRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApplicationReadRepository,
+    public class ApprenticeshipApplicationRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApplicationReadRepository,
         IApplicationWriteRepository
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IMapper _mapper;
 
-        public ApplicationRepository(
+        public ApprenticeshipApplicationRepository(
             IConfigurationManager configurationManager,
             IMapper mapper)
             : base(configurationManager, "Applications.mongoDB", "applications")
@@ -88,10 +88,11 @@
             return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipApplicationDetail, ApprenticeshipApplicationDetail>(mongoEntity);
         }
 
-        public IList<ApplicationSummary> GetForCandidate(Guid candidateId)
+        public IList<ApprenticeshipApplicationSummary> GetForCandidate(Guid candidateId)
         {
             Logger.Debug("Calling repository to get ApplicationSummary list for candidate with Id={0}", candidateId);
-            // Get apprenticeshipApplication summaries for the specified candidate, excluding any that are archived.
+            
+            // Get apprenticeship application summaries for the specified candidate, excluding any that are archived.
             var mongoApplicationDetailsList = Collection
                 .AsQueryable()
                 .Where(each => each.CandidateId == candidateId)
@@ -102,7 +103,7 @@
             Logger.Debug("Mapping MongoApprenticeshipApplicationDetail items to ApplicationSummary list for candidate with Id={0}", candidateId);
 
             var applicationDetailsList = _mapper
-                .Map<MongoApprenticeshipApplicationDetail[], IEnumerable<ApplicationSummary>>(mongoApplicationDetailsList)
+                .Map<MongoApprenticeshipApplicationDetail[], IEnumerable<ApprenticeshipApplicationSummary>>(mongoApplicationDetailsList)
                 .ToList();
 
             Logger.Debug("{0} ApplicationSummary items returned for candidate with Id={1}", applicationDetailsList.Count(), candidateId);
@@ -150,25 +151,24 @@
 
         public void ExpireOrWithdrawForCandidate(Guid candidateId, int vacancyId)
         {
-            Logger.Debug("Calling repository to expire or withdraw apprenticeshipApplication for candidate with Id={0} and VacancyId={1}", candidateId, vacancyId);
+            Logger.Debug("Calling repository to expire or withdraw apprenticeship application for candidate with Id={0} and VacancyId={1}", candidateId, vacancyId);
 
             var applicationDetail = GetForCandidate(
                 candidateId, each => each.Vacancy.Id == vacancyId);
 
             if (applicationDetail == null)
             {
-                Logger.Debug("Application to be expired or withdrawn was not found for CandidateId={0}, VacancyId={1}", candidateId, vacancyId);
-
+                Logger.Debug("Apprenticeship application to be expired or withdrawn was not found for CandidateId={0}, VacancyId={1}", candidateId, vacancyId);
                 return;
             }
 
-            Logger.Debug("Found apprenticeshipApplication to be expired or withdrawn with Id={0}, Status={1}", applicationDetail.EntityId, applicationDetail.Status);
+            Logger.Debug("Found apprenticeship application to be expired or withdrawn with Id={0}, Status={1}", applicationDetail.EntityId, applicationDetail.Status);
 
             applicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;
 
             Save(applicationDetail);
 
-            Logger.Debug("Saved expired or withdrawn apprenticeshipApplication for candidate with Id={0} and VacancyId={1}", applicationDetail.CandidateId, vacancyId);
+            Logger.Debug("Saved expired or withdrawn apprenticeship application for candidate with Id={0} and VacancyId={1}", applicationDetail.CandidateId, vacancyId);
         }
     }
 }

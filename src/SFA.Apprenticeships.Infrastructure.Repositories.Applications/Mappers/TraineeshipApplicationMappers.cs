@@ -4,7 +4,7 @@
     using Domain.Entities.Applications;
     using Entities;
 
-    public class ApplicationMappers : MapperEngine
+    public class TraineeshipApplicationMappers : MapperEngine
     {
         public override void Initialise()
         {
@@ -14,18 +14,17 @@
 
         private void InitialiseApplicationDetailMappers()
         {
-            Mapper.CreateMap<ApprenticeshipApplicationDetail, MongoApprenticeshipApplicationDetail>();
-            Mapper.CreateMap<MongoApprenticeshipApplicationDetail, ApprenticeshipApplicationDetail>();
+            Mapper.CreateMap<TraineeshipApplicationDetail, MongoTraineeshipApplicationDetail>();
+            Mapper.CreateMap<MongoTraineeshipApplicationDetail, TraineeshipApplicationDetail>();
         }
 
         private void InitialiseApplicationSummaryMappers()
         {
-            Mapper.CreateMap<MongoApprenticeshipApplicationDetail, ApplicationSummary>()
+            Mapper.CreateMap<MongoTraineeshipApplicationDetail, TraineeshipApplicationSummary>()
                 .ForMember(x => x.ApplicationId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(x => x.LegacyVacancyId, opt => opt.MapFrom(src => src.Vacancy.Id))
                 .ForMember(x => x.Title, opt => opt.MapFrom(src => src.Vacancy.Title))
                 .ForMember(x => x.EmployerName, opt => opt.MapFrom(src => src.Vacancy.EmployerName))
-                .ForMember(x => x.Status, opt => opt.MapFrom(src => src.Status))
                 .ForMember(x => x.ClosingDate, opt => opt.MapFrom(src => src.Vacancy.ClosingDate))
                 .ForMember(x => x.IsArchived, opt => opt.MapFrom(src => src.IsArchived))
                 .ForMember(x => x.DateUpdated, opt => opt.MapFrom(src => src.DateUpdated))

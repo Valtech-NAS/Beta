@@ -6,11 +6,11 @@
 
     public interface IApplicationReadRepository : IReadRepository<ApprenticeshipApplicationDetail>
     {
-        ApprenticeshipApplicationDetail Get(Guid id, bool errerrorIfNotFound);
+        ApprenticeshipApplicationDetail Get(Guid id, bool errorIfNotFound);
 
         ApprenticeshipApplicationDetail Get(int legacyApplicationId);
 
-        IList<ApplicationSummary> GetForCandidate(Guid candidateId);
+        IList<ApprenticeshipApplicationSummary> GetForCandidate(Guid candidateId);
 
         ApprenticeshipApplicationDetail GetForCandidate(Guid candidateId, Func<ApprenticeshipApplicationDetail, bool> filter);
     }

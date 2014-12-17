@@ -168,6 +168,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Consumers\CreateCandidateRequestConsumerAsync.cs" />
+    <Compile Include="Consumers\SubmitTraineeshipApplicationRequestConsumerAsync.cs" />
     <Compile Include="Consumers\SubmitApplicationRequestConsumerAsync.cs" />
     <Compile Include="Consumers\EmailRequestConsumerAsync.cs" />
     <Compile Include="IoC\AsyncProcessorRegistry.cs" />

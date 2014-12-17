@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class ApplicationSummary
+    public abstract class ApplicationSummary
     {
         public Guid ApplicationId { get; set; }
 
@@ -12,8 +12,6 @@
 
         public string EmployerName { get; set; }
 
-        public ApplicationStatuses Status { get; set; }
-
         public DateTime ClosingDate { get; set; }
 
         public bool IsArchived { get; set; }
@@ -21,7 +19,5 @@
         public DateTime DateUpdated { get; set; }
 
         public DateTime? DateApplied { get; set; }
-
-        public string UnsuccessfulReason { get; set; }
     }
 }

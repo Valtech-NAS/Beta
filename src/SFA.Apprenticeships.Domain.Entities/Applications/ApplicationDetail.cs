@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Applications
 {
     using System;
-    using SFA.Apprenticeships.Domain.Entities.Candidates;
-    using SFA.Apprenticeships.Domain.Entities.Users;
+    using Candidates;
+    using Users;
 
     public abstract class ApplicationDetail : BaseEntity
     {

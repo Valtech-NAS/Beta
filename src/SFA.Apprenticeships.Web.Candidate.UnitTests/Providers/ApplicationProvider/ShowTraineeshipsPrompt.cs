@@ -83,10 +83,10 @@
             results.ShouldShowTraineeshipsPrompt.Should().BeFalse();
         }
 
-        private static List<ApplicationSummary> GetApplicationSummaries(int applicationSummariesCount)
+        private static List<ApprenticeshipApplicationSummary> GetApplicationSummaries(int applicationSummariesCount)
         {
             return Enumerable.Range(1, applicationSummariesCount)
-                .Select(i => new ApplicationSummary {Status = ApplicationStatuses.Unsuccessful})
+                .Select(i => new ApprenticeshipApplicationSummary {Status = ApplicationStatuses.Unsuccessful})
                 .ToList();
         }
     }

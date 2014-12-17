@@ -4,7 +4,7 @@
     using Domain.Entities.Applications;
     using MongoDB.Bson.Serialization.Attributes;
 
-    public class MongoTraineeshipApplicationDetail : TraineeshipApplicationDetail
+    public class MongoApprenticeshipApplicationDetail : ApprenticeshipApplicationDetail
     {
         [BsonId]
         public Guid Id

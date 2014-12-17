@@ -91,9 +91,11 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Applications\ApplicationHelper.cs" />
+    <Compile Include="Applications\ApprenticeshipApplicationHelper.cs" />
     <Compile Include="Applications\ApplicationStatusSummary.cs" />
+    <Compile Include="Applications\TraineeshipApplicationSummary.cs" />
     <Compile Include="Applications\ApplicationSummary.cs" />
+    <Compile Include="Applications\ApprenticeshipApplicationSummary.cs" />
     <Compile Include="Applications\ApplicationDetail.cs" />
     <Compile Include="Applications\TraineeshipApplicationDetail.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationDetail.cs" />

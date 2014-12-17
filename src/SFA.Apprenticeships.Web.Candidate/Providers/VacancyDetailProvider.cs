@@ -90,7 +90,7 @@
             }
         }
 
-        private ApplicationSummary GetCandidateApplication(Guid candidateId, int vacancyId)
+        private ApprenticeshipApplicationSummary GetCandidateApplication(Guid candidateId, int vacancyId)
         {
             return _candidateService
                 .GetApplications(candidateId)

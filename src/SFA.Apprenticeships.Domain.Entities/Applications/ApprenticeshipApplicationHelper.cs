@@ -4,7 +4,7 @@
     using Exceptions;
     using System.Linq;
 
-    public static class ApplicationHelper
+    public static class ApprenticeshipApplicationHelper
     {
         public static void AssertState(this ApprenticeshipApplicationDetail apprenticeshipApplicationDetail, string errorMessage, params ApplicationStatuses[] allowedUserStatuses)
         {
@@ -12,8 +12,8 @@
             {
                 var expectedStatuses = string.Join(", ", allowedUserStatuses);
                 var message = string.Format("Application in invalid state for '{0}' (id: {1}, current: {2}, expected: '{3}')", 
-                    errorMessage, 
-                    apprenticeshipApplicationDetail.EntityId, 
+                    errorMessage,
+                    apprenticeshipApplicationDetail.EntityId,
                     apprenticeshipApplicationDetail.Status,
                     expectedStatuses);
 
@@ -31,7 +31,7 @@
         {
             apprenticeshipApplicationDetail.Status = ApplicationStatuses.Submitted;
         }
-        
+
         public static void SetStateExpiredOrWithdrawn(this ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
         {
             apprenticeshipApplicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;

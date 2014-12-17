@@ -103,6 +103,7 @@
     <Compile Include="Caching\BaseCacheKey.cs" />
     <Compile Include="Caching\ICacheService.cs" />
     <Compile Include="Mapping\IMapper.cs" />
+    <Compile Include="Repositories\ITraineeshipApplicationReadRepository.cs" />
     <Compile Include="Repositories\IApplicationRepository.cs" />
     <Compile Include="Repositories\IAuthenticationRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />

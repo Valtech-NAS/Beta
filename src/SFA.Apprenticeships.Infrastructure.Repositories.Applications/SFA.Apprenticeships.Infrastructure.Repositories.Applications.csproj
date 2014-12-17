@@ -120,10 +120,13 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ApplicationRepository.cs" />
+    <Compile Include="Entities\MongoTraineeshipApplicationDetail.cs" />
+    <Compile Include="Mappers\TraineeshipApplicationMappers.cs" />
+    <Compile Include="TraineeshipApplicationRepository.cs" />
+    <Compile Include="ApprenticeshipApplicationRepository.cs" />
     <Compile Include="Entities\MongoApprenticeshipApplicationDetail.cs" />
     <Compile Include="IoC\ApplicationRepositoryRegistry.cs" />
-    <Compile Include="Mappers\ApplicationMappers.cs" />
+    <Compile Include="Mappers\ApprenticeshipApplicationMappers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
