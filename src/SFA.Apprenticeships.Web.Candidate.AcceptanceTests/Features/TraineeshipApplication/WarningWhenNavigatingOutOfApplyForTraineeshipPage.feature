@@ -15,13 +15,13 @@ Scenario: Selecting No I will remain in the same page
 	When I select the "first" traineeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the TraineeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the TraineeshipApprenticeshipApplicationPage page
+	Then I am on the TraineeshipApplicationPage page
 	When I choose QualificationsYes
 	And I am on QualificationTypeDropdown list item matching criteria
 		| Field | Rule   | Value |
 		| Text  | Equals | GCSE  |
 	And I choose WrappedElement
-	And I am on the TraineeshipApprenticeshipApplicationPage page
+	And I am on the TraineeshipApplicationPage page
 	When I enter data
 		| Field        | Value        |
 		| SubjectYear  | 2012         |
@@ -29,8 +29,8 @@ Scenario: Selecting No I will remain in the same page
 		| SubjectGrade | SubjectGrade |
 	And I choose MyApplicationsLink
 	When I see an alert box and select No
-	When I am on the TraineeshipApprenticeshipApplicationPage page
-	Then I am on the TraineeshipApprenticeshipApplicationPage page
+	When I am on the TraineeshipApplicationPage page
+	Then I am on the TraineeshipApplicationPage page
 	#This is required cleanup for this test. Without it the next test run will fail when reusing the browser
 	When I choose MyApplicationsLink
 	And I see an alert box and select Yes
@@ -41,13 +41,13 @@ Scenario: Selecting yes will redirect me to another page
 	When I select the "first" traineeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the TraineeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the TraineeshipApprenticeshipApplicationPage page
+	Then I am on the TraineeshipApplicationPage page
 	When I choose QualificationsYes
 	And I am on QualificationTypeDropdown list item matching criteria
 		| Field | Rule   | Value |
 		| Text  | Equals | GCSE  |
 	And I choose WrappedElement
-	And I am on the TraineeshipApprenticeshipApplicationPage page
+	And I am on the TraineeshipApplicationPage page
 	When I enter data
 		| Field        | Value        |
 		| SubjectYear  | 2012         |

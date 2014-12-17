@@ -15,7 +15,7 @@ Scenario: As a candidate I would like to apply for a traineeship
 	When I select the "first" traineeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the TraineeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the TraineeshipApprenticeshipApplicationPage page
+	Then I am on the TraineeshipApplicationPage page
 	When I enter employer question data if present
 		| Field                                              | Value |
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
@@ -29,7 +29,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 	When I select the "first" traineeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the TraineeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the TraineeshipApprenticeshipApplicationPage page
+	Then I am on the TraineeshipApplicationPage page
 	When I choose QualificationsYes
 	And I choose SaveQualification
 	Then I see
@@ -39,13 +39,13 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| Field | Rule   | Value |
 		| Text  | Equals | GCSE  |
 	And I choose WrappedElement
-	And I am on the TraineeshipApprenticeshipApplicationPage page
+	And I am on the TraineeshipApplicationPage page
 	When I enter data
 		| Field        | Value        |
 		| SubjectYear  | 2012         |
 		| SubjectName  | SubjectName  |
 		| SubjectGrade | SubjectGrade |
-	And I am on the TraineeshipApprenticeshipApplicationPage page
+	And I am on the TraineeshipApplicationPage page
 	And I choose SaveQualification
 	#Should be removed when it works properly
 	And I choose SaveQualification
@@ -59,7 +59,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| Year    | Equals | 2012         |
 		| Grade   | Equals | SubjectGrade |
 	When I choose RemoveQualificationLink
-	And I am on the TraineeshipApprenticeshipApplicationPage page
+	And I am on the TraineeshipApplicationPage page
 	Then I see
         | Field                 | Rule           | Value |
         | QualificationsSummary | Does Not Exist |       |
@@ -88,7 +88,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| JobTitle   | Equals | WorkTitle    |
 		| MainDuties | Equals | WorkRole     |
 	When I choose RemoveLink
-	And I am on the TraineeshipApprenticeshipApplicationPage page
+	And I am on the TraineeshipApplicationPage page
 	Then I see
         | Field                 | Rule           | Value |
         | WorkExperienceSummary | Does Not Exist |       |
@@ -102,7 +102,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| Field | Rule   | Value |
 		| Text  | Equals | GCSE  |
 	And I choose WrappedElement
-	And I am on the TraineeshipApprenticeshipApplicationPage page
+	And I am on the TraineeshipApplicationPage page
 	And I enter data
 		| Field        | Value        |
 		| SubjectYear  | 2012         |
@@ -118,6 +118,6 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| WorkFromYear | 2011         |
 		| WorkToYear   | 2012         |
 	And I choose SaveWorkExperience
-	When I am on the TraineeshipApprenticeshipApplicationPage page
+	When I am on the TraineeshipApplicationPage page
 	And I choose ApplyButton
 	Then I am on the TraineeshipWhatsNextPage page
