@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
     using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
     using SFA.Apprenticeships.Web.Common.Constants;
@@ -68,7 +67,7 @@
         //TODO Make this the summary info as don't need all details
         //TODO: Keep this here?
         //public CandidateViewModelBase Candidate { get; set; }
-        public ApplicationStatuses Status { get; set; }
+
         public DateTime? DateUpdated { get; set; }
         public int VacancyId { get; set; }
         public bool IsJavascript { get; set; }

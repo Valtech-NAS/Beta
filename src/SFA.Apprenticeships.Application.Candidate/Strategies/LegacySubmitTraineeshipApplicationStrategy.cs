@@ -8,6 +8,7 @@
     using SFA.Apprenticeships.Application.Vacancy;
     using SFA.Apprenticeships.Domain.Entities.Applications;
     using SFA.Apprenticeships.Domain.Entities.Candidates;
+    using SFA.Apprenticeships.Domain.Entities.Exceptions;
     using SFA.Apprenticeships.Domain.Entities.Users;
     using SFA.Apprenticeships.Domain.Entities.Vacancies;
     using SFA.Apprenticeships.Domain.Entities.Vacancies.Traineeships;
@@ -21,16 +22,22 @@
         private readonly ICommunicationService _communicationService;
         private readonly IMessageBus _messageBus;
         private readonly IVacancyDataProvider _vacancyDataProvider;
+        private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
+        private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
 
         public LegacySubmitTraineeshipApplicationStrategy(IMessageBus messageBus,
             ICommunicationService communicationService,
             IVacancyDataProvider vacancyDataProvider,
-            ICandidateReadRepository candidateReadRepository)
+            ICandidateReadRepository candidateReadRepository, 
+            ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository, 
+            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
         {
             _messageBus = messageBus;
             _communicationService = communicationService;
             _vacancyDataProvider = vacancyDataProvider;
             _candidateReadRepository = candidateReadRepository;
+            _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
+            _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
         }
 
         public void SubmitApplication(Guid candidateId, int vacancyId,
@@ -46,43 +53,37 @@
             var candidate = _candidateReadRepository.Get(candidateId);
             var applicationDetail = CreateApplicationDetail(candidate, vacancyDetails);
 
-            // TODO: use the new repo
-            // _applicationWriteRepository.Save(applicationDetail);
+            _traineeshipApplicationWriteRepository.Save(applicationDetail);
         }
 
         public void SubmitApplication(Guid applicationId)
         {
             // TODO: use the new repos
-            //var applicationDetail = _applicationReadRepository.Get(applicationId, true);
+            var applicationDetail = _traineeshipApplicationReadRepository.Get(applicationId, true);
 
-            //applicationDetail.AssertState("Submit apprenticeshipApplication", ApplicationStatuses.Draft);
+            try
+            {
+                PublishMessage(applicationDetail);
+                // NotifyCandidate(applicationDetail.CandidateId, applicationDetail.EntityId.ToString());
+            }
+            catch (Exception ex)
+            {
+                Logger.Debug("SubmitApplicationRequest could not be queued for ApplicationId={0}", applicationId);
 
-            //try
-            //{
-            //    applicationDetail.SetStateSubmitting();
-            //    _applicationWriteRepository.Save(applicationDetail);
-
-            //    PublishMessage(applicationDetail);
-            //    NotifyCandidate(applicationDetail.CandidateId, applicationDetail.EntityId.ToString());
-            //}
-            //catch (Exception ex)
-            //{
-            //    Logger.Debug("SubmitApplicationRequest could not be queued for ApplicationId={0}", applicationId);
-
-            //    throw new CustomException("SubmitApplicationRequest could not be queued", ex,
-            //        ErrorCodes.ApplicationQueuingError);
-            //}
+                throw new CustomException("SubmitApplicationRequest could not be queued", ex,
+                    ErrorCodes.ApplicationQueuingError);
+            }
         }
 
-        private static void PublishMessage(TraineeshipApplicationDetail traineeshipApplicationDetail)
+        private void PublishMessage(TraineeshipApplicationDetail traineeshipApplicationDetail)
         {
             //TODO: use a new message?
-            /*var message = new SubmitApplicationRequest
+            var message = new SubmitTraineeshipApplicationRequest
             {
                 ApplicationId = traineeshipApplicationDetail.EntityId
             };
 
-            _messageBus.PublishMessage(message);*/
+            _messageBus.PublishMessage(message);
         }
 
         private void NotifyCandidate(Guid candidateId, string applicationId)

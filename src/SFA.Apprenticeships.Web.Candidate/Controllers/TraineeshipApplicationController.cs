@@ -36,11 +36,6 @@
             {
                 var model = _traineeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-                //if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
-                //{
-                //    return new VacancyNotFoundResult();
-                //}
-
                 //if (model.HasError())
                 //{
                 //    return RedirectToRoute(CandidateRouteNames.MyApplications);
@@ -71,11 +66,6 @@
 
                 var submittedApplicationModel =
                     _traineeshipApplicationProvider.SubmitApplication(UserContext.CandidateId, id, model);
-
-                if (submittedApplicationModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
-                {
-                    return new VacancyNotFoundResult();
-                }
 
                 if (submittedApplicationModel.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
                 {

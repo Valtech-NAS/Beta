@@ -9,7 +9,6 @@
     using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
     using SFA.Apprenticeships.Web.Common.Models.Application;
-    using ErrorCodes = SFA.Apprenticeships.Domain.Entities.Exceptions.ErrorCodes;
 
     public class TraineeshipApplicationProvider : ITraineeshipApplicationProvider
     {
@@ -17,6 +16,7 @@
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
         private readonly ITraineeshipVacancyDetailProvider _traineeshipVacancyDetailProvider;
+
         public TraineeshipApplicationProvider(IMapper mapper,
             ICandidateService candidateService,
             ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider)
@@ -42,13 +42,6 @@
             }
             catch (CustomException e)
             {
-                //if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
-                //{
-                //    Logger.Info(e.Message, e);
-                //    return new ApprenticheshipApplicationViewModel(MyApplicationsPageMessages.ApplicationInIncorrectState,
-                //        ApplicationViewModelStatus.ApplicationInIncorrectState);
-                //}
-
                 var message =
                     string.Format(
                         "Unhandled custom exception while getting the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
@@ -68,23 +61,23 @@
             }
         }
 
-        public TraineeshipApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId, TraineeshipApplicationViewModel traineeshipApplicationViewModel)
+        public TraineeshipApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId,
+            TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
             Logger.Debug(
                 "Calling TraineeeshipApplicationProvider to submit the traineeships application for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
-            var model = new TraineeshipApplicationViewModel();
-
             try
             {
-                model = GetApplicationViewModel(candidateId, vacancyId);
+                var model = GetApplicationViewModel(candidateId, vacancyId);
 
                 var traineeshipApplicationDetails =
-                    _mapper.Map<TraineeshipApplicationViewModel, TraineeshipApplicationDetail>(traineeshipApplicationViewModel);
-                
+                    _mapper.Map<TraineeshipApplicationViewModel, TraineeshipApplicationDetail>(
+                        traineeshipApplicationViewModel);
+
                 _candidateService.SubmitTraineeshipApplication(candidateId, vacancyId, traineeshipApplicationDetails);
-                
+
                 Logger.Debug("Traineeship application submitted for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
@@ -92,15 +85,6 @@
             }
             catch (CustomException e)
             {
-                if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
-                {
-                    Logger.Info(e.Message, e);
-                    return new TraineeshipApplicationViewModel(ApplicationViewModelStatus.ApplicationInIncorrectState)
-                    {
-                        Status = model.Status
-                    };
-                }
-
                 var message =
                     string.Format(
                         "Unhandled custom exception while submitting the traineeship application for candidate ID: {0}, vacancy ID: {1}.",
@@ -131,11 +115,7 @@
 
             try
             {
-                // var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
-                var applicationDetails = GetDummyApplication();
-                var model =
-                    _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(applicationDetails);
-                var patchedModel = PatchWithVacancyDetail(candidateId, vacancyId, model);
+                var patchedModel = GetApplicationViewModel(candidateId, vacancyId);
 
                 if (patchedModel.HasError())
                 {
@@ -145,8 +125,7 @@
                 return new WhatHappensNextViewModel
                 {
                     VacancyReference = patchedModel.VacancyDetail.VacancyReference,
-                    VacancyTitle = patchedModel.VacancyDetail.Title,
-                    Status = patchedModel.Status
+                    VacancyTitle = patchedModel.VacancyDetail.Title
                 };
             }
             catch (Exception e)
@@ -162,9 +141,11 @@
             }
         }
 
-        public TraineeshipApplicationViewModel PatchApplicationViewModel(Guid candidateId, TraineeshipApplicationViewModel savedModel, TraineeshipApplicationViewModel submittedModel)
+        public TraineeshipApplicationViewModel PatchApplicationViewModel(Guid candidateId,
+            TraineeshipApplicationViewModel savedModel, TraineeshipApplicationViewModel submittedModel)
         {
-            Logger.Debug("Calling ApprenticeshipApplicationProvider to patch the Application View Model for candidate ID: {0}.",
+            Logger.Debug(
+                "Calling ApprenticeshipApplicationProvider to patch the Application View Model for candidate ID: {0}.",
                 candidateId);
 
             try
@@ -192,21 +173,16 @@
             throw new NotImplementedException();
         }
 
-        private static TraineeshipApplicationDetail GetDummyApplication()
-        {
-            return new TraineeshipApplicationDetail();
-        }
-
         private TraineeshipApplicationViewModel PatchWithVacancyDetail(Guid candidateId, int vacancyId,
             TraineeshipApplicationViewModel apprenticheshipApplicationViewModel)
         {
             // TODO: why have a patch method like this? should be done in mapper.
-            var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId,
+                vacancyId);
 
             if (vacancyDetailViewModel == null)
             {
                 apprenticheshipApplicationViewModel.ViewModelMessage = MyApplicationsPageMessages.DraftExpired;
-                apprenticheshipApplicationViewModel.Status = ApplicationStatuses.ExpiredOrWithdrawn;
 
                 return apprenticheshipApplicationViewModel;
             }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Configuration;
+    using SFA.Apprenticeships.Domain.Entities.Applications;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
     using SFA.Apprenticeships.Web.Common.Models.Application;
 
@@ -10,6 +11,8 @@
     {
         //Constants used on application form
         public string AutoSaveTimeInMiutes = ConfigurationManager.AppSettings["AutoSaveTimeInMinutes"];
+
+        public ApplicationStatuses Status { get; set; }
 
         public ApprenticeshipCandidateViewModel Candidate { get; set; }
 
