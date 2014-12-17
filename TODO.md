@@ -19,7 +19,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 ## Service layer ##
 
-- 
+- Lock down providers to "internal", web, application and infrastructure to enforce structural pattern, see [http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute%28v=vs.110%29.aspx](http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute%28v=vs.110%29.aspx) for application providers
 
 ## Infrastructure layer ##
 
