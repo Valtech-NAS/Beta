@@ -235,18 +235,15 @@
                 var distance = UserData.Pop(UserDataItemNames.VacancyDistance);
                 var lastVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
 
-                if (!string.IsNullOrWhiteSpace(distance)
-                    && !string.IsNullOrWhiteSpace(lastVacancyId)
-                    && int.Parse(lastVacancyId) == id)
+                if (HasToPopulateDistance(id, distance, lastVacancyId))
                 {
                     ViewBag.Distance = distance;
                     UserData.Push(UserDataItemNames.VacancyDistance, distance);
                 }
-
-                var urlHelper = new UrlHelper(ControllerContext.RequestContext);
-                var url = urlHelper.RouteUrl(CandidateRouteNames.ApprenticeshipResults, null);
-                if (Request != null && Request.UrlReferrer != null && Request.UrlReferrer.AbsolutePath == url)
+                
+                if (HasToPopulateReturnUrl())
                 {
+// ReSharper disable once PossibleNullReferenceException
                     ViewBag.SearchReturnUrl = Request.UrlReferrer.PathAndQuery;
                 }
 
@@ -254,6 +251,13 @@
 
                 return View(vacancy);
             });
+        }
+
+        private bool HasToPopulateReturnUrl()
+        {
+            var urlHelper = new UrlHelper(ControllerContext.RequestContext);
+            var url = urlHelper.RouteUrl(CandidateRouteNames.ApprenticeshipResults, null);
+            return Request != null && Request.UrlReferrer != null && Request.UrlReferrer.AbsolutePath == url;
         }
     }
 }

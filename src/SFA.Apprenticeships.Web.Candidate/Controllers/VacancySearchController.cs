@@ -5,6 +5,7 @@
     using Application.Interfaces.Vacancies;
     using Common.Constants;
     using Domain.Interfaces.Configuration;
+    using SFA.Apprenticeships.Web.Candidate.Constants;
     using ViewModels.VacancySearch;
 
     public abstract class VacancySearchController : CandidateControllerBase
@@ -24,7 +25,6 @@
             {
                 resultsPerPage = _vacancyResultsPerPage;
             }
-
 
             return resultsPerPage;
         }
@@ -102,6 +102,13 @@
             searchViewModel.CheckLatLonLocHash();
 
             return searchViewModel.Latitude.HasValue && searchViewModel.Longitude.HasValue;
+        }
+
+        protected static bool HasToPopulateDistance(int id, string distance, string lastVacancyId)
+        {
+            return !string.IsNullOrWhiteSpace(distance)
+                   && !string.IsNullOrWhiteSpace(lastVacancyId)
+                   && int.Parse(lastVacancyId) == id;
         }
 
         #endregion

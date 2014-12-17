@@ -49,6 +49,7 @@
                     if (candidateId != null)
                     {
                         // Vacancy is being viewed by a signed-in candidate, update application status.
+                        // TODO: This line won't work for traineeships...
                         _applicationWriteRepository.ExpireOrWithdrawForCandidate(candidateId.Value, vacancyId);
                     }
 

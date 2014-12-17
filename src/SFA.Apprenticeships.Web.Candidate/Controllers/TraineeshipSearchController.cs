@@ -17,13 +17,14 @@
     using Validators;
     using ViewModels.VacancySearch;
 
+    [TraineeshipsToggle]
     public class TraineeshipSearchController : VacancySearchController
     {
         private readonly TraineeshipSearchViewModelLocationValidator _searchLocationValidator;
         private readonly ISearchProvider _searchProvider;
         private readonly TraineeshipSearchViewModelClientValidator _searchRequestValidator;
         private readonly IVacancyDetailProvider _vacancyDetailProvider;
-
+        
         public TraineeshipSearchController(IConfigurationManager configManager,
             ISearchProvider searchProvider,
             TraineeshipSearchViewModelClientValidator searchRequestValidator,
@@ -48,14 +49,19 @@
                 PopulateSortType();
 
                 var resultsPerPage = GetResultsPerPage();
-                return View(new TraineeshipSearchViewModel {
-                        WithinDistance = 40,
-                        ResultsPerPage = resultsPerPage,
-                        SortType = VacancySortType.Distance
-                    });
+
+                return View(new TraineeshipSearchViewModel
+                {
+                    WithinDistance = 40,
+                    ResultsPerPage = resultsPerPage,
+                    SortType = VacancySortType.Distance
+                });
             });
         }
 
+        [HttpGet]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Results(TraineeshipSearchViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -72,6 +78,7 @@
 
                 PopulateDistances(model.WithinDistance);
                 PopulateResultsPerPage(model.ResultsPerPage);
+                PopulateSortType(model.SortType);
 
                 var clientResult = _searchRequestValidator.Validate(model);
 
@@ -144,8 +151,7 @@
                     SetUserMessage(results.ViewModelMessage, UserMessageLevel.Warning);
                     return View("results", new TraineeshipSearchResponseViewModel { VacancySearch = model });
                 }
-
-                PopulateSortType(model.SortType);
+                
                 return View("results", results);
             });
 
@@ -196,18 +202,15 @@
                 var distance = UserData.Pop(UserDataItemNames.VacancyDistance);
                 var lastVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
 
-                if (!string.IsNullOrWhiteSpace(distance)
-                    && !string.IsNullOrWhiteSpace(lastVacancyId)
-                    && int.Parse(lastVacancyId) == id)
+                if (HasToPopulateDistance(id, distance, lastVacancyId))
                 {
                     ViewBag.Distance = distance;
                     UserData.Push(UserDataItemNames.VacancyDistance, distance);
                 }
 
-                var urlHelper = new UrlHelper(ControllerContext.RequestContext);
-                var url = urlHelper.RouteUrl(CandidateRouteNames.ApprenticeshipResults, null);
-                if (Request != null && Request.UrlReferrer != null && Request.UrlReferrer.AbsolutePath == url)
+                if (HasToPopulateReturnUrl())
                 {
+// ReSharper disable once PossibleNullReferenceException
                     ViewBag.SearchReturnUrl = Request.UrlReferrer.PathAndQuery;
                 }
 
@@ -216,6 +219,11 @@
                 return View(vacancy);
             });
         }
-
+        protected bool HasToPopulateReturnUrl()
+        {
+            var urlHelper = new UrlHelper(ControllerContext.RequestContext);
+            var url = urlHelper.RouteUrl(CandidateRouteNames.TraineeshipResults, null);
+            return Request != null && Request.UrlReferrer != null && Request.UrlReferrer.AbsolutePath == url;
+        }
     }
 }
