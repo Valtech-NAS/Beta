@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Applications.ApplicationDetail">
+    <Position X="10.25" Y="6.25" Width="2.75" />
+    <AssociationLine Name="CandidateInformation" Type="SFA.Apprenticeships.Domain.Entities.Candidates.ApplicationTemplate">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.119" Y="0.06" Height="0.182" Width="1.695" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Status" />
+      <Property Name="CandidateInformation" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Applications.ApplicationStatusSummary">
+    <Position X="20" Y="6.25" Width="2.25" />
+    <AssociationLine Name="ApplicationStatus" Type="SFA.Apprenticeships.Domain.Entities.Applications.ApplicationStatuses">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-3.537" Y="0.468" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="VacancyStatus" Type="SFA.Apprenticeships.Domain.Entities.Vacancies.VacancyStatuses">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.042" Y="0.329" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="ApplicationStatus" />
+      <Property Name="VacancyStatus" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Applications.ApplicationSummary">
+    <Position X="17.5" Y="6.25" Width="2" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Status" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Applications.ApprenticeshipApplicationDetail">
+    <Position X="10.25" Y="10.75" Width="2.75" />
+    <AssociationLine Name="Vacancy" Type="SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipSummary">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.152" Y="0.29" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Vacancy" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Applications.TraineeshipApplicationDetail">
+    <Position X="14" Y="10.75" Width="2.5" />
+    <AssociationLine Name="Vacancy" Type="SFA.Apprenticeships.Domain.Entities.Vacancies.Traineeships.TraineeshipSummary">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.089" Y="0.395" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Vacancy" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipSummary">
+    <Position X="10.25" Y="12.75" Width="2.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Vacancies.Traineeships.TraineeshipSummary">
+    <Position X="14" Y="13" Width="2.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Candidates.ApplicationTemplate">
+    <Position X="6" Y="6.25" Width="2.25" />
+    <AssociationLine Name="EducationHistory" Type="SFA.Apprenticeships.Domain.Entities.Candidates.Education" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6" Y="6.75" />
+        <Point X="5.122" Y="6.75" />
+        <Point X="5.122" Y="9.244" />
+        <Point X="4" Y="9.244" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.145" Y="0.971" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Qualifications" Type="SFA.Apprenticeships.Domain.Entities.Candidates.Qualification" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6" Y="7.062" />
+        <Point X="5.625" Y="7.062" />
+        <Point X="5.625" Y="10.875" />
+        <Point X="4" Y="10.875" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.206" Y="0.128" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="WorkExperience" Type="SFA.Apprenticeships.Domain.Entities.Candidates.WorkExperience">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.128" Y="1.299" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="AboutYou" Type="SFA.Apprenticeships.Domain.Entities.Candidates.AboutYou">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.31" Y="0.06" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="EducationHistory" />
+      <Property Name="AboutYou" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Qualifications" />
+      <Property Name="WorkExperience" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Candidates.AboutYou">
+    <Position X="1.75" Y="6.25" Width="2.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Candidates.CommunicationPreferences">
+    <Position X="20" Y="1" Width="2.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Candidates.Education">
+    <Position X="1.75" Y="8.5" Width="2.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Candidates.Qualification">
+    <Position X="1.75" Y="10.25" Width="2.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Candidates.WorkExperience">
+    <Position X="6" Y="10.25" Width="2.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Candidates.Candidate">
+    <Position X="15" Y="1" Width="2.25" />
+    <AssociationLine Name="RegistrationDetails" Type="SFA.Apprenticeships.Domain.Entities.Users.RegistrationDetails">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.31" Y="0.042" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="ApplicationTemplate" Type="SFA.Apprenticeships.Domain.Entities.Candidates.ApplicationTemplate" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="15" Y="2.295" />
+        <Point X="13.995" Y="2.295" />
+        <Point X="13.995" Y="5.124" />
+        <Point X="7.625" Y="5.124" />
+        <Point X="7.625" Y="6.25" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-3.42" Y="0.474" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="CommunicationPreferences" Type="SFA.Apprenticeships.Domain.Entities.Candidates.CommunicationPreferences">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.58" Y="0.146" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="RegistrationDetails" />
+      <Property Name="ApplicationTemplate" />
+      <Property Name="CommunicationPreferences" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Users.RegistrationDetails">
+    <Position X="10.25" Y="1" Width="2.75" />
+    <AssociationLine Name="Address" Type="SFA.Apprenticeships.Domain.Entities.Locations.Address" FixedFromPoint="true">
+      <Path>
+        <Point X="10.25" Y="1.875" />
+        <Point X="8.25" Y="1.875" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.602" Y="0.06" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Address" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Locations.Address">
+    <Position X="6" Y="1" Width="2.25" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="GeoPoint" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Locations.Location">
+    <Position X="1.75" Y="3.25" Width="2.25" />
+    <AssociationLine Name="GeoPoint" Type="SFA.Apprenticeships.Domain.Entities.Locations.GeoPoint">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.092" Y="0.169" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="GeoPoint" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Locations.GeoPoint">
+    <Position X="1.75" Y="1" Width="2.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.BaseEntity">
+    <Position X="15" Y="3.5" Width="2.25" />
+    <TypeIdentifier />
+  </Class>
+  <Enum Name="SFA.Apprenticeships.Domain.Entities.Applications.ApplicationStatuses">
+    <Position X="14.25" Y="6.25" Width="2.25" />
+    <TypeIdentifier />
+  </Enum>
+  <Enum Name="SFA.Apprenticeships.Domain.Entities.Vacancies.VacancyStatuses">
+    <Position X="20" Y="9.25" Width="2.25" />
+    <TypeIdentifier />
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Users.User">
+    <Position X="6.25" Y="4" Width="2.25" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Status" />
+      <Property Name="Roles" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Users.UserCredentials">
+    <Position X="9.5" Y="4" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.Users.RegistrationDetails">
+    <Position X="3" Y="0.5" Width="2.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Domain.Entities.BaseEntity">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Enum Name="SFA.Apprenticeships.Domain.Entities.Users.UserRoles">
+    <Position X="3" Y="6.25" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Enum Name="SFA.Apprenticeships.Domain.Entities.Users.UserStatuses">
+    <Position X="3" Y="4" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

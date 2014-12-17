@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.VacancySummary">
+    <Position X="16.5" Y="1.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Events" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Address" Type="SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.VacancySummaryAddress">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.103" Y="0.597" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Address" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.Vacancy">
+    <Position X="9.75" Y="1.5" Width="3.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Events" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="ApprenticeshipFramework" Type="SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ApprenticeshipFramework">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.775" Y="0.13" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="ApprenticeshipOccupation" Type="SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ApprenticeshipOccupation">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.757" Y="0.112" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="VacancyAddress" Type="SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.AddressDetails">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.934" Y="0.11" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="ApplicationLock" />
+      <Property Name="ApprenticeshipFramework" />
+      <Property Name="ApprenticeshipOccupation" />
+      <Property Name="VacancyAddress" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ApplicationLock">
+    <Position X="3.5" Y="1.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Events" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ApprenticeshipFramework">
+    <Position X="3.5" Y="5.25" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Events" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ApprenticeshipOccupation">
+    <Position X="3.5" Y="12.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Events" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.AddressDetails">
+    <Position X="3.5" Y="18" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Events" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.VacancySummaryAddress">
+    <Position X="16.75" Y="10.25" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
