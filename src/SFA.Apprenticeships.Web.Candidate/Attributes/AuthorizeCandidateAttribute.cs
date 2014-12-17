@@ -4,6 +4,7 @@
     using System.Web.Routing;
     using Common.Constants;
     using Common.Controllers;
+    using Common.Providers;
 
     public class AuthorizeCandidateAttribute : AuthorizeAttribute
     {
@@ -11,13 +12,25 @@
         {
             base.OnAuthorization(filterContext);
 
+            UserContext userContext = null;
+            var controller = filterContext.Controller as IUserController;
+            if (controller != null)
+            {
+                userContext = controller.UserData.GetUserContext();
+            }
+
             if (filterContext.Result is HttpUnauthorizedResult)
             {
-                OnUnauthorized(filterContext);
+                OnUnauthorized(filterContext, userContext);
+            }
+            else if (userContext == null)
+            {
+                //Current session is invalid. Force user to log in again.
+                OnSessionExpired(filterContext);
             }
         }
 
-        private void OnUnauthorized(AuthorizationContext filterContext)
+        private void OnUnauthorized(AuthorizationContext filterContext, UserContext userContext)
         {
             var user = filterContext.RequestContext.HttpContext.User;
 
@@ -31,19 +44,23 @@
 
                 OnUnauthorizedActivated(filterContext);
             }
-            else
+            else if (userContext != null)
             {
-                var controller = filterContext.Controller as IUserController;
-                if (controller != null)
-                {
-                    var userContext = controller.UserData.GetUserContext();
-                    if (userContext != null)
-                    {
-                        //User was logged in but their authentication cookie has expired
-                        OnUnauthorizedSessionExpired(filterContext);
-                    }
-                }
+                //User was logged in but their authentication cookie has expired
+                OnSessionExpired(filterContext);
             }
+        }
+
+        private void OnSessionExpired(AuthorizationContext filterContext)
+        {
+            var routeValues = new RouteValueDictionary
+            {
+                {"Controller", "Login"},
+                {"Action", "SessionTimeout"},
+                {"ReturnUrl", GetReturnUrl(filterContext)}
+            };
+
+            filterContext.Result = new RedirectToRouteResult(routeValues);
         }
 
         private void OnUnauthorizedUnactivated(AuthorizationContext filterContext)
@@ -52,18 +69,6 @@
             {
                 {"Controller", "Register"},
                 {"Action", "Activation"},
-                {"ReturnUrl", GetReturnUrl(filterContext)}
-            };
-
-            filterContext.Result = new RedirectToRouteResult(routeValues);
-        }
-
-        private void OnUnauthorizedSessionExpired(AuthorizationContext filterContext)
-        {
-            var routeValues = new RouteValueDictionary
-            {
-                {"Controller", "Login"},
-                {"Action", "SessionTimeout"},
                 {"ReturnUrl", GetReturnUrl(filterContext)}
             };
 
