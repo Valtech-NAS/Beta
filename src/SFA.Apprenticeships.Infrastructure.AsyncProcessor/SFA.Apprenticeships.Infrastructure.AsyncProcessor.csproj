@@ -169,7 +169,7 @@
     </Compile>
     <Compile Include="Consumers\CreateCandidateRequestConsumerAsync.cs" />
     <Compile Include="Consumers\SubmitTraineeshipApplicationRequestConsumerAsync.cs" />
-    <Compile Include="Consumers\SubmitApplicationRequestConsumerAsync.cs" />
+    <Compile Include="Consumers\SubmitApprenticeshipApplicationRequestConsumerAsync.cs" />
     <Compile Include="Consumers\EmailRequestConsumerAsync.cs" />
     <Compile Include="IoC\AsyncProcessorRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

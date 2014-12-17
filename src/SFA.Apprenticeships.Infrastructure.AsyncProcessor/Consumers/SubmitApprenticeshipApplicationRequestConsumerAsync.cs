@@ -11,7 +11,7 @@
     using EasyNetQ.AutoSubscribe;
     using NLog;
 
-    public class SubmitApplicationRequestConsumerAsync : IConsumeAsync<SubmitApplicationRequest>
+    public class SubmitApprenticeshipApplicationRequestConsumerAsync : IConsumeAsync<SubmitApplicationRequest>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -21,7 +21,7 @@
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IMessageBus _messageBus;
 
-        public SubmitApplicationRequestConsumerAsync(
+        public SubmitApprenticeshipApplicationRequestConsumerAsync(
             ILegacyApplicationProvider legacyApplicationProvider,
             IApplicationReadRepository applicationReadRepository,
             IApplicationWriteRepository applicationWriteRepository,
@@ -35,7 +35,7 @@
             _messageBus = messageBus;
         }
 
-        [AutoSubscriberConsumer(SubscriptionId = "SubmitApplicationRequestConsumerAsync")]
+        [AutoSubscriberConsumer(SubscriptionId = "SubmitApprenticeshipApplicationRequestConsumerAsync")]
         public Task Consume(SubmitApplicationRequest request)
         {
             return Task.Run(() =>
