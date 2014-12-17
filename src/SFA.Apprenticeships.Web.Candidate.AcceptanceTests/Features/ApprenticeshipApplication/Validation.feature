@@ -9,9 +9,9 @@ Scenario: Complete validation path
 	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	And I see
         | Field                      | Rule   | Value |
         | EducationNameOfSchoolError | Exists |       |

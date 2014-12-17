@@ -1,19 +1,20 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application
+﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.ApprenticeshipApplication
 {
     using System.Globalization;
-    using global::SpecBind.Pages;
-    using OpenQA.Selenium;
-    using SpecBind.Selenium;
     using System.Linq;
-    using SummaryItems;
+    using OpenQA.Selenium;
+    using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application.SummaryItems;
+    using SpecBind.Pages;
+    using SpecBind.Selenium;
 
     [PageNavigation("/apprenticeship/apply/[0-9]+")]
-    [PageAlias("ApplicationPage")]
-    public class ApplicationPage : BaseValidationPage
+    [PageAlias("ApprenticeshipApplicationPage")]
+    public class ApprenticeshipApplicationPage : BaseValidationPage
     {
         private IElementList<IWebElement, QualificationTypeDropdownItem> _qualificationTypeDropdown;
 
-        public ApplicationPage(ISearchContext context) : base(context)
+        public ApprenticeshipApplicationPage(ISearchContext context)
+            : base(context)
         {
         }
 

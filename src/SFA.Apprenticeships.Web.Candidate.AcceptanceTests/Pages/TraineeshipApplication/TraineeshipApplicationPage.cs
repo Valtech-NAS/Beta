@@ -5,6 +5,7 @@
     using OpenQA.Selenium;
     using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application;
     using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application.SummaryItems;
+    using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.ApprenticeshipApplication;
     using SpecBind.Pages;
     using SpecBind.Selenium;
 

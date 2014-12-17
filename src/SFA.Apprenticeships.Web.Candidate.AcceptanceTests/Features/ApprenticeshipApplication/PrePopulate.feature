@@ -15,7 +15,7 @@ Scenario: Pre-populate my personal and contact details
 	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	And I see
 		| Field                   | Rule   | Value              |
 		#Should have been filled in automatically from personal details
@@ -42,7 +42,7 @@ Scenario: Pre-populate my Education Qualifications Work Experience About You det
 	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	When I enter data
 		| Field                   | Value                         |
 		| EducationNameOfSchool   | SchoolName                    |
@@ -59,7 +59,7 @@ Scenario: Pre-populate my Education Qualifications Work Experience About You det
 	When I select the "second" apprenticeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	And I see
 		| Field                 | Rule   | Value                 |
 		| EducationNameOfSchool | Equals | SchoolName            |

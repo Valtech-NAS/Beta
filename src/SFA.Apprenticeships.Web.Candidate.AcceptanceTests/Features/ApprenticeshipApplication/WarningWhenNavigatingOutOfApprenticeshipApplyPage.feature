@@ -12,16 +12,10 @@ Background:
 @US501
 Scenario: Selecting No I will remain in the same page
 	Given I have registered a new candidate
-	#When I enter data
-	#	| Field    | Value  |
-	#	| Location | N7 8LS |
-	#And I choose Search
-	#Then I am on the ApprenticeshipSearchResultPage page
-	#When I choose FirstVacancyLink
 	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	When I enter data
 		| Field                   | Value                         |
 		| EducationNameOfSchool   | SchoolName                    |
@@ -32,8 +26,8 @@ Scenario: Selecting No I will remain in the same page
 		| HobbiesAndInterests     | Hobbies and interests         |
 	And I choose MyApplicationsLink
 	When I see an alert box and select No
-	When I am on the ApplicationPage page
-	Then I am on the ApplicationPage page
+	When I am on the ApprenticeshipApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	#This is required cleanup for this test. Without it the next test run will fail when reusing the browser
 	When I choose MyApplicationsLink
 	And I see an alert box and select Yes
@@ -42,16 +36,10 @@ Scenario: Selecting No I will remain in the same page
 @US501
 Scenario: Selecting yes will redirect me to another page
 	Given I have registered a new candidate
-	#When I enter data
-	#	| Field    | Value  |
-	#	| Location | N7 8LS |
-	#And I choose Search
-	#Then I am on the ApprenticeshipSearchResultPage page
-	#When I choose FirstVacancyLink
 	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	When I enter data
 		| Field                   | Value                         |
 		| EducationNameOfSchool   | SchoolName                    |

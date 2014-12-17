@@ -1,6 +1,6 @@
-﻿Feature: Apply for a vacancy
+﻿Feature: Apply for an apprenticeship vacancy
 	As a candidate
-	I want to submit applications 
+	I want to submit apprenticeship applications 
 	so that it can be reviewed by a Vacancy Manager
 
 Background: 
@@ -10,12 +10,12 @@ Background:
 	Then I am on the ApprenticeshipSearchPage page
 
 @US486 @US458 @US354 @US352
-Scenario: As a candidate I would like to preview a vacancy application
+Scenario: As a candidate I would like to preview an apprenticeship vacancy application
 	Given I have registered a new candidate
 	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	When I choose SupportMeYes
 	And I enter data
 		| Field                   | Value                         |
@@ -31,15 +31,15 @@ Scenario: As a candidate I would like to preview a vacancy application
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
 	And I choose ApplyButton
-	Then I am on the ApplicationPreviewPage page
+	Then I am on the ApprenticeshipApplicationPreviewPage page
 
 @US461 @US154 @US458 @US464
-Scenario: As a candidate I want to save my application as a draft and be able to resume
+Scenario: As a candidate I want to save my apprenticeship application as a draft and be able to resume
 	Given I have registered a new candidate
 	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	When I enter data
 		| Field                   | Value                         |
 		| EducationNameOfSchool   | SchoolName                    |
@@ -59,7 +59,7 @@ Scenario: As a candidate I want to save my application as a draft and be able to
 		| Field                  | Rule   | Value |
 		| DraftApplicationsCount | Equals | 1     |
 	When I choose ResumeLink
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	And I see
 		| Field                   | Rule      | Value                 |
 		| ApplicationSavedMessage | Ends With | my applications       |
@@ -73,12 +73,12 @@ Scenario: As a candidate I want to save my application as a draft and be able to
 	Then I am on the MyApplicationsPage page
 
 @US461 @US362 @US365 @US154 @US463 @US352 @US354
-Scenario: As a candidate I want to enter my qualifications and work experience
+Scenario: As a candidate I want to enter my qualifications and work experience in an apprenticeship application
 	Given I have registered a new candidate
 	When I navigate to the details of the vacancy 445650
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	When I choose QualificationsYes
 	And I choose SaveQualification
 	Then I see
@@ -88,13 +88,13 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| Field | Rule   | Value |
 		| Text  | Equals | GCSE  |
 	And I choose WrappedElement
-	And I am on the ApplicationPage page
+	And I am on the ApprenticeshipApplicationPage page
 	When I enter data
 		| Field        | Value        |
 		| SubjectYear  | 2012         |
 		| SubjectName  | SubjectName  |
 		| SubjectGrade | SubjectGrade |
-	And I am on the ApplicationPage page
+	And I am on the ApprenticeshipApplicationPage page
 	And I choose SaveQualification
 	#Should be removed when it works properly
 	And I choose SaveQualification
@@ -108,7 +108,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| Year    | Equals | 2012         |
 		| Grade   | Equals | SubjectGrade |
 	When I choose RemoveQualificationLink
-	And I am on the ApplicationPage page
+	And I am on the ApprenticeshipApplicationPage page
 	Then I see
         | Field                 | Rule           | Value |
         | QualificationsSummary | Does Not Exist |       |
@@ -137,7 +137,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| JobTitle   | Equals | WorkTitle    |
 		| MainDuties | Equals | WorkRole     |
 	When I choose RemoveLink
-	And I am on the ApplicationPage page
+	And I am on the ApprenticeshipApplicationPage page
 	Then I see
         | Field                 | Rule           | Value |
         | WorkExperienceSummary | Does Not Exist |       |
@@ -159,7 +159,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| Field | Rule   | Value |
 		| Text  | Equals | GCSE  |
 	And I choose WrappedElement
-	And I am on the ApplicationPage page
+	And I am on the ApprenticeshipApplicationPage page
 	And I enter data
 		| Field        | Value        |
 		| SubjectYear  | 2012         |
@@ -186,8 +186,8 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| Field                  | Rule   | Value |
 		| DraftApplicationsCount | Equals | 1     |
 	When I choose ResumeLink
-	Then I wait 120 second for the ApplicationPage page
-	When I am on the ApplicationPage page
+	Then I wait 120 second for the ApprenticeshipApplicationPage page
+	When I am on the ApprenticeshipApplicationPage page
 	Then I see
         | Field                      | Rule   | Value |
         | QualificationsSummaryCount | Equals | 1     |
@@ -196,7 +196,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| Subject | Equals | SubjectName  |
 		| Year    | Equals | 2012         |
 		| Grade   | Equals | SubjectGrade |
-	And I am on the ApplicationPage page
+	And I am on the ApprenticeshipApplicationPage page
 	And I see
         | Field                | Rule   | Value |
         | WorkExperiencesCount | Equals | 1     |
@@ -205,9 +205,9 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| Employer   | Equals | WorkEmployer |
 		| JobTitle   | Equals | WorkTitle    |
 		| MainDuties | Equals | WorkRole     |
-	When I am on the ApplicationPage page
+	When I am on the ApprenticeshipApplicationPage page
 	And I choose ApplyButton
-	Then I am on the ApplicationPreviewPage page
+	Then I am on the ApprenticeshipApplicationPreviewPage page
 	And I see
 		| Field                         | Rule      | Value                 |
 		| ApplicationSavedTopMessage    | Ends With | my applications       |
@@ -224,7 +224,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| WhatCanYouImprove             | Equals    | What can I improve    |
 		| HobbiesAndInterests           | Equals    | Hobbies and interests |
 	When I choose SubmitApplication
-	Then I am on the ApplicationCompletePage page
+	Then I am on the ApprenticeshipApplicationCompletePage page
 	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
 	And I see
@@ -232,12 +232,12 @@ Scenario: As a candidate I want to enter my qualifications and work experience
 		| SubmittedApplicationsCount | Equals | 1     |
 
 @US154
-Scenario: As a candidate I would like to see my application as successful
+Scenario: As a candidate I would like to see my apprenticeship application as successful
 	Given I have registered a new candidate
 	When I select the "first" apprenticeship vacancy in location "London" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	When I choose SupportMeYes
 	And I enter data
 		| Field                   | Value                         |
@@ -253,9 +253,9 @@ Scenario: As a candidate I would like to see my application as successful
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
 	And I choose ApplyButton
-	Then I am on the ApplicationPreviewPage page
+	Then I am on the ApprenticeshipApplicationPreviewPage page
 	When I choose SubmitApplication
-	Then I am on the ApplicationCompletePage page
+	Then I am on the ApprenticeshipApplicationCompletePage page
 	When I wait 5 seconds
 	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
@@ -273,12 +273,12 @@ Scenario: As a candidate I would like to see my application as successful
 
 
 @US154
-Scenario: As a candidate I would like to see my application as submitted
+Scenario: As a candidate I would like to see my apprenticeship application as submitted
 	Given I have registered a new candidate
 	When I select the "first" apprenticeship vacancy in location "London" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	When I choose SupportMeYes
 	And I enter data
 		| Field                   | Value                         |
@@ -294,9 +294,9 @@ Scenario: As a candidate I would like to see my application as submitted
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
 	And I choose ApplyButton
-	Then I am on the ApplicationPreviewPage page
+	Then I am on the ApprenticeshipApplicationPreviewPage page
 	When I choose SubmitApplication
-	Then I am on the ApplicationCompletePage page
+	Then I am on the ApprenticeshipApplicationCompletePage page
 	When I wait 5 seconds
 	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
@@ -313,12 +313,12 @@ Scenario: As a candidate I would like to see my application as submitted
 	Then I am on the MyApplicationsPage page
 
 @US154
-Scenario: As a candidate I would like to see my application as unsuccessful
+Scenario: As a candidate I would like to see my apprenticeship application as unsuccessful
 	Given I have registered a new candidate
 	When I select the "first" apprenticeship vacancy in location "London" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	When I choose SupportMeYes
 	And I enter data
 		| Field                   | Value                         |
@@ -334,9 +334,9 @@ Scenario: As a candidate I would like to see my application as unsuccessful
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
 	And I choose ApplyButton
-	Then I am on the ApplicationPreviewPage page
+	Then I am on the ApprenticeshipApplicationPreviewPage page
 	When I choose SubmitApplication
-	Then I am on the ApplicationCompletePage page
+	Then I am on the ApprenticeshipApplicationCompletePage page
 	When I wait 5 seconds
 	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
@@ -353,14 +353,13 @@ Scenario: As a candidate I would like to see my application as unsuccessful
 	Then I am on the MyApplicationsPage page
 
 
-#Ignored as AsyncProcessorService does not support a Withdrawn application properly
 @US154
-Scenario: As a candidate I would like to see my application as withdrawn
+Scenario: As a candidate I would like to see my apprenticeship application as withdrawn
 	Given I have registered a new candidate
 	When I select the "first" apprenticeship vacancy in location "London" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	When I choose SupportMeYes
 	And I enter data
 		| Field                   | Value                         |
@@ -376,9 +375,9 @@ Scenario: As a candidate I would like to see my application as withdrawn
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
 	And I choose ApplyButton
-	Then I am on the ApplicationPreviewPage page
+	Then I am on the ApprenticeshipApplicationPreviewPage page
 	When I choose SubmitApplication
-	Then I am on the ApplicationCompletePage page
+	Then I am on the ApprenticeshipApplicationCompletePage page
 	When I wait 5 seconds
 	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page

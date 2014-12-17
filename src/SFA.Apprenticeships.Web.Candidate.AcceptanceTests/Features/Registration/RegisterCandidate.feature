@@ -141,7 +141,7 @@ Scenario: As a candidate I want to be submit my registration details so that I c
 	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
 

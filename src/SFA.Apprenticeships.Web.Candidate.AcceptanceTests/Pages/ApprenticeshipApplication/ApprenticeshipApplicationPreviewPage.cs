@@ -4,10 +4,11 @@
     using OpenQA.Selenium;
 
     [PageNavigation("/apprenticeship/preview/[0-9]+")]
-    [PageAlias("ApplicationPreviewPage")]
-    public class ApplicationPreviewPage : BaseValidationPage
+    [PageAlias("ApprenticeshipApplicationPreviewPage")]
+    public class ApprenticeshipApplicationPreviewPage : BaseValidationPage
     {
-        public ApplicationPreviewPage(ISearchContext context) : base(context)
+        public ApprenticeshipApplicationPreviewPage(ISearchContext context)
+            : base(context)
         {
         }
 

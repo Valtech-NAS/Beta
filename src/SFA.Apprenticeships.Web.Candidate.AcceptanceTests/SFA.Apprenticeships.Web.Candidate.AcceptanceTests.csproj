@@ -170,25 +170,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UpdatinPersonalDetailsWillUpdateDraftApplications.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Application\Apply.feature.cs">
+    <Compile Include="Features\ApprenticeshipApplication\ApplyForApprenticeship.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Apply.feature</DependentUpon>
+      <DependentUpon>ApplyForApprenticeship.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Application\PrePopulate.feature.cs">
+    <Compile Include="Features\ApprenticeshipApplication\PrePopulate.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PrePopulate.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Application\Validation.feature.cs">
+    <Compile Include="Features\ApprenticeshipApplication\Validation.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Validation.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Application\WarningWhenNavigatingOutOfApplyPage.feature.cs">
+    <Compile Include="Features\ApprenticeshipApplication\WarningWhenNavigatingOutOfApprenticeshipApplyPage.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WarningWhenNavigatingOutOfApplyPage.feature</DependentUpon>
+      <DependentUpon>WarningWhenNavigatingOutOfApprenticeshipApplyPage.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Dashboard\ApplicationStatusses.feature.cs">
       <AutoGen>True</AutoGen>
@@ -241,6 +241,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Features\TraineeshipApplication\WarningWhenNavigatingOutOfApplyForTraineeshipPage.feature.cs">
+      <DependentUpon>WarningWhenNavigatingOutOfApplyForTraineeshipPage.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Features\TraineeshipSearch\TraineeshipSearchValidation.feature.cs">
       <DependentUpon>TraineeshipSearchValidation.feature</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -290,11 +295,11 @@
     <Compile Include="Hooks\BeforeAllScenarios.cs" />
     <Compile Include="IoC\WebTestRegistry.cs" />
     <Compile Include="Pages\Account\SettingsPage.cs" />
-    <Compile Include="Pages\Application\ApplicationCompletePage.cs" />
-    <Compile Include="Pages\Application\ApplicationPreviewPage.cs" />
-    <Compile Include="Pages\Application\ApplicationPage.cs" />
-    <Compile Include="Pages\Application\SummaryItems\QualificationSummaryItem.cs" />
-    <Compile Include="Pages\Application\SummaryItems\WorkExperienceSummaryItem.cs" />
+    <Compile Include="Pages\ApprenticeshipApplication\ApprenticeshipApplicationCompletePage.cs" />
+    <Compile Include="Pages\ApprenticeshipApplication\ApprenticeshipApplicationPreviewPage.cs" />
+    <Compile Include="Pages\ApprenticeshipApplication\ApprenticeshipApplicationPage.cs" />
+    <Compile Include="Pages\ApprenticeshipApplication\SummaryItems\QualificationSummaryItem.cs" />
+    <Compile Include="Pages\ApprenticeshipApplication\SummaryItems\WorkExperienceSummaryItem.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\BaseValidationPage.cs" />
     <Compile Include="Pages\Dashboard\MyApplicationsPage.cs" />
@@ -372,21 +377,21 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>UpdatinPersonalDetailsWillUpdateDraftApplications.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Application\Apply.feature">
+    <None Include="Features\ApprenticeshipApplication\ApplyForApprenticeship.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>Apply.feature.cs</LastGenOutput>
+      <LastGenOutput>ApplyForApprenticeship.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Application\PrePopulate.feature">
+    <None Include="Features\ApprenticeshipApplication\PrePopulate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>PrePopulate.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Application\Validation.feature">
+    <None Include="Features\ApprenticeshipApplication\Validation.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Validation.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Application\WarningWhenNavigatingOutOfApplyPage.feature">
+    <None Include="Features\ApprenticeshipApplication\WarningWhenNavigatingOutOfApprenticeshipApplyPage.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>WarningWhenNavigatingOutOfApplyPage.feature.cs</LastGenOutput>
+      <LastGenOutput>WarningWhenNavigatingOutOfApprenticeshipApplyPage.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Dashboard\ApplicationStatusses.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -427,6 +432,10 @@
     <None Include="Features\TraineeshipApplication\ApplyForTraineeship.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ApplyForTraineeship.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\TraineeshipApplication\WarningWhenNavigatingOutOfApplyForTraineeshipPage.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>WarningWhenNavigatingOutOfApplyForTraineeshipPage.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\TraineeshipSearch\TraineeshipSearchValidation.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

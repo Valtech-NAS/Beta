@@ -15,7 +15,7 @@ Scenario: Updating personal details will update draft applications
 	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	When I choose SupportMeYes
 	And I enter data
 		| Field                   | Value                         |
@@ -31,7 +31,7 @@ Scenario: Updating personal details will update draft applications
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
 	And I choose ApplyButton
-	Then I am on the ApplicationPreviewPage page
+	Then I am on the ApprenticeshipApplicationPreviewPage page
 	
 	Given I navigated to the SettingsPage page
 	When I am on the SettingsPage page
@@ -47,13 +47,13 @@ Scenario: Updating personal details will update draft applications
 		| Field                  | Rule   | Value |
 		| DraftApplicationsCount | Equals | 1     |
 	When I choose ResumeLink
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	And I see
 		| Field            | Rule     | Value |
 		| FullnameReadOnly | Contains | Jane  |
 
 	When I choose ApplyButton
-	Then I am on the ApplicationPreviewPage page
+	Then I am on the ApprenticeshipApplicationPreviewPage page
 	And I see
 		| Field    | Rule     | Value |
 		| Fullname | Contains | Jane  |
@@ -61,7 +61,7 @@ Scenario: Updating personal details will update draft applications
 	When I select the "first" apprenticeship vacancy in location "London" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
-	Then I am on the ApplicationPage page
+	Then I am on the ApprenticeshipApplicationPage page
 	And I see
 		| Field            | Rule     | Value |
 		| FullnameReadOnly | Contains | Jane  |
