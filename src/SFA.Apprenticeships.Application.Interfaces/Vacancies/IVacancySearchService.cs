@@ -11,5 +11,7 @@
         /// <param name="parameters"></param>
         /// <returns>0..* matching vacancies</returns>
         SearchResults<TVacancySummaryResponse> Search(SearchParameters parameters);
+
+        VacancyDetail GetVacancyDetails(int vacancyId);
     }
 }

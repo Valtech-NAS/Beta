@@ -23,19 +23,19 @@
         private readonly ApprenticeshipSearchViewModelLocationValidator _searchLocationValidator;
         private readonly ISearchProvider _searchProvider;
         private readonly ApprenticeshipSearchViewModelClientValidator _searchRequestValidator;
-        private readonly IVacancyDetailProvider _vacancyDetailProvider;
+        private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
 
         public ApprenticeshipSearchController(IConfigurationManager configManager,
             ISearchProvider searchProvider,
             ApprenticeshipSearchViewModelClientValidator searchRequestValidator,
             ApprenticeshipSearchViewModelLocationValidator searchLocationValidator,
-            IVacancyDetailProvider vacancyDetailProvider)
+            IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider)
             : base(configManager)
         {
             _searchProvider = searchProvider;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
-            _vacancyDetailProvider = vacancyDetailProvider;
+            _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
         }
 
         [HttpGet]
@@ -217,7 +217,7 @@
                     candidateId = UserContext.CandidateId;
                 }
 
-                var vacancy = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
+                var vacancy = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
 
                 if (vacancy == null)
                 {

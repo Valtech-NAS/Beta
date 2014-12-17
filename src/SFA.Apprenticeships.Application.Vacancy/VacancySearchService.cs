@@ -23,10 +23,12 @@
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IVacancySearchProvider<TVacancySummaryResponse> _vacancySearchProvider;
+        private readonly IVacancyDataService _vacancyDataService;
 
-        public VacancySearchService(IVacancySearchProvider<TVacancySummaryResponse> vacancySearchProvider)
+        public VacancySearchService(IVacancySearchProvider<TVacancySummaryResponse> vacancySearchProvider, IVacancyDataService vacancyDataService)
         {
             _vacancySearchProvider = vacancySearchProvider;
+            _vacancyDataService = vacancyDataService;
         }
 
         public SearchResults<TVacancySummaryResponse> Search(SearchParameters parameters)
@@ -49,6 +51,13 @@
                 Logger.Debug(message, e);
                 throw new CustomException(message, e, ErrorCodes.VacanciesSearchFailed);
             }
+        }
+
+        public VacancyDetail GetVacancyDetails(int vacancyId)
+        {
+            Condition.Requires(vacancyId).IsGreaterOrEqual(1);
+
+            return _vacancyDataService.GetVacancyDetails(vacancyId);
         }
 
         private static string GetLoggerMessage(string message, SearchParameters parameters)

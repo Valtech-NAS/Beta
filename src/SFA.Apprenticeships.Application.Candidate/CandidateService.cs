@@ -28,6 +28,7 @@
         private readonly ISaveApplicationStrategy _saveApplicationStrategy;
         private readonly IArchiveApplicationStrategy _archiveApplicationStrategy;
         private readonly ISubmitApplicationStrategy _submitApplicationStrategy;
+        private readonly ISubmitTraineeshipApplicationStrategy _submitTraineeshipApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IDeleteApplicationStrategy _deleteApplicationStrategy;
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
@@ -47,7 +48,8 @@
             ISaveApplicationStrategy saveApplicationStrategy,
             IArchiveApplicationStrategy archiveApplicationStrategy, 
             IDeleteApplicationStrategy deleteApplicationStrategy, 
-            ISaveCandidateStrategy saveCandidateStrategy)
+            ISaveCandidateStrategy saveCandidateStrategy, 
+            ISubmitTraineeshipApplicationStrategy submitTraineeshipApplicationStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -64,6 +66,7 @@
             _archiveApplicationStrategy = archiveApplicationStrategy;
             _deleteApplicationStrategy = deleteApplicationStrategy;
             _saveCandidateStrategy = saveCandidateStrategy;
+            _submitTraineeshipApplicationStrategy = submitTraineeshipApplicationStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -255,6 +258,18 @@
             var applicationId = GetApplicationId(candidateId, vacancyId);
 
             _submitApplicationStrategy.SubmitApplication(applicationId);
+        }
+
+        public void SubmitTraineeshipApplication(Guid candidateId, int vacancyId,
+            TraineeshipApplicationDetail traineeshipApplicationDetail)
+        {
+            Condition.Requires(candidateId);
+
+            Logger.Debug(
+                "Calling CandidateService to submit the traineeship Application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                candidateId, vacancyId);
+
+            _submitTraineeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId, traineeshipApplicationDetail);
         }
 
         private Guid GetApplicationId(Guid candidateId, int vacancyId)

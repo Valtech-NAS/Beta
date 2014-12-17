@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancy
 {
-    using System;
-    using Domain.Entities.Vacancies;
+    using SFA.Apprenticeships.Domain.Entities.Vacancies;
 
     public interface IVacancyDataProvider
     {

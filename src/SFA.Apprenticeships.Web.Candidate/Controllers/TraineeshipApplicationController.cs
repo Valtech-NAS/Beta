@@ -64,8 +64,13 @@
             {
                 model = StripApplicationViewModelBeforeValidation(model);
 
+                var savedModel = _traineeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+
+                model = _traineeshipApplicationProvider.PatchApplicationViewModel(UserContext.CandidateId, savedModel,
+                    model);
+
                 var submittedApplicationModel =
-                    _traineeshipApplicationProvider.SubmitApplication(UserContext.CandidateId, id);
+                    _traineeshipApplicationProvider.SubmitApplication(UserContext.CandidateId, id, model);
 
                 if (submittedApplicationModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
                 {

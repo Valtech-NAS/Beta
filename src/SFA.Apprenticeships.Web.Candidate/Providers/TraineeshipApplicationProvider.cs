@@ -16,15 +16,14 @@
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
-        private readonly IVacancyDetailProvider _vacancyDetailProvider;
-
+        private readonly ITraineeshipVacancyDetailProvider _traineeshipVacancyDetailProvider;
         public TraineeshipApplicationProvider(IMapper mapper,
             ICandidateService candidateService,
-            IVacancyDetailProvider vacancyDetailProvider)
+            ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider)
         {
             _mapper = mapper;
             _candidateService = candidateService;
-            _vacancyDetailProvider = vacancyDetailProvider;
+            _traineeshipVacancyDetailProvider = traineeshipVacancyDetailProvider;
         }
 
         public TraineeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
@@ -69,7 +68,7 @@
             }
         }
 
-        public TraineeshipApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId)
+        public TraineeshipApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId, TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
             Logger.Debug(
                 "Calling TraineeeshipApplicationProvider to submit the traineeships application for candidate ID: {0}, vacancy ID: {1}.",
@@ -81,13 +80,11 @@
             {
                 model = GetApplicationViewModel(candidateId, vacancyId);
 
-                if (model.HasError())
-                {
-                    return model;
-                }
-
-                // _candidateService.SubmitApplication(candidateId, vacancyId);
-
+                var traineeshipApplicationDetails =
+                    _mapper.Map<TraineeshipApplicationViewModel, TraineeshipApplicationDetail>(traineeshipApplicationViewModel);
+                
+                _candidateService.SubmitTraineeshipApplication(candidateId, vacancyId, traineeshipApplicationDetails);
+                
                 Logger.Debug("Traineeship application submitted for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
@@ -165,6 +162,31 @@
             }
         }
 
+        public TraineeshipApplicationViewModel PatchApplicationViewModel(Guid candidateId, TraineeshipApplicationViewModel savedModel, TraineeshipApplicationViewModel submittedModel)
+        {
+            Logger.Debug("Calling ApprenticeshipApplicationProvider to patch the Application View Model for candidate ID: {0}.",
+                candidateId);
+
+            try
+            {
+                savedModel.Candidate.HasQualifications = submittedModel.Candidate.HasQualifications;
+                savedModel.Candidate.Qualifications = submittedModel.Candidate.Qualifications;
+                savedModel.Candidate.HasWorkExperience = submittedModel.Candidate.HasWorkExperience;
+                savedModel.Candidate.WorkExperience = submittedModel.Candidate.WorkExperience;
+                savedModel.Candidate.EmployerQuestionAnswers = submittedModel.Candidate.EmployerQuestionAnswers;
+
+                return savedModel;
+            }
+            catch (Exception e)
+            {
+                var message =
+                    string.Format(
+                        "Patch traineeship application View Model failed for user {0}.", candidateId);
+                Logger.Error(message, e);
+                throw;
+            }
+        }
+
         public TraineeshipApplicationViewModel ArchiveApplication(Guid candidateId, int vacancyId)
         {
             throw new NotImplementedException();
@@ -179,7 +201,7 @@
             TraineeshipApplicationViewModel apprenticheshipApplicationViewModel)
         {
             // TODO: why have a patch method like this? should be done in mapper.
-            var vacancyDetailViewModel = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null)
             {

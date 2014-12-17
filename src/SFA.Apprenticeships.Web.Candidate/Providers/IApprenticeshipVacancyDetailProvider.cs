@@ -3,7 +3,7 @@
     using System;
     using ViewModels.VacancySearch;
 
-    public interface IVacancyDetailProvider
+    public interface IApprenticeshipVacancyDetailProvider
     {
         VacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId);
     }

@@ -17,6 +17,7 @@
     using Application.UserAccount;
     using Application.UserAccount.Strategies;
     using Application.Vacancy;
+    using AutoMapper;
     using Domain.Interfaces.Mapping;
     using Mappers;
     using Microsoft.WindowsAzure;
@@ -60,6 +61,7 @@
             For<Application.Communication.Strategies.ISendPasswordResetCodeStrategy>()
                 .Use<QueueEmailOnlyPasswordResetCodeStrategy>();
             For<ISubmitApplicationStrategy>().Use<LegacySubmitApplicationStrategy>();
+            For<ISubmitTraineeshipApplicationStrategy>().Use<LegacySubmitTraineeshipApplicationStrategy>();
             For<ISendActivationCodeStrategy>().Use<QueueEmailOnlyActivationCodeStrategy>();
             For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApplicationSubmittedStrategy>();
             For<ISendPasswordChangedStrategy>().Use<QueueEmailOnlyPasswordChangedStrategy>();
@@ -93,7 +95,7 @@
             For<ICommunicationService>().Use<CommunicationService>();
             For<IGetCandidateApplicationsStrategy>().Use<LegacyGetCandidateApplicationsStrategy>();
             For<IApplicationStatusUpdater>().Use<ApplicationStatusUpdater>();
-
+            
             // Apprenticeship providers (web)
             For<IMapper>().Singleton().Use<ApprenticeshipCandidateWebMappers>().Name = "ApprenticeshipCandidateWebMappers";
             For<IMapper>().Singleton().Use<TraineeshipCandidateWebMappers>().Name = "TraineeshipCandidateWebMappers";
@@ -102,7 +104,7 @@
                 .Ctor<IMapper>("apprenticeshipSearchMapper").Named("ApprenticeshipCandidateWebMappers")
                 .Ctor<IMapper>("traineeshipSearchMapper").Named("TraineeshipCandidateWebMappers"); 
             
-            For<IVacancyDetailProvider>().Use<VacancyDetailProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
+            For<IApprenticeshipVacancyDetailProvider>().Use<ApprenticeshipVacancyDetailProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<IApprenticeshipApplicationProvider>().Use<ApprenticeshipApplicationProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<IAccountProvider>().Use<AccountProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<ICandidateServiceProvider>()
@@ -112,6 +114,10 @@
 
             // Traineeship providers (web)
             For<IMapper>().Singleton().Use<TraineeshipCandidateWebMappers>().Name = "TraineeshipCandidateWebMappers";
+            For<ITraineeshipVacancyDetailProvider>()
+                .Use<TraineeshipVacancyDetailProvider>()
+                .Ctor<IMapper>()
+                .Named("TraineeshipCandidateWebMappers");
             For<ITraineeshipApplicationProvider>().Use<TraineeshipApplicationProvider>();
 
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));

@@ -124,11 +124,13 @@
     <Compile Include="Strategies\IDeleteApplicationStrategy.cs" />
     <Compile Include="Strategies\ISaveApplicationStrategy.cs" />
     <Compile Include="Strategies\ISaveCandidateStrategy.cs" />
+    <Compile Include="Strategies\ISubmitTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ISubmitApplicationStrategy.cs" />
     <Compile Include="Strategies\IVacancyStatusProvider.cs" />
     <Compile Include="Strategies\LegacyActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\LegacyGetCandidateApplicationsStrategy.cs" />
     <Compile Include="Strategies\LegacyResetForgottenPasswordStrategy.cs" />
+    <Compile Include="Strategies\LegacySubmitTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\LegacySubmitApplicationStrategy.cs" />
     <Compile Include="Strategies\LegacyUnlockAccountStrategy .cs" />
     <Compile Include="Strategies\LegacyVacancyStatusProvider.cs" />

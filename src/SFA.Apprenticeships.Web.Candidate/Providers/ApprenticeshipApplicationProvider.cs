@@ -23,7 +23,7 @@
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly IVacancyDetailProvider _vacancyDetailProvider;
+        private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
         private readonly IPerformanceCounterService _performanceCounterService;
@@ -31,14 +31,14 @@
         private readonly IFeatureToggle _featureToggle;
 
         public ApprenticeshipApplicationProvider(
-            IVacancyDetailProvider vacancyDetailProvider,
+            IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
             ICandidateService candidateService,
             IMapper mapper, 
             IPerformanceCounterService performanceCounterService,
             IConfigurationManager configurationManager, 
             IFeatureToggle featureToggle)
         {
-            _vacancyDetailProvider = vacancyDetailProvider;
+            _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
             _candidateService = candidateService;
             _mapper = mapper;
             _performanceCounterService = performanceCounterService;
@@ -369,7 +369,7 @@
         private ApprenticheshipApplicationViewModel PatchWithVacancyDetail(Guid candidateId, int vacancyId, ApprenticheshipApplicationViewModel apprenticheshipApplicationViewModel)
         {
             // TODO: why have a patch method like this? should be done in mapper.
-            var vacancyDetailViewModel = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null)
             {

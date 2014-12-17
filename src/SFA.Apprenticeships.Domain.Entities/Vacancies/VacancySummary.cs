@@ -20,7 +20,5 @@
         public string EmployerName { get; set; }
 
         public GeoPoint Location { get; set; }
-
-        public VacancyLocationType VacancyLocationType { get; set; }
     }
 }

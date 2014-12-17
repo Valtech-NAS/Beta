@@ -36,6 +36,9 @@
 
         void SubmitApplication(Guid candidateId, int vacancyId);
 
+        void SubmitTraineeshipApplication(Guid candidateId, int vacancyId,
+            TraineeshipApplicationDetail traineeshipApplicationDetail);
+
         void UnlockAccount(string username, string accountUnlockCode);
 
         void ResetForgottenPassword(string username, string passwordCode, string newPassword);

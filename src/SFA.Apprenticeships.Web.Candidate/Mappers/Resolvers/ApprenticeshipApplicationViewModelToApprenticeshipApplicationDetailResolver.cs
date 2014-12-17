@@ -1,18 +1,16 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
-
-namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
+﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
 {
     using System.Collections.Generic;
     using AutoMapper;
-    using Domain.Entities.Applications;
-    using Domain.Entities.Candidates;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Users;
-    using Domain.Entities.Vacancies;
-    using Helpers;
-    using ViewModels.Applications;
-    using ViewModels.Candidate;
-    using ViewModels.VacancySearch;
+    using SFA.Apprenticeships.Domain.Entities.Applications;
+    using SFA.Apprenticeships.Domain.Entities.Candidates;
+    using SFA.Apprenticeships.Domain.Entities.Locations;
+    using SFA.Apprenticeships.Domain.Entities.Users;
+    using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+    using SFA.Apprenticeships.Web.Candidate.Mappers.Helpers;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
 
     public class ApprenticeshipApplicationViewModelToApprenticeshipApplicationDetailResolver :
         ITypeConverter<ApprenticheshipApplicationViewModel, ApprenticeshipApplicationDetail>
@@ -27,8 +25,14 @@ namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
                 Vacancy = GetVacancy(model.VacancyDetail),
                 CandidateDetails = GetCandidateDetails(model.Candidate),
                 CandidateInformation = GetCandidateInformation(model.Candidate),
-                AdditionalQuestion1Answer = model.Candidate.EmployerQuestionAnswers != null ? model.Candidate.EmployerQuestionAnswers.CandidateAnswer1 : string.Empty,
-                AdditionalQuestion2Answer = model.Candidate.EmployerQuestionAnswers != null ? model.Candidate.EmployerQuestionAnswers.CandidateAnswer2 : string.Empty
+                AdditionalQuestion1Answer =
+                    model.Candidate.EmployerQuestionAnswers != null
+                        ? model.Candidate.EmployerQuestionAnswers.CandidateAnswer1
+                        : string.Empty,
+                AdditionalQuestion2Answer =
+                    model.Candidate.EmployerQuestionAnswers != null
+                        ? model.Candidate.EmployerQuestionAnswers.CandidateAnswer2
+                        : string.Empty
             };
 
             return application;
@@ -40,8 +44,14 @@ namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
             {
                 AboutYou = ApplicationConverter.GetAboutYou(modelBase.AboutYou),
                 EducationHistory = ApplicationConverter.GetEducation(modelBase.Education),
-                Qualifications = modelBase.HasQualifications ? ApplicationConverter.GetQualifications(modelBase.Qualifications) : new List<Qualification>(),
-                WorkExperience = modelBase.HasWorkExperience ? ApplicationConverter.GetWorkExperiences(modelBase.WorkExperience) : new List<WorkExperience>(),
+                Qualifications =
+                    modelBase.HasQualifications
+                        ? ApplicationConverter.GetQualifications(modelBase.Qualifications)
+                        : new List<Qualification>(),
+                WorkExperience =
+                    modelBase.HasWorkExperience
+                        ? ApplicationConverter.GetWorkExperiences(modelBase.WorkExperience)
+                        : new List<WorkExperience>(),
             };
         }
 

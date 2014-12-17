@@ -13,7 +13,7 @@
     using NLog;
     using ViewModels.VacancySearch;
 
-    public class VacancyDetailProvider : IVacancyDetailProvider
+    public class ApprenticeshipVacancyDetailProvider : IApprenticeshipVacancyDetailProvider
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -22,7 +22,7 @@
         private readonly IMapper _mapper;
         private readonly IVacancyDataService _vacancyDataService;
 
-        public VacancyDetailProvider(
+        public ApprenticeshipVacancyDetailProvider(
             IVacancyDataService vacancyDataService,
             ICandidateService candidateService,
             IApplicationWriteRepository applicationWriteRepository,
@@ -37,7 +37,7 @@
         public VacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId)
         {
             Logger.Debug(
-                "Calling VacancyDetailProvider to get the Vacancy detail View Model for candidate ID: {0}, vacancy ID: {1}.",
+                "Calling ApprenticeshipVacancyDetailProvider to get the Vacancy detail View Model for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
@@ -49,7 +49,6 @@
                     if (candidateId != null)
                     {
                         // Vacancy is being viewed by a signed-in candidate, update application status.
-                        // TODO: This line won't work for traineeships...
                         _applicationWriteRepository.ExpireOrWithdrawForCandidate(candidateId.Value, vacancyId);
                     }
 
@@ -73,16 +72,16 @@
             }
             catch (CustomException e)
             {
-                var message = string.Format("Get Vacancy View Model failed for candidate ID: {0}, vacancy ID: {1}.",
+                var message = string.Format("Get Apprenticeship Vacancy View Model failed for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
                 Logger.Error(message, e);
 
-                return new VacancyDetailViewModel(VacancyDetailPageMessages.GetVacancyDetailFailed);
+                return new VacancyDetailViewModel(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed);
             }
             catch (Exception e)
             {
-                var message = string.Format("Get Vacancy View Model failed for candidate ID: {0}, vacancy ID: {1}.",
+                var message = string.Format("Get Apprenticeship Vacancy View Model failed for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
                 Logger.Error(message, e);

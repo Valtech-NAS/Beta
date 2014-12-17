@@ -131,9 +131,6 @@
                     opt => opt.ResolveUsing<LegacyVacancySummaryLocationResolver>()
                         .FromMember(src => src.Address))
 
-                .ForMember(dest => dest.VacancyLocationType,
-                    opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
-
                 .ForMember(dest => dest.Title,
                     opt => opt.MapFrom(src => src.VacancyTitle));
         }

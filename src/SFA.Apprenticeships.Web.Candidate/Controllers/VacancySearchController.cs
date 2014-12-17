@@ -2,11 +2,10 @@
 {
     using System.Collections;
     using System.Web.Mvc;
-    using Application.Interfaces.Vacancies;
-    using Common.Constants;
-    using Domain.Interfaces.Configuration;
-    using SFA.Apprenticeships.Web.Candidate.Constants;
-    using ViewModels.VacancySearch;
+    using SFA.Apprenticeships.Application.Interfaces.Vacancies;
+    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using SFA.Apprenticeships.Web.Common.Constants;
 
     public abstract class VacancySearchController : CandidateControllerBase
     {
@@ -18,6 +17,7 @@
         }
 
         #region Helpers
+
         protected int GetResultsPerPage()
         {
             int resultsPerPage;
@@ -75,14 +75,14 @@
 
             if (!string.IsNullOrWhiteSpace(keywords))
             {
-                sortTypeOptions.Add(new { SortType = VacancySortType.Relevancy, Name = "Best Match" });
+                sortTypeOptions.Add(new {SortType = VacancySortType.Relevancy, Name = "Best Match"});
             }
 
-            sortTypeOptions.Add(new { SortType = VacancySortType.ClosingDate, Name = "Closing Date" });
+            sortTypeOptions.Add(new {SortType = VacancySortType.ClosingDate, Name = "Closing Date"});
 
             if (isLocalLocationType)
             {
-                sortTypeOptions.Add(new { SortType = VacancySortType.Distance, Name = "Distance" });
+                sortTypeOptions.Add(new {SortType = VacancySortType.Distance, Name = "Distance"});
             }
 
             ModelState.Remove("SortType");
@@ -92,7 +92,7 @@
                 "SortType",
                 "Name",
                 selectedSortType
-            );
+                );
 
             ViewBag.SortTypes = sortTypes;
         }

@@ -23,19 +23,19 @@
         private readonly TraineeshipSearchViewModelLocationValidator _searchLocationValidator;
         private readonly ISearchProvider _searchProvider;
         private readonly TraineeshipSearchViewModelClientValidator _searchRequestValidator;
-        private readonly IVacancyDetailProvider _vacancyDetailProvider;
+        private readonly ITraineeshipVacancyDetailProvider _traineeshipVacancyDetailProvider;
         
         public TraineeshipSearchController(IConfigurationManager configManager,
             ISearchProvider searchProvider,
             TraineeshipSearchViewModelClientValidator searchRequestValidator,
             TraineeshipSearchViewModelLocationValidator searchLocationValidator,
-            IVacancyDetailProvider vacancyDetailProvider)
+            ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider)
             : base(configManager)
         {
             _searchProvider = searchProvider;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
-            _vacancyDetailProvider = vacancyDetailProvider;
+            _traineeshipVacancyDetailProvider = traineeshipVacancyDetailProvider;
         }
 
         [HttpGet]
@@ -184,7 +184,7 @@
                     candidateId = UserContext.CandidateId;
                 }
 
-                var vacancy = _vacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
+                var vacancy = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
 
                 if (vacancy == null)
                 {
