@@ -186,6 +186,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Consumers\MonitorControlQueueConsumer.cs" />
+    <Compile Include="Tasks\CheckTraineeshipApplicationRepository.cs" />
     <Compile Include="Tasks\CheckUserDirectory.cs" />
     <Compile Include="Tasks\CheckElasticsearchAliases.cs" />
     <Compile Include="Tasks\CheckElasticsearchCluster.cs" />
@@ -193,7 +194,7 @@
     <Compile Include="Tasks\CheckMongoReplicaSets.cs" />
     <Compile Include="Tasks\CheckNasGateway.cs" />
     <Compile Include="Tasks\CheckPostcodeService.cs" />
-    <Compile Include="Tasks\CheckApplicationRepository.cs" />
+    <Compile Include="Tasks\CheckApprenticeshipApplicationRepository.cs" />
     <Compile Include="Tasks\CheckCandidateRepository.cs" />
     <Compile Include="Tasks\CheckAddressSearch.cs" />
     <Compile Include="Tasks\CheckRabbitMessageQueue.cs" />

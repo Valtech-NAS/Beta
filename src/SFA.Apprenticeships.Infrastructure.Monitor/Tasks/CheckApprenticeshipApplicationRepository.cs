@@ -3,18 +3,18 @@
     using System;
     using Domain.Interfaces.Repositories;
 
-    public class CheckApplicationRepository : IMonitorTask
+    public class CheckApprenticeshipApplicationRepository : IMonitorTask
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
 
-        public CheckApplicationRepository(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository)
+        public CheckApprenticeshipApplicationRepository(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository)
         {
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
         }
 
         public string TaskName
         {
-            get { return "Check applications repository"; }
+            get { return "Check apprenticeship applications repository"; }
         }
 
         public void Run()

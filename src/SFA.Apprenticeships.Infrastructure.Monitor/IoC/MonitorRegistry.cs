@@ -18,7 +18,8 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
                 .Contains(x =>
                 {
                     x.Type<CheckUserRepository>();
-                    x.Type<CheckApplicationRepository>();
+                    x.Type<CheckApprenticeshipApplicationRepository>();
+                    x.Type<CheckTraineeshipApplicationRepository>();
                     x.Type<CheckCandidateRepository>();
                     x.Type<CheckVacancySearch>();
                     x.Type<CheckLocationLookup>();
