@@ -213,7 +213,7 @@
             {
                 Guid? candidateId = null;
 
-                if (Request.IsAuthenticated)
+                if (Request.IsAuthenticated && UserContext != null)
                 {
                     candidateId = UserContext.CandidateId;
                 }
