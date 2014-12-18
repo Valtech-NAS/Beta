@@ -1,5 +1,4 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Applications
-@model VacancyDetailViewModel
+﻿@model VacancyDetailViewModel
 
 @{
     var AnalyticsTag = "onclick=\"Webtrends.multiTrack({{ element: this, argsa: ['DCS.dcsuri', '{0}" + Model.Id + "', 'WT.dl', '99', 'WT.ti', '{1}', 'DCSext.buttonPos', '{2}'] }});\"";
@@ -7,21 +6,9 @@
 
 @if (Request.IsAuthenticated)
 {
-    if (Model.CandidateApplicationStatus.HasValue && Model.CandidateApplicationStatus.Value != ApplicationStatuses.Unknown)
+    if(Model.HasCandidateAlreadyApplied)
     {
-        // Candidate has applied for this vacancy.
-        // Can't do this yet, but leaving it in here
-        switch (Model.CandidateApplicationStatus.Value)
-        {
-            case ApplicationStatuses.Draft:
-                <a role="button" id="apply-button" class="button button-with-hint" title="Resume application" href="@Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/traineeship/apply/resume/", "Traineeship – Resume Application", ViewData["AnalyticsButtonPosition"]))>Resume application</a>
-                break;
-
-            default:
-                <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
-                <a href='@Url.RouteUrl(CandidateRouteNames.MyApplications)'>Track application status</a>
-                break;
-        }
+        <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
     }
     else
     {

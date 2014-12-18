@@ -117,6 +117,8 @@
         [DataType(DataType.DateTime)]
         public DateTime? DateApplied { get; set; }
 
+        public bool HasCandidateAlreadyApplied { get; set; }
+
         #endregion        
     }
 }

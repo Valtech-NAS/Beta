@@ -20,6 +20,7 @@
 
         private readonly IActivateCandidateStrategy _activateCandidateStrategy;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
+        private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
         private readonly IAuthenticateCandidateStrategy _authenticateCandidateStrategy;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICreateApprenticeshipApplicationStrategy _createApplicationStrategy;
@@ -53,7 +54,8 @@
             IDeleteApplicationStrategy deleteApplicationStrategy, 
             ISaveCandidateStrategy saveCandidateStrategy,
             ISubmitTraineeshipApplicationStrategy submitTraineeshipApplicationStrategy, 
-            ISaveTraineeshipApplicationStrategy saveTraineeshipApplicationStrategy)
+            ISaveTraineeshipApplicationStrategy saveTraineeshipApplicationStrategy, 
+            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -72,6 +74,7 @@
             _saveCandidateStrategy = saveCandidateStrategy;
             _submitTraineeshipApplicationStrategy = submitTraineeshipApplicationStrategy;
             _saveTraineeshipApplicationStrategy = saveTraineeshipApplicationStrategy;
+            _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -227,6 +230,20 @@
             _deleteApplicationStrategy.DeleteApplication(applicationId);
         }
 
+        public TraineeshipApplicationDetail GetTraineeshipApplication(Guid candidateId, int vacancyId)
+        {
+            Condition.Requires(candidateId);
+
+            Logger.Debug(
+                "Calling CandidateService to get the apprenticeshipApplication of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                candidateId, vacancyId);
+
+            //TODO: repeating the query twice?
+            //TODO: Replace with Null object pattern or maybe pattern?
+            var applicationId = GetTraineeshipApplicationId(candidateId, vacancyId);
+            return applicationId == null ? null : _traineeshipApplicationReadRepository.Get(applicationId.Value);
+        }
+
         public void SaveApplication(Guid candidateId, int vacancyId, ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
             Condition.Requires(apprenticeshipApplication);
@@ -282,6 +299,16 @@
         {
             var applicationDetail = _apprenticeshipApplicationReadRepository
                 .GetForCandidate(candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
+
+            return applicationDetail.EntityId;
+        }
+
+        private Guid? GetTraineeshipApplicationId(Guid candidateId, int vacancyId)
+        {
+            var applicationDetail = _traineeshipApplicationReadRepository
+                .GetForCandidate(candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
+
+            if (applicationDetail == null) return null;
 
             return applicationDetail.EntityId;
         }

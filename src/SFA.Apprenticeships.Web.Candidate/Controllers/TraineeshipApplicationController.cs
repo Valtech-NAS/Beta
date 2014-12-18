@@ -36,10 +36,10 @@
             {
                 var model = _traineeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
 
-                //if (model.HasError())
-                //{
-                //    return RedirectToRoute(CandidateRouteNames.MyApplications);
-                //}
+                if (model.HasError())
+                {
+                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                }
 
                 model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 

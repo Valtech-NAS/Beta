@@ -34,10 +34,16 @@
 
             try
             {
+                // Check if we've already applied for the vacancy
+                if (_candidateService.GetTraineeshipApplication(candidateId, vacancyId) != null)
+                {
+                    return new TraineeshipApplicationViewModel("Traineeship already applied", ApplicationViewModelStatus.ApplicationInIncorrectState);
+                }
+
                 var applicationDetails = _candidateService.CreateTraineeshipApplication(candidateId, vacancyId);
                 var applicationViewModel =
                     _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(applicationDetails);
-
+                
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
             catch (CustomException e)

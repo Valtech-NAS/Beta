@@ -26,7 +26,6 @@
 
         ApprenticeshipApplicationDetail GetApplication(Guid candidateId, int vacancyId);
 
-        TraineeshipApplicationDetail CreateTraineeshipApplication(Guid candidateId, int traineeshipVacancyId);
 
         void ArchiveApplication(Guid candidateId, int vacancyId);
 
@@ -35,6 +34,9 @@
         IList<ApprenticeshipApplicationSummary> GetApplications(Guid candidateId);
 
         void SubmitApplication(Guid candidateId, int vacancyId);
+        TraineeshipApplicationDetail CreateTraineeshipApplication(Guid candidateId, int traineeshipVacancyId);
+
+        TraineeshipApplicationDetail GetTraineeshipApplication(Guid candidateId, int vacancyId);
 
         void SubmitTraineeshipApplication(Guid candidateId, int vacancyId,
             TraineeshipApplicationDetail traineeshipApplicationDetail);
