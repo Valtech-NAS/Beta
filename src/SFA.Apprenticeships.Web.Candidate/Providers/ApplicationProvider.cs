@@ -289,6 +289,7 @@
             try
             {
                 var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
+                var candidate = _candidateService.GetCandidate(candidateId);
                 var model = _mapper.Map<ApplicationDetail, ApplicationViewModel>(applicationDetails);
                 var patchedModel = PatchWithVacancyDetail(candidateId, vacancyId, model);
 
@@ -301,7 +302,8 @@
                 {
                     VacancyReference = patchedModel.VacancyDetail.VacancyReference,
                     VacancyTitle = patchedModel.VacancyDetail.Title,
-                    Status = patchedModel.Status
+                    Status = patchedModel.Status,
+                    ShowEmailLabel = candidate.CommunicationPreferences.AllowEmail
                 };
             }
             catch (Exception e)

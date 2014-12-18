@@ -18,5 +18,7 @@
         public string VacancyReference { get; set; }
 
         public ApplicationStatuses Status { get; set; }
+
+        public bool ShowEmailLabel { get; set; }
     }
 }

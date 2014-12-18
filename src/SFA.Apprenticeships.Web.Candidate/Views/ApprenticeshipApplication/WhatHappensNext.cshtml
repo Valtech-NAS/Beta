@@ -11,12 +11,17 @@
         <h2 class="heading-medium">@Html.DisplayFor(m => m.VacancyTitle) - @Html.DisplayFor(m => m.VacancyReference)</h2>
     </div>
 </div>
-<section class="section-border">
-    <p>
-        <i class="fa fa-envelope-o"></i>We have sent you an email confirming
-        your application
-    </p>
-</section>
+
+@if (Model.ShowEmailLabel)
+{
+    <section class="section-border">
+        <p>
+            <i class="fa fa-envelope-o"></i>We have sent you an email confirming
+            your application
+        </p>
+    </section>
+}
+
 <h2 class="heading-medium">What happens next</h2>
 <div class="text form-group">
     <p>
