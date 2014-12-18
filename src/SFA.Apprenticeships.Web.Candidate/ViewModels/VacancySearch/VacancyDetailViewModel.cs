@@ -30,6 +30,8 @@
         
         public string VacancyType { get; set; }
 
+        public VacancyLevel VacancyLevel { get; set; }
+
         public VacancyLocationType VacancyLocationType { get; set; }
 
         [UIHint("Date")]
