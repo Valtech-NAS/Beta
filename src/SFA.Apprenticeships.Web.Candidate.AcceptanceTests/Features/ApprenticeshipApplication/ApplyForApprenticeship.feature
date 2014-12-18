@@ -232,6 +232,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| SubmittedApplicationsCount | Equals | 1     |
 
 @US154
+@RequiresStubGateway
 Scenario: As a candidate I would like to see my apprenticeship application as successful
 	Given I have registered a new candidate
 	When I select the "first" apprenticeship vacancy in location "London" that can apply by this website
@@ -313,6 +314,7 @@ Scenario: As a candidate I would like to see my apprenticeship application as su
 	Then I am on the MyApplicationsPage page
 
 @US154
+@RequiresStubGateway
 Scenario: As a candidate I would like to see my apprenticeship application as unsuccessful
 	Given I have registered a new candidate
 	When I select the "first" apprenticeship vacancy in location "London" that can apply by this website
@@ -354,6 +356,7 @@ Scenario: As a candidate I would like to see my apprenticeship application as un
 
 
 @US154
+@RequiresStubGateway
 Scenario: As a candidate I would like to see my apprenticeship application as withdrawn
 	Given I have registered a new candidate
 	When I select the "first" apprenticeship vacancy in location "London" that can apply by this website
