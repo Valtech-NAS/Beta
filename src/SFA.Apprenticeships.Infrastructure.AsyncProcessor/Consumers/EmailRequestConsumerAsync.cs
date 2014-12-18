@@ -19,7 +19,7 @@
         [AutoSubscriberConsumer(SubscriptionId = "EmailRequestConsumerAsync")]
         public Task Consume(EmailRequest request)
         {
-            Logger.Debug("Email request recieved from message bus, From:{0}, To:{1}, Subject:{2}", request.FromEmail, request.ToEmail, request.Subject);
+            Logger.Debug("Email request received from message bus, From:{0}, To:{1}, Subject:{2}", request.FromEmail, request.ToEmail, request.Subject);
 
             return Task.Run(() =>
             {
