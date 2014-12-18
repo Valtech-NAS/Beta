@@ -1,0 +1,21 @@
+﻿<script>
+        var html = document.documentElement;
+        html.className += " js-enabled";
+
+        if (!('open' in document.createElement('details'))) {
+            document.documentElement.className += ' no-details';
+        }
+
+        window.WebTrendsDscId = "@ViewBag.WebTrendsDscId";
+        window.WebTrendsDomainName = "@ViewBag.WebTrendsDomainName";
+</script>
+@Scripts.Render("~/Content/_assets/js/vendor/modernizr-custom.js")
+
+@if (ViewBag.EnableWebTrends == true)
+{
+    @Scripts.Render("~/Content/_assets/js/webtrends/webtrends.load.js")
+}
+else
+{
+    @Scripts.Render("~/Content/_assets/js/webtrends/webtrends.stub.js")
+}
