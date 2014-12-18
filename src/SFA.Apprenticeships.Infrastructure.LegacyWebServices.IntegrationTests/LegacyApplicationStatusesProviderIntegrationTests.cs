@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using Application.ApplicationUpdate;
@@ -78,10 +79,17 @@
             var applicationDetail = CreateApplicationForCandidate(candidate);
 
             // Act: get application statuses (should only be one).
-            var statuses = _legacyApplicationStatusesProvider
-                .GetCandidateApplicationStatuses(candidate)
-                .ToList();
-
+            var statuses = new List<ApplicationStatusSummary>(0);
+            for (var i = 0; i < 10; i++)
+            {
+                //There appears to be a delay in the nas gateway between submitting the application and being able to query the state.
+                //Loop until the state is found or we deem that this request has failed
+                statuses = _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate).ToList();
+                if (statuses.Count > 0)
+                    break;
+                Thread.Sleep(1000);
+            }
+            
             // Assert.
             statuses.Should().NotBeNull();
             statuses.Count().Should().Be(1);
