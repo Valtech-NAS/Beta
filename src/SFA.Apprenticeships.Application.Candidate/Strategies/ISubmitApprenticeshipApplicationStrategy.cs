@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface ISubmitApplicationStrategy
+    public interface ISubmitApprenticeshipApplicationStrategy
     {
         void SubmitApplication(Guid applicationId);
     }

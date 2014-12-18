@@ -1,6 +1,6 @@
 ﻿Feature: GDS Start Page redirect
 	As a Production user
-	When I navigate to the Aprenticeships home page
+	When I navigate to the Apprenticeships home page
 	Then I am redirected to the GDS Start Page
 
 @SmokeTestsProd

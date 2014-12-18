@@ -125,7 +125,7 @@
     <Compile Include="Strategies\Traineeships\ISaveTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\ISaveApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ISaveCandidateStrategy.cs" />
-    <Compile Include="Strategies\ISubmitApplicationStrategy.cs" />
+    <Compile Include="Strategies\ISubmitApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\IVacancyStatusProvider.cs" />
     <Compile Include="Strategies\LegacyActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\LegacyGetCandidateApprenticeshipApplicationsStrategy.cs" />

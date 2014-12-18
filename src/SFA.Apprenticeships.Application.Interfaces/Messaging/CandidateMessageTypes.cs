@@ -5,7 +5,8 @@
         SendActivationCode,
         SendPasswordResetCode,
         SendAccountUnlockCode,
-        ApplicationSubmitted,
+        ApprenticeshipApplicationSubmitted,
+        TraineeshipApplicationSubmitted,
         PasswordChanged
     }
 }

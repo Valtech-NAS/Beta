@@ -30,7 +30,7 @@
         private readonly ISaveApprenticeshipApplicationStrategy _saveApplicationStrategy;
         private readonly ISaveTraineeshipApplicationStrategy _saveTraineeshipApplicationStrategy;
         private readonly IArchiveApplicationStrategy _archiveApplicationStrategy;
-        private readonly ISubmitApplicationStrategy _submitApprenticeshipApplicationStrategy;
+        private readonly ISubmitApprenticeshipApplicationStrategy _submitApplicationStrategy;
         private readonly ISubmitApplicationStrategy _submitTraineeshipApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IDeleteApplicationStrategy _deleteApplicationStrategy;
@@ -41,7 +41,7 @@
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             IActivateCandidateStrategy activateCandidateStrategy,
             IAuthenticateCandidateStrategy authenticateCandidateStrategy,
-            ISubmitApplicationStrategy submitApprenticeshipApplicationStrategy,
+            ISubmitApprenticeshipApplicationStrategy submitApplicationStrategy,
             IRegisterCandidateStrategy registerCandidateStrategy,
             ICreateApprenticeshipApplicationStrategy createApplicationStrategy,
             ICreateTraineeshipApplicationStrategy createTraineeshipApplicationStrategy,

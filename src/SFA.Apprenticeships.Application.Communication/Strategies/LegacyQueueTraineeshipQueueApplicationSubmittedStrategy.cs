@@ -9,27 +9,27 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
     using Interfaces.Messaging;
     using Vacancy;
 
-    public class LegacyQueueApplicationSubmittedStrategy : ISendApplicationSubmittedStrategy
+    public class LegacyQueueTraineeshipQueueApplicationSubmittedStrategy : ISendTraineeshipApplicationSubmittedStrategy
     {
         private readonly IMessageBus _messageBus;
-        private readonly IVacancyDataProvider<ApprenticeshipVacancyDetail> _vacancyDataProvider;
+        private readonly IVacancyDataProvider<TraineeshipVacancyDetail> _vacancyDataProvider;
 
-        public LegacyQueueApplicationSubmittedStrategy(IMessageBus messageBus, IVacancyDataProvider<ApprenticeshipVacancyDetail> vacancyDataProvider)
+        public LegacyQueueTraineeshipQueueApplicationSubmittedStrategy(IMessageBus messageBus, IVacancyDataProvider<TraineeshipVacancyDetail> vacancyDataProvider)
         {
             _messageBus = messageBus;
             _vacancyDataProvider = vacancyDataProvider;
         }
 
-        public void Send(Candidate candidate, ApprenticeshipApplicationDetail apprenticeshipApplicationDetail, CandidateMessageTypes messageType,
+        public void Send(Candidate candidate, TraineeshipApplicationDetail traineeshipApplicationDetail, CandidateMessageTypes messageType,
             IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
         {
-            var reference = GetVacancyReference(apprenticeshipApplicationDetail.Vacancy.Id);
+            var reference = GetVacancyReference(traineeshipApplicationDetail.Vacancy.Id);
 
             var applicationTokens = new[]
             {
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName), 
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyTitle,
-                    apprenticeshipApplicationDetail.Vacancy.Title),
+                    traineeshipApplicationDetail.Vacancy.Title),
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference, reference)
             };
 
@@ -37,7 +37,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
             {
                 ToEmail = candidate.RegistrationDetails.EmailAddress,
                 MessageType = messageType,
-                Tokens = applicationTokens,
+                Tokens = applicationTokens
             };
 
             _messageBus.PublishMessage(request);

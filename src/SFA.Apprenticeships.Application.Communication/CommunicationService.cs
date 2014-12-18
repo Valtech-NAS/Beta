@@ -14,35 +14,45 @@
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
-        private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ISendAccountUnlockCodeStrategy _sendAccountUnlockCodeStrategy;
         private readonly ISendActivationCodeStrategy _sendActivationCodeStrategy;
         private readonly ISendApplicationSubmittedStrategy _sendApplicationSubmittedStrategy;
+        private readonly ISendTraineeshipApplicationSubmittedStrategy _sendTraineeshipApplicationSubmittedStrategy;
         private readonly ISendPasswordChangedStrategy _sendPasswordChangedStrategy;
         private readonly ISendPasswordResetCodeStrategy _sendPasswordResetCodeStrategy;
+
+        private readonly IApplicationReadRepository _apprenticeshipApplicationReadRepository;
+        private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
+        private readonly ICandidateReadRepository _candidateReadRepository;
 
         public CommunicationService(ISendActivationCodeStrategy sendActivationCodeStrategy,
             ISendPasswordResetCodeStrategy sendPasswordResetCodeStrategy,
             ISendApplicationSubmittedStrategy sendApplicationSubmittedStrategy,
+            ISendTraineeshipApplicationSubmittedStrategy sendTraineeshipApplicationSubmittedStrategy,
             ISendPasswordChangedStrategy sendPasswordChangedStrategy,
             ISendAccountUnlockCodeStrategy sendAccountUnlockCodeStrategy,
             ICandidateReadRepository candidateReadRepository,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository)
+            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
         {
             _sendActivationCodeStrategy = sendActivationCodeStrategy;
             _sendPasswordResetCodeStrategy = sendPasswordResetCodeStrategy;
             _sendApplicationSubmittedStrategy = sendApplicationSubmittedStrategy;
+            _sendTraineeshipApplicationSubmittedStrategy = sendTraineeshipApplicationSubmittedStrategy;
             _sendPasswordChangedStrategy = sendPasswordChangedStrategy;
             _sendAccountUnlockCodeStrategy = sendAccountUnlockCodeStrategy;
             _candidateReadRepository = candidateReadRepository;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
+            _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
         }
 
         public void SendMessageToCandidate(Guid candidateId, CandidateMessageTypes messageType,
             IList<KeyValuePair<CommunicationTokens, string>> tokens)
         {
+            var sentEmail = true;
+
             Logger.Debug("Calling CommunicationService to send a message of type {0} to candidate with Id={1}",
-                messageType.ToString(), candidateId);
+                messageType, candidateId);
 
             var candidate = _candidateReadRepository.Get(candidateId);
 
@@ -51,23 +61,30 @@
                 case CandidateMessageTypes.SendActivationCode:
                     _sendActivationCodeStrategy.Send(candidate, messageType, tokens);
                     break;
+
                 case CandidateMessageTypes.SendPasswordResetCode:
                     _sendPasswordResetCodeStrategy.Send(candidate, messageType, tokens);
                     break;
+
                 case CandidateMessageTypes.SendAccountUnlockCode:
                     _sendAccountUnlockCodeStrategy.Send(candidate, messageType, tokens);
                     break;
-                case CandidateMessageTypes.ApplicationSubmitted:
-                    if (candidate.CommunicationPreferences.AllowEmail)
+
+                case CandidateMessageTypes.ApprenticeshipApplicationSubmitted:
+                    if ((sentEmail = candidate.CommunicationPreferences.AllowEmail) == true)
                     {
-                        var application = GetApplicationDetail(tokens);
+                        var application = GetApprenticeshipApplicationDetail(tokens);
 
                         _sendApplicationSubmittedStrategy.Send(candidate, application, messageType, tokens);
                     }
-                    else
+                    break;
+
+                case CandidateMessageTypes.TraineeshipApplicationSubmitted:
+                    if ((sentEmail = candidate.CommunicationPreferences.AllowEmail) == true)
                     {
-                        Logger.Debug("NOT calling CommunicationService to send a message of type {0} to candidate with Id={1} (candidate has AllowEmail = false set)",
-                            messageType.ToString(), candidateId);
+                        var application = GetTraineeshipApplicationDetail(tokens);
+
+                        _sendTraineeshipApplicationSubmittedStrategy.Send(candidate, application, messageType, tokens);
                     }
                     break;
 
@@ -78,13 +95,25 @@
                 default:
                     throw new ArgumentOutOfRangeException("messageType");
             }
+
+            if (!sentEmail)
+            {
+                Logger.Debug("NOT calling CommunicationService to send a message of type {0} to candidate with Id={1} (candidate has AllowEmail = false set)", messageType, candidateId);
+            }
         }
 
-        private ApprenticeshipApplicationDetail GetApplicationDetail(IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
+        private ApprenticeshipApplicationDetail GetApprenticeshipApplicationDetail(IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
         {
             var applicationId = Guid.Parse(tokens.First(m => m.Key == CommunicationTokens.ApplicationId).Value);
 
             return _apprenticeshipApplicationReadRepository.Get(applicationId);
+        }
+
+        private TraineeshipApplicationDetail GetTraineeshipApplicationDetail(IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
+        {
+            var applicationId = Guid.Parse(tokens.First(m => m.Key == CommunicationTokens.ApplicationId).Value);
+
+            return _traineeshipApplicationReadRepository.Get(applicationId);
         }
     }
 }

@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using Application.Interfaces.Messaging;
     using Common.IoC;
-    using Domain.Interfaces.Configuration;
     using IoC;
     using NUnit.Framework;
     using StructureMap;
@@ -22,10 +21,10 @@
                 x.AddRegistry<CommunicationRegistry>();
                 x.AddRegistry<CommonRegistry>();
             });
-#pragma warning restore 0618
 
             _dispatcher = ObjectFactory.GetNamedInstance<IEmailDispatcher>("SendGridEmailDispatcher");
             _voidEmailDispatcher = ObjectFactory.GetNamedInstance<IEmailDispatcher>("VoidEmailDispatcher");
+#pragma warning restore 0618
         }
 
         private IEmailDispatcher _dispatcher;
@@ -83,7 +82,19 @@
             };
         }
 
-        private static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateApplicationSubmittedTokens()
+        private static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateApprenticeshipApplicationSubmittedTokens()
+        {
+            return new[]
+            {
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyTitle,
+                    "Application Vacancy Title"),
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference,
+                    "Application Vacancy Reference")
+            };
+        }
+
+        private static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateTraineeshipApplicationSubmittedTokens()
         {
             return new[]
             {
@@ -169,14 +180,28 @@
         }
 
         [Test, Category("Integration")]
-        public void ShouldSendApplicationSubmittedEmail()
+        public void ShouldSendApprenticeshipApplicationSubmittedEmail()
         {
             var request = new EmailRequest
             {
                 FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
-                Tokens = CreateApplicationSubmittedTokens(),
-                MessageType = CandidateMessageTypes.ApplicationSubmitted
+                Tokens = CreateApprenticeshipApplicationSubmittedTokens(),
+                MessageType = CandidateMessageTypes.ApprenticeshipApplicationSubmitted
+            };
+
+            _dispatcher.SendEmail(request);
+        }
+
+        [Test, Category("Integration")]
+        public void ShouldSendTraineeshipApplicationSubmittedEmail()
+        {
+            var request = new EmailRequest
+            {
+                FromEmail = TestFromEmail,
+                ToEmail = TestToEmail,
+                Tokens = CreateTraineeshipApplicationSubmittedTokens(),
+                MessageType = CandidateMessageTypes.TraineeshipApplicationSubmitted
             };
 
             _dispatcher.SendEmail(request);
