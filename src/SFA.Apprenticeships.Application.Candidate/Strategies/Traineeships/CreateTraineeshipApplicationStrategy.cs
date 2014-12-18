@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
+﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Traineeships
 {
     using System;
     using AutoMapper;
@@ -6,8 +6,8 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Interfaces.Repositories;
     using Domain.Entities.Vacancies.Traineeships;
+    using Domain.Interfaces.Repositories;
     using Vacancy;
 
     public class CreateTraineeshipApplicationStrategy : ICreateTraineeshipApplicationStrategy

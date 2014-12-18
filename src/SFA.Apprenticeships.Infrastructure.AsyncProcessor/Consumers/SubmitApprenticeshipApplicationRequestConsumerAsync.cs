@@ -3,6 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using Application.Candidate.Strategies;
+    using Application.Candidate.Strategies.Apprenticeships;
     using Application.Interfaces.Messaging;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
@@ -16,21 +17,21 @@
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly ILegacyApplicationProvider _legacyApplicationProvider;
-        private readonly IApplicationReadRepository _applicationReadRepository;
-        private readonly IApplicationWriteRepository _applicationWriteRepository;
+        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
+        private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IMessageBus _messageBus;
 
         public SubmitApprenticeshipApplicationRequestConsumerAsync(
             ILegacyApplicationProvider legacyApplicationProvider,
-            IApplicationReadRepository applicationReadRepository,
-            IApplicationWriteRepository applicationWriteRepository,
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
+            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             ICandidateReadRepository candidateReadRepository,
             IMessageBus messageBus)
         {
             _legacyApplicationProvider = legacyApplicationProvider;
-            _applicationReadRepository = applicationReadRepository;
-            _applicationWriteRepository = applicationWriteRepository;
+            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
+            _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _candidateReadRepository = candidateReadRepository;
             _messageBus = messageBus;
         }
@@ -54,7 +55,7 @@
 
         public void CreateApplication(SubmitApplicationRequest request)
         {
-            var applicationDetail = _applicationReadRepository.Get(request.ApplicationId, true);
+            var applicationDetail = _apprenticeshipApplicationReadRepository.Get(request.ApplicationId, true);
 
             try
             {
@@ -123,13 +124,13 @@
         private void SetApplicationStateSubmitted(ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
             apprenticeshipApplication.SetStateSubmitted();
-            _applicationWriteRepository.Save(apprenticeshipApplication);
+            _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
         }
 
         private void SetStateExpiredOrWithdrawn(ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
             apprenticeshipApplication.SetStateExpiredOrWithdrawn();
-            _applicationWriteRepository.Save(apprenticeshipApplication);
+            _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
         }
 
         private void Requeue(SubmitApplicationRequest request)

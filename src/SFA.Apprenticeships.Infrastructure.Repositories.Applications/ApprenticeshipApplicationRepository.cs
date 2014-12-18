@@ -14,14 +14,14 @@
     using MongoDB.Driver.Linq;
     using NLog;
 
-    public class ApprenticeshipApplicationRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApplicationReadRepository,
-        IApplicationWriteRepository
+    public class ApprenticeshipApprenticeshipApprenticeshipApplicationRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApprenticeshipApplicationReadRepository,
+        IApprenticeshipApplicationWriteRepository
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IMapper _mapper;
 
-        public ApprenticeshipApplicationRepository(
+        public ApprenticeshipApprenticeshipApprenticeshipApplicationRepository(
             IConfigurationManager configurationManager,
             IMapper mapper)
             : base(configurationManager, "Applications.mongoDB", "applications")

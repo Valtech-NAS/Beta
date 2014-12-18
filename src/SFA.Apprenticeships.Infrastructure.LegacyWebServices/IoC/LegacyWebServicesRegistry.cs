@@ -2,6 +2,7 @@
 {
     using Application.ApplicationUpdate;
     using Application.Candidate.Strategies;
+    using Application.Candidate.Strategies.Apprenticeships;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Application.VacancyEtl;

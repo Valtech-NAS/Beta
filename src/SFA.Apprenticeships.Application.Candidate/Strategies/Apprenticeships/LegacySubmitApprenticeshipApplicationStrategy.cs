@@ -9,33 +9,33 @@
     using Interfaces.Messaging;
     using NLog;
 
-    public class LegacySubmitApplicationStrategy : ISubmitApplicationStrategy
+    public class LegacySubmitApprenticeshipApplicationStrategy : ISubmitApplicationStrategy
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IApplicationReadRepository _applicationReadRepository;
-        private readonly IApplicationWriteRepository _applicationWriteRepository;
+        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
+        private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly IMessageBus _messageBus;
         private readonly ICommunicationService _communicationService;
 
-        public LegacySubmitApplicationStrategy(IMessageBus messageBus, IApplicationReadRepository applicationReadRepository,
-            IApplicationWriteRepository applicationWriteRepository, ICommunicationService communicationService)
+        public LegacySubmitApprenticeshipApplicationStrategy(IMessageBus messageBus, IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
+            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository, ICommunicationService communicationService)
         {
             _messageBus = messageBus;
-            _applicationReadRepository = applicationReadRepository;
-            _applicationWriteRepository = applicationWriteRepository;
+            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
+            _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _communicationService = communicationService;
         }
 
         public void SubmitApplication(Guid applicationId)
         {
-            var applicationDetail = _applicationReadRepository.Get(applicationId, true);
+            var applicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationId, true);
 
             applicationDetail.AssertState("Submit apprenticeshipApplication", ApplicationStatuses.Draft);
 
             try
             {
                 applicationDetail.SetStateSubmitting();
-                _applicationWriteRepository.Save(applicationDetail);
+                _apprenticeshipApplicationWriteRepository.Save(applicationDetail);
 
                 PublishMessage(applicationDetail);
                 NotifyCandidate(applicationDetail.CandidateId, applicationDetail.EntityId.ToString());
@@ -63,7 +63,7 @@
             catch
             {
                 apprenticeshipApplicationDetail.RevertStateToDraft();
-                _applicationWriteRepository.Save(apprenticeshipApplicationDetail);
+                _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplicationDetail);
                 throw;
             }
         }

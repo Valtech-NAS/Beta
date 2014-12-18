@@ -9,16 +9,16 @@
 
     public class StatusController : CandidateControllerBase
     {
-        private readonly IApplicationReadRepository _applicationReadRepository;
+        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ILocationLookupProvider _locationLookupProvider;
 
         public StatusController(ILocationLookupProvider locationLookupProvider,
-            IApplicationReadRepository applicationReadRepository,
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ICandidateReadRepository candidateReadRepository)
         {
             _locationLookupProvider = locationLookupProvider;
-            _applicationReadRepository = applicationReadRepository;
+            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _candidateReadRepository = candidateReadRepository;
         }
 
@@ -26,7 +26,7 @@
         {
             var statusTasks = new[]
             {
-                new Task(() => _applicationReadRepository.Get(Guid.NewGuid())),
+                new Task(() => _apprenticeshipApplicationReadRepository.Get(Guid.NewGuid())),
                 new Task(() => _candidateReadRepository.Get(Guid.NewGuid())),
                 new Task(() => _locationLookupProvider.FindLocation("London"))
             };

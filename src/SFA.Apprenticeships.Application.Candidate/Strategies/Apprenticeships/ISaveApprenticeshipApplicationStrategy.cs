@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
+﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Apprenticeships
 {
     using Domain.Entities.Applications;
 
-    public interface ISaveApplicationStrategy
+    public interface ISaveApprenticeshipApplicationStrategy
     {
         ApprenticeshipApplicationDetail SaveApplication(ApprenticeshipApplicationDetail apprenticeshipApplication);
     }

@@ -5,6 +5,7 @@
     using System.Threading;
     using Application.ApplicationUpdate;
     using Application.Candidate.Strategies;
+    using Application.Candidate.Strategies.Apprenticeships;
     using Common.IoC;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;

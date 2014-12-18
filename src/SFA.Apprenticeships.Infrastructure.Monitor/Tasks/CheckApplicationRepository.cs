@@ -5,11 +5,11 @@
 
     public class CheckApplicationRepository : IMonitorTask
     {
-        private readonly IApplicationReadRepository _applicationReadRepository;
+        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
 
-        public CheckApplicationRepository(IApplicationReadRepository applicationReadRepository)
+        public CheckApplicationRepository(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository)
         {
-            _applicationReadRepository = applicationReadRepository;
+            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
         }
 
         public string TaskName
@@ -19,7 +19,7 @@
 
         public void Run()
         {
-            _applicationReadRepository.Get(Guid.NewGuid());
+            _apprenticeshipApplicationReadRepository.Get(Guid.NewGuid());
         }
     }
 }

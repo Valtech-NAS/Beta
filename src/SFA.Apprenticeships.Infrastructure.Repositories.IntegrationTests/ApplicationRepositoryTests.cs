@@ -30,7 +30,7 @@
             // arrange
 #pragma warning disable 0618
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var writer = ObjectFactory.GetInstance<IApplicationWriteRepository>();
+            var writer = ObjectFactory.GetInstance<IApprenticeshipApplicationWriteRepository>();
 #pragma warning restore 0618
 
             var application = CreateTestApplication();

@@ -4,29 +4,30 @@
     using System.Collections.Generic;
     using System.Linq;
     using ApplicationUpdate;
+    using Apprenticeships;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
     using NLog;
 
-    public class LegacyGetCandidateApplicationsStrategy : IGetCandidateApplicationsStrategy
+    public class LegacyGetCandidateApprenticeshipApplicationsStrategy : IGetCandidateApprenticeshipApplicationsStrategy
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
         private readonly IApplicationStatusUpdater _applicationStatusUpdater;
-        private readonly IApplicationReadRepository _applicationReadRepository;
+        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
 
-        public LegacyGetCandidateApplicationsStrategy(
+        public LegacyGetCandidateApprenticeshipApplicationsStrategy(
             ICandidateReadRepository candidateReadRepository,
             ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider,
             IApplicationStatusUpdater applicationStatusUpdater,
-            IApplicationReadRepository applicationReadRepository)
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository)
         {
             _candidateReadRepository = candidateReadRepository;
             _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
             _applicationStatusUpdater = applicationStatusUpdater;
-            _applicationReadRepository = applicationReadRepository;
+            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
         }
 
         public IList<ApprenticeshipApplicationSummary> GetApplications(Guid candidateId)
@@ -45,14 +46,14 @@
 
                 //todo: not doing 3 below for now... TBC later
                 // (3) for any draft applications, update status based on current vacancy status
-                //var candidateApplications = _applicationReadRepository.GetForCandidate(candidateId);
+                //var candidateApplications = _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId);
                 //var draftApplicationIds = candidateApplications
                 //    .Where(a => a.Status == ApplicationStatuses.Draft)
                 //    .Select(a => a.ApplicationId);
 
                 //foreach (var applicationId in draftApplicationIds) //todo: parallel?
                 //{
-                //    var application = _applicationReadRepository.Get(applicationId);
+                //    var application = _apprenticeshipApplicationReadRepository.Get(applicationId);
                 //    var vacancyStatus = _vacancyStatusProvider.GetVacancyStatus(application.LegacyApplicationId);
 
                 //    //todo: update each application status for any that are NOT VacancyStatuses.Live
@@ -69,7 +70,7 @@
                 Logger.Error("Failed to update candidate's application statuses from legacy", ex);
             }
 
-            return _applicationReadRepository.GetForCandidate(candidateId);
+            return _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId);
         }
     }
 }

@@ -15,6 +15,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{9EB317AB-3B6E-4CEB-864B-B1D60B06A536}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{2EC3ADC0-EB51-4D4B-9B87-8D159C1326C4}"
+	ProjectSection(SolutionItems) = preProject
+		SFA.Apprenticeships.Application.Candidate\Strategies\ISaveApprenticeshipApplicationStrategy.cs = SFA.Apprenticeships.Application.Candidate\Strategies\ISaveApprenticeshipApplicationStrategy.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}"
 EndProject

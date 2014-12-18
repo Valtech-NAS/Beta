@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Candidate.Strategies;
+    using Application.Candidate.Strategies.Apprenticeships;
     using Common.IoC;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;

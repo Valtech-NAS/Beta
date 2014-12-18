@@ -107,39 +107,38 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CandidateService.cs" />
-    <Compile Include="Strategies\ArchiveApplicationStrategy.cs" />
-    <Compile Include="Strategies\CreateTraineeshipApplicationStrategy.cs" />
+    <Compile Include="Strategies\Apprenticeships\ArchiveApprenticeshipApplicationStrategy.cs" />
+    <Compile Include="Strategies\Traineeships\CreateTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\IArchiveApplicationStrategy.cs" />
-    <Compile Include="Strategies\ICreateTraineeshipApplicationStrategy.cs" />
+    <Compile Include="Strategies\Traineeships\ICreateTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ILegacyApplicationProvider.cs" />
-    <Compile Include="Strategies\CreateApplicationStrategy.cs" />
-    <Compile Include="Strategies\IGetCandidateApplicationsStrategy.cs" />
+    <Compile Include="Strategies\Apprenticeships\CreateApprenticeshipApplicationStrategy.cs" />
+    <Compile Include="Strategies\Apprenticeships\IGetCandidateApprenticeshipApplicationsStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\AuthenticateCandidateStrategy.cs" />
     <Compile Include="Strategies\IAuthenticateCandidateStrategy.cs" />
-    <Compile Include="Strategies\ICreateApplicationStrategy.cs" />
+    <Compile Include="Strategies\Apprenticeships\ICreateApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ILegacyCandidateProvider.cs" />
     <Compile Include="Strategies\IRegisterCandidateStrategy.cs" />
     <Compile Include="Strategies\IActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\IDeleteApplicationStrategy.cs" />
-    <Compile Include="Strategies\ISaveTraineeshipApplicationStrategy.cs" />
-    <Compile Include="Strategies\ISaveApplicationStrategy.cs" />
+    <Compile Include="Strategies\Traineeships\ISaveTraineeshipApplicationStrategy.cs" />
+    <Compile Include="Strategies\Apprenticeships\ISaveApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ISaveCandidateStrategy.cs" />
-    <Compile Include="Strategies\ISubmitTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ISubmitApplicationStrategy.cs" />
     <Compile Include="Strategies\IVacancyStatusProvider.cs" />
     <Compile Include="Strategies\LegacyActivateCandidateStrategy.cs" />
-    <Compile Include="Strategies\LegacyGetCandidateApplicationsStrategy.cs" />
+    <Compile Include="Strategies\Apprenticeships\LegacyGetCandidateApprenticeshipApplicationsStrategy.cs" />
     <Compile Include="Strategies\LegacyResetForgottenPasswordStrategy.cs" />
-    <Compile Include="Strategies\LegacySubmitTraineeshipApplicationStrategy.cs" />
-    <Compile Include="Strategies\LegacySubmitApplicationStrategy.cs" />
+    <Compile Include="Strategies\Traineeships\LegacySubmitTraineeshipApplicationStrategy.cs" />
+    <Compile Include="Strategies\Apprenticeships\LegacySubmitApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\LegacyUnlockAccountStrategy .cs" />
     <Compile Include="Strategies\LegacyVacancyStatusProvider.cs" />
     <Compile Include="Strategies\QueuedLegacyActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\RegisterCandidateStrategy.cs" />
-    <Compile Include="Strategies\DeleteApplicationStrategy.cs" />
-    <Compile Include="Strategies\SaveTraineeshipApplicationStrategy.cs" />
-    <Compile Include="Strategies\SaveApplicationStrategy.cs" />
+    <Compile Include="Strategies\Apprenticeships\DeleteApprenticeshipApplicationStrategy.cs" />
+    <Compile Include="Strategies\Traineeships\SaveTraineeshipApplicationStrategy.cs" />
+    <Compile Include="Strategies\Apprenticeships\SaveApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\SaveCandidateStrategy.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,7 +17,7 @@
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly IApplicationWriteRepository _applicationWriteRepository;
+        private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
         private readonly IVacancyDataService<ApprenticeshipVacancyDetail> _vacancyDataService;
@@ -25,10 +25,10 @@
         public ApprenticeshipVacancyDetailProvider(
             IVacancyDataService<ApprenticeshipVacancyDetail> vacancyDataService,
             ICandidateService candidateService,
-            IApplicationWriteRepository applicationWriteRepository,
+            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IMapper mapper)
         {
-            _applicationWriteRepository = applicationWriteRepository;
+            _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _vacancyDataService = vacancyDataService;
             _candidateService = candidateService;
             _mapper = mapper;
@@ -49,7 +49,7 @@
                     if (candidateId != null)
                     {
                         // Vacancy is being viewed by a signed-in candidate, update application status.
-                        _applicationWriteRepository.ExpireOrWithdrawForCandidate(candidateId.Value, vacancyId);
+                        _apprenticeshipApplicationWriteRepository.ExpireOrWithdrawForCandidate(candidateId.Value, vacancyId);
                     }
 
                     return null;

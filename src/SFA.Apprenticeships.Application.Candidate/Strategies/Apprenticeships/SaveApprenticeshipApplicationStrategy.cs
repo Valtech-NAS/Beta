@@ -1,29 +1,29 @@
-﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
+﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Apprenticeships
 {
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
 
-    public class SaveApplicationStrategy : ISaveApplicationStrategy
+    public class SaveApprenticeshipApplicationStrategy : ISaveApprenticeshipApplicationStrategy
     {
-        private readonly IApplicationReadRepository _applicationReadRepository;
-        private readonly IApplicationWriteRepository _applicationWriteRepository;
+        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
+        private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
 
-        public SaveApplicationStrategy(IApplicationReadRepository applicationReadRepository,
-            IApplicationWriteRepository applicationWriteRepository, ICandidateReadRepository candidateReadRepository,
+        public SaveApprenticeshipApplicationStrategy(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
+            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository, ICandidateReadRepository candidateReadRepository,
             ICandidateWriteRepository candidateWriteRepository)
         {
-            _applicationReadRepository = applicationReadRepository;
-            _applicationWriteRepository = applicationWriteRepository;
+            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
+            _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _candidateReadRepository = candidateReadRepository;
             _candidateWriteRepository = candidateWriteRepository;
         }
 
         public ApprenticeshipApplicationDetail SaveApplication(ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
-            var applicationDetail = _applicationReadRepository.Get(apprenticeshipApplication.EntityId, true);
+            var applicationDetail = _apprenticeshipApplicationReadRepository.Get(apprenticeshipApplication.EntityId, true);
 
             applicationDetail.AssertState("Save apprenticeship application", ApplicationStatuses.Draft);
 
@@ -31,7 +31,7 @@
             applicationDetail.AdditionalQuestion1Answer = apprenticeshipApplication.AdditionalQuestion1Answer;
             applicationDetail.AdditionalQuestion2Answer = apprenticeshipApplication.AdditionalQuestion2Answer;
 
-            var savedApplication = _applicationWriteRepository.Save(applicationDetail);
+            var savedApplication = _apprenticeshipApplicationWriteRepository.Save(applicationDetail);
 
             SyncToCandidatesApplicationTemplate(savedApplication);
 

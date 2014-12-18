@@ -1,17 +1,17 @@
-﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
+﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Traineeships
 {
     using System;
     using System.Collections.Generic;
-    using Domain.Entities.Vacancies.Apprenticeships;
-    using NLog;
-    using Interfaces.Messaging;
-    using Vacancy;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
+    using Interfaces.Messaging;
+    using NLog;
+    using Vacancy;
 
-    public class LegacySubmitTraineeshipApplicationStrategy : ISubmitTraineeshipApplicationStrategy
+    public class LegacySubmitTraineeshipApplicationStrategy : ISubmitApplicationStrategy
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly ICandidateReadRepository _candidateReadRepository;

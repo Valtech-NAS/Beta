@@ -10,15 +10,15 @@
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly IApplicationWriteRepository _applicationWriteRepository;
-        private readonly IApplicationReadRepository _applicationReadRepository;
+        private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
+        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
 
         public ApplicationStatusUpdater(
-            IApplicationWriteRepository applicationWriteRepository,
-            IApplicationReadRepository applicationReadRepository)
+            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository)
         {
-            _applicationWriteRepository = applicationWriteRepository;
-            _applicationReadRepository = applicationReadRepository;
+            _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
+            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
         }
 
         public void Update(Candidate candidate, IEnumerable<ApplicationStatusSummary> applicationStatuses)
@@ -29,7 +29,7 @@
             {
                 var legacyVacancyId  = applicationStatus.LegacyVacancyId;
 
-                var applicationDetail = _applicationReadRepository.GetForCandidate(
+                var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(
                     candidate.EntityId, each => each.Vacancy.Id == legacyVacancyId);
 
                 // TODO: DEBT: AG: this block of code is duplicated in ApplicationStatusUpdateStrategy.
@@ -68,7 +68,7 @@
 
                     if (updated)
                     {
-                        _applicationWriteRepository.Save(applicationDetail);
+                        _apprenticeshipApplicationWriteRepository.Save(applicationDetail);
                     }
                 }
                 else

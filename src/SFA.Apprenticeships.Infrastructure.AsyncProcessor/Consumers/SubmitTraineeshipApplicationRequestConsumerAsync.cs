@@ -3,6 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using Application.Candidate.Strategies;
+    using Application.Candidate.Strategies.Apprenticeships;
     using Application.Interfaces.Messaging;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;

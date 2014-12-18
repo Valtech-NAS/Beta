@@ -14,17 +14,17 @@
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
-        private readonly IApplicationReadRepository _applicationReadRepository;
+        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApplicationStatusUpdateStrategy _applicationStatusUpdateStrategy;
         private readonly IMessageBus _messageBus;
 
         public ApplicationStatusProcessor(ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider,
-            IApplicationReadRepository applicationReadRepository,
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy, 
             IMessageBus messageBus)
         {
             _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
-            _applicationReadRepository = applicationReadRepository;
+            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
             _messageBus = messageBus;
         }
@@ -74,7 +74,7 @@
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 applicationStatusSummary =>
                 {
-                    var applicationDetail = _applicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
+                    var applicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
 
                     // If the application status has not changed, there's no work to do.
                     //TODO: Should we be doing anything in the event of applicationDetail being null? This happens because we're sharing the nas preprod gateway with four environments
@@ -92,7 +92,7 @@
             Logger.Debug("Processing application summary status update for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
 
             // for a single application, check if the update strategy needs to be invoked
-            var application = _applicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
+            var application = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
 
             if (application == null)
             {

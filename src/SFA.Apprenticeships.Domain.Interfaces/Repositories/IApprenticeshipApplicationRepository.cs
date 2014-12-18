@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Entities.Applications;
 
-    public interface IApplicationReadRepository : IReadRepository<ApprenticeshipApplicationDetail>
+    public interface IApprenticeshipApplicationReadRepository : IReadRepository<ApprenticeshipApplicationDetail>
     {
         ApprenticeshipApplicationDetail Get(Guid id, bool errorIfNotFound);
 
@@ -15,7 +15,7 @@
         ApprenticeshipApplicationDetail GetForCandidate(Guid candidateId, Func<ApprenticeshipApplicationDetail, bool> filter);
     }
 
-    public interface IApplicationWriteRepository : IWriteRepository<ApprenticeshipApplicationDetail> {
+    public interface IApprenticeshipApplicationWriteRepository : IWriteRepository<ApprenticeshipApplicationDetail> {
         void ExpireOrWithdrawForCandidate(Guid value, int vacancyId);
     }
 }

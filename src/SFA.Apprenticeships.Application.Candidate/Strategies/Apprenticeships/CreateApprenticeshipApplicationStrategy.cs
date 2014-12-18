@@ -1,38 +1,36 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
-
-namespace SFA.Apprenticeships.Application.Candidate.Strategies
+﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Apprenticeships
 {
     using System;
     using AutoMapper;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
     using Vacancy;
 
-    public class CreateApplicationStrategy : ICreateApplicationStrategy
+    public class CreateApprenticeshipApplicationStrategy : ICreateApprenticeshipApplicationStrategy
     {
-        private readonly IApplicationReadRepository _applicationReadRepository;
-        private readonly IApplicationWriteRepository _applicationWriteRepository;
+        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
+        private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IVacancyDataProvider<ApprenticeshipVacancyDetail> _vacancyDataProvider;
 
-        public CreateApplicationStrategy(
+        public CreateApprenticeshipApplicationStrategy(
             IVacancyDataProvider<ApprenticeshipVacancyDetail> vacancyDataProvider,
-            IApplicationReadRepository applicationReadRepository,
-            IApplicationWriteRepository applicationWriteRepository,
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
+            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             ICandidateReadRepository candidateReadRepository)
         {
             _vacancyDataProvider = vacancyDataProvider;
-            _applicationWriteRepository = applicationWriteRepository;
-            _applicationReadRepository = applicationReadRepository;
+            _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
+            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _candidateReadRepository = candidateReadRepository;
         }
 
         public ApprenticeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
         {
-            var applicationDetail = _applicationReadRepository.GetForCandidate(
+            var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(
                 candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
 
             if (applicationDetail == null)
@@ -48,9 +46,9 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
             if (vacancyDetails == null)
             {
                 // Update apprenticeshipApplication status.
-                _applicationWriteRepository.ExpireOrWithdrawForCandidate(candidateId, vacancyId);
+                _apprenticeshipApplicationWriteRepository.ExpireOrWithdrawForCandidate(candidateId, vacancyId);
 
-                return _applicationReadRepository.Get(applicationDetail.EntityId);
+                return _apprenticeshipApplicationReadRepository.Get(applicationDetail.EntityId);
             }
 
             if (applicationDetail.IsArchived)
@@ -64,9 +62,9 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
         private ApprenticeshipApplicationDetail UnarchiveApplication(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
         {
             apprenticeshipApplicationDetail.IsArchived = false;
-            _applicationWriteRepository.Save(apprenticeshipApplicationDetail);
+            _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplicationDetail);
 
-            return _applicationReadRepository.Get(apprenticeshipApplicationDetail.EntityId);
+            return _apprenticeshipApplicationReadRepository.Get(apprenticeshipApplicationDetail.EntityId);
         }
 
         private ApprenticeshipApplicationDetail CreateNewApplication(Guid candidateId, int vacancyId)
@@ -84,7 +82,7 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
             var candidate = _candidateReadRepository.Get(candidateId);
             var applicationDetail = CreateApplicationDetail(candidate, vacancyDetails);
 
-            _applicationWriteRepository.Save(applicationDetail);
+            _apprenticeshipApplicationWriteRepository.Save(applicationDetail);
 
             return applicationDetail;
         }

@@ -8,11 +8,11 @@
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly IApplicationWriteRepository _applicationWriteRepository;
+        private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
 
-        public ApplicationStatusUpdateStrategy(IApplicationWriteRepository applicationWriteRepository)
+        public ApplicationStatusUpdateStrategy(IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository)
         {
-            _applicationWriteRepository = applicationWriteRepository;
+            _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
         }
 
         public void Update(ApprenticeshipApplicationDetail apprenticeshipApplication, ApplicationStatusSummary applicationStatusSummary)
@@ -62,7 +62,7 @@
 
             if (updated)
             {
-                _applicationWriteRepository.Save(apprenticeshipApplication);
+                _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
             }
         }
     }

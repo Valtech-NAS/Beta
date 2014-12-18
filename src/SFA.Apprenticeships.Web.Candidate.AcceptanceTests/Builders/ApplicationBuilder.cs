@@ -64,7 +64,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
 
 #pragma warning disable 0618
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var repo = ObjectFactory.GetInstance<IApplicationWriteRepository>();
+            var repo = ObjectFactory.GetInstance<IApprenticeshipApplicationWriteRepository>();
 #pragma warning restore 0618
 
             ApprenticeshipApplicationDetail.CandidateDetails = RegistrationBuilder.Build();
@@ -78,8 +78,8 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
         {
 #pragma warning disable 0618
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var writerepo = ObjectFactory.GetInstance<IApplicationWriteRepository>();
-            var readrepo = ObjectFactory.GetInstance<IApplicationReadRepository>();
+            var writerepo = ObjectFactory.GetInstance<IApprenticeshipApplicationWriteRepository>();
+            var readrepo = ObjectFactory.GetInstance<IApprenticeshipApplicationReadRepository>();
 #pragma warning restore 0618
 
             var candidateApplications = readrepo.GetForCandidate(userCandidateId);

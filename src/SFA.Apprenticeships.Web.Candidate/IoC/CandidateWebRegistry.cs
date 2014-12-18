@@ -6,6 +6,8 @@
     using Application.Authentication;
     using Application.Candidate;
     using Application.Candidate.Strategies;
+    using Application.Candidate.Strategies.Apprenticeships;
+    using Application.Candidate.Strategies.Traineeships;
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Interfaces.Candidates;
@@ -36,7 +38,10 @@
             For<IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail>>().Use<VacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail>>();
             For<IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>>().Use<VacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>>();
 
-            For<ICandidateService>().Use<CandidateService>();
+            For<ICandidateService>().Use<CandidateService>()
+                .Ctor<ISubmitApplicationStrategy>("submitApprenticeshipApplicationStrategy").Is<LegacySubmitApprenticeshipApplicationStrategy>()
+                .Ctor<ISubmitApplicationStrategy>("submitTraineeshipApplicationStrategy").Is<LegacySubmitTraineeshipApplicationStrategy>();
+
             For<IActivateCandidateStrategy>().Use<QueuedLegacyActivateCandidateStrategy>();
             For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
@@ -60,8 +65,6 @@
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<Application.Communication.Strategies.ISendPasswordResetCodeStrategy>()
                 .Use<QueueEmailOnlyPasswordResetCodeStrategy>();
-            For<ISubmitApplicationStrategy>().Use<LegacySubmitApplicationStrategy>();
-            For<ISubmitTraineeshipApplicationStrategy>().Use<LegacySubmitTraineeshipApplicationStrategy>();
             For<ISendActivationCodeStrategy>().Use<QueueEmailOnlyActivationCodeStrategy>();
             For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApplicationSubmittedStrategy>();
             For<ISendPasswordChangedStrategy>().Use<QueueEmailOnlyPasswordChangedStrategy>();
@@ -83,18 +86,18 @@
             
             For<ILockAccountStrategy>().Use<LockAccountStrategy>();
             For<ILockUserStrategy>().Use<LockUserStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
-            For<ICreateApplicationStrategy>().Use<CreateApplicationStrategy>();
+            For<ICreateApprenticeshipApplicationStrategy>().Use<CreateApprenticeshipApplicationStrategy>();
             For<ICreateTraineeshipApplicationStrategy>().Use<CreateTraineeshipApplicationStrategy>();
-            For<ISaveApplicationStrategy>().Use<SaveApplicationStrategy>();
+            For<ISaveApprenticeshipApplicationStrategy>().Use<SaveApprenticeshipApplicationStrategy>(); ;
             For<ISaveTraineeshipApplicationStrategy>().Use<SaveTraineeshipApplicationStrategy>();
-            For<IArchiveApplicationStrategy>().Use<ArchiveApplicationStrategy>();
-            For<IDeleteApplicationStrategy>().Use<DeleteApplicationStrategy>();
+            For<IArchiveApplicationStrategy>().Use<ArchiveApprenticeshipApplicationStrategy>();
+            For<IDeleteApplicationStrategy>().Use<DeleteApprenticeshipApplicationStrategy>();
             For<IAuthenticateCandidateStrategy>().Use<AuthenticateCandidateStrategy>();
             For<IUserAccountService>().Use<UserAccountService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<IAuthenticationService>().Use<AuthenticationService>();
             For<ICommunicationService>().Use<CommunicationService>();
-            For<IGetCandidateApplicationsStrategy>().Use<LegacyGetCandidateApplicationsStrategy>();
+            For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<LegacyGetCandidateApprenticeshipApplicationsStrategy>();
             For<IApplicationStatusUpdater>().Use<ApplicationStatusUpdater>();
             
             // Apprenticeship providers (web)

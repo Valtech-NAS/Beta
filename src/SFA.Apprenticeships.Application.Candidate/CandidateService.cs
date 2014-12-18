@@ -10,6 +10,8 @@
     using Domain.Entities.Exceptions;
     using NLog;
     using Strategies;
+    using Strategies.Apprenticeships;
+    using Strategies.Traineeships;
     using UserAccount.Strategies;
 
     public class CandidateService : ICandidateService
@@ -17,53 +19,53 @@
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IActivateCandidateStrategy _activateCandidateStrategy;
-        private readonly IApplicationReadRepository _applicationReadRepository;
+        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IAuthenticateCandidateStrategy _authenticateCandidateStrategy;
         private readonly ICandidateReadRepository _candidateReadRepository;
-        private readonly ICreateApplicationStrategy _createApplicationStrategy;
+        private readonly ICreateApprenticeshipApplicationStrategy _createApplicationStrategy;
         private readonly ICreateTraineeshipApplicationStrategy _createTraineeshipApplicationStrategy;
-        private readonly IGetCandidateApplicationsStrategy _getCandidateApplicationsStrategy;
+        private readonly IGetCandidateApprenticeshipApplicationsStrategy _getCandidateApplicationsStrategy;
         private readonly IRegisterCandidateStrategy _registerCandidateStrategy;
         private readonly IResetForgottenPasswordStrategy _resetForgottenPasswordStrategy;
-        private readonly ISaveApplicationStrategy _saveApplicationStrategy;
+        private readonly ISaveApprenticeshipApplicationStrategy _saveApplicationStrategy;
         private readonly ISaveTraineeshipApplicationStrategy _saveTraineeshipApplicationStrategy;
         private readonly IArchiveApplicationStrategy _archiveApplicationStrategy;
-        private readonly ISubmitApplicationStrategy _submitApplicationStrategy;
-        private readonly ISubmitTraineeshipApplicationStrategy _submitTraineeshipApplicationStrategy;
+        private readonly ISubmitApplicationStrategy _submitApprenticeshipApplicationStrategy;
+        private readonly ISubmitApplicationStrategy _submitTraineeshipApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IDeleteApplicationStrategy _deleteApplicationStrategy;
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
 
         public CandidateService(
             ICandidateReadRepository candidateReadRepository,
-            IApplicationReadRepository applicationReadRepository,
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             IActivateCandidateStrategy activateCandidateStrategy,
             IAuthenticateCandidateStrategy authenticateCandidateStrategy,
-            ISubmitApplicationStrategy submitApplicationStrategy,
+            ISubmitApplicationStrategy submitApprenticeshipApplicationStrategy,
             IRegisterCandidateStrategy registerCandidateStrategy,
-            ICreateApplicationStrategy createApplicationStrategy,
+            ICreateApprenticeshipApplicationStrategy createApplicationStrategy,
             ICreateTraineeshipApplicationStrategy createTraineeshipApplicationStrategy,
-            IGetCandidateApplicationsStrategy getCandidateApplicationsStrategy,
+            IGetCandidateApprenticeshipApplicationsStrategy getCandidateApplicationsStrategy,
             IResetForgottenPasswordStrategy resetForgottenPasswordStrategy,
             IUnlockAccountStrategy unlockAccountStrategy,
-            ISaveApplicationStrategy saveApplicationStrategy,
+            ISaveApprenticeshipApplicationStrategy saveApplicationStrategy,
             IArchiveApplicationStrategy archiveApplicationStrategy, 
             IDeleteApplicationStrategy deleteApplicationStrategy, 
             ISaveCandidateStrategy saveCandidateStrategy, 
-            ISubmitTraineeshipApplicationStrategy submitTraineeshipApplicationStrategy, 
+            ISubmitApplicationStrategy submitTraineeshipApplicationStrategy, 
             ISaveTraineeshipApplicationStrategy saveTraineeshipApplicationStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
             _authenticateCandidateStrategy = authenticateCandidateStrategy;
-            _submitApplicationStrategy = submitApplicationStrategy;
+            _submitApprenticeshipApplicationStrategy = submitApprenticeshipApplicationStrategy;
             _registerCandidateStrategy = registerCandidateStrategy;
             _createApplicationStrategy = createApplicationStrategy;
             _createTraineeshipApplicationStrategy = createTraineeshipApplicationStrategy;
             _getCandidateApplicationsStrategy = getCandidateApplicationsStrategy;
             _resetForgottenPasswordStrategy = resetForgottenPasswordStrategy;
             _unlockAccountStrategy = unlockAccountStrategy;
-            _applicationReadRepository = applicationReadRepository;
+            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _saveApplicationStrategy = saveApplicationStrategy;
             _archiveApplicationStrategy = archiveApplicationStrategy;
             _deleteApplicationStrategy = deleteApplicationStrategy;
@@ -186,7 +188,7 @@
 
             var applicationId = GetApplicationId(candidateId, vacancyId);
 
-            return _applicationReadRepository.Get(applicationId);
+            return _apprenticeshipApplicationReadRepository.Get(applicationId);
         }
 
         public TraineeshipApplicationDetail CreateTraineeshipApplication(Guid candidateId, int traineeshipVacancyId)
@@ -260,7 +262,7 @@
 
             var applicationId = GetApplicationId(candidateId, vacancyId);
 
-            _submitApplicationStrategy.SubmitApplication(applicationId);
+            _submitApprenticeshipApplicationStrategy.SubmitApplication(applicationId);
         }
 
         public void SubmitTraineeshipApplication(Guid candidateId, int vacancyId,
@@ -278,7 +280,7 @@
 
         private Guid GetApplicationId(Guid candidateId, int vacancyId)
         {
-            var applicationDetail = _applicationReadRepository
+            var applicationDetail = _apprenticeshipApplicationReadRepository
                 .GetForCandidate(candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
 
             return applicationDetail.EntityId;

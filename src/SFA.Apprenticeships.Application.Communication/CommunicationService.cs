@@ -13,7 +13,7 @@
     public class CommunicationService : ICommunicationService
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IApplicationReadRepository _applicationReadRepository;
+        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ISendAccountUnlockCodeStrategy _sendAccountUnlockCodeStrategy;
         private readonly ISendActivationCodeStrategy _sendActivationCodeStrategy;
@@ -27,7 +27,7 @@
             ISendPasswordChangedStrategy sendPasswordChangedStrategy,
             ISendAccountUnlockCodeStrategy sendAccountUnlockCodeStrategy,
             ICandidateReadRepository candidateReadRepository,
-            IApplicationReadRepository applicationReadRepository)
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository)
         {
             _sendActivationCodeStrategy = sendActivationCodeStrategy;
             _sendPasswordResetCodeStrategy = sendPasswordResetCodeStrategy;
@@ -35,7 +35,7 @@
             _sendPasswordChangedStrategy = sendPasswordChangedStrategy;
             _sendAccountUnlockCodeStrategy = sendAccountUnlockCodeStrategy;
             _candidateReadRepository = candidateReadRepository;
-            _applicationReadRepository = applicationReadRepository;
+            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
         }
 
         public void SendMessageToCandidate(Guid candidateId, CandidateMessageTypes messageType,
@@ -84,7 +84,7 @@
         {
             var applicationId = Guid.Parse(tokens.First(m => m.Key == CommunicationTokens.ApplicationId).Value);
 
-            return _applicationReadRepository.Get(applicationId);
+            return _apprenticeshipApplicationReadRepository.Get(applicationId);
         }
     }
 }
