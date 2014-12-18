@@ -30,8 +30,8 @@
         private readonly ISaveApprenticeshipApplicationStrategy _saveApplicationStrategy;
         private readonly ISaveTraineeshipApplicationStrategy _saveTraineeshipApplicationStrategy;
         private readonly IArchiveApplicationStrategy _archiveApplicationStrategy;
-        private readonly ISubmitApprenticeshipApplicationStrategy _submitApplicationStrategy;
-        private readonly ISubmitApplicationStrategy _submitTraineeshipApplicationStrategy;
+        private readonly ISubmitApprenticeshipApplicationStrategy _submitApprenticeshipApplicationStrategy;
+        private readonly ISubmitTraineeshipApplicationStrategy _submitTraineeshipApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IDeleteApplicationStrategy _deleteApplicationStrategy;
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
@@ -41,7 +41,7 @@
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             IActivateCandidateStrategy activateCandidateStrategy,
             IAuthenticateCandidateStrategy authenticateCandidateStrategy,
-            ISubmitApprenticeshipApplicationStrategy submitApplicationStrategy,
+            ISubmitApprenticeshipApplicationStrategy submitApprenticeshipApplicationStrategy,
             IRegisterCandidateStrategy registerCandidateStrategy,
             ICreateApprenticeshipApplicationStrategy createApplicationStrategy,
             ICreateTraineeshipApplicationStrategy createTraineeshipApplicationStrategy,
@@ -51,8 +51,8 @@
             ISaveApprenticeshipApplicationStrategy saveApplicationStrategy,
             IArchiveApplicationStrategy archiveApplicationStrategy, 
             IDeleteApplicationStrategy deleteApplicationStrategy, 
-            ISaveCandidateStrategy saveCandidateStrategy, 
-            ISubmitApplicationStrategy submitTraineeshipApplicationStrategy, 
+            ISaveCandidateStrategy saveCandidateStrategy,
+            ISubmitTraineeshipApplicationStrategy submitTraineeshipApplicationStrategy, 
             ISaveTraineeshipApplicationStrategy saveTraineeshipApplicationStrategy)
         {
             _candidateReadRepository = candidateReadRepository;

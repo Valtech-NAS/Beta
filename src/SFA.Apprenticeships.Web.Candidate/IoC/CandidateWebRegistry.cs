@@ -39,8 +39,8 @@
             For<IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>>().Use<VacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>>();
 
             For<ICandidateService>().Use<CandidateService>()
-                .Ctor<ISubmitApplicationStrategy>("submitApprenticeshipApplicationStrategy").Is<LegacySubmitApprenticeshipApplicationStrategy>()
-                .Ctor<ISubmitApplicationStrategy>("submitTraineeshipApplicationStrategy").Is<LegacySubmitTraineeshipApplicationStrategy>();
+                .Ctor<ISubmitApprenticeshipApplicationStrategy>("submitApprenticeshipApplicationStrategy").Is<LegacySubmitApprenticeshipApplicationStrategy>()
+                .Ctor<ISubmitTraineeshipApplicationStrategy>("submitTraineeshipApplicationStrategy").Is<LegacySubmitTraineeshipApplicationStrategy>();
 
             For<IActivateCandidateStrategy>().Use<QueuedLegacyActivateCandidateStrategy>();
             For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>()

@@ -4,14 +4,12 @@
     using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using NLog;
-    using Vacancy;
 
-    public class LegacySubmitTraineeshipApplicationStrategy : ISubmitApplicationStrategy
+    public class LegacySubmitTraineeshipApplicationStrategy : ISubmitTraineeshipApplicationStrategy
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly ICommunicationService _communicationService;

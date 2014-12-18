@@ -13,7 +13,7 @@
     public class CommunicationService : ICommunicationService
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
+
         private readonly ISendAccountUnlockCodeStrategy _sendAccountUnlockCodeStrategy;
         private readonly ISendActivationCodeStrategy _sendActivationCodeStrategy;
         private readonly ISendApplicationSubmittedStrategy _sendApplicationSubmittedStrategy;
@@ -21,7 +21,7 @@
         private readonly ISendPasswordChangedStrategy _sendPasswordChangedStrategy;
         private readonly ISendPasswordResetCodeStrategy _sendPasswordResetCodeStrategy;
 
-        private readonly IApplicationReadRepository _apprenticeshipApplicationReadRepository;
+        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
 
@@ -32,7 +32,7 @@
             ISendPasswordChangedStrategy sendPasswordChangedStrategy,
             ISendAccountUnlockCodeStrategy sendAccountUnlockCodeStrategy,
             ICandidateReadRepository candidateReadRepository,
-            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository)
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
         {
             _sendActivationCodeStrategy = sendActivationCodeStrategy;
