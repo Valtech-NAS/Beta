@@ -2,18 +2,21 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using Domain.Entities.Applications;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
-    using Locations;
-    
+    using SFA.Apprenticeships.Domain.Entities.Applications;
+    using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Locations;
+
     //TODO Remove unused properties
     [Serializable]
     public class VacancyDetailViewModel : ViewModelBase
     {
-        public VacancyDetailViewModel() : base() { }
+        public VacancyDetailViewModel()
+        {
+        }
 
-        public VacancyDetailViewModel(string message) : base(message) { }
+        public VacancyDetailViewModel(string message) : base(message)
+        {
+        }
 
         #region Vacancy
 
@@ -22,13 +25,13 @@
         public string VacancyReference { get; set; }
 
         public string Title { get; set; }
-        
+
         public string Description { get; set; }
 
         public string FullDescription { get; set; }
 
         public string Framework { get; set; }
-        
+
         public string VacancyType { get; set; }
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
@@ -98,7 +101,7 @@
         public string QualificationRequired { get; set; }
 
         public string SkillsRequired { get; set; }
-        
+
         public string FutureProspects { get; set; }
 
         public string RealityCheck { get; set; }
@@ -121,6 +124,6 @@
 
         public bool HasCandidateAlreadyApplied { get; set; }
 
-        #endregion        
+        #endregion
     }
 }
