@@ -31,6 +31,8 @@
         
         public string VacancyType { get; set; }
 
+        public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
+
         public ApprenticeshipLocationType VacancyLocationType { get; set; }
 
         [UIHint("Date")]
