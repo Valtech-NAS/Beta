@@ -27,12 +27,10 @@
         {
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
+            //TODO: can we return null?
             if (vacancyDetails == null)
             {
-                return new TraineeshipApplicationDetail
-                {
-                    Status = ApplicationStatuses.ExpiredOrWithdrawn
-                };
+                return new TraineeshipApplicationDetail();
             }
 
             var candidate = _candidateReadRepository.Get(candidateId);
@@ -46,7 +44,6 @@
             return new TraineeshipApplicationDetail
             {
                 EntityId = Guid.NewGuid(),
-                Status = ApplicationStatuses.Draft,
                 DateCreated = DateTime.Now,
                 CandidateId = candidate.EntityId,
                 // TODO: US354: AG: better way to clone? http://stackoverflow.com/questions/5713556/copy-object-to-object-with-automapper

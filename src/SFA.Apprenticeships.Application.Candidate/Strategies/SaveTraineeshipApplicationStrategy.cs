@@ -36,8 +36,6 @@
 
             candidate.ApplicationTemplate = new ApplicationTemplate
             {
-                AboutYou = apprenticeshipApplicationDetail.CandidateInformation.AboutYou,
-                EducationHistory = apprenticeshipApplicationDetail.CandidateInformation.EducationHistory,
                 Qualifications = apprenticeshipApplicationDetail.CandidateInformation.Qualifications,
                 WorkExperience = apprenticeshipApplicationDetail.CandidateInformation.WorkExperience
             };

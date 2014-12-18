@@ -39,7 +39,7 @@
 
         public TraineeshipApplicationDetail Save(TraineeshipApplicationDetail entity)
         {
-            Logger.Debug("Calling repository to save TraineeshipApplicationDetail Id={0}, Status={1}", entity.EntityId, entity.Status);
+            Logger.Debug("Calling repository to save TraineeshipApplicationDetail Id={0}", entity.EntityId);
 
             var mongoEntity = _mapper.Map<TraineeshipApplicationDetail, MongoTraineeshipApplicationDetail>(entity);
 
