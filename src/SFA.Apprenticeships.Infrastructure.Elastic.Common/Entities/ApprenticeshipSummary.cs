@@ -18,7 +18,7 @@
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public DateTime ClosingDate { get; set; }
 
-        [ElasticProperty(Index = FieldIndexOption.Analyzed)]
+        [ElasticProperty(Index = FieldIndexOption.Analyzed, Analyzer = "snowball")]
         public string EmployerName { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.Analyzed, Analyzer = "snowball")]
