@@ -9,8 +9,9 @@
     using NLog;
     using ErrorCodes = Interfaces.Vacancies.ErrorCodes;
 
-    public class VacancySearchService<TVacancySummaryResponse> : IVacancySearchService<TVacancySummaryResponse>
+    public class VacancySearchService<TVacancySummaryResponse, TVacancyDetail> : IVacancySearchService<TVacancySummaryResponse, TVacancyDetail>
         where TVacancySummaryResponse : VacancySummary
+        where TVacancyDetail : VacancyDetail
     {
         private const string MessageFormat =
             "Keywords:{0}, Location:{1}, PageNumber:{2}, PageSize{3}, SearchRadius:{4}, SortType:{5}, LocationType:{6}";
@@ -23,9 +24,9 @@
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IVacancySearchProvider<TVacancySummaryResponse> _vacancySearchProvider;
-        private readonly IVacancyDataService _vacancyDataService;
+        private readonly IVacancyDataService<TVacancyDetail> _vacancyDataService;
 
-        public VacancySearchService(IVacancySearchProvider<TVacancySummaryResponse> vacancySearchProvider, IVacancyDataService vacancyDataService)
+        public VacancySearchService(IVacancySearchProvider<TVacancySummaryResponse> vacancySearchProvider, IVacancyDataService<TVacancyDetail> vacancyDataService)
         {
             _vacancySearchProvider = vacancySearchProvider;
             _vacancyDataService = vacancyDataService;
@@ -53,7 +54,7 @@
             }
         }
 
-        public VacancyDetail GetVacancyDetails(int vacancyId)
+        public TVacancyDetail GetVacancyDetails(int vacancyId)
         {
             Condition.Requires(vacancyId).IsGreaterOrEqual(1);
 

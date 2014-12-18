@@ -5,7 +5,7 @@
     using Application.VacancyEtl;
     using Common.IoC;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using IoC;
     using NUnit.Framework;
@@ -25,12 +25,12 @@
                 x.AddRegistry<LegacyWebServicesRegistry>();
             });
 
-            _vacancyDataProvider = ObjectFactory.GetInstance<IVacancyDataProvider>();
+            _vacancyDataProvider = ObjectFactory.GetInstance<IVacancyDataProvider<ApprenticeshipVacancyDetail>>();
             _vacancyIndexDataProvider = ObjectFactory.GetInstance<IVacancyIndexDataProvider>();
 #pragma warning restore 0618
         }
 
-        private IVacancyDataProvider _vacancyDataProvider;
+        private IVacancyDataProvider<ApprenticeshipVacancyDetail> _vacancyDataProvider;
         private IVacancyIndexDataProvider _vacancyIndexDataProvider;
 
         [Test, Category("Integration"), Category("SmokeTests")]

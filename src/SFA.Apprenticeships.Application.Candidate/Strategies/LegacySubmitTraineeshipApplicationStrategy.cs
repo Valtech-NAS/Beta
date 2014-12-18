@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using NLog;
     using SFA.Apprenticeships.Application.Interfaces.Messaging;
     using SFA.Apprenticeships.Application.Vacancy;
@@ -16,18 +17,19 @@
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICommunicationService _communicationService;
         private readonly IMessageBus _messageBus;
+        private readonly IVacancyDataProvider<TraineeshipVacancyDetail> _traineeshipDataProvider;
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
         private readonly IVacancyDataProvider _vacancyDataProvider;
 
         public LegacySubmitTraineeshipApplicationStrategy(IMessageBus messageBus,
             ICommunicationService communicationService,
-            IVacancyDataProvider vacancyDataProvider,
+            IVacancyDataProvider<TraineeshipVacancyDetail> traineeshipDataProvider,
             ICandidateReadRepository candidateReadRepository,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
         {
             _messageBus = messageBus;
             _communicationService = communicationService;
-            _vacancyDataProvider = vacancyDataProvider;
+            _traineeshipDataProvider = traineeshipDataProvider;
             _candidateReadRepository = candidateReadRepository;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
         }

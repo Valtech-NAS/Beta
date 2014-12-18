@@ -9,19 +9,18 @@
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.Locations;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
+    using Infrastructure.PerformanceCounters;
 
     [TestFixture]
     public class SearchProviderTests
     {
         private Mock<ILocationSearchService> _locationSearchService;
-        private Mock<IVacancySearchService<ApprenticeshipSummaryResponse>> _apprenticeshipSearchService;
-        private Mock<IVacancySearchService<TraineeshipSummaryResponse>> _traineeshipSearchService;
+        private Mock<IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail>> _apprenticeshipSearchService;
+        private Mock<IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>> _traineeshipSearchService;
         private Mock<IAddressSearchService> _addressSearchService;
         private Mock<IPerformanceCounterService> _performanceCounterService;
 
@@ -32,8 +31,8 @@
         public void Setup()
         {
             _locationSearchService = new Mock<ILocationSearchService>();
-            _apprenticeshipSearchService = new Mock<IVacancySearchService<ApprenticeshipSummaryResponse>>();
-            _traineeshipSearchService = new Mock<IVacancySearchService<TraineeshipSummaryResponse>>();
+            _apprenticeshipSearchService = new Mock<IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail>>();
+            _traineeshipSearchService = new Mock<IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>>();
             _addressSearchService = new Mock<IAddressSearchService>();
             _performanceCounterService = new Mock<IPerformanceCounterService>();
             

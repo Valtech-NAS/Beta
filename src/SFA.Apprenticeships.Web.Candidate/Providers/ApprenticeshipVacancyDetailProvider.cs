@@ -7,7 +7,6 @@
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
@@ -21,10 +20,10 @@
         private readonly IApplicationWriteRepository _applicationWriteRepository;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
-        private readonly IVacancyDataService _vacancyDataService;
+        private readonly IVacancyDataService<ApprenticeshipVacancyDetail> _vacancyDataService;
 
         public ApprenticeshipVacancyDetailProvider(
-            IVacancyDataService vacancyDataService,
+            IVacancyDataService<ApprenticeshipVacancyDetail> vacancyDataService,
             ICandidateService candidateService,
             IApplicationWriteRepository applicationWriteRepository,
             IMapper mapper)

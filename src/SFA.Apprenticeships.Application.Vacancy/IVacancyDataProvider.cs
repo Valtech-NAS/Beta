@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancy
 {
-    using SFA.Apprenticeships.Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
 
-    public interface IVacancyDataProvider
+    public interface IVacancyDataProvider<out TVacancyDetail> where TVacancyDetail : VacancyDetail
     {
-        ApprenticeshipVacancyDetail GetVacancyDetails(int vacancyId);
+        TVacancyDetail GetVacancyDetails(int vacancyId);
     }
 }

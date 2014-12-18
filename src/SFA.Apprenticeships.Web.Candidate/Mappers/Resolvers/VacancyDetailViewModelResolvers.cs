@@ -7,9 +7,9 @@
 
     public class VacancyDetailViewModelResolvers
     {
-        public class EmployerNameResolver : ValueResolver<ApprenticeshipVacancyDetail, string>
+        public class EmployerNameResolver : ValueResolver<VacancyDetail, string>
         {
-            protected override string ResolveCore(ApprenticeshipVacancyDetail vacancyDetail)
+            protected override string ResolveCore(VacancyDetail vacancyDetail)
             {
                 return vacancyDetail.IsEmployerAnonymous
                     ? vacancyDetail.AnonymousEmployerName
@@ -17,9 +17,9 @@
             }
         }
 
-        public class WageResolver : ValueResolver<ApprenticeshipVacancyDetail, string>
+        public class WageResolver : ValueResolver<VacancyDetail, string>
         {
-            protected override string ResolveCore(ApprenticeshipVacancyDetail vacancyDetail)
+            protected override string ResolveCore(VacancyDetail vacancyDetail)
             {
                 return vacancyDetail.WageType == WageType.Text
                     ? vacancyDetail.WageDescription

@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Messaging;
     using Interfaces.Messaging;
     using Vacancy;
@@ -11,9 +12,9 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
     public class LegacyQueueApplicationSubmittedStrategy : ISendApplicationSubmittedStrategy
     {
         private readonly IMessageBus _messageBus;
-        private readonly IVacancyDataProvider _vacancyDataProvider;
+        private readonly IVacancyDataProvider<ApprenticeshipVacancyDetail> _vacancyDataProvider;
 
-        public LegacyQueueApplicationSubmittedStrategy(IMessageBus messageBus, IVacancyDataProvider vacancyDataProvider)
+        public LegacyQueueApplicationSubmittedStrategy(IMessageBus messageBus, IVacancyDataProvider<ApprenticeshipVacancyDetail> vacancyDataProvider)
         {
             _messageBus = messageBus;
             _vacancyDataProvider = vacancyDataProvider;

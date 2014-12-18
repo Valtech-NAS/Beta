@@ -19,18 +19,18 @@
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly IGetCandidateApplicationsStrategy _getCandidateApplicationsStrategy;
-        private readonly IVacancyDataProvider _vacancyDataProvider;
+        private readonly IVacancyDataProvider<ApprenticeshipVacancyDetail> _apprenticeshipDataProvider;
 
         public SaveCandidateStrategy(ICandidateWriteRepository candidateWriteRepository,
             IGetCandidateApplicationsStrategy getCandidateApplicationsStrategy,
-            IVacancyDataProvider vacancyDataProvider,
+            IVacancyDataProvider<ApprenticeshipVacancyDetail> apprenticeshipDataProvider,
             ICandidateReadRepository candidateReadRepository,
             IApplicationWriteRepository applicationWriteRepository,
             IApplicationReadRepository applicationReadRepository)
         {
             _candidateWriteRepository = candidateWriteRepository;
             _getCandidateApplicationsStrategy = getCandidateApplicationsStrategy;
-            _vacancyDataProvider = vacancyDataProvider;
+            _apprenticeshipDataProvider = apprenticeshipDataProvider;
             _candidateReadRepository = candidateReadRepository;
             _applicationWriteRepository = applicationWriteRepository;
             _applicationReadRepository = applicationReadRepository;
@@ -50,7 +50,7 @@
                 try
                 {
                     var vacancyDetails =
-                        _vacancyDataProvider.GetVacancyDetails(candidateApplication.LegacyVacancyId);
+                        _apprenticeshipDataProvider.GetVacancyDetails(candidateApplication.LegacyVacancyId);
                     var reloadedCandidate = _candidateReadRepository.Get(candidate.EntityId);
                     var apprenticeshipApplicationDetail = UpdateApplicationDetail(reloadedCandidate, vacancyDetails);
 

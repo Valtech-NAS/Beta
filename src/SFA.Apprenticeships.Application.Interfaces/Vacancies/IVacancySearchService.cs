@@ -3,7 +3,9 @@
     using Domain.Entities.Vacancies;
     using Search;
 
-    public interface IVacancySearchService<TVacancySummaryResponse> where TVacancySummaryResponse : VacancySummary
+    public interface IVacancySearchService<TVacancySummaryResponse, out TVacancyDetail> 
+        where TVacancySummaryResponse : VacancySummary
+        where TVacancyDetail : VacancyDetail
     {
         /// <summary>
         /// returns vacancies matching search criteria
@@ -12,6 +14,6 @@
         /// <returns>0..* matching vacancies</returns>
         SearchResults<TVacancySummaryResponse> Search(SearchParameters parameters);
 
-        VacancyDetail GetVacancyDetails(int vacancyId);
+        TVacancyDetail GetVacancyDetails(int vacancyId);
     }
 }

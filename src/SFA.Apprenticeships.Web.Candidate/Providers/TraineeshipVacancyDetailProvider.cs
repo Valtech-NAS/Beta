@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using NLog;
     using SFA.Apprenticeships.Application.Interfaces.Vacancies;
     using SFA.Apprenticeships.Domain.Entities.Exceptions;
@@ -14,11 +15,11 @@
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IMapper _mapper;
-        private readonly IVacancySearchService<TraineeshipSummaryResponse> _vacancySearchService;
+        private readonly IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail> _vacancySearchService;
 
         public TraineeshipVacancyDetailProvider(
-            IMapper mapper, 
-            IVacancySearchService<TraineeshipSummaryResponse> vacancySearchService)
+            IMapper mapper,
+            IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail> vacancySearchService)
         {
             _mapper = mapper;
             _vacancySearchService = vacancySearchService;
@@ -39,8 +40,7 @@
                     return null;
                 }
 
-                var vacancyDetailViewModel =
-                    _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+                var vacancyDetailViewModel = _mapper.Map<TraineeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
                 return vacancyDetailViewModel;
             }

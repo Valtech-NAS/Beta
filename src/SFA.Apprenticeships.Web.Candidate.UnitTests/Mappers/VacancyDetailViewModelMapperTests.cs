@@ -29,7 +29,7 @@
         {
 #pragma warning disable 0618
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            _mapper = ObjectFactory.GetInstance<IMapper>();
+            _mapper = ObjectFactory.GetInstance<ApprenticeshipCandidateWebMappers>();
 #pragma warning restore 0618
         }
 

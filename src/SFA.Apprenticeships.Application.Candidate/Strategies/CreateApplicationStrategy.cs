@@ -16,10 +16,10 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
         private readonly IApplicationReadRepository _applicationReadRepository;
         private readonly IApplicationWriteRepository _applicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
-        private readonly IVacancyDataProvider _vacancyDataProvider;
+        private readonly IVacancyDataProvider<ApprenticeshipVacancyDetail> _vacancyDataProvider;
 
         public CreateApplicationStrategy(
-            IVacancyDataProvider vacancyDataProvider,
+            IVacancyDataProvider<ApprenticeshipVacancyDetail> vacancyDataProvider,
             IApplicationReadRepository applicationReadRepository,
             IApplicationWriteRepository applicationWriteRepository,
             ICandidateReadRepository candidateReadRepository)

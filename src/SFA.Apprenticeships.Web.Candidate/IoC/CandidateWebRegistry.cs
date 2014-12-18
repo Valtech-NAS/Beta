@@ -17,6 +17,7 @@
     using Application.UserAccount;
     using Application.UserAccount.Strategies;
     using Application.Vacancy;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
     using Mappers;
     using Microsoft.WindowsAzure;
@@ -32,8 +33,8 @@
 
             // services (app)
             For<ILocationSearchService>().Use<LocationSearchService>();
-            For<IVacancySearchService<ApprenticeshipSummaryResponse>>().Use<VacancySearchService<ApprenticeshipSummaryResponse>>();
-            For<IVacancySearchService<TraineeshipSummaryResponse>>().Use<VacancySearchService<TraineeshipSummaryResponse>>();
+            For<IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail>>().Use<VacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail>>();
+            For<IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>>().Use<VacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>>();
 
             For<ICandidateService>().Use<CandidateService>();
             For<IActivateCandidateStrategy>().Use<QueuedLegacyActivateCandidateStrategy>();
@@ -103,7 +104,7 @@
             For<ISearchProvider>().Use<SearchProvider>()
                 .Ctor<IMapper>("apprenticeshipSearchMapper").Named("ApprenticeshipCandidateWebMappers")
                 .Ctor<IMapper>("traineeshipSearchMapper").Named("TraineeshipCandidateWebMappers"); 
-            
+
             For<IApprenticeshipVacancyDetailProvider>().Use<ApprenticeshipVacancyDetailProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<IApprenticeshipApplicationProvider>().Use<ApprenticeshipApplicationProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<IAccountProvider>().Use<AccountProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");

@@ -7,18 +7,17 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
     using System.Linq;
     using Domain.Entities.Vacancies.Traineeships;
     using NLog;
-    using SFA.Apprenticeships.Application.Vacancy;
-    using SFA.Apprenticeships.Application.VacancyEtl;
-    using SFA.Apprenticeships.Domain.Entities.Vacancies;
+    using Application.Vacancy;
+    using Application.VacancyEtl;
 
     public class CheckNasGateway : IMonitorTask
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IVacancyDataProvider _vacancyDataProvider;
+        private readonly IVacancyDataProvider<ApprenticeshipVacancyDetail> _vacancyDataProvider;
         private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
 
         public CheckNasGateway(IVacancyIndexDataProvider vacancyIndexDataProvider,
-            IVacancyDataProvider vacancyDataProvider)
+            IVacancyDataProvider<ApprenticeshipVacancyDetail> vacancyDataProvider)
         {
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
             _vacancyDataProvider = vacancyDataProvider;

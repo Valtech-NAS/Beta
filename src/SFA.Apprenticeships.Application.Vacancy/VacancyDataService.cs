@@ -2,21 +2,20 @@
 {
     using System;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Interfaces.Vacancies;
     using NLog;
 
-    public class VacancyDataService : IVacancyDataService
+    public class VacancyDataService<TVacancyDetail> : IVacancyDataService<TVacancyDetail> where TVacancyDetail : VacancyDetail
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IVacancyDataProvider _service;
+        private readonly IVacancyDataProvider<TVacancyDetail> _service;
 
-        public VacancyDataService(IVacancyDataProvider service)
+        public VacancyDataService(IVacancyDataProvider<TVacancyDetail> service)
         {
             _service = service;
         }
 
-        public ApprenticeshipVacancyDetail GetVacancyDetails(int vacancyId)
+        public TVacancyDetail GetVacancyDetails(int vacancyId)
         {
             Logger.Debug("Calling VacancyDataProvider to get vacancy details for user {0}.", vacancyId);
 

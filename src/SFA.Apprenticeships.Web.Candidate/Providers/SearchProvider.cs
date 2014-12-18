@@ -12,7 +12,6 @@
     using Constants.ViewModels;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
     using Microsoft.WindowsAzure;
@@ -31,13 +30,13 @@
         private readonly ILocationSearchService _locationSearchService;
         private readonly IMapper _apprenticeshipSearchMapper;
         private readonly IMapper _traineeshipSearchMapper;
-        private readonly IVacancySearchService<ApprenticeshipSummaryResponse> _apprenticeshipSearchService;
-        private readonly IVacancySearchService<TraineeshipSummaryResponse> _traineeshipSearchService;
+        private readonly IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail> _apprenticeshipSearchService;
+        private readonly IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail> _traineeshipSearchService;
         private readonly IPerformanceCounterService _performanceCounterService;
 
         public SearchProvider(ILocationSearchService locationSearchService,
-            IVacancySearchService<ApprenticeshipSummaryResponse> apprenticeshipSearchService,
-            IVacancySearchService<TraineeshipSummaryResponse> traineeshipSearchService,
+            IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail> apprenticeshipSearchService,
+            IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail> traineeshipSearchService,
             IAddressSearchService addressSearchService,
             IMapper apprenticeshipSearchMapper,
             IMapper traineeshipSearchMapper, 

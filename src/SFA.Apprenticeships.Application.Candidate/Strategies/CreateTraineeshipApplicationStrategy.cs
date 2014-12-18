@@ -13,10 +13,10 @@
     public class CreateTraineeshipApplicationStrategy : ICreateTraineeshipApplicationStrategy
     {
         private readonly ICandidateReadRepository _candidateReadRepository;
-        private readonly IVacancyDataProvider _vacancyDataProvider;
+        private readonly IVacancyDataProvider<TraineeshipVacancyDetail> _vacancyDataProvider;
 
         public CreateTraineeshipApplicationStrategy(
-            IVacancyDataProvider vacancyDataProvider,
+            IVacancyDataProvider<TraineeshipVacancyDetail> vacancyDataProvider,
             ICandidateReadRepository candidateReadRepository)
         {
             _vacancyDataProvider = vacancyDataProvider;
@@ -38,8 +38,8 @@
 
             return applicationDetail;
         }
-        
-        private static TraineeshipApplicationDetail CreateApplicationDetail(Candidate candidate, ApprenticeshipVacancyDetail vacancyDetails)
+
+        private static TraineeshipApplicationDetail CreateApplicationDetail(Candidate candidate, TraineeshipVacancyDetail vacancyDetails)
         {
             return new TraineeshipApplicationDetail
             {

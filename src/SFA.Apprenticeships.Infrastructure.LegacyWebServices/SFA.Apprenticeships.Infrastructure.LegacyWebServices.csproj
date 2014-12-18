@@ -133,6 +133,7 @@
     <Compile Include="Mappers\Apprenticeships\VacancyStatusResolver.cs" />
     <Compile Include="Mappers\Apprenticeships\ApprenticeshipLevelResolver.cs" />
     <Compile Include="Mappers\Apprenticeships\VacancyLocationTypeResolver.cs" />
+    <Compile Include="Mappers\Traineeship\LegacyTraineeshipVacancyDetailMapper.cs" />
     <Compile Include="Mappers\WageTypeResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\GatewayServiceProxy\Reference.cs">

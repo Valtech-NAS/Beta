@@ -3,6 +3,7 @@
     using System;
     using Application.Candidate.Strategies;
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
     using Moq;
     using NUnit.Framework;
@@ -14,7 +15,7 @@
         [TestCase, ExpectedException(typeof(Exception))]
         public void WhenCreatingANewApplication_ShouldThrowACustomException()
         {
-            var vacancyDataProvider = new Mock<IVacancyDataProvider>();
+            var vacancyDataProvider = new Mock<IVacancyDataProvider<ApprenticeshipVacancyDetail>>();
             var applicationReadRepository = new Mock<IApplicationReadRepository>();
             var applicationWriteRepository = new Mock<IApplicationWriteRepository>();
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
