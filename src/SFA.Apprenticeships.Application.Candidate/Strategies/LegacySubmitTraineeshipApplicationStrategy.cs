@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using Domain.Entities.Vacancies.Apprenticeships;
     using NLog;
-    using SFA.Apprenticeships.Application.Interfaces.Messaging;
-    using SFA.Apprenticeships.Application.Vacancy;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Domain.Entities.Exceptions;
-    using SFA.Apprenticeships.Domain.Interfaces.Messaging;
-    using SFA.Apprenticeships.Domain.Interfaces.Repositories;
+    using Interfaces.Messaging;
+    using Vacancy;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Exceptions;
+    using Domain.Interfaces.Messaging;
+    using Domain.Interfaces.Repositories;
 
     public class LegacySubmitTraineeshipApplicationStrategy : ISubmitTraineeshipApplicationStrategy
     {
@@ -19,7 +19,7 @@
         private readonly IMessageBus _messageBus;
         private readonly IVacancyDataProvider<TraineeshipVacancyDetail> _traineeshipDataProvider;
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
-        private readonly IVacancyDataProvider _vacancyDataProvider;
+        
 
         public LegacySubmitTraineeshipApplicationStrategy(IMessageBus messageBus,
             ICommunicationService communicationService,
