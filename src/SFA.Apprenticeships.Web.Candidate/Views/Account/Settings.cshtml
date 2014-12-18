@@ -6,7 +6,7 @@
 }
 <div class="grid-wrapper">
     <div class="grid grid-1-2">
-        <h1 class="heading-xlarge">Settings</h1>
+        <h1 class="heading-xlarge">Your account settings</h1>
     </div>
     <div class="grid grid-1-2">
         <p>
@@ -34,12 +34,12 @@
         <div id="accountSettings2">
             <h3 class="heading-large">How we contact you</h3>
             <div class="panel-indent text">
-                <p>We will send you a notification when:</p>
-                <ul class="list-bullet">
+                <p>We'll notify you when you submit an application form</p>
+                @*<ul class="list-bullet">
                     <li>you submit an application form</li>
                     <li>the status of one of your applications changes</li>
                     <li>an apprenticeship is approaching its closing date</li>
-                </ul>
+                </ul>*@
             </div>
             @Html.FormRadioButtonsYesNo(c => c.AllowEmailComms)
         </div>
