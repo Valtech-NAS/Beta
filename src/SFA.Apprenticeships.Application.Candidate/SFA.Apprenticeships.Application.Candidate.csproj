@@ -122,6 +122,7 @@
     <Compile Include="Strategies\IRegisterCandidateStrategy.cs" />
     <Compile Include="Strategies\IActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\IDeleteApplicationStrategy.cs" />
+    <Compile Include="Strategies\ISaveTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ISaveApplicationStrategy.cs" />
     <Compile Include="Strategies\ISaveCandidateStrategy.cs" />
     <Compile Include="Strategies\ISubmitTraineeshipApplicationStrategy.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Strategies\QueuedLegacyActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\RegisterCandidateStrategy.cs" />
     <Compile Include="Strategies\DeleteApplicationStrategy.cs" />
+    <Compile Include="Strategies\SaveTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\SaveApplicationStrategy.cs" />
     <Compile Include="Strategies\SaveCandidateStrategy.cs" />
   </ItemGroup>

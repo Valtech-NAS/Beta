@@ -17,7 +17,6 @@
     using Application.UserAccount;
     using Application.UserAccount.Strategies;
     using Application.Vacancy;
-    using AutoMapper;
     using Domain.Interfaces.Mapping;
     using Mappers;
     using Microsoft.WindowsAzure;
@@ -86,6 +85,7 @@
             For<ICreateApplicationStrategy>().Use<CreateApplicationStrategy>();
             For<ICreateTraineeshipApplicationStrategy>().Use<CreateTraineeshipApplicationStrategy>();
             For<ISaveApplicationStrategy>().Use<SaveApplicationStrategy>();
+            For<ISaveTraineeshipApplicationStrategy>().Use<SaveTraineeshipApplicationStrategy>();
             For<IArchiveApplicationStrategy>().Use<ArchiveApplicationStrategy>();
             For<IDeleteApplicationStrategy>().Use<DeleteApplicationStrategy>();
             For<IAuthenticateCandidateStrategy>().Use<AuthenticateCandidateStrategy>();
