@@ -49,7 +49,7 @@
             Logger.Debug("Calling UserAccountService to discover if the username {0} is available.", username);
 
             // check status of user (unactivated account should also be considered "available")
-            User user = _userReadRepository.Get(username, false);
+            var user = _userReadRepository.Get(username, false);
             return user == null || user.Status == UserStatuses.PendingActivation;
         }
 
@@ -127,7 +127,7 @@
 
             Logger.Debug("Calling UserAccountService to get the status for the user {0}.", username);
 
-            User user = _userReadRepository.Get(username, false);
+            var user = _userReadRepository.Get(username, false);
 
             if (user == null)
             {
@@ -144,7 +144,7 @@
             Logger.Debug("Calling UserAccountService to get the role names for the user {0}.", username);
 
             var claims = new List<string>();
-            UserStatuses userStatus = GetUserStatus(username);
+            var userStatus = GetUserStatus(username);
 
             // Add 'roles' for user status.
             switch (userStatus)

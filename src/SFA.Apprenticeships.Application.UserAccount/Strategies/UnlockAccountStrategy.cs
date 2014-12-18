@@ -41,7 +41,6 @@
                 throw new CustomException("Invalid account unlock code.", ErrorCodes.AccountUnlockCodeInvalid);
             }
 
-            // 
             user.SetStateActive();
             _userWriteRepository.Save(user);
         }
