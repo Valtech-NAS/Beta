@@ -49,14 +49,12 @@
             base.OnActionExecuted(filterContext);
         }
 
-        private void AddMetaRefreshTimeout(ActionExecutedContext filterContext)
+        private static void AddMetaRefreshTimeout(ControllerContext filterContext)
         {
             var request = filterContext.RequestContext.HttpContext.Request;
             var returnUrl = request != null && request.Url != null ? request.Url.PathAndQuery : "/";
-            var helper = new UrlHelper(filterContext.RequestContext);
-            var sessionTimeoutUrl = helper.Action("SessionTimeout", "Login", new { ReturnUrl = returnUrl });
             filterContext.Controller.ViewBag.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds;
-            filterContext.Controller.ViewBag.SessionTimeoutUrl = sessionTimeoutUrl;
+            filterContext.Controller.ViewBag.SessionTimeoutUrl = returnUrl;
             filterContext.Controller.ViewBag.EnableSessionTimeout = true;
         }
     }
