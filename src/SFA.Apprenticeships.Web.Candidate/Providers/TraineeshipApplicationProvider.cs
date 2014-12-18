@@ -116,6 +116,7 @@
             try
             {
                 var patchedModel = GetApplicationViewModel(candidateId, vacancyId);
+                var candidate = _candidateService.GetCandidate(candidateId);
 
                 if (patchedModel.HasError())
                 {
@@ -125,7 +126,8 @@
                 return new WhatHappensNextViewModel
                 {
                     VacancyReference = patchedModel.VacancyDetail.VacancyReference,
-                    VacancyTitle = patchedModel.VacancyDetail.Title
+                    VacancyTitle = patchedModel.VacancyDetail.Title,
+                    SentEmail = candidate.CommunicationPreferences.AllowEmail
                 };
             }
             catch (Exception e)
