@@ -303,7 +303,7 @@
                     VacancyReference = patchedModel.VacancyDetail.VacancyReference,
                     VacancyTitle = patchedModel.VacancyDetail.Title,
                     Status = patchedModel.Status,
-                    ShowEmailLabel = candidate.CommunicationPreferences.AllowEmail
+                    SentEmail = candidate.CommunicationPreferences.AllowEmail
                 };
             }
             catch (Exception e)

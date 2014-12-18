@@ -19,6 +19,6 @@
 
         public ApplicationStatuses Status { get; set; }
 
-        public bool ShowEmailLabel { get; set; }
+        public bool SentEmail { get; set; }
     }
 }
