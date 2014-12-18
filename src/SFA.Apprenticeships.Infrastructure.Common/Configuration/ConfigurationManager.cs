@@ -6,6 +6,7 @@
     using System.IO;
     using CuttingEdge.Conditions;
     using Domain.Interfaces.Configuration;
+    using Microsoft.WindowsAzure;
 
     public class ConfigurationManager : IConfigurationManager
     {
@@ -67,6 +68,12 @@
         public T GetAppSetting<T>(string key)
         {
             var setting = GetAppSetting(key);
+            return (T) Convert.ChangeType(setting, typeof (T));
+        }
+
+        public T GetCloudAppSetting<T>(string key)
+        {
+            var setting = CloudConfigurationManager.GetSetting(key);
             return (T) Convert.ChangeType(setting, typeof (T));
         }
 

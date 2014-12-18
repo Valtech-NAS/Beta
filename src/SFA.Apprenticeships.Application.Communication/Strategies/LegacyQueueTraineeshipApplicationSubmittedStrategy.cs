@@ -9,12 +9,12 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
     using Interfaces.Messaging;
     using Vacancy;
 
-    public class LegacyQueueTraineeshipQueueApplicationSubmittedStrategy : ISendTraineeshipApplicationSubmittedStrategy
+    public class LegacyQueueTraineeshipApplicationSubmittedStrategy : ISendTraineeshipApplicationSubmittedStrategy
     {
         private readonly IMessageBus _messageBus;
         private readonly IVacancyDataProvider<TraineeshipVacancyDetail> _vacancyDataProvider;
 
-        public LegacyQueueTraineeshipQueueApplicationSubmittedStrategy(IMessageBus messageBus, IVacancyDataProvider<TraineeshipVacancyDetail> vacancyDataProvider)
+        public LegacyQueueTraineeshipApplicationSubmittedStrategy(IMessageBus messageBus, IVacancyDataProvider<TraineeshipVacancyDetail> vacancyDataProvider)
         {
             _messageBus = messageBus;
             _vacancyDataProvider = vacancyDataProvider;

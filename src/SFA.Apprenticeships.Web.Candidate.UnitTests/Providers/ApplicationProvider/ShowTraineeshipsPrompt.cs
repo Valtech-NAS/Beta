@@ -28,7 +28,7 @@
             _featureToggle = new Mock<IFeatureToggle>();
 
 
-            _configurationManager.Setup(cm => cm.GetAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt"))
+            _configurationManager.Setup(cm => cm.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt"))
                 .Returns(UnsuccessfulApplications);
 
             _featureToggle.Setup(ft => ft.IsActive(Feature.Traineeships)).Returns(true);

@@ -68,6 +68,8 @@
                 .ForMember(d => d.DateApplied,
                     opt => opt.Ignore())
                 .ForMember(d => d.ViewModelMessage,
+                    opt => opt.Ignore())
+                 .ForMember(d => d.HasCandidateAlreadyApplied,
                     opt => opt.Ignore());
 
             Mapper.CreateMap<Address, AddressViewModel>();

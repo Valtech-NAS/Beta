@@ -342,7 +342,7 @@
                     .ToList();
 
                 var unsuccessfulApplicationsToShowTraineeshipsPrompt =
-                    _configurationManager.GetAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt");
+                    _configurationManager.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt");
 
                 var traineeshipsActive = _featureToggle.IsActive(Feature.Traineeships);
 
