@@ -105,8 +105,7 @@
                     break;
 
                 case ErrorCodes.LegacyVacancyStateError:
-                    Logger.Warn("Legacy Vacancy was in an invalid state. Apprenticeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
-                    //TODO: Check that the returned state is expired or withdrawn
+                    Logger.Info("Legacy Vacancy was in an invalid state. Apprenticeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     SetStateExpiredOrWithdrawn(apprenticeshipApplication);
                     break;
 
