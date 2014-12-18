@@ -364,6 +364,7 @@
     <Content Include="Views\Shared\_ApprenticeshipLayout.cshtml" />
     <Content Include="Views\TraineeshipSearch\Details.cshtml" />
     <Content Include="Views\TraineeshipSearch\_Apply.cshtml" />
+    <Content Include="Views\Shared\_WebTrends.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -571,6 +572,8 @@
     <Compile Include="ViewModels\Register\ActivationViewModel.cs" />
     <Compile Include="ViewModels\Register\PasswordResetViewModel.cs" />
     <Compile Include="ViewModels\Register\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\TraineeshipVacancySummaryViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\VacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\TraineeshipSearchResponseViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\TraineeshipSearchViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySearchViewModel.cs" />
@@ -579,7 +582,7 @@
     <Compile Include="ViewModels\VacancySearch\VacancyDetailViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\ApprenticeshipSearchResponseViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\ApprenticeshipSearchViewModel.cs" />
-    <Compile Include="ViewModels\VacancySearch\VacancySummaryViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\ApprenticeshipVacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>

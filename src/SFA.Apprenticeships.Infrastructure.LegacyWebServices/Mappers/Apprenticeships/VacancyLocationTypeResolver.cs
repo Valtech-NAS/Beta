@@ -1,26 +1,27 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers.Apprenticeships
 {
     using System;
     using AutoMapper;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
 
-    public class VacancyLocationTypeResolver : ValueResolver<string, VacancyLocationType>
+    public class VacancyLocationTypeResolver : ValueResolver<string, ApprenticeshipLocationType>
     {
-        protected override VacancyLocationType ResolveCore(string source)
+        protected override ApprenticeshipLocationType ResolveCore(string source)
         {
             if (source == null)
             {
-                return VacancyLocationType.Unknown;
+                return ApprenticeshipLocationType.Unknown;
             }
            
             switch (source)
             {
                 case "National":              
-                    return VacancyLocationType.National;
+                    return ApprenticeshipLocationType.National;
                 case "Standard":
                 case "MultipleLocation":               
                     // TODO: DONTKNOW: MultiLocation are posted once for each location so are equivelent to NonNational but needs backed by requirements in new system.
-                    return VacancyLocationType.NonNational;
+                    return ApprenticeshipLocationType.NonNational;
                 default:
                     throw new ArgumentException(
                         string.Format(

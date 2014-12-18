@@ -2,6 +2,7 @@
 {
     using Application.Vacancy;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Caching;
     using NLog;
 
@@ -19,7 +20,7 @@
             _vacancyDataProvider = vacancyDataProvider;
         }
 
-        public VacancyDetail GetVacancyDetails(int vacancyId)
+        public ApprenticeshipVacancyDetail GetVacancyDetails(int vacancyId)
         {
             Logger.Debug("Calling GetVacancyDetails for VacancyId: {0}", vacancyId);
             return _cacheService.Get(VacancyDataCacheKey, _vacancyDataProvider.GetVacancyDetails, vacancyId);

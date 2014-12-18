@@ -14,7 +14,7 @@
 
             var viewModel = new ApprenticeshipSearchResponseViewModel
             {
-                Vacancies = context.Engine.Map<IEnumerable<ApprenticeshipSummaryResponse>, IEnumerable<VacancySummaryViewModel>>(source.Results)
+                Vacancies = context.Engine.Map<IEnumerable<ApprenticeshipSummaryResponse>, IEnumerable<ApprenticeshipVacancySummaryViewModel>>(source.Results)
             };
 
             return viewModel;

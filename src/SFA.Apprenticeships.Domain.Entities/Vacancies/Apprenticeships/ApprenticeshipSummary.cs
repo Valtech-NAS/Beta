@@ -4,12 +4,7 @@
 
     public class ApprenticeshipSummary : VacancySummary
     {
-        public VacancyLocationType VacancyLocationType { get; set; }
+        public ApprenticeshipLocationType VacancyLocationType { get; set; }
 
-        [Obsolete("Required for backward compatibility with previous document version that has this field.")]
-        public int? VacancyType {
-            get { return null; }
-            set { }
-        }
     }
 }

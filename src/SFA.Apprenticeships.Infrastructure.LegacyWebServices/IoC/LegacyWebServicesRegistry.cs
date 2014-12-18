@@ -11,6 +11,7 @@
     using GatewayServiceProxy;
     using GetCandidateApplicationStatuses;
     using Mappers;
+    using Mappers.Apprenticeships;
     using StructureMap.Configuration.DSL;
     using VacancyDetail;
     using VacancySummary;
@@ -25,7 +26,7 @@
         public LegacyWebServicesRegistry(bool useCache)
         {
             For<IMapper>().Use<LegacyVacancySummaryMapper>().Name = "LegacyWebServices.LegacyVacancySummaryMapper";
-            For<IMapper>().Use<LegacyVacancyDetailMapper>().Name = "LegacyWebServices.LegacyVacancyDetailMapper";
+            For<IMapper>().Use<LegacyApprenticeshipVacancyDetailMapper>().Name = "LegacyWebServices.LegacyVacancyDetailMapper";
             For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
 
             For<IVacancyIndexDataProvider>()

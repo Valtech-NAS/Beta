@@ -104,6 +104,9 @@
     <Compile Include="Exceptions\CustomException.cs" />
     <Compile Include="Exceptions\ErrorCodes.cs" />
     <Compile Include="Users\UserCredentials.cs" />
+    <Compile Include="Vacancies\Apprenticeships\ApprenticeshipVacancyDetail.cs" />
+    <Compile Include="Vacancies\Traineeships\TraineeshipVacancyDetail.cs" />
+    <Compile Include="Vacancies\VacancyDetail.cs" />
     <Compile Include="Vacancies\VacancyStatuses.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Candidates\AboutYou.cs" />
@@ -123,13 +126,11 @@
     <Compile Include="Users\UserHelper.cs" />
     <Compile Include="Users\UserStatuses.cs" />
     <Compile Include="Users\UserRoles.cs" />
-    <Compile Include="Vacancies\VacancyDetail.cs" />
-    <Compile Include="Vacancies\VacancyLocationType.cs" />
+    <Compile Include="Vacancies\Apprenticeships\ApprenticeshipLocationType.cs" />
     <Compile Include="Vacancies\Traineeships\TraineeshipSummary.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSummary.cs" />
-    <Compile Include="Vacancies\VacancyLevel.cs" />
+    <Compile Include="Vacancies\Apprenticeships\ApprenticeshipLevel.cs" />
     <Compile Include="Vacancies\VacancySummary.cs" />
-    <Compile Include="Vacancies\VacancyType.cs" />
     <Compile Include="Vacancies\WageType.cs" />
   </ItemGroup>
   <ItemGroup />

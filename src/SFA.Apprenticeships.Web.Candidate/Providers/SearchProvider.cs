@@ -13,6 +13,7 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
     using Microsoft.WindowsAzure;
     using NLog;
@@ -112,14 +113,14 @@
                 }
 
                 var nationalResults =
-                    results[0].Results.Any(x => x.VacancyLocationType == VacancyLocationType.National)
+                    results[0].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.National)
                     ? results[0]
-                    : results[1].Results.Any(x => x.VacancyLocationType == VacancyLocationType.National) ? results[1] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null);
+                    : results[1].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.National) ? results[1] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null);
 
                 var nonNationalResults = 
-                    results[1].Results.Any(x => x.VacancyLocationType == VacancyLocationType.NonNational) 
+                    results[1].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.NonNational) 
                     ? results[1]
-                    : results[0].Results.Any(x => x.VacancyLocationType == VacancyLocationType.NonNational) ? results[0] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null);
+                    : results[0].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.NonNational) ? results[0] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null);
 
                 var nationalResponse =
                     _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse>, ApprenticeshipSearchResponseViewModel>(
@@ -129,7 +130,7 @@
                     _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse>, ApprenticeshipSearchResponseViewModel>(
                         nonNationalResults);
 
-                if (search.LocationType == VacancyLocationType.NonNational)
+                if (search.LocationType == ApprenticeshipLocationType.NonNational)
                 {
                     nonNationlResponse.TotalLocalHits = nonNationalResults.Total;
                     nonNationlResponse.TotalNationalHits = nationalResults.Total;
@@ -139,7 +140,7 @@
                     if (nonNationalResults.Total == 0 && nationalResults.Total > 0)
                     {
                         nonNationlResponse.Vacancies = nationalResponse.Vacancies;
-                        nonNationlResponse.VacancySearch.LocationType = VacancyLocationType.National;
+                        nonNationlResponse.VacancySearch.LocationType = ApprenticeshipLocationType.National;
                     }
 
                     return nonNationlResponse;
@@ -185,7 +186,7 @@
                     PageSize = search.ResultsPerPage,
                     SearchRadius = search.WithinDistance,
                     SortType = search.SortType,
-                    VacancyLocationType = VacancyLocationType.NonNational
+                    VacancyLocationType = ApprenticeshipLocationType.NonNational
                 };
 
                 var searchResults = _traineeshipSearchService.Search(searchRequest);
@@ -276,7 +277,7 @@
                     PageSize = search.ResultsPerPage,
                     SearchRadius = search.WithinDistance,
                     SortType = string.IsNullOrWhiteSpace(search.Keywords) ? VacancySortType.ClosingDate : VacancySortType.Relevancy,
-                    VacancyLocationType = VacancyLocationType.National
+                    VacancyLocationType = ApprenticeshipLocationType.National
                 },
                 new SearchParameters
                 {
@@ -286,7 +287,7 @@
                     PageSize = search.ResultsPerPage,
                     SearchRadius = search.WithinDistance,
                     SortType = search.SortType,
-                    VacancyLocationType = VacancyLocationType.NonNational
+                    VacancyLocationType = ApprenticeshipLocationType.NonNational
                 }
             };
 

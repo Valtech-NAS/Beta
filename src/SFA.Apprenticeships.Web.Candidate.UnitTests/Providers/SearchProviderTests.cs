@@ -10,6 +10,7 @@
     using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -94,7 +95,7 @@
             {
                 new ApprenticeshipSummaryResponse
                 {
-                    VacancyLocationType = VacancyLocationType.National
+                    VacancyLocationType = ApprenticeshipLocationType.National
                 }
             });
 
@@ -109,7 +110,7 @@
                 PageNumber = 1,
                 WithinDistance = 2,
                 ResultsPerPage = pageSize,
-                LocationType = VacancyLocationType.National
+                LocationType = ApprenticeshipLocationType.National
             };
 
             var searchProvider = new SearchProvider(_locationSearchService.Object,

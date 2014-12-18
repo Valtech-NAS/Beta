@@ -3,7 +3,7 @@
     using System;
     using Locations;
 
-    public class VacancyDetail
+    public abstract class VacancyDetail
     {
         #region Vacancy
 
@@ -18,8 +18,6 @@
         public string FullDescription { get; set; }
 
         public string Framework { get; set; }
-
-        public VacancyLevel VacancyLevel { get; set; }
 
         public DateTime StartDate { get; set; }
 
@@ -42,8 +40,6 @@
         public string VacancyOwner { get; set; }
 
         public string VacancyManager { get; set; }
-
-        public VacancyLocationType VacancyLocationType { get; set; }
 
         public string LocalAuthority { get; set; }
 

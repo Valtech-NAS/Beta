@@ -5,9 +5,9 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.Traineeships;
+    using Domain.Entities.Vacancies.Traineeships;
     using Vacancy;
 
     public class CreateTraineeshipApplicationStrategy : ICreateTraineeshipApplicationStrategy
@@ -39,7 +39,7 @@
             return applicationDetail;
         }
         
-        private static TraineeshipApplicationDetail CreateApplicationDetail(Candidate candidate, VacancyDetail vacancyDetails)
+        private static TraineeshipApplicationDetail CreateApplicationDetail(Candidate candidate, ApprenticeshipVacancyDetail vacancyDetails)
         {
             return new TraineeshipApplicationDetail
             {

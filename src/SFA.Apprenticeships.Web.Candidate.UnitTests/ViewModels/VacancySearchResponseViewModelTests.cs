@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.ViewModels
 {
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using NUnit.Framework;
     using Candidate.ViewModels.VacancySearch;
@@ -17,7 +18,7 @@
         {
             var test = new ApprenticeshipSearchResponseViewModel
             {
-                VacancySearch = new ApprenticeshipSearchViewModel {LocationType = VacancyLocationType.NonNational},
+                VacancySearch = new ApprenticeshipSearchViewModel {LocationType = ApprenticeshipLocationType.NonNational},
                 TotalLocalHits = hits,
                 PageSize = pageSize
             };
@@ -33,7 +34,7 @@
             {
                 TotalLocalHits = 101,
                 PageSize = 10,
-                VacancySearch = new ApprenticeshipSearchViewModel { PageNumber = startPage, LocationType = VacancyLocationType.NonNational }
+                VacancySearch = new ApprenticeshipSearchViewModel { PageNumber = startPage, LocationType = ApprenticeshipLocationType.NonNational }
             };
 
             test.NextPage.Should().Be(expected);
@@ -54,7 +55,7 @@
         [TestCase(11, 10)]
         public void ShouldReturnPrevPageNUmberGivenStartPage(int startPage, int expected)
         {
-            var test = new ApprenticeshipSearchResponseViewModel { TotalLocalHits = 101, PageSize = 10, VacancySearch = new ApprenticeshipSearchViewModel { PageNumber = startPage, LocationType = VacancyLocationType.NonNational } };
+            var test = new ApprenticeshipSearchResponseViewModel { TotalLocalHits = 101, PageSize = 10, VacancySearch = new ApprenticeshipSearchViewModel { PageNumber = startPage, LocationType = ApprenticeshipLocationType.NonNational } };
 
             test.PrevPage.Should().Be(expected);
         }
@@ -66,7 +67,7 @@
             {
                 TotalLocalHits = 101,
                 PageSize = 10,
-                VacancySearch = new ApprenticeshipSearchViewModel {LocationType = VacancyLocationType.NonNational}
+                VacancySearch = new ApprenticeshipSearchViewModel {LocationType = ApprenticeshipLocationType.NonNational}
             };
             test.PrevPage.Should().Be(0);
         }

@@ -1,12 +1,13 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers.Apprenticeships
 {
     using Common.Mappers;
+    using Domain.Entities.Vacancies.Apprenticeships;
 
-    public class LegacyVacancyDetailMapper : MapperEngine
+    public class LegacyApprenticeshipVacancyDetailMapper : MapperEngine
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<GatewayServiceProxy.Vacancy, Domain.Entities.Vacancies.VacancyDetail>()
+            Mapper.CreateMap<GatewayServiceProxy.Vacancy, ApprenticeshipVacancyDetail>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom(src => src.VacancyId))
 
@@ -140,8 +141,8 @@
                 .ForMember(dest => dest.Title,
                     opt => opt.MapFrom(src => src.VacancyTitle))
 
-                .ForMember(dest => dest.VacancyLevel,
-                    opt => opt.ResolveUsing<VacancyLevelResolver>().FromMember(src => src.VacancyType))
+                .ForMember(dest => dest.ApprenticeshipLevel,
+                    opt => opt.ResolveUsing<ApprenticeshipLevelResolver>().FromMember(src => src))
 
                 .ForMember(dest => dest.VacancyUrl,
                 opt => opt.MapFrom(src => src.ApplyViaEmployerWebsite && string.IsNullOrEmpty(src.VacancyUrl) ? src.EmployerRecruitmentWebsite : src.VacancyUrl))

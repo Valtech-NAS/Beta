@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
+    using Apprenticeships;
     using Common.Mappers;
     using GatewayServiceProxy;
 

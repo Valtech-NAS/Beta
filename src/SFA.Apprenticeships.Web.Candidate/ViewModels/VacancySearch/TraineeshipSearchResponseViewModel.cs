@@ -16,7 +16,7 @@
 
         public int PageSize { get; set; }
 
-        public IEnumerable<VacancySummaryViewModel> Vacancies { get; set; }
+        public IEnumerable<TraineeshipVacancySummaryViewModel> Vacancies { get; set; }
 
         public TraineeshipSearchViewModel VacancySearch { get; set; }
 

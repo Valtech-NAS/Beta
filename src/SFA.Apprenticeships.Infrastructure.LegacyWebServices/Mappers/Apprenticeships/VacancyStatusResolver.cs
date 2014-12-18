@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers.Apprenticeships
 {
     using AutoMapper;
     using Domain.Entities.Vacancies;

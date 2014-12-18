@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Locations;
     
     //TODO Remove unused properties
@@ -30,7 +31,7 @@
         
         public string VacancyType { get; set; }
 
-        public VacancyLocationType VacancyLocationType { get; set; }
+        public ApprenticeshipLocationType VacancyLocationType { get; set; }
 
         [UIHint("Date")]
         [DataType(DataType.DateTime)]

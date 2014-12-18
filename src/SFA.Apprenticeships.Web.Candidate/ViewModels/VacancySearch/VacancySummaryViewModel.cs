@@ -2,10 +2,9 @@
 {
     using System;
     using System.Globalization;
-    using Domain.Entities.Vacancies;
     using Locations;
 
-    public class VacancySummaryViewModel
+    public abstract class VacancySummaryViewModel
     {
         public int Id { get; set; }
 
@@ -30,7 +29,5 @@
                 return Math.Round(Distance, 1, MidpointRounding.AwayFromZero).ToString(CultureInfo.InvariantCulture);
             }
         }
-
-        public VacancyLocationType VacancyLocationType { get; set; }
     }
 }

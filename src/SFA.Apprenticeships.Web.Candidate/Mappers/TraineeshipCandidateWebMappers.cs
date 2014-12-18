@@ -2,9 +2,9 @@
 {
     using Application.Interfaces.Search;
     using Domain.Entities.Locations;
-    using Domain.Entities.Vacancies;
     using Application.Interfaces.Vacancies;
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Infrastructure.Common.Mappers;
     using Resolvers;
     using ViewModels.Locations;
@@ -18,7 +18,7 @@
             Mapper.CreateMap<SearchResults<TraineeshipSummaryResponse>, TraineeshipSearchResponseViewModel>()
                 .ConvertUsing<TraineeshipSearchResultsResolver>();
 
-            Mapper.CreateMap<TraineeshipSummaryResponse, VacancySummaryViewModel>();
+            Mapper.CreateMap<TraineeshipSummaryResponse, TraineeshipVacancySummaryViewModel>();
 
             Mapper.CreateMap<TraineeshipSearchViewModel, Location>()
                 .ConvertUsing<LocationResolver>();
@@ -26,7 +26,7 @@
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
             Mapper.CreateMap<GeoPointViewModel, GeoPoint>();
 
-            Mapper.CreateMap<VacancyDetail, VacancyDetailViewModel>()
+            Mapper.CreateMap<TraineeshipVacancyDetail, VacancyDetailViewModel>()
                 .ForMember(d => d.EmployerName,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
                 .ForMember(d => d.Wage,
@@ -59,6 +59,8 @@
                 .ForMember(d => d.IsWellFormedEmployerWebsiteUrl,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.IsWellFormedUrlResolver>()
                         .FromMember(src => src.EmployerWebsite))
+                .ForMember(d => d.VacancyLocationType,
+                    opt => opt.Ignore())
                 .ForMember(d => d.VacancyType,
                     opt => opt.Ignore())
                 .ForMember(d => d.CandidateApplicationStatus,

@@ -2,6 +2,7 @@
 {
     using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
     using FluentAssertions;
     using IoC;
@@ -47,13 +48,13 @@
         [Test]
         public void ShouldNotAnonymiseEmployerNameIfEmployerHasNotOptedForAnonymity()
         {
-            var vacancyDetail = new VacancyDetail
+            var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 EmployerName = "Acme Corp",
                 IsEmployerAnonymous = false
             };
 
-            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.EmployerName.Should().Be(vacancyDetail.EmployerName);
@@ -62,14 +63,14 @@
         [Test]
         public void ShouldAnonymiseEmployerNameIfEmployerHasOptedForAnonymity()
         {
-            var vacancyDetail = new VacancyDetail
+            var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 EmployerName = "Acme Corp",
                 AnonymousEmployerName = "Blue Chip Corp",
                 IsEmployerAnonymous = true
             };
 
-            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.EmployerName.Should().Be(vacancyDetail.AnonymousEmployerName);
@@ -78,13 +79,13 @@
         [Test]
         public void ShouldShowWageIfWageTypeIsWeekly()
         {
-            var vacancyDetail = new VacancyDetail
+            var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 WageType = WageType.Weekly,
                 Wage = 101.19m
             };
 
-            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
             const string expectedWage = "£101.19";
 
             model.Should().NotBeNull();
@@ -94,13 +95,13 @@
         [Test]
         public void ShouldShowWageDescriptionIfWageTypeIsText()
         {
-            var vacancyDetail = new VacancyDetail
+            var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 WageType = WageType.Text,
                 WageDescription = "Competetive"
             };
 
-            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.Wage.Should().Be(vacancyDetail.WageDescription);
@@ -109,12 +110,12 @@
         [Test]
         public void ShouldReturnTheEmployerWebsiteWithHttpIfItAlreadyHasIt()
         {
-            var vacancyDetail = new VacancyDetail
+            var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 EmployerWebsite = "http://wwww.someweb.com"
             };
 
-            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.EmployerWebsite.Should().StartWith("http://");
@@ -124,12 +125,12 @@
         [Test]
         public void ShouldReturnTheEmployerWebsiteWithHttpIfItDoesntHaveIt()
         {
-            var vacancyDetail = new VacancyDetail
+            var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 EmployerWebsite = "wwww.someweb.com"
             };  
 
-            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.EmployerWebsite.Should().StartWith("http://");
@@ -139,12 +140,12 @@
         [Test]
         public void ShouldReturnTheEmployerWebsiteWithHttpsIfItStartsWithIt()
         {
-            var vacancyDetail = new VacancyDetail
+            var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 EmployerWebsite = "https://wwww.someweb.com"
             };
 
-            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.EmployerWebsite.Should().StartWith("https://");
@@ -154,12 +155,12 @@
         [Test]
         public void ShouldReturnRawStringIfEmployerWebsiteIsNotWellFormed()
         {
-            var vacancyDetail = new VacancyDetail
+            var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 EmployerWebsite = "www.somedomain.co.uk / www.anotherdomain.co.uk"
             };
 
-            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.EmployerWebsite.Should().Be(vacancyDetail.EmployerWebsite);
@@ -169,12 +170,12 @@
         [Test]
         public void ShouldReturnTheVacancyUrlWithHttpIfItAlreadyHasIt()
         {
-            var vacancyDetail = new VacancyDetail
+            var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 VacancyUrl = "http://wwww.someweb.com"
             };
 
-            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.VacancyUrl.Should().StartWith("http://");
@@ -184,12 +185,12 @@
         [Test]
         public void ShouldReturnTheVacancyUrlWithHttpIfItDoesntHaveIt()
         {
-            var vacancyDetail = new VacancyDetail
+            var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 VacancyUrl = "wwww.someweb.com"
             };
 
-            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.VacancyUrl.Should().StartWith("http://");
@@ -199,12 +200,12 @@
         [Test]
         public void ShouldReturnTheVacancyUrlWithHttpsIfItStartsWithIt()
         {
-            var vacancyDetail = new VacancyDetail
+            var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 VacancyUrl = "https://wwww.someweb.com"
             };
 
-            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.VacancyUrl.Should().StartWith("https://");
@@ -214,12 +215,12 @@
         [Test]
         public void ShouldReturnRawStringIfVacancyUrlIsNotWellFormed()
         {
-            var vacancyDetail = new VacancyDetail
+            var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 VacancyUrl = "www.somedomain.co.uk / www.anotherdomain.co.uk"
             };
 
-            var model = _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.VacancyUrl.Should().Be(vacancyDetail.VacancyUrl);

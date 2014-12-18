@@ -5,6 +5,7 @@
     using Application.Vacancy;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
@@ -27,7 +28,7 @@
             _mapper = mapper;
         }
 
-        public VacancyDetail GetVacancyDetails(int vacancyId)
+        public ApprenticeshipVacancyDetail GetVacancyDetails(int vacancyId)
         {
             var request = new GetVacancyDetailsRequest { VacancyId = vacancyId };
 
@@ -60,7 +61,7 @@
                     ErrorCodes.GatewayServiceFailed);
             }
 
-            var vacancyDetail = _mapper.Map<Vacancy, VacancyDetail>(response.Vacancy);
+            var vacancyDetail = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(response.Vacancy);
 
             if (vacancyDetail.ClosingDate < DateTime.Today.ToUniversalTime())
             {

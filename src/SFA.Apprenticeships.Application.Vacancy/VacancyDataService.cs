@@ -2,6 +2,7 @@
 {
     using System;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Interfaces.Vacancies;
     using NLog;
 
@@ -15,7 +16,7 @@
             _service = service;
         }
 
-        public VacancyDetail GetVacancyDetails(int vacancyId)
+        public ApprenticeshipVacancyDetail GetVacancyDetails(int vacancyId)
         {
             Logger.Debug("Calling VacancyDataProvider to get vacancy details for user {0}.", vacancyId);
 

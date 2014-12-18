@@ -3,12 +3,13 @@
     using System;
     using AutoMapper;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
 
     public class VacancyDetailViewModelResolvers
     {
-        public class EmployerNameResolver : ValueResolver<VacancyDetail, string>
+        public class EmployerNameResolver : ValueResolver<ApprenticeshipVacancyDetail, string>
         {
-            protected override string ResolveCore(VacancyDetail vacancyDetail)
+            protected override string ResolveCore(ApprenticeshipVacancyDetail vacancyDetail)
             {
                 return vacancyDetail.IsEmployerAnonymous
                     ? vacancyDetail.AnonymousEmployerName
@@ -16,9 +17,9 @@
             }
         }
 
-        public class WageResolver : ValueResolver<VacancyDetail, string>
+        public class WageResolver : ValueResolver<ApprenticeshipVacancyDetail, string>
         {
-            protected override string ResolveCore(VacancyDetail vacancyDetail)
+            protected override string ResolveCore(ApprenticeshipVacancyDetail vacancyDetail)
             {
                 return vacancyDetail.WageType == WageType.Text
                     ? vacancyDetail.WageDescription

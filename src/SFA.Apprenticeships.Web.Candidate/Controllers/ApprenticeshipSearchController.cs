@@ -11,6 +11,7 @@
     using Common.Constants;
     using Constants;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Microsoft.Ajax.Utilities;
@@ -54,7 +55,7 @@
                     View(new ApprenticeshipSearchViewModel
                     {
                         WithinDistance = 2,
-                        LocationType = VacancyLocationType.NonNational,
+                        LocationType = ApprenticeshipLocationType.NonNational,
                         ResultsPerPage = resultsPerPage
                     });
             });
@@ -77,19 +78,19 @@
                 UserData.Push(UserDataItemNames.ResultsPerPage,
                     model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
 
-                if (model.SearchAction == SearchAction.Search && model.LocationType != VacancyLocationType.NonNational)
+                if (model.SearchAction == SearchAction.Search && model.LocationType != ApprenticeshipLocationType.NonNational)
                 {
-                    model.LocationType = VacancyLocationType.NonNational;
+                    model.LocationType = ApprenticeshipLocationType.NonNational;
                 }
 
-                if (model.LocationType == VacancyLocationType.NonNational && model.SortType == VacancySortType.Relevancy &&
+                if (model.LocationType == ApprenticeshipLocationType.NonNational && model.SortType == VacancySortType.Relevancy &&
                     string.IsNullOrWhiteSpace(model.Keywords))
                 {
                     ModelState.Remove("SortType");
                     model.SortType = VacancySortType.Distance;
                 }
 
-                if (model.LocationType == VacancyLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) &&
+                if (model.LocationType == ApprenticeshipLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) &&
                     model.SortType != VacancySortType.ClosingDate)
                 {
                     ModelState.Remove("SortType");
@@ -174,10 +175,10 @@
 
                 if (model.SearchAction == SearchAction.Search && results.TotalLocalHits > 0)
                 {
-                    results.VacancySearch.LocationType = VacancyLocationType.NonNational;
+                    results.VacancySearch.LocationType = ApprenticeshipLocationType.NonNational;
                 }
 
-                if (results.VacancySearch.LocationType == VacancyLocationType.National)
+                if (results.VacancySearch.LocationType == ApprenticeshipLocationType.National)
                 {
                     PopulateSortType(model.SortType, model.Keywords, false);
                 }

@@ -7,6 +7,7 @@
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Infrastructure.Common.Mappers;
     using Resolvers;
     using ViewModels.Account;
@@ -29,7 +30,7 @@
                 .ForMember(d => d.Latitude, opt => opt.MapFrom(s => s.GeoPoint.Latitude))
                 .ForMember(d => d.Longitude, opt => opt.MapFrom(s => s.GeoPoint.Longitude));
 
-            Mapper.CreateMap<VacancyDetail, VacancyDetailViewModel>()
+            Mapper.CreateMap<ApprenticeshipVacancyDetail, VacancyDetailViewModel>()
                 .ForMember(d => d.EmployerName,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
                 .ForMember(d => d.Wage,
@@ -71,7 +72,7 @@
                 .ForMember(d => d.ViewModelMessage,
                         opt => opt.Ignore());
 
-            Mapper.CreateMap<ApprenticeshipSummaryResponse, VacancySummaryViewModel>();
+            Mapper.CreateMap<ApprenticeshipSummaryResponse, ApprenticeshipVacancySummaryViewModel>();
             
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<AddressViewModel, Address>();

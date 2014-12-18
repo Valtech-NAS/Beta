@@ -8,7 +8,7 @@
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using StructureMap;
-    using VacancyLocationType = Domain.Entities.Vacancies.VacancyLocationType;
+    using VacancyLocationType = Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLocationType;
 
     [TestFixture]
     public class IndexingInitialisationTests

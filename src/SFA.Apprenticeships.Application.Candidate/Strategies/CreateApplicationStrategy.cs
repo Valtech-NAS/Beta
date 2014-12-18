@@ -89,7 +89,7 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
             return applicationDetail;
         }
 
-        private static ApprenticeshipApplicationDetail CreateApplicationDetail(Candidate candidate, VacancyDetail vacancyDetails)
+        private static ApprenticeshipApplicationDetail CreateApplicationDetail(Candidate candidate, ApprenticeshipVacancyDetail vacancyDetails)
         {
             return new ApprenticeshipApplicationDetail
             {

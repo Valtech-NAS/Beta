@@ -5,6 +5,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
     using NLog;
     using Vacancy;
@@ -69,7 +70,7 @@
             return result;
         }
 
-        private ApprenticeshipApplicationDetail UpdateApplicationDetail(Candidate candidate, VacancyDetail vacancyDetails)
+        private ApprenticeshipApplicationDetail UpdateApplicationDetail(Candidate candidate, ApprenticeshipVacancyDetail vacancyDetails)
         {
             var currentApprenticeshipApplicationDetail =
                 _applicationReadRepository.GetForCandidate(candidate.EntityId, a => a.Vacancy.Id == vacancyDetails.Id);

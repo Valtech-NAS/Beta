@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
 
     public class ApprenticeshipSearchResponseViewModel : ViewModelBase
     {
@@ -16,7 +17,7 @@
         public long TotalLocalHits { get; set; }
         public long TotalNationalHits { get; set; }
         public int PageSize { get; set; }
-        public IEnumerable<VacancySummaryViewModel> Vacancies { get; set; }
+        public IEnumerable<ApprenticeshipVacancySummaryViewModel> Vacancies { get; set; }
         public ApprenticeshipSearchViewModel VacancySearch { get; set; }
 
         public int PrevPage
@@ -47,7 +48,7 @@
                 var pages = 1;
                 if (PageSize <= 0) {return pages;}
 
-                if (VacancySearch.LocationType == VacancyLocationType.NonNational)
+                if (VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
                 {
                     pages = (int)TotalLocalHits / PageSize;
                     if (TotalLocalHits % PageSize > 0) pages++;

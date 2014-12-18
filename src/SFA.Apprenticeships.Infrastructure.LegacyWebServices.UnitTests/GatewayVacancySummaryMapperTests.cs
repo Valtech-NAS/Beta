@@ -63,7 +63,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.VacancyLocationType.Should().Be(Domain.Entities.Vacancies.VacancyLocationType.NonNational);
+            dest.VacancyLocationType.Should().Be(ApprenticeshipLocationType.NonNational);
         }
 
         [TestCase]
@@ -80,7 +80,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.VacancyLocationType.Should().Be(Domain.Entities.Vacancies.VacancyLocationType.NonNational);
+            dest.VacancyLocationType.Should().Be(ApprenticeshipLocationType.NonNational);
         }
 
         [TestCase]
@@ -97,7 +97,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.VacancyLocationType.Should().Be(Domain.Entities.Vacancies.VacancyLocationType.National);
+            dest.VacancyLocationType.Should().Be(ApprenticeshipLocationType.National);
         }
 
         [TestCase]

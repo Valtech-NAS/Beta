@@ -8,6 +8,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using NLog;
@@ -56,7 +57,7 @@
                 }
 
                 var vacancyDetailViewModel =
-                    _mapper.Map<VacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+                    _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
                 if (candidateId == null) { return vacancyDetailViewModel; }
 

@@ -2,20 +2,22 @@
 {
     using System;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using GatewayServiceProxy;
     using Mappers;
+    using Mappers.Apprenticeships;
     using NUnit.Framework;
 
     [TestFixture]
     public class GatewayVacancyDetailMapperTests
     {
-        private LegacyVacancyDetailMapper _mapper;
+        private LegacyApprenticeshipVacancyDetailMapper _mapper;
 
         [SetUp]
         public void Setup()
         {
-            _mapper = new LegacyVacancyDetailMapper();
+            _mapper = new LegacyApprenticeshipVacancyDetailMapper();
         }
 
         [TestCase]
@@ -69,7 +71,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -124,7 +126,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -142,7 +144,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -160,7 +162,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -178,7 +180,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -196,7 +198,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -214,7 +216,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -231,7 +233,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -275,7 +277,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -304,11 +306,11 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.VacancyLocationType.Should().Be(VacancyLocationType.NonNational);
+            dest.VacancyLocationType.Should().Be(ApprenticeshipLocationType.NonNational);
         }
 
         [TestCase]
@@ -321,11 +323,11 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.VacancyLocationType.Should().Be(VacancyLocationType.NonNational);
+            dest.VacancyLocationType.Should().Be(ApprenticeshipLocationType.NonNational);
         }
 
         [TestCase]
@@ -338,11 +340,11 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.VacancyLocationType.Should().Be(VacancyLocationType.National);
+            dest.VacancyLocationType.Should().Be(ApprenticeshipLocationType.National);
         }
 
         [TestCase]
@@ -355,11 +357,11 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.VacancyLocationType.Should().Be(VacancyLocationType.Unknown);
+            dest.VacancyLocationType.Should().Be(ApprenticeshipLocationType.Unknown);
         }
 
         [TestCase]
@@ -372,7 +374,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -389,7 +391,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -406,7 +408,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -423,11 +425,11 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.VacancyLevel.Should().Be(VacancyLevel.Intermediate);
+            dest.ApprenticeshipLevel.Should().Be(ApprenticeshipLevel.Intermediate);
         }
 
         [TestCase]
@@ -440,11 +442,11 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.VacancyLevel.Should().Be(VacancyLevel.Advanced);
+            dest.ApprenticeshipLevel.Should().Be(ApprenticeshipLevel.Advanced);
         }
 
         [TestCase]
@@ -457,11 +459,11 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, VacancyDetail>(src);
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
-            dest.VacancyLevel.Should().Be(VacancyLevel.Unknown);
+            dest.ApprenticeshipLevel.Should().Be(ApprenticeshipLevel.Unknown);
         }
     }
 }

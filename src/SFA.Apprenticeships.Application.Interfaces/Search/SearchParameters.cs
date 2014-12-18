@@ -2,6 +2,7 @@
 {
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Vacancies;
 
     public class SearchParameters
@@ -12,6 +13,6 @@
         public int PageSize { get; set; }
         public int SearchRadius { get; set; }
         public VacancySortType SortType { get; set; }
-        public VacancyLocationType VacancyLocationType { get; set; }
+        public ApprenticeshipLocationType VacancyLocationType { get; set; }
     }
 }

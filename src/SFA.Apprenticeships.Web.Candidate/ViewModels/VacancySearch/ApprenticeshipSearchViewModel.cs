@@ -3,6 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentValidation.Attributes;
     using Validators;
 
@@ -24,6 +25,6 @@
         [Display(Name = ApprenticeshipSearchViewModelMessages.LocationMessages.LabelText, Description = ApprenticeshipSearchViewModelMessages.LocationMessages.HintText)]
         public override string Location { get; set; }
 
-        public VacancyLocationType LocationType { get; set; }
+        public ApprenticeshipLocationType LocationType { get; set; }
     }
 }
