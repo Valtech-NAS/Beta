@@ -14,6 +14,7 @@
     using Moq;
     using NUnit.Framework;
     using Infrastructure.PerformanceCounters;
+    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
 
     [TestFixture]
     public class SearchProviderTests
@@ -23,6 +24,7 @@
         private Mock<IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>> _traineeshipSearchService;
         private Mock<IAddressSearchService> _addressSearchService;
         private Mock<IPerformanceCounterService> _performanceCounterService;
+        private Mock<IConfigurationManager> _configurationManager;
 
         private ApprenticeshipCandidateWebMappers _apprenticeshipMapper;
         private TraineeshipCandidateWebMappers _traineeeshipMapper;
@@ -35,6 +37,7 @@
             _traineeshipSearchService = new Mock<IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>>();
             _addressSearchService = new Mock<IAddressSearchService>();
             _performanceCounterService = new Mock<IPerformanceCounterService>();
+            _configurationManager = new Mock<IConfigurationManager>();
             
             _apprenticeshipMapper = new ApprenticeshipCandidateWebMappers();
             _traineeeshipMapper = new TraineeshipCandidateWebMappers();
@@ -56,7 +59,8 @@
                 _addressSearchService.Object, 
                 _apprenticeshipMapper, 
                 _traineeeshipMapper,
-                _performanceCounterService.Object);
+                _performanceCounterService.Object,
+                _configurationManager.Object);
 
             var results = searchProvider.FindLocation("Location1");
             var result = results.Locations.First();
@@ -78,7 +82,8 @@
                 _addressSearchService.Object,
                 _apprenticeshipMapper,
                 _traineeeshipMapper,
-                _performanceCounterService.Object);
+                _performanceCounterService.Object,
+                _configurationManager.Object);
 
             var results = searchProvider.FindLocation(string.Empty);
 
@@ -118,7 +123,8 @@
                 _addressSearchService.Object,
                 _apprenticeshipMapper,
                 _traineeeshipMapper,
-                _performanceCounterService.Object);
+                _performanceCounterService.Object,
+                _configurationManager.Object);
 
             var test = searchProvider.FindVacancies(search);
 
