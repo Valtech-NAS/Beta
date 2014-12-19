@@ -54,7 +54,7 @@ Given I have an empty dashboard
 @US366
 Scenario: As a candidate I dont want to see the traineeships prompt if I have less than three unsuccessful applications
 Given I have an empty dashboard
-	And I add 2 applications in "Unsuccessful" state
+	And I add 6 applications in "Unsuccessful" state
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data

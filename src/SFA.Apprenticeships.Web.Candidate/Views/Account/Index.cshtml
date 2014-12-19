@@ -42,13 +42,13 @@
     @if (Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())
     {
         <div class="grid grid-1-2">
-            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { @class = "page-link" })
+            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id="find-apprenticeship-link", @class = "page-link" })
         </div>
     }
     @if (Model.ShowTraineeshipsPrompt || Model.TraineeshipApplications.Any())
     {
         <div class="grid grid-1-2">
-            @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { @class = "page-link" })
+            @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id="find-traineeship-link", @class = "page-link" })
         </div>
     }
 </div>
@@ -57,7 +57,7 @@
     <div class="text">
         <p id="empty-application-history-text">Your application history is currently empty. This is because you haven’t submitted or saved any apprenticeship applications yet.</p>
         <p>Once you start, applications will be recorded and you’ll be able to track your progress</p>
-        <div class="get-started">@Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { @class = "button" })</div>
+        <div class="get-started">@Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new {@id="find-apprenticeship-button", @class = "button" })</div>
     </div>
 }
 else

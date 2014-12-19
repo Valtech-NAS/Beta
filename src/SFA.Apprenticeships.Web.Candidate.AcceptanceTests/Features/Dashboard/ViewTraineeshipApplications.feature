@@ -9,7 +9,6 @@ Background:
 	Then I am on the TraineeshipSearchPage page
 
 @US586
-@Ignore
 Scenario: I have applied for two traineeships
 	Given I have an empty dashboard
 	And I applied for 2 traineeships
@@ -22,5 +21,5 @@ Scenario: I have applied for two traineeships
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see
-		| Field             | Rule   | Value |
-		| TraineeshipsCount | Equals | -1    |
+		| Field                        | Rule   | Value |
+		| TraineeshipApplicationsCount | Equals | 2     |

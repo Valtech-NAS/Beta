@@ -206,12 +206,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DeleteADraft.feature</DependentUpon>
     </Compile>
-    <Compile Include="TraineeshipDashboard\DismissTraineeshipApplication.feature.cs">
+    <Compile Include="Features\Dashboard\FindVacancyLinks.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DismissTraineeshipApplication.feature</DependentUpon>
+      <DependentUpon>FindVacancyLinks.feature</DependentUpon>
     </Compile>
-    <Compile Include="TraineeshipDashboard\ViewTraineeshipApplications.feature.cs">
+    <Compile Include="Features\Dashboard\ViewTraineeshipApplications.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ViewTraineeshipApplications.feature</DependentUpon>
@@ -416,11 +416,11 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>DeleteADraft.feature.cs</LastGenOutput>
     </None>
-    <None Include="TraineeshipDashboard\DismissTraineeshipApplication.feature">
+    <None Include="Features\Dashboard\FindVacancyLinks.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>DismissTraineeshipApplication.feature.cs</LastGenOutput>
+      <LastGenOutput>FindVacancyLinks.feature.cs</LastGenOutput>
     </None>
-    <None Include="TraineeshipDashboard\ViewTraineeshipApplications.feature">
+    <None Include="Features\Dashboard\ViewTraineeshipApplications.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ViewTraineeshipApplications.feature.cs</LastGenOutput>
     </None>

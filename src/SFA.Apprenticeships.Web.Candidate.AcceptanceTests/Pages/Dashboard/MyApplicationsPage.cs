@@ -23,8 +23,8 @@
         [ElementLocator(Id = "unsuccessful-applications-count")]
         public IWebElement UnsuccessfulApplicationsCount { get; set; }
 
-        [ElementLocator(Id = "trainee-applications-count")]
-        public IWebElement TraineeApplicationsCount { get; set; }
+        [ElementLocator(Id = "traineeship-applications-count")]
+        public IWebElement TraineeshipApplicationsCount { get; set; }
 
         [ElementLocator(Class = "resume-link")]
         public IWebElement ResumeLink { get; set; }
@@ -46,6 +46,15 @@
 
         [ElementLocator(Id = "application-status-description")]
         public IWebElement ApplicationStatusDescription { get; set; }
+
+        [ElementLocator(Id = "find-traineeship-link")]
+        public IWebElement FindTraineeshipLink { get; set; }
+
+        [ElementLocator(Id = "find-apprenticeship-button")]
+        public IWebElement FindApprenticeshipButton { get; set; }
+
+        [ElementLocator(Id = "find-apprenticeship-link")]
+        public IWebElement FindApprenticeshipLink { get; set; }
 
         public string TraineeshipsPromptDisplayed
         {
