@@ -41,9 +41,7 @@
             if (response == null)
             {
                 Logger.Error("Legacy.GetVacancySummaries for page count did not respond");
-
-                throw new CustomException("Failed to retrieve application status pages from Legacy.GetVacancySummaries",
-                    ErrorCodes.GatewayServiceFailed);
+                throw new CustomException("Failed to retrieve application status pages from Legacy.GetVacancySummaries", ErrorCodes.GatewayServiceFailed);
             }
 
             Logger.Debug("Vacancy summary page count retrieved from Legacy.GetApplicationsStatus ({0})", response.TotalPages);

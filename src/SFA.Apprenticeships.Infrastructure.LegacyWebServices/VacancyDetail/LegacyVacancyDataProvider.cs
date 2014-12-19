@@ -42,22 +42,15 @@
                 if (response != null && response.ValidationErrors != null && response.ValidationErrors.Any())
                 {
                     var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
-
-                    Logger.Info("Legacy.GetVacancyDetails reported {0} validation error(s): {1}",
-                        response.ValidationErrors.Count(), responseAsJson);
+                    Logger.Info("Legacy.GetVacancyDetails reported {0} validation error(s): {1}", response.ValidationErrors.Count(), responseAsJson);
                 }
                 else
                 {
                     Logger.Info("Legacy.GetVacancyDetails did not respond");
                 }
 
-                var message =
-                    string.Format(
-                        "Legacy.GetVacancyDetails failed to retrieve vacancy details from legacy system for vacancyId {0}",
-                        vacancyId);
-                throw new CustomException(
-                    message,
-                    ErrorCodes.GatewayServiceFailed);
+                var message = string.Format("Legacy.GetVacancyDetails failed to retrieve vacancy details from legacy system for vacancyId {0}", vacancyId);
+                throw new CustomException(message, ErrorCodes.GatewayServiceFailed);
             }
 
             var vacancyDetail = _mapper.Map<Vacancy, TVacancyDetail>(response.Vacancy);
