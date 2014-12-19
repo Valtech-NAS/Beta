@@ -32,6 +32,26 @@ Scenario: Find traineeships and test ordering
         | ResultsAreInClosingDateOrder | Equals | True  |
 
 @SmokeTests
+Scenario: Find traineeships and change distance
+	Given I navigated to the TraineeshipSearchPage page
+	When I enter data
+		 | Field    | Value  |
+		 | Location | London |
+	And I choose Search
+	And I am on the TraineeshipSearchResultPage page
+	Then I see
+        | Field          | Rule   | Value    |
+        | WithInDistance | Equals | 40 miles |
+	When I enter data
+		| Field          | Value   |
+		| WithInDistance | 2 miles |
+	And I choose Search
+	Then I am on the TraineeshipSearchResultPage page
+	And I see
+        | Field          | Rule   | Value   |
+        | WithInDistance | Equals | 2 miles |
+
+@SmokeTests
 Scenario: Find traineeships and test paging
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data

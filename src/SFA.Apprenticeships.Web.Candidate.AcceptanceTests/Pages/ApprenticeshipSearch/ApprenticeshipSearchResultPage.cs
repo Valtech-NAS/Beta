@@ -31,6 +31,9 @@
             }
         }
 
+        [ElementLocator(Id = "loc-within")]
+        public IWebElement WithInDistance { get; set; }
+
         [ElementLocator(Id = "search-button")]
         public IWebElement Search { get; set; }
 
