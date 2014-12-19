@@ -2,19 +2,18 @@
 {
     using System;
     using System.Linq;
-    using Application.Interfaces.Candidates;
-    using Common.Models.Application;
-    using Domain.Entities.Applications;
-    using Domain.Entities.Exceptions;
-    using Domain.Interfaces.Mapping;
-    using Constants.Pages;
-    using Microsoft.WindowsAzure;
     using NLog;
+    using SFA.Apprenticeships.Application.Interfaces.Candidates;
+    using SFA.Apprenticeships.Domain.Entities.Applications;
+    using SFA.Apprenticeships.Domain.Entities.Exceptions;
     using SFA.Apprenticeships.Domain.Interfaces.Configuration;
+    using SFA.Apprenticeships.Domain.Interfaces.Mapping;
     using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
-    using ViewModels.Applications;
-    using ViewModels.MyApplications;
-    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
+    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications;
+    using SFA.Apprenticeships.Web.Common.Models.Application;
+    using ErrorCodes = SFA.Apprenticeships.Domain.Entities.Exceptions.ErrorCodes;
 
     public class ApprenticeshipApplicationProvider : IApprenticeshipApplicationProvider
     {
@@ -25,17 +24,17 @@
 
         private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
         private readonly ICandidateService _candidateService;
-        private readonly IMapper _mapper;
-        private readonly IPerformanceCounterService _performanceCounterService;
         private readonly IConfigurationManager _configurationManager;
         private readonly IFeatureToggle _featureToggle;
+        private readonly IMapper _mapper;
+        private readonly IPerformanceCounterService _performanceCounterService;
 
         public ApprenticeshipApplicationProvider(
             IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
             ICandidateService candidateService,
-            IMapper mapper, 
+            IMapper mapper,
             IPerformanceCounterService performanceCounterService,
-            IConfigurationManager configurationManager, 
+            IConfigurationManager configurationManager,
             IFeatureToggle featureToggle)
         {
             _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
@@ -48,13 +47,15 @@
 
         public ApprenticheshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
         {
-            Logger.Debug("Calling ApprenticeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
+            Logger.Debug(
+                "Calling ApprenticeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
             {
                 var applicationDetails = _candidateService.CreateApplication(candidateId, vacancyId);
-                var applicationViewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticheshipApplicationViewModel>(applicationDetails);
+                var applicationViewModel =
+                    _mapper.Map<ApprenticeshipApplicationDetail, ApprenticheshipApplicationViewModel>(applicationDetails);
 
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
@@ -63,8 +64,9 @@
                 if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
                 {
                     Logger.Info(e.Message, e);
-                    return new ApprenticheshipApplicationViewModel(MyApplicationsPageMessages.ApplicationInIncorrectState,
-                        ApplicationViewModelStatus.ApplicationInIncorrectState);
+                    return
+                        new ApprenticheshipApplicationViewModel(MyApplicationsPageMessages.ApplicationInIncorrectState,
+                            ApplicationViewModelStatus.ApplicationInIncorrectState);
                 }
 
                 var message =
@@ -81,14 +83,18 @@
 
                 Logger.Error(message, e);
 
-                return new ApprenticheshipApplicationViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed,
-                    ApplicationViewModelStatus.Error);
+                return
+                    new ApprenticheshipApplicationViewModel(
+                        MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed,
+                        ApplicationViewModelStatus.Error);
             }
         }
 
-        public ApprenticheshipApplicationViewModel PatchApplicationViewModel(Guid candidateId, ApprenticheshipApplicationViewModel savedModel, ApprenticheshipApplicationViewModel submittedModel)
+        public ApprenticheshipApplicationViewModel PatchApplicationViewModel(Guid candidateId,
+            ApprenticheshipApplicationViewModel savedModel, ApprenticheshipApplicationViewModel submittedModel)
         {
-            Logger.Debug("Calling ApprenticeshipApplicationProvider to patch the Application View Model for candidate ID: {0}.",
+            Logger.Debug(
+                "Calling ApprenticeshipApplicationProvider to patch the Application View Model for candidate ID: {0}.",
                 candidateId);
 
             try
@@ -112,20 +118,24 @@
             {
                 var message =
                     string.Format(
-                        "Patch application View Model failed for user {0}.",candidateId);
+                        "Patch application View Model failed for user {0}.", candidateId);
                 Logger.Error(message, e);
                 throw;
             }
         }
 
-        public void SaveApplication(Guid candidateId, int vacancyId, ApprenticheshipApplicationViewModel apprenticheshipApplicationViewModel)
+        public void SaveApplication(Guid candidateId, int vacancyId,
+            ApprenticheshipApplicationViewModel apprenticheshipApplicationViewModel)
         {
-            Logger.Debug("Calling ApprenticeshipApplicationProvider to save the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
+            Logger.Debug(
+                "Calling ApprenticeshipApplicationProvider to save the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
             {
-                var application = _mapper.Map<ApprenticheshipApplicationViewModel, ApprenticeshipApplicationDetail>(apprenticheshipApplicationViewModel);
+                var application =
+                    _mapper.Map<ApprenticheshipApplicationViewModel, ApprenticeshipApplicationDetail>(
+                        apprenticheshipApplicationViewModel);
 
                 _candidateService.SaveApplication(candidateId, vacancyId, application);
                 Logger.Debug("Application View Model saved for candidate ID: {0}, vacancy ID: {1}.",
@@ -144,7 +154,8 @@
 
         public ApprenticheshipApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId)
         {
-            Logger.Debug("Calling ApprenticeshipApplicationProvider to submit the Application for candidate ID: {0}, vacancy ID: {1}.",
+            Logger.Debug(
+                "Calling ApprenticeshipApplicationProvider to submit the Application for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             var model = new ApprenticheshipApplicationViewModel();
@@ -164,7 +175,7 @@
 
 
                 Logger.Debug("Application submitted for candidate ID: {0}, vacancy ID: {1}.",
-                candidateId, vacancyId);
+                    candidateId, vacancyId);
 
                 return model;
             }
@@ -173,10 +184,11 @@
                 if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
                 {
                     Logger.Info(e.Message, e);
-                    return new ApprenticheshipApplicationViewModel(ApplicationViewModelStatus.ApplicationInIncorrectState)
-                    {
-                        Status = model.Status
-                    };
+                    return
+                        new ApprenticheshipApplicationViewModel(ApplicationViewModelStatus.ApplicationInIncorrectState)
+                        {
+                            Status = model.Status
+                        };
                 }
 
                 var message =
@@ -201,24 +213,17 @@
             }
         }
 
-        private void IncrementApplicationSubmissionCounter()
-        {
-            if(_configurationManager.GetCloudAppSetting<bool>("PerformanceCountersEnabled"))
-            {
-                _performanceCounterService.IncrementCounter(WebRolePerformanceCounterCategory, ApplicationSubmissionCounter);
-            }
-        }
-
         public ApprenticheshipApplicationViewModel ArchiveApplication(Guid candidateId, int vacancyId)
         {
-            Logger.Debug("Calling ApprenticeshipApplicationProvider to archive the Application for candidate ID: {0}, vacancy ID: {1}.",
+            Logger.Debug(
+                "Calling ApprenticeshipApplicationProvider to archive the Application for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
             {
                 _candidateService.ArchiveApplication(candidateId, vacancyId);
                 Logger.Debug("Application archived for candidate ID: {0}, vacancy ID: {1}.",
-                   candidateId, vacancyId);
+                    candidateId, vacancyId);
             }
             catch (Exception e)
             {
@@ -237,14 +242,15 @@
 
         public ApprenticheshipApplicationViewModel DeleteApplication(Guid candidateId, int vacancyId)
         {
-            Logger.Debug("Calling ApprenticeshipApplicationProvider to delete the Application for candidate ID: {0}, vacancy ID: {1}.",
+            Logger.Debug(
+                "Calling ApprenticeshipApplicationProvider to delete the Application for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
             {
                 _candidateService.DeleteApplication(candidateId, vacancyId);
                 Logger.Debug("Application deleted for candidate ID: {0}, vacancy ID: {1}.",
-                   candidateId, vacancyId);
+                    candidateId, vacancyId);
             }
             catch (CustomException e)
             {
@@ -280,14 +286,16 @@
 
         public WhatHappensNextViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId)
         {
-            Logger.Debug("Calling ApprenticeshipApplicationProvider to get the What Happens Next data for candidate ID: {0}, vacancy ID: {1}.",
+            Logger.Debug(
+                "Calling ApprenticeshipApplicationProvider to get the What Happens Next data for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
             {
                 var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
                 var candidate = _candidateService.GetCandidate(candidateId);
-                var model = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticheshipApplicationViewModel>(applicationDetails);
+                var model =
+                    _mapper.Map<ApprenticeshipApplicationDetail, ApprenticheshipApplicationViewModel>(applicationDetails);
                 var patchedModel = PatchWithVacancyDetail(candidateId, vacancyId, model);
 
                 if (patchedModel.HasError())
@@ -305,8 +313,9 @@
             }
             catch (Exception e)
             {
-                var message = string.Format("Get What Happens Next View Model failed for candidate ID: {0}, vacancy ID: {1}.",
-                    candidateId, vacancyId);
+                var message =
+                    string.Format("Get What Happens Next View Model failed for candidate ID: {0}, vacancy ID: {1}.",
+                        candidateId, vacancyId);
 
                 Logger.Error(message, e);
 
@@ -317,7 +326,8 @@
 
         public MyApplicationsViewModel GetMyApplications(Guid candidateId)
         {
-            Logger.Debug("Calling ApprenticeshipApplicationProvider to get the applications for candidate ID: {0}.", candidateId);
+            Logger.Debug("Calling ApprenticeshipApplicationProvider to get the applications for candidate ID: {0}.",
+                candidateId);
 
             try
             {
@@ -350,6 +360,15 @@
             }
         }
 
+        private void IncrementApplicationSubmissionCounter()
+        {
+            if (_configurationManager.GetCloudAppSetting<bool>("PerformanceCountersEnabled"))
+            {
+                _performanceCounterService.IncrementCounter(WebRolePerformanceCounterCategory,
+                    ApplicationSubmissionCounter);
+            }
+        }
+
         private TraineeshipInformation GetTraineeshipInformation(Guid candidateId)
         {
             return new TraineeshipInformation
@@ -363,7 +382,8 @@
 
         #region Helpers
 
-        private static ApprenticheshipApplicationViewModel FailedApplicationViewModel(int vacancyId, Guid candidateId, string failure,
+        private static ApprenticheshipApplicationViewModel FailedApplicationViewModel(int vacancyId, Guid candidateId,
+            string failure,
             string failMessage, Exception e)
         {
             var message = string.Format("{0} {1} failed for user {2}", failure, vacancyId, candidateId);
@@ -371,10 +391,12 @@
             return new ApprenticheshipApplicationViewModel(failMessage, ApplicationViewModelStatus.Error);
         }
 
-        private ApprenticheshipApplicationViewModel PatchWithVacancyDetail(Guid candidateId, int vacancyId, ApprenticheshipApplicationViewModel apprenticheshipApplicationViewModel)
+        private ApprenticheshipApplicationViewModel PatchWithVacancyDetail(Guid candidateId, int vacancyId,
+            ApprenticheshipApplicationViewModel apprenticheshipApplicationViewModel)
         {
             // TODO: why have a patch method like this? should be done in mapper.
-            var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId,
+                vacancyId);
 
             if (vacancyDetailViewModel == null)
             {
@@ -392,8 +414,10 @@
             }
 
             apprenticheshipApplicationViewModel.VacancyDetail = vacancyDetailViewModel;
-            apprenticheshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 = vacancyDetailViewModel.SupplementaryQuestion1;
-            apprenticheshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = vacancyDetailViewModel.SupplementaryQuestion2;
+            apprenticheshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 =
+                vacancyDetailViewModel.SupplementaryQuestion1;
+            apprenticheshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 =
+                vacancyDetailViewModel.SupplementaryQuestion2;
 
             return apprenticheshipApplicationViewModel;
         }
