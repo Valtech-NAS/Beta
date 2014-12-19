@@ -9,7 +9,6 @@
     <div>
         You've applied for:
         <h2 class="heading-medium">@Html.DisplayFor(m => m.VacancyTitle) - @Html.DisplayFor(m => m.VacancyReference)</h2>
-        <p>@Model.ProviderContactInfo</p>
     </div>
 </div>
 @if (Model.SentEmail)
@@ -22,21 +21,21 @@
     </section>
 }
 else
-{
-    <p>
-        TODO: We haven't sent you an email confirming
-        your application because your email notification preference is set to no
-    </p>
-    <p>
-        TODO: You can turn on notifications by going to the settings section in <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">my applications</a>
-    </p>
-}
-<h2 class="heading-medium">What happens next</h2>
-<div class="text form-group">
-    <p>
-        You’ll be contacted if you’re eligible for a traineeship. You can see the applications you've made by visiting <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">my applications</a>.
-    </p>
-</div>
-<div class="form-group get-started">
-    <a role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)'>Find a traineeship</a>
-</div>
+{       
+    <section class="section-border">
+        <p class="text">
+            <i class="fa fa-envelope-o"></i>If you'd like to receive email confirmation of applications, you can turn notifications on in the <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">settings</a> section in your account. 
+        </p>
+    </section>
+    }
+    <h2 class="heading-medium">What happens next</h2>
+    <div class="text form-group">
+        <p>
+            You’ll be contacted if you’re eligible for a traineeship. You can see the applications you've made by visiting <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">my applications</a>.
+        </p>
+        <p>If you'd like to contact the provider, their details are:</p>
+        <p>@Model.ProviderContactInfo</p>
+    </div>
+    <div class="form-group get-started">
+        <a role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)'>Find a traineeship</a>
+    </div>
