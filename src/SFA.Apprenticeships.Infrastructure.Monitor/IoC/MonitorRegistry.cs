@@ -3,6 +3,8 @@
 namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
 {
     using Consumers;
+    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
+    using SFA.Apprenticeships.Infrastructure.Common.Configuration;
     using StructureMap.Configuration.DSL;
     using Tasks;
 
@@ -12,6 +14,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
         {
             For<MonitorControlQueueConsumer>().Use<MonitorControlQueueConsumer>();
             For<IMonitorTasksRunner>().Use<MonitorTasksRunner>();
+            For<IConfigurationManager>().Use<ConfigurationManager>();
 
             For<IMonitorTasksRunner>().Use<MonitorTasksRunner>()
                 .EnumerableOf<IMonitorTask>()

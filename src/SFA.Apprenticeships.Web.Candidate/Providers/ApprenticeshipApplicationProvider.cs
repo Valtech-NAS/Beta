@@ -203,10 +203,7 @@
 
         private void IncrementApplicationSubmissionCounter()
         {
-            bool performanceCountersEnabled;
-
-            if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
-                && performanceCountersEnabled)
+            if(_configurationManager.GetCloudAppSetting<bool>("PerformanceCountersEnabled"))
             {
                 _performanceCounterService.IncrementCounter(WebRolePerformanceCounterCategory, ApplicationSubmissionCounter);
             }

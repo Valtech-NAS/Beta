@@ -1,14 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
 {
-    using System;
     using System.Threading.Tasks;
     using EasyNetQ.AutoSubscribe;
-    using Application.VacancyEtl.Entities;
-    using Elastic.Common.Entities;
     using Microsoft.WindowsAzure;
     using NLog;
-    using PerformanceCounters;
-    using VacancyIndexer;
+    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
+    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
+    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Entities;
+    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
+    using SFA.Apprenticeships.Infrastructure.VacancyIndexer;
 
     public class VacancySummaryCompleteConsumerAsync : IConsumeAsync<VacancySummaryUpdateComplete>
     {
@@ -16,17 +16,24 @@
         private const string VacancyIndexCounter = "VacancyEtlExecutions";
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> _apprenticeshipIndexer;
-        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _trainseeshipIndexer;
-        private readonly IPerformanceCounterService _performanceCounterService;
 
-        public VacancySummaryCompleteConsumerAsync(IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> apprenticeshipIndexer, 
+        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>
+            _apprenticeshipIndexer;
+
+        private readonly IPerformanceCounterService _performanceCounterService;
+        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _trainseeshipIndexer;
+        private readonly IConfigurationManager _configurationManager;
+
+        public VacancySummaryCompleteConsumerAsync(
+            IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> apprenticeshipIndexer,
             IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> trainseeshipIndexer,
-            IPerformanceCounterService performanceCounterService)
+            IPerformanceCounterService performanceCounterService, 
+            IConfigurationManager configurationManager)
         {
             _apprenticeshipIndexer = apprenticeshipIndexer;
             _trainseeshipIndexer = trainseeshipIndexer;
             _performanceCounterService = performanceCounterService;
+            _configurationManager = configurationManager;
         }
 
         [AutoSubscriberConsumer(SubscriptionId = "VacancySummaryCompleteConsumerAsync")]
@@ -64,10 +71,7 @@
 
         private void IncrementVacancyIndexPerformanceCounter()
         {
-            bool performanceCountersEnabled;
-
-            if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
-                && performanceCountersEnabled)
+            if ( _configurationManager.GetCloudAppSetting<bool>("PerformanceCountersEnabled"))
             {
                 _performanceCounterService.IncrementCounter(VacancyEtlPerformanceCounterCategory, VacancyIndexCounter);
             }

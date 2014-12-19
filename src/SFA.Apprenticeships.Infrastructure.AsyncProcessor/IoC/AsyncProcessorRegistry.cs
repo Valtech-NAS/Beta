@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.IoC
 {
-    using Application.Interfaces.Messaging;
-    using Consumers;
     using Microsoft.WindowsAzure;
+    using SFA.Apprenticeships.Application.Interfaces.Messaging;
+    using SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers;
     using StructureMap.Configuration.DSL;
 
     public class AsyncProcessorRegistry : Registry
@@ -11,9 +11,14 @@
         {
             var emailDispatcher = CloudConfigurationManager.GetSetting("EmailDispatcher");
 
-            For<EmailRequestConsumerAsync>().Use<EmailRequestConsumerAsync>().Ctor<IEmailDispatcher>().Named(emailDispatcher);
-            For<SubmitApprenticeshipApplicationRequestConsumerAsync>().Use<SubmitApprenticeshipApplicationRequestConsumerAsync>();
-            For<SubmitTraineeshipApplicationRequestConsumerAsync>().Use<SubmitTraineeshipApplicationRequestConsumerAsync>();
+            For<EmailRequestConsumerAsync>()
+                .Use<EmailRequestConsumerAsync>()
+                .Ctor<IEmailDispatcher>()
+                .Named(emailDispatcher);
+            For<SubmitApprenticeshipApplicationRequestConsumerAsync>()
+                .Use<SubmitApprenticeshipApplicationRequestConsumerAsync>();
+            For<SubmitTraineeshipApplicationRequestConsumerAsync>()
+                .Use<SubmitTraineeshipApplicationRequestConsumerAsync>();
             For<CreateCandidateRequestConsumerAsync>().Use<CreateCandidateRequestConsumerAsync>();
         }
     }

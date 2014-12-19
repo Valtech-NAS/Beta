@@ -17,6 +17,7 @@
     using Microsoft.WindowsAzure;
     using NLog;
     using Infrastructure.PerformanceCounters;
+    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
     using ViewModels.Locations;
     using ViewModels.VacancySearch;
     using ErrorCodes = Application.Interfaces.Locations.ErrorCodes;
@@ -33,6 +34,7 @@
         private readonly IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail> _apprenticeshipSearchService;
         private readonly IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail> _traineeshipSearchService;
         private readonly IPerformanceCounterService _performanceCounterService;
+        private readonly IConfigurationManager _configurationManager;
 
         public SearchProvider(ILocationSearchService locationSearchService,
             IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail> apprenticeshipSearchService,
@@ -40,7 +42,8 @@
             IAddressSearchService addressSearchService,
             IMapper apprenticeshipSearchMapper,
             IMapper traineeshipSearchMapper, 
-            IPerformanceCounterService performanceCounterService)
+            IPerformanceCounterService performanceCounterService, 
+            IConfigurationManager configurationManager)
         {
             _locationSearchService = locationSearchService;
             _apprenticeshipSearchService = apprenticeshipSearchService;
@@ -49,6 +52,7 @@
             _apprenticeshipSearchMapper = apprenticeshipSearchMapper;
             _traineeshipSearchMapper = traineeshipSearchMapper;
             _performanceCounterService = performanceCounterService;
+            _configurationManager = configurationManager;
         }
 
         public LocationsViewModel FindLocation(string placeNameOrPostcode)
@@ -308,10 +312,7 @@
 
         private void IncrementVacancySearchPerformanceCounter()
         {
-            bool performanceCountersEnabled;
-
-            if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
-                && performanceCountersEnabled)
+            if(_configurationManager.GetCloudAppSetting<bool>("PerformanceCountersEnabled"))
             {
                 _performanceCounterService.IncrementCounter(WebRolePerformanceCounterCategory, VacancySearchCounter);
             }

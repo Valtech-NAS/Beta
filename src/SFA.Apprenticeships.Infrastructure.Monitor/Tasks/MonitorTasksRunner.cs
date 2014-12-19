@@ -7,6 +7,7 @@
     using Microsoft.WindowsAzure;
     using NLog;
     using PerformanceCounters;
+    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
 
     public class MonitorTasksRunner : IMonitorTasksRunner
     {
@@ -16,12 +17,15 @@
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IEnumerable<IMonitorTask> _monitorTasks;
         private readonly IPerformanceCounterService _performanceCounterService;
+        private readonly IConfigurationManager _configurationManager;
 
         public MonitorTasksRunner(IEnumerable<IMonitorTask> monitorTasks, 
-            IPerformanceCounterService performanceCounterService)
+            IPerformanceCounterService performanceCounterService, 
+            IConfigurationManager configurationManager)
         {
             _monitorTasks = monitorTasks;
             _performanceCounterService = performanceCounterService;
+            _configurationManager = configurationManager;
         }
 
         public void RunMonitorTasks()
@@ -53,10 +57,7 @@
 
         private void IncrementCounter()
         {
-            bool performanceCountersEnabled;
-
-            if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
-                && performanceCountersEnabled)
+            if(_configurationManager.GetCloudAppSetting<bool>("PerformanceCountersEnabled"))
             {
                 _performanceCounterService.IncrementCounter(MonitorPerformanceCounterCategory, MonitorCounter);
             }

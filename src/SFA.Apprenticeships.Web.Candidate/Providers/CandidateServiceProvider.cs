@@ -2,24 +2,24 @@
 {
     using System;
     using System.Linq;
-    using Application.Interfaces.Candidates;
     using System.Web;
-    using Application.Interfaces.Users;
-    using Common.Constants;
-    using Common.Services;
-    using Constants.Pages;
-    using Constants.ViewModels;
-    using Domain.Entities.Applications;
-    using Domain.Entities.Candidates;
-    using Domain.Entities.Exceptions;
-    using Domain.Entities.Users;
-    using Domain.Interfaces.Mapping;
-    using Microsoft.WindowsAzure;
     using NLog;
+    using SFA.Apprenticeships.Application.Interfaces.Candidates;
+    using SFA.Apprenticeships.Application.Interfaces.Users;
+    using SFA.Apprenticeships.Domain.Entities.Applications;
+    using SFA.Apprenticeships.Domain.Entities.Candidates;
+    using SFA.Apprenticeships.Domain.Entities.Exceptions;
+    using SFA.Apprenticeships.Domain.Entities.Users;
+    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
+    using SFA.Apprenticeships.Domain.Interfaces.Mapping;
     using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
-    using ViewModels.Login;
-    using ViewModels.Register;
-    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
+    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
+    using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Login;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
+    using SFA.Apprenticeships.Web.Common.Constants;
+    using SFA.Apprenticeships.Web.Common.Services;
+    using ErrorCodes = SFA.Apprenticeships.Domain.Entities.Exceptions.ErrorCodes;
 
     public class CandidateServiceProvider : ICandidateServiceProvider
     {
@@ -27,21 +27,23 @@
         private const string CandidateRegistrationCounter = "CandidateRegistration";
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
-        private readonly IUserAccountService _userAccountService;
-        private readonly ICandidateService _candidateService;
-        private readonly IMapper _mapper;
         private readonly IAuthenticationTicketService _authenticationTicketService;
-        private readonly IPerformanceCounterService _performanceCounterService;
+
+        private readonly ICandidateService _candidateService;
+        private readonly IConfigurationManager _configurationManager;
         private readonly HttpContextBase _httpContext;
+        private readonly IMapper _mapper;
+        private readonly IPerformanceCounterService _performanceCounterService;
+        private readonly IUserAccountService _userAccountService;
 
         public CandidateServiceProvider(
             ICandidateService candidateService,
             IUserAccountService userAccountService,
             IAuthenticationTicketService authenticationTicketService,
-            IMapper mapper, 
-            HttpContextBase httpContext, 
-            IPerformanceCounterService performanceCounterService)
+            IMapper mapper,
+            HttpContextBase httpContext,
+            IPerformanceCounterService performanceCounterService,
+            IConfigurationManager configurationManager)
         {
             _candidateService = candidateService;
             _userAccountService = userAccountService;
@@ -49,6 +51,7 @@
             _mapper = mapper;
             _httpContext = httpContext;
             _performanceCounterService = performanceCounterService;
+            _configurationManager = configurationManager;
         }
 
         public UserNameAvailability IsUsernameAvailable(string username)
@@ -61,7 +64,7 @@
             {
                 userNameAvailability.IsUserNameAvailable = _userAccountService.IsUsernameAvailable(username);
             }
-            catch ( Exception ex)
+            catch (Exception ex)
             {
                 const string errorMessage = "Error checking user name availability";
                 var message = string.Format("{0} for {1}", errorMessage, username);
@@ -147,7 +150,8 @@
                 {
                     Logger.Info(message, e);
                 }
-                else {
+                else
+                {
                     Logger.Error(message, e);
                 }
                 return false;
@@ -221,7 +225,7 @@
                 }
 
                 var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
-               
+
                 if (candidate != null)
                 {
                     // User is authentic.
@@ -230,7 +234,8 @@
                     return new LoginResultViewModel
                     {
                         EmailAddress = candidate.RegistrationDetails.EmailAddress,
-                        FullName = candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
+                        FullName =
+                            candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
                         UserStatus = userStatusViewModel.UserStatus,
                         IsAuthenticated = true
                     };
@@ -257,39 +262,10 @@
             }
         }
 
-        private void IncrementCandidateRegistrationCounter()
-        {
-            bool performanceCountersEnabled;
-
-            if (bool.TryParse(CloudConfigurationManager.GetSetting("PerformanceCountersEnabled"), out performanceCountersEnabled)
-                && performanceCountersEnabled)
-            {
-                _performanceCounterService.IncrementCounter(WebRolePerformanceCounterCategory, CandidateRegistrationCounter);
-            }
-        }
-
-        private static LoginResultViewModel GetLoginResultViewModel(LoginViewModel model, UserStatuses userStatus)
-        {
-            return new LoginResultViewModel
-            {
-                EmailAddress = model.EmailAddress,
-                UserStatus = userStatus
-            };
-        }
-
-        private static LoginResultViewModel GetAuthenticationFailedViewModel(LoginViewModel model, UserStatuses userStatus)
-        {
-            // Authentication failed, user's account is not locked yet.
-            return new LoginResultViewModel(LoginPageMessages.InvalidUsernameOrPasswordErrorText)
-            {
-                EmailAddress = model.EmailAddress,
-                UserStatus = userStatus
-            };
-        }
-
         public bool RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model)
         {
-            Logger.Debug("Calling CandidateServiceProvider to request a password reset code for user {0}", model.EmailAddress);
+            Logger.Debug("Calling CandidateServiceProvider to request a password reset code for user {0}",
+                model.EmailAddress);
 
             try
             {
@@ -328,7 +304,7 @@
             try
             {
                 _userAccountService.ResendAccountUnlockCode(model.EmailAddress);
-                return new AccountUnlockViewModel{EmailAddress = model.EmailAddress};
+                return new AccountUnlockViewModel {EmailAddress = model.EmailAddress};
             }
             catch (CustomException e)
             {
@@ -342,13 +318,13 @@
                         Logger.Error(e.Message, e);
                         break;
                 }
-                return new AccountUnlockViewModel(e.Message){EmailAddress = model.EmailAddress};
+                return new AccountUnlockViewModel(e.Message) {EmailAddress = model.EmailAddress};
             }
             catch (Exception e)
             {
                 var message = string.Format("Send account unlock code failed for " + model.EmailAddress);
                 Logger.Error(message, e);
-                return new AccountUnlockViewModel(message){EmailAddress = model.EmailAddress};
+                return new AccountUnlockViewModel(message) {EmailAddress = model.EmailAddress};
             }
         }
 
@@ -366,7 +342,7 @@
                 UserStatus = model.UserStatus,
                 IsPasswordResetCodeValid = false
             };
-            
+
             try
             {
                 _candidateService.ResetForgottenPassword(result.EmailAddress, result.PasswordResetCode, result.Password);
@@ -432,16 +408,19 @@
                     case Application.Interfaces.Users.ErrorCodes.AccountUnlockCodeInvalid:
                     case Application.Interfaces.Users.ErrorCodes.UnknownUserError:
                         Logger.Info(e.Message, e);
-                        return new AccountUnlockViewModel {Status = AccountUnlockState.AccountEmailAddressOrUnlockCodeInvalid};
+                        return new AccountUnlockViewModel
+                        {
+                            Status = AccountUnlockState.AccountEmailAddressOrUnlockCodeInvalid
+                        };
                     default:
-                        Logger.Error(e.Message,e);
-                        return new AccountUnlockViewModel { Status = AccountUnlockState.Error };
+                        Logger.Error(e.Message, e);
+                        return new AccountUnlockViewModel {Status = AccountUnlockState.Error};
                 }
             }
             catch (Exception e)
             {
                 Logger.Error("Account unlock failed for " + model.EmailAddress, e);
-                return new AccountUnlockViewModel{ Status = AccountUnlockState.Error };
+                return new AccountUnlockViewModel {Status = AccountUnlockState.Error};
             }
         }
 
@@ -506,5 +485,34 @@
         }
 
         #endregion
+
+        private void IncrementCandidateRegistrationCounter()
+        {
+            if (_configurationManager.GetCloudAppSetting<bool>("PerformanceCountersEnabled"))
+            {
+                _performanceCounterService.IncrementCounter(WebRolePerformanceCounterCategory,
+                    CandidateRegistrationCounter);
+            }
+        }
+
+        private static LoginResultViewModel GetLoginResultViewModel(LoginViewModel model, UserStatuses userStatus)
+        {
+            return new LoginResultViewModel
+            {
+                EmailAddress = model.EmailAddress,
+                UserStatus = userStatus
+            };
+        }
+
+        private static LoginResultViewModel GetAuthenticationFailedViewModel(LoginViewModel model,
+            UserStatuses userStatus)
+        {
+            // Authentication failed, user's account is not locked yet.
+            return new LoginResultViewModel(LoginPageMessages.InvalidUsernameOrPasswordErrorText)
+            {
+                EmailAddress = model.EmailAddress,
+                UserStatus = userStatus
+            };
+        }
     }
 }

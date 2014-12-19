@@ -3,7 +3,7 @@
 namespace SFA.Apprenticeships.Infrastructure.Monitor.Consumers
 {
     using System.Threading.Tasks;
-    using Microsoft.WindowsAzure;
+    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
     using SFA.Apprenticeships.Domain.Interfaces.Messaging;
     using SFA.Apprenticeships.Infrastructure.Azure.Common.Messaging;
     using SFA.Apprenticeships.Infrastructure.Monitor.Tasks;
@@ -11,11 +11,13 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Consumers
     public class MonitorControlQueueConsumer : AzureControlQueueConsumer
     {
         private readonly IMonitorTasksRunner _monitorTasksRunner;
+        private readonly IConfigurationManager _configurationManager;
 
         public MonitorControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService,
-            IMonitorTasksRunner monitorTasksRunner) : base(messageService, "Monitor")
+            IMonitorTasksRunner monitorTasksRunner, IConfigurationManager configurationManager) : base(messageService, "Monitor")
         {
             _monitorTasksRunner = monitorTasksRunner;
+            _configurationManager = configurationManager;
         }
 
         public Task CheckScheduleQueue()
@@ -34,11 +36,9 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Consumers
             });
         }
 
-        private static bool IsMonitorEnabled()
-        {
-            bool monitorEnabled;
-            bool.TryParse(CloudConfigurationManager.GetSetting("MonitorEnabled"), out monitorEnabled);
-            return monitorEnabled;
+        private bool IsMonitorEnabled()
+        {   
+            return _configurationManager.GetCloudAppSetting<bool>("MonitorEnabled");
         }
     }
 }
