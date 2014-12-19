@@ -311,9 +311,23 @@
                 model.EmailAddress);
 
             try
-            {   
+            {
                 _userAccountService.ResendAccountUnlockCode(model.EmailAddress);
                 return new AccountUnlockViewModel{EmailAddress = model.EmailAddress};
+            }
+            catch (CustomException e)
+            {
+                switch (e.Code)
+                {
+                    case ErrorCodes.UserInIncorrectStateError:
+                    case Application.Interfaces.Users.ErrorCodes.UnknownUserError:
+                        Logger.Info(e.Message, e);
+                        break;
+                    default:
+                        Logger.Error(e.Message, e);
+                        break;
+                }
+                return new AccountUnlockViewModel(e.Message){EmailAddress = model.EmailAddress};
             }
             catch (Exception e)
             {
