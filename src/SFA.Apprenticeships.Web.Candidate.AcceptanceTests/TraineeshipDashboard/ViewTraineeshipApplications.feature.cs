@@ -81,22 +81,24 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.TraineeshipDashboard
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("I have applied for two traineeships")]
+        [NUnit.Framework.IgnoreAttribute()]
         [NUnit.Framework.CategoryAttribute("US586")]
         public virtual void IHaveAppliedForTwoTraineeships()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I have applied for two traineeships", new string[] {
-                        "US586"});
-#line 12
+                        "US586",
+                        "Ignore"});
+#line 13
 this.ScenarioSetup(scenarioInfo);
 #line 5
 this.FeatureBackground();
-#line 13
- testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 14
- testRunner.And("I applied for 2 traineeships", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 15
- testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I applied for 2 traineeships", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
+ testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
  testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -108,11 +110,11 @@ this.FeatureBackground();
             table1.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
-#line 17
+#line 18
  testRunner.And("I enter data", ((string)(null)), table1, "And ");
-#line 21
- testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 22
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 23
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -123,7 +125,7 @@ this.FeatureBackground();
                         "TraineeshipsCount",
                         "Equals",
                         "-1"});
-#line 23
+#line 24
  testRunner.And("I see", ((string)(null)), table2, "And ");
 #line hidden
             this.ScenarioCleanup();

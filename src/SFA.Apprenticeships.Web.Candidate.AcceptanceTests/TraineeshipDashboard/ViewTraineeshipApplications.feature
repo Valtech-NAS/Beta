@@ -9,6 +9,7 @@ Background:
 	Then I am on the TraineeshipSearchPage page
 
 @US586
+@Ignore
 Scenario: I have applied for two traineeships
 	Given I have an empty dashboard
 	And I applied for 2 traineeships
