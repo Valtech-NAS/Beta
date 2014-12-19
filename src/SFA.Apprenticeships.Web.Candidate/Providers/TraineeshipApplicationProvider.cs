@@ -123,7 +123,11 @@
 
             try
             {
-                var patchedModel = GetApplicationViewModel(candidateId, vacancyId);
+                var applicationDetails = _candidateService.GetTraineeshipApplication(candidateId, vacancyId);
+                var applicationViewModel =
+                    _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(applicationDetails);
+
+                var patchedModel = PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
                 var candidate = _candidateService.GetCandidate(candidateId);
 
                 if (patchedModel.HasError())
@@ -135,7 +139,8 @@
                 {
                     VacancyReference = patchedModel.VacancyDetail.VacancyReference,
                     VacancyTitle = patchedModel.VacancyDetail.Title,
-                    SentEmail = candidate.CommunicationPreferences.AllowEmail
+                    SentEmail = candidate.CommunicationPreferences.AllowEmail,
+                    ProviderContactInfo = patchedModel.VacancyDetail.Contact
                 };
             }
             catch (Exception e)

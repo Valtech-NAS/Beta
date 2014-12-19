@@ -8,10 +8,10 @@
     <h1 class="heading-large"><i class="fa fa-check"></i>Traineeship application submitted</h1>
     <div>
         You've applied for:
-        <h2 class="heading-medium">@Html.DisplayFor(m => m.VacancyTitle)</h2>
+        <h2 class="heading-medium">@Html.DisplayFor(m => m.VacancyTitle) - @Html.DisplayFor(m => m.VacancyReference)</h2>
+        <p>@Model.ProviderContactInfo</p>
     </div>
 </div>
-
 @if (Model.SentEmail)
 {
     <section class="section-border">
