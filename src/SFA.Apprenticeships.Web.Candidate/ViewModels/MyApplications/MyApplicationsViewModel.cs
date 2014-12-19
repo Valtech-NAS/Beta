@@ -6,51 +6,60 @@
 
     public class MyApplicationsViewModel
     {
-        private readonly TraineeshipInformation _traineeshipInformation;
-
-        public MyApplicationsViewModel(IEnumerable<MyApplicationViewModel> applications, 
-            TraineeshipInformation traineeshipInformation)
+        public MyApplicationsViewModel(
+            IEnumerable<MyApprenticeshipApplicationViewModel> apprenticeshipApplications,
+            IEnumerable<MyTraineeshipApplicationViewModel> traineeshipApplications, 
+            TraineeshipPromptViewModel traineeshipPrompt)
         {
-            _traineeshipInformation = traineeshipInformation;
-            AllApplications = applications
+            AllApprenticeshipApplications = apprenticeshipApplications
                 .Where(a => !a.IsArchived)
                 .OrderByDescending(a => a.DateUpdated);
+
+            TraineeshipApplications = traineeshipApplications
+                .Where(a => !a.IsArchived)
+                .OrderByDescending(a => a.DateApplied);
+
+            TraineeshipPrompt = traineeshipPrompt;
         }
 
-        public IEnumerable<MyApplicationViewModel> AllApplications { get; private set; }
+        public IEnumerable<MyApprenticeshipApplicationViewModel> AllApprenticeshipApplications { get; private set; }
 
-        public IEnumerable<MyApplicationViewModel> SubmittedApplications
+        public IOrderedEnumerable<MyTraineeshipApplicationViewModel> TraineeshipApplications { get; private set; }
+
+        public TraineeshipPromptViewModel TraineeshipPrompt { get; set; }
+
+        public IEnumerable<MyApprenticeshipApplicationViewModel> SubmittedApprenticeshipApplications
         {
             get
             {
-                return AllApplications.Where(each =>
+                return AllApprenticeshipApplications.Where(each =>
                     each.ApplicationStatus == ApplicationStatuses.Submitting ||
                     each.ApplicationStatus == ApplicationStatuses.Submitted);
             }
         }
 
-        public IEnumerable<MyApplicationViewModel> SuccessfulApplications
+        public IEnumerable<MyApprenticeshipApplicationViewModel> SuccessfulApprenticeshipApplications
         {
-            get { return AllApplications.Where(each => each.ApplicationStatus == ApplicationStatuses.Successful); }
+            get { return AllApprenticeshipApplications.Where(each => each.ApplicationStatus == ApplicationStatuses.Successful); }
         }
 
-        public IEnumerable<MyApplicationViewModel> UnsuccessfulApplications
+        public IEnumerable<MyApprenticeshipApplicationViewModel> UnsuccessfulApplications
         {
             get
             {
-                return AllApplications
+                return AllApprenticeshipApplications
                     .Where(each =>
                         each.ApplicationStatus == ApplicationStatuses.Unsuccessful ||
                         (each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && each.DateApplied.HasValue));
             }
         }
 
-        public IEnumerable<MyApplicationViewModel> DraftApplications
+        public IEnumerable<MyApprenticeshipApplicationViewModel> DraftApprenticeshipApplications
         {
             get
             {
                 // Return Draft or Expired / Withdrawn draft applications.
-                return AllApplications
+                return AllApprenticeshipApplications
                     .Where(each =>
                         each.ApplicationStatus == ApplicationStatuses.Draft ||
                         (each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && !each.DateApplied.HasValue))
@@ -58,13 +67,13 @@
             }
         }
 
-        public bool ShouldShowTraineeshipsPrompt
+        public bool ShowTraineeshipsPrompt
         {
             get
             {
-                return _traineeshipInformation.TraineeshipsFeatureActive 
-                    && UnsuccessfulApplications.Count() >= _traineeshipInformation.UnsuccessfulApplicationsToShowTraineeshipsPrompt 
-                    && !_traineeshipInformation.AnyTraineeshipsApplied;
+                return TraineeshipPrompt.TraineeshipsFeatureActive &&
+                       UnsuccessfulApplications.Count() >= TraineeshipPrompt.UnsuccessfulApplicationsToShowTraineeshipsPrompt
+                       && !TraineeshipApplications.Any();
             }
         }
     }

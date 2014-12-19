@@ -8,6 +8,7 @@
         public override void Initialise()
         {
             Mapper.CreateMap<GatewayServiceProxy.Vacancy, ApprenticeshipVacancyDetail>()
+                .BeforeMap<ApprenticeshipTypeCheck>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom(src => src.VacancyId))
 

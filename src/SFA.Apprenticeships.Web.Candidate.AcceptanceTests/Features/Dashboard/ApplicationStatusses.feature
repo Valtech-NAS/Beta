@@ -12,7 +12,7 @@ Background:
 	Then I am on the ApprenticeshipSearchPage page
 
 @US463
-Scenario: As a candidate I want to see the applications in my dashbord grouped by state
+Scenario: As a candidate I want to see the applications in my dashboard grouped by state
 	Given I have an empty dashboard
 	And I add 4 applications in "Draft" state
 	And I add 4 applications in "Successful" state

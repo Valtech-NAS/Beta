@@ -25,7 +25,8 @@
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICreateApprenticeshipApplicationStrategy _createApplicationStrategy;
         private readonly ICreateTraineeshipApplicationStrategy _createTraineeshipApplicationStrategy;
-        private readonly IGetCandidateApprenticeshipApplicationsStrategy _getCandidateApplicationsStrategy;
+        private readonly IGetCandidateApprenticeshipApplicationsStrategy _getCandidateApprenticeshipApplicationsStrategy;
+        private readonly IGetCandidateTraineeshipApplicationsStrategy _getCandidateTraineeshipApplicationsStrategy;
         private readonly IRegisterCandidateStrategy _registerCandidateStrategy;
         private readonly IResetForgottenPasswordStrategy _resetForgottenPasswordStrategy;
         private readonly ISaveApprenticeshipApplicationStrategy _saveApplicationStrategy;
@@ -46,7 +47,7 @@
             IRegisterCandidateStrategy registerCandidateStrategy,
             ICreateApprenticeshipApplicationStrategy createApplicationStrategy,
             ICreateTraineeshipApplicationStrategy createTraineeshipApplicationStrategy,
-            IGetCandidateApprenticeshipApplicationsStrategy getCandidateApplicationsStrategy,
+            IGetCandidateApprenticeshipApplicationsStrategy getCandidateApprenticeshipApplicationsStrategy,
             IResetForgottenPasswordStrategy resetForgottenPasswordStrategy,
             IUnlockAccountStrategy unlockAccountStrategy,
             ISaveApprenticeshipApplicationStrategy saveApplicationStrategy,
@@ -55,7 +56,8 @@
             ISaveCandidateStrategy saveCandidateStrategy,
             ISubmitTraineeshipApplicationStrategy submitTraineeshipApplicationStrategy, 
             ISaveTraineeshipApplicationStrategy saveTraineeshipApplicationStrategy, 
-            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
+            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
+            IGetCandidateTraineeshipApplicationsStrategy getCandidateTraineeshipApplicationsStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -64,7 +66,7 @@
             _registerCandidateStrategy = registerCandidateStrategy;
             _createApplicationStrategy = createApplicationStrategy;
             _createTraineeshipApplicationStrategy = createTraineeshipApplicationStrategy;
-            _getCandidateApplicationsStrategy = getCandidateApplicationsStrategy;
+            _getCandidateApprenticeshipApplicationsStrategy = getCandidateApprenticeshipApplicationsStrategy;
             _resetForgottenPasswordStrategy = resetForgottenPasswordStrategy;
             _unlockAccountStrategy = unlockAccountStrategy;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
@@ -75,6 +77,7 @@
             _submitTraineeshipApplicationStrategy = submitTraineeshipApplicationStrategy;
             _saveTraineeshipApplicationStrategy = saveTraineeshipApplicationStrategy;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
+            _getCandidateTraineeshipApplicationsStrategy = getCandidateTraineeshipApplicationsStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -165,7 +168,7 @@
             Condition.Requires(passwordCode).IsNotNullOrEmpty();
             Condition.Requires(newPassword).IsNotNullOrEmpty();
 
-            Logger.Debug("Calling CandidateService to reseth the password for the user {0}.", username);
+            Logger.Debug("Calling CandidateService to reset the password for the user {0}.", username);
 
             _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
         }
@@ -175,7 +178,7 @@
             Condition.Requires(candidateId);
 
             Logger.Debug(
-                "Calling CandidateService to create an apprenticeshipApplication of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to create an apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
             return _createApplicationStrategy.CreateApplication(candidateId, vacancyId);
@@ -186,7 +189,7 @@
             Condition.Requires(candidateId);
 
             Logger.Debug(
-                "Calling CandidateService to get the apprenticeshipApplication of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to get the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
             var applicationId = GetApplicationId(candidateId, vacancyId);
@@ -199,7 +202,7 @@
             Condition.Requires(candidateId);
 
             Logger.Debug(
-                "Calling CandidateService to create a traineeship Application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to create a traineeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, traineeshipVacancyId);
 
             return _createTraineeshipApplicationStrategy.CreateApplication(candidateId, traineeshipVacancyId);
@@ -210,7 +213,7 @@
             Condition.Requires(candidateId);
 
             Logger.Debug(
-                "Calling CandidateService to archive the apprenticeshipApplication of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to archive the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
             var applicationId = GetApplicationId(candidateId, vacancyId);
@@ -223,7 +226,7 @@
             Condition.Requires(candidateId);
 
             Logger.Debug(
-                "Calling CandidateService to delete the apprenticeshipApplication of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to delete the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
             var applicationId = GetApplicationId(candidateId, vacancyId);
@@ -235,7 +238,7 @@
             Condition.Requires(candidateId);
 
             Logger.Debug(
-                "Calling CandidateService to get the apprenticeshipApplication of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to get the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
             //TODO: repeating the query twice?
@@ -244,17 +247,12 @@
             return applicationId == null ? null : _traineeshipApplicationReadRepository.Get(applicationId.Value);
         }
 
-        public bool HasCandidateAppliedForAnyTraineeship(Guid candidateId)
-        {
-            return _traineeshipApplicationReadRepository.GetForCandidate(candidateId).Count > 0;
-        }
-
         public void SaveApplication(Guid candidateId, int vacancyId, ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
             Condition.Requires(apprenticeshipApplication);
 
             Logger.Debug(
-                "Calling CandidateService to save the apprenticeshipApplication of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to save the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
             var applicationId = GetApplicationId(candidateId, vacancyId);
@@ -263,15 +261,15 @@
             _saveApplicationStrategy.SaveApplication(apprenticeshipApplication);
         }
 
-        public IList<ApprenticeshipApplicationSummary> GetApplications(Guid candidateId)
+        public IList<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId)
         {
             Condition.Requires(candidateId);
 
             Logger.Debug(
-                "Calling CandidateService to get the applications of the user with Id={0}.",
+                "Calling CandidateService to get the apprenticeship applications of the user with Id={0}.",
                 candidateId);
 
-            return _getCandidateApplicationsStrategy.GetApplications(candidateId);
+            return _getCandidateApprenticeshipApplicationsStrategy.GetApplications(candidateId);
         }
 
         public void SubmitApplication(Guid candidateId, int vacancyId)
@@ -279,7 +277,7 @@
             Condition.Requires(candidateId);
 
             Logger.Debug(
-                "Calling CandidateService to submit the apprenticeshipApplication of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to submit the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
             var applicationId = GetApplicationId(candidateId, vacancyId);
@@ -293,7 +291,7 @@
             Condition.Requires(candidateId);
 
             Logger.Debug(
-                "Calling CandidateService to submit the traineeship Application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to submit the traineeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
             var traineeshipDetails = _saveTraineeshipApplicationStrategy.SaveApplication(traineeshipApplicationDetail);
@@ -316,6 +314,17 @@
             if (applicationDetail == null) return null;
 
             return applicationDetail.EntityId;
+        }
+
+        public IList<TraineeshipApplicationSummary> GetTraineeshipApplications(Guid candidateId)
+        {
+            Condition.Requires(candidateId);
+
+            Logger.Debug(
+                "Calling CandidateService to get the traineeship applications of the user with Id={0}.",
+                candidateId);
+
+            return _getCandidateTraineeshipApplicationsStrategy.GetApplications(candidateId);
         }
     }
 }

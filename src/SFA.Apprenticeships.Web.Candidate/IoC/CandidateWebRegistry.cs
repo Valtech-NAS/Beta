@@ -126,6 +126,7 @@
                 .Ctor<IMapper>()
                 .Named("TraineeshipCandidateWebMappers");
             For<ITraineeshipApplicationProvider>().Use<TraineeshipApplicationProvider>();
+            For<IGetCandidateTraineeshipApplicationsStrategy>().Use<LegacyGetCandidateTraineeshipApplicationsStrategy>();
 
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
 

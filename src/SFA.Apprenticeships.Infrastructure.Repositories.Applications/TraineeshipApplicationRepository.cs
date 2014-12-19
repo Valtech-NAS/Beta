@@ -89,7 +89,7 @@
 
         public IList<TraineeshipApplicationSummary> GetForCandidate(Guid candidateId)
         {
-            Logger.Debug("Calling repository to get ApplicationSummary list for candidate with Id={0}", candidateId);
+            Logger.Debug("Calling repository to get TraineeshipApplicationSummary list for candidate with Id={0}", candidateId);
 
             // Get traineeship application summaries for the specified candidate, excluding any that are archived.
             var mongoApplicationDetailsList = Collection

@@ -3,9 +3,8 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using Domain.Entities.Applications;
-    using Microsoft.Ajax.Utilities;
 
-    public class MyApplicationViewModel
+    public class MyApprenticeshipApplicationViewModel
     {
         public int VacancyId { get; set; }
 

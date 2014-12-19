@@ -10,7 +10,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
     using Domain.Interfaces.Repositories;
     using StructureMap;
 
-    public class ApplicationBuilder
+    public class ApprenticeshipApplicationBuilder
     {
         private readonly Guid _candidateId = new Guid("00000000-0000-0000-0000-000000000001");
         private readonly string _emailAddress = string.Empty;
@@ -18,25 +18,25 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
         private DateTime? _dateApplied = DateTime.Now;
         private DateTime _expirationDate = DateTime.Now.AddDays(30);
 
-        public ApplicationBuilder(Guid candidateId, string emailAddress)
+        public ApprenticeshipApplicationBuilder(Guid candidateId, string emailAddress)
         {
             _candidateId = candidateId;
             _emailAddress = emailAddress;
         }
 
-        public ApplicationBuilder WithApplicationStatus(ApplicationStatuses applicationStatus)
+        public ApprenticeshipApplicationBuilder WithApplicationStatus(ApplicationStatuses applicationStatus)
         {
             _applicationStatus = applicationStatus;
             return this;
         }
 
-        public ApplicationBuilder WithExpirationDate(DateTime expirationDate)
+        public ApprenticeshipApplicationBuilder WithExpirationDate(DateTime expirationDate)
         {
             _expirationDate = expirationDate;
             return this;
         }
 
-        public ApplicationBuilder WithoutDateApplied()
+        public ApprenticeshipApplicationBuilder WithoutDateApplied()
         {
             _dateApplied = null;
             return this;
@@ -74,7 +74,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
             return ApprenticeshipApplicationDetail;
         }
 
-        public void DeleteApplications(Guid userCandidateId)
+        public void DeleteApprenticeshipApplications(Guid userCandidateId)
         {
 #pragma warning disable 0618
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.

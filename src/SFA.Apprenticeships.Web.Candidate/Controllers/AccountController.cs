@@ -98,10 +98,7 @@
 
                 var model = _apprenticeshipApplicationProvider.GetMyApplications(UserContext.CandidateId);
 
-                if (model.ShouldShowTraineeshipsPrompt)
-                {
-                    ViewBag.RenderTraineeshipsPrompt = true;
-                }
+                ViewBag.RenderTraineeshipsPrompt = model.ShowTraineeshipsPrompt;
 
                 return View(model);
             });

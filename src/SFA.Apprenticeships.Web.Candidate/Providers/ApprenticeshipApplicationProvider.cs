@@ -331,10 +331,10 @@
 
             try
             {
-                var applicationSummaries = _candidateService.GetApplications(candidateId);
+                var apprenticeshipApplicationSummaries = _candidateService.GetApprenticeshipApplications(candidateId);
 
-                var applications = applicationSummaries
-                    .Select(each => new MyApplicationViewModel
+                var apprenticeshipApplications = apprenticeshipApplicationSummaries
+                    .Select(each => new MyApprenticeshipApplicationViewModel
                     {
                         VacancyId = each.LegacyVacancyId,
                         Title = each.Title,
@@ -348,7 +348,21 @@
                     })
                     .ToList();
 
-                return new MyApplicationsViewModel(applications, GetTraineeshipInformation(candidateId));
+                var traineeshipApplicationSummaries = _candidateService.GetTraineeshipApplications(candidateId);
+
+                var traineeshipApplications = traineeshipApplicationSummaries
+                    .Select(each => new MyTraineeshipApplicationViewModel
+                    {
+                        VacancyId = each.LegacyVacancyId,
+                        Title = each.Title,
+                        EmployerName = each.EmployerName,
+                        IsArchived = each.IsArchived,
+                        DateApplied = each.DateApplied
+                    })
+                    .ToList();
+
+                return new MyApplicationsViewModel(
+                    apprenticeshipApplications, traineeshipApplications, GetTraineeshipPrompt(candidateId));
             }
             catch (Exception e)
             {
@@ -369,14 +383,13 @@
             }
         }
 
-        private TraineeshipInformation GetTraineeshipInformation(Guid candidateId)
+        private TraineeshipPromptViewModel GetTraineeshipPrompt(Guid candidateId)
         {
-            return new TraineeshipInformation
+            return new TraineeshipPromptViewModel
             {
                 UnsuccessfulApplicationsToShowTraineeshipsPrompt =
                     _configurationManager.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt"),
-                TraineeshipsFeatureActive = _featureToggle.IsActive(Feature.Traineeships),
-                AnyTraineeshipsApplied = _candidateService.HasCandidateAppliedForAnyTraineeship(candidateId)
+                TraineeshipsFeatureActive = _featureToggle.IsActive(Feature.Traineeships)
             };
         }
 

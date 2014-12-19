@@ -15,8 +15,11 @@
         private const string EmailAddressTokenName = "EmailAddressToken";
         private const string PasswordTokenName = "PasswordToken";
         private const string Password = "?Password01!";
+
         private readonly ITokenManager _tokenManager;
-        private ApplicationBuilder _applicationBuilder;
+
+        private ApprenticeshipApplicationBuilder _apprenticeshipApplicationBuilder;
+        private TraineeshipApplicationBuilder _traineeshipApplicationBuilder;
 
         public DashboardBinding(ITokenManager tokenManager)
         {
@@ -34,11 +37,12 @@
 
             SetTokens(candidate, user);
 
-            _applicationBuilder = new ApplicationBuilder(candidate.EntityId,
-                    UserEmailAddress);
-            _applicationBuilder.DeleteApplications(candidate.EntityId);
-        }
+            _apprenticeshipApplicationBuilder = new ApprenticeshipApplicationBuilder(candidate.EntityId, UserEmailAddress);
+            _traineeshipApplicationBuilder = new TraineeshipApplicationBuilder(candidate.EntityId, UserEmailAddress);
 
+            _apprenticeshipApplicationBuilder.DeleteApprenticeshipApplications(candidate.EntityId);
+            _traineeshipApplicationBuilder.DeleteTraineeshipApplications(candidate.EntityId);
+        }
 
         [Given(@"I add (.*) applications in ""(.*)"" state")]
         public void GivenIAddApplicationsInState(int numberOfApplications, string state)
@@ -47,7 +51,7 @@
             for (var i = 0; i < numberOfApplications; i++)
             {
                 var applicationStatus = (ApplicationStatuses)Enum.Parse(typeof(ApplicationStatuses), state);
-                _applicationBuilder
+                _apprenticeshipApplicationBuilder
                     .WithApplicationStatus(applicationStatus).Build();
             }
         }
@@ -57,7 +61,7 @@
         {
             for (var i = 0; i < numberOfApplications; i++)
             {
-                _applicationBuilder
+                _apprenticeshipApplicationBuilder
                     .WithApplicationStatus(ApplicationStatuses.ExpiredOrWithdrawn)
                     .WithExpirationDate(DateTime.Now.AddDays(-5))
                     .WithoutDateApplied()
@@ -65,6 +69,15 @@
             }
         }
 
+        [Given(@"I applied for (.*) traineeships")]
+        public void GivenIAppliedForTraineeships(int numberOfTraineeships)
+        {
+            for (var i = 0; i < numberOfTraineeships; i++)
+            {
+                _traineeshipApplicationBuilder
+                    .Build();
+            }
+        }
 
         private void SetTokens(Candidate candidate, User user)
         {

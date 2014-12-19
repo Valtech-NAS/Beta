@@ -558,7 +558,7 @@
     <Compile Include="ViewModels\Login\LoginResultViewModel.cs" />
     <Compile Include="ViewModels\Login\UserStatusesViewModel.cs" />
     <Compile Include="ViewModels\MyApplications\MyApplicationsViewModel.cs" />
-    <Compile Include="ViewModels\MyApplications\MyApplicationViewModel.cs" />
+    <Compile Include="ViewModels\MyApplications\MyApprenticeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Applications\WhatHappensNextViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EducationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EmployerQuestionAnswersViewModel.cs" />
@@ -570,7 +570,8 @@
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\Login\AccountUnlockViewModel.cs" />
-    <Compile Include="ViewModels\MyApplications\TraineeshipInformation.cs" />
+    <Compile Include="ViewModels\MyApplications\MyTraineeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\MyApplications\TraineeshipPromptViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenPasswordViewModel.cs" />
     <Compile Include="ViewModels\Login\LoginViewModel.cs" />
     <Compile Include="ViewModels\Register\ActivationViewModel.cs" />

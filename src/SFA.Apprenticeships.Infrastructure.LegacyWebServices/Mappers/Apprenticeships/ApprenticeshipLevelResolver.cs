@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers.Apprenticeships
 {
     using AutoMapper;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using NLog;

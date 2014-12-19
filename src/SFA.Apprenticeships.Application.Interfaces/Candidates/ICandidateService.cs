@@ -31,14 +31,15 @@
 
         void SaveApplication(Guid candidateId, int vacancyId, ApprenticeshipApplicationDetail apprenticeshipApplication);
 
-        IList<ApprenticeshipApplicationSummary> GetApplications(Guid candidateId);
+        IList<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId);
 
         void SubmitApplication(Guid candidateId, int vacancyId);
+
         TraineeshipApplicationDetail CreateTraineeshipApplication(Guid candidateId, int traineeshipVacancyId);
 
         TraineeshipApplicationDetail GetTraineeshipApplication(Guid candidateId, int vacancyId);
 
-        bool HasCandidateAppliedForAnyTraineeship(Guid candidateId);
+        IList<TraineeshipApplicationSummary> GetTraineeshipApplications(Guid candidateId);
 
         void SubmitTraineeshipApplication(Guid candidateId, int vacancyId,
             TraineeshipApplicationDetail traineeshipApplicationDetail);

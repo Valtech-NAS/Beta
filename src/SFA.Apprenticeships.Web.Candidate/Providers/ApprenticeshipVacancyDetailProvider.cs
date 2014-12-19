@@ -92,7 +92,7 @@
         private ApprenticeshipApplicationSummary GetCandidateApplication(Guid candidateId, int vacancyId)
         {
             return _candidateService
-                .GetApplications(candidateId)
+                .GetApprenticeshipApplications(candidateId)
                 .SingleOrDefault(a => a.LegacyVacancyId == vacancyId);
         }
     }

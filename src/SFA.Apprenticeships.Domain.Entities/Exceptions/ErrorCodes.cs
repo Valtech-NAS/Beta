@@ -27,6 +27,7 @@
         public const string ApplicationCreationError = "Application005";
         public const string ApplicationDuplicatedError = "Application006";
         public const string ApplicationGatewayCreationError = "Application007";
+        public const string ApplicationTypeMismatch = "Application008";
 
         // Vacancy Exception Codes
         public const string VacancyNotFoundError = "Vacancy001";

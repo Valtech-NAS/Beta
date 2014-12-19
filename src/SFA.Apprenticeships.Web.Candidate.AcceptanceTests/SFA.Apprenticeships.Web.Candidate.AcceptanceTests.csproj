@@ -156,7 +156,8 @@
     <Compile Include="Bindings\HomePageBinding.cs" />
     <Compile Include="Bindings\Registration\ForgottenPasswordDataBinding.cs" />
     <Compile Include="Bindings\VacancySearch\VacancySearchPageBindings.cs" />
-    <Compile Include="Builders\ApplicationBuilder.cs" />
+    <Compile Include="Builders\TraineeshipApplicationBuilder.cs" />
+    <Compile Include="Builders\ApprenticeshipApplicationBuilder.cs" />
     <Compile Include="Builders\CandidateBuilder.cs" />
     <Compile Include="Builders\RegistrationBuilder.cs" />
     <Compile Include="Builders\UserBuilder.cs" />
@@ -204,6 +205,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DeleteADraft.feature</DependentUpon>
+    </Compile>
+    <Compile Include="TraineeshipDashboard\DismissTraineeshipApplication.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DismissTraineeshipApplication.feature</DependentUpon>
+    </Compile>
+    <Compile Include="TraineeshipDashboard\ViewTraineeshipApplications.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewTraineeshipApplications.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Gds\GdsRedirect.feature.cs">
       <AutoGen>True</AutoGen>
@@ -404,6 +415,14 @@
     <None Include="Features\Dashboard\DeleteADraft.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>DeleteADraft.feature.cs</LastGenOutput>
+    </None>
+    <None Include="TraineeshipDashboard\DismissTraineeshipApplication.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>DismissTraineeshipApplication.feature.cs</LastGenOutput>
+    </None>
+    <None Include="TraineeshipDashboard\ViewTraineeshipApplications.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ViewTraineeshipApplications.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Gds\GdsRedirect.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

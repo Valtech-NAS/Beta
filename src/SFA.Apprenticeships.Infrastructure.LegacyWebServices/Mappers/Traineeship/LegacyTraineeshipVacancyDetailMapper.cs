@@ -2,12 +2,14 @@
 {
     using Common.Mappers;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Traineeship;
 
     public class LegacyTraineeshipVacancyDetailMapper : MapperEngine
     {
         public override void Initialise()
         {
             Mapper.CreateMap<GatewayServiceProxy.Vacancy, TraineeshipVacancyDetail>()
+                .BeforeMap<TraineeshipTypeCheck>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom(src => src.VacancyId))
 

@@ -23,6 +23,9 @@
         [ElementLocator(Id = "unsuccessful-applications-count")]
         public IWebElement UnsuccessfulApplicationsCount { get; set; }
 
+        [ElementLocator(Id = "trainee-applications-count")]
+        public IWebElement TraineeApplicationsCount { get; set; }
+
         [ElementLocator(Class = "resume-link")]
         public IWebElement ResumeLink { get; set; }
 
@@ -38,7 +41,7 @@
         [ElementLocator(Id = "empty-application-history-text")]
         public IWebElement EmptyApplicationHistoryText { get; set; }
 
-        [ElementLocator(Id = "tshipPrompt")]
+        [ElementLocator(Id = "traineeshipPrompt")]
         public IWebElement TraineeshipsPrompt { get; set; }
 
         [ElementLocator(Id = "application-status-description")]

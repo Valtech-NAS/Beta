@@ -124,6 +124,7 @@
     <Compile Include="Strategies\IRegisterCandidateStrategy.cs" />
     <Compile Include="Strategies\IActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\IDeleteApplicationStrategy.cs" />
+    <Compile Include="Strategies\Traineeships\IGetCandidateTraineeshipApplicationsStrategy.cs" />
     <Compile Include="Strategies\Traineeships\ISaveTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\ISaveApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ISaveCandidateStrategy.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Strategies\LegacyActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\LegacyGetCandidateApprenticeshipApplicationsStrategy.cs" />
     <Compile Include="Strategies\LegacyResetForgottenPasswordStrategy.cs" />
+    <Compile Include="Strategies\Traineeships\LegacyGetCandidateTraineeshipApplicationsStrategy.cs" />
     <Compile Include="Strategies\Traineeships\LegacySubmitTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\LegacyUnlockAccountStrategy .cs" />
     <Compile Include="Strategies\LegacyVacancyStatusProvider.cs" />

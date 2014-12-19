@@ -106,7 +106,7 @@
 
             try
             {
-                var application = _candidateService.GetApplications(candidateId)
+                var application = _candidateService.GetApprenticeshipApplications(candidateId)
                     .SingleOrDefault(a => a.LegacyVacancyId == vacancyId);
 
                 if (application == null)

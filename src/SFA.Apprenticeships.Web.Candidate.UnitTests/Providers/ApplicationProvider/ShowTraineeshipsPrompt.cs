@@ -5,10 +5,10 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.Interfaces.Candidates;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-    using SFA.Apprenticeships.Web.Candidate.Providers;
+    using Application.Interfaces.Candidates;
+    using Domain.Entities.Applications;
+    using Domain.Interfaces.Configuration;
+    using Candidate.Providers;
     using System.Linq;
 
     [TestFixture]
@@ -40,14 +40,14 @@
         public void GivenAUserHasMoreThanNUnsuccessfulApplications_ShouldSeeTheTraineeshipsPrompt()
         {
             //Arrange
-            _candidateService.Setup(cs => cs.GetApplications(It.IsAny<Guid>())).
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
                 Returns(GetApplicationSummaries(UnsuccessfulApplications));
 
             //Act
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
 
             //Assert
-            results.ShouldShowTraineeshipsPrompt.Should().BeTrue();
+            results.ShowTraineeshipsPrompt.Should().BeTrue();
         }
 
         [Test]
@@ -56,21 +56,21 @@
             //Arrange
             const int unsuccessfulApplicationsThreshold = UnsuccessfulApplications - 1;
 
-            _candidateService.Setup(cs => cs.GetApplications(It.IsAny<Guid>())).
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
                 Returns(GetApplicationSummaries(unsuccessfulApplicationsThreshold));
 
             //Act
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
 
             //Assert
-            results.ShouldShowTraineeshipsPrompt.Should().BeFalse();
+            results.ShowTraineeshipsPrompt.Should().BeFalse();
         }
 
         [Test]
         public void GivenTraineeshipsAreNotSwitchedOn_ShouldntSeeTheTraineeshipsPrompt()
         {
             //Arrange
-            _candidateService.Setup(cs => cs.GetApplications(It.IsAny<Guid>())).
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
                 Returns(GetApplicationSummaries(UnsuccessfulApplications));
 
             _featureToggle.Setup(ft => ft.IsActive(Feature.Traineeships)).Returns(false);
@@ -80,7 +80,7 @@
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
 
             //Assert
-            results.ShouldShowTraineeshipsPrompt.Should().BeFalse();
+            results.ShowTraineeshipsPrompt.Should().BeFalse();
         }
 
         private static List<ApprenticeshipApplicationSummary> GetApplicationSummaries(int applicationSummariesCount)
