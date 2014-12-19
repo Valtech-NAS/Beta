@@ -39,7 +39,7 @@
     <div class="grid grid-1-2">
         <h1 class="heading-xlarge">My applications</h1>
     </div>
-    @if (Model.AllApprenticeshipApplications.Any())
+    @if (Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())
     {
         <div class="grid grid-1-2">
             @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { @class = "page-link" })
