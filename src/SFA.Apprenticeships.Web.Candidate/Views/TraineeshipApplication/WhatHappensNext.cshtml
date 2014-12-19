@@ -12,13 +12,24 @@
     </div>
 </div>
 
-@if(Model.SentEmail){
+@if (Model.SentEmail)
+{
     <section class="section-border">
         <p>
             <i class="fa fa-envelope-o"></i>We have sent you an email confirming
             your application
         </p>
     </section>
+}
+else
+{
+    <p>
+        TODO: We haven't sent you an email confirming
+        your application because your email notification preference is set to no
+    </p>
+    <p>
+        TODO: You can turn on notifications by going to the settings section in <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">my applications</a>
+    </p>
 }
 <h2 class="heading-medium">What happens next</h2>
 <div class="text form-group">
