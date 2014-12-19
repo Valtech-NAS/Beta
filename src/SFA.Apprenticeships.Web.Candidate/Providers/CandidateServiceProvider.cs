@@ -297,6 +297,21 @@
 
                 return true;
             }
+            catch (CustomException e)
+            {
+                switch (e.Code)
+                {
+                    case ErrorCodes.UserInIncorrectStateError:
+                    case Application.Interfaces.Users.ErrorCodes.UnknownUserError:
+                        Logger.Info(e.Message, e);
+                        break;
+                    default:
+                        Logger.Error(e.Message, e);
+                        break;
+                }
+
+                return false;
+            }
             catch (Exception e)
             {
                 Logger.Error("Send password reset code failed for " + model.EmailAddress, e);
