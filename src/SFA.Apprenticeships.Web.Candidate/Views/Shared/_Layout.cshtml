@@ -164,7 +164,7 @@
         </div>
     </footer>
 
-    @if (ViewBag.ShowAbout)
+    @if (ViewBag.ShowAbout != null && ViewBag.ShowAbout == true)
     {
         Html.RenderPartial("_about");
     }

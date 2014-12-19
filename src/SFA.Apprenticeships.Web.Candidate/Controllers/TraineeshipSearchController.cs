@@ -41,6 +41,14 @@
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [ApplyWebTrends]
+        public async Task<ActionResult> Overview()
+        {
+            return await Task.Run<ActionResult>(() => View());
+        }
+
+        [HttpGet]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
         public async Task<ActionResult> Index()
         {
             return await Task.Run<ActionResult>(() =>
