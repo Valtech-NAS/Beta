@@ -43,6 +43,9 @@
             _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
                 Returns(GetApplicationSummaries(UnsuccessfulApplications));
 
+            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>())).
+                Returns(GetTraineeshipApplicationSummaries(0));
+
             //Act
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
 
@@ -58,6 +61,9 @@
 
             _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
                 Returns(GetApplicationSummaries(unsuccessfulApplicationsThreshold));
+
+            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>())).
+                Returns(GetTraineeshipApplicationSummaries(0));
 
             //Act
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
@@ -75,6 +81,25 @@
 
             _featureToggle.Setup(ft => ft.IsActive(Feature.Traineeships)).Returns(false);
 
+            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>())).
+                Returns(GetTraineeshipApplicationSummaries(0));
+
+            //Act
+            var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
+
+            //Assert
+            results.ShowTraineeshipsPrompt.Should().BeFalse();
+        }
+
+        [Test]
+        public void GivenIveAppliedForAtLeastOneTraineeship_ShouldntSeeTheTraineeshipsPrompt()
+        {
+            //Arrange
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
+                Returns(GetApplicationSummaries(UnsuccessfulApplications));
+            
+            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>())).
+                Returns(GetTraineeshipApplicationSummaries(1));
 
             //Act
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
@@ -87,6 +112,15 @@
         {
             return Enumerable.Range(1, applicationSummariesCount)
                 .Select(i => new ApprenticeshipApplicationSummary {Status = ApplicationStatuses.Unsuccessful})
+                .ToList();
+        }
+
+        private static List<TraineeshipApplicationSummary> GetTraineeshipApplicationSummaries(int traineeshipSummariesCount)
+        {
+            if (traineeshipSummariesCount == 0) return new List<TraineeshipApplicationSummary>();
+
+            return Enumerable.Range(1, traineeshipSummariesCount)
+                .Select(i => new TraineeshipApplicationSummary())
                 .ToList();
         }
     }
