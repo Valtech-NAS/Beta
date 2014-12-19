@@ -78,6 +78,8 @@
             {
                 var model = GetApplicationViewModel(candidateId, vacancyId);
 
+                //TODO: check for error (traineeship already submitted)?
+
                 var traineeshipApplicationDetails =
                     _mapper.Map<TraineeshipApplicationViewModel, TraineeshipApplicationDetail>(
                         traineeshipApplicationViewModel);
