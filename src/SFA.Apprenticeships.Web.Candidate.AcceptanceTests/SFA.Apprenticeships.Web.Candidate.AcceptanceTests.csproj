@@ -191,25 +191,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WarningWhenNavigatingOutOfApprenticeshipApplyPage.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Dashboard\ApplicationStatusses.feature.cs">
+    <Compile Include="Features\Dashboard\ViewApprenticeshipApplications.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ApplicationStatusses.feature</DependentUpon>
+      <DependentUpon>ViewApprenticeshipApplications.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Dashboard\ArchiveApplications.feature.cs">
+    <Compile Include="Features\Dashboard\ArchiveApprenticeshipApplications.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ArchiveApplications.feature</DependentUpon>
+      <DependentUpon>ArchiveApprenticeshipApplications.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Dashboard\DeleteADraft.feature.cs">
+    <Compile Include="Features\Dashboard\DeleteDraftApprenticeshipApplication.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DeleteADraft.feature</DependentUpon>
+      <DependentUpon>DeleteDraftApprenticeshipApplication.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Dashboard\FindVacancyLinks.feature.cs">
+    <Compile Include="Features\Dashboard\ShowFindVacancyLinks.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FindVacancyLinks.feature</DependentUpon>
+      <DependentUpon>ShowFindVacancyLinks.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Dashboard\ViewTraineeshipApplications.feature.cs">
       <AutoGen>True</AutoGen>
@@ -404,21 +404,21 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>WarningWhenNavigatingOutOfApprenticeshipApplyPage.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Dashboard\ApplicationStatusses.feature">
+    <None Include="Features\Dashboard\ViewApprenticeshipApplications.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ApplicationStatusses.feature.cs</LastGenOutput>
+      <LastGenOutput>ViewApprenticeshipApplications.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Dashboard\ArchiveApplications.feature">
+    <None Include="Features\Dashboard\ArchiveApprenticeshipApplications.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ArchiveApplications.feature.cs</LastGenOutput>
+      <LastGenOutput>ArchiveApprenticeshipApplications.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Dashboard\DeleteADraft.feature">
+    <None Include="Features\Dashboard\DeleteDraftApprenticeshipApplication.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>DeleteADraft.feature.cs</LastGenOutput>
+      <LastGenOutput>DeleteDraftApprenticeshipApplication.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Dashboard\FindVacancyLinks.feature">
+    <None Include="Features\Dashboard\ShowFindVacancyLinks.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>FindVacancyLinks.feature.cs</LastGenOutput>
+      <LastGenOutput>ShowFindVacancyLinks.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Dashboard\ViewTraineeshipApplications.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

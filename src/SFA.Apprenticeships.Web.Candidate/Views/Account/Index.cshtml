@@ -268,7 +268,7 @@ else
                 @if (Model.TraineeshipApplications.Any())
                 {
                     <h2 class="heading-medium" id="dashTraineeships">Traineeships</h2>
-                    <table class="vert-middle">
+                    <table id="traineeships-table" class="vert-middle">
                         <colgroup>
                             <col class="t60">
                             <col class="t20">
@@ -278,7 +278,7 @@ else
                         <tbody class="tbody-3rows">
                             @foreach (var application in @Model.TraineeshipApplications)
                             {
-                                    <tr>
+                                    <tr class="traineeship-table-row">
                                         <td>@application.Title with @application.EmployerName</td>
                                         <td class="ta-center">Applied</td>
                                         <td class="ta-center">@Html.DisplayFor(m => application.DateApplied)</td>

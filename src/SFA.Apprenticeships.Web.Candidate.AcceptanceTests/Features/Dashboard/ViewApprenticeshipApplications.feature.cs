@@ -25,7 +25,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Dashboard
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "ApplicationStatusses.feature"
+#line 1 "ViewApprenticeshipApplications.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
