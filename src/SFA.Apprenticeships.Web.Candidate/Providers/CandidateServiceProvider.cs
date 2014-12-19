@@ -395,10 +395,10 @@
                 switch (e.Code)
                 {
                     case ErrorCodes.UserInIncorrectStateError:
-                        Logger.Warn(e.Message, e);
+                        Logger.Info(e.Message, e);
                         return new AccountUnlockViewModel {Status = AccountUnlockState.UserInIncorrectState};
                     case Application.Interfaces.Users.ErrorCodes.AccountUnlockCodeExpired:
-                        Logger.Warn(e.Message, e);
+                        Logger.Info(e.Message, e);
                         return new AccountUnlockViewModel {Status = AccountUnlockState.AccountUnlockCodeExpired};
                     case Application.Interfaces.Users.ErrorCodes.AccountUnlockCodeInvalid:
                     case Application.Interfaces.Users.ErrorCodes.UnknownUserError:
