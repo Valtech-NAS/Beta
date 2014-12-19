@@ -1,12 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
 {
     using System.Collections.Generic;
-    using CuttingEdge.Conditions;
     using Microsoft.WindowsAzure;
     using SFA.Apprenticeships.Domain.Interfaces.Configuration;
 
     public class FeatureToggle : IFeatureToggle
     {
+        private readonly IConfigurationManager _configurationManager;
+
+        public FeatureToggle(IConfigurationManager configurationManager)
+        {
+            _configurationManager = configurationManager;
+        }
+
         private readonly Dictionary<Feature, string> _featureToggleKeys = new Dictionary<Feature, string>
         {
             {Feature.Traineeships, "TraineeshipsEnabled"}
@@ -20,11 +26,7 @@
                     feature));
             }
 
-            bool isActive;
-
-            var settingValue = CloudConfigurationManager.GetSetting(_featureToggleKeys[feature]);
-            bool.TryParse(settingValue, out isActive);
-            return isActive;
+            return _configurationManager.GetCloudAppSetting<bool>(_featureToggleKeys[feature]);
         }
     }
 }
