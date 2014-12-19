@@ -8,7 +8,7 @@
     {
         public void Process(GatewayServiceProxy.Vacancy source, ApprenticeshipVacancyDetail destination)
         {
-            if (source.VacancyType == "Traineeship")
+            if (source.VacancyType == "Traineeship" && source.VacancyType != "LegacyTestServiceType")
             {
                 throw new CustomException("Expected an apprenticeship, got a traineeship.", ErrorCodes.ApplicationTypeMismatch);
             }
