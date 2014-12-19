@@ -15,7 +15,7 @@
 {
     <section class="section-border">
         <p>
-            <i class="fa fa-envelope-o"></i>We have sent you an email confirming
+            <i class="fa fa-envelope-o"></i>We've sent you an email confirming
             your application
         </p>
     </section>
@@ -27,7 +27,7 @@ else
             <i class="fa fa-envelope-o"></i>If you'd like to receive email confirmation of applications, you can turn notifications on in the <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">settings</a> section in your account. 
         </p>
     </section>
-    }
+}
     <h2 class="heading-medium">What happens next</h2>
     <div class="text form-group">
         <p>
@@ -35,6 +35,9 @@ else
         </p>
         <p>If you'd like to contact the provider, their details are:</p>
         <p>@Model.ProviderContactInfo</p>
+        <p>
+            <a href="@(ViewBag.FeedbackUrl)" rel="external" target="_blank">What did you think of the service?</a>
+        </p>
     </div>
     <div class="form-group get-started">
         <a role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)'>Find a traineeship</a>
