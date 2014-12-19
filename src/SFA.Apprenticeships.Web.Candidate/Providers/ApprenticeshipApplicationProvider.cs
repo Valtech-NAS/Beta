@@ -341,12 +341,7 @@
                     })
                     .ToList();
 
-                var unsuccessfulApplicationsToShowTraineeshipsPrompt =
-                    _configurationManager.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt");
-
-                var traineeshipsActive = _featureToggle.IsActive(Feature.Traineeships);
-
-                return new MyApplicationsViewModel(applications, unsuccessfulApplicationsToShowTraineeshipsPrompt, traineeshipsActive);
+                return new MyApplicationsViewModel(applications, GetTraineeshipInformation(candidateId));
             }
             catch (Exception e)
             {
@@ -356,6 +351,17 @@
 
                 throw;
             }
+        }
+
+        private TraineeshipInformation GetTraineeshipInformation(Guid candidateId)
+        {
+            return new TraineeshipInformation
+            {
+                UnsuccessfulApplicationsToShowTraineeshipsPrompt =
+                    _configurationManager.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt"),
+                TraineeshipsFeatureActive = _featureToggle.IsActive(Feature.Traineeships),
+                AnyTraineeshipsApplied = _candidateService.HasCandidateAppliedForAnyTraineeship(candidateId)
+            };
         }
 
         #region Helpers

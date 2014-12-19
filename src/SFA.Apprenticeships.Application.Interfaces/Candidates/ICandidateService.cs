@@ -38,6 +38,8 @@
 
         TraineeshipApplicationDetail GetTraineeshipApplication(Guid candidateId, int vacancyId);
 
+        bool HasCandidateAppliedForAnyTraineeship(Guid candidateId);
+
         void SubmitTraineeshipApplication(Guid candidateId, int vacancyId,
             TraineeshipApplicationDetail traineeshipApplicationDetail);
 

@@ -244,6 +244,11 @@
             return applicationId == null ? null : _traineeshipApplicationReadRepository.Get(applicationId.Value);
         }
 
+        public bool HasCandidateAppliedForAnyTraineeship(Guid candidateId)
+        {
+            return _traineeshipApplicationReadRepository.GetForCandidate(candidateId).Count > 0;
+        }
+
         public void SaveApplication(Guid candidateId, int vacancyId, ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
             Condition.Requires(apprenticeshipApplication);

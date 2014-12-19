@@ -6,14 +6,12 @@
 
     public class MyApplicationsViewModel
     {
-        private readonly int _unsuccessfulApplicationsToShowTraineeshipsPrompt;
-        private readonly bool _traineeshipsActive;
+        private readonly TraineeshipInformation _traineeshipInformation;
 
         public MyApplicationsViewModel(IEnumerable<MyApplicationViewModel> applications, 
-            int unsuccessfulApplicationsToShowTraineeshipsPrompt, bool traineeshipsActive)
+            TraineeshipInformation traineeshipInformation)
         {
-            _unsuccessfulApplicationsToShowTraineeshipsPrompt = unsuccessfulApplicationsToShowTraineeshipsPrompt;
-            _traineeshipsActive = traineeshipsActive;
+            _traineeshipInformation = traineeshipInformation;
             AllApplications = applications
                 .Where(a => !a.IsArchived)
                 .OrderByDescending(a => a.DateUpdated);
@@ -64,8 +62,9 @@
         {
             get
             {
-                return _traineeshipsActive &&
-                       UnsuccessfulApplications.Count() >= _unsuccessfulApplicationsToShowTraineeshipsPrompt;
+                return _traineeshipInformation.TraineeshipsFeatureActive 
+                    && UnsuccessfulApplications.Count() >= _traineeshipInformation.UnsuccessfulApplicationsToShowTraineeshipsPrompt 
+                    && !_traineeshipInformation.AnyTraineeshipsApplied;
             }
         }
     }
