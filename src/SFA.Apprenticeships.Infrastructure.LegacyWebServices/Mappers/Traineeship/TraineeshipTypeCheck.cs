@@ -10,7 +10,7 @@
         {
             if (source.VacancyType != "Traineeship")
             {
-                throw new CustomException("Expected an traineeship, got a apprenticeship.", ErrorCodes.ApplicationTypeMismatch);
+                throw new CustomException("Expected a traineeship, got an apprenticeship.", ErrorCodes.ApplicationTypeMismatch);
             }
         }
     }

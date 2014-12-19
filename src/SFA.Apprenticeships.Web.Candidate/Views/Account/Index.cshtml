@@ -17,7 +17,7 @@
     </div>
 }
 
-@if (ViewBag.ShowTraineeshipsPrompt != null && ViewBag.ShowTraineeshipsPrompt)
+@if (Model.ShowTraineeshipsPrompt)
 {
     <div role="alert" aria-live="assertive" id="traineeshipPrompt" class="toggle-content panel-info" style="display: block;">
         <div class="text">
@@ -43,6 +43,12 @@
     {
         <div class="grid grid-1-2">
             @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { @class = "page-link" })
+        </div>
+    }
+    @if (Model.ShowTraineeshipsPrompt || Model.TraineeshipApplications.Any())
+    {
+        <div class="grid grid-1-2">
+            @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { @class = "page-link" })
         </div>
     }
 </div>

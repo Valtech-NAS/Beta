@@ -97,9 +97,7 @@
                 }
 
                 var model = _apprenticeshipApplicationProvider.GetMyApplications(UserContext.CandidateId);
-
-                ViewBag.RenderTraineeshipsPrompt = model.ShowTraineeshipsPrompt;
-
+                
                 return View(model);
             });
         }
