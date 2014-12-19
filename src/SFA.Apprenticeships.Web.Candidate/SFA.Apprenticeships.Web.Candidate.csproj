@@ -367,7 +367,7 @@
     <Content Include="Views\Shared\_ApprenticeshipLayout.cshtml" />
     <Content Include="Views\TraineeshipSearch\Details.cshtml" />
     <Content Include="Views\TraineeshipSearch\_Apply.cshtml" />
-    <Content Include="Views\Shared\_WebTrends.cshtml" />
+    <Content Include="Views\Shared\_Scripts.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
