@@ -1,11 +1,75 @@
 ﻿
 @{
-    ViewBag.Title = "Overview";
+    ViewBag.Title = "Traineeship Overview";
     Layout = "~/Views/Shared/_TraineeshipLayout.cshtml";
 }
 
-<h2>Overview</h2>
-
-<p>
-    <a id="prompt-traineeship-search-link" href=@Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)>TODO: Find a traineeship</a>
-</p>
+<section class="text">
+    <div class="text">
+        <h1 class="heading-xlarge">Are you eligible for a traineeship?</h1>
+    </div>
+    <div class="text" id="tshipAbout">
+        <section>
+            <p>
+                A traineeship is a course designed to prepare someone for an apprenticeship
+                or get them ready for work. They can take up to 6 months.
+            </p>
+            <p>You can apply for a traineeship if you’re all of the following:</p>
+        </section>
+        <div class="form-group">
+            <h2 class="heading-medium heading-with-check">
+                <i class="fa fa-check-square-o font-large"></i>
+                eligible to work in England
+            </h2>
+        </div>
+        <div class="form-group inline">
+            <h2 class="heading-medium heading-with-check">
+                <i class="fa fa-check-square-o font-large"></i>
+                unemployed and have little or no work experience
+            </h2>
+            <details>
+                <summary>What does this mean?</summary>
+                <div class="panel-indent detail-content">
+                    <p>
+                        You can only apply for a traineeship if you’re unemployed (or are
+                        working less than 16 hours a week)
+                    </p>
+                </div>
+            </details>
+        </div>
+        <div class="form-group">
+            <h2 class="heading-medium heading-with-check">
+                <i class="fa fa-check-square-o font-large"></i>
+                aged 16 to 18 and qualified below Level 3, or aged 19 to 24 and qualified below Level 2
+            </h2>
+            <details>
+                <summary>More about qualifications</summary>
+                <div class="panel-indent detail-content">
+                    <p>
+                        A Level 2 qualification is equivalent to 5 GCSEs at Grades A* -
+                        C.
+                    </p>
+                    <p>A Level 3 qualification is equivalent to 2 or more ‘A’ level passes.</p>
+                </div>
+            </details>
+        </div>
+        <div class="panel-indent">
+            <p>
+                Traineeships are unpaid, but employers can sometimes pay expenses for
+                things like travel and meals.
+            </p>
+            <p>
+                If you're unsure if a traineeship is right for you, contact the <a rel="external" target="_blank" href="https://nationalcareersservice.direct.gov.uk">National Careers Service</a> for
+                advice.
+            </p>
+        </div>
+        <div class="get-started form-group">
+            <a id="prompt-traineeship-search-link" href=@Url.RouteUrl(CandidateRouteNames.TraineeshipSearch) class="button">Find a traineeship</a>
+        </div>
+        <p>
+            Alternatively, if you think you'd be eligible for an apprenticeship,
+            use the @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null) service
+            instead.
+        </p>
+    </div>
+ </section>
