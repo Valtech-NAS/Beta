@@ -23,6 +23,12 @@ Scenario: As a candidate I would like to apply for a traineeship
 	And I choose ApplyButton
 	Then I am on the TraineeshipWhatsNextPage page
 
+@US592
+Scenario: As a candidate I am taken to login or create an account when viewing traineeship details
+	Given I select the "first" traineeship vacancy in location "N7 8LS" that can apply by this website
+	When I am on the TraineeshipDetailsPage page
+	And I choose ApplyButton
+	Then I am on the LoginPage page
 
 Scenario: As a candidate I want to enter my qualifications and work experience in a traineeship application
 	Given I have registered a new candidate

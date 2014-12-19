@@ -31,7 +31,6 @@
 
     @if (!Model.HasError())
     {
-
         <section class="section-border grid-wrapper">
             <div class="grid grid-2-3">
                 <div class="inner-block-padr">
@@ -107,11 +106,15 @@
                 @Html.Raw(Model.FutureProspects)
             </div>
         </section>
-        <section class="section-border grid-wrapper">
-            <h2 class="heading-large">Other information</h2>
-            <div class="text">
-                <p>@Html.Raw(Model.OtherInformation)</p>
-            </div>
-        </section>
+        
+        if (!string.IsNullOrEmpty(Model.OtherInformation))
+        {
+             <section class="section-border grid-wrapper">
+                 <h2 class="heading-large">Other information</h2>
+                 <div class="text">
+                     <p>@Html.Raw(Model.OtherInformation)</p>
+                 </div>
+             </section>
+         }
     }
 </div>

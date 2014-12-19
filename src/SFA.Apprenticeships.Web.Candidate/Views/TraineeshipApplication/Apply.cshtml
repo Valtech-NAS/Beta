@@ -19,7 +19,7 @@
             @Html.HiddenFor(m => m.VacancyDetail.Description)
             <p id="vacancy-summary">@Model.VacancyDetail.Description</p>
             <p>
-                <a href="@Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })">View opportunity</a>
+                <a href="@Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })">View traineeship</a>
             </p>
         </div>
     </section>
