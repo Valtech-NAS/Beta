@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Runtime.Serialization;
 
+    //todo: why is this marked up as a WCF contract? 
     [DataContract(Namespace = "http://candidates.gov.uk")]
     public class SearchResults<TResult> where TResult : class
     {

@@ -9,6 +9,7 @@
 
     public class StatusController : CandidateControllerBase
     {
+        //todo: none of these references are "allowed" - should be calling services
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ILocationLookupProvider _locationLookupProvider;

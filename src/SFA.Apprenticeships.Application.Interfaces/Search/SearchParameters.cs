@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Search
 {
     using Domain.Entities.Locations;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Vacancies;
 
