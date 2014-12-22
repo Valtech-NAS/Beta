@@ -45,6 +45,8 @@
 
         public VacancyLocationType VacancyLocationType { get; set; }
 
+        public bool IsMultiLocation { get; set; }
+
         public VacancyType VacancyType { get; set; }
 
         public string LocalAuthority { get; set; }

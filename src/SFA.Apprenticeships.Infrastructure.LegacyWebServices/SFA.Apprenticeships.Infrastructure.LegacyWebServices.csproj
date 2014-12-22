@@ -130,6 +130,7 @@
     <Compile Include="Mappers\LegacyVacancySummaryLocationResolver.cs" />
     <Compile Include="Mappers\ApplicationStatusSummaryMapper.cs" />
     <Compile Include="Mappers\ApplicationStatusResolver.cs" />
+    <Compile Include="Mappers\MultiLocationResolver.cs" />
     <Compile Include="Mappers\VacancyStatusResolver.cs" />
     <Compile Include="Mappers\VacancyLevelResolver.cs" />
     <Compile Include="Mappers\VacancyLocationTypeResolver.cs" />

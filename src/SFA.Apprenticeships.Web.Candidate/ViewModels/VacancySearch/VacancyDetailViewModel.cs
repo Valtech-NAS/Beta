@@ -34,6 +34,8 @@
 
         public VacancyLocationType VacancyLocationType { get; set; }
 
+        public bool IsMultiLocation { get; set; }
+
         [UIHint("Date")]
         [DataType(DataType.DateTime)]
         public DateTime ClosingDate { get; set; }
