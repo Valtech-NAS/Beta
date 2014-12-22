@@ -173,6 +173,7 @@
     <Compile Include="Providers\SearchProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderTest.cs" />
+    <Compile Include="Validators\EmployerQuestionsViewModelValidatorTests.cs" />
     <Compile Include="Validators\PasswordResetViewModelValidatorTests.cs" />
     <Compile Include="Validators\EducationViewModelValidatorTests.cs" />
     <Compile Include="Validators\AboutYouViewModelValidatorTests.cs" />

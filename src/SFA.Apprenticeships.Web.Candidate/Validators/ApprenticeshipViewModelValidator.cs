@@ -12,7 +12,7 @@
         }
     }
 
-    public class ApprenticeshipViewModelServerValidator : CandidateViewModelClientValidatorBase<ApprenticeshipCandidateViewModel>
+    public class ApprenticeshipViewModelServerValidator : CandidateViewModelServerValidatorBase<ApprenticeshipCandidateViewModel>
     {
         public ApprenticeshipViewModelServerValidator()
         {

@@ -11,9 +11,9 @@
         }
     }
 
-    public abstract class CandidateViewModelServerValidator : AbstractValidator<CandidateViewModelBase>
+    public abstract class CandidateViewModelServerValidatorBase<T> : AbstractValidator<T> where T : CandidateViewModelBase
     {
-        protected CandidateViewModelServerValidator()
+        protected CandidateViewModelServerValidatorBase()
         {
             RuleFor(x => x.EmployerQuestionAnswers).SetValidator(new EmployerQuestionAnswersViewModelServerValidator());
             RuleFor(x => x.Qualifications)

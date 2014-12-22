@@ -2,10 +2,13 @@
 {
     using System;
     using System.Configuration;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
-    using SFA.Apprenticeships.Web.Common.Models.Application;
+    using FluentValidation.Attributes;
+    using Domain.Entities.Applications;
+    using Candidate;
+    using Common.Models.Application;
+    using Validators;
 
+    [Validator(typeof(ApprenticeshipApplicationViewModelClientValidator))]
     [Serializable]
     public class ApprenticheshipApplicationViewModel : ApplicationViewModelBase
     {
