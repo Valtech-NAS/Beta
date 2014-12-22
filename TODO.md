@@ -9,7 +9,6 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - validation messages should be parameterised where possible (e.g. max length). See AddressMessages.cs for an example.
 - check all messages starting with "TODO" and 'TODO' (C# and JavaScript).
 - usernamecheck should use remote validator
-- write bundle orderer for bundle.config
 - review ApplyWebTrends attribute - use on controller or apply globally  
 - increase the HSTS header to months or years in line with GDS recommendations when we're confident it works https://www.gov.uk/service-manual/operations/operating-servicegovuk-subdomains#transport-layer-security
 - CDN changes:
@@ -24,7 +23,6 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 ## Infrastructure layer ##
 
 - log request/response payloads for nas gateway calls
-- replace address lookup with public service. No longer available - need to investigate other options with the agency
 - change to entity repos (re. Mark). E.g. Consider renaming GenericMongoClient to MongoRepositoryBase; move MongoDB code out of into new MongoClient class; MongoRepositoryBase (and other future repos that may not be based on Domain EntityBase) would consume MongoClient (via IoC).
 - wrap ElasticSearchClient -> search into a new class to be able to rethrow WebException swallowed by Nest
 - agree on and implement location search behaviour fix for prefix sorting on different servers
@@ -33,6 +31,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 ## Cross cutting ##
 
+- Error codes are defined inconsistently across the services. Codes should be considered part of a service's interface/contract so should be defined close to where the interface is defined
 - Error logging is inconsistent between layers which leads to double logging/counting some errors/warnings. Need to decide on a consistent approach
 
 ## WebOps
@@ -65,3 +64,8 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - need to consider turning off integration tests against NAS Gateway services once we are hitting the live service
 - solution should be executable when disconnected from platform (i.e. standalone)
 - demo website should use separate configuration (e.g. databases, settings, etc.)
+
+# Descoped #
+
+- write bundle orderer for bundle.config
+- replace address lookup with public service. No longer available - need to investigate other options with the agency
