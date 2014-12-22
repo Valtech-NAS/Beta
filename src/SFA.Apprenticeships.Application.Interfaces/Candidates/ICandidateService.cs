@@ -26,7 +26,6 @@
 
         ApprenticeshipApplicationDetail GetApplication(Guid candidateId, int vacancyId);
 
-
         void ArchiveApplication(Guid candidateId, int vacancyId);
 
         void SaveApplication(Guid candidateId, int vacancyId, ApprenticeshipApplicationDetail apprenticeshipApplication);
@@ -41,8 +40,7 @@
 
         IList<TraineeshipApplicationSummary> GetTraineeshipApplications(Guid candidateId);
 
-        void SubmitTraineeshipApplication(Guid candidateId, int vacancyId,
-            TraineeshipApplicationDetail traineeshipApplicationDetail);
+        void SubmitTraineeshipApplication(Guid candidateId, int vacancyId, TraineeshipApplicationDetail traineeshipApplicationDetail);
 
         void UnlockAccount(string username, string accountUnlockCode);
 
