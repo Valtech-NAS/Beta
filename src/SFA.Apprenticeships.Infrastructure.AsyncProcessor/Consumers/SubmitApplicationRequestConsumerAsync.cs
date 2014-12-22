@@ -42,8 +42,16 @@
             {
                 if (request.ProcessTime.HasValue && request.ProcessTime > DateTime.Now)
                 {
-                    _messageBus.PublishMessage(request);
-                    return;
+                    try
+                    {
+                        _messageBus.PublishMessage(request);
+                        return;
+                    }
+                    catch
+                    {
+                        Logger.Error("Failed to re-queue deferred 'Submit Application' request: {{ 'ApplicationId': '{0}' }}", request.ApplicationId);
+                        throw;
+                    }
                 }
                 
                 Log("Submitting", request);
@@ -54,6 +62,7 @@
 
         public void CreateApplication(SubmitApplicationRequest request)
         {
+            // TODO: why is this outside of the try / catch.
             var application = _applicationReadRepository.Get(request.ApplicationId, true);
 
             try

@@ -41,8 +41,16 @@
             {
                 if (request.ProcessTime.HasValue && request.ProcessTime > DateTime.Now)
                 {
-                    _messageBus.PublishMessage(request);
-                    return;
+                    try
+                    {
+                        _messageBus.PublishMessage(request);
+                        return;
+                    }
+                    catch
+                    {
+                        Logger.Error("Failed to re-queue deferred 'Create Candidate' request: {{ 'CandidateId': '{0}' }}", request.CandidateId);
+                        throw;
+                    }
                 }
 
                 Log("Creating", request);
