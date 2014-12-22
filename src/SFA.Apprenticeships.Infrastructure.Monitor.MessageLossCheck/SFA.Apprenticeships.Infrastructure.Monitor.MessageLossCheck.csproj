@@ -133,11 +133,14 @@
     <Compile Include="IoC\MessageLogCheckRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\TraineeshipApplicationDiagnosticsRepository.cs" />
     <Compile Include="Repository\ApprenticeshipApplicationDiagnosticsRepository.cs" />
     <Compile Include="Repository\CandidateDiagnosticsRepository.cs" />
+    <Compile Include="Repository\ITraineeshipApplicationDiagnosticsRepository.cs" />
     <Compile Include="Repository\IApprenticeshipApplicationDiagnosticsRepository.cs" />
     <Compile Include="Repository\ICandidateDiagnosticsRepository.cs" />
-    <Compile Include="Tasks\CheckUnsentApplicationMessages.cs" />
+    <Compile Include="Tasks\CheckUnsentTraineeshipApplicationMessages.cs" />
+    <Compile Include="Tasks\CheckUnsentApprenticeshipApplicationMessages.cs" />
     <Compile Include="Tasks\CheckUnsentCandidateMessages.cs" />
     <Compile Include="Tasks\IMessageLossCheckTaskRunner.cs" />
     <Compile Include="Tasks\MessageLossCheckTaskRunner.cs" />

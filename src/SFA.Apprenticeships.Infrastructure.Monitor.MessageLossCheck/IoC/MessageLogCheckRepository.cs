@@ -17,7 +17,8 @@
                 .Contains(x =>
                 {
                     x.Type<CheckUnsentCandidateMessages>();
-                    x.Type<CheckUnsentApplicationMessages>();
+                    x.Type<CheckUnsentApprenticeshipApplicationMessages>();
+                    x.Type<CheckUnsentTraineeshipApplicationMessages>();
                 });
         }
     }

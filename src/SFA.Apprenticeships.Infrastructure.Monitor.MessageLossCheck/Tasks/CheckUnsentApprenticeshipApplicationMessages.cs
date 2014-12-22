@@ -10,13 +10,13 @@
     using NLog;
     using Repository;
 
-    public class CheckUnsentApplicationMessages : IMonitorTask
+    public class CheckUnsentApprenticeshipApplicationMessages : IMonitorTask
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IApprenticeshipApplicationDiagnosticsRepository _applicationDiagnosticsRepository;
         private readonly IMessageBus _messageBus;
 
-        public CheckUnsentApplicationMessages(IApprenticeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository, IMessageBus messageBus)
+        public CheckUnsentApprenticeshipApplicationMessages(IApprenticeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository, IMessageBus messageBus)
         {
             _applicationDiagnosticsRepository = applicationDiagnosticsRepository;
             _messageBus = messageBus;
@@ -24,7 +24,7 @@
 
         public string TaskName
         {
-            get { return "Check Unsent Application Messages"; }
+            get { return "Check Unsent Apprenticeship Application Messages"; }
         }
 
         public void Run()
