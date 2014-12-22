@@ -19,7 +19,7 @@
         private readonly ICandidateReadRepository _candidateReadRepository;
 
         public ApprenticeshipApplicationDiagnosticsRepository(IConfigurationManager configurationManager, IMapper mapper, ICandidateReadRepository candidateReadRepository)
-            : base(configurationManager, "Applications.mongoDB", "applications")
+            : base(configurationManager, "Applications.mongoDB", "apprenticeships")
         {
             _mapper = mapper;
             _candidateReadRepository = candidateReadRepository;
