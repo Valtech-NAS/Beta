@@ -23,8 +23,9 @@
 
         public IEnumerable<Address> FindAddress(string postcode)
         {
-            Logger.Debug("FindAddress for postcode {0}", postcode);
             Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
+
+            Logger.Debug("FindAddress for postcode {0}", postcode);
             
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(Elastic.Common.Entities.Address));
@@ -48,7 +49,7 @@
             }
 
             var addresses = _mapper
-                .Map<IEnumerable<Elastic.Common.Entities.Address>, IEnumerable<Domain.Entities.Locations.Address>>(search.Documents)
+                .Map<IEnumerable<Elastic.Common.Entities.Address>, IEnumerable<Address>>(search.Documents)
                 .ToList();
 
             SanitiseAddresses(addresses);
