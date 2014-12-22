@@ -14,6 +14,7 @@
 
     public class LegacyVacancyDataProvider<TVacancyDetail> : IVacancyDataProvider<TVacancyDetail> where TVacancyDetail : VacancyDetail
     {
+        private const string UnknownVacancy = "UNKNOWN_VACANCY";
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IWcfService<GatewayServiceContract> _service;
@@ -37,12 +38,17 @@
 
             _service.Use("SecureService", client => response = client.GetVacancyDetails(request).GetVacancyDetailsResponse);
 
-            if (response == null || response.Vacancy == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
+            if (IsThereAnyErrorOn(response))
             {
-                if (response != null && response.ValidationErrors != null && response.ValidationErrors.Any())
+                if (IsThereAnyValidationErrorOn(response))
                 {
                     var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
                     Logger.Info("Legacy.GetVacancyDetails reported {0} validation error(s): {1}", response.ValidationErrors.Count(), responseAsJson);
+                    if (VacancyDoesntExist(response))
+                    {
+                        Logger.Info("Unknown vacancy ({0}). Returning null.", vacancyId);
+                        return null;
+                    }
                 }
                 else
                 {
@@ -53,15 +59,38 @@
                 throw new CustomException(message, ErrorCodes.GatewayServiceFailed);
             }
 
+            var vacancyDetail = GetVacancyDetailFrom(response);
+
+            if (!VacancyHasExpired(vacancyDetail)) return vacancyDetail;
+
+            Logger.Info("Vacancy ({0}) closing date has expired. Returning null.", vacancyId);
+            return null;
+        }
+
+        private static bool VacancyDoesntExist(GetVacancyDetailsResponse response)
+        {
+            return response.ValidationErrors.Any(e => e.ErrorCode == UnknownVacancy);
+        }
+
+        private static bool VacancyHasExpired(TVacancyDetail vacancyDetail)
+        {
+            return vacancyDetail.ClosingDate < DateTime.Today.ToUniversalTime();
+        }
+
+        private TVacancyDetail GetVacancyDetailFrom(GetVacancyDetailsResponse response)
+        {
             var vacancyDetail = _mapper.Map<Vacancy, TVacancyDetail>(response.Vacancy);
-
-            if (vacancyDetail.ClosingDate < DateTime.Today.ToUniversalTime())
-            {
-                Logger.Info("Vacancy ({0}) closing date has expired. Returning null.", vacancyId);
-                return null;
-            }
-
             return vacancyDetail;
+        }
+
+        private static bool IsThereAnyValidationErrorOn(GetVacancyDetailsResponse response)
+        {
+            return response != null && response.ValidationErrors != null && response.ValidationErrors.Any();
+        }
+
+        private static bool IsThereAnyErrorOn(GetVacancyDetailsResponse response)
+        {
+            return response == null || response.Vacancy == null || (response.ValidationErrors != null && response.ValidationErrors.Any());
         }
     }
 }
