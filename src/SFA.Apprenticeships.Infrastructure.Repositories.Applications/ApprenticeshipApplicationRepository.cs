@@ -24,7 +24,7 @@
         public ApprenticeshipApprenticeshipApprenticeshipApplicationRepository(
             IConfigurationManager configurationManager,
             IMapper mapper)
-            : base(configurationManager, "Applications.mongoDB", "applications")
+            : base(configurationManager, "Applications.mongoDB", "apprenticeships")
         {
             _mapper = mapper;
         }
