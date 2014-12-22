@@ -50,6 +50,9 @@ namespace SFA.Apprenticeships.Infrastructure.Communication
                 case CommunicationTokens.LogMessage:
                     emailTemplateToken = "Application.LogMessage";
                     break;
+                case CommunicationTokens.ProviderContact:
+                    emailTemplateToken = "Provider.Contact";
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("key");
             }

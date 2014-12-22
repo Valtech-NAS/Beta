@@ -16,6 +16,7 @@
         ApplicationVacancyTitle,
         ApplicationVacancyReference,
         ApplicationId,
-        LogMessage
+        LogMessage,
+        ProviderContact
     }
 }

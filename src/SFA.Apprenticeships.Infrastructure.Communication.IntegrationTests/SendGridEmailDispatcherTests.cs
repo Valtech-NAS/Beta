@@ -102,7 +102,9 @@
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyTitle,
                     "Application Vacancy Title"),
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference,
-                    "Application Vacancy Reference")
+                    "Application Vacancy Reference"),
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ProviderContact,
+                    "Provider Contact")
             };
         }
 
