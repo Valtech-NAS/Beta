@@ -4,20 +4,15 @@
     using System.Linq;
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
-    using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings;
-    using SpecBind.BrowserSupport;
     using SpecBind.Selenium;
 
     [PageNavigation("/myapplications")]
     [PageAlias("MyApplicationsPage")]
     public class MyApplicationsPage : BaseValidationPage
     {
-        private readonly IWebDriver _driver;
-
-        public MyApplicationsPage(ISearchContext context, IBrowser browser)
+        public MyApplicationsPage(ISearchContext context)
             : base(context)
         {
-            _driver = BindingUtils.Driver(browser);
         }
 
         [ElementLocator(Id = "draft-applications-count")]
@@ -76,10 +71,8 @@
         [ElementLocator(Id = "traineeships-table")]
         public IWebElement TraineeshipTable { get; set; }
 
-        public IWebElement MoreTraineeshipsLink
-        {
-            get { return _driver.FindElement(By.ClassName("btnExpandRows")); }
-        }
+        [ElementLocator(Class = "btnExpandRows")]
+        public IWebElement MoreTraineeshipsLink { get; set; }
 
         [ElementLocator(Id = "traineeships-table")]
         public IElementList<IWebElement, TraineeshipTableRow> TraineeshipTableRows { get; set; }
