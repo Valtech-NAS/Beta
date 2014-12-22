@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ActionResults
 {
-    using SFA.Apprenticeships.Web.Common.ActionResults;
+    using Common.ActionResults;
 
     public class VacancyNotFoundResult : HttpCustomStatusCodeResult
     {
