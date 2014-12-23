@@ -1,14 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
     using System.Linq;
-    using Application.Vacancy;
-    using Application.VacancyEtl;
-    using Common.IoC;
-    using Domain.Entities.Exceptions;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
-    using IoC;
     using NUnit.Framework;
+    using SFA.Apprenticeships.Application.Vacancy;
+    using SFA.Apprenticeships.Application.VacancyEtl;
+    using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+    using SFA.Apprenticeships.Infrastructure.Common.IoC;
+    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC;
     using StructureMap;
 
     [TestFixture]
@@ -34,10 +33,9 @@
         private IVacancyIndexDataProvider _vacancyIndexDataProvider;
 
         [Test, Category("Integration"), Category("SmokeTests")]
-        [ExpectedException(typeof(CustomException))]
         public void ShouldNotReturnVacancyDetailsForInvalidVacancyId()
         {
-            var result = _vacancyDataProvider.GetVacancyDetails(-123);
+            var result = _vacancyDataProvider.GetVacancyDetails(123456789);
 
             result.Should().BeNull();
         }
