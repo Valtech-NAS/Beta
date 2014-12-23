@@ -56,11 +56,28 @@ Scenario: Find apprenticeships and test ordering with keywords
         #| ResultsAreInClosingDateOrder    | Equals | False |
 
 @SmokeTests
+Scenario: Find apprenticeships location must be two or more characters
+	Given I navigated to the ApprenticeshipSearchPage page
+	When I enter data
+		 | Field          | Value    |
+		 | Location       | B        |
+		 | WithInDistance | 40 miles |
+	And I choose Search
+	Then I am on the ApprenticeshipSearchPage page
+	And I see
+        | Field                  | Rule   | Value |
+        | ValidationSummaryCount | Equals | 1     |
+	And I am on the ApprenticeshipSearchPage page
+	And I am on ValidationSummaryItems list item matching criteria
+	| Field | Rule   | Value                                 |
+	| Text  | Equals | Location must be 2 or more characters |
+
+@SmokeTests
 Scenario: Find apprenticeships by partial postcode returns results
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field          | Value    |
-		 | Location       | CV1      |
+		 | Location       | B1       |
 		 | WithInDistance | 40 miles |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page

@@ -27,7 +27,7 @@
             validator.RuleFor(x => x.Location)
                 .NotEmpty()
                 .WithMessage(ApprenticeshipSearchViewModelMessages.LocationMessages.RequiredErrorText)
-                .Length(3, 99)
+                .Length(2, 99)
                 .WithMessage(ApprenticeshipSearchViewModelMessages.LocationMessages.LengthErrorText)
                 .Matches(ApprenticeshipSearchViewModelMessages.LocationMessages.WhiteList)
                 .WithMessage(ApprenticeshipSearchViewModelMessages.LocationMessages.WhiteListErrorText);
