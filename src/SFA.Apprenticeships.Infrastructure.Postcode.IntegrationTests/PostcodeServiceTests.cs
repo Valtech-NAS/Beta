@@ -38,6 +38,19 @@
         }
 
         [Test, Category("Integration")]
+        public void ShouldReturnCorrectLocationForPartialPostcode()
+        {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
+            var service = ObjectFactory.GetInstance<IPostcodeLookupProvider>();
+#pragma warning restore 0618
+
+            var location = service.GetLocation("CV1");
+            location.GeoPoint.Latitude.Should().Be(52.4084714696457);
+            location.GeoPoint.Longitude.Should().Be(-1.50508839395149);
+        }
+
+        [Test, Category("Integration")]
         public void ShouldReturnNullForNonExistentPostcode()
         {
 #pragma warning disable 0618

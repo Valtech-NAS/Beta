@@ -7,17 +7,8 @@
     [TestFixture]
     public class LocationHelperPartialPostcodeTests
     {
-        [TestCase("CV12WT")]
-        [TestCase("cv12wt")]
-        [TestCase("CV1 2WT")]
-        [TestCase(" CV1 2WT ")]
         [TestCase("CV1")]
         [TestCase("CV12")]
-        [TestCase("CV123")]
-        [TestCase("CV1234")]
-        [TestCase("CV1 2")]
-        [TestCase("CV12W")]
-        [TestCase("CV1 2W")]
         [TestCase("B1")]
         public void ShouldBeIdentitiedAsPartialPostcode(string postcode)
         {
@@ -29,6 +20,15 @@
         [TestCase("CV")]
         [TestCase("")]
         [TestCase(default(string))]
+        [TestCase("CV12WT")]
+        [TestCase("cv12wt")]
+        [TestCase("CV1 2WT")]
+        [TestCase(" CV1 2WT ")]
+        [TestCase("CV123")]
+        [TestCase("CV1234")]
+        [TestCase("CV1 2")]
+        [TestCase("CV12W")]
+        [TestCase("CV1 2W")]
         public void ShouldNotBeIdentitiedAsPartialPostcode(string postcode)
         {
             Assert.IsFalse(LocationHelper.IsPartialPostcode(postcode));

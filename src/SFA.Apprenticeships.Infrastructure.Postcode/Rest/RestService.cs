@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
-    using Domain.Entities.Exceptions;
     using RestSharp;
     using RestSharp.Deserializers;
 
@@ -11,7 +10,9 @@
     {
         private IRestClient _client;
 
-        protected RestService() { }
+        protected RestService()
+        {
+        }
 
         protected RestService(string baseUrl)
         {
@@ -28,7 +29,7 @@
             {
                 if (_client == null)
                 {
-                    _client = new RestClient { BaseUrl = BaseUrl };
+                    _client = new RestClient {BaseUrl = BaseUrl};
                     (_client as RestClient).AddHandler("application/json", new JsonDeserializer());
                 }
 
@@ -39,8 +40,8 @@
         }
 
         public virtual IRestRequest Create(
-            Method method, 
-            string url, 
+            Method method,
+            string url,
             string jsonBody = null,
             params KeyValuePair<string, string>[] segments)
         {
@@ -102,7 +103,7 @@
 
         private static void ThrowErrorException(IRestResponse response)
         {
-            throw new ApplicationException("Error retrieving response. Check inner details for more info.", 
+            throw new ApplicationException("Error retrieving response. Check inner details for more info.",
                 response.ErrorException);
         }
 

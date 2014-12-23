@@ -56,6 +56,19 @@ Scenario: Find apprenticeships and test ordering with keywords
         #| ResultsAreInClosingDateOrder    | Equals | False |
 
 @SmokeTests
+Scenario: Find apprenticeships by partial postcode returns results
+	Given I navigated to the ApprenticeshipSearchPage page
+	When I enter data
+		 | Field          | Value    |
+		 | Location       | CV1      |
+		 | WithInDistance | 40 miles |
+	And I choose Search
+	And I am on the ApprenticeshipSearchResultPage page
+	Then I see
+        | Field                           | Rule   | Value |
+        | SearchResultItemsCount          | Equals | 5     |
+
+@SmokeTests
 Scenario: Find apprenticeships and test paging
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data

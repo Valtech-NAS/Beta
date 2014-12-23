@@ -34,7 +34,7 @@
         {
             Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
 
-            var request = Create("postcodes?q={postcode}",
+            var request = Create(GetServiceUrl(postcode),
                 new[] {new KeyValuePair<string, string>("postcode", postcode)});
             var postcodes = Execute<PostcodeInfoResult>(request);
 
@@ -42,6 +42,14 @@
                 return postcodes.Data.Result.AsEnumerable();
 
             return Enumerable.Empty<PostcodeInfo>();
+        }
+
+        private static string GetServiceUrl(string postcode)
+        {
+            if (LocationHelper.IsPostcode(postcode))
+                return "postcodes?q={postcode}";
+
+            return string.Format("outcodes/{0}", postcode);
         }
     }
 }

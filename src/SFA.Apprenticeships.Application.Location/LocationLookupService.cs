@@ -28,7 +28,7 @@
             Logger.Debug("Calling LocationLookupService to find location for place name or postcode {0}.",
                 placeNameOrPostcode);
 
-            if (LocationHelper.IsPostcode(placeNameOrPostcode))
+            if (LocationHelper.IsPostcode(placeNameOrPostcode) || LocationHelper.IsPartialPostcode(placeNameOrPostcode))
             {
                 Location location;
 

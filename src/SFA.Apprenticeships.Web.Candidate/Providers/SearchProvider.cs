@@ -223,22 +223,6 @@
 
         }
 
-        public bool IsValidPostcode(string postcode)
-        {
-            Logger.Debug("Calling SearchProvider to find out if {0} is a valid postcode.", postcode);
-
-            try
-            {
-                return LocationHelper.IsPostcode(postcode);
-            }
-            catch (Exception e)
-            {
-                var message = string.Format("IsValidPostcode failed for postcode {0}.", postcode);
-                Logger.Error(message, e);
-                throw;
-            }
-        }
-
         public AddressSearchResult FindAddresses(string postcode)
         {
             Logger.Debug("Calling SearchProvider to find out the addresses for postcode {0}.", postcode);

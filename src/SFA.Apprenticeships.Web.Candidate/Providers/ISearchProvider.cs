@@ -12,7 +12,5 @@
         ApprenticeshipSearchResponseViewModel FindVacancies(ApprenticeshipSearchViewModel search);
 
         TraineeshipSearchResponseViewModel FindVacancies(TraineeshipSearchViewModel search);
-
-        bool IsValidPostcode(string postcode);
     }
 }
