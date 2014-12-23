@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl.IoC
 {
-    using System;
     using Application.ApplicationUpdate;
     using Application.ApplicationUpdate.Strategies;
     using Consumers;

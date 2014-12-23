@@ -7,7 +7,6 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
     using System.Threading;
     using Azure.Common.IoC;
     using Common.IoC;
-    using Communication.IoC;
     using Consumers;
     using EasyNetQ;
     using IoC;
@@ -76,11 +75,15 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
 
                 Logger.Debug("Application Etl Process IoC initialized");
 
+#pragma warning disable 618
                 var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
+#pragma warning restore 618
                 subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(ApplicationStatusSummaryConsumerAsync)), "ApplicationEtl");
                 Logger.Debug("Rabbit subscriptions setup complete");
 
+#pragma warning disable 618
                 _applicationEtlControlQueueConsumer = ObjectFactory.GetInstance<ApplicationEtlControlQueueConsumer>();
+#pragma warning restore 618
 
                 Logger.Debug("Application Etl Process setup complete");
             }
@@ -107,6 +110,12 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
         public override void OnStop()
         {
             Logger.Debug("Application Etl Process OnStop called");
+
+            // Stop consumers
+#pragma warning disable 618
+            ObjectFactory.GetInstance<ApplicationStatusSummaryPageConsumerAsync>().Stop();
+            ObjectFactory.GetInstance<ApplicationStatusSummaryConsumerAsync>().Stop();
+#pragma warning restore 618
 
             // Kill the bus which will kill any subscriptions
 #pragma warning disable 0618
