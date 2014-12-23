@@ -151,13 +151,13 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("As a candidate I want to see the traineeships prompt if I have three or more unsu" +
-            "ccessful applications")]
+        [NUnit.Framework.DescriptionAttribute("As a candidate I want to see the traineeships prompt if I have six or more unsucc" +
+            "essful applications")]
         [NUnit.Framework.CategoryAttribute("US366")]
-        public virtual void AsACandidateIWantToSeeTheTraineeshipsPromptIfIHaveThreeOrMoreUnsuccessfulApplications()
+        public virtual void AsACandidateIWantToSeeTheTraineeshipsPromptIfIHaveSixOrMoreUnsuccessfulApplications()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to see the traineeships prompt if I have three or more unsu" +
-                    "ccessful applications", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to see the traineeships prompt if I have six or more unsucc" +
+                    "essful applications", new string[] {
                         "US366"});
 #line 37
 this.ScenarioSetup(scenarioInfo);
@@ -166,7 +166,7 @@ this.FeatureBackground();
 #line 38
 testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 39
- testRunner.And("I add 3 applications in \"Unsuccessful\" state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I add 6 applications in \"Unsuccessful\" state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 40
  testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 41
@@ -207,13 +207,13 @@ testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecF
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("As a candidate I dont want to see the traineeships prompt if I have less than thr" +
-            "ee unsuccessful applications")]
+        [NUnit.Framework.DescriptionAttribute("As a candidate I dont want to see the traineeships prompt if I have less than six" +
+            " unsuccessful applications")]
         [NUnit.Framework.CategoryAttribute("US366")]
-        public virtual void AsACandidateIDontWantToSeeTheTraineeshipsPromptIfIHaveLessThanThreeUnsuccessfulApplications()
+        public virtual void AsACandidateIDontWantToSeeTheTraineeshipsPromptIfIHaveLessThanSixUnsuccessfulApplications()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I dont want to see the traineeships prompt if I have less than thr" +
-                    "ee unsuccessful applications", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I dont want to see the traineeships prompt if I have less than six" +
+                    " unsuccessful applications", new string[] {
                         "US366"});
 #line 55
 this.ScenarioSetup(scenarioInfo);
@@ -222,7 +222,7 @@ this.FeatureBackground();
 #line 56
 testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 57
- testRunner.And("I add 6 applications in \"Unsuccessful\" state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I add 5 applications in \"Unsuccessful\" state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 58
  testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 59
