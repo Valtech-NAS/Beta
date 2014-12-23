@@ -23,14 +23,21 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
         public void Send(Candidate candidate, TraineeshipApplicationDetail traineeshipApplicationDetail, CandidateMessageTypes messageType,
             IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
         {
-            var reference = GetVacancyReference(traineeshipApplicationDetail.Vacancy.Id);
+            var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(traineeshipApplicationDetail.Vacancy.Id);
+
+            if (vacancyDetails == null)
+            {
+                throw new CustomException(
+                    "Vacancy not found with ID {0}.", ErrorCodes.VacancyNotFoundError, traineeshipApplicationDetail.Vacancy.Id);
+            }
 
             var applicationTokens = new[]
             {
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName), 
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyTitle,
                     traineeshipApplicationDetail.Vacancy.Title),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference, reference)
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference, vacancyDetails.VacancyReference),
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ProviderContact, vacancyDetails.Contact)
             };
 
             var request = new EmailRequest
@@ -41,19 +48,6 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
             };
 
             _messageBus.PublishMessage(request);
-        }
-
-        private string GetVacancyReference(int id)
-        {
-            var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(id);
-
-            if (vacancyDetails == null)
-            {
-                throw new CustomException(
-                    "Vacancy not found with ID {0}.", ErrorCodes.VacancyNotFoundError, id);
-            }
-
-            return vacancyDetails.VacancyReference;
         }
     }
 }
