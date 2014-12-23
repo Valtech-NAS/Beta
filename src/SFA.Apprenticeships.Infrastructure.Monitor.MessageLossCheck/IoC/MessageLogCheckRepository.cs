@@ -11,6 +11,7 @@
         {
             For<ICandidateDiagnosticsRepository>().Use<CandidateDiagnosticsRepository>();
             For<IApprenticeshipApplicationDiagnosticsRepository>().Use<ApprenticeshipApplicationDiagnosticsRepository>();
+            For<ITraineeshipApplicationDiagnosticsRepository>().Use<TraineeshipApplicationDiagnosticsRepository>();
 
             For<IMessageLossCheckTaskRunner>().Use<MessageLossCheckTaskRunner>()
                 .EnumerableOf<IMonitorTask>()
