@@ -20,7 +20,7 @@
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [ApplyWebTrends]
-        public async Task<ActionResult> Results(VacancySearchViewModel model)
+        public async Task<ActionResult> Results(ApprenticeshipSearchViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {

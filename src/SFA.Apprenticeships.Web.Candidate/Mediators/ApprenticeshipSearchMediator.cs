@@ -5,7 +5,7 @@
 
     public class ApprenticeshipSearchMediator : IApprenticeshipSearchMediator
     {
-        public MediatorResponse<VacancySearchResponseViewModel> Search(VacancySearchViewModel model)
+        public MediatorResponse<ApprenticeshipSearchResponseViewModel> Search(ApprenticeshipSearchViewModel model)
         {
             throw new NotImplementedException();
         }
