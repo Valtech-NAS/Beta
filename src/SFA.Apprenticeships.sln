@@ -172,6 +172,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Diagram
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck", "SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck\SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck.csproj", "{9059D4C9-8970-4EC3-B54A-A8945671F187}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Postcode.UnitTests", "SFA.Apprenticeships.Infrastructure.Postcode.UnitTests\SFA.Apprenticeships.Infrastructure.Postcode.UnitTests.csproj", "{54DFC073-A57B-4D2E-9E27-D0661D5A9337}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Demo|Any CPU = Demo|Any CPU
@@ -974,6 +976,18 @@ Global
 		{9059D4C9-8970-4EC3-B54A-A8945671F187}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
 		{9059D4C9-8970-4EC3-B54A-A8945671F187}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
 		{9059D4C9-8970-4EC3-B54A-A8945671F187}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{54DFC073-A57B-4D2E-9E27-D0661D5A9337}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{54DFC073-A57B-4D2E-9E27-D0661D5A9337}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{54DFC073-A57B-4D2E-9E27-D0661D5A9337}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{54DFC073-A57B-4D2E-9E27-D0661D5A9337}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{54DFC073-A57B-4D2E-9E27-D0661D5A9337}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{54DFC073-A57B-4D2E-9E27-D0661D5A9337}.Local|Any CPU.Build.0 = Local|Any CPU
+		{54DFC073-A57B-4D2E-9E27-D0661D5A9337}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{54DFC073-A57B-4D2E-9E27-D0661D5A9337}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{54DFC073-A57B-4D2E-9E27-D0661D5A9337}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{54DFC073-A57B-4D2E-9E27-D0661D5A9337}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{54DFC073-A57B-4D2E-9E27-D0661D5A9337}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{54DFC073-A57B-4D2E-9E27-D0661D5A9337}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1055,5 +1069,6 @@ Global
 		{2D21EA2D-CE77-4795-B2F0-A172E59AC491} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{8041222E-487D-40F6-816A-53AA5E3A39A3} = {37F78283-62CA-418D-9548-4EF7A6C126B7}
 		{9059D4C9-8970-4EC3-B54A-A8945671F187} = {37F78283-62CA-418D-9548-4EF7A6C126B7}
+		{54DFC073-A57B-4D2E-9E27-D0661D5A9337} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
 	EndGlobalSection
 EndGlobal
