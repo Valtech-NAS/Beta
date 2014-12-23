@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
+﻿/*namespace SFA.Apprenticeships.Web.Candidate.Mediators
 {
     using System;
     using System.Threading.Tasks;
@@ -37,4 +37,4 @@
             });
         }
     }
-}
+}*/
