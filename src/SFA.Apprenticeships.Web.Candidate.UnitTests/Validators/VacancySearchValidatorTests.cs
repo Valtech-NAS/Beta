@@ -27,9 +27,9 @@
         }
 
         [Test]
-        public void ShouldHaveErrorWhenLocationIsUnder3Characters()
+        public void ShouldHaveErrorWhenLocationIsUnder2Characters()
         {
-            var viewModel = new ApprenticeshipSearchViewModel { Location = "xx", Latitude = 0.1d, Longitude = 1.0d };
+            var viewModel = new ApprenticeshipSearchViewModel { Location = "x", Latitude = 0.1d, Longitude = 1.0d };
             _viewModelClientValidator.ShouldHaveValidationErrorFor(x => x.Location, viewModel);
         }
 
