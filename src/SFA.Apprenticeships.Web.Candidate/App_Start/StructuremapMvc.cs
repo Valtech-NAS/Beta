@@ -22,8 +22,8 @@ namespace SFA.Apprenticeships.Web.Candidate
     using Infrastructure.UserDirectory.IoC;
     using Infrastructure.VacancySearch.IoC;
     using IoC;
-    using SFA.Apprenticeships.Infrastructure.PerformanceCounters.IoC;
-    using SFA.Apprenticeships.Infrastructure.Repositories.Authentication.IoC;
+    using Infrastructure.PerformanceCounters.IoC;
+    using Infrastructure.Repositories.Authentication.IoC;
     using StructureMap;
 
     /// <summary>

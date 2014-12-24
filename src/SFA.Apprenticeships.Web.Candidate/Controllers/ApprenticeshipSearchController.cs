@@ -14,6 +14,7 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
+    using Mediators;
     using Microsoft.Ajax.Utilities;
     using Providers;
     using Validators;
@@ -22,17 +23,20 @@
     public class ApprenticeshipSearchController : VacancySearchController
     {
         private readonly ApprenticeshipSearchViewModelLocationValidator _searchLocationValidator;
+        private readonly IApprenticeshipSearchMediator _apprenticeshipSearchMediator;
         private readonly ISearchProvider _searchProvider;
         private readonly ApprenticeshipSearchViewModelClientValidator _searchRequestValidator;
         private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
 
         public ApprenticeshipSearchController(IConfigurationManager configManager,
+            IApprenticeshipSearchMediator apprenticeshipSearchMediator,
             ISearchProvider searchProvider,
             ApprenticeshipSearchViewModelClientValidator searchRequestValidator,
             ApprenticeshipSearchViewModelLocationValidator searchLocationValidator,
             IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider)
             : base(configManager)
         {
+            _apprenticeshipSearchMediator = apprenticeshipSearchMediator;
             _searchProvider = searchProvider;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
@@ -218,19 +222,14 @@
                     candidateId = UserContext.CandidateId;
                 }
 
-                var vacancy = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
-
-                if (vacancy == null)
+                var response = _apprenticeshipSearchMediator.Details(id, candidateId);
+                switch (response.Code)
                 {
-                    return new VacancyNotFoundResult();
-                }
-
-                if (vacancy.HasError())
-                {
-                    ModelState.Clear();
-                    SetUserMessage(vacancy.ViewModelMessage, UserMessageLevel.Warning);
-
-                    return View(vacancy);
+                    case "410": return new VacancyNotFoundResult();
+                    case "message":
+                        ModelState.Clear();
+                        SetUserMessage(response.Message.Message, response.Message.Level);
+                        return View(response.ViewModel);
                 }
 
                 var distance = UserData.Pop(UserDataItemNames.VacancyDistance);
@@ -242,15 +241,14 @@
                     UserData.Push(UserDataItemNames.VacancyDistance, distance);
                 }
                 
-                if (HasToPopulateReturnUrl())
+                if (HasToPopulateReturnUrl() && Request.UrlReferrer != null)
                 {
-// ReSharper disable once PossibleNullReferenceException
                     ViewBag.SearchReturnUrl = Request.UrlReferrer.PathAndQuery;
                 }
 
                 UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToStringInvariant());
 
-                return View(vacancy);
+                return View(response.ViewModel);
             });
         }
 

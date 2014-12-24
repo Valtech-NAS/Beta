@@ -688,7 +688,7 @@
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Applications</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Authentication\SFA.Apprenticeships.Infrastructure.Repositories.Authentication.csproj">
-      <Project>{2D21EA2D-CE77-4795-B2F0-A172E59AC491}</Project>
+      <Project>{2d21ea2d-ce77-4795-b2f0-a172e59ac491}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Authentication</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Candidates\SFA.Apprenticeships.Infrastructure.Repositories.Candidates.csproj">

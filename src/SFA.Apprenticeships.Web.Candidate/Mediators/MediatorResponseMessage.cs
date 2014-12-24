@@ -4,8 +4,8 @@
 
     public class MediatorResponseMessage
     {
-        public UserMessageLevel Level { get; set; }
-
         public string Message { get; set; }
+
+        public UserMessageLevel Level { get; set; }
     }
 }

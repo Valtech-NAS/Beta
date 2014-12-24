@@ -12,6 +12,8 @@
     using Newtonsoft.Json;
     using NLog;
     using Wcf;
+    using Candidate = Domain.Entities.Candidates.Candidate;
+    using WorkExperience = GatewayServiceProxy.WorkExperience;
 
     public class LegacyApplicationProvider : ILegacyApplicationProvider
     {
@@ -157,7 +159,7 @@
 
         private static CreateApplicationRequest MapApplicationToLegacyRequest(
             ApprenticeshipApplicationDetail apprenticeshipApplicationDetail,
-            Domain.Entities.Candidates.Candidate candidate)
+            Candidate candidate)
         {
             return new CreateApplicationRequest
             {
@@ -181,7 +183,7 @@
 
         private static CreateApplicationRequest MapApplicationToLegacyRequest(
             TraineeshipApplicationDetail traineeshipApplicationDetail,
-            Domain.Entities.Candidates.Candidate candidate)
+            Candidate candidate)
         {
             return new CreateApplicationRequest
             {
@@ -223,7 +225,7 @@
 
             return new School
             {
-                Name = "Bash St",
+                Name = "N/A",
                 AttendedFrom = fakeAttendanceYear,
                 AttendedTo = fakeAttendanceYear
             };
@@ -247,12 +249,12 @@
             return isPredicted ? string.Format("{0}-Pred", grade) : grade;
         }
 
-        private static GatewayServiceProxy.WorkExperience[] MapWorkExperience(
+        private static WorkExperience[] MapWorkExperience(
             IEnumerable<Domain.Entities.Candidates.WorkExperience> workExperience)
         {
             const int maxTypeOfWorkLength = 200;
 
-            return workExperience.Select(each => new GatewayServiceProxy.WorkExperience
+            return workExperience.Select(each => new WorkExperience
             {
                 Employer = each.Employer,
                 FromDate = each.FromDate,

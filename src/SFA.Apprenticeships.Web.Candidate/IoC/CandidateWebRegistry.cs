@@ -22,6 +22,7 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
     using Mappers;
+    using Mediators;
     using Microsoft.WindowsAzure;
     using Providers;
     using StructureMap.Configuration.DSL;
@@ -133,6 +134,9 @@
             // Would be good if we could do this for the base class CandidateControllerBase rather than each controller
             //ForConcreteType<HomeController>().Configure.Setter<IUserDataProvider>();
             //ForConcreteType<HomeController>().Configure.Setter<IEuCookieDirectiveProvider>();
+
+            //Mediators
+            For<IApprenticeshipSearchMediator>().Use<ApprenticeshipSearchMediator>();
         }
     }
 }
