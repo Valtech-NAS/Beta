@@ -1,18 +1,20 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Controllers
 {
-    using System;
     using System.Web.Mvc;
     using Attributes;
     using Providers;
     using Services;
+    using StructureMap.Attributes;
 
     [AuthenticateUser]
     public abstract class ControllerBase<TContextType> : Controller, IUserController<TContextType> where TContextType : UserContext
     {
         public TContextType UserContext { get; protected set; }
 
-        public IUserDataProvider UserData { get; protected set; }
+        [SetterProperty]
+        public IUserDataProvider UserData { get; set; }
 
-        public IAuthenticationTicketService AuthenticationTicketService  { get; protected set; }
+        [SetterProperty]
+        public IAuthenticationTicketService AuthenticationTicketService { get; set; }
     }
 }
