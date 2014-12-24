@@ -22,14 +22,14 @@
         private const string FailedMessageFormat =
             "Vacancy search failed for the following parameters; " + MessageFormat;
 
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly IVacancySearchProvider<TVacancySummaryResponse> _vacancySearchProvider;
-        private readonly IVacancyDataService<TVacancyDetail> _vacancyDataService;
+        private readonly IVacancyDataProvider<TVacancyDetail> _vacancyDataProvider;
 
-        public VacancySearchService(IVacancySearchProvider<TVacancySummaryResponse> vacancySearchProvider, IVacancyDataService<TVacancyDetail> vacancyDataService)
+        public VacancySearchService(IVacancySearchProvider<TVacancySummaryResponse> vacancySearchProvider, IVacancyDataProvider<TVacancyDetail> vacancyDataProvider)
         {
             _vacancySearchProvider = vacancySearchProvider;
-            _vacancyDataService = vacancyDataService;
+            _vacancyDataProvider = vacancyDataProvider;
         }
 
         public SearchResults<TVacancySummaryResponse> Search(SearchParameters parameters)
@@ -40,7 +40,7 @@
             Condition.Requires(parameters.PageSize).IsGreaterOrEqual(1);
 
             var enterMmessage = GetLoggerMessage(CallingMessageFormat, parameters);
-            Logger.Debug(enterMmessage);
+            _logger.Debug(enterMmessage);
 
             try
             {
@@ -49,7 +49,7 @@
             catch (Exception e)
             {
                 var message = GetLoggerMessage(FailedMessageFormat, parameters);
-                Logger.Debug(message, e);
+                _logger.Debug(message, e);
                 throw new CustomException(message, e, ErrorCodes.VacanciesSearchFailed);
             }
         }
@@ -58,7 +58,18 @@
         {
             Condition.Requires(vacancyId).IsGreaterOrEqual(1);
 
-            return _vacancyDataService.GetVacancyDetails(vacancyId);
+            _logger.Debug("Calling VacancyDataProvider to get vacancy details for user {0}.", vacancyId);
+
+            try
+            {
+                return _vacancyDataProvider.GetVacancyDetails(vacancyId);
+            }
+            catch (Exception e)
+            {
+                var message = string.Format("Get vacancy failed for vacancy {0}.", vacancyId);
+                _logger.Debug(message, e);
+                throw new CustomException(message, e, ErrorCodes.GetVacancyDetailsFailed);
+            }
         }
 
         private static string GetLoggerMessage(string message, SearchParameters parameters)

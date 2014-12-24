@@ -14,6 +14,11 @@
         /// <returns>0..* matching vacancies</returns>
         SearchResults<TVacancySummaryResponse> Search(SearchParameters parameters);
 
+        /// <summary>
+        /// returns vacancy details
+        /// </summary>
+        /// <param name="vacancyId">id for the vacancy to retrieve</param>
+        /// <returns>vacancy detail or null</returns>
         TVacancyDetail GetVacancyDetails(int vacancyId);
     }
 }

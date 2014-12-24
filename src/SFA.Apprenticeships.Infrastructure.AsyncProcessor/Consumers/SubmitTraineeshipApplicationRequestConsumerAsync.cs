@@ -2,10 +2,8 @@
 {
     using System;
     using System.Threading.Tasks;
-    using Application.Candidate.Strategies;
-    using Application.Candidate.Strategies.Apprenticeships;
+    using Application.Candidate;
     using Application.Interfaces.Messaging;
-    using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
@@ -18,20 +16,17 @@
 
         private readonly ILegacyApplicationProvider _legacyApplicationProvider;
         private readonly ITraineeshipApplicationReadRepository _applicationReadApplicationReadRepository;
-        private readonly ITraineeshipApplicationWriteRepository _applicationApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IMessageBus _messageBus;
 
         public SubmitTraineeshipApplicationRequestConsumerAsync(
             ILegacyApplicationProvider legacyApplicationProvider,
             ITraineeshipApplicationReadRepository applicationReadApplicationReadRepository,
-            ITraineeshipApplicationWriteRepository applicationApplicationWriteRepository,
             ICandidateReadRepository candidateReadRepository,
             IMessageBus messageBus)
         {
             _legacyApplicationProvider = legacyApplicationProvider;
             _applicationReadApplicationReadRepository = applicationReadApplicationReadRepository;
-            _applicationApplicationWriteRepository = applicationApplicationWriteRepository;
             _candidateReadRepository = candidateReadRepository;
             _messageBus = messageBus;
         }
@@ -83,7 +78,7 @@
             }
             catch (CustomException ex)
             {
-                HandleCustomException(request, ex, applicationDetail);
+                HandleCustomException(request, ex);
             }
             catch (Exception ex)
             {
@@ -92,7 +87,7 @@
             }
         }
 
-        private void HandleCustomException(SubmitTraineeshipApplicationRequest request, CustomException ex, TraineeshipApplicationDetail applicationDetail)
+        private void HandleCustomException(SubmitTraineeshipApplicationRequest request, CustomException ex)
         {
             switch (ex.Code)
             {

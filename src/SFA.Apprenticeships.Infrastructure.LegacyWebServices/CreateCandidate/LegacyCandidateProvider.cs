@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    using Application.Candidate.Strategies;
+    using Application.Candidate;
     using Domain.Entities.Exceptions;
     using GatewayServiceProxy;
     using NLog;

@@ -1,9 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
 {
     using Application.ApplicationUpdate;
-    using Application.Candidate.Strategies;
-    using Application.Candidate.Strategies.Apprenticeships;
-    using Application.Interfaces.Vacancies;
+    using Application.Candidate;
     using Application.Vacancy;
     using Application.VacancyEtl;
     using CreateApplication;
@@ -21,9 +19,7 @@
 
     public class LegacyWebServicesRegistry : Registry
     {
-        public LegacyWebServicesRegistry(): this(false)
-        {
-        }
+        public LegacyWebServicesRegistry(): this(false) { }
 
         public LegacyWebServicesRegistry(bool useCache)
         {
@@ -67,16 +63,6 @@
                     .Ctor<IVacancyDataProvider<TraineeshipVacancyDetail>>()
                     .Named("LegacyTraineeshipVacancyDataProvider");
             }
-
-            For<IVacancyDataService<ApprenticeshipVacancyDetail>>()
-                .Use<VacancyDataService<ApprenticeshipVacancyDetail>>()
-                .Ctor<IVacancyDataProvider<ApprenticeshipVacancyDetail>>();
-
-
-            For<IVacancyDataService<TraineeshipVacancyDetail>>()
-                .Use<VacancyDataService<TraineeshipVacancyDetail>>()
-                .Ctor<IVacancyDataProvider<TraineeshipVacancyDetail>>();
-
 
             For<IVacancyStatusProvider>().Use<LegacyVacancyStatusProvider>();
 

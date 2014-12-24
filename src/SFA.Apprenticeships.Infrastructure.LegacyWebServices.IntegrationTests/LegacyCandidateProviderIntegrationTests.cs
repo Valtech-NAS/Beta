@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
     using System;
-    using Application.Candidate.Strategies;
+    using Application.Candidate;
     using Common.IoC;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;

@@ -3,8 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Candidate.Strategies;
-    using Application.Candidate.Strategies.Apprenticeships;
+    using Application.Candidate;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
@@ -191,7 +190,7 @@
                     VacancyId = traineeshipApplicationDetail.Vacancy.Id,
                     VacancyRef = null, // not required if VacancyId is supplied.
                     CandidateId = candidate.LegacyCandidateId,
-                    School = MapSchool(traineeshipApplicationDetail),
+                    School = MapSchool(),
                     EducationResults = MapQualifications(traineeshipApplicationDetail.CandidateInformation.Qualifications),
                     WorkExperiences = MapWorkExperience(traineeshipApplicationDetail.CandidateInformation.WorkExperience),
                     AdditionalQuestion1Answer = traineeshipApplicationDetail.AdditionalQuestion1Answer ?? string.Empty,
@@ -218,7 +217,7 @@
             };
         }
 
-        private static School MapSchool(TraineeshipApplicationDetail traineeshipApplicationDetail)
+        private static School MapSchool()
         {
             var fakeAttendanceYear = MapYearToDate(2000);
 

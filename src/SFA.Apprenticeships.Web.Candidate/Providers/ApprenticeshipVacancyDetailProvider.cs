@@ -5,7 +5,6 @@
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Vacancies;
     using Constants.Pages;
-    using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
@@ -17,19 +16,19 @@
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
+        private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository; //todo: MG: remove this!!
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
-        private readonly IVacancyDataService<ApprenticeshipVacancyDetail> _vacancyDataService;
+        private readonly IVacancySearchService<ApprenticeshipSummary, ApprenticeshipVacancyDetail> _vacancySearchService;
 
         public ApprenticeshipVacancyDetailProvider(
-            IVacancyDataService<ApprenticeshipVacancyDetail> vacancyDataService,
+            IVacancySearchService<ApprenticeshipSummary, ApprenticeshipVacancyDetail> vacancySearchService,
             ICandidateService candidateService,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IMapper mapper)
         {
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
-            _vacancyDataService = vacancyDataService;
+            _vacancySearchService = vacancySearchService;
             _candidateService = candidateService;
             _mapper = mapper;
         }
@@ -42,7 +41,7 @@
 
             try
             {
-                var vacancyDetail = _vacancyDataService.GetVacancyDetails(vacancyId);
+                var vacancyDetail = _vacancySearchService.GetVacancyDetails(vacancyId);
 
                 if (vacancyDetail == null)
                 {
@@ -61,7 +60,9 @@
                 if (candidateId == null) { return vacancyDetailViewModel; }
 
                 // If candidate has applied for vacancy, include the details in the view model.
-                var applicationDetails = GetCandidateApplication(candidateId.Value, vacancyId);
+                var applicationDetails = _candidateService
+                    .GetApprenticeshipApplications(candidateId.Value)
+                    .SingleOrDefault(a => a.LegacyVacancyId == vacancyId);
 
                 if (applicationDetails == null) { return vacancyDetailViewModel; }
 
@@ -88,12 +89,5 @@
                 throw;
             }
         }
-
-        private ApprenticeshipApplicationSummary GetCandidateApplication(Guid candidateId, int vacancyId)
-        {
-            return _candidateService
-                .GetApprenticeshipApplications(candidateId)
-                .SingleOrDefault(a => a.LegacyVacancyId == vacancyId);
-        }
-    }
+   }
 }

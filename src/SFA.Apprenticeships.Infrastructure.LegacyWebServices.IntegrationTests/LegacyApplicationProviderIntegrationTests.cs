@@ -1,8 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
     using System;
-    using Application.Candidate.Strategies;
-    using Application.Candidate.Strategies.Apprenticeships;
+    using Application.Candidate;
     using Common.IoC;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
@@ -84,7 +83,7 @@
             });
             var applicationDetail = new TestApplicationBuilder().Build();
 
-            applicationDetail.CandidateInformation.EducationHistory = new Education()
+            applicationDetail.CandidateInformation.EducationHistory = new Education
             {
                 Institution =  "GENERAL_ERROR",
                 FromYear = 1999,
