@@ -10,12 +10,10 @@
     using Attributes;
     using Common.Constants;
     using Constants;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Mediators;
-    using Microsoft.Ajax.Utilities;
     using Providers;
     using Validators;
     using ViewModels.VacancySearch;
@@ -26,21 +24,18 @@
         private readonly IApprenticeshipSearchMediator _apprenticeshipSearchMediator;
         private readonly ISearchProvider _searchProvider;
         private readonly ApprenticeshipSearchViewModelClientValidator _searchRequestValidator;
-        private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
 
         public ApprenticeshipSearchController(IConfigurationManager configManager,
             IApprenticeshipSearchMediator apprenticeshipSearchMediator,
             ISearchProvider searchProvider,
             ApprenticeshipSearchViewModelClientValidator searchRequestValidator,
-            ApprenticeshipSearchViewModelLocationValidator searchLocationValidator,
-            IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider)
+            ApprenticeshipSearchViewModelLocationValidator searchLocationValidator)
             : base(configManager)
         {
             _apprenticeshipSearchMediator = apprenticeshipSearchMediator;
             _searchProvider = searchProvider;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
-            _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
         }
 
         [HttpGet]
@@ -215,48 +210,47 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                Guid? candidateId = null;
+                var candidateId = GetCandidateId();
 
-                if (Request.IsAuthenticated && UserContext != null)
-                {
-                    candidateId = UserContext.CandidateId;
-                }
-
-                var response = _apprenticeshipSearchMediator.Details(id, candidateId);
+                var searchReturnUrl = GetSearchReturnUrl();
+                
+                var response = _apprenticeshipSearchMediator.Details(id, candidateId, searchReturnUrl);
+                
                 switch (response.Code)
                 {
-                    case "410": return new VacancyNotFoundResult();
-                    case "message":
+                    case Codes.ApprenticeshipSearch.Details.VacancyNotFound: 
+                        return new VacancyNotFoundResult();
+                    case Codes.ApprenticeshipSearch.Details.VacancyHasError:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Message, response.Message.Level);
                         return View(response.ViewModel);
+                    case Codes.ApprenticeshipSearch.Details.Ok:
+                        return View(response.ViewModel);
                 }
 
-                var distance = UserData.Pop(UserDataItemNames.VacancyDistance);
-                var lastVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
-
-                if (HasToPopulateDistance(id, distance, lastVacancyId))
-                {
-                    ViewBag.Distance = distance;
-                    UserData.Push(UserDataItemNames.VacancyDistance, distance);
-                }
-                
-                if (HasToPopulateReturnUrl() && Request.UrlReferrer != null)
-                {
-                    ViewBag.SearchReturnUrl = Request.UrlReferrer.PathAndQuery;
-                }
-
-                UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToStringInvariant());
-
-                return View(response.ViewModel);
+                throw new ArgumentException(string.Format("Mediator returned unrecognised code: {0}", response.Code));
             });
         }
 
-        private bool HasToPopulateReturnUrl()
+        private Guid? GetCandidateId()
+        {
+            Guid? candidateId = null;
+
+            if (Request.IsAuthenticated && UserContext != null)
+            {
+                candidateId = UserContext.CandidateId;
+            }
+
+            return candidateId;
+        }
+
+        private string GetSearchReturnUrl()
         {
             var urlHelper = new UrlHelper(ControllerContext.RequestContext);
             var url = urlHelper.RouteUrl(CandidateRouteNames.ApprenticeshipResults, null);
-            return Request != null && Request.UrlReferrer != null && Request.UrlReferrer.AbsolutePath == url;
+            if (Request != null && Request.UrlReferrer != null && Request.UrlReferrer.AbsolutePath == url)
+                return Request.UrlReferrer.PathAndQuery;
+            return null;
         }
     }
 }

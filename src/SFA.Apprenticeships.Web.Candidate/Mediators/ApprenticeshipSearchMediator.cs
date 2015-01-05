@@ -8,6 +8,7 @@
     using Common.Providers;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentValidation.Mvc;
+    using Microsoft.Ajax.Utilities;
     using Providers;
     using Validators;
     using ViewModels;
@@ -33,6 +34,11 @@
             _userDataProvider = userDataProvider;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
+        }
+
+        public MediatorResponse<ApprenticeshipSearchViewModel> Index()
+        {
+            throw new NotImplementedException();
         }
 
         public MediatorResponse<ApprenticeshipSearchResponseViewModel> Search(ApprenticeshipSearchViewModel model, ModelStateDictionary modelState)
@@ -146,8 +152,51 @@
             return GetMediatorResponse("results", results);
         }
 
-        private static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel)
-            where T : ViewModelBase
+        public MediatorResponse<VacancyDetailViewModel> Details(int id, Guid? candidateId, string searchReturnUrl)
+        {
+            var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
+
+            if (vacancyDetailViewModel == null)
+            {
+                return GetMediatorResponse<VacancyDetailViewModel>(Codes.ApprenticeshipSearch.Details.VacancyNotFound, null);
+            }
+
+            if (vacancyDetailViewModel.HasError())
+            {
+                return GetMediatorResponse(Codes.ApprenticeshipSearch.Details.VacancyHasError, vacancyDetailViewModel, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Warning);
+            }
+
+            var distance = _userDataProvider.Pop(UserDataItemNames.VacancyDistance);
+            var lastVacancyId = _userDataProvider.Pop(UserDataItemNames.LastViewedVacancyId);
+
+            if (HasToPopulateDistance(id, distance, lastVacancyId))
+            {
+                vacancyDetailViewModel.Distance = distance;
+                _userDataProvider.Push(UserDataItemNames.VacancyDistance, distance);
+            }
+
+            vacancyDetailViewModel.SearchReturnUrl = searchReturnUrl;
+
+            _userDataProvider.Push(UserDataItemNames.LastViewedVacancyId, id.ToStringInvariant());
+
+            return GetMediatorResponse(Codes.ApprenticeshipSearch.Details.Ok, vacancyDetailViewModel);
+        }
+
+        private static bool HasGeoPoint(VacancySearchViewModel searchViewModel)
+        {
+            searchViewModel.CheckLatLonLocHash();
+
+            return searchViewModel.Latitude.HasValue && searchViewModel.Longitude.HasValue;
+        }
+
+        private static bool HasToPopulateDistance(int id, string distance, string lastVacancyId)
+        {
+            return !string.IsNullOrWhiteSpace(distance)
+                   && !string.IsNullOrWhiteSpace(lastVacancyId)
+                   && int.Parse(lastVacancyId) == id;
+        }
+
+        private static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel) where T : ViewModelBase
         {
             var response = new MediatorResponse<T>
             {
@@ -158,8 +207,7 @@
             return response;
         }
 
-        private static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel, string message, UserMessageLevel level)
-            where T : ViewModelBase
+        private static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel, string message, UserMessageLevel level) where T : ViewModelBase
         {
             var response = new MediatorResponse<T>
             {
@@ -173,48 +221,6 @@
             };
 
             return response;
-        }
-
-        public MediatorResponse<VacancyDetailViewModel> Details(int id, Guid? candidateId)
-        {
-            var vacancy = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
-
-            if (vacancy == null)
-            {
-                return GetMediatorResponse("410", vacancy);
-            }
-
-            if (vacancy.HasError())
-            {
-                return GetMediatorResponse("message", vacancy, vacancy.ViewModelMessage, UserMessageLevel.Warning);
-            }
-
-            /*var UserData = _userDataProvider;
-
-            var distance = UserData.Pop(UserDataItemNames.VacancyDistance);
-            var lastVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
-
-            if (HasToPopulateDistance(id, distance, lastVacancyId))
-            {
-                ViewBag.Distance = distance;
-                UserData.Push(UserDataItemNames.VacancyDistance, distance);
-            }
-
-            if (HasToPopulateReturnUrl() && Request.UrlReferrer != null)
-            {
-                ViewBag.SearchReturnUrl = Request.UrlReferrer.PathAndQuery;
-            }
-
-            UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToStringInvariant());*/
-
-            return GetMediatorResponse("details", vacancy);
-        }
-
-        private static bool HasGeoPoint(VacancySearchViewModel searchViewModel)
-        {
-            searchViewModel.CheckLatLonLocHash();
-
-            return searchViewModel.Latitude.HasValue && searchViewModel.Longitude.HasValue;
         }
     }
 }

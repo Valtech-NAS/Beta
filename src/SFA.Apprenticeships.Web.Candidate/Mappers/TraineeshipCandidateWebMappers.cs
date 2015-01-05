@@ -72,7 +72,11 @@
                  .ForMember(d => d.HasCandidateAlreadyApplied,
                     opt => opt.Ignore())
                 .ForMember(d => d.ApprenticeshipLevel,
-                    opt => opt.Ignore());
+                    opt => opt.Ignore())
+                .ForMember(d => d.Distance,
+                        opt => opt.Ignore())
+                .ForMember(d => d.SearchReturnUrl,
+                        opt => opt.Ignore());
 
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<AddressViewModel, Address>();

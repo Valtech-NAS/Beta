@@ -71,8 +71,12 @@
                         opt => opt.Ignore())
                 .ForMember(d => d.ViewModelMessage,
                         opt => opt.Ignore())
-                 .ForMember(d => d.HasCandidateAlreadyApplied,
-                    opt=> opt.Ignore());
+                .ForMember(d => d.HasCandidateAlreadyApplied,
+                    opt => opt.Ignore())
+                .ForMember(d => d.Distance,
+                        opt => opt.Ignore())
+                .ForMember(d => d.SearchReturnUrl,
+                        opt => opt.Ignore());
 
             Mapper.CreateMap<ApprenticeshipSummaryResponse, ApprenticeshipVacancySummaryViewModel>();
             

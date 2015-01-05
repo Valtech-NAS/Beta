@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
     using System;
     using Candidate.Mediators;
@@ -12,12 +12,12 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class ApprenticeshipSearchMediatorTests
+    public class DetailsTests
     {
         private const int Id = 1;
 
         [Test]
-        public void DetailsVacancyNotFound()
+        public void VacancyNotFound()
         {
             var searchProvider = new Mock<ISearchProvider>();
             var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
@@ -25,16 +25,16 @@
             var userDataProvider = new Mock<IUserDataProvider>();
             var mediator = GetMediator(searchProvider.Object, apprenticeshipVacancyDetailProvider.Object, userDataProvider.Object);
 
-            var response = mediator.Details(Id, null);
+            var response = mediator.Details(Id, null, null);
 
-            response.Code.Should().Be("410");
+            response.Code.Should().Be(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
             response.ViewModel.Should().BeNull();
             response.Message.Should().BeNull();
             response.Parameters.Should().BeNull();
         }
 
         [Test]
-        public void DetailsVacancyHasError()
+        public void VacancyHasError()
         {
             const string message = "The vacancy has an error";
             
@@ -45,9 +45,9 @@
             var userDataProvider = new Mock<IUserDataProvider>();
             var mediator = GetMediator(searchProvider.Object, apprenticeshipVacancyDetailProvider.Object, userDataProvider.Object);
 
-            var response = mediator.Details(Id, null);
+            var response = mediator.Details(Id, null, null);
 
-            response.Code.Should().Be("message");
+            response.Code.Should().Be(Codes.ApprenticeshipSearch.Details.VacancyHasError);
             response.ViewModel.Should().NotBeNull();
             response.Message.Message.Should().Be(message);
             response.Message.Level.Should().Be(UserMessageLevel.Warning);
@@ -55,7 +55,7 @@
         }
 
         [Test]
-        public void DetailsOk()
+        public void Ok()
         {
             var searchProvider = new Mock<ISearchProvider>();
             var vacancyDetailViewModel = new VacancyDetailViewModel();
@@ -64,9 +64,9 @@
             var userDataProvider = new Mock<IUserDataProvider>();
             var mediator = GetMediator(searchProvider.Object, apprenticeshipVacancyDetailProvider.Object, userDataProvider.Object);
 
-            var response = mediator.Details(Id, null);
+            var response = mediator.Details(Id, null, null);
 
-            response.Code.Should().Be("details");
+            response.Code.Should().Be(Codes.ApprenticeshipSearch.Details.Ok);
             response.ViewModel.Should().NotBeNull();
             response.Message.Should().BeNull();
             response.Parameters.Should().BeNull();

@@ -19,9 +19,9 @@
             </div>
         </div>
         <div class="grid grid-1-3">
-            @if (ViewBag.SearchReturnUrl != null)
+            @if (Model.SearchReturnUrl != null)
             {
-                <a href="@ViewBag.SearchReturnUrl" title="Return to search results" class="page-link" id="lnk-return-search-results">Return to search results</a>
+                <a href="@Model.SearchReturnUrl" title="Return to search results" class="page-link" id="lnk-return-search-results">Return to search results</a>
             }
             else
             {
@@ -61,10 +61,10 @@
                     }
                     <h3 class="bold-small">Planned start date</h3>
                     <p id="vacancy-start-date">@Html.DisplayFor(m => Model.StartDate)</p>
-                    @if (Model.VacancyLocationType != ApprenticeshipLocationType.National && ViewBag.Distance != null)
+                    @if (Model.VacancyLocationType != ApprenticeshipLocationType.National && Model.Distance != null)
                     {
                         <h3 class="bold-small">Distance</h3>
-                        <p id="vacancy-distance">@ViewBag.Distance miles</p>
+                        <p id="vacancy-distance">@Model.Distance miles</p>
                     }
                     <h3 class="bold-small">Apprenticeship level</h3>
                     <p id="vacancy-type" itemprop="employmentType">@Model.ApprenticeshipLevel Level Apprenticeship</p>

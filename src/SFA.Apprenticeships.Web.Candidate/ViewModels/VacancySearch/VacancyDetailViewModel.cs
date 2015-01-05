@@ -18,6 +18,14 @@
         {
         }
 
+        #region Controls
+
+        public string Distance { get; set; }
+
+        public string SearchReturnUrl { get; set; }
+
+        #endregion
+
         #region Vacancy
 
         public int Id { get; set; }
