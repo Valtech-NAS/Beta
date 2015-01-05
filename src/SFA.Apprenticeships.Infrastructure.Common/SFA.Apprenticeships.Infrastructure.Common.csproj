@@ -120,7 +120,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\ConfigurationManager.cs" />
-    <Compile Include="Configuration\FeatureToggle.cs" />
     <Compile Include="Configuration\SecureConfigurationSection.cs" />
     <Compile Include="IoC\CommonRegistry.cs" />
     <Compile Include="Mappers\MapperEngine.cs" />

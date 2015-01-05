@@ -3,7 +3,6 @@
     using System;
     using System.Threading.Tasks;
     using Application.Candidate;
-    using Application.Interfaces.Messaging;
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;

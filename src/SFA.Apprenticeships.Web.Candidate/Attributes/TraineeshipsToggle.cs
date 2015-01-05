@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Attributes
 {
     using System.Web.Mvc;
-    using Domain.Interfaces.Configuration;
+    using Configuration;
     using StructureMap.Attributes;
 
     public class TraineeshipsToggle : ActionFilterAttribute

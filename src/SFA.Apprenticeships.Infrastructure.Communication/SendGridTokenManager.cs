@@ -47,9 +47,6 @@ namespace SFA.Apprenticeships.Infrastructure.Communication
                 case CommunicationTokens.AccountUnlockCodeExpiryDays:
                     emailTemplateToken = "Candidate.AccountUnlockCodeExpiryDays";
                     break;
-                case CommunicationTokens.LogMessage:
-                    emailTemplateToken = "Application.LogMessage";
-                    break;
                 case CommunicationTokens.ProviderContact:
                     emailTemplateToken = "Provider.Contact";
                     break;

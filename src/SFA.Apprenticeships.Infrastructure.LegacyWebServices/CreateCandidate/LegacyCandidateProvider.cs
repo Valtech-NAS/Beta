@@ -5,10 +5,11 @@
     using Application.Candidate;
     using Domain.Entities.Exceptions;
     using GatewayServiceProxy;
+    using Newtonsoft.Json;
     using NLog;
     using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
-    using Newtonsoft.Json;
+    using CreateCandidateRequest = GatewayServiceProxy.CreateCandidateRequest;
 
     public class LegacyCandidateProvider : ILegacyCandidateProvider
     {

@@ -19,10 +19,10 @@
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository; //todo: MG: remove this!!
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
-        private readonly IVacancySearchService<ApprenticeshipSummary, ApprenticeshipVacancyDetail> _vacancySearchService;
+        private readonly IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail> _vacancySearchService;
 
         public ApprenticeshipVacancyDetailProvider(
-            IVacancySearchService<ApprenticeshipSummary, ApprenticeshipVacancyDetail> vacancySearchService,
+            IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail> vacancySearchService,
             ICandidateService candidateService,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IMapper mapper)

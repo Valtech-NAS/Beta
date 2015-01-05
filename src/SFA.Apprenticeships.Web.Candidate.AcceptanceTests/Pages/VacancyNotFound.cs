@@ -3,8 +3,8 @@
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
 
-    [PageNavigation("/VacancyNotFound.html")]
-    [PageAlias("VacancyNotFound")]
+    [PageNavigation("/apprenticeship/[0-9]+")]
+    [PageAlias("Error")]
     public class VacancyNotFound
     {
         /// <summary>
@@ -14,5 +14,8 @@
         public VacancyNotFound(ISearchContext context)
         {
         }
+
+        [ElementLocator(Class = "heading-xlarge")]
+        public IWebElement Heading { get; set; }
     }
 }

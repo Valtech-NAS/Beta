@@ -435,6 +435,8 @@
     <Compile Include="Attributes\SiteRootRedirect.cs" />
     <Compile Include="Attributes\ApplyWebTrendsAttribute.cs" />
     <Compile Include="Attributes\AuthorizeCandidateAttribute.cs" />
+    <Compile Include="Configuration\FeatureToggle.cs" />
+    <Compile Include="Configuration\IFeatureToggle.cs" />
     <Compile Include="Constants\CacheProfiles.cs" />
     <Compile Include="Constants\CandidateRouteNames.cs" />
     <Compile Include="Constants\Pages\ApplicationPageMessages.cs" />

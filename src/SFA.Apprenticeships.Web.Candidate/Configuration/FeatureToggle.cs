@@ -1,9 +1,8 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
+﻿namespace SFA.Apprenticeships.Web.Candidate.Configuration
 {
     using System.Collections.Generic;
     using Domain.Interfaces.Configuration;
 
-    //todo: move the toggle into the web layer as it's only used there
     public class FeatureToggle : IFeatureToggle
     {
         private readonly IConfigurationManager _configurationManager;
