@@ -7,10 +7,7 @@
     {
         public TraineeshipApplicationViewModelClientValidator()
         {
-//TODO: review
-#pragma warning disable 618 
             RuleFor(x => x.Candidate).SetValidator(new TraineeshipViewModelClientValidator());
-#pragma warning restore 618
         }
     }
 
@@ -18,10 +15,7 @@
     {
         public TraineeshipApplicationViewModelServerValidator()
         {
-//TODO: review
-#pragma warning disable 618
             RuleFor(x => x.Candidate).SetValidator(new TraineeshipViewModelClientValidator());
-#pragma warning restore 618
         }
     }
 }
