@@ -4,6 +4,7 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Vacancies;
 
+    //todo: these parameters are not applicable to both apprenticeships and traineeships
     public class SearchParameters
     {
         public string Keywords { get; set; }
