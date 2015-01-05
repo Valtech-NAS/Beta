@@ -42,13 +42,10 @@
         {
             var candidate = _candidateReadRepository.Get(apprenticeshipApplicationDetail.CandidateId);
 
-            candidate.ApplicationTemplate = new ApplicationTemplate
-            {
-                AboutYou = apprenticeshipApplicationDetail.CandidateInformation.AboutYou,
-                EducationHistory = apprenticeshipApplicationDetail.CandidateInformation.EducationHistory,
-                Qualifications = apprenticeshipApplicationDetail.CandidateInformation.Qualifications,
-                WorkExperience = apprenticeshipApplicationDetail.CandidateInformation.WorkExperience
-            };
+            candidate.ApplicationTemplate.AboutYou = apprenticeshipApplicationDetail.CandidateInformation.AboutYou;
+            candidate.ApplicationTemplate.EducationHistory = apprenticeshipApplicationDetail.CandidateInformation.EducationHistory;
+            candidate.ApplicationTemplate.Qualifications = apprenticeshipApplicationDetail.CandidateInformation.Qualifications;
+            candidate.ApplicationTemplate.WorkExperience = apprenticeshipApplicationDetail.CandidateInformation.WorkExperience;
 
             _candidateWriteRepository.Save(candidate);
         }

@@ -30,15 +30,12 @@
             return savedApplication;
         }
 
-        private void SyncToCandidatesApplicationTemplate(TraineeshipApplicationDetail apprenticeshipApplicationDetail)
+        private void SyncToCandidatesApplicationTemplate(TraineeshipApplicationDetail traineeshipApplicationDetail)
         {
-            var candidate = _candidateReadRepository.Get(apprenticeshipApplicationDetail.CandidateId);
+            var candidate = _candidateReadRepository.Get(traineeshipApplicationDetail.CandidateId);
 
-            candidate.ApplicationTemplate = new ApplicationTemplate
-            {
-                Qualifications = apprenticeshipApplicationDetail.CandidateInformation.Qualifications,
-                WorkExperience = apprenticeshipApplicationDetail.CandidateInformation.WorkExperience
-            };
+            candidate.ApplicationTemplate.Qualifications = traineeshipApplicationDetail.CandidateInformation.Qualifications;
+            candidate.ApplicationTemplate.WorkExperience = traineeshipApplicationDetail.CandidateInformation.WorkExperience;
 
             _candidateWriteRepository.Save(candidate);
         }
