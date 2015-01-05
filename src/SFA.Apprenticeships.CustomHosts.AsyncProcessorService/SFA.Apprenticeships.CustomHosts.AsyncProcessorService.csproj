@@ -99,7 +99,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EasyNetQ">
-      <HintPath>..\packages\EasyNetQ.0.39.4.338\lib\net40\EasyNetQ.dll</HintPath>
+      <HintPath>..\packages\EasyNetQ.0.39.5.339\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
