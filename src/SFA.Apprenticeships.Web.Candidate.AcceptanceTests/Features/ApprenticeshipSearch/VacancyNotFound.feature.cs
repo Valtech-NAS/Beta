@@ -97,6 +97,17 @@ this.FeatureBackground();
 #line 14
  testRunner.Then("I am on the VacancyNotFound page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table1.AddRow(new string[] {
+                        "Heading",
+                        "Equals",
+                        "Apprenticeship no longer available"});
+#line 15
+ testRunner.And("I see", ((string)(null)), table1, "And ");
+#line hidden
             this.ScenarioCleanup();
         }
     }

@@ -12,3 +12,6 @@ Scenario: Vacancy not found should redirect to the error page
 	Given I am in the right environment
 	When I navigate to the details of the vacancy 199999
 	Then I am on the VacancyNotFound page
+	And I see
+        | Field   | Rule   | Value                              |
+        | Heading | Equals | Apprenticeship no longer available |
