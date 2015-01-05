@@ -17,11 +17,10 @@
         protected RestService(string baseUrl)
         {
             Condition.Requires(baseUrl, "baseUrl").IsNotNullOrWhiteSpace();
-
-            BaseUrl = baseUrl;
+            BaseUrl = new Uri(baseUrl);
         }
 
-        public string BaseUrl { get; protected set; }
+        public Uri BaseUrl { get; protected set; }
 
         public IRestClient Client
         {
