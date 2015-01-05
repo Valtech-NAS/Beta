@@ -19,6 +19,7 @@
     using Application.UserAccount;
     using Application.UserAccount.Strategies;
     using Application.Vacancy;
+    using Configuration;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
     using Mappers;
@@ -92,7 +93,7 @@
             For<ILockUserStrategy>().Use<LockUserStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ICreateApprenticeshipApplicationStrategy>().Use<CreateApprenticeshipApplicationStrategy>();
             For<ICreateTraineeshipApplicationStrategy>().Use<CreateTraineeshipApplicationStrategy>();
-            For<ISaveApprenticeshipApplicationStrategy>().Use<SaveApprenticeshipApplicationStrategy>(); ;
+            For<ISaveApprenticeshipApplicationStrategy>().Use<SaveApprenticeshipApplicationStrategy>();
             For<ISaveTraineeshipApplicationStrategy>().Use<SaveTraineeshipApplicationStrategy>();
             For<IArchiveApplicationStrategy>().Use<ArchiveApprenticeshipApplicationStrategy>();
             For<IDeleteApplicationStrategy>().Use<DeleteApprenticeshipApplicationStrategy>();
@@ -119,6 +120,8 @@
                 .Use<CandidateServiceProvider>()
                 .Ctor<IMapper>()
                 .Named("ApprenticeshipCandidateWebMappers");
+
+            For<IFeatureToggle>().Use<FeatureToggle>();
 
             // Traineeship providers (web)
             For<IMapper>().Singleton().Use<TraineeshipCandidateWebMappers>().Name = "TraineeshipCandidateWebMappers";

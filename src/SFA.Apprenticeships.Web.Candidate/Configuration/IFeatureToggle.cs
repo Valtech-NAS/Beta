@@ -1,6 +1,5 @@
-﻿namespace SFA.Apprenticeships.Domain.Interfaces.Configuration
+﻿namespace SFA.Apprenticeships.Web.Candidate.Configuration
 {
-    //todo: move the toggle into the web layer as it's only used there
     public interface IFeatureToggle
     {
         bool IsActive(Feature feature);

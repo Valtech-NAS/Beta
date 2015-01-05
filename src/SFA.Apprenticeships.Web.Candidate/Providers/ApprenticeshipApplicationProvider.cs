@@ -2,18 +2,19 @@
 {
     using System;
     using System.Linq;
+    using Configuration;
     using NLog;
-    using SFA.Apprenticeships.Application.Interfaces.Candidates;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Domain.Entities.Exceptions;
-    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-    using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
-    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications;
-    using SFA.Apprenticeships.Web.Common.Models.Application;
-    using ErrorCodes = SFA.Apprenticeships.Domain.Entities.Exceptions.ErrorCodes;
+    using Application.Interfaces.Candidates;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Exceptions;
+    using Domain.Interfaces.Configuration;
+    using Domain.Interfaces.Mapping;
+    using Infrastructure.PerformanceCounters;
+    using Constants.Pages;
+    using ViewModels.Applications;
+    using ViewModels.MyApplications;
+    using Common.Models.Application;
+    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
 
     public class ApprenticeshipApplicationProvider : IApprenticeshipApplicationProvider
     {

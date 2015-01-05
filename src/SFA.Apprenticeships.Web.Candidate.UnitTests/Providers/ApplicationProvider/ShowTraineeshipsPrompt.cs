@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Configuration;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
