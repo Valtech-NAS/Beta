@@ -88,13 +88,13 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EasyNetQ, Version=0.39.5.339, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="EasyNetQ, Version=0.39.4.338, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EasyNetQ.0.39.5.339\lib\net40\EasyNetQ.dll</HintPath>
+      <HintPath>..\packages\EasyNetQ.0.39.4.338\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
-    <Reference Include="EasyNetQ.Management.Client, Version=0.39.5.339, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="EasyNetQ.Management.Client, Version=0.39.4.338, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EasyNetQ.Management.Client.0.39.5.339\lib\net40\EasyNetQ.Management.Client.dll</HintPath>
+      <HintPath>..\packages\EasyNetQ.Management.Client.0.39.4.338\lib\net40\EasyNetQ.Management.Client.dll</HintPath>
     </Reference>
     <Reference Include="Elasticsearch.Net, Version=1.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
