@@ -71,8 +71,9 @@
         {
             get
             {
+                // Candidate has a number of unsuccessful apprenticeship applications and has not applied for a traineeship yet.
                 return TraineeshipPrompt.TraineeshipsFeatureActive &&
-                       UnsuccessfulApplications.Count() >= TraineeshipPrompt.UnsuccessfulApplicationsToShowTraineeshipsPrompt
+                       AllApprenticeshipApplications.Count(each => each.ApplicationStatus == ApplicationStatuses.Unsuccessful) >= TraineeshipPrompt.UnsuccessfulApplicationsToShowTraineeshipsPrompt
                        && !TraineeshipApplications.Any();
             }
         }
