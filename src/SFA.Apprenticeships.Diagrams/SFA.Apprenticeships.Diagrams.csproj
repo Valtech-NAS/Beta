@@ -57,6 +57,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Entities\Applications.cd" />
     <None Include="Entities\Users.cd" />
     <None Include="Entities\Vacancies.cd" />
