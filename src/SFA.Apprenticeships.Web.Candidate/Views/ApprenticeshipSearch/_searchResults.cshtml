@@ -59,7 +59,7 @@
 {
 <div class="form-group">
     <label for="results-per-page" class="heading-small inline">Display results</label>
-    @Html.DropDownList("resultsPerPage", (SelectList)ViewBag.ResultsPerPageSelectList, new { @id = "results-per-page" })
+    @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" })
     <noscript>
         <button class="button show-nojs" name="ChangeResultsPerPageAction" value="ResultsPerPage">View</button>
     </noscript>

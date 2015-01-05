@@ -31,7 +31,7 @@
         }
 
         //TODO: DFSW Remove once mediators are in place for all controllers and ViewBag is no longer used
-        protected void PopulateResultsPerPage(int selectedValue)
+        protected void PopulateResultsPerPage(VacancySearchViewModel viewModel, int selectedValue)
         {
             var resultsPerPage = new SelectList(
                 new[]
@@ -46,7 +46,7 @@
                 selectedValue
                 );
 
-            ViewBag.ResultsPerPageSelectList = resultsPerPage;
+            viewModel.ResultsPerPageSelectList = resultsPerPage;
         }
 
         //TODO: DFSW Remove once mediators are in place for all controllers and ViewBag is no longer used

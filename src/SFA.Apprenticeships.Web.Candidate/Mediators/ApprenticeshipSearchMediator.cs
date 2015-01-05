@@ -2,8 +2,10 @@
 {
     using System;
     using System.Collections;
+    using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
+    using System.Web.UI.WebControls;
     using Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
@@ -60,26 +62,36 @@
             return GetMediatorResponse(Codes.ApprenticeshipSearch.Index.Ok, viewModel);
         }
 
-        public MediatorResponse<ApprenticeshipSearchResponseViewModel> Search(ApprenticeshipSearchViewModel model, ModelStateDictionary modelState)
+        public MediatorResponse<ApprenticeshipSearchResponseViewModel> Results(ApprenticeshipSearchViewModel model, ModelStateDictionary modelState)
         {
+            _userDataProvider.Pop(UserDataItemNames.VacancyDistance);
+
+            if (model.ResultsPerPage == 0)
+            {
+                model.ResultsPerPage = GetResultsPerPage();
+            }
+
+            _userDataProvider.Push(UserDataItemNames.ResultsPerPage, model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
+
             if (model.SearchAction == SearchAction.Search && model.LocationType != ApprenticeshipLocationType.NonNational)
             {
                 model.LocationType = ApprenticeshipLocationType.NonNational;
             }
 
-            if (model.LocationType == ApprenticeshipLocationType.NonNational && model.SortType == VacancySortType.Relevancy &&
-                string.IsNullOrWhiteSpace(model.Keywords))
+            if (model.LocationType == ApprenticeshipLocationType.NonNational && model.SortType == VacancySortType.Relevancy && string.IsNullOrWhiteSpace(model.Keywords))
             {
                 modelState.Remove("SortType");
                 model.SortType = VacancySortType.Distance;
             }
 
-            if (model.LocationType == ApprenticeshipLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) &&
-                model.SortType != VacancySortType.ClosingDate)
+            if (model.LocationType == ApprenticeshipLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) && model.SortType != VacancySortType.ClosingDate)
             {
                 modelState.Remove("SortType");
                 model.SortType = VacancySortType.ClosingDate;
             }
+
+            model.Distances = GetDistances(model.WithinDistance);
+            model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
 
             var clientResult = _searchRequestValidator.Validate(model);
 
@@ -88,7 +100,7 @@
                 modelState.Clear();
                 clientResult.AddToModelState(modelState, string.Empty);
 
-                return GetMediatorResponse("results", new ApprenticeshipSearchResponseViewModel { VacancySearch = model });
+                return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.Ok, new ApprenticeshipSearchResponseViewModel { VacancySearch = model });
             }
 
             if (!HasGeoPoint(model))
@@ -99,7 +111,7 @@
                 if (suggestedLocations.HasError())
                 {
                     modelState.Clear();
-                    return GetMediatorResponse("results", new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
+                    return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.HasError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
                 }
 
                 if (suggestedLocations.Locations.Any())
@@ -114,8 +126,7 @@
                     model.Latitude = location.Latitude;
                     model.Longitude = location.Longitude;
 
-                    //TODO: Add to view model
-                    var locationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
+                    model.LocationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
                     {
                         var vsvm = new ApprenticeshipSearchViewModel
                         {
@@ -141,7 +152,7 @@
             if (!locationResult.IsValid)
             {
                 modelState.Clear();
-                return GetMediatorResponse("results", new ApprenticeshipSearchResponseViewModel { VacancySearch = model });
+                return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.Ok, new ApprenticeshipSearchResponseViewModel { VacancySearch = model });
             }
 
             var results = _searchProvider.FindVacancies(model);
@@ -149,7 +160,7 @@
             if (results.HasError())
             {
                 modelState.Clear();
-                return GetMediatorResponse("results", new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, results.ViewModelMessage, UserMessageLevel.Warning);
+                return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.HasError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, results.ViewModelMessage, UserMessageLevel.Warning);
             }
 
             if (model.SearchAction == SearchAction.Search && results.TotalLocalHits > 0)
@@ -157,18 +168,10 @@
                 results.VacancySearch.LocationType = ApprenticeshipLocationType.NonNational;
             }
 
-            if (results.VacancySearch.LocationType == ApprenticeshipLocationType.National)
-            {
-                //TODO: Uncomment and make compatible with new pattern
-                //PopulateSortType(model.SortType, model.Keywords, false);
-            }
-            else
-            {
-                //TODO: Uncomment and make compatible with new pattern
-                //PopulateSortType(model.SortType, model.Keywords);
-            }
+            var isLocalLocationType = results.VacancySearch.LocationType != ApprenticeshipLocationType.National;
+            results.VacancySearch.SortTypes = GetSortTypes(model.SortType, model.Keywords, isLocalLocationType);
 
-            return GetMediatorResponse("results", results);
+            return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.Ok, results);
         }
 
         public MediatorResponse<VacancyDetailViewModel> Details(int id, Guid? candidateId, string searchReturnUrl)
@@ -245,6 +248,24 @@
                 );
 
             return sortTypes;
+        }
+
+        private static SelectList GetResultsPerPageSelectList(int selectedValue)
+        {
+            var resultsPerPage = new SelectList(
+                new[]
+                {
+                    new {ResultsPerPage = 5, Name = "5 per page"},
+                    new {ResultsPerPage = 10, Name = "10 per page"},
+                    new {ResultsPerPage = 25, Name = "25 per page"},
+                    new {ResultsPerPage = 50, Name = "50 per page"}
+                },
+                "ResultsPerPage",
+                "Name",
+                selectedValue
+                );
+
+            return resultsPerPage;
         }
 
         private int GetResultsPerPage()

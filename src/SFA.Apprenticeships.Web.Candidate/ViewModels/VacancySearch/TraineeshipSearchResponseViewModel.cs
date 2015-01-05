@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     using System.Collections.Generic;
+    using System.Web.Mvc;
 
     public class TraineeshipSearchResponseViewModel : ViewModelBase
     {
@@ -51,6 +52,26 @@
                 if (TotalHits % PageSize > 0) { pages++; }
                 return pages;
             }
+        }
+
+        public SelectList ResultsPerPageSelectList
+        {
+            get { return VacancySearch.ResultsPerPageSelectList; }
+        }
+
+        public SelectList Distances
+        {
+            get { return VacancySearch.Distances; }
+        }
+
+        public SelectList SortTypes
+        {
+            get { return VacancySearch.SortTypes; }
+        }
+
+        public TraineeshipSearchViewModel[] LocationSearches
+        {
+            get { return VacancySearch.LocationSearches; }
         }
     }
 }

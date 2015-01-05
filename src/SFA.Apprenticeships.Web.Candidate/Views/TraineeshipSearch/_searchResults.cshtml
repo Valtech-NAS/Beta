@@ -7,7 +7,7 @@
         <div class="float-right-wrap">
             <div class="form-group form-group-compound">
                 <label for="sort-results" class="heading-medium inline">Sort results</label>
-                @Html.DropDownList("sortType", (SelectList)ViewBag.SortTypes, new { @id = "sort-results" })
+                @Html.DropDownList("sortType", Model.SortTypes, new { @id = "sort-results" })
                 <noscript>
                     <button class="button show-nojs" name="SearchAction" value="Sort">Sort</button>
                 </noscript>
@@ -45,7 +45,7 @@
 {
 <div class="form-group">
     <label for="results-per-page" class="heading-small inline">Display results</label>
-    @Html.DropDownList("resultsPerPage", (SelectList)ViewBag.ResultsPerPageSelectList, new { @id = "results-per-page" })
+    @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" })
     <noscript>
         <button class="button show-nojs" name="ChangeResultsPerPageAction" value="ResultsPerPage">View</button>
     </noscript>

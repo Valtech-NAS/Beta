@@ -9,6 +9,12 @@
                 public const string Ok = "search";
             }
 
+            public class Results
+            {
+                public const string HasError = "message";
+                public const string Ok = "results";
+            }
+
             public class Details
             {
                 public const string VacancyNotFound = "410";

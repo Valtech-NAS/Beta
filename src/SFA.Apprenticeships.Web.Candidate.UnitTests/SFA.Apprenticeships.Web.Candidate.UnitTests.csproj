@@ -171,6 +171,7 @@
     <Compile Include="Mappers\VacancyDetailViewModelMapperTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\DetailsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\IndexTests.cs" />
+    <Compile Include="Mediators\ApprenticeshipSearch\ResultsTests.cs" />
     <Compile Include="Mocks\HttpContextFactory.cs" />
     <Compile Include="Providers\ApplicationProvider\ShowTraineeshipsPrompt.cs" />
     <Compile Include="Providers\SearchProviderTests.cs" />

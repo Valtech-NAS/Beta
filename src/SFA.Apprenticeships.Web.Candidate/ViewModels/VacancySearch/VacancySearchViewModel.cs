@@ -74,6 +74,8 @@
 
         public int ResultsPerPage { get; set; }
 
+        public SelectList ResultsPerPageSelectList { get; set; }
+
         public SelectList Distances { get; set; }
 
         public SelectList SortTypes { get; set; }

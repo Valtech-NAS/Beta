@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators
     {
         MediatorResponse<ApprenticeshipSearchViewModel> Index();
 
-        MediatorResponse<ApprenticeshipSearchResponseViewModel> Search(ApprenticeshipSearchViewModel model, ModelStateDictionary modelState);
+        MediatorResponse<ApprenticeshipSearchResponseViewModel> Results(ApprenticeshipSearchViewModel model, ModelStateDictionary modelState);
 
         MediatorResponse<VacancyDetailViewModel> Details(int id, Guid? candidateId, string searchReturnUrl);
     }

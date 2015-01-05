@@ -9,14 +9,14 @@
             @Html.FormTextFor(m => m.Keywords, hintText: "")
             @Html.FormTextFor(m => m.Location, hintText: "")
             
-            @if (ViewBag.LocationSearches != null && ViewBag.LocationSearches.Length > 0)
+            @if (Model.LocationSearches != null && Model.LocationSearches.Length > 0)
             {
                 <details open class="open form-group form-group-compound" id="locationSuggestions">
                     <summary tabindex="0" aria-describedby="locSuggestionsAria">Did you mean:</summary>
                     <p class="visuallyhidden" aria-live="polite" id="locSuggestionsAria"></p>
                     <div class="detail-content panel-indent">
                         <ul id="location-suggestions" class="list-text list-max-11">
-                            @foreach (var locationSearch in ViewBag.LocationSearches)
+                            @foreach (var locationSearch in Model.LocationSearches)
                             {
                                 <li><a href="@Url.Action("results", locationSearch)">@locationSearch.Location</a></li>
                             }

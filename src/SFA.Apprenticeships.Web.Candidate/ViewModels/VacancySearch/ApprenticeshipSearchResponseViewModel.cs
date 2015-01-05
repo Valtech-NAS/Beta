@@ -64,6 +64,11 @@
             }
         }
 
+        public SelectList ResultsPerPageSelectList
+        {
+            get { return VacancySearch.ResultsPerPageSelectList; }
+        }
+
         public SelectList Distances
         {
             get { return VacancySearch.Distances; }
@@ -72,6 +77,11 @@
         public SelectList SortTypes
         {
             get { return VacancySearch.SortTypes; }
+        }
+
+        public ApprenticeshipSearchViewModel[] LocationSearches
+        {
+            get { return VacancySearch.LocationSearches; }
         }
     }
 }

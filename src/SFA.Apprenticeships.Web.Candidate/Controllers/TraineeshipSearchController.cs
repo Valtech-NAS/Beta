@@ -87,7 +87,7 @@
                     model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
 
                 PopulateDistances(model, model.WithinDistance);
-                PopulateResultsPerPage(model.ResultsPerPage);
+                PopulateResultsPerPage(model, model.ResultsPerPage);
                 PopulateSortType(model, model.SortType);
 
                 var clientResult = _searchRequestValidator.Validate(model);
@@ -125,7 +125,7 @@
                         model.Latitude = location.Latitude;
                         model.Longitude = location.Longitude;
 
-                        ViewBag.LocationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
+                        model.LocationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
                         {
                             var vsvm = new TraineeshipSearchViewModel
                             {

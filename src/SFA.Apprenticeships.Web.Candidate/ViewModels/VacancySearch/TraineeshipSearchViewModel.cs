@@ -18,5 +18,7 @@
 
         [Display(Name = TraineeshipSearchViewModelMessages.LocationMessages.LabelText, Description = TraineeshipSearchViewModelMessages.LocationMessages.HintText)]
         public override string Location { get; set; }
+
+        public TraineeshipSearchViewModel[] LocationSearches { get; set; }
     }
 }

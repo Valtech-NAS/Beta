@@ -26,5 +26,7 @@
         public override string Location { get; set; }
 
         public ApprenticeshipLocationType LocationType { get; set; }
+
+        public ApprenticeshipSearchViewModel[] LocationSearches { get; set; }
     }
 }
