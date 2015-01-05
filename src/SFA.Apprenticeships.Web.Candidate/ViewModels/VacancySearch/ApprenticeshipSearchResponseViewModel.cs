@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     using System.Collections.Generic;
+    using System.Web.Mvc;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
 
@@ -61,6 +62,16 @@
 
                 return pages;
             }
+        }
+
+        public SelectList Distances
+        {
+            get { return VacancySearch.Distances; }
+        }
+
+        public SelectList SortTypes
+        {
+            get { return VacancySearch.SortTypes; }
         }
     }
 }

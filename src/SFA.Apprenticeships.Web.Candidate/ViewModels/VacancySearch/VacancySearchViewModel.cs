@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
+    using System.Web.Mvc;
     using Application.Interfaces.Vacancies;
     
     public enum SearchAction
@@ -72,5 +73,9 @@
         public SearchAction SearchAction { get; set; }
 
         public int ResultsPerPage { get; set; }
+
+        public SelectList Distances { get; set; }
+
+        public SelectList SortTypes { get; set; }
     }
 }

@@ -1,9 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
 {
-    public class Codes
+    public partial class Codes
     {
         public class ApprenticeshipSearch
         {
+            public class Index
+            {
+                public const string Ok = "search";
+            }
+
             public class Details
             {
                 public const string VacancyNotFound = "410";

@@ -7,6 +7,7 @@
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Common.Providers;
+    using Domain.Interfaces.Configuration;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -19,11 +20,7 @@
         [Test]
         public void VacancyNotFound()
         {
-            var searchProvider = new Mock<ISearchProvider>();
-            var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns((VacancyDetailViewModel)null);
-            var userDataProvider = new Mock<IUserDataProvider>();
-            var mediator = GetMediator(searchProvider.Object, apprenticeshipVacancyDetailProvider.Object, userDataProvider.Object);
+            var mediator = GetMediator(null);
 
             var response = mediator.Details(Id, null, null);
 
@@ -38,12 +35,8 @@
         {
             const string message = "The vacancy has an error";
             
-            var searchProvider = new Mock<ISearchProvider>();
             var vacancyDetailViewModel = new VacancyDetailViewModel {ViewModelMessage = message};
-            var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
-            var userDataProvider = new Mock<IUserDataProvider>();
-            var mediator = GetMediator(searchProvider.Object, apprenticeshipVacancyDetailProvider.Object, userDataProvider.Object);
+            var mediator = GetMediator(vacancyDetailViewModel);
 
             var response = mediator.Details(Id, null, null);
 
@@ -57,12 +50,8 @@
         [Test]
         public void Ok()
         {
-            var searchProvider = new Mock<ISearchProvider>();
             var vacancyDetailViewModel = new VacancyDetailViewModel();
-            var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
-            var userDataProvider = new Mock<IUserDataProvider>();
-            var mediator = GetMediator(searchProvider.Object, apprenticeshipVacancyDetailProvider.Object, userDataProvider.Object);
+            var mediator = GetMediator(vacancyDetailViewModel);
 
             var response = mediator.Details(Id, null, null);
 
@@ -72,9 +61,20 @@
             response.Parameters.Should().BeNull();
         }
 
-        private static IApprenticeshipSearchMediator GetMediator(ISearchProvider searchProvider, IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider, IUserDataProvider userDataProvider)
+        private static IApprenticeshipSearchMediator GetMediator(VacancyDetailViewModel vacancyDetailViewModel)
         {
-            var mediator = new ApprenticeshipSearchMediator(searchProvider, apprenticeshipVacancyDetailProvider, userDataProvider, new ApprenticeshipSearchViewModelClientValidator(), new ApprenticeshipSearchViewModelLocationValidator());
+            var configurationManager = new Mock<IConfigurationManager>();
+            var searchProvider = new Mock<ISearchProvider>();
+            var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
+            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            var userDataProvider = new Mock<IUserDataProvider>();
+            var mediator = GetMediator(configurationManager.Object, searchProvider.Object, apprenticeshipVacancyDetailProvider.Object, userDataProvider.Object);
+            return mediator;
+        }
+
+        private static IApprenticeshipSearchMediator GetMediator(IConfigurationManager configurationManager, ISearchProvider searchProvider, IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider, IUserDataProvider userDataProvider)
+        {
+            var mediator = new ApprenticeshipSearchMediator(configurationManager, searchProvider, apprenticeshipVacancyDetailProvider, userDataProvider, new ApprenticeshipSearchViewModelClientValidator(), new ApprenticeshipSearchViewModelLocationValidator());
             return mediator;
         }
     }

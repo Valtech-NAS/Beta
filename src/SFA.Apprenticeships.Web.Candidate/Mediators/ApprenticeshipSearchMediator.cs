@@ -1,12 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
 {
     using System;
+    using System.Collections;
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Microsoft.Ajax.Utilities;
     using Providers;
@@ -21,8 +23,10 @@
         private readonly IUserDataProvider _userDataProvider;
         private readonly ApprenticeshipSearchViewModelClientValidator _searchRequestValidator;
         private readonly ApprenticeshipSearchViewModelLocationValidator _searchLocationValidator;
+        private readonly int _vacancyResultsPerPage;
 
         public ApprenticeshipSearchMediator(
+            IConfigurationManager configManager,
             ISearchProvider searchProvider,
             IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
             IUserDataProvider userDataProvider,
@@ -34,11 +38,26 @@
             _userDataProvider = userDataProvider;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
+
+            _vacancyResultsPerPage = configManager.GetAppSetting<int>("VacancyResultsPerPage");
         }
 
         public MediatorResponse<ApprenticeshipSearchViewModel> Index()
         {
-            throw new NotImplementedException();
+            var distances = GetDistances();
+            var sortTypes = GetSortTypes();
+            var resultsPerPage = GetResultsPerPage();
+
+            var viewModel = new ApprenticeshipSearchViewModel
+            {
+                WithinDistance = 2,
+                LocationType = ApprenticeshipLocationType.NonNational,
+                Distances = distances,
+                SortTypes = sortTypes,
+                ResultsPerPage = resultsPerPage
+            };
+
+            return GetMediatorResponse(Codes.ApprenticeshipSearch.Index.Ok, viewModel);
         }
 
         public MediatorResponse<ApprenticeshipSearchResponseViewModel> Search(ApprenticeshipSearchViewModel model, ModelStateDictionary modelState)
@@ -181,6 +200,63 @@
 
             return GetMediatorResponse(Codes.ApprenticeshipSearch.Details.Ok, vacancyDetailViewModel);
         }
+        private static SelectList GetDistances(int selectedValue = 2)
+        {
+            var distances = new SelectList(
+                new[]
+                {
+                    new {WithinDistance = 2, Name = "2 miles"},
+                    new {WithinDistance = 5, Name = "5 miles"},
+                    new {WithinDistance = 10, Name = "10 miles"},
+                    new {WithinDistance = 15, Name = "15 miles"},
+                    new {WithinDistance = 20, Name = "20 miles"},
+                    new {WithinDistance = 30, Name = "30 miles"},
+                    new {WithinDistance = 40, Name = "40 miles"}
+                },
+                "WithinDistance",
+                "Name",
+                selectedValue
+                );
+
+            return distances;
+        }
+
+        public SelectList GetSortTypes(VacancySortType selectedSortType = VacancySortType.Distance, string keywords = null, bool isLocalLocationType = true)
+        {
+            var sortTypeOptions = new ArrayList();
+
+            if (!string.IsNullOrWhiteSpace(keywords))
+            {
+                sortTypeOptions.Add(new { SortType = VacancySortType.Relevancy, Name = "Best Match" });
+            }
+
+            sortTypeOptions.Add(new { SortType = VacancySortType.ClosingDate, Name = "Closing Date" });
+
+            if (isLocalLocationType)
+            {
+                sortTypeOptions.Add(new { SortType = VacancySortType.Distance, Name = "Distance" });
+            }
+
+            var sortTypes = new SelectList(
+                sortTypeOptions,
+                "SortType",
+                "Name",
+                selectedSortType
+                );
+
+            return sortTypes;
+        }
+
+        private int GetResultsPerPage()
+        {
+            int resultsPerPage;
+            if (!int.TryParse(_userDataProvider.Get(UserDataItemNames.ResultsPerPage), out resultsPerPage))
+            {
+                resultsPerPage = _vacancyResultsPerPage;
+            }
+
+            return resultsPerPage;
+        }
 
         private static bool HasGeoPoint(VacancySearchViewModel searchViewModel)
         {
@@ -196,7 +272,7 @@
                    && int.Parse(lastVacancyId) == id;
         }
 
-        private static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel) where T : ViewModelBase
+        private static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel)
         {
             var response = new MediatorResponse<T>
             {

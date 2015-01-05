@@ -45,18 +45,12 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                PopulateDistances();
-                PopulateSortType();
+                //Originally done in PopulateSortType
+                ModelState.Remove("SortType");
 
-                var resultsPerPage = GetResultsPerPage();
+                var response = _apprenticeshipSearchMediator.Index();
 
-                return
-                    View(new ApprenticeshipSearchViewModel
-                    {
-                        WithinDistance = 2,
-                        LocationType = ApprenticeshipLocationType.NonNational,
-                        ResultsPerPage = resultsPerPage
-                    });
+                return View(response.ViewModel);
             });
         }
 
@@ -96,7 +90,7 @@
                     model.SortType = VacancySortType.ClosingDate;
                 }
 
-                PopulateDistances(model.WithinDistance);
+                PopulateDistances(model, model.WithinDistance);
                 PopulateResultsPerPage(model.ResultsPerPage);
 
                 var clientResult = _searchRequestValidator.Validate(model);
@@ -179,11 +173,11 @@
 
                 if (results.VacancySearch.LocationType == ApprenticeshipLocationType.National)
                 {
-                    PopulateSortType(model.SortType, model.Keywords, false);
+                    PopulateSortType(model, model.SortType, model.Keywords, false);
                 }
                 else
                 {
-                    PopulateSortType(model.SortType, model.Keywords);
+                    PopulateSortType(model, model.SortType, model.Keywords);
                 }
 
                 return View("results", results);

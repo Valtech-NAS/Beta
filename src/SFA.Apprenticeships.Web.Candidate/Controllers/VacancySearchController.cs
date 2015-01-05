@@ -18,6 +18,7 @@
 
         #region Helpers
 
+        //TODO: DFSW Remove once mediators are in place for all controllers and ViewBag is no longer used
         protected int GetResultsPerPage()
         {
             int resultsPerPage;
@@ -29,6 +30,7 @@
             return resultsPerPage;
         }
 
+        //TODO: DFSW Remove once mediators are in place for all controllers and ViewBag is no longer used
         protected void PopulateResultsPerPage(int selectedValue)
         {
             var resultsPerPage = new SelectList(
@@ -47,7 +49,8 @@
             ViewBag.ResultsPerPageSelectList = resultsPerPage;
         }
 
-        protected void PopulateDistances(int selectedValue = 2)
+        //TODO: DFSW Remove once mediators are in place for all controllers and ViewBag is no longer used
+        protected void PopulateDistances(VacancySearchViewModel viewModel, int selectedValue = 2)
         {
             var distances = new SelectList(
                 new[]
@@ -65,10 +68,11 @@
                 selectedValue
                 );
 
-            ViewBag.Distances = distances;
+            viewModel.Distances = distances;
         }
 
-        protected void PopulateSortType(VacancySortType selectedSortType = VacancySortType.Distance,
+        //TODO: DFSW Remove once mediators are in place for all controllers and ViewBag is no longer used
+        protected void PopulateSortType(VacancySearchViewModel viewModel, VacancySortType selectedSortType = VacancySortType.Distance,
             string keywords = null, bool isLocalLocationType = true)
         {
             var sortTypeOptions = new ArrayList();
@@ -94,9 +98,10 @@
                 selectedSortType
                 );
 
-            ViewBag.SortTypes = sortTypes;
+            viewModel.SortTypes = sortTypes;
         }
 
+        //TODO: DFSW Remove once mediators are in place for all controllers and ViewBag is no longer used
         protected static bool HasGeoPoint(VacancySearchViewModel searchViewModel)
         {
             searchViewModel.CheckLatLonLocHash();
@@ -104,6 +109,7 @@
             return searchViewModel.Latitude.HasValue && searchViewModel.Longitude.HasValue;
         }
 
+        //TODO: DFSW Remove once mediators are in place for all controllers and ViewBag is no longer used
         protected static bool HasToPopulateDistance(int id, string distance, string lastVacancyId)
         {
             return !string.IsNullOrWhiteSpace(distance)

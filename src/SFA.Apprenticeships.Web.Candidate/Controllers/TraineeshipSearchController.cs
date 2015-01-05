@@ -53,17 +53,19 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                PopulateDistances();
-                PopulateSortType();
-
                 var resultsPerPage = GetResultsPerPage();
 
-                return View(new TraineeshipSearchViewModel
+                var viewModel = new TraineeshipSearchViewModel
                 {
                     WithinDistance = 40,
                     ResultsPerPage = resultsPerPage,
                     SortType = VacancySortType.Distance
-                });
+                };
+
+                PopulateDistances(viewModel);
+                PopulateSortType(viewModel);
+                
+                return View(viewModel);
             });
         }
 
@@ -84,9 +86,9 @@
                 UserData.Push(UserDataItemNames.ResultsPerPage,
                     model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
 
-                PopulateDistances(model.WithinDistance);
+                PopulateDistances(model, model.WithinDistance);
                 PopulateResultsPerPage(model.ResultsPerPage);
-                PopulateSortType(model.SortType);
+                PopulateSortType(model, model.SortType);
 
                 var clientResult = _searchRequestValidator.Validate(model);
 

@@ -28,7 +28,7 @@
             @* TODO::Create a form control for this. *@
             <div class="form-group">
                 <label for="loc-within" class="form-label">Within</label>
-                @Html.DropDownListFor(m => m.WithinDistance, (SelectList)ViewBag.Distances, new { @id = "loc-within", @name = "WithinDistance" })
+                @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance" })
             </div>
             <div class="form-group">
                 <button class="button no-btm-margin" id="search-button" name="SearchAction" value="Search">Update results</button>
