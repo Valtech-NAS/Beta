@@ -504,11 +504,13 @@
     <Compile Include="Mappers\Resolvers\ApprenticeshipSearchResultsResolver.cs" />
     <Compile Include="Mappers\Resolvers\SettingsViewModelResolvers.cs" />
     <Compile Include="Mappers\Resolvers\VacancyDetailViewModelResolvers.cs" />
+    <Compile Include="Mediators\MediatorBase.cs" />
     <Compile Include="Mediators\IApprenticeshipSearchMediator.cs" />
     <Compile Include="Mediators\ApprenticeshipSearchMediatorCodes.cs" />
     <Compile Include="Mediators\MediatorResponse.cs" />
     <Compile Include="Mediators\MediatorResponseMessage.cs" />
     <Compile Include="Mediators\ApprenticeshipSearchMediator.cs" />
+    <Compile Include="Mediators\SearchMediatorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\AccountProvider.cs" />
     <Compile Include="Providers\ApprenticeshipApplicationProvider.cs" />
