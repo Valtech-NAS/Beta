@@ -4,6 +4,6 @@
 
     public interface IArchiveApplicationStrategy
     {
-        void ArchiveApplication(Guid applicationId);
+        void ArchiveApplication(Guid candidateId, int vacancyId);
     }
 }

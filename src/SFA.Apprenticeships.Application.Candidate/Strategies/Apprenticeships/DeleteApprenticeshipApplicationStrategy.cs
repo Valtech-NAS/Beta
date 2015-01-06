@@ -16,13 +16,16 @@
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
         }
 
-        public void DeleteApplication(Guid applicationId)
+        public void DeleteApplication(Guid candidateId, int vacancyId)
         {
-            var applicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationId, true);
+            var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
 
-            applicationDetail.AssertState("Delete application", ApplicationStatuses.Draft, ApplicationStatuses.ExpiredOrWithdrawn);
+            if (applicationDetail != null)
+            {
+                applicationDetail.AssertState("Delete application", ApplicationStatuses.Draft, ApplicationStatuses.ExpiredOrWithdrawn);
 
-            _apprenticeshipApplicationWriteRepository.Delete(applicationDetail.EntityId);
+                _apprenticeshipApplicationWriteRepository.Delete(applicationDetail.EntityId);
+            }
         }
     }
 }

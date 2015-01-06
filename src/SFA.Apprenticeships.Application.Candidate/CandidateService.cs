@@ -192,9 +192,7 @@
                 "Calling CandidateService to get the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
-            var applicationId = GetApplicationId(candidateId, vacancyId);
-
-            return _apprenticeshipApplicationReadRepository.Get(applicationId);
+            return _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
         }
 
         public TraineeshipApplicationDetail CreateTraineeshipApplication(Guid candidateId, int traineeshipVacancyId)
@@ -216,9 +214,7 @@
                 "Calling CandidateService to archive the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
-            var applicationId = GetApplicationId(candidateId, vacancyId);
-
-            _archiveApplicationStrategy.ArchiveApplication(applicationId);
+            _archiveApplicationStrategy.ArchiveApplication(candidateId, vacancyId);
         }
 
         public void DeleteApplication(Guid candidateId, int vacancyId)
@@ -229,8 +225,7 @@
                 "Calling CandidateService to delete the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
-            var applicationId = GetApplicationId(candidateId, vacancyId);
-            _deleteApplicationStrategy.DeleteApplication(applicationId);
+            _deleteApplicationStrategy.DeleteApplication(candidateId, vacancyId);
         }
 
         public TraineeshipApplicationDetail GetTraineeshipApplication(Guid candidateId, int vacancyId)
@@ -241,10 +236,7 @@
                 "Calling CandidateService to get the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
-            //TODO: repeating the query twice?
-            //TODO: Replace with Null object pattern or maybe pattern?
-            var applicationId = GetTraineeshipApplicationId(candidateId, vacancyId);
-            return applicationId == null ? null : _traineeshipApplicationReadRepository.Get(applicationId.Value);
+            return _traineeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
         }
 
         public void SaveApplication(Guid candidateId, int vacancyId, ApprenticeshipApplicationDetail apprenticeshipApplication)
@@ -255,10 +247,7 @@
                 "Calling CandidateService to save the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
-            var applicationId = GetApplicationId(candidateId, vacancyId);
-            apprenticeshipApplication.EntityId = applicationId;
-
-            _saveApplicationStrategy.SaveApplication(apprenticeshipApplication);
+            _saveApplicationStrategy.SaveApplication(candidateId, vacancyId, apprenticeshipApplication);
         }
 
         public IList<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId)
@@ -280,9 +269,7 @@
                 "Calling CandidateService to submit the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
-            var applicationId = GetApplicationId(candidateId, vacancyId);
-
-            _submitApprenticeshipApplicationStrategy.SubmitApplication(applicationId);
+            _submitApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
         }
 
         public void SubmitTraineeshipApplication(Guid candidateId, int vacancyId,
@@ -296,24 +283,6 @@
 
             var traineeshipDetails = _saveTraineeshipApplicationStrategy.SaveApplication(traineeshipApplicationDetail);
             _submitTraineeshipApplicationStrategy.SubmitApplication(traineeshipDetails.EntityId);
-        }
-
-        private Guid GetApplicationId(Guid candidateId, int vacancyId)
-        {
-            var applicationDetail = _apprenticeshipApplicationReadRepository
-                .GetForCandidate(candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
-
-            return applicationDetail.EntityId;
-        }
-
-        private Guid? GetTraineeshipApplicationId(Guid candidateId, int vacancyId)
-        {
-            var applicationDetail = _traineeshipApplicationReadRepository
-                .GetForCandidate(candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
-
-            if (applicationDetail == null) return null;
-
-            return applicationDetail.EntityId;
         }
 
         public IList<TraineeshipApplicationSummary> GetTraineeshipApplications(Guid candidateId)

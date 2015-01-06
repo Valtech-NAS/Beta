@@ -26,9 +26,9 @@
             _communicationService = communicationService;
         }
 
-        public void SubmitApplication(Guid applicationId)
+        public void SubmitApplication(Guid candidateId, int vacancyId)
         {
-            var applicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationId, true);
+            var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId, true);
 
             applicationDetail.AssertState("Submit apprenticeshipApplication", ApplicationStatuses.Draft);
 
@@ -42,7 +42,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Debug("SubmitApplicationRequest could not be queued for ApplicationId={0}", applicationId);
+                Logger.Debug("SubmitApplicationRequest could not be queued for ApplicationId={0}", applicationDetail.EntityId);
 
                 throw new CustomException("SubmitApplicationRequest could not be queued", ex,
                     ErrorCodes.ApplicationQueuingError);

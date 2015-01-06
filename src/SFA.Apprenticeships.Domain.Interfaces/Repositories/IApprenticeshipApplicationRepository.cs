@@ -12,7 +12,7 @@
 
         IList<ApprenticeshipApplicationSummary> GetForCandidate(Guid candidateId);
 
-        ApprenticeshipApplicationDetail GetForCandidate(Guid candidateId, Func<ApprenticeshipApplicationDetail, bool> filter);
+        ApprenticeshipApplicationDetail GetForCandidate(Guid candidateId, int vacancyId, bool errorIfNotFound = false);
     }
 
     public interface IApprenticeshipApplicationWriteRepository : IWriteRepository<ApprenticeshipApplicationDetail> {

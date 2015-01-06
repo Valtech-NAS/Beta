@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Apprenticeships
 {
+    using System;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
@@ -21,7 +22,7 @@
             _candidateWriteRepository = candidateWriteRepository;
         }
 
-        public ApprenticeshipApplicationDetail SaveApplication(ApprenticeshipApplicationDetail apprenticeshipApplication)
+        public ApprenticeshipApplicationDetail SaveApplication(Guid candidateId, int vacancyId, ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
             var applicationDetail = _apprenticeshipApplicationReadRepository.Get(apprenticeshipApplication.EntityId, true);
 

@@ -73,7 +73,7 @@
         private ApprenticeshipApplicationDetail UpdateApplicationDetail(Candidate candidate, ApprenticeshipVacancyDetail vacancyDetails)
         {
             var currentApprenticeshipApplicationDetail =
-                _apprenticeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, a => a.Vacancy.Id == vacancyDetails.Id);
+                _apprenticeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, vacancyDetails.Id);
 
             currentApprenticeshipApplicationDetail.CandidateDetails = candidate.RegistrationDetails;
 

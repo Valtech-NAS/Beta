@@ -31,7 +31,7 @@
         public ApprenticeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
         {
             var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(
-                candidateId, applicationdDetail => applicationdDetail.Vacancy.Id == vacancyId);
+                candidateId, vacancyId);
 
             if (applicationDetail == null)
             {
