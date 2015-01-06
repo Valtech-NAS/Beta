@@ -45,13 +45,6 @@
                     {
                         r.Distance = double.Parse(hitMd.Sorts.Skip(hitMd.Sorts.Count() - 1).First().ToString());
                     }
-                    else
-                    {
-                        //if anyone can find a better way to get this value out, feel free!
-                        var array = hitMd.Fields.FieldValues<JArray>("distance");
-                        var value = array[0];
-                        r.Distance = double.Parse(value.ToString());
-                    }
                 }
 
                 r.Score = hitMd.Score;

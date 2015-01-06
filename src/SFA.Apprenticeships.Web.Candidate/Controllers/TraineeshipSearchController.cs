@@ -59,7 +59,6 @@
                 {
                     WithinDistance = 40,
                     ResultsPerPage = resultsPerPage,
-                    SortType = VacancySortType.Distance
                 };
 
                 PopulateDistances(viewModel);

@@ -131,7 +131,7 @@
 
             if (!locationResult.IsValid)
             {
-                return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.ValidationError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, locationResult);
+                return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.Ok, new ApprenticeshipSearchResponseViewModel { VacancySearch = model });
             }
 
             var results = _searchProvider.FindVacancies(model);
