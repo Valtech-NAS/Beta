@@ -40,6 +40,8 @@
         {
             var result = _candidateWriteRepository.Save(candidate);
 
+            var reloadedCandidate = _candidateReadRepository.Get(candidate.EntityId);
+
             var candidateApplications = _getCandidateApplicationsStrategy
                 .GetApplications(candidate.EntityId)
                 .Where(a => a.Status == ApplicationStatuses.Draft)
@@ -49,35 +51,34 @@
             {
                 try
                 {
-                    var vacancyDetails =
-                        _apprenticeshipDataProvider.GetVacancyDetails(candidateApplication.LegacyVacancyId);
-                    var reloadedCandidate = _candidateReadRepository.Get(candidate.EntityId);
-                    var apprenticeshipApplicationDetail = UpdateApplicationDetail(reloadedCandidate, vacancyDetails);
-
-                    _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplicationDetail);
+                    var vacancyDetails = _apprenticeshipDataProvider.GetVacancyDetails(candidateApplication.LegacyVacancyId);
+                    UpdateApplicationDetail(reloadedCandidate, vacancyDetails);
                 }
                 catch (Exception e)
                 {
-                    // Try updating the next one
-                    var message =
-                        string.Format(
-                            "Error while updating an application in draft state with the new user personal details for user {0}",
-                            candidate.EntityId);
-                    Logger.Error(message, e);
+                    // try updating the next one
+                    var message = string.Format(
+                        "Error while updating a draft application with the updated user personal details for user {0}",
+                        candidate.EntityId);
+
+                    Logger.Warn(message, e);
                 }
             });
 
             return result;
         }
 
-        private ApprenticeshipApplicationDetail UpdateApplicationDetail(Candidate candidate, ApprenticeshipVacancyDetail vacancyDetails)
+        private void UpdateApplicationDetail(Candidate candidate, ApprenticeshipVacancyDetail vacancyDetails)
         {
-            var currentApprenticeshipApplicationDetail =
-                _apprenticeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, a => a.Vacancy.Id == vacancyDetails.Id);
+            var apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository
+                .GetForCandidate(candidate.EntityId, a => a.Vacancy.Id == vacancyDetails.Id);
 
-            currentApprenticeshipApplicationDetail.CandidateDetails = candidate.RegistrationDetails;
-
-            return currentApprenticeshipApplicationDetail;
+            if (apprenticeshipApplicationDetail != null) // vacancy may have expired
+            {
+                apprenticeshipApplicationDetail.CandidateDetails = candidate.RegistrationDetails;
+                _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplicationDetail);
+                
+            }
         }
     }
 }
