@@ -4,7 +4,6 @@
     using Application.Interfaces.Vacancies;
     using Candidate.Mediators;
     using Candidate.Providers;
-    using Candidate.Validators;
     using Candidate.ViewModels.VacancySearch;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
@@ -13,7 +12,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class ResultsTests
+    public class ResultsTests : TestsBase
     {
         [Test]
         public void LocationOk()
@@ -134,12 +133,6 @@
             var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
             var userDataProvider = new Mock<IUserDataProvider>();
             var mediator = GetMediator(configurationManager.Object, searchProvider, apprenticeshipVacancyDetailProvider.Object, userDataProvider.Object);
-            return mediator;
-        }
-
-        private static IApprenticeshipSearchMediator GetMediator(IConfigurationManager configurationManager, ISearchProvider searchProvider, IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider, IUserDataProvider userDataProvider)
-        {
-            var mediator = new ApprenticeshipSearchMediator(configurationManager, searchProvider, apprenticeshipVacancyDetailProvider, userDataProvider, new ApprenticeshipSearchViewModelClientValidator(), new ApprenticeshipSearchViewModelLocationValidator());
             return mediator;
         }
     }

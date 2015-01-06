@@ -5,7 +5,7 @@
 
     public abstract class MediatorBase
     {
-        protected static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel, ValidationResult validationResult = null)
+        protected static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel = default(T), ValidationResult validationResult = null)
         {
             var response = new MediatorResponse<T>
             {

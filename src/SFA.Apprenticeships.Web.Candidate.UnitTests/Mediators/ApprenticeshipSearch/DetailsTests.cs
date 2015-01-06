@@ -3,17 +3,15 @@
     using System;
     using Candidate.Mediators;
     using Candidate.Providers;
-    using Candidate.Validators;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
-    using FluentAssertions;
     using Moq;
     using NUnit.Framework;
 
     [TestFixture]
-    public class DetailsTests
+    public class DetailsTests : TestsBase
     {
         private const int Id = 1;
 
@@ -59,12 +57,6 @@
             apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
             var userDataProvider = new Mock<IUserDataProvider>();
             var mediator = GetMediator(configurationManager.Object, searchProvider.Object, apprenticeshipVacancyDetailProvider.Object, userDataProvider.Object);
-            return mediator;
-        }
-
-        private static IApprenticeshipSearchMediator GetMediator(IConfigurationManager configurationManager, ISearchProvider searchProvider, IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider, IUserDataProvider userDataProvider)
-        {
-            var mediator = new ApprenticeshipSearchMediator(configurationManager, searchProvider, apprenticeshipVacancyDetailProvider, userDataProvider, new ApprenticeshipSearchViewModelClientValidator(), new ApprenticeshipSearchViewModelLocationValidator());
             return mediator;
         }
     }

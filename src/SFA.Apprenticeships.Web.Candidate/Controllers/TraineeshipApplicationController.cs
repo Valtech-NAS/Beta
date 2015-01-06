@@ -37,16 +37,17 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = _traineeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                var response = _traineeshipApplicationMediator.Apply(UserContext.CandidateId, id);
 
-                if (model.HasError())
+                switch (response.Code)
                 {
-                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case Codes.TraineeshipApplication.Apply.HasError:
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case Codes.ApprenticeshipSearch.Details.Ok:
+                        return View(response.ViewModel);
                 }
 
-                model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
-
-                return View(model);
+                throw new InvalidMediatorCodeException(response.Code);
             });
         }
 
