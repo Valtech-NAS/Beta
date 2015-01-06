@@ -21,11 +21,7 @@
 
             var response = mediator.Index();
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Index.Ok);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertCode(Codes.ApprenticeshipSearch.Index.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.WithinDistance.Should().Be(2);

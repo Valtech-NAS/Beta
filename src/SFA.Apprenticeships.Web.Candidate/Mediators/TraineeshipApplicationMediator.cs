@@ -2,11 +2,15 @@
 {
     using Common.Providers;
     using Domain.Interfaces.Configuration;
+    using Providers;
 
     public class TraineeshipApplicationMediator : SearchMediatorBase, ITraineeshipApplicationMediator
     {
-        public TraineeshipApplicationMediator(IConfigurationManager configManager, IUserDataProvider userDataProvider) : base(configManager, userDataProvider)
+        private readonly ITraineeshipApplicationProvider _traineeshipApplicationProvider;
+
+        public TraineeshipApplicationMediator(ITraineeshipApplicationProvider traineeshipApplicationProvider, IConfigurationManager configManager, IUserDataProvider userDataProvider) : base(configManager, userDataProvider)
         {
+            _traineeshipApplicationProvider = traineeshipApplicationProvider;
         }
     }
 }

@@ -140,6 +140,7 @@
 
             //Mediators
             For<IApprenticeshipSearchMediator>().Use<ApprenticeshipSearchMediator>();
+            For<ITraineeshipApplicationMediator>().Use<TraineeshipApplicationMediator>();
         }
     }
 }

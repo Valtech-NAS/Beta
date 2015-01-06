@@ -16,14 +16,17 @@
     using Common.Attributes;
     using Common.Constants;
     using Common.Models.Application;
+    using Mediators;
 
     [TraineeshipsToggle]
     public class TraineeshipApplicationController : CandidateControllerBase
     {
+        private readonly ITraineeshipApplicationMediator _traineeshipApplicationMediator;
         private readonly ITraineeshipApplicationProvider _traineeshipApplicationProvider;
 
-        public TraineeshipApplicationController(ITraineeshipApplicationProvider traineeshipApplicationProvider)
+        public TraineeshipApplicationController(ITraineeshipApplicationMediator traineeshipApplicationMediator, ITraineeshipApplicationProvider traineeshipApplicationProvider)
         {
+            _traineeshipApplicationMediator = traineeshipApplicationMediator;
             _traineeshipApplicationProvider = traineeshipApplicationProvider;
         }
 

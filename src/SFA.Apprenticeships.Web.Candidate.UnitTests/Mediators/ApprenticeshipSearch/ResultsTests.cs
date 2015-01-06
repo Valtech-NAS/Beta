@@ -26,11 +26,7 @@
             
             var response = mediator.Results(searchViewModel);
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.Ok);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.Vacancies.Should().NotBeNullOrEmpty();
@@ -49,11 +45,7 @@
 
             var response = mediator.Results(searchViewModel);
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.Ok);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.Vacancies.Should().NotBeNull();
@@ -69,11 +61,7 @@
 
             var response = mediator.Results(searchViewModel);
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.ValidationError);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().NotBeNull();
+            response.AssertValidationResult(Codes.ApprenticeshipSearch.Results.ValidationError, true);
         }
 
         [Test]
@@ -87,11 +75,7 @@
 
             var response = mediator.Results(searchViewModel);
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.Ok);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             var sortTypes = viewModel.SortTypes.ToList();
@@ -112,11 +96,7 @@
 
             var response = mediator.Results(searchViewModel);
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.Ok);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             var sortTypes = viewModel.SortTypes.ToList();

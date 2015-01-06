@@ -24,11 +24,7 @@
 
             var response = mediator.Details(Id, null, null);
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
-            response.ViewModel.Should().BeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertCode(Codes.ApprenticeshipSearch.Details.VacancyNotFound, false);
         }
 
         [Test]
@@ -41,12 +37,7 @@
 
             var response = mediator.Details(Id, null, null);
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Details.VacancyHasError);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Message.Should().Be(message);
-            response.Message.Level.Should().Be(UserMessageLevel.Warning);
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertMessage(Codes.ApprenticeshipSearch.Details.VacancyHasError, message, UserMessageLevel.Warning, true);
         }
 
         [Test]
@@ -57,11 +48,7 @@
 
             var response = mediator.Details(Id, null, null);
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Details.Ok);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertCode(Codes.ApprenticeshipSearch.Details.Ok, true);
         }
 
         private static IApprenticeshipSearchMediator GetMediator(VacancyDetailViewModel vacancyDetailViewModel)
