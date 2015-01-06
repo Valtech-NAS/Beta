@@ -504,6 +504,7 @@
     <Compile Include="Mappers\Resolvers\ApprenticeshipSearchResultsResolver.cs" />
     <Compile Include="Mappers\Resolvers\SettingsViewModelResolvers.cs" />
     <Compile Include="Mappers\Resolvers\VacancyDetailViewModelResolvers.cs" />
+    <Compile Include="Mediators\InvalidMediatorCodeException.cs" />
     <Compile Include="Mediators\MediatorBase.cs" />
     <Compile Include="Mediators\IApprenticeshipSearchMediator.cs" />
     <Compile Include="Mediators\ApprenticeshipSearchMediatorCodes.cs" />

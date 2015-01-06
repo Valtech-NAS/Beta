@@ -75,7 +75,7 @@
                         return View(response.ViewModel);
                 }
 
-                throw new ArgumentException(string.Format("Mediator returned unrecognised code: {0}", response.Code));
+                throw new InvalidMediatorCodeException(response.Code);
             });
         }
 
@@ -117,7 +117,7 @@
                         return View(response.ViewModel);
                 }
 
-                throw new ArgumentException(string.Format("Mediator returned unrecognised code: {0}", response.Code));
+                throw new InvalidMediatorCodeException(response.Code);
             });
         }
 

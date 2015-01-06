@@ -8,8 +8,6 @@
     using Common.Providers;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
-    using FluentValidation.Mvc;
-    using Microsoft.Ajax.Utilities;
     using Providers;
     using Validators;
     using ViewModels.VacancySearch;
@@ -154,9 +152,9 @@
             return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.Ok, results);
         }
 
-        public MediatorResponse<VacancyDetailViewModel> Details(int id, Guid? candidateId, string searchReturnUrl)
+        public MediatorResponse<VacancyDetailViewModel> Details(int vacancyId, Guid? candidateId, string searchReturnUrl)
         {
-            var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, id);
+            var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null)
             {
@@ -171,7 +169,7 @@
             var distance = UserDataProvider.Pop(UserDataItemNames.VacancyDistance);
             var lastVacancyId = UserDataProvider.Pop(UserDataItemNames.LastViewedVacancyId);
 
-            if (HasToPopulateDistance(id, distance, lastVacancyId))
+            if (HasToPopulateDistance(vacancyId, distance, lastVacancyId))
             {
                 vacancyDetailViewModel.Distance = distance;
                 UserDataProvider.Push(UserDataItemNames.VacancyDistance, distance);
@@ -179,7 +177,7 @@
 
             vacancyDetailViewModel.SearchReturnUrl = searchReturnUrl;
 
-            UserDataProvider.Push(UserDataItemNames.LastViewedVacancyId, id.ToStringInvariant());
+            UserDataProvider.Push(UserDataItemNames.LastViewedVacancyId, vacancyId.ToString(CultureInfo.InvariantCulture));
 
             return GetMediatorResponse(Codes.ApprenticeshipSearch.Details.Ok, vacancyDetailViewModel);
         }
