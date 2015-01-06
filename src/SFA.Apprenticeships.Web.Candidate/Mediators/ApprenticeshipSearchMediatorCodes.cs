@@ -13,6 +13,7 @@
             {
                 public const string HasError = "message";
                 public const string Ok = "results";
+                public const string ValidationError = "validationError";
             }
 
             public class Details

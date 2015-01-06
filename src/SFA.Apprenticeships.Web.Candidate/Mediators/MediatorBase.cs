@@ -1,15 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
 {
     using Common.Constants;
+    using FluentValidation.Results;
 
     public abstract class MediatorBase
     {
-        protected static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel)
+        protected static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel, ValidationResult validationResult = null)
         {
             var response = new MediatorResponse<T>
             {
                 Code = code,
-                ViewModel = viewModel
+                ViewModel = viewModel,
+                ValidationResult = validationResult
             };
 
             return response;

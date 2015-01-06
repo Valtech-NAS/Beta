@@ -25,6 +25,7 @@
             response.ViewModel.Should().NotBeNull();
             response.Message.Should().BeNull();
             response.Parameters.Should().BeNull();
+            response.ValidationResult.Should().BeNull();
 
             var viewModel = response.ViewModel;
             viewModel.WithinDistance.Should().Be(2);

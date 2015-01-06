@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
 {
     using System.Collections.Generic;
+    using FluentValidation.Results;
 
     public class MediatorResponse<T>
     {
@@ -10,6 +11,8 @@
 
         public MediatorResponseMessage Message { get; set; }
 
-        public IDictionary<string, string> Parameters { get; set; } 
+        public IDictionary<string, string> Parameters { get; set; }
+
+        public ValidationResult ValidationResult { get; set; }
     }
 }

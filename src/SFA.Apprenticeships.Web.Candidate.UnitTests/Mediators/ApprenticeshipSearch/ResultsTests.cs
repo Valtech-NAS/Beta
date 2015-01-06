@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
     using System.Linq;
-    using System.Web.Mvc;
     using Application.Interfaces.Vacancies;
     using Candidate.Mediators;
     using Candidate.Providers;
@@ -25,12 +24,13 @@
                 Location = "London"
             };
             
-            var response = mediator.Results(searchViewModel, new ModelStateDictionary());
+            var response = mediator.Results(searchViewModel);
 
             response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.Ok);
             response.ViewModel.Should().NotBeNull();
             response.Message.Should().BeNull();
             response.Parameters.Should().BeNull();
+            response.ValidationResult.Should().BeNull();
 
             var viewModel = response.ViewModel;
             viewModel.Vacancies.Should().NotBeNullOrEmpty();
@@ -47,12 +47,13 @@
                 Location = "Middle of Nowhere"
             };
 
-            var response = mediator.Results(searchViewModel, new ModelStateDictionary());
+            var response = mediator.Results(searchViewModel);
 
             response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.Ok);
             response.ViewModel.Should().NotBeNull();
             response.Message.Should().BeNull();
             response.Parameters.Should().BeNull();
+            response.ValidationResult.Should().BeNull();
 
             var viewModel = response.ViewModel;
             viewModel.Vacancies.Should().NotBeNull();
@@ -66,12 +67,13 @@
             var mediator = GetMediator();
             var searchViewModel = new ApprenticeshipSearchViewModel();
 
-            var response = mediator.Results(searchViewModel, new ModelStateDictionary());
+            var response = mediator.Results(searchViewModel);
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.Ok);
+            response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.ValidationError);
             response.ViewModel.Should().NotBeNull();
             response.Message.Should().BeNull();
             response.Parameters.Should().BeNull();
+            response.ValidationResult.Should().NotBeNull();
         }
 
         [Test]
@@ -83,12 +85,13 @@
                 Location = "London"
             };
 
-            var response = mediator.Results(searchViewModel, new ModelStateDictionary());
+            var response = mediator.Results(searchViewModel);
 
             response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.Ok);
             response.ViewModel.Should().NotBeNull();
             response.Message.Should().BeNull();
             response.Parameters.Should().BeNull();
+            response.ValidationResult.Should().BeNull();
 
             var viewModel = response.ViewModel;
             var sortTypes = viewModel.SortTypes.ToList();
@@ -107,12 +110,13 @@
                 Keywords = "Sales"
             };
 
-            var response = mediator.Results(searchViewModel, new ModelStateDictionary());
+            var response = mediator.Results(searchViewModel);
 
             response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.Ok);
             response.ViewModel.Should().NotBeNull();
             response.Message.Should().BeNull();
             response.Parameters.Should().BeNull();
+            response.ValidationResult.Should().BeNull();
 
             var viewModel = response.ViewModel;
             var sortTypes = viewModel.SortTypes.ToList();

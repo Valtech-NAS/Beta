@@ -28,6 +28,7 @@
             response.ViewModel.Should().BeNull();
             response.Message.Should().BeNull();
             response.Parameters.Should().BeNull();
+            response.ValidationResult.Should().BeNull();
         }
 
         [Test]
@@ -45,6 +46,7 @@
             response.Message.Message.Should().Be(message);
             response.Message.Level.Should().Be(UserMessageLevel.Warning);
             response.Parameters.Should().BeNull();
+            response.ValidationResult.Should().BeNull();
         }
 
         [Test]
@@ -59,6 +61,7 @@
             response.ViewModel.Should().NotBeNull();
             response.Message.Should().BeNull();
             response.Parameters.Should().BeNull();
+            response.ValidationResult.Should().BeNull();
         }
 
         private static IApprenticeshipSearchMediator GetMediator(VacancyDetailViewModel vacancyDetailViewModel)

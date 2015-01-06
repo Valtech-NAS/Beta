@@ -5,10 +5,13 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
+    using Application.Interfaces.Vacancies;
     using Attributes;
     using Common.Constants;
     using Constants;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
+    using FluentValidation.Mvc;
     using Mediators;
     using ViewModels.VacancySearch;
 
@@ -46,14 +49,29 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _apprenticeshipSearchMediator.Results(model, ModelState);
+                //TODO: DFSW Can we remove model state manipulation entirely? Where are these used?
+                if ((model.LocationType == ApprenticeshipLocationType.NonNational && model.SortType == VacancySortType.Relevancy && string.IsNullOrWhiteSpace(model.Keywords)) ||
+                    (model.LocationType == ApprenticeshipLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) && model.SortType != VacancySortType.ClosingDate))
+                {
+                    ModelState.Remove("SortType");
+                }
+
+                var response = _apprenticeshipSearchMediator.Results(model);
 
                 switch (response.Code)
                 {
+                    case Codes.ApprenticeshipSearch.Results.ValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(response.ViewModel);
                     case Codes.ApprenticeshipSearch.Results.HasError:
+                        ModelState.Clear();
                         SetUserMessage(response.Message.Message, response.Message.Level);
                         return View(response.ViewModel);
                     case Codes.ApprenticeshipSearch.Results.Ok:
+                        ModelState.Remove("Location");
+                        ModelState.Remove("Latitude");
+                        ModelState.Remove("Longitude");
                         return View(response.ViewModel);
                 }
 

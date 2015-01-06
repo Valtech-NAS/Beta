@@ -3,7 +3,6 @@
     using System;
     using System.Globalization;
     using System.Linq;
-    using System.Web.Mvc;
     using Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
@@ -55,7 +54,7 @@
             return GetMediatorResponse(Codes.ApprenticeshipSearch.Index.Ok, viewModel);
         }
 
-        public MediatorResponse<ApprenticeshipSearchResponseViewModel> Results(ApprenticeshipSearchViewModel model, ModelStateDictionary modelState)
+        public MediatorResponse<ApprenticeshipSearchResponseViewModel> Results(ApprenticeshipSearchViewModel model)
         {
             UserDataProvider.Pop(UserDataItemNames.VacancyDistance);
 
@@ -73,13 +72,11 @@
 
             if (model.LocationType == ApprenticeshipLocationType.NonNational && model.SortType == VacancySortType.Relevancy && string.IsNullOrWhiteSpace(model.Keywords))
             {
-                modelState.Remove("SortType");
                 model.SortType = VacancySortType.Distance;
             }
 
             if (model.LocationType == ApprenticeshipLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) && model.SortType != VacancySortType.ClosingDate)
             {
-                modelState.Remove("SortType");
                 model.SortType = VacancySortType.ClosingDate;
             }
 
@@ -90,10 +87,7 @@
 
             if (!clientResult.IsValid)
             {
-                modelState.Clear();
-                clientResult.AddToModelState(modelState, string.Empty);
-
-                return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.Ok, new ApprenticeshipSearchResponseViewModel { VacancySearch = model });
+                return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.ValidationError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, clientResult);
             }
 
             if (!HasGeoPoint(model))
@@ -103,17 +97,12 @@
 
                 if (suggestedLocations.HasError())
                 {
-                    modelState.Clear();
                     return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.HasError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
                 }
 
                 if (suggestedLocations.Locations.Any())
                 {
                     var location = suggestedLocations.Locations.First();
-
-                    modelState.Remove("Location");
-                    modelState.Remove("Latitude");
-                    modelState.Remove("Longitude");
 
                     model.Location = location.Name;
                     model.Latitude = location.Latitude;
@@ -144,15 +133,13 @@
 
             if (!locationResult.IsValid)
             {
-                modelState.Clear();
-                return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.Ok, new ApprenticeshipSearchResponseViewModel { VacancySearch = model });
+                return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.ValidationError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, locationResult);
             }
 
             var results = _searchProvider.FindVacancies(model);
 
             if (results.HasError())
             {
-                modelState.Clear();
                 return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.HasError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, results.ViewModelMessage, UserMessageLevel.Warning);
             }
 
