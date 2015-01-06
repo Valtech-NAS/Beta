@@ -12,6 +12,8 @@
     using Constants;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
+    using Mediators;
+    using Mediators.Traineeships;
     using Microsoft.Ajax.Utilities;
     using Providers;
     using Validators;
@@ -24,18 +26,21 @@
         private readonly ISearchProvider _searchProvider;
         private readonly TraineeshipSearchViewModelClientValidator _searchRequestValidator;
         private readonly ITraineeshipVacancyDetailProvider _traineeshipVacancyDetailProvider;
-        
+        private readonly ITraineeshipSearchMediator _traineeshipSearchMediator;
+
         public TraineeshipSearchController(IConfigurationManager configManager,
             ISearchProvider searchProvider,
             TraineeshipSearchViewModelClientValidator searchRequestValidator,
             TraineeshipSearchViewModelLocationValidator searchLocationValidator,
-            ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider)
+            ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider,
+            ITraineeshipSearchMediator traineeshipSearchMediator)
             : base(configManager)
         {
             _searchProvider = searchProvider;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
             _traineeshipVacancyDetailProvider = traineeshipVacancyDetailProvider;
+            _traineeshipSearchMediator = traineeshipSearchMediator;
         }
 
         [HttpGet]
@@ -53,6 +58,13 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
+                var response = _traineeshipSearchMediator.Index();
+
+                return View(response.ViewModel);
+
+                // TODO: AG: MEDIATORS: remove dead code.
+
+                /*
                 var resultsPerPage = GetResultsPerPage();
 
                 var viewModel = new TraineeshipSearchViewModel
@@ -65,6 +77,7 @@
                 PopulateSortType(viewModel);
                 
                 return View(viewModel);
+                */
             });
         }
 
@@ -186,6 +199,30 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
+                var candidateId = GetCandidateId();
+                var searchReturnUrl = GetSearchReturnUrl();
+                var response = _traineeshipSearchMediator.Details(id, candidateId, searchReturnUrl);
+
+                switch (response.Code)
+                {
+                    case Codes.TraineeshipSearch.Details.VacancyNotFound:
+                        return new VacancyNotFoundResult();
+
+                    case Codes.TraineeshipSearch.Details.VacancyHasError:
+                        ModelState.Clear();
+                        // TODO: AG: MEDIATORS: rename Message.Message to Message.Text.
+                        SetUserMessage(response.Message.Message, response.Message.Level);
+                        return View(response.ViewModel);
+
+                    case Codes.TraineeshipSearch.Details.Ok:
+                        return View(response.ViewModel);
+                }
+
+                throw new InvalidMediatorCodeException(response.Code);
+
+                // TODO: AG: MEDIATORS: remove dead code.
+
+                /*
                 Guid? candidateId = null;
 
                 if (Request.IsAuthenticated && UserContext != null)
@@ -226,13 +263,33 @@
                 UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToStringInvariant());
 
                 return View(vacancy);
+                */
             });
         }
-        protected bool HasToPopulateReturnUrl()
+
+        // TODO: AG: MEDIATORS: refactor into base class.
+        private Guid? GetCandidateId()
+        {
+            Guid? candidateId = null;
+
+            if (Request.IsAuthenticated && UserContext != null)
+            {
+                candidateId = UserContext.CandidateId;
+            }
+
+            return candidateId;
+        }
+
+        // TODO: AG: MEDIATORS: refactor into base class.
+        private string GetSearchReturnUrl()
         {
             var urlHelper = new UrlHelper(ControllerContext.RequestContext);
-            var url = urlHelper.RouteUrl(CandidateRouteNames.TraineeshipResults, null);
-            return Request != null && Request.UrlReferrer != null && Request.UrlReferrer.AbsolutePath == url;
+            var url = urlHelper.RouteUrl(CandidateRouteNames.ApprenticeshipResults, null);
+
+            if (Request != null && Request.UrlReferrer != null && Request.UrlReferrer.AbsolutePath == url)
+                return Request.UrlReferrer.PathAndQuery;
+
+            return null;
         }
     }
 }

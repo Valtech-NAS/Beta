@@ -24,6 +24,7 @@
     using Domain.Interfaces.Mapping;
     using Mappers;
     using Mediators;
+    using Mediators.Traineeships;
     using Microsoft.WindowsAzure;
     using Providers;
     using StructureMap.Configuration.DSL;
@@ -141,6 +142,7 @@
             //Mediators
             For<IApprenticeshipSearchMediator>().Use<ApprenticeshipSearchMediator>();
             For<ITraineeshipApplicationMediator>().Use<TraineeshipApplicationMediator>();
+            For<ITraineeshipSearchMediator>().Use<TraineeshipSearchMediator>();
         }
     }
 }
