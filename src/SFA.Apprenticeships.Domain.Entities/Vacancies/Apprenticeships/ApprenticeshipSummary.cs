@@ -5,6 +5,5 @@
     public class ApprenticeshipSummary : VacancySummary
     {
         public ApprenticeshipLocationType VacancyLocationType { get; set; }
-
     }
 }

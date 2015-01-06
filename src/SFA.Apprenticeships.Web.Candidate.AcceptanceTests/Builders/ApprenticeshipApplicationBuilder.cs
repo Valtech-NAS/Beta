@@ -6,7 +6,6 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
     using System.Linq;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
-    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
     using StructureMap;
 
