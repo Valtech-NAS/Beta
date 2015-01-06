@@ -4,7 +4,6 @@
     using Application.Interfaces.Vacancies;
     using Candidate.Mediators;
     using Candidate.Providers;
-    using Candidate.Validators;
     using Candidate.ViewModels.VacancySearch;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
@@ -13,7 +12,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class ResultsTests
+    public class ResultsTests : TestsBase
     {
         [Test]
         public void LocationOk()
@@ -26,11 +25,7 @@
             
             var response = mediator.Results(searchViewModel);
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.Ok);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.Vacancies.Should().NotBeNullOrEmpty();
@@ -49,11 +44,7 @@
 
             var response = mediator.Results(searchViewModel);
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.Ok);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.Vacancies.Should().NotBeNull();
@@ -69,11 +60,7 @@
 
             var response = mediator.Results(searchViewModel);
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.ValidationError);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().NotBeNull();
+            response.AssertValidationResult(Codes.ApprenticeshipSearch.Results.ValidationError, true);
         }
 
         [Test]
@@ -87,11 +74,7 @@
 
             var response = mediator.Results(searchViewModel);
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.Ok);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             var sortTypes = viewModel.SortTypes.ToList();
@@ -112,11 +95,7 @@
 
             var response = mediator.Results(searchViewModel);
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Results.Ok);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             var sortTypes = viewModel.SortTypes.ToList();
@@ -154,12 +133,6 @@
             var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
             var userDataProvider = new Mock<IUserDataProvider>();
             var mediator = GetMediator(configurationManager.Object, searchProvider, apprenticeshipVacancyDetailProvider.Object, userDataProvider.Object);
-            return mediator;
-        }
-
-        private static IApprenticeshipSearchMediator GetMediator(IConfigurationManager configurationManager, ISearchProvider searchProvider, IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider, IUserDataProvider userDataProvider)
-        {
-            var mediator = new ApprenticeshipSearchMediator(configurationManager, searchProvider, apprenticeshipVacancyDetailProvider, userDataProvider, new ApprenticeshipSearchViewModelClientValidator(), new ApprenticeshipSearchViewModelLocationValidator());
             return mediator;
         }
     }

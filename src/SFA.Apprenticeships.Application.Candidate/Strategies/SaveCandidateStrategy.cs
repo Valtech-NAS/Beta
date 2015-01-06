@@ -71,7 +71,7 @@
         private void UpdateApplicationDetail(Candidate candidate, ApprenticeshipVacancyDetail vacancyDetails)
         {
             var apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository
-                .GetForCandidate(candidate.EntityId, a => a.Vacancy.Id == vacancyDetails.Id);
+                .GetForCandidate(candidate.EntityId, vacancyDetails.Id);
 
             if (apprenticeshipApplicationDetail != null) // vacancy may have expired
             {

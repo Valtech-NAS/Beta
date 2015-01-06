@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     using System.ComponentModel.DataAnnotations;
+    using Application.Interfaces.Vacancies;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Validators;
@@ -8,8 +9,9 @@
     [Validator(typeof(TraineeshipSearchViewModelClientValidator))]
     public class TraineeshipSearchViewModel : VacancySearchViewModel
     {
-        public TraineeshipSearchViewModel() 
+        public TraineeshipSearchViewModel()
         {
+            SortType = VacancySortType.Distance;
         }
 
         public TraineeshipSearchViewModel(TraineeshipSearchViewModel viewModel) : base(viewModel)

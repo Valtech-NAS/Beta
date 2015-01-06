@@ -1,9 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
-    using System.Web.Mvc;
     using Candidate.Mediators;
     using Candidate.Providers;
-    using Candidate.Validators;
     using Common.Providers;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
@@ -12,7 +10,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class IndexTests
+    public class IndexTests : TestsBase
     {
         [Test]
         public void Ok()
@@ -21,11 +19,7 @@
 
             var response = mediator.Index();
 
-            response.Code.Should().Be(Codes.ApprenticeshipSearch.Index.Ok);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertCode(Codes.ApprenticeshipSearch.Index.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.WithinDistance.Should().Be(2);
@@ -41,12 +35,6 @@
             var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
             var userDataProvider = new Mock<IUserDataProvider>();
             var mediator = GetMediator(configurationManager.Object, searchProvider.Object, apprenticeshipVacancyDetailProvider.Object, userDataProvider.Object);
-            return mediator;
-        }
-
-        private static IApprenticeshipSearchMediator GetMediator(IConfigurationManager configurationManager, ISearchProvider searchProvider, IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider, IUserDataProvider userDataProvider)
-        {
-            var mediator = new ApprenticeshipSearchMediator(configurationManager, searchProvider, apprenticeshipVacancyDetailProvider, userDataProvider, new ApprenticeshipSearchViewModelClientValidator(), new ApprenticeshipSearchViewModelLocationValidator());
             return mediator;
         }
     }

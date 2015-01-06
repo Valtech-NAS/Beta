@@ -1,9 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidate.Strategies.CreateApplicationStrategy
 {
     using System;
-    using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
-    using Domain.Entities.Applications;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
     using Moq;
@@ -22,7 +20,7 @@
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
 
             applicationReadRepository.Setup(arr => arr.GetForCandidate(It.IsAny<Guid>(),
-                It.IsAny<Func<ApprenticeshipApplicationDetail, bool>>())).Throws<Exception>();
+                It.IsAny<int>(), It.IsAny<bool>())).Throws<Exception>();
 
             var createApplicationStrategy = new CreateApprenticeshipApplicationStrategy(vacancyDataProvider.Object,
                 applicationReadRepository.Object, applicationWriteRepository.Object,

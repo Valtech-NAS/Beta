@@ -4,6 +4,6 @@
 
     public interface ISubmitApprenticeshipApplicationStrategy
     {
-        void SubmitApplication(Guid applicationId);
+        void SubmitApplication(Guid candidateId, int vacancyId);
     }
 }

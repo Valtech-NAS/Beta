@@ -111,14 +111,21 @@
             return applicationDetailsList;
         }
 
-        public ApprenticeshipApplicationDetail GetForCandidate(Guid candidateId, Func<ApprenticeshipApplicationDetail, bool> filter)
+        public ApprenticeshipApplicationDetail GetForCandidate(Guid candidateId, int vacancyId, bool errorIfNotFound = false)
         {
             Logger.Debug("Calling repository to get ApplicationSummary list for candidate with Id={0}", candidateId);
 
             var mongoApplicationDetailsList = Collection
                 .AsQueryable()
-                .Where(each => each.CandidateId == candidateId)
+                .Where(each => each.CandidateId == candidateId && each.Vacancy.Id == vacancyId)
                 .ToArray();
+
+            if (mongoApplicationDetailsList.Length == 0 && errorIfNotFound)
+            {
+                var message = string.Format("No ApprenticeshipApplicationDetail found for candidateId={0} and vacancyId={1}", candidateId, vacancyId);
+
+                throw new CustomException(message, ErrorCodes.ApplicationNotFoundError);
+            }
 
             Logger.Debug("{0} MongoApprenticeshipApplicationDetail items returned in collection for candidate with Id={1}", mongoApplicationDetailsList.Count(), candidateId);
 
@@ -132,7 +139,6 @@
             Logger.Debug("{0} ApplicationSummary items returned for candidate with Id={1}", applicationDetails.Count(), candidateId);
 
             return applicationDetails
-                .Where(filter)
                 .FirstOrDefault(); // we expect zero or 1
         }
 
@@ -154,7 +160,7 @@
             Logger.Debug("Calling repository to expire or withdraw apprenticeship application for candidate with Id={0} and VacancyId={1}", candidateId, vacancyId);
 
             var applicationDetail = GetForCandidate(
-                candidateId, each => each.Vacancy.Id == vacancyId);
+                candidateId, vacancyId, false);
 
             if (applicationDetail == null)
             {

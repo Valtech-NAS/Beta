@@ -1,11 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Configuration;
+    using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
@@ -16,12 +18,15 @@
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
+        private readonly IMapper _vacancySearchMapper;
         private readonly SearchConfiguration _searchConfiguration;
 
         public ApprenticeshipsSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory,
+            IMapper vacancySearchMapper,
             SearchConfiguration searchConfiguration)
         {
             _elasticsearchClientFactory = elasticsearchClientFactory;
+            _vacancySearchMapper = vacancySearchMapper;
             _searchConfiguration = searchConfiguration;
         }
 
@@ -35,8 +40,7 @@
                 indexName);
 
             var search = PerformSearch(parameters, client, indexName, documentTypeName);
-
-            var responses = search.Documents.ToList();
+            var responses = _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryResponse>>(search.Documents).ToList();
 
             responses.ForEach(r =>
             {
@@ -73,10 +77,10 @@
             throw new System.NotImplementedException();
         }
 
-        private ISearchResponse<ApprenticeshipSummaryResponse> PerformSearch(SearchParameters parameters, ElasticClient client, string indexName,
+        private ISearchResponse<ApprenticeshipSummary> PerformSearch(SearchParameters parameters, ElasticClient client, string indexName,
             string documentTypeName)
         {
-            var search = client.Search<ApprenticeshipSummaryResponse>(s =>
+            var search = client.Search<ApprenticeshipSummary>(s =>
             {
                 s.Index(indexName);
                 s.Type(documentTypeName);
@@ -197,6 +201,7 @@
 
                 return s;
             });
+
             return search;
         }
 
@@ -214,7 +219,7 @@
             return queryContainer;
         }
 
-        private static void BuildFieldQuery(MatchQueryDescriptor<ApprenticeshipSummaryResponse> queryDescriptor,
+        private static void BuildFieldQuery(MatchQueryDescriptor<ApprenticeshipSummary> queryDescriptor,
             ISearchTermFactorsConfiguration searchFactors)
         {
             if (searchFactors.Boost.HasValue)

@@ -4,6 +4,6 @@
 
     public interface IDeleteApplicationStrategy
     {
-        void DeleteApplication(Guid applicationId);
+        void DeleteApplication(Guid candidateId, int vacancyId);
     }
 }

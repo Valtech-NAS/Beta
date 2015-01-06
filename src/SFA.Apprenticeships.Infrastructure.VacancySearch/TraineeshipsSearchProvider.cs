@@ -1,10 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
+    using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
@@ -15,9 +17,11 @@
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
+        private readonly IMapper _vacancySearchMapper;
 
-        public TraineeshipsSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory)
+        public TraineeshipsSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory, IMapper vacancySearchMapper)
         {
+            _vacancySearchMapper = vacancySearchMapper;
             _elasticsearchClientFactory = elasticsearchClientFactory;
         }
 
@@ -27,12 +31,10 @@
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (TraineeshipSummary));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(TraineeshipSummary));
 
-            Logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
-                indexName);
+            Logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName, indexName);
 
             var search = PerformSearch(parameters, client, indexName, documentTypeName);
-
-            var responses = search.Documents.ToList();
+            var responses = _vacancySearchMapper.Map<IEnumerable<TraineeshipSummary>, IEnumerable<TraineeshipSummaryResponse>>(search.Documents).ToList();
 
             responses.ForEach(r =>
             {
@@ -44,13 +46,6 @@
                         parameters.SortType == VacancySortType.Distance)
                     {
                         r.Distance = double.Parse(hitMd.Sorts.Skip(hitMd.Sorts.Count() - 1).First().ToString());
-                    }
-                    else
-                    {
-                        //if anyone can find a better way to get this value out, feel free!
-                        var array = hitMd.Fields.FieldValues<JArray>("distance");
-                        var value = array[0];
-                        r.Distance = double.Parse(value.ToString());
                     }
                 }
 
@@ -64,10 +59,10 @@
             return results;
         }
 
-        private ISearchResponse<TraineeshipSummaryResponse> PerformSearch(SearchParameters parameters, ElasticClient client, string indexName,
+        private ISearchResponse<TraineeshipSummary> PerformSearch(SearchParameters parameters, ElasticClient client, string indexName,
             string documentTypeName)
         {
-            var search = client.Search<TraineeshipSummaryResponse>(s =>
+            var search = client.Search<TraineeshipSummary>(s =>
             {
                 s.Index(indexName);
                 s.Type(documentTypeName);

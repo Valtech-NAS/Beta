@@ -15,9 +15,9 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies.Apprenticeships
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
         }
 
-        public void ArchiveApplication(Guid applicationId)
+        public void ArchiveApplication(Guid candidateId, int vacancyId)
         {
-            var applicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationId, true);
+            var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId, true);
 
             if (applicationDetail.IsArchived) return;
 
