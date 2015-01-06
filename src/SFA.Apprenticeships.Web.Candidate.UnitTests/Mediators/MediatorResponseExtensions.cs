@@ -34,6 +34,15 @@
             response.ValidationResult.Should().NotBeNull();
         }
 
+        public static void AssertParameters<T>(this MediatorResponse<T> response, string code, bool viewModelShouldNotBeNull)
+        {
+            response.Code.Should().Be(code);
+            response.AssertViewModel(viewModelShouldNotBeNull);
+            response.Message.Should().BeNull();
+            response.Parameters.Should().NotBeNull();
+            response.ValidationResult.Should().BeNull();
+        }
+
         private static void AssertViewModel<T>(this MediatorResponse<T> response, bool viewModelShouldNotBeNull)
         {
             if (viewModelShouldNotBeNull)

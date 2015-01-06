@@ -11,7 +11,7 @@
 
         public MediatorResponseMessage Message { get; set; }
 
-        public IDictionary<string, string> Parameters { get; set; }
+        public object Parameters { get; set; }
 
         public ValidationResult ValidationResult { get; set; }
     }

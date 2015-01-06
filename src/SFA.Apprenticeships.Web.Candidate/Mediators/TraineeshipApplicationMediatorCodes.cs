@@ -9,6 +9,13 @@
                 public const string Ok = "ok";
                 public const string HasError = "error";
             }
+
+            public class Submit
+            {
+                public const string IncorrectState = "incorrectState";
+                public const string Error = "error";
+                public const string Ok = "ok";
+            }
         }
     }
 }

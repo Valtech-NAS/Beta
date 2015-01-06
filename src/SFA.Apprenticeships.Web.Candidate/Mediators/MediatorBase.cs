@@ -5,19 +5,20 @@
 
     public abstract class MediatorBase
     {
-        protected static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel = default(T), ValidationResult validationResult = null)
+        protected static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel = default(T), ValidationResult validationResult = null, object parameters = null)
         {
             var response = new MediatorResponse<T>
             {
                 Code = code,
                 ViewModel = viewModel,
-                ValidationResult = validationResult
+                ValidationResult = validationResult,
+                Parameters = parameters
             };
 
             return response;
         }
 
-        protected static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel, string message, UserMessageLevel level)
+        protected static MediatorResponse<T> GetMediatorResponse<T>(string code, T viewModel, string message, UserMessageLevel level, object parameters = null)
         {
             var response = new MediatorResponse<T>
             {
@@ -27,7 +28,8 @@
                 {
                     Message = message,
                     Level = level
-                }
+                },
+                Parameters = parameters
             };
 
             return response;

@@ -177,6 +177,7 @@
     <Compile Include="Mediators\TraineeshipSearch\DetailsTests.cs" />
     <Compile Include="Mediators\TraineeshipSearch\IndexTests.cs" />
     <Compile Include="Mediators\TraineeshipApplication\ApplyTests.cs" />
+    <Compile Include="Mediators\TraineeshipApplication\SubmitTests.cs" />
     <Compile Include="Mediators\TraineeshipApplication\TestsBase.cs" />
     <Compile Include="Mocks\HttpContextFactory.cs" />
     <Compile Include="Providers\ApplicationProvider\ShowTraineeshipsPrompt.cs" />

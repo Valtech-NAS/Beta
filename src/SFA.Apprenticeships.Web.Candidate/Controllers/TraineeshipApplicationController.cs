@@ -43,7 +43,7 @@
                 {
                     case Codes.TraineeshipApplication.Apply.HasError:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case Codes.ApprenticeshipSearch.Details.Ok:
+                    case Codes.TraineeshipApplication.Apply.Ok:
                         return View(response.ViewModel);
                 }
 
@@ -61,34 +61,20 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                model = StripApplicationViewModelBeforeValidation(model);
+                var response = _traineeshipApplicationMediator.Submit(UserContext.CandidateId, id, model);
 
-                var savedModel = _traineeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
-                model = _traineeshipApplicationProvider.PatchApplicationViewModel(UserContext.CandidateId, savedModel,
-                    model);
-
-                var submittedApplicationModel =
-                    _traineeshipApplicationProvider.SubmitApplication(UserContext.CandidateId, id, model);
-
-                if (submittedApplicationModel.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
+                switch (response.Code)
                 {
-                    return RedirectToRoute(CandidateRouteNames.MyApplications);
-                }
-                if (submittedApplicationModel.ViewModelStatus == ApplicationViewModelStatus.Error)
-                {
-                    // TODO: change this to something specific to traineeships?
-                    SetUserMessage(ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning);
-                    return RedirectToAction("Preview", new {id});
+                    case Codes.TraineeshipApplication.Submit.IncorrectState:
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case Codes.TraineeshipApplication.Submit.Error:
+                        SetUserMessage(response.Message.Message, response.Message.Level);
+                        return RedirectToAction("Preview", response.Parameters);
+                    case Codes.TraineeshipApplication.Submit.Ok:
+                        return RedirectToAction("WhatHappensNext", response.Parameters);
                 }
 
-                return RedirectToAction("WhatHappensNext",
-                    new
-                    {
-                        id,
-                        vacancyReference = submittedApplicationModel.VacancyDetail.VacancyReference,
-                        vacancyTitle = submittedApplicationModel.VacancyDetail.Title
-                    });
+                throw new InvalidMediatorCodeException(response.Code);
             });
         }
 
