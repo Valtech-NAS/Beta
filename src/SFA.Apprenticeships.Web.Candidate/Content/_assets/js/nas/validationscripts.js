@@ -118,6 +118,13 @@ $(document).ready(function () {
         }, 50);
     });
 
+    $('.grid-wrapper').on('click', '.delete-draft', function () {
+        var $this    = $(this),
+            delDraft = $this[0];
+
+        $(delDraft).addClass('disabled');
+    });
+
     // -- Sort out styling issues on details page
 
     $('[itemscope]').find('[style]').not('iframe').removeAttr('style');
