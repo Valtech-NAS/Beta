@@ -1,33 +1,23 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using System.Web.Security;
-    using Domain.Entities.Applications;
     using ActionResults;
     using Attributes;
-    using Constants;
-    using Constants.Pages;
-    using Providers;
-    using ViewModels.Applications;
-    using ViewModels.Candidate;
     using Common.Attributes;
     using Common.Constants;
-    using Common.Models.Application;
+    using Constants;
     using Mediators;
+    using ViewModels.Applications;
 
     [TraineeshipsToggle]
     public class TraineeshipApplicationController : CandidateControllerBase
     {
         private readonly ITraineeshipApplicationMediator _traineeshipApplicationMediator;
-        private readonly ITraineeshipApplicationProvider _traineeshipApplicationProvider;
 
-        public TraineeshipApplicationController(ITraineeshipApplicationMediator traineeshipApplicationMediator, ITraineeshipApplicationProvider traineeshipApplicationProvider)
+        public TraineeshipApplicationController(ITraineeshipApplicationMediator traineeshipApplicationMediator)
         {
             _traineeshipApplicationMediator = traineeshipApplicationMediator;
-            _traineeshipApplicationProvider = traineeshipApplicationProvider;
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -88,14 +78,11 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
-                model.Candidate.HasQualifications = model.Candidate.Qualifications.Count() != 0;
-                model.DefaultQualificationRows = 5;
-                model.DefaultWorkExperienceRows = 0;
+                var response = _traineeshipApplicationMediator.AddEmptyQualificationRows(model);
 
                 ModelState.Clear();
 
-                return View("Apply", model);
+                return View("Apply", response.ViewModel);
             });
         }
 
@@ -109,15 +96,11 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
-                model.Candidate.HasWorkExperience = model.Candidate.WorkExperience.Count() != 0;
-
-                model.DefaultQualificationRows = 0;
-                model.DefaultWorkExperienceRows = 3;
+                var response = _traineeshipApplicationMediator.AddEmptyWorkExperienceRows(model);
 
                 ModelState.Clear();
 
-                return View("Apply", model);
+                return View("Apply", response.ViewModel);
             });
         }
 
@@ -128,74 +111,19 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = _traineeshipApplicationProvider.GetWhatHappensNextViewModel(UserContext.CandidateId, id);
+                var response = _traineeshipApplicationMediator.WhatHappensNext(UserContext.CandidateId, id, vacancyReference, vacancyTitle);
 
-                // TODO: change to something specific to traineeships?
-                if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                switch (response.Code)
                 {
-                    return new VacancyNotFoundResult();
+                    case Codes.TraineeshipApplication.WhatHappensNext.VacancyNotFound:
+                        // TODO: change to something specific to traineeships?
+                        return new VacancyNotFoundResult();
+                    case Codes.TraineeshipApplication.WhatHappensNext.Ok:
+                        return View(response.ViewModel);
                 }
 
-                if (model.HasError())
-                {
-                    model.VacancyReference = vacancyReference;
-                    model.VacancyTitle = vacancyTitle;
-                }
-
-                return View(model);
+                throw new InvalidMediatorCodeException(response.Code);
             });
-        }
-
-        private static TraineeshipApplicationViewModel StripApplicationViewModelBeforeValidation(
-            TraineeshipApplicationViewModel model)
-        {
-            model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
-            model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
-
-            model.DefaultQualificationRows = 0;
-            model.DefaultWorkExperienceRows = 0;
-
-            if (model.IsJavascript)
-            {
-                return model;
-            }
-
-            model.Candidate.HasQualifications = model.Candidate.Qualifications.Count() != 0;
-            model.Candidate.HasWorkExperience = model.Candidate.WorkExperience.Count() != 0;
-
-            return model;
-        }
-
-        private static IEnumerable<WorkExperienceViewModel> RemoveEmptyRowsFromWorkExperience(
-            IEnumerable<WorkExperienceViewModel> workExperience)
-        {
-            if (workExperience == null)
-            {
-                return new List<WorkExperienceViewModel>();
-            }
-
-            return workExperience.Where(vm =>
-                vm.Employer != null && !string.IsNullOrWhiteSpace(vm.Employer.Trim()) ||
-                vm.JobTitle != null && !string.IsNullOrWhiteSpace(vm.JobTitle.Trim()) ||
-                vm.Description != null && !string.IsNullOrWhiteSpace(vm.Description.Trim()) ||
-                vm.FromYear != null && !string.IsNullOrWhiteSpace(vm.FromYear.Trim()) ||
-                vm.ToYear != null && !string.IsNullOrWhiteSpace(vm.ToYear.Trim())
-                ).ToList();
-        }
-
-        private static IEnumerable<QualificationsViewModel> RemoveEmptyRowsFromQualifications(
-            IEnumerable<QualificationsViewModel> qualifications)
-        {
-            if (qualifications == null)
-            {
-                return new List<QualificationsViewModel>();
-            }
-
-            return qualifications.Where(vm =>
-                vm.Subject != null && !string.IsNullOrWhiteSpace(vm.Subject.Trim()) ||
-                vm.QualificationType != null && !string.IsNullOrWhiteSpace(vm.QualificationType.Trim()) ||
-                vm.Grade != null && !string.IsNullOrWhiteSpace(vm.Grade.Trim()) ||
-                vm.Year != null && !string.IsNullOrWhiteSpace(vm.Year.Trim())).ToList();
         }
     }
 }

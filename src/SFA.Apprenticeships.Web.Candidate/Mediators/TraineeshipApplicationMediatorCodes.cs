@@ -16,6 +16,22 @@
                 public const string Error = "error";
                 public const string Ok = "ok";
             }
+
+            public class AddEmptyQualificationRows
+            {
+                public const string Ok = "ok";
+            }
+
+            public class AddEmptyWorkExperienceRows
+            {
+                public const string Ok = "ok";
+            }
+
+            public class WhatHappensNext
+            {
+                public const string VacancyNotFound = "vacancyNotFound";
+                public const string Ok = "ok";
+            }
         }
     }
 }

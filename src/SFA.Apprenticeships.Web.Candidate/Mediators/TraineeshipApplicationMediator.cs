@@ -7,8 +7,8 @@
     using Common.Constants;
     using Common.Models.Application;
     using Common.Providers;
-    using Constants;
     using Constants.Pages;
+    using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;
     using Providers;
     using ViewModels.Applications;
@@ -64,6 +64,46 @@
                 vacancyTitle = submittedApplicationModel.VacancyDetail.Title
             };
             return GetMediatorResponse<TraineeshipApplicationViewModel>(Codes.TraineeshipApplication.Submit.Ok, parameters: parameters);
+        }
+
+        public MediatorResponse<TraineeshipApplicationViewModel> AddEmptyQualificationRows(TraineeshipApplicationViewModel viewModel)
+        {
+            viewModel.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(viewModel.Candidate.Qualifications);
+            viewModel.Candidate.HasQualifications = viewModel.Candidate.Qualifications.Count() != 0;
+            viewModel.DefaultQualificationRows = 5;
+            viewModel.DefaultWorkExperienceRows = 0;
+
+            return GetMediatorResponse(Codes.TraineeshipApplication.AddEmptyQualificationRows.Ok, viewModel);
+        }
+
+        public MediatorResponse<TraineeshipApplicationViewModel> AddEmptyWorkExperienceRows(TraineeshipApplicationViewModel viewModel)
+        {
+            viewModel.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(viewModel.Candidate.WorkExperience);
+            viewModel.Candidate.HasWorkExperience = viewModel.Candidate.WorkExperience.Count() != 0;
+
+            viewModel.DefaultQualificationRows = 0;
+            viewModel.DefaultWorkExperienceRows = 3;
+
+            return GetMediatorResponse(Codes.TraineeshipApplication.AddEmptyWorkExperienceRows.Ok, viewModel);
+        }
+
+        public MediatorResponse<WhatHappensNextViewModel> WhatHappensNext(Guid candidateId, int vacancyId, string vacancyReference, string vacancyTitle)
+        {
+            var model = _traineeshipApplicationProvider.GetWhatHappensNextViewModel(candidateId, vacancyId);
+
+            // TODO: change to something specific to traineeships?
+            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            {
+                return GetMediatorResponse<WhatHappensNextViewModel>(Codes.TraineeshipApplication.WhatHappensNext.VacancyNotFound);
+            }
+
+            if (model.HasError())
+            {
+                model.VacancyReference = vacancyReference;
+                model.VacancyTitle = vacancyTitle;
+            }
+
+            return GetMediatorResponse(Codes.TraineeshipApplication.WhatHappensNext.Ok, model);
         }
 
         private static TraineeshipApplicationViewModel StripApplicationViewModelBeforeValidation(

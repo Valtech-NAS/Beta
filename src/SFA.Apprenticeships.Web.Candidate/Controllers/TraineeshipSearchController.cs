@@ -6,7 +6,6 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
-    using Application.Interfaces.Vacancies;
     using Attributes;
     using Common.Constants;
     using Constants;
@@ -14,7 +13,6 @@
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Traineeships;
-    using Microsoft.Ajax.Utilities;
     using Providers;
     using Validators;
     using ViewModels.VacancySearch;
