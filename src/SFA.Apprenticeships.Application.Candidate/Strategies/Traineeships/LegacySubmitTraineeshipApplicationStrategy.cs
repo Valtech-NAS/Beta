@@ -4,12 +4,10 @@
     using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using NLog;
-    using Vacancy;
 
     public class LegacySubmitTraineeshipApplicationStrategy : ISubmitTraineeshipApplicationStrategy
     {
@@ -19,17 +17,18 @@
         private readonly IMessageBus _messageBus;
 
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
-        private readonly IVacancyDataProvider<TraineeshipVacancyDetail> _traineeshipVacancyDataProvider;
+        private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
 
-        public LegacySubmitTraineeshipApplicationStrategy(IMessageBus messageBus,
+        public LegacySubmitTraineeshipApplicationStrategy(
+            IMessageBus messageBus,
             ICommunicationService communicationService,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
-            IVacancyDataProvider<TraineeshipVacancyDetail> traineeshipVacancyDataProvider)
+            ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository)
         {
             _messageBus = messageBus;
             _communicationService = communicationService;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
-            _traineeshipVacancyDataProvider = traineeshipVacancyDataProvider;
+            _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
         }
 
         public void SubmitApplication(Guid applicationId)
@@ -52,24 +51,29 @@
 
         private void PublishMessage(TraineeshipApplicationDetail traineeshipApplicationDetail)
         {
-            var message = new SubmitTraineeshipApplicationRequest
+            try
             {
-                ApplicationId = traineeshipApplicationDetail.EntityId
-            };
+                var message = new SubmitTraineeshipApplicationRequest
+                {
+                    ApplicationId = traineeshipApplicationDetail.EntityId
+                };
 
-            _messageBus.PublishMessage(message);
+                _messageBus.PublishMessage(message);
+            }
+            catch
+            {
+                // Compensate for failure to enqueue application submission by deleting the application.
+                _traineeshipApplicationWriteRepository.Delete(traineeshipApplicationDetail.EntityId);
+                throw;
+            }
         }
 
-        private void NotifyCandidate(TraineeshipApplicationDetail applicationDetail)
+        private void NotifyCandidate(TraineeshipApplicationDetail traineeshipApplicationDetail)
         {
-            var vacancyDetail = _traineeshipVacancyDataProvider.GetVacancyDetails(applicationDetail.Vacancy.Id);
-
-            _communicationService.SendMessageToCandidate(applicationDetail.CandidateId, CandidateMessageTypes.TraineeshipApplicationSubmitted,
+            _communicationService.SendMessageToCandidate(traineeshipApplicationDetail.CandidateId, CandidateMessageTypes.TraineeshipApplicationSubmitted,
                 new[]
                 {
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationId, applicationDetail.EntityId.ToString()),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference, applicationDetail.Vacancy.VacancyReference),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ProviderContact, vacancyDetail.Contact)
+                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationId, traineeshipApplicationDetail.EntityId.ToString())
                 });
         }
     }

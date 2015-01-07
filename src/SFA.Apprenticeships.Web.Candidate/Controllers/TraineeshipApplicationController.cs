@@ -58,8 +58,9 @@
                     case Codes.TraineeshipApplication.Submit.IncorrectState:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case Codes.TraineeshipApplication.Submit.Error:
+                        ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToAction("Preview", response.Parameters);
+                        return View(model);
                     case Codes.TraineeshipApplication.Submit.Ok:
                         return RedirectToAction("WhatHappensNext", response.Parameters);
                 }
