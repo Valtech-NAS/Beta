@@ -214,9 +214,11 @@
     <Content Include="Content\_assets\img\icon-external-hover.svg" />
     <Content Include="Content\_assets\img\icon-external.png" />
     <Content Include="Content\_assets\img\icon-external.svg" />
+    <Content Include="Content\_assets\img\icon-location.svg" />
     <Content Include="Content\_assets\img\performance-icon-2x.png" />
     <Content Include="Content\_assets\img\performance-icon.png" />
     <Content Include="Content\_assets\js\nas\dirtyFormDialog.js" />
+    <Content Include="Content\_assets\js\nas\resultsMap.js" />
     <Content Include="Content\_assets\js\nas\webTrendsInlineTrack.js" />
     <Content Include="Content\_assets\js\scripts.js" />
     <Content Include="Content\_assets\js\vendor\fastclick-1.0.3.js" />

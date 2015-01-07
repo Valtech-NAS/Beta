@@ -123,8 +123,8 @@
 
     function bindMarkerClick(marker, map, vacancyID) {
         google.maps.event.addListener(marker, 'mouseover', function () {
-            $('#' + vacancyID).closest('.search-results__item').css('background', '#E5E5E5').addClass('map-hover');
-            $('.vacancy-link').not('#' + vacancyID).closest('.search-results__item').css('background', 'none').removeClass('map-hover');
+            $('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item').css('background', '#E5E5E5').addClass('map-hover');
+            $('.vacancy-link').not('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item').css('background', 'none').removeClass('map-hover');
         });
     }
 
