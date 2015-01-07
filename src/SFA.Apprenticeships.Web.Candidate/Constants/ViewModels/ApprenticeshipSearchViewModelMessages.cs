@@ -8,7 +8,7 @@
         {
             public const string LabelText = "Keywords (optional)";
             public const string HintText = "";
-            public const string WhiteList = Whitelists.NameWhitelist.RegularExpression;
+            public const string WhiteList = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'Keywords' " + Whitelists.NameWhitelist.ErrorText;
         }
 
