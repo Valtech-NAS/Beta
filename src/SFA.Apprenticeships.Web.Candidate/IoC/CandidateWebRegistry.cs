@@ -141,6 +141,7 @@
             //ForConcreteType<HomeController>().Configure.Setter<IEuCookieDirectiveProvider>();
 
             //Mediators
+            For<IApprenticeshipApplicationMediator>().Use<ApprenticeshipApplicationMediator>();
             For<IApprenticeshipSearchMediator>().Use<ApprenticeshipSearchMediator>();
             For<ITraineeshipApplicationMediator>().Use<TraineeshipApplicationMediator>();
             For<ITraineeshipSearchMediator>().Use<TraineeshipSearchMediator>();

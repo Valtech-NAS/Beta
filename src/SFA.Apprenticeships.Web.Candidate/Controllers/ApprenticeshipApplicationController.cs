@@ -1,40 +1,23 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using System.Web.Security;
-    using FluentValidation.Mvc;
-    using Domain.Entities.Applications;
     using ActionResults;
     using Attributes;
-    using Constants;
-    using Constants.Pages;
-    using Helpers;
-    using Providers;
-    using Validators;
-    using ViewModels.Applications;
-    using ViewModels.Candidate;
     using Common.Attributes;
     using Common.Constants;
-    using Common.Models.Application;
+    using Constants;
+    using FluentValidation.Mvc;
+    using Mediators;
+    using ViewModels.Applications;
 
     public class ApprenticeshipApplicationController : CandidateControllerBase
     {
-        private readonly IApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
-        private readonly ApprenticeshipApplicationViewModelServerValidator _apprenticeshipApplicationViewModelFullValidator;
-        private readonly ApprenticeshipApplicationViewModelSaveValidator _apprenticeshipApplicationViewModelSaveValidator;
+        private readonly IApprenticeshipApplicationMediator _apprenticeshipApplicationMediator;
 
-        public ApprenticeshipApplicationController(
-            IApprenticeshipApplicationProvider apprenticeshipApplicationProvider,
-            ApprenticeshipApplicationViewModelServerValidator apprenticeshipApplicationViewModelFullValidator,
-            ApprenticeshipApplicationViewModelSaveValidator apprenticeshipApplicationViewModelSaveValidator)
+        public ApprenticeshipApplicationController(IApprenticeshipApplicationMediator apprenticeshipApplicationMediator)
         {
-            _apprenticeshipApplicationProvider = apprenticeshipApplicationProvider;
-            _apprenticeshipApplicationViewModelFullValidator = apprenticeshipApplicationViewModelFullValidator;
-            _apprenticeshipApplicationViewModelSaveValidator = apprenticeshipApplicationViewModelSaveValidator;
+            _apprenticeshipApplicationMediator = apprenticeshipApplicationMediator;
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -44,15 +27,17 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                var response = _apprenticeshipApplicationMediator.Resume(UserContext.CandidateId, id);
 
-                if (model.HasError())
+                switch (response.Code)
                 {
-                    SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
-                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case Codes.ApprenticeshipApplication.Resume.HasError:
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case Codes.ApprenticeshipApplication.Resume.Ok:
+                        return RedirectToAction("Apply", response.Parameters);
                 }
 
-                return RedirectToAction("Apply", new {id});
+                throw new InvalidMediatorCodeException(response.Code);
             });
         }
 
@@ -63,21 +48,19 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                var response = _apprenticeshipApplicationMediator.Apply(UserContext.CandidateId, id);
 
-                if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                switch (response.Code)
                 {
-                    return new VacancyNotFoundResult();
+                    case Codes.ApprenticeshipApplication.Apply.VacancyNotFound:
+                        return new VacancyNotFoundResult();
+                    case Codes.ApprenticeshipApplication.Apply.HasError:
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case Codes.ApprenticeshipApplication.Apply.Ok:
+                        return View(response.ViewModel);
                 }
 
-                if (model.HasError())
-                {
-                    return RedirectToRoute(CandidateRouteNames.MyApplications);
-                }
-
-                model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
-
-                return View(model);
+                throw new InvalidMediatorCodeException(response.Code);
             });
         }
 
@@ -87,49 +70,32 @@
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Preview")]
         [ApplyWebTrends]
         [ValidateInput(false)]
-        public async Task<ActionResult> Apply(int id, ApprenticheshipApplicationViewModel model)
+        public async Task<ActionResult> Apply(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
-                model = StripApplicationViewModelBeforeValidation(model);
+                var response = _apprenticeshipApplicationMediator.PreviewAndSubmit(UserContext.CandidateId, id, model);
 
-                var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
-                if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                switch (response.Code)
                 {
-                    return new VacancyNotFoundResult();
-                }
-                if (savedModel.Status != ApplicationStatuses.Draft)
-                {
-                    return RedirectToRoute(CandidateRouteNames.MyApplications);
-                }
-
-                ModelState.Clear();
-
-                model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
-
-                if (savedModel.HasError())
-                {
-                    SetUserMessage(ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning);
-
-                    return View("Apply", model);
+                    case Codes.ApprenticeshipApplication.PreviewAndSubmit.VacancyNotFound:
+                        return new VacancyNotFoundResult();
+                    case Codes.ApprenticeshipApplication.PreviewAndSubmit.IncorrectState:
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case Codes.ApprenticeshipApplication.PreviewAndSubmit.Error:
+                        ModelState.Clear();
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View(model);
+                    case Codes.ApprenticeshipApplication.PreviewAndSubmit.ValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(model);
+                    case Codes.ApprenticeshipApplication.PreviewAndSubmit.Ok:
+                        ModelState.Clear();
+                        return RedirectToAction("Preview", response.Parameters);
                 }
 
-                var result = _apprenticeshipApplicationViewModelFullValidator.Validate(model);
-
-                model = _apprenticeshipApplicationProvider.PatchApplicationViewModel(
-                    UserContext.CandidateId, savedModel, model);
-
-                if (!result.IsValid)
-                {
-                    result.AddToModelState(ModelState, string.Empty);
-
-                    return View("Apply", model);
-                }
-
-                _apprenticeshipApplicationProvider.SaveApplication(UserContext.CandidateId, id, model);
-
-                return RedirectToAction("Preview", new {id});
+                throw new InvalidMediatorCodeException(response.Code);
             });
         }
 
@@ -139,47 +105,30 @@
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Save")]
         [ApplyWebTrends]
         [ValidateInput(false)]
-        public async Task<ActionResult> Save(int id, ApprenticheshipApplicationViewModel model)
+        public async Task<ActionResult> Save(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
-                model = StripApplicationViewModelBeforeValidation(model);
+                var response = _apprenticeshipApplicationMediator.Save(UserContext.CandidateId, id, model);
 
-                var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
-                if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                switch (response.Code)
                 {
-                    return new VacancyNotFoundResult();
+                    case Codes.ApprenticeshipApplication.Save.VacancyNotFound:
+                        return new VacancyNotFoundResult();
+                    case Codes.ApprenticeshipApplication.Save.Error:
+                        ModelState.Clear();
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View("Apply", model);
+                    case Codes.ApprenticeshipApplication.Save.ValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View("Apply", model);
+                    case Codes.ApprenticeshipApplication.Save.Ok:
+                        ModelState.Clear();
+                        return View("Apply", model);
                 }
 
-                ModelState.Clear();
-
-                model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
-
-                if (savedModel.HasError())
-                {
-                    SetUserMessage(ApplicationPageMessages.SaveFailed, UserMessageLevel.Warning);
-
-                    return View("Apply", model);
-                }
-
-                var result = _apprenticeshipApplicationViewModelSaveValidator.Validate(model);
-
-                model = _apprenticeshipApplicationProvider.PatchApplicationViewModel(UserContext.CandidateId, savedModel, model);
-
-                if (!result.IsValid)
-                {
-                    result.AddToModelState(ModelState, string.Empty);
-
-                    return View("Apply", model);
-                }
-
-                _apprenticeshipApplicationProvider.SaveApplication(UserContext.CandidateId, id, model);
-
-                model = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-                model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
-
-                return View("Apply", model);
+                throw new InvalidMediatorCodeException(response.Code);
             });
         }
 
@@ -187,58 +136,28 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ValidateInput(false)]
-        public async Task<JsonResult> AutoSave(int id, ApprenticheshipApplicationViewModel model)
+        public async Task<JsonResult> AutoSave(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run(() =>
             {
-                var autoSaveResult = new AutoSaveResultViewModel();
+                var response = _apprenticeshipApplicationMediator.AutoSave(UserContext.CandidateId, id, model);
 
-                var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-
-                if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                switch (response.Code)
                 {
-                    autoSaveResult.Status = "failed";
-
-                    return new JsonResult {Data = autoSaveResult};
+                    case Codes.ApprenticeshipApplication.AutoSave.VacancyNotFound:
+                        return new JsonResult { Data = response.ViewModel };
+                    case Codes.ApprenticeshipApplication.AutoSave.HasError:
+                        ModelState.Clear();
+                        return new JsonResult { Data = response.ViewModel };
+                    case Codes.ApprenticeshipApplication.AutoSave.ValidationError:
+                        ModelState.Clear();
+                        return new JsonResult { Data = response.ViewModel };
+                    case Codes.ApprenticeshipApplication.AutoSave.Ok:
+                        ModelState.Clear();
+                        return new JsonResult { Data = response.ViewModel };
                 }
 
-                ModelState.Clear();
-
-                model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
-
-                if (savedModel.HasError())
-                {
-                    autoSaveResult.Status = "failed";
-
-                    return new JsonResult {Data = autoSaveResult};
-                }
-
-                var result = _apprenticeshipApplicationViewModelSaveValidator.Validate(model);
-
-                model = _apprenticeshipApplicationProvider.PatchApplicationViewModel(
-                    UserContext.CandidateId, savedModel, model);
-
-                if (!result.IsValid)
-                {
-                    autoSaveResult.Status = "failed";
-
-                    return new JsonResult {Data = autoSaveResult};
-                }
-
-                _apprenticeshipApplicationProvider.SaveApplication(UserContext.CandidateId, id, model);
-
-                model = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
-                model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
-
-                autoSaveResult.Status = "succeeded";
-
-                if (model.DateUpdated != null)
-                {
-                    autoSaveResult.DateTimeMessage =
-                        AutoSaveDateTimeHelper.GetDisplayDateTime((DateTime) model.DateUpdated);
-                }
-
-                return new JsonResult {Data = autoSaveResult};
+                throw new InvalidMediatorCodeException(response.Code);
             });
         }
 
@@ -248,18 +167,15 @@
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyQualificationRows")]
         [ApplyWebTrends]
         [ValidateInput(false)]
-        public async Task<ActionResult> AddEmptyQualificationRows(int id, ApprenticheshipApplicationViewModel model)
+        public async Task<ActionResult> AddEmptyQualificationRows(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
-                model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
-                model.Candidate.HasQualifications = model.Candidate.Qualifications.Count() != 0;
-                model.DefaultQualificationRows = 5;
-                model.DefaultWorkExperienceRows = 0;
+                var response = _apprenticeshipApplicationMediator.AddEmptyQualificationRows(model);
 
                 ModelState.Clear();
 
-                return View("Apply", model);
+                return View("Apply", response.ViewModel);
             });
         }
 
@@ -269,19 +185,15 @@
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyWorkExperienceRows")]
         [ApplyWebTrends]
         [ValidateInput(false)]
-        public async Task<ActionResult> AddEmptyWorkExperienceRows(int id, ApprenticheshipApplicationViewModel model)
+        public async Task<ActionResult> AddEmptyWorkExperienceRows(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
-                model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
-                model.Candidate.HasWorkExperience = model.Candidate.WorkExperience.Count() != 0;
-
-                model.DefaultQualificationRows = 0;
-                model.DefaultWorkExperienceRows = 3;
+                var response = _apprenticeshipApplicationMediator.AddEmptyWorkExperienceRows(model);
 
                 ModelState.Clear();
 
-                return View("Apply", model);
+                return View("Apply", response.ViewModel);
             });
         }
 
@@ -292,22 +204,21 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                var response = _apprenticeshipApplicationMediator.Preview(UserContext.CandidateId, id);
 
-                if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                switch (response.Code)
                 {
-                    return new VacancyNotFoundResult();
+                    case Codes.ApprenticeshipApplication.Preview.VacancyNotFound:
+                        return new VacancyNotFoundResult();
+                    case Codes.ApprenticeshipApplication.Preview.HasError:
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case Codes.ApprenticeshipApplication.Preview.Ok:
+                        // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
+                        ViewBag.VacancyId = id;
+                        return View(response.ViewModel);
                 }
 
-                if (model.HasError())
-                {
-                    return RedirectToRoute(CandidateRouteNames.MyApplications);
-                }
-
-                // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
-                ViewBag.VacancyId = id;
-
-                return View(model);
+                throw new InvalidMediatorCodeException(response.Code);
             });
         }
 
@@ -318,30 +229,23 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = _apprenticeshipApplicationProvider.SubmitApplication(UserContext.CandidateId, id);
+                var response = _apprenticeshipApplicationMediator.Submit(UserContext.CandidateId, id);
 
-                if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                switch (response.Code)
                 {
-                    return new VacancyNotFoundResult();
+                    case Codes.ApprenticeshipApplication.Submit.VacancyNotFound:
+                        return new VacancyNotFoundResult();
+                    case Codes.ApprenticeshipApplication.Submit.IncorrectState:
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case Codes.ApprenticeshipApplication.Submit.Error:
+                        ModelState.Clear();
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View("Preview", response.Parameters);
+                    case Codes.ApprenticeshipApplication.Submit.Ok:
+                        return RedirectToAction("WhatHappensNext", response.Parameters);
                 }
 
-                if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
-                {
-                    return RedirectToRoute(CandidateRouteNames.MyApplications);
-                }
-                if (model.ViewModelStatus == ApplicationViewModelStatus.Error)
-                {
-                    SetUserMessage(ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning);
-                    return RedirectToAction("Preview", new {id});
-                }
-
-                return RedirectToAction("WhatHappensNext",
-                    new
-                    {
-                        id,
-                        vacancyReference = model.VacancyDetail.VacancyReference,
-                        vacancyTitle = model.VacancyDetail.Title
-                    });
+                throw new InvalidMediatorCodeException(response.Code);
             });
         }
 
@@ -352,76 +256,18 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = _apprenticeshipApplicationProvider.GetWhatHappensNextViewModel(UserContext.CandidateId, id);
+                var response = _apprenticeshipApplicationMediator.WhatHappensNext(UserContext.CandidateId, id, vacancyReference, vacancyTitle);
 
-                if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+                switch (response.Code)
                 {
-                    return new VacancyNotFoundResult();
+                    case Codes.ApprenticeshipApplication.WhatHappensNext.VacancyNotFound:
+                        return new VacancyNotFoundResult();
+                    case Codes.ApprenticeshipApplication.WhatHappensNext.Ok:
+                        return View(response.ViewModel);
                 }
 
-                if (model.HasError())
-                {
-                    model.VacancyReference = vacancyReference;
-                    model.VacancyTitle = vacancyTitle;
-                }
-
-                return View(model);
+                throw new InvalidMediatorCodeException(response.Code);
             });
         }
-
-        #region Helpers
-
-        private static ApprenticheshipApplicationViewModel StripApplicationViewModelBeforeValidation(ApprenticheshipApplicationViewModel model)
-        {
-            model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
-            model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
-
-            model.DefaultQualificationRows = 0;
-            model.DefaultWorkExperienceRows = 0;
-
-            if (model.IsJavascript)
-            {
-                return model;
-            }
-
-            model.Candidate.HasQualifications = model.Candidate.Qualifications.Count() != 0;
-            model.Candidate.HasWorkExperience = model.Candidate.WorkExperience.Count() != 0;
-
-            return model;
-        }
-
-        private static IEnumerable<WorkExperienceViewModel> RemoveEmptyRowsFromWorkExperience(
-            IEnumerable<WorkExperienceViewModel> workExperience)
-        {
-            if (workExperience == null)
-            {
-                return new List<WorkExperienceViewModel>();
-            }
-
-            return workExperience.Where(vm =>
-                vm.Employer != null && !string.IsNullOrWhiteSpace(vm.Employer.Trim()) ||
-                vm.JobTitle != null && !string.IsNullOrWhiteSpace(vm.JobTitle.Trim()) ||
-                vm.Description != null && !string.IsNullOrWhiteSpace(vm.Description.Trim()) ||
-                vm.FromYear != null && !string.IsNullOrWhiteSpace(vm.FromYear.Trim()) ||
-                vm.ToYear != null && !string.IsNullOrWhiteSpace(vm.ToYear.Trim())
-                ).ToList();
-        }
-
-        private static IEnumerable<QualificationsViewModel> RemoveEmptyRowsFromQualifications(
-            IEnumerable<QualificationsViewModel> qualifications)
-        {
-            if (qualifications == null)
-            {
-                return new List<QualificationsViewModel>();
-            }
-
-            return qualifications.Where(vm =>
-                vm.Subject != null && !string.IsNullOrWhiteSpace(vm.Subject.Trim()) ||
-                vm.QualificationType != null && !string.IsNullOrWhiteSpace(vm.QualificationType.Trim()) ||
-                vm.Grade != null && !string.IsNullOrWhiteSpace(vm.Grade.Trim()) ||
-                vm.Year != null && !string.IsNullOrWhiteSpace(vm.Year.Trim())).ToList();
-        }
-
-        #endregion
     }
 }

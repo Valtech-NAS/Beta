@@ -6,41 +6,32 @@
 
     public static class MediatorResponseExtensions
     {
-        public static void AssertCode<T>(this MediatorResponse<T> response, string code, bool viewModelShouldNotBeNull)
+        public static void AssertCode<T>(this MediatorResponse<T> response, string code, bool viewModelShouldNotBeNull, bool parametersShouldNotBeNull = false)
         {
             response.Code.Should().Be(code);
             response.AssertViewModel(viewModelShouldNotBeNull);
             response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
+            response.AssertParameters(parametersShouldNotBeNull);
             response.ValidationResult.Should().BeNull();
         }
 
-        public static void AssertMessage<T>(this MediatorResponse<T> response, string code, string message, UserMessageLevel messageLevel, bool viewModelShouldNotBeNull)
+        public static void AssertMessage<T>(this MediatorResponse<T> response, string code, string message, UserMessageLevel messageLevel, bool viewModelShouldNotBeNull, bool parametersShouldNotBeNull = false)
         {
             response.Code.Should().Be(code);
             response.AssertViewModel(viewModelShouldNotBeNull);
             response.Message.Text.Should().Be(message);
             response.Message.Level.Should().Be(messageLevel);
-            response.Parameters.Should().BeNull();
+            response.AssertParameters(parametersShouldNotBeNull);
             response.ValidationResult.Should().BeNull();
         }
 
-        public static void AssertValidationResult<T>(this MediatorResponse<T> response, string code, bool viewModelShouldNotBeNull)
+        public static void AssertValidationResult<T>(this MediatorResponse<T> response, string code, bool viewModelShouldNotBeNull, bool parametersShouldNotBeNull = false)
         {
             response.Code.Should().Be(code);
             response.AssertViewModel(viewModelShouldNotBeNull);
             response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
+            response.AssertParameters(parametersShouldNotBeNull);
             response.ValidationResult.Should().NotBeNull();
-        }
-
-        public static void AssertParameters<T>(this MediatorResponse<T> response, string code, bool viewModelShouldNotBeNull)
-        {
-            response.Code.Should().Be(code);
-            response.AssertViewModel(viewModelShouldNotBeNull);
-            response.Message.Should().BeNull();
-            response.Parameters.Should().NotBeNull();
-            response.ValidationResult.Should().BeNull();
         }
 
         private static void AssertViewModel<T>(this MediatorResponse<T> response, bool viewModelShouldNotBeNull)
@@ -52,6 +43,18 @@
             else
             {
                 response.ViewModel.Should().BeNull();
+            }
+        }
+
+        private static void AssertParameters<T>(this MediatorResponse<T> response, bool parametersShouldNotBeNull)
+        {
+            if (parametersShouldNotBeNull)
+            {
+                response.Parameters.Should().NotBeNull();
+            }
+            else
+            {
+                response.Parameters.Should().BeNull();
             }
         }
     }

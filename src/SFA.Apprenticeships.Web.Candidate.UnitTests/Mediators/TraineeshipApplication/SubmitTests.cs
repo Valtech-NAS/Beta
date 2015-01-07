@@ -28,7 +28,7 @@
 
             var response = mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertParameters(Codes.TraineeshipApplication.Apply.Ok, false);
+            response.AssertCode(Codes.TraineeshipApplication.Apply.Ok, false, true);
         }
 
         private static ITraineeshipApplicationMediator GetMediator()

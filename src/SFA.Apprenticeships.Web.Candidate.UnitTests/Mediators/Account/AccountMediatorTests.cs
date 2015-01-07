@@ -52,7 +52,7 @@
         [Test]
         public void ArchiveSuccessTest()
         {
-            var applicationView = new ApprenticheshipApplicationViewModel();
+            var applicationView = new ApprenticeshipApplicationViewModel();
             _apprenticeshipApplicationProviderMock.Setup(x => x.ArchiveApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(applicationView);
 
             var response = _accountMediator.Archive(Guid.NewGuid(), 1);
@@ -64,7 +64,7 @@
         [Test]
         public void ArchiveErrorTest()
         {
-            var applicationView = new ApprenticheshipApplicationViewModel { ViewModelMessage = "Has error" };
+            var applicationView = new ApprenticeshipApplicationViewModel { ViewModelMessage = "Has error" };
             _apprenticeshipApplicationProviderMock.Setup(x => x.ArchiveApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(applicationView);
 
             var response = _accountMediator.Archive(Guid.NewGuid(), 1);
@@ -76,7 +76,7 @@
         [Test]
         public void DeleteAlreadyDeleted()
         {
-            var applicationView = new ApprenticheshipApplicationViewModel { ViewModelMessage = "Has error" };
+            var applicationView = new ApprenticeshipApplicationViewModel { ViewModelMessage = "Has error" };
             _apprenticeshipApplicationProviderMock.Setup(x => x.GetApplicationViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(applicationView);
             
             var response = _accountMediator.Delete(Guid.NewGuid(), 1);
@@ -88,8 +88,8 @@
         [Test]
         public void DeleteErrorDeleting()
         {
-            var successApplicationView = new ApprenticheshipApplicationViewModel();
-            var errorApplicationView = new ApprenticheshipApplicationViewModel { ViewModelMessage = "Error deleting" };
+            var successApplicationView = new ApprenticeshipApplicationViewModel();
+            var errorApplicationView = new ApprenticeshipApplicationViewModel { ViewModelMessage = "Error deleting" };
             _apprenticeshipApplicationProviderMock.Setup(x => x.GetApplicationViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(successApplicationView);
             _apprenticeshipApplicationProviderMock.Setup(x => x.DeleteApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(errorApplicationView);
 
@@ -102,7 +102,7 @@
         [Test]
         public void DeleteSuccess()
         {
-            var successApplicationView = new ApprenticheshipApplicationViewModel
+            var successApplicationView = new ApprenticeshipApplicationViewModel
             {
                 VacancyDetail = new VacancyDetailViewModel()
                 {

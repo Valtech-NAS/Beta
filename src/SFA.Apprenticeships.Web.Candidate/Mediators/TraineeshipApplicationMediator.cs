@@ -14,7 +14,7 @@
     using ViewModels.Applications;
     using ViewModels.Candidate;
 
-    public class TraineeshipApplicationMediator : SearchMediatorBase, ITraineeshipApplicationMediator
+    public class TraineeshipApplicationMediator : ApplicationMediatorBase, ITraineeshipApplicationMediator
     {
         private readonly ITraineeshipApplicationProvider _traineeshipApplicationProvider;
 
@@ -106,8 +106,7 @@
             return GetMediatorResponse(Codes.TraineeshipApplication.WhatHappensNext.Ok, model);
         }
 
-        private static TraineeshipApplicationViewModel StripApplicationViewModelBeforeValidation(
-            TraineeshipApplicationViewModel model)
+        private static TraineeshipApplicationViewModel StripApplicationViewModelBeforeValidation(TraineeshipApplicationViewModel model)
         {
             model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
             model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
@@ -124,38 +123,6 @@
             model.Candidate.HasWorkExperience = model.Candidate.WorkExperience.Count() != 0;
 
             return model;
-        }
-
-        private static IEnumerable<WorkExperienceViewModel> RemoveEmptyRowsFromWorkExperience(
-            IEnumerable<WorkExperienceViewModel> workExperience)
-        {
-            if (workExperience == null)
-            {
-                return new List<WorkExperienceViewModel>();
-            }
-
-            return workExperience.Where(vm =>
-                vm.Employer != null && !string.IsNullOrWhiteSpace(vm.Employer.Trim()) ||
-                vm.JobTitle != null && !string.IsNullOrWhiteSpace(vm.JobTitle.Trim()) ||
-                vm.Description != null && !string.IsNullOrWhiteSpace(vm.Description.Trim()) ||
-                vm.FromYear != null && !string.IsNullOrWhiteSpace(vm.FromYear.Trim()) ||
-                vm.ToYear != null && !string.IsNullOrWhiteSpace(vm.ToYear.Trim())
-                ).ToList();
-        }
-
-        private static IEnumerable<QualificationsViewModel> RemoveEmptyRowsFromQualifications(
-            IEnumerable<QualificationsViewModel> qualifications)
-        {
-            if (qualifications == null)
-            {
-                return new List<QualificationsViewModel>();
-            }
-
-            return qualifications.Where(vm =>
-                vm.Subject != null && !string.IsNullOrWhiteSpace(vm.Subject.Trim()) ||
-                vm.QualificationType != null && !string.IsNullOrWhiteSpace(vm.QualificationType.Trim()) ||
-                vm.Grade != null && !string.IsNullOrWhiteSpace(vm.Grade.Trim()) ||
-                vm.Year != null && !string.IsNullOrWhiteSpace(vm.Year.Trim())).ToList();
         }
     }
 }

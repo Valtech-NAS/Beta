@@ -13,11 +13,11 @@
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
 
     public class ApprenticeshipApplicationViewModelToApprenticeshipApplicationDetailResolver :
-        ITypeConverter<ApprenticheshipApplicationViewModel, ApprenticeshipApplicationDetail>
+        ITypeConverter<ApprenticeshipApplicationViewModel, ApprenticeshipApplicationDetail>
     {
         public ApprenticeshipApplicationDetail Convert(ResolutionContext context)
         {
-            var model = (ApprenticheshipApplicationViewModel) context.SourceValue;
+            var model = (ApprenticeshipApplicationViewModel) context.SourceValue;
 
             var application = new ApprenticeshipApplicationDetail
             {

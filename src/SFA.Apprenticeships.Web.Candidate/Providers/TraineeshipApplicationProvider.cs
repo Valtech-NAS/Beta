@@ -189,7 +189,7 @@
         }
 
         private TraineeshipApplicationViewModel PatchWithVacancyDetail(Guid candidateId, int vacancyId,
-            TraineeshipApplicationViewModel apprenticheshipApplicationViewModel)
+            TraineeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             // TODO: why have a patch method like this? should be done in mapper.
             var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId,
@@ -197,25 +197,25 @@
 
             if (vacancyDetailViewModel == null)
             {
-                apprenticheshipApplicationViewModel.ViewModelMessage = MyApplicationsPageMessages.DraftExpired;
+                apprenticeshipApplicationViewModel.ViewModelMessage = MyApplicationsPageMessages.DraftExpired;
 
-                return apprenticheshipApplicationViewModel;
+                return apprenticeshipApplicationViewModel;
             }
 
             if (vacancyDetailViewModel.HasError())
             {
-                apprenticheshipApplicationViewModel.ViewModelMessage = vacancyDetailViewModel.ViewModelMessage;
+                apprenticeshipApplicationViewModel.ViewModelMessage = vacancyDetailViewModel.ViewModelMessage;
 
-                return apprenticheshipApplicationViewModel;
+                return apprenticeshipApplicationViewModel;
             }
 
-            apprenticheshipApplicationViewModel.VacancyDetail = vacancyDetailViewModel;
-            apprenticheshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 =
+            apprenticeshipApplicationViewModel.VacancyDetail = vacancyDetailViewModel;
+            apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 =
                 vacancyDetailViewModel.SupplementaryQuestion1;
-            apprenticheshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 =
+            apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 =
                 vacancyDetailViewModel.SupplementaryQuestion2;
 
-            return apprenticheshipApplicationViewModel;
+            return apprenticeshipApplicationViewModel;
         }
 
         private static TraineeshipApplicationViewModel FailedApplicationViewModel(int vacancyId, Guid candidateId,

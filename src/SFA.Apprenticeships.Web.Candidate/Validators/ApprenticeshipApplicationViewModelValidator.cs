@@ -3,7 +3,7 @@
     using FluentValidation;
     using ViewModels.Applications;
 
-    public class ApprenticeshipApplicationViewModelClientValidator : AbstractValidator<ApprenticheshipApplicationViewModel>
+    public class ApprenticeshipApplicationViewModelClientValidator : AbstractValidator<ApprenticeshipApplicationViewModel>
     {
         public ApprenticeshipApplicationViewModelClientValidator()
         {
@@ -11,7 +11,7 @@
         }
     }
 
-    public class ApprenticeshipApplicationViewModelServerValidator : AbstractValidator<ApprenticheshipApplicationViewModel>
+    public class ApprenticeshipApplicationViewModelServerValidator : AbstractValidator<ApprenticeshipApplicationViewModel>
     {
         public ApprenticeshipApplicationViewModelServerValidator()
         {
@@ -19,7 +19,7 @@
         }
     }
 
-    public class ApprenticeshipApplicationViewModelSaveValidator : AbstractValidator<ApprenticheshipApplicationViewModel>
+    public class ApprenticeshipApplicationViewModelSaveValidator : AbstractValidator<ApprenticeshipApplicationViewModel>
     {
         public ApprenticeshipApplicationViewModelSaveValidator()
         {

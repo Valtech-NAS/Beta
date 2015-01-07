@@ -10,7 +10,7 @@
 
     [Validator(typeof(ApprenticeshipApplicationViewModelClientValidator))]
     [Serializable]
-    public class ApprenticheshipApplicationViewModel : ApplicationViewModelBase
+    public class ApprenticeshipApplicationViewModel : ApplicationViewModelBase
     {
         //Constants used on application form
         public string AutoSaveTimeInMiutes = ConfigurationManager.AppSettings["AutoSaveTimeInMinutes"];
@@ -19,20 +19,20 @@
 
         public ApprenticeshipCandidateViewModel Candidate { get; set; }
 
-        public ApprenticheshipApplicationViewModel(string message, ApplicationViewModelStatus viewModelStatus)
+        public ApprenticeshipApplicationViewModel(string message, ApplicationViewModelStatus viewModelStatus)
             : base(message, viewModelStatus)
         {
         }
 
-        public ApprenticheshipApplicationViewModel(string message) : base(message)
+        public ApprenticeshipApplicationViewModel(string message) : base(message)
         {
         }
 
-        public ApprenticheshipApplicationViewModel(ApplicationViewModelStatus viewModelStatus) : base(viewModelStatus)
+        public ApprenticeshipApplicationViewModel(ApplicationViewModelStatus viewModelStatus) : base(viewModelStatus)
         {
         }
 
-        public ApprenticheshipApplicationViewModel()
+        public ApprenticeshipApplicationViewModel()
         {
         }
     }

@@ -507,6 +507,10 @@
     <Compile Include="Mediators\Account\AccountMediator.cs" />
     <Compile Include="Mediators\Account\IAccountMediator.cs" />
     <Compile Include="Mediators\AccountMediatorCodes.cs" />
+    <Compile Include="Mediators\ApplicationMediatorBase.cs" />
+    <Compile Include="Mediators\ApprenticeshipApplicationMediator.cs" />
+    <Compile Include="Mediators\ApprenticeshipApplicationMediatorCodes.cs" />
+    <Compile Include="Mediators\IApprenticeshipApplicationMediator.cs" />
     <Compile Include="Mediators\TraineeshipSearchMediatorCodes.cs" />
     <Compile Include="Mediators\InvalidMediatorCodeException.cs" />
     <Compile Include="Mediators\ITraineeshipApplicationMediator.cs" />
@@ -561,7 +565,7 @@
     <Compile Include="Validators\WorkExperienceViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Applications\ApplicationViewModelBase.cs" />
-    <Compile Include="ViewModels\Applications\ApprenticheshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Applications\ApprenticeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Applications\AutoSaveResultViewModel.cs" />
     <Compile Include="ViewModels\Applications\TraineeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\ApprenticeshipCandidateViewModel.cs" />
