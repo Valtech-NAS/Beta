@@ -75,7 +75,6 @@
 
                 if (suggestedLocations.HasError())
                 {
-                    // TODO: AG: MEDIATORS: HasError -> FindLocationError to aid unit testability.
                     return GetMediatorResponse(Codes.TraineeshipSearch.Results.HasError, new TraineeshipSearchResponseViewModel { VacancySearch = model }, suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
                 }
 

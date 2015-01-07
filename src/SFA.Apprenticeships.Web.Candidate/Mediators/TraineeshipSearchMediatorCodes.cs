@@ -20,7 +20,7 @@
             {
                 public const string Ok = "details";
                 public const string VacancyNotFound = "410";
-                public const string VacancyHasError = "message"; // TODO: AG: MEDIATORS: why not match string variable name / namespace?
+                public const string VacancyHasError = "message";
             }
         }
     }

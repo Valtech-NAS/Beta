@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
     using System.Globalization;
     using System.Threading.Tasks;
     using System.Web.Mvc;
@@ -10,7 +9,6 @@
     using Common.Constants;
     using Constants;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Mediators;
     using ViewModels.VacancySearch;
@@ -19,9 +17,7 @@
     {
         private readonly IApprenticeshipSearchMediator _apprenticeshipSearchMediator;
 
-        public ApprenticeshipSearchController(IConfigurationManager configManager,
-            IApprenticeshipSearchMediator apprenticeshipSearchMediator)
-            : base(configManager)
+        public ApprenticeshipSearchController(IApprenticeshipSearchMediator apprenticeshipSearchMediator)
         {
             _apprenticeshipSearchMediator = apprenticeshipSearchMediator;
         }
@@ -66,7 +62,7 @@
                         return View(response.ViewModel);
                     case Codes.ApprenticeshipSearch.Results.HasError:
                         ModelState.Clear();
-                        SetUserMessage(response.Message.Message, response.Message.Level);
+                        SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
                     case Codes.ApprenticeshipSearch.Results.Ok:
                         ModelState.Remove("Location");
@@ -101,7 +97,7 @@
             {
                 var candidateId = GetCandidateId();
 
-                var searchReturnUrl = GetSearchReturnUrl();
+                var searchReturnUrl = GetSearchReturnUrl(CandidateRouteNames.ApprenticeshipResults);
                 
                 var response = _apprenticeshipSearchMediator.Details(id, candidateId, searchReturnUrl);
                 
@@ -111,7 +107,7 @@
                         return new VacancyNotFoundResult();
                     case Codes.ApprenticeshipSearch.Details.VacancyHasError:
                         ModelState.Clear();
-                        SetUserMessage(response.Message.Message, response.Message.Level);
+                        SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
                     case Codes.ApprenticeshipSearch.Details.Ok:
                         return View(response.ViewModel);
@@ -119,27 +115,6 @@
 
                 throw new InvalidMediatorCodeException(response.Code);
             });
-        }
-
-        private Guid? GetCandidateId()
-        {
-            Guid? candidateId = null;
-
-            if (Request.IsAuthenticated && UserContext != null)
-            {
-                candidateId = UserContext.CandidateId;
-            }
-
-            return candidateId;
-        }
-
-        private string GetSearchReturnUrl()
-        {
-            var urlHelper = new UrlHelper(ControllerContext.RequestContext);
-            var url = urlHelper.RouteUrl(CandidateRouteNames.ApprenticeshipResults, null);
-            if (Request != null && Request.UrlReferrer != null && Request.UrlReferrer.AbsolutePath == url)
-                return Request.UrlReferrer.PathAndQuery;
-            return null;
         }
     }
 }

@@ -26,7 +26,7 @@
                 ViewModel = viewModel,
                 Message = new MediatorResponseMessage
                 {
-                    Message = message,
+                    Text = message,
                     Level = level
                 },
                 Parameters = parameters

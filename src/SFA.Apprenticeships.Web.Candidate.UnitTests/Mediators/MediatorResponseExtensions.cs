@@ -19,7 +19,7 @@
         {
             response.Code.Should().Be(code);
             response.AssertViewModel(viewModelShouldNotBeNull);
-            response.Message.Message.Should().Be(message);
+            response.Message.Text.Should().Be(message);
             response.Message.Level.Should().Be(messageLevel);
             response.Parameters.Should().BeNull();
             response.ValidationResult.Should().BeNull();

@@ -35,11 +35,7 @@
             var mediator = GetMediator(null);
             var response = mediator.Details(VacancyId, null, null);
 
-            response.Code.Should().Be(Codes.TraineeshipSearch.Details.VacancyNotFound);
-            response.ViewModel.Should().BeNull();
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertCode(Codes.TraineeshipSearch.Details.VacancyNotFound, false);
         }
 
         [Test]
@@ -52,12 +48,7 @@
 
             var response = mediator.Details(VacancyId, null, null);
 
-            response.Code.Should().Be(Codes.TraineeshipSearch.Details.VacancyHasError);
-            response.ViewModel.Should().NotBeNull();
-            response.Message.Message.Should().Be(message);
-            response.Message.Level.Should().Be(UserMessageLevel.Warning);
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertMessage(Codes.TraineeshipSearch.Details.VacancyHasError, message, UserMessageLevel.Warning, true);
         }
         [Test]
         public void Ok()
@@ -66,11 +57,7 @@
             var mediator = GetMediator(vacancyDetailViewModel);
             var response = mediator.Details(VacancyId, null, SearchReturnUrl);
 
-            response.Code.Should().Be(Codes.TraineeshipSearch.Details.Ok);
-            response.ViewModel.Should().Be(vacancyDetailViewModel);
-            response.Message.Should().BeNull();
-            response.Parameters.Should().BeNull();
-            response.ValidationResult.Should().BeNull();
+            response.AssertCode(Codes.TraineeshipSearch.Details.Ok, true);
             
             response.ViewModel.Distance.Should().Be(Distance);
             response.ViewModel.SearchReturnUrl.Should().Be(SearchReturnUrl);
