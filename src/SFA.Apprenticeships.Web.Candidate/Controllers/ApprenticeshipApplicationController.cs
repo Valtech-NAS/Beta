@@ -85,11 +85,11 @@
                     case Codes.ApprenticeshipApplication.PreviewAndSubmit.Error:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View(model);
+                        return View(response.ViewModel);
                     case Codes.ApprenticeshipApplication.PreviewAndSubmit.ValidationError:
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                        return View(model);
+                        return View(response.ViewModel);
                     case Codes.ApprenticeshipApplication.PreviewAndSubmit.Ok:
                         ModelState.Clear();
                         return RedirectToAction("Preview", response.Parameters);
@@ -118,14 +118,14 @@
                     case Codes.ApprenticeshipApplication.Save.Error:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View("Apply", model);
+                        return View("Apply", response.ViewModel);
                     case Codes.ApprenticeshipApplication.Save.ValidationError:
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                        return View("Apply", model);
+                        return View("Apply", response.ViewModel);
                     case Codes.ApprenticeshipApplication.Save.Ok:
                         ModelState.Clear();
-                        return View("Apply", model);
+                        return View("Apply", response.ViewModel);
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);

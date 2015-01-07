@@ -60,7 +60,7 @@
                     case Codes.TraineeshipApplication.Submit.Error:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View(model);
+                        return View(response.ViewModel);
                     case Codes.TraineeshipApplication.Submit.Ok:
                         return RedirectToAction("WhatHappensNext", response.Parameters);
                 }

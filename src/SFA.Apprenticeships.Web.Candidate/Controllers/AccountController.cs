@@ -60,10 +60,10 @@
                 {
                     case Codes.AccountMediator.Settings.ValidationError:
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                        return View(model);
+                        return View(response.ViewModel);
                     case Codes.AccountMediator.Settings.SaveError:
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View(model);
+                        return View(response.ViewModel);
                     case Codes.AccountMediator.Settings.Success:
                         UserData.SetUserContext(UserContext.UserName, response.ViewModel.Firstname + " " + response.ViewModel.Lastname);
                         SetUserMessage(AccountPageMessages.SettingsUpdated);
