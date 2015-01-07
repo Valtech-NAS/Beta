@@ -1,37 +1,20 @@
 ﻿$(function () {
 
-    $("#Location").locationMatch({
-        url: '@Url.Action("location", "Location")',
-        longitude: '#Longitude',
-        latitude: '#Latitude',
-        latlonhash: '#Hash'
-    });
-
-    $('#sort-results').change(function () {
-
-        $('#SearchAction').val("Sort");
-        $("form").submit();
-    });
-
-    $('#results-per-page').change(function () {
-        $('#SearchAction').val("Sort");
-        $("form").submit();
-    });
-
-    $('#search-button').click(function () {
-        $('#LocationType').val("NonNational");
-    });
-
     /*Show map with radius in results*/
 
     var apprLatitude = Number($('#Latitude').val()),
         apprLongitude = Number($('#Longitude').val()),
         apprMiles = Number($('#loc-within').val()),
+        resultsPage = $('#results-per-page').val(),
+        numberOfResults = $('.vacancy-link').length,
+        distanceOfLast = $('.search-results__item:last-child .distance-value').html(),
+        sortResultsControl = $('#sort-results').val(),
         apprZoom = 9,
         radiusCircle,
         vacancyLinks = $('.vacancy-link').toArray(),
         vacancies = [],
-        vacancy = [];
+        vacancy = [],
+        theMarkers = [];
 
     for (var i = 0; i < vacancyLinks.length; i++) {
         var lat = $(vacancyLinks[i]).attr('data-lat'),
@@ -43,24 +26,38 @@
     }
 
     if (apprMiles <= 40) {
-        apprZoom = 7
-    }
-
-    if (apprMiles <= 30) {
         apprZoom = 8
     }
 
-    if (apprMiles < 20) {
+    if (apprMiles <= 30) {
         apprZoom = 9
     }
 
-    if (apprMiles < 10) {
+    if (apprMiles < 20) {
         apprZoom = 10
     }
 
-    if (apprMiles < 5) {
+    if (apprMiles < 10) {
         apprZoom = 11
     }
+
+    if (apprMiles < 5) {
+        apprZoom = 12
+    }
+
+    if (sortResultsControl == 'Distance', numberOfResults > 20 && distanceOfLast < 2.2) {
+        apprZoom = 12
+    }
+
+    if (sortResultsControl == 'Distance', numberOfResults > 20 && distanceOfLast < 1.4) {
+        apprZoom = 13
+    }
+
+    if (sortResultsControl == 'Distance', numberOfResults > 20 && distanceOfLast < 0.6) {
+        apprZoom = 14
+    }
+
+    
 
     if (apprLatitude == 0 || apprLongitude == 0) {
         $('#map-canvas').parent().hide();
@@ -100,7 +97,9 @@
     }
 
     function setMarkers(map, locations) {
-        var image = '/Content/_assets/img/icon-location.svg';
+        var image1 = '/Content/_assets/img/icon-location.svg',
+            image2 = '/Content/_assets/img/icon-location-selected.svg';
+
 
         for (var i = 0; i < locations.length; i++) {
             var appship = locations[i];
@@ -109,22 +108,33 @@
                 position: myLatLng,
                 map: map,
                 animation: google.maps.Animation.DROP,
-                icon: image,
+                icon: image1,
                 title: appship[2]
             });
 
+            theMarkers.push(marker);
+
             var vacancyID = appship[3];
 
-            bindMarkerClick(marker, map, vacancyID);
+            bindMarkerClick(marker, map, vacancyID, image1, image2);
+
+            itemHover(image1, image2);
 
         }
 
     }
 
-    function bindMarkerClick(marker, map, vacancyID) {
+    function bindMarkerClick(marker, map, vacancyID, image1, image2) {
         google.maps.event.addListener(marker, 'mouseover', function () {
+            marker.setIcon(image2);
+            marker.setZIndex(1000);
             $('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item').css('background', '#E5E5E5').addClass('map-hover');
             $('.vacancy-link').not('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item').css('background', 'none').removeClass('map-hover');
+        });
+
+        google.maps.event.addListener(marker, 'mouseout', function () {
+            marker.setIcon(image1);
+            marker.setZIndex(0);
         });
     }
 
@@ -137,6 +147,23 @@
             }
         }
     });
+
+    function itemHover(image1, image2) {
+        $('.search-results__item').mouseover(function () {
+            var thisPosition = $(this).index();
+            theMarkers[thisPosition].setIcon(image2);
+            theMarkers[thisPosition].setZIndex(1000);
+
+        });
+
+        $('.search-results__item').mouseleave(function () {
+            var thisPosition = $(this).index();
+            theMarkers[thisPosition].setIcon(image1);
+            theMarkers[thisPosition].setZIndex(0);
+
+        });
+
+    }
 
     $('#editSearchToggle').on('click', function () {
         initialize();

@@ -123,5 +123,33 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 
     @Scripts.Render("~/bundles/nas/locationsearch")
-    <script type="text/javascript" src="~/Content/_assets/js/nas/resultsMap.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#Location").locationMatch({
+                url: '@Url.Action("location", "Location")',
+                longitude: '#Longitude',
+                latitude: '#Latitude',
+                latlonhash: '#Hash'
+            });
+
+            $('#sort-results').change(function () {
+
+                $('#SearchAction').val("Sort");
+                $("form").submit();
+            });
+
+            $('#results-per-page').change(function () {
+                $('#SearchAction').val("Sort");
+                $("form").submit();
+            });
+
+            $('#search-button').click(function () {
+                $('#LocationType').val("NonNational");
+            });
+        });
+    </script>
+
+
+    @Scripts.Render("~/bundles/nas/resultsMap")
+
 }
