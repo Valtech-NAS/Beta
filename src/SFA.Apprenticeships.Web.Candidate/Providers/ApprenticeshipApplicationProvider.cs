@@ -55,9 +55,7 @@
             try
             {
                 var applicationDetails = _candidateService.CreateApplication(candidateId, vacancyId);
-                var applicationViewModel =
-                    _mapper.Map<ApprenticeshipApplicationDetail, ApprenticheshipApplicationViewModel>(applicationDetails);
-
+                var applicationViewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticheshipApplicationViewModel>(applicationDetails);
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
             catch (CustomException e)

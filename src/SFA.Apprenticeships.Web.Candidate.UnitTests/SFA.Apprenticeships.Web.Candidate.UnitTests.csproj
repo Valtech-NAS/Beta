@@ -169,6 +169,7 @@
     <Compile Include="Helpers\BaseExtensionTests.cs" />
     <Compile Include="Helpers\FormTextForTests.cs" />
     <Compile Include="Mappers\VacancyDetailViewModelMapperTests.cs" />
+    <Compile Include="Mediators\Account\AccountMediatorTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\DetailsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\IndexTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\ResultsTests.cs" />

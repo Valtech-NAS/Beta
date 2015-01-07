@@ -8,23 +8,29 @@
     using Constants;
     using Constants.Pages;
     using FluentValidation.Mvc;
-    using Providers;
-    using Validators;
+    using Mediators;
+    using Mediators.Account;
     using ViewModels.Account;
 
     public class AccountController : CandidateControllerBase
     {
-        private readonly IApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
-        private readonly IAccountProvider _accountProvider;
-        private readonly SettingsViewModelServerValidator _settingsViewModelServerValidator;
+        private readonly IAccountMediator _accountMediator;
 
-        public AccountController(
-            IAccountProvider accountProvider,
-            SettingsViewModelServerValidator settingsViewModelServerValidator, IApprenticeshipApplicationProvider apprenticeshipApplicationProvider)
+        public AccountController(IAccountMediator accountMediator)
         {
-            _accountProvider = accountProvider;
-            _settingsViewModelServerValidator = settingsViewModelServerValidator;
-            _apprenticeshipApplicationProvider = apprenticeshipApplicationProvider;
+            _accountMediator = accountMediator;
+        }
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
+        public async Task<ActionResult> Index()
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.Index(UserContext.CandidateId, UserData.Pop(UserDataItemNames.DeletedVacancyId), UserData.Pop(UserDataItemNames.DeletedVacancyTitle));
+                return View(response.ViewModel);
+            });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -34,9 +40,8 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = _accountProvider.GetSettingsViewModel(UserContext.CandidateId);
-
-                return View(model);
+                var response = _accountMediator.Settings(UserContext.CandidateId);
+                return View(response.ViewModel);
             });
         }
 
@@ -48,57 +53,24 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var validationResult = _settingsViewModelServerValidator.Validate(model);
+                var response = _accountMediator.Settings(UserContext.CandidateId, model);
+                ModelState.Clear();
 
-                if (!validationResult.IsValid)
+                switch (response.Code)
                 {
-                    ModelState.Clear();
-                    validationResult.AddToModelState(ModelState, string.Empty);
-
-                    return View(model);
+                    case Codes.AccountMediator.Settings.ValidationError:
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(model);
+                    case Codes.AccountMediator.Settings.SaveError:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View(model);
+                    case Codes.AccountMediator.Settings.Success:
+                        UserData.SetUserContext(UserContext.UserName, response.ViewModel.Firstname + " " + response.ViewModel.Lastname);
+                        SetUserMessage(AccountPageMessages.SettingsUpdated);
+                        return RedirectToRoute(CandidateRouteNames.Settings);
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
                 }
-
-                var saved = _accountProvider.SaveSettings(UserContext.CandidateId, model);
-
-                if (!saved)
-                {
-                    ModelState.Clear();
-                    SetUserMessage(AccountPageMessages.SettingsUpdateFailed, UserMessageLevel.Warning);
-
-                    return View(model);
-                }
-
-                UserData.SetUserContext(UserContext.UserName, model.Firstname + " " + model.Lastname);
-                SetUserMessage(AccountPageMessages.SettingsUpdated);
-
-                return RedirectToRoute(CandidateRouteNames.Settings);
-            });
-        }
-
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
-        public async Task<ActionResult> Index()
-        {
-            return await Task.Run<ActionResult>(() =>
-            {
-                var deletedVacancyId = UserData.Pop(UserDataItemNames.DeletedVacancyId);
-
-                if (!string.IsNullOrEmpty(deletedVacancyId))
-                {
-                    ViewBag.VacancyId = deletedVacancyId;
-                }
-
-                var deletedVacancyTitle = UserData.Pop(UserDataItemNames.DeletedVacancyTitle);
-
-                if (!string.IsNullOrEmpty(deletedVacancyTitle))
-                {
-                    ViewBag.VacancyTitle = deletedVacancyTitle;
-                }
-
-                var model = _apprenticeshipApplicationProvider.GetMyApplications(UserContext.CandidateId);
-                
-                return View(model);
             });
         }
 
@@ -109,16 +81,19 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var applicationViewModel = _apprenticeshipApplicationProvider.ArchiveApplication(UserContext.CandidateId, id);
+                var response = _accountMediator.Archive(UserContext.CandidateId, id);
 
-                if (applicationViewModel.HasError())
+                switch (response.Code)
                 {
-                    SetUserMessage(applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
-
-                    return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case Codes.AccountMediator.Archive.SuccessfullyArchived:
+                        SetUserMessage(MyApplicationsPageMessages.ApplicationArchived);
+                        break;
+                    case Codes.AccountMediator.Archive.ErrorArchiving:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        break;
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
                 }
-
-                SetUserMessage(MyApplicationsPageMessages.ApplicationArchived);
 
                 return RedirectToRoute(CandidateRouteNames.MyApplications);
             });
@@ -131,26 +106,20 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var viewModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(UserContext.CandidateId, id);
+                var response = _accountMediator.Delete(UserContext.CandidateId, id);
 
-                var applicationViewModel = _apprenticeshipApplicationProvider.DeleteApplication(UserContext.CandidateId, id);
-
-                if (applicationViewModel.HasError())
+                switch (response.Code)
                 {
-                    SetUserMessage(applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
-
-                    return RedirectToRoute(CandidateRouteNames.MyApplications);
-                }
-
-                if (viewModel.HasError())
-                {
-                    SetUserMessage(MyApplicationsPageMessages.ApplicationDeleted);
-                }
-                else
-                {
-                    UserData.Push(UserDataItemNames.DeletedVacancyId,
-                        viewModel.VacancyDetail.Id.ToString(CultureInfo.InvariantCulture));
-                    UserData.Push(UserDataItemNames.DeletedVacancyTitle, viewModel.VacancyDetail.Title);
+                    case Codes.AccountMediator.Delete.SuccessfullyDeleted:
+                        UserData.Push(UserDataItemNames.DeletedVacancyId, id.ToString(CultureInfo.InvariantCulture));
+                        UserData.Push(UserDataItemNames.DeletedVacancyTitle, response.Message.Text);
+                        break;
+                    case Codes.AccountMediator.Delete.AlreadyDeleted:
+                    case Codes.AccountMediator.Delete.ErrorDeleting:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        break;
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
                 }
 
                 return RedirectToRoute(CandidateRouteNames.MyApplications);

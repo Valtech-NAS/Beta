@@ -24,6 +24,7 @@
     using Domain.Interfaces.Mapping;
     using Mappers;
     using Mediators;
+    using Mediators.Account;
     using Mediators.Traineeships;
     using Microsoft.WindowsAzure;
     using Providers;
@@ -143,6 +144,7 @@
             For<IApprenticeshipSearchMediator>().Use<ApprenticeshipSearchMediator>();
             For<ITraineeshipApplicationMediator>().Use<TraineeshipApplicationMediator>();
             For<ITraineeshipSearchMediator>().Use<TraineeshipSearchMediator>();
+            For<IAccountMediator>().Use<AccountMediator>();
         }
     }
 }

@@ -77,5 +77,9 @@
                        && !TraineeshipApplications.Any();
             }
         }
+
+        public string DeletedVacancyId { get; set; }
+
+        public string DeletedVacancyTitle { get; set; }
     }
 }
