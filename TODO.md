@@ -15,6 +15,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
     - fix links to CDN to use "assets" sub-domain in production
     - solve issue with custom domain name being used with an Azure CDN over HTTPS (may move CDN off Azure or use 3rd party CDN)
 - refactor: _qualificationsJS.cshtml, _qualificationsNonJS.cshtml, _workExperiencesJS.cshtml, _workExperiencesNonJS.cshtml files are in ApprenticeshipApplication and TraineeshipApplication folders, but only differs in the model they receive. Tried to use the base class but HasQualification and HasWorkExperience property doesn't propagate correctly to the controller.
+- Razor view unit tests (Create example use)
 
 ## Service layer ##
 
