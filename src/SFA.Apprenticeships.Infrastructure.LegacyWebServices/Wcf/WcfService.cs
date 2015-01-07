@@ -68,25 +68,39 @@
             }
             catch (CommunicationException ex)
             {
-                Logger.Error("WCF CommunicationException ", ex);
+                Logger.Info("WCF CommunicationException", (Exception)ex);
                 throw; // handle WCF CommunicationException
             }
             catch (TimeoutException ex)
             {
-                Logger.Error("WCF TimeoutException ", ex);
+                Logger.Info("WCF TimeoutException", (Exception)ex);
                 throw; // handle WCF TimeoutException
             }
             catch (Exception exception)
             {
-                Logger.Error("Non-WCF TimeoutException ", exception);
+                Logger.Info("Non-WCF TimeoutException", exception);
                 throw; // handle non-WCF Exception
             }
             finally
             {
                 if (!success)
                 {
-                    ((IClientChannel)client).Abort();
-                    factory.Abort();
+                    try
+                    {
+                        ((IClientChannel)client).Abort();
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Info("Failed to abort client", ex);
+                    }
+                    try
+                    {
+                        factory.Abort();
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Info("Failed to abort factory", ex);
+                    }
                 }
             }
         }
