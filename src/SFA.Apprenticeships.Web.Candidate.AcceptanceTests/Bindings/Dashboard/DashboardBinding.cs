@@ -52,6 +52,7 @@
             {
                 var applicationStatus = (ApplicationStatuses)Enum.Parse(typeof(ApplicationStatuses), state);
                 _apprenticeshipApplicationBuilder
+                    .WithVacancyId(i + 1)
                     .WithApplicationStatus(applicationStatus).Build();
             }
         }
@@ -62,6 +63,7 @@
             for (var i = 0; i < numberOfApplications; i++)
             {
                 _apprenticeshipApplicationBuilder
+                    .WithVacancyId(i + 1)
                     .WithApplicationStatus(ApplicationStatuses.ExpiredOrWithdrawn)
                     .WithExpirationDate(DateTime.Now.AddDays(-5))
                     .WithoutDateApplied()
@@ -75,6 +77,7 @@
             for (var i = 0; i < numberOfTraineeships; i++)
             {
                 _traineeshipApplicationBuilder
+                    .WithVacancyId(i + 1)
                     .Build();
             }
         }

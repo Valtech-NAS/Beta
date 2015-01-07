@@ -12,6 +12,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
     public class ApprenticeshipApplicationBuilder
     {
         private readonly Guid _candidateId = new Guid("00000000-0000-0000-0000-000000000001");
+        private int _vacancyId;
         private readonly string _emailAddress = string.Empty;
         private ApplicationStatuses _applicationStatus = ApplicationStatuses.Unknown;
         private DateTime? _dateApplied = DateTime.Now;
@@ -21,6 +22,12 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
         {
             _candidateId = candidateId;
             _emailAddress = emailAddress;
+        }
+
+        public ApprenticeshipApplicationBuilder WithVacancyId(int vacancyId)
+        {
+            _vacancyId = vacancyId;
+            return this;
         }
 
         public ApprenticeshipApplicationBuilder WithApplicationStatus(ApplicationStatuses applicationStatus)
@@ -57,6 +64,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
                 DateApplied = _dateApplied,
                 Vacancy = new ApprenticeshipSummary
                 {
+                    Id = _vacancyId,
                     ClosingDate = _expirationDate
                 }
             };

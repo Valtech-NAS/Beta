@@ -113,33 +113,19 @@
 
         public ApprenticeshipApplicationDetail GetForCandidate(Guid candidateId, int vacancyId, bool errorIfNotFound = false)
         {
-            Logger.Debug("Calling repository to get ApplicationSummary list for candidate with Id={0}", candidateId);
+            Logger.Debug("Calling repository to get ApplicationSummary for candidateId={0} and vacancyId={1}", candidateId, vacancyId);
 
-            var mongoApplicationDetailsList = Collection
-                .AsQueryable()
-                .Where(each => each.CandidateId == candidateId && each.Vacancy.Id == vacancyId)
-                .ToArray();
+            var mongoApplicationDetail = Collection.AsQueryable().SingleOrDefault(each => each.CandidateId == candidateId && each.Vacancy.Id == vacancyId);
 
-            if (mongoApplicationDetailsList.Length == 0 && errorIfNotFound)
+            if (mongoApplicationDetail == null && errorIfNotFound)
             {
                 var message = string.Format("No ApprenticeshipApplicationDetail found for candidateId={0} and vacancyId={1}", candidateId, vacancyId);
-
                 throw new CustomException(message, ErrorCodes.ApplicationNotFoundError);
             }
 
-            Logger.Debug("{0} MongoApprenticeshipApplicationDetail items returned in collection for candidate with Id={1}", mongoApplicationDetailsList.Count(), candidateId);
+            Logger.Debug("Returning ApplicationSummary for candidateId={0} and vacancyId={1}", candidateId, vacancyId);
 
-            Logger.Debug("Mapping MongoApprenticeshipApplicationDetail items to ApplicationSummary list for candidate with Id={0}", candidateId);
-
-            var applicationDetailsList = _mapper.Map<MongoApprenticeshipApplicationDetail[], IEnumerable<ApprenticeshipApplicationDetail>>(
-                mongoApplicationDetailsList);
-
-            var applicationDetails = applicationDetailsList as IList<ApprenticeshipApplicationDetail> ?? applicationDetailsList.ToList();
-
-            Logger.Debug("{0} ApplicationSummary items returned for candidate with Id={1}", applicationDetails.Count(), candidateId);
-
-            return applicationDetails
-                .FirstOrDefault(); // we expect zero or 1
+            return _mapper.Map<MongoApprenticeshipApplicationDetail, ApprenticeshipApplicationDetail>(mongoApplicationDetail);
         }
 
         public ApprenticeshipApplicationDetail Get(Guid id)

@@ -11,6 +11,7 @@
     public class TraineeshipApplicationBuilder
     {
         private readonly Guid _candidateId = new Guid("00000000-0000-0000-0000-000000000001");
+        private int _vacancyId;
         private readonly string _emailAddress = string.Empty;
 
         private DateTime _closingDate = DateTime.Now.AddDays(30);
@@ -19,6 +20,12 @@
         {
             _candidateId = candidateId;
             _emailAddress = emailAddress;
+        }
+
+        public TraineeshipApplicationBuilder WithVacancyId(int vacancyId)
+        {
+            _vacancyId = vacancyId;
+            return this;
         }
 
         public TraineeshipApplicationBuilder WithClosingDate(DateTime closingDate)
@@ -42,6 +49,7 @@
                 DateApplied = DateTime.Now.AddDays(-1),
                 Vacancy = new TraineeshipSummary
                 {
+                    Id = _vacancyId,
                     ClosingDate = _closingDate
                 }
             };
