@@ -1,11 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearch
 {
-    using System.Web.UI.WebControls;
+    using System.Linq;
     using Application.Interfaces.Vacancies;
     using Candidate.Mediators;
     using Candidate.Mediators.Traineeships;
     using Candidate.Providers;
-    using Candidate.Validators;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
@@ -13,7 +12,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class IndexTests
+    public class IndexTests : TestsBase
     {
         [Test]
         public void Ok()
@@ -34,8 +33,11 @@
             viewModel.SortType.Should().Be(VacancySortType.Distance);
 
             viewModel.Distances.Should().NotBeNull();
-            viewModel.Distances.SelectedValue.Should().Be(2); // TODO: AG: MEDIATORS: testing select lists from base class.
-            viewModel.SortTypes.Should().NotBeNull(); // TODO: AG: MEDIATORS: testing select lists from base class.
+            viewModel.Distances.SelectedValue.Should().Be(2);
+
+            viewModel.SortTypes.Should().NotBeNull();
+            viewModel.SortTypes.Count().Should().BeGreaterThan(0);
+            viewModel.SortTypes.SelectedValue.Should().Be(VacancySortType.Distance);
         }
 
         private static ITraineeshipSearchMediator GetMediator()
@@ -47,15 +49,8 @@
             var searchProvider = new Mock<ISearchProvider>();
             var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
             var userDataProvider = new Mock<IUserDataProvider>();
-            var mediator = GetMediator(configurationManager.Object, searchProvider.Object, traineeshipVacancyDetailProvider.Object, userDataProvider.Object);
 
-            return mediator;
-        }
-
-        private static ITraineeshipSearchMediator GetMediator(IConfigurationManager configurationManager, ISearchProvider searchProvider, ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider, IUserDataProvider userDataProvider)
-        {
-            return new TraineeshipSearchMediator(
-                configurationManager, searchProvider, traineeshipVacancyDetailProvider, userDataProvider, new TraineeshipSearchViewModelClientValidator(), new TraineeshipSearchViewModelLocationValidator());
+            return GetMediator(configurationManager.Object, searchProvider.Object, traineeshipVacancyDetailProvider.Object, userDataProvider.Object);
         }
     }
 }

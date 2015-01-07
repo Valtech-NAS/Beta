@@ -54,6 +54,7 @@
             }
         }
 
+        // TODO: AG: MEDIATORS: consider renaming to ResultsPerPage (might collide with another property).
         public SelectList ResultsPerPageSelectList
         {
             get { return VacancySearch.ResultsPerPageSelectList; }

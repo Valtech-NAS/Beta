@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using Candidate.Mediators;
     using Candidate.Mediators.Traineeships;
     using Candidate.Providers;
-    using Candidate.Validators;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Common.Providers;
@@ -15,7 +15,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class DetailsTests
+    public class DetailsTests : TestsBase
     {
         private const int VacancyId = 1;
         private const string Distance = "42";
@@ -79,7 +79,26 @@
             _userData[UserDataItemNames.VacancyDistance].Should().Be(Distance);
             
             _userData.ContainsKey(UserDataItemNames.LastViewedVacancyId).Should().BeTrue();
-            _userData[UserDataItemNames.LastViewedVacancyId].Should().Be(Convert.ToString(VacancyId));
+            _userData[UserDataItemNames.LastViewedVacancyId].Should().Be(VacancyId.ToString(CultureInfo.InvariantCulture));
+        }
+
+        private Mock<IUserDataProvider> GetUserDataProvider()
+        {
+            var userDataProvider = new Mock<IUserDataProvider>();
+
+            userDataProvider.Setup(p => p.Pop(
+                It.Is<string>(s => s == UserDataItemNames.VacancyDistance)))
+                .Returns(Distance);
+
+            userDataProvider.Setup(p => p.Pop(
+                It.Is<string>(s => s == UserDataItemNames.LastViewedVacancyId)))
+                .Returns(VacancyId.ToString(CultureInfo.InvariantCulture));
+
+            userDataProvider.Setup(p => p.Push(
+                It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string>((key, value) => _userData.Add(key, value));
+
+            return userDataProvider;
         }
 
         private ITraineeshipSearchMediator GetMediator(VacancyDetailViewModel vacancyDetailViewModel)
@@ -91,27 +110,9 @@
             traineeshipVacancyDetailProvider.Setup(
                 p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
 
-            var userDataProvider = new Mock<IUserDataProvider>();
-
-            userDataProvider.Setup(p => p.Pop(
-                It.Is<string>(s => s == UserDataItemNames.VacancyDistance)))
-                .Returns(Distance);
-
-            userDataProvider.Setup(p => p.Pop(
-                It.Is<string>(s => s == UserDataItemNames.LastViewedVacancyId)))
-                .Returns(Convert.ToString(VacancyId));
-
-            userDataProvider.Setup(p => p.Push(
-                It.IsAny<string>(),
-                It.IsAny<string>()))
-                .Callback<string, string>((key, value) => _userData.Add(key, value));
+            var userDataProvider = GetUserDataProvider();
 
             return GetMediator(configurationManager.Object, searchProvider.Object, traineeshipVacancyDetailProvider.Object, userDataProvider.Object);
-        }
-
-        private ITraineeshipSearchMediator GetMediator(IConfigurationManager configurationManager, ISearchProvider searchProvider, ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider, IUserDataProvider userDataProvider)
-        {
-            return new TraineeshipSearchMediator(configurationManager, searchProvider, traineeshipVacancyDetailProvider, userDataProvider, new TraineeshipSearchViewModelClientValidator(), new TraineeshipSearchViewModelLocationValidator());
         }
     }
 }

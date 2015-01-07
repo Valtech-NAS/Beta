@@ -2,7 +2,6 @@
 {
     using System;
     using System.Globalization;
-    using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
@@ -13,31 +12,18 @@
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Traineeships;
-    using Providers;
-    using Validators;
     using ViewModels.VacancySearch;
 
     [TraineeshipsToggle]
     public class TraineeshipSearchController : VacancySearchController
     {
-        private readonly TraineeshipSearchViewModelLocationValidator _searchLocationValidator;
-        private readonly ISearchProvider _searchProvider;
-        private readonly TraineeshipSearchViewModelClientValidator _searchRequestValidator;
-        private readonly ITraineeshipVacancyDetailProvider _traineeshipVacancyDetailProvider;
         private readonly ITraineeshipSearchMediator _traineeshipSearchMediator;
 
-        public TraineeshipSearchController(IConfigurationManager configManager,
-            ISearchProvider searchProvider,
-            TraineeshipSearchViewModelClientValidator searchRequestValidator,
-            TraineeshipSearchViewModelLocationValidator searchLocationValidator,
-            ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider,
+        public TraineeshipSearchController(
+            IConfigurationManager configManager,
             ITraineeshipSearchMediator traineeshipSearchMediator)
             : base(configManager)
         {
-            _searchProvider = searchProvider;
-            _searchRequestValidator = searchRequestValidator;
-            _searchLocationValidator = searchLocationValidator;
-            _traineeshipVacancyDetailProvider = traineeshipVacancyDetailProvider;
             _traineeshipSearchMediator = traineeshipSearchMediator;
         }
 
@@ -86,6 +72,33 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
+                var response = _traineeshipSearchMediator.Results(model);
+
+                switch (response.Code)
+                {
+                    case Codes.TraineeshipSearch.Results.ValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(response.ViewModel);
+
+                    case Codes.TraineeshipSearch.Results.HasError:
+                        ModelState.Clear();
+                        SetUserMessage(response.Message.Message, response.Message.Level);
+                        return View(response.ViewModel);
+
+                    case Codes.TraineeshipSearch.Results.Ok:
+                        ModelState.Remove("Location");
+                        ModelState.Remove("Latitude");
+                        ModelState.Remove("Longitude");
+
+                        return View(response.ViewModel);
+                }
+
+                throw new InvalidMediatorCodeException(response.Code);
+
+                // TODO: AG: MEDIATORS: remove dead code.
+
+                /*
                 UserData.Pop(UserDataItemNames.VacancyDistance);
 
                 if (model.ResultsPerPage == 0)
@@ -173,8 +186,8 @@
                 }
                 
                 return View("results", results);
+                */
             });
-
         }
 
         [HttpGet]
@@ -282,7 +295,7 @@
         private string GetSearchReturnUrl()
         {
             var urlHelper = new UrlHelper(ControllerContext.RequestContext);
-            var url = urlHelper.RouteUrl(CandidateRouteNames.ApprenticeshipResults, null);
+            var url = urlHelper.RouteUrl(CandidateRouteNames.TraineeshipResults, null);
 
             if (Request != null && Request.UrlReferrer != null && Request.UrlReferrer.AbsolutePath == url)
                 return Request.UrlReferrer.PathAndQuery;

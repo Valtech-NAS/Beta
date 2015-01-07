@@ -2,6 +2,7 @@
 {
     using System;
     using System.Globalization;
+    using System.Linq;
     using Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
@@ -48,7 +49,77 @@
 
         public MediatorResponse<TraineeshipSearchResponseViewModel> Results(TraineeshipSearchViewModel model)
         {
-            throw new NotImplementedException();
+            UserDataProvider.Pop(UserDataItemNames.VacancyDistance);
+
+            if (model.ResultsPerPage == 0)
+            {
+                model.ResultsPerPage = GetResultsPerPage();
+            }
+
+            UserDataProvider.Push(UserDataItemNames.ResultsPerPage, model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
+
+            model.Distances = GetDistances(model.WithinDistance);
+            model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
+
+            var clientResult = _searchRequestValidator.Validate(model);
+
+            if (!clientResult.IsValid)
+            {
+                return GetMediatorResponse(Codes.TraineeshipSearch.Results.ValidationError, new TraineeshipSearchResponseViewModel { VacancySearch = model }, clientResult);
+            }
+
+            if (!HasGeoPoint(model))
+            {
+                // User did not select a location from the dropdown list, provide suggested locations.
+                var suggestedLocations = _searchProvider.FindLocation(model.Location.Trim());
+
+                if (suggestedLocations.HasError())
+                {
+                    // TODO: AG: MEDIATORS: HasError -> FindLocationError to aid unit testability.
+                    return GetMediatorResponse(Codes.TraineeshipSearch.Results.HasError, new TraineeshipSearchResponseViewModel { VacancySearch = model }, suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
+                }
+
+                if (suggestedLocations.Locations.Any())
+                {
+                    var location = suggestedLocations.Locations.First();
+
+                    model.Location = location.Name;
+                    model.Latitude = location.Latitude;
+                    model.Longitude = location.Longitude;
+
+                    model.LocationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
+                    {
+                        var vsvm = new TraineeshipSearchViewModel
+                        {
+                            Location = each.Name,
+                            Latitude = each.Latitude,
+                            Longitude = each.Longitude,
+                            PageNumber = model.PageNumber,
+                            SortType = model.SortType,
+                            WithinDistance = model.WithinDistance,
+                            ResultsPerPage = model.ResultsPerPage
+                        };
+
+                        vsvm.Hash = vsvm.LatLonLocHash();
+
+                        return vsvm;
+                    }).ToArray();
+                }
+            }
+
+            // TODO: AG: MEDIATORS: test location result validation.
+            var locationResult = _searchLocationValidator.Validate(model);
+
+            if (!locationResult.IsValid)
+            {
+                return GetMediatorResponse(Codes.TraineeshipSearch.Results.Ok, new TraineeshipSearchResponseViewModel { VacancySearch = model });
+            }
+
+            var traineeshipSearchResponseViewModel = _searchProvider.FindVacancies(model);
+
+            traineeshipSearchResponseViewModel.VacancySearch.SortTypes = GetSortTypes(model.SortType);
+
+            return GetMediatorResponse(Codes.TraineeshipSearch.Results.Ok, traineeshipSearchResponseViewModel);
         }
 
         public MediatorResponse<VacancyDetailViewModel> Details(int vacancyId, Guid? candidateId, string searchReturnUrl)
