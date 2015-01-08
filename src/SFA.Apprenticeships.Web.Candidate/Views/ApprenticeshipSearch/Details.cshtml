@@ -130,7 +130,7 @@
                             {
                                 <p>@Model.EmployerWebsite</p>
                             }
-                        @if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                        @if (Model.VacancyLocationType != ApprenticeshipLocationType.National && !Model.IsMultiLocation)
                         {
                             <div itemscope itemtype="http://schema.org/PostalAddress">
                                 <h3 class="bold-small">Address</h3>
@@ -146,7 +146,7 @@
                     </div>
                 </div>
                 <div class="grid grid-1-2">
-                    @if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
+                    @if (Model.VacancyLocationType != ApprenticeshipLocationType.National && !Model.IsMultiLocation)
                     {
                         <div class="ad-details__map">
                             <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>

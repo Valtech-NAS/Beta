@@ -13,6 +13,7 @@
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Locations;
     using Application.Interfaces.Messaging;
+    using Application.Interfaces.Search;
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Location;
@@ -40,8 +41,8 @@
 
             // services (app)
             For<ILocationSearchService>().Use<LocationSearchService>();
-            For<IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail>>().Use<VacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail>>();
-            For<IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>>().Use<VacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>>();
+            For<IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>().Use<VacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
+            For<IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>().Use<VacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>();
 
             For<ICandidateService>().Use<CandidateService>()
                 .Ctor<ISubmitApprenticeshipApplicationStrategy>("submitApprenticeshipApplicationStrategy").Is<LegacySubmitApprenticeshipApplicationStrategy>()

@@ -14,7 +14,7 @@
     using Newtonsoft.Json.Linq;
     using NLog;
 
-    public class ApprenticeshipsSearchProvider : IVacancySearchProvider<ApprenticeshipSummaryResponse>
+    public class ApprenticeshipsSearchProvider : IVacancySearchProvider<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
@@ -30,7 +30,7 @@
             _searchConfiguration = searchConfiguration;
         }
 
-        public SearchResults<ApprenticeshipSummaryResponse> FindVacancies(SearchParameters parameters)
+        public SearchResults<ApprenticeshipSummaryResponse> FindVacancies(ApprenticeshipSearchParameters parameters)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (ApprenticeshipSummary));
@@ -72,12 +72,12 @@
             return results;
         }
 
-        private ISearchResponse<ApprenticeshipSummaryResponse> PerformNationalSearch(SearchParameters parameters, ElasticClient client, string indexName, string documentTypeName)
+        private ISearchResponse<ApprenticeshipSummaryResponse> PerformNationalSearch(ApprenticeshipSearchParameters parameters, ElasticClient client, string indexName, string documentTypeName)
         {
             throw new System.NotImplementedException();
         }
 
-        private ISearchResponse<ApprenticeshipSummary> PerformSearch(SearchParameters parameters, ElasticClient client, string indexName,
+        private ISearchResponse<ApprenticeshipSummary> PerformSearch(ApprenticeshipSearchParameters parameters, ElasticClient client, string indexName,
             string documentTypeName)
         {
             var search = client.Search<ApprenticeshipSummary>(s =>
@@ -137,6 +137,15 @@
                         });
                         query = BuildContainer(query, queryClause);
                     }
+
+                    /*if (parameters.ApprenticeshipLevel != "All")
+                    {
+                        var queryClause = q.Match(m =>
+                        {
+                            m.OnField(f => f.ApprenticeshipLevel).Query(parameters.ApprenticeshipLevel);
+                        });
+                        query = BuildContainer(query, queryClause);
+                    }*/
 
                     queryVacancyLocation =
                         q.Match(

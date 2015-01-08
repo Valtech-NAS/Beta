@@ -120,6 +120,7 @@
     <Compile Include="Configuration\ElasticsearchIndexConfiguration.cs" />
     <Compile Include="Configuration\ElasticsearchConfiguration.cs" />
     <Compile Include="Entities\Address.cs" />
+    <Compile Include="Entities\ApprenticeshipLevel.cs" />
     <Compile Include="Entities\TraineeshipSummary.cs" />
     <Compile Include="Entities\GeoPoint.cs" />
     <Compile Include="Entities\LocationLookup.cs" />

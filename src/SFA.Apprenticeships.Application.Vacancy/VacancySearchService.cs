@@ -9,30 +9,26 @@
     using NLog;
     using ErrorCodes = Interfaces.Vacancies.ErrorCodes;
 
-    public class VacancySearchService<TVacancySummaryResponse, TVacancyDetail> : IVacancySearchService<TVacancySummaryResponse, TVacancyDetail>
+    public class VacancySearchService<TVacancySummaryResponse, TVacancyDetail, TSearchParameters> : IVacancySearchService<TVacancySummaryResponse, TVacancyDetail, TSearchParameters>
         where TVacancySummaryResponse : VacancySummary
         where TVacancyDetail : VacancyDetail
+        where TSearchParameters : SearchParametersBase
     {
-        private const string MessageFormat =
-            "Keywords:{0}, Location:{1}, PageNumber:{2}, PageSize{3}, SearchRadius:{4}, SortType:{5}, LocationType:{6}";
+        private const string CallingMessageFormat = "Calling VacancySearchService with the following parameters; {0}";
 
-        private const string CallingMessageFormat =
-            "Calling VacancySearchService with the following parameters; " + MessageFormat;
-
-        private const string FailedMessageFormat =
-            "Vacancy search failed for the following parameters; " + MessageFormat;
+        private const string FailedMessageFormat = "Vacancy search failed for the following parameters; {0}";
 
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private readonly IVacancySearchProvider<TVacancySummaryResponse> _vacancySearchProvider;
+        private readonly IVacancySearchProvider<TVacancySummaryResponse, TSearchParameters> _vacancySearchProvider;
         private readonly IVacancyDataProvider<TVacancyDetail> _vacancyDataProvider;
 
-        public VacancySearchService(IVacancySearchProvider<TVacancySummaryResponse> vacancySearchProvider, IVacancyDataProvider<TVacancyDetail> vacancyDataProvider)
+        public VacancySearchService(IVacancySearchProvider<TVacancySummaryResponse, TSearchParameters> vacancySearchProvider, IVacancyDataProvider<TVacancyDetail> vacancyDataProvider)
         {
             _vacancySearchProvider = vacancySearchProvider;
             _vacancyDataProvider = vacancyDataProvider;
         }
 
-        public SearchResults<TVacancySummaryResponse> Search(SearchParameters parameters)
+        public SearchResults<TVacancySummaryResponse> Search(TSearchParameters parameters)
         {
             Condition.Requires(parameters).IsNotNull();
             Condition.Requires(parameters.SearchRadius).IsGreaterOrEqual(0);
@@ -72,11 +68,9 @@
             }
         }
 
-        private static string GetLoggerMessage(string message, SearchParameters parameters)
+        private static string GetLoggerMessage(string message, SearchParametersBase parameters)
         {
-            return string.Format(message, parameters.Keywords, parameters.Location,
-                parameters.PageNumber, parameters.PageSize, parameters.SearchRadius, parameters.SortType,
-                parameters.VacancyLocationType);
+            return string.Format(message, parameters);
         }
     }
 }

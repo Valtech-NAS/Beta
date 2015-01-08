@@ -1,16 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers.Apprenticeships
 {
     using AutoMapper;
-    using Domain.Entities.Exceptions;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using GatewayServiceProxy;
     using NLog;
 
-    public class ApprenticeshipLevelResolver : ValueResolver<GatewayServiceProxy.Vacancy, ApprenticeshipLevel>
+    public class DetailApprenticeshipLevelResolver : ValueResolver<Vacancy, ApprenticeshipLevel>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        protected override ApprenticeshipLevel ResolveCore(GatewayServiceProxy.Vacancy source)
+        protected override ApprenticeshipLevel ResolveCore(Vacancy source)
         {
             switch (source.VacancyType)
             {

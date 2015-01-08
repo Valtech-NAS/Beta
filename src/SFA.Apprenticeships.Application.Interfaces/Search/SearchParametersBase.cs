@@ -4,15 +4,18 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Vacancies;
 
-    //todo: these parameters are not applicable to both apprenticeships and traineeships
-    public class SearchParameters
+    public abstract class SearchParametersBase
     {
-        public string Keywords { get; set; }
         public Location Location { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public int SearchRadius { get; set; }
         public VacancySortType SortType { get; set; }
         public ApprenticeshipLocationType VacancyLocationType { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Location:{0}, PageNumber:{1}, PageSize{2}, SearchRadius:{3}, SortType:{4}, LocationType:{5}", Location, PageNumber, PageSize, SearchRadius, SortType, VacancyLocationType);
+        }
     }
 }

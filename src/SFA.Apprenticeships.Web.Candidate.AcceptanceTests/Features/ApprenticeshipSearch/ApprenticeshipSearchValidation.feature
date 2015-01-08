@@ -43,7 +43,10 @@ Scenario: Show validation error message when two character location entered that
 		 | Field    | Value |
 		 | Location | MA    |
 	When I choose Search
-	And I wait to see ValidationSummary
-	Then I see
-        | Field                  | Rule   | Value |
-        | ValidationSummaryCount | Equals | 1     |
+	Then I am on the ApprenticeshipSearchResultPage page
+	And I see
+		| Field                     | Rule   | Value |
+		| ValidationFieldErrorCount | Equals | 1     |
+	And I am on ValidationFieldErrorItems list item matching criteria
+		| Field | Rule   | Value                                               |
+		| Text  | Equals | Location must be 3 or more characters or a postcode |

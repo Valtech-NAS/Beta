@@ -2,11 +2,12 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Locations;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies.Apprenticeships;
+    using Locations;
 
     //TODO Remove unused properties
+    //TODO Split into Apprenticeship and Traineeship ViewModels
     [Serializable]
     public class VacancyDetailViewModel : ViewModelBase
     {
@@ -45,6 +46,9 @@
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
         public ApprenticeshipLocationType VacancyLocationType { get; set; }
+
+        //TODO: Remove once NAS gatway service updated to return correct vacancy address with multi-location vacancies
+        public bool IsMultiLocation { get; set; }
 
         [UIHint("Date")]
         [DataType(DataType.DateTime)]

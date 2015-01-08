@@ -67,3 +67,55 @@ Given I have an empty dashboard
 	And I see
 		| Field              | Rule           | Value |
 		| TraineeshipsPrompt | Does Not Exist |       |
+
+@US651
+Scenario: As a candidate I want to be shown a support message if my application is unsuccessful
+	Given I have an empty dashboard
+	And I add 1 applications in "Unsuccessful" state
+	And I navigated to the LoginPage page
+	When I am on the LoginPage page
+	And I enter data
+		| Field        | Value               |
+		| EmailAddress | {EmailAddressToken} |
+		| Password     | {PasswordToken}     |
+	And I choose SignInButton
+	Then I am on the MyApplicationsPage page
+	And I see
+		| Field                         | Rule   | Value |
+		| UnsuccessfulApplicationsCount | Equals | 1     |
+		| CandidateSupportMessage       | Exists |       |
+
+@US651
+Scenario: As a candidate I do not want to be shown a support message if my application has been withdrawn
+	Given I have an empty dashboard
+	And I add 1 applications in "ExpiredOrWithdrawn" state
+	And I navigated to the LoginPage page
+	When I am on the LoginPage page
+	And I enter data
+		| Field        | Value               |
+		| EmailAddress | {EmailAddressToken} |
+		| Password     | {PasswordToken}     |
+	And I choose SignInButton
+	Then I am on the MyApplicationsPage page
+	And I see
+		| Field                         | Rule           | Value |
+		| UnsuccessfulApplicationsCount | Equals         | 1     |
+		| CandidateSupportMessage       | Does Not Exist |       |
+
+@US651
+Scenario: As a candidate I want to be shown a support message if any of my applications have been unsuccessful
+	Given I have an empty dashboard
+	And I add 1 applications in "Unsuccessful" state
+	And I add 1 applications in "ExpiredOrWithdrawn" state
+	And I navigated to the LoginPage page
+	When I am on the LoginPage page
+	And I enter data
+		| Field        | Value               |
+		| EmailAddress | {EmailAddressToken} |
+		| Password     | {PasswordToken}     |
+	And I choose SignInButton
+	Then I am on the MyApplicationsPage page
+	And I see
+		| Field                         | Rule   | Value |
+		| UnsuccessfulApplicationsCount | Equals | 2     |
+		| CandidateSupportMessage       | Exists |       |

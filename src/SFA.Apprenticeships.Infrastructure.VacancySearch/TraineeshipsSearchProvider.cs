@@ -13,7 +13,7 @@
     using Newtonsoft.Json.Linq;
     using NLog;
 
-    public class TraineeshipsSearchProvider : IVacancySearchProvider<TraineeshipSummaryResponse>
+    public class TraineeshipsSearchProvider : IVacancySearchProvider<TraineeshipSummaryResponse, TraineeshipSearchParameters>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
@@ -25,7 +25,7 @@
             _elasticsearchClientFactory = elasticsearchClientFactory;
         }
 
-        public SearchResults<TraineeshipSummaryResponse> FindVacancies(SearchParameters parameters)
+        public SearchResults<TraineeshipSummaryResponse> FindVacancies(TraineeshipSearchParameters parameters)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (TraineeshipSummary));
@@ -59,7 +59,7 @@
             return results;
         }
 
-        private ISearchResponse<TraineeshipSummary> PerformSearch(SearchParameters parameters, ElasticClient client, string indexName,
+        private ISearchResponse<TraineeshipSummary> PerformSearch(TraineeshipSearchParameters parameters, ElasticClient client, string indexName,
             string documentTypeName)
         {
             var search = client.Search<TraineeshipSummary>(s =>

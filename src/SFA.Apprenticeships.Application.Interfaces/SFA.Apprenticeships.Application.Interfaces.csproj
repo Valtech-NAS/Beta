@@ -103,7 +103,9 @@
     <Compile Include="Messaging\IEmailDispatcher.cs" />
     <Compile Include="Messaging\ISmsDispatcher.cs" />
     <Compile Include="Messaging\SmsRequest.cs" />
-    <Compile Include="Search\SearchParameters.cs" />
+    <Compile Include="Search\ApprenticeshipSearchParameters.cs" />
+    <Compile Include="Search\SearchParametersBase.cs" />
+    <Compile Include="Search\TraineeshipSearchParameters.cs" />
     <Compile Include="Users\ErrorCodes.cs" />
     <Compile Include="Users\ICodeGenerator.cs" />
     <Compile Include="Users\IUserAccountService.cs" />

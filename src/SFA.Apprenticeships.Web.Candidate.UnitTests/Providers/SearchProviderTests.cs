@@ -14,14 +14,14 @@
     using Moq;
     using NUnit.Framework;
     using Infrastructure.PerformanceCounters;
-    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
+    using Domain.Interfaces.Configuration;
 
     [TestFixture]
     public class SearchProviderTests
     {
         private Mock<ILocationSearchService> _locationSearchService;
-        private Mock<IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail>> _apprenticeshipSearchService;
-        private Mock<IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>> _traineeshipSearchService;
+        private Mock<IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>> _apprenticeshipSearchService;
+        private Mock<IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>> _traineeshipSearchService;
         private Mock<IAddressSearchService> _addressSearchService;
         private Mock<IPerformanceCounterService> _performanceCounterService;
         private Mock<IConfigurationManager> _configurationManager;
@@ -33,8 +33,8 @@
         public void Setup()
         {
             _locationSearchService = new Mock<ILocationSearchService>();
-            _apprenticeshipSearchService = new Mock<IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail>>();
-            _traineeshipSearchService = new Mock<IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>>();
+            _apprenticeshipSearchService = new Mock<IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
+            _traineeshipSearchService = new Mock<IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>();
             _addressSearchService = new Mock<IAddressSearchService>();
             _performanceCounterService = new Mock<IPerformanceCounterService>();
             _configurationManager = new Mock<IConfigurationManager>();
@@ -104,7 +104,7 @@
             });
 
             _apprenticeshipSearchService.Setup(
-                x => x.Search(It.IsAny<SearchParameters>())).Returns(results);          
+                x => x.Search(It.IsAny<ApprenticeshipSearchParameters>())).Returns(results);          
 
             var search = new ApprenticeshipSearchViewModel
             {

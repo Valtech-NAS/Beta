@@ -90,5 +90,8 @@
             {
             }
         }
+
+        [ElementLocator(Id = "candidate-support-message")]
+        public IWebElement CandidateSupportMessage { get; set; }
     }
 }

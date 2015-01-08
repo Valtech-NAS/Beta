@@ -123,8 +123,18 @@
     }
 
     function setMarkers(map, locations) {
-        var image1 = '/Content/_assets/img/icon-location.svg',
-            image2 = '/Content/_assets/img/icon-location-selected.svg';
+        var image1 = new google.maps.MarkerImage(
+                        '/Content/_assets/img/icon-location.png',
+                        null, /* size is determined at runtime */
+                        null, /* origin is 0,0 */
+                        null, /* anchor is bottom center of the scaled image */
+                        new google.maps.Size(20, 32));
+        var image2 = new google.maps.MarkerImage(
+                        '/Content/_assets/img/icon-location-selected.png',
+                        null, /* size is determined at runtime */
+                        null, /* origin is 0,0 */
+                        null, /* anchor is bottom center of the scaled image */
+                        new google.maps.Size(20, 32));
 
 
         for (var i = 0; i < locations.length; i++) {
