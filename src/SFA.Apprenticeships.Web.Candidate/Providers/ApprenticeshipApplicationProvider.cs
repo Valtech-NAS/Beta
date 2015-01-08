@@ -46,7 +46,55 @@
             _featureToggle = featureToggle;
         }
 
+        //TODO: Move all usages of GetOrCreateApplicationViewModel to this method
         public ApprenticeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
+        {
+            Logger.Debug(
+                "Calling ApprenticeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
+                candidateId, vacancyId);
+
+            try
+            {
+                var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
+                if (applicationDetails == null)
+                {
+                    return new ApprenticeshipApplicationViewModel(MyApplicationsPageMessages.ApplicationNotFound, ApplicationViewModelStatus.ApplicationNotFound);
+                }
+                var applicationViewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
+                return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
+            }
+            catch (CustomException e)
+            {
+                if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
+                {
+                    Logger.Info(e.Message, e);
+                    return
+                        new ApprenticeshipApplicationViewModel(MyApplicationsPageMessages.ApplicationInIncorrectState,
+                            ApplicationViewModelStatus.ApplicationInIncorrectState);
+                }
+
+                var message =
+                    string.Format(
+                        "Unhandled custom exception while getting the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
+                        candidateId, vacancyId);
+                Logger.Error(message, e);
+                return new ApprenticeshipApplicationViewModel("Unhandled error", ApplicationViewModelStatus.Error);
+            }
+            catch (Exception e)
+            {
+                var message = string.Format("Get Application View Model failed for candidate ID: {0}, vacancy ID: {1}.",
+                    candidateId, vacancyId);
+
+                Logger.Error(message, e);
+
+                return
+                    new ApprenticeshipApplicationViewModel(
+                        MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed,
+                        ApplicationViewModelStatus.Error);
+            }
+        }
+
+        public ApprenticeshipApplicationViewModel GetOrCreateApplicationViewModel(Guid candidateId, int vacancyId)
         {
             Logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
@@ -161,7 +209,7 @@
 
             try
             {
-                model = GetApplicationViewModel(candidateId, vacancyId);
+                model = GetOrCreateApplicationViewModel(candidateId, vacancyId);
 
                 if (model.HasError())
                 {

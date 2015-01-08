@@ -65,6 +65,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
                 Vacancy = new ApprenticeshipSummary
                 {
                     Id = _vacancyId,
+                    Title = "Vacancy " + _vacancyId,
                     ClosingDate = _expirationDate
                 }
             };
