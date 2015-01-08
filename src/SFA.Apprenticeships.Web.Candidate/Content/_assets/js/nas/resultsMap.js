@@ -26,7 +26,7 @@
         vacancies[i] = [lat, longi, title, id];
     }
 
-    if (!markersFeature) {
+    if (!markersFeature || numberOfResults == 0) {
 
         if (apprMiles <= 40) {
             apprZoom = 7
@@ -73,7 +73,7 @@
             apprZoom = 12
         }
 
-        if (sortResultsControl == 'Distance' && numberOfResults > 20 && distanceOfLast < 1.4) {
+        if (sortResultsControl == 'Distance' && numberOfResults > 20 && distanceOfLast < 1) {
             apprZoom = 13
         }
 
@@ -158,6 +158,14 @@
             $('.vacancy-link').not('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item').css('background', 'none').removeClass('map-hover');
         });
 
+        google.maps.event.addListener(marker, 'click', function () {
+            marker.setIcon(image2);
+            marker.setZIndex(1000);
+            $('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item')[0].scrollIntoView();
+            $('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item').css('background', '#E5E5E5').addClass('map-hover');
+            $('.vacancy-link').not('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item').css('background', 'none').removeClass('map-hover');
+        });
+
         google.maps.event.addListener(marker, 'mouseout', function () {
             marker.setIcon(image1);
             marker.setZIndex(0);
@@ -179,6 +187,7 @@
             var thisPosition = $(this).index();
             theMarkers[thisPosition].setIcon(image2);
             theMarkers[thisPosition].setZIndex(1000);
+            $(this).css('background', '#E5E5E5').addClass('map-hover');
 
         });
 
@@ -187,6 +196,7 @@
             theMarkers[thisPosition].setIcon(image1);
             theMarkers[thisPosition].setZIndex(0);
 
+            $(this).css('background', 'none').removeClass('map-hover');
         });
 
     }
