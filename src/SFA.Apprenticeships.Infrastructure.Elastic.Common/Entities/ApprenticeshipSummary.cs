@@ -29,5 +29,8 @@
 
         [ElasticProperty(Type = FieldType.GeoPoint, Index = FieldIndexOption.Analyzed)]
         public GeoPoint Location { get; set; }
+        
+        [ElasticProperty(Index = FieldIndexOption.Analyzed)]
+        public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
     }
 }

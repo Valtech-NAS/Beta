@@ -47,6 +47,9 @@
                     opt => opt.ResolveUsing<LegacyVacancySummaryLocationResolver>()
                         .FromMember(src => src.Address))
 
+                .ForMember(dest => dest.ApprenticeshipLevel,
+                    opt => opt.ResolveUsing<SummaryApprenticeshipLevelResolver>().FromMember(src => src))
+
                 .ForMember(dest => dest.VacancyLocationType,
                     opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
 

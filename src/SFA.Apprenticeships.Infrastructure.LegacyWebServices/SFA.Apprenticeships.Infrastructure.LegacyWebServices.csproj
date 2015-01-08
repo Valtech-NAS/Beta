@@ -129,6 +129,7 @@
     <Compile Include="GetCandidateApplicationStatuses\LegacyCandidateApplicationStatusesProvider.cs" />
     <Compile Include="IoC\LegacyWebServicesRegistry.cs" />
     <Compile Include="Mappers\Apprenticeships\ApprenticeshipTypeCheck.cs" />
+    <Compile Include="Mappers\Apprenticeships\SummaryApprenticeshipLevelResolver .cs" />
     <Compile Include="Mappers\Apprenticeships\LegacyApprenticeshipVacancyDetailMapper.cs" />
     <Compile Include="Mappers\LegacyVacancyDetailAddressDetailsResolver.cs" />
     <Compile Include="Mappers\LegacyVacancySummaryMapper.cs" />
@@ -136,7 +137,7 @@
     <Compile Include="Mappers\ApplicationStatusSummaryMapper.cs" />
     <Compile Include="Mappers\ApplicationStatusResolver.cs" />
     <Compile Include="Mappers\Apprenticeships\VacancyStatusResolver.cs" />
-    <Compile Include="Mappers\Apprenticeships\ApprenticeshipLevelResolver.cs" />
+    <Compile Include="Mappers\Apprenticeships\DetailApprenticeshipLevelResolver.cs" />
     <Compile Include="Mappers\Apprenticeships\VacancyLocationTypeResolver.cs" />
     <Compile Include="Mappers\Traineeship\TraineeshipTypeCheck.cs" />
     <Compile Include="Mappers\Traineeship\LegacyTraineeshipVacancyDetailMapper.cs" />

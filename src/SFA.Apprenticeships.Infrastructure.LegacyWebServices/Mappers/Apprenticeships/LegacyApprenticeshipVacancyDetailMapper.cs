@@ -143,7 +143,7 @@
                     opt => opt.MapFrom(src => src.VacancyTitle))
 
                 .ForMember(dest => dest.ApprenticeshipLevel,
-                    opt => opt.ResolveUsing<ApprenticeshipLevelResolver>().FromMember(src => src))
+                    opt => opt.ResolveUsing<DetailApprenticeshipLevelResolver>().FromMember(src => src))
 
                 .ForMember(dest => dest.VacancyUrl,
                 opt => opt.MapFrom(src => src.ApplyViaEmployerWebsite && string.IsNullOrEmpty(src.VacancyUrl) ? src.EmployerRecruitmentWebsite : src.VacancyUrl))
