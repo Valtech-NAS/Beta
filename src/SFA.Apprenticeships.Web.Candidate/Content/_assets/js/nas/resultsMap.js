@@ -2,19 +2,19 @@
 
     /*Show map with radius in results*/
 
-    var apprLatitude = Number($('#Latitude').val()),
-        apprLongitude = Number($('#Longitude').val()),
-        apprMiles = Number($('#loc-within').val()),
-        resultsPage = $('#results-per-page').val(),
-        numberOfResults = $('.vacancy-link').length,
-        distanceOfLast = $('.search-results__item:last-child .distance-value').html(),
+    var apprLatitude       = Number($('#Latitude').val()),
+        apprLongitude      = Number($('#Longitude').val()),
+        apprMiles          = Number($('#loc-within').val()),
+        resultsPage        = $('#results-per-page').val(),
+        numberOfResults    = $('.vacancy-link').length,
+        distanceOfLast     = $('.search-results__item:last-child .distance-value').html(),
         sortResultsControl = $('#sort-results').val(),
-        apprZoom = 9,
+        apprZoom           = 9,
         radiusCircle,
-        vacancyLinks = $('.vacancy-link').toArray(),
-        vacancies = [],
-        vacancy = [],
-        theMarkers = [];
+        vacancyLinks       = $('.vacancy-link').toArray(),
+        vacancies          = [],
+        vacancy            = [],
+        theMarkers         = [];
 
     for (var i = 0; i < vacancyLinks.length; i++) {
         var lat = $(vacancyLinks[i]).attr('data-lat'),
@@ -34,7 +34,7 @@
     }
 
     if (apprMiles < 20) {
-        apprZoom = 10
+        apprZoom = 9
     }
 
     if (apprMiles < 10) {
@@ -45,19 +45,17 @@
         apprZoom = 12
     }
 
-    if (sortResultsControl == 'Distance', numberOfResults > 20 && distanceOfLast < 2.2) {
+    if (sortResultsControl == 'Distance' && numberOfResults > 20 && distanceOfLast < 2.2) {
         apprZoom = 12
     }
 
-    if (sortResultsControl == 'Distance', numberOfResults > 20 && distanceOfLast < 1.4) {
+    if (sortResultsControl == 'Distance' && numberOfResults > 20 && distanceOfLast < 1.4) {
         apprZoom = 13
     }
 
-    if (sortResultsControl == 'Distance', numberOfResults > 20 && distanceOfLast < 0.6) {
+    if (sortResultsControl == 'Distance' && distanceOfLast < 0.6) {
         apprZoom = 14
     }
-
-    
 
     if (apprLatitude == 0 || apprLongitude == 0) {
         $('#map-canvas').parent().hide();
