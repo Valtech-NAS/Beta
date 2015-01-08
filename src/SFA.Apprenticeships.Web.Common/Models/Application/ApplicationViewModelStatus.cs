@@ -4,6 +4,7 @@
     {
         Ok,
         ApplicationInIncorrectState,
-        Error
+        Error,
+        ApplicationNotFound
     }
 }

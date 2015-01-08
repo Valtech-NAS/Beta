@@ -116,6 +116,7 @@
                         break;
                     case Codes.AccountMediator.Delete.AlreadyDeleted:
                     case Codes.AccountMediator.Delete.ErrorDeleting:
+                    case Codes.AccountMediator.Delete.SuccessfullyDeletedExpiredOrWithdrawn:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         break;
                     default:

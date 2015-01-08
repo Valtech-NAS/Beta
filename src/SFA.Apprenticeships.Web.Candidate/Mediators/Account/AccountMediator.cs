@@ -6,6 +6,7 @@
     using Validators;
     using ViewModels.Account;
     using Constants.Pages;
+    using Domain.Entities.Applications;
     using ViewModels.MyApplications;
 
     public class AccountMediator : MediatorBase, IAccountMediator
@@ -50,7 +51,10 @@
 
             if (viewModel.HasError())
             {
-                return GetMediatorResponse(Codes.AccountMediator.Delete.AlreadyDeleted, MyApplicationsPageMessages.ApplicationDeleted, UserMessageLevel.Warning);
+                if (viewModel.Status != ApplicationStatuses.ExpiredOrWithdrawn)
+                {
+                    return GetMediatorResponse(Codes.AccountMediator.Delete.AlreadyDeleted, MyApplicationsPageMessages.ApplicationDeleted, UserMessageLevel.Warning);
+                }
             }
 
             var applicationViewModel = _apprenticeshipApplicationProvider.DeleteApplication(candidateId, vacancyId);
@@ -58,6 +62,11 @@
             if (applicationViewModel.HasError())
             {
                 return GetMediatorResponse(Codes.AccountMediator.Delete.ErrorDeleting, applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
+            }
+
+            if (viewModel.VacancyDetail == null)
+            {
+                return GetMediatorResponse(Codes.AccountMediator.Delete.SuccessfullyDeletedExpiredOrWithdrawn, MyApplicationsPageMessages.ApplicationDeleted, UserMessageLevel.Success);
             }
 
             return GetMediatorResponse(Codes.AccountMediator.Delete.SuccessfullyDeleted, viewModel.VacancyDetail.Title, UserMessageLevel.Success);

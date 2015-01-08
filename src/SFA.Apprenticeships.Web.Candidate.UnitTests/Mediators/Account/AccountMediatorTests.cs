@@ -14,6 +14,7 @@
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Constants.Pages;
+    using Domain.Entities.Applications;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -114,7 +115,28 @@
 
             var response = _accountMediator.Delete(Guid.NewGuid(), 1);
             response.Code.Should().Be(Codes.AccountMediator.Delete.SuccessfullyDeleted);
+            response.Message.Should().NotBeNull();
             response.Message.Text.Should().Be("Vac title");
+            response.Message.Level.Should().Be(UserMessageLevel.Success);
+        }
+
+        [Test]
+        public void DeleteSuccessVacancyExpiredOrWithdrawn()
+        {
+            var successApplicationView = new ApprenticeshipApplicationViewModel
+            {
+                //Expired or withdrawn vacancies will no longer exist in the system. See ApprenticeshipApplicationProvider.PatchWithVacancyDetail
+                VacancyDetail = null,
+                ViewModelMessage = MyApplicationsPageMessages.DraftExpired,
+                Status = ApplicationStatuses.ExpiredOrWithdrawn
+            };
+            _apprenticeshipApplicationProviderMock.Setup(x => x.GetApplicationViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(successApplicationView);
+            _apprenticeshipApplicationProviderMock.Setup(x => x.DeleteApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new ApprenticeshipApplicationViewModel());
+
+            var response = _accountMediator.Delete(Guid.NewGuid(), 1);
+            response.Code.Should().Be(Codes.AccountMediator.Delete.SuccessfullyDeletedExpiredOrWithdrawn);
+            response.Message.Should().NotBeNull();
+            response.Message.Text.Should().Be(MyApplicationsPageMessages.ApplicationDeleted);
             response.Message.Level.Should().Be(UserMessageLevel.Success);
         }
 

@@ -18,6 +18,7 @@
             public class Delete
             {
                 public const string SuccessfullyDeleted = "SuccessfullyDeleted";
+                public const string SuccessfullyDeletedExpiredOrWithdrawn = "SuccessfullyDeletedExpiredOrWithdrawn";
                 public const string ErrorDeleting = "ErrorDeleting";
                 public const string AlreadyDeleted = "AlreadyDeleted";
             }

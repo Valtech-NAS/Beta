@@ -56,7 +56,10 @@
         public void NoSearchParameters()
         {
             var mediator = GetMediator();
-            var searchViewModel = new ApprenticeshipSearchViewModel();
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = string.Empty
+            };
 
             var response = mediator.Results(searchViewModel);
 
