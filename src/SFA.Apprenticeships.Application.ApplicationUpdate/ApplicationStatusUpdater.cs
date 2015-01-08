@@ -29,8 +29,7 @@
             {
                 var legacyVacancyId  = applicationStatus.LegacyVacancyId;
 
-                var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(
-                    candidate.EntityId, legacyVacancyId);
+                var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, legacyVacancyId);
 
                 // TODO: DEBT: AG: this block of code is duplicated in ApplicationStatusUpdateStrategy.
                 if (applicationDetail != null)

@@ -136,7 +136,7 @@
     <Compile Include="Strategies\LegacyActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\LegacyGetCandidateApprenticeshipApplicationsStrategy.cs" />
     <Compile Include="Strategies\LegacyResetForgottenPasswordStrategy.cs" />
-    <Compile Include="Strategies\Traineeships\LegacyGetCandidateTraineeshipApplicationsStrategy.cs" />
+    <Compile Include="Strategies\Traineeships\GetCandidateTraineeshipApplicationsStrategy.cs" />
     <Compile Include="Strategies\Traineeships\LegacySubmitTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\LegacyUnlockAccountStrategy .cs" />
     <Compile Include="LegacyVacancyStatusProvider.cs" />

@@ -6,13 +6,13 @@
     using Domain.Interfaces.Repositories;
     using NLog;
 
-    public class LegacyGetCandidateTraineeshipApplicationsStrategy : IGetCandidateTraineeshipApplicationsStrategy
+    public class GetCandidateTraineeshipApplicationsStrategy : IGetCandidateTraineeshipApplicationsStrategy
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
 
-        public LegacyGetCandidateTraineeshipApplicationsStrategy(
+        public GetCandidateTraineeshipApplicationsStrategy(
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
         {
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
