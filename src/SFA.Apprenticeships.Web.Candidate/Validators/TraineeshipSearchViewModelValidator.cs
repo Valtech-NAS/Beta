@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
+    using System;
+    using System.Linq;
     using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.VacancySearch;
@@ -9,6 +11,15 @@
         public TraineeshipSearchViewModelClientValidator()
         {
             this.AddCommonRules();
+        }
+    }
+
+    public class TraineeshipSearchViewModelServerValidator : AbstractValidator<TraineeshipSearchViewModel>
+    {
+        public TraineeshipSearchViewModelServerValidator()
+        {
+            this.AddCommonRules();
+            this.AddServerRules();
         }
     }
 
@@ -31,6 +42,14 @@
                 .WithMessage(TraineeshipSearchViewModelMessages.LocationMessages.LengthErrorText)
                 .Matches(TraineeshipSearchViewModelMessages.LocationMessages.WhiteList)
                 .WithMessage(TraineeshipSearchViewModelMessages.LocationMessages.WhiteListErrorText);
+        }
+
+        public static void AddServerRules(this AbstractValidator<TraineeshipSearchViewModel> validator)
+        {
+            validator.RuleFor(x => x.Location)
+                .Length(3, 99)
+                .When(x => !x.Location.Any(Char.IsDigit))
+                .WithMessage(TraineeshipSearchViewModelMessages.LocationMessages.LengthErrorText);
         }
 
         public static void AddLocationRules(this AbstractValidator<TraineeshipSearchViewModel> validator)

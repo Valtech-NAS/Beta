@@ -10,7 +10,7 @@
     {
         protected static ITraineeshipSearchMediator GetMediator(IConfigurationManager configurationManager, ISearchProvider searchProvider, ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider, IUserDataProvider userDataProvider)
         {
-            return new TraineeshipSearchMediator(configurationManager, searchProvider, traineeshipVacancyDetailProvider, userDataProvider, new TraineeshipSearchViewModelClientValidator(), new TraineeshipSearchViewModelLocationValidator());
+            return new TraineeshipSearchMediator(configurationManager, searchProvider, traineeshipVacancyDetailProvider, userDataProvider, new TraineeshipSearchViewModelServerValidator(), new TraineeshipSearchViewModelLocationValidator());
         }
     }
 }

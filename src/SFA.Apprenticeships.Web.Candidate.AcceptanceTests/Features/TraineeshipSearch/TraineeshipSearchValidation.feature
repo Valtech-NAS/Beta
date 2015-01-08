@@ -18,3 +18,29 @@ Scenario: Show validation error message when no location entered
 	Then I see
         | Field                  | Rule   | Value |
         | ValidationSummaryCount | Equals | 1     |
+
+@SmokeTests
+Scenario: Show validation error message when single character location entered
+	Given I navigated to the TraineeshipSearchPage page
+	Then I clear the Location field
+	When I enter data
+		 | Field    | Value |
+		 | Location | M     |
+	When I choose Search
+	And I wait to see ValidationSummary
+	Then I see
+        | Field                  | Rule   | Value |
+        | ValidationSummaryCount | Equals | 1     |
+
+@SmokeTests
+Scenario: Show validation error message when two character location entered that is not a partial postcode
+	Given I navigated to the TraineeshipSearchPage page
+	Then I clear the Location field
+	When I enter data
+		 | Field    | Value |
+		 | Location | MA    |
+	When I choose Search
+	And I wait to see ValidationSummary
+	Then I see
+        | Field                  | Rule   | Value |
+        | ValidationSummaryCount | Equals | 1     |

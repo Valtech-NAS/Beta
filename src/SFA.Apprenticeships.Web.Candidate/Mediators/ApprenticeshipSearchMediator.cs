@@ -16,7 +16,7 @@
     {
         private readonly ISearchProvider _searchProvider;
         private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
-        private readonly ApprenticeshipSearchViewModelClientValidator _searchRequestValidator;
+        private readonly ApprenticeshipSearchViewModelServerValidator _searchRequestValidator;
         private readonly ApprenticeshipSearchViewModelLocationValidator _searchLocationValidator;
 
         public ApprenticeshipSearchMediator(
@@ -24,7 +24,7 @@
             ISearchProvider searchProvider,
             IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
             IUserDataProvider userDataProvider,
-            ApprenticeshipSearchViewModelClientValidator searchRequestValidator,
+            ApprenticeshipSearchViewModelServerValidator searchRequestValidator,
             ApprenticeshipSearchViewModelLocationValidator searchLocationValidator)
             : base(configManager, userDataProvider)
         {
@@ -158,7 +158,7 @@
 
             if (vacancyDetailViewModel == null)
             {
-                return GetMediatorResponse<VacancyDetailViewModel>(Codes.ApprenticeshipSearch.Details.VacancyNotFound, null);
+                return GetMediatorResponse<VacancyDetailViewModel>(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
             }
 
             if (vacancyDetailViewModel.HasError())

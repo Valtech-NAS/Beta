@@ -15,7 +15,7 @@
     {
         private readonly ISearchProvider _searchProvider;
         private readonly ITraineeshipVacancyDetailProvider _traineeshipVacancyDetailProvider;
-        private readonly TraineeshipSearchViewModelClientValidator _searchRequestValidator;
+        private readonly TraineeshipSearchViewModelServerValidator _searchRequestValidator;
         private readonly TraineeshipSearchViewModelLocationValidator _searchLocationValidator;
 
         public TraineeshipSearchMediator(
@@ -23,7 +23,7 @@
             ISearchProvider searchProvider,
             ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider,
             IUserDataProvider userDataProvider,
-            TraineeshipSearchViewModelClientValidator searchRequestValidator,
+            TraineeshipSearchViewModelServerValidator searchRequestValidator,
             TraineeshipSearchViewModelLocationValidator searchLocationValidator)
             : base(configManager, userDataProvider)
         {
@@ -127,7 +127,7 @@
 
             if (vacancyDetailViewModel == null)
             {
-                return GetMediatorResponse<VacancyDetailViewModel>(Codes.TraineeshipSearch.Details.VacancyNotFound, null);
+                return GetMediatorResponse<VacancyDetailViewModel>(Codes.TraineeshipSearch.Details.VacancyNotFound);
             }
 
             if (vacancyDetailViewModel.HasError())
