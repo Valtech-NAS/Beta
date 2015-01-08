@@ -254,7 +254,7 @@ this.FeatureBackground();
             table9.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Location must be 2 or more characters"});
+                        "Location must be 3 or more characters or a postcode"});
 #line 71
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table9, "And ");
 #line hidden

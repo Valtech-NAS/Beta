@@ -69,8 +69,8 @@ Scenario: Find apprenticeships location must be two or more characters
         | ValidationSummaryCount | Equals | 1     |
 	And I am on the ApprenticeshipSearchPage page
 	And I am on ValidationSummaryItems list item matching criteria
-	| Field | Rule   | Value                                 |
-	| Text  | Equals | Location must be 2 or more characters |
+	| Field | Rule   | Value                                               |
+	| Text  | Equals | Location must be 3 or more characters or a postcode |
 
 @SmokeTests
 Scenario: Find apprenticeships by partial postcode returns results
