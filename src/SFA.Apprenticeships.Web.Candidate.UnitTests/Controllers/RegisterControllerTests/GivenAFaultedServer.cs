@@ -16,27 +16,27 @@
     [TestFixture]
     public class GivenAFaultedServer
     {
-        [TestCase]
-        public async Task WhenICheckAUsername_ThenIReceiveAJsonWithHasError()
-        {
-            // Arrange
-            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            const string username = "username";
+        //[TestCase]
+        //public async Task WhenICheckAUsername_ThenIReceiveAJsonWithHasError()
+        //{
+        //    // Arrange
+        //    var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+        //    const string username = "username";
 
-            RegisterDependencies(null);
+        //    RegisterDependencies(null);
 
-            candidateServiceProvider.Setup(csp => csp.IsUsernameAvailable(username))
-                .Returns(new UserNameAvailability {HasError = true});
+        //    candidateServiceProvider.Setup(csp => csp.IsUsernameAvailable(username))
+        //        .Returns(new UserNameAvailability {HasError = true});
 
-            var registerController = new RegisterController(candidateServiceProvider.Object, null, null, null,
-                null, null);
+        //    var registerController = new RegisterController(candidateServiceProvider.Object, null, null, null,
+        //        null, null);
 
-            // Act
-            var result = await registerController.CheckUsername(username);
+        //    // Act
+        //    var result = await registerController.CheckUsername(username);
 
-            //Assert
-            AssertTheViewModelHasError(result);
-        }
+        //    //Assert
+        //    AssertTheViewModelHasError(result);
+        //}
 
         private static void AssertTheViewModelHasError(ActionResult result)
         {
