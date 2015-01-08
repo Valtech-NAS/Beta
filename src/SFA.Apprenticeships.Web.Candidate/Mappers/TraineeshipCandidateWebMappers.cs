@@ -61,6 +61,8 @@
                         .FromMember(src => src.EmployerWebsite))
                 .ForMember(d => d.VacancyLocationType,
                     opt => opt.Ignore())
+                .ForMember(d => d.IsMultiLocation,
+                    opt => opt.Ignore())
                 .ForMember(d => d.VacancyType,
                     opt => opt.Ignore())
                 .ForMember(d => d.CandidateApplicationStatus,
