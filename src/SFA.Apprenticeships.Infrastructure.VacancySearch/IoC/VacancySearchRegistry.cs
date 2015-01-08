@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch.IoC
 {
+    using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Configuration;
@@ -13,8 +14,8 @@
         {
             For<SearchConfiguration>().Singleton().Use(SearchConfiguration.Instance);
             For<IMapper>().Use<VacancySearchMapper>().Name = "VacancySearchMapper";
-            For<IVacancySearchProvider<ApprenticeshipSummaryResponse>>().Use<ApprenticeshipsSearchProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
-            For<IVacancySearchProvider<TraineeshipSummaryResponse>>().Use<TraineeshipsSearchProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
+            For<IVacancySearchProvider<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>>().Use<ApprenticeshipsSearchProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
+            For<IVacancySearchProvider<TraineeshipSummaryResponse, TraineeshipSearchParameters>>().Use<TraineeshipsSearchProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
         }
     }
 }

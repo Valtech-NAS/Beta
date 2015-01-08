@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using Application.Interfaces.Candidates;
+    using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Constants.Pages;
     using Domain.Entities.Exceptions;
@@ -19,10 +20,10 @@
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository; //todo: MG: remove this!!
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
-        private readonly IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail> _vacancySearchService;
+        private readonly IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> _vacancySearchService;
 
         public ApprenticeshipVacancyDetailProvider(
-            IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail> vacancySearchService,
+            IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> vacancySearchService,
             ICandidateService candidateService,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IMapper mapper)

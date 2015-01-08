@@ -1,17 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
-    using Domain.Entities.Locations;
-    using Domain.Entities.Vacancies;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
+    using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.Apprenticeships;
 
     public class CheckVacancySearch : IMonitorTask
     {
-        private readonly IVacancySearchProvider<ApprenticeshipSummaryResponse> _vacancySearchProvider;
+        private readonly IVacancySearchProvider<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters> _vacancySearchProvider;
 
-        public CheckVacancySearch(IVacancySearchProvider<ApprenticeshipSummaryResponse> vacancySearchProvider)
+        public CheckVacancySearch(IVacancySearchProvider<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters> vacancySearchProvider)
         {
             _vacancySearchProvider = vacancySearchProvider;
         }
@@ -23,7 +22,7 @@
 
         public void Run()
         {
-            var parameters = new SearchParameters
+            var parameters = new ApprenticeshipSearchParameters
             {
                 Keywords = string.Empty,
                 Location = new Location {GeoPoint = new GeoPoint()},

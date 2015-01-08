@@ -1,14 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using Application.Interfaces.Search;
     using NLog;
-    using SFA.Apprenticeships.Application.Interfaces.Candidates;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancies;
-    using SFA.Apprenticeships.Domain.Entities.Exceptions;
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
-    using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using Application.Interfaces.Candidates;
+    using Application.Interfaces.Vacancies;
+    using Domain.Entities.Exceptions;
+    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Interfaces.Mapping;
+    using Constants.Pages;
+    using ViewModels.VacancySearch;
 
     public class TraineeshipVacancyDetailProvider : ITraineeshipVacancyDetailProvider
     {
@@ -16,14 +17,14 @@
 
         private readonly IMapper _mapper;
 
-        private readonly IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail>
+        private readonly IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>
             _vacancySearchService;
 
         private readonly ICandidateService _candidateService;
 
         public TraineeshipVacancyDetailProvider(
             IMapper mapper,
-            IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail> vacancySearchService, 
+            IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> vacancySearchService, 
             ICandidateService candidateService)
         {
             _mapper = mapper;

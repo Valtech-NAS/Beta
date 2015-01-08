@@ -13,11 +13,10 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
-    using Microsoft.WindowsAzure;
-    using NLog;
     using Infrastructure.PerformanceCounters;
-    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
+    using NLog;
     using ViewModels.Locations;
     using ViewModels.VacancySearch;
     using ErrorCodes = Application.Interfaces.Locations.ErrorCodes;
@@ -31,14 +30,14 @@
         private readonly ILocationSearchService _locationSearchService;
         private readonly IMapper _apprenticeshipSearchMapper;
         private readonly IMapper _traineeshipSearchMapper;
-        private readonly IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail> _apprenticeshipSearchService;
-        private readonly IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail> _traineeshipSearchService;
+        private readonly IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> _apprenticeshipSearchService;
+        private readonly IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> _traineeshipSearchService;
         private readonly IPerformanceCounterService _performanceCounterService;
         private readonly IConfigurationManager _configurationManager;
 
         public SearchProvider(ILocationSearchService locationSearchService,
-            IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail> apprenticeshipSearchService,
-            IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail> traineeshipSearchService,
+            IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> apprenticeshipSearchService,
+            IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> traineeshipSearchService,
             IAddressSearchService addressSearchService,
             IMapper apprenticeshipSearchMapper,
             IMapper traineeshipSearchMapper, 
@@ -182,7 +181,7 @@
 
             try
             {
-                var searchRequest = new SearchParameters
+                var searchRequest = new TraineeshipSearchParameters
                 {
                     Location = searchLocation,
                     PageNumber = search.PageNumber,
@@ -254,9 +253,9 @@
         private SearchResults<ApprenticeshipSummaryResponse>[] ProcessNationalAndNonNationalSearches(
             ApprenticeshipSearchViewModel search, Location searchLocation)
         {
-            var searchparameters = new List<SearchParameters>
+            var searchparameters = new List<ApprenticeshipSearchParameters>
             {
-                new SearchParameters
+                new ApprenticeshipSearchParameters
                 {
                     Keywords = search.Keywords,
                     Location = null,
@@ -266,7 +265,7 @@
                     SortType = string.IsNullOrWhiteSpace(search.Keywords) ? VacancySortType.ClosingDate : VacancySortType.Relevancy,
                     VacancyLocationType = ApprenticeshipLocationType.National
                 },
-                new SearchParameters
+                new ApprenticeshipSearchParameters
                 {
                     Keywords = search.Keywords,
                     Location = searchLocation,
