@@ -8,36 +8,26 @@
     using Common.Services;
     using Constants;
     using Constants.Pages;
-    using Domain.Entities.Candidates;
-    using Domain.Entities.Users;
     using FluentValidation.Mvc;
+    using Mediators;
+    using Mediators.Register;
     using Providers;
-    using Validators;
     using ViewModels.Register;
 
     public class RegisterController : CandidateControllerBase
     {
-        private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
+        private readonly IRegisterMediator _registerMediator;
+        
         private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
 
-        private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
-        private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;
-        private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
-
         public RegisterController(ICandidateServiceProvider candidateServiceProvider,
             IAuthenticationTicketService authenticationTicketService,
-            RegisterViewModelServerValidator registerViewModelServerValidator,
-            ActivationViewModelServerValidator activationViewModelServerValidator,
-            ForgottenPasswordViewModelServerValidator forgottenPasswordViewModelServerValidator,
-            PasswordResetViewModelServerValidator passwordResetViewModelServerValidator)
+            IRegisterMediator registerMediator)
         {
             _authenticationTicketService = authenticationTicketService;
             _candidateServiceProvider = candidateServiceProvider;
-            _registerViewModelServerValidator = registerViewModelServerValidator;
-            _activationViewModelServerValidator = activationViewModelServerValidator;
-            _forgottenPasswordViewModelServerValidator = forgottenPasswordViewModelServerValidator;
-            _passwordResetViewModelServerValidator = passwordResetViewModelServerValidator;
+            _registerMediator = registerMediator;
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
@@ -56,33 +46,24 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var userNameAvailable = _candidateServiceProvider.IsUsernameAvailable(model.EmailAddress.Trim());
-                if (!userNameAvailable.HasError)
-                {
-                    model.IsUsernameAvailable = userNameAvailable.IsUserNameAvailable;
-                    var validationResult = _registerViewModelServerValidator.Validate(model);
-
-                    if (!validationResult.IsValid)
-                    {
-                        ModelState.Clear();
-                        validationResult.AddToModelState(ModelState, string.Empty);
-
-                        return View(model);
-                    }
-
-                    var serverError = !_candidateServiceProvider.Register(model);
-                    if (!serverError)
-                    {
-                        UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname);
-
-                        return RedirectToAction("Activation");
-                    }
-                }
-
-                SetUserMessage(RegisterPageMessages.RegistrationFailed, UserMessageLevel.Warning);
+                var response = _registerMediator.Register(model);
 
                 ModelState.Clear();
-                return View(model);
+
+                switch (response.Code)
+                {
+                    case Codes.RegisterMediatorCodes.Register.ValidationFailed:
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(model);
+                    case Codes.RegisterMediatorCodes.Register.RegistrationFailed:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View(model);
+                    case Codes.RegisterMediatorCodes.Register.SuccessfullyRegistered:
+                        UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname);
+                        return RedirectToAction("Activation");
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
             });
         }
 
@@ -95,10 +76,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var model = new ActivationViewModel
-                {
-                    EmailAddress = UserContext.UserName
-                };
+                var model = new ActivationViewModel { EmailAddress = UserContext.UserName };
 
                 if (!string.IsNullOrWhiteSpace(returnUrl))
                 {
@@ -117,24 +95,22 @@
         {
             return await Task.Run(() =>
             {
-                model = _candidateServiceProvider.Activate(model, UserContext.CandidateId);
+                var response = _registerMediator.Activate(UserContext.CandidateId, model);
 
-                switch (model.State)
+                switch (response.Code)
                 {
-                    case ActivateUserState.Activated:
-                        var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
-                        SetUserMessage(ActivationPageMessages.AccountActivated);
-                        return SetAuthenticationCookieAndRedirectToAction(candidate);
-
-                    case ActivateUserState.Error:
-                        SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
+                    case Codes.RegisterMediatorCodes.Activate.SuccessfullyActivated:
+                        SetUserMessage(response.Message.Text);
+                        return SetAuthenticationCookieAndRedirectToAction(model.EmailAddress);
+                    case Codes.RegisterMediatorCodes.Activate.InvalidActivationCode:
+                    case Codes.RegisterMediatorCodes.Activate.FailedValidation:
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         break;
-
-                    case ActivateUserState.InvalidCode:
-                        var activatedResult = _activationViewModelServerValidator.Validate(model);
-                        ModelState.Clear();
-                        activatedResult.AddToModelState(ModelState, string.Empty);
+                    case Codes.RegisterMediatorCodes.Activate.ErrorActivating:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
                         break;
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
                 }
 
                 return View("Activation", model);
@@ -147,12 +123,7 @@
         [ApplyWebTrends]
         public async Task<ActionResult> Complete()
         {
-            return await Task.Run(() =>
-            {
-                ViewBag.Message = UserContext.UserName;
-
-                return View();
-            });
+            return await Task.Run(() => View(UserContext.UserName));
         }
 
         [HttpGet]
@@ -171,25 +142,24 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var validationResult = _forgottenPasswordViewModelServerValidator.Validate(model);
+                var response = _registerMediator.ForgottenPassword(model);
 
-                if (!validationResult.IsValid)
+                ModelState.Clear();
+
+                switch (response.Code)
                 {
-                    ModelState.Clear();
-                    validationResult.AddToModelState(ModelState, string.Empty);
-
-                    return View(model);
+                    case Codes.RegisterMediatorCodes.ForgotttenPassword.FailedValidation:
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(response.ViewModel);
+                    case Codes.RegisterMediatorCodes.ForgotttenPassword.FailedToSendResetCode:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View(response.ViewModel);
+                    case Codes.RegisterMediatorCodes.ForgotttenPassword.PasswordSent:
+                        UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
+                        return RedirectToAction("ResetPassword");
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
                 }
-
-                if (_candidateServiceProvider.RequestForgottenPasswordResetCode(model))
-                {
-                    UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
-                    return RedirectToAction("ResetPassword");
-                }
-
-                SetUserMessage(PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
-
-                return View(model);
             });
         }
 
@@ -208,11 +178,7 @@
                     return RedirectToAction("ForgottenPassword");
                 }
 
-                var model = new PasswordResetViewModel
-                {
-                    EmailAddress = emailAddress
-                };
-
+                var model = new PasswordResetViewModel { EmailAddress = emailAddress };
                 return View(model);
             });
         }
@@ -226,42 +192,32 @@
         {
             return await Task.Run(() =>
             {
-                //Password Reset Code is verified in VerifyPasswordReset. Initially assume the reset code is valid as a full check requires hitting the repo.
-                model.IsPasswordResetCodeValid = true;
 
-                var validationResult = _passwordResetViewModelServerValidator.Validate(model);
+                var response = _registerMediator.ResetPassword(model);
 
-                if (validationResult.IsValid)
+                switch (response.Code)
                 {
-                    model = _candidateServiceProvider.VerifyPasswordReset(model);
+                    case Codes.RegisterMediatorCodes.ResetPassword.FailedValidation:
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(response.ViewModel);
 
-                    if (model.HasError())
-                    {
-                        SetUserMessage(model.ViewModelMessage, UserMessageLevel.Warning);
+                    case Codes.RegisterMediatorCodes.ResetPassword.InvalidResetCode:
+                    case Codes.RegisterMediatorCodes.ResetPassword.FailedToResetPassword:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(model);
-                    }
 
-                    if (model.UserStatus == UserStatuses.Locked)
-                    {
+                    case Codes.RegisterMediatorCodes.ResetPassword.UserAccountLocked:
                         UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
                         return RedirectToAction("Unlock", "Login");
-                    }
 
-                    validationResult = _passwordResetViewModelServerValidator.Validate(model);
-                    if (validationResult.IsValid)
-                    {
-                        var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
+                    case Codes.RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword:
+                        SetUserMessage(response.Message.Text);
+                        return SetAuthenticationCookieAndRedirectToAction(model.EmailAddress);
 
-                        SetUserMessage(PasswordResetPageMessages.SuccessfulPasswordReset);
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
 
-                        return SetAuthenticationCookieAndRedirectToAction(candidate);
-                    }
                 }
-
-                ModelState.Clear();
-                validationResult.AddToModelState(ModelState, string.Empty);
-
-                return View(model);
             });
         }
 
@@ -273,10 +229,7 @@
         {
             return await Task.Run(() =>
             {
-                var model = new ForgottenPasswordViewModel
-                {
-                    EmailAddress = emailAddress
-                };
+                var model = new ForgottenPasswordViewModel { EmailAddress = emailAddress };
 
                 UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
 
@@ -326,14 +279,13 @@
 
         #region Helpers
 
-        private ActionResult SetAuthenticationCookieAndRedirectToAction(Candidate candidate)
+        private ActionResult SetAuthenticationCookieAndRedirectToAction(string candidateEmail)
         {
+            var candidate = _candidateServiceProvider.GetCandidate(candidateEmail);
             //todo: refactor - similar to stuff in login controller... move to ILoginServiceProvider
             //todo: test this
-            _authenticationTicketService.SetAuthenticationCookie(HttpContext.Response.Cookies,
-                candidate.EntityId.ToString(), UserRoleNames.Activated);
-            UserData.SetUserContext(candidate.RegistrationDetails.EmailAddress,
-                candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName);
+            _authenticationTicketService.SetAuthenticationCookie(HttpContext.Response.Cookies, candidate.EntityId.ToString(), UserRoleNames.Activated);
+            UserData.SetUserContext(candidate.RegistrationDetails.EmailAddress, candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName);
 
             // ReturnUrl takes precedence over last view vacnacy id.
             var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);

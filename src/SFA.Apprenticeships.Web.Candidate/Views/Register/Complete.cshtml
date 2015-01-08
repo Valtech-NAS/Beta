@@ -1,4 +1,4 @@
-﻿
+﻿@model string
 @{
     ViewBag.Title = "Apprenticeships - Account created";
     Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
@@ -9,7 +9,7 @@
     <legend class="heading-large">Confirmation email sent</legend>
     <div class="form-group text">
         <p>
-            Your confirmation email has been sent to <strong>@ViewBag.Message</strong>
+            Your confirmation email has been sent to <strong>@Model</strong>
         </p>
     </div>
     <div class="form-group">

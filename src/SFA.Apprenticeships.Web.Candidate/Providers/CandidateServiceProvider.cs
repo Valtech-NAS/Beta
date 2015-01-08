@@ -66,8 +66,8 @@
             }
             catch (Exception ex)
             {
-                const string errorMessage = "Error checking user name availability";
-                var message = string.Format("{0} for {1}", errorMessage, username);
+                const string errorMessage = "Error checking user name availability for {0}";
+                var message = string.Format(errorMessage, username);
                 Logger.Error(message, ex);
 
                 userNameAvailability.HasError = true;
@@ -328,30 +328,20 @@
             }
         }
 
-        public PasswordResetViewModel VerifyPasswordReset(PasswordResetViewModel model)
+        public PasswordResetViewModel VerifyPasswordReset(PasswordResetViewModel passwordResetViewModel)
         {
-            Logger.Debug("Calling CandidateServiceProvider to verify password reset for user {0}",
-                model.EmailAddress);
-
-            var result = new PasswordResetViewModel
-            {
-                EmailAddress = model.EmailAddress,
-                PasswordResetCode = model.PasswordResetCode,
-                Password = model.Password,
-                ConfirmPassword = model.ConfirmPassword,
-                UserStatus = model.UserStatus,
-                IsPasswordResetCodeValid = false
-            };
+            Logger.Debug("Calling CandidateServiceProvider to verify password reset for user {0}", passwordResetViewModel.EmailAddress);
+            passwordResetViewModel.IsPasswordResetCodeValid = false;
 
             try
             {
-                _candidateService.ResetForgottenPassword(result.EmailAddress, result.PasswordResetCode, result.Password);
-                result.IsPasswordResetCodeValid = true;
-                result.UserStatus = _userAccountService.GetUserStatus(result.EmailAddress);
+                _candidateService.ResetForgottenPassword(passwordResetViewModel.EmailAddress, passwordResetViewModel.PasswordResetCode, passwordResetViewModel.Password);
+                passwordResetViewModel.IsPasswordResetCodeValid = true;
+                passwordResetViewModel.UserStatus = _userAccountService.GetUserStatus(passwordResetViewModel.EmailAddress);
             }
             catch (CustomException e)
             {
-                Logger.Info("Reset forgotten password failed for " + result.EmailAddress, e);
+                Logger.Info("Reset forgotten password failed for " + passwordResetViewModel.EmailAddress, e);
 
                 switch (e.Code)
                 {
@@ -359,30 +349,30 @@
                     case ErrorCodes.UserInIncorrectStateError:
                     case ErrorCodes.UserPasswordResetCodeExpiredError:
                     case ErrorCodes.UserPasswordResetCodeIsInvalid:
-                        result.IsPasswordResetCodeValid = false;
+                        passwordResetViewModel.IsPasswordResetCodeValid = false;
                         break;
 
                     case ErrorCodes.UserAccountLockedError:
-                        result.UserStatus = UserStatuses.Locked;
+                        passwordResetViewModel.UserStatus = UserStatuses.Locked;
                         break;
 
                     case ErrorCodes.CandidateCreationError:
-                        result.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
-                        Logger.Error("Reset forgotten password failed for " + result.EmailAddress, e);
+                        passwordResetViewModel.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
+                        Logger.Error("Reset forgotten password failed for " + passwordResetViewModel.EmailAddress, e);
                         break;
                     default:
-                        result.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
+                        passwordResetViewModel.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
                         break;
                 }
             }
             catch (Exception e)
             {
-                Logger.Error("Reset forgotten password failed for " + result.EmailAddress, e);
+                Logger.Error("Reset forgotten password failed for " + passwordResetViewModel.EmailAddress, e);
 
-                result.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
+                passwordResetViewModel.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
             }
 
-            return result;
+            return passwordResetViewModel;
         }
 
         public AccountUnlockViewModel VerifyAccountUnlockCode(AccountUnlockViewModel model)

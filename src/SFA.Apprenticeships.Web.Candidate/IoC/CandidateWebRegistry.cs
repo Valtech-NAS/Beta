@@ -25,6 +25,7 @@
     using Mappers;
     using Mediators;
     using Mediators.Account;
+    using Mediators.Register;
     using Mediators.Traineeships;
     using Microsoft.WindowsAzure;
     using Providers;
@@ -146,6 +147,7 @@
             For<ITraineeshipApplicationMediator>().Use<TraineeshipApplicationMediator>();
             For<ITraineeshipSearchMediator>().Use<TraineeshipSearchMediator>();
             For<IAccountMediator>().Use<AccountMediator>();
+            For<IRegisterMediator>().Use<RegisterMediator>();
         }
     }
 }

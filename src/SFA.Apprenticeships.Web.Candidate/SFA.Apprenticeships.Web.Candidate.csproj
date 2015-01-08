@@ -469,7 +469,6 @@
     <Compile Include="Constants\Pages\SignOutPageMessages.cs" />
     <Compile Include="Constants\ViewModels\SettingsViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\UserNameAvailability.cs" />
-    <Compile Include="Constants\ViewModels\ViewModelStates.cs" />
     <Compile Include="Constants\ViewModels\WorkExperienceViewModelMessages.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
     <Compile Include="Controllers\VacancySearchController.cs" />
@@ -507,9 +506,12 @@
     <Compile Include="Mappers\Resolvers\ApprenticeshipSearchResultsResolver.cs" />
     <Compile Include="Mappers\Resolvers\SettingsViewModelResolvers.cs" />
     <Compile Include="Mappers\Resolvers\VacancyDetailViewModelResolvers.cs" />
+    <Compile Include="Mediators\RegisterMediatorCodes.cs" />
     <Compile Include="Mediators\Account\AccountMediator.cs" />
     <Compile Include="Mediators\Account\IAccountMediator.cs" />
     <Compile Include="Mediators\AccountMediatorCodes.cs" />
+    <Compile Include="Mediators\Register\IRegisterMediator.cs" />
+    <Compile Include="Mediators\Register\RegisterMediator.cs" />
     <Compile Include="Mediators\ApplicationMediatorBase.cs" />
     <Compile Include="Mediators\ApprenticeshipApplicationMediator.cs" />
     <Compile Include="Mediators\ApprenticeshipApplicationMediatorCodes.cs" />
