@@ -133,6 +133,10 @@
                 .ForMember(dest => dest.VacancyLocationType,
                    opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
 
+                //TODO: Remove once NAS gatway service updated to return correct vacancy address with multi-location vacancies
+                .ForMember(dest => dest.IsMultiLocation,
+                   opt => opt.ResolveUsing<MultiLocationResolver>().FromMember(src => src.VacancyLocationType))
+
                 .ForMember(dest => dest.VacancyManager,
                     opt => opt.MapFrom(src => src.VacancyManager))
 

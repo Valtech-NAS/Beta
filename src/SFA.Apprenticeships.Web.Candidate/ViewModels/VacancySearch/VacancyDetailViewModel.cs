@@ -46,6 +46,9 @@
 
         public ApprenticeshipLocationType VacancyLocationType { get; set; }
 
+        //TODO: Remove once NAS gatway service updated to return correct vacancy address with multi-location vacancies
+        public bool IsMultiLocation { get; set; }
+
         [UIHint("Date")]
         [DataType(DataType.DateTime)]
         public DateTime ClosingDate { get; set; }
