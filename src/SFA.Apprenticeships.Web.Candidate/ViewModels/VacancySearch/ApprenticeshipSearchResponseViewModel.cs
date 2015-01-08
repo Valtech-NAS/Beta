@@ -83,5 +83,10 @@
         {
             get { return VacancySearch.LocationSearches; }
         }
+
+        public SelectList ApprenticeshipLevels
+        {
+            get { return VacancySearch.ApprenticeshipLevels; }
+        }
     }
 }

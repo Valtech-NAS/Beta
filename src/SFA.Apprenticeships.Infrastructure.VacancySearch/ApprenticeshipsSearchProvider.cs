@@ -138,14 +138,14 @@
                         query = BuildContainer(query, queryClause);
                     }
 
-                    /*if (parameters.ApprenticeshipLevel != "All")
+                    if (!string.IsNullOrWhiteSpace(parameters.ApprenticeshipLevel) && parameters.ApprenticeshipLevel != "All")
                     {
                         var queryClause = q.Match(m =>
                         {
                             m.OnField(f => f.ApprenticeshipLevel).Query(parameters.ApprenticeshipLevel);
                         });
                         query = BuildContainer(query, queryClause);
-                    }*/
+                    }
 
                     queryVacancyLocation =
                         q.Match(

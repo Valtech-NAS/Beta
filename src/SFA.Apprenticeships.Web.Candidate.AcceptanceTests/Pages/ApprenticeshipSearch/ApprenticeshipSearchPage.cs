@@ -22,6 +22,9 @@
         [ElementLocator(Id = "loc-within")]
         public IWebElement WithInDistance { get; set; }
 
+        [ElementLocator(Id = "apprenticeship-level")]
+        public IWebElement ApprenticeshipLevel { get; set; }
+
         [ElementLocator(Id = "search-button")]
         public IWebElement Search { get; set; }
 

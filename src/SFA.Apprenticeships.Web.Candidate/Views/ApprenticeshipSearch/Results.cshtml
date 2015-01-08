@@ -104,6 +104,10 @@
                         <li>using different keywords</li>
                         <li>expanding your search location</li>
                         <li>making sure all words are spelt correctly</li>
+                    @if (Model.VacancySearch.ApprenticeshipLevel != "All")
+                    {
+                        <li id="search-no-results-apprenticeship-levels">specify all apprenticeship levels</li>
+                    }
                     </ul>
                 }
                 else

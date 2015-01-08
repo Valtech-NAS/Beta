@@ -34,6 +34,9 @@
         [ElementLocator(Id = "loc-within")]
         public IWebElement WithInDistance { get; set; }
 
+        [ElementLocator(Id = "apprenticeship-level")]
+        public IWebElement ApprenticeshipLevel { get; set; }
+
         [ElementLocator(Id = "search-button")]
         public IWebElement Search { get; set; }
 
@@ -116,6 +119,9 @@
             get { return LocationSuggestions.Count().ToString(); }
         }
 
+        [ElementLocator(Id = "search-no-results-apprenticeship-levels")]
+        public IWebElement ApprenticeshipLevelAdvice { get; set; }
+        
         public string ResultsAreInDistanceOrder
         {
             get

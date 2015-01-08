@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
     using System.Linq;
+    using System.Web.Mvc;
     using Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
@@ -39,6 +40,8 @@
             var distances = GetDistances();
             var sortTypes = GetSortTypes();
             var resultsPerPage = GetResultsPerPage();
+            var apprenticeshipLevels = GetApprenticeshipLevels();
+            var apprenticeshipLevel = GetApprenticeshipLevel();
 
             var viewModel = new ApprenticeshipSearchViewModel
             {
@@ -46,10 +49,35 @@
                 LocationType = ApprenticeshipLocationType.NonNational,
                 Distances = distances,
                 SortTypes = sortTypes,
-                ResultsPerPage = resultsPerPage
+                ResultsPerPage = resultsPerPage,
+                ApprenticeshipLevels = apprenticeshipLevels,
+                ApprenticeshipLevel = apprenticeshipLevel
             };
 
             return GetMediatorResponse(Codes.ApprenticeshipSearch.Index.Ok, viewModel);
+        }
+
+        private static SelectList GetApprenticeshipLevels(string selectedValue = "All")
+        {
+            var apprenticeshipLevels = new SelectList(
+                new[]
+                {
+                    new {ApprenticeshipLevel = "All", Name = "All levels"},
+                    new {ApprenticeshipLevel = "Intermediate", Name = "Intermediate"},
+                    new {ApprenticeshipLevel = "Advanced", Name = "Advanced"},
+                    new {ApprenticeshipLevel = "Higher", Name = "Higher"}
+                },
+                "ApprenticeshipLevel",
+                "Name",
+                selectedValue
+                );
+
+            return apprenticeshipLevels;
+        }
+
+        private string GetApprenticeshipLevel()
+        {
+            return UserDataProvider.Get(UserDataItemNames.ApprenticeshipLevel) ?? "All";
         }
 
         public MediatorResponse<ApprenticeshipSearchResponseViewModel> Results(ApprenticeshipSearchViewModel model)
@@ -62,6 +90,13 @@
             }
 
             UserDataProvider.Push(UserDataItemNames.ResultsPerPage, model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
+
+            if (string.IsNullOrEmpty(model.ApprenticeshipLevel))
+            {
+                model.ApprenticeshipLevel = GetApprenticeshipLevel();
+            }
+
+            UserDataProvider.Push(UserDataItemNames.ApprenticeshipLevel, model.ApprenticeshipLevel.ToString(CultureInfo.InvariantCulture));
 
             if (model.SearchAction == SearchAction.Search && model.LocationType != ApprenticeshipLocationType.NonNational)
             {
@@ -80,6 +115,7 @@
 
             model.Distances = GetDistances(model.WithinDistance);
             model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
+            model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
 
             var clientResult = _searchRequestValidator.Validate(model);
 

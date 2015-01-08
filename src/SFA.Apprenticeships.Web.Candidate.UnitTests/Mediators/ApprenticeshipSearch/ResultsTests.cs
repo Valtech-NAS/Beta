@@ -5,6 +5,7 @@
     using Candidate.Mediators;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
+    using Common.Constants;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
@@ -14,16 +15,46 @@
     [TestFixture]
     public class ResultsTests : TestsBase
     {
+        private Mock<IConfigurationManager> _configurationManager;
+        private Mock<ISearchProvider> _searchProvider;
+        private Mock<IApprenticeshipVacancyDetailProvider> _apprenticeshipVacancyDetailProvider;
+        private Mock<IUserDataProvider> _userDataProvider;
+        private IApprenticeshipSearchMediator _mediator;
+
+        [SetUp]
+        public void Setup()
+        {
+            _configurationManager = new Mock<IConfigurationManager>();
+            _searchProvider = GetSearchProvider();
+            _apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
+            _userDataProvider = new Mock<IUserDataProvider>();
+            _mediator = GetMediator(_configurationManager.Object, _searchProvider.Object, _apprenticeshipVacancyDetailProvider.Object, _userDataProvider.Object);
+        }
+
+        private static Mock<ISearchProvider> GetSearchProvider()
+        {
+            var searchProvider = new Mock<ISearchProvider>();
+            searchProvider.Setup(sp => sp.FindLocation(It.IsAny<string>())).Returns<string>(l => new LocationsViewModel(new[] { new LocationViewModel { Name = l } }));
+            var londonVacancies = new[]
+            {
+                new ApprenticeshipVacancySummaryViewModel {Description = "A London Vacancy"}
+            };
+            var emptyVacancies = new ApprenticeshipVacancySummaryViewModel[0];
+            //This order is important. Moq will run though all matches and pick the last one
+            searchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>())).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = emptyVacancies, VacancySearch = svm });
+            searchProvider.Setup(sp => sp.FindVacancies(It.Is<ApprenticeshipSearchViewModel>(svm => svm.Location == "London"))).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm });
+            return searchProvider;
+        }
+
         [Test]
         public void LocationOk()
         {
-            var mediator = GetMediator();
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
                 Location = "London"
             };
-            
-            var response = mediator.Results(searchViewModel);
+
+            var response = _mediator.Results(searchViewModel);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
@@ -31,18 +62,41 @@
             viewModel.Vacancies.Should().NotBeNullOrEmpty();
             var vacancies = viewModel.Vacancies.ToList();
             vacancies.Count.Should().Be(1);
+            viewModel.ApprenticeshipLevels.Should().NotBeNull();
+            viewModel.VacancySearch.ApprenticeshipLevel.Should().Be("All");
+        }
+
+        [Test]
+        public void ApprenticeshipLevelOk()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = "London",
+                ApprenticeshipLevel = "Higher"
+            };
+
+            var response = _mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+
+            var viewModel = response.ViewModel;
+            viewModel.Vacancies.Should().NotBeNullOrEmpty();
+            var vacancies = viewModel.Vacancies.ToList();
+            vacancies.Count.Should().Be(1);
+            viewModel.ApprenticeshipLevels.Should().NotBeNull();
+            viewModel.VacancySearch.ApprenticeshipLevel.Should().Be("Higher");
+            _userDataProvider.Verify(udp => udp.Push(UserDataItemNames.ApprenticeshipLevel, "Higher"), Times.Once);
         }
 
         [Test]
         public void NoResults()
         {
-            var mediator = GetMediator();
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
                 Location = "Middle of Nowhere"
             };
 
-            var response = mediator.Results(searchViewModel);
+            var response = _mediator.Results(searchViewModel);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
@@ -55,13 +109,12 @@
         [Test]
         public void NoSearchParameters()
         {
-            var mediator = GetMediator();
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
                 Location = string.Empty
             };
 
-            var response = mediator.Results(searchViewModel);
+            var response = _mediator.Results(searchViewModel);
 
             response.AssertValidationResult(Codes.ApprenticeshipSearch.Results.ValidationError, true);
         }
@@ -69,13 +122,12 @@
         [Test]
         public void LocationSortTypes()
         {
-            var mediator = GetMediator();
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
                 Location = "London"
             };
 
-            var response = mediator.Results(searchViewModel);
+            var response = _mediator.Results(searchViewModel);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
@@ -89,14 +141,13 @@
         [Test]
         public void KeywordSortTypes()
         {
-            var mediator = GetMediator();
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
                 Location = "London",
                 Keywords = "Sales"
             };
 
-            var response = mediator.Results(searchViewModel);
+            var response = _mediator.Results(searchViewModel);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
@@ -106,37 +157,6 @@
             sortTypes.Should().Contain(sli => sli.Value == VacancySortType.Relevancy.ToString());
             sortTypes.Should().Contain(sli => sli.Value == VacancySortType.ClosingDate.ToString());
             sortTypes.Should().Contain(sli => sli.Value == VacancySortType.Distance.ToString());
-        }
-
-        private static Mock<ISearchProvider> GetSearchProvider()
-        {
-            var searchProvider = new Mock<ISearchProvider>();
-            searchProvider.Setup(sp => sp.FindLocation(It.IsAny<string>())).Returns<string>(l => new LocationsViewModel(new[] {new LocationViewModel {Name = l}}));
-            var londonVacancies = new[]
-            {
-                new ApprenticeshipVacancySummaryViewModel {Description = "A London Vacancy"}
-            };
-            var emptyVacancies = new ApprenticeshipVacancySummaryViewModel[0];
-            //This order is important. Moq will run though all matches and pick the last one
-            searchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>())).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = emptyVacancies, VacancySearch = svm });
-            searchProvider.Setup(sp => sp.FindVacancies(It.Is<ApprenticeshipSearchViewModel>(svm => svm.Location == "London"))).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm });
-            return searchProvider;
-        }
-
-        private static IApprenticeshipSearchMediator GetMediator()
-        {
-            var searchProvider = GetSearchProvider();
-            var mediator = GetMediator(searchProvider.Object);
-            return mediator;
-        }
-
-        private static IApprenticeshipSearchMediator GetMediator(ISearchProvider searchProvider)
-        {
-            var configurationManager = new Mock<IConfigurationManager>();
-            var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            var userDataProvider = new Mock<IUserDataProvider>();
-            var mediator = GetMediator(configurationManager.Object, searchProvider, apprenticeshipVacancyDetailProvider.Object, userDataProvider.Object);
-            return mediator;
         }
     }
 }

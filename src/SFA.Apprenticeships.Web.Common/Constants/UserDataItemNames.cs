@@ -13,5 +13,6 @@
         public const string LoggingSessionId = "Data.SessionId";
         public const string DeletedVacancyId = "Data.DeletedVacancyId";
         public const string DeletedVacancyTitle = "Data.DeletedVacancyTitle";
+        public const string ApprenticeshipLevel = "Data.ApprenticeshipLevel";
     }
 }

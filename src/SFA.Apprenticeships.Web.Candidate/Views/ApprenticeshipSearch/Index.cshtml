@@ -20,9 +20,15 @@
                 <p class="visuallyhidden" id="keywordsHint">Try words that describe the type of apprenticeship you want, for example “carpentry” or “mechanics”.</p>
                 @Html.FormTextFor(m => m.Location)
 
-                <div class="form-group">
-                    <label for="loc-within" class="form-label">Within</label>
-                    @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance" })
+                <div class="inline">
+                    <div class="form-group">
+                        <label for="loc-within" class="form-label">Within</label>
+                        @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance" })
+                    </div>
+                    <div class="form-group">
+                        <label for="apprenticeship-level" class="form-label">Apprenticeship Level</label>
+                        @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel" })
+                    </div>
                 </div>
 
                 <div class="form-group">
