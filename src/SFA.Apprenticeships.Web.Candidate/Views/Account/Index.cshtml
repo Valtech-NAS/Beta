@@ -27,9 +27,6 @@
             <p>
                 <a id="traineeship-overview-link" href=@Url.RouteUrl(CandidateRouteNames.TraineeshipOverview)>More about traineeships</a>
             </p>
-            <p>
-                <a id="prompt-traineeship-search-link" href=@Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)>TODO: Find a traineeship</a>
-            </p>
         </div>
     </div>
 }
@@ -38,18 +35,26 @@
     <div class="grid grid-1-2">
         <h1 class="heading-xlarge">My applications</h1>
     </div>
-    @if (Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())
-    {
-        <div class="grid grid-1-2">
-            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id="find-apprenticeship-link", @class = "page-link" })
-        </div>
-    }
-    @if (Model.ShowTraineeshipsPrompt || Model.TraineeshipApplications.Any())
-    {
-        <div class="grid grid-1-2">
-            @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id="find-traineeship-link", @class = "page-link" })
-        </div>
-    }
+    <div class="grid grid-1-2">
+        <div class="page-link">
+            @if (Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())
+            {
+                 <ul class="list-text small-btm-margin">
+                     <li>@Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "link-unimp" })</li>
+                 </ul>
+                
+            }
+            @if (Model.ShowTraineeshipsPrompt || Model.TraineeshipApplications.Any())
+            {
+                <ul class="list-text">
+                    <li>
+                        @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "link-unimp" })
+                    </li>
+                </ul>
+            }
+</div>
+        
+    </div>
 </div>
 @if (!(Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any()))
 {

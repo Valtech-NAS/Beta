@@ -1,6 +1,6 @@
 ﻿@model VacancyDetailViewModel
 @{
-    ViewBag.Title = "Apprenticeships - " + Model.Title;
+    ViewBag.Title = "Find a traineeship - " + Model.Title;
     Layout = "~/Views/Shared/_TraineeshipLayout.cshtml";
 }
 
@@ -82,7 +82,7 @@
                                 <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</p>
                                 <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.AddressLine3</p>
                                 <p class="small-btm-margin" itemprop="addressRegion">@Model.VacancyAddress.AddressLine4</p>
-                                <p class="small-btm-margin" itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
+                                <p class="" itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
                             </div>
                         </div>
                     </div>
@@ -100,16 +100,16 @@
             <h2 class="heading-large">Desired skills and what this will lead to</h2>
             <div class="text">
                 <h3 class="heading-small">Desired skills</h3>
-                @Html.Raw(Model.SkillsRequired)
-                @Html.Raw(Model.PersonalQualities)
+                <p>@Html.Raw(Model.SkillsRequired)</p>
+                <p>@Html.Raw(Model.PersonalQualities)</p>
                 <h3 class="heading-small">What this will lead to</h3>
-                @Html.Raw(Model.FutureProspects)
+                <p>@Html.Raw(Model.FutureProspects)</p>
             </div>
         </section>
         
         if (!string.IsNullOrWhiteSpace(Model.OtherInformation))
         {
-             <section class="section-border grid-wrapper">
+             <section class="grid-wrapper">
                  <h2 class="heading-large">Other information</h2>
                  <div class="text">
                      <p>@Html.Raw(Model.OtherInformation)</p>
