@@ -362,16 +362,14 @@ $(function() {
 
   var sortControl = $('.float-right-wrap');
   var secondToLast = $('.search-results__item:nth-last-child(2)');
-  var origPosition = $('.fixedsticky').css('top');
-  var posNumber = parseInt(origPosition, 10);
+  var origPosition = '23px';
+  var posNumber = 23;
 
   $(window).scroll(function() {
-    var sort = sortControl[0];
-    var second = secondToLast[0];
-
-    var sortTopPos = sort.getBoundingClientRect().top;
-    var secLastTopPos = second.getBoundingClientRect().top;
-
+    var sortOffset = sortControl.offset(),
+        secondOffset = secondToLast.offset(),
+        sortTopPos = sortOffset.top - $(window).scrollTop(),
+        secLastTopPos = secondOffset.top - $(window).scrollTop();
 
     if(sortTopPos < posNumber) {
       $('.fixedsticky').addClass('sticky');
