@@ -129,7 +129,7 @@
                         null, /* origin is 0,0 */
                         null, /* anchor is bottom center of the scaled image */
                         new google.maps.Size(20, 32));
-        image2 = new google.maps.MarkerImage(
+        var image2 = new google.maps.MarkerImage(
                         '/Content/_assets/img/icon-location-selected.png',
                         null, /* size is determined at runtime */
                         null, /* origin is 0,0 */
