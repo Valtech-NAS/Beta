@@ -29,6 +29,12 @@
                 public const string ValidationError = "ValError";
                 public const string SaveError = "SaveError";
             }
+
+            public class DismissTraineeshipPrompts
+            {
+                public const string SuccessfullyDismissed = "SuccessfullyDismissed";
+                public const string ErrorDismissing = "ErrorDismissing";
+            }
         }
     }
 }

@@ -8,5 +8,6 @@
         public const string CreateOrRetrieveApplicationFailed = "There's been a problem creating or retrieving your application details. Please try again.";
         public const string ApplicationInIncorrectState = "The application is not in draft state.";
         public const string ApplicationNotFound = "The application has not been found";
+        public const string DismissTraineeshipPromptsFailed = "TODO: There's been a problem updating your account settings. Please try again.";
     }
 }

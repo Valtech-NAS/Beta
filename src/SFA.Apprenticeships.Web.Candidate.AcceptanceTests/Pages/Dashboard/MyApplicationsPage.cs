@@ -68,6 +68,9 @@
         [ElementLocator(Id = "traineeship-overview-link")]
         public IWebElement TraineeshipOverviewLink { get; set; }
 
+        [ElementLocator(Id = "dismiss-traineeship-prompts-link")]
+        public IWebElement DismissTraineeshipPromptsLink { get; set; }
+
         [ElementLocator(Id = "traineeships-table")]
         public IWebElement TraineeshipTable { get; set; }
 

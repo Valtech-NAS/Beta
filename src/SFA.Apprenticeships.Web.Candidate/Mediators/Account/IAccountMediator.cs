@@ -12,6 +12,8 @@
 
         MediatorResponse Delete(Guid candidateId, int vacancyId);
 
+        MediatorResponse DismissTraineeshipPrompts(Guid candidateId);
+
         MediatorResponse<SettingsViewModel> Settings(Guid candidateId);
 
         MediatorResponse<SettingsViewModel> Settings(Guid candidateId, SettingsViewModel settingsViewModel);

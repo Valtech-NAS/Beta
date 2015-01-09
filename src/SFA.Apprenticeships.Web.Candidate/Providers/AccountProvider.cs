@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Interfaces.Candidates;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using Domain.Interfaces.Mapping;
@@ -63,6 +64,28 @@
             catch (Exception e)
             {
                 Logger.Error("Save settings failed for candidate " + candidateId, e);
+
+                return false;
+            }
+        }
+
+        public bool DismissTraineeshipPrompts(Guid candidateId)
+        {
+            try
+            {
+                Logger.Debug("Calling AccountProvider to dismiss traineeship prompts for candidate with Id={0}", candidateId);
+
+                var candidate = _candidateService.GetCandidate(candidateId);
+
+                candidate.CommunicationPreferences.AllowTraineeshipPrompts = false;
+                _candidateService.SaveCandidate(candidate);
+
+                Logger.Debug("Settings saved for candidate with Id={0}", candidateId);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Logger.Error("Dismiss traineeship prompts failed for candidate " + candidateId, e);
 
                 return false;
             }

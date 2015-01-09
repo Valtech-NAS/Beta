@@ -82,3 +82,28 @@ Scenario: I have applied for one or more traineeships and no apprenticeships
 		| FindTraineeshipLink      | Exists         |       |
 		| FindApprenticeshipButton | Does Not Exist |       |
 		| TraineeshipsPrompt       | Does Not Exist |       |
+
+@US658
+Scenario: I am not interested in traineeships and I want to dismiss the traineeships prompt
+	Given I have an empty dashboard
+	And I add 6 applications in "Unsuccessful" state
+	And I navigated to the LoginPage page
+	When I am on the LoginPage page
+	And I enter data
+		| Field        | Value               |
+		| EmailAddress | {EmailAddressToken} |
+		| Password     | {PasswordToken}     |
+	And I choose SignInButton
+	Then I am on the MyApplicationsPage page
+	And I see
+		| Field                    | Rule           | Value |
+		| FindApprenticeshipLink   | Exists         |       |
+		| FindTraineeshipLink      | Exists         |       |
+		| TraineeshipsPrompt       | Exists         |       |
+	When I choose DismissTraineeshipPromptsLink
+	Then I am on the MyApplicationsPage page
+	And I see
+		| Field                    | Rule           | Value |
+		| FindApprenticeshipLink   | Exists         |       |
+		| FindTraineeshipLink      | Does Not Exist |       |
+		| TraineeshipsPrompt       | Does Not Exist |       |

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 {
     using System;
+    using System.Data;
     using Common.Constants;
     using Providers;
     using Validators;
@@ -70,6 +71,16 @@
             }
 
             return GetMediatorResponse(Codes.AccountMediator.Delete.SuccessfullyDeleted, viewModel.VacancyDetail.Title, UserMessageLevel.Success);
+        }
+
+        public MediatorResponse DismissTraineeshipPrompts(Guid candidateId)
+        {
+            if (_accountProvider.DismissTraineeshipPrompts(candidateId))
+            {
+                return GetMediatorResponse(Codes.AccountMediator.DismissTraineeshipPrompts.SuccessfullyDismissed);                
+            }
+
+            return GetMediatorResponse(Codes.AccountMediator.DismissTraineeshipPrompts.ErrorDismissing, MyApplicationsPageMessages.DismissTraineeshipPromptsFailed, UserMessageLevel.Error);
         }
 
         public MediatorResponse<SettingsViewModel> Settings(Guid candidateId)

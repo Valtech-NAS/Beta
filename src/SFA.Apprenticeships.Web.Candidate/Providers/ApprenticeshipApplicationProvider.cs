@@ -433,11 +433,14 @@
 
         private TraineeshipPromptViewModel GetTraineeshipPrompt(Guid candidateId)
         {
+            var candididate = _candidateService.GetCandidate(candidateId);
+
             return new TraineeshipPromptViewModel
             {
                 UnsuccessfulApplicationsToShowTraineeshipsPrompt =
                     _configurationManager.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt"),
-                TraineeshipsFeatureActive = _featureToggle.IsActive(Feature.Traineeships)
+                TraineeshipsFeatureActive = _featureToggle.IsActive(Feature.Traineeships),
+                AllowTraineeshipPrompts = candididate.CommunicationPreferences.AllowTraineeshipPrompts
             };
         }
 

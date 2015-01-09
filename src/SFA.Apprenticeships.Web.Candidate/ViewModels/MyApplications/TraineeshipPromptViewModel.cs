@@ -5,5 +5,7 @@
         public bool TraineeshipsFeatureActive { get; set; }
 
         public int UnsuccessfulApplicationsToShowTraineeshipsPrompt { get; set; }
+ 
+        public bool AllowTraineeshipPrompts { get; set; }
     }
 }

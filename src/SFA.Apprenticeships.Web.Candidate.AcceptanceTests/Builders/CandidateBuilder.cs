@@ -31,16 +31,16 @@
 #pragma warning restore 0618
 
             Candidate.RegistrationDetails = RegistrationBuilder.Build();
+            Candidate.CommunicationPreferences = new CommunicationPreferences();
 
             var candidateInRepo = repoRead.Get(Candidate.RegistrationDetails.EmailAddress);
-            if (candidateInRepo == null)
-            {
-                repo.Save(Candidate);
-            }
-            else
+
+            if (candidateInRepo != null)
             {
                 Candidate.EntityId = candidateInRepo.EntityId;
             }
+
+            repo.Save(Candidate);
 
             return Candidate;
         }

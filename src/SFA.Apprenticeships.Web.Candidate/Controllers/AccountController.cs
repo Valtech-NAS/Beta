@@ -126,5 +126,29 @@
                 return RedirectToRoute(CandidateRouteNames.MyApplications);
             });
         }
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
+        public async Task<ActionResult> DismissTraineeshipPrompts()
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.DismissTraineeshipPrompts(UserContext.CandidateId);
+
+                switch (response.Code)
+                {
+                    case Codes.AccountMediator.DismissTraineeshipPrompts.SuccessfullyDismissed:
+                        break;
+                    case Codes.AccountMediator.DismissTraineeshipPrompts.ErrorDismissing:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        break;
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+
+                return RedirectToRoute(CandidateRouteNames.MyApplications);
+            });
+        }
     }
 }

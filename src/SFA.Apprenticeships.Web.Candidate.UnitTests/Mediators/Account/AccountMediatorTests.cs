@@ -205,5 +205,29 @@
             response.Message.Text.Should().Be(AccountPageMessages.SettingsUpdateFailed);
             response.Message.Level.Should().Be(UserMessageLevel.Warning);
         }
+
+        [Test]
+        public void DismissTraineeshipPromptTest_SuccessfullyDismissed()
+        {
+            _accountProviderMock.Setup(x => x.DismissTraineeshipPrompts(It.IsAny<Guid>())).Returns(true);
+
+            var response = _accountMediator.DismissTraineeshipPrompts(Guid.NewGuid());
+
+            response.Should().NotBeNull();
+            response.Code.Should().Be(Codes.AccountMediator.DismissTraineeshipPrompts.SuccessfullyDismissed);
+        }
+
+        [Test]
+        public void DismissTraineeshipPromptTest_ErrorDismissing()
+        {
+            _accountProviderMock.Setup(x => x.DismissTraineeshipPrompts(It.IsAny<Guid>())).Returns(false);
+
+            var response = _accountMediator.DismissTraineeshipPrompts(Guid.NewGuid());
+
+            response.Should().NotBeNull();
+            response.Code.Should().Be(Codes.AccountMediator.DismissTraineeshipPrompts.ErrorDismissing);
+            response.Message.Text.Should().Be(MyApplicationsPageMessages.DismissTraineeshipPromptsFailed);
+            response.Message.Level.Should().Be(UserMessageLevel.Error);
+        }
     }
 }
