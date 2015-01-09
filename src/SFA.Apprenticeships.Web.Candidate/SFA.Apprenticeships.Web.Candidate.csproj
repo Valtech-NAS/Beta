@@ -337,6 +337,7 @@
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Startup\DisableSslv3.ps1" />
     <None Include="Startup\startup.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
