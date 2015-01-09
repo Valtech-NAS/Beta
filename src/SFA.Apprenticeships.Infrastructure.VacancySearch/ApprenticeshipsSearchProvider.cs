@@ -138,19 +138,16 @@
                         query = BuildContainer(query, queryClause);
                     }
 
-                    if (!string.IsNullOrWhiteSpace(parameters.ApprenticeshipLevel) && parameters.ApprenticeshipLevel != "All")
-                    {
-                        var queryClause = q.Match(m =>
-                        {
-                            m.OnField(f => f.ApprenticeshipLevel).Query(parameters.ApprenticeshipLevel);
-                        });
-                        query = BuildContainer(query, queryClause);
-                    }
-
                     queryVacancyLocation =
                         q.Match(
                             m => m.OnField(f => f.VacancyLocationType).Query(parameters.VacancyLocationType.ToString()));
                     query = query && queryVacancyLocation;
+
+                    if (!string.IsNullOrWhiteSpace(parameters.ApprenticeshipLevel) && parameters.ApprenticeshipLevel != "All")
+                    {
+                        var queryClause = q.Match(m => m.OnField(f => f.ApprenticeshipLevel).Query(parameters.ApprenticeshipLevel));
+                        query = query && queryClause;
+                    }
 
                     return query;
                 });
