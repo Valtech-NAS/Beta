@@ -9,6 +9,5 @@
         public const string SaveFailed = "There's been a problem saving your application. Please try again.";
         public const string LeavingPageMessage = "You’re about to leave the page. Any changes you’ve made will be lost.";
         public const string VacancyNotFound = "Apprenticeship not found";
-        public const string TraineeshipAlreadyApplied = "TODO: You have already applied for this vacancy.";
     }
 }
