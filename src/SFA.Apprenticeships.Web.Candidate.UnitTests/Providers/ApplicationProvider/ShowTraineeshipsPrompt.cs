@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Configuration;
+    using Domain.Entities.Candidates;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -15,10 +16,12 @@
     [TestFixture]
     public class ShowTraineeshipsPrompt
     {
+        const int UnsuccessfulApplications = 3;
+
         private Mock<ICandidateService> _candidateService;
         private Mock<IConfigurationManager> _configurationManager;
         private Mock<IFeatureToggle> _featureToggle;
-        const int UnsuccessfulApplications = 3;
+
         private ApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
 
         [SetUp]
@@ -41,11 +44,14 @@
         public void GivenAUserHasMoreThanNUnsuccessfulApplications_ShouldSeeTheTraineeshipsPrompt()
         {
             //Arrange
+            _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+                .Returns(new Candidate());
+            
             _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
                 Returns(GetApplicationSummaries(UnsuccessfulApplications));
 
-            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>())).
-                Returns(GetTraineeshipApplicationSummaries(0));
+            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
+                .Returns(GetTraineeshipApplicationSummaries(0));
 
             //Act
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
@@ -55,16 +61,45 @@
         }
 
         [Test]
+        public void GivenAUserHasMoreThanNUnsuccessfulApplications_AndUserHasOptedNotToAllowTraineeshipsPrompt_ShouldntSeeTheTraineeshipsPrompt()
+        {
+            //Arrange
+            _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+                .Returns(new Candidate
+                {
+                    CommunicationPreferences = new CommunicationPreferences
+                    {
+                        AllowTraineeshipPrompts = false
+                    }
+                });
+
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
+                Returns(GetApplicationSummaries(UnsuccessfulApplications));
+
+            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
+                .Returns(GetTraineeshipApplicationSummaries(0));
+
+            //Act
+            var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
+
+            //Assert
+            results.ShowTraineeshipsPrompt.Should().BeFalse();
+        }
+
+        [Test]
         public void GivenAUserHasLessThanNUnsuccessfulApplications_ShouldntSeeTheTraineeshipsPrompt()
         {
             //Arrange
             const int unsuccessfulApplicationsThreshold = UnsuccessfulApplications - 1;
 
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
-                Returns(GetApplicationSummaries(unsuccessfulApplicationsThreshold));
+            _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+                .Returns(new Candidate());
 
-            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>())).
-                Returns(GetTraineeshipApplicationSummaries(0));
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>()))
+                .Returns(GetApplicationSummaries(unsuccessfulApplicationsThreshold));
+
+            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
+                .Returns(GetTraineeshipApplicationSummaries(0));
 
             //Act
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
@@ -77,13 +112,16 @@
         public void GivenTraineeshipsAreNotSwitchedOn_ShouldntSeeTheTraineeshipsPrompt()
         {
             //Arrange
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
-                Returns(GetApplicationSummaries(UnsuccessfulApplications));
+            _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>())).Returns(new Candidate());
 
-            _featureToggle.Setup(ft => ft.IsActive(Feature.Traineeships)).Returns(false);
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>()))
+                .Returns(GetApplicationSummaries(UnsuccessfulApplications));
 
-            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>())).
-                Returns(GetTraineeshipApplicationSummaries(0));
+            _featureToggle.Setup(ft => ft.IsActive(Feature.Traineeships))
+                .Returns(false);
+
+            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
+                .Returns(GetTraineeshipApplicationSummaries(0));
 
             //Act
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
@@ -96,11 +134,14 @@
         public void GivenIveAppliedForAtLeastOneTraineeship_ShouldntSeeTheTraineeshipsPrompt()
         {
             //Arrange
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
-                Returns(GetApplicationSummaries(UnsuccessfulApplications));
+            _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+                .Returns(new Candidate());
+
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>()))
+                .Returns(GetApplicationSummaries(UnsuccessfulApplications));
             
-            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>())).
-                Returns(GetTraineeshipApplicationSummaries(1));
+            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
+                .Returns(GetTraineeshipApplicationSummaries(1));
 
             //Act
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
