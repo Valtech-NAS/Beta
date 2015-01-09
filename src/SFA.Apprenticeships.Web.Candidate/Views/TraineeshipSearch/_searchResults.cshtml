@@ -31,7 +31,7 @@
                 <p>@vacancy.Description</p>
                 <ul class="list-text no-btm-margin">
                     <li><b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles</li>
-                    <li><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
+                    <li><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
                 </ul>
             </li>
             itemPosition++;
