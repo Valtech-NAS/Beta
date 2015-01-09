@@ -195,6 +195,7 @@
     <Compile Include="Constants\YearRangeRegexGenerator.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\IUserController.cs" />
+    <Compile Include="Framework\DateDisplayExtensions.cs" />
     <Compile Include="Framework\SpanLabelExtensions.cs" />
     <Compile Include="Framework\RuntimeHelper.cs" />
     <Compile Include="Framework\HttpServerUtilityExtensions.cs" />

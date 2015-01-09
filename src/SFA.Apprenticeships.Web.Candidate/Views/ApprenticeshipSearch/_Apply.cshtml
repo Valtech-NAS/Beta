@@ -46,4 +46,4 @@ else
     // Vacancy is not being viewed by a signed-in candidate.
     <a role="button" id="apply-button" class="button button-with-hint" title="Sign in to apply" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signin/", "Apprenticeship – Sign In to Apply", ViewData["AnalyticsButtonPosition"]))>Sign in to apply</a>
 }
-<p class="copy-16">Closing date: @Html.DisplayFor(m => m.ClosingDate, "Date")</p>
+<p class="copy-16">Closing date: @Model.ClosingDate.ToFriendlyClosingToday()</p>

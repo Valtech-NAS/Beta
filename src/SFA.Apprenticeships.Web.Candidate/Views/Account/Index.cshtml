@@ -250,7 +250,7 @@ else
                                         @if (application.ApplicationStatus == ApplicationStatuses.Draft)
                                             {
                                             <br />
-                                            <strong>Closing date:</strong> @Html.DisplayFor(m => application.ClosingDate)
+                                            <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
                                             }
                                     </td>
                                     <td class="ta-center">

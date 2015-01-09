@@ -44,7 +44,7 @@
                         <li><b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles</li>
                     }
 
-                    <li><b>Closing date:</b> <span class="closing-date-value">@Html.DisplayFor(m => vacancy.ClosingDate, "Date")</span></li>
+                    <li><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
 
                     @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.National)
                     {

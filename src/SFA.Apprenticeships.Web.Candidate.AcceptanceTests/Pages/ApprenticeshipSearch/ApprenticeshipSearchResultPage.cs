@@ -156,8 +156,8 @@
                     if (i > 0)
                     {
                         var currentItem = SearchResultItems.ElementAt(i);
-                        var currrentClosingDate = DateTime.Parse(currentItem.ClosingDate.Text);
-                        var previousClosingDate = DateTime.Parse(previousItem.ClosingDate.Text);
+                        var currrentClosingDate = DateTime.Parse(currentItem.ClosingDate.GetAttribute("data-date"));
+                        var previousClosingDate = DateTime.Parse(previousItem.ClosingDate.GetAttribute("data-date"));
                         result = result & currrentClosingDate >= previousClosingDate;
                     }
                     previousItem = SearchResultItems.ElementAt(i);
