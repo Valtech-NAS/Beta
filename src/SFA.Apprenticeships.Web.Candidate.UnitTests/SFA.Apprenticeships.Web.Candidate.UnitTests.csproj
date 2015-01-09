@@ -185,6 +185,12 @@
     <Compile Include="Mediators\ApprenticeshipSearch\IndexTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\ResultsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\TestsBase.cs" />
+    <Compile Include="Mediators\Login\IndexTests.cs" />
+    <Compile Include="Mediators\Login\ResendTests.cs" />
+    <Compile Include="Mediators\Login\SessionTimeoutTests.cs" />
+    <Compile Include="Mediators\Login\SignOutTests.cs" />
+    <Compile Include="Mediators\Login\TestsBase.cs" />
+    <Compile Include="Mediators\Login\UnlockTests.cs" />
     <Compile Include="Mediators\MediatorResponseExtensions.cs" />
     <Compile Include="Mediators\Register\ForgottenPasswordTests.cs" />
     <Compile Include="Mediators\Register\RegisterBaseTests.cs" />

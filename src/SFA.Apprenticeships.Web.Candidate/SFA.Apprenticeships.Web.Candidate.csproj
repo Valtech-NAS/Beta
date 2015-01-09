@@ -509,6 +509,9 @@
     <Compile Include="Mappers\Resolvers\ApprenticeshipSearchResultsResolver.cs" />
     <Compile Include="Mappers\Resolvers\SettingsViewModelResolvers.cs" />
     <Compile Include="Mappers\Resolvers\VacancyDetailViewModelResolvers.cs" />
+    <Compile Include="Mediators\ILoginMediator.cs" />
+    <Compile Include="Mediators\LoginMediator.cs" />
+    <Compile Include="Mediators\LoginMediatorCodes.cs" />
     <Compile Include="Mediators\RegisterMediatorCodes.cs" />
     <Compile Include="Mediators\Account\AccountMediator.cs" />
     <Compile Include="Mediators\Account\IAccountMediator.cs" />
