@@ -13,10 +13,11 @@ Background:
 Scenario: When searching by keyword the keyword is shown
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value      |
-		 | Keywords       | Mechanical |
-		 | Location       | Birmingham |
-		 | WithInDistance | 40 miles   |
+		 | Field               | Value      |
+		 | Keywords            | Mechanical |
+		 | Location            | Birmingham |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see 
@@ -27,10 +28,11 @@ Scenario: When searching by keyword the keyword is shown
 Scenario: When searching by keyword the results are ordered by best match
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value      |
-		 | Keywords       | Mechanical |
-		 | Location       | Birmingham |
-		 | WithInDistance | 40 miles   |
+		 | Field               | Value      |
+		 | Keywords            | Mechanical |
+		 | Location            | Birmingham |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see 
@@ -44,10 +46,11 @@ Scenario: When searching by keyword the results are ordered by best match
 Scenario: When searching by keywords the results are ordered by best match
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value                  |
-		 | Keywords       | Mechanical Engineering |
-		 | Location       | Birmingham             |
-		 | WithInDistance | 40 miles               |
+		 | Field               | Value                  |
+		 | Keywords            | Mechanical Engineering |
+		 | Location            | Birmingham             |
+		 | WithInDistance      | 40 miles               |
+		 | ApprenticeshipLevel | All levels             |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see 
@@ -61,10 +64,11 @@ Scenario: When searching by keywords the results are ordered by best match
 Scenario: When searching by keyword then removing keyword and searching again the results are ordered by distance
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value      |
-		 | Keywords       | Mechanical |
-		 | Location       | Birmingham |
-		 | WithInDistance | 40 miles   |
+		 | Field               | Value      |
+		 | Keywords            | Mechanical |
+		 | Location            | Birmingham |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see 
@@ -85,10 +89,11 @@ Scenario: When searching by keyword then removing keyword and searching again th
 Scenario: When searching by keyword then changing keyword and searching again the new keyword is used
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value      |
-		 | Keywords       | Mechanical |
-		 | Location       | Birmingham |
-		 | WithInDistance | 40 miles   |
+		 | Field               | Value      |
+		 | Keywords            | Mechanical |
+		 | Location            | Birmingham |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see 
@@ -110,9 +115,10 @@ Scenario: When searching by keyword then changing keyword and searching again th
 Scenario: When searching by location then adding keyword and searching again the results are ordered by best match
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value      |
-		 | Location       | Birmingham |
-		 | WithInDistance | 40 miles   |
+		 | Field               | Value      |
+		 | Location            | Birmingham |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see 
@@ -136,10 +142,11 @@ Scenario: When searching by location then adding keyword and searching again the
 Scenario: Nationwide apprenticeships are included in keyword search results
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Keywords       | it       |
-		 | Location       | London   |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Keywords            | it         |
+		 | Location            | London     |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see 
@@ -152,10 +159,11 @@ Scenario: Nationwide apprenticeships are included in keyword search results
 Scenario: Find apprenticeships by keyword and change ordering to distance
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Keywords       | Admin    |
-		 | Location       | Coventry |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Keywords            | Admin      |
+		 | Location            | Coventry   |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see
@@ -179,10 +187,11 @@ Scenario: Find apprenticeships by keyword and change ordering to distance
 Scenario: Find apprenticeships by keyword and change ordering to closing date
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Keywords       | Admin    |
-		 | Location       | Coventry |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Keywords            | Admin      |
+		 | Location            | Coventry   |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see

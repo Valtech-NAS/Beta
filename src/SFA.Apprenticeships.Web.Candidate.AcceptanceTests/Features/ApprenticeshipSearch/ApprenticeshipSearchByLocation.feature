@@ -13,9 +13,10 @@ Background:
 Scenario: When searching by location the results are ordered by distance and order options do not contain best match
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value      |
-		 | Location       | Birmingham |
-		 | WithInDistance | 40 miles   |
+		 | Field               | Value      |
+		 | Location            | Birmingham |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see
@@ -29,9 +30,10 @@ Scenario: When searching by location the results are ordered by distance and ord
 Scenario: When searching by location the results are ordered by distance and distance is shown
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value      |
-		 | Location       | Birmingham |
-		 | WithInDistance | 40 miles   |
+		 | Field               | Value      |
+		 | Location            | Birmingham |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see SearchResults list contains
@@ -194,9 +196,10 @@ Scenario: User enters location manually then selects from autocomplete then chan
 Scenario: Find apprenticeships by location and change ordering to closing date
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | Coventry |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Location            | Coventry   |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see
@@ -220,9 +223,10 @@ Scenario: Find apprenticeships by location and change ordering to closing date
 Scenario: Find apprenticeships by location and change ordering to closing date and back again
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | Coventry |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Location            | Coventry   |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see

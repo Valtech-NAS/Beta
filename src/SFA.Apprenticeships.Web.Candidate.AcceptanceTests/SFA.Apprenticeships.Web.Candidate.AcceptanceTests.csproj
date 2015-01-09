@@ -192,6 +192,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WarningWhenNavigatingOutOfApprenticeshipApplyPage.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\ApprenticeshipSearch\ApprenticeshipSearchByKeyword1.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApprenticeshipSearchByKeyword.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\ApprenticeshipSearch\ApprenticeshipSearchByLevel.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -484,7 +489,7 @@
     </None>
     <None Include="Features\ApprenticeshipSearch\ApprenticeshipSearchByKeyword.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ApprenticeshipSearchByKeyword.feature.cs</LastGenOutput>
+      <LastGenOutput>ApprenticeshipSearchByKeyword1.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\ApprenticeshipSearch\ApprenticeshipSearchByLocation.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

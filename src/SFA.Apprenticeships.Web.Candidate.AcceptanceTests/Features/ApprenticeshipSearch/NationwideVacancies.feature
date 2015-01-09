@@ -14,9 +14,10 @@ Background:
 Scenario: After search I see the local apprenticeships
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | London   |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Location            | London     |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
@@ -28,9 +29,10 @@ Scenario: After search I see the local apprenticeships
 Scenario: After clicking on nationwide apprenticeships I see them
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | London   |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Location            | London     |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
@@ -44,9 +46,10 @@ Scenario: After clicking on nationwide apprenticeships I see them
 Scenario: Nationwide apprenticeships cannot have their sort order changed
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | London   |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Location            | London     |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
@@ -57,9 +60,10 @@ Scenario: Nationwide apprenticeships cannot have their sort order changed
 Scenario: Nationwide apprenticeships do not show distance
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | London   |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Location            | London     |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
@@ -74,9 +78,10 @@ Scenario: Nationwide apprenticeships do not show distance
 Scenario: nationwide apprenticeships are in closing date order
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | London   |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Location            | London     |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
@@ -89,10 +94,11 @@ Scenario: nationwide apprenticeships are in closing date order
 Scenario: nationwide apprenticeships found by keyword are in best match order
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Keywords       | it       |
-		 | Location       | London   |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Keywords            | it         |
+		 | Location            | London     |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
@@ -105,10 +111,11 @@ Scenario: nationwide apprenticeships found by keyword are in best match order
 Scenario: Nationwide apprenticeships found by keyword can be ordered
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Keywords       | it       |
-		 | Location       | London   |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Keywords            | it         |
+		 | Location            | London     |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see 
@@ -131,9 +138,10 @@ Scenario: Nationwide apprenticeships found by keyword can be ordered
 Scenario: When I'm seeing nationwide apprenticeships and I change the results per page I remain there
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | London   |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Location            | London     |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
@@ -151,10 +159,11 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the results pe
 Scenario: When I'm seeing nationwide apprenticeships and I change the sort order I remain there
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value        |
-		 | Keywords       | Construction |
-		 | Location       | London       |
-		 | WithInDistance | 40 miles     |
+		 | Field               | Value        |
+		 | Keywords            | Construction |
+		 | Location            | London       |
+		 | WithInDistance      | 40 miles     |
+		 | ApprenticeshipLevel | All levels   |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
@@ -172,9 +181,10 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the sort order
 Scenario: If there are only nationwide apprenticeships do not show any link
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value   |
-		 | Location       | Stanton |
-		 | WithInDistance | 2 miles |
+		 | Field               | Value      |
+		 | Location            | Stanton    |
+		 | WithInDistance      | 2 miles    |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I am on the ApprenticeshipSearchResultPage page

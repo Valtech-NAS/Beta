@@ -14,9 +14,10 @@ Background:
 Scenario: Find apprenticeships and test ordering without keywords
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | Coventry |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Location            | Coventry   |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see
@@ -42,10 +43,11 @@ Scenario: Find apprenticeships and test ordering without keywords
 Scenario: Find apprenticeships and test ordering with keywords
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Keywords       | Admin    |
-		 | Location       | Coventry |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Keywords            | Admin      |
+		 | Location            | Coventry   |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see
@@ -59,9 +61,10 @@ Scenario: Find apprenticeships and test ordering with keywords
 Scenario: Find apprenticeships location must be two or more characters
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | B        |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Location            | B          |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchPage page
 	And I see
@@ -76,9 +79,10 @@ Scenario: Find apprenticeships location must be two or more characters
 Scenario: Find apprenticeships by partial postcode returns results
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | B1       |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Location            | B1         |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see
@@ -89,9 +93,10 @@ Scenario: Find apprenticeships by partial postcode returns results
 Scenario: Find apprenticeships and test paging
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | Coventry |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Location            | Coventry   |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	And I wait to not see PreviousPage
@@ -125,9 +130,10 @@ Scenario: Find apprenticeships and test paging
 Scenario: Search when no results are returned for location
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field    | Value  |
-		 | Keywords | Chef   |
-		 | Location | Dundee |
+		 | Field               | Value      |
+		 | Keywords            | Chef       |
+		 | Location            | Dundee     |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see
@@ -174,9 +180,10 @@ Scenario: Search location autocomplete appears on both initial search page and s
 Scenario: Different results per page
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | London   |
-		 | WithInDistance | 40 miles |
+		 | Field               | Value      |
+		 | Location            | London     |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
