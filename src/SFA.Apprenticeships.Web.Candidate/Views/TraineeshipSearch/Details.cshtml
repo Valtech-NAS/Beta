@@ -47,6 +47,8 @@
                 <p>@Model.Contact</p>
                 <h3 class="bold-small">Expected duration</h3>
                 <p>@Model.ExpectedDuration</p>
+                <h3 class="bold-small">Possible start date</h3>
+                <p id="vacancy-start-date">@Html.DisplayFor(m => Model.StartDate)</p>
                 @if (ViewBag.Distance != null)
                 {
                     <h3 class="bold-small">Distance</h3>
