@@ -22,6 +22,11 @@ $cipherorder += "TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA256
 $cipherorder += "TLS_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA,"
 $cipherorder += "TLS_RSA_WITH_3DES_EDE_CBC_SHA"
 
+Set-ItemProperty -path "HKLM:\SOFTWARE\Policies\Microsoft\Cryptography\Configuration\SSL0010002" `
+				-name "Functions" `
+				-value $cipherorder `
+				-type string
+
 # If any settings are changed, this will change to $True and the server will reboot
 $reboot = $False
 
