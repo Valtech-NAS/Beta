@@ -129,9 +129,9 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
             }
         }
 
-        private static RestClient CreateRestClient()
+        private RestClient CreateRestClient()
         {
-            var client = new RestClient();
+            var client = new RestClient(BaseUrl);
 
             client.AddHandler("application/json", new DynamicJsonDeserializer());
 
@@ -153,8 +153,8 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 
         private string BuildUri(DateTime indexDate)
         {
-            const string format = "{0}/logstash-{1}/logstash/_search?sort=@timestamp:desc&fields=@timestamp&size={2}";
-            var uri = string.Format(format, BaseUrl, indexDate.ToString("yyyy.MM.dd"), ExpectedMinimumLogCount);
+            const string format = "logstash-{0}/logstash/_search?sort=@timestamp:desc&fields=@timestamp&size={1}";
+            var uri = string.Format(format, indexDate.ToString("yyyy.MM.dd"), ExpectedMinimumLogCount);
 
             return uri;
         }
