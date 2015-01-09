@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
-    using System.Net;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using Application.Interfaces.Locations;
