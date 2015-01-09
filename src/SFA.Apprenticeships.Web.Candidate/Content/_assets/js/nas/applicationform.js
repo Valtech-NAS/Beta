@@ -517,8 +517,8 @@
         var self = this;
         //TODO get this from config too
         self.months = ko.observableArray([
-            new monthOfTheYear('Jan', 1), new monthOfTheYear('Feb', 2), new monthOfTheYear('Apr', 3),
-            new monthOfTheYear('Mar', 4), new monthOfTheYear('May', 5), new monthOfTheYear('June', 6),
+            new monthOfTheYear('Jan', 1), new monthOfTheYear('Feb', 2), new monthOfTheYear('Mar', 3),
+            new monthOfTheYear('Apr', 4), new monthOfTheYear('May', 5), new monthOfTheYear('June', 6),
             new monthOfTheYear('July', 7), new monthOfTheYear('Aug', 8), new monthOfTheYear('Sept', 9),
             new monthOfTheYear('Oct', 10), new monthOfTheYear('Nov', 11), new monthOfTheYear('Dec', 12)
         ]);
