@@ -218,6 +218,7 @@
     <Content Include="Content\_assets\img\icon-location-selected.svg" />
     <Content Include="Content\_assets\img\icon-location.png" />
     <Content Include="Content\_assets\img\icon-location.svg" />
+    <Content Include="Content\_assets\img\logo-ticks.gif" />
     <Content Include="Content\_assets\img\performance-icon-2x.png" />
     <Content Include="Content\_assets\img\performance-icon.png" />
     <Content Include="Content\_assets\js\nas\dirtyFormDialog.js" />
