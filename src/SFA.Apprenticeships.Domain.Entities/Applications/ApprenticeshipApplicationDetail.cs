@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Applications
 {
+    using Vacancies;
     using Vacancies.Apprenticeships;
 
     public class ApprenticeshipApplicationDetail : ApplicationDetail
@@ -11,6 +12,8 @@
         }
 
         public ApplicationStatuses Status { get; set; }
+
+        public VacancyStatuses VacancyStatus { get; set; }
 
         public string WithdrawnOrDeclinedReason { get; set; }
 

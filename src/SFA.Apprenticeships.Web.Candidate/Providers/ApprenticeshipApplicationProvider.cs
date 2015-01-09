@@ -388,6 +388,7 @@
                         EmployerName = each.EmployerName,
                         UnsuccessfulReason = each.UnsuccessfulReason,
                         ApplicationStatus = each.Status,
+                        VacancyStatus = each.VacancyStatus,
                         IsArchived = each.IsArchived,
                         DateApplied = each.DateApplied,
                         ClosingDate = each.ClosingDate,

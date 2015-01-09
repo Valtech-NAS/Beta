@@ -48,6 +48,12 @@
                 updated = true;
             }
 
+            if (apprenticeshipApplication.VacancyStatus != applicationStatusSummary.VacancyStatus)
+            {
+                apprenticeshipApplication.VacancyStatus = applicationStatusSummary.VacancyStatus;
+                updated = true;
+            }
+
             if (apprenticeshipApplication.Vacancy.ClosingDate != applicationStatusSummary.ClosingDate)
             {
                 apprenticeshipApplication.Vacancy.ClosingDate = applicationStatusSummary.ClosingDate;

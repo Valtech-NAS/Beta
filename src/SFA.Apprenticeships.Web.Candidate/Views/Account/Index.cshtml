@@ -1,4 +1,5 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Applications
+@using SFA.Apprenticeships.Domain.Entities.Vacancies
 @model SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications.MyApplicationsViewModel
 
 @{
@@ -119,15 +120,24 @@ else
                             </colgroup>
                             <tbody class="tbody-3rows">
                                 @foreach (var application in @Model.SuccessfulApprenticeshipApplications)
-                                    {
+                                {
                                     <tr>
-                                        <td>@application.Title with @application.EmployerName</td>
+                                        <td>
+                                            @if (application.IsLiveVacancy)
+                                            {
+                                                @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                            }
+                                            else
+                                            {
+                                                @application.Title @:with @application.EmployerName
+                                            }
+                                        </td>
                                         <td class="ta-center">@application.ApplicationStatusDescription</td>
                                         <td class="ta-center">
                                             <a class="icon-black archive-successful" href="@Url.Action("Archive", "Account", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                         </td>
                                     </tr>
-                                    }
+                                }
                             </tbody>
                             <tbody class="tbody-expandrows">
                                 <tr class="no-btm-border">
@@ -152,9 +162,18 @@ else
                             </colgroup>
                             <tbody class="tbody-3rows">
                                 @foreach (var application in @Model.SubmittedApprenticeshipApplications)
-                                    {
+                                {
                                     <tr>
-                                        <td>@application.Title with @application.EmployerName</td>
+                                        <td>
+                                            @if (application.IsLiveVacancy)
+                                            {
+                                                @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                            }
+                                            else
+                                            {
+                                                @application.Title @:with @application.EmployerName
+                                            }
+                                        </td>
                                         <td class="ta-center">@application.ApplicationStatusDescription</td>
                                         <td class="ta-center">@Html.DisplayFor(m => application.DateApplied)</td>
                                     </tr>
@@ -190,24 +209,33 @@ else
                             </colgroup>
                             <tbody class="tbody-3rows tbody-withReasons">
                                 @foreach (var application in @Model.UnsuccessfulApplications)
-                                    {
+                                {
                                     <tr>
-                                        <td>@application.Title with @application.EmployerName</td>
+                                        <td>
+                                            @if (application.IsLiveVacancy)
+                                            {
+                                                @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                            }
+                                            else
+                                            {
+                                                @application.Title @:with @application.EmployerName
+                                            }
+                                        </td>
                                         <td id="application-status-description" class="ta-center">@application.ApplicationStatusDescription</td>
                                         <td class="ta-center">
                                             <a class="icon-black archive-unsuccessful" href="@Url.Action("Archive", "Account", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                         </td>
                                     </tr>
 
-                                        if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason))
-                                        {
-                                    <tr>
-                                        <td colspan="3">
-                                            <b>Reason:</b> @application.UnsuccessfulReason
-                                        </td>
-                                    </tr>
-                                        }
+                                    if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason))
+                                    {
+                                        <tr>
+                                            <td colspan="3">
+                                                <b>Reason:</b> @application.UnsuccessfulReason
+                                            </td>
+                                        </tr>
                                     }
+                                }
                             </tbody>
                             <tbody class="tbody-expandrows">
                                 <tr class="no-btm-border">
@@ -242,24 +270,27 @@ else
                         </colgroup>
                         <tbody>
                             @foreach (var application in @Model.DraftApprenticeshipApplications)
-                                {
+                            {
                                 <tr>
                                     <td>
-                                        @application.Title with @application.EmployerName
-
-                                        @if (application.ApplicationStatus == ApplicationStatuses.Draft)
-                                            {
+                                        @if (application.IsLiveVacancy)
+                                        {
+                                            @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new {id = application.VacancyId}, new {@class = "link-unimp"})
                                             <br />
                                             <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
-                                            }
+                                        }
+                                        else
+                                        {
+                                            @application.Title @:with @application.EmployerName
+                                        }
                                     </td>
                                     <td class="ta-center">
-                                        @if (application.ApplicationStatus == ApplicationStatuses.Draft)
-                                            {
+                                        @if (application.IsLiveVacancy)
+                                        {
                                             @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = application.VacancyId }, new { @class = "resume-link" })
-                                            }
-                                            else
-                                            {
+                                        }
+                                        else
+                                        {
                                             @:Apprenticeship withdrawn
                                         }
                                     </td>
@@ -267,7 +298,7 @@ else
                                         <a class="icon-black delete-draft" href="@Url.Action("Delete", "Account", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                     </td>
                                 </tr>
-                                }
+                            }
                         </tbody>
                     </table>
                 }
@@ -286,7 +317,9 @@ else
                             @foreach (var application in @Model.TraineeshipApplications)
                             {
                                     <tr class="traineeship-table-row">
-                                        <td>@application.Title with @application.EmployerName</td>
+                                        <td>
+                                            @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "TraineeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                        </td>
                                         <td class="ta-center">Applied</td>
                                         <td class="ta-center">@Html.DisplayFor(m => application.DateApplied)</td>
                                     </tr>

@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
 
     public class MyApprenticeshipApplicationViewModel
     {
@@ -13,6 +14,26 @@
         public string EmployerName { get; set; }
 
         public ApplicationStatuses ApplicationStatus { get; set; }
+
+        public bool IsLiveVacancy
+        {
+            get
+            {
+                switch (ApplicationStatus)
+                {
+                    case ApplicationStatuses.Draft:
+                        return true;
+
+                    case ApplicationStatuses.ExpiredOrWithdrawn:
+                        return false;
+
+                    default:
+                        return VacancyStatus == VacancyStatuses.Unknown || VacancyStatus == VacancyStatuses.Live;
+                }
+            }
+        }
+
+        public VacancyStatuses VacancyStatus { get; set; }
 
         public string ApplicationStatusDescription
         {

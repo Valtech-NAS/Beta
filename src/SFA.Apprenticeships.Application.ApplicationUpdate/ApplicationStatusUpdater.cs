@@ -53,6 +53,12 @@
                         updated = true;
                     }
 
+                    if (applicationDetail.VacancyStatus != applicationStatus.VacancyStatus)
+                    {
+                        applicationDetail.VacancyStatus = applicationStatus.VacancyStatus;
+                        updated = true;
+                    }
+
                     if (applicationDetail.Vacancy.ClosingDate != applicationStatus.ClosingDate)
                     {
                         applicationDetail.Vacancy.ClosingDate = applicationStatus.ClosingDate;
