@@ -18,7 +18,8 @@
         {
             UserDataProvider = new Mock<IUserDataProvider>();
             CandidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            Mediator = new LoginMediator(UserDataProvider.Object, CandidateServiceProvider.Object, new LoginViewModelServerValidator());
+            Mediator = new LoginMediator(UserDataProvider.Object, CandidateServiceProvider.Object,
+                new LoginViewModelServerValidator(), new AccountUnlockViewModelServerValidator(), new ResendAccountUnlockCodeViewModelServerValidator());
         }
     }
 }

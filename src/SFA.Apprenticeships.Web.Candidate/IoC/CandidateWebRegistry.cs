@@ -149,6 +149,7 @@
             For<ITraineeshipSearchMediator>().Use<TraineeshipSearchMediator>();
             For<IAccountMediator>().Use<AccountMediator>();
             For<IRegisterMediator>().Use<RegisterMediator>();
+            For<ILoginMediator>().Use<LoginMediator>();
         }
     }
 }

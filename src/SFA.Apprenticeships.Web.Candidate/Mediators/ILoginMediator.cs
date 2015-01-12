@@ -5,5 +5,9 @@
     public interface ILoginMediator
     {
         MediatorResponse Index(LoginViewModel viewModel);
+
+        MediatorResponse<AccountUnlockViewModel> Unlock(AccountUnlockViewModel accountUnlockView);
+
+        MediatorResponse<AccountUnlockViewModel> Resend(AccountUnlockViewModel accountUnlockViewModel);
     }
 }

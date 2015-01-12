@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System.Threading.Tasks;
+    using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
     using Attributes;
@@ -9,32 +10,20 @@
     using Common.Services;
     using Constants;
     using Constants.Pages;
-    using Domain.Entities.Applications;
-    using Domain.Entities.Users;
     using FluentValidation.Mvc;
-    using Providers;
-    using Validators;
+    using Mediators;
     using ViewModels.Login;
 
     public class LoginController : CandidateControllerBase
     {
-        private readonly AccountUnlockViewModelServerValidator _accountUnlockViewModelServerValidator;
-        private readonly ResendAccountUnlockCodeViewModelServerValidator _resendAccountUnlockCodeViewModelServerValidator;
-        private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly IAuthenticationTicketService _authenticationTicketService;
-        private readonly LoginViewModelServerValidator _loginViewModelServerValidator;
-
-        public LoginController(LoginViewModelServerValidator loginViewModelServerValidator,
-            AccountUnlockViewModelServerValidator accountUnlockViewModelServerValidator,
-            ResendAccountUnlockCodeViewModelServerValidator resendAccountUnlockCodeViewModelServerValidator,
-            ICandidateServiceProvider candidateServiceProvider,
-            IAuthenticationTicketService authenticationTicketService)
+        private readonly ILoginMediator _loginMediator;
+     
+        public LoginController(IAuthenticationTicketService authenticationTicketService,
+            ILoginMediator loginMediator)
         {
-            _loginViewModelServerValidator = loginViewModelServerValidator;
-            _accountUnlockViewModelServerValidator = accountUnlockViewModelServerValidator;
-            _resendAccountUnlockCodeViewModelServerValidator = resendAccountUnlockCodeViewModelServerValidator;
-            _candidateServiceProvider = candidateServiceProvider;
-            _authenticationTicketService = authenticationTicketService; //todo: shouldn't be in here, move to Provider layer
+            _authenticationTicketService = authenticationTicketService; //todo: shouldn't be in here, move to Provider layer?
+            _loginMediator = loginMediator;
         }
 
         [HttpGet]
@@ -66,45 +55,47 @@
         [ApplyWebTrends]
         public async Task<ActionResult> Index(LoginViewModel model)
         {
-            return await Task.Run(() =>
+            return await Task.Run<ActionResult>(() =>
             {
                 if (User.Identity.IsAuthenticated)
                 {
                     return RedirectToRoute(CandidateRouteNames.MyApplications);
                 }
 
-                // todo: refactor - too much going on here Provider layer
-                // Validate view model.
-                var validationResult = _loginViewModelServerValidator.Validate(model);
+                var response = _loginMediator.Index(model);
 
-                if (!validationResult.IsValid)
+                switch (response.Code)
                 {
-                    ModelState.Clear();
-                    validationResult.AddToModelState(ModelState, string.Empty);
+                    case Codes.Login.Index.ValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(model);
 
-                    return View(model);
+                    case Codes.Login.Index.AccountLocked:
+                        return RedirectToAction("Unlock");
+
+                    case Codes.Login.Index.ApprenticeshipApply:
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipApply, new { id = response.Parameters.ToString() });
+
+                    case Codes.Login.Index.ApprenticeshipDetails:
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id = response.Parameters.ToString() });
+
+                    case Codes.Login.Index.ReturnUrl:
+                        return Redirect(HttpUtility.UrlDecode(response.Parameters.ToString()));
+
+                    case Codes.Login.Index.Ok:
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
+
+                    case Codes.Login.Index.PendingActivation:
+                        return RedirectToAction("Activation", "Register");
+
+                    case Codes.Login.Index.LoginFailed:
+                        ModelState.AddModelError(string.Empty, response.Parameters.ToString());
+                        return View(model);
+
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
                 }
-
-                var result = _candidateServiceProvider.Login(model);
-
-                if (result.UserStatus == UserStatuses.Locked)
-                {
-                    UserData.Push(UserDataItemNames.UnlockEmailAddress, result.EmailAddress);
-
-                    return RedirectToAction("Unlock");
-                }
-
-                if (result.IsAuthenticated)
-                {
-                    UserData.SetUserContext(result.EmailAddress, result.FullName);
-
-                    return RedirectOnAuthenticated(result.UserStatus, result.EmailAddress);
-                }
-
-                ModelState.Clear();
-                ModelState.AddModelError(string.Empty, result.ViewModelMessage);
-
-                return View(model);
             });
         }
 
@@ -117,8 +108,7 @@
             return await Task.Run(() =>
             {
                 var emailAddress = UserData.Pop(UserDataItemNames.UnlockEmailAddress);
-
-                return ViewAccountUnlock(emailAddress);
+                return View(new AccountUnlockViewModel { EmailAddress = emailAddress });
             });
         }
 
@@ -131,38 +121,37 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                // todo: refactor - too much going on here Provider layer
-                var validationResult = _accountUnlockViewModelServerValidator.Validate(model);
+                var response = _loginMediator.Unlock(model);
 
-                if (!validationResult.IsValid)
+                switch (response.Code)
                 {
-                    ModelState.Clear();
-                    validationResult.AddToModelState(ModelState, string.Empty);
+                    case Codes.Login.Unlock.ValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(model);
 
-                    return View(model);
-                }
-
-                var accountUnlockViewModel = _candidateServiceProvider.VerifyAccountUnlockCode(model);
-                switch (accountUnlockViewModel.Status)
-                {
-                    case AccountUnlockState.Ok:
+                    case Codes.Login.Unlock.UnlockedSuccessfully:
                         UserData.Pop(UserDataItemNames.EmailAddress);
                         SetUserMessage(AccountUnlockPageMessages.AccountUnlockedText);
                         return RedirectToAction("Index");
 
-                    case AccountUnlockState.UserInIncorrectState:
+                    case Codes.Login.Unlock.UserInIncorrectState:
                         return RedirectToAction("Index");
-                    case AccountUnlockState.AccountEmailAddressOrUnlockCodeInvalid:
+
+                    case Codes.Login.Unlock.AccountEmailAddressOrUnlockCodeInvalid:
                         SetUserMessage(AccountUnlockPageMessages.WrongEmailAddressOrAccountUnlockCodeErrorText, UserMessageLevel.Error);
                         return View(model);
 
-                    case AccountUnlockState.AccountUnlockCodeExpired:
+                    case Codes.Login.Unlock.AccountUnlockCodeExpired:
                         SetUserMessage(AccountUnlockPageMessages.AccountUnlockCodeExpired, UserMessageLevel.Warning);
                         return View(model);
 
-                    default:
+                    case Codes.Login.Unlock.AccountUnlockFailed:
                         SetUserMessage(AccountUnlockPageMessages.AccountUnlockFailed, UserMessageLevel.Warning);
                         return View(model);
+
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
                 }
             });
         }
@@ -176,34 +165,23 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                // todo: refactor - too much going on here Provider layer
-                var validationResult = _resendAccountUnlockCodeViewModelServerValidator.Validate(model);
+                var response = _loginMediator.Resend(model);
 
-                if (!validationResult.IsValid)
+                switch (response.Code)
                 {
-                    ModelState.Clear();
-                    validationResult.AddToModelState(ModelState, string.Empty);
+                    case Codes.Login.Resend.ValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(model);
 
-                    return View(model);
+                    case Codes.Login.Resend.ResendFailed:
+                    case Codes.Login.Resend.ResentSuccessfully:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return RedirectToAction("Unlock");
+
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
                 }
-
-                var emailAddress = model.EmailAddress;
-
-                //TODO: make different things if we have an error or a user with an invalid state
-
-                model = _candidateServiceProvider.RequestAccountUnlockCode(model);
-                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
-
-                if (model.HasError())
-                {
-                    SetUserMessage(AccountUnlockPageMessages.AccountUnlockResendCodeFailed, UserMessageLevel.Warning);
-                }
-                else
-                {
-                    SetUserMessage(string.Format(AccountUnlockPageMessages.AccountUnlockCodeResent, emailAddress));
-                }
-
-                return RedirectToAction("Unlock");
             });
         }
 
@@ -225,7 +203,6 @@
         [ApplyWebTrends]
         public ActionResult SessionTimeout(string returnUrl)
         {
-
             FormsAuthentication.SignOut();
             UserData.Clear();
 
@@ -238,62 +215,5 @@
 
             return RedirectToAction("Index");
         }
-
-        #region Helpers
-
-        private ActionResult ViewAccountUnlock(string emailAddress)
-        {
-            return View(new AccountUnlockViewModel
-            {
-                EmailAddress = emailAddress
-            });
-        }
-
-        private ActionResult RedirectOnAuthenticated(UserStatuses userStatus, string username)
-        {
-            // todo: refactor - too much going on here Provider layer
-            if (userStatus == UserStatuses.PendingActivation)
-            {
-                return RedirectToAction("Activation", "Register");
-            }
-
-            // Redirect to session return URL (if any).
-            var sessionReturnUrl = UserData.Pop(UserDataItemNames.SessionReturnUrl);
-
-            if (!string.IsNullOrWhiteSpace(sessionReturnUrl))
-            {
-                return Redirect(Server.UrlDecode(sessionReturnUrl));
-            }
-
-            // Redirect to return URL (if any).
-            var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
-
-            if (!string.IsNullOrWhiteSpace(returnUrl))
-            {
-                return Redirect(Server.UrlDecode(returnUrl));
-            }
-
-            // Redirect to last viewed vacancy (if any).
-            var lastViewedVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
-
-            if (lastViewedVacancyId != null)
-            {
-                var candidate = _candidateServiceProvider.GetCandidate(username);
-
-                var applicationStatus = _candidateServiceProvider.GetApplicationStatus(
-                    candidate.EntityId, int.Parse(lastViewedVacancyId));
-
-                if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
-                {
-                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipApply, new { id = lastViewedVacancyId });
-                }
-
-                return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id = lastViewedVacancyId });
-            }
-
-            return RedirectToRoute(CandidateRouteNames.MyApplications);
-        }
-
-        #endregion
     }
 }
