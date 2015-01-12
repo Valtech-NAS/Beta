@@ -6,6 +6,22 @@
 
     public static class MediatorResponseExtensions
     {
+        public static void AssertCode(this MediatorResponse response, string code, bool parametersShouldNotBeNull = false)
+        {
+            response.Code.Should().Be(code);
+            response.Message.Should().BeNull();
+            response.AssertParameters(parametersShouldNotBeNull);
+            response.ValidationResult.Should().BeNull();
+        }
+
+        public static void AssertValidationResult(this MediatorResponse response, string code, bool parametersShouldNotBeNull = false)
+        {
+            response.Code.Should().Be(code);
+            response.Message.Should().BeNull();
+            response.AssertParameters(parametersShouldNotBeNull);
+            response.ValidationResult.Should().NotBeNull();
+        }
+
         public static void AssertCode<T>(this MediatorResponse<T> response, string code, bool viewModelShouldNotBeNull, bool parametersShouldNotBeNull = false)
         {
             response.Code.Should().Be(code);
@@ -47,6 +63,18 @@
         }
 
         private static void AssertParameters<T>(this MediatorResponse<T> response, bool parametersShouldNotBeNull)
+        {
+            if (parametersShouldNotBeNull)
+            {
+                response.Parameters.Should().NotBeNull();
+            }
+            else
+            {
+                response.Parameters.Should().BeNull();
+            }
+        }
+
+        private static void AssertParameters(this MediatorResponse response, bool parametersShouldNotBeNull)
         {
             if (parametersShouldNotBeNull)
             {

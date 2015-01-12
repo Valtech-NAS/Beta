@@ -44,10 +44,10 @@
                 <h3 class="bold-small">Training provider</h3>
                 <p>@Model.ProviderName</p>
                 <h3 class="bold-small">Contact</h3>
-                <p>@Model.Contact</p>
+                <p>@Model.Contact</p>                
                 <h3 class="bold-small">Expected duration</h3>
-                <p>@Model.ExpectedDuration</p>
-                <h3 class="bold-small">Possible start date</h3>
+                <p>@(string.IsNullOrWhiteSpace(@Model.ExpectedDuration) ? "Not specified" : @Model.ExpectedDuration)</p>
+                <h3 class="bold-small">Planned start date</h3>
                 <p id="vacancy-start-date">@Html.DisplayFor(m => Model.StartDate)</p>
                 @if (ViewBag.Distance != null)
                 {
@@ -104,8 +104,12 @@
                 <h3 class="heading-small">Desired skills</h3>
                 <p>@Html.Raw(Model.SkillsRequired)</p>
                 <p>@Html.Raw(Model.PersonalQualities)</p>
-                <h3 class="heading-small">What this will lead to</h3>
-                <p>@Html.Raw(Model.FutureProspects)</p>
+                
+                @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
+                {
+                    <h3 class="heading-small">What this will lead to</h3>
+                    <p>@Html.Raw(Model.FutureProspects)</p>
+                }
             </div>
         </section>
         

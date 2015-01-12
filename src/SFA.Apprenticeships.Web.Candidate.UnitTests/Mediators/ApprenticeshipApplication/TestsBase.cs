@@ -5,13 +5,23 @@
     using Candidate.Validators;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
+    using Moq;
+    using NUnit.Framework;
 
     public abstract class TestsBase
     {
-        protected static IApprenticeshipApplicationMediator GetMediator(IApprenticeshipApplicationProvider apprenticeshipApplicationProvider, IConfigurationManager configurationManager, IUserDataProvider userDataProvider)
+        protected Mock<IApprenticeshipApplicationProvider> ApprenticeshipApplicationProvider;
+        protected Mock<IConfigurationManager> ConfigurationManager;
+        protected Mock<IUserDataProvider> UserDataProvider;
+        protected IApprenticeshipApplicationMediator Mediator;
+
+        [SetUp]
+        public void Setup()
         {
-            var mediator = new ApprenticeshipApplicationMediator(apprenticeshipApplicationProvider, new ApprenticeshipApplicationViewModelServerValidator(), new ApprenticeshipApplicationViewModelSaveValidator(), configurationManager, userDataProvider);
-            return mediator;
+            ApprenticeshipApplicationProvider = new Mock<IApprenticeshipApplicationProvider>();
+            ConfigurationManager = new Mock<IConfigurationManager>();
+            UserDataProvider = new Mock<IUserDataProvider>();
+            Mediator = new ApprenticeshipApplicationMediator(ApprenticeshipApplicationProvider.Object, new ApprenticeshipApplicationViewModelServerValidator(), new ApprenticeshipApplicationViewModelSaveValidator(), ConfigurationManager.Object, UserDataProvider.Object);
         }
     }
 }

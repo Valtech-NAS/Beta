@@ -3,11 +3,8 @@
     using System.Linq;
     using Application.Interfaces.Vacancies;
     using Candidate.Mediators;
-    using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
-    using Common.Providers;
-    using Domain.Interfaces.Configuration;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -15,35 +12,20 @@
     [TestFixture]
     public class ResultsTests : TestsBase
     {
-        private Mock<IConfigurationManager> _configurationManager;
-        private Mock<ISearchProvider> _searchProvider;
-        private Mock<IApprenticeshipVacancyDetailProvider> _apprenticeshipVacancyDetailProvider;
-        private Mock<IUserDataProvider> _userDataProvider;
-        private IApprenticeshipSearchMediator _mediator;
-
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
-            _configurationManager = new Mock<IConfigurationManager>();
-            _searchProvider = GetSearchProvider();
-            _apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            _userDataProvider = new Mock<IUserDataProvider>();
-            _mediator = GetMediator(_configurationManager.Object, _searchProvider.Object, _apprenticeshipVacancyDetailProvider.Object, _userDataProvider.Object);
-        }
-
-        private static Mock<ISearchProvider> GetSearchProvider()
-        {
-            var searchProvider = new Mock<ISearchProvider>();
-            searchProvider.Setup(sp => sp.FindLocation(It.IsAny<string>())).Returns<string>(l => new LocationsViewModel(new[] { new LocationViewModel { Name = l } }));
+            base.Setup();
+            
+            SearchProvider.Setup(sp => sp.FindLocation(It.IsAny<string>())).Returns<string>(l => new LocationsViewModel(new[] { new LocationViewModel { Name = l } }));
             var londonVacancies = new[]
             {
                 new ApprenticeshipVacancySummaryViewModel {Description = "A London Vacancy"}
             };
             var emptyVacancies = new ApprenticeshipVacancySummaryViewModel[0];
             //This order is important. Moq will run though all matches and pick the last one
-            searchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>())).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = emptyVacancies, VacancySearch = svm });
-            searchProvider.Setup(sp => sp.FindVacancies(It.Is<ApprenticeshipSearchViewModel>(svm => svm.Location == "London"))).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm });
-            return searchProvider;
+            SearchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>())).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = emptyVacancies, VacancySearch = svm });
+            SearchProvider.Setup(sp => sp.FindVacancies(It.Is<ApprenticeshipSearchViewModel>(svm => svm.Location == "London"))).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm });
         }
 
         [Test]
@@ -54,7 +36,7 @@
                 Location = "London"
             };
 
-            var response = _mediator.Results(searchViewModel);
+            var response = Mediator.Results(searchViewModel);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
@@ -75,7 +57,7 @@
                 ApprenticeshipLevel = "Higher"
             };
 
-            var response = _mediator.Results(searchViewModel);
+            var response = Mediator.Results(searchViewModel);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
@@ -85,7 +67,7 @@
             vacancies.Count.Should().Be(1);
             viewModel.ApprenticeshipLevels.Should().NotBeNull();
             viewModel.VacancySearch.ApprenticeshipLevel.Should().Be("Higher");
-            _userDataProvider.Verify(udp => udp.Push(UserDataItemNames.ApprenticeshipLevel, "Higher"), Times.Once);
+            UserDataProvider.Verify(udp => udp.Push(UserDataItemNames.ApprenticeshipLevel, "Higher"), Times.Once);
         }
 
         [Test]
@@ -96,7 +78,7 @@
                 Location = "Middle of Nowhere"
             };
 
-            var response = _mediator.Results(searchViewModel);
+            var response = Mediator.Results(searchViewModel);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
@@ -114,7 +96,7 @@
                 Location = string.Empty
             };
 
-            var response = _mediator.Results(searchViewModel);
+            var response = Mediator.Results(searchViewModel);
 
             response.AssertValidationResult(Codes.ApprenticeshipSearch.Results.ValidationError, true);
         }
@@ -127,7 +109,7 @@
                 Location = "London"
             };
 
-            var response = _mediator.Results(searchViewModel);
+            var response = Mediator.Results(searchViewModel);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
@@ -147,7 +129,7 @@
                 Keywords = "Sales"
             };
 
-            var response = _mediator.Results(searchViewModel);
+            var response = Mediator.Results(searchViewModel);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 

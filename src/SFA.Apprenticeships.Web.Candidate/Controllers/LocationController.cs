@@ -5,12 +5,12 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-    using SFA.Apprenticeships.Web.Candidate.Constants;
-    using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
-    using SFA.Apprenticeships.Web.Candidate.Providers;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
-    using SFA.Apprenticeships.Web.Common.Attributes;
+    using Domain.Interfaces.Configuration;
+    using Constants;
+    using Constants.ViewModels;
+    using Providers;
+    using ViewModels.VacancySearch;
+    using Common.Attributes;
 
     public class LocationController : Controller
     {
