@@ -131,7 +131,7 @@
                 FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
                 Tokens = CreateActivationEmailTokens(),
-                MessageType = CandidateMessageTypes.SendActivationCode
+                MessageType = MessageTypes.SendActivationCode
             };
 
             _dispatcher.SendEmail(request);
@@ -146,7 +146,7 @@
                 Subject = "Hello, World at " + DateTime.Now.ToLongTimeString(),
                 ToEmail = TestToEmail,
                 Tokens = CreateActivationEmailTokens(),
-                MessageType = CandidateMessageTypes.SendActivationCode
+                MessageType = MessageTypes.SendActivationCode
             };
 
             _dispatcher.SendEmail(request);
@@ -161,7 +161,7 @@
                 FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
                 Tokens = CreateActivationEmailTokens(),
-                MessageType = CandidateMessageTypes.SendActivationCode
+                MessageType = MessageTypes.SendActivationCode
             };
 
             _dispatcher.SendEmail(request);
@@ -175,7 +175,7 @@
                 FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
                 Tokens = CreateAccountUnlockCodeTokens(),
-                MessageType = CandidateMessageTypes.SendAccountUnlockCode
+                MessageType = MessageTypes.SendAccountUnlockCode
             };
 
             _dispatcher.SendEmail(request);
@@ -189,7 +189,7 @@
                 FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
                 Tokens = CreateApprenticeshipApplicationSubmittedTokens(),
-                MessageType = CandidateMessageTypes.ApprenticeshipApplicationSubmitted
+                MessageType = MessageTypes.ApprenticeshipApplicationSubmitted
             };
 
             _dispatcher.SendEmail(request);
@@ -203,7 +203,7 @@
                 FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
                 Tokens = CreateTraineeshipApplicationSubmittedTokens(),
-                MessageType = CandidateMessageTypes.TraineeshipApplicationSubmitted
+                MessageType = MessageTypes.TraineeshipApplicationSubmitted
             };
 
             _dispatcher.SendEmail(request);
@@ -217,7 +217,7 @@
                 FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
                 Tokens = CreatePasswordResetTokens(),
-                MessageType = CandidateMessageTypes.SendPasswordResetCode
+                MessageType = MessageTypes.SendPasswordResetCode
             };
 
             _dispatcher.SendEmail(request);
@@ -231,7 +231,7 @@
                 FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
                 Tokens = CreatePasswordResetConfirmationTokens(),
-                MessageType = CandidateMessageTypes.PasswordChanged
+                MessageType = MessageTypes.PasswordChanged
             };
 
             _dispatcher.SendEmail(request);

@@ -9,7 +9,7 @@
     /// </summary>
     public interface ICommunicationService
     {
-        void SendMessageToCandidate(Guid candidateId, CandidateMessageTypes messageType,
+        void SendMessageToCandidate(Guid candidateId, MessageTypes messageType,
             IList<KeyValuePair<CommunicationTokens, string>> tokens);
     }
 }

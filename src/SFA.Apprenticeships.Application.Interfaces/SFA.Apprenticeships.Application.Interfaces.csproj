@@ -96,8 +96,9 @@
     <Compile Include="Locations\ErrorCodes.cs" />
     <Compile Include="Locations\IAddressSearchProvider.cs" />
     <Compile Include="Messaging\BaseRequest.cs" />
-    <Compile Include="Messaging\CandidateMessageTypes.cs" />
+    <Compile Include="Messaging\MessageTypes.cs" />
     <Compile Include="Messaging\CommunicationTokens.cs" />
+    <Compile Include="Messaging\CommunicationRequest.cs" />
     <Compile Include="Messaging\EmailRequest.cs" />
     <Compile Include="Messaging\ICommunicationService.cs" />
     <Compile Include="Messaging\IEmailDispatcher.cs" />

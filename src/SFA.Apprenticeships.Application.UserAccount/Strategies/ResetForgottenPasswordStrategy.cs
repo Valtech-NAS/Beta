@@ -85,7 +85,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             var firstName = candidate.RegistrationDetails.FirstName;
             var emailAddress = candidate.RegistrationDetails.EmailAddress;
 
-            _communicationService.SendMessageToCandidate(candidate.EntityId, CandidateMessageTypes.PasswordChanged,
+            _communicationService.SendMessageToCandidate(candidate.EntityId, MessageTypes.PasswordChanged,
                 new[]
                 {
                     new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, firstName),

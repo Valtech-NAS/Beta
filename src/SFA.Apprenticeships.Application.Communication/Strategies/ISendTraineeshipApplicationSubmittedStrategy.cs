@@ -1,13 +1,12 @@
 namespace SFA.Apprenticeships.Application.Communication.Strategies
 {
+    using System;
     using System.Collections.Generic;
-    using Domain.Entities.Applications;
-    using Domain.Entities.Candidates;
     using Interfaces.Messaging;
 
     public interface ISendTraineeshipApplicationSubmittedStrategy
     {
-        void Send(Candidate candidate, TraineeshipApplicationDetail traineeshipApplicationDetail, CandidateMessageTypes messageType,
-            IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens);
+        //todo: remove this interface as all comm event strategies now use same signature
+        void Send(Guid candidateId, IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens);
     }
 }

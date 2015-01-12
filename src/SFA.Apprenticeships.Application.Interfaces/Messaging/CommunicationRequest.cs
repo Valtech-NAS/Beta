@@ -4,15 +4,11 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// DTO to represent an email that should be sent
+    /// DTO to represent an outbound communication message (email, SMS)
     /// </summary>
-    public class EmailRequest
+    public class CommunicationRequest
     {
-        public string ToEmail { get; set; }
-
-        public string FromEmail { get; set; }
-
-        public string Subject { get; set; }
+        public Guid EntityId { get; set; }
 
         public MessageTypes MessageType { get; set; }
 

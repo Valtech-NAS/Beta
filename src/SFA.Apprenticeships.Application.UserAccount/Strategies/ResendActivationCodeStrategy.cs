@@ -71,7 +71,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             var expiry = FormatActivationCodeExpiryDays();
             var firstName = candidate.RegistrationDetails.FirstName;
 
-            _communicationService.SendMessageToCandidate(candidate.EntityId, CandidateMessageTypes.SendActivationCode,
+            _communicationService.SendMessageToCandidate(candidate.EntityId, MessageTypes.SendActivationCode,
                 new[]
                 {
                     new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, firstName),

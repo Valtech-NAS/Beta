@@ -1,11 +1,13 @@
 namespace SFA.Apprenticeships.Application.Communication.Strategies
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Domain.Entities.Applications;
-    using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Messaging;
+    using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using Vacancy;
 
@@ -13,41 +15,57 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
     {
         private readonly IMessageBus _messageBus;
         private readonly IVacancyDataProvider<TraineeshipVacancyDetail> _vacancyDataProvider;
+        private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
+        private readonly ICandidateReadRepository _candidateReadRepository;
 
-        public LegacyQueueTraineeshipApplicationSubmittedStrategy(IMessageBus messageBus, IVacancyDataProvider<TraineeshipVacancyDetail> vacancyDataProvider)
+        public LegacyQueueTraineeshipApplicationSubmittedStrategy(IMessageBus messageBus, IVacancyDataProvider<TraineeshipVacancyDetail> vacancyDataProvider, ICandidateReadRepository candidateReadRepository, ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
         {
             _messageBus = messageBus;
             _vacancyDataProvider = vacancyDataProvider;
+            _candidateReadRepository = candidateReadRepository;
+            _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
         }
 
-        public void Send(Candidate candidate, TraineeshipApplicationDetail traineeshipApplicationDetail, CandidateMessageTypes messageType,
-            IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
+        public void Send(Guid candidateId, IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
         {
-            var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(traineeshipApplicationDetail.Vacancy.Id);
+            var candidate = _candidateReadRepository.Get(candidateId);
 
-            if (vacancyDetails == null)
+            if (!candidate.CommunicationPreferences.AllowEmail) return; //todo: move comm pref check out of this class
+
+            var application = GetApplication(tokens);
+            var vacancy = _vacancyDataProvider.GetVacancyDetails(application.Vacancy.Id);
+
+            if (vacancy == null) //todo: add flag to repo operation
             {
-                throw new CustomException(
-                    "Vacancy not found with ID {0}.", ErrorCodes.VacancyNotFoundError, traineeshipApplicationDetail.Vacancy.Id);
+                throw new CustomException("Vacancy not found with ID {0}.", 
+                    ErrorCodes.VacancyNotFoundError, 
+                    application.Vacancy.Id);
             }
 
             var applicationTokens = new[]
             {
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName), 
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyTitle,
-                    traineeshipApplicationDetail.Vacancy.Title),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference, vacancyDetails.VacancyReference),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ProviderContact, vacancyDetails.Contact)
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyTitle, vacancy.Title),
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference, vacancy.VacancyReference),
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ProviderContact, vacancy.Contact)
             };
 
+            //todo: change to CommunicationRequest
             var request = new EmailRequest
             {
                 ToEmail = candidate.RegistrationDetails.EmailAddress,
-                MessageType = messageType,
+                MessageType = MessageTypes.TraineeshipApplicationSubmitted,
                 Tokens = applicationTokens
             };
 
             _messageBus.PublishMessage(request);
+        }
+
+        private TraineeshipApplicationDetail GetApplication(IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
+        {
+            var applicationId = Guid.Parse(tokens.First(m => m.Key == CommunicationTokens.ApplicationId).Value);
+
+            return _traineeshipApplicationReadRepository.Get(applicationId, true);
         }
     }
 }

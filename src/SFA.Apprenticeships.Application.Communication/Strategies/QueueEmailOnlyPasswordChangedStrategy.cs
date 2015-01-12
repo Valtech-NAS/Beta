@@ -2,26 +2,30 @@
 {
     using System;
     using System.Collections.Generic;
-    using Domain.Entities.Candidates;
     using Domain.Interfaces.Messaging;
+    using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
 
+    //todo: rename
     public class QueueEmailOnlyPasswordChangedStrategy : ISendPasswordChangedStrategy
     {
         private readonly IMessageBus _messageBus;
+        private readonly ICandidateReadRepository _candidateReadRepository;
 
-        public QueueEmailOnlyPasswordChangedStrategy(IMessageBus messageBus)
+        public QueueEmailOnlyPasswordChangedStrategy(IMessageBus messageBus, ICandidateReadRepository candidateReadRepository)
         {
             _messageBus = messageBus;
+            _candidateReadRepository = candidateReadRepository;
         }
 
-        public void Send(Candidate candidate, CandidateMessageTypes messageType,
-            IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
+        public void Send(Guid candidateId, IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
         {
+            var candidate = _candidateReadRepository.Get(candidateId);
+
             var request = new EmailRequest
             {
                 ToEmail = candidate.RegistrationDetails.EmailAddress,
-                MessageType = messageType,
+                MessageType = MessageTypes.PasswordChanged,
                 Tokens = tokens,
             };
 

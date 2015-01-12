@@ -75,7 +75,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             var emailAddress = candidate.RegistrationDetails.EmailAddress;
             var expiry = string.Format(_passwordResetCodeExpiryDays == 1 ? "{0} day" : "{0} days", _passwordResetCodeExpiryDays);
 
-            _communicationService.SendMessageToCandidate(candidate.EntityId, CandidateMessageTypes.SendPasswordResetCode,
+            _communicationService.SendMessageToCandidate(candidate.EntityId, MessageTypes.SendPasswordResetCode,
                 new[]
                 {
                     new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, firstName),

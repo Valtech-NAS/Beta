@@ -59,7 +59,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             };
 
             _communicationService.SendMessageToCandidate(
-                candidate.EntityId, CandidateMessageTypes.SendAccountUnlockCode, tokens);
+                candidate.EntityId, MessageTypes.SendAccountUnlockCode, tokens);
         }
     }
 }

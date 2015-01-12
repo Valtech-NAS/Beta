@@ -12,6 +12,7 @@
     using NLog;
     using SendGrid;
 
+    //todo: simplify - we don't need to pass "subject" and "from address" in the EmailRequest DTO
     public class SendGridEmailDispatcher : IEmailDispatcher
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

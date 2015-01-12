@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Messaging
 {
-    public enum CandidateMessageTypes
+    public enum MessageTypes
     {
         SendActivationCode,
         SendPasswordResetCode,

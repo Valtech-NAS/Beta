@@ -70,7 +70,7 @@
 
         private void NotifyCandidate(Guid candidateId, string applicationId)
         {
-            _communicationService.SendMessageToCandidate(candidateId, CandidateMessageTypes.ApprenticeshipApplicationSubmitted,
+            _communicationService.SendMessageToCandidate(candidateId, MessageTypes.ApprenticeshipApplicationSubmitted,
                 new[]
                 {
                     new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationId, applicationId)
