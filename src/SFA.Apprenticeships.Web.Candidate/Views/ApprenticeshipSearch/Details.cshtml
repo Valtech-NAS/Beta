@@ -53,12 +53,8 @@
 
                     <h3 class="bold-small">Working week</h3>
                     <p id="vacancy-working-week" itemprop="workHours">@Model.WorkingWeek</p>
-
-                    @if (!string.IsNullOrWhiteSpace(Model.ExpectedDuration))
-                    {
-                        <h3 class="bold-small">Expected duration</h3>
-                        <p id="vacancy-expected-duration">@Model.ExpectedDuration</p>           
-                    }
+                    <h3 class="bold-small">Expected duration</h3>
+                    <p id="vacancy-expected-duration">@(string.IsNullOrWhiteSpace(@Model.ExpectedDuration) ? "Not specified" : @Model.ExpectedDuration)</p>
                     <h3 class="bold-small">Planned start date</h3>
                     <p id="vacancy-start-date">@Html.DisplayFor(m => Model.StartDate)</p>
                     @if (Model.VacancyLocationType != ApprenticeshipLocationType.National && Model.Distance != null)
@@ -85,7 +81,7 @@
             <div class="grid grid-1-2">
                 <div class="inner-block-padr">
                     <div class="text">
-                        @**Both Skills Required and Quals Required are optional - but displaying headers regradless*@
+                        @**Both Skills Required and Quals Required are optional - but displaying headers regardless*@
                         <h3 class="heading-small">Desired skills</h3>
                         <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.SkillsRequired)</p>
                         <h3 class="heading-small">Qualifications required</h3>
