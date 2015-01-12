@@ -70,14 +70,14 @@
             For<ISendPasswordResetCodeStrategy>().Use<SendPasswordResetCodeStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<Application.Communication.Strategies.ISendPasswordResetCodeStrategy>()
-                .Use<QueueEmailOnlyPasswordResetCodeStrategy>();
+                .Use<QueuePasswordResetCodeStrategy>();
             For<ISubmitApprenticeshipApplicationStrategy>().Use<LegacySubmitApprenticeshipApplicationStrategy>();
-            For<ISendActivationCodeStrategy>().Use<QueueEmailOnlyActivationCodeStrategy>();
+            For<ISendActivationCodeStrategy>().Use<QueueActivationCodeStrategy>();
             For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
             For<ISendTraineeshipApplicationSubmittedStrategy>()
                 .Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>(); 
-            For<ISendPasswordChangedStrategy>().Use<QueueEmailOnlyPasswordChangedStrategy>();
-            For<Application.Communication.Strategies.ISendAccountUnlockCodeStrategy>().Use<QueueEmailOnlyAccountUnlockCodeStrategy>();
+            For<ISendPasswordChangedStrategy>().Use<QueuePasswordChangedStrategy>();
+            For<Application.Communication.Strategies.ISendAccountUnlockCodeStrategy>().Use<QueueAccountUnlockCodeStrategy>();
             For<IResendActivationCodeStrategy>().Use<ResendActivationCodeStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<Application.UserAccount.Strategies.ISendAccountUnlockCodeStrategy>().Use<SendAccountUnlockCodeStrategy>();

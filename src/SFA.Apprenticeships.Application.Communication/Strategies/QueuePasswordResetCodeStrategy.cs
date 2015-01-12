@@ -6,13 +6,12 @@
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
 
-    //todo: rename
-    public class QueueEmailOnlyPasswordChangedStrategy : ISendPasswordChangedStrategy
+    public class QueuePasswordResetCodeStrategy : ISendPasswordResetCodeStrategy
     {
         private readonly IMessageBus _messageBus;
         private readonly ICandidateReadRepository _candidateReadRepository;
 
-        public QueueEmailOnlyPasswordChangedStrategy(IMessageBus messageBus, ICandidateReadRepository candidateReadRepository)
+        public QueuePasswordResetCodeStrategy(IMessageBus messageBus, ICandidateReadRepository candidateReadRepository)
         {
             _messageBus = messageBus;
             _candidateReadRepository = candidateReadRepository;
@@ -25,7 +24,7 @@
             var request = new EmailRequest
             {
                 ToEmail = candidate.RegistrationDetails.EmailAddress,
-                MessageType = MessageTypes.PasswordChanged,
+                MessageType = MessageTypes.SendPasswordResetCode,
                 Tokens = tokens,
             };
 

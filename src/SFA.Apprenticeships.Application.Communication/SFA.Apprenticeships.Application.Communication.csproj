@@ -107,10 +107,10 @@
     <Compile Include="Strategies\ISendActivationCodeStrategy.cs" />
     <Compile Include="Strategies\LegacyQueueTraineeshipApplicationSubmittedStrategy.cs" />
     <Compile Include="Strategies\LegacyQueueApprenticeshipApplicationSubmittedStrategy.cs" />
-    <Compile Include="Strategies\QueueEmailOnlyAccountUnlockCodeStrategy.cs" />
-    <Compile Include="Strategies\QueueEmailOnlyPasswordChangedStrategy.cs" />
-    <Compile Include="Strategies\QueueEmailOnlyPasswordResetCodeStrategy.cs" />
-    <Compile Include="Strategies\QueueEmailOnlyActivationCodeStrategy.cs" />
+    <Compile Include="Strategies\QueueAccountUnlockCodeStrategy.cs" />
+    <Compile Include="Strategies\QueuePasswordChangedStrategy.cs" />
+    <Compile Include="Strategies\QueuePasswordResetCodeStrategy.cs" />
+    <Compile Include="Strategies\QueueActivationCodeStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
