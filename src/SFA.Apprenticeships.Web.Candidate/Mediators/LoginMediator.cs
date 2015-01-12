@@ -1,9 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
 {
-    using System.Web;
     using Common.Constants;
     using Common.Providers;
-    using Common.Services;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Users;
@@ -15,21 +13,18 @@
     {
         private readonly IUserDataProvider _userDataProvider;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
-        private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly LoginViewModelServerValidator _loginViewModelServerValidator;
         private readonly AccountUnlockViewModelServerValidator _accountUnlockViewModelServerValidator;
         private readonly ResendAccountUnlockCodeViewModelServerValidator _resendAccountUnlockCodeViewModelServerValidator;
 
 
         public LoginMediator(IUserDataProvider userDataProvider, ICandidateServiceProvider candidateServiceProvider,
-            IAuthenticationTicketService authenticationTicketService,
             LoginViewModelServerValidator loginViewModelServerValidator, 
             AccountUnlockViewModelServerValidator accountUnlockViewModelServerValidator,
             ResendAccountUnlockCodeViewModelServerValidator resendAccountUnlockCodeViewModelServerValidator)
         {
             _userDataProvider = userDataProvider;
             _candidateServiceProvider = candidateServiceProvider;
-            _authenticationTicketService = authenticationTicketService;
             _loginViewModelServerValidator = loginViewModelServerValidator;
             _accountUnlockViewModelServerValidator = accountUnlockViewModelServerValidator;
             _resendAccountUnlockCodeViewModelServerValidator = resendAccountUnlockCodeViewModelServerValidator;
