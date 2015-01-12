@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
+    using System;
     using System.Linq;
     using Application.Interfaces.Vacancies;
     using Candidate.Mediators;
@@ -8,16 +9,22 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
 
     [TestFixture]
     public class ResultsTests : TestsBase
     {
+        private const string ACityWithOneSuggestedLocation = "London";
+        private const string ACityWithoutSuggestedLocations = "Liverpool";
+        private const string SomeErrorMessage = "SomeErrorMessage";
+        private const string ACityWithMoreThanOneSuggestedLocation = "Manchester";
         [SetUp]
         public override void Setup()
         {
             base.Setup();
             
             SearchProvider.Setup(sp => sp.FindLocation(It.IsAny<string>())).Returns<string>(l => new LocationsViewModel(new[] { new LocationViewModel { Name = l } }));
+            
             var londonVacancies = new[]
             {
                 new ApprenticeshipVacancySummaryViewModel {Description = "A London Vacancy"}
@@ -25,7 +32,7 @@
             var emptyVacancies = new ApprenticeshipVacancySummaryViewModel[0];
             //This order is important. Moq will run though all matches and pick the last one
             SearchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>())).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = emptyVacancies, VacancySearch = svm });
-            SearchProvider.Setup(sp => sp.FindVacancies(It.Is<ApprenticeshipSearchViewModel>(svm => svm.Location == "London"))).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm });
+            searchProvider.Setup(sp => sp.FindVacancies(It.Is<ApprenticeshipSearchViewModel>(svm => svm.Location == ACityWithOneSuggestedLocation))).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm });
         }
 
         [Test]
@@ -33,7 +40,7 @@
         {
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
-                Location = "London"
+                Location = ACityWithOneSuggestedLocation
             };
 
             var response = Mediator.Results(searchViewModel);
@@ -53,7 +60,7 @@
         {
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
-                Location = "London",
+                Location = ACityWithOneSuggestedLocation,
                 ApprenticeshipLevel = "Higher"
             };
 
@@ -106,7 +113,7 @@
         {
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
-                Location = "London"
+                Location = ACityWithOneSuggestedLocation
             };
 
             var response = Mediator.Results(searchViewModel);
@@ -125,7 +132,7 @@
         {
             var searchViewModel = new ApprenticeshipSearchViewModel
             {
-                Location = "London",
+                Location = ACityWithOneSuggestedLocation,
                 Keywords = "Sales"
             };
 
@@ -139,6 +146,115 @@
             sortTypes.Should().Contain(sli => sli.Value == VacancySortType.Relevancy.ToString());
             sortTypes.Should().Contain(sli => sli.Value == VacancySortType.ClosingDate.ToString());
             sortTypes.Should().Contain(sli => sli.Value == VacancySortType.Distance.ToString());
+        }
+
+        [Test]
+        public void IfTheLocationIsNationalAndThereAreNoKeywords_SortTypeShouldBeClosingDate()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = ACityWithOneSuggestedLocation,
+                LocationType = ApprenticeshipLocationType.National,
+                SortType = VacancySortType.Distance,
+                SearchAction = SearchAction.Sort
+            };
+
+            var response = _mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+
+            response.ViewModel.VacancySearch.SortType.Should().Be(VacancySortType.ClosingDate);
+        }
+
+        [Test]
+        public void ShouldShowAMessageIfAnErrorOccursWhileFindingSuggestedLocations()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = ACityWithMoreThanOneSuggestedLocation
+            };
+
+            _searchProvider.Setup(sp => sp.FindLocation(ACityWithMoreThanOneSuggestedLocation))
+                .Returns(() => new LocationsViewModel{ViewModelMessage = SomeErrorMessage});
+
+            var response = _mediator.Results(searchViewModel);
+
+            response.AssertMessage(Codes.ApprenticeshipSearch.Results.HasError, SomeErrorMessage, UserMessageLevel.Warning, true);
+        }
+
+        [Test]
+        public void ShouldReturnAListOfSuggestedLocations()
+        {
+            const int numberOfSuggestedLocations = 4;
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = ACityWithMoreThanOneSuggestedLocation
+            };
+
+            _searchProvider.Setup(sp => sp.FindLocation(ACityWithMoreThanOneSuggestedLocation))
+                .Returns(() => new LocationsViewModel(Enumerable.Range(1, numberOfSuggestedLocations + 1).Select(e => new LocationViewModel { Name = Convert.ToString(e) })));
+
+            var response = _mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.ViewModel.LocationSearches.Should().HaveCount(numberOfSuggestedLocations);
+        }
+
+        [Test]
+        public void LocationResultIsNotValid()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = ACityWithoutSuggestedLocations
+            };
+
+            _searchProvider.Setup(sp => sp.FindLocation(ACityWithoutSuggestedLocations))
+                .Returns(() => new LocationsViewModel());
+
+            var response = _mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.ViewModel.VacancySearch.Should().Be(searchViewModel);
+        }
+
+        [Test]
+        public void ErrorFindingVacancies()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = ACityWithOneSuggestedLocation
+            };
+
+            _searchProvider.Setup(sp => sp.FindVacancies(searchViewModel))
+                .Returns(new ApprenticeshipSearchResponseViewModel
+                {
+                    ViewModelMessage = SomeErrorMessage
+                });
+
+            var response = _mediator.Results(searchViewModel);
+
+            response.AssertMessage(Codes.ApprenticeshipSearch.Results.HasError, SomeErrorMessage, UserMessageLevel.Warning, true);
+        }
+
+        [Test]
+        public void IfTotalLocalHitsIsGreaterThanZero_LocationTypeIsNonNational()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = ACityWithOneSuggestedLocation
+            };
+
+            _searchProvider.Setup(sp => sp.FindVacancies(searchViewModel))
+                .Returns(new ApprenticeshipSearchResponseViewModel
+                {
+                    TotalLocalHits = 1,
+                    VacancySearch = searchViewModel
+                });
+
+            var response = _mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.ViewModel.VacancySearch.LocationType = ApprenticeshipLocationType.NonNational;
         }
     }
 }
