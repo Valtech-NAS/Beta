@@ -54,7 +54,7 @@
         {
             Condition.Requires(vacancyId).IsGreaterOrEqual(1);
 
-            _logger.Debug("Calling VacancyDataProvider to get vacancy details for user {0}.", vacancyId);
+            _logger.Debug("Calling VacancyDataProvider to get vacancy details for vacancy {0}.", vacancyId);
 
             try
             {
