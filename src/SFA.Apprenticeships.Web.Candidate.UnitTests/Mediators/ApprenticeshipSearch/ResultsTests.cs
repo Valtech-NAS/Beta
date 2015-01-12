@@ -32,7 +32,7 @@
             var emptyVacancies = new ApprenticeshipVacancySummaryViewModel[0];
             //This order is important. Moq will run though all matches and pick the last one
             SearchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>())).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = emptyVacancies, VacancySearch = svm });
-            searchProvider.Setup(sp => sp.FindVacancies(It.Is<ApprenticeshipSearchViewModel>(svm => svm.Location == ACityWithOneSuggestedLocation))).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm });
+            SearchProvider.Setup(sp => sp.FindVacancies(It.Is<ApprenticeshipSearchViewModel>(svm => svm.Location == ACityWithOneSuggestedLocation))).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm });
         }
 
         [Test]
@@ -159,7 +159,7 @@
                 SearchAction = SearchAction.Sort
             };
 
-            var response = _mediator.Results(searchViewModel);
+            var response = Mediator.Results(searchViewModel);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
@@ -174,10 +174,10 @@
                 Location = ACityWithMoreThanOneSuggestedLocation
             };
 
-            _searchProvider.Setup(sp => sp.FindLocation(ACityWithMoreThanOneSuggestedLocation))
+            SearchProvider.Setup(sp => sp.FindLocation(ACityWithMoreThanOneSuggestedLocation))
                 .Returns(() => new LocationsViewModel{ViewModelMessage = SomeErrorMessage});
 
-            var response = _mediator.Results(searchViewModel);
+            var response = Mediator.Results(searchViewModel);
 
             response.AssertMessage(Codes.ApprenticeshipSearch.Results.HasError, SomeErrorMessage, UserMessageLevel.Warning, true);
         }
@@ -191,10 +191,10 @@
                 Location = ACityWithMoreThanOneSuggestedLocation
             };
 
-            _searchProvider.Setup(sp => sp.FindLocation(ACityWithMoreThanOneSuggestedLocation))
+            SearchProvider.Setup(sp => sp.FindLocation(ACityWithMoreThanOneSuggestedLocation))
                 .Returns(() => new LocationsViewModel(Enumerable.Range(1, numberOfSuggestedLocations + 1).Select(e => new LocationViewModel { Name = Convert.ToString(e) })));
 
-            var response = _mediator.Results(searchViewModel);
+            var response = Mediator.Results(searchViewModel);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
             response.ViewModel.LocationSearches.Should().HaveCount(numberOfSuggestedLocations);
@@ -208,10 +208,10 @@
                 Location = ACityWithoutSuggestedLocations
             };
 
-            _searchProvider.Setup(sp => sp.FindLocation(ACityWithoutSuggestedLocations))
+            SearchProvider.Setup(sp => sp.FindLocation(ACityWithoutSuggestedLocations))
                 .Returns(() => new LocationsViewModel());
 
-            var response = _mediator.Results(searchViewModel);
+            var response = Mediator.Results(searchViewModel);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
             response.ViewModel.VacancySearch.Should().Be(searchViewModel);
@@ -225,13 +225,13 @@
                 Location = ACityWithOneSuggestedLocation
             };
 
-            _searchProvider.Setup(sp => sp.FindVacancies(searchViewModel))
+            SearchProvider.Setup(sp => sp.FindVacancies(searchViewModel))
                 .Returns(new ApprenticeshipSearchResponseViewModel
                 {
                     ViewModelMessage = SomeErrorMessage
                 });
 
-            var response = _mediator.Results(searchViewModel);
+            var response = Mediator.Results(searchViewModel);
 
             response.AssertMessage(Codes.ApprenticeshipSearch.Results.HasError, SomeErrorMessage, UserMessageLevel.Warning, true);
         }
@@ -244,14 +244,14 @@
                 Location = ACityWithOneSuggestedLocation
             };
 
-            _searchProvider.Setup(sp => sp.FindVacancies(searchViewModel))
+            SearchProvider.Setup(sp => sp.FindVacancies(searchViewModel))
                 .Returns(new ApprenticeshipSearchResponseViewModel
                 {
                     TotalLocalHits = 1,
                     VacancySearch = searchViewModel
                 });
 
-            var response = _mediator.Results(searchViewModel);
+            var response = Mediator.Results(searchViewModel);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
             response.ViewModel.VacancySearch.LocationType = ApprenticeshipLocationType.NonNational;
