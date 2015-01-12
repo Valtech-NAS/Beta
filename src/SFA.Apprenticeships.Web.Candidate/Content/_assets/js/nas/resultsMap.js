@@ -26,62 +26,25 @@
         vacancies[i] = [lat, longi, title, id];
     }
 
-    if (!markersFeature || numberOfResults == 0) {
-
-        if (apprMiles <= 40) {
-            apprZoom = 7
-        }
-
-        if (apprMiles <= 30) {
-            apprZoom = 8
-        }
-
-        if (apprMiles < 20) {
-            apprZoom = 9
-        }
-
-        if (apprMiles < 10) {
-            apprZoom = 10
-        }
-
-        if (apprMiles < 5) {
-            apprZoom = 11
-        }
-    } else {
-
-        if (apprMiles <= 40) {
-            apprZoom = 8
-        }
-
-        if (apprMiles <= 30) {
-            apprZoom = 9
-        }
-
-        if (apprMiles < 20) {
-            apprZoom = 9
-        }
-
-        if (apprMiles < 10) {
-            apprZoom = 11
-        }
-
-        if (apprMiles < 5) {
-            apprZoom = 12
-        }
-
-        if (sortResultsControl == 'Distance' && numberOfResults > 20 && distanceOfLast < 2.2) {
-            apprZoom = 12
-        }
-
-        if (sortResultsControl == 'Distance' && numberOfResults > 20 && distanceOfLast < 1) {
-            apprZoom = 13
-        }
-
-        if (sortResultsControl == 'Distance' && distanceOfLast < 0.6) {
-            apprZoom = 14
-        }
+    if (apprMiles <= 40) {
+        apprZoom = 7
     }
-    
+
+    if (apprMiles <= 30) {
+        apprZoom = 8
+    }
+
+    if (apprMiles < 20) {
+        apprZoom = 9
+    }
+
+    if (apprMiles < 10) {
+        apprZoom = 10
+    }
+
+    if (apprMiles < 5) {
+        apprZoom = 11
+    }
 
     if (apprLatitude == 0 || apprLongitude == 0) {
         $('#map-canvas').parent().hide();
