@@ -192,6 +192,7 @@
     <Compile Include="Mediators\Login\TestsBase.cs" />
     <Compile Include="Mediators\Login\UnlockTests.cs" />
     <Compile Include="Mediators\MediatorResponseExtensions.cs" />
+    <Compile Include="Mediators\Register\ActivateTests.cs" />
     <Compile Include="Mediators\Register\ForgottenPasswordTests.cs" />
     <Compile Include="Mediators\Register\RegisterBaseTests.cs" />
     <Compile Include="Mediators\Register\RegisterTests.cs" />
