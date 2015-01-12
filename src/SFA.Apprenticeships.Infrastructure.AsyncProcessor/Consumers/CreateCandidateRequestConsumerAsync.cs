@@ -63,7 +63,7 @@
             try
             {
                 var user = _userReadRepository.Get(request.CandidateId);
-                user.AssertState("Create legacy user", UserStatuses.Active);
+                user.AssertState("Create legacy user", UserStatuses.Active, UserStatuses.Locked);
 
                 var candidate = _candidateReadRepository.Get(request.CandidateId, true);
                 if (candidate.LegacyCandidateId == 0)
