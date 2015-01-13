@@ -21,6 +21,7 @@
         {
             var candidate = _candidateReadRepository.Get(candidateId);
 
+            //todo: change to CommunicationRequest
             var request = new EmailRequest
             {
                 ToEmail = candidate.RegistrationDetails.EmailAddress,
