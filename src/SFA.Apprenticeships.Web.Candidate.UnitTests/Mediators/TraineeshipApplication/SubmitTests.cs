@@ -5,6 +5,9 @@
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
     using Candidate.ViewModels.VacancySearch;
+    using Common.Constants;
+    using Common.Models.Application;
+    using Constants.Pages;
     using Moq;
     using NUnit.Framework;
 
@@ -12,6 +15,42 @@
     public class SubmitTests : TestsBase
     {
         private const int ValidVacancyId = 1;
+
+        [Test]
+        public void IncorrectState()
+        {
+            var viewModel = new TraineeshipApplicationViewModel
+            {
+                Candidate = new TraineeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel(),
+                ViewModelStatus = ApplicationViewModelStatus.ApplicationInIncorrectState
+            };
+            TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new TraineeshipApplicationViewModel { ViewModelStatus = ApplicationViewModelStatus.ApplicationInIncorrectState });
+            TraineeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<TraineeshipApplicationViewModel>(), It.IsAny<TraineeshipApplicationViewModel>())).Returns<Guid, TraineeshipApplicationViewModel, TraineeshipApplicationViewModel>((cid, svm, vm) => vm);
+            TraineeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<TraineeshipApplicationViewModel>())).Returns<Guid, int, TraineeshipApplicationViewModel>((cid, vid, vm) => vm);
+            
+            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertCode(Codes.TraineeshipApplication.Submit.IncorrectState, false);
+        }
+
+        [Test]
+        public void Error()
+        {
+            var viewModel = new TraineeshipApplicationViewModel
+            {
+                Candidate = new TraineeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel(),
+                ViewModelStatus = ApplicationViewModelStatus.Error
+            };
+            TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new TraineeshipApplicationViewModel { ViewModelStatus = ApplicationViewModelStatus.Error });
+            TraineeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<TraineeshipApplicationViewModel>(), It.IsAny<TraineeshipApplicationViewModel>())).Returns<Guid, TraineeshipApplicationViewModel, TraineeshipApplicationViewModel>((cid, svm, vm) => vm);
+            TraineeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<TraineeshipApplicationViewModel>())).Returns<Guid, int, TraineeshipApplicationViewModel>((cid, vid, vm) => vm);
+            
+            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertMessage(Codes.TraineeshipApplication.Submit.Error, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, false, true);
+        }
 
         [Test]
         public void Ok()
@@ -27,7 +66,25 @@
             
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(Codes.TraineeshipApplication.Apply.Ok, false, true);
+            response.AssertCode(Codes.TraineeshipApplication.Submit.Ok, false, true);
+        }
+
+        [Test]
+        public void OkIsJavascript()
+        {
+            var viewModel = new TraineeshipApplicationViewModel
+            {
+                Candidate = new TraineeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel(),
+                IsJavascript = true
+            };
+            TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new TraineeshipApplicationViewModel());
+            TraineeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<TraineeshipApplicationViewModel>(), It.IsAny<TraineeshipApplicationViewModel>())).Returns<Guid, TraineeshipApplicationViewModel, TraineeshipApplicationViewModel>((cid, svm, vm) => vm);
+            TraineeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<TraineeshipApplicationViewModel>())).Returns<Guid, int, TraineeshipApplicationViewModel>((cid, vid, vm) => vm);
+            
+            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertCode(Codes.TraineeshipApplication.Submit.Ok, false, true);
         }
     }
 }

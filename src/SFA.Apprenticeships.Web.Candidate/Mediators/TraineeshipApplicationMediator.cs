@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Security;
     using Common.Constants;
@@ -12,7 +11,6 @@
     using Domain.Interfaces.Configuration;
     using Providers;
     using ViewModels.Applications;
-    using ViewModels.Candidate;
 
     public class TraineeshipApplicationMediator : ApplicationMediatorBase, ITraineeshipApplicationMediator
     {

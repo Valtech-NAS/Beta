@@ -207,6 +207,13 @@
         }
 
         [Test]
+        public void SettingsSuccessTest()
+        {
+            var response = _accountMediator.Settings(Guid.NewGuid());
+            response.AssertCode(Codes.AccountMediator.Settings.Success);
+        }
+
+        [Test]
         public void DismissTraineeshipPromptTest_SuccessfullyDismissed()
         {
             _accountProviderMock.Setup(x => x.DismissTraineeshipPrompts(It.IsAny<Guid>())).Returns(true);
