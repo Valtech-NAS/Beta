@@ -5,6 +5,8 @@
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
     using Candidate.ViewModels.VacancySearch;
+    using Common.Constants;
+    using Constants.Pages;
     using Domain.Entities.Applications;
     using Moq;
     using NUnit.Framework;
@@ -13,6 +15,70 @@
     public class PreviewAndSubmitTests : TestsBase
     {
         private const int ValidVacancyId = 1;
+
+        [Test]
+        public void VacancyNotFound()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel()
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.ExpiredOrWithdrawn });
+            
+            var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertCode(Codes.ApprenticeshipApplication.PreviewAndSubmit.VacancyNotFound, false);
+        }
+
+        [Test]
+        public void IncorrectState()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel()
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Submitting });
+            
+            var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertCode(Codes.ApprenticeshipApplication.PreviewAndSubmit.IncorrectState, false);
+        }
+
+        [Test]
+        public void Error()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel()
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel("Has error") { Status = ApplicationStatuses.Draft });
+            
+            var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertMessage(Codes.ApprenticeshipApplication.PreviewAndSubmit.Error, ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning, true);
+        }
+
+        [Test]
+        public void ValidationError()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel
+                {
+                    AboutYou = new AboutYouViewModel()
+                },
+                VacancyDetail = new VacancyDetailViewModel(),
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft });
+            ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
+            
+            var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertValidationResult(Codes.ApprenticeshipApplication.PreviewAndSubmit.ValidationError);
+        }
 
         [Test]
         public void Ok()
