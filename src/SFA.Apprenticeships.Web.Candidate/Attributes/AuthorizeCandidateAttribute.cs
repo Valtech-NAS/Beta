@@ -44,6 +44,11 @@
 
                 OnUnauthorizedActivated(filterContext);
             }
+            else if (userContext != null)
+            {
+                //User was logged in but their authentication cookie has expired
+                OnSessionExpired(filterContext);
+            }
         }
 
         private void OnSessionExpired(AuthorizationContext filterContext)
