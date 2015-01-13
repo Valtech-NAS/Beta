@@ -82,17 +82,13 @@
             validator.RuleFor(x => x.DateOfBirth).SetValidator(new DateOfBirthViewModelServerValidator());
 
             validator.RuleFor(x => x.EmailAddress)
-                .Must(UsernameAvailable)
+                .Must((model, emailAddress) => model.IsUsernameAvailable)
+                .When(x => !string.IsNullOrWhiteSpace(x.EmailAddress))
                 .WithMessage(RegisterViewModelMessages.EmailAddressMessages.UsernameNotAvailableErrorText);
 
             validator.RuleFor(x => x.Password)
                 .Equal(x => x.ConfirmPassword)
                 .WithMessage(RegisterViewModelMessages.PasswordMessages.PasswordsDoNotMatchErrorText);
-        }
-
-        private static bool UsernameAvailable(RegisterViewModel model, string emailAddress)
-        {
-            return emailAddress != null && (!string.IsNullOrEmpty(emailAddress) && model.IsUsernameAvailable);
         }
     }
 }

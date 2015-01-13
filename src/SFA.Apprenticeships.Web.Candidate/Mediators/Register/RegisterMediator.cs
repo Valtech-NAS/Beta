@@ -3,6 +3,7 @@
     using System;
     using Common.Constants;
     using Constants.Pages;
+    using Constants.ViewModels;
     using Domain.Entities.Users;
     using Providers;
     using Validators;
@@ -32,7 +33,24 @@
 
         public MediatorResponse<RegisterViewModel> Register(RegisterViewModel registerViewModel)
         {
-            var userNameAvailable = _candidateServiceProvider.IsUsernameAvailable(registerViewModel.EmailAddress.Trim());
+            var emailAddress = string.IsNullOrWhiteSpace(registerViewModel.EmailAddress)
+                ? string.Empty
+                : registerViewModel.EmailAddress.Trim();
+
+            UserNameAvailability userNameAvailable;
+
+            if (string.IsNullOrWhiteSpace(emailAddress))
+            {
+                userNameAvailable = new UserNameAvailability
+                {
+                    HasError = false,
+                    IsUserNameAvailable = false
+                };
+            }
+            else
+            {
+                userNameAvailable = _candidateServiceProvider.IsUsernameAvailable(emailAddress);    
+            }
 
             if (!userNameAvailable.HasError)
             {
