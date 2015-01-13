@@ -5,10 +5,8 @@
     using Apprenticeships;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
     using NLog;
-    using Vacancy;
 
     public class SaveCandidateStrategy : ISaveCandidateStrategy
     {
@@ -19,18 +17,15 @@
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly IGetCandidateApprenticeshipApplicationsStrategy _getCandidateApplicationsStrategy;
-        private readonly IVacancyDataProvider<ApprenticeshipVacancyDetail> _apprenticeshipDataProvider;
 
         public SaveCandidateStrategy(ICandidateWriteRepository candidateWriteRepository,
             IGetCandidateApprenticeshipApplicationsStrategy getCandidateApplicationsStrategy,
-            IVacancyDataProvider<ApprenticeshipVacancyDetail> apprenticeshipDataProvider,
             ICandidateReadRepository candidateReadRepository,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository)
         {
             _candidateWriteRepository = candidateWriteRepository;
             _getCandidateApplicationsStrategy = getCandidateApplicationsStrategy;
-            _apprenticeshipDataProvider = apprenticeshipDataProvider;
             _candidateReadRepository = candidateReadRepository;
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
@@ -51,8 +46,7 @@
             {
                 try
                 {
-                    var vacancyDetails = _apprenticeshipDataProvider.GetVacancyDetails(candidateApplication.LegacyVacancyId);
-                    UpdateApplicationDetail(reloadedCandidate, vacancyDetails);
+                    UpdateApprenticeshipApplicationDetail(reloadedCandidate, candidateApplication.LegacyVacancyId);
                 }
                 catch (Exception e)
                 {
@@ -68,16 +62,14 @@
             return result;
         }
 
-        private void UpdateApplicationDetail(Candidate candidate, ApprenticeshipVacancyDetail vacancyDetails)
+        private void UpdateApprenticeshipApplicationDetail(Candidate candidate, int vacancyId)
         {
-            var apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository
-                .GetForCandidate(candidate.EntityId, vacancyDetails.Id);
+            var apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, vacancyId);
 
-            if (apprenticeshipApplicationDetail != null) // vacancy may have expired
+            if (apprenticeshipApplicationDetail != null)
             {
                 apprenticeshipApplicationDetail.CandidateDetails = candidate.RegistrationDetails;
                 _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplicationDetail);
-                
             }
         }
     }
