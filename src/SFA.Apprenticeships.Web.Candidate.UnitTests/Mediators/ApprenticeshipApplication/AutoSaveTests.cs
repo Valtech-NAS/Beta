@@ -15,6 +15,21 @@
         private const int ValidVacancyId = 1;
 
         [Test]
+        public void VacancyNotFound()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel()
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.ExpiredOrWithdrawn });
+            
+            var response = Mediator.AutoSave(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertCode(Codes.ApprenticeshipApplication.AutoSave.VacancyNotFound, true);
+        }
+
+        [Test]
         public void Ok()
         {
             var viewModel = new ApprenticeshipApplicationViewModel

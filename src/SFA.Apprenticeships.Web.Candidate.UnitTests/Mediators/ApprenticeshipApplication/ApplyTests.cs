@@ -3,6 +3,7 @@
     using System;
     using Candidate.Mediators;
     using Candidate.ViewModels.Applications;
+    using Domain.Entities.Applications;
     using Moq;
     using NUnit.Framework;
 
@@ -13,9 +14,19 @@
         private const int InvalidVacancyId = 99999;
 
         [Test]
+        public void VacancyNotFound()
+        {
+            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), InvalidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.ExpiredOrWithdrawn });
+            
+            var response = Mediator.Apply(Guid.NewGuid(), InvalidVacancyId);
+
+            response.AssertCode(Codes.ApprenticeshipApplication.Apply.VacancyNotFound, false);
+        }
+
+        [Test]
         public void HasError()
         {
-            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), InvalidVacancyId)).Returns(new ApprenticeshipApplicationViewModel("Vacancy not found"));
+            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), InvalidVacancyId)).Returns(new ApprenticeshipApplicationViewModel("Vacancy has error"));
             
             var response = Mediator.Apply(Guid.NewGuid(), InvalidVacancyId);
 

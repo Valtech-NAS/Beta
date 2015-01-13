@@ -29,6 +29,7 @@
         [TestCase("CV1 2")]
         [TestCase("CV12W")]
         [TestCase("CV1 2W")]
+        [TestCase(null)]
         public void ShouldNotBeIdentitiedAsPartialPostcode(string postcode)
         {
             Assert.IsFalse(LocationHelper.IsPartialPostcode(postcode));
