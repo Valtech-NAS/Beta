@@ -24,7 +24,16 @@
             _candidateServiceProvider.Setup(x => x.IsUsernameAvailable(It.IsAny<string>()))
                 .Returns(new UserNameAvailability {HasError = true});
 
-            var registerViewModel = new RegisterViewModel {EmailAddress = ""};
+            var registerViewModel = new RegisterViewModel
+            {
+                Firstname = SomeName,
+                Lastname = SomeName,
+                EmailAddress = ValidEmailAddress,
+                PhoneNumber = SomePhoneNumber,
+                Password = ValidPassword,
+                ConfirmPassword = ValidPassword,
+                HasAcceptedTermsAndConditions = true
+            };
             var response = _registerMediator.Register(registerViewModel);
 
             response.AssertMessage(Codes.RegisterMediatorCodes.Register.RegistrationFailed,
