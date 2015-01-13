@@ -598,7 +598,7 @@
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\Login\AccountUnlockViewModel.cs" />
     <Compile Include="ViewModels\MyApplications\MyTraineeshipApplicationViewModel.cs" />
-    <Compile Include="ViewModels\MyApplications\TraineeshipPromptViewModel.cs" />
+    <Compile Include="ViewModels\Applications\TraineeshipFeatureViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenPasswordViewModel.cs" />
     <Compile Include="ViewModels\Login\LoginViewModel.cs" />
     <Compile Include="ViewModels\Register\ActivationViewModel.cs" />

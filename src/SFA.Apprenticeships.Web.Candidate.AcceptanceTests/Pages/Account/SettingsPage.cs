@@ -124,5 +124,11 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Account
                 throw new Exception("Invalid checked state on Allow Email Communication preference");
             }
         }
+
+        [ElementLocator(Id = "find-apprenticeship-link")]
+        public IWebElement FindApprenticeshipLink { get; set; }
+
+        [ElementLocator(Id = "find-traineeship-link")]
+        public IWebElement FindTraineeshipLink { get; set; }
     }
 }

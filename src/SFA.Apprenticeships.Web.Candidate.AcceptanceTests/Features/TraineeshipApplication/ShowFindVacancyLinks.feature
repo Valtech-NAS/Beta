@@ -25,6 +25,13 @@ Scenario: I have applied for neither traineeships nor apprenticeships
 		| FindTraineeshipLink      | Does Not Exist |       |
 		| FindApprenticeshipButton | Exists         |       |
 		| TraineeshipsPrompt       | Does Not Exist |       |
+	When I am on the MyApplicationsPage page
+	And I choose MySettingsLink
+	Then I am on the SettingsPage page
+	And I see
+		| Field                  | Rule           | Value |
+		| FindApprenticeshipLink | Exists         |       |
+		| FindTraineeshipLink    | Does Not Exist |       |
 		
 @US586
 Scenario: I have applied for one or more apprenticeship and no traineeships
@@ -44,6 +51,13 @@ Scenario: I have applied for one or more apprenticeship and no traineeships
 		| FindTraineeshipLink      | Does Not Exist |       |
 		| FindApprenticeshipButton | Does Not Exist |       |
 		| TraineeshipsPrompt       | Does Not Exist |       |
+	When I am on the MyApplicationsPage page
+	And I choose MySettingsLink
+	Then I am on the SettingsPage page
+	And I see
+		| Field                  | Rule           | Value |
+		| FindApprenticeshipLink | Exists         |       |
+		| FindTraineeshipLink    | Does Not Exist |       |
 
 @US586
 Scenario: I have applied for six or more unsuccessful apprenticeships and no traineeships
@@ -63,6 +77,40 @@ Scenario: I have applied for six or more unsuccessful apprenticeships and no tra
 		| FindTraineeshipLink      | Exists         |       |
 		| FindApprenticeshipButton | Does Not Exist |       |
 		| TraineeshipsPrompt       | Exists         |       |
+	When I am on the MyApplicationsPage page
+	And I choose MySettingsLink
+	Then I am on the SettingsPage page
+	And I see
+		| Field                  | Rule   | Value |
+		| FindApprenticeshipLink | Exists |       |
+		| FindTraineeshipLink    | Exists |       |
+
+@US586
+Scenario: I have applied for six or more unsuccessful apprenticeships one successful apprenticeship and no traineeships
+	Given I have an empty dashboard
+	And I add 6 applications in "Unsuccessful" state
+	And I add 6 applications in "Successful" state
+	And I navigated to the LoginPage page
+	When I am on the LoginPage page
+	And I enter data
+		| Field        | Value               |
+		| EmailAddress | {EmailAddressToken} |
+		| Password     | {PasswordToken}     |
+	And I choose SignInButton
+	Then I am on the MyApplicationsPage page
+	And I see
+		| Field                    | Rule           | Value |
+		| FindApprenticeshipLink   | Exists         |       |
+		| FindTraineeshipLink      | Exists         |       |
+		| FindApprenticeshipButton | Does Not Exist |       |
+		| TraineeshipsPrompt       | Does Not Exist |       |
+	When I am on the MyApplicationsPage page
+	And I choose MySettingsLink
+	Then I am on the SettingsPage page
+	And I see
+		| Field                  | Rule   | Value |
+		| FindApprenticeshipLink | Exists |       |
+		| FindTraineeshipLink    | Exists |       |
 
 @US586
 Scenario: I have applied for one or more traineeships and no apprenticeships
@@ -82,6 +130,13 @@ Scenario: I have applied for one or more traineeships and no apprenticeships
 		| FindTraineeshipLink      | Exists         |       |
 		| FindApprenticeshipButton | Does Not Exist |       |
 		| TraineeshipsPrompt       | Does Not Exist |       |
+	When I am on the MyApplicationsPage page
+	And I choose MySettingsLink
+	Then I am on the SettingsPage page
+	And I see
+		| Field                  | Rule   | Value |
+		| FindApprenticeshipLink | Exists |       |
+		| FindTraineeshipLink    | Exists |       |
 
 @US658
 Scenario: I am not interested in traineeships and I want to dismiss the traineeships prompt
@@ -103,7 +158,14 @@ Scenario: I am not interested in traineeships and I want to dismiss the trainees
 	When I choose DismissTraineeshipPromptsLink
 	Then I am on the MyApplicationsPage page
 	And I see
-		| Field                    | Rule           | Value |
-		| FindApprenticeshipLink   | Exists         |       |
-		| FindTraineeshipLink      | Does Not Exist |       |
-		| TraineeshipsPrompt       | Does Not Exist |       |
+		| Field                  | Rule           | Value |
+		| FindApprenticeshipLink | Exists         |       |
+		| FindTraineeshipLink    | Exists         |       |
+		| TraineeshipsPrompt     | Does Not Exist |       |
+	When I am on the MyApplicationsPage page
+	And I choose MySettingsLink
+	Then I am on the SettingsPage page
+	And I see
+		| Field                  | Rule   | Value |
+		| FindApprenticeshipLink | Exists |       |
+		| FindTraineeshipLink    | Exists |       |

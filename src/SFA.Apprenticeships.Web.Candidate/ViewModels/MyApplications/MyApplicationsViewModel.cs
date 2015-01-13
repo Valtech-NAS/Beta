@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Applications;
     using Domain.Entities.Applications;
 
     public class MyApplicationsViewModel
@@ -9,7 +10,7 @@
         public MyApplicationsViewModel(
             IEnumerable<MyApprenticeshipApplicationViewModel> apprenticeshipApplications,
             IEnumerable<MyTraineeshipApplicationViewModel> traineeshipApplications, 
-            TraineeshipPromptViewModel traineeshipPrompt)
+            TraineeshipFeatureViewModel traineeshipFeature)
         {
             AllApprenticeshipApplications = apprenticeshipApplications
                 .Where(a => !a.IsArchived)
@@ -19,14 +20,14 @@
                 .Where(a => !a.IsArchived)
                 .OrderByDescending(a => a.DateApplied);
 
-            TraineeshipPrompt = traineeshipPrompt;
+            TraineeshipFeature = traineeshipFeature;
         }
 
         public IEnumerable<MyApprenticeshipApplicationViewModel> AllApprenticeshipApplications { get; private set; }
 
         public IOrderedEnumerable<MyTraineeshipApplicationViewModel> TraineeshipApplications { get; private set; }
 
-        public TraineeshipPromptViewModel TraineeshipPrompt { get; set; }
+        public TraineeshipFeatureViewModel TraineeshipFeature { get; set; }
 
         public IEnumerable<MyApprenticeshipApplicationViewModel> SubmittedApprenticeshipApplications
         {
@@ -64,18 +65,6 @@
                         each.ApplicationStatus == ApplicationStatuses.Draft ||
                         (each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && !each.DateApplied.HasValue))
                      .OrderBy(app => app.ClosingDate);
-            }
-        }
-
-        public bool ShowTraineeshipsPrompt
-        {
-            get
-            {
-                // Candidate has a number of unsuccessful apprenticeship applications and has not applied for a traineeship yet.
-                return TraineeshipPrompt.TraineeshipsFeatureActive &&
-                        TraineeshipPrompt.AllowTraineeshipPrompts &&
-                       AllApprenticeshipApplications.Count(each => each.ApplicationStatus == ApplicationStatuses.Unsuccessful) >= TraineeshipPrompt.UnsuccessfulApplicationsToShowTraineeshipsPrompt
-                       && !TraineeshipApplications.Any();
             }
         }
 

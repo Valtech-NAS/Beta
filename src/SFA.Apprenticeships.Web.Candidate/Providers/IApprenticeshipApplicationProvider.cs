@@ -23,5 +23,7 @@
         ApprenticeshipApplicationViewModel ArchiveApplication(Guid candidateId, int vacancyId);
 
         ApprenticeshipApplicationViewModel DeleteApplication(Guid candidateId, int vacancyId);
+
+        TraineeshipFeatureViewModel GetTraineeshipFeatureViewModel(Guid candidateId);
     }
 }

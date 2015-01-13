@@ -34,7 +34,7 @@
             _apprenticeshipApplicationProviderMock = new Mock<IApprenticeshipApplicationProvider>();
             _accountProviderMock = new Mock<IAccountProvider>();
             _settingsViewModelServerValidator = new SettingsViewModelServerValidator();
-            _emptyMyApplicationsView = new MyApplicationsViewModel(new List<MyApprenticeshipApplicationViewModel>(),new List<MyTraineeshipApplicationViewModel>(), new TraineeshipPromptViewModel());
+            _emptyMyApplicationsView = new MyApplicationsViewModel(new List<MyApprenticeshipApplicationViewModel>(),new List<MyTraineeshipApplicationViewModel>(), new TraineeshipFeatureViewModel());
             _accountMediator = new AccountMediator(_accountProviderMock.Object, _settingsViewModelServerValidator, _apprenticeshipApplicationProviderMock.Object);
         }
 
@@ -209,6 +209,7 @@
         [Test]
         public void SettingsSuccessTest()
         {
+            _accountProviderMock.Setup(x => x.GetSettingsViewModel(It.IsAny<Guid>())).Returns(new SettingsViewModel());
             var response = _accountMediator.Settings(Guid.NewGuid());
             response.AssertCode(Codes.AccountMediator.Settings.Success);
         }

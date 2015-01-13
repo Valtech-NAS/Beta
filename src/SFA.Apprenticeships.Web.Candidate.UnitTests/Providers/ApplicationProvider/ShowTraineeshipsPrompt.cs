@@ -48,7 +48,7 @@
                 .Returns(new Candidate());
             
             _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
-                Returns(GetApplicationSummaries(UnsuccessfulApplications));
+                Returns(GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications));
 
             _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
                 .Returns(GetTraineeshipApplicationSummaries(0));
@@ -57,7 +57,31 @@
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
 
             //Assert
-            results.ShowTraineeshipsPrompt.Should().BeTrue();
+            results.TraineeshipFeature.ShowTraineeshipsPrompt.Should().BeTrue();
+            results.TraineeshipFeature.ShowTraineeshipsLink.Should().BeTrue();
+        }
+
+        [Test]
+        public void GivenAUserHasMoreThanNUnsuccessfulApplications_AndOneSuccessfulApplication_ShouldntSeeTheTraineeshipsPrompt()
+        {
+            //Arrange
+            _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+                .Returns(new Candidate());
+
+            var apprenticeshipApplicationSummaries = GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications);
+            apprenticeshipApplicationSummaries.AddRange(GetSuccessfulApplicationSummaries(1));
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
+                Returns(apprenticeshipApplicationSummaries);
+
+            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
+                .Returns(GetTraineeshipApplicationSummaries(0));
+
+            //Act
+            var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
+
+            //Assert
+            results.TraineeshipFeature.ShowTraineeshipsPrompt.Should().BeFalse();
+            results.TraineeshipFeature.ShowTraineeshipsLink.Should().BeTrue();
         }
 
         [Test]
@@ -74,7 +98,7 @@
                 });
 
             _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
-                Returns(GetApplicationSummaries(UnsuccessfulApplications));
+                Returns(GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications));
 
             _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
                 .Returns(GetTraineeshipApplicationSummaries(0));
@@ -83,7 +107,8 @@
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
 
             //Assert
-            results.ShowTraineeshipsPrompt.Should().BeFalse();
+            results.TraineeshipFeature.ShowTraineeshipsPrompt.Should().BeFalse();
+            results.TraineeshipFeature.ShowTraineeshipsLink.Should().BeTrue();
         }
 
         [Test]
@@ -96,7 +121,7 @@
                 .Returns(new Candidate());
 
             _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>()))
-                .Returns(GetApplicationSummaries(unsuccessfulApplicationsThreshold));
+                .Returns(GetUnsuccessfulApplicationSummaries(unsuccessfulApplicationsThreshold));
 
             _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
                 .Returns(GetTraineeshipApplicationSummaries(0));
@@ -105,7 +130,8 @@
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
 
             //Assert
-            results.ShowTraineeshipsPrompt.Should().BeFalse();
+            results.TraineeshipFeature.ShowTraineeshipsPrompt.Should().BeFalse();
+            results.TraineeshipFeature.ShowTraineeshipsLink.Should().BeFalse();
         }
 
         [Test]
@@ -115,7 +141,7 @@
             _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>())).Returns(new Candidate());
 
             _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>()))
-                .Returns(GetApplicationSummaries(UnsuccessfulApplications));
+                .Returns(GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications));
 
             _featureToggle.Setup(ft => ft.IsActive(Feature.Traineeships))
                 .Returns(false);
@@ -127,7 +153,8 @@
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
 
             //Assert
-            results.ShowTraineeshipsPrompt.Should().BeFalse();
+            results.TraineeshipFeature.ShowTraineeshipsPrompt.Should().BeFalse();
+            results.TraineeshipFeature.ShowTraineeshipsLink.Should().BeFalse();
         }
 
         [Test]
@@ -138,7 +165,7 @@
                 .Returns(new Candidate());
 
             _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>()))
-                .Returns(GetApplicationSummaries(UnsuccessfulApplications));
+                .Returns(GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications));
             
             _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
                 .Returns(GetTraineeshipApplicationSummaries(1));
@@ -147,13 +174,21 @@
             var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
 
             //Assert
-            results.ShowTraineeshipsPrompt.Should().BeFalse();
+            results.TraineeshipFeature.ShowTraineeshipsPrompt.Should().BeFalse();
+            results.TraineeshipFeature.ShowTraineeshipsLink.Should().BeTrue();
         }
 
-        private static List<ApprenticeshipApplicationSummary> GetApplicationSummaries(int applicationSummariesCount)
+        private static List<ApprenticeshipApplicationSummary> GetUnsuccessfulApplicationSummaries(int applicationSummariesCount)
         {
             return Enumerable.Range(1, applicationSummariesCount)
                 .Select(i => new ApprenticeshipApplicationSummary {Status = ApplicationStatuses.Unsuccessful})
+                .ToList();
+        }
+
+        private static List<ApprenticeshipApplicationSummary> GetSuccessfulApplicationSummaries(int applicationSummariesCount)
+        {
+            return Enumerable.Range(1, applicationSummariesCount)
+                .Select(i => new ApprenticeshipApplicationSummary {Status = ApplicationStatuses.Successful})
                 .ToList();
         }
 

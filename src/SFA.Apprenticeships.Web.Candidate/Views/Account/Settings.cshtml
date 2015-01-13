@@ -10,8 +10,14 @@
     </div>
     <div class="grid grid-1-2">
         <p>
-            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { @class = "page-link" })
+            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link" })
         </p>
+    @if (Model.TraineeshipFeature.ShowTraineeshipsLink)
+    {
+        <p>
+            @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "page-link" })
+        </p>
+    }
     </div>
 </div>
 

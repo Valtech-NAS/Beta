@@ -212,7 +212,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DeleteDraftApprenticeshipApplication.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Dashboard\ShowFindVacancyLinks.feature.cs">
+    <Compile Include="Features\TraineeshipApplication\ShowFindVacancyLinks.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ShowFindVacancyLinks.feature</DependentUpon>
@@ -426,7 +426,7 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>DeleteDraftApprenticeshipApplication.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Dashboard\ShowFindVacancyLinks.feature">
+    <None Include="Features\TraineeshipApplication\ShowFindVacancyLinks.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ShowFindVacancyLinks.feature.cs</LastGenOutput>
     </None>

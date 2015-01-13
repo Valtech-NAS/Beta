@@ -1,9 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Account
 {
     using System.ComponentModel.DataAnnotations;
+    using Applications;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Locations;
+    using MyApplications;
     using Validators;
 
     [Validator(typeof(SettingsViewModelClientValidator))]
@@ -24,5 +26,7 @@
 
         [Display(Name = SettingsViewModelMessages.AllowEmailCommsMessages.LabelText)]
         public bool AllowEmailComms { get; set; }
+
+        public TraineeshipFeatureViewModel TraineeshipFeature { get; set; }
     }
 }

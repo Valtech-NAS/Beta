@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Configuration;
     using NLog;
@@ -409,12 +410,34 @@
                     })
                     .ToList();
 
+                var traineeshipFeatureViewModel = GetTraineeshipFeatureViewModel(candidateId, apprenticeshipApplicationSummaries, traineeshipApplicationSummaries);
+
                 return new MyApplicationsViewModel(
-                    apprenticeshipApplications, traineeshipApplications, GetTraineeshipPrompt(candidateId));
+                    apprenticeshipApplications, traineeshipApplications, traineeshipFeatureViewModel);
             }
             catch (Exception e)
             {
                 var message = string.Format("Get MyApplications failed for candidate ID: {0}.", candidateId);
+
+                Logger.Error(message, e);
+
+                throw;
+            }
+        }
+
+        public TraineeshipFeatureViewModel GetTraineeshipFeatureViewModel(Guid candidateId)
+        {
+            try
+            {
+                var apprenticeshipApplicationSummaries = _candidateService.GetApprenticeshipApplications(candidateId);
+                var traineeshipApplicationSummaries = _candidateService.GetTraineeshipApplications(candidateId);
+                var traineeshipFeatureViewModel = GetTraineeshipFeatureViewModel(candidateId, apprenticeshipApplicationSummaries, traineeshipApplicationSummaries);
+
+                return traineeshipFeatureViewModel;
+            }
+            catch (Exception e)
+            {
+                var message = string.Format("Get Traineeship Feature View Model failed for candidate ID: {0}.", candidateId);
 
                 Logger.Error(message, e);
 
@@ -431,17 +454,25 @@
             }
         }
 
-        private TraineeshipPromptViewModel GetTraineeshipPrompt(Guid candidateId)
+        private TraineeshipFeatureViewModel GetTraineeshipFeatureViewModel(Guid candidateId, IList<ApprenticeshipApplicationSummary> apprenticeshipApplicationSummaries, IList<TraineeshipApplicationSummary> traineeshipApplicationSummaries)
         {
             var candididate = _candidateService.GetCandidate(candidateId);
 
-            return new TraineeshipPromptViewModel
+            var unsuccessfulApplicationsToShowTraineeshipsPrompt = _configurationManager.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt");
+            var traineeshipsFeatureActive = _featureToggle.IsActive(Feature.Traineeships);
+            var allowTraineeshipPrompts = candididate.CommunicationPreferences.AllowTraineeshipPrompts;
+
+            var sufficentUnsuccessfulApprenticeshipApplicationsToPrompt = apprenticeshipApplicationSummaries.Count(each => each.Status == ApplicationStatuses.Unsuccessful) >= unsuccessfulApplicationsToShowTraineeshipsPrompt;
+            var candidateHasSuccessfulApprenticeshipApplication = apprenticeshipApplicationSummaries.Any(each => each.Status == ApplicationStatuses.Successful);
+            var candidateHasAppliedForTraineeship = traineeshipApplicationSummaries.Any();
+
+            var viewModel = new TraineeshipFeatureViewModel
             {
-                UnsuccessfulApplicationsToShowTraineeshipsPrompt =
-                    _configurationManager.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt"),
-                TraineeshipsFeatureActive = _featureToggle.IsActive(Feature.Traineeships),
-                AllowTraineeshipPrompts = candididate.CommunicationPreferences.AllowTraineeshipPrompts
+                ShowTraineeshipsPrompt = traineeshipsFeatureActive && allowTraineeshipPrompts && sufficentUnsuccessfulApprenticeshipApplicationsToPrompt && !candidateHasSuccessfulApprenticeshipApplication && !candidateHasAppliedForTraineeship,
+                ShowTraineeshipsLink = traineeshipsFeatureActive && (sufficentUnsuccessfulApprenticeshipApplicationsToPrompt || candidateHasAppliedForTraineeship)
             };
+
+            return viewModel;
         }
 
         #region Helpers

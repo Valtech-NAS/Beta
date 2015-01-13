@@ -17,7 +17,7 @@
     </div>
 }
 
-@if (Model.ShowTraineeshipsPrompt)
+@if (Model.TraineeshipFeature.ShowTraineeshipsPrompt)
 {
     <div role="alert" aria-live="assertive" id="traineeshipPrompt" class="toggle-content panel-info" style="display: block;">
         <div class="text">
@@ -48,7 +48,7 @@
                  </ul>
                 
             }
-            @if (Model.ShowTraineeshipsPrompt || Model.TraineeshipApplications.Any())
+            @if (Model.TraineeshipFeature.ShowTraineeshipsLink)
             {
                 <ul class="list-text">
                     <li>
