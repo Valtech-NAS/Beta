@@ -32,17 +32,27 @@ else
         </p>
     </section>
 }
-    <h2 class="heading-medium">What happens next</h2>
-    <div class="text form-group">
-        <p>
-            You’ll be contacted if you’re eligible for a traineeship. You can see the applications you've made by visiting <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">my applications</a>.
+
+@if (ViewBag.SearchReturnUrl != null)
+{
+    <section class="section-border">
+        <p class="text">
+            <a href="@ViewBag.SearchReturnUrl" title="Return to search results" id="lnk-return-search-results">Return to search results</a>
         </p>
-        <h3 class="heading-small">Training provider</h3>
-        <p>@Model.ProviderContactInfo</p>
-        <p>
-            <a href="@(ViewBag.FeedbackUrl)" rel="external" target="_blank">What did you think of the service?</a>
-        </p>
-    </div>
-    <div class="form-group get-started">
-        <a role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)'>Find a traineeship</a>
-    </div>
+    </section>
+}
+
+<h2 class="heading-medium">What happens next</h2>
+<div class="text form-group">
+    <p>
+        You’ll be contacted if you’re eligible for a traineeship. You can see the applications you've made by visiting <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">my applications</a>.
+    </p>
+    <h3 class="heading-small">Training provider</h3>
+    <p>@Model.ProviderContactInfo</p>
+    <p>
+        <a href="@(ViewBag.FeedbackUrl)" rel="external" target="_blank">What did you think of the service?</a>
+    </p>
+</div>
+<div class="form-group get-started">
+    <a role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)'>Find a traineeship</a>
+</div>

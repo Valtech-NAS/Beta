@@ -23,6 +23,7 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ApplyWebTrends]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
         public async Task<ActionResult> Resume(int id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -44,6 +45,7 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ApplyWebTrends]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
         public async Task<ActionResult> Apply(int id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -70,6 +72,7 @@
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Preview")]
         [ApplyWebTrends]
         [ValidateInput(false)]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
         public async Task<ActionResult> Apply(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -105,6 +108,7 @@
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Save")]
         [ApplyWebTrends]
         [ValidateInput(false)]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
         public async Task<ActionResult> Save(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -136,6 +140,7 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ValidateInput(false)]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
         public async Task<JsonResult> AutoSave(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run(() =>
@@ -167,6 +172,7 @@
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyQualificationRows")]
         [ApplyWebTrends]
         [ValidateInput(false)]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
         public async Task<ActionResult> AddEmptyQualificationRows(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -185,6 +191,7 @@
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyWorkExperienceRows")]
         [ApplyWebTrends]
         [ValidateInput(false)]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
         public async Task<ActionResult> AddEmptyWorkExperienceRows(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -200,6 +207,7 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [ApplyWebTrends]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
         public async Task<ActionResult> Preview(int id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -225,6 +233,7 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ApplyWebTrends]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
         public async Task<ActionResult> SubmitApplication(int id)
         {
             return await Task.Run<ActionResult>(() =>

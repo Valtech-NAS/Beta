@@ -437,6 +437,7 @@
     <Compile Include="App_Start\WebApiConfig.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Attributes\ClearSearchReturnUrlAttribute.cs" />
     <Compile Include="Attributes\TraineeshipsToggle.cs" />
     <Compile Include="Attributes\SiteRootRedirect.cs" />
     <Compile Include="Attributes\ApplyWebTrendsAttribute.cs" />
@@ -474,7 +475,6 @@
     <Compile Include="Constants\ViewModels\UserNameAvailability.cs" />
     <Compile Include="Constants\ViewModels\WorkExperienceViewModelMessages.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
-    <Compile Include="Controllers\VacancySearchController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />

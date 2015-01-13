@@ -1,9 +1,9 @@
-﻿
-namespace SFA.Apprenticeships.Web.Candidate.Controllers
+﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
     using System.Configuration;
     using System.Web.Mvc;
+    using Attributes;
     using Common.Attributes;
     using Common.Constants;
     using Common.Controllers;
@@ -11,7 +11,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using NLog;
     using Providers;
 
-    [SessionTimeout, CookiesEnabled, AllowReturnUrl(Allow = true)]
+    [SessionTimeout, CookiesEnabled, AllowReturnUrl(Allow = true), ClearSearchReturnUrl]
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -84,6 +84,18 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
 
             MappedDiagnosticsContext.Set("sessionId", sessionId);
             MappedDiagnosticsContext.Set("userId", UserContext != null ? UserContext.CandidateId.ToString() : "<none>");
+        }
+
+        protected Guid? GetCandidateId()
+        {
+            Guid? candidateId = null;
+
+            if (Request.IsAuthenticated && UserContext != null)
+            {
+                candidateId = UserContext.CandidateId;
+            }
+
+            return candidateId;
         }
     }
 }

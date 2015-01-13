@@ -10,5 +10,8 @@
         public TraineeshipWhatsNextPage(ISearchContext context) : base(context)
         {
         }
+
+        [ElementLocator(Id = "lnk-return-search-results")]
+        public IWebElement BackToSearchResults { get; set; }
     }
 }

@@ -13,7 +13,7 @@
     using ViewModels.VacancySearch;
 
     [TraineeshipsToggle]
-    public class TraineeshipSearchController : VacancySearchController
+    public class TraineeshipSearchController : CandidateControllerBase
     {
         private readonly ITraineeshipSearchMediator _traineeshipSearchMediator;
 
@@ -46,10 +46,13 @@
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [ApplyWebTrends]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
         public async Task<ActionResult> Results(TraineeshipSearchViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
+                ViewBag.SearchReturnUrl = (Request != null && Request.Url != null) ? Request.Url.PathAndQuery : null;
+
                 var response = _traineeshipSearchMediator.Results(model);
 
                 switch (response.Code)
@@ -78,6 +81,7 @@
 
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
         public async Task<ActionResult> DetailsWithDistance(int id, string distance)
         {
             return await Task.Run<ActionResult>(() =>
@@ -92,12 +96,15 @@
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [ApplyWebTrends]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
         public async Task<ActionResult> Details(int id)
         {
             return await Task.Run<ActionResult>(() =>
             {
                 var candidateId = GetCandidateId();
-                var searchReturnUrl = GetSearchReturnUrl(CandidateRouteNames.TraineeshipResults);
+
+                string searchReturnUrl = ViewBag.SearchReturnUrl != null ? ViewBag.SearchReturnUrl.ToString() : null;
+
                 var response = _traineeshipSearchMediator.Details(id, candidateId, searchReturnUrl);
 
                 switch (response.Code)

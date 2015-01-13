@@ -28,6 +28,16 @@ else
         </p>
     </section>
 }
+
+@if (ViewBag.SearchReturnUrl != null)
+{
+    <section class="section-border">
+        <p class="text">
+            <a href="@ViewBag.SearchReturnUrl" title="Return to search results" id="lnk-return-search-results">Return to search results</a>
+        </p>
+    </section>
+}
+
 <h2 class="heading-medium">What happens next</h2>
 <div class="text form-group">
     <p>
