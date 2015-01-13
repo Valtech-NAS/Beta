@@ -6,6 +6,7 @@
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
+    using Common.Providers;
     using Common.Services;
     using Constants;
     using Constants.Pages;
@@ -225,11 +226,17 @@
         [ApplyWebTrends]
         public ActionResult SessionTimeout(string returnUrl)
         {
+            var userContext = UserData.GetUserContext();
 
             FormsAuthentication.SignOut();
             UserData.Clear();
-
-            SetUserMessage(SignOutPageMessages.SessionTimeoutMessageText);
+            
+            if (userContext != null)
+            {
+                //Only set the message if the user context was set by a previous login action.
+                //This means that the session has timed out rather than becoming invalid after closing the browser.
+                SetUserMessage(SignOutPageMessages.SessionTimeoutMessageText);
+            }
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {
