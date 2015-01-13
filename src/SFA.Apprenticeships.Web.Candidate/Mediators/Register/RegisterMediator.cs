@@ -141,7 +141,8 @@
 
             if (!resetViewModel.IsPasswordResetCodeValid)
             {
-                return GetMediatorResponse(Codes.RegisterMediatorCodes.ResetPassword.InvalidResetCode, resetViewModel);
+                validationResult = _passwordResetViewModelServerValidator.Validate(resetViewModel);
+                return GetMediatorResponse(Codes.RegisterMediatorCodes.ResetPassword.InvalidResetCode, resetViewModel, validationResult);
             }
 
             return GetMediatorResponse(Codes.RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword, resetViewModel, PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success);

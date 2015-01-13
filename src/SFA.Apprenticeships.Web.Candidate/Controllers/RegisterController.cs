@@ -198,10 +198,10 @@
                 switch (response.Code)
                 {
                     case Codes.RegisterMediatorCodes.ResetPassword.FailedValidation:
+                    case Codes.RegisterMediatorCodes.ResetPassword.InvalidResetCode:
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(response.ViewModel);
-
-                    case Codes.RegisterMediatorCodes.ResetPassword.InvalidResetCode:
+                    
                     case Codes.RegisterMediatorCodes.ResetPassword.FailedToResetPassword:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(model);
