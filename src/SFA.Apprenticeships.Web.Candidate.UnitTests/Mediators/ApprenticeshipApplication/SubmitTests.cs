@@ -5,6 +5,11 @@
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
     using Candidate.ViewModels.VacancySearch;
+    using Common.Constants;
+    using Common.Models.Application;
+    using Constants.Pages;
+    using Domain.Entities.Applications;
+    using FluentAssertions;
     using Moq;
     using NUnit.Framework;
 
@@ -12,6 +17,54 @@
     public class SubmitTests : TestsBase
     {
         private const int ValidVacancyId = 1;
+
+        [Test]
+        public void VacancyNotFound()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel(),
+                Status = ApplicationStatuses.ExpiredOrWithdrawn
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+            
+            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId);
+
+            response.AssertCode(Codes.ApprenticeshipApplication.Submit.VacancyNotFound, false);
+        }
+
+        [Test]
+        public void IncorrectState()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel(),
+                ViewModelStatus = ApplicationViewModelStatus.ApplicationInIncorrectState
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+            
+            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId);
+
+            response.AssertCode(Codes.ApprenticeshipApplication.Submit.IncorrectState, false);
+        }
+
+        [Test]
+        public void Error()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel(),
+                ViewModelStatus = ApplicationViewModelStatus.Error
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+            
+            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId);
+
+            response.AssertMessage(Codes.ApprenticeshipApplication.Submit.Error, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, false, true);
+        }
 
         [Test]
         public void Ok()
@@ -27,7 +80,7 @@
             
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.Apply.Ok, false, true);
+            response.AssertCode(Codes.ApprenticeshipApplication.Submit.Ok, false, true);
         }
     }
 }

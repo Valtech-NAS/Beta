@@ -69,6 +69,24 @@
         }
 
         [Test]
+        public void OkIsJavascript()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel(),
+                IsJavascript = true
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft });
+            ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
+            ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+            
+            var response = Mediator.Save(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertCode(Codes.ApprenticeshipApplication.Save.Ok, true);
+        }
+
+        [Test]
         public void Ok()
         {
             var viewModel = new ApprenticeshipApplicationViewModel
