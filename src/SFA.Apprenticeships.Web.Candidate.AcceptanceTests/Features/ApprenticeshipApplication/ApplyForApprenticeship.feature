@@ -41,13 +41,13 @@ Scenario: As a candidate I want to save my apprenticeship application as a draft
 	When I choose ApplyButton
 	Then I am on the ApprenticeshipApplicationPage page
 	When I enter data
-		| Field                   | Value                         |
-		| EducationNameOfSchool   | SchoolName                    |
-		| EducationFromYear       | 2010                          |
-		| EducationToYear         | 2012                          |
-		| WhatAreYourStrengths    | My strengths                  |
-		| WhatCanYouImprove       | What can I improve            |
-		| HobbiesAndInterests     | Hobbies and interests         |
+		| Field                 | Value                 |
+		| EducationNameOfSchool | SchoolName            |
+		| EducationFromYear     | 2010                  |
+		| EducationToYear       | 2012                  |
+		| WhatAreYourStrengths  | My strengths          |
+		| WhatCanYouImprove     | What can I improve    |
+		| HobbiesAndInterests   | Hobbies and interests |
 	And I choose SaveButton
 	Then I wait to see ApplicationSavedMessage
 	And I see
@@ -72,7 +72,7 @@ Scenario: As a candidate I want to save my apprenticeship application as a draft
 	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
 
-@US461 @US362 @US365 @US154 @US463 @US352 @US354 @US678
+@US461 @US362 @US365 @US154 @US463 @US352 @US354
 Scenario: As a candidate I want to enter my qualifications and work experience in an apprenticeship application
 	Given I have registered a new candidate
 	When I navigate to the details of the vacancy 445650
@@ -225,9 +225,6 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| HobbiesAndInterests           | Equals    | Hobbies and interests |
 	When I choose SubmitApplication
 	Then I am on the ApprenticeshipApplicationCompletePage page
-	And I see
-		| Field               | Rule   | Value |
-		| BackToSearchResults | Exists |       |
 	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
 	And I see

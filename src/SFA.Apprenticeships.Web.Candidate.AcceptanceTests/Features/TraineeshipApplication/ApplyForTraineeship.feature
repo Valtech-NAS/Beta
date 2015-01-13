@@ -30,7 +30,6 @@ Scenario: As a candidate I am taken to login or create an account when viewing t
 	And I choose ApplyButton
 	Then I am on the LoginPage page
 
-@US678
 Scenario: As a candidate I want to enter my qualifications and work experience in a traineeship application
 	Given I have registered a new candidate
 	When I select the "first" traineeship vacancy in location "N7 8LS" that can apply by this website
@@ -128,6 +127,3 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 	When I am on the TraineeshipApplicationPage page
 	And I choose ApplyButton
 	Then I am on the TraineeshipWhatsNextPage page
-	And I see
-		| Field               | Rule   | Value |
-		| BackToSearchResults | Exists |       |
