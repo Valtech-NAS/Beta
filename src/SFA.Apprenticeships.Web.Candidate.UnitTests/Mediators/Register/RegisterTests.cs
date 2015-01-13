@@ -4,11 +4,11 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
-    using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
-    using SFA.Apprenticeships.Web.Candidate.Mediators;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
-    using SFA.Apprenticeships.Web.Common.Constants;
+    using Constants.Pages;
+    using Constants.ViewModels;
+    using Candidate.Mediators;
+    using Candidate.ViewModels.Register;
+    using Common.Constants;
 
     [TestFixture]
     public class RegisterTests : RegisterBaseTests
@@ -73,6 +73,18 @@
                 e => e.ErrorMessage == RegisterViewModelMessages.EmailAddressMessages.UsernameNotAvailableErrorText)
                 .Should()
                 .NotBeNull();
+        }
+
+        [Test]
+        public void RegistrationValidationFailedWhenEmailAddressIsNull()
+        {
+            _candidateServiceProvider.Setup(x => x.IsUsernameAvailable(It.IsAny<string>()))
+                .Returns(new UserNameAvailability { HasError = true });
+
+            var registerViewModel = new RegisterViewModel { EmailAddress = null };
+            var response = _registerMediator.Register(registerViewModel);
+
+            response.AssertValidationResult(Codes.RegisterMediatorCodes.Register.ValidationFailed, true);
         }
 
         [Test]
