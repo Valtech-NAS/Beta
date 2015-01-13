@@ -75,7 +75,7 @@
 
             var response = _registerMediator.ResetPassword(resetPasswordViewModel);
 
-            response.AssertCode(Codes.RegisterMediatorCodes.ResetPassword.InvalidResetCode, true);
+            response.AssertValidationResult(Codes.RegisterMediatorCodes.ResetPassword.InvalidResetCode);
         }
 
         [Test]
