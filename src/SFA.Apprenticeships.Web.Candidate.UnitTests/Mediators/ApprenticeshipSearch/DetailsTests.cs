@@ -16,7 +16,7 @@
         [Test]
         public void VacancyNotFound()
         {
-            var response = Mediator.Details(Id, null, null);
+            var response = Mediator.Details(Id, null);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Details.VacancyNotFound, false);
         }
@@ -29,7 +29,7 @@
             var vacancyDetailViewModel = new VacancyDetailViewModel {ViewModelMessage = message};
             ApprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
             
-            var response = Mediator.Details(Id, null, null);
+            var response = Mediator.Details(Id, null);
 
             response.AssertMessage(Codes.ApprenticeshipSearch.Details.VacancyHasError, message, UserMessageLevel.Warning, true);
         }
@@ -40,7 +40,7 @@
             var vacancyDetailViewModel = new VacancyDetailViewModel();
             ApprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
 
-            var response = Mediator.Details(Id, null, null);
+            var response = Mediator.Details(Id, null);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Details.Ok, true);
         }
@@ -54,7 +54,7 @@
             UserDataProvider.Setup(udp => udp.Pop(UserDataItemNames.VacancyDistance)).Returns(VacancyDistance);
             UserDataProvider.Setup(udp => udp.Pop(UserDataItemNames.LastViewedVacancyId)).Returns(Convert.ToString(Id));
 
-            var response = Mediator.Details(Id, null, null);
+            var response = Mediator.Details(Id, null);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Details.Ok, true);
         }

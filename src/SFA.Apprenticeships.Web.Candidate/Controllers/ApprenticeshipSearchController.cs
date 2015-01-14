@@ -101,10 +101,8 @@
             return await Task.Run<ActionResult>(() =>
             {
                 var candidateId = GetCandidateId();
-
-                string searchReturnUrl = ViewBag.SearchReturnUrl != null ? ViewBag.SearchReturnUrl.ToString() : null;
                 
-                var response = _apprenticeshipSearchMediator.Details(id, candidateId, searchReturnUrl);
+                var response = _apprenticeshipSearchMediator.Details(id, candidateId);
                 
                 switch (response.Code)
                 {
