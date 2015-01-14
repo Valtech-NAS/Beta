@@ -6,24 +6,23 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using Vacancy;
 
     public class LegacyQueueApprenticeshipApplicationSubmittedStrategy : ISendApplicationSubmittedStrategy
     {
-        private readonly IMessageBus _messageBus;
         private readonly IVacancyDataProvider<ApprenticeshipVacancyDetail> _vacancyDataProvider;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
+        private readonly IQueueCommunicationRequestStrategy _queueCommunicationRequestStrategy;
 
-        public LegacyQueueApprenticeshipApplicationSubmittedStrategy(IMessageBus messageBus, IVacancyDataProvider<ApprenticeshipVacancyDetail> vacancyDataProvider, IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, ICandidateReadRepository candidateReadRepository)
+        public LegacyQueueApprenticeshipApplicationSubmittedStrategy(IVacancyDataProvider<ApprenticeshipVacancyDetail> vacancyDataProvider, IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, ICandidateReadRepository candidateReadRepository, IQueueCommunicationRequestStrategy queueCommunicationRequestStrategy)
         {
-            _messageBus = messageBus;
             _vacancyDataProvider = vacancyDataProvider;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _candidateReadRepository = candidateReadRepository;
+            _queueCommunicationRequestStrategy = queueCommunicationRequestStrategy;
         }
 
         public void Send(Guid candidateId, IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
@@ -49,15 +48,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference, vacancy.VacancyReference)
             };
 
-            //todo: change to CommunicationRequest
-            var request = new EmailRequest
-            {
-                ToEmail = candidate.RegistrationDetails.EmailAddress,
-                MessageType = MessageTypes.ApprenticeshipApplicationSubmitted,
-                Tokens = applicationTokens
-            };
-
-            _messageBus.PublishMessage(request);
+            _queueCommunicationRequestStrategy.Queue(candidateId, MessageTypes.ApprenticeshipApplicationSubmitted, applicationTokens);
         }
 
         private ApprenticeshipApplicationDetail GetApplication(IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)

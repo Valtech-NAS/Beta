@@ -2,34 +2,20 @@
 {
     using System;
     using System.Collections.Generic;
-    using Domain.Interfaces.Messaging;
-    using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
 
     public class QueueAccountUnlockCodeStrategy : ISendAccountUnlockCodeStrategy
     {
-        private readonly IMessageBus _messageBus;
-        private readonly ICandidateReadRepository _candidateReadRepository;
+        private readonly IQueueCommunicationRequestStrategy _queueCommunicationRequestStrategy;
 
-        public QueueAccountUnlockCodeStrategy(IMessageBus messageBus, ICandidateReadRepository candidateReadRepository)
+        public QueueAccountUnlockCodeStrategy(IQueueCommunicationRequestStrategy queueCommunicationRequestStrategy)
         {
-            _messageBus = messageBus;
-            _candidateReadRepository = candidateReadRepository;
+            _queueCommunicationRequestStrategy = queueCommunicationRequestStrategy;
         }
 
         public void Send(Guid candidateId, IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
         {
-            var candidate = _candidateReadRepository.Get(candidateId);
-
-            //todo: change to CommunicationRequest
-            var request = new EmailRequest
-            {
-                ToEmail = candidate.RegistrationDetails.EmailAddress,
-                MessageType = MessageTypes.SendAccountUnlockCode,
-                Tokens = tokens,
-            };
-
-            _messageBus.PublishMessage(request);
+            _queueCommunicationRequestStrategy.Queue(candidateId, MessageTypes.SendAccountUnlockCode, tokens);
         }
     }
 }

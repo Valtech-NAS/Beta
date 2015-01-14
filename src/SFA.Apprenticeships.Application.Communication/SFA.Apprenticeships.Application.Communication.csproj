@@ -98,6 +98,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CommunicationService.cs" />
+    <Compile Include="Strategies\QueueCommunicationRequestStrategy.cs" />
+    <Compile Include="Strategies\IQueueCommunicationRequestStrategy.cs" />
     <Compile Include="Strategies\ISendAccountUnlockCodeStrategy.cs" />
     <Compile Include="Strategies\ISendTraineeshipApplicationSubmittedStrategy.cs" />
     <Compile Include="Strategies\ISendApplicationSubmittedStrategy.cs" />

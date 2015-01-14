@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Messaging
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// DTO to represent an SMS that should be sent
@@ -12,5 +13,8 @@
         public string ToNumber { get; set; }
 
         public string Message { get; set; }
+        public MessageTypes MessageType { get; set; }
+
+        public IEnumerable<KeyValuePair<CommunicationTokens, string>> Tokens { get; set; }
     }
 }

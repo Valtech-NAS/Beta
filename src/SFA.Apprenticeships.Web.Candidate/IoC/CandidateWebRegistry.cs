@@ -48,6 +48,7 @@
                 .Ctor<ISubmitApprenticeshipApplicationStrategy>("submitApprenticeshipApplicationStrategy").Is<LegacySubmitApprenticeshipApplicationStrategy>()
                 .Ctor<ISubmitTraineeshipApplicationStrategy>("submitTraineeshipApplicationStrategy").Is<LegacySubmitTraineeshipApplicationStrategy>();
 
+            For<IQueueCommunicationRequestStrategy>().Use<QueueCommunicationRequestStrategy>();
             For<IActivateCandidateStrategy>().Use<QueuedLegacyActivateCandidateStrategy>();
             For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);

@@ -16,6 +16,8 @@
         ApplicationVacancyTitle,
         ApplicationVacancyReference,
         ApplicationId,
-        ProviderContact
+        ProviderContact,
+        CandidateEmailAddress,
+        CandidateMobileNumber
     }
 }
