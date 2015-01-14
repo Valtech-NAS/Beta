@@ -133,10 +133,10 @@
                     case Codes.Login.Unlock.UnlockedSuccessfully:
                         UserData.Pop(UserDataItemNames.EmailAddress);
                         SetUserMessage(AccountUnlockPageMessages.AccountUnlockedText);
-                        return RedirectToAction("Index");
+                        return RedirectToRoute(RouteNames.SignIn);
 
                     case Codes.Login.Unlock.UserInIncorrectState:
-                        return RedirectToAction("Index");
+                        return RedirectToRoute(RouteNames.SignIn);
 
                     case Codes.Login.Unlock.AccountEmailAddressOrUnlockCodeInvalid:
                         SetUserMessage(AccountUnlockPageMessages.WrongEmailAddressOrAccountUnlockCodeErrorText, UserMessageLevel.Error);
@@ -195,7 +195,7 @@
 
             SetUserMessage(SignOutPageMessages.SignOutMessageText);
 
-            return RedirectToAction("Index");
+            return RedirectToRoute(RouteNames.SignIn);
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -220,7 +220,7 @@
                 UserData.Push(UserDataItemNames.SessionReturnUrl, Server.UrlEncode(returnUrl));
             }
 
-            return RedirectToAction("Index");
+            return RedirectToRoute(RouteNames.SignIn);
         }
     }
 }
