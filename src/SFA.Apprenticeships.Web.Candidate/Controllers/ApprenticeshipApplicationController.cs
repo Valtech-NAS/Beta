@@ -240,7 +240,7 @@
                     case Codes.ApprenticeshipApplication.Submit.Error:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View("Preview", response.Parameters);
+                        return RedirectToAction("Preview", response.Parameters);
                     case Codes.ApprenticeshipApplication.Submit.Ok:
                         return RedirectToAction("WhatHappensNext", response.Parameters);
                 }
