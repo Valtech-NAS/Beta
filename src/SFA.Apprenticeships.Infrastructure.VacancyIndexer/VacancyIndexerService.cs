@@ -21,7 +21,7 @@
         private const int PageSize = 5;
         private const double LondonLatitude = 51;
         private const double LondonLongitude = -0.1;
-        private const int SearchRadius = 20;
+        private const int SearchRadius = 30;
 
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
         private readonly IMapper _mapper;
@@ -130,7 +130,7 @@
             var client = _elasticsearchClientFactory.GetElasticClient();
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (TDestinationSummary));
 
-            var search = client.Search<ApprenticeshipSummaryResponse>(s =>
+            var search = client.Search<TDestinationSummary>(s =>
             {
                 s.Index(newIndexName);
                 s.Type(documentTypeName);
@@ -146,7 +146,7 @@
 
                 return s;
             });
-           
+
             var result = search.Documents.Any();
             LogResult(result, newIndexName);
 
