@@ -19,8 +19,6 @@
         [AutoSubscriberConsumer(SubscriptionId = "EmailRequestConsumerAsync")]
         public Task Consume(EmailRequest request)
         {
-            Logger.Debug("Email request received from message bus, From:{0}, To:{1}, Subject:{2}", request.FromEmail, request.ToEmail, request.Subject);
-
             return Task.Run(() =>
             {
                 try
@@ -28,16 +26,10 @@
                     Logger.Debug("Sending email to dispatcher From:{0}, To:{1}, Subject:{2}, Template:{3}",
                         request.FromEmail, request.ToEmail, request.Subject, request.MessageType);
                     _dispatcher.SendEmail(request);
-                    Logger.Debug("Sent email to dispatcher From:{0}, To:{1}, Subject:{2}, Template:{3}",
-                        request.FromEmail, request.ToEmail, request.Subject, request.MessageType);
                 }
                 catch (Exception ex)
                 {
-                    var message =
-                        string.Format(
-                            "Error while sending email to dispatcher From:{0}, To:{1}, Subject:{2}, Template:{3}",
-                            request.FromEmail, request.ToEmail, request.Subject, request.MessageType);
-                    Logger.Error(message, ex);
+                    Logger.Error("Error sending email", ex);
                 }
             });
         }

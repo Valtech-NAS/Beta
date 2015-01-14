@@ -31,6 +31,9 @@
 
         public void SendEmail(EmailRequest request)
         {
+            Logger.Debug("Dispatching email From:{0}, To:{1}, Subject:{2}, Template:{3}",
+                request.FromEmail, request.ToEmail, request.Subject, request.MessageType);
+
             var message = ComposeMessage(request);
             DispatchMessage(message);
         }
