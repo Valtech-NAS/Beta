@@ -159,6 +159,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Consumers\CommunicationRequestConsumerAsync.cs" />
     <Compile Include="Consumers\CreateCandidateRequestConsumerAsync.cs" />
     <Compile Include="Consumers\SubmitTraineeshipApplicationRequestConsumerAsync.cs" />
     <Compile Include="Consumers\SubmitApprenticeshipApplicationRequestConsumerAsync.cs" />

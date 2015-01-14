@@ -10,9 +10,9 @@
     {
         public string ToEmail { get; set; }
 
-        public string FromEmail { get; set; }
+        public string FromEmail { get; set; } //todo: remove as defined in email template/config
 
-        public string Subject { get; set; }
+        public string Subject { get; set; } //todo: remove as defined in email template/config
 
         public MessageTypes MessageType { get; set; }
 

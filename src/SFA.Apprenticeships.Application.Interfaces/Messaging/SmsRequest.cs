@@ -7,8 +7,10 @@
     /// </summary>
     public class SmsRequest
     {
-        public string Sender { get; set; }
-        public string MobileNumber { get; set; }
+        public string Sender { get; set; } //todo: remove as (will be) defined in config
+
+        public string ToNumber { get; set; }
+
         public string Message { get; set; }
     }
 }

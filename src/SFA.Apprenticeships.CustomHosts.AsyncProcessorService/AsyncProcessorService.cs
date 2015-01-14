@@ -80,8 +80,7 @@
 
             Logger.Debug("RabbitMQ initialising");
 
-            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof (EmailRequestConsumerAsync)),
-                asyncProcessorSubscriptionId);
+            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(EmailRequestConsumerAsync)), asyncProcessorSubscriptionId);
 
             Logger.Debug("RabbitMQ initialised");
         }

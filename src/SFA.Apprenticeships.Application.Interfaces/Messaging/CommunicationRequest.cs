@@ -4,7 +4,7 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// DTO to represent an outbound communication message (email, SMS)
+    /// DTO to represent an outbound communication message (which may yield subsequent email, SMS requests)
     /// </summary>
     public class CommunicationRequest
     {

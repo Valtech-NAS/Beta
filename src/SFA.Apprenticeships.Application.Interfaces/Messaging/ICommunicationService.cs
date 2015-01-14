@@ -4,8 +4,9 @@
     using System.Collections.Generic;
 
     /// <summary>
-    ///     Responsible for gathering required info for sending SMS / Email messages to users.
-    ///     Sending is delegated to a strategy for each message
+    /// Used for sending SMS / Email messages to users. 
+    /// Responsible for delegating request to message specific strategies. 
+    /// Relevant data is collected in each message strategy and queued for later processing
     /// </summary>
     public interface ICommunicationService
     {
