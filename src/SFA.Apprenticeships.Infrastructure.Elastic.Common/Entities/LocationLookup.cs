@@ -17,5 +17,8 @@
 
         [ElasticProperty(Name = "latitude", Type = FieldType.Double, Store = true, Index = FieldIndexOption.NotAnalyzed)]
         public double Latitude { get; set; }
+
+        [ElasticProperty(Name = "size", Type = FieldType.Integer, Store = true, Index = FieldIndexOption.NotAnalyzed)]
+        public double Size { get; set; }
     }
 }

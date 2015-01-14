@@ -14,6 +14,7 @@ namespace LocationLoader.Process
             Map(m => m.County).Name("County");
             Map(m => m.Latitude).Name("Latitude");
             Map(m => m.Longitude).Name("Longitude");
+            Map(m => m.Type).Name("Type");
         }
     }
 }

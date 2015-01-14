@@ -6,6 +6,7 @@
     using Domain.Entities.Locations;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
+    using Nest;
     using NLog;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
 
@@ -32,8 +33,10 @@
             // 1. Find place names that match the search term exactly.
             var exactMatchResults = client.Search<LocationLookup>(s => s
                 .Index(indexName)
-                .Query(q => q
-                    .Match(m => m.OnField(f => f.Name).Query(term))
+                .Query(q1 => q1
+                    .FunctionScore(fs => fs.Query(q2 => q2
+                        .Match(m => m.OnField(f => f.Name).Query(term)))
+                        .Functions(f => f.FieldValueFactor(fvf => fvf.Field(ll => ll.Size))).ScoreMode(FunctionScoreMode.Sum))
                 )
                 .From(0)
                 .Size(maxResults));
@@ -41,8 +44,10 @@
             // 2. Find place names that are prefixed with the search term (autocomplete).
             var prefixMatchResults = client.Search<LocationLookup>(s => s
                 .Index(indexName)
-                .Query(q => q
-                    .Prefix(p => p.OnField(n => n.Name).Value(term))
+                .Query(q1 => q1
+                    .FunctionScore(fs => fs.Query(q2 => q2
+                        .Prefix(p => p.OnField(n => n.Name).Value(term)))
+                        .Functions(f => f.FieldValueFactor(fvf => fvf.Field(ll => ll.Size))).ScoreMode(FunctionScoreMode.Sum))
                 )
                 .From(0)
                 .Size(maxResults));
@@ -50,9 +55,11 @@
             // 3. Find place names and counties by Levenshtein distance from the search term (http://en.wikipedia.org/wiki/Levenshtein_distance).
             var fuzzyMatchResults = client.Search<LocationLookup>(s => s
                 .Index(indexName)
-                .Query(q =>
-                    q.Fuzzy(f => f.PrefixLength(1).OnField(n => n.Name).Value(term).Boost(2.0)) ||
-                    q.Fuzzy(f => f.PrefixLength(1).OnField(n => n.County).Value(term).Boost(1.0))
+                .Query(q1 => q1
+                    .FunctionScore(fs => fs.Query(q2 => 
+                        q2.Fuzzy(f => f.PrefixLength(1).OnField(n => n.Name).Value(term).Boost(2.0)) || 
+                        q2.Fuzzy(f => f.PrefixLength(1).OnField(n => n.County).Value(term).Boost(1.0)))
+                        .Functions(f => f.FieldValueFactor(fvf => fvf.Field(ll => ll.Size))).ScoreMode(FunctionScoreMode.Sum))
                 )
                 .From(0)
                 .Size(maxResults));
@@ -61,7 +68,6 @@
             var results =
                 exactMatchResults.Documents
                 .Concat(prefixMatchResults.Documents)
-                //.Concat(prefixMatchResults.Documents.Where(l => l.Name.ToLower().StartsWith(term.ToLower())).OrderBy(l => l.Name).ThenBy(l => l.County))
                 .Concat(fuzzyMatchResults.Documents)
                 .Distinct((new LocationLookupComparer()))
                 .Take(maxResults)

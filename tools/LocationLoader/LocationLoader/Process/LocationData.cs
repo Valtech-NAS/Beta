@@ -25,5 +25,27 @@ namespace LocationLoader.Process
 
         [ElasticProperty(Name = "postcode", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.analyzed)]
         public string Postcode { get; set; }
+
+        [ElasticProperty(Name = "type", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.not_analyzed)]
+        public string Type { get; set; }
+
+        [ElasticProperty(Name = "size", Type = FieldType.integer_type, Store = true, Index = FieldIndexOption.not_analyzed)]
+        public int Size
+        {
+            get
+            {
+                switch (Type)
+                {
+                    case "City":
+                        return 5;
+                    case "Town":
+                        return 3;
+                    case "Other":
+                        return 1;
+                    default:
+                        return 1;
+                }
+            }
+        }
     }
 }
