@@ -19,6 +19,8 @@
     [TestFixture]
     public class SearchProviderTests
     {
+        private const int PageSize = 10;
+
         private Mock<ILocationSearchService> _locationSearchService;
         private Mock<IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>> _apprenticeshipSearchService;
         private Mock<IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>> _traineeshipSearchService;
@@ -93,38 +95,11 @@
         [TestCase]
         public void ShouldFindVacanciesFromCriteria()
         {
-            const int pageSize = 10;
-            var results = new 
-                SearchResults<ApprenticeshipSummaryResponse>(100, 1, new List<ApprenticeshipSummaryResponse>
-            {
-                new ApprenticeshipSummaryResponse
-                {
-                    VacancyLocationType = ApprenticeshipLocationType.National
-                }
-            });
+            SetupReturnOneHundredResultsOfType(ApprenticeshipLocationType.National);
 
-            _apprenticeshipSearchService.Setup(
-                x => x.Search(It.IsAny<ApprenticeshipSearchParameters>())).Returns(results);          
+            var search = GetASearchViewModelOfType(ApprenticeshipLocationType.National);
 
-            var search = new ApprenticeshipSearchViewModel
-            {
-                Location = "Test",
-                Longitude = 0d,
-                Latitude = 0d,
-                PageNumber = 1,
-                WithinDistance = 2,
-                ResultsPerPage = pageSize,
-                LocationType = ApprenticeshipLocationType.National
-            };
-
-            var searchProvider = new SearchProvider(_locationSearchService.Object,
-                _apprenticeshipSearchService.Object,
-                _traineeshipSearchService.Object,
-                _addressSearchService.Object,
-                _apprenticeshipMapper,
-                _traineeeshipMapper,
-                _performanceCounterService.Object,
-                _configurationManager.Object);
+            var searchProvider = GetSearchProvider();
 
             var test = searchProvider.FindVacancies(search);
 
@@ -135,6 +110,79 @@
             test.TotalNationalHits.Should().Be(100);
             test.TotalLocalHits.Should().Be(0);
             test.VacancySearch.Should().Be(search);
+        }
+
+        [Test]
+        public void IfThereIsntNonNationalResultsButThereAreNationalResuts_ShouldReturnLocationTypeAsNational()
+        {
+            SetupReturnOneHundredResultsOfType(ApprenticeshipLocationType.National);
+
+            var search = GetASearchViewModelOfType(ApprenticeshipLocationType.NonNational);
+
+            var searchProvider = GetSearchProvider();
+            
+            var vacancies = searchProvider.FindVacancies(search);
+
+            vacancies.VacancySearch.LocationType.Should().Be(ApprenticeshipLocationType.National);
+        }
+
+        [Test]
+        public void
+            IfItsANationalSearchButThereIsntNationalResuls_TheNonNationalResultsAreReturned()
+        {
+            SetupReturnOneHundredResultsOfType(ApprenticeshipLocationType.NonNational);
+
+            var search = GetASearchViewModelOfType(ApprenticeshipLocationType.National);
+
+            var searchProvider = GetSearchProvider();
+
+            var vacancies = searchProvider.FindVacancies(search);
+
+            vacancies.Vacancies.Should().HaveCount(1);
+            vacancies.Vacancies.First().VacancyLocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+        }
+
+        private static ApprenticeshipSearchViewModel GetASearchViewModelOfType(ApprenticeshipLocationType locationType)
+        {
+            var search = new ApprenticeshipSearchViewModel
+            {
+                Location = "Test",
+                Longitude = 0d,
+                Latitude = 0d,
+                PageNumber = 1,
+                WithinDistance = 2,
+                ResultsPerPage = PageSize,
+                LocationType = locationType
+            };
+            return search;
+        }
+
+        private void SetupReturnOneHundredResultsOfType(ApprenticeshipLocationType locationType)
+        {
+            var results = new
+                SearchResults<ApprenticeshipSummaryResponse>(100, 1, new List<ApprenticeshipSummaryResponse>
+                {
+                    new ApprenticeshipSummaryResponse
+                    {
+                        VacancyLocationType = locationType
+                    }
+                });
+
+            _apprenticeshipSearchService.Setup(
+                x => x.Search(It.IsAny<ApprenticeshipSearchParameters>())).Returns(results);
+        }
+
+        private SearchProvider GetSearchProvider()
+        {
+            var searchProvider = new SearchProvider(_locationSearchService.Object,
+                _apprenticeshipSearchService.Object,
+                _traineeshipSearchService.Object,
+                _addressSearchService.Object,
+                _apprenticeshipMapper,
+                _traineeeshipMapper,
+                _performanceCounterService.Object,
+                _configurationManager.Object);
+            return searchProvider;
         }
     }
 }
