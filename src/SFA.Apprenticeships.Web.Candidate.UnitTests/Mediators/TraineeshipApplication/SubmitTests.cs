@@ -49,7 +49,7 @@
             
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertMessage(Codes.TraineeshipApplication.Submit.Error, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, false, true);
+            response.AssertMessage(Codes.TraineeshipApplication.Submit.Error, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, true, true);
         }
 
         [Test]
