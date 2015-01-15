@@ -7,7 +7,7 @@
     {
         public int Id { get; set; }
 
-        public string VacancyReference { get; set; }
+        public int VacancyReference { get; set; }
         
         public string Title { get; set; }
 
@@ -20,5 +20,9 @@
         public string EmployerName { get; set; }
 
         public GeoPoint Location { get; set; }
+
+        public string Sector { get; set; }
+
+        public string Framework { get; set; }
     }
 }

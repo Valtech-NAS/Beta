@@ -15,5 +15,11 @@
         string Description { get; set; }
 
         GeoPoint Location { get; set; }
+
+        int VacancyReference { get; set; }
+
+        string Sector { get; set; }
+
+        string Framework { get; set; }
     }
 }

@@ -3,9 +3,9 @@
     using System;
     using Apprenticeships;
     using Common.Mappers;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
+    using GatewayServiceProxy;
 
     public class LegacyVacancySummaryMapper : MapperEngine
     {
@@ -17,22 +17,15 @@
 
         private void CreateApprenticeshipSummaryMap()
         {
-            Mapper.CreateMap<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>()
+            Mapper.CreateMap<VacancySummary, ApprenticeshipSummary>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom(src => src.VacancyId))
 
-                //TODO: Change needed on gateway for future requirements
-                //.ForMember(dest => dest.VacancyReference,
-                //    opt => opt.MapFrom(src => src.VacancyReference))
-
-                //.ForMember(dest => dest.StartDate,
-                //    opt => opt.MapFrom(src => src.StartDate))
-
                 .ForMember(dest => dest.VacancyReference,
-                    opt => opt.UseValue(null))
+                    opt => opt.MapFrom(src => src.VacancyReference))
 
                 .ForMember(dest => dest.StartDate,
-                    opt => opt.UseValue(DateTime.MinValue))
+                    opt => opt.MapFrom(src => src.PossibleStartDate))
 
                 .ForMember(dest => dest.ClosingDate,
                     opt => opt.MapFrom(src => src.ClosingDate))
@@ -54,21 +47,26 @@
                     opt => opt.ResolveUsing<VacancyLocationTypeResolver>().FromMember(src => src.VacancyLocationType))
 
                 .ForMember(dest => dest.Title,
-                    opt => opt.MapFrom(src => src.VacancyTitle));
+                    opt => opt.MapFrom(src => src.VacancyTitle))
+
+                .ForMember(dest => dest.Sector,
+                    opt => opt.MapFrom(src => src.ApprenticeshipOccupation))
+
+                .ForMember(dest => dest.Framework,
+                    opt => opt.MapFrom(src => src.ApprenticeshipFrameworkDescription));
         }
 
         private void CreateTraineeshipSummaryMap()
         {
-            Mapper.CreateMap<GatewayServiceProxy.VacancySummary, TraineeshipSummary>()
+            Mapper.CreateMap<VacancySummary, TraineeshipSummary>()
                 .ForMember(dest => dest.Id,
                     opt => opt.MapFrom(src => src.VacancyId))
 
-                //TODO: Change needed on gateway for future requirements
-                //.ForMember(dest => dest.VacancyReference,
-                //    opt => opt.MapFrom(src => src.VacancyReference))
+                .ForMember(dest => dest.VacancyReference,
+                    opt => opt.MapFrom(src => src.VacancyReference))
 
-                //.ForMember(dest => dest.StartDate,
-                //    opt => opt.MapFrom(src => src.StartDate))
+                .ForMember(dest => dest.StartDate,
+                    opt => opt.MapFrom(src => src.PossibleStartDate))
 
                 .ForMember(dest => dest.VacancyReference,
                     opt => opt.UseValue(null))
@@ -90,7 +88,13 @@
                         .FromMember(src => src.Address))
 
                 .ForMember(dest => dest.Title,
-                    opt => opt.MapFrom(src => src.VacancyTitle));
+                    opt => opt.MapFrom(src => src.VacancyTitle))
+
+                .ForMember(dest => dest.Sector,
+                    opt => opt.MapFrom(src => src.ApprenticeshipOccupation))
+
+                .ForMember(dest => dest.Framework,
+                    opt => opt.MapFrom(src => src.ApprenticeshipFrameworkDescription));
         }
     }
 }
