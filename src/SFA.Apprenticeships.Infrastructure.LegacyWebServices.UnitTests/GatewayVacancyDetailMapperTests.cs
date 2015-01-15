@@ -34,6 +34,7 @@
             var src = new Vacancy
             {
                 VacancyId =  67,
+                Status = "Live",
                 VacancyReference = 42,
                 ApplicationInstructions = "ApplicationInstructions",
                 ClosingDate = DateTime.Today.AddDays(1),
@@ -77,6 +78,7 @@
             dest.Should().NotBeNull();
 
             dest.Id.Should().Be(src.VacancyId);
+            dest.VacancyStatus.Should().Be(VacancyStatuses.Live);
             dest.ApplicationInstructions.Should().Be(src.ApplicationInstructions);
             dest.ClosingDate.Should().Be(src.ClosingDate);
             dest.Contact.Should().Be(src.ContactForCandidate);
@@ -111,8 +113,7 @@
             dest.Wage.Should().Be(src.WeeklyWage);
             dest.WageDescription.Should().Be(src.WageText);
             dest.WorkingWeek.Should().Be(src.WorkingWeek);
-            dest.VacancyReference.Should().Be("VAC" + src.VacancyReference.ToString("D9"))
-            ;
+            dest.VacancyReference.Should().Be("VAC" + src.VacancyReference.ToString("D9"));
         }
 
         [TestCase]

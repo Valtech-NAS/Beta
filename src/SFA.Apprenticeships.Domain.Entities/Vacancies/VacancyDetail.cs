@@ -49,6 +49,8 @@
 
         public DateTime Created { get; set; }
 
+        public VacancyStatuses VacancyStatus { get; set; }
+
         #endregion
 
         #region Employer
