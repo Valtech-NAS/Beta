@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
 {
-    using System;
     using System.Collections.Generic;
     using Application.Interfaces.Messaging;
     using Common.IoC;
@@ -11,6 +10,14 @@
     [TestFixture]
     public class SendGridEmailDispatcherTests
     {
+        private IEmailDispatcher _dispatcher;
+
+        private IEmailDispatcher _voidEmailDispatcher;
+
+        private const string TestToEmail = "valtechnas@gmail.com";
+
+        private const string TestActivationCode = "ABC123";
+
         [SetUp]
         public void SetUp()
         {
@@ -27,15 +34,6 @@
 #pragma warning restore 0618
         }
 
-        private IEmailDispatcher _dispatcher;
-        private IEmailDispatcher _voidEmailDispatcher;
-
-        private const string TestToEmail = "valtechnas@gmail.com";
-
-        private const string TestActivationCode = "ABC123"; 
-
-        private const string TestFromEmail = "from@example.com";
-        
         private IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateActivationEmailTokens()
         {
             return new[]
@@ -127,8 +125,6 @@
         {
             var request = new EmailRequest
             {
-                Subject = "Hello, World at " + DateTime.Now.ToLongTimeString(),
-                FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
                 Tokens = CreateActivationEmailTokens(),
                 MessageType = MessageTypes.SendActivationCode
@@ -143,7 +139,6 @@
             // NOTE: FromEmail is not set and is defined in SendGrid email template.
             var request = new EmailRequest
             {
-                Subject = "Hello, World at " + DateTime.Now.ToLongTimeString(),
                 ToEmail = TestToEmail,
                 Tokens = CreateActivationEmailTokens(),
                 MessageType = MessageTypes.SendActivationCode
@@ -158,7 +153,6 @@
             // NOTE: Subject is not set and is defined in SendGrid email template.
             var request = new EmailRequest
             {
-                FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
                 Tokens = CreateActivationEmailTokens(),
                 MessageType = MessageTypes.SendActivationCode
@@ -172,7 +166,6 @@
         {
             var request = new EmailRequest
             {
-                FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
                 Tokens = CreateAccountUnlockCodeTokens(),
                 MessageType = MessageTypes.SendAccountUnlockCode
@@ -186,7 +179,6 @@
         {
             var request = new EmailRequest
             {
-                FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
                 Tokens = CreateApprenticeshipApplicationSubmittedTokens(),
                 MessageType = MessageTypes.ApprenticeshipApplicationSubmitted
@@ -200,7 +192,6 @@
         {
             var request = new EmailRequest
             {
-                FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
                 Tokens = CreateTraineeshipApplicationSubmittedTokens(),
                 MessageType = MessageTypes.TraineeshipApplicationSubmitted
@@ -214,7 +205,6 @@
         {
             var request = new EmailRequest
             {
-                FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
                 Tokens = CreatePasswordResetTokens(),
                 MessageType = MessageTypes.SendPasswordResetCode
@@ -228,7 +218,6 @@
         {
             var request = new EmailRequest
             {
-                FromEmail = TestFromEmail,
                 ToEmail = TestToEmail,
                 Tokens = CreatePasswordResetConfirmationTokens(),
                 MessageType = MessageTypes.PasswordChanged

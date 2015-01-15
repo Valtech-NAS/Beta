@@ -3,12 +3,14 @@
     using System;
     using System.Threading.Tasks;
     using Application.Candidate;
-    using Application.Interfaces.Messaging;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;
     using NLog;
+    using ApplicationsErrorCodes = Application.Interfaces.Applications.ErrorCodes;
+    using CandidatesErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
+    using VacanciesErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
 
     public class SubmitTraineeshipApplicationRequestConsumerAsync : IConsumeAsync<SubmitTraineeshipApplicationRequest>
     {
@@ -91,19 +93,19 @@
         {
             switch (ex.Code)
             {
-                case ErrorCodes.ApplicationDuplicatedError:
+                case ApplicationsErrorCodes.ApplicationDuplicatedError:
                     Logger.Warn("Traineeship application has already been submitted to legacy system: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
-                case ErrorCodes.LegacyCandidateStateError:
+                case CandidatesErrorCodes.LegacyCandidateStateError:
                     Logger.Error("Legacy candidate is in an invalid state. Traineeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
-                case ErrorCodes.LegacyCandidateNotFoundError:
+                case CandidatesErrorCodes.LegacyCandidateNotFoundError:
                     Logger.Error("Legacy candidate was not found. Traineeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
-                case ErrorCodes.LegacyVacancyStateError:
+                case VacanciesErrorCodes.LegacyVacancyStateError:
                     Logger.Warn("Legacy Vacancy was in an invalid state. Traineeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 

@@ -8,6 +8,7 @@
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using NLog;
+    using MessagingErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
 
     public class LegacySubmitApprenticeshipApplicationStrategy : ISubmitApprenticeshipApplicationStrategy
     {
@@ -45,7 +46,7 @@
                 Logger.Debug("SubmitApplicationRequest could not be queued for ApplicationId={0}", applicationDetail.EntityId);
 
                 throw new CustomException("SubmitApplicationRequest could not be queued", ex,
-                    ErrorCodes.ApplicationQueuingError);
+                    MessagingErrorCodes.ApplicationQueuingError);
             }
         }
 

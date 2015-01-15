@@ -117,8 +117,10 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TwilioConfigurationTests.cs" />
     <Compile Include="SendGridConfigurationTests.cs" />
     <Compile Include="SendGridEmailDispatcherTests.cs" />
+    <Compile Include="TwilioSmsDispatcherTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

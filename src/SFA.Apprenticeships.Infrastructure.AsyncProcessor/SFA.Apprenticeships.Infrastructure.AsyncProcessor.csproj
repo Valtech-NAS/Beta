@@ -161,6 +161,7 @@
     </Compile>
     <Compile Include="Consumers\CommunicationRequestConsumerAsync.cs" />
     <Compile Include="Consumers\CreateCandidateRequestConsumerAsync.cs" />
+    <Compile Include="Consumers\SmsRequestConsumerAsync.cs" />
     <Compile Include="Consumers\SubmitTraineeshipApplicationRequestConsumerAsync.cs" />
     <Compile Include="Consumers\SubmitApprenticeshipApplicationRequestConsumerAsync.cs" />
     <Compile Include="Consumers\EmailRequestConsumerAsync.cs" />

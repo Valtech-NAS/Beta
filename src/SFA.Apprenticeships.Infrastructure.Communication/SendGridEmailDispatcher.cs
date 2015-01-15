@@ -11,6 +11,7 @@
     using Domain.Entities.Exceptions;
     using NLog;
     using SendGrid;
+    using MessagingErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
 
     //todo: simplify - we don't need to pass "subject" and "from address" in the EmailRequest DTO
     public class SendGridEmailDispatcher : IEmailDispatcher
@@ -31,8 +32,8 @@
 
         public void SendEmail(EmailRequest request)
         {
-            Logger.Debug("Dispatching email From:{0}, To:{1}, Subject:{2}, Template:{3}",
-                request.FromEmail, request.ToEmail, request.Subject, request.MessageType);
+            Logger.Debug("Dispatching email To:{0}, Template:{1}",
+                request.ToEmail, request.MessageType);
 
             var message = ComposeMessage(request);
             DispatchMessage(message);
@@ -53,7 +54,7 @@
             const string emptyHtml = "<span></span>";
             const string emptyText = "";
 
-            var subject = DefaultSubject(request);
+            const string subject = "-";
 
             // NOTE: https://github.com/sendgrid/sendgrid-csharp.
             var message = new SendGridMessage
@@ -68,12 +69,6 @@
             };
 
             return message;
-        }
-
-        private static string DefaultSubject(EmailRequest request)
-        {
-            const string emptySubject = "-"; // CRITICAL: must be a single hyphen.
-            return string.IsNullOrWhiteSpace(request.Subject) ? emptySubject : request.Subject;
         }
 
         private static void PopulateTemplate(EmailRequest request, SendGridMessage message)
@@ -95,7 +90,7 @@
         {
             var templateName = GetTemplateName(request.MessageType);
             var template = GetTemplateConfiguration(templateName);
-            var fromEmail = DefaultFromEmail(request, template);
+            var fromEmail = template.FromEmail;
 
             message.From = new MailAddress(fromEmail);
             message.EnableTemplateEngine(template.Id);
@@ -107,11 +102,6 @@
             var templateName = string.Format("{0}.{1}", enumType.Name, Enum.GetName(enumType, messageType));
             Logger.Debug("Determined email template: EnumType={0} Name={1} TemplateName={2} MessageType={3}", enumType, enumType.Name, templateName, messageType);
             return templateName;
-        }
-
-        private static string DefaultFromEmail(EmailRequest request, SendGridTemplateConfiguration template)
-        {
-            return String.IsNullOrWhiteSpace(request.FromEmail) ? template.FromEmail : request.FromEmail;
         }
 
         private SendGridTemplateConfiguration GetTemplateConfiguration(string templateName)
@@ -144,7 +134,7 @@
             catch (Exception e)
             {
                 Logger.Error("Failed to dispatch email", e);
-                throw new CustomException("Failed to dispatch email", e, ErrorCodes.EmailSendGridError);
+                throw new CustomException("Failed to dispatch email", e, MessagingErrorCodes.EmailSendGridError);
             }
         }
 

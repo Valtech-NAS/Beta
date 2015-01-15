@@ -92,10 +92,12 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Applications\ErrorCodes.cs" />
     <Compile Include="Candidates\ErrorCodes.cs" />
     <Compile Include="Locations\ErrorCodes.cs" />
     <Compile Include="Locations\IAddressSearchProvider.cs" />
     <Compile Include="Messaging\BaseRequest.cs" />
+    <Compile Include="Messaging\ErrorCodes.cs" />
     <Compile Include="Messaging\MessageTypes.cs" />
     <Compile Include="Messaging\CommunicationTokens.cs" />
     <Compile Include="Messaging\CommunicationRequest.cs" />

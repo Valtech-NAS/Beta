@@ -9,6 +9,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
     using Domain.Interfaces.Repositories;
     using Interfaces.Messaging;
     using Vacancy;
+    using MessagingErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
 
     public class LegacyQueueApprenticeshipApplicationSubmittedStrategy : ISendApplicationSubmittedStrategy
     {
@@ -37,7 +38,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
             if (vacancy == null) //todo: add flag to repo operation
             {
                 throw new CustomException("Vacancy not found with ID {0}.",
-                    ErrorCodes.VacancyNotFoundError,
+                    MessagingErrorCodes.VacancyNotFoundError,
                     application.Vacancy.Id);
             }
 

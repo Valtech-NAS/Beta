@@ -132,7 +132,7 @@
 
             var cex = ex as CustomException;
 // ReSharper disable once PossibleNullReferenceException
-            cex.Code.Should().Be(ErrorCodes.ApplicationDuplicatedError);
+            cex.Code.Should().Be(Application.Interfaces.Applications.ErrorCodes.ApplicationDuplicatedError);
         }
 
         public void CheckForApplicationGatewayCreationException(Exception ex)
@@ -150,7 +150,7 @@
 
             var cex = ex as CustomException;
 // ReSharper disable once PossibleNullReferenceException
-            cex.Code.Should().Be(ErrorCodes.LegacyCandidateNotFoundError);
+            cex.Code.Should().Be(Application.Interfaces.Candidates.ErrorCodes.LegacyCandidateNotFoundError);
         }
 
         private int CreateLegacyCandidateId()

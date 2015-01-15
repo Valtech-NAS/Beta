@@ -8,11 +8,8 @@
     /// </summary>
     public class SmsRequest
     {
-        public string Sender { get; set; } //todo: remove as (will be) defined in config
-
         public string ToNumber { get; set; }
 
-        public string Message { get; set; }
         public MessageTypes MessageType { get; set; }
 
         public IEnumerable<KeyValuePair<CommunicationTokens, string>> Tokens { get; set; }

@@ -6,30 +6,30 @@
     using EasyNetQ.AutoSubscribe;
     using NLog;
 
-    public class EmailRequestConsumerAsync : IConsumeAsync<EmailRequest>
+    public class SmsRequestConsumerAsync : IConsumeAsync<SmsRequest>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IEmailDispatcher _dispatcher;
+        private readonly ISmsDispatcher _dispatcher;
 
-        public EmailRequestConsumerAsync(IEmailDispatcher dispatcher)
+        public SmsRequestConsumerAsync(ISmsDispatcher dispatcher)
         {
             _dispatcher = dispatcher;
         }
 
-        [AutoSubscriberConsumer(SubscriptionId = "EmailRequestConsumerAsync")]
-        public Task Consume(EmailRequest request)
+        [AutoSubscriberConsumer(SubscriptionId = "SmsRequestConsumerAsync")]
+        public Task Consume(SmsRequest request)
         {
             return Task.Run(() =>
             {
                 try
                 {
-                    Logger.Debug("Sending email to dispatcher To:{0}, Template:{1}",
-                        request.ToEmail, request.MessageType);
-                    _dispatcher.SendEmail(request);
+                    Logger.Debug("Sending sms to dispatcher To:{0}, MessageType:{1}",
+                        request.ToNumber, request.MessageType);
+                    _dispatcher.SendSms(request);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("Error sending email", ex);
+                    Logger.Error("Error sending sms", ex);
                 }
             });
         }
