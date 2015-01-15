@@ -1,14 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
 {
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Runtime.InteropServices;
     using System.Threading.Tasks;
     using Application.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
-    using SFA.Apprenticeships.Domain.Interfaces.Messaging;
-    using SFA.Apprenticeships.Domain.Interfaces.Repositories;
+    using Domain.Interfaces.Messaging;
+    using Domain.Interfaces.Repositories;
 
     public class CommunicationRequestConsumerAsync : IConsumeAsync<CommunicationRequest>
     {
@@ -43,6 +41,8 @@
                 {
                     SendSmsMessage(message);
                 }
+
+                //todo: future work: write to communication repository
             });
         }
 
