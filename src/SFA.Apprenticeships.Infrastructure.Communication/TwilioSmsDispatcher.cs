@@ -37,14 +37,25 @@
                 var message = GetMessageFrom(request);
 
                 Logger.Debug("Dispatching sms: {0}", LogTwilioMessage(request));
-                twilio.SendMessage(_mobileNumberFrom, request.ToNumber, message);
+                var response = twilio.SendMessage(_mobileNumberFrom, request.ToNumber, message);
+                if (response.RestException != null)
+                {
+                    Logger.Error("Failed to dispatch sms: {0}", response.RestException.Message);
+                    throw new CustomException(GetExceptionMessage(response.RestException), ErrorCodes.EmailSendGridError);
+                }
                 Logger.Info("Dispatched sms: {0} to {1}", message, request.ToNumber);
             }
             catch (Exception e)
             {
                 Logger.Error("Failed to dispatch sms", e);
-                throw new CustomException("Failed to dispatch email", e, ErrorCodes.EmailSendGridError);
+                throw new CustomException("Failed to dispatch sms", e, ErrorCodes.EmailSendGridError);
             }
+        }
+
+        private static string GetExceptionMessage(RestException restException)
+        {
+            return string.Format("Failed to dispatch sms. Code:{0}, Message:{1}, MoreInfo: {2}, Status:{3}",
+                restException.Code, restException.Message, restException.MoreInfo, restException.Status);
         }
 
         private static string LogTwilioMessage(SmsRequest request)

@@ -5,8 +5,8 @@
     using System.Threading.Tasks;
     using Application.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
-    using Domain.Interfaces.Messaging;
-    using Domain.Interfaces.Repositories;
+    using SFA.Apprenticeships.Domain.Interfaces.Messaging;
+    using SFA.Apprenticeships.Domain.Interfaces.Repositories;
 
     public class CommunicationRequestConsumerAsync : IConsumeAsync<CommunicationRequest>
     {
@@ -27,22 +27,20 @@
                 var candidateId = message.EntityId;
 
                 // note, some messages are mandatory - determined by type
-                var isOptional = message.MessageType == MessageTypes.TraineeshipApplicationSubmitted ||
+                var isOptionalMessageType = message.MessageType == MessageTypes.TraineeshipApplicationSubmitted ||
                                   message.MessageType == MessageTypes.ApprenticeshipApplicationSubmitted;
 
                 var candidate = _candidateReadRepository.Get(candidateId);
 
-                if (!isOptional || candidate.CommunicationPreferences.AllowEmail)
+                if (!isOptionalMessageType || candidate.CommunicationPreferences.AllowEmail)
                 {
                     SendEmailMessage(message);
                 }
 
-                if (!isOptional || candidate.CommunicationPreferences.AllowMobile)
+                if (!isOptionalMessageType || candidate.CommunicationPreferences.AllowMobile)
                 {
                     SendSmsMessage(message);
                 }
-
-                //todo: future work: write to communication repository
             });
         }
 

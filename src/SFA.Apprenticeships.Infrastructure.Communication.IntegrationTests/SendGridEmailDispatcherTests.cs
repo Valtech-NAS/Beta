@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
 {
-    using System.Collections.Generic;
     using Application.Interfaces.Messaging;
     using Common.IoC;
     using IoC;
@@ -16,7 +15,6 @@
 
         private const string TestToEmail = "valtechnas@gmail.com";
 
-        private const string TestActivationCode = "ABC123";
 
         [SetUp]
         public void SetUp()
@@ -32,78 +30,6 @@
             _dispatcher = ObjectFactory.GetNamedInstance<IEmailDispatcher>("SendGridEmailDispatcher");
             _voidEmailDispatcher = ObjectFactory.GetNamedInstance<IEmailDispatcher>("VoidEmailDispatcher");
 #pragma warning restore 0618
-        }
-
-        private IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateActivationEmailTokens()
-        {
-            return new[]
-            {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
-                new KeyValuePair<CommunicationTokens, string>(
-                    CommunicationTokens.ActivationCode, TestActivationCode),
-                new KeyValuePair<CommunicationTokens, string>(
-                    CommunicationTokens.Username, TestToEmail),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ActivationCodeExpiryDays,
-                    " 30 days")
-            };
-        }
-
-        private IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateAccountUnlockCodeTokens()
-        {
-            return new[]
-            {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, TestToEmail),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.AccountUnlockCode, TestActivationCode),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.AccountUnlockCodeExpiryDays,
-                    " 1 day")
-            };
-        }
-
-        private IEnumerable<KeyValuePair<CommunicationTokens, string>> CreatePasswordResetConfirmationTokens()
-        {
-            return new[]
-            {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, TestToEmail)
-            };
-        }
-
-        private IEnumerable<KeyValuePair<CommunicationTokens, string>> CreatePasswordResetTokens()
-        {
-            return new[]
-            {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, TestToEmail),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.PasswordResetCode, TestActivationCode),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.PasswordResetCodeExpiryDays, "1 day")
-            };
-        }
-
-        private static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateApprenticeshipApplicationSubmittedTokens()
-        {
-            return new[]
-            {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyTitle,
-                    "Application Vacancy Title"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference,
-                    "Application Vacancy Reference")
-            };
-        }
-
-        private static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateTraineeshipApplicationSubmittedTokens()
-        {
-            return new[]
-            {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyTitle,
-                    "Application Vacancy Title"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference,
-                    "Application Vacancy Reference"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ProviderContact,
-                    "Provider Contact")
-            };
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
@@ -126,7 +52,7 @@
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = CreateActivationEmailTokens(),
+                Tokens = TokenGenerator.CreateActivationEmailTokens(),
                 MessageType = MessageTypes.SendActivationCode
             };
 
@@ -140,7 +66,7 @@
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = CreateActivationEmailTokens(),
+                Tokens = TokenGenerator.CreateActivationEmailTokens(),
                 MessageType = MessageTypes.SendActivationCode
             };
 
@@ -154,7 +80,7 @@
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = CreateActivationEmailTokens(),
+                Tokens = TokenGenerator.CreateActivationEmailTokens(),
                 MessageType = MessageTypes.SendActivationCode
             };
 
@@ -167,7 +93,7 @@
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = CreateAccountUnlockCodeTokens(),
+                Tokens = TokenGenerator.CreateAccountUnlockCodeTokens(),
                 MessageType = MessageTypes.SendAccountUnlockCode
             };
 
@@ -180,7 +106,7 @@
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = CreateApprenticeshipApplicationSubmittedTokens(),
+                Tokens = TokenGenerator.CreateApprenticeshipApplicationSubmittedTokens(),
                 MessageType = MessageTypes.ApprenticeshipApplicationSubmitted
             };
 
@@ -193,7 +119,7 @@
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = CreateTraineeshipApplicationSubmittedTokens(),
+                Tokens = TokenGenerator.CreateTraineeshipApplicationSubmittedTokens(),
                 MessageType = MessageTypes.TraineeshipApplicationSubmitted
             };
 
@@ -206,7 +132,7 @@
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = CreatePasswordResetTokens(),
+                Tokens = TokenGenerator.CreatePasswordResetTokens(),
                 MessageType = MessageTypes.SendPasswordResetCode
             };
 
@@ -219,7 +145,7 @@
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = CreatePasswordResetConfirmationTokens(),
+                Tokens = TokenGenerator.CreatePasswordResetConfirmationTokens(),
                 MessageType = MessageTypes.PasswordChanged
             };
 
