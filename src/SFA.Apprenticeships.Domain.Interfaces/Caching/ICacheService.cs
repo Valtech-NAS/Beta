@@ -40,6 +40,10 @@
 
         #region Put
 
+        void PutObject(string cacheKey, object cacheObject);
+
+        void PutObject(string cacheKey, object cacheObject, CacheDuration cacheDuration);
+            
         void Put<TCacheEntry, TResult, TFuncParam1>(TCacheEntry cacheEntry, TResult result, TFuncParam1 funcParam1)
             where TCacheEntry : BaseCacheKey
             where TResult : class;

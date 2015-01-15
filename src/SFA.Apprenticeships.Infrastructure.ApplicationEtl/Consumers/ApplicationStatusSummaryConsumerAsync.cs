@@ -5,19 +5,23 @@
     using System.Threading.Tasks;
     using Application.ApplicationUpdate;
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
+    using Domain.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
 
     public class ApplicationStatusSummaryConsumerAsync : IConsumeAsync<ApplicationStatusSummary>
     {
         private readonly IApplicationStatusProcessor _applicationStatusProcessor;
+        private readonly IMessageBus _bus;
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent _applicationStatusSummaryConsumerResetEvent = new ManualResetEvent(true);
 
         private CancellationToken CancellationToken { get { return _cancellationTokenSource.Token; } }
 
-        public ApplicationStatusSummaryConsumerAsync(IApplicationStatusProcessor applicationStatusProcessor)
+        public ApplicationStatusSummaryConsumerAsync(IApplicationStatusProcessor applicationStatusProcessor, IMessageBus bus)
         {
             _applicationStatusProcessor = applicationStatusProcessor;
+            _bus = bus;
         }
 
         [AutoSubscriberConsumer(SubscriptionId = "ApplicationStatusSummaryConsumerAsync")]
@@ -36,6 +40,15 @@
                 try
                 {
                     _applicationStatusProcessor.ProcessApplicationStatuses(applicationStatusSummaryToProcess);
+
+                    var vacancyStatusSummary = new VacancyStatusSummary
+                    {
+                        LegacyVacancyId = applicationStatusSummaryToProcess.LegacyVacancyId,
+                        VacancyStatus = applicationStatusSummaryToProcess.VacancyStatus,
+                        ClosingDate = applicationStatusSummaryToProcess.ClosingDate,
+                        DateTime = DateTime.Now
+                    };
+                    _bus.PublishMessage(vacancyStatusSummary);
                 }
                 finally
                 {

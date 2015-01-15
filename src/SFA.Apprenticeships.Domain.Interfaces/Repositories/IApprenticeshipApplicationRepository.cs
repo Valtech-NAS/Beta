@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Entities.Applications;
+    using Entities.Vacancies;
 
     public interface IApprenticeshipApplicationReadRepository : IReadRepository<ApprenticeshipApplicationDetail>
     {
@@ -13,6 +14,8 @@
         IList<ApprenticeshipApplicationSummary> GetForCandidate(Guid candidateId);
 
         ApprenticeshipApplicationDetail GetForCandidate(Guid candidateId, int vacancyId, bool errorIfNotFound = false);
+
+        IEnumerable<ApplicationStatusSummary> GetApprenticeshipApplications(int vacancyId, VacancyStatuses vacancyStatus);
     }
 
     public interface IApprenticeshipApplicationWriteRepository : IWriteRepository<ApprenticeshipApplicationDetail> {

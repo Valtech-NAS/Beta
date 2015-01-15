@@ -477,7 +477,9 @@
 
         #region Helpers
 
-        private static ApprenticeshipApplicationViewModel FailedApplicationViewModel(int vacancyId, Guid candidateId,
+        private static ApprenticeshipApplicationViewModel FailedApplicationViewModel(
+            int vacancyId, 
+            Guid candidateId,
             string failure,
             string failMessage, Exception e)
         {
@@ -490,8 +492,7 @@
             ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             // TODO: why have a patch method like this? should be done in mapper.
-            var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId,
-                vacancyId);
+            var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null)
             {
@@ -509,10 +510,8 @@
             }
 
             apprenticeshipApplicationViewModel.VacancyDetail = vacancyDetailViewModel;
-            apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 =
-                vacancyDetailViewModel.SupplementaryQuestion1;
-            apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 =
-                vacancyDetailViewModel.SupplementaryQuestion2;
+            apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 = vacancyDetailViewModel.SupplementaryQuestion1;
+            apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = vacancyDetailViewModel.SupplementaryQuestion2;
 
             return apprenticeshipApplicationViewModel;
         }

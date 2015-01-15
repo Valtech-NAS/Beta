@@ -101,8 +101,7 @@
                 {
                     Id = vacancyDetails.Id,
                     Title = vacancyDetails.Title,
-                    EmployerName = vacancyDetails.IsEmployerAnonymous ?
-                        vacancyDetails.AnonymousEmployerName : vacancyDetails.EmployerName,
+                    EmployerName = vacancyDetails.IsEmployerAnonymous ? vacancyDetails.AnonymousEmployerName : vacancyDetails.EmployerName,
                     ClosingDate = vacancyDetails.ClosingDate,
                     Description = vacancyDetails.Description,
                     Location = null, // NOTE: no equivalent in legacy vacancy details.

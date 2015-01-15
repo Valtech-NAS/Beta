@@ -5,6 +5,7 @@
     using System.Linq;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
@@ -14,14 +15,14 @@
     using MongoDB.Driver.Linq;
     using NLog;
 
-    public class ApprenticeshipApprenticeshipApprenticeshipApplicationRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApprenticeshipApplicationReadRepository,
+    public class ApprenticeshipApplicationRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApprenticeshipApplicationReadRepository,
         IApprenticeshipApplicationWriteRepository
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IMapper _mapper;
 
-        public ApprenticeshipApprenticeshipApprenticeshipApplicationRepository(
+        public ApprenticeshipApplicationRepository(
             IConfigurationManager configurationManager,
             IMapper mapper)
             : base(configurationManager, "Applications.mongoDB", "apprenticeships")
@@ -126,6 +127,21 @@
             Logger.Debug("Returning ApplicationSummary for candidateId={0} and vacancyId={1}", candidateId, vacancyId);
 
             return _mapper.Map<MongoApprenticeshipApplicationDetail, ApprenticeshipApplicationDetail>(mongoApplicationDetail);
+        }
+
+        public IEnumerable<ApplicationStatusSummary> GetApprenticeshipApplications(int vacancyId, VacancyStatuses vacancyStatus)
+        {
+            Logger.Debug("Calling repository to get ApplicationStatusSummaries with VacancyId:{0} and VacancyStatus:{1}", vacancyId, vacancyStatus);
+
+            var mongoEntities = Collection.Find(Query.And(Query.EQ("Vacancy._id", vacancyId), Query.NE("VacancyStatus", vacancyStatus))).ToArray();
+
+            Logger.Debug("Found {0} ApplicationStatusSummaries with VacancyId:{0} and VacancyStatus:{1}", mongoEntities.Count());
+
+            var applicationSummaries =
+                _mapper.Map<IEnumerable<MongoApprenticeshipApplicationDetail>, IEnumerable<ApplicationStatusSummary>>(
+                    mongoEntities);
+
+            return applicationSummaries;
         }
 
         public ApprenticeshipApplicationDetail Get(Guid id)

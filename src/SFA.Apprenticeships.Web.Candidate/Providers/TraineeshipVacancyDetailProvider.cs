@@ -2,11 +2,11 @@
 {
     using System;
     using Application.Interfaces.Search;
+    using Domain.Entities.Vacancies.Traineeships;
     using NLog;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Vacancies;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
     using Constants.Pages;
     using ViewModels.VacancySearch;

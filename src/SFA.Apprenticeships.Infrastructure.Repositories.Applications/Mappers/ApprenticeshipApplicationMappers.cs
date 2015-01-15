@@ -16,6 +16,7 @@
         {
             Mapper.CreateMap<ApprenticeshipApplicationDetail, MongoApprenticeshipApplicationDetail>();
             Mapper.CreateMap<MongoApprenticeshipApplicationDetail, ApprenticeshipApplicationDetail>();
+            Mapper.CreateMap<MongoApprenticeshipApplicationDetail, ApplicationStatusSummary>();
         }
 
         private void InitialiseApplicationSummaryMappers()

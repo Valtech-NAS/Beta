@@ -1,8 +1,5 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies.Traineeships
 {
-    using System;
-    using Locations;
-
     public class TraineeshipVacancyDetail : VacancyDetail
     {
         #region Vacancy

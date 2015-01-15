@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.Traineeships;
 
     internal class TraineeshipTypeCheck : IMappingAction<GatewayServiceProxy.Vacancy, TraineeshipVacancyDetail>
     {

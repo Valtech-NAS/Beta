@@ -77,7 +77,8 @@
                     var applicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
 
                     // If the application status has not changed, there's no work to do.
-                    //TODO: Should we be doing anything in the event of applicationDetail being null? This happens because we're sharing the nas preprod gateway with four environments
+                    //TODO: Should we be doing anything in the event of applicationDetail being null? 
+                    //This happens because we're sharing the nas preprod gateway with environments
                     if (applicationDetail != null && applicationDetail.Status != applicationStatusSummary.ApplicationStatus)
                     {
                         _messageBus.PublishMessage(applicationStatusSummary);

@@ -10,6 +10,7 @@
     using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.Traineeships;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;

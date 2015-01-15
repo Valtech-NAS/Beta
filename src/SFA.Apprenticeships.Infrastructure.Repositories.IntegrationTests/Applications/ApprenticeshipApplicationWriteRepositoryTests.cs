@@ -1,42 +1,40 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.IntegrationTests
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.IntegrationTests.Applications
 {
     using System;
-    using Applications.IoC;
-    using Common.IoC;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
+    using FluentAssertions;
     using NUnit.Framework;
     using StructureMap;
 
     [TestFixture]
-    public class ApplicationRepositoryTests
+    public class ApprenticeshipApplicationWriteRepositoryTests
     {
-        [SetUp]
-        public void SetUp()
-        {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
-            {
-                x.AddRegistry<ApplicationRepositoryRegistry>();
-                x.AddRegistry<CommonRegistry>();
-            });
-#pragma warning restore 0618
-        }
-
         [Test, Category("Integration")]
-        public void ShouldCreateApplication()
+        public void ShouldCreateAndDeleteApplication()
         {
             // arrange
 #pragma warning disable 0618
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var writer = ObjectFactory.GetInstance<IApprenticeshipApplicationWriteRepository>();
+            var reader = ObjectFactory.GetInstance<IApprenticeshipApplicationReadRepository>();
 #pragma warning restore 0618
 
             var application = CreateTestApplication();
 
-            // act, assert
+            // act
             writer.Save(application);
+
+            //assert
+            var savedApplication = reader.Get(application.LegacyApplicationId);
+            savedApplication.Should().NotBeNull();
+            savedApplication.EntityId.Should().Be(application.EntityId);
+            savedApplication.CandidateDetails.FirstName.Should().Be(application.CandidateDetails.FirstName);
+            savedApplication.CandidateDetails.Address.AddressLine1.Should().Be(application.CandidateDetails.Address.AddressLine1);
+
+            writer.Delete(savedApplication.EntityId);
+            savedApplication = reader.Get(application.LegacyApplicationId);
+            savedApplication.Should().BeNull();
         }
 
         #region Helpers

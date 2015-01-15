@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.IntegrationTests
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.IntegrationTests.Users
 {
     using System;
     using Common.IoC;
@@ -6,8 +6,8 @@
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using NUnit.Framework;
+    using Repositories.Users.IoC;
     using StructureMap;
-    using Users.IoC;
 
     [TestFixture]
     public class UserRepositoryTests
@@ -18,17 +18,10 @@
         [SetUp]
         public void SetUp()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
-            {
-                x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<UserRepositoryRegistry>();
-            });
-#pragma warning restore 0618
-
+            #pragma warning disable 0618
             _userWriteRepository = ObjectFactory.GetInstance<IUserWriteRepository>();
             _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
+            #pragma warning restore 0618
         }
 
         [Test, Category("Integration")]

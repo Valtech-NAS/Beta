@@ -239,6 +239,16 @@
 
         #region Put
 
+        public void PutObject(string cacheKey, object cacheObject)
+        {
+            Store(cacheKey, cacheObject, CacheDuration.CacheDefault);
+        }
+
+        public void PutObject(string cacheKey, object cacheObject, CacheDuration cacheDuration)
+        {
+            Store(cacheKey, cacheObject, cacheDuration);
+        }
+
         public void Put<TCacheKey, TResult, TFuncParam1>(TCacheKey cacheEntry, TResult result, TFuncParam1 funcParam1)
             where TCacheKey : BaseCacheKey
             where TResult : class

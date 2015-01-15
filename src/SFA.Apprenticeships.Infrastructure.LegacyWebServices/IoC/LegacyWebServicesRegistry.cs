@@ -7,6 +7,7 @@
     using CreateApplication;
     using CreateCandidate;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
     using GetCandidateApplicationStatuses;

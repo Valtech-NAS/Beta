@@ -14,6 +14,7 @@
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Infrastructure.PerformanceCounters;

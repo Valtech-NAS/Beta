@@ -12,12 +12,12 @@
             // Apprenticeships.
             For<IMapper>().Use<ApprenticeshipApplicationMappers>().Name = "ApplicationDetailMapper";
 
-            For<IApprenticeshipApplicationWriteRepository>().Use<ApprenticeshipApprenticeshipApprenticeshipApplicationRepository>()
+            For<IApprenticeshipApplicationWriteRepository>().Use<ApprenticeshipApplicationRepository>()
                 .Ctor<IMapper>()
                 .Named("ApplicationDetailMapper");
 
             For<IApprenticeshipApplicationReadRepository>()
-                .Use<ApprenticeshipApprenticeshipApprenticeshipApplicationRepository>()
+                .Use<ApprenticeshipApplicationRepository>()
                 .Ctor<IMapper>()
                 .Named("ApplicationDetailMapper");
 

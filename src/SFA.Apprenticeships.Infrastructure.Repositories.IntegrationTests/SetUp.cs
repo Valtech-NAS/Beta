@@ -1,0 +1,24 @@
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.IntegrationTests
+{
+    using Common.IoC;
+    using NUnit.Framework;
+    using Repositories.Applications.IoC;
+    using StructureMap;
+
+    [SetUpFixture]
+    public class SetUp
+    {
+        [SetUp]
+        public void SetUpObjectFactory()
+        {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
+            ObjectFactory.Initialize(x =>
+            {
+                x.AddRegistry<ApplicationRepositoryRegistry>();
+                x.AddRegistry<CommonRegistry>();
+            });
+#pragma warning restore 0618
+        }
+    }
+}
