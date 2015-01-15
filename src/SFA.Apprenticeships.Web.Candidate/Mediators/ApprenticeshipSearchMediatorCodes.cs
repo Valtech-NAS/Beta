@@ -14,6 +14,7 @@
                 public const string HasError = "message";
                 public const string Ok = "results";
                 public const string ValidationError = "validationError";
+                public const string ExactMatchFound = "exactMatchFound";
             }
 
             public class Details

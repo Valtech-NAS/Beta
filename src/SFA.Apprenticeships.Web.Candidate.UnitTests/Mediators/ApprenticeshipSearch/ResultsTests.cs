@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Vacancies;
     using Candidate.Mediators;
@@ -9,7 +10,7 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.Apprenticeships;
 
     [TestFixture]
     public class ResultsTests : TestsBase
@@ -255,6 +256,33 @@
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
             response.ViewModel.VacancySearch.LocationType = ApprenticeshipLocationType.NonNational;
+        }
+
+        [Test]
+        public void ExactMatchFoundUsingVacancyReference()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Keywords = "VAC000123456"
+            };
+
+            SearchProvider.Setup(sp => sp.FindVacancies(searchViewModel))
+                .Returns(new ApprenticeshipSearchResponseViewModel
+                {
+                    ExactMatchFound = true,
+                    VacancySearch = searchViewModel,
+                    Vacancies = new List<ApprenticeshipVacancySummaryViewModel>
+                    {
+                        new ApprenticeshipVacancySummaryViewModel
+                        {
+                            Id = 123456
+                        }
+                    }
+                });
+
+            var response = Mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.ExactMatchFound, false);
         }
     }
 }

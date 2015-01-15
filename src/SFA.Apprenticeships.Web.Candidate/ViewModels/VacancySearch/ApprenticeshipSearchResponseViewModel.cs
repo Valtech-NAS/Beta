@@ -88,5 +88,7 @@
         {
             get { return VacancySearch.ApprenticeshipLevels; }
         }
+
+        public bool ExactMatchFound { get; set; }
     }
 }
