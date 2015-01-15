@@ -678,6 +678,16 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
         
         private string deliveryOrganisationOwnerOrgField;
         
+        private System.Nullable<int> vacancyReferenceField;
+        
+        private bool vacancyReferenceFieldSpecified;
+        
+        private System.Nullable<System.DateTime> possibleStartDateField;
+        
+        private bool possibleStartDateFieldSpecified;
+        
+        private string apprenticeshipOccupationField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public int VacancyId {
@@ -1011,6 +1021,66 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
             set {
                 this.deliveryOrganisationOwnerOrgField = value;
                 this.RaisePropertyChanged("DeliveryOrganisationOwnerOrg");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=22)]
+        public System.Nullable<int> VacancyReference {
+            get {
+                return this.vacancyReferenceField;
+            }
+            set {
+                this.vacancyReferenceField = value;
+                this.RaisePropertyChanged("VacancyReference");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool VacancyReferenceSpecified {
+            get {
+                return this.vacancyReferenceFieldSpecified;
+            }
+            set {
+                this.vacancyReferenceFieldSpecified = value;
+                this.RaisePropertyChanged("VacancyReferenceSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=23)]
+        public System.Nullable<System.DateTime> PossibleStartDate {
+            get {
+                return this.possibleStartDateField;
+            }
+            set {
+                this.possibleStartDateField = value;
+                this.RaisePropertyChanged("PossibleStartDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PossibleStartDateSpecified {
+            get {
+                return this.possibleStartDateFieldSpecified;
+            }
+            set {
+                this.possibleStartDateFieldSpecified = value;
+                this.RaisePropertyChanged("PossibleStartDateSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=24)]
+        public string ApprenticeshipOccupation {
+            get {
+                return this.apprenticeshipOccupationField;
+            }
+            set {
+                this.apprenticeshipOccupationField = value;
+                this.RaisePropertyChanged("ApprenticeshipOccupation");
             }
         }
         
@@ -3619,6 +3689,10 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
         
         private string supplementaryInfoField;
         
+        private int candidateIdField;
+        
+        private bool candidateIdFieldSpecified;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public int ApplicationId {
@@ -3736,6 +3810,30 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
             set {
                 this.supplementaryInfoField = value;
                 this.RaisePropertyChanged("SupplementaryInfo");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public int CandidateId {
+            get {
+                return this.candidateIdField;
+            }
+            set {
+                this.candidateIdField = value;
+                this.RaisePropertyChanged("CandidateId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool CandidateIdSpecified {
+            get {
+                return this.candidateIdFieldSpecified;
+            }
+            set {
+                this.candidateIdFieldSpecified = value;
+                this.RaisePropertyChanged("CandidateIdSpecified");
             }
         }
         
@@ -4316,12 +4414,20 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1", Order=1)]
         public int PreferredPageSize;
         
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1", Order=2)]
+        public System.DateTime RangeFrom;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1", Order=3)]
+        public System.DateTime RangeTo;
+        
         public GetApplicationsStatusRequest() {
         }
         
-        public GetApplicationsStatusRequest(int PageNumber, int PreferredPageSize) {
+        public GetApplicationsStatusRequest(int PageNumber, int PreferredPageSize, System.DateTime RangeFrom, System.DateTime RangeTo) {
             this.PageNumber = PageNumber;
             this.PreferredPageSize = PreferredPageSize;
+            this.RangeFrom = RangeFrom;
+            this.RangeTo = RangeTo;
         }
     }
     
@@ -4655,10 +4761,12 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
             return base.Channel.GetApplicationsStatus(request);
         }
         
-        public SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.CandidateApplication[] GetApplicationsStatus(ref int PageNumber, int PreferredPageSize, out int PageSize, out int TotalPages) {
+        public SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.CandidateApplication[] GetApplicationsStatus(ref int PageNumber, int PreferredPageSize, System.DateTime RangeFrom, System.DateTime RangeTo, out int PageSize, out int TotalPages) {
             SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetApplicationsStatusRequest inValue = new SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetApplicationsStatusRequest();
             inValue.PageNumber = PageNumber;
             inValue.PreferredPageSize = PreferredPageSize;
+            inValue.RangeFrom = RangeFrom;
+            inValue.RangeTo = RangeTo;
             SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetApplicationsStatusResponse retVal = ((SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract)(this)).GetApplicationsStatus(inValue);
             PageNumber = retVal.PageNumber;
             PageSize = retVal.PageSize;

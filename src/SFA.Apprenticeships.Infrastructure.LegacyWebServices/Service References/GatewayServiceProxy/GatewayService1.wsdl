@@ -40,6 +40,8 @@
           <xs:sequence>
             <xs:element minOccurs="0" name="PageNumber" type="xs:int" />
             <xs:element minOccurs="0" name="PreferredPageSize" type="xs:int" />
+            <xs:element minOccurs="0" name="RangeFrom" type="xs:dateTime" />
+            <xs:element minOccurs="0" name="RangeTo" type="xs:dateTime" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -243,6 +245,7 @@
           <xs:element minOccurs="0" name="ClosingDate" type="xs:dateTime" />
           <xs:element name="UnsuccessfulReason" nillable="true" type="xs:string" />
           <xs:element name="SupplementaryInfo" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CandidateId" type="xs:int" />
         </xs:sequence>
       </xs:complexType>
       <xs:element name="CandidateApplication" nillable="true" type="tns:CandidateApplication" />
@@ -433,6 +436,9 @@
           <xs:element minOccurs="0" name="LearningDeliverySiteName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="VacancyOwnerOwnerOrg" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="DeliveryOrganisationOwnerOrg" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyReference" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="PossibleStartDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ApprenticeshipOccupation" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:complexType>
       <xs:element name="VacancySummary" nillable="true" type="tns:VacancySummary" />
@@ -613,7 +619,7 @@
   </wsdl:binding>
   <wsdl:service name="GatewayService">
     <wsdl:port name="DefaultEndpoint" binding="tns:DefaultEndpoint">
-      <soap:address location="http://sfacapvm0.cloudapp.net/NASGatewayService/GatewayService.svc" />
+      <soap:address location="http://gateway.preprod.avms.sfa.bis.gov.uk/services/NASGatewayService/GatewayService.svc" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
