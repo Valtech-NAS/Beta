@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GetCandidateApplicationStatuses
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Newtonsoft.Json;
@@ -15,6 +16,7 @@
 
     public class LegacyCandidateApplicationStatusesProvider : ILegacyApplicationStatusesProvider
     {
+        private const int ApplicationStatusExtractWindow = 4*60; // todo: temp code to define 4 hour window for application ETL
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IMapper _mapper;
         private readonly IWcfService<GatewayServiceContract> _service;
@@ -73,7 +75,9 @@
 
             var request = new GetApplicationsStatusRequest
             {
-                PageNumber = 1
+                PageNumber = 1,
+                RangeTo = DateTime.UtcNow,
+                RangeFrom = DateTime.UtcNow.AddMinutes(ApplicationStatusExtractWindow * -1)
             };
 
             var response = default(GetApplicationsStatusResponse);
@@ -101,7 +105,9 @@
 
             var request = new GetApplicationsStatusRequest
             {
-                PageNumber = page
+                PageNumber = page,
+                RangeTo = DateTime.UtcNow,
+                RangeFrom = DateTime.UtcNow.AddMinutes(ApplicationStatusExtractWindow * -1)
             };
 
             var response = default(GetApplicationsStatusResponse);
