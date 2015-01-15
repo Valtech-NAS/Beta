@@ -22,7 +22,7 @@
                 new KeyValuePair<MessageTypes, SmsMessageGenerator>(MessageTypes.SendPasswordResetCode, new SmsPasswordResetCodeMessageGenerator(TwilioConfiguration.Instance)),
                 new KeyValuePair<MessageTypes, SmsMessageGenerator>(MessageTypes.PasswordChanged, new SmsPasswordChangedMessageGenerator(TwilioConfiguration.Instance)),
                 new KeyValuePair<MessageTypes, SmsMessageGenerator>(MessageTypes.ApprenticeshipApplicationSubmitted, new SmsApprenticeshipApplicationSubmittedMessageGenerator(TwilioConfiguration.Instance)),
-                new KeyValuePair<MessageTypes, SmsMessageGenerator>(MessageTypes.ApprenticeshipApplicationSubmitted, new SmsTraineeshipApplicationSubmittedMessageGenerator(TwilioConfiguration.Instance))
+                new KeyValuePair<MessageTypes, SmsMessageGenerator>(MessageTypes.TraineeshipApplicationSubmitted, new SmsTraineeshipApplicationSubmittedMessageGenerator(TwilioConfiguration.Instance))
             };
 
             For<ISmsDispatcher>().Use<TwilioSmsDispatcher>().Named("TwilioSmsDispatcher")
