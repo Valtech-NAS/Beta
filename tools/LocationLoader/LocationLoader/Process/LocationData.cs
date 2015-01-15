@@ -8,8 +8,14 @@ namespace LocationLoader.Process
     /// </summary>
     internal class LocationData
     {
-        [ElasticProperty(Name = "name", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.analyzed)]
-        public string Name { get; set; }
+        private string _name;
+
+        [ElasticProperty(Name = "name", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.analyzed, Analyzer = "keyword")]
+        public string Name
+        {
+            get { return _name.ToLower(); }
+            set { _name = value; }
+        }
 
         [ElasticProperty(Name = "county", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.analyzed)]
         public string County { get; set; }
