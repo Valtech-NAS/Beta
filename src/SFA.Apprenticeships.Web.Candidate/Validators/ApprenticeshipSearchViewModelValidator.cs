@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies;
     using FluentValidation;
     using ViewModels.VacancySearch;
 
@@ -37,6 +38,7 @@
         {
             validator.RuleFor(x => x.Location)
                 .NotEmpty()
+                .When(x => !VacancyHelper.IsVacancyReferenceNumber(x.Keywords))
                 .WithMessage(ApprenticeshipSearchViewModelMessages.LocationMessages.RequiredErrorText)
                 .Length(2, 99)
                 .WithMessage(ApprenticeshipSearchViewModelMessages.LocationMessages.LengthErrorText)
@@ -52,7 +54,7 @@
         {
             validator.RuleFor(x => x.Location)
                 .Length(3, 99)
-                .When(x => x.Location != null && !x.Location.Any(Char.IsDigit))
+                .When(x => x.Location != null && !x.Location.Any(Char.IsDigit) && !VacancyHelper.IsVacancyReferenceNumber(x.Keywords))
                 .WithMessage(ApprenticeshipSearchViewModelMessages.LocationMessages.LengthErrorText);
         }
 
@@ -60,7 +62,8 @@
         {
             // NOTE: no message here, 'no results' help text provides suggestions to user.
             validator.RuleFor(x => x.Location)
-                .Must(HaveLatAndLongPopulated);
+                .Must(HaveLatAndLongPopulated)
+                .When(x => !VacancyHelper.IsVacancyReferenceNumber(x.Keywords));
         }
 
         private static bool HaveLatAndLongPopulated(ApprenticeshipSearchViewModel instance, string location)

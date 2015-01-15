@@ -124,7 +124,7 @@
                 return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.ValidationError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, clientResult);
             }
 
-            if (!HasGeoPoint(model))
+            if (!HasGeoPoint(model) && !string.IsNullOrEmpty(model.Location))
             {
                 // User did not select a location from the dropdown list, provide suggested locations.
                 var suggestedLocations = _searchProvider.FindLocation(model.Location.Trim());
@@ -175,6 +175,12 @@
             if (results.HasError())
             {
                 return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.HasError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, results.ViewModelMessage, UserMessageLevel.Warning);
+            }
+
+            if (results.ExactMatchFound)
+            {
+                var id = results.Vacancies.Single().Id;
+                return GetMediatorResponse<ApprenticeshipSearchResponseViewModel>(Codes.ApprenticeshipSearch.Results.ExactMatchFound, parameters: new { id });
             }
 
             if (model.SearchAction == SearchAction.Search && results.TotalLocalHits > 0)

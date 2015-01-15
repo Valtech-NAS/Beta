@@ -197,6 +197,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ApprenticeshipSearchByLevel.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\ApprenticeshipSearch\ApprenticeshipSearchByReferenceNumber.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApprenticeshipSearchByReferenceNumber.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Dashboard\ViewApprenticeshipApplications.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -413,6 +418,10 @@
     <None Include="Features\ApprenticeshipSearch\ApprenticeshipSearchByLevel.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ApprenticeshipSearchByLevel.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\ApprenticeshipSearch\ApprenticeshipSearchByReferenceNumber.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ApprenticeshipSearchByReferenceNumber.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Dashboard\ViewApprenticeshipApplications.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

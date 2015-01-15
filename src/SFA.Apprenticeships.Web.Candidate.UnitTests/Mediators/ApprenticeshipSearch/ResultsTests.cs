@@ -282,7 +282,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.ExactMatchFound, false);
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.ExactMatchFound, false, true);
         }
     }
 }

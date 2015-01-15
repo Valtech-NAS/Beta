@@ -7,7 +7,7 @@
         public static class KeywordMessages
         {
             public const string LabelText = "Keywords (optional)";
-            public const string HintText = "Can include job title or employer name";
+            public const string HintText = "Can include job title, employer or reference number";
             public const string WhiteList = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'Keywords' " + Whitelists.NameWhitelist.ErrorText;
         }

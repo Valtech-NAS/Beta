@@ -50,6 +50,25 @@
             }
         }
 
+        public SearchResults<TVacancySummaryResponse> FindExactMatch(TSearchParameters parameters)
+        {
+            Condition.Requires(parameters).IsNotNull();
+
+            var enterMmessage = GetLoggerMessage(CallingMessageFormat, parameters);
+            _logger.Debug(enterMmessage);
+
+            try
+            {
+                return _vacancySearchProvider.FindExactMatchVacancy(parameters);
+            }
+            catch (Exception e)
+            {
+                var message = GetLoggerMessage(FailedMessageFormat, parameters);
+                _logger.Debug(message, e);
+                throw new CustomException(message, e, ErrorCodes.VacanciesSearchFailed);
+            }
+        }
+
         public TVacancyDetail GetVacancyDetails(int vacancyId)
         {
             Condition.Requires(vacancyId).IsGreaterOrEqual(1);

@@ -7,5 +7,7 @@
         where TSearchParameters : SearchParametersBase
     {
         SearchResults<TVacancySummaryResponse> FindVacancies(TSearchParameters parameters);
+
+        SearchResults<TVacancySummaryResponse> FindExactMatchVacancy(TSearchParameters parameters);
     }
 }

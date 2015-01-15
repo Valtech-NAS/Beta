@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
@@ -10,7 +11,6 @@
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
-    using Newtonsoft.Json.Linq;
     using NLog;
 
     public class TraineeshipsSearchProvider : IVacancySearchProvider<TraineeshipSummaryResponse, TraineeshipSearchParameters>
@@ -57,6 +57,11 @@
             var results = new SearchResults<TraineeshipSummaryResponse>(search.Total, parameters.PageNumber, responses);
 
             return results;
+        }
+
+        public SearchResults<TraineeshipSummaryResponse> FindExactMatchVacancy(TraineeshipSearchParameters parameters)
+        {
+            throw new NotImplementedException();
         }
 
         private ISearchResponse<TraineeshipSummary> PerformSearch(TraineeshipSearchParameters parameters, ElasticClient client, string indexName,

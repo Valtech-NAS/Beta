@@ -12,6 +12,7 @@
     using Constants.ViewModels;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
@@ -107,6 +108,33 @@
 
             try
             {
+                int vacancyReferenceNumber;
+                if (VacancyHelper.TryGetVacancyReferenceNumber(search.Keywords, out vacancyReferenceNumber))
+                {
+                    var searchParameters = new ApprenticeshipSearchParameters
+                    {
+                        VacancyReferenceNumber = vacancyReferenceNumber
+                    };
+                    var searchResults = _apprenticeshipSearchService.FindExactMatch(searchParameters);
+                    //Expect only a single result. Any other number should be interpreted as no results
+                    if (searchResults.Total == 1)
+                    {
+                        var exactMatchResponse = _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse>, ApprenticeshipSearchResponseViewModel>(searchResults);
+                        exactMatchResponse.ExactMatchFound = true;
+                        return exactMatchResponse;
+                    }
+                    if (searchResults.Total > 1)
+                    {
+                        Logger.Warn("{0} results found for Vacancy Reference Number {1} parsed from {2}. Expected 0 or 1", searchResults.Total, vacancyReferenceNumber, search.Keywords);
+                    }
+                    var response = new ApprenticeshipSearchResponseViewModel
+                    {
+                        Vacancies = new List<ApprenticeshipVacancySummaryViewModel>(),
+                        VacancySearch = search
+                    };
+                    return response;
+                }
+
                 var results = ProcessNationalAndNonNationalSearches(search, searchLocation);
 
                 if (IsANewSearch(search))

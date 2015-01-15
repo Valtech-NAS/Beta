@@ -72,9 +72,24 @@
             return results;
         }
 
-        private ISearchResponse<ApprenticeshipSummaryResponse> PerformNationalSearch(ApprenticeshipSearchParameters parameters, ElasticClient client, string indexName, string documentTypeName)
+        public SearchResults<ApprenticeshipSummaryResponse> FindExactMatchVacancy(ApprenticeshipSearchParameters parameters)
         {
-            throw new System.NotImplementedException();
+            var client = _elasticsearchClientFactory.GetElasticClient();
+            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary));
+            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(ApprenticeshipSummary));
+
+            Logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
+                indexName);
+
+            var searchResults = client.Search<ApprenticeshipSummary>(s => s
+                .Index(indexName)
+                .Type(documentTypeName)
+                .Query(q => q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, parameters.VacancyReferenceNumber)))));
+
+            var responses = _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryResponse>>(searchResults.Documents).ToList();
+            var results = new SearchResults<ApprenticeshipSummaryResponse>(searchResults.Total, parameters.PageNumber, responses);
+
+            return results;
         }
 
         private ISearchResponse<ApprenticeshipSummary> PerformSearch(ApprenticeshipSearchParameters parameters, ElasticClient client, string indexName,

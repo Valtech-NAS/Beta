@@ -121,6 +121,9 @@
 
         [ElementLocator(Id = "search-no-results-apprenticeship-levels")]
         public IWebElement ApprenticeshipLevelAdvice { get; set; }
+
+        [ElementLocator(Id = "search-no-results-reference-number")]
+        public IWebElement ReferenceNumberAdvice { get; set; }
         
         public string ResultsAreInDistanceOrder
         {
