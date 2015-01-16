@@ -5,7 +5,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 ## Web layer ##
 
 - refactor: controllers should use providers to avoid containing orchestration logic
-- refactor: qualification types reference data should be read from configuration / provided by a configuration service
+- refactor: configuration service - use mongo collection with JSON fallback. This should periodically check for updates to allow in-situ config updates to running applications.
 - validation messages should be parameterised where possible (e.g. max length). See AddressMessages.cs for an example.
 - check all messages starting with "TODO" and 'TODO' (C# and JavaScript).
 - usernamecheck should use remote validator
