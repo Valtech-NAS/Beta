@@ -1,10 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
 {
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.Interfaces.Messaging;
-    using SFA.Apprenticeships.Domain.Entities.Exceptions;
-    using SFA.Apprenticeships.Infrastructure.Common.IoC;
-    using SFA.Apprenticeships.Infrastructure.Communication.IoC;
+    using Application.Interfaces.Messaging;
+    using Domain.Entities.Exceptions;
+    using Common.IoC;
+    using IoC;
+    using Sms;
     using StructureMap;
 
     [TestFixture]

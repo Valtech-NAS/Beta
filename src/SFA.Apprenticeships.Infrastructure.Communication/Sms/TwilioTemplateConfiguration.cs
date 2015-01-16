@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Configuration
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Sms
 {
     using System.Configuration;
 

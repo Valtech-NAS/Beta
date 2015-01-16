@@ -2,7 +2,8 @@
 {
     using System.Collections.Generic;
     using Application.Interfaces.Messaging;
-    using Configuration;
+    using Email;
+    using Sms;
     using StructureMap.Configuration.DSL;
 
     public class CommunicationRegistry : Registry

@@ -7,11 +7,11 @@
     using System.Net;
     using System.Net.Mail;
     using Application.Interfaces.Messaging;
-    using Configuration;
     using Domain.Entities.Exceptions;
+    using Email;
     using NLog;
     using SendGrid;
-    using MessagingErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
+    using ErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
 
     public class SendGridEmailDispatcher : IEmailDispatcher
     {
@@ -131,7 +131,7 @@
             catch (Exception e)
             {
                 Logger.Error("Failed to dispatch email", e);
-                throw new CustomException("Failed to dispatch email", e, MessagingErrorCodes.EmailSendGridError);
+                throw new CustomException("Failed to dispatch email", e, ErrorCodes.EmailError);
             }
         }
 

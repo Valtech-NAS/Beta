@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
 {
+    using Email;
     using NUnit.Framework;
     using System.Linq;
-    using Configuration;
 
     [TestFixture]
     public class SendGridConfigurationTests

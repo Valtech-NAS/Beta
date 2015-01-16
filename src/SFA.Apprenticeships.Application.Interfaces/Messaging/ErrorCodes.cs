@@ -3,10 +3,10 @@
     public static class ErrorCodes
     {
         // Email Exception Codes
-        public const string EmailSendGridError = "SendEmail.Failed";
+        public const string EmailError = "SendEmail.Failed";
 
         // Sms Exception Codes
-        public const string SmsSendGridError = "SendSms.Failed";
+        public const string SmsError = "SendSms.Failed";
 
         // Vacancy Exception Codes
         public const string VacancyNotFoundError = "VacancyNotFound.Error";

@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using NUnit.Framework;
-    using Configuration;
+    using Sms;
 
     [TestFixture]
     public class TwilioConfigurationTests

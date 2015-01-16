@@ -5,9 +5,9 @@
     using System.Configuration;
     using System.Linq;
     using Application.Interfaces.Messaging;
-    using NLog;
     using Domain.Entities.Exceptions;
-    using Configuration;
+    using NLog;
+    using Sms;
     using Twilio;
     using ErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
 
@@ -41,14 +41,14 @@
                 if (response.RestException != null)
                 {
                     Logger.Error("Failed to dispatch sms: {0}", response.RestException.Message);
-                    throw new CustomException(GetExceptionMessage(response.RestException), ErrorCodes.EmailSendGridError);
+                    throw new CustomException(GetExceptionMessage(response.RestException), ErrorCodes.SmsError);
                 }
                 Logger.Info("Dispatched sms: {0} to {1}", message, request.ToNumber);
             }
             catch (Exception e)
             {
                 Logger.Error("Failed to dispatch sms", e);
-                throw new CustomException("Failed to dispatch sms", e, ErrorCodes.EmailSendGridError);
+                throw new CustomException("Failed to dispatch sms", e, ErrorCodes.SmsError);
             }
         }
 
@@ -89,7 +89,7 @@
                 return template;
             }
 
-            var errorMessage = string.Format("GetTemplateConfiguration : Invalid email template name: {0}",
+            var errorMessage = string.Format("GetTemplateConfiguration : Invalid SMS template name: {0}",
                 templateName);
             Logger.Error(errorMessage);
 

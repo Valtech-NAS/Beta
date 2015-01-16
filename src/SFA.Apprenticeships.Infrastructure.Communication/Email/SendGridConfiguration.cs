@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Configuration
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Email
 {
     using System.Configuration;
     using Common.Configuration;

@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
 {
     using System.Collections.Generic;
-    using SFA.Apprenticeships.Application.Interfaces.Messaging;
+    using Application.Interfaces.Messaging;
 
     public static class TokenGenerator
     {

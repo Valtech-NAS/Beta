@@ -2,6 +2,7 @@
 {
     using Application.Interfaces.Messaging;
     using Common.IoC;
+    using Email;
     using IoC;
     using NUnit.Framework;
     using StructureMap;

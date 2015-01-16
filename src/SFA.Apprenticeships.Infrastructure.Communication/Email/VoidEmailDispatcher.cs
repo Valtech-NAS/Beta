@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communication
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Email
 {
     using Application.Interfaces.Messaging;
 
