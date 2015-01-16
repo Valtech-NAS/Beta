@@ -20,6 +20,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
         private const string ActivationTokenId = "ActivationToken";
         private const string InvalidPasswordTokenName = "InvalidPasswordToken";
         private const string VacancyIdToken = "VacancyId";
+        private const string VacancyReferenceToken = "VacancyReference";
         private const string Password = "?Password01!"; //TODO: remove duplication?
         private readonly ITokenManager _tokenManager;
         private readonly IUserReadRepository _userReadRepository;
@@ -51,6 +52,16 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             _tokenManager.SetToken(InvalidPasswordTokenName, new string(Password.Reverse().ToArray()));
         }
 
+        [Given(@"I select the ""(.*)"" apprenticeship vacancy in location ""(.*)""")]
+        [When(@"I select the ""(.*)"" apprenticeship vacancy in location ""(.*)""")]
+        public void WhenISelectTheNthApprenticeshipVacancy(string position, string location)
+        {
+            var expectedPosition = _positions[position];
+            SearchForAnApprenticeshipVacancyIn(location);
+
+            SelectVacancyInPosition(expectedPosition);
+        }
+
         [Given(@"I select the ""(.*)"" apprenticeship vacancy in location ""(.*)"" that can apply by this website")]
         [When(@"I select the ""(.*)"" apprenticeship vacancy in location ""(.*)"" that can apply by this website")]
         public void WhenISelectTheNthApprenticeshipVacancyThatCanApplyByThisWebsite(string position, string location)
@@ -58,7 +69,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             var expectedPosition = _positions[position];
             SearchForAnApprenticeshipVacancyIn(location);
 
-            SelectVacanyApplicableViaThisWebsiteInPosition(expectedPosition);
+            SelectVacancyApplicableViaThisWebsiteInPosition(expectedPosition);
         }
 
         [Given(@"I select the ""(.*)"" traineeship vacancy in location ""(.*)"" that can apply by this website")]
@@ -68,10 +79,40 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             var expectedPosition = _positions[position];
             SearchForATraineeshipVacancyIn(location);
 
-            SelectVacanyApplicableViaThisWebsiteInPosition(expectedPosition);
+            SelectVacancyApplicableViaThisWebsiteInPosition(expectedPosition);
         }
 
-        private void SelectVacanyApplicableViaThisWebsiteInPosition(int expectedPosition)
+        private void SelectVacancyInPosition(int expectedPosition)
+        {
+            const int numResults = 50;
+            var i = 0;
+            var validPositionCount = 0;
+
+            while (validPositionCount != expectedPosition)
+            {
+                if (i == numResults)
+                {
+                    throw new Exception("Can't find any suitable apprenticeship vacancy.");
+                }
+
+                // Click on the i-th search result
+                _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(180));
+                var searchResult = _driver.FindElements(
+                    By.CssSelector(".search-results__item .vacancy-link"))
+                    .Skip(i++).First();
+                var vacancyId = searchResult.GetAttribute("data-vacancy-id");
+                _tokenManager.SetToken(VacancyIdToken, vacancyId);
+                searchResult.Click();
+
+                var vacancyReference = _driver.FindElement(By.Id("vacancy-reference-id")).Text;
+                _tokenManager.SetToken(VacancyReferenceToken, vacancyReference);
+                validPositionCount++;
+                if (validPositionCount != expectedPosition)
+                    _driver.Navigate().Back();
+            }
+        }
+
+        private void SelectVacancyApplicableViaThisWebsiteInPosition(int expectedPosition)
         {
             const int numResults = 50;
             var i = 0;
@@ -97,6 +138,8 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
                 {
                     _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(0));
                     _driver.FindElement(By.Id("apply-button"));
+                    var vacancyReference = _driver.FindElement(By.Id("vacancy-reference-id")).Text;
+                    _tokenManager.SetToken(VacancyReferenceToken, vacancyReference);
                     validPositionCount++;
                     if (validPositionCount != expectedPosition)
                         _driver.Navigate().Back();
@@ -131,14 +174,16 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
                 var searchResult = _driver.FindElements(
                     By.CssSelector(".search-results__item .vacancy-link"))
                     .Skip(i++).First();
-                searchResult.Click();
                 var vacancyId = searchResult.GetAttribute("data-vacancy-id");
                 _tokenManager.SetToken(VacancyIdToken, vacancyId);
+                searchResult.Click();
 
                 try
                 {
-                    _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(0)); 
+                    _driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(0));
                     _driver.FindElement(By.Id("external-employer-website"));
+                    var vacancyReference = _driver.FindElement(By.Id("vacancy-reference-id")).Text;
+                    _tokenManager.SetToken(VacancyReferenceToken, vacancyReference);
                     validPositionCount++;
                     if (validPositionCount != expectedPosition)
                         _driver.Navigate().Back();

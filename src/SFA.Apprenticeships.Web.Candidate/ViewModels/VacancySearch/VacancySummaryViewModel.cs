@@ -22,6 +22,8 @@
 
         public double Score { get; set; }
 
+        public DateTime StartDate { get; set; }
+
         public string DistanceAsString
         {
             get

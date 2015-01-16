@@ -66,14 +66,14 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Apprentices
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("When searching by reference number and finding a result I am taken to the details" +
-            " page")]
+        [NUnit.Framework.DescriptionAttribute("When searching by reference number and finding no result I am advised to use a di" +
+            "fferent number")]
         [NUnit.Framework.CategoryAttribute("US659")]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
-        public virtual void WhenSearchingByReferenceNumberAndFindingAResultIAmTakenToTheDetailsPage()
+        public virtual void WhenSearchingByReferenceNumberAndFindingNoResultIAmAdvisedToUseADifferentNumber()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When searching by reference number and finding a result I am taken to the details" +
-                    " page", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When searching by reference number and finding no result I am advised to use a di" +
+                    "fferent number", new string[] {
                         "US659",
                         "SmokeTests"});
 #line 7
@@ -109,19 +109,23 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("When searching by reference number and finding no result I am advised to use a di" +
-            "fferent number")]
+        [NUnit.Framework.DescriptionAttribute("When searching by reference number and finding a result I am taken to the details" +
+            " page")]
         [NUnit.Framework.CategoryAttribute("US659")]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
-        public virtual void WhenSearchingByReferenceNumberAndFindingNoResultIAmAdvisedToUseADifferentNumber()
+        public virtual void WhenSearchingByReferenceNumberAndFindingAResultIAmTakenToTheDetailsPage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When searching by reference number and finding no result I am advised to use a di" +
-                    "fferent number", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When searching by reference number and finding a result I am taken to the details" +
+                    " page", new string[] {
                         "US659",
                         "SmokeTests"});
 #line 19
 this.ScenarioSetup(scenarioInfo);
 #line 20
+ testRunner.Given("I select the \"first\" apprenticeship vacancy in location \"London\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 21
+ testRunner.Then("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 22
  testRunner.Given("I navigated to the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -129,12 +133,12 @@ this.ScenarioSetup(scenarioInfo);
                         "Value"});
             table3.AddRow(new string[] {
                         "Keywords",
-                        "VAC000508729"});
-#line 21
+                        "{VacancyReference}"});
+#line 23
  testRunner.When("I enter data", ((string)(null)), table3, "When ");
-#line 24
+#line 26
  testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 25
+#line 27
  testRunner.Then("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
