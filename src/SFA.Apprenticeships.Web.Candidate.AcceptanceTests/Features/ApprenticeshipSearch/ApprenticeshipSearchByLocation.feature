@@ -77,13 +77,13 @@ Scenario: User enters location manually then changes location manually and sees 
 	Then I clear the Location field
 	When I enter data
 		 | Field    | Value |
-		 | Location | Birm  |
+		 | Location | Cov   |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	And I see 
-        | Field                    | Rule         | Value                      |
-        | Location                 | Equals       | Birmingham (West Midlands) |
-        | LocationSuggestionsCount | Greater Than | 0                          |
+        | Field                    | Rule         | Value                    |
+        | Location                 | Equals       | Coventry (West Midlands) |
+        | LocationSuggestionsCount | Greater Than | 0                        |
 
 @USXXX @SmokeTests
 Scenario: User enters location manually then selects from autocomplete and sees only their chosen location
@@ -152,13 +152,13 @@ Scenario: User enters location manually then selects from autocomplete then refi
 	Then I clear the Location field
 	When I enter data
 		 | Field    | Value |
-		 | Location | Birm  |
+		 | Location | Cov   |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	And I see 
-        | Field                    | Rule         | Value                      |
-        | Location                 | Equals       | Birmingham (West Midlands) |
-        | LocationSuggestionsCount | Greater Than | 0                          |
+        | Field                    | Rule         | Value                    |
+        | Location                 | Equals       | Coventry (West Midlands) |
+        | LocationSuggestionsCount | Greater Than | 0                        |
 
 @USXXX @SmokeTests
 Scenario: User enters location manually then selects from autocomplete then changes location manually then selects from autocomplete and sees a list of suggested locations

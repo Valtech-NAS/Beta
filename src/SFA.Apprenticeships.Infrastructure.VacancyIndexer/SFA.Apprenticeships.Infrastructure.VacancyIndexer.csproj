@@ -131,6 +131,7 @@
     </Compile>
     <Compile Include="Mappers\VacancyIndexerMapper.cs" />
     <Compile Include="IVacancyIndexerService.cs" />
+    <Compile Include="Mappers\VacancyReferenceResolver.cs" />
     <Compile Include="VacancyIndexerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
