@@ -80,7 +80,7 @@
         {
             Logger.Debug("Calling repository to get ApprenticeshipApplicationDetail with legacy Id={0}", legacyApplicationId);
 
-            var mongoEntity = Collection.AsQueryable().FirstOrDefault(a => a.LegacyApplicationId == legacyApplicationId);
+            var mongoEntity = Collection.AsQueryable().SingleOrDefault(a => a.LegacyApplicationId == legacyApplicationId);
 
             var message = mongoEntity == null ? "Found no ApprenticeshipApplicationDetail with legacy Id={0}" : "Found ApprenticeshipApplicationDetail with legacy Id={0}";
 
