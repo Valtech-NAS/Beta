@@ -16,11 +16,11 @@ Scenario: Show validation error message when no location entered
 	When I enter data
 		 | Field          | Value    |
 		 | WithInDistance | 40 miles |
-	And I choose Search
-	And I wait to see ValidationSummary
-	Then I see
-        | Field                  | Rule   | Value |
-        | ValidationSummaryCount | Equals | 1     |
+	When I choose Search
+	Then I am on the ApprenticeshipSearchResultPage page
+	And I see
+		| Field                     | Rule   | Value |
+		| ValidationFieldErrorCount | Equals | 1     |
 
 @SmokeTests
 Scenario: Show validation error message when single character location entered
