@@ -3,6 +3,8 @@
     using Common.IoC;
     using NUnit.Framework;
     using Repositories.Applications.IoC;
+    using Repositories.Candidates.IoC;
+    using Repositories.Users.IoC;
     using StructureMap;
 
     [SetUpFixture]
@@ -16,6 +18,8 @@
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<ApplicationRepositoryRegistry>();
+                x.AddRegistry<CandidateRepositoryRegistry>();
+                x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<CommonRegistry>();
             });
 #pragma warning restore 0618
