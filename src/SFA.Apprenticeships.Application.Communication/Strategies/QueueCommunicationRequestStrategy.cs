@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using SFA.Apprenticeships.Application.Interfaces.Messaging;
-    using SFA.Apprenticeships.Domain.Interfaces.Messaging;
-    using SFA.Apprenticeships.Domain.Interfaces.Repositories;
+    using Interfaces.Messaging;
+    using Domain.Interfaces.Messaging;
+    using Domain.Interfaces.Repositories;
 
     public class QueueCommunicationRequestStrategy : IQueueCommunicationRequestStrategy
     {

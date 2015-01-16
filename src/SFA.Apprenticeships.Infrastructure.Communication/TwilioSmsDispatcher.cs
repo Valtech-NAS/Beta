@@ -6,10 +6,10 @@
     using System.Linq;
     using Application.Interfaces.Messaging;
     using NLog;
-    using SFA.Apprenticeships.Domain.Entities.Exceptions;
-    using SFA.Apprenticeships.Infrastructure.Communication.Configuration;
+    using Domain.Entities.Exceptions;
+    using Configuration;
     using Twilio;
-    using ErrorCodes = SFA.Apprenticeships.Application.Interfaces.Messaging.ErrorCodes;
+    using ErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
 
     public class TwilioSmsDispatcher : ISmsDispatcher
     {

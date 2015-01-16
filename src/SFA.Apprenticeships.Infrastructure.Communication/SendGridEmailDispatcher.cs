@@ -13,7 +13,6 @@
     using SendGrid;
     using MessagingErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
 
-    //todo: simplify - we don't need to pass "subject" and "from address" in the EmailRequest DTO
     public class SendGridEmailDispatcher : IEmailDispatcher
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -32,8 +31,7 @@
 
         public void SendEmail(EmailRequest request)
         {
-            Logger.Debug("Dispatching email To:{0}, Template:{1}",
-                request.ToEmail, request.MessageType);
+            Logger.Debug("Dispatching email To:{0}, Template:{1}", request.ToEmail, request.MessageType);
 
             var message = ComposeMessage(request);
             DispatchMessage(message);
@@ -53,7 +51,6 @@
         {
             const string emptyHtml = "<span></span>";
             const string emptyText = "";
-
             const string subject = "-";
 
             // NOTE: https://github.com/sendgrid/sendgrid-csharp.
