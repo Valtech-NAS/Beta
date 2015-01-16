@@ -1,41 +1,35 @@
-﻿using System;
-using Nest;
-
-namespace LocationLoader.Process
+﻿namespace LocationLoader.Process
 {
+    using Nest;
+
     /// <summary>
     /// DTO for mapping elasticsearch index to
     /// </summary>
+    [ElasticType(Name = "locationdatas")]
     internal class LocationData
     {
-        private string _name;
+        [ElasticProperty(Name = "name", Type = FieldType.String, Store = true, Index = FieldIndexOption.Analyzed, Analyzer = "keywordlowercase")]
+        public string Name { get; set; }
 
-        [ElasticProperty(Name = "name", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.analyzed, Analyzer = "keyword")]
-        public string Name
-        {
-            get { return _name.ToLower(); }
-            set { _name = value; }
-        }
-
-        [ElasticProperty(Name = "county", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.analyzed)]
+        [ElasticProperty(Name = "county", Type = FieldType.String, Store = true, Index = FieldIndexOption.Analyzed)]
         public string County { get; set; }
 
-        [ElasticProperty(Name = "country", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.not_analyzed)]
+        [ElasticProperty(Name = "country", Type = FieldType.String, Store = true, Index = FieldIndexOption.NotAnalyzed)]
         public string Country { get; set; }
 
-        [ElasticProperty(Name = "longitude", Type = FieldType.double_type, Store = true, Index = FieldIndexOption.not_analyzed)]
+        [ElasticProperty(Name = "longitude", Type = FieldType.Double, Store = true, Index = FieldIndexOption.NotAnalyzed)]
         public double Longitude { get; set; }
 
-        [ElasticProperty(Name = "latitude", Type = FieldType.double_type, Store = true, Index = FieldIndexOption.not_analyzed)]
+        [ElasticProperty(Name = "latitude", Type = FieldType.Double, Store = true, Index = FieldIndexOption.NotAnalyzed)]
         public double Latitude { get; set; }
 
-        [ElasticProperty(Name = "postcode", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.analyzed)]
+        [ElasticProperty(Name = "postcode", Type = FieldType.String, Store = true, Index = FieldIndexOption.Analyzed)]
         public string Postcode { get; set; }
 
-        [ElasticProperty(Name = "type", Type = FieldType.string_type, Store = true, Index = FieldIndexOption.not_analyzed)]
+        [ElasticProperty(Name = "type", Type = FieldType.String, Store = true, Index = FieldIndexOption.NotAnalyzed)]
         public string Type { get; set; }
 
-        [ElasticProperty(Name = "size", Type = FieldType.integer_type, Store = true, Index = FieldIndexOption.not_analyzed)]
+        [ElasticProperty(Name = "size", Type = FieldType.Integer, Store = true, Index = FieldIndexOption.NotAnalyzed)]
         public int Size
         {
             get

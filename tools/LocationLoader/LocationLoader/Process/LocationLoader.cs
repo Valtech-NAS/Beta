@@ -48,7 +48,6 @@ namespace LocationLoader.Process
                 settings.SetDefaultIndex(_indexName);
 
                 var client = new ElasticClient(settings);
-                client.MapFromAttributes<LocationData>(_indexName);
 
                 _logger.Debug("Checking if index already exists");
                 if (client.IndexExists(_indexName).Exists)
@@ -74,7 +73,14 @@ namespace LocationLoader.Process
                 else
                 {
                     _logger.Debug("Creating new index");
-                    client.CreateIndex(_indexName, i => i.AddMapping<LocationData>(m => m.MapFromAttributes()));
+
+                    var indexSettings = new IndexSettings();
+                    var keywordLowercaseCustomAnalyzer = new CustomAnalyzer { Tokenizer = "keyword", Filter = new[] { "lowercase" } };
+                    indexSettings.Analysis.Analyzers.Add("keywordlowercase", keywordLowercaseCustomAnalyzer);
+
+                    client.CreateIndex(i => i.Index(_indexName).InitializeUsing(indexSettings));
+
+                    client.Map<LocationData>(p => p.Index(_indexName).MapFromAttributes());
                 }
 
                 _logger.Debug("Indexing \"{0}\" in batches of {1}...", _indexName, _batchSize);
