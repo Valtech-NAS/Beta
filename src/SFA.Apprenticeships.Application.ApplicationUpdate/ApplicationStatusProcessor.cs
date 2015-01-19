@@ -2,7 +2,6 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using Domain.Entities.Applications;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Entities;
@@ -15,16 +14,19 @@
 
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
+        private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
         private readonly IApplicationStatusUpdateStrategy _applicationStatusUpdateStrategy;
         private readonly IMessageBus _messageBus;
 
         public ApplicationStatusProcessor(ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
+            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy, 
             IMessageBus messageBus)
         {
             _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
+            _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
             _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
             _messageBus = messageBus;
         }
@@ -91,28 +93,47 @@
         public void ProcessApplicationStatuses(ApplicationStatusSummary applicationStatusSummary)
         {
             Logger.Debug("Processing application summary status update for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
+            var successfullyProcessedApplication = false;
 
-            // for a single application, check if the update strategy needs to be invoked
-            var application = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
-
-            if (application == null)
+            if (applicationStatusSummary.ApplicationType == ApplicationType.ApprenticeshipApplication)
             {
-                Logger.Warn("Unable to find/update application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
-                return;
+                successfullyProcessedApplication = ProcessApprenticeshipsApplication(applicationStatusSummary);
             }
 
-            // only if status has changed
-            if (applicationStatusSummary.ApplicationStatus != application.Status)
+            if (applicationStatusSummary.ApplicationType == ApplicationType.TraineeshipApplication)
             {
-                _applicationStatusUpdateStrategy.Update(application, applicationStatusSummary);
-                Logger.Debug("Updated application status for application with legacy application ID '{0}'",
-                    applicationStatusSummary.LegacyApplicationId);
+                successfullyProcessedApplication = ProcessTraineeshipsApplication(applicationStatusSummary);
             }
-            else
+
+            if (!successfullyProcessedApplication)
             {
-                Logger.Debug("Skipped application status for application with legacy application ID '{0}'",
-                    applicationStatusSummary.LegacyApplicationId);
+                Logger.Warn("Unable to find/update apprenticeship of traineeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
             }
+        }
+
+        private bool ProcessApprenticeshipsApplication(ApplicationStatusSummary applicationStatusSummary)
+        {
+            var apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
+
+            if (apprenticeshipApplicationDetail == null)
+            {
+                Logger.Debug("Unable to find/update apprenticeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
+                return false;
+            }
+            return _applicationStatusUpdateStrategy.Update(apprenticeshipApplicationDetail, applicationStatusSummary);
+        }
+
+        private bool ProcessTraineeshipsApplication(ApplicationStatusSummary applicationStatusSummary)
+        {
+            var traineeshipApplicationDetail = _traineeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
+
+            if (traineeshipApplicationDetail == null)
+            {
+                Logger.Debug("Unable to find/update traineeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
+                return false;
+            }
+
+            return _applicationStatusUpdateStrategy.Update(traineeshipApplicationDetail, applicationStatusSummary);
         }
     }
 }

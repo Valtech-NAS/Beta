@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
+    using Application.ApplicationUpdate.Entities;
     using Apprenticeships;
     using Common.Mappers;
     using GatewayServiceProxy;
@@ -8,7 +9,7 @@
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<CandidateApplication, Domain.Entities.Applications.ApplicationStatusSummary>()
+            Mapper.CreateMap<CandidateApplication, ApplicationStatusSummary>()
                 .ForMember(x => x.ApplicationId, y => y.Ignore())
                 .ForMember(x => x.LegacyApplicationId, opt => opt.MapFrom(src => src.ApplicationId))
                 .ForMember(x => x.LegacyVacancyId, opt => opt.MapFrom(src => src.VacancyId))

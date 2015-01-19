@@ -37,6 +37,9 @@
                 var submittedApplicationStatuses = _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate);
 
                 _applicationStatusUpdater.Update(candidate, submittedApplicationStatuses);
+
+                //Queue drafts for status updates.
+                
             }
             catch (Exception ex)
             {

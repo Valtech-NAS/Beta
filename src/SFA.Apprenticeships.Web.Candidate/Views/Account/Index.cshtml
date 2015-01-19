@@ -126,7 +126,7 @@ else
                                 {
                                     <tr>
                                         <td>
-                                            @if (application.IsLiveVacancy)
+                                            @if (application.VacancyStatus == VacancyStatuses.Live)
                                             {
                                                 @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                             }
@@ -168,7 +168,7 @@ else
                                 {
                                     <tr>
                                         <td>
-                                            @if (application.IsLiveVacancy)
+                                            @if (application.VacancyStatus == VacancyStatuses.Live)
                                             {
                                                 @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                             }
@@ -215,7 +215,7 @@ else
                                 {
                                     <tr>
                                         <td>
-                                            @if (application.IsLiveVacancy)
+                                            @if (application.VacancyStatus == VacancyStatuses.Live)
                                             {
                                                 @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                             }
@@ -276,7 +276,7 @@ else
                             {
                                 <tr>
                                     <td>
-                                        @if (application.IsLiveVacancy)
+                                        @if (application.VacancyStatus == VacancyStatuses.Live)
                                         {
                                             @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new {id = application.VacancyId}, new {@class = "link-unimp"})
                                             <br />

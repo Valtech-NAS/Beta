@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Extensions
 {
-    using Domain.Entities.Vacancies;
+    using Application.VacancyEtl.Entities;
     using Domain.Interfaces.Caching;
 
     public static class VacancyStatusSummaryExtensions
@@ -14,7 +14,8 @@
 
         public static CacheDuration CacheDuration(this VacancyStatusSummary vacancyStatusSummary)
         {
-            return Domain.Interfaces.Caching.CacheDuration.FiveMinutes;
+            //TODO: Move cache config into Mongo collection (config service)
+            return Domain.Interfaces.Caching.CacheDuration.ThirtyMinutes;
         }
     }
 }

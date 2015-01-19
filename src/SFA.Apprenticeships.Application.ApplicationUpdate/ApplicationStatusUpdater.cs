@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.ApplicationUpdate
 {
     using System.Collections.Generic;
-    using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
+    using Entities;
+    using Extensions;
     using NLog;
 
     public class ApplicationStatusUpdater : IApplicationStatusUpdater
@@ -12,73 +13,54 @@
 
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
+        private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
+        private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
 
         public ApplicationStatusUpdater(
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
-            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository)
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
+            ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
+            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
         {
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
+            _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
+            _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
         }
 
         public void Update(Candidate candidate, IEnumerable<ApplicationStatusSummary> applicationStatuses)
         {
             // For the specified candidate, update the application repo for any of the status updates
             // passed in (if they're different).
-            foreach (var applicationStatus in applicationStatuses)
+            foreach (var applicationStatusSummary in applicationStatuses)
             {
-                var legacyVacancyId  = applicationStatus.LegacyVacancyId;
+                var legacyVacancyId = applicationStatusSummary.LegacyVacancyId;
 
-                var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, legacyVacancyId);
+                // Try apprenticeships first, the majority should be apprenticeships
+                var apprenticeshipApplication = _apprenticeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, legacyVacancyId);
 
-                // TODO: DEBT: AG: this block of code is duplicated in ApplicationStatusUpdateStrategy.
-                if (applicationDetail != null)
+                if (apprenticeshipApplication != null)
                 {
-                    var updated = false;
-
-                    if (applicationDetail.Status != applicationStatus.ApplicationStatus)
+                    if (apprenticeshipApplication.UpdateApprenticeshipApplicationDetail(applicationStatusSummary))
                     {
-                        applicationDetail.Status = applicationStatus.ApplicationStatus;
-                        
-                        // Application status has changed, ensure it appears on the candidate's dashboard.
-                        applicationDetail.IsArchived = false;
-
-                        updated = true;
-                    }
-
-                    if (applicationDetail.LegacyApplicationId != applicationStatus.LegacyApplicationId)
-                    {
-                        // Ensure the application is linked to the legacy application.
-                        applicationDetail.LegacyApplicationId = applicationStatus.LegacyApplicationId;
-                        updated = true;
-                    }
-
-                    if (applicationDetail.VacancyStatus != applicationStatus.VacancyStatus)
-                    {
-                        applicationDetail.VacancyStatus = applicationStatus.VacancyStatus;
-                        updated = true;
-                    }
-
-                    if (applicationDetail.Vacancy.ClosingDate != applicationStatus.ClosingDate)
-                    {
-                        applicationDetail.Vacancy.ClosingDate = applicationStatus.ClosingDate;
-                        updated = true;
-                    }
-
-                    if (applicationDetail.UnsuccessfulReason != applicationStatus.UnsuccessfulReason)
-                    {
-                        applicationDetail.UnsuccessfulReason = applicationStatus.UnsuccessfulReason;
-                        updated = true;
-                    }
-
-                    if (updated)
-                    {
-                        _apprenticeshipApplicationWriteRepository.Save(applicationDetail);
+                        _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
                     }
                 }
                 else
                 {
-                    Logger.Warn("Unable to find application with legacy ID \"{0}\".", applicationStatus.LegacyApplicationId);
+                    var traineeshipApplication = _traineeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, legacyVacancyId);
+
+                    if (traineeshipApplication != null)
+                    {
+                        if (traineeshipApplication.UpdateTraineeshipApplicationDetail(applicationStatusSummary))
+                        {
+                            _traineeshipApplicationWriteRepository.Save(traineeshipApplication);
+                        }
+                    }
+                    else
+                    {
+                        Logger.Warn("Unable to find apprenticeship or traineeship application with legacy ID \"{0}\".", applicationStatusSummary.LegacyApplicationId);   
+                    }
                 }
             }
         }

@@ -1,8 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.UnitTests
 {
+    using Application.ApplicationUpdate.Entities;
+    using Application.VacancyEtl.Entities;
     using Consumers;
     using Domain.Entities.Applications;
-    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Caching;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
@@ -17,6 +18,7 @@
         private VacancyStatusSummaryConsumerAsync _vacancyStatusSummaryConsumerAsync;
         private Mock<ICacheService> _cacheServiceMock;
         private Mock<IApprenticeshipApplicationReadRepository> _apprenticeshipApplicationReadMock;
+        private Mock<ITraineeshipApplicationReadRepository> _traineeshipApplicationReadMock;
         private Mock<IMessageBus> _bus;
 
         [SetUp]
@@ -24,8 +26,10 @@
         {
             _cacheServiceMock = new Mock<ICacheService>();
             _apprenticeshipApplicationReadMock = new Mock<IApprenticeshipApplicationReadRepository>();
+            _traineeshipApplicationReadMock = new Mock<ITraineeshipApplicationReadRepository>();
             _bus = new Mock<IMessageBus>();
-            _vacancyStatusSummaryConsumerAsync = new VacancyStatusSummaryConsumerAsync(_cacheServiceMock.Object, _apprenticeshipApplicationReadMock.Object, _bus.Object);
+            _vacancyStatusSummaryConsumerAsync = new VacancyStatusSummaryConsumerAsync(_cacheServiceMock.Object,
+                _apprenticeshipApplicationReadMock.Object, _traineeshipApplicationReadMock.Object, _bus.Object);
         }
 
         [Test]
@@ -43,6 +47,8 @@
         public void ShouldPutInCacheWhenNotInCache()
         {
             var vacancyStatusSummary = new VacancyStatusSummary { LegacyVacancyId = 123};
+            _cacheServiceMock.Setup(x => x.PutObject(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<CacheDuration>()));
+
             var task = _vacancyStatusSummaryConsumerAsync.Consume(vacancyStatusSummary);
             task.Wait();
 
@@ -55,28 +61,38 @@
         }
 
         [Test]
-        public void ShouldQueueApplicationStatusSummaryForEachApprenticeshipApplication()
+        public void ShouldQueueApplicationStatusSummaryForEachApplication()
         {
-            var applicationSummaries = Builder<ApplicationStatusSummary>.CreateListOfSize(5).Build();
+            //Would never get back from both app and trn but just checking right things are called
+            var apprenticeshipApplicationSummaries = Builder<ApprenticeshipApplicationSummary>.CreateListOfSize(4).Build();
+            var traineeshipApplicationSummaries = Builder<TraineeshipApplicationSummary>.CreateListOfSize(3).Build();
 
             _bus.Setup(x => x.PublishMessage(It.IsAny<ApplicationStatusSummary>()));
 
             _apprenticeshipApplicationReadMock.Setup(
-                x => x.GetApprenticeshipApplications(It.IsAny<int>(), It.IsAny<VacancyStatuses>()))
-                .Returns(applicationSummaries);
+                x => x.GetApplicationSummaries(It.IsAny<int>()))
+                .Returns(apprenticeshipApplicationSummaries);
+
+            _traineeshipApplicationReadMock.Setup(
+                x => x.GetApplicationSummaries(It.IsAny<int>()))
+                .Returns(traineeshipApplicationSummaries);
             
-            var vacancyStatusSummary = new VacancyStatusSummary { LegacyVacancyId = 123, VacancyStatus = VacancyStatuses.Unavailable};
+            var vacancyStatusSummary = new VacancyStatusSummary() { LegacyVacancyId = 123 };
 
             var task = _vacancyStatusSummaryConsumerAsync.Consume(vacancyStatusSummary);
             task.Wait();
 
             _apprenticeshipApplicationReadMock.Verify(
                 x =>
-                    x.GetApprenticeshipApplications(
-                        It.Is<int>(id => id == vacancyStatusSummary.LegacyVacancyId),
-                        It.Is<VacancyStatuses>(vs => vs == VacancyStatuses.Unavailable)), Times.Once);
+                    x.GetApplicationSummaries(
+                        It.Is<int>(id => id == vacancyStatusSummary.LegacyVacancyId)), Times.Once);
 
-            _bus.Verify(x => x.PublishMessage(It.IsAny<ApplicationStatusSummary>()), Times.Exactly(5));
+            _traineeshipApplicationReadMock.Verify(
+                x =>
+                    x.GetApplicationSummaries(
+                        It.Is<int>(id => id == vacancyStatusSummary.LegacyVacancyId)), Times.Once);
+
+            _bus.Verify(x => x.PublishMessage(It.IsAny<ApplicationStatusSummary>()), Times.Exactly(7));
         }
     }
 }

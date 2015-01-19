@@ -126,6 +126,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Applications\TraineeshipApplicationReadRepositoryTests.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationWriteRepositoryTests.cs" />
     <Compile Include="SetUp.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationReadRepositoryTests.cs" />

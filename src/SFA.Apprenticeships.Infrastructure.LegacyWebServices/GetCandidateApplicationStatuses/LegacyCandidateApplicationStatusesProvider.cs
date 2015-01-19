@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.ApplicationUpdate.Entities;
     using Newtonsoft.Json;
     using NLog;
     using Application.ApplicationUpdate;
-    using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;

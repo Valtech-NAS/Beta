@@ -13,6 +13,8 @@
         IList<TraineeshipApplicationSummary> GetForCandidate(Guid candidateId);
 
         TraineeshipApplicationDetail GetForCandidate(Guid candidateId, int vacancyId, bool errorIfNotFound = false);
+
+        IEnumerable<TraineeshipApplicationSummary> GetApplicationSummaries(int vacancyId);
     }
 
     public interface ITraineeshipApplicationWriteRepository : IWriteRepository<TraineeshipApplicationDetail>

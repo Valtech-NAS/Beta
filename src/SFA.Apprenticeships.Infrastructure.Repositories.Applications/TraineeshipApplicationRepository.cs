@@ -110,6 +110,21 @@
             return applicationDetailsList;
         }
 
+        public IEnumerable<TraineeshipApplicationSummary> GetApplicationSummaries(int vacancyId)
+        {
+            Logger.Debug("Calling repository to get TraineeshipApplicationSummaries with VacancyId:{0}", vacancyId);
+
+            var mongoEntities = Collection.Find(Query.EQ("Vacancy._id", vacancyId)).ToArray();
+
+            Logger.Debug("Found {0} TraineeshipApplicationSummaries with VacancyId:{1}", mongoEntities.Count(), vacancyId);
+
+            var applicationSummaries =
+                _mapper.Map<IEnumerable<MongoTraineeshipApplicationDetail>, IEnumerable<TraineeshipApplicationSummary>>(
+                    mongoEntities);
+
+            return applicationSummaries;
+        }
+
         public TraineeshipApplicationDetail GetForCandidate(Guid candidateId, int vacancyId, bool errorIfNotFound = false)
         {
             Logger.Debug("Calling repository to get ApplicationSummary list for candidate with Id={0}", candidateId);

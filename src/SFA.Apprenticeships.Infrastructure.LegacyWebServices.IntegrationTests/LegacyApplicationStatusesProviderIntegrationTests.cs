@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading;
     using Application.ApplicationUpdate;
+    using Application.ApplicationUpdate.Entities;
     using Application.Candidate;
     using Common.IoC;
     using Domain.Entities.Applications;

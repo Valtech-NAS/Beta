@@ -15,13 +15,13 @@
     using StructureMap;
 
     [TestFixture]
-    public class ApprenticeshipApplicationReadRepositoryTests
+    public class TraineeshipApplicationReadRepositoryTests
     {
         private IConfigurationManager _configurationManager;
-        private IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
-        private IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
+        private ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
+        private ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
         private MongoDatabase _database;
-        private MongoCollection<MongoApprenticeshipApplicationDetail> _collection;
+        private MongoCollection<MongoTraineeshipApplicationDetail> _collection;
 
         private const int _testVacancyId = -100;
 
@@ -30,8 +30,8 @@
         {
             #pragma warning disable 0618
             _configurationManager = ObjectFactory.GetInstance<IConfigurationManager>();
-            _apprenticeshipApplicationReadRepository = ObjectFactory.GetInstance<IApprenticeshipApplicationReadRepository>();
-            _apprenticeshipApplicationWriteRepository = ObjectFactory.GetInstance<IApprenticeshipApplicationWriteRepository>();
+            _traineeshipApplicationReadRepository = ObjectFactory.GetInstance<ITraineeshipApplicationReadRepository>();
+            _traineeshipApplicationWriteRepository = ObjectFactory.GetInstance<ITraineeshipApplicationWriteRepository>();
             #pragma warning restore 0618
 
             var mongoConnectionString = _configurationManager.GetAppSetting("Applications.mongoDB");
@@ -40,7 +40,7 @@
             _database = new MongoClient(mongoConnectionString)
                 .GetServer()
                 .GetDatabase(mongoDbName);
-            _collection = _database.GetCollection<MongoApprenticeshipApplicationDetail>("apprenticeships");
+            _collection = _database.GetCollection<MongoTraineeshipApplicationDetail>("traineeships");
         }
 
         [TestFixtureTearDown]
@@ -50,14 +50,14 @@
         }
 
         [Test, Category("Integration")]
-        public void GetApprenticeshipApplicationsReturnsCorrectResults()
+        public void GetTraineeshipApplicationsReturnsCorrectResults()
         {
             //Arrange - Build Applications
             var applications = BuildApprenticeshipApplicationDetails();
-            applications.ForEach(a => _apprenticeshipApplicationWriteRepository.Save(a));
+            applications.ForEach(a => _traineeshipApplicationWriteRepository.Save(a));
 
             //Act - Get application vacancy statuses
-            var summaries = _apprenticeshipApplicationReadRepository.GetApplicationSummaries(_testVacancyId);
+            var summaries = _traineeshipApplicationReadRepository.GetApplicationSummaries(_testVacancyId);
 
             //Assert - the correct number of applicaitons with the correct vacancy state
             summaries.Count(v => v.VacancyStatus == VacancyStatuses.Unknown).Should().Be(10);
@@ -65,10 +65,10 @@
             summaries.Count(v => v.VacancyStatus == VacancyStatuses.Unavailable).Should().Be(7);
         }
 
-        public List<ApprenticeshipApplicationDetail> BuildApprenticeshipApplicationDetails()
+        public List<TraineeshipApplicationDetail> BuildApprenticeshipApplicationDetails()
         {
             var vacancyStatus =
-                Builder<ApprenticeshipApplicationDetail>.CreateListOfSize(25)
+                Builder<TraineeshipApplicationDetail>.CreateListOfSize(25)
                     .All()
                     .With(a => a.Vacancy.Id = _testVacancyId)
                     .TheFirst(10)

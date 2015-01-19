@@ -1,7 +1,14 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Applications
+﻿namespace SFA.Apprenticeships.Application.ApplicationUpdate.Entities
 {
     using System;
-    using Vacancies;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
+
+    public enum ApplicationType
+    {
+        ApprenticeshipApplication,
+        TraineeshipApplication
+    }
 
     public class ApplicationStatusSummary
     {
@@ -10,6 +17,8 @@
         public int LegacyApplicationId { get; set; }
 
         public ApplicationStatuses ApplicationStatus { get; set; }
+
+        public ApplicationType ApplicationType { get; set; }
 
         public int LegacyVacancyId { get; set; }
 

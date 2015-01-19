@@ -2,6 +2,8 @@
 {
     using System;
     using Application.ApplicationUpdate;
+    using Application.ApplicationUpdate.Entities;
+    using Application.VacancyEtl.Entities;
     using Consumers;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
@@ -16,7 +18,7 @@
         private Mock<IApplicationStatusProcessor> _applicationStatusProcessorMock;
         private Mock<IMessageBus> _bus;
 
-        [TestFixtureSetUp]
+        [SetUp]
         public void SetUp()
         {
             _applicationStatusProcessorMock = new Mock<IApplicationStatusProcessor>();
@@ -35,6 +37,7 @@
                 ApplicationId = Guid.NewGuid(),
                 LegacyVacancyId = 101,
                 ApplicationStatus = ApplicationStatuses.Submitted,
+                ApplicationType = ApplicationType.TraineeshipApplication,
                 VacancyStatus = VacancyStatuses.Live,
                 ClosingDate = DateTime.Now,
                 LegacyApplicationId = 1001,

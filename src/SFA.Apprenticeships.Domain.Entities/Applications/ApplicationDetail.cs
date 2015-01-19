@@ -3,6 +3,7 @@
     using System;
     using Candidates;
     using Users;
+    using Vacancies;
 
     public abstract class ApplicationDetail : BaseEntity
     {
@@ -10,7 +11,12 @@
         {
             CandidateDetails = new RegistrationDetails();
             CandidateInformation = new ApplicationTemplate();
+            Status = ApplicationStatuses.Unknown;
         }
+
+        public VacancyStatuses VacancyStatus { get; set; }
+
+        public ApplicationStatuses Status { get; set; }
         
         public bool IsArchived { get; set; }
 

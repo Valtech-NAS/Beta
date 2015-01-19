@@ -1,10 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Applications
 {
     using System;
+    using Vacancies;
 
     public abstract class ApplicationSummary
     {
         public Guid ApplicationId { get; set; }
+
+        public VacancyStatuses VacancyStatus { get; set; }
 
         public int LegacyVacancyId { get; set; }
 
