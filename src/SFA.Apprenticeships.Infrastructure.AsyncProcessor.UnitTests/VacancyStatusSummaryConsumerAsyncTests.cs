@@ -19,7 +19,7 @@
         private Mock<IApprenticeshipApplicationReadRepository> _apprenticeshipApplicationReadMock;
         private Mock<IMessageBus> _bus;
 
-        [TestFixtureSetUp]
+        [SetUp]
         public void SetUp()
         {
             _cacheServiceMock = new Mock<ICacheService>();
