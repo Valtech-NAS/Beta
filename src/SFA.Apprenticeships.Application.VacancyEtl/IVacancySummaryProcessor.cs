@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.VacancyEtl
 {
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Messaging;
     using Entities;
-    using SFA.Apprenticeships.Domain.Entities.Vacancies;
 
     public interface IVacancySummaryProcessor
     {
@@ -10,6 +10,6 @@
 
         void QueueVacancySummaries(VacancySummaryPage vacancySummaryPage);
 
-        void QueueVacancyIfExpired(VacancySummary vacancySummary);
+        void QueueVacancyIfExpired(ApprenticeshipSummary vacancySummary);
     }
 }

@@ -10,8 +10,7 @@
     using Entities;
     using NLog;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using SFA.Apprenticeships.Domain.Entities.Vacancies;
-    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
+    using Domain.Interfaces.Configuration;
 
     public class GatewayVacancySummaryProcessor : IVacancySummaryProcessor
     {
@@ -87,7 +86,7 @@
                 });
         }
 
-        public void QueueVacancyIfExpired(VacancySummary vacancySummary)
+        public void QueueVacancyIfExpired(ApprenticeshipSummary vacancySummary)
         {
             var notificationHours = _configurationManager.GetAppSetting<int>(VacancyAboutToExpireNotificationHours);
 

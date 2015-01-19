@@ -6,7 +6,7 @@
     using Application.VacancyEtl.Entities;
     using Elastic.Common.Entities;
     using NLog;
-    using SFA.Apprenticeships.Application.VacancyEtl;
+    using Application.VacancyEtl;
     using VacancyIndexer;
 
     public class ApprenticeshipSummaryConsumerAsync : IConsumeAsync<ApprenticeshipSummaryUpdate>

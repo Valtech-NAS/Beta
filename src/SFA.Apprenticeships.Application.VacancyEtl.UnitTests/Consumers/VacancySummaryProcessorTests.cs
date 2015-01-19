@@ -6,12 +6,12 @@
     using System.Threading;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.Traineeships;
-    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-    using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-    using SFA.Apprenticeships.Domain.Interfaces.Messaging;
+    using Entities;
+    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.Traineeships;
+    using Domain.Interfaces.Configuration;
+    using Domain.Interfaces.Mapping;
+    using Domain.Interfaces.Messaging;
 
     [TestFixture]
     public class VacancySummaryProcessorTests

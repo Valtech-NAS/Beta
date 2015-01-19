@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using EasyNetQ.AutoSubscribe;
     using NLog;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
+    using Application.VacancyEtl.Entities;
 
     public class VacancyAboutToExpireConsumerAsync : IConsumeAsync<VacancyAboutToExpire>
     {
