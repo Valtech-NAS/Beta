@@ -84,7 +84,7 @@
             var searchResults = client.Search<ApprenticeshipSummary>(s => s
                 .Index(indexName)
                 .Type(documentTypeName)
-                .Query(q => q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, parameters.VacancyReferenceNumber)))));
+                .Query(q => q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, parameters.VacancyReference)))));
 
             var responses = _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryResponse>>(searchResults.Documents).ToList();
             var results = new SearchResults<ApprenticeshipSummaryResponse>(searchResults.Total, parameters.PageNumber, responses);

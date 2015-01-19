@@ -16,7 +16,7 @@
 
         GeoPoint Location { get; set; }
 
-        int VacancyReference { get; set; }
+        string VacancyReference { get; set; }
 
         string Sector { get; set; }
 

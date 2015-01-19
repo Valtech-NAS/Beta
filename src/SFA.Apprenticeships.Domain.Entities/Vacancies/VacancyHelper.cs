@@ -6,14 +6,14 @@
     {
         private static readonly Regex VacancyReferenceNumberRegex = new Regex(@"^(VAC)?(\d{6,9})");
 
-        public static bool IsVacancyReferenceNumber(string value)
+        public static bool IsVacancyReference(string value)
         {
             return !string.IsNullOrEmpty(value) && VacancyReferenceNumberRegex.IsMatch(value);
         }
 
-        public static bool TryGetVacancyReferenceNumber(string value, out int vacancyReferenceNumber)
+        public static bool TryGetVacancyReference(string value, out string vacancyReference)
         {
-            vacancyReferenceNumber = 0;
+            vacancyReference = null;
             
             if(string.IsNullOrEmpty(value))
                 return false;
@@ -22,10 +22,14 @@
             
             if (match.Success)
             {
-                var vacancyReferenceNumberString = match.Groups[2].Value;
-                vacancyReferenceNumber = int.Parse(vacancyReferenceNumberString);
+                vacancyReference = match.Groups[2].Value;
+                int vacancyReferenceNumber;
+                if (!string.IsNullOrEmpty(vacancyReference) && int.TryParse(vacancyReference, out vacancyReferenceNumber))
+                {
+                    vacancyReference = vacancyReferenceNumber.ToString();
+                }
             }
-            
+
             return match.Success;
         }
     }

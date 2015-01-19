@@ -14,24 +14,24 @@
         [TestCase("12345", false)]
         [TestCase("", false)]
         [TestCase(null, false)]
-        public void IsVacancyReferenceNumber(string value, bool expectTrue)
+        public void IsVacancyReference(string value, bool expectTrue)
         {
-            Assert.That(VacancyHelper.IsVacancyReferenceNumber(value), Is.EqualTo(expectTrue));
+            Assert.That(VacancyHelper.IsVacancyReference(value), Is.EqualTo(expectTrue));
         }
 
-        [TestCase("VAC000123456", true, 123456)]
-        [TestCase("000123456", true, 123456)]
-        [TestCase("123456", true, 123456)]
-        [TestCase("VRN000123456", false, 0)]
-        [TestCase("chef", false, 0)]
-        [TestCase("12345", false, 0)]
-        [TestCase("", false, 0)]
-        [TestCase(null, false, 0)]
-        public void TryGetVacancyReferenceNumber(string value, bool expectParse, int expectedVacancyReferenceNumber)
+        [TestCase("VAC000123456", true, "123456")]
+        [TestCase("000123456", true, "123456")]
+        [TestCase("123456", true, "123456")]
+        [TestCase("VRN000123456", false, null)]
+        [TestCase("chef", false, null)]
+        [TestCase("12345", false, null)]
+        [TestCase("", false, null)]
+        [TestCase(null, false, null)]
+        public void TryGetVacancyReference(string value, bool expectParse, string expectedVacancyReference)
         {
-            int vacancyReferenceNumber;
-            Assert.That(VacancyHelper.TryGetVacancyReferenceNumber(value, out vacancyReferenceNumber), Is.EqualTo(expectParse));
-            Assert.That(vacancyReferenceNumber, Is.EqualTo(expectedVacancyReferenceNumber));
+            string vacancyReference;
+            Assert.That(VacancyHelper.TryGetVacancyReference(value, out vacancyReference), Is.EqualTo(expectParse));
+            Assert.That(vacancyReference, Is.EqualTo(expectedVacancyReference));
         }
     }
 }

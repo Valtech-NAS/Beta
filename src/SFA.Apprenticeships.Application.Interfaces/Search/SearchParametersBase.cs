@@ -12,11 +12,11 @@
         public int SearchRadius { get; set; }
         public VacancySortType SortType { get; set; }
         public ApprenticeshipLocationType VacancyLocationType { get; set; }
-        public int? VacancyReferenceNumber { get; set; }
+        public string VacancyReference { get; set; }
 
         public override string ToString()
         {
-            return string.Format("Location:{0}, PageNumber:{1}, PageSize{2}, SearchRadius:{3}, SortType:{4}, LocationType:{5}, VacancyReferenceNumber:{6}", Location, PageNumber, PageSize, SearchRadius, SortType, VacancyLocationType, VacancyReferenceNumber);
+            return string.Format("Location:{0}, PageNumber:{1}, PageSize{2}, SearchRadius:{3}, SortType:{4}, LocationType:{5}, VacancyReference:{6}", Location, PageNumber, PageSize, SearchRadius, SortType, VacancyLocationType, VacancyReference);
         }
     }
 }

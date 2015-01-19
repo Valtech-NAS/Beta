@@ -109,12 +109,12 @@
 
             try
             {
-                int vacancyReferenceNumber;
-                if (VacancyHelper.TryGetVacancyReferenceNumber(search.Keywords, out vacancyReferenceNumber))
+                string vacancyReference;
+                if (VacancyHelper.TryGetVacancyReference(search.Keywords, out vacancyReference))
                 {
                     var searchParameters = new ApprenticeshipSearchParameters
                     {
-                        VacancyReferenceNumber = vacancyReferenceNumber
+                        VacancyReference = vacancyReference
                     };
                     var searchResults = _apprenticeshipSearchService.FindExactMatch(searchParameters);
                     //Expect only a single result. Any other number should be interpreted as no results
@@ -126,7 +126,7 @@
                     }
                     if (searchResults.Total > 1)
                     {
-                        Logger.Warn("{0} results found for Vacancy Reference Number {1} parsed from {2}. Expected 0 or 1", searchResults.Total, vacancyReferenceNumber, search.Keywords);
+                        Logger.Warn("{0} results found for Vacancy Reference Number {1} parsed from {2}. Expected 0 or 1", searchResults.Total, vacancyReference, search.Keywords);
                     }
                     var response = new ApprenticeshipSearchResponseViewModel
                     {

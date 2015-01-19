@@ -10,15 +10,13 @@
         {
             Mapper.CreateMap<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>()
                 .ForMember(d => d.Location,
-                    opt => opt.ResolveUsing<GeoPointDomainToElasticResolver>().FromMember(src => src.Location))
-                .ForMember(d => d.VacancyReference, opt => opt.ResolveUsing<VacancyReferenceResolver>().FromMember(src => int.Parse(src.VacancyReference)));
+                    opt => opt.ResolveUsing<GeoPointDomainToElasticResolver>().FromMember(src => src.Location));
 
             Mapper.CreateMap<ApprenticeshipSummary, ApprenticeshipSummaryUpdate>();
 
             Mapper.CreateMap<TraineeshipSummaryUpdate, TraineeshipSummary>()
                 .ForMember(d => d.Location,
-                    opt => opt.ResolveUsing<GeoPointDomainToElasticResolver>().FromMember(src => src.Location))
-                .ForMember(d => d.VacancyReference, opt => opt.ResolveUsing<VacancyReferenceResolver>().FromMember(src => int.Parse(src.VacancyReference)));
+                    opt => opt.ResolveUsing<GeoPointDomainToElasticResolver>().FromMember(src => src.Location));
 
             Mapper.CreateMap<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>();
         }

@@ -34,7 +34,7 @@
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
-        public int VacancyReference { get; set; }
+        public string VacancyReference { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public string Sector { get; set; }

@@ -102,7 +102,7 @@
                     <p id="search-no-results-title">There are currently no apprenticeships that match your search.</p>
                     <p>Try editing your search:</p>
                     <ul>
-                    @if (VacancyHelper.IsVacancyReferenceNumber(Model.VacancySearch.Keywords))
+                    @if (VacancyHelper.IsVacancyReference(Model.VacancySearch.Keywords))
                     {
                         <li id="search-no-results-reference-number">try a different reference number</li>
                     }
