@@ -54,12 +54,12 @@
             if (submittedApplicationModel.ViewModelStatus == ApplicationViewModelStatus.Error)
             {
                 // TODO: change this to something specific to traineeships?
-                return GetMediatorResponse(Codes.TraineeshipApplication.Submit.Error, viewModel, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { vacancyId });
+                return GetMediatorResponse(Codes.TraineeshipApplication.Submit.Error, viewModel, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { id = vacancyId });
             }
 
             var parameters = new
             {
-                vacancyId,
+                id = vacancyId,
                 vacancyReference = submittedApplicationModel.VacancyDetail.VacancyReference,
                 vacancyTitle = submittedApplicationModel.VacancyDetail.Title
             };

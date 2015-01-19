@@ -92,7 +92,7 @@
 
             _apprenticeshipApplicationProvider.SaveApplication(candidateId, vacancyId, viewModel);
 
-            return GetMediatorResponse<ApprenticeshipApplicationViewModel>(Codes.ApprenticeshipApplication.PreviewAndSubmit.Ok, parameters: new { vacancyId });
+            return GetMediatorResponse<ApprenticeshipApplicationViewModel>(Codes.ApprenticeshipApplication.PreviewAndSubmit.Ok, parameters: new { id = vacancyId });
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Save(Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel viewModel)
@@ -187,12 +187,12 @@
             }
             if (model.ViewModelStatus == ApplicationViewModelStatus.Error)
             {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(Codes.ApprenticeshipApplication.Submit.Error, null, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { vacancyId });
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(Codes.ApprenticeshipApplication.Submit.Error, null, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { id = vacancyId });
             }
 
             var parameters = new
             {
-                vacancyId,
+                id = vacancyId,
                 vacancyReference = model.VacancyDetail.VacancyReference,
                 vacancyTitle = model.VacancyDetail.Title
             };
