@@ -33,11 +33,8 @@
                 }
                 catch(Exception ex)
                 {
-                    var message = string.Format("Failed indexing vacancy summary {0}. Requeuing.",
-                        vacancySummaryToIndex.Id);
+                    var message = string.Format("Failed indexing vacancy summary {0}", vacancySummaryToIndex.Id);
                     Logger.Error(message, ex);
-
-                    _messageBus.PublishMessage(vacancySummaryToIndex);
                 }
             });
         }
