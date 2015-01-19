@@ -2,24 +2,24 @@
 {
     using System;
     using System.Threading.Tasks;
-    using Domain.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
     using Application.VacancyEtl.Entities;
     using Elastic.Common.Entities;
     using NLog;
+    using SFA.Apprenticeships.Application.VacancyEtl;
     using VacancyIndexer;
 
     public class ApprenticeshipSummaryConsumerAsync : IConsumeAsync<ApprenticeshipSummaryUpdate>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> _vacancyIndexer;
-        private readonly IMessageBus _messageBus;
+        private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
 
         public ApprenticeshipSummaryConsumerAsync(IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> vacancyIndexer, 
-            IMessageBus messageBus)
+            IVacancySummaryProcessor vacancySummaryProcessor)
         {
             _vacancyIndexer = vacancyIndexer;
-            _messageBus = messageBus;
+            _vacancySummaryProcessor = vacancySummaryProcessor;
         }
 
         [AutoSubscriberConsumer(SubscriptionId = "ApprenticeshipSummaryConsumerAsync")]
@@ -30,6 +30,7 @@
                 try
                 {
                     _vacancyIndexer.Index(vacancySummaryToIndex);
+                    _vacancySummaryProcessor.QueueVacancyIfExpired(vacancySummaryToIndex);
                 }
                 catch(Exception ex)
                 {

@@ -10,25 +10,31 @@
     using Entities;
     using NLog;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using SFA.Apprenticeships.Domain.Entities.Vacancies;
+    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
 
     public class GatewayVacancySummaryProcessor : IVacancySummaryProcessor
     {
+        private const string VacancyAboutToExpireNotificationHours = "VacancyAboutToExpireNotificationHours";
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IMessageBus _messageBus;
         private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
         private readonly IMapper _mapper;
         private readonly IProcessControlQueue<StorageQueueMessage> _processControlQueue;
+        private readonly IConfigurationManager _configurationManager;
 
         public GatewayVacancySummaryProcessor(IMessageBus messageBus,
                                        IVacancyIndexDataProvider vacancyIndexDataProvider,
                                        IMapper mapper,
-                                       IProcessControlQueue<StorageQueueMessage> processControlQueue)
+                                       IProcessControlQueue<StorageQueueMessage> processControlQueue, 
+                                       IConfigurationManager configurationManager)
         {
             _messageBus = messageBus;
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
             _mapper = mapper;
             _processControlQueue = processControlQueue;
+            _configurationManager = configurationManager;
         }
 
         public void QueueVacancyPages(StorageQueueMessage scheduledQueueMessage)
@@ -79,6 +85,17 @@
                     traineeshipExtended.ScheduledRefreshDateTime = vacancySummaryPage.ScheduledRefreshDateTime;
                     _messageBus.PublishMessage(traineeshipExtended);
                 });
+        }
+
+        public void QueueVacancyIfExpired(VacancySummary vacancySummary)
+        {
+            var notificationHours = _configurationManager.GetAppSetting<int>(VacancyAboutToExpireNotificationHours);
+
+            if (vacancySummary.ClosingDate < DateTime.Now.AddHours(notificationHours))
+            {
+                var vacancyAboutToExpireMessage = new VacancyAboutToExpire {Id = vacancySummary.Id};
+                _messageBus.PublishMessage(vacancyAboutToExpireMessage);
+            }
         }
 
         #region Helpers

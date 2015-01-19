@@ -169,6 +169,7 @@
     </Compile>
     <Compile Include="Consumers\TraineeshipsSummaryConsumerAsync.cs" />
     <Compile Include="Consumers\VacancyEtlControlQueueConsumer.cs" />
+    <Compile Include="Consumers\VacancyAboutToExpireConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryCompleteConsumerAsync.cs" />
     <Compile Include="Consumers\ApprenticeshipSummaryConsumerAsync.cs" />
     <Compile Include="Consumers\VacancySummaryPageConsumerAsync.cs" />

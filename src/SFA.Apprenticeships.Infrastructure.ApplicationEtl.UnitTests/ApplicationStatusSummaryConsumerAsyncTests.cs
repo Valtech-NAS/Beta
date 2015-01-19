@@ -17,7 +17,7 @@
         private Mock<IMessageBus> _bus;
 
         [TestFixtureSetUp]
-        private void SetUp()
+        public void SetUp()
         {
             _applicationStatusProcessorMock = new Mock<IApplicationStatusProcessor>();
             _bus = new Mock<IMessageBus>();

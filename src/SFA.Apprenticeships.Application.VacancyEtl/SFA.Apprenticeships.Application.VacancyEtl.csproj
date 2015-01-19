@@ -99,6 +99,7 @@
     </Compile>
     <Compile Include="Entities\IVacancyUpdate.cs" />
     <Compile Include="Entities\TraineeshipSummaryUpdate.cs" />
+    <Compile Include="Entities\VacancyAboutToExpire.cs" />
     <Compile Include="Entities\VacancySummaries.cs" />
     <Compile Include="Entities\VacancySummaryPage.cs" />
     <Compile Include="Entities\VacancySummaryPageComplete.cs" />

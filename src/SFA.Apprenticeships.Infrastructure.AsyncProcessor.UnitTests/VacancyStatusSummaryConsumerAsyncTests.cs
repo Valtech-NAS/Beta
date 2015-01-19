@@ -20,7 +20,7 @@
         private Mock<IMessageBus> _bus;
 
         [TestFixtureSetUp]
-        private void SetUp()
+        public void SetUp()
         {
             _cacheServiceMock = new Mock<ICacheService>();
             _apprenticeshipApplicationReadMock = new Mock<IApprenticeshipApplicationReadRepository>();
@@ -42,7 +42,7 @@
         [Test]
         public void ShouldPutInCacheWhenNotInCache()
         {
-            var vacancyStatusSummary = new VacancyStatusSummary() { LegacyVacancyId = 123};
+            var vacancyStatusSummary = new VacancyStatusSummary { LegacyVacancyId = 123};
             var task = _vacancyStatusSummaryConsumerAsync.Consume(vacancyStatusSummary);
             task.Wait();
 
@@ -65,7 +65,7 @@
                 x => x.GetApprenticeshipApplications(It.IsAny<int>(), It.IsAny<VacancyStatuses>()))
                 .Returns(applicationSummaries);
             
-            var vacancyStatusSummary = new VacancyStatusSummary() { LegacyVacancyId = 123, VacancyStatus = VacancyStatuses.Unavailable};
+            var vacancyStatusSummary = new VacancyStatusSummary { LegacyVacancyId = 123, VacancyStatus = VacancyStatuses.Unavailable};
 
             var task = _vacancyStatusSummaryConsumerAsync.Consume(vacancyStatusSummary);
             task.Wait();
