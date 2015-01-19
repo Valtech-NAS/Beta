@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using System.Threading;
     using Azure.Common.IoC;
     using Common.IoC;
+    using Communication.IoC;
     using Consumers;
     using EasyNetQ;
     using Elastic.Common.IoC;
@@ -18,6 +19,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using RabbitMq.Interfaces;
     using RabbitMq.IoC;
     using PerformanceCounters.IoC;
+    using Repositories.Communication.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
 
@@ -74,6 +76,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                     x.AddRegistry<GatewayVacancyEtlRegistry>();
                     x.AddRegistry<ElasticsearchCommonRegistry>();
                     x.AddRegistry<PerformanceCounterRegistry>();
+                    x.AddRegistry<CommunicationRepositoryRegistry>();
                 });
 #pragma warning restore 0618
 

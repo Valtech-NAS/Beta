@@ -100,6 +100,7 @@
     <Compile Include="Applications\ApprenticeshipApplicationDetail.cs" />
     <Compile Include="Applications\ApplicationStatuses.cs" />
     <Compile Include="Candidates\CommunicationPreferences.cs" />
+    <Compile Include="Communication\ExpiringDraft.cs" />
     <Compile Include="Exceptions\CustomException.cs" />
     <Compile Include="Exceptions\ErrorCodes.cs" />
     <Compile Include="Users\UserCredentials.cs" />

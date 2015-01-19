@@ -2,6 +2,8 @@
 {
     using Application.VacancyEtl.Entities;
     using Common.Mappers;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Communication;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
 
@@ -11,6 +13,7 @@
         {
             Mapper.CreateMap<ApprenticeshipSummary, ApprenticeshipSummaryUpdate>();
             Mapper.CreateMap<TraineeshipSummary, TraineeshipSummaryUpdate>();
+            Mapper.CreateMap<ApprenticeshipApplicationSummary, ExpiringDraft>();
         }
     }
 }

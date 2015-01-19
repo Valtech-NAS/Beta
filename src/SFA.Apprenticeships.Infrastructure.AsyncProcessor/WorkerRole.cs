@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
     using System.Net;
     using System.Reflection;
     using System.Threading;
+    using Azure.Common.IoC;
     using Common.IoC;
     using Communication.IoC;
     using Consumers;
@@ -17,6 +18,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Candidates.IoC;
+    using Repositories.Communication.IoC;
     using Repositories.Users.IoC;
     using StructureMap;
 
@@ -112,6 +114,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<CommunicationRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
@@ -119,6 +122,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<AsyncProcessorRegistry>();
+                x.AddRegistry<CommunicationRepositoryRegistry>();
             });
 #pragma warning restore 0618
 

@@ -7,6 +7,8 @@
     {
         public Guid ApplicationId { get; set; }
 
+        public Guid CandidateId { get; set; }
+
         public VacancyStatuses VacancyStatus { get; set; }
 
         public int LegacyVacancyId { get; set; }

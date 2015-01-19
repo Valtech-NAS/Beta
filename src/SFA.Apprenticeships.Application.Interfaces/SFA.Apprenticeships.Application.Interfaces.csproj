@@ -98,6 +98,7 @@
     <Compile Include="Locations\IAddressSearchProvider.cs" />
     <Compile Include="Messaging\BaseRequest.cs" />
     <Compile Include="Messaging\ErrorCodes.cs" />
+    <Compile Include="Messaging\ICommunicationProcessor.cs" />
     <Compile Include="Messaging\MessageTypes.cs" />
     <Compile Include="Messaging\CommunicationTokens.cs" />
     <Compile Include="Messaging\CommunicationRequest.cs" />
