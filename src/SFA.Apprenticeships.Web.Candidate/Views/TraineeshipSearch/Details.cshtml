@@ -55,7 +55,7 @@
                     <p id="vacancy-distance">@ViewBag.Distance miles</p>
                 }
                 <h3 class="bold-small">Reference number</h3>
-                <p>@Model.VacancyReference</p>
+                <p id="vacancy-reference-id">@Model.VacancyReference</p>
                 @Html.Partial("_Apply", Model, new ViewDataDictionary() { new KeyValuePair<string, object>("AnalyticsButtonPosition", "Top")})
             </div>
         </section>
