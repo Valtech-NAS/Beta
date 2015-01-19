@@ -37,7 +37,6 @@
                 ApplicationId = Guid.NewGuid(),
                 LegacyVacancyId = 101,
                 ApplicationStatus = ApplicationStatuses.Submitted,
-                ApplicationType = ApplicationType.TraineeshipApplication,
                 VacancyStatus = VacancyStatuses.Live,
                 ClosingDate = DateTime.Now,
                 LegacyApplicationId = 1001,

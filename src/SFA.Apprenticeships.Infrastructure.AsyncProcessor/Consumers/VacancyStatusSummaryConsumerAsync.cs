@@ -70,7 +70,6 @@
                             ApplicationId = x.ApplicationId,
                             LegacyApplicationId = x.LegacyVacancyId,
                             ApplicationStatus = x.Status,
-                            ApplicationType = ApplicationType.ApprenticeshipApplication,
                             VacancyStatus = x.VacancyStatus,
                             LegacyVacancyId = x.LegacyVacancyId,
                             ClosingDate = x.ClosingDate,
@@ -95,7 +94,6 @@
                             ApplicationId = x.ApplicationId,
                             LegacyApplicationId = x.LegacyVacancyId,
                             ApplicationStatus = ApplicationStatuses.Submitted,
-                            ApplicationType = ApplicationType.TraineeshipApplication,
                             VacancyStatus = x.VacancyStatus,
                             LegacyVacancyId = x.LegacyVacancyId,
                             ClosingDate = x.ClosingDate

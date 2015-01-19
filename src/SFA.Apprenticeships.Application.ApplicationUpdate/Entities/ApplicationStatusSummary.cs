@@ -4,12 +4,6 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
 
-    public enum ApplicationType
-    {
-        ApprenticeshipApplication,
-        TraineeshipApplication
-    }
-
     public class ApplicationStatusSummary
     {
         public Guid ApplicationId { get; set; }
@@ -17,8 +11,6 @@
         public int LegacyApplicationId { get; set; }
 
         public ApplicationStatuses ApplicationStatus { get; set; }
-
-        public ApplicationType ApplicationType { get; set; }
 
         public int LegacyVacancyId { get; set; }
 

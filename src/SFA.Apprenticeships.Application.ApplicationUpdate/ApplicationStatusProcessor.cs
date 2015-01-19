@@ -74,18 +74,7 @@
             Parallel.ForEach(
                 applicationStatusSummaries,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
-                applicationStatusSummary =>
-                {
-                    var applicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
-
-                    // If the application status has not changed, there's no work to do.
-                    //TODO: Should we be doing anything in the event of applicationDetail being null? 
-                    //This happens because we're sharing the nas preprod gateway with environments
-                    if (applicationDetail != null && applicationDetail.Status != applicationStatusSummary.ApplicationStatus)
-                    {
-                        _messageBus.PublishMessage(applicationStatusSummary);
-                    }
-                });
+                applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
 
             Logger.Debug("Queued {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
         }
@@ -93,19 +82,8 @@
         public void ProcessApplicationStatuses(ApplicationStatusSummary applicationStatusSummary)
         {
             Logger.Debug("Processing application summary status update for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
-            var successfullyProcessedApplication = false;
-
-            if (applicationStatusSummary.ApplicationType == ApplicationType.ApprenticeshipApplication)
-            {
-                successfullyProcessedApplication = ProcessApprenticeshipsApplication(applicationStatusSummary);
-            }
-
-            if (applicationStatusSummary.ApplicationType == ApplicationType.TraineeshipApplication)
-            {
-                successfullyProcessedApplication = ProcessTraineeshipsApplication(applicationStatusSummary);
-            }
-
-            if (!successfullyProcessedApplication)
+            
+            if (!ProcessApprenticeshipsApplication(applicationStatusSummary) && !ProcessTraineeshipsApplication(applicationStatusSummary))
             {
                 Logger.Warn("Unable to find/update apprenticeship of traineeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
             }
