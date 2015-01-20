@@ -80,5 +80,19 @@
                     "Provider Contact")
             };
         }
+
+        public static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateVacanciesAboutToExpireTokens()
+        {
+            return new[]
+            {
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ItemCount, "3"),
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Item1,
+                    "Application Vacancy Title 1|Employer name 1|15 Jan 15"),
+                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Item2,
+                    "Application Vacancy Title 2|Employer name 2|15 Jan 15"),
+                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Item3,
+                    "Application Vacancy Title 3|Employer name 3|15 Jan 15")
+            };
+        }
     }
 }

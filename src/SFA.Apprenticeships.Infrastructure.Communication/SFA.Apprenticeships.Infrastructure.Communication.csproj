@@ -120,10 +120,10 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Email\EmailMessageFormatter.cs" />
-    <Compile Include="Email\EmailMessageFormatters\EmailExpiryMessageFormatter.cs" />
+    <Compile Include="Email\EmailMessageFormatters\EmailDailyDigestMessageFormatter.cs" />
     <Compile Include="Email\EmailMessageFormatters\EmailSimpleMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatter.cs" />
-    <Compile Include="Sms\SmsMessageFormatters\SmsExpiryMessageFormatter.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsTraineeshipApplicationSubmittedMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsAccountUnlockCodeMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsActivationCodeMessageFormatter.cs" />

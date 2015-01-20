@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using Application.Interfaces.Messaging;
 
-    public class SmsExpiryMessageFormatter : SmsMessageFormatter
+    public class SmsDailyDigestMessageFormatter : SmsMessageFormatter
     {
-        public SmsExpiryMessageFormatter(TwilioConfiguration configuration) : base(configuration)
+        public SmsDailyDigestMessageFormatter(TwilioConfiguration configuration) : base(configuration)
         {
             Message = GetTemplateConfiguration("MessageTypes.PasswordChanged").Message;
         }

@@ -73,17 +73,6 @@
         private void PopulateTemplate(EmailRequest request, SendGridMessage message)
         {
             // NOTE: https://sendgrid.com/docs/API_Reference/SMTP_API/substitution_tags.html.
-            //foreach (var token in request.Tokens)
-            //{
-            //    var sendgridtoken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(token.Key);
-            //    message.AddSubstitution(
-            //        sendgridtoken,
-            //        new List<string>
-            //        {
-            //            token.Value
-            //        });
-            //}
-
             _messageFormatters.First(mf => mf.Key == request.MessageType).Value.PopulateMessage(request, message);
         }
 

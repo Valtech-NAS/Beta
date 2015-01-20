@@ -6,7 +6,7 @@
     using Application.Interfaces.Messaging;
     using SendGrid;
 
-    public class EmailExpiryMessageFormatter : EmailMessageFormatter
+    public class EmailDailyDigestMessageFormatter : EmailMessageFormatter
     {
         private const string Pipe = "|";
 
@@ -24,14 +24,15 @@
             var itemCountToken =
                 SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.TotalItems);
 
+            string itemCount = request.Tokens.First(t => t.Key == CommunicationTokens.ItemCount).Value;
             message.AddSubstitution(
                 itemCountToken,
                 new List<string>
                 {
-                    request.Tokens.First(t => t.Key == CommunicationTokens.TotalItems).Value
+                    itemCount
                 });
 
-            return Convert.ToInt32(itemCountToken);
+            return Convert.ToInt32(itemCount);
         }
 
         private static void PopulateHtmlData(EmailRequest request, SendGridMessage message, int itemCount)
@@ -53,7 +54,7 @@
             for (var i = 0; i < itemCount; i++)
             {
                 var communicationToken = (CommunicationTokens) Enum.Parse(typeof (CommunicationTokens),
-                    string.Format("CommunicationTokens.Item{0}", i));
+                    string.Format("Item{0}", i+1));
 
                 substitutionText += formatFunction(request.Tokens.First(t => t.Key == communicationToken).Value);
             }
@@ -73,7 +74,7 @@
             string closingDate;
             ExtractVacancyDataFrom(line, out apprenticeshipName, out companyName, out closingDate);
 
-            return string.Format("<li>{0} with {1}</br><b>Closing date:</b> {2}</li>", apprenticeshipName, companyName,
+            return string.Format("<li>{0} with {1}<br><b>Closing date:</b> {2}</li>", apprenticeshipName, companyName,
                 closingDate);
         }
 

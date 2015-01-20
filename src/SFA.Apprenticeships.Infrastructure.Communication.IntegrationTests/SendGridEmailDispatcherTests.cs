@@ -14,7 +14,7 @@
 
         private IEmailDispatcher _voidEmailDispatcher;
 
-        private const string TestToEmail = "valtechnas@gmail.com";
+        private const string TestToEmail = "vincentredrum@gmail.com";
 
 
         [SetUp]
@@ -148,6 +148,19 @@
                 ToEmail = TestToEmail,
                 Tokens = TokenGenerator.CreatePasswordResetConfirmationTokens(),
                 MessageType = MessageTypes.PasswordChanged
+            };
+
+            _dispatcher.SendEmail(request);
+        }
+
+        [Test, Category("Integration")]
+        public void ShouldSendVacanciesAboutToExpireEmail()
+        {
+            var request = new EmailRequest
+            {
+                ToEmail = TestToEmail,
+                Tokens = TokenGenerator.CreateVacanciesAboutToExpireTokens(),
+                MessageType = MessageTypes.DailyDigest
             };
 
             _dispatcher.SendEmail(request);
