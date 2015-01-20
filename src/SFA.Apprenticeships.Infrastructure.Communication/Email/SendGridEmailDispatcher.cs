@@ -73,6 +73,13 @@
         private void PopulateTemplate(EmailRequest request, SendGridMessage message)
         {
             // NOTE: https://sendgrid.com/docs/API_Reference/SMTP_API/substitution_tags.html.
+            if (!_messageFormatters.Any(mf => mf.Key == request.MessageType))
+            {
+                var errorMessage = string.Format("Populate template: No message formatter exists for MessageType name: {0}", request.MessageType);
+                Logger.Error(errorMessage);
+
+                throw new ConfigurationErrorsException(errorMessage);
+            }
             _messageFormatters.First(mf => mf.Key == request.MessageType).Value.PopulateMessage(request, message);
         }
 

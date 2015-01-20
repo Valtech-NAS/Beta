@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
     using Application.Interfaces.Messaging;
     using Domain.Entities.Exceptions;
@@ -63,6 +64,14 @@
 
         private string GetMessageFrom(SmsRequest request)
         {
+            if (!_messageFormatters.Any(mf => mf.Key == request.MessageType))
+            {
+                var errorMessage = string.Format("GetMessageFrom: No message formatter exists for MessageType name: {0}", request.MessageType);
+                Logger.Error(errorMessage);
+
+                throw new ConfigurationErrorsException(errorMessage);
+            }
+
             return _messageFormatters.First(m => m.Key == request.MessageType).Value.GetMessage(request.Tokens);
         }
     }
