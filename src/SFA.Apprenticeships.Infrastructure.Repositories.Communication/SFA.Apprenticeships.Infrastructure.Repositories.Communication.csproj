@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Local</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B1278CE6-5670-49F4-85DF-350294EC151F}</ProjectGuid>
+    <ProjectGuid>{B1278CE6-5670-49F4-85DF-350294EC151A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SFA.Apprenticeships.Infrastructure.Repositories.Communication</RootNamespace>

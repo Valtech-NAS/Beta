@@ -18,7 +18,6 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Candidates.IoC;
-    using Repositories.Communication.IoC;
     using Repositories.Users.IoC;
     using StructureMap;
 
@@ -122,7 +121,6 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<AsyncProcessorRegistry>();
-                x.AddRegistry<CommunicationRepositoryRegistry>();
             });
 #pragma warning restore 0618
 

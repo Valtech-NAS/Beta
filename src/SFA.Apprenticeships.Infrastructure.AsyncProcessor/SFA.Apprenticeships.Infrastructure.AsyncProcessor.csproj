@@ -234,6 +234,10 @@
       <Project>{984F8CD2-61B3-48A4-B0CC-5D05E235983D}</Project>
       <Name>SFA.Apprenticeships.Application.Candidate</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Communications\SFA.Apprenticeships.Application.Communications.csproj">
+      <Project>{D91E4093-3348-43ED-B386-CF70000FFCB3}</Project>
+      <Name>SFA.Apprenticeships.Application.Communications</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
@@ -281,10 +285,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Candidates\SFA.Apprenticeships.Infrastructure.Repositories.Candidates.csproj">
       <Project>{AA87BD85-5A33-46B8-B26F-C6B680876486}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Communication\SFA.Apprenticeships.Infrastructure.Repositories.Communication.csproj">
-      <Project>{B1278CE6-5670-49F4-85DF-350294EC151F}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Communication</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">
       <Project>{4696d786-2f3c-4a12-bd6b-38e2981d6df1}</Project>

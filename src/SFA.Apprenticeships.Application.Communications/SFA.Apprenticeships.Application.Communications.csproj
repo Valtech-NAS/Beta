@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Local</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C91E4093-3348-43ED-B386-CF70000FFCB3}</ProjectGuid>
+    <ProjectGuid>{D91E4093-3348-43ED-B386-CF70000FFCB3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Application.Communication</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Application.Communication</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Application.Communications</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Application.Communications</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -97,22 +97,9 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="CommunicationService.cs" />
-    <Compile Include="Strategies\QueueCommunicationRequestStrategy.cs" />
-    <Compile Include="Strategies\IQueueCommunicationRequestStrategy.cs" />
-    <Compile Include="Strategies\ISendAccountUnlockCodeStrategy.cs" />
-    <Compile Include="Strategies\ISendTraineeshipApplicationSubmittedStrategy.cs" />
-    <Compile Include="Strategies\ISendApplicationSubmittedStrategy.cs" />
-    <Compile Include="Strategies\ISendPasswordChangedStrategy.cs" />
-    <Compile Include="Strategies\ISendPasswordResetCodeStrategy.cs" />
+    <Compile Include="CommunicationProcessor.cs" />
+    <Compile Include="ICommunicationProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strategies\ISendActivationCodeStrategy.cs" />
-    <Compile Include="Strategies\LegacyQueueTraineeshipApplicationSubmittedStrategy.cs" />
-    <Compile Include="Strategies\LegacyQueueApprenticeshipApplicationSubmittedStrategy.cs" />
-    <Compile Include="Strategies\QueueAccountUnlockCodeStrategy.cs" />
-    <Compile Include="Strategies\QueuePasswordChangedStrategy.cs" />
-    <Compile Include="Strategies\QueuePasswordResetCodeStrategy.cs" />
-    <Compile Include="Strategies\QueueActivationCodeStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

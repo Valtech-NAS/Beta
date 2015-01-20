@@ -170,7 +170,7 @@
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Communication\SFA.Apprenticeships.Infrastructure.Repositories.Communication.csproj">
-      <Project>{B1278CE6-5670-49F4-85DF-350294EC151F}</Project>
+      <Project>{B1278CE6-5670-49F4-85DF-350294EC151A}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Communication</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">

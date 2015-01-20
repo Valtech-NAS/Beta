@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Communication
+﻿namespace SFA.Apprenticeships.Application.Communications
 {
     using System.Collections.Generic;
     using System.Linq;

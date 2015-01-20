@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
 {
     using System.Threading.Tasks;
-    using Application.Interfaces.Messaging;
+    using Application.Communications;
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;
 
