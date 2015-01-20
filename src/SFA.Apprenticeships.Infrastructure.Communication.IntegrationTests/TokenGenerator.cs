@@ -85,7 +85,7 @@
         {
             return new[]
             {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ItemCount, "3"),
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.TotalItems, "3"),
                 new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Item1,
                     "Application Vacancy Title 1|Employer name 1|15 Jan 15"),
                     new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Item2,

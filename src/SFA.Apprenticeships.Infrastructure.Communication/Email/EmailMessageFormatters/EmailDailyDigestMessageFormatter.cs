@@ -24,7 +24,7 @@
             var itemCountToken =
                 SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.TotalItems);
 
-            string itemCount = request.Tokens.First(t => t.Key == CommunicationTokens.ItemCount).Value;
+            string itemCount = request.Tokens.First(t => t.Key == CommunicationTokens.TotalItems).Value;
             message.AddSubstitution(
                 itemCountToken,
                 new List<string>
