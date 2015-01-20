@@ -61,10 +61,19 @@
 
             var vacancyDetail = GetVacancyDetailFrom(response);
 
-            if (!VacancyHasExpired(vacancyDetail)) return vacancyDetail;
+            if (IsClosingDateExpired(vacancyDetail))
+            {
+                Logger.Info("Vacancy ({0}) closing date {1} has expired. Returning null.", vacancyId, vacancyDetail.ClosingDate);
+                return null;
+            }
 
-            Logger.Info("Vacancy ({0}) closing date has expired. Returning null.", vacancyId);
-            return null;
+            if (vacancyDetail.VacancyStatus != VacancyStatuses.Live)
+            {
+                Logger.Info("Vacancy ({0}) is unavailable. Returning null.", vacancyId);
+                return null;
+            }
+
+            return vacancyDetail;
         }
 
         private static bool VacancyDoesntExist(GetVacancyDetailsResponse response)
@@ -72,15 +81,14 @@
             return response.ValidationErrors.Any(e => e.ErrorCode == UnknownVacancy);
         }
 
-        private static bool VacancyHasExpired(TVacancyDetail vacancyDetail)
+        private static bool IsClosingDateExpired(TVacancyDetail vacancyDetail)
         {
             return vacancyDetail.ClosingDate < DateTime.Today.ToUniversalTime();
         }
 
         private TVacancyDetail GetVacancyDetailFrom(GetVacancyDetailsResponse response)
         {
-            var vacancyDetail = _mapper.Map<Vacancy, TVacancyDetail>(response.Vacancy);
-            return vacancyDetail;
+            return _mapper.Map<Vacancy, TVacancyDetail>(response.Vacancy);
         }
 
         private static bool IsThereAnyValidationErrorOn(GetVacancyDetailsResponse response)

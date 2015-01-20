@@ -3,7 +3,6 @@
     using System;
     using AutoMapper;
     using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.Apprenticeships;
 
     public class VacancyDetailViewModelResolvers
     {

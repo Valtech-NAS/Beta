@@ -5,7 +5,6 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using GatewayServiceProxy;
-    using Mappers;
     using Mappers.Apprenticeships;
     using NUnit.Framework;
 
@@ -34,8 +33,8 @@
             var src = new Vacancy
             {
                 VacancyId =  67,
-                Status = "Live",
                 VacancyReference = 42,
+                Status = "Live",
                 ApplicationInstructions = "ApplicationInstructions",
                 ClosingDate = DateTime.Today.AddDays(1),
                 ContactPerson = "ContactPerson",
@@ -79,6 +78,7 @@
 
             dest.Id.Should().Be(src.VacancyId);
             dest.VacancyStatus.Should().Be(VacancyStatuses.Live);
+            dest.VacancyReference.Should().Be("VAC" + src.VacancyReference.ToString("D9"));
             dest.ApplicationInstructions.Should().Be(src.ApplicationInstructions);
             dest.ClosingDate.Should().Be(src.ClosingDate);
             dest.Contact.Should().Be(src.ContactForCandidate);
@@ -113,7 +113,6 @@
             dest.Wage.Should().Be(src.WeeklyWage);
             dest.WageDescription.Should().Be(src.WageText);
             dest.WorkingWeek.Should().Be(src.WorkingWeek);
-            dest.VacancyReference.Should().Be("VAC" + src.VacancyReference.ToString("D9"));
         }
 
         [TestCase]
@@ -465,6 +464,30 @@
             // Assert.
             dest.Should().NotBeNull();
             dest.ApprenticeshipLevel.Should().Be(ApprenticeshipLevel.Unknown);
+        }
+
+        [TestCase("Live", VacancyStatuses.Live)]
+        [TestCase("Wrong", VacancyStatuses.Unavailable)]
+        [TestCase("Deleted", VacancyStatuses.Unavailable)]
+        [TestCase("ClosingDatePassed", VacancyStatuses.Unavailable)]
+        [TestCase("Withdrawn", VacancyStatuses.Unavailable)]
+        [TestCase("Expired", VacancyStatuses.Unavailable)]
+        [TestCase("Completed", VacancyStatuses.Unavailable)]
+        [TestCase("PostedInError", VacancyStatuses.Unavailable)]
+        public void ShouldMapVacancyStatus(string vacancyStatusString, VacancyStatuses vacancyStatus)
+        {
+            // Arrange.
+            var src = new Vacancy
+            {
+                Status = vacancyStatusString
+            };
+
+            // Act.
+            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+
+            // Assert.
+            dest.Should().NotBeNull();
+            dest.VacancyStatus.Should().Be(vacancyStatus);
         }
     }
 }

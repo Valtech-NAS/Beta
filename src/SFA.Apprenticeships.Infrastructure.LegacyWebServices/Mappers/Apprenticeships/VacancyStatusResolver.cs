@@ -12,16 +12,8 @@
                 case "Live":
                     return VacancyStatuses.Live;
 
-                case "Deleted":
-                case "ClosingDatePassed":
-                case "Withdrawn":
-                case "Expired":
-                case "Completed":
-                case "PostedInError":
-                    return VacancyStatuses.Unavailable;
-
                 default:
-                    return VacancyStatuses.Unknown;
+                    return VacancyStatuses.Unavailable;
             }
         }
     }
