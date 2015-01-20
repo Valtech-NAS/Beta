@@ -28,7 +28,9 @@
             });
 #pragma warning restore 0618
 
+#pragma warning disable 618
             _legacyCandidateProvider = ObjectFactory.GetInstance<ILegacyCandidateProvider>();
+#pragma warning restore 618
         }
 
         [Test, Category("Integration")]

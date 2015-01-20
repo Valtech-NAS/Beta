@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch.Configuration
 {
-    using System;
     using System.Collections.Generic;
     using System.Configuration;
     using Common.Configuration;
@@ -53,23 +52,23 @@
 
     public class SearchTermFactorCollection : ConfigurationElementCollection, IEnumerable<ISearchTermFactorsConfiguration>
     {
-        private readonly List<ISearchTermFactorsConfiguration> elements;
-        private readonly Dictionary<string, ISearchTermFactorsConfiguration> elementDictionary;
+        private readonly List<ISearchTermFactorsConfiguration> _elements;
+        private readonly Dictionary<string, ISearchTermFactorsConfiguration> _elementDictionary;
 
-        private ISearchTermFactorsConfiguration jobTitleFactors = null;
-        private ISearchTermFactorsConfiguration descriptionFactors = null;
-        private ISearchTermFactorsConfiguration employerFactors = null;
+        private ISearchTermFactorsConfiguration _jobTitleFactors;
+        private ISearchTermFactorsConfiguration _descriptionFactors;
+        private ISearchTermFactorsConfiguration _employerFactors;
 
         public SearchTermFactorCollection()
         {
-            elements = new List<ISearchTermFactorsConfiguration>();
-            elementDictionary = new Dictionary<string, ISearchTermFactorsConfiguration>();
+            _elements = new List<ISearchTermFactorsConfiguration>();
+            _elementDictionary = new Dictionary<string, ISearchTermFactorsConfiguration>();
         }
 
         protected override ConfigurationElement CreateNewElement()
         {
             var element = new SearchTermFactorsConfiguration();
-            elements.Add(element);
+            _elements.Add(element);
 
             return element;
         }
@@ -77,47 +76,47 @@
         protected override object GetElementKey(ConfigurationElement element)
         {
             string key = ((ISearchTermFactorsConfiguration)element).FieldName;
-            if (!elementDictionary.ContainsKey(key))
+            if (!_elementDictionary.ContainsKey(key))
             {
-                elementDictionary.Add(key, ((ISearchTermFactorsConfiguration)element));
+                _elementDictionary.Add(key, ((ISearchTermFactorsConfiguration)element));
             }
-            return elementDictionary[key];
+            return _elementDictionary[key];
         }
 
         public new ISearchTermFactorsConfiguration this[string name]
         {
             get
             {
-                return elementDictionary.ContainsKey(name) ? elementDictionary[name] : null;
+                return _elementDictionary.ContainsKey(name) ? _elementDictionary[name] : null;
             }
         }
 
         public new IEnumerator<ISearchTermFactorsConfiguration> GetEnumerator()
         {
-            return elements.GetEnumerator();
+            return _elements.GetEnumerator();
         }
 
         public ISearchTermFactorsConfiguration JobTitleFactors
         {
             get {
-                return jobTitleFactors ??
-                       (jobTitleFactors = this["JobTitle"] ?? new SearchTermFactorsConfiguration());
+                return _jobTitleFactors ??
+                       (_jobTitleFactors = this["JobTitle"] ?? new SearchTermFactorsConfiguration());
             }
         }
 
         public ISearchTermFactorsConfiguration DescriptionFactors
         {
             get {
-                return descriptionFactors ??
-                       (descriptionFactors = this["Description"] ?? new SearchTermFactorsConfiguration());                
+                return _descriptionFactors ??
+                       (_descriptionFactors = this["Description"] ?? new SearchTermFactorsConfiguration());                
             }
         }
 
         public ISearchTermFactorsConfiguration EmployerFactors
         {
             get {
-                return employerFactors ??
-                       (employerFactors = this["Employer"] ?? new SearchTermFactorsConfiguration());                
+                return _employerFactors ??
+                       (_employerFactors = this["Employer"] ?? new SearchTermFactorsConfiguration());                
 
             }
         }

@@ -29,7 +29,9 @@
                                             
 #pragma warning restore 0618
 
+#pragma warning disable 618
             _service = ObjectFactory.GetInstance<IUserDirectoryProvider>();
+#pragma warning restore 618
         }
 
         [Test, Category("Integration")]

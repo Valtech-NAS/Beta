@@ -2,7 +2,6 @@
 {
     using System;
     using System.Threading.Tasks;
-    using Domain.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
     using Application.VacancyEtl.Entities;
     using Elastic.Common.Entities;
@@ -13,13 +12,10 @@
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _vacancyIndexer;
-        private readonly IMessageBus _messageBus;
 
-        public TraineeshipsSummaryConsumerAsync(IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> vacancyIndexer, 
-            IMessageBus messageBus)
+        public TraineeshipsSummaryConsumerAsync(IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> vacancyIndexer)
         {
             _vacancyIndexer = vacancyIndexer;
-            _messageBus = messageBus;
         }
 
         [AutoSubscriberConsumer(SubscriptionId = "TraineeshipSummaryConsumerAsync")]

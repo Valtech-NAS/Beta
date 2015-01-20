@@ -4,16 +4,17 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Application.Interfaces.Messaging;
+    using Domain.Interfaces.Messaging;
+    using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;
-    using SFA.Apprenticeships.Domain.Interfaces.Messaging;
-    using SFA.Apprenticeships.Domain.Interfaces.Repositories;
 
     public class CommunicationRequestConsumerAsync : IConsumeAsync<CommunicationRequest>
     {
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IMessageBus _messageBus;
 
-        public CommunicationRequestConsumerAsync(ICandidateReadRepository candidateReadRepository, IMessageBus messageBus)
+        public CommunicationRequestConsumerAsync(ICandidateReadRepository candidateReadRepository,
+            IMessageBus messageBus)
         {
             _candidateReadRepository = candidateReadRepository;
             _messageBus = messageBus;
@@ -28,7 +29,7 @@
 
                 // note, some messages are mandatory - determined by type
                 var isOptionalMessageType = message.MessageType == MessageTypes.TraineeshipApplicationSubmitted ||
-                                  message.MessageType == MessageTypes.ApprenticeshipApplicationSubmitted;
+                                            message.MessageType == MessageTypes.ApprenticeshipApplicationSubmitted;
 
                 var candidate = _candidateReadRepository.Get(candidateId);
 
@@ -78,6 +79,6 @@
                     t =>
                         t.Key != CommunicationTokens.CandidateEmailAddress &&
                         t.Key != CommunicationTokens.CandidateMobileNumber);
-        } 
+        }
     }
 }

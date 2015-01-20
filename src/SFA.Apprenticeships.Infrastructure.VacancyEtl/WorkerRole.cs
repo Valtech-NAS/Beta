@@ -83,12 +83,16 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
                 Logger.Debug("Vacancy Etl Process IoC initialized");
 
+#pragma warning disable 618
                 var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
+#pragma warning restore 618
                 subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(VacancySummaryPageConsumerAsync)),
                     "VacancyEtl");
                 Logger.Debug("Rabbit subscriptions setup");
 
+#pragma warning disable 618
                 _vacancyEtlControlQueueConsumer = ObjectFactory.GetInstance<VacancyEtlControlQueueConsumer>();
+#pragma warning restore 618
 
                 Logger.Debug("Vacancy Etl Process setup complete");
             }

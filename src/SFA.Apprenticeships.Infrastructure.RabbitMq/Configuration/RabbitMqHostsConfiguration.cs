@@ -28,19 +28,19 @@
 
     public class RabbitMqCollection : ConfigurationElementCollection, IEnumerable<IRabbitMqHostConfiguration>
     {
-        private readonly List<IRabbitMqHostConfiguration> elements;
-        private readonly Dictionary<string, IRabbitMqHostConfiguration> elementDictionary;
+        private readonly List<IRabbitMqHostConfiguration> _elements;
+        private readonly Dictionary<string, IRabbitMqHostConfiguration> _elementDictionary;
 
         public RabbitMqCollection()
         {
-            elements = new List<IRabbitMqHostConfiguration>();
-            elementDictionary = new Dictionary<string, IRabbitMqHostConfiguration>();
+            _elements = new List<IRabbitMqHostConfiguration>();
+            _elementDictionary = new Dictionary<string, IRabbitMqHostConfiguration>();
         }
 
         protected override ConfigurationElement CreateNewElement()
         {
             var element = new RabbitMqHostConfiguration();
-            elements.Add(element);
+            _elements.Add(element);
 
             return element;
         }
@@ -48,24 +48,24 @@
         protected override object GetElementKey(ConfigurationElement element)
         {
             string key = ((IRabbitMqHostConfiguration)element).Name;
-            if (!elementDictionary.ContainsKey(key))
+            if (!_elementDictionary.ContainsKey(key))
             {
-                elementDictionary.Add(key, ((RabbitMqHostConfiguration)element));
+                _elementDictionary.Add(key, ((RabbitMqHostConfiguration)element));
             }
-            return elementDictionary[key];
+            return _elementDictionary[key];
         }
 
         public new IRabbitMqHostConfiguration this[string name]
         {
             get
             {
-                return elementDictionary.ContainsKey(name) ? elementDictionary[name] : null;
+                return _elementDictionary.ContainsKey(name) ? _elementDictionary[name] : null;
             }
         }
 
         public new IEnumerator<IRabbitMqHostConfiguration> GetEnumerator()
         {
-            return elements.GetEnumerator();
+            return _elements.GetEnumerator();
         }
     }
 }

@@ -45,19 +45,19 @@
 
     public class ElasticsearchIndexCollection : ConfigurationElementCollection, IEnumerable<IElasticsearchIndexConfiguration>
     {
-        private readonly List<IElasticsearchIndexConfiguration> elements;
-        private readonly Dictionary<string, IElasticsearchIndexConfiguration> elementDictionary;
+        private readonly List<IElasticsearchIndexConfiguration> _elements;
+        private readonly Dictionary<string, IElasticsearchIndexConfiguration> _elementDictionary;
 
         public ElasticsearchIndexCollection()
         {
-            elements = new List<IElasticsearchIndexConfiguration>();
-            elementDictionary = new Dictionary<string, IElasticsearchIndexConfiguration>();
+            _elements = new List<IElasticsearchIndexConfiguration>();
+            _elementDictionary = new Dictionary<string, IElasticsearchIndexConfiguration>();
         }
 
         protected override ConfigurationElement CreateNewElement()
         {
             var element = new ElasticsearchIndexConfiguration();
-            elements.Add(element);
+            _elements.Add(element);
 
             return element;
         }
@@ -65,24 +65,24 @@
         protected override object GetElementKey(ConfigurationElement element)
         {
             string key = ((IElasticsearchIndexConfiguration)element).Name;
-            if (!elementDictionary.ContainsKey(key))
+            if (!_elementDictionary.ContainsKey(key))
             {
-                elementDictionary.Add(key, ((ElasticsearchIndexConfiguration)element));
+                _elementDictionary.Add(key, ((ElasticsearchIndexConfiguration)element));
             }
-            return elementDictionary[key];
+            return _elementDictionary[key];
         }
 
         public new IElasticsearchIndexConfiguration this[string name]
         {
             get
             {
-                return elementDictionary.ContainsKey(name) ? elementDictionary[name] : null;
+                return _elementDictionary.ContainsKey(name) ? _elementDictionary[name] : null;
             }
         }
 
         public new IEnumerator<IElasticsearchIndexConfiguration> GetEnumerator()
         {
-            return elements.GetEnumerator();
+            return _elements.GetEnumerator();
         }
     }
 }

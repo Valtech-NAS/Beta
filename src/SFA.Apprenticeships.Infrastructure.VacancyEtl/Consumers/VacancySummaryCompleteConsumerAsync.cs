@@ -1,14 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
 {
     using System.Threading.Tasks;
+    using Application.VacancyEtl.Entities;
+    using Domain.Interfaces.Configuration;
     using EasyNetQ.AutoSubscribe;
-    using Microsoft.WindowsAzure;
+    using Elastic.Common.Entities;
     using NLog;
-    using SFA.Apprenticeships.Application.VacancyEtl.Entities;
-    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Entities;
-    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
-    using SFA.Apprenticeships.Infrastructure.VacancyIndexer;
+    using PerformanceCounters;
+    using VacancyIndexer;
 
     public class VacancySummaryCompleteConsumerAsync : IConsumeAsync<VacancySummaryUpdateComplete>
     {
@@ -20,14 +19,15 @@
         private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>
             _apprenticeshipIndexer;
 
+        private readonly IConfigurationManager _configurationManager;
+
         private readonly IPerformanceCounterService _performanceCounterService;
         private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _trainseeshipIndexer;
-        private readonly IConfigurationManager _configurationManager;
 
         public VacancySummaryCompleteConsumerAsync(
             IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> apprenticeshipIndexer,
             IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> trainseeshipIndexer,
-            IPerformanceCounterService performanceCounterService, 
+            IPerformanceCounterService performanceCounterService,
             IConfigurationManager configurationManager)
         {
             _apprenticeshipIndexer = apprenticeshipIndexer;
@@ -71,7 +71,7 @@
 
         private void IncrementVacancyIndexPerformanceCounter()
         {
-            if ( _configurationManager.GetCloudAppSetting<bool>("PerformanceCountersEnabled"))
+            if (_configurationManager.GetCloudAppSetting<bool>("PerformanceCountersEnabled"))
             {
                 _performanceCounterService.IncrementCounter(VacancyEtlPerformanceCounterCategory, VacancyIndexCounter);
             }

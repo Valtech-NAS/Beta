@@ -13,6 +13,7 @@
     using GetCandidateApplicationStatuses;
     using Mappers;
     using Mappers.Apprenticeships;
+    using Mappers.Traineeship;
     using StructureMap.Configuration.DSL;
     using VacancyDetail;
     using VacancySummary;

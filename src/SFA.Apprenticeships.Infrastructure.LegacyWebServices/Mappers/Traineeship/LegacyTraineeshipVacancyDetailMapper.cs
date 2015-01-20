@@ -1,9 +1,8 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers.Apprenticeships
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers.Traineeship
 {
+    using Apprenticeships;
     using Common.Mappers;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
-    using Traineeship;
 
     public class LegacyTraineeshipVacancyDetailMapper : MapperEngine
     {
