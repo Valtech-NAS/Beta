@@ -10,7 +10,7 @@
         
         public int VacancyId { get; set; }
 
-        public string VacancyTitle { get; set; }
+        public string Title { get; set; }
 
         public string EmployerName { get; set; }
 

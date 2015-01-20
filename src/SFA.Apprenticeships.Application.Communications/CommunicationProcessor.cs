@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
@@ -39,14 +40,16 @@
                     var commTokens = new List<KeyValuePair<CommunicationTokens, string>>();
                     int counter = 1;
 
-                    commTokens.Add(new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.TotalItems, candidateDailyDigest.Value.Count().ToString()));
+                    commTokens.Add(new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateEmailAddress, candidate.RegistrationDetails.EmailAddress));
+                    commTokens.Add(new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber));
+                    commTokens.Add(new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.TotalItems, candidateDailyDigest.Value.Count().ToString(CultureInfo.InvariantCulture)));
 
                     foreach (var draft in candidateDailyDigest.Value)
                     {
                         if (counter <= 10)
                         {
                             var pipeDelimitedDraftValues = string.Join("|",
-                                new[] {draft.VacancyTitle, draft.EmployerName, draft.ClosingDate.ToLongDateString()});
+                                new[] {draft.Title, draft.EmployerName, draft.ClosingDate.ToLongDateString()});
                             var token =
                                 new KeyValuePair<CommunicationTokens, string>(
                                     (CommunicationTokens) Enum.Parse(typeof (CommunicationTokens), "Item" + counter++),
