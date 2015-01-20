@@ -91,7 +91,7 @@
       <Private>True</Private>
       <RoleType>Worker</RoleType>
       <RoleName>SFA.Apprenticeships.Infrastructure.Communications</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+      <UpdateDiagnosticsConnectionStringOnPublish>False</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Monitor\SFA.Apprenticeships.Infrastructure.Monitor.csproj">
       <Name>SFA.Apprenticeships.Infrastructure.Monitor</Name>
