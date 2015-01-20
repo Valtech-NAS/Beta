@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communication
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Email
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,6 @@
     using System.Net.Mail;
     using Application.Interfaces.Messaging;
     using Domain.Entities.Exceptions;
-    using Email;
     using NLog;
     using SendGrid;
     using ErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
@@ -22,8 +21,11 @@
         private readonly SendGridTemplateConfiguration[] _templates;
         private readonly string _userName;
 
-        public SendGridEmailDispatcher(SendGridConfiguration configuration)
+        private readonly IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> _messageFormatters;
+
+        public SendGridEmailDispatcher(SendGridConfiguration configuration, IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> messageFormatters)
         {
+            _messageFormatters = messageFormatters;
             _userName = configuration.UserName;
             _password = configuration.Password;
             _templates = configuration.Templates.ToArray();
@@ -68,19 +70,21 @@
             return message;
         }
 
-        private static void PopulateTemplate(EmailRequest request, SendGridMessage message)
+        private void PopulateTemplate(EmailRequest request, SendGridMessage message)
         {
             // NOTE: https://sendgrid.com/docs/API_Reference/SMTP_API/substitution_tags.html.
-            foreach (var token in request.Tokens)
-            {
-                var sendgridtoken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(token.Key);
-                message.AddSubstitution(
-                    sendgridtoken,
-                    new List<string>
-                    {
-                        token.Value
-                    });
-            }
+            //foreach (var token in request.Tokens)
+            //{
+            //    var sendgridtoken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(token.Key);
+            //    message.AddSubstitution(
+            //        sendgridtoken,
+            //        new List<string>
+            //        {
+            //            token.Value
+            //        });
+            //}
+
+            _messageFormatters.First(mf => mf.Key == request.MessageType).Value.PopulateMessage(request, message);
         }
 
         private void AttachTemplate(EmailRequest request, SendGridMessage message)
@@ -97,7 +101,8 @@
         {
             var enumType = messageType.GetType();
             var templateName = string.Format("{0}.{1}", enumType.Name, Enum.GetName(enumType, messageType));
-            Logger.Debug("Determined email template: EnumType={0} Name={1} TemplateName={2} MessageType={3}", enumType, enumType.Name, templateName, messageType);
+            Logger.Debug("Determined email template: EnumType={0} Name={1} TemplateName={2} MessageType={3}", enumType,
+                enumType.Name, templateName, messageType);
             return templateName;
         }
 
@@ -126,7 +131,8 @@
 
                 Logger.Debug("Dispatching email: {0}", LogSendGridMessage(message));
                 web.Deliver(message);
-                Logger.Info("Dispatched email: {0} to {1}", message.Subject, string.Join(", ", message.To.Select(a => a.Address)));
+                Logger.Info("Dispatched email: {0} to {1}", message.Subject,
+                    string.Join(", ", message.To.Select(a => a.Address)));
             }
             catch (Exception e)
             {
