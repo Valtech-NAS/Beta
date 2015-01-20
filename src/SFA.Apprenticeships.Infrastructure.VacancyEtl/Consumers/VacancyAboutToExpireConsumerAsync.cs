@@ -44,7 +44,7 @@
                         expiringApplications).ToList();
 
                 //Write to repo
-                expiringDrafts.ForEach(_expiringDraftRepository.Upsert);
+                expiringDrafts.ForEach(_expiringDraftRepository.Save);
             });
         }
     }

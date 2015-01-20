@@ -16,13 +16,13 @@
         private readonly IMapper _mapper;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public ExpiringDraftRepository(IConfigurationManager configurationManager, string collectionName, IMapper mapper)
-            : base(configurationManager, collectionName)
+        public ExpiringDraftRepository(IConfigurationManager configurationManager, IMapper mapper)
+            : base(configurationManager, "expiringdrafts")
         {
             _mapper = mapper;
         }
 
-        public void Upsert(ExpiringDraft expiringDraft)
+        public void Save(ExpiringDraft expiringDraft)
         {
             var mongoExpiringDraft = _mapper.Map<ExpiringDraft, MongoExpiringDraft>(expiringDraft);
             UpdateEntityTimestamps(mongoExpiringDraft);

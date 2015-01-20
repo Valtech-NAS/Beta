@@ -128,6 +128,7 @@
   <ItemGroup>
     <Compile Include="Applications\TraineeshipApplicationReadRepositoryTests.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationWriteRepositoryTests.cs" />
+    <Compile Include="Communication\ExpiringDraftsRepositoryTests.cs" />
     <Compile Include="SetUp.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationReadRepositoryTests.cs" />
     <Compile Include="Candidates\CandidateRepositoryTests.cs" />
@@ -167,6 +168,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Candidates\SFA.Apprenticeships.Infrastructure.Repositories.Candidates.csproj">
       <Project>{AA87BD85-5A33-46B8-B26F-C6B680876486}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Communication\SFA.Apprenticeships.Infrastructure.Repositories.Communication.csproj">
+      <Project>{B1278CE6-5670-49F4-85DF-350294EC151F}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Communication</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">
       <Project>{4696D786-2F3C-4A12-BD6B-38E2981D6DF1}</Project>

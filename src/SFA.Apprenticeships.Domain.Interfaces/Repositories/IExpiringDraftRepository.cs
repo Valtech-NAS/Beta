@@ -6,7 +6,7 @@
 
     public interface IExpiringDraftRepository
     {
-        void Upsert(ExpiringDraft expiringDraft);
+        void Save(ExpiringDraft expiringDraft);
 
         Dictionary<Guid, List<ExpiringDraft>> GetCandidatesDailyDigest();
     }

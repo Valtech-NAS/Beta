@@ -7,7 +7,7 @@
     public abstract class CommunicationRepository<TBaseEntity> : GenericMongoClient<TBaseEntity> where TBaseEntity : BaseEntity
     {
         protected CommunicationRepository(IConfigurationManager configurationManager, string collectionName)
-            : base(configurationManager, "Communication.mongoDB", collectionName)
+            : base(configurationManager, "Communications.mongoDB", collectionName)
         {
         }
     }

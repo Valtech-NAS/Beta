@@ -4,6 +4,7 @@
     using NUnit.Framework;
     using Repositories.Applications.IoC;
     using Repositories.Candidates.IoC;
+    using Repositories.Communication.IoC;
     using Repositories.Users.IoC;
     using StructureMap;
 
@@ -20,6 +21,7 @@
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
+                x.AddRegistry<CommunicationRepositoryRegistry>();
                 x.AddRegistry<CommonRegistry>();
             });
 #pragma warning restore 0618

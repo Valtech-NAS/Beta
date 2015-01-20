@@ -51,7 +51,7 @@
                     candidateDailyDigest.Value.ToList().ForEach(dd =>
                     {
                         dd.IsSent = true;
-                        _expiringDraftRepository.Upsert(dd);
+                        _expiringDraftRepository.Save(dd);
                     });
                 }
             }
