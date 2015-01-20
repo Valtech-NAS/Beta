@@ -86,7 +86,7 @@
                 });
         }
 
-        public void QueueVacancyIfExpired(ApprenticeshipSummary vacancySummary)
+        public void QueueVacancyIfExpiring(ApprenticeshipSummary vacancySummary)
         {
             var notificationHours = _configurationManager.GetAppSetting<int>(VacancyAboutToExpireNotificationHours);
 

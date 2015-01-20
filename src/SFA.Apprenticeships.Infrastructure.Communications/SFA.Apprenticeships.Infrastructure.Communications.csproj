@@ -244,6 +244,10 @@
       <Project>{480622E1-7624-449C-904F-AF7FD3590BEF}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.RabbitMq</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Candidates\SFA.Apprenticeships.Infrastructure.Repositories.Candidates.csproj">
+      <Project>{AA87BD85-5A33-46B8-B26F-C6B680876486}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Communication\SFA.Apprenticeships.Infrastructure.Repositories.Communication.csproj">
       <Project>{b1278ce6-5670-49f4-85df-350294ec151a}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Communication</Name>

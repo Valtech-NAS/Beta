@@ -30,7 +30,7 @@
                 try
                 {
                     _vacancyIndexer.Index(vacancySummaryToIndex);
-                    _vacancySummaryProcessor.QueueVacancyIfExpired(vacancySummaryToIndex);
+                    _vacancySummaryProcessor.QueueVacancyIfExpiring(vacancySummaryToIndex);
                 }
                 catch(Exception ex)
                 {

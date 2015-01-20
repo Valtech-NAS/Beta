@@ -139,7 +139,7 @@
                 ClosingDate = DateTime.Now.AddHours(vacancyAboutToExpireNotificationHours + 1)
             };
 
-            vacancyConsumer.QueueVacancyIfExpired(vacancySummary);
+            vacancyConsumer.QueueVacancyIfExpiring(vacancySummary);
 
             _busMock.Verify(x => x.PublishMessage(It.Is<VacancyAboutToExpire>(m => m.Id == aVacancyId)), Times.Never());
             _configurationManagerMock.VerifyAll();
@@ -160,7 +160,7 @@
                 ClosingDate = DateTime.Now.AddHours(vacancyAboutToExpireNotificationHours - 1)
             };
 
-            vacancyConsumer.QueueVacancyIfExpired(vacancySummary);
+            vacancyConsumer.QueueVacancyIfExpiring(vacancySummary);
 
             _busMock.Verify(x => x.PublishMessage(It.Is<VacancyAboutToExpire>(m => m.Id == aVacancyId)));
             _configurationManagerMock.VerifyAll();

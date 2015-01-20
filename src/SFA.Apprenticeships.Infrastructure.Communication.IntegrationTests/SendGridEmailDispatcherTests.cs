@@ -14,7 +14,7 @@
 
         private IEmailDispatcher _voidEmailDispatcher;
 
-        private const string TestToEmail = "vincentredrum@gmail.com";
+        private const string TestToEmail = "valtechnas@gmail.com";
 
 
         [SetUp]

@@ -14,6 +14,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
     using RabbitMq.IoC;
+    using Repositories.Candidates.IoC;
     using Repositories.Communication.IoC;
     using StructureMap;
 
@@ -68,6 +69,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
                     x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<CommunicationsRegistry>();
                     x.AddRegistry<CommunicationRepositoryRegistry>();
+                    x.AddRegistry<CandidateRepositoryRegistry>();
                 });
 #pragma warning restore 0618
 
