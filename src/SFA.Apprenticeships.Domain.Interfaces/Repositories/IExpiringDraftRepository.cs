@@ -8,6 +8,8 @@
     {
         void Save(ExpiringDraft expiringDraft);
 
+        void Delete(ExpiringDraft expiringDraft);
+
         Dictionary<Guid, List<ExpiringDraft>> GetCandidatesDailyDigest();
     }
 }

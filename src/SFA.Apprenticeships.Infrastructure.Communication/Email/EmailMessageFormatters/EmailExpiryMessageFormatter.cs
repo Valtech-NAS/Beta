@@ -22,13 +22,13 @@
         private static int PopulateItemCountData(EmailRequest request, SendGridMessage message)
         {
             var itemCountToken =
-                SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.ItemCount);
+                SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.TotalItems);
 
             message.AddSubstitution(
                 itemCountToken,
                 new List<string>
                 {
-                    request.Tokens.First(t => t.Key == CommunicationTokens.ItemCount).Value
+                    request.Tokens.First(t => t.Key == CommunicationTokens.TotalItems).Value
                 });
 
             return Convert.ToInt32(itemCountToken);

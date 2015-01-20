@@ -51,7 +51,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                 case CommunicationTokens.ProviderContact:
                     emailTemplateToken = "Provider.Contact";
                     break;
-                case CommunicationTokens.ItemCount:
+                case CommunicationTokens.TotalItems:
                     emailTemplateToken = "Expiry.Vacancies.Count";
                     break;
                 default:

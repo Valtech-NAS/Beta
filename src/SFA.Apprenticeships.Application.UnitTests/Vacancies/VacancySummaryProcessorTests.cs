@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.VacancyEtl.UnitTests.Consumers
+﻿namespace SFA.Apprenticeships.Application.UnitTests.Vacancies
 {
     using System;
     using System.Collections.Generic;
@@ -9,9 +9,10 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Messaging;
-    using Entities;
     using Moq;
     using NUnit.Framework;
+    using VacancyEtl;
+    using VacancyEtl.Entities;
 
     [TestFixture]
     public class VacancySummaryProcessorTests

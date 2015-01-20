@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Communications
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Interfaces.Messaging;
@@ -29,22 +30,32 @@
 
                 if (candidate.CommunicationPreferences.AllowEmail || candidate.CommunicationPreferences.AllowMobile)
                 {
-                    // TODO: Create and put communication object on queue with all details.
-
-                    var communicationMessage = new CommunicationRequest()
+                    var communicationMessage = new CommunicationRequest
                     {
                         EntityId = candidate.EntityId,
-                        //TODO:
-                        //MessageType = MessageTypes.DailyDigest
+                        MessageType = MessageTypes.DailyDigest
                     };
 
                     var commTokens = new List<KeyValuePair<CommunicationTokens, string>>();
+                    int counter = 1;
 
-                    foreach (var expiringDraft in candidateDailyDigest.Value)
+                    commTokens.Add(new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.TotalItems, candidateDailyDigest.Value.Count().ToString()));
+
+                    foreach (var draft in candidateDailyDigest.Value)
                     {
-                        //TODO: Repeating tokens needs re-worked
+                        if (counter <= 10)
+                        {
+                            var pipeDelimitedDraftValues = string.Join("|",
+                                new[] {draft.VacancyTitle, draft.EmployerName, draft.ClosingDate.ToLongDateString()});
+                            var token =
+                                new KeyValuePair<CommunicationTokens, string>(
+                                    (CommunicationTokens) Enum.Parse(typeof (CommunicationTokens), "Item" + counter++),
+                                    pipeDelimitedDraftValues);
+                            commTokens.Add(token);
+                        }
                     }
 
+                    communicationMessage.Tokens = commTokens;
                     _bus.PublishMessage(communicationMessage);
 
                     // Update candidates expiring drafts to sent
@@ -53,6 +64,11 @@
                         dd.IsSent = true;
                         _expiringDraftRepository.Save(dd);
                     });
+                }
+                else
+                {
+                    // Delete candidates expiring drafts
+                    candidateDailyDigest.Value.ToList().ForEach(_expiringDraftRepository.Delete);
                 }
             }
         }

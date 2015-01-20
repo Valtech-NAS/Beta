@@ -30,6 +30,11 @@
             Collection.Save(mongoExpiringDraft);
         }
 
+        public void Delete(ExpiringDraft expiringDraft)
+        {
+            Collection.Remove(Query.EQ("_id", expiringDraft.EntityId));
+        }
+
         public Dictionary<Guid, List<ExpiringDraft>> GetCandidatesDailyDigest()
         {
             var mongoExpiringDrafts = Collection.FindAs<MongoExpiringDraft>(Query.EQ("IsSent", false));

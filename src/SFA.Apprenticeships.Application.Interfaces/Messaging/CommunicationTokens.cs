@@ -17,7 +17,7 @@
         ProviderContact,
         CandidateEmailAddress,
         CandidateMobileNumber,
-        ItemCount,
+        TotalItems,
         Item1,
         Item2,
         Item3,

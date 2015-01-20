@@ -7,6 +7,7 @@
         SendAccountUnlockCode,
         ApprenticeshipApplicationSubmitted,
         TraineeshipApplicationSubmitted,
-        PasswordChanged
+        PasswordChanged,
+        DailyDigest
     }
 }

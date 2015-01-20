@@ -10,7 +10,9 @@
         
         public int VacancyId { get; set; }
 
-        public string VacancyName { get; set; }
+        public string VacancyTitle { get; set; }
+
+        public string EmployerName { get; set; }
 
         public DateTime ClosingDate { get; set; }
 

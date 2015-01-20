@@ -46,7 +46,7 @@
         }
 
         [Test, Category("Integration")]
-        public void TestMultiUpsertAndGetCandidatesDailyDigest()
+        public void TestMultiSaveGetAndDeleteCandidatesDailyDigest()
         {
             //Arrange
             var expiringDrafts =
@@ -67,10 +67,18 @@
             
             //Assert
             var candidatesDailyDigest = _expiringDraftRepository.GetCandidatesDailyDigest();
+            candidatesDailyDigest.Count().Should().Be(3);
             var returnedExpiringDrafts = candidatesDailyDigest.SelectMany(cand => cand.Value.ToArray());
             returnedExpiringDrafts.Count(ed => ed.VacancyId == _testVacancyId && !ed.IsSent)
                 .Should()
                 .Be(3);
+
+            //Act
+            expiringDrafts.ForEach(_expiringDraftRepository.Delete);
+
+            //Assert
+            candidatesDailyDigest = _expiringDraftRepository.GetCandidatesDailyDigest();
+            candidatesDailyDigest.Count().Should().Be(0);
         } 
     }
 }
