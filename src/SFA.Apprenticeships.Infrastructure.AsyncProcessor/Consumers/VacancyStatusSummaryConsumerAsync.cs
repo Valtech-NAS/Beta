@@ -49,8 +49,8 @@
 
                     _cacheService.PutObject(message.CacheKey(), message, message.CacheDuration());
 
-                    QueueApprenticeshipApplicationStatusSummaries(message.LegacyVacancyId);
-                    QueueTraineeshipApplicationStatusSummaries(message.LegacyVacancyId);
+                    QueueApprenticeshipApplicationStatusSummaries(message);
+                    QueueTraineeshipApplicationStatusSummaries(message);
                 }
                 catch (Exception ex)
                 {
@@ -59,9 +59,9 @@
             });
         }
 
-        private void QueueApprenticeshipApplicationStatusSummaries(int legacyVacancyId)
+        private void QueueApprenticeshipApplicationStatusSummaries(VacancyStatusSummary vacancyStatusSummary)
         {
-            var applicationSummaries = _apprenticeshipApplicationReadRepository.GetApplicationSummaries(legacyVacancyId);
+            var applicationSummaries = _apprenticeshipApplicationReadRepository.GetApplicationSummaries(vacancyStatusSummary.LegacyVacancyId);
             var applicationStatusSummaries =
                 applicationSummaries.Select(
                     x =>
@@ -70,9 +70,9 @@
                             ApplicationId = x.ApplicationId,
                             LegacyApplicationId = x.LegacyVacancyId,
                             ApplicationStatus = x.Status,
-                            VacancyStatus = x.VacancyStatus,
+                            VacancyStatus = vacancyStatusSummary.VacancyStatus,
                             LegacyVacancyId = x.LegacyVacancyId,
-                            ClosingDate = x.ClosingDate,
+                            ClosingDate = vacancyStatusSummary.ClosingDate,
                             UnsuccessfulReason = x.UnsuccessfulReason
                         });
 
@@ -83,9 +83,9 @@
                 applicationStatusSummary => _bus.PublishMessage(applicationStatusSummary));            
         }
 
-        private void QueueTraineeshipApplicationStatusSummaries(int legacyVacancyId)
+        private void QueueTraineeshipApplicationStatusSummaries(VacancyStatusSummary vacancyStatusSummary)
         {
-            var applicationSummaries = _traineeshipApplicationReadRepository.GetApplicationSummaries(legacyVacancyId);
+            var applicationSummaries = _traineeshipApplicationReadRepository.GetApplicationSummaries(vacancyStatusSummary.LegacyVacancyId);
             var applicationStatusSummaries =
                 applicationSummaries.Select(
                     x =>
@@ -94,9 +94,9 @@
                             ApplicationId = x.ApplicationId,
                             LegacyApplicationId = x.LegacyVacancyId,
                             ApplicationStatus = ApplicationStatuses.Submitted,
-                            VacancyStatus = x.VacancyStatus,
+                            VacancyStatus = vacancyStatusSummary.VacancyStatus,
                             LegacyVacancyId = x.LegacyVacancyId,
-                            ClosingDate = x.ClosingDate
+                            ClosingDate = vacancyStatusSummary.ClosingDate
                         });
 
             //TODO: Think how to reduce applications that need processed based on their status.
