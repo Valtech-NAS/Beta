@@ -21,7 +21,7 @@
             _bus = bus;
         }
 
-        public void SendDailyDigests()
+        public void SendDailyDigests(Guid batchId)
         {
             var candidatesDailyDigest = _expiringDraftRepository.GetCandidatesDailyDigest();
 
@@ -64,7 +64,7 @@
                     // Update candidates expiring drafts to sent
                     candidateDailyDigest.Value.ToList().ForEach(dd =>
                     {
-                        dd.IsSent = true;
+                        dd.BatchId = batchId;
                         _expiringDraftRepository.Save(dd);
                     });
                 }

@@ -37,7 +37,8 @@
             _expiringDraftRepository.Setup(x => x.Delete(It.IsAny<ExpiringDraft>()));
             _candidateReadRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(GetCandidate(false));
 
-            _communicationProcessor.SendDailyDigests();
+            var batchId = Guid.NewGuid();
+            _communicationProcessor.SendDailyDigests(batchId);
 
             _expiringDraftRepository.Verify(x => x.GetCandidatesDailyDigest(), Times.Once);
             _candidateReadRepository.Verify(x => x.Get(It.IsAny<Guid>()), Times.Exactly(2));
@@ -53,12 +54,13 @@
             _candidateReadRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(GetCandidate(true));
             _bus.Setup(x => x.PublishMessage(It.IsAny<CommunicationRequest>()));
 
-            _communicationProcessor.SendDailyDigests();
+            var batchId = Guid.NewGuid();
+            _communicationProcessor.SendDailyDigests(batchId);
 
             _expiringDraftRepository.Verify(x => x.GetCandidatesDailyDigest(), Times.Once);
             _candidateReadRepository.Verify(x => x.Get(It.IsAny<Guid>()), Times.Exactly(2));
             _expiringDraftRepository.Verify(x => x.Delete(It.IsAny<ExpiringDraft>()), Times.Never);
-            _expiringDraftRepository.Verify(x => x.Save(It.Is<ExpiringDraft>(ed => ed.IsSent)), Times.Exactly(4));
+            _expiringDraftRepository.Verify(x => x.Save(It.Is<ExpiringDraft>(ed => ed.BatchId == batchId)), Times.Exactly(4));
             _bus.Verify(x => x.PublishMessage(It.IsAny<CommunicationRequest>()), Times.Exactly(2));
         }
 

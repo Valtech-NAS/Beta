@@ -159,7 +159,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Consumers\DailyDigestControlQueueConsumer.cs" />
     <Compile Include="Consumers\CommunicationRequestConsumerAsync.cs" />
     <Compile Include="Consumers\CreateCandidateRequestConsumerAsync.cs" />
     <Compile Include="Consumers\SmsRequestConsumerAsync.cs" />

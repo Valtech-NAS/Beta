@@ -8,6 +8,7 @@
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Entities;
+    using MongoDB.Bson;
     using MongoDB.Driver.Builders;
     using NLog;
 
@@ -26,7 +27,7 @@
         {
             var mongoExpiringDraft = _mapper.Map<ExpiringDraft, MongoExpiringDraft>(expiringDraft);
             UpdateEntityTimestamps(mongoExpiringDraft);
-            // Defaults to upsert
+            mongoExpiringDraft.SentDateTime = mongoExpiringDraft.BatchId.HasValue ? mongoExpiringDraft.DateUpdated : null;
             Collection.Save(mongoExpiringDraft);
         }
 
@@ -37,7 +38,7 @@
 
         public Dictionary<Guid, List<ExpiringDraft>> GetCandidatesDailyDigest()
         {
-            var mongoExpiringDrafts = Collection.FindAs<MongoExpiringDraft>(Query.EQ("IsSent", false));
+            var mongoExpiringDrafts = Collection.FindAs<MongoExpiringDraft>(Query.EQ("BatchId", BsonNull.Value));
             var expiringDrafts = _mapper.Map<IEnumerable<MongoExpiringDraft>, IEnumerable<ExpiringDraft>>(mongoExpiringDrafts);
             return expiringDrafts.GroupBy(x => x.CandidateId).ToDictionary(grp => grp.Key, grp => grp.ToList());
         }

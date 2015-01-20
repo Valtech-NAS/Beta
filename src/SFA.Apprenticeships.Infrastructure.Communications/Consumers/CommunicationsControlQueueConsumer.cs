@@ -21,7 +21,7 @@
                 var scheduleerNotification = GetLatestQueueMessage();
                 if (scheduleerNotification != null)
                 {
-                    _communicationProcessor.SendDailyDigests();
+                    _communicationProcessor.SendDailyDigests(scheduleerNotification.ClientRequestId);
                     _messageService.DeleteMessage(scheduleerNotification.MessageId, scheduleerNotification.PopReceipt);
                 }
             });

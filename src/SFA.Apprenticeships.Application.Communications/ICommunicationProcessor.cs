@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.Communications
 {
+    using System;
+
     public interface ICommunicationProcessor
     {
-        void SendDailyDigests();
+        void SendDailyDigests(Guid batchId);
     }
 }

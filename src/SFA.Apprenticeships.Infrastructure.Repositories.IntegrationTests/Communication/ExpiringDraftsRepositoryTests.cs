@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.IntegrationTests.Communication
 {
+    using System;
     using System.Linq;
     using Domain.Entities.Communication;
     using Domain.Interfaces.Configuration;
@@ -49,18 +50,22 @@
         public void TestMultiSaveGetAndDeleteCandidatesDailyDigest()
         {
             //Arrange
+            var batchId = Guid.NewGuid();
+            var sentDateTime = DateTime.Now;
             var expiringDrafts =
                 Builder<ExpiringDraft>.CreateListOfSize(3)
                     .All()
                     .With(ed => ed.VacancyId = _testVacancyId)
-                    .With(ed => ed.IsSent = true)
+                    .With(ed => ed.BatchId = batchId)
+                    .With(ed => ed.SentDateTime = sentDateTime)
                     .Build().ToList();
 
             //Act
             expiringDrafts.ForEach(ed =>
             {
                 _expiringDraftRepository.Save(ed);
-                ed.IsSent = false;
+                ed.BatchId = null;
+                ed.SentDateTime = null;
                 _expiringDraftRepository.Save(ed);
             });
 
@@ -69,7 +74,7 @@
             var candidatesDailyDigest = _expiringDraftRepository.GetCandidatesDailyDigest();
             candidatesDailyDigest.Count().Should().Be(3);
             var returnedExpiringDrafts = candidatesDailyDigest.SelectMany(cand => cand.Value.ToArray());
-            returnedExpiringDrafts.Count(ed => ed.VacancyId == _testVacancyId && !ed.IsSent)
+            returnedExpiringDrafts.Count(ed => ed.VacancyId == _testVacancyId && ed.BatchId == null && ed.SentDateTime == null)
                 .Should()
                 .Be(3);
 

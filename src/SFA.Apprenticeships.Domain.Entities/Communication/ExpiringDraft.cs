@@ -16,6 +16,8 @@
 
         public DateTime ClosingDate { get; set; }
 
-        public bool IsSent { get; set; }
+        public Guid? BatchId { get; set; }
+
+        public DateTime? SentDateTime { get; set; }
     }
 }
