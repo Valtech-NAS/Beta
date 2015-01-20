@@ -1,21 +1,21 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Sms.SmsMessageFormatters
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Application.Interfaces.Messaging;
 
     public class SmsDailyDigestMessageFormatter : SmsMessageFormatter
     {
         public SmsDailyDigestMessageFormatter(TwilioConfiguration configuration) : base(configuration)
         {
-            Message = GetTemplateConfiguration("MessageTypes.PasswordChanged").Message;
+            Message = GetTemplateConfiguration("MessageTypes.DailyDigest").Message;
         }
 
         public override string GetMessage(IEnumerable<KeyValuePair<CommunicationTokens, string>> communicationTokens)
         {
-            // count the number of about to expire vacancies
-            var numberOfVacanciesAboutToExpire = 6;
+            var itemCount = communicationTokens.First(t => t.Key == CommunicationTokens.TotalItems).Value;
 
-            return string.Format(Message, numberOfVacanciesAboutToExpire);
+            return string.Format(Message, itemCount);
         }
     }
 }

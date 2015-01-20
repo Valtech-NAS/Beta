@@ -137,6 +137,19 @@
             _dispatcher.SendSms(request);
         }
 
+        [Test, Category("Integration")]
+        public void ShoudSendDailyDigestSms()
+        {
+            var request = new SmsRequest
+            {
+                ToNumber = TestToNumber,
+                Tokens = TokenGenerator.CreateVacanciesAboutToExpireTokens(),
+                MessageType = MessageTypes.DailyDigest
+            };
+
+            _dispatcher.SendSms(request);
+        }
+
         [Test, Category("Integration"), ExpectedException(typeof(CustomException))]
         public void ShouldGetExceptionIfSomethingHappens()
         {

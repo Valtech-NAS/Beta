@@ -154,7 +154,7 @@
         }
 
         [Test, Category("Integration")]
-        public void ShouldSendVacanciesAboutToExpireEmail()
+        public void ShouldSendDailyDigestEmail()
         {
             var request = new EmailRequest
             {
