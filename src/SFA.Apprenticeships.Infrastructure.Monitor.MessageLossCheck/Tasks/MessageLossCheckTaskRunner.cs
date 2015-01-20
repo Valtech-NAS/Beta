@@ -22,7 +22,8 @@
             {
                 Logger.Info("Running " + monitorTask.TaskName);
                 monitorTask.Run();
-                if (monitorTask.GetType() == typeof(CheckUnsentCandidateMessages))
+                var checkUnsentCandidateMessages = monitorTask as CheckUnsentCandidateMessages;
+                if (checkUnsentCandidateMessages != null && checkUnsentCandidateMessages.ActionsTaken)
                 {
                     Logger.Info("Waiting for 5 minutes to allow any application queue messages to be processed after fixing the associated candidate");
                     Thread.Sleep(TimeSpan.FromMinutes(5));

@@ -5,7 +5,6 @@
     using System.Text;
     using System.Threading;
     using Application.Candidate;
-    using Application.Interfaces.Messaging;
     using Domain.Interfaces.Messaging;
     using Monitor.Tasks;
     using NLog;
@@ -51,7 +50,13 @@
                 sb.AppendLine(requeuedMessage);
             }
 
-            if (!candidatesToRequeue.Any()) return;
+            if (!candidatesToRequeue.Any())
+            {
+                ActionsTaken = false;
+                return;
+            }
+
+            ActionsTaken = true;
 
             //Wait 5 seconds to allow messages to be processed. Nondeterministic of course
             Thread.Sleep(TimeSpan.FromSeconds(5));
@@ -62,12 +67,18 @@
                 sb.AppendLine("The actions taken did not resolve the following issues with candidates:");
                 activatedCandidatesWithUnsetLegacyId.ForEach(c => sb.AppendLine(string.Format("Candidate with id: {0} is activated but has an unset legacy candidate id", c.EntityId)));
                 Logger.Error(sb.ToString());
+                ActionsSuccessful = false;
             }
             else
             {
                 sb.AppendLine("The actions taken appear to have resolved the issues");
                 Logger.Warn(sb.ToString());
+                ActionsSuccessful = true;
             }
         }
+
+        public bool ActionsTaken { get; private set; }
+
+        public bool ActionsSuccessful { get; private set; }
     }
 }
