@@ -85,6 +85,14 @@
       <RoleName>SFA.Apprenticeships.Infrastructure.AsyncProcessor</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>False</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Communications\SFA.Apprenticeships.Infrastructure.Communications.csproj">
+      <Name>SFA.Apprenticeships.Infrastructure.Communications</Name>
+      <Project>{e3e6531a-0b3b-4afb-9ecb-3a25b3c616f8}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>SFA.Apprenticeships.Infrastructure.Communications</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Monitor\SFA.Apprenticeships.Infrastructure.Monitor.csproj">
       <Name>SFA.Apprenticeships.Infrastructure.Monitor</Name>
       <Project>{61619f66-5f17-4ef7-a8cf-ba720bea3ad3}</Project>
@@ -106,6 +114,7 @@
     <Folder Include="Profiles" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.ApplicationEtlContent\" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.AsyncProcessorContent\" />
+    <Folder Include="SFA.Apprenticeships.Infrastructure.CommunicationsContent\" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.MonitorContent\" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.VacancyEtlContent\" />
   </ItemGroup>
@@ -114,6 +123,9 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="SFA.Apprenticeships.Infrastructure.AsyncProcessorContent\diagnostics.wadcfg">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SFA.Apprenticeships.Infrastructure.CommunicationsContent\diagnostics.wadcfg">
       <SubType>Content</SubType>
     </Content>
     <Content Include="SFA.Apprenticeships.Infrastructure.MonitorContent\diagnostics.wadcfg">
