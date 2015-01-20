@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{22CE73E4-F469-434C-AC5D-D926EBBAC3D5}"
 EndProject
@@ -185,6 +185,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Repositories.Communication", "SFA.Apprenticeships.Infrastructure.Repositories.Communication\SFA.Apprenticeships.Infrastructure.Repositories.Communication.csproj", "{B1278CE6-5670-49F4-85DF-350294EC151A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Processes", "Processes", "{7DD479F0-A7A4-4EAB-B9D2-75CD113C6D4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Communications", "SFA.Apprenticeships.Infrastructure.Communications\SFA.Apprenticeships.Infrastructure.Communications.csproj", "{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1195,6 +1197,20 @@ Global
 		{B1278CE6-5670-49F4-85DF-350294EC151A}.Prod|Any CPU.Build.0 = Prod|Any CPU
 		{B1278CE6-5670-49F4-85DF-350294EC151A}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{B1278CE6-5670-49F4-85DF-350294EC151A}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}.Local|Any CPU.Build.0 = Local|Any CPU
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}.MSDN|Any CPU.ActiveCfg = MSDN|Any CPU
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}.MSDN|Any CPU.Build.0 = MSDN|Any CPU
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1283,5 +1299,6 @@ Global
 		{B62D1C17-2C2B-49BE-A6DF-8A152873A8C3} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{B1278CE6-5670-49F4-85DF-350294EC151A} = {B62D1C17-2C2B-49BE-A6DF-8A152873A8C3}
 		{7DD479F0-A7A4-4EAB-B9D2-75CD113C6D4C} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
+		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8} = {7DD479F0-A7A4-4EAB-B9D2-75CD113C6D4C}
 	EndGlobalSection
 EndGlobal
