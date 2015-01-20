@@ -5,7 +5,6 @@
     using System.Text;
     using System.Threading;
     using Application.Candidate;
-    using Application.Interfaces.Messaging;
     using Domain.Interfaces.Messaging;
     using Monitor.Tasks;
     using NLog;

@@ -8,6 +8,7 @@
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Mongo.Common;
+    using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
     using NLog;
     using Repositories.Applications.Entities;
@@ -48,6 +49,11 @@
             }
 
             return applicationsForValidCandidatesWithUnsetLegacyId;
+        }
+
+        public IEnumerable<string> GetDraftApplicationVacancyIds()
+        {
+            return Collection.Distinct("Vacancy._id", Query.EQ("Status", ApplicationStatuses.Draft)).Select(v => v.ToString());
         }
     }
 }

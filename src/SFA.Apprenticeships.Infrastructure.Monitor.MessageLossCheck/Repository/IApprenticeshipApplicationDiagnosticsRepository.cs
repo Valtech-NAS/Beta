@@ -6,5 +6,7 @@
     public interface IApprenticeshipApplicationDiagnosticsRepository
     {
         IEnumerable<ApprenticeshipApplicationDetail> GetApplicationsForValidCandidatesWithUnsetLegacyId();
+
+        IEnumerable<string> GetDraftApplicationVacancyIds();
     }
 }

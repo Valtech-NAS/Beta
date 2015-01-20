@@ -3,6 +3,7 @@
     using System;
     using Common.IoC;
     using EasyNetQ;
+    using Elastic.Common.IoC;
     using IoC;
     using RabbitMq.IoC;
     using Repositories.Candidates.IoC;
@@ -18,6 +19,7 @@
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();

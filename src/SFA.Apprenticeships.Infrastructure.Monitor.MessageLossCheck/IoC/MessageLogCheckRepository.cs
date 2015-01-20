@@ -20,6 +20,7 @@
                     x.Type<CheckUnsentCandidateMessages>();
                     x.Type<CheckUnsentApprenticeshipApplicationMessages>();
                     x.Type<CheckUnsentTraineeshipApplicationMessages>();
+                    //x.Type<CheckExpiredDrafts>();
                 });
         }
     }
