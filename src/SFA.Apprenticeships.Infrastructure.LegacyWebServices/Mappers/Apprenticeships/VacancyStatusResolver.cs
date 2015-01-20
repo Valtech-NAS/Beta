@@ -5,13 +5,13 @@
     using GatewayServiceProxy;
     using NLog;
 
-    public class VacancyStatusResolver : ValueResolver<Vacancy, VacancyStatuses>
+    public class VacancyStatusResolver : ValueResolver<string, VacancyStatuses>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        protected override VacancyStatuses ResolveCore(Vacancy source)
+        protected override VacancyStatuses ResolveCore(string source)
         {
-            switch (source.Status)
+            switch (source)
             {
                 case "Live":
                     return VacancyStatuses.Live;
@@ -25,7 +25,7 @@
                     return VacancyStatuses.Unavailable;
 
                 default:
-                    Logger.Warn("Gateway returned vacancy (Id: {0}) with unknown vacancy status: \"{1}\"", source.VacancyId, source.Status);
+                    Logger.Warn("Gateway returned vacancy with unknown vacancy status: \"{1}\"", source);
                     return VacancyStatuses.Unknown;
             }
         }
