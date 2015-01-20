@@ -25,7 +25,7 @@
                     return VacancyStatuses.Unavailable;
 
                 default:
-                    Logger.Warn("Gateway returned vacancy with unknown vacancy status: \"{1}\"", source);
+                    Logger.Warn("Gateway returned vacancy with unknown vacancy status: \"{0}\"", source);
                     return VacancyStatuses.Unknown;
             }
         }
