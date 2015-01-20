@@ -4,7 +4,7 @@
     using Application.Interfaces.Messaging;
     using SendGrid;
 
-    public class SimpleEmailMessageFormatter : EmailMessageFormatter
+    public class EmailSimpleMessageFormatter : EmailMessageFormatter
     {
         public override void PopulateMessage(EmailRequest request, SendGridMessage message)
         {
