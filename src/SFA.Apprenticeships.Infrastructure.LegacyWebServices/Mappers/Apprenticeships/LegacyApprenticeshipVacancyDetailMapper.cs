@@ -13,7 +13,10 @@
                     opt => opt.MapFrom(src => src.VacancyId))
 
                 .ForMember(dest => dest.VacancyReference,
-                 opt => opt.MapFrom(src => "VAC" + src.VacancyReference.ToString("D9")))
+                     opt => opt.MapFrom(src => "VAC" + src.VacancyReference.ToString("D9")))
+
+                .ForMember(dest => dest.VacancyStatus,
+                   opt => opt.ResolveUsing<VacancyStatusResolver>().FromMember(src => src))
 
                 .ForMember(dest => dest.ApplicationInstructions,
                     opt => opt.MapFrom(src => src.ApplicationInstructions))
