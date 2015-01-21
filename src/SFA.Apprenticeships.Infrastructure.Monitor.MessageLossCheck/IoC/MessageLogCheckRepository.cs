@@ -1,5 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck.IoC
 {
+    using Application.Interfaces.Search;
+    using Application.Interfaces.Vacancies;
+    using Application.Vacancy;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Monitor.Tasks;
     using Repository;
     using StructureMap.Configuration.DSL;
@@ -9,6 +13,8 @@
     {
         public MessageLogCheckRepository()
         {
+            For<IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>().Use<VacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
+            
             For<ICandidateDiagnosticsRepository>().Use<CandidateDiagnosticsRepository>();
             For<IApprenticeshipApplicationDiagnosticsRepository>().Use<ApprenticeshipApplicationDiagnosticsRepository>();
             For<ITraineeshipApplicationDiagnosticsRepository>().Use<TraineeshipApplicationDiagnosticsRepository>();

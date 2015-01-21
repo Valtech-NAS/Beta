@@ -5,11 +5,13 @@
     using EasyNetQ;
     using Elastic.Common.IoC;
     using IoC;
+    using LegacyWebServices.IoC;
     using RabbitMq.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Users.IoC;
     using StructureMap;
     using Tasks;
+    using VacancySearch.IoC;
 
     public class Program
     {
@@ -21,9 +23,11 @@
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(false));
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<MessageLogCheckRepository>();
+                x.AddRegistry<VacancySearchRegistry>();
             });
 
             var messageLossCheckTaskRunner = ObjectFactory.GetInstance<IMessageLossCheckTaskRunner>();
