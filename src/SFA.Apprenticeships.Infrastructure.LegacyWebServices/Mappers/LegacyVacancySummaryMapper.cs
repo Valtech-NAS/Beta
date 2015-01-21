@@ -68,12 +68,6 @@
                 .ForMember(dest => dest.StartDate,
                     opt => opt.MapFrom(src => src.PossibleStartDate))
 
-                .ForMember(dest => dest.VacancyReference,
-                    opt => opt.UseValue(null))
-
-                .ForMember(dest => dest.StartDate,
-                    opt => opt.UseValue(DateTime.MinValue))
-
                 .ForMember(dest => dest.ClosingDate,
                     opt => opt.MapFrom(src => src.ClosingDate))
 
