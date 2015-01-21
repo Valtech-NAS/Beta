@@ -192,16 +192,23 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 
         private void EnsureClusterIsHealthy(IHealthResponse health)
         {
-            if (health.Status == "green") { return; }
-
-            if (health.Status == "yellow" && health.NumberOfNodes == 1 && NodeCount == health.NumberOfNodes)
+            if (health.Status == "green")
             {
                 return;
             }
 
-            var message = string.Format("Cluster is unhealthy: \"{0}\", cluster should contain {1} nodes, but only has {2}.", health.Status, NodeCount, health.NumberOfNodes);
+            //Clusters with only one node allways have status of "yellow"
+            if ((health.Status == "yellow" && NodeCount > 1) || health.Status == "red")
+            {
+                var statusMessage = string.Format("Cluster is unhealthy: \"{0}\". Advise checking cluster if this message is logged again.", health.Status);
+                Logger.Warn(statusMessage);
+            }
 
-            Logger.Warn(message);
+            if (health.NumberOfNodes != NodeCount)
+            {
+                var message = string.Format("Cluster should contain {0} nodes, but only has {1}.", NodeCount, health.NumberOfNodes);
+                Logger.Warn(message);
+            }
         }
 
         private IHealthResponse GetClusterHealth()

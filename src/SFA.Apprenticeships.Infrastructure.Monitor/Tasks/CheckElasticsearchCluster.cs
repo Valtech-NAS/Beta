@@ -81,14 +81,18 @@
                 return;
             }
 
-            if (health.Status == "yellow" && health.NumberOfNodes == 1 && ExpectedNodeCount == health.NumberOfNodes)
+            //Clusters with only one node allways have status of "yellow"
+            if ((health.Status == "yellow" && ExpectedNodeCount > 1) || health.Status == "red")
             {
-                return;
+                var statusMessage = string.Format("Cluster is unhealthy: \"{0}\". Advise checking cluster if this message is logged again.", health.Status);
+                Logger.Warn(statusMessage);
             }
 
-            var message = string.Format("Cluster is unhealthy: \"{0}\", cluster should contain {1} nodes, but only has {2}.", health.Status, ExpectedNodeCount, health.NumberOfNodes);
-
-            Logger.Warn(message);
+            if (health.NumberOfNodes != ExpectedNodeCount)
+            {
+                var message = string.Format("Cluster should contain {0} nodes, but only has {1}.", ExpectedNodeCount, health.NumberOfNodes);
+                Logger.Warn(message);
+            }
         }
 
         private int ExpectedNodeCount
