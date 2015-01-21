@@ -150,5 +150,28 @@
                 return RedirectToRoute(CandidateRouteNames.MyApplications);
             });
         }
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
+        public async Task<ActionResult> Track(int id)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.Track(UserContext.CandidateId, id);
+
+                switch (response.Code)
+                {
+                    case Codes.AccountMediator.Track.SuccessfullyTracked:
+                    case Codes.AccountMediator.Track.ErrorTracking:
+                        // Tracking an application is 'best efforts'. Errors are not reported to the user.
+                        break;
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+
+                return RedirectToRoute(CandidateRouteNames.MyApplications);
+            });
+        }
     }
 }

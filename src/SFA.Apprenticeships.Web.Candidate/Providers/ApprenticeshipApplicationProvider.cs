@@ -288,6 +288,34 @@
             return new ApprenticeshipApplicationViewModel();
         }
 
+        public ApprenticeshipApplicationViewModel UnarchiveApplication(Guid candidateId, int vacancyId)
+        {
+            Logger.Debug(
+                "Calling ApprenticeshipApplicationProvider to ensure Application is unarchived for candidate ID: {0}, vacancy ID: {1}.",
+                candidateId, vacancyId);
+
+            try
+            {
+                _candidateService.UnarchiveApplication(candidateId, vacancyId);
+
+                Logger.Debug("Application unarchived for candidate ID: {0}, vacancy ID: {1}.",
+                    candidateId, vacancyId);
+            }
+            catch (Exception e)
+            {
+                var message =
+                    string.Format(
+                        "Unarchive application failed for candidate ID: {0}, vacancy ID: {1}.",
+                        candidateId, vacancyId);
+                Logger.Error(message, e);
+
+                return FailedApplicationViewModel(vacancyId, candidateId, "Unarchive of application",
+                    ApplicationPageMessages.UnarchiveFailed, e);
+            }
+
+            return new ApprenticeshipApplicationViewModel();
+        }
+
         public ApprenticeshipApplicationViewModel DeleteApplication(Guid candidateId, int vacancyId)
         {
             Logger.Debug(

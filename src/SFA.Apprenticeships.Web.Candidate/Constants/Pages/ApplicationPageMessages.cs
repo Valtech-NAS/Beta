@@ -3,6 +3,7 @@
     public class ApplicationPageMessages
     {
         public const string ArchiveFailed = "There’s been a problem saving your application. Please try again.";
+        public const string UnarchiveFailed = "TODO: There's been a problem processing your request. Please try again.";
         public const string DeleteFailed = "There’s been a problem deleting your application. Please try again.";
         public const string SubmitApplicationFailed = "There's been a problem submitting your application. Please try again.";
         public const string PreviewFailed = "There's been a problem processing your request. Please try again.";

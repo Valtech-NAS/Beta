@@ -107,5 +107,17 @@
                 ? GetMediatorResponse(Codes.AccountMediator.Settings.SaveError, settingsViewModel, AccountPageMessages.SettingsUpdateFailed, UserMessageLevel.Warning)
                 : GetMediatorResponse(Codes.AccountMediator.Settings.Success, settingsViewModel);
         }
+
+        public MediatorResponse Track(Guid candidateId, int vacancyId)
+        {
+            var applicationViewModel = _apprenticeshipApplicationProvider.UnarchiveApplication(candidateId, vacancyId);
+
+            if (applicationViewModel.HasError())
+            {
+                return GetMediatorResponse(Codes.AccountMediator.Track.ErrorTracking, applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
+            }
+
+            return GetMediatorResponse(Codes.AccountMediator.Track.SuccessfullyTracked);
+        }
     }
 }

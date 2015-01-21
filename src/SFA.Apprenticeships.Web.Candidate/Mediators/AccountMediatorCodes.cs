@@ -35,6 +35,12 @@
                 public const string SuccessfullyDismissed = "SuccessfullyDismissed";
                 public const string ErrorDismissing = "ErrorDismissing";
             }
+
+            public class Track
+            {
+                public const string SuccessfullyTracked = "SuccessfullyTracked";
+                public const string ErrorTracking = "ErrorTracking";
+            }
         }
     }
 }

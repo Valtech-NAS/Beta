@@ -28,6 +28,8 @@
 
         void ArchiveApplication(Guid candidateId, int vacancyId);
 
+        void UnarchiveApplication(Guid candidateId, int vacancyId);
+
         void SaveApplication(Guid candidateId, int vacancyId, ApprenticeshipApplicationDetail apprenticeshipApplication);
 
         IList<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId);

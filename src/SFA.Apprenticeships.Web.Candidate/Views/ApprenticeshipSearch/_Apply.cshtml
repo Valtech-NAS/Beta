@@ -30,8 +30,9 @@ else if (Request.IsAuthenticated)
                 break;
 
             default:
+                <!-- TODO: AG: can we get here without a DateApplied? -->
                 <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
-                <a href='@Url.RouteUrl(CandidateRouteNames.MyApplications)'>Track application status</a>
+                <a href="@Url.Action("Track", "Account", new { id = Model.Id })">Track application status</a>
                 break;
         }
     }

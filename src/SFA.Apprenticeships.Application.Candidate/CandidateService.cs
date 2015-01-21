@@ -217,6 +217,17 @@
             _archiveApplicationStrategy.ArchiveApplication(candidateId, vacancyId);
         }
 
+        public void UnarchiveApplication(Guid candidateId, int vacancyId)
+        {
+            Condition.Requires(candidateId);
+
+            Logger.Debug(
+                "Calling CandidateService to unarchive the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                candidateId, vacancyId);
+
+            _archiveApplicationStrategy.UnarchiveApplication(candidateId, vacancyId);
+        }
+
         public void DeleteApplication(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);

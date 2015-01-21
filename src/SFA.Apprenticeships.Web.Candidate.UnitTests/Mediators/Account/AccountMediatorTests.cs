@@ -237,5 +237,32 @@
             response.Message.Text.Should().Be(MyApplicationsPageMessages.DismissTraineeshipPromptsFailed);
             response.Message.Level.Should().Be(UserMessageLevel.Error);
         }
+
+        [Test]
+        public void TrackSuccessTest()
+        {
+            var applicationView = new ApprenticeshipApplicationViewModel();
+
+            _apprenticeshipApplicationProviderMock.Setup(x => x.UnarchiveApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(applicationView);
+
+            var response = _accountMediator.Track(Guid.NewGuid(), 1);
+
+            response.Code.Should().Be(Codes.AccountMediator.Track.SuccessfullyTracked);
+            response.Message.Should().BeNull();
+        }
+
+        [Test]
+        public void TrackErrorTest()
+        {
+            var applicationView = new ApprenticeshipApplicationViewModel { ViewModelMessage = "Has error" };
+
+            _apprenticeshipApplicationProviderMock.Setup(x => x.UnarchiveApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(applicationView);
+
+            var response = _accountMediator.Track(Guid.NewGuid(), 1);
+
+            response.Code.Should().Be(Codes.AccountMediator.Track.ErrorTracking);
+            response.Message.Text.Should().Be(applicationView.ViewModelMessage);
+            response.Message.Level.Should().Be(UserMessageLevel.Warning);
+        }
     }
 }
