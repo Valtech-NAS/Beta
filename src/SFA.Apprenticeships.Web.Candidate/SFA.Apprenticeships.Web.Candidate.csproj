@@ -211,6 +211,7 @@
   <ItemGroup>
     <Content Include="403.aspx" />
     <Content Include="403.html" />
+    <Content Include="TraineeshipNotFound.html" />
     <Content Include="Content\_assets\img\icon-external-hover.svg" />
     <Content Include="Content\_assets\img\icon-external.png" />
     <Content Include="Content\_assets\img\icon-external.svg" />
@@ -239,7 +240,7 @@
     <Content Include="Content\_assets\js\webtrends\webtrends.stub.js" />
     <Content Include="Scripts\knockout-3.2.0.debug.js" />
     <Content Include="Scripts\knockout-3.2.0.js" />
-    <Content Include="VacancyNotFound.html" />
+    <Content Include="ApprenticeshipNotFound.html" />
     <Content Include="404.aspx" />
     <Content Include="404.html" />
     <Content Include="500.aspx" />
@@ -425,7 +426,8 @@
     <Compile Include="403.aspx.designer.cs">
       <DependentUpon>403.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ActionResults\VacancyNotFoundResult.cs" />
+    <Compile Include="ActionResults\TraineeshipNotFoundResult.cs" />
+    <Compile Include="ActionResults\ApprenticeshipNotFoundResult.cs" />
     <Compile Include="App_Start\BundleConfig.cs">
       <SubType>Code</SubType>
     </Compile>

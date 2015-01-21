@@ -75,7 +75,7 @@ Scenario: As a candidate I want to save my apprenticeship application as a draft
 @US461 @US362 @US365 @US154 @US463 @US352 @US354
 Scenario: As a candidate I want to enter my qualifications and work experience in an apprenticeship application
 	Given I have registered a new candidate
-	When I navigate to the details of the vacancy 445650
+	When I navigate to the details of the apprenticeship vacancy 445650
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApprenticeshipApplicationPage page

@@ -107,7 +107,7 @@
                 switch (response.Code)
                 {
                     case Codes.ApprenticeshipSearch.Details.VacancyNotFound: 
-                        return new VacancyNotFoundResult();
+                        return new ApprenticeshipNotFoundResult();
                     case Codes.ApprenticeshipSearch.Details.VacancyHasError:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);

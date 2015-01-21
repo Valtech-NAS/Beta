@@ -178,16 +178,27 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             _driver.WindowHandles.Count.Should().Be(2);
         }
 
-        [When(@"I navigate to the details of the vacancy (.*)")]
-        public void WhenINavigateToTheDetailsOfTheVacancy(int vacancyid)
+        [When(@"I navigate to the details of the apprenticeship vacancy (.*)")]
+        public void WhenINavigateToTheDetailsOfTheApprenticeshipVacancy(int vacancyid)
         {
             var vacancySearchUri = new Uri(_driver.Url);
             var vacancyDetailsUri =
                 string.Format("{0}://{1}:{2}/apprenticeship/{3}", 
                 vacancySearchUri.Scheme, vacancySearchUri.Host, vacancySearchUri.Port, vacancyid);
+
             _driver.Navigate().GoToUrl(vacancyDetailsUri);
         }
 
+        [When(@"I navigate to the details of the traineeship vacancy (.*)")]
+        public void WhenINavigateToTheDetailsOfTheTraineeshipVacancy(int vacancyid)
+        {
+            var vacancySearchUri = new Uri(_driver.Url);
+            var vacancyDetailsUri =
+                string.Format("{0}://{1}:{2}/traineeship/{3}",
+                vacancySearchUri.Scheme, vacancySearchUri.Host, vacancySearchUri.Port, vacancyid);
+
+            _driver.Navigate().GoToUrl(vacancyDetailsUri);
+        }
 
         private Table GetVacancySearchData(string location)
         {

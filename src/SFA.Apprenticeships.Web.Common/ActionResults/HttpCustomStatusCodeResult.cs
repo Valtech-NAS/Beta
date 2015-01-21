@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.ActionResults
 {
-    using System;
     using System.Web.Mvc;
 
     public abstract class HttpCustomStatusCodeResult : ActionResult
