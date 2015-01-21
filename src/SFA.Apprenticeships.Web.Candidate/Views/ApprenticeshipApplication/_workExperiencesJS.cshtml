@@ -20,7 +20,7 @@
                 </label>
             </div>
             <div id="workexperience-panel" class="toggle-content" data-bind="style: {'display': workExperienceStatus() }" aria-hidden="true">
-                <div class="clearfix">
+                <div id="workexperience-apply" class="clearfix">
                     <div class="form-group form-group-compound" data-bind="parentvalElement: employer">
                         <label for="work-employer" class="form-label">Employer</label>
                         <input type="text" class="form-control" id="work-employer" data-bind="value: employer" maxlength="50">
@@ -68,6 +68,9 @@
                                 <label for="work-current">Current</label>
                             </div>
                         </div>
+                    </div>
+                    <div id="work-experience-save-warning" class="hidden">
+                        <span class="form-hint text">TODO: Click "Add work" to add the work experience.</span>
                     </div>
                     <div class="form-group">
                         <a role="button" href="#" class="button" id="addWorkBtn" data-bind="click: addWorkExperience">Add work</a>
