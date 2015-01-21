@@ -18,9 +18,11 @@
             // public const string RegularExpression = @"^[a-zA-Z0-9+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$";
 
             // Used this one instead as appears more robust, may be worth checking periodically for updates from OWASP
-            // http://www.regxlib.com/REDetails.aspx?regexp_id=167
-            // And modified to allow longer domain roots and the addional chars listed in the OWASP version
-            public const string RegularExpression = @"^([a-zA-Z0-9+&*_\-\.]+)@([a-zA-Z0-9\-\.]+)\.([a-zA-Z]{2,7})$";
+            // http://haacked.com/archive/2007/08/21/i-knew-how-to-validate-an-email-address-until-i.aspx/
+            // Modified to add uppercases
+            public const string RegularExpression = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
+                                                        + @"([-a-zA-Z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
+                                                        + @"@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$";
             public const string ErrorText = @"must be a valid email address";
         }
 
