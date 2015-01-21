@@ -467,7 +467,7 @@
         }
 
         [TestCase("Live", VacancyStatuses.Live)]
-        [TestCase("Wrong", VacancyStatuses.Unknown)]
+        [TestCase("Wrong", VacancyStatuses.Unavailable)]
         [TestCase("Deleted", VacancyStatuses.Unavailable)]
         [TestCase("ClosingDatePassed", VacancyStatuses.Unavailable)]
         [TestCase("Withdrawn", VacancyStatuses.Unavailable)]

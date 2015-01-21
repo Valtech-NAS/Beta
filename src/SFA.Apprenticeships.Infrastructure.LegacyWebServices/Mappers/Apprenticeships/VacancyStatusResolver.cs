@@ -2,13 +2,9 @@
 {
     using AutoMapper;
     using Domain.Entities.Vacancies;
-    using GatewayServiceProxy;
-    using NLog;
 
     public class VacancyStatusResolver : ValueResolver<string, VacancyStatuses>
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
         protected override VacancyStatuses ResolveCore(string source)
         {
             switch (source)
@@ -16,17 +12,8 @@
                 case "Live":
                     return VacancyStatuses.Live;
 
-                case "Deleted":
-                case "ClosingDatePassed":
-                case "Withdrawn":
-                case "Expired":
-                case "Completed":
-                case "PostedInError":
-                    return VacancyStatuses.Unavailable;
-
                 default:
-                    Logger.Warn("Gateway returned vacancy with unknown vacancy status: \"{0}\"", source);
-                    return VacancyStatuses.Unknown;
+                    return VacancyStatuses.Unavailable;
             }
         }
     }
