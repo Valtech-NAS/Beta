@@ -84,6 +84,10 @@
                 indexSettings.Analysis.TokenFilters.Add("snowball", snowballFilter);
                 indexSettings.Analysis.Analyzers.Add("snowball", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "snowball" } });
 
+                //Matches whole phrases ignoring case
+                var keywordLowercaseCustomAnalyzer = new CustomAnalyzer { Tokenizer = "keyword", Filter = new[] { "lowercase" } };
+                indexSettings.Analysis.Analyzers.Add("keywordlowercase", keywordLowercaseCustomAnalyzer);
+
                 client.CreateIndex(i => i.Index(newIndexName).InitializeUsing(indexSettings));
 
                 client.Map<TDestinationSummary>(p => p.Index(newIndexName).MapFromAttributes().Properties(prop =>

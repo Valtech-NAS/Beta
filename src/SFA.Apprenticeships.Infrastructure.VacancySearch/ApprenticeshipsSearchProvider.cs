@@ -130,12 +130,19 @@
 
                     if (_searchConfiguration.SearchEmployerNameField && !string.IsNullOrWhiteSpace(parameters.Keywords))
                     {
-                        var queryClause = q.Match(m =>
+                        var exactMatchClause = q.Match(m =>
                         {
                             m.OnField(f => f.EmployerName).Query(parameters.Keywords);
                             BuildFieldQuery(m, _searchConfiguration.SearchTermParameters.EmployerFactors);
                         });
-                        query = BuildContainer(query, queryClause);
+                        query = BuildContainer(query, exactMatchClause);
+
+                        //Uncomment to resolve Prindiville Prestige Ltd from Prindiville Prestige
+                        /*var prefixClause = q.Prefix(m =>
+                        {
+                            m.OnField(f => f.EmployerName).Value(parameters.Keywords.ToLower());
+                        });
+                        query = BuildContainer(query, prefixClause);*/
                     }
 
                     queryVacancyLocation =
