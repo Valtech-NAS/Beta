@@ -56,7 +56,7 @@
                 switch (response.Code)
                 {
                     case Codes.ApprenticeshipApplication.Apply.VacancyNotFound:
-                        return new VacancyNotFoundResult();
+                        return new ApprenticeshipNotFoundResult();
                     case Codes.ApprenticeshipApplication.Apply.HasError:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case Codes.ApprenticeshipApplication.Apply.Ok:
@@ -83,7 +83,7 @@
                 switch (response.Code)
                 {
                     case Codes.ApprenticeshipApplication.PreviewAndSubmit.VacancyNotFound:
-                        return new VacancyNotFoundResult();
+                        return new ApprenticeshipNotFoundResult();
                     case Codes.ApprenticeshipApplication.PreviewAndSubmit.IncorrectState:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case Codes.ApprenticeshipApplication.PreviewAndSubmit.Error:
@@ -119,7 +119,7 @@
                 switch (response.Code)
                 {
                     case Codes.ApprenticeshipApplication.Save.VacancyNotFound:
-                        return new VacancyNotFoundResult();
+                        return new ApprenticeshipNotFoundResult();
                     case Codes.ApprenticeshipApplication.Save.Error:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
@@ -218,7 +218,7 @@
                 switch (response.Code)
                 {
                     case Codes.ApprenticeshipApplication.Preview.VacancyNotFound:
-                        return new VacancyNotFoundResult();
+                        return new ApprenticeshipNotFoundResult();
                     case Codes.ApprenticeshipApplication.Preview.HasError:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case Codes.ApprenticeshipApplication.Preview.Ok:
@@ -244,7 +244,7 @@
                 switch (response.Code)
                 {
                     case Codes.ApprenticeshipApplication.Submit.VacancyNotFound:
-                        return new VacancyNotFoundResult();
+                        return new ApprenticeshipNotFoundResult();
                     case Codes.ApprenticeshipApplication.Submit.IncorrectState:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case Codes.ApprenticeshipApplication.Submit.Error:
@@ -271,7 +271,7 @@
                 switch (response.Code)
                 {
                     case Codes.ApprenticeshipApplication.WhatHappensNext.VacancyNotFound:
-                        return new VacancyNotFoundResult();
+                        return new ApprenticeshipNotFoundResult();
                     case Codes.ApprenticeshipApplication.WhatHappensNext.Ok:
                         return View(response.ViewModel);
                 }

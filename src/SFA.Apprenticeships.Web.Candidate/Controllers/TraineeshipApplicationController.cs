@@ -121,8 +121,7 @@
                 switch (response.Code)
                 {
                     case Codes.TraineeshipApplication.WhatHappensNext.VacancyNotFound:
-                        // TODO: change to something specific to traineeships?
-                        return new VacancyNotFoundResult();
+                        return new TraineeshipNotFoundResult();
                     case Codes.TraineeshipApplication.WhatHappensNext.Ok:
                         return View(response.ViewModel);
                 }

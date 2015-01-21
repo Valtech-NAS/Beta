@@ -313,6 +313,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ApprenticeshipSearchValidation.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\TraineeshipSearch\VacancyNotFound.feature.cs">
+      <DependentUpon>VacancyNotFound.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Generators\EmailGenerator.cs" />
     <Compile Include="Hooks\BeforeAllScenarios.cs" />
     <Compile Include="IoC\WebTestRegistry.cs" />
@@ -328,12 +333,13 @@
     <Compile Include="Pages\Gds\GdsStartPage.cs" />
     <Compile Include="Pages\TraineeshipApplication\TraineeshipWhatsNextPage.cs" />
     <Compile Include="Pages\TraineeshipApplication\TraineeshipApplicationPage.cs" />
+    <Compile Include="Pages\TraineeshipSearch\TraineeshipVacancyNotFound.cs" />
     <Compile Include="Pages\TraineeshipSearch\TraineeshipDetailsPage.cs" />
     <Compile Include="Pages\TraineeshipSearch\TraineeshipSearchResultsItem.cs" />
     <Compile Include="Pages\TraineeshipSearch\TraineeshipSearchPage.cs" />
     <Compile Include="Pages\TraineeshipSearch\TraineeshipSearchResultPage.cs" />
     <Compile Include="Pages\Traineeship\Overview.cs" />
-    <Compile Include="Pages\VacancyNotFound.cs" />
+    <Compile Include="Pages\ApprenticeshipSearch\ApprenticeshipVacancyNotFound.cs" />
     <Compile Include="Pages\Registration\ResetPasswordPage.cs" />
     <Compile Include="Pages\Registration\ForgottenPasswordPage.cs" />
     <Compile Include="Pages\Login\UnlockPage.cs" />
@@ -510,6 +516,10 @@
     <None Include="Features\ApprenticeshipSearch\ApprenticeshipSearchValidation.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ApprenticeshipSearchValidation.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\TraineeshipSearch\VacancyNotFound.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>VacancyNotFound.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>

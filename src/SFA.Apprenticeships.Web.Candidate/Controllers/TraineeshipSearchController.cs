@@ -110,7 +110,7 @@
                 switch (response.Code)
                 {
                     case Codes.TraineeshipSearch.Details.VacancyNotFound:
-                        return new VacancyNotFoundResult();
+                        return new TraineeshipNotFoundResult();
 
                     case Codes.TraineeshipSearch.Details.VacancyHasError:
                         ModelState.Clear();

@@ -1,17 +1,17 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages
+﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.TraineeshipSearch
 {
-    using global::SpecBind.Pages;
     using OpenQA.Selenium;
+    using SpecBind.Pages;
 
-    [PageNavigation("/apprenticeship/[0-9]+")]
+    [PageNavigation("/traineeship/[0-9]+")]
     [PageAlias("Error")]
-    public class VacancyNotFound
+    public class TraineeshipVacancyNotFound
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HomePage" /> class by using the provided parent control.
         /// </summary>
         /// <param name="context">The <see cref="ISearchContext" /> that contains this control.</param>
-        public VacancyNotFound(ISearchContext context)
+        public TraineeshipVacancyNotFound(ISearchContext context)
         {
         }
 
