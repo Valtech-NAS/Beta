@@ -46,13 +46,6 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                //TODO: DFSW Can we remove model state manipulation entirely? Where are these used?
-                if ((model.LocationType == ApprenticeshipLocationType.NonNational && model.SortType == VacancySortType.Relevancy && string.IsNullOrWhiteSpace(model.Keywords)) ||
-                    (model.LocationType == ApprenticeshipLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) && model.SortType != VacancySortType.ClosingDate))
-                {
-                    ModelState.Remove("SortType");
-                }
-
                 ViewBag.SearchReturnUrl = (Request != null && Request.Url != null) ? Request.Url.PathAndQuery : null;
 
                 var response = _apprenticeshipSearchMediator.Results(model);
@@ -73,6 +66,7 @@
                         ModelState.Remove("Location");
                         ModelState.Remove("Latitude");
                         ModelState.Remove("Longitude");
+                        ModelState.Remove("SortType");
                         return View(response.ViewModel);
                 }
 

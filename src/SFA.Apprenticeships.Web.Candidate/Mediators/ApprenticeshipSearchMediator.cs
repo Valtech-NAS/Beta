@@ -103,15 +103,7 @@
                 model.LocationType = ApprenticeshipLocationType.NonNational;
             }
 
-            if (model.LocationType == ApprenticeshipLocationType.NonNational && model.SortType == VacancySortType.Relevancy && string.IsNullOrWhiteSpace(model.Keywords))
-            {
-                model.SortType = VacancySortType.Distance;
-            }
-
-            if (model.LocationType == ApprenticeshipLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) && model.SortType != VacancySortType.ClosingDate)
-            {
-                model.SortType = VacancySortType.ClosingDate;
-            }
+            PopulateSortType(model);
 
             model.Distances = GetDistances(model.WithinDistance);
             model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
@@ -192,6 +184,26 @@
             results.VacancySearch.SortTypes = GetSortTypes(model.SortType, model.Keywords, isLocalLocationType);
 
             return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.Ok, results);
+        }
+
+        private static void PopulateSortType(ApprenticeshipSearchViewModel model)
+        {
+            if (model.LocationType == ApprenticeshipLocationType.NonNational && model.SortType == VacancySortType.Relevancy &&
+                string.IsNullOrWhiteSpace(model.Keywords))
+            {
+                model.SortType = VacancySortType.Distance;
+            }
+
+            if (model.LocationType == ApprenticeshipLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) &&
+                model.SortType != VacancySortType.ClosingDate)
+            {
+                model.SortType = VacancySortType.ClosingDate;
+            }
+
+            if (model.SearchAction == SearchAction.Search && !string.IsNullOrWhiteSpace(model.Keywords))
+            {
+                model.SortType = VacancySortType.Relevancy;
+            }
         }
 
         public MediatorResponse<VacancyDetailViewModel> Details(int vacancyId, Guid? candidateId)

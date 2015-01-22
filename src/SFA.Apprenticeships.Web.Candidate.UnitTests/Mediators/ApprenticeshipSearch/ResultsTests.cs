@@ -15,6 +15,7 @@
     [TestFixture]
     public class ResultsTests : TestsBase
     {
+        private const string AKeyword = "A keyword";
         private const string ACityWithOneSuggestedLocation = "London";
         private const string ACityWithoutSuggestedLocations = "Liverpool";
         private const string SomeErrorMessage = "SomeErrorMessage";
@@ -283,6 +284,46 @@
             var response = Mediator.Results(searchViewModel);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Results.ExactMatchFound, false, true);
+        }
+
+        [Test]
+        public void NewSearchWithKeywords()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = ACityWithOneSuggestedLocation,
+                LocationType = ApprenticeshipLocationType.NonNational,
+                SortType = VacancySortType.Distance,
+                SearchAction = SearchAction.Search,
+                Keywords = AKeyword
+            };
+
+            var response = Mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+
+            response.ViewModel.VacancySearch.SortType.Should().Be(VacancySortType.Relevancy);
+        }
+
+        [Test]
+        public void SortWithKeywords()
+        {
+            const VacancySortType originalSortType = VacancySortType.Distance;
+
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = ACityWithOneSuggestedLocation,
+                LocationType = ApprenticeshipLocationType.NonNational,
+                SortType = originalSortType,
+                SearchAction = SearchAction.Sort,
+                Keywords = AKeyword
+            };
+
+            var response = Mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+
+            response.ViewModel.VacancySearch.SortType.Should().Be(originalSortType);
         }
     }
 }
