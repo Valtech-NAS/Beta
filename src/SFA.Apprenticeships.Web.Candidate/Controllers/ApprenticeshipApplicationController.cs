@@ -33,6 +33,7 @@
                 switch (response.Code)
                 {
                     case Codes.ApprenticeshipApplication.Resume.HasError:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case Codes.ApprenticeshipApplication.Resume.Ok:
                         return RedirectToAction("Apply", response.Parameters);
