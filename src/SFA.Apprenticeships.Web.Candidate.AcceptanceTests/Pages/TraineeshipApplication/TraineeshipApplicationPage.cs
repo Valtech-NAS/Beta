@@ -2,10 +2,9 @@
 {
     using System.Globalization;
     using System.Linq;
+    using Application.SummaryItems;
+    using ApprenticeshipApplication;
     using OpenQA.Selenium;
-    using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application;
-    using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application.SummaryItems;
-    using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.ApprenticeshipApplication;
     using SpecBind.Pages;
     using SpecBind.Selenium;
 
@@ -13,14 +12,13 @@
     [PageAlias("TraineeshipApplicationPage")]
     public class TraineeshipApplicationPage : BaseValidationPage
     {
-        private IElementList<IWebElement, TraineeshipQualificationTypeDropdownItem> _qualificationTypeDropdown;
-
         public TraineeshipApplicationPage(ISearchContext context)
             : base(context)
         {
         }
 
         #region Save and apply
+
         [ElementLocator(Id = "applicationSavedTopMessage")]
         public IWebElement ApplicationSavedMessage { get; set; }
 
@@ -29,6 +27,7 @@
 
         [ElementLocator(Id = "save-button")]
         public IWebElement SaveButton { get; set; }
+
         #endregion
 
         #region General information
@@ -83,6 +82,7 @@
 
         [ElementLocator(Id = "Address")]
         public IWebElement Address { get; set; }
+
         #endregion
 
         #region Qualifications
@@ -99,11 +99,8 @@
         [ElementLocator(Id = "saveQualification")]
         public IWebElement SaveQualification { get; set; }
 
-        [ElementLocator(Id="qual-type")]
-        public IElementList<IWebElement, TraineeshipQualificationTypeDropdownItem> QualificationTypeDropdown
-        {
-            get { return _qualificationTypeDropdown; }
-            set { _qualificationTypeDropdown = value; }
+        [ElementLocator(Id = "qual-type")]
+        public IElementList<IWebElement, TraineeshipQualificationTypeDropdownItem> QualificationTypeDropdown { get; set;
         }
 
         [ElementLocator(Id = "subject-year")]
@@ -121,14 +118,7 @@
         [ElementLocator(Id = "qualifications-summary")]
         public IElementList<IWebElement, QualificationSummaryItem> QualificationsSummaryItems { get; set; }
 
-        public string QualificationsSummaryCount
-        {
-            get { 
-                return QualificationsSummaryItems.Count().ToString(CultureInfo.InvariantCulture); 
-            }
-        }
-
-        [ElementLocator(Class="field-validation-error")]
+        [ElementLocator(Class = "field-validation-error")]
         public IWebElement FieldValidationError { get; set; }
 
         #endregion
@@ -167,10 +157,7 @@
 
         public string WorkExperiencesCount
         {
-            get
-            {
-                return WorkExperienceSummaryItems.Count().ToString(CultureInfo.InvariantCulture);
-            }
+            get { return WorkExperienceSummaryItems.Count().ToString(CultureInfo.InvariantCulture); }
         }
 
         [ElementLocator(Id = "qualifications-panel")]
@@ -178,10 +165,7 @@
 
         public string QualificationsValidationErrorsCount
         {
-            get
-            {
-                return QualificationsPanel.ValidationErrorsCount;
-            }
+            get { return QualificationsPanel.ValidationErrorsCount; }
         }
 
         [ElementLocator(Id = "workexperience-panel")]
@@ -189,10 +173,7 @@
 
         public string WorkExperienceValidationErrorsCount
         {
-            get
-            {
-                return WorkExperiencePanel.ValidationErrorsCount;
-            }
+            get { return WorkExperiencePanel.ValidationErrorsCount; }
         }
 
         #endregion
@@ -207,13 +188,13 @@
         }
     }
 
-    
+
     public class TraineeshipWorkExperiencePanel : WebElement
     {
         public TraineeshipWorkExperiencePanel(ISearchContext parent) : base(parent)
         {
         }
-    
+
         public string ValidationErrorsCount
         {
             get
