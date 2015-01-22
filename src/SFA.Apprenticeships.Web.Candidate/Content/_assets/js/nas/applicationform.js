@@ -207,7 +207,7 @@
             pattern: {
                 message: validationMessageQualificationYearMustBeARange,
                 params: self.yearRegexPattern,
-                onlyIf: function () { return (self.predicted() === false); }
+                onlyIf: function () { return (self.predicted() === false && self.yearValidationActivated() === true); }
             }
         });
 
@@ -228,6 +228,8 @@
             }
         });
         self.predicted = ko.observable(false);
+
+        self.yearValidationActivated = ko.observable(false);
 
         self.qualifications = ko.observableArray();
 
@@ -257,6 +259,7 @@
         };
 
         self.addQualification = function () {
+            self.yearValidationActivated(true);
 
             if (self.errors().length == 0) {
 
@@ -280,6 +283,7 @@
 
                 self.errors.showAllMessages(false);
                 $("#qualification-save-warning").addClass("hidden");
+                self.yearValidationActivated(false);
             } else {
                 self.errors.showAllMessages();
                 $('#qualAddConfirmText').text('There has been a problem adding this qualification, check errors above');
