@@ -183,6 +183,7 @@
     <Compile Include="Attributes\AuthenticateUserAttribute.cs" />
     <Compile Include="Attributes\CookiesEnabledAttribute.cs" />
     <Compile Include="Attributes\NoCacheAttribute.cs" />
+    <Compile Include="Attributes\PlannedOutageMessageAttribute.cs" />
     <Compile Include="Attributes\SessionTimeoutAttribute.cs" />
     <Compile Include="Attributes\AllowReturnUrlAttribute.cs" />
     <Compile Include="Binders\TrimModelBinder.cs" />
@@ -212,9 +213,11 @@
     <Compile Include="Modules\RemoveETagModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CookieDetectionProvider.cs" />
+    <Compile Include="Providers\DismissPlannedOutageMessageCookieProvider.cs" />
     <Compile Include="Providers\EntityContext.cs" />
     <Compile Include="Providers\EuCookieDirectiveProvider.cs" />
     <Compile Include="Providers\ICookieDetectionProvider.cs" />
+    <Compile Include="Providers\IDismissPlannedOutageMessageCookieProvider.cs" />
     <Compile Include="Providers\IEuCookieDirectiveProvider.cs" />
     <Compile Include="Providers\IUserDataProvider.cs" />
     <Compile Include="Providers\UserContext.cs" />
@@ -239,6 +242,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
+      <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
+      <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

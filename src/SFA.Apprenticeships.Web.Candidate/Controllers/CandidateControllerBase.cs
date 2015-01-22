@@ -11,7 +11,7 @@
     using NLog;
     using Providers;
 
-    [SessionTimeout, CookiesEnabled, AllowReturnUrl(Allow = true), ClearSearchReturnUrl]
+    [SessionTimeout, CookiesEnabled, AllowReturnUrl(Allow = true), ClearSearchReturnUrl, PlannedOutageMessage]
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)

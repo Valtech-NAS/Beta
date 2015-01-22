@@ -1,10 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System.Globalization;
+    using System.Net;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using Attributes;
     using Common.Constants;
+    using Common.Providers;
     using Constants;
     using Constants.Pages;
     using FluentValidation.Mvc;
@@ -15,10 +17,12 @@
     public class AccountController : CandidateControllerBase
     {
         private readonly IAccountMediator _accountMediator;
+        private readonly IDismissPlannedOutageMessageCookieProvider _dismissPlannedOutageMessageCookieProvider;
 
-        public AccountController(IAccountMediator accountMediator)
+        public AccountController(IAccountMediator accountMediator, IDismissPlannedOutageMessageCookieProvider dismissPlannedOutageMessageCookieProvider)
         {
             _accountMediator = accountMediator;
+            _dismissPlannedOutageMessageCookieProvider = dismissPlannedOutageMessageCookieProvider;
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -124,6 +128,28 @@
                 }
 
                 return RedirectToRoute(CandidateRouteNames.MyApplications);
+            });
+        }
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
+        public async Task<ActionResult> DismissPlannedOutageMessage(bool isJavascript)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                _dismissPlannedOutageMessageCookieProvider.SetCookie(HttpContext);
+
+                if (isJavascript)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                }
+
+                if (Request.UrlReferrer != null)
+                {
+                    return Redirect(Request.UrlReferrer.ToString());
+                }
+
+                return RedirectToRoute(RouteNames.SignIn);
             });
         }
 

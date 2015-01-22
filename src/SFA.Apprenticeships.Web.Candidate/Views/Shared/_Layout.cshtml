@@ -36,6 +36,15 @@
             </div>
         </div>
     }
+    
+    @if (!string.IsNullOrEmpty(ViewBag.PlannedOutageMessage))
+    {
+        <div id="planned-outage-message" class="cookie-banner">
+            <div class="content-container" role="alert">
+                <span class="copy-16">@Html.Raw(ViewBag.PlannedOutageMessage) <a href="@Url.Action("DismissPlannedOutageMessage", "Account", new { isJavascript = false })" class="notInterested link-unimp icon-black"><i id="dismiss-planned-outage-message" class="copy-16 fa fa-times-circle"></i></a></span>
+            </div>
+        </div>
+    }
 
     <div class="skiplink-container">
         <div>
@@ -143,6 +152,24 @@
             e.type = "text/javascript";
             document.getElementsByTagName("head")[0].appendChild(e);
         }
+
+        $(function () {
+            $("#dismiss-planned-outage-message").click(function (event) {
+
+                event.preventDefault();
+
+                var request = $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("DismissPlannedOutageMessage", "Account", new { isJavascript = true })'
+                });
+
+                request.done(function () {
+
+                    $("#planned-outage-message").hide();
+
+                });
+            });
+        });
     </script>    
 
     @Scripts.Render("~/bundles/nascript")

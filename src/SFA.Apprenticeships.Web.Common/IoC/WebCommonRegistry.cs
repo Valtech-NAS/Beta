@@ -29,6 +29,7 @@
                 x.For<IUserDataProvider>().Use<CookieUserDataProvider>();
                 x.For<IEuCookieDirectiveProvider>().Use<EuCookieDirectiveProvider>();
                 x.For<ICookieDetectionProvider>().Use<CookieDetectionProvider>();
+                x.For<IDismissPlannedOutageMessageCookieProvider>().Use<DismissPlannedOutageMessageCookieProvider>();
             });
 
             // Set the MVC/WebApi dependency resolver.
