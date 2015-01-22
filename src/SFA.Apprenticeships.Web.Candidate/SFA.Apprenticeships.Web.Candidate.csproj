@@ -368,6 +368,8 @@
     <Content Include="Views\TraineeshipSearch\Details.cshtml" />
     <Content Include="Views\TraineeshipSearch\_Apply.cshtml" />
     <Content Include="Views\Shared\_Scripts.cshtml" />
+    <Content Include="Views\Account\Terms.cshtml" />
+    <Content Include="Views\Shared\_TermsAndConditions.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -458,6 +460,7 @@
     <Compile Include="Constants\Pages\LoginPageMessages.cs" />
     <Compile Include="Constants\Pages\ApprenticeshipVacancyDetailPageMessages.cs" />
     <Compile Include="Constants\Pages\VacancySearchResultsPageMessages.cs" />
+    <Compile Include="Constants\Settings.cs" />
     <Compile Include="Constants\ViewModels\AddressSearchResult.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\TraineeshipSearchViewModelMessages.cs" />

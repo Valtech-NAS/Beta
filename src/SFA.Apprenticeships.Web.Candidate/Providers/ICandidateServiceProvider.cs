@@ -2,11 +2,10 @@
 {
     using System;
     using Domain.Entities.Applications;
-    using Domain.Entities.Users;
     using Domain.Entities.Candidates;
     using ViewModels.Login;
     using ViewModels.Register;
-    using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
+    using Constants.ViewModels;
 
     public interface ICandidateServiceProvider
     {
@@ -23,5 +22,6 @@
         bool ResendActivationCode(string username);
         Candidate GetCandidate(string username);
         Candidate GetCandidate(Guid candidateId);
+        bool AcceptTermsAndConditions(Guid candidateId, string currentVersion);
     }
 }

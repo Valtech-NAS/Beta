@@ -8,6 +8,7 @@
     using Common.Services;
     using Constants;
     using Constants.Pages;
+    using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Register;
@@ -17,17 +18,20 @@
     public class RegisterController : CandidateControllerBase
     {
         private readonly IRegisterMediator _registerMediator;
-        
+        private readonly IConfigurationManager _configurationManager;
+
         private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
 
         public RegisterController(ICandidateServiceProvider candidateServiceProvider,
             IAuthenticationTicketService authenticationTicketService,
-            IRegisterMediator registerMediator)
+            IRegisterMediator registerMediator,
+            IConfigurationManager configurationManager)
         {
             _authenticationTicketService = authenticationTicketService;
             _candidateServiceProvider = candidateServiceProvider;
             _registerMediator = registerMediator;
+            _configurationManager = configurationManager;
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
@@ -59,7 +63,7 @@
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(model);
                     case Codes.RegisterMediatorCodes.Register.SuccessfullyRegistered:
-                        UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname);
+                        UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname, _configurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion));
                         return RedirectToAction("Activation");
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
@@ -285,7 +289,9 @@
             //todo: refactor - similar to stuff in login controller... move to ILoginServiceProvider
             //todo: test this
             _authenticationTicketService.SetAuthenticationCookie(HttpContext.Response.Cookies, candidate.EntityId.ToString(), UserRoleNames.Activated);
-            UserData.SetUserContext(candidate.RegistrationDetails.EmailAddress, candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName);
+            UserData.SetUserContext(candidate.RegistrationDetails.EmailAddress,
+                candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
+                candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion);
 
             // ReturnUrl takes precedence over last view vacnacy id.
             var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);

@@ -6,7 +6,7 @@
     {
         UserContext GetUserContext();
 
-        void SetUserContext(string userName, string fullName);
+        void SetUserContext(string userName, string fullName, string acceptedTermsAndConditionsVersion);
 
         void Clear();
 

@@ -20,5 +20,7 @@
         public UserStatuses UserStatus { get; set; }
 
         public bool IsAuthenticated { get; set; }
+
+        public string AcceptedTermsAndConditionsVersion { get; set; }
     }
 }

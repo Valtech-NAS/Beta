@@ -19,5 +19,7 @@
         MediatorResponse<SettingsViewModel> Settings(Guid candidateId, SettingsViewModel settingsViewModel);
 
         MediatorResponse Track(Guid candidateId, int vacancyId);
+
+        MediatorResponse AcceptTermsAndConditions(Guid candidateId);
     }
 }

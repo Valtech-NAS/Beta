@@ -4,5 +4,6 @@
     {
         public const string SignIn = "SignIn";
         public const string SignOut = "SignOut";
+        public const string UpdatedTermsAndConditions = "UpdatedTermsAndConditions";
     }
 }

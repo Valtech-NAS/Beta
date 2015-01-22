@@ -13,6 +13,7 @@
                 public const string ApprenticeshipApply = "Login.Index.ApprenticeshipApply";
                 public const string ApprenticeshipDetails = "Login.Index.ApprenticeshipDetails";
                 public const string LoginFailed = "Login.Index.LoginFailed";
+                public const string TermsAndConditionsNeedAccepted = "Login.Index.TermsAndConditionsNeedAccepted";
                 public const string Ok = "Login.Index.Ok";
             }
 

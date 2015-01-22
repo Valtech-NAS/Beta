@@ -3,23 +3,24 @@
     using System;
     using System.Linq;
     using System.Web;
+    using Common.Providers;
     using NLog;
-    using SFA.Apprenticeships.Application.Interfaces.Candidates;
-    using SFA.Apprenticeships.Application.Interfaces.Users;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Domain.Entities.Candidates;
-    using SFA.Apprenticeships.Domain.Entities.Exceptions;
-    using SFA.Apprenticeships.Domain.Entities.Users;
-    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-    using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-    using SFA.Apprenticeships.Infrastructure.PerformanceCounters;
-    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
-    using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Login;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
-    using SFA.Apprenticeships.Web.Common.Constants;
-    using SFA.Apprenticeships.Web.Common.Services;
-    using ErrorCodes = SFA.Apprenticeships.Domain.Entities.Exceptions.ErrorCodes;
+    using Application.Interfaces.Candidates;
+    using Application.Interfaces.Users;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
+    using Domain.Entities.Users;
+    using Domain.Interfaces.Configuration;
+    using Domain.Interfaces.Mapping;
+    using Infrastructure.PerformanceCounters;
+    using Constants.Pages;
+    using Constants.ViewModels;
+    using ViewModels.Login;
+    using ViewModels.Register;
+    using Common.Constants;
+    using Common.Services;
+    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
 
     public class CandidateServiceProvider : ICandidateServiceProvider
     {
@@ -35,10 +36,12 @@
         private readonly IMapper _mapper;
         private readonly IPerformanceCounterService _performanceCounterService;
         private readonly IUserAccountService _userAccountService;
+        private readonly IUserDataProvider _userDataProvider;
 
         public CandidateServiceProvider(
             ICandidateService candidateService,
             IUserAccountService userAccountService,
+            IUserDataProvider userDataProvider,
             IAuthenticationTicketService authenticationTicketService,
             IMapper mapper,
             HttpContextBase httpContext,
@@ -47,6 +50,7 @@
         {
             _candidateService = candidateService;
             _userAccountService = userAccountService;
+            _userDataProvider = userDataProvider;
             _authenticationTicketService = authenticationTicketService;
             _mapper = mapper;
             _httpContext = httpContext;
@@ -234,10 +238,10 @@
                     return new LoginResultViewModel
                     {
                         EmailAddress = candidate.RegistrationDetails.EmailAddress,
-                        FullName =
-                            candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
+                        FullName = candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
                         UserStatus = userStatusViewModel.UserStatus,
-                        IsAuthenticated = true
+                        IsAuthenticated = true,
+                        AcceptedTermsAndConditionsVersion = candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion
                     };
                 }
 
@@ -462,6 +466,23 @@
                 var message = string.Format("GetCandidate for user with Id={0} failed.", candidateId);
                 Logger.Error(message, e);
                 throw;
+            }
+        }
+
+        public bool AcceptTermsAndConditions(Guid candidateId, string currentVersion)
+        {
+            try
+            {
+                var candidate = _candidateService.GetCandidate(candidateId);
+                candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = currentVersion;
+                _candidateService.SaveCandidate(candidate);
+                _userDataProvider.SetUserContext(candidate.RegistrationDetails.EmailAddress, candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName, currentVersion);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error updating terms and conditions version", ex);
+                return false;
             }
         }
 

@@ -5,9 +5,15 @@
     using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
+    using Constants;
+    using Domain.Interfaces.Configuration;
+    using StructureMap.Attributes;
 
     public class AuthorizeCandidateAttribute : AuthorizeAttribute
     {
+        [SetterProperty]
+        public IConfigurationManager ConfigurationManager { get; set; }
+
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             base.OnAuthorization(filterContext);
@@ -27,6 +33,16 @@
             {
                 //Current session is invalid. Force user to log in again.
                 OnSessionExpired(filterContext);
+            }
+            else if (
+                !filterContext.RequestContext.HttpContext.Request.Path.ToLower().StartsWith("/updatedtermsandconditions") &&
+                userContext.AcceptedTermsAndConditionsVersion != ConfigurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion))
+            {
+                var routeValues = new RouteValueDictionary
+                {
+                    {"ReturnUrl", filterContext.RequestContext.HttpContext.Request.Path}
+                };
+                filterContext.Result = new RedirectToRouteResult(RouteNames.UpdatedTermsAndConditions, routeValues);
             }
         }
 
@@ -85,7 +101,6 @@
 
             filterContext.Result = new RedirectToRouteResult(routeValues);
         }
-
 
         private static string GetReturnUrl(AuthorizationContext filterContext)
         {

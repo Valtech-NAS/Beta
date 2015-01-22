@@ -9,6 +9,7 @@
         private const string UserContextCookieName = "User.Context";
         private const string UserNameCookieName = "User.UserName";
         private const string FullNameCookieName = "User.FullName";
+        private const string AcceptedTermsAndConditionsVersion = "User.TermsConditionsVersion";
 
         private readonly HttpContextBase _httpContext;
         private readonly HttpCookie _httpDataCookie;
@@ -28,16 +29,18 @@
                 : new UserContext
                 {
                     UserName = cookie.Values[UserNameCookieName],
-                    FullName = cookie.Values[FullNameCookieName]
+                    FullName = cookie.Values[FullNameCookieName],
+                    AcceptedTermsAndConditionsVersion = cookie.Values[AcceptedTermsAndConditionsVersion]
                 };
         }
 
-        public void SetUserContext(string userName, string fullName)
+        public void SetUserContext(string userName, string fullName, string acceptedTermsAndConditionsVersion)
         {
             var cookie = new HttpCookie(UserContextCookieName);
 
             cookie.Values.Add(UserNameCookieName, userName);
             cookie.Values.Add(FullNameCookieName, fullName);
+            cookie.Values.Add(AcceptedTermsAndConditionsVersion, acceptedTermsAndConditionsVersion);
 
             _httpContext.Response.Cookies.Add(cookie);
         }

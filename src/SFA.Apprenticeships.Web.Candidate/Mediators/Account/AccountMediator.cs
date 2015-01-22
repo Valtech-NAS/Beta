@@ -2,8 +2,10 @@
 {
     using System;
     using Common.Constants;
+    using Common.Providers;
     using Constants.Pages;
     using Domain.Entities.Applications;
+    using Domain.Interfaces.Configuration;
     using Providers;
     using Validators;
     using ViewModels.Account;
@@ -12,17 +14,23 @@
     public class AccountMediator : MediatorBase, IAccountMediator
     {
         private readonly IApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
+        private readonly IConfigurationManager _configurationManager;
         private readonly IAccountProvider _accountProvider;
+        private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly SettingsViewModelServerValidator _settingsViewModelServerValidator;
 
         public AccountMediator(
             IAccountProvider accountProvider,
+            ICandidateServiceProvider candidateServiceProvider,
             SettingsViewModelServerValidator settingsViewModelServerValidator, 
-            IApprenticeshipApplicationProvider apprenticeshipApplicationProvider)
+            IApprenticeshipApplicationProvider apprenticeshipApplicationProvider,
+            IConfigurationManager configurationManager)
         {
             _accountProvider = accountProvider;
+            _candidateServiceProvider = candidateServiceProvider;
             _settingsViewModelServerValidator = settingsViewModelServerValidator;
             _apprenticeshipApplicationProvider = apprenticeshipApplicationProvider;
+            _configurationManager = configurationManager;
         }
 
         public MediatorResponse<MyApplicationsViewModel> Index(Guid candidateId, string deletedVacancyId, string deletedVacancyTitle)
@@ -118,6 +126,31 @@
             }
 
             return GetMediatorResponse(Codes.AccountMediator.Track.SuccessfullyTracked);
+        }
+
+        public MediatorResponse AcceptTermsAndConditions(Guid candidateId)
+        {
+            try
+            {
+                var candidate = _candidateServiceProvider.GetCandidate(candidateId);
+                var currentTsAndCsVersion = _configurationManager.GetAppSetting<string>(Constants.Settings.TermsAndConditionsVersion);
+
+                if (candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion == currentTsAndCsVersion)
+                {
+                    return GetMediatorResponse(Codes.AccountMediator.AcceptTermsAndConditions.AlreadyAccepted);
+                }
+
+                var success = _candidateServiceProvider.AcceptTermsAndConditions(candidateId, currentTsAndCsVersion);
+
+                if (success)
+                {
+                    return GetMediatorResponse(Codes.AccountMediator.AcceptTermsAndConditions.SuccessfullyAccepted);
+                }
+
+            }
+            catch{}
+
+            return GetMediatorResponse(Codes.AccountMediator.AcceptTermsAndConditions.ErrorAccepting);
         }
     }
 }

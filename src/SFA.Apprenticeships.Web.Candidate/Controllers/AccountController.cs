@@ -69,7 +69,7 @@
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
                     case Codes.AccountMediator.Settings.Success:
-                        UserData.SetUserContext(UserContext.UserName, response.ViewModel.Firstname + " " + response.ViewModel.Lastname);
+                        UserData.SetUserContext(UserContext.UserName, response.ViewModel.Firstname + " " + response.ViewModel.Lastname, UserContext.AcceptedTermsAndConditionsVersion);
                         SetUserMessage(AccountPageMessages.SettingsUpdated);
                         return RedirectToRoute(CandidateRouteNames.Settings);
                     default:
@@ -177,6 +177,7 @@
             });
         }
 
+
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ApplyWebTrends]
@@ -197,6 +198,73 @@
                 }
 
                 return RedirectToRoute(CandidateRouteNames.MyApplications);
+            });
+        }
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
+        public async Task<ActionResult> UpdatedTermsAndConditions(string returnUrl)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {                
+                if (!string.IsNullOrEmpty(returnUrl))
+                {
+                    var routeValueDictionary = new {ReturnUrl = returnUrl};
+                    return View("Terms", routeValueDictionary);
+                }
+
+                return View("Terms");
+            });
+        }
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
+        public async Task<ActionResult> AcceptTermsAndConditions(string returnUrl)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                if (UserContext == null)
+                {
+                    //Check needed as AuthorizeCandidate attribute not on action
+                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipSearch);
+                }
+
+                var response = _accountMediator.AcceptTermsAndConditions(UserContext.CandidateId);
+
+                switch (response.Code)
+                {
+                    case Codes.AccountMediator.AcceptTermsAndConditions.SuccessfullyAccepted:
+                    case Codes.AccountMediator.AcceptTermsAndConditions.AlreadyAccepted:
+                        break;
+                    case Codes.AccountMediator.AcceptTermsAndConditions.ErrorAccepting:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        break;
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+
+                if (!string.IsNullOrWhiteSpace(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+
+                return RedirectToRoute(CandidateRouteNames.MyApplications);
+            });
+        }
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
+
+        public async Task<ActionResult> DeclineTermsAndConditions(string returnUrl)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                SetUserMessage(SignOutPageMessages.MustAcceptUpdatedTermsAndConditions, UserMessageLevel.Warning);
+
+                return !string.IsNullOrEmpty(returnUrl)
+                    ? RedirectToRoute(RouteNames.SignOut, new {ReturnUrl = returnUrl})
+                    : RedirectToRoute(RouteNames.SignOut);
             });
         }
     }

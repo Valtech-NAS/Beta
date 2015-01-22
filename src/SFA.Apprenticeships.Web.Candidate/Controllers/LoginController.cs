@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
+    using System.Web.Routing;
     using System.Web.Security;
     using Attributes;
     using Common.Attributes;
@@ -92,6 +93,14 @@
                     case Codes.Login.Index.LoginFailed:
                         ModelState.AddModelError(string.Empty, response.Parameters.ToString());
                         return View(model);
+
+                    case Codes.Login.Index.TermsAndConditionsNeedAccepted:
+                        if (response.Parameters != null)
+                        {
+                            var returnUrl = new { ReturnUrl = HttpUtility.UrlDecode(response.Parameters.ToString())};
+                            return RedirectToRoute(RouteNames.UpdatedTermsAndConditions, returnUrl);
+                        }
+                        return RedirectToRoute(RouteNames.UpdatedTermsAndConditions);
 
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
@@ -188,14 +197,24 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
         [ApplyWebTrends]
-        public ActionResult SignOut()
+        public ActionResult SignOut(string returnUrl)
         {
             FormsAuthentication.SignOut();
-            UserData.Clear();
 
-            SetUserMessage(SignOutPageMessages.SignOutMessageText);
+            if (UserData.Get(UserMessageConstants.WarningMessage) == SignOutPageMessages.MustAcceptUpdatedTermsAndConditions)
+            {
+                UserData.Clear();
+                SetUserMessage(SignOutPageMessages.MustAcceptUpdatedTermsAndConditions, UserMessageLevel.Warning);
+            }
+            else
+            {
+                UserData.Clear();
+                SetUserMessage(SignOutPageMessages.SignOutMessageText);
+            }
 
-            return RedirectToRoute(RouteNames.SignIn);
+            return !string.IsNullOrEmpty(returnUrl)
+                ? RedirectToRoute(RouteNames.SignIn, new {ReturnUrl = returnUrl})
+                : RedirectToRoute(RouteNames.SignIn);
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]

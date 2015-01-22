@@ -8,6 +8,7 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
 
     [TestFixture]
@@ -177,6 +178,26 @@
             var response = Mediator.Index(viewModel);
 
             response.AssertCode(Codes.Login.Index.Ok);
+        }
+
+        [Test]
+        public void TermsAndConditionsVersion()
+        {
+            var viewModel = new LoginViewModel
+            {
+                EmailAddress = ValidEmailAddress,
+                Password = ValidPassword
+            };
+
+            const string returnUrl = "http://return.url.com";
+            ConfigurationManager.Setup(x => x.GetAppSetting<string>(It.IsAny<string>())).Returns("2");
+            UserDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);
+            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { IsAuthenticated = true, AcceptedTermsAndConditionsVersion = "1" });
+
+            var response = Mediator.Index(viewModel);
+
+            response.AssertCode(Codes.Login.Index.TermsAndConditionsNeedAccepted, true);
+            response.Parameters.Should().Be(returnUrl);
         }
     }
 }

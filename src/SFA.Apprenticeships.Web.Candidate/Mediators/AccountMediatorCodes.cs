@@ -41,6 +41,13 @@
                 public const string SuccessfullyTracked = "SuccessfullyTracked";
                 public const string ErrorTracking = "ErrorTracking";
             }
+
+            public class AcceptTermsAndConditions
+            {
+                public const string SuccessfullyAccepted = "SuccessfullyAccepted";
+                public const string AlreadyAccepted = "AlreadyAccepted";
+                public const string ErrorAccepting = "ErrorAccepting";
+            }
         }
     }
 }

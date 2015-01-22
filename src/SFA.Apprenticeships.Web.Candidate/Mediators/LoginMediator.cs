@@ -2,15 +2,18 @@
 {
     using Common.Constants;
     using Common.Providers;
+    using Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Configuration;
     using Providers;
     using Validators;
     using ViewModels.Login;
 
     public class LoginMediator : MediatorBase, ILoginMediator
     {
+        private readonly IConfigurationManager _configurationManager;
         private readonly IUserDataProvider _userDataProvider;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly LoginViewModelServerValidator _loginViewModelServerValidator;
@@ -18,13 +21,16 @@
         private readonly ResendAccountUnlockCodeViewModelServerValidator _resendAccountUnlockCodeViewModelServerValidator;
 
 
-        public LoginMediator(IUserDataProvider userDataProvider, ICandidateServiceProvider candidateServiceProvider,
+        public LoginMediator(IUserDataProvider userDataProvider, 
+            ICandidateServiceProvider candidateServiceProvider,
+            IConfigurationManager configurationManager,
             LoginViewModelServerValidator loginViewModelServerValidator, 
             AccountUnlockViewModelServerValidator accountUnlockViewModelServerValidator,
             ResendAccountUnlockCodeViewModelServerValidator resendAccountUnlockCodeViewModelServerValidator)
         {
             _userDataProvider = userDataProvider;
             _candidateServiceProvider = candidateServiceProvider;
+            _configurationManager = configurationManager;
             _loginViewModelServerValidator = loginViewModelServerValidator;
             _accountUnlockViewModelServerValidator = accountUnlockViewModelServerValidator;
             _resendAccountUnlockCodeViewModelServerValidator = resendAccountUnlockCodeViewModelServerValidator;
@@ -50,7 +56,7 @@
 
             if (result.IsAuthenticated)
             {
-                _userDataProvider.SetUserContext(result.EmailAddress, result.FullName);
+                _userDataProvider.SetUserContext(result.EmailAddress, result.FullName, result.AcceptedTermsAndConditionsVersion);
 
                 if (result.UserStatus == UserStatuses.PendingActivation)
                 {
@@ -58,15 +64,15 @@
                 }
 
                 // Redirect to session return URL (if any).
-                var sessionReturnUrl = _userDataProvider.Pop(UserDataItemNames.SessionReturnUrl);
+                var returnUrl = _userDataProvider.Pop(UserDataItemNames.SessionReturnUrl) ??
+                                       _userDataProvider.Pop(UserDataItemNames.ReturnUrl);
 
-                if (!string.IsNullOrWhiteSpace(sessionReturnUrl))
+                if (result.AcceptedTermsAndConditionsVersion != _configurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion))
                 {
-                    return GetMediatorResponse(Codes.Login.Index.ReturnUrl, parameters: sessionReturnUrl);
+                    return !string.IsNullOrEmpty(returnUrl)
+                        ? GetMediatorResponse(Codes.Login.Index.TermsAndConditionsNeedAccepted, parameters: returnUrl)
+                        : GetMediatorResponse(Codes.Login.Index.TermsAndConditionsNeedAccepted);
                 }
-
-                // Redirect to return URL (if any).
-                var returnUrl = _userDataProvider.Pop(UserDataItemNames.ReturnUrl);
 
                 if (!string.IsNullOrWhiteSpace(returnUrl))
                 {

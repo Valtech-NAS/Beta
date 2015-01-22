@@ -33,5 +33,7 @@
         }
 
         public string PhoneNumber { get; set; }
+
+        public string AcceptedTermsAndConditionsVersion { get; set; }
     }
 }
