@@ -434,6 +434,290 @@ this.FeatureBackground();
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("As a candidate applying for a traineeship I want to know that I have to add when " +
+            "recording qualifications")]
+        [NUnit.Framework.CategoryAttribute("US687")]
+        public virtual void AsACandidateApplyingForATraineeshipIWantToKnowThatIHaveToAddWhenRecordingQualifications()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate applying for a traineeship I want to know that I have to add when " +
+                    "recording qualifications", new string[] {
+                        "US687"});
+#line 132
+this.ScenarioSetup(scenarioInfo);
+#line 7
+this.FeatureBackground();
+#line 133
+ testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 134
+ testRunner.When("I select the \"first\" traineeship vacancy in location \"N7 8LS\" that can apply by t" +
+                    "his website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 135
+ testRunner.Then("I am on the TraineeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 136
+ testRunner.When("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 137
+ testRunner.Then("I am on the TraineeshipApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 138
+ testRunner.When("I choose QualificationsYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table17.AddRow(new string[] {
+                        "QualificationSaveWarning",
+                        "Does Not Exist",
+                        ""});
+#line 139
+ testRunner.Then("I see", ((string)(null)), table17, "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table18.AddRow(new string[] {
+                        "Text",
+                        "Equals",
+                        "GCSE"});
+#line 142
+ testRunner.When("I am on QualificationTypeDropdown list item matching criteria", ((string)(null)), table18, "When ");
+#line 145
+ testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 146
+ testRunner.And("I am on the TraineeshipApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table19.AddRow(new string[] {
+                        "SubjectName",
+                        "SubjectName"});
+            table19.AddRow(new string[] {
+                        "SubjectYear",
+                        "2012"});
+#line 147
+ testRunner.When("I enter data", ((string)(null)), table19, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table20.AddRow(new string[] {
+                        "QualificationSaveWarning",
+                        "Exists",
+                        ""});
+#line 151
+ testRunner.Then("I see", ((string)(null)), table20, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("As a candidate applying for a traineeship I dont want to see the qualifications w" +
+            "arning after adding a qualification")]
+        [NUnit.Framework.CategoryAttribute("US687")]
+        public virtual void AsACandidateApplyingForATraineeshipIDontWantToSeeTheQualificationsWarningAfterAddingAQualification()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate applying for a traineeship I dont want to see the qualifications w" +
+                    "arning after adding a qualification", new string[] {
+                        "US687"});
+#line 156
+this.ScenarioSetup(scenarioInfo);
+#line 7
+this.FeatureBackground();
+#line 157
+testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 158
+ testRunner.When("I select the \"first\" traineeship vacancy in location \"N7 8LS\" that can apply by t" +
+                    "his website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 159
+ testRunner.Then("I am on the TraineeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 160
+ testRunner.When("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 161
+ testRunner.Then("I am on the TraineeshipApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 162
+ testRunner.When("I choose QualificationsYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table21.AddRow(new string[] {
+                        "Text",
+                        "Equals",
+                        "GCSE"});
+#line 163
+ testRunner.When("I am on QualificationTypeDropdown list item matching criteria", ((string)(null)), table21, "When ");
+#line 166
+ testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 167
+ testRunner.And("I am on the TraineeshipApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table22.AddRow(new string[] {
+                        "SubjectYear",
+                        "2012"});
+            table22.AddRow(new string[] {
+                        "SubjectName",
+                        "SubjectName"});
+            table22.AddRow(new string[] {
+                        "SubjectGrade",
+                        "SubjectGrade"});
+#line 168
+ testRunner.When("I enter data", ((string)(null)), table22, "When ");
+#line 173
+ testRunner.And("I am on the TraineeshipApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 174
+ testRunner.And("I choose SaveQualification", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 175
+ testRunner.And("I wait for 3 seconds to see QualificationsSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table23.AddRow(new string[] {
+                        "QualificationSaveWarning",
+                        "Does Not Exist",
+                        ""});
+#line 176
+ testRunner.Then("I see", ((string)(null)), table23, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("As a candidate applying for a traineeship I want to know that I have to add when " +
+            "recording work experience")]
+        [NUnit.Framework.CategoryAttribute("US687")]
+        public virtual void AsACandidateApplyingForATraineeshipIWantToKnowThatIHaveToAddWhenRecordingWorkExperience()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate applying for a traineeship I want to know that I have to add when " +
+                    "recording work experience", new string[] {
+                        "US687"});
+#line 181
+this.ScenarioSetup(scenarioInfo);
+#line 7
+this.FeatureBackground();
+#line 182
+ testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 183
+ testRunner.When("I select the \"first\" traineeship vacancy in location \"N7 8LS\" that can apply by t" +
+                    "his website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 184
+ testRunner.Then("I am on the TraineeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 185
+ testRunner.When("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 186
+ testRunner.Then("I am on the TraineeshipApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 187
+ testRunner.When("I choose WorkExperienceYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table24.AddRow(new string[] {
+                        "WorkExperienceSaveWarning",
+                        "Does Not Exist",
+                        ""});
+#line 188
+ testRunner.Then("I see", ((string)(null)), table24, "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table25.AddRow(new string[] {
+                        "WorkEmployer",
+                        "WorkEmployer"});
+            table25.AddRow(new string[] {
+                        "WorkTitle",
+                        "WorkTitle"});
+#line 191
+ testRunner.When("I enter data", ((string)(null)), table25, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table26.AddRow(new string[] {
+                        "WorkExperienceSaveWarning",
+                        "Exists",
+                        ""});
+#line 195
+ testRunner.Then("I see", ((string)(null)), table26, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("As a candidate applying for a traineeship I dont want to see the work experience " +
+            "warning after adding a work experience")]
+        [NUnit.Framework.CategoryAttribute("US687")]
+        public virtual void AsACandidateApplyingForATraineeshipIDontWantToSeeTheWorkExperienceWarningAfterAddingAWorkExperience()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate applying for a traineeship I dont want to see the work experience " +
+                    "warning after adding a work experience", new string[] {
+                        "US687"});
+#line 200
+this.ScenarioSetup(scenarioInfo);
+#line 7
+this.FeatureBackground();
+#line 201
+ testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 202
+ testRunner.When("I select the \"first\" traineeship vacancy in location \"N7 8LS\" that can apply by t" +
+                    "his website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 203
+ testRunner.Then("I am on the TraineeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 204
+ testRunner.When("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 205
+ testRunner.Then("I am on the TraineeshipApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 206
+ testRunner.When("I choose WorkExperienceYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table27.AddRow(new string[] {
+                        "WorkEmployer",
+                        "WorkEmployer"});
+            table27.AddRow(new string[] {
+                        "WorkTitle",
+                        "WorkTitle"});
+            table27.AddRow(new string[] {
+                        "WorkRole",
+                        "WorkRole"});
+            table27.AddRow(new string[] {
+                        "WorkFromYear",
+                        "2011"});
+            table27.AddRow(new string[] {
+                        "WorkToYear",
+                        "2012"});
+#line 207
+ testRunner.When("I enter data", ((string)(null)), table27, "When ");
+#line 214
+ testRunner.And("I choose SaveWorkExperience", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table28 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table28.AddRow(new string[] {
+                        "WorkExperienceSaveWarning",
+                        "Does Not Exist",
+                        ""});
+#line 215
+ testRunner.Then("I see", ((string)(null)), table28, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

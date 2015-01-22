@@ -121,6 +121,9 @@
         [ElementLocator(Class = "field-validation-error")]
         public IWebElement FieldValidationError { get; set; }
 
+        [ElementLocator(Id = "qualification-save-warning")]
+        public IWebElement QualificationSaveWarning { get; set; }
+
         #endregion
 
         #region Work Experience
@@ -175,6 +178,9 @@
         {
             get { return WorkExperiencePanel.ValidationErrorsCount; }
         }
+
+        [ElementLocator(Id = "work-experience-save-warning")]
+        public IWebElement WorkExperienceSaveWarning { get; set; }
 
         #endregion
     }
