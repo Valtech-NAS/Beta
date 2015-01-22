@@ -54,27 +54,14 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                 case CommunicationTokens.TotalItems:
                     emailTemplateToken = "Expiry.Vacancies.Count";
                     break;
+                case CommunicationTokens.Item1:
+                    emailTemplateToken = "Expiry.Vacancies.Info";
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("key");
             }
 
             return string.Format("{0}{1}{0}", TemplateTokenDelimiter, emailTemplateToken);
-        }
-
-        public static string VacancyAboutToExpireVacanciesInfoHtmlToken
-        {
-            get
-            {
-                return string.Format("{0}Expiry.Vacancies.Info.Html{0}", TemplateTokenDelimiter);
-            }
-        }
-
-        public static string VacancyAboutToExpireVacanciesInfoTextToken
-        {
-            get
-            {
-                return string.Format("{0}Expiry.Vacancies.Info.Text{0}", TemplateTokenDelimiter);
-            }
         }
     }
 }

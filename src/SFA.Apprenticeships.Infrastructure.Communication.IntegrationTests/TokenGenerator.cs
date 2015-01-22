@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Application.Interfaces.Messaging;
 
     public static class TokenGenerator
@@ -81,18 +83,18 @@
             };
         }
 
-        public static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateVacanciesAboutToExpireTokens()
+        public static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateVacanciesAboutToExpireTokens(int numOfVacancies)
         {
-            return new[]
+            var tokens = new List<KeyValuePair<CommunicationTokens, string>>
             {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.TotalItems, "3"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Item1,
-                    "Application Vacancy Title 1|Employer name 1|15 Jan 15"),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Item2,
-                    "Application Vacancy Title 2|Employer name 2|15 Jan 15"),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Item3,
-                    "Application Vacancy Title 3|Employer name 3|15 Jan 15")
+                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.TotalItems, Convert.ToString(numOfVacancies))
             };
+
+            tokens.AddRange(Enumerable.Range(1, numOfVacancies).Select(i =>
+                new KeyValuePair<CommunicationTokens, string>((CommunicationTokens)Enum.Parse(typeof(CommunicationTokens), "Item"+i),
+                    string.Format("Application Vacancy Title {0}|Employer name {0}|15 Jan 15", i))));
+
+            return tokens;
         }
     }
 }

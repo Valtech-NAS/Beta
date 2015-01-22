@@ -14,7 +14,7 @@
 
         private IEmailDispatcher _voidEmailDispatcher;
 
-        private const string TestToEmail = "valtechnas@gmail.com";
+        private const string TestToEmail = "vgaltes@outlook.com";
 
 
         [SetUp]
@@ -159,7 +159,7 @@
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = TokenGenerator.CreateVacanciesAboutToExpireTokens(),
+                Tokens = TokenGenerator.CreateVacanciesAboutToExpireTokens(4),
                 MessageType = MessageTypes.DailyDigest
             };
 

@@ -8,6 +8,10 @@
 
     public class EmailDailyDigestMessageFormatter : EmailMessageFormatter
     {
+        private const string OneSavedApplicationAboutToExpire = "You've saved an application for an apprenticeship that is due to expire soon.";
+
+        private const string MoreThanOneSaveApplicationAboutToExpire =
+            "You've saved applications for apprenticeships that are due to close soon.";
         private const string Pipe = "|";
 
         public override void PopulateMessage(EmailRequest request, SendGridMessage message)
@@ -15,8 +19,6 @@
             var itemCount = PopulateItemCountData(request, message);
 
             PopulateHtmlData(request, message, itemCount);
-
-            PopulateTextData(request, message, itemCount);
         }
 
         private static int PopulateItemCountData(EmailRequest request, SendGridMessage message)
@@ -24,41 +26,40 @@
             var itemCountToken =
                 SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.TotalItems);
 
-            var itemCount = request.Tokens.First(t => t.Key == CommunicationTokens.TotalItems).Value;
-            message.AddSubstitution(
-                itemCountToken,
-                new List<string>
-                {
-                    itemCount
-                });
+            var itemCount = Convert.ToInt32(request.Tokens.First(t => t.Key == CommunicationTokens.TotalItems).Value);
+
+            var substitutionText = itemCount == 1 ? OneSavedApplicationAboutToExpire : MoreThanOneSaveApplicationAboutToExpire;
+
+            AddSubstitutionTo(message, itemCountToken, substitutionText);
 
             return Convert.ToInt32(itemCount);
         }
 
         private static void PopulateHtmlData(EmailRequest request, SendGridMessage message, int itemCount)
         {
-            var sendgridtoken = SendGridTokenManager.VacancyAboutToExpireVacanciesInfoHtmlToken;
-            AddVacanciesDataSubstitution(request, message, itemCount, sendgridtoken, FormatHtmlListElement);
+            var sendgridtoken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.Item1);
+            AddVacanciesDataSubstitution(request, message, itemCount, sendgridtoken);
         }
 
-        private static void PopulateTextData(EmailRequest request, SendGridMessage message, int itemCount)
+        private static void AddVacanciesDataSubstitution(EmailRequest request, SendGridMessage message, int itemCount, string sendgridtoken )
         {
-            var sendgridtoken = SendGridTokenManager.VacancyAboutToExpireVacanciesInfoTextToken;
-            AddVacanciesDataSubstitution(request, message, itemCount, sendgridtoken, FormatTextListElement);
-        }
-
-        private static void AddVacanciesDataSubstitution(EmailRequest request, SendGridMessage message, int itemCount, string sendgridtoken, Func<string, string> formatFunction )
-        {
-            var substitutionText = string.Empty;
+            var substitutionText = "<ul>";
 
             for (var i = 0; i < itemCount; i++)
             {
                 var communicationToken = (CommunicationTokens) Enum.Parse(typeof (CommunicationTokens),
                     string.Format("Item{0}", i+1));
 
-                substitutionText += formatFunction(request.Tokens.First(t => t.Key == communicationToken).Value);
+                substitutionText += FormatHtmlListElement(request.Tokens.First(t => t.Key == communicationToken).Value);
             }
 
+            substitutionText += "</ul>";
+
+            AddSubstitutionTo(message, sendgridtoken, substitutionText);
+        }
+
+        private static void AddSubstitutionTo(SendGridMessage message, string sendgridtoken, string substitutionText)
+        {
             message.AddSubstitution(
                 sendgridtoken,
                 new List<string>
@@ -74,18 +75,7 @@
             string closingDate;
             ExtractVacancyDataFrom(line, out apprenticeshipName, out companyName, out closingDate);
 
-            return string.Format("<li>{0} with {1}<br><b>Closing date:</b> {2}</li>", apprenticeshipName, companyName,
-                closingDate);
-        }
-
-        private static string FormatTextListElement(string line)
-        {
-            string apprenticeshipName;
-            string companyName;
-            string closingDate;
-            ExtractVacancyDataFrom(line, out apprenticeshipName, out companyName, out closingDate);
-
-            return string.Format("{0} with {1}.\\nClosing date: {2}\\n\\n", apprenticeshipName, companyName,
+            return string.Format("<li>{0} with {1}<br>Closing date: {2}</li>", apprenticeshipName, companyName,
                 closingDate);
         }
 
