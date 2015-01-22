@@ -197,6 +197,7 @@
     <Compile Include="Mediators\Register\RegisterBaseTests.cs" />
     <Compile Include="Mediators\Register\RegisterTests.cs" />
     <Compile Include="Mediators\Register\ResetPasswordTests.cs" />
+    <Compile Include="Mediators\SearchMediatorBaseTests.cs" />
     <Compile Include="Mediators\TraineeshipApplication\AddEmptyQualificationRowsTests.cs" />
     <Compile Include="Mediators\TraineeshipApplication\AddEmptyWorkExperienceRowsTests.cs" />
     <Compile Include="Mediators\TraineeshipApplication\WhatHappensNextTests.cs" />

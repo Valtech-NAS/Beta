@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
 {
     using System.Collections;
+    using System.Text.RegularExpressions;
     using System.Web.Mvc;
     using Application.Interfaces.Vacancies;
     using Common.Constants;
@@ -10,6 +11,8 @@
 
     public abstract class SearchMediatorBase : MediatorBase
     {
+        private static readonly Regex VacancyIdRegex = new Regex(@"(^\d+).*");
+
         private readonly int _vacancyResultsPerPage;
 
         protected readonly IUserDataProvider UserDataProvider;
@@ -109,6 +112,21 @@
             return !string.IsNullOrWhiteSpace(distance)
                    && !string.IsNullOrWhiteSpace(lastVacancyId)
                    && int.Parse(lastVacancyId) == id;
+        }
+
+        protected static bool TryParseVacancyId(string vacancyIdString, out int vacancyId)
+        {
+            vacancyId = 0;
+
+            if (string.IsNullOrWhiteSpace(vacancyIdString)) return false;
+
+            var match = VacancyIdRegex.Match(vacancyIdString);
+
+            if (!match.Success) return false;
+            
+            vacancyIdString = match.Groups[1].Value;
+            
+            return int.TryParse(vacancyIdString, out vacancyId);
         }
     }
 }

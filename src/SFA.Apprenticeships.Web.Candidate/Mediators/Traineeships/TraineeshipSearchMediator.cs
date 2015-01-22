@@ -121,8 +121,14 @@
             return GetMediatorResponse(Codes.TraineeshipSearch.Results.Ok, traineeshipSearchResponseViewModel);
         }
 
-        public MediatorResponse<VacancyDetailViewModel> Details(int vacancyId, Guid? candidateId, string searchReturnUrl)
+        public MediatorResponse<VacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId, string searchReturnUrl)
         {
+            int vacancyId;
+            if (!TryParseVacancyId(vacancyIdString, out vacancyId))
+            {
+                return GetMediatorResponse<VacancyDetailViewModel>(Codes.TraineeshipSearch.Details.VacancyNotFound);
+            }
+
             var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null)

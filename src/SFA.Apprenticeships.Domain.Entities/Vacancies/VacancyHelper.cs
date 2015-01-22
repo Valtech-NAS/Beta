@@ -14,8 +14,8 @@
         public static bool TryGetVacancyReference(string value, out string vacancyReference)
         {
             vacancyReference = null;
-            
-            if(string.IsNullOrEmpty(value))
+
+            if (string.IsNullOrWhiteSpace(value))
                 return false;
             
             var match = VacancyReferenceNumberRegex.Match(value);

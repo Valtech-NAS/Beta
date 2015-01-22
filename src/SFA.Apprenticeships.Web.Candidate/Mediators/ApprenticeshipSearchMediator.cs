@@ -206,8 +206,14 @@
             }
         }
 
-        public MediatorResponse<VacancyDetailViewModel> Details(int vacancyId, Guid? candidateId)
+        public MediatorResponse<VacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId)
         {
+            int vacancyId;
+            if (!TryParseVacancyId(vacancyIdString, out vacancyId))
+            {
+                return GetMediatorResponse<VacancyDetailViewModel>(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
+            }
+
             var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null)

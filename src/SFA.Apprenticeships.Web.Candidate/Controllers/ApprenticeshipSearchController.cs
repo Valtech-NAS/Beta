@@ -92,7 +92,7 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [ApplyWebTrends]
         [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(string id)
         {
             return await Task.Run<ActionResult>(() =>
             {

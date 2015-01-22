@@ -10,7 +10,7 @@
     [TestFixture]
     public class DetailsTests : TestsBase
     {
-        private const int Id = 1;
+        private const string Id = "1";
         private const string VacancyDistance = "10";
 
         [Test]

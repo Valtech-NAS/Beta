@@ -17,7 +17,7 @@
     [TestFixture]
     public class DetailsTests : TestsBase
     {
-        private const int VacancyId = 1;
+        private const string VacancyId = "1";
         private const string Distance = "42";
         private const string SearchReturnUrl = "http://www.example.com";
 
@@ -53,7 +53,7 @@
         [Test]
         public void Ok()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel { Id = VacancyId };
+            var vacancyDetailViewModel = new VacancyDetailViewModel { Id = int.Parse(VacancyId) };
             var mediator = GetMediator(vacancyDetailViewModel);
             var response = mediator.Details(VacancyId, null, SearchReturnUrl);
 
