@@ -16,6 +16,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
     - solve issue with custom domain name being used with an Azure CDN over HTTPS (may move CDN off Azure or use 3rd party CDN)
 - refactor: _qualificationsJS.cshtml, _qualificationsNonJS.cshtml, _workExperiencesJS.cshtml, _workExperiencesNonJS.cshtml files are in ApprenticeshipApplication and TraineeshipApplication folders, but only differs in the model they receive. Tried to use the base class but HasQualification and HasWorkExperience property doesn't propagate correctly to the controller.
 - Razor view unit tests (Create example use)
+- Potentially remove IsWebsiteOffline/WebsiteOfflineMessage
 
 ## Service layer ##
 
@@ -29,6 +30,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - agree on and implement location search behaviour fix for prefix sorting on different servers
 - refactor: vacancy ETL process (simplify to process pages immediately? TBD. current approach facilitates multiple data sources)
 - additional mongo indexes for app status and date updated (TBC: not sure how effective this would be - re. Alan)
+- Multiple PreFetchCount values for each queue. Intetrnal processes should be able to have a much higher value than ones that talk to the gateway
 
 ## Cross cutting ##
 
