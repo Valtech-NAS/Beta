@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Web;
     using Common.Providers;
+    using Constants;
     using NLog;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Users;
@@ -137,6 +138,7 @@
             try
             {
                 var candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
+                candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = _configurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion);
 
                 _candidateService.Register(candidate, model.Password);
 
