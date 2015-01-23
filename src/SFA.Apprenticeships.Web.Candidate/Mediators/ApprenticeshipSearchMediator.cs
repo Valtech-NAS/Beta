@@ -45,7 +45,7 @@
 
             var viewModel = new ApprenticeshipSearchViewModel
             {
-                WithinDistance = 2,
+                WithinDistance = 5,
                 LocationType = ApprenticeshipLocationType.NonNational,
                 Distances = distances,
                 SortTypes = sortTypes,

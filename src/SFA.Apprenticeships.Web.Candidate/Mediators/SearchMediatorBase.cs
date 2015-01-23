@@ -21,7 +21,7 @@
             UserDataProvider = userDataProvider;
         }
 
-        protected static SelectList GetDistances(int selectedValue = 2)
+        protected static SelectList GetDistances(int selectedValue = 5)
         {
             var distances = new SelectList(
                 new[]
