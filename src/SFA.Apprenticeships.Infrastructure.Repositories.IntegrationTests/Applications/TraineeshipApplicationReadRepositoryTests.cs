@@ -23,7 +23,7 @@
         private MongoDatabase _database;
         private MongoCollection<MongoTraineeshipApplicationDetail> _collection;
 
-        private const int _testVacancyId = -100;
+        private const int TestVacancyId = -100;
 
         [TestFixtureSetUp]
         public void SetUp()
@@ -46,7 +46,7 @@
         [TestFixtureTearDown]
         public void TearDown()
         {
-            _collection.Remove(Query.EQ("Vacancy._id", _testVacancyId));
+            _collection.Remove(Query.EQ("Vacancy._id", TestVacancyId));
         }
 
         [Test, Category("Integration")]
@@ -57,26 +57,31 @@
             applications.ForEach(a => _traineeshipApplicationWriteRepository.Save(a));
 
             //Act - Get application vacancy statuses
-            var summaries = _traineeshipApplicationReadRepository.GetApplicationSummaries(_testVacancyId);
+            var summaries = _traineeshipApplicationReadRepository
+                .GetApplicationSummaries(TestVacancyId)
+                .ToList();
 
             //Assert - the correct number of applicaitons with the correct vacancy state
             summaries.Count(v => v.VacancyStatus == VacancyStatuses.Unknown).Should().Be(10);
             summaries.Count(v => v.VacancyStatus == VacancyStatuses.Live).Should().Be(8);
             summaries.Count(v => v.VacancyStatus == VacancyStatuses.Unavailable).Should().Be(7);
+            summaries.Count(v => v.VacancyStatus == VacancyStatuses.Expired).Should().Be(6);
         }
 
         public List<TraineeshipApplicationDetail> BuildApprenticeshipApplicationDetails()
         {
             var vacancyStatus =
-                Builder<TraineeshipApplicationDetail>.CreateListOfSize(25)
+                Builder<TraineeshipApplicationDetail>.CreateListOfSize(31)
                     .All()
-                    .With(a => a.Vacancy.Id = _testVacancyId)
+                    .With(a => a.Vacancy.Id = TestVacancyId)
                     .TheFirst(10)
                     .With(a => a.VacancyStatus = VacancyStatuses.Unknown)
                     .TheNext(8)
                     .With(a => a.VacancyStatus = VacancyStatuses.Live)
                     .TheNext(7)
                     .With(a => a.VacancyStatus = VacancyStatuses.Unavailable)
+                    .TheNext(6)
+                    .With(a => a.VacancyStatus = VacancyStatuses.Expired)
                     .Build().ToList();
 
             return vacancyStatus.ToList();

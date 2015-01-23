@@ -117,8 +117,9 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="GatewayTraineeshipVacancyDetailMapperTests.cs" />
     <Compile Include="GatewayVacancySummaryMapperTests.cs" />
-    <Compile Include="GatewayVacancyDetailMapperTests.cs" />
+    <Compile Include="GatewayApprenticeshipVacancyDetailMapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

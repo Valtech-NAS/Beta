@@ -48,6 +48,7 @@
         {
             get
             {
+                // Unsuccessful applications include those where candidate applied but have been expired or withdrawn.
                 return AllApprenticeshipApplications
                     .Where(each =>
                         each.ApplicationStatus == ApplicationStatuses.Unsuccessful ||
@@ -59,7 +60,7 @@
         {
             get
             {
-                // Return Draft or Expired / Withdrawn draft applications.
+                // Draft applications include those where candidate did NOT apply but have been expired or withdrawn.
                 return AllApprenticeshipApplications
                     .Where(each =>
                         each.ApplicationStatus == ApplicationStatuses.Draft ||

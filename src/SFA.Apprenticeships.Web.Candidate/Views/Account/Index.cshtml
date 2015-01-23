@@ -1,5 +1,6 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Applications
 @using SFA.Apprenticeships.Domain.Entities.Vacancies
+
 @model SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications.MyApplicationsViewModel
 
 @{
@@ -55,8 +56,7 @@
                     </li>
                 </ul>
             }
-</div>
-        
+        </div>
     </div>
 </div>
 @if (!(Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any()))
@@ -101,7 +101,7 @@ else
             </li>
         }
     </ul>
-<div class="grid-wrapper proto-dashboard">
+    <div class="grid-wrapper proto-dashboard">
     @if (
             Model.SuccessfulApprenticeshipApplications.Any() ||
             Model.UnsuccessfulApplications.Any() ||
@@ -125,13 +125,13 @@ else
                                 {
                                     <tr>
                                         <td>
-                                            @if (application.VacancyStatus == VacancyStatuses.Live)
+                                            @if (application.VacancyStatus == VacancyStatuses.Unavailable)
                                             {
-                                                @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                                @application.Title @:with @application.EmployerName
                                             }
                                             else
                                             {
-                                                @application.Title @:with @application.EmployerName
+                                                @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                             }
                                         </td>
                                         <td class="ta-center">@application.ApplicationStatusDescription</td>
@@ -167,13 +167,13 @@ else
                                 {
                                     <tr>
                                         <td>
-                                            @if (application.VacancyStatus == VacancyStatuses.Live)
+                                            @if (application.VacancyStatus == VacancyStatuses.Unavailable)
                                             {
-                                                @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                                @application.Title @:with @application.EmployerName
                                             }
                                             else
                                             {
-                                                @application.Title @:with @application.EmployerName
+                                                @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                             }
                                         </td>
                                         <td class="ta-center">@application.ApplicationStatusDescription</td>
@@ -193,61 +193,61 @@ else
                         }
 
                     @if (Model.UnsuccessfulApplications.Any())
-                        {
+                    {
                         <h2 class="heading-medium" id="dashUnsuccessful">Unsuccessful</h2>
                             if (Model.UnsuccessfulApplications.Any(a => a.ApplicationStatus == ApplicationStatuses.Unsuccessful))
                             {
-                        <div class="panel-indent font-xxsmall" id="candidate-support-message">
-                            <p>Some of your applications have been unsuccessful. Please contact the training provider for futher information.</p>
-                            <p>For careers advice and support visit the <a rel="external" target="_blank" href="https://nationalcareersservice.direct.gov.uk/pages/home.aspx">National Careers Service</a>.</p>
-                        </div>
+                                <div class="panel-indent font-xxsmall" id="candidate-support-message">
+                                    <p>Some of your applications have been unsuccessful. Please contact the training provider for futher information.</p>
+                                    <p>For careers advice and support visit the <a rel="external" target="_blank" href="https://nationalcareersservice.direct.gov.uk/pages/home.aspx">National Careers Service</a>.</p>
+                                </div>
                             }
-                        <table class="vert-middle">
-                            <colgroup>
-                                <col class="t50">
-                                <col class="t25">
-                                <col class="t25">
-                                <col>
-                            </colgroup>
-                            <tbody class="tbody-3rows tbody-withReasons">
-                                @foreach (var application in @Model.UnsuccessfulApplications)
-                                {
-                                    <tr>
-                                        <td>
-                                            @if (application.VacancyStatus == VacancyStatuses.Live)
-                                            {
-                                                @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
-                                            }
-                                            else
-                                            {
-                                                @application.Title @:with @application.EmployerName
-                                            }
-                                        </td>
-                                        <td id="application-status-description" class="ta-center">@application.ApplicationStatusDescription</td>
-                                        <td class="ta-center">
-                                            <a class="icon-black archive-unsuccessful" href="@Url.Action("Archive", "Account", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
-                                        </td>
-                                    </tr>
-
-                                    if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason))
+                            <table class="vert-middle">
+                                <colgroup>
+                                    <col class="t50">
+                                    <col class="t25">
+                                    <col class="t25">
+                                    <col>
+                                </colgroup>
+                                <tbody class="tbody-3rows tbody-withReasons">
+                                    @foreach (var application in @Model.UnsuccessfulApplications)
                                     {
                                         <tr>
-                                            <td colspan="3">
-                                                <b>Reason:</b> @application.UnsuccessfulReason
+                                            <td>
+                                                @if (application.VacancyStatus == VacancyStatuses.Unavailable)
+                                                {
+                                                    @application.Title @:with @application.EmployerName
+                                                }
+                                                else
+                                                {
+                                                    @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                                }
+                                            </td>
+                                            <td id="application-status-description" class="ta-center">@application.ApplicationStatusDescription</td>
+                                            <td class="ta-center">
+                                                <a class="icon-black archive-unsuccessful" href="@Url.Action("Archive", "Account", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Delete</span></a>
                                             </td>
                                         </tr>
+
+                                        if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason))
+                                        {
+                                            <tr>
+                                                <td colspan="3">
+                                                    <b>Reason:</b> @application.UnsuccessfulReason
+                                                </td>
+                                            </tr>
+                                        }
                                     }
-                                }
-                            </tbody>
-                            <tbody class="tbody-expandrows">
-                                <tr class="no-btm-border">
-                                    <td colspan="2"></td>
-                                    <td class="no-wrap ta-center">
-                                        <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                                <tbody class="tbody-expandrows">
+                                    <tr class="no-btm-border">
+                                        <td colspan="2"></td>
+                                        <td class="no-wrap ta-center">
+                                            <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         }
                 </section>
             </div>
@@ -275,25 +275,26 @@ else
                             {
                                 <tr>
                                     <td>
-                                        @if (application.VacancyStatus == VacancyStatuses.Live)
-                                        {
-                                            @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new {id = application.VacancyId}, new {@class = "link-unimp"})
-                                            <br />
-                                            <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
-                                        }
-                                        else
+                                        @if (application.VacancyStatus == VacancyStatuses.Unavailable)
                                         {
                                             @application.Title @:with @application.EmployerName
                                         }
+                                        else
+                                        {
+                                            @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                            <br />
+                                            <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
+                                        }
                                     </td>
                                     <td class="ta-center">
-                                        @if (application.IsLiveVacancy)
+                                        @if (application.VacancyStatus == VacancyStatuses.Live)
                                         {
                                             @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = application.VacancyId }, new { @class = "resume-link" })
                                         }
                                         else
                                         {
-                                            @:Apprenticeship withdrawn
+                                            // TODO: AG: US679: review application status descriptions here (was always 'Apprenticeship withdrawn').
+                                            @application.ApplicationStatusDescription
                                         }
                                     </td>
                                     <td class="ta-center">
@@ -318,20 +319,20 @@ else
                         <tbody class="tbody-3rows">
                             @foreach (var application in @Model.TraineeshipApplications)
                             {
-                                    <tr class="traineeship-table-row">
-                                        <td>
+                                <tr class="traineeship-table-row">
+                                    <td>
                                         @if (application.VacancyStatus == VacancyStatuses.Unavailable)
                                         {
                                             @application.Title @:with @application.EmployerName
                                         }
                                         else
                                         {
-                                            @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "TraineeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                        @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "TraineeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                         }
-                                        </td>
-                                        <td class="ta-center">Applied</td>
-                                        <td class="ta-center">@Html.DisplayFor(m => application.DateApplied)</td>
-                                    </tr>
+                                    </td>
+                                    <td class="ta-center">Applied</td>
+                                    <td class="ta-center">@Html.DisplayFor(m => application.DateApplied)</td>
+                                </tr>
                             }
                         </tbody>
                         <tbody class="tbody-expandrows">
@@ -348,42 +349,4 @@ else
         </div>
         }
     </div>
-}
-
-@section scripts
-{
-    <script type="text/javascript">
-
-        //var lastDraftDeleteClicked = new Date();
-
-        //function timeDelay() {
-        //    var d = new Date();
-        //    while (d.getTime() < (lastDraftDeleteClicked.getTime() + 2550)) {
-        //        d = new Date();
-        //    }
-
-        //    lastDraftDeleteClicked = new Date();
-        //}
-
-        //var showConfirmationMessage = function (message, e) {
-        //    timeDelay();
-        //    if (!window.confirm(message)) {
-        //        if (e.preventDefault) e.preventDefault();
-        //        return false;
-        //    }
-        //};
-
-        //$('.delete-draft').on('click', function(e) {
-        //    showConfirmationMessage("TODO: Do you really want to delete this draft?", e);
-        //});
-
-        //$('.archive-successful').on('click', function(e) {
-        //    showConfirmationMessage("TODO: Do you really want to delete this successful application?", e);
-        //});
-
-        //$('.archive-unsuccessful').on('click', function(e) {
-        //    showConfirmationMessage("TODO: Do you really want to delete this unsuccessful application?", e);
-        //});
-
-    </script>
 }

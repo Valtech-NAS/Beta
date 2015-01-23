@@ -69,7 +69,7 @@
 
             if (vacancyDetail.VacancyStatus != VacancyStatuses.Live)
             {
-                Logger.Info("Vacancy ({0}) is unavailable. Returning null.", vacancyId);
+                Logger.Info("Vacancy ({0}) is '\"{1}\". Returning null.", vacancyId, vacancyDetail.VacancyStatus);
                 return null;
             }
 

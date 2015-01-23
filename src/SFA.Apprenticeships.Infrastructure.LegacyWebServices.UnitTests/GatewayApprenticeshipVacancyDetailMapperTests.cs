@@ -1,15 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
 {
     using System;
+    using AutoMapper;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.Traineeships;
     using FluentAssertions;
     using GatewayServiceProxy;
     using Mappers.Apprenticeships;
     using NUnit.Framework;
 
     [TestFixture]
-    public class GatewayVacancyDetailMapperTests
+    public class GatewayApprenticeshipVacancyDetailMapperTests
     {
         private LegacyApprenticeshipVacancyDetailMapper _mapper;
 
@@ -24,6 +26,22 @@
         {
             // Act.
             _mapper.Mapper.AssertConfigurationIsValid();
+        }
+
+        [TestCase]
+        [ExpectedException(typeof(AutoMapperMappingException))]
+        public void ShouldThrowIfNotApprenticeship()
+        {
+            // Arrange.
+            var src = new Vacancy
+            {
+                VacancyType = "Traineeship",
+            };
+
+            // Act.
+            _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+
+            // Assert: throws.
         }
 
         [TestCase]
@@ -467,13 +485,13 @@
         }
 
         [TestCase("Live", VacancyStatuses.Live)]
-        [TestCase("Wrong", VacancyStatuses.Unavailable)]
-        [TestCase("Deleted", VacancyStatuses.Unavailable)]
-        [TestCase("ClosingDatePassed", VacancyStatuses.Unavailable)]
+        [TestCase("Posted in error", VacancyStatuses.Unavailable)]
         [TestCase("Withdrawn", VacancyStatuses.Unavailable)]
-        [TestCase("Expired", VacancyStatuses.Unavailable)]
-        [TestCase("Completed", VacancyStatuses.Unavailable)]
-        [TestCase("PostedInError", VacancyStatuses.Unavailable)]
+        [TestCase("Deleted", VacancyStatuses.Unavailable)]
+        [TestCase("Pending deletion", VacancyStatuses.Unavailable)]
+        [TestCase("Closed", VacancyStatuses.Expired)]
+        [TestCase("Completed", VacancyStatuses.Expired)]
+        [TestCase("Wrong", VacancyStatuses.Unknown)]
         public void ShouldMapVacancyStatus(string vacancyStatusString, VacancyStatuses vacancyStatus)
         {
             // Arrange.
