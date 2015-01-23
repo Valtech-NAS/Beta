@@ -37,6 +37,7 @@
             _messageBus = messageBus;
         }
 
+        [SubscriptionConfiguration(PrefetchCount = 2)]
         [AutoSubscriberConsumer(SubscriptionId = "SubmitApprenticeshipApplicationRequestConsumerAsync")]
         public Task Consume(SubmitApplicationRequest request)
         {

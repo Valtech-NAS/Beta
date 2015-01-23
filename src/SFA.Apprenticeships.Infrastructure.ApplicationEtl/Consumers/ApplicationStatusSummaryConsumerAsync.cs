@@ -24,6 +24,7 @@
             _bus = bus;
         }
 
+        [SubscriptionConfiguration(PrefetchCount = 20)]
         [AutoSubscriberConsumer(SubscriptionId = "ApplicationStatusSummaryConsumerAsync")]
         public Task Consume(ApplicationStatusSummary applicationStatusSummaryToProcess)
         {

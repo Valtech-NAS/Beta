@@ -22,6 +22,7 @@
             _vacancySummaryProcessor = vacancySummaryProcessor;
         }
 
+        [SubscriptionConfiguration(PrefetchCount = 20)]
         [AutoSubscriberConsumer(SubscriptionId = "ApprenticeshipSummaryConsumerAsync")]
         public Task Consume(ApprenticeshipSummaryUpdate vacancySummaryToIndex)
         {

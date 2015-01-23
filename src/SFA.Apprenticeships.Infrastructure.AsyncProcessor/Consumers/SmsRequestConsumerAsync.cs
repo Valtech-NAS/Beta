@@ -16,6 +16,7 @@
             _dispatcher = dispatcher;
         }
 
+        [SubscriptionConfiguration(PrefetchCount = 20)]
         [AutoSubscriberConsumer(SubscriptionId = "SmsRequestConsumerAsync")]
         public Task Consume(SmsRequest request)
         {

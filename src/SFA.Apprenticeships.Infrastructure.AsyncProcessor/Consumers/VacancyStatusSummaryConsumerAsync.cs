@@ -33,6 +33,7 @@
             _bus = bus;
         }
 
+        [SubscriptionConfiguration(PrefetchCount = 20)]
         [AutoSubscriberConsumer(SubscriptionId = "VacancyStatusSummaryConsumerAsync")]
         public Task Consume(VacancyStatusSummary message)
         {

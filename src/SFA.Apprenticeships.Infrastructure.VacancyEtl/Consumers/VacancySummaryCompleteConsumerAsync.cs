@@ -36,6 +36,7 @@
             _configurationManager = configurationManager;
         }
 
+        [SubscriptionConfiguration(PrefetchCount = 2)]
         [AutoSubscriberConsumer(SubscriptionId = "VacancySummaryCompleteConsumerAsync")]
         public Task Consume(VacancySummaryUpdateComplete updateComplete)
         {

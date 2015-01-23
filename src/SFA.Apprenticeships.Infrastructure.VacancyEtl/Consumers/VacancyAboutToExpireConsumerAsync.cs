@@ -26,6 +26,7 @@
             _mapper = mapper;
         }
 
+        [SubscriptionConfiguration(PrefetchCount = 20)]
         [AutoSubscriberConsumer(SubscriptionId = "VacancyAboutToExpireConsumerAsync")]
         public Task Consume(VacancyAboutToExpire vacancy)
         {

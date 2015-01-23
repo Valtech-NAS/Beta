@@ -19,6 +19,7 @@
             _vacancySummaryProcessor = vacancySummaryProcessor;
         }
 
+        [SubscriptionConfiguration(PrefetchCount = 2)]
         [AutoSubscriberConsumer(SubscriptionId = "VacancySummaryPageConsumerAsync")]
         public Task Consume(VacancySummaryPage vacancySummaryPage)
         {

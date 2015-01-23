@@ -18,7 +18,8 @@
             _vacancyIndexer = vacancyIndexer;
         }
 
-        [AutoSubscriberConsumer(SubscriptionId = "TraineeshipSummaryConsumerAsync")]
+        [SubscriptionConfiguration(PrefetchCount = 20)]
+        [AutoSubscriberConsumer(SubscriptionId = "TraineeshipsSummaryConsumerAsync")]
         public Task Consume(TraineeshipSummaryUpdate vacancySummaryToIndex)
         {
             return Task.Run(() =>

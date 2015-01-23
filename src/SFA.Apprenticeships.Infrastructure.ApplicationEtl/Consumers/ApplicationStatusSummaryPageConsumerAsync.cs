@@ -21,6 +21,7 @@
             _applicationStatusProcessor = applicationStatusProcessor;
         }
 
+        [SubscriptionConfiguration(PrefetchCount = 2)]
         [AutoSubscriberConsumer(SubscriptionId = "ApplicationStatusSummaryPageConsumerAsync")]
         public Task Consume(ApplicationUpdatePage message)
         {

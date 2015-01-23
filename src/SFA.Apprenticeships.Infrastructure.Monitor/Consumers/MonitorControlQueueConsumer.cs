@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Infrastructure.Monitor.Consumers
+﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Consumers
 {
     using System.Threading.Tasks;
-    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-    using SFA.Apprenticeships.Domain.Interfaces.Messaging;
-    using SFA.Apprenticeships.Infrastructure.Azure.Common.Messaging;
-    using SFA.Apprenticeships.Infrastructure.Monitor.Tasks;
+    using Domain.Interfaces.Configuration;
+    using Domain.Interfaces.Messaging;
+    using Azure.Common.Messaging;
+    using Tasks;
 
     public class MonitorControlQueueConsumer : AzureControlQueueConsumer
     {

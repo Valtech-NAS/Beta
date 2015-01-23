@@ -1,12 +1,11 @@
-﻿using SFA.Apprenticeships.Infrastructure.RabbitMq.Configuration;
-
-namespace SFA.Apprenticeships.Infrastructure.RabbitMq.RabbitMQ
+﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.RabbitMQ
 {
     using System.Reflection;
     using EasyNetQ;
     using EasyNetQ.AutoSubscribe;
     using StructureMap;
     using Interfaces;
+    using Configuration;
 
     internal class BootstrapSubcribers : IBootstrapSubcribers
     {
@@ -26,9 +25,8 @@ namespace SFA.Apprenticeships.Infrastructure.RabbitMq.RabbitMQ
                 ConfigureSubscriptionConfiguration = configuration => configuration.WithPrefetchCount(_defaultHostConfiguration.PreFetchCount),
 #pragma warning disable 0618
                 // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-                AutoSubscriberMessageDispatcher = new StructureMapMessageDispatcher(ObjectFactory.Container),
+                AutoSubscriberMessageDispatcher = new StructureMapMessageDispatcher(ObjectFactory.Container)
 #pragma warning restore 0618
-                GenerateSubscriptionId = c => string.Format("{0}_{1}", c.ConcreteType.Name, subscriptionId)
             };
 
             autosubscriber.Subscribe(assembly);

@@ -33,6 +33,7 @@
             _messageBus = messageBus;
         }
 
+        [SubscriptionConfiguration(PrefetchCount = 2)]
         [AutoSubscriberConsumer(SubscriptionId = "CreateCandidateRequestConsumerAsync")]
         public Task Consume(CreateCandidateRequest request)
         {
