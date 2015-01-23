@@ -25,7 +25,7 @@
 
         public IEnumerable<MyApprenticeshipApplicationViewModel> AllApprenticeshipApplications { get; private set; }
 
-        public IOrderedEnumerable<MyTraineeshipApplicationViewModel> TraineeshipApplications { get; private set; }
+        public IEnumerable<MyTraineeshipApplicationViewModel> TraineeshipApplications { get; private set; }
 
         public TraineeshipFeatureViewModel TraineeshipFeature { get; set; }
 

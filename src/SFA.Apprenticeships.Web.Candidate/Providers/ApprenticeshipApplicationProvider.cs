@@ -431,6 +431,7 @@
                     .Select(each => new MyTraineeshipApplicationViewModel
                     {
                         VacancyId = each.LegacyVacancyId,
+                        VacancyStatus = each.VacancyStatus,
                         Title = each.Title,
                         EmployerName = each.EmployerName,
                         IsArchived = each.IsArchived,

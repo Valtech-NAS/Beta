@@ -320,7 +320,14 @@ else
                             {
                                     <tr class="traineeship-table-row">
                                         <td>
+                                        @if (application.VacancyStatus == VacancyStatuses.Unavailable)
+                                        {
+                                            @application.Title @:with @application.EmployerName
+                                        }
+                                        else
+                                        {
                                             @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "TraineeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                        }
                                         </td>
                                         <td class="ta-center">Applied</td>
                                         <td class="ta-center">@Html.DisplayFor(m => application.DateApplied)</td>
