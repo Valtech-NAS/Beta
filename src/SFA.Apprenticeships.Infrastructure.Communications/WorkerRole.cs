@@ -11,6 +11,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
     using IoC;
     using LegacyWebServices.IoC;
     using Logging;
+    using Microsoft.WindowsAzure;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
     using RabbitMq.IoC;
@@ -33,7 +34,18 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
             {
                 try
                 {
-                    _communicationsControlQueueConsumer.CheckScheduleQueue().Wait();
+                    var isEnabled = bool.Parse(CloudConfigurationManager.GetSetting("IsEnabled") ?? "true");
+
+                    if (isEnabled)
+                    {
+                        Logger.Debug("Communications worker role enabled");
+                        _communicationsControlQueueConsumer.CheckScheduleQueue().Wait();
+                    }
+                    else
+                    {
+                        Logger.Debug("Communications worker role disabled");
+                    }
+
                 }
                 catch (CommunicationException ce)
                 {
