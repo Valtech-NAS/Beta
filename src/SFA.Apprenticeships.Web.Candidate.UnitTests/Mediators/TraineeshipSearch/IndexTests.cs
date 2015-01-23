@@ -29,7 +29,7 @@
             viewModel.SortType.Should().Be(VacancySortType.Distance);
 
             viewModel.Distances.Should().NotBeNull();
-            viewModel.Distances.SelectedValue.Should().Be(2);
+            viewModel.Distances.SelectedValue.Should().Be(5);
 
             viewModel.SortTypes.Should().NotBeNull();
             viewModel.SortTypes.Count().Should().BeGreaterThan(0);
