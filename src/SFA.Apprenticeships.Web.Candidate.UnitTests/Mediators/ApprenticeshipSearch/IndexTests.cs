@@ -17,7 +17,7 @@
             response.AssertCode(Codes.ApprenticeshipSearch.Index.Ok, true);
 
             var viewModel = response.ViewModel;
-            viewModel.WithinDistance.Should().Be(2);
+            viewModel.WithinDistance.Should().Be(5);
             viewModel.LocationType.Should().Be(ApprenticeshipLocationType.NonNational);
             viewModel.ResultsPerPage.Should().Be(5);
             viewModel.ApprenticeshipLevels.Should().NotBeNull();
