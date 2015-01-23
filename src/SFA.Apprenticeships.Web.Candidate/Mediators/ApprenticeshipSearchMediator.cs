@@ -45,7 +45,7 @@
 
             var viewModel = new ApprenticeshipSearchViewModel
             {
-                WithinDistance = 2,
+                WithinDistance = 5,
                 LocationType = ApprenticeshipLocationType.NonNational,
                 Distances = distances,
                 SortTypes = sortTypes,
@@ -105,7 +105,7 @@
 
             PopulateSortType(model);
 
-            model.Distances = GetDistances(model.WithinDistance);
+            model.Distances = GetDistances();
             model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
             model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
 

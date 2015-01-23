@@ -24,7 +24,7 @@
             UserDataProvider = userDataProvider;
         }
 
-        protected static SelectList GetDistances(int selectedValue = 2)
+        protected static SelectList GetDistances()
         {
             var distances = new SelectList(
                 new[]
@@ -38,8 +38,7 @@
                     new {WithinDistance = 40, Name = "40 miles"}
                 },
                 "WithinDistance",
-                "Name",
-                selectedValue
+                "Name"
                 );
 
             return distances;

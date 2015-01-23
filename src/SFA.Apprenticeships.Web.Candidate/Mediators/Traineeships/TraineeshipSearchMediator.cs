@@ -58,7 +58,7 @@
 
             UserDataProvider.Push(UserDataItemNames.ResultsPerPage, model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
 
-            model.Distances = GetDistances(model.WithinDistance);
+            model.Distances = GetDistances();
             model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
 
             var clientResult = _searchRequestValidator.Validate(model);
