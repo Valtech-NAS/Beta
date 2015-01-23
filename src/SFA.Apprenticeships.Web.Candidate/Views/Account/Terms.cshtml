@@ -5,12 +5,10 @@
 }
 
 <div class="hgroup">
-    <h1 class="heading-xlarge">Updated Terms and conditions</h1>
+    <h1 class="heading-xlarge">There have been changes to our terms and conditions</h1>
+    <h2 class="heading-large">Please read and accept below:</h2>
+    (David to re-work header text)
 </div>
-
-<p>(David need to do copy magic here) We have updated our terms and conditions, please accept to continue.</p>
-
 @Html.Partial("_TermsAndConditions")
-
 @Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, new { @class ="button" })
-@Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new { @class = "button" })
+@Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new {})
