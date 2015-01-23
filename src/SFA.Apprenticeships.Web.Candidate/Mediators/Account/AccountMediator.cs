@@ -2,7 +2,6 @@
 {
     using System;
     using Common.Constants;
-    using Common.Providers;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;

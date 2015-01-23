@@ -461,7 +461,7 @@
     <Compile Include="Constants\Pages\ApprenticeshipVacancyDetailPageMessages.cs" />
     <Compile Include="Constants\Pages\VacancySearchResultsPageMessages.cs" />
     <Compile Include="Constants\Settings.cs" />
-    <Compile Include="Constants\ViewModels\AddressSearchResult.cs" />
+    <Compile Include="ViewModels\AddressSearchResult.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\TraineeshipSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
@@ -477,7 +477,7 @@
     <Compile Include="Constants\ViewModels\EducationViewModelMessages.cs" />
     <Compile Include="Constants\Pages\SignOutPageMessages.cs" />
     <Compile Include="Constants\ViewModels\SettingsViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\UserNameAvailability.cs" />
+    <Compile Include="ViewModels\UserNameAvailability.cs" />
     <Compile Include="Constants\ViewModels\WorkExperienceViewModelMessages.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />

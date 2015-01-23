@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Constants.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels
 {
     public class UserNameAvailability
     {

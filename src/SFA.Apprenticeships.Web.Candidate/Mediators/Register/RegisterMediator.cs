@@ -3,10 +3,10 @@
     using System;
     using Common.Constants;
     using Constants.Pages;
-    using Constants.ViewModels;
     using Domain.Entities.Users;
     using Providers;
     using Validators;
+    using ViewModels;
     using ViewModels.Register;
 
     public class RegisterMediator : MediatorBase, IRegisterMediator

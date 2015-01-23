@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
-    using Constants.ViewModels;
+    using ViewModels;
     using ViewModels.VacancySearch;
 
     public interface ISearchProvider

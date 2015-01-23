@@ -5,6 +5,7 @@
     using System.Web.Mvc;
     using Candidate.Controllers;
     using Candidate.Providers;
+    using Candidate.ViewModels;
     using Common.IoC;
     using Constants.ViewModels;
     using Infrastructure.Common.IoC;

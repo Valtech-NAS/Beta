@@ -6,7 +6,6 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Infrastructure.Common.Mappers;
     using Resolvers;

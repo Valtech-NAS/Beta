@@ -15,7 +15,7 @@
     using Domain.Interfaces.Mapping;
     using Infrastructure.PerformanceCounters;
     using Constants.Pages;
-    using Constants.ViewModels;
+    using ViewModels;
     using ViewModels.Login;
     using ViewModels.Register;
     using Common.Constants;

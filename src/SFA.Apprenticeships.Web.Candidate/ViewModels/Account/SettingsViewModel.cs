@@ -5,7 +5,6 @@
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Locations;
-    using MyApplications;
     using Validators;
 
     [Validator(typeof(SettingsViewModelClientValidator))]

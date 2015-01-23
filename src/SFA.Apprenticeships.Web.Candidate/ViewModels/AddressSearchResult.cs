@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Constants.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels
 {
     using System.Collections.Generic;
-    using Candidate.ViewModels.Locations;
+    using Locations;
 
     public class AddressSearchResult
     {

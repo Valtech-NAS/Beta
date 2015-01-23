@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Register
 {
     using System.Linq;
+    using Candidate.ViewModels;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;

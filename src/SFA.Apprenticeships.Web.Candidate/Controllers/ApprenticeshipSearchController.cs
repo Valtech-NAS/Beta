@@ -4,11 +4,9 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
-    using Application.Interfaces.Vacancies;
     using Attributes;
     using Common.Constants;
     using Constants;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentValidation.Mvc;
     using Mediators;
     using ViewModels.VacancySearch;

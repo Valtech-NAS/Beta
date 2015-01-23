@@ -9,7 +9,6 @@
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Constants.Pages;
-    using Constants.ViewModels;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
@@ -19,6 +18,7 @@
     using Domain.Interfaces.Mapping;
     using Infrastructure.PerformanceCounters;
     using NLog;
+    using ViewModels;
     using ViewModels.Locations;
     using ViewModels.VacancySearch;
     using ErrorCodes = Application.Interfaces.Locations.ErrorCodes;

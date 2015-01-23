@@ -1,6 +1,5 @@
 ﻿using System;
 using FluentValidation;
-using FluentValidation.Results;
 using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
 using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
 

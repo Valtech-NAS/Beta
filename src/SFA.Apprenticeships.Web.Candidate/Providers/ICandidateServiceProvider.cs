@@ -3,9 +3,9 @@
     using System;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using ViewModels;
     using ViewModels.Login;
     using ViewModels.Register;
-    using Constants.ViewModels;
 
     public interface ICandidateServiceProvider
     {
