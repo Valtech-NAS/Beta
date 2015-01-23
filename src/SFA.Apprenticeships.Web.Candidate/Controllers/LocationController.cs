@@ -7,7 +7,6 @@
     using System.Web.Mvc;
     using Domain.Interfaces.Configuration;
     using Constants;
-    using Constants.ViewModels;
     using Providers;
     using ViewModels.VacancySearch;
     using Common.Attributes;
@@ -50,7 +49,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                AddressSearchResult addresses = _searchProvider.FindAddresses(postcode);
+                var addresses = _searchProvider.FindAddresses(postcode);
                 if (Request.IsAjaxRequest())
                 {
                     return Json(addresses, JsonRequestBehavior.AllowGet);
