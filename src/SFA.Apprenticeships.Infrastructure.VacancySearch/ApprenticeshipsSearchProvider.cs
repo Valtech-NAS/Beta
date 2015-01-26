@@ -172,8 +172,17 @@
                         query = BuildContainer(query, prefixClause);*/
                     }
 
-                    // Add Sector and Framework aggregation
-                    // if(parameters.S)
+                    if (!string.IsNullOrWhiteSpace(parameters.Sector))
+                    {
+                        var querySector = q.Match(m => m.OnField(f => f.Sector).Query(parameters.Sector));
+                        query = query && querySector;
+                    }
+
+                    if (parameters.Frameworks != null)
+                    {
+                        var queryFrameworks = q.Terms(f => f.Framework, parameters.Frameworks);
+                        query = query && queryFrameworks;
+                    }
 
                     queryVacancyLocation =
                         q.Match(

@@ -293,7 +293,9 @@
                     SearchRadius = search.WithinDistance,
                     SortType = string.IsNullOrWhiteSpace(search.Keywords) ? VacancySortType.ClosingDate : VacancySortType.Relevancy,
                     VacancyLocationType = ApprenticeshipLocationType.National,
-                    ApprenticeshipLevel = search.ApprenticeshipLevel
+                    ApprenticeshipLevel = search.ApprenticeshipLevel,
+                    Sector = search.Sector,
+                    Frameworks = search.Frameworks
                 },
                 new ApprenticeshipSearchParameters
                 {
@@ -304,7 +306,9 @@
                     SearchRadius = search.WithinDistance,
                     SortType = search.SortType,
                     VacancyLocationType = ApprenticeshipLocationType.NonNational,
-                    ApprenticeshipLevel = search.ApprenticeshipLevel
+                    ApprenticeshipLevel = search.ApprenticeshipLevel,
+                    Sector = search.Sector,
+                    Frameworks = search.Frameworks
                 }
             };
 

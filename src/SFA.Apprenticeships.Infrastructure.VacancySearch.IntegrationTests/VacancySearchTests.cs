@@ -10,15 +10,18 @@
     using Elastic.Common.IoC;
     using FluentAssertions;
     using IoC;
-    using Mappers;
     using NUnit.Framework;
     using StructureMap;
 
     [TestFixture]
     public class VacancySearchTests
     {
-        [Test]
-        public void ShouldReturnFrameworksCount()
+        private const string RetailAndCommercialEnterprise = "Retail and Commercial Enterprise";
+        private IElasticsearchClientFactory _elasticsearchClientFactory;
+        private IMapper _mapper;
+
+        [TestFixtureSetUp]
+        public void FixtureSetUp()
         {
 #pragma warning disable 0618
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
@@ -28,14 +31,58 @@
                 x.AddRegistry<VacancySearchRegistry>();
             });
 
+            _elasticsearchClientFactory = ObjectFactory.GetInstance<IElasticsearchClientFactory>();
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var elasticsearchClientFactory = ObjectFactory.GetInstance<IElasticsearchClientFactory>();
-            var mapper = ObjectFactory.GetInstance<IMapper>();
+            _mapper = ObjectFactory.GetInstance<IMapper>();
 #pragma warning restore 0618
-            
-            var vacancySearchProvider = new ApprenticeshipsSearchProvider(elasticsearchClientFactory, mapper, SearchConfiguration.Instance);
+        }
 
-            var vacancies = vacancySearchProvider.FindVacancies(new ApprenticeshipSearchParameters
+        [Test]
+        public void ShouldReturnFrameworksCount()
+        {
+
+            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
+                SearchConfiguration.Instance);
+
+            var vacancies = vacancySearchProvider.FindVacancies(GetCommonSearchParameters());
+
+            vacancies.AggregationResults.Should().HaveCount(c => c > 0);
+        }
+
+        [Test]
+        public void ShouldSearchBySector()
+        {
+
+            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
+                SearchConfiguration.Instance);
+
+            var searchParameters = GetCommonSearchParameters();
+            searchParameters.Sector = RetailAndCommercialEnterprise;
+
+            var vacancies = vacancySearchProvider.FindVacancies(searchParameters);
+
+            vacancies.AggregationResults.Should().HaveCount(c => c > 0);
+        }
+
+        [Test]
+        public void ShouldSearchBySectorAndFramework()
+        {
+
+            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
+                SearchConfiguration.Instance);
+
+            var searchParameters = GetCommonSearchParameters();
+            searchParameters.Sector = RetailAndCommercialEnterprise;
+            searchParameters.Frameworks = new[] {"Hospitality"};
+
+            var vacancies = vacancySearchProvider.FindVacancies(searchParameters);
+
+            vacancies.AggregationResults.Should().HaveCount(1);
+        }
+
+        private static ApprenticeshipSearchParameters GetCommonSearchParameters()
+        {
+            return new ApprenticeshipSearchParameters
             {
                 ApprenticeshipLevel = "Intermediate",
                 Keywords = "Chef",
@@ -53,9 +100,7 @@
                 SearchRadius = 5,
                 SortType = VacancySortType.ClosingDate,
                 VacancyLocationType = ApprenticeshipLocationType.NonNational
-            });
-
-            vacancies.AggregationResults.Should().HaveCount(c => c > 0);
+            };
         }
     }
 }
