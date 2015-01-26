@@ -1,17 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer.IntegrationTests
 {
+    using Elastic.Common.Configuration;
+    using Elastic.Common.IoC;
+    using IoC;
     using Nest;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.IoC;
-    using SFA.Apprenticeships.Infrastructure.VacancyIndexer.IoC;
     using StructureMap;
 
     [SetUpFixture]
     public class SetUpFixture
     {
-        private ElasticClient _elasticClient;
         private readonly ElasticsearchConfiguration _elasticsearchConfiguration = ElasticsearchConfiguration.Instance;
+        private ElasticClient _elasticClient;
 
         [SetUp]
         public void SetUp()
@@ -28,7 +28,8 @@
             var settings = new ConnectionSettings(_elasticsearchConfiguration.DefaultHost);
             _elasticClient = new ElasticClient(settings);
 
-            foreach (IElasticsearchIndexConfiguration elasticsearchIndexConfiguration in _elasticsearchConfiguration.Indexes)
+            foreach (
+                IElasticsearchIndexConfiguration elasticsearchIndexConfiguration in _elasticsearchConfiguration.Indexes)
             {
                 if (elasticsearchIndexConfiguration.Name.EndsWith("_integration_test"))
                 {
@@ -40,7 +41,8 @@
         [TearDown]
         public void TearDown()
         {
-            foreach (IElasticsearchIndexConfiguration elasticsearchIndexConfiguration in _elasticsearchConfiguration.Indexes)
+            foreach (
+                IElasticsearchIndexConfiguration elasticsearchIndexConfiguration in _elasticsearchConfiguration.Indexes)
             {
                 if (elasticsearchIndexConfiguration.Name.EndsWith("_integration_test"))
                 {

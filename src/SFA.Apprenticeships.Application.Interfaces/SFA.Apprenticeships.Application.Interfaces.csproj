@@ -106,6 +106,7 @@
     <Compile Include="Messaging\ISmsDispatcher.cs" />
     <Compile Include="Messaging\SmsRequest.cs" />
     <Compile Include="ReferenceData\IReferenceDataService.cs" />
+    <Compile Include="Search\AggregationResult.cs" />
     <Compile Include="Search\ApprenticeshipSearchParameters.cs" />
     <Compile Include="Search\SearchParametersBase.cs" />
     <Compile Include="Search\TraineeshipSearchParameters.cs" />

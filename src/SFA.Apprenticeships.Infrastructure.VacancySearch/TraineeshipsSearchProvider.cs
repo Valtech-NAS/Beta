@@ -54,7 +54,7 @@
 
             Logger.Debug("{0} search results returned", search.Total);
 
-            var results = new SearchResults<TraineeshipSummaryResponse>(search.Total, parameters.PageNumber, responses);
+            var results = new SearchResults<TraineeshipSummaryResponse>(search.Total, parameters.PageNumber, responses, null);
 
             return results;
         }

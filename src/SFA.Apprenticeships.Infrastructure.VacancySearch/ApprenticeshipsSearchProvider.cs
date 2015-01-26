@@ -10,12 +10,14 @@
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
+    using JetBrains.Annotations;
     using Nest;
     using Newtonsoft.Json.Linq;
     using NLog;
 
     public class ApprenticeshipsSearchProvider : IVacancySearchProvider<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>
     {
+        private const string FrameworkAggregationName = "Frameworks";
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
         private readonly IMapper _vacancySearchMapper;
@@ -67,10 +69,20 @@
 
             Logger.Debug("{0} search results returned", search.Total);
 
-            var results = new SearchResults<ApprenticeshipSummaryResponse>(search.Total, parameters.PageNumber, responses);
+            var aggregationResults = GetAggregationResultsFrom(search.Aggs);
+
+            var results = new SearchResults<ApprenticeshipSummaryResponse>(search.Total, parameters.PageNumber, responses, aggregationResults);
 
             return results;
         }
+
+        private static IEnumerable<AggregationResult> GetAggregationResultsFrom(AggregationsHelper aggregations)
+        {
+            return
+                aggregations.Terms(FrameworkAggregationName)
+                    .Items.Select(bucket => new AggregationResult {Name = bucket.Key, Count = bucket.DocCount});
+        }
+
 
         public SearchResults<ApprenticeshipSummaryResponse> FindExactMatchVacancy(ApprenticeshipSearchParameters parameters)
         {
@@ -87,7 +99,7 @@
                 .Query(q => q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, parameters.VacancyReference)))));
 
             var responses = _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryResponse>>(searchResults.Documents).ToList();
-            var results = new SearchResults<ApprenticeshipSummaryResponse>(searchResults.Total, parameters.PageNumber, responses);
+            var results = new SearchResults<ApprenticeshipSummaryResponse>(searchResults.Total, parameters.PageNumber, responses, null);
 
             return results;
         }
@@ -160,6 +172,9 @@
                         query = BuildContainer(query, prefixClause);*/
                     }
 
+                    // Add Sector and Framework aggregation
+                    // if(parameters.S)
+
                     queryVacancyLocation =
                         q.Match(
                             m => m.OnField(f => f.VacancyLocationType).Query(parameters.VacancyLocationType.ToString()));
@@ -217,6 +232,8 @@
                         //.Script("doc[\u0027location\u0027].distanceInMiles(lat,lon)")));
                         break;
                 }
+
+                s.Aggregations(a => a.Terms(FrameworkAggregationName, st => st.Field(o => o.Framework).Size(0)));
 
                 if (parameters.Location != null)
                 {

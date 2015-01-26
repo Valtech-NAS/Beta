@@ -146,12 +146,12 @@
                 var nationalResults =
                     results[0].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.National)
                     ? results[0]
-                    : results[1].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.National) ? results[1] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null);
+                    : results[1].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.National) ? results[1] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null, null);
 
                 var nonNationalResults = 
                     results[1].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.NonNational) 
                     ? results[1]
-                    : results[0].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.NonNational) ? results[0] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null);
+                    : results[0].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.NonNational) ? results[0] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null, null);
 
                 var nationalResponse =
                     _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse>, ApprenticeshipSearchResponseViewModel>(
