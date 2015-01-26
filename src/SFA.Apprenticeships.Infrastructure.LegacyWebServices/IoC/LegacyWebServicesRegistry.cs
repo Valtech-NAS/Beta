@@ -95,7 +95,17 @@
 
             #region Reference Data Service and Providers
 
-            For<IReferenceDataProvider>().Use<ReferenceDataProvider>();
+            For<IReferenceDataProvider>().Use<ReferenceDataProvider>().Name = "LegacyReferenceDataProvider";
+
+            if (useCache)
+            {
+                For<IReferenceDataProvider>()
+                    .Use<CachedReferenceDataProvider>()
+                    .Ctor<IReferenceDataProvider>()
+                    .IsTheDefault()
+                    .Ctor<IReferenceDataProvider>()
+                    .Named("LegacyReferenceDataProvider");
+            }
 
             #endregion
 
