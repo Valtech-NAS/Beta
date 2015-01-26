@@ -82,8 +82,11 @@ WriteLiteral(" id=\"tshipAbout\"");
 WriteLiteral(@">
         <section>
             <p>
-                A traineeship is a course designed to prepare someone for an apprenticeship
-                or get them ready for work. They can take up to 6 months and as part of it you’ll get:
+                A traineeship is designed to prepare someone for an apprenticeship
+                or get them ready for work. They can take up to 6 months.
+            </p>
+            <p>
+                You’ll get:
             </p>
             <ul>
                 <li>help with English and maths (if you need it)</li>
@@ -168,14 +171,14 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" id=\"prompt-traineeship-search-link\"");
 
-WriteAttribute("href", Tuple.Create(" href=", 2492), Tuple.Create("", 2550)
+WriteAttribute("href", Tuple.Create(" href=", 2518), Tuple.Create("", 2576)
             
-            #line 59 "..\..\Views\TraineeshipSearch\Overview.cshtml"
-, Tuple.Create(Tuple.Create("", 2498), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
+            #line 62 "..\..\Views\TraineeshipSearch\Overview.cshtml"
+, Tuple.Create(Tuple.Create("", 2524), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
             
             #line default
             #line hidden
-, 2498), false)
+, 2524), false)
 );
 
 WriteLiteral(" class=\"button\"");
@@ -184,7 +187,7 @@ WriteLiteral(">Find a traineeship</a>\r\n        </div>\r\n        <p>\r\n      
 "if you think you\'d be eligible for an apprenticeship,\r\n            use the ");
 
             
-            #line 63 "..\..\Views\TraineeshipSearch\Overview.cshtml"
+            #line 66 "..\..\Views\TraineeshipSearch\Overview.cshtml"
                Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null));
 
             

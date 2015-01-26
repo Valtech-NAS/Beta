@@ -67,20 +67,24 @@ WriteLiteral(">\r\n    <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Updated Terms and conditions</h1>\r\n</div>\r\n\r\n<p>(David need to do copy magic her" +
-"e) We have updated our terms and conditions, please accept to continue.</p>\r\n\r\n");
+WriteLiteral(">There have been changes to our terms and conditions</h1>\r\n    <h2");
+
+WriteLiteral(" class=\"heading-large\"");
+
+WriteLiteral(">Please read and accept below:</h2>\r\n    (TODO: David to re-work header text)\r\n</" +
+"div>\r\n");
 
             
-            #line 13 "..\..\Views\Account\Terms.cshtml"
+            #line 12 "..\..\Views\Account\Terms.cshtml"
 Write(Html.Partial("_TermsAndConditions"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("\r\n");
 
             
-            #line 15 "..\..\Views\Account\Terms.cshtml"
+            #line 13 "..\..\Views\Account\Terms.cshtml"
 Write(Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, new { @class ="button" }));
 
             
@@ -89,8 +93,8 @@ Write(Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, ne
 WriteLiteral("\r\n");
 
             
-            #line 16 "..\..\Views\Account\Terms.cshtml"
-Write(Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new { @class = "button" }));
+            #line 14 "..\..\Views\Account\Terms.cshtml"
+Write(Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new {}));
 
             
             #line default
