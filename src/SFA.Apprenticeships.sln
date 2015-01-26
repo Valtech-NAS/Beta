@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{22CE73E4-F469-434C-AC5D-D926EBBAC3D5}"
 EndProject
@@ -181,6 +181,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{A34B1856-1875-4220-A1CC-AF67CB5A521F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Repositories.Communication", "SFA.Apprenticeships.Infrastructure.Repositories.Communication\SFA.Apprenticeships.Infrastructure.Repositories.Communication.csproj", "{B1278CE6-5670-49F4-85DF-350294EC151A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.ReferenceData", "SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj", "{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1163,6 +1165,20 @@ Global
 		{B1278CE6-5670-49F4-85DF-350294EC151A}.Prod|Any CPU.Build.0 = Prod|Any CPU
 		{B1278CE6-5670-49F4-85DF-350294EC151A}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{B1278CE6-5670-49F4-85DF-350294EC151A}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}.Local|Any CPU.Build.0 = Local|Any CPU
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}.MSDN|Any CPU.ActiveCfg = MSDN|Any CPU
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}.MSDN|Any CPU.Build.0 = MSDN|Any CPU
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1249,5 +1265,6 @@ Global
 		{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8} = {18D67FE8-091F-4873-871A-8B81E455DA79}
 		{A34B1856-1875-4220-A1CC-AF67CB5A521F} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{B1278CE6-5670-49F4-85DF-350294EC151A} = {A34B1856-1875-4220-A1CC-AF67CB5A521F}
+		{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3} = {620A2A3B-BC44-409A-9C74-75D2A9C75F79}
 	EndGlobalSection
 EndGlobal

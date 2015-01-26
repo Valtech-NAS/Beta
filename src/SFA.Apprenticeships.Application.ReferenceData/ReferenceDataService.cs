@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.ReferenceData
 {
+    using System;
     using System.Collections.Generic;
     using Domain.Entities.ReferenceData;
     using Interfaces.ReferenceData;
@@ -15,7 +16,8 @@
 
         public IEnumerable<ReferenceDataItem> GetReferenceData(string type)
         {
-            return _service.GetReferenceData(type);
+            throw new NotImplementedException();
+            //return _service.GetReferenceData(type);
         }
     }
 }

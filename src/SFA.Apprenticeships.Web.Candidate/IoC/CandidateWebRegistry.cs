@@ -13,10 +13,12 @@
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Locations;
     using Application.Interfaces.Messaging;
+    using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Search;
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Location;
+    using Application.ReferenceData;
     using Application.UserAccount;
     using Application.UserAccount.Strategies;
     using Application.Vacancy;
@@ -24,6 +26,7 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Mapping;
+    using Infrastructure.LegacyWebServices.ReferenceData;
     using Mappers;
     using Mediators;
     using Mediators.Account;
@@ -110,6 +113,8 @@
             For<ICommunicationService>().Use<CommunicationService>();
             For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<LegacyGetCandidateApprenticeshipApplicationsStrategy>();
             For<IApplicationStatusUpdater>().Use<ApplicationStatusUpdater>();
+            For<IReferenceDataService>().Use<ReferenceDataService>();
+            For<IReferenceDataProvider>().Use<ReferenceDataProvider>();
             
             // Apprenticeship providers (web)
             For<IMapper>().Singleton().Use<ApprenticeshipCandidateWebMappers>().Name = "ApprenticeshipCandidateWebMappers";

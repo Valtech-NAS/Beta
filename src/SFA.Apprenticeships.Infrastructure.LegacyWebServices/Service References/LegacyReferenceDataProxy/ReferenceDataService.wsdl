@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://services.imservices.org.uk/AVMS/Interfaces/5.1" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://tempuri.org/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferenceDataService" targetNamespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xs:element name="GetErrorCodesRequest">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/" name="ExternalSystemId" type="q1:guid" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/" name="MessageId" type="q2:guid" />
+      <xs:element name="PublicKey" nillable="true" type="xs:string" />
+      <xs:element name="GetErrorCodesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ErrorCodes" nillable="true" type="tns:ArrayOfErrorCodesData" />
+            <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MessageId" type="q3:guid" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="ArrayOfErrorCodesData">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ErrorCodesData" nillable="true" type="tns:ErrorCodesData" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfErrorCodesData" nillable="true" type="tns:ArrayOfErrorCodesData" />
+      <xs:complexType name="ErrorCodesData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="InterfaceErrorCode" type="xs:int" />
+          <xs:element minOccurs="0" name="InterfaceErrorDescription" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ErrorCodesData" nillable="true" type="tns:ErrorCodesData" />
+      <xs:complexType name="SystemFaultContract">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="SystemFaultContract" nillable="true" type="tns:SystemFaultContract" />
+      <xs:element name="GetApprenticeshipFrameworksRequest">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetApprenticeshipFrameworksResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ApprenticeshipFrameworks" nillable="true" type="tns:ArrayOfApprenticeshipFrameworkAndOccupationData" />
+            <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MessageId" type="q4:guid" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="ArrayOfApprenticeshipFrameworkAndOccupationData">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ApprenticeshipFrameworkAndOccupationData" nillable="true" type="tns:ApprenticeshipFrameworkAndOccupationData" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfApprenticeshipFrameworkAndOccupationData" nillable="true" type="tns:ArrayOfApprenticeshipFrameworkAndOccupationData" />
+      <xs:complexType name="ApprenticeshipFrameworkAndOccupationData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ApprenticeshipFrameworkCodeName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApprenticeshipFrameworkFullName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApprenticeshipFrameworkShortName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApprenticeshipOccupationCodeName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApprenticeshipOccupationFullName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ApprenticeshipOccupationShortName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ApprenticeshipFrameworkAndOccupationData" nillable="true" type="tns:ApprenticeshipFrameworkAndOccupationData" />
+      <xs:element name="GetRegionRequest">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetRegionResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MessageId" type="q5:guid" />
+            <xs:element minOccurs="0" name="Regions" nillable="true" type="tns:ArrayOfRegionData" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="ArrayOfRegionData">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="RegionData" nillable="true" type="tns:RegionData" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfRegionData" nillable="true" type="tns:ArrayOfRegionData" />
+      <xs:complexType name="RegionData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CodeName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="RegionData" nillable="true" type="tns:RegionData" />
+      <xs:element name="GetCountiesRequest">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCountiesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="Counties" nillable="true" type="tns:ArrayOfCountyData" />
+            <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MessageId" type="q6:guid" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="ArrayOfCountyData">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CountyData" nillable="true" type="tns:CountyData" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCountyData" nillable="true" type="tns:ArrayOfCountyData" />
+      <xs:complexType name="CountyData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CodeName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CountyData" nillable="true" type="tns:CountyData" />
+      <xs:element name="GetLocalAuthoritiesRequest">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetLocalAuthoritiesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="LocalAuthorities" nillable="true" type="tns:ArrayOfLocalAuthorityData" />
+            <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MessageId" type="q7:guid" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="ArrayOfLocalAuthorityData">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="LocalAuthorityData" nillable="true" type="tns:LocalAuthorityData" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfLocalAuthorityData" nillable="true" type="tns:ArrayOfLocalAuthorityData" />
+      <xs:complexType name="LocalAuthorityData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="County" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="LocalAuthorityData" nillable="true" type="tns:LocalAuthorityData" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="anyType" nillable="true" type="xs:anyType" />
+      <xs:element name="anyURI" nillable="true" type="xs:anyURI" />
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary" />
+      <xs:element name="boolean" nillable="true" type="xs:boolean" />
+      <xs:element name="byte" nillable="true" type="xs:byte" />
+      <xs:element name="dateTime" nillable="true" type="xs:dateTime" />
+      <xs:element name="decimal" nillable="true" type="xs:decimal" />
+      <xs:element name="double" nillable="true" type="xs:double" />
+      <xs:element name="float" nillable="true" type="xs:float" />
+      <xs:element name="int" nillable="true" type="xs:int" />
+      <xs:element name="long" nillable="true" type="xs:long" />
+      <xs:element name="QName" nillable="true" type="xs:QName" />
+      <xs:element name="short" nillable="true" type="xs:short" />
+      <xs:element name="string" nillable="true" type="xs:string" />
+      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" />
+      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" />
+      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" />
+      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" />
+      <xs:element name="char" nillable="true" type="tns:char" />
+      <xs:simpleType name="char">
+        <xs:restriction base="xs:int" />
+      </xs:simpleType>
+      <xs:element name="duration" nillable="true" type="tns:duration" />
+      <xs:simpleType name="duration">
+        <xs:restriction base="xs:duration">
+          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" />
+          <xs:minInclusive value="-P10675199DT2H48M5.4775808S" />
+          <xs:maxInclusive value="P10675199DT2H48M5.4775807S" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="guid" nillable="true" type="tns:guid" />
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:attribute name="FactoryType" type="xs:QName" />
+      <xs:attribute name="Id" type="xs:ID" />
+      <xs:attribute name="Ref" type="xs:IDREF" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetErrorCodesRequest">
+    <wsdl:part name="parameters" element="tns:GetErrorCodesRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetErrorCodesRequest_Headers">
+    <wsdl:part name="ExternalSystemId" element="tns:ExternalSystemId" />
+    <wsdl:part name="MessageId" element="tns:MessageId" />
+    <wsdl:part name="PublicKey" element="tns:PublicKey" />
+  </wsdl:message>
+  <wsdl:message name="GetErrorCodesResponse">
+    <wsdl:part name="parameters" element="tns:GetErrorCodesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReferenceData_GetErrorCodes_SystemFaultContractFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SystemFaultContract" />
+  </wsdl:message>
+  <wsdl:message name="GetApprenticeshipFrameworksRequest">
+    <wsdl:part name="parameters" element="tns:GetApprenticeshipFrameworksRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetApprenticeshipFrameworksRequest_Headers">
+    <wsdl:part name="ExternalSystemId" element="tns:ExternalSystemId" />
+    <wsdl:part name="MessageId" element="tns:MessageId" />
+    <wsdl:part name="PublicKey" element="tns:PublicKey" />
+  </wsdl:message>
+  <wsdl:message name="GetApprenticeshipFrameworksResponse">
+    <wsdl:part name="parameters" element="tns:GetApprenticeshipFrameworksResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReferenceData_GetApprenticeshipFrameworks_SystemFaultContractFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SystemFaultContract" />
+  </wsdl:message>
+  <wsdl:message name="GetRegionRequest">
+    <wsdl:part name="parameters" element="tns:GetRegionRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetRegionRequest_Headers">
+    <wsdl:part name="ExternalSystemId" element="tns:ExternalSystemId" />
+    <wsdl:part name="MessageId" element="tns:MessageId" />
+    <wsdl:part name="PublicKey" element="tns:PublicKey" />
+  </wsdl:message>
+  <wsdl:message name="GetRegionResponse">
+    <wsdl:part name="parameters" element="tns:GetRegionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReferenceData_GetRegion_SystemFaultContractFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SystemFaultContract" />
+  </wsdl:message>
+  <wsdl:message name="GetCountiesRequest">
+    <wsdl:part name="parameters" element="tns:GetCountiesRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetCountiesRequest_Headers">
+    <wsdl:part name="ExternalSystemId" element="tns:ExternalSystemId" />
+    <wsdl:part name="MessageId" element="tns:MessageId" />
+    <wsdl:part name="PublicKey" element="tns:PublicKey" />
+  </wsdl:message>
+  <wsdl:message name="GetCountiesResponse">
+    <wsdl:part name="parameters" element="tns:GetCountiesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReferenceData_GetCounties_SystemFaultContractFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SystemFaultContract" />
+  </wsdl:message>
+  <wsdl:message name="GetLocalAuthoritiesRequest">
+    <wsdl:part name="parameters" element="tns:GetLocalAuthoritiesRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetLocalAuthoritiesRequest_Headers">
+    <wsdl:part name="ExternalSystemId" element="tns:ExternalSystemId" />
+    <wsdl:part name="MessageId" element="tns:MessageId" />
+    <wsdl:part name="PublicKey" element="tns:PublicKey" />
+  </wsdl:message>
+  <wsdl:message name="GetLocalAuthoritiesResponse">
+    <wsdl:part name="parameters" element="tns:GetLocalAuthoritiesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReferenceData_GetLocalAuthorities_SystemFaultContractFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SystemFaultContract" />
+  </wsdl:message>
+  <wsdl:portType name="IReferenceData">
+    <wsdl:operation name="GetErrorCodes">
+      <wsdl:input wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetErrorCodes" name="GetErrorCodesRequest" message="tns:GetErrorCodesRequest" />
+      <wsdl:output wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetErrorCodesResponse" name="GetErrorCodesResponse" message="tns:GetErrorCodesResponse" />
+      <wsdl:fault wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetErrorCodesSystemFaultContractFault" name="SystemFaultContractFault" message="tns:IReferenceData_GetErrorCodes_SystemFaultContractFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetApprenticeshipFrameworks">
+      <wsdl:input wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetApprenticeshipFrameworks" name="GetApprenticeshipFrameworksRequest" message="tns:GetApprenticeshipFrameworksRequest" />
+      <wsdl:output wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetApprenticeshipFrameworksResponse" name="GetApprenticeshipFrameworksResponse" message="tns:GetApprenticeshipFrameworksResponse" />
+      <wsdl:fault wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetApprenticeshipFrameworksSystemFaultContractFault" name="SystemFaultContractFault" message="tns:IReferenceData_GetApprenticeshipFrameworks_SystemFaultContractFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRegion">
+      <wsdl:input wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetRegion" name="GetRegionRequest" message="tns:GetRegionRequest" />
+      <wsdl:output wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetRegionResponse" name="GetRegionResponse" message="tns:GetRegionResponse" />
+      <wsdl:fault wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetRegionSystemFaultContractFault" name="SystemFaultContractFault" message="tns:IReferenceData_GetRegion_SystemFaultContractFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCounties">
+      <wsdl:input wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetCounties" name="GetCountiesRequest" message="tns:GetCountiesRequest" />
+      <wsdl:output wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetCountiesResponse" name="GetCountiesResponse" message="tns:GetCountiesResponse" />
+      <wsdl:fault wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetCountiesSystemFaultContractFault" name="SystemFaultContractFault" message="tns:IReferenceData_GetCounties_SystemFaultContractFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLocalAuthorities">
+      <wsdl:input wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetLocalAuthorities" name="GetLocalAuthoritiesRequest" message="tns:GetLocalAuthoritiesRequest" />
+      <wsdl:output wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetLocalAuthoritiesResponse" name="GetLocalAuthoritiesResponse" message="tns:GetLocalAuthoritiesResponse" />
+      <wsdl:fault wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetLocalAuthoritiesSystemFaultContractFault" name="SystemFaultContractFault" message="tns:IReferenceData_GetLocalAuthorities_SystemFaultContractFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IReferenceData" type="tns:IReferenceData">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetErrorCodes">
+      <soap:operation soapAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetErrorCodes" style="document" />
+      <wsdl:input name="GetErrorCodesRequest">
+        <soap:header message="tns:GetErrorCodesRequest_Headers" part="ExternalSystemId" use="literal" />
+        <soap:header message="tns:GetErrorCodesRequest_Headers" part="MessageId" use="literal" />
+        <soap:header message="tns:GetErrorCodesRequest_Headers" part="PublicKey" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetErrorCodesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SystemFaultContractFault">
+        <soap:fault use="literal" name="SystemFaultContractFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetApprenticeshipFrameworks">
+      <soap:operation soapAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetApprenticeshipFrameworks" style="document" />
+      <wsdl:input name="GetApprenticeshipFrameworksRequest">
+        <soap:header message="tns:GetApprenticeshipFrameworksRequest_Headers" part="ExternalSystemId" use="literal" />
+        <soap:header message="tns:GetApprenticeshipFrameworksRequest_Headers" part="MessageId" use="literal" />
+        <soap:header message="tns:GetApprenticeshipFrameworksRequest_Headers" part="PublicKey" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetApprenticeshipFrameworksResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SystemFaultContractFault">
+        <soap:fault use="literal" name="SystemFaultContractFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRegion">
+      <soap:operation soapAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetRegion" style="document" />
+      <wsdl:input name="GetRegionRequest">
+        <soap:header message="tns:GetRegionRequest_Headers" part="ExternalSystemId" use="literal" />
+        <soap:header message="tns:GetRegionRequest_Headers" part="MessageId" use="literal" />
+        <soap:header message="tns:GetRegionRequest_Headers" part="PublicKey" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetRegionResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SystemFaultContractFault">
+        <soap:fault use="literal" name="SystemFaultContractFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetCounties">
+      <soap:operation soapAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetCounties" style="document" />
+      <wsdl:input name="GetCountiesRequest">
+        <soap:header message="tns:GetCountiesRequest_Headers" part="ExternalSystemId" use="literal" />
+        <soap:header message="tns:GetCountiesRequest_Headers" part="MessageId" use="literal" />
+        <soap:header message="tns:GetCountiesRequest_Headers" part="PublicKey" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetCountiesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SystemFaultContractFault">
+        <soap:fault use="literal" name="SystemFaultContractFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetLocalAuthorities">
+      <soap:operation soapAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetLocalAuthorities" style="document" />
+      <wsdl:input name="GetLocalAuthoritiesRequest">
+        <soap:header message="tns:GetLocalAuthoritiesRequest_Headers" part="ExternalSystemId" use="literal" />
+        <soap:header message="tns:GetLocalAuthoritiesRequest_Headers" part="MessageId" use="literal" />
+        <soap:header message="tns:GetLocalAuthoritiesRequest_Headers" part="PublicKey" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetLocalAuthoritiesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SystemFaultContractFault">
+        <soap:fault use="literal" name="SystemFaultContractFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ReferenceDataService">
+    <wsdl:port name="BasicHttpBinding_IReferenceData" binding="tns:BasicHttpBinding_IReferenceData">
+      <soap:address location="http://apprenticeshipvacancymatchingservice.lsc.gov.uk/services/ReferenceData/ReferenceData51.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
