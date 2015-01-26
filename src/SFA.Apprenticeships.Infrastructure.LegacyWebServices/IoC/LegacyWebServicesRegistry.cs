@@ -2,8 +2,10 @@
 {
     using Application.ApplicationUpdate;
     using Application.Candidate;
+    using Application.ReferenceData;
     using Application.Vacancy;
     using Application.VacancyEtl;
+    using Configuration;
     using CreateApplication;
     using CreateCandidate;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -11,9 +13,11 @@
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
     using GetCandidateApplicationStatuses;
+    using LegacyReferenceDataProxy;
     using Mappers;
     using Mappers.Apprenticeships;
     using Mappers.Traineeship;
+    using ReferenceData;
     using StructureMap.Configuration.DSL;
     using VacancyDetail;
     using VacancySummary;
@@ -25,10 +29,12 @@
 
         public LegacyWebServicesRegistry(bool useCache)
         {
+            For<ILegacyServicesConfiguration>().Singleton().Use(LegacyServicesConfiguration.Instance);
             For<IMapper>().Use<LegacyVacancySummaryMapper>().Name = "LegacyWebServices.LegacyVacancySummaryMapper";
             For<IMapper>().Use<LegacyApprenticeshipVacancyDetailMapper>().Name = "LegacyWebServices.LegacyApprenticeshipVacancyDetailMapper";
             For<IMapper>().Use<LegacyTraineeshipVacancyDetailMapper>().Name = "LegacyWebServices.LegacyTraineeshipVacancyDetailMapper";
             For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
+            For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
 
             For<IVacancyIndexDataProvider>()
                 .Use<LegacyVacancyIndexDataProvider>()
@@ -86,6 +92,13 @@
                 .Name = "LegacyCandidateApplicationStatusesProvider";
 
             #endregion
+
+            #region Reference Data Service and Providers
+
+            For<IReferenceDataProvider>().Use<ReferenceDataProvider>();
+
+            #endregion
+
         }
     }
 }

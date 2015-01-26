@@ -1,7 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.ReferenceData
 {
+    using System.Collections.Generic;
+    using Domain.Entities.ReferenceData;
+
     public interface IReferenceDataProvider
     {
-        //todo: add category and sub-category method(s)
+        IEnumerable<Category> GetCategories();
     }
 }

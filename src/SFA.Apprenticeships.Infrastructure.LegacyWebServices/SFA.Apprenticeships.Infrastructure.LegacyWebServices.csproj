@@ -124,6 +124,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\ILegacyServicesConfiguration.cs" />
+    <Compile Include="Configuration\LegacyServicesConfiguration.cs" />
     <Compile Include="CreateApplication\LegacyApplicationProvider.cs" />
     <Compile Include="CreateCandidate\LegacyCandidateProvider.cs" />
     <Compile Include="GetCandidateApplicationStatuses\LegacyCandidateApplicationStatusesProvider.cs" />
