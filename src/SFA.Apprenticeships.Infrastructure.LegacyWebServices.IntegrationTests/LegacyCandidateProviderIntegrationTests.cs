@@ -23,7 +23,6 @@
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
-                //x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
             });
 #pragma warning restore 0618

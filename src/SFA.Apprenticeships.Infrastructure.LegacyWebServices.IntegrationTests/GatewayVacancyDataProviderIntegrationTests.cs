@@ -3,11 +3,11 @@
     using System.Linq;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.Vacancy;
-    using SFA.Apprenticeships.Application.VacancyEtl;
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
-    using SFA.Apprenticeships.Infrastructure.Common.IoC;
-    using SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC;
+    using Application.Vacancy;
+    using Application.VacancyEtl;
+    using Domain.Entities.Vacancies.Apprenticeships;
+    using Common.IoC;
+    using IoC;
     using StructureMap;
 
     [TestFixture]
