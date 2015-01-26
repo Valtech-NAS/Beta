@@ -42,8 +42,14 @@
 
             var vacancyPageCount = _vacancyIndexDataProvider.GetVacancyPageCount();
 
-            Logger.Debug("Retrieved vacancy summary page count of {0}", vacancyPageCount);
-         
+            Logger.Info("Retrieved vacancy summary page count of {0}", vacancyPageCount);
+
+            if (vacancyPageCount == 0)
+            {
+                Logger.Warn("Expected vacancy page count to be greater than zero. Indexes will not be created successfully");
+                return;
+            }
+
             var vacancySumaries = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, vacancyPageCount).ToList();
 
             // Only delete from queue once we have all vacancies from the service without error.
@@ -54,7 +60,7 @@
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 vacancySummaryPage => _messageBus.PublishMessage(vacancySummaryPage));
 
-            Logger.Debug("Queued {0} vacancy summary pages", vacancySumaries.Count());
+            Logger.Info("Queued {0} vacancy summary pages", vacancySumaries.Count());
         }
       
         public void QueueVacancySummaries(VacancySummaryPage vacancySummaryPage)

@@ -38,16 +38,16 @@
                     return;
                 }
 
-                Logger.Debug("Calling vacancy indexer service to create scheduled index");
+                Logger.Info("Calling vacancy indexer service to create scheduled index");
 
                 _apprenticeshipIndexer.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
                 _trainseeshipIndexer.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
 
-                Logger.Debug("Calling vacancy summary processor to queue vacancy pages");
+                Logger.Info("Calling vacancy summary processor to queue vacancy pages");
 
                 _vacancySummaryProcessor.QueueVacancyPages(latestScheduledMessage);
 
-                Logger.Debug("Scheduled index created and vacancy pages queued");
+                Logger.Info("Scheduled index created and vacancy pages queued");
             });
         }
     }
