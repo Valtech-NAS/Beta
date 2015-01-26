@@ -288,53 +288,194 @@
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_ErrorLayout.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\ReferenceDataViewModel.cshtml" />
-    <Content Include="Views\ApprenticeshipSearch\Index.cshtml" />
-    <Content Include="Views\ApprenticeshipSearch\Results.cshtml" />
-    <Content Include="Views\ApprenticeshipSearch\_searchResults.cshtml" />
-    <Content Include="Views\ApprenticeshipSearch\_pagination.cshtml" />
-    <Content Include="Views\ApprenticeshipSearch\Details.cshtml" />
-    <Content Include="Views\Error\NotFound.cshtml" />
-    <Content Include="Views\Error\InternalServerError.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\Apply.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\EditorTemplates\AboutYouViewModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Date.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\Preview.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\DisplayTemplates\AboutYouViewModel.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\EditorTemplates\EmployerQuestionAnswersViewModel.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\EditorTemplates\EducationViewModel.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\DisplayTemplates\EducationViewModel.cshtml" />
-    <Content Include="Views\Shared\ValidationSummary.cshtml" />
-    <Content Include="Views\Register\Index.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\AddressViewModel.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\DateViewModel.cshtml" />
-    <Content Include="Views\Register\Activation.cshtml" />
-    <Content Include="Views\Register\Complete.cshtml" />
-    <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="Views\Register\ForgottenPassword.cshtml" />
-    <Content Include="Views\Register\ResetPassword.cshtml" />
-    <Content Include="Views\Login\Unlock.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\WhatHappensNext.cshtml" />
-    <Content Include="Views\ApprenticeshipSearch\_Apply.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
-    <Content Include="Views\Account\Settings.cshtml" />
-    <Content Include="Views\Home\Privacy.cshtml" />
-    <Content Include="Views\Home\Cookies.cshtml" />
-    <Content Include="Views\Home\Helpdesk.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\DateTimeSaved.cshtml" />
-    <Content Include="Views\ApprenticeshipSearch\_searchUpdate.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\_qualificationsJS.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\_workExperiencesJS.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\_qualificationsNonJS.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\_workExperiencesNonJS.cshtml" />
-    <Content Include="Views\Home\Terms.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_ViewStart.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Home\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_ErrorLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_ErrorLayout.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_Layout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_Layout.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\ReferenceDataViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ReferenceDataViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipSearch\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipSearch\Results.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Results.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipSearch\_searchResults.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_searchResults.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipSearch\_pagination.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_pagination.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipSearch\Details.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Details.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Error\NotFound.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>NotFound.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Error\InternalServerError.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>InternalServerError.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\Apply.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Apply.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ApprenticeshipCandidateViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\EditorTemplates\AboutYouViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AboutYouViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Date.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Date.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\Preview.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Preview.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\DisplayTemplates\AboutYouViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AboutYouViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EmployerQuestionAnswersViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\EditorTemplates\EmployerQuestionAnswersViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EmployerQuestionAnswersViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\EditorTemplates\EducationViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EducationViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\DisplayTemplates\EducationViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EducationViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\ValidationSummary.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ValidationSummary.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Register\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\EditorTemplates\AddressViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AddressViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\EditorTemplates\DateViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>DateViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Register\Activation.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Activation.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Register\Complete.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Complete.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Login\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Register\ForgottenPassword.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ForgottenPassword.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Register\ResetPassword.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ResetPassword.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Login\Unlock.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Unlock.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_LoginPartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_LoginPartial.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\WhatHappensNext.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WhatHappensNext.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipSearch\_Apply.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_Apply.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Account\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Account\Settings.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Settings.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Home\Privacy.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Privacy.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Home\Cookies.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Cookies.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Home\Helpdesk.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Helpdesk.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\DateTimeSaved.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>DateTimeSaved.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipSearch\_searchUpdate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_searchUpdate.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\_qualificationsJS.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_qualificationsJS.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\_workExperiencesJS.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_workExperiencesJS.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\_qualificationsNonJS.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_qualificationsNonJS.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\_workExperiencesNonJS.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_workExperiencesNonJS.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Home\Terms.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Terms.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -344,32 +485,98 @@
     <None Include="Startup\startup.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="Views\Shared\_About.cshtml" />
+    <Content Include="Views\Shared\_About.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_About.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Startup\startup.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="Views\TraineeshipSearch\Overview.cshtml" />
-    <Content Include="Views\TraineeshipApplication\Apply.cshtml" />
-    <Content Include="Views\TraineeshipApplication\_qualificationsJS.cshtml" />
-    <Content Include="Views\TraineeshipApplication\_qualificationsNonJS.cshtml" />
-    <Content Include="Views\TraineeshipApplication\_workExperiencesJS.cshtml" />
-    <Content Include="Views\TraineeshipApplication\_workExperiencesNonJS.cshtml" />
-    <Content Include="Views\TraineeshipApplication\DisplayTemplates\TraineeshipCandidateViewModel.cshtml" />
-    <Content Include="Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml" />
-    <Content Include="Views\TraineeshipApplication\EditorTemplates\EmployerQuestionAnswersViewModel.cshtml" />
-    <Content Include="Views\TraineeshipApplication\WhatHappensNext.cshtml" />
-    <Content Include="Views\TraineeshipSearch\Index.cshtml" />
-    <Content Include="Views\TraineeshipSearch\Results.cshtml" />
-    <Content Include="Views\TraineeshipSearch\_searchResults.cshtml" />
-    <Content Include="Views\TraineeshipSearch\_pagination.cshtml" />
-    <Content Include="Views\TraineeshipSearch\_searchUpdate.cshtml" />
-    <Content Include="Views\Shared\_TraineeshipLayout.cshtml" />
-    <Content Include="Views\Shared\_ApprenticeshipLayout.cshtml" />
-    <Content Include="Views\TraineeshipSearch\Details.cshtml" />
-    <Content Include="Views\TraineeshipSearch\_Apply.cshtml" />
+    <Content Include="Views\TraineeshipSearch\Overview.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Overview.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipApplication\Apply.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Apply.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipApplication\_qualificationsJS.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_qualificationsJS.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipApplication\_qualificationsNonJS.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_qualificationsNonJS.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipApplication\_workExperiencesJS.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_workExperiencesJS.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipApplication\_workExperiencesNonJS.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_workExperiencesNonJS.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipApplication\DisplayTemplates\TraineeshipCandidateViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TraineeshipCandidateViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EmployerQuestionAnswersViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipApplication\EditorTemplates\EmployerQuestionAnswersViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EmployerQuestionAnswersViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipApplication\WhatHappensNext.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WhatHappensNext.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipSearch\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipSearch\Results.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Results.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipSearch\_searchResults.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_searchResults.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipSearch\_pagination.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_pagination.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipSearch\_searchUpdate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_searchUpdate.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_TraineeshipLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_TraineeshipLayout.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_ApprenticeshipLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_ApprenticeshipLayout.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipSearch\Details.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Details.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipSearch\_Apply.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_Apply.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Views\Shared\_Scripts.cshtml" />
-    <Content Include="Views\Account\Terms.cshtml" />
-    <Content Include="Views\Shared\_TermsAndConditions.cshtml" />
+    <Content Include="Views\Account\Terms.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Terms.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_TermsAndConditions.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_TermsAndConditions.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -621,6 +828,351 @@
     <Compile Include="ViewModels\VacancySearch\ApprenticeshipSearchViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\ApprenticeshipVacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\Account\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Account\Settings.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Settings.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Account\Terms.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Terms.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\Apply.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Apply.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\DisplayTemplates\AboutYouViewModel.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AboutYouViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\DisplayTemplates\ApprenticeshipCandidateViewModel.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApprenticeshipCandidateViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\DisplayTemplates\EducationViewModel.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EducationViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployerQuestionAnswersViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\EditorTemplates\AboutYouViewModel.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AboutYouViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\EditorTemplates\EducationViewModel.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EducationViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\EditorTemplates\EmployerQuestionAnswersViewModel.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployerQuestionAnswersViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\Preview.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Preview.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\WhatHappensNext.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WhatHappensNext.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\_qualificationsJS.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_qualificationsJS.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\_qualificationsNonJS.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_qualificationsNonJS.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\_workExperiencesJS.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_workExperiencesJS.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\_workExperiencesNonJS.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_workExperiencesNonJS.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipSearch\Details.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Details.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipSearch\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipSearch\Results.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Results.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipSearch\_Apply.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_Apply.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipSearch\_pagination.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_pagination.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipSearch\_searchResults.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_searchResults.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipSearch\_searchUpdate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_searchUpdate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Error\InternalServerError.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InternalServerError.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Error\NotFound.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotFound.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\Cookies.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cookies.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\Helpdesk.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Helpdesk.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\Privacy.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Privacy.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\Terms.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Terms.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Login\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Login\Unlock.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Unlock.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Register\Activation.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Activation.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Register\Complete.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Complete.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Register\ForgottenPassword.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ForgottenPassword.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Register\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Register\ResetPassword.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResetPassword.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Date.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Date.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\DateTimeSaved.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DateTimeSaved.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\ReferenceDataViewModel.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReferenceDataViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\AddressViewModel.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddressViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\DateViewModel.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DateViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\ValidationSummary.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ValidationSummary.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_About.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_About.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_ApprenticeshipLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_ApprenticeshipLayout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_ErrorLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_ErrorLayout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_Layout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_Layout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_LoginPartial.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_LoginPartial.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_TermsAndConditions.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_TermsAndConditions.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_TraineeshipLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_TraineeshipLayout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipApplication\Apply.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Apply.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployerQuestionAnswersViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipApplication\DisplayTemplates\TraineeshipCandidateViewModel.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TraineeshipCandidateViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipApplication\EditorTemplates\EmployerQuestionAnswersViewModel.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployerQuestionAnswersViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipApplication\WhatHappensNext.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WhatHappensNext.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipApplication\_qualificationsJS.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_qualificationsJS.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipApplication\_qualificationsNonJS.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_qualificationsNonJS.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipApplication\_workExperiencesJS.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_workExperiencesJS.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipApplication\_workExperiencesNonJS.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_workExperiencesNonJS.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipSearch\Details.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Details.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipSearch\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipSearch\Overview.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Overview.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipSearch\Results.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Results.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipSearch\_Apply.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_Apply.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipSearch\_pagination.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_pagination.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipSearch\_searchResults.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_searchResults.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipSearch\_searchUpdate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_searchUpdate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\_ViewStart.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_ViewStart.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

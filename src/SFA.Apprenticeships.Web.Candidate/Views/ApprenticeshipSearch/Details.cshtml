@@ -128,7 +128,7 @@
                             }
                         @if (Model.VacancyLocationType != ApprenticeshipLocationType.National && !Model.IsMultiLocation)
                         {
-                            <div itemscope itemtype="http://schema.org/PostalAddress">
+                            <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
                                 <h3 class="bold-small">Address</h3>
                                 <div itemprop="address">
                                     <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</p>
@@ -144,7 +144,7 @@
                 <div class="grid grid-1-2">
                     @if (Model.VacancyLocationType != ApprenticeshipLocationType.National && !Model.IsMultiLocation)
                     {
-                        <div class="ad-details__map">
+                        <div id="vacancy-map" class="ad-details__map">
                             <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
                             <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.VacancyAddress.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
@@ -157,7 +157,7 @@
             <h2 class="heading-large">Training provider</h2>
             @if (Model.IsNasProvider)
             {
-                <p>Training provider selection is currently in progress</p>
+                <p id="vacancy-nas-provider">Training provider selection is currently in progress</p>
             }
             else
             {
@@ -172,7 +172,7 @@
                             <p id="vacancy-framework">@Html.Raw(Model.Framework)</p>
                             @if (Model.ProviderSectorPassRate.HasValue)
                             {
-                                <p>The training provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprenticeship training.</p>
+                                <p id="vacancy-provider-sector-pass-rate">The training provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprenticeship training.</p>
                             }
                         </div>
                     </div>
@@ -207,10 +207,10 @@
 
         if (Model.ApplyViaEmployerWebsite && !string.IsNullOrWhiteSpace(Model.ApplicationInstructions))
         {      
-            <section id="application-instructions" class="section-border">
+            <section id="application-instructions-container" class="section-border">
                 <h2 class="heading-large">Employer's Application Instructions</h2>
                 <div class="text">
-                    <p>@Model.ApplicationInstructions</p>
+                    <p id="application-instructions">@Model.ApplicationInstructions</p>
                 </div>
             </section>
         }
