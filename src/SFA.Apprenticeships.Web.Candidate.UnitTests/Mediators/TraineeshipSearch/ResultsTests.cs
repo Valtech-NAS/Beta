@@ -113,7 +113,6 @@
 
             viewModel.Distances.Should().NotBeNull();
             viewModel.Distances.Count().Should().BeGreaterThan(0);
-            viewModel.Distances.SelectedValue.Should().Be(searchViewModel.WithinDistance);
         }
 
         [Test]
