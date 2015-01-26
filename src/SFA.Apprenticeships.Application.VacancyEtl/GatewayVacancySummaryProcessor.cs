@@ -42,6 +42,7 @@
             if (vacancyPageCount == 0)
             {
                 Logger.Warn("Expected vacancy page count to be greater than zero. Indexes will not be created successfully");
+                _processControlQueue.DeleteMessage(scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
                 return;
             }
 
