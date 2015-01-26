@@ -7,5 +7,7 @@
     public interface IReferenceDataService
     {
         IEnumerable<ReferenceDataItem> GetReferenceData(string type);
+
+        IEnumerable<Category> GetCategories();
     }
 }

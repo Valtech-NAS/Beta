@@ -19,5 +19,10 @@
             throw new NotImplementedException();
             //return _service.GetReferenceData(type);
         }
+
+        public IEnumerable<Category> GetCategories()
+        {
+            return _service.GetCategories();
+        }
     }
 }
