@@ -36,10 +36,10 @@
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public string VacancyReference { get; set; }
 
-        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        [ElasticProperty(Index = FieldIndexOption.Analyzed)]
         public string Sector { get; set; }
 
-        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        [ElasticProperty(Index = FieldIndexOption.Analyzed)]
         public string Framework { get; set; }
     }
 }
