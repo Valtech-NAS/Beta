@@ -21,5 +21,10 @@
             public const string WhiteList = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Location " + Whitelists.NameWhitelist.ErrorText;
         }
+
+        public static class CategoryMessages
+        {
+            public const string RequiredErrorText = "Please select a category";
+        }
     }
 }

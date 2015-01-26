@@ -1,4 +1,5 @@
-﻿@model ApprenticeshipSearchViewModel
+﻿@using SFA.Apprenticeships.Web.Candidate.Extensions
+@model ApprenticeshipSearchViewModel
 
 <section class="grid grid-1-3">
     <div>
@@ -6,49 +7,68 @@
 
             <legend class="heading-medium mob-collpanel-trigger" id="editSearchToggle">Edit search</legend>
             <div class="mob-collpanel toggle-content--mob" id="editSearchPanel">
+                <nav class="tabbed-nav">
+                    @{
+                        var searchTabControlUrl = Url.ApprenticeshipSearchViewModelAction("results", new ApprenticeshipSearchViewModel(Model) {SearchMode = ApprenticeshipSearchMode.Keyword});
+                        var browseTabControlUrl = Url.ApprenticeshipSearchViewModelAction("results", new ApprenticeshipSearchViewModel(Model) {SearchMode = ApprenticeshipSearchMode.Category});
+                        var searchTabControlClass = "tabbed-tab" + (Model.SearchMode == ApprenticeshipSearchMode.Keyword ? " active" : "");
+                        var browseTabControlClass = "tabbed-tab" + (Model.SearchMode == ApprenticeshipSearchMode.Category ? " active" : "");
+                    }
+                    <a href="@searchTabControlUrl" id="searchTabControl" class="@searchTabControlClass" tab="#tab1">Search</a>
+                    <a href="@browseTabControlUrl" id="browseTabControl" class="@browseTabControlClass" tab="#tab2">Browse</a>
+                </nav>
+                <div class="tabbed-content active">
 
-                @Html.FormTextFor(m => m.Keywords, hintText: "")
-                @Html.FormTextFor(m => m.Location, hintText: "")
+                    @Html.Partial("_categoriesAndSubCategories", Model)
 
-                @if (Model.LocationSearches != null && Model.LocationSearches.Length > 0)
-                {
-                    <details open class="open form-group form-group-compound" id="locationSuggestions">
-                        <summary tabindex="0" aria-describedby="locSuggestionsAria">Did you mean:</summary>
-                        <p class="visuallyhidden" aria-live="polite" id="locSuggestionsAria"></p>
-                        <div class="detail-content panel-indent">
-                            <ul id="location-suggestions" class="list-text list-max-11">
-                                @foreach (var locationSearch in Model.LocationSearches)
-                                {
-                                    <li><a href="@Url.Action("results", locationSearch)">@locationSearch.Location</a></li>
-                                }
-                            </ul>
-                        </div>
-                    </details>
-                }
+                    @if (Model.SearchMode == ApprenticeshipSearchMode.Keyword)
+                    {
+                        @Html.FormTextFor(m => m.Keywords, hintText: "", containerHtmlAttributes: new {@class = "tabbed-element tab1" })
+                    }
+                    else
+                    {
+                        //TODO: create style for tabbed-element that defaults to hidden like tabbed-content. Remove inline style
+                        @Html.FormTextFor(m => m.Keywords, hintText: "", containerHtmlAttributes: new {@class = "tabbed-element tab1", style = "display: none" })
+                    }
 
-                @* TODO::Create a form control for this. *@<div class="form-group">
-                    <label for="loc-within" class="form-label">Within</label>
-                    @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new {@id = "loc-within", @name = "WithinDistance"})
+                    @Html.FormTextFor(m => m.Location, hintText: "")
+
+                    @if (Model.LocationSearches != null && Model.LocationSearches.Length > 0)
+                    {
+                        <details open class="open form-group form-group-compound" id="locationSuggestions">
+                            <summary tabindex="0" aria-describedby="locSuggestionsAria">Did you mean:</summary>
+                            <p class="visuallyhidden" aria-live="polite" id="locSuggestionsAria"></p>
+                            <div class="detail-content panel-indent">
+                                <ul id="location-suggestions" class="list-text list-max-11">
+                                    @foreach (var locationSearch in Model.LocationSearches)
+                                    {
+                                        <li><a href="@Url.Action("results", locationSearch)">@locationSearch.Location</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </details>
+                    }@* TODO::Create a form control for this. *@<div class="form-group">
+                        <label for="loc-within" class="form-label">Within</label>
+                        @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new {@id = "loc-within", @name = "WithinDistance"})
+                    </div>
+                    <div class="form-group">
+                        <label for="apprenticeship-level" class="form-label">Apprenticeship Level</label>
+                        @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new {@id = "apprenticeship-level", @name = "ApprenticeshipLevel"})
+                    </div>
+                    <div class="form-group">
+                        <button class="button no-btm-margin" id="search-button" name="SearchAction" value="Search">Update results</button>
+                    </div>
+                    <div class="form-group map-container hide-nojs">
+                        <div id="map-canvas" style="width: 100%; height: 250px"></div>
+                    </div>
+
+                    @Html.HiddenFor(m => m.Latitude)
+                    @Html.HiddenFor(m => m.Longitude)
+                    @Html.Hidden("Hash", Model.LatLonLocHash())
+                    @Html.HiddenFor(m => m.SearchMode)
+
                 </div>
-                <div class="form-group">
-                    <label for="apprenticeship-level" class="form-label">Apprenticeship Level</label>
-                    @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel" })
-                </div>
-                <div class="form-group">
-                    <button class="button no-btm-margin" id="search-button" name="SearchAction" value="Search">Update results</button>
-                </div>
-                <div class="form-group map-container hide-nojs">
-                    <div id="map-canvas" style="width: 100%; height: 250px"></div>
-                </div>
-
-                @Html.HiddenFor(m => m.Latitude)
-                @Html.HiddenFor(m => m.Longitude)
-                @Html.Hidden("Hash", Model.LatLonLocHash())
-
-
             </div>
         </fieldset>
     </div>
-    
-
 </section>

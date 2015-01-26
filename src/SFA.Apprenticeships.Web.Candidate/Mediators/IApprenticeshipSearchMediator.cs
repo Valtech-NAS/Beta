@@ -5,7 +5,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators
 
     public interface IApprenticeshipSearchMediator
     {
-        MediatorResponse<ApprenticeshipSearchViewModel> Index();
+        MediatorResponse<ApprenticeshipSearchViewModel> Index(ApprenticeshipSearchMode searchMode);
 
         MediatorResponse<ApprenticeshipSearchResponseViewModel> Results(ApprenticeshipSearchViewModel model);
 

@@ -172,6 +172,11 @@
                     {
                         nonNationlResponse.Vacancies = nationalResponse.Vacancies;
                         nonNationlResponse.VacancySearch.LocationType = ApprenticeshipLocationType.National;
+                        SetAggregationResults(nonNationlResponse, nationalResults.AggregationResults);
+                    }
+                    else
+                    {
+                        SetAggregationResults(nonNationlResponse, nonNationalResults.AggregationResults);
                     }
 
                     return nonNationlResponse;
@@ -184,7 +189,12 @@
 
                 if (nationalResults.Total == 0 && nonNationalResults.Total != 0)
                 {
-                    nationalResponse.Vacancies = nonNationlResponse.Vacancies;                   
+                    nationalResponse.Vacancies = nonNationlResponse.Vacancies;
+                    SetAggregationResults(nonNationlResponse, nonNationalResults.AggregationResults);
+                }
+                else
+                {
+                    SetAggregationResults(nonNationlResponse, nationalResults.AggregationResults);
                 }
 
                 return nationalResponse;
@@ -199,6 +209,30 @@
             {
                 Logger.Error("Find apprenticeship vacancies failed. Check inner details for more info", e);
                 throw;
+            }
+        }
+
+        private static void SetAggregationResults(ApprenticeshipSearchResponseViewModel response, IEnumerable<AggregationResult> aggregationResults)
+        {
+            if (aggregationResults == null || response.VacancySearch.Categories == null) return;
+
+            var aggregationResultsList = aggregationResults.ToList();
+
+            foreach (var category in response.VacancySearch.Categories)
+            {
+                foreach (var subCategory in category.SubCategories)
+                {
+                    var aggregationResult = aggregationResultsList.SingleOrDefault(ar => ar.Code == subCategory.CodeName);
+                    if (aggregationResult != null) subCategory.Count = aggregationResult.Count;
+                }
+            }
+
+            foreach (var category in response.VacancySearch.Categories.Where(c => c.SubCategories.Any(sc => sc.Count.HasValue)))
+            {
+                foreach (var subCategory in category.SubCategories)
+                {
+                    if (!subCategory.Count.HasValue) subCategory.Count = 0;
+                }
             }
         }
 
@@ -294,8 +328,8 @@
                     SortType = string.IsNullOrWhiteSpace(search.Keywords) ? VacancySortType.ClosingDate : VacancySortType.Relevancy,
                     VacancyLocationType = ApprenticeshipLocationType.National,
                     ApprenticeshipLevel = search.ApprenticeshipLevel,
-                    Sector = search.Sector,
-                    Frameworks = search.Frameworks
+                    Sector = search.Category,
+                    Frameworks = search.SubCategories
                 },
                 new ApprenticeshipSearchParameters
                 {
@@ -307,8 +341,8 @@
                     SortType = search.SortType,
                     VacancyLocationType = ApprenticeshipLocationType.NonNational,
                     ApprenticeshipLevel = search.ApprenticeshipLevel,
-                    Sector = search.Sector,
-                    Frameworks = search.Frameworks
+                    Sector = search.Category,
+                    Frameworks = search.SubCategories
                 }
             };
 

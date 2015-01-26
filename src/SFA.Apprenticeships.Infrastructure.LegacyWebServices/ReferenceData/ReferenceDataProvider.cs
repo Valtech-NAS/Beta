@@ -58,7 +58,7 @@
                             CodeName = d.ApprenticeshipFrameworkCodeName,
                             ShortName = d.ApprenticeshipFrameworkShortName,
                             FullName = d.ApprenticeshipFrameworkFullName
-                        });
+                        }).ToList();
 
                 categories.Add(topLevelCategory);
             }
