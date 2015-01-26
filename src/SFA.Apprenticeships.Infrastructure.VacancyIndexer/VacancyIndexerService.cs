@@ -48,7 +48,7 @@
 
         public void CreateScheduledIndex(DateTime scheduledRefreshDateTime)
         {
-            Logger.Debug("Creating new vacancy search index for date: {0}", scheduledRefreshDateTime);
+            Logger.Info("Creating new vacancy search index for date: {0}", scheduledRefreshDateTime);
 
             var indexAlias = GetIndexAlias();
             var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
@@ -92,7 +92,7 @@
 
                 client.Map<TDestinationSummary>(p => p.Index(newIndexName).MapFromAttributes().Properties(prop =>
                     prop.GeoPoint(g => g.Name(n => n.Location))));
-                Logger.Debug("Created new vacancy search index named: {0}", newIndexName);
+                Logger.Info("Created new vacancy search index named: {0}", newIndexName);
             }
             else
             {

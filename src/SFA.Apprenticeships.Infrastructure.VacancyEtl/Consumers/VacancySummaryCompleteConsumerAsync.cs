@@ -45,9 +45,9 @@
             {
                 if (_apprenticeshipIndexer.IsIndexCorrectlyCreated(updateComplete.ScheduledRefreshDateTime))
                 {
-                    Logger.Debug("Swapping apprenticeship index alias after vacancy summary update completed");
+                    Logger.Info("Swapping apprenticeship index alias after vacancy summary update completed");
                     _apprenticeshipIndexer.SwapIndex(updateComplete.ScheduledRefreshDateTime);
-                    Logger.Debug("Index apprenticeship swapped after vacancy summary update completed");
+                    Logger.Info("Index apprenticeship swapped after vacancy summary update completed");
                     IncrementVacancyIndexPerformanceCounter();
                 }
                 else
@@ -57,9 +57,9 @@
 
                 if (_trainseeshipIndexer.IsIndexCorrectlyCreated(updateComplete.ScheduledRefreshDateTime))
                 {
-                    Logger.Debug("Swapping traineeship index alias after vacancy summary update completed");
+                    Logger.Info("Swapping traineeship index alias after vacancy summary update completed");
                     _trainseeshipIndexer.SwapIndex(updateComplete.ScheduledRefreshDateTime);
-                    Logger.Debug("Index traineeship swapped after vacancy summary update completed");
+                    Logger.Info("Index traineeship swapped after vacancy summary update completed");
                     IncrementVacancyIndexPerformanceCounter();
                 }
                 else

@@ -31,9 +31,9 @@
 
             if (vacancySummaryPage.PageNumber == vacancySummaryPage.TotalPages)
             {
-                Logger.Debug("Vacancy ETL Queue completed: {0} vacancy summary pages queued ", vacancySummaryPage.TotalPages);
+                Logger.Info("Vacancy ETL Queue completed: {0} vacancy summary pages queued ", vacancySummaryPage.TotalPages);
 
-                Logger.Debug("Publishing VacancySummaryUpdateComplete message to queue");
+                Logger.Info("Publishing VacancySummaryUpdateComplete message to queue");
                 
                 var vsuc = new VacancySummaryUpdateComplete
                 {
@@ -42,7 +42,7 @@
 
                 _messageBus.PublishMessage(vsuc);
 
-                Logger.Debug("Published VacancySummaryUpdateComplete message published to queue");
+                Logger.Info("Published VacancySummaryUpdateComplete message published to queue");
             }
         }
     }
