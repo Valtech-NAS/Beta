@@ -34,5 +34,9 @@
         public SelectList ApprenticeshipLevels { get; set; }
 
         public string ApprenticeshipLevel { get; set; }
+
+        public string Sector { get; set; }
+
+        public string[] Frameworks { get; set; }
     }
 }
