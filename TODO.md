@@ -31,6 +31,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - refactor: vacancy ETL process (simplify to process pages immediately? TBD. current approach facilitates multiple data sources)
 - additional mongo indexes for app status and date updated (TBC: not sure how effective this would be - re. Alan)
 - Multiple PreFetchCount values for each queue. Intetrnal processes should be able to have a much higher value than ones that talk to the gateway
+- Enums should be serialized to strings into mongo (rather than numeric enum values)
 
 ## Cross cutting ##
 
