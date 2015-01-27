@@ -264,11 +264,7 @@
                         break;
                 }
 
-                
-
                 s.Aggregations(a => a.Terms(FrameworkAggregationName, st => st.Field(o => o.FrameworkCode).Size(0)));
-
-                var json = System.Text.Encoding.UTF8.GetString(client.Serializer.Serialize(s));
 
                 return s;
             });
