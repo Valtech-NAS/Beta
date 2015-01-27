@@ -59,6 +59,7 @@
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
                     case Codes.ApprenticeshipSearch.Results.ExactMatchFound:
+                        ViewBag.SearchReturnUrl = null;
                         return RedirectToAction("Details", response.Parameters);
                     case Codes.ApprenticeshipSearch.Results.Ok:
                         ModelState.Remove("Location");
