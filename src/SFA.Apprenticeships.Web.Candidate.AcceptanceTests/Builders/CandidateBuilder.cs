@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
 {
     using System;
+    using System.Configuration;
     using Domain.Entities.Candidates;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using StructureMap;
 
@@ -28,9 +30,11 @@
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             var repo = ObjectFactory.GetInstance<ICandidateWriteRepository>();
             var repoRead = ObjectFactory.GetInstance<ICandidateReadRepository>();
+            var configuration = ObjectFactory.GetInstance<IConfigurationManager>();
 #pragma warning restore 0618
 
             Candidate.RegistrationDetails = RegistrationBuilder.Build();
+            Candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = configuration.GetAppSetting<string>("TermsAndConditionsVersion");
             Candidate.CommunicationPreferences = new CommunicationPreferences();
 
             var candidateInRepo = repoRead.Get(Candidate.RegistrationDetails.EmailAddress);
