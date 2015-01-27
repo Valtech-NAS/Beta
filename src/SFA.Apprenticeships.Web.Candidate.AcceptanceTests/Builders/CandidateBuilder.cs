@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
 {
     using System;
-    using System.Configuration;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;

@@ -1268,7 +1268,7 @@ this.FeatureBackground();
 #line 402
  testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 403
- testRunner.When("I navigate to the details of the vacancy 445650", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I navigate to the details of the apprenticeship vacancy 445650", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 404
  testRunner.Then("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 405
@@ -1346,7 +1346,7 @@ this.FeatureBackground();
 #line 426
 testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 427
- testRunner.When("I navigate to the details of the vacancy 445650", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I navigate to the details of the apprenticeship vacancy 445650", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 428
  testRunner.Then("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 429
@@ -1420,7 +1420,7 @@ this.FeatureBackground();
 #line 451
  testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 452
- testRunner.When("I navigate to the details of the vacancy 445650", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I navigate to the details of the apprenticeship vacancy 445650", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 453
  testRunner.Then("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 454
@@ -1483,7 +1483,7 @@ this.FeatureBackground();
 #line 470
  testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 471
- testRunner.When("I navigate to the details of the vacancy 445650", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I navigate to the details of the apprenticeship vacancy 445650", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 472
  testRunner.Then("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 473

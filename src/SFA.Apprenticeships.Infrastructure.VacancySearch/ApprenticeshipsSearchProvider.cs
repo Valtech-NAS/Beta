@@ -10,18 +10,18 @@
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
-    using JetBrains.Annotations;
     using Nest;
     using Newtonsoft.Json.Linq;
     using NLog;
 
-    public class ApprenticeshipsSearchProvider : IVacancySearchProvider<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>
+    public class ApprenticeshipsSearchProvider :
+        IVacancySearchProvider<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>
     {
         private const string FrameworkAggregationName = "Frameworks";
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
-        private readonly IMapper _vacancySearchMapper;
         private readonly SearchConfiguration _searchConfiguration;
+        private readonly IMapper _vacancySearchMapper;
 
         public ApprenticeshipsSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory,
             IMapper vacancySearchMapper,
@@ -42,7 +42,9 @@
                 indexName);
 
             var search = PerformSearch(parameters, client, indexName, documentTypeName);
-            var responses = _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryResponse>>(search.Documents).ToList();
+            var responses =
+                _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryResponse>>
+                    (search.Documents).ToList();
 
             responses.ForEach(r =>
             {
@@ -71,7 +73,35 @@
 
             var aggregationResults = GetAggregationResultsFrom(search.Aggs);
 
-            var results = new SearchResults<ApprenticeshipSummaryResponse>(search.Total, parameters.PageNumber, responses, aggregationResults);
+            var results = new SearchResults<ApprenticeshipSummaryResponse>(search.Total, parameters.PageNumber,
+                responses, aggregationResults);
+
+            return results;
+        }
+
+
+        public SearchResults<ApprenticeshipSummaryResponse> FindExactMatchVacancy(
+            ApprenticeshipSearchParameters parameters)
+        {
+            var client = _elasticsearchClientFactory.GetElasticClient();
+            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (ApprenticeshipSummary));
+            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (ApprenticeshipSummary));
+
+            Logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
+                indexName);
+
+            var searchResults = client.Search<ApprenticeshipSummary>(s => s
+                .Index(indexName)
+                .Type(documentTypeName)
+                .Query(
+                    q =>
+                        q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, parameters.VacancyReference)))));
+
+            var responses =
+                _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryResponse>>
+                    (searchResults.Documents).ToList();
+            var results = new SearchResults<ApprenticeshipSummaryResponse>(searchResults.Total, parameters.PageNumber,
+                responses, null);
 
             return results;
         }
@@ -83,28 +113,8 @@
                     .Items.Select(bucket => new AggregationResult {Code = bucket.Key, Count = bucket.DocCount});
         }
 
-
-        public SearchResults<ApprenticeshipSummaryResponse> FindExactMatchVacancy(ApprenticeshipSearchParameters parameters)
-        {
-            var client = _elasticsearchClientFactory.GetElasticClient();
-            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary));
-            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(ApprenticeshipSummary));
-
-            Logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
-                indexName);
-
-            var searchResults = client.Search<ApprenticeshipSummary>(s => s
-                .Index(indexName)
-                .Type(documentTypeName)
-                .Query(q => q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, parameters.VacancyReference)))));
-
-            var responses = _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryResponse>>(searchResults.Documents).ToList();
-            var results = new SearchResults<ApprenticeshipSummaryResponse>(searchResults.Total, parameters.PageNumber, responses, null);
-
-            return results;
-        }
-
-        private ISearchResponse<ApprenticeshipSummary> PerformSearch(ApprenticeshipSearchParameters parameters, ElasticClient client, string indexName,
+        private ISearchResponse<ApprenticeshipSummary> PerformSearch(ApprenticeshipSearchParameters parameters,
+            ElasticClient client, string indexName,
             string documentTypeName)
         {
             var search = client.Search<ApprenticeshipSummary>(s =>
@@ -189,9 +199,11 @@
                             m => m.OnField(f => f.VacancyLocationType).Query(parameters.VacancyLocationType.ToString()));
                     query = query && queryVacancyLocation;
 
-                    if (!string.IsNullOrWhiteSpace(parameters.ApprenticeshipLevel) && parameters.ApprenticeshipLevel != "All")
+                    if (!string.IsNullOrWhiteSpace(parameters.ApprenticeshipLevel) &&
+                        parameters.ApprenticeshipLevel != "All")
                     {
-                        var queryClause = q.Match(m => m.OnField(f => f.ApprenticeshipLevel).Query(parameters.ApprenticeshipLevel));
+                        var queryClause =
+                            q.Match(m => m.OnField(f => f.ApprenticeshipLevel).Query(parameters.ApprenticeshipLevel));
                         query = query && queryClause;
                     }
 
@@ -210,7 +222,7 @@
                         break;
                     case VacancySortType.ClosingDate:
                         s.Sort(v => v.OnField(f => f.ClosingDate).Ascending());
-                        if (parameters.Location == null) 
+                        if (parameters.Location == null)
                         {
                             break;
                         }

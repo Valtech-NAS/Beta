@@ -135,7 +135,7 @@ Scenario: When searching by location then adding keyword and searching again the
         | SearchResultItemsCount         | Greater Than | 0                                |
         | SortOrderingDropDownItemsCount | Equals       | 3                                |
         | SortOrderingDropDownItemsText  | Equals       | Best Match,Closing Date,Distance |
-        | SortOrderingDropDown           | Equals       | Distance                         |
+        | SortOrderingDropDown           | Equals       | Best Match                       |
 
 #Inclusion of nationwide vacancies in results superceeded by US500
 @US449 @SmokeTests

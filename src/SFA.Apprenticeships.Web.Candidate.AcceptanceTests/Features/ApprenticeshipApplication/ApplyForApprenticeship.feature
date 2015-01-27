@@ -400,7 +400,7 @@ Scenario: As a candidate I would like to see my apprenticeship application as wi
 @US687
 Scenario: As a candidate I want to know that I have to add when recording qualifications
 	Given I have registered a new candidate
-	When I navigate to the details of the vacancy 445650
+	When I navigate to the details of the apprenticeship vacancy 445650
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApprenticeshipApplicationPage page
@@ -424,7 +424,7 @@ Scenario: As a candidate I want to know that I have to add when recording qualif
 @US687
 Scenario: As a candidate I dont want to see the qualifications warning after adding a qualification
 Given I have registered a new candidate
-	When I navigate to the details of the vacancy 445650
+	When I navigate to the details of the apprenticeship vacancy 445650
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApprenticeshipApplicationPage page
@@ -449,7 +449,7 @@ Given I have registered a new candidate
 @US687
 Scenario: As a candidate I want to know that I have to add when recording work experience
 	Given I have registered a new candidate
-	When I navigate to the details of the vacancy 445650
+	When I navigate to the details of the apprenticeship vacancy 445650
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApprenticeshipApplicationPage page
@@ -468,7 +468,7 @@ Scenario: As a candidate I want to know that I have to add when recording work e
 @US687
 Scenario: As a candidate I dont want to see the work experience warning after adding a work experience
 	Given I have registered a new candidate
-	When I navigate to the details of the vacancy 445650
+	When I navigate to the details of the apprenticeship vacancy 445650
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApprenticeshipApplicationPage page
