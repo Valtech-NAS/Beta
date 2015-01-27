@@ -17,18 +17,21 @@
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly ILegacyApplicationProvider _legacyApplicationProvider;
-        private readonly ITraineeshipApplicationReadRepository _applicationReadApplicationReadRepository;
+        private readonly ITraineeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
+        private readonly ITraineeshipApplicationWriteRepository _traineeeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IMessageBus _messageBus;
 
         public SubmitTraineeshipApplicationRequestConsumerAsync(
             ILegacyApplicationProvider legacyApplicationProvider,
-            ITraineeshipApplicationReadRepository applicationReadApplicationReadRepository,
+            ITraineeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
+            ITraineeshipApplicationWriteRepository traineeeshipApplicationWriteRepository,
             ICandidateReadRepository candidateReadRepository,
             IMessageBus messageBus)
         {
             _legacyApplicationProvider = legacyApplicationProvider;
-            _applicationReadApplicationReadRepository = applicationReadApplicationReadRepository;
+            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
+            _traineeeshipApplicationWriteRepository = traineeeshipApplicationWriteRepository;
             _candidateReadRepository = candidateReadRepository;
             _messageBus = messageBus;
         }
@@ -61,7 +64,7 @@
 
         public void CreateApplication(SubmitTraineeshipApplicationRequest request)
         {
-            var applicationDetail = _applicationReadApplicationReadRepository.Get(request.ApplicationId, true);
+            var applicationDetail = _apprenticeshipApplicationReadRepository.Get(request.ApplicationId, true);
 
             try
             {
@@ -77,6 +80,7 @@
                 else
                 {
                     applicationDetail.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(applicationDetail);
+                    _traineeeshipApplicationWriteRepository.Save(applicationDetail);
                 }
             }
             catch (CustomException ex)
