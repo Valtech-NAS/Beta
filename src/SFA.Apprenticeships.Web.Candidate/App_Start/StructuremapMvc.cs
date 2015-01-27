@@ -34,7 +34,7 @@ namespace SFA.Apprenticeships.Web.Candidate
         public static void Start()
         {
             var config = new ConfigurationManager();
-            string useCacheSetting = config.TryGetAppSetting("UseCaching");
+            var useCacheSetting = config.TryGetAppSetting("UseCaching");
             bool useCache;
             bool.TryParse(useCacheSetting, out useCache);
 

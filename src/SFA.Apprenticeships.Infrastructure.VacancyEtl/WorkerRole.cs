@@ -6,6 +6,9 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using System.ServiceModel;
     using System.Threading;
     using Azure.Common.IoC;
+    using Caching.Azure.IoC;
+    using Caching.Memory.IoC;
+    using Common.Configuration;
     using Common.IoC;
     using Consumers;
     using EasyNetQ;
@@ -61,9 +64,13 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
         private void Initialise()
         {
             VersionLogging.SetVersion();
-
             try
             {
+                var config = new ConfigurationManager();
+                var useCacheSetting = config.TryGetAppSetting("UseCaching");
+                bool useCache;
+                bool.TryParse(useCacheSetting, out useCache);
+
 #pragma warning disable 0618
                 // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
                 ObjectFactory.Initialize(x =>
@@ -72,7 +79,9 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                     x.AddRegistry<AzureCommonRegistry>();
                     x.AddRegistry<VacancyIndexerRegistry>();
                     x.AddRegistry<RabbitMqRegistry>();
-                    x.AddRegistry<LegacyWebServicesRegistry>();
+                    x.AddRegistry<AzureCacheRegistry>();
+                    x.AddRegistry<MemoryCacheRegistry>();
+                    x.AddRegistry(new LegacyWebServicesRegistry(useCache));
                     x.AddRegistry<GatewayVacancyEtlRegistry>();
                     x.AddRegistry<ElasticsearchCommonRegistry>();
                     x.AddRegistry<PerformanceCounterRegistry>();

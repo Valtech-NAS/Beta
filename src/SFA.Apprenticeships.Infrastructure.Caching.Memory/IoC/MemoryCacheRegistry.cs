@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Infrastructure.Caching.Memory.IoC
     {
         public MemoryCacheRegistry()
         {
-            For<ICacheService>().Singleton().Use<MemoryCacheService>();
+            For<ICacheService>().Singleton().Use<MemoryCacheService>().Name = "MemoryCacheService";
         }
     }
 }

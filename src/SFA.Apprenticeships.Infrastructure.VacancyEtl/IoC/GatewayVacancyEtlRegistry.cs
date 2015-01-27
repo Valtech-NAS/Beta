@@ -24,6 +24,7 @@
                 .Use<VacancyAboutToExpireConsumerAsync>()
                 .Ctor<IMapper>()
                 .Named("VacancyEtlMapper");
+
             For<IReferenceDataService>().Use<ReferenceDataService>();
         }
     }

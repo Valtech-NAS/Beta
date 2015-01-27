@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Infrastructure.Caching.Azure.IoC
     {
         public AzureCacheRegistry()
         {
-            For<ICacheService>().Singleton().Use<AzureCacheService>();
+            For<ICacheService>().Singleton().Use<AzureCacheService>().Name = "AzureCacheService";
         }
     }
 }
