@@ -207,6 +207,16 @@
                         query = query && queryClause;
                     }
 
+                    if (parameters.Location != null)
+                    {
+                        var queryClause = q.Filtered(qf => qf.Filter(f => f
+                            .GeoDistance(vs => vs
+                                .Location, descriptor => descriptor
+                                    .Location(parameters.Location.GeoPoint.Latitude, parameters.Location.GeoPoint.Longitude)
+                                    .Distance(parameters.SearchRadius, GeoUnit.Miles))));
+                        query = query && queryClause;
+                    }
+
                     return query;
                 });
 
@@ -254,20 +264,15 @@
                         break;
                 }
 
+                
+
                 s.Aggregations(a => a.Terms(FrameworkAggregationName, st => st.Field(o => o.FrameworkCode).Size(0)));
 
-                if (parameters.Location != null)
-                {
-                    s.Filter(f => f
-                        .GeoDistance(vs => vs
-                            .Location, descriptor => descriptor
-                                .Location(parameters.Location.GeoPoint.Latitude, parameters.Location.GeoPoint.Longitude)
-                                .Distance(parameters.SearchRadius, GeoUnit.Miles)));
-                }
+                var json = System.Text.Encoding.UTF8.GetString(client.Serializer.Serialize(s));
 
                 return s;
             });
-
+            
             return search;
         }
 

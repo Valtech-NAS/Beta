@@ -16,7 +16,7 @@
     [TestFixture]
     public class VacancySearchTests
     {
-        private const string RetailAndCommercialEnterprise = "HBY"; //"Retail and Commercial Enterprise";
+        private const string RetailAndCommercialEnterprise = "MFP"; //"HBY"; //"Retail and Commercial Enterprise";
         private IElasticsearchClientFactory _elasticsearchClientFactory;
         private IMapper _mapper;
 
@@ -85,7 +85,6 @@
             return new ApprenticeshipSearchParameters
             {
                 ApprenticeshipLevel = "Intermediate",
-                Keywords = "Chef",
                 Location = new Location
                 {
                     Name = "London",
