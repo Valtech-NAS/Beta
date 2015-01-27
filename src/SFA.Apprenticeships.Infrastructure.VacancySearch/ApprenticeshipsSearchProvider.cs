@@ -80,7 +80,7 @@
         {
             return
                 aggregations.Terms(FrameworkAggregationName)
-                    .Items.Select(bucket => new AggregationResult {Name = bucket.Key, Count = bucket.DocCount});
+                    .Items.Select(bucket => new AggregationResult {Code = bucket.Key, Count = bucket.DocCount});
         }
 
 
@@ -174,13 +174,13 @@
 
                     if (!string.IsNullOrWhiteSpace(parameters.Sector))
                     {
-                        var querySector = q.Match(m => m.OnField(f => f.Sector).Query(parameters.Sector));
+                        var querySector = q.Match(m => m.OnField(f => f.SectorCode).Query(parameters.Sector));
                         query = query && querySector;
                     }
 
                     if (parameters.Frameworks != null)
                     {
-                        var queryFrameworks = q.Terms(f => f.Framework, parameters.Frameworks);
+                        var queryFrameworks = q.Terms(f => f.FrameworkCode, parameters.Frameworks);
                         query = query && queryFrameworks;
                     }
 
@@ -242,7 +242,7 @@
                         break;
                 }
 
-                s.Aggregations(a => a.Terms(FrameworkAggregationName, st => st.Field(o => o.Framework).Size(0)));
+                s.Aggregations(a => a.Terms(FrameworkAggregationName, st => st.Field(o => o.FrameworkCode).Size(0)));
 
                 if (parameters.Location != null)
                 {

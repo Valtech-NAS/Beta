@@ -16,7 +16,7 @@
     [TestFixture]
     public class VacancySearchTests
     {
-        private const string RetailAndCommercialEnterprise = "Retail and Commercial Enterprise";
+        private const string RetailAndCommercialEnterprise = "HBY"; //"Retail and Commercial Enterprise";
         private IElasticsearchClientFactory _elasticsearchClientFactory;
         private IMapper _mapper;
 
@@ -73,7 +73,7 @@
 
             var searchParameters = GetCommonSearchParameters();
             searchParameters.Sector = RetailAndCommercialEnterprise;
-            searchParameters.Frameworks = new[] {"Hospitality"};
+            searchParameters.Frameworks = new[] {"582"};
 
             var vacancies = vacancySearchProvider.FindVacancies(searchParameters);
 
