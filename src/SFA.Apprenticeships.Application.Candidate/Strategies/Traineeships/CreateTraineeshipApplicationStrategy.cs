@@ -5,7 +5,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
     using Vacancy;
@@ -27,8 +27,8 @@
         {
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
-            //TODO: can we return null?
-            if (vacancyDetails == null)
+            // TODO: AG: US680: can we return null and handle this in the mediator?
+            if (vacancyDetails == null || vacancyDetails.VacancyStatus != VacancyStatuses.Live)
             {
                 return new TraineeshipApplicationDetail();
             }
@@ -48,6 +48,7 @@
                 CandidateId = candidate.EntityId,
                 // TODO: US354: AG: better way to clone? http://stackoverflow.com/questions/5713556/copy-object-to-object-with-automapper
                 CandidateDetails = Mapper.Map<RegistrationDetails, RegistrationDetails>(candidate.RegistrationDetails),
+                VacancyStatus = vacancyDetails.VacancyStatus,
                 Vacancy = new TraineeshipSummary
                 {
                     Id = vacancyDetails.Id,

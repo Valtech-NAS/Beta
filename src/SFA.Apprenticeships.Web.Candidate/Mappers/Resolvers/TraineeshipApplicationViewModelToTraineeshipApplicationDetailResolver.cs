@@ -2,15 +2,15 @@
 {
     using System.Collections.Generic;
     using AutoMapper;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Domain.Entities.Candidates;
-    using SFA.Apprenticeships.Domain.Entities.Locations;
-    using SFA.Apprenticeships.Domain.Entities.Users;
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.Traineeships;
-    using SFA.Apprenticeships.Web.Candidate.Mappers.Helpers;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Candidates;
+    using Domain.Entities.Locations;
+    using Domain.Entities.Users;
+    using Domain.Entities.Vacancies.Traineeships;
+    using Helpers;
+    using ViewModels.Applications;
+    using ViewModels.Candidate;
+    using ViewModels.VacancySearch;
 
     public class TraineeeshipApplicationViewModelToTraineeeshipApplicationDetailResolver :
         ITypeConverter<TraineeshipApplicationViewModel, TraineeshipApplicationDetail>
@@ -22,6 +22,7 @@
             var application = new TraineeshipApplicationDetail
             {
                 CandidateId = model.Candidate.Id,
+                VacancyStatus = model.VacancyDetail.VacancyStatus,
                 Vacancy = GetVacancy(model.VacancyDetail),
                 CandidateDetails = GetCandidateDetails(model.Candidate),
                 CandidateInformation = GetCandidateInformation(model.Candidate),

@@ -6,6 +6,7 @@
     using Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using Providers;
     using Validators;
@@ -124,6 +125,7 @@
         public MediatorResponse<VacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId, string searchReturnUrl)
         {
             int vacancyId;
+
             if (!TryParseVacancyId(vacancyIdString, out vacancyId))
             {
                 return GetMediatorResponse<VacancyDetailViewModel>(Codes.TraineeshipSearch.Details.VacancyNotFound);
@@ -131,7 +133,8 @@
 
             var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
-            if (vacancyDetailViewModel == null)
+            // TODO: AG: US680: unit test.
+            if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
                 return GetMediatorResponse<VacancyDetailViewModel>(Codes.TraineeshipSearch.Details.VacancyNotFound);
             }

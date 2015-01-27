@@ -50,6 +50,7 @@
                 MessageId = "456",
                 PopReceipt = "789"
             };
+
             vacancyConsumer.QueueVacancyPages(scheduledMessage);
 
             Thread.Sleep(100); //Slight delay to ensure parallel foreach has completed before assertions are made

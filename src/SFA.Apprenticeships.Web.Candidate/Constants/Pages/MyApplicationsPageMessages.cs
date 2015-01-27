@@ -2,7 +2,9 @@
 {
     public class MyApplicationsPageMessages
     {
-        public const string DraftExpired = "This apprenticeship is no longer available";
+        // TODO: AG: US680: review message content.
+        public const string ApprenticeshipNoLongerAvailable = "TODO: This apprenticeship is no longer available";
+        public const string TraineeshipNoLongerAvailable = "TODO: This traineeship is no longer available";
         public const string ApplicationArchived = "Your application has been removed";
         public const string ApplicationDeleted = "Your application has been removed from your drafts";
         public const string CreateOrRetrieveApplicationFailed = "There's been a problem creating or retrieving your application details. Please try again.";

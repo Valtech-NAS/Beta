@@ -283,7 +283,12 @@ else
                                         {
                                             @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                             <br />
-                                            <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
+                                            
+                                            <!-- TODO: AG: US680: only show Closing date when vacancy is Live -->
+                                            if (application.VacancyStatus == VacancyStatuses.Live)
+                                            {
+                                                <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
+                                            }
                                         }
                                     </td>
                                     <td class="ta-center">
@@ -293,8 +298,8 @@ else
                                         }
                                         else
                                         {
-                                            // TODO: AG: US679: review application status descriptions here (was always 'Apprenticeship withdrawn').
-                                            @application.ApplicationStatusDescription
+                                            // TODO: AG: US680: status description could / should be based on Vacancy Status.
+                                            @:Apprenticeship no longer available
                                         }
                                     </td>
                                     <td class="ta-center">
@@ -327,7 +332,7 @@ else
                                         }
                                         else
                                         {
-                                        @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "TraineeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                            @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "TraineeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                         }
                                     </td>
                                     <td class="ta-center">Applied</td>

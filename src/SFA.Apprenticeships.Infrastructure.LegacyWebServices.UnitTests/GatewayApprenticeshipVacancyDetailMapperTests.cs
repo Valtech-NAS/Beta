@@ -491,7 +491,7 @@
         [TestCase("Pending deletion", VacancyStatuses.Unavailable)]
         [TestCase("Closed", VacancyStatuses.Expired)]
         [TestCase("Completed", VacancyStatuses.Expired)]
-        [TestCase("Wrong", VacancyStatuses.Unknown)]
+        [TestCase("Wrong", VacancyStatuses.Unavailable)]
         public void ShouldMapVacancyStatus(string vacancyStatusString, VacancyStatuses vacancyStatus)
         {
             // Arrange.

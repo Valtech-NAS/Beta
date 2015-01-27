@@ -11,8 +11,6 @@
 
         WhatHappensNextViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId);
 
-        TraineeshipApplicationViewModel ArchiveApplication(Guid candidateId, int vacancyId);
-
         TraineeshipApplicationViewModel PatchApplicationViewModel(Guid candidateId,
             TraineeshipApplicationViewModel savedModel, TraineeshipApplicationViewModel submittedModel);
     }

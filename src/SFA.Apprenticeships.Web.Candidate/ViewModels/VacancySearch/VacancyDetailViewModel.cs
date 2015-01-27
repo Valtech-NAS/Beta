@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Locations;
 
@@ -30,6 +31,8 @@
         #region Vacancy
 
         public int Id { get; set; }
+
+        public VacancyStatuses VacancyStatus { get; set; }
 
         public string VacancyReference { get; set; }
 
@@ -133,8 +136,6 @@
         [UIHint("Date")]
         [DataType(DataType.DateTime)]
         public DateTime? DateApplied { get; set; }
-
-        public bool HasCandidateAlreadyApplied { get; set; }
 
         #endregion
     }

@@ -12,6 +12,7 @@
             CandidateDetails = new RegistrationDetails();
             CandidateInformation = new ApplicationTemplate();
             Status = ApplicationStatuses.Unknown;
+            VacancyStatus = VacancyStatuses.Unknown;
         }
 
         public VacancyStatuses VacancyStatus { get; set; }

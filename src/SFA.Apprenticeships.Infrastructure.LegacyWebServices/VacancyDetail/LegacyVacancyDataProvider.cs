@@ -11,6 +11,7 @@
     using NLog;
     using Wcf;
     using ErrorCodes = Application.VacancyEtl.ErrorCodes;
+    using MessagingErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
 
     public class LegacyVacancyDataProvider<TVacancyDetail> : IVacancyDataProvider<TVacancyDetail> where TVacancyDetail : VacancyDetail
     {
@@ -28,7 +29,7 @@
             _mapper = mapper;
         }
 
-        public TVacancyDetail GetVacancyDetails(int vacancyId)
+        public TVacancyDetail GetVacancyDetails(int vacancyId, bool errorIfNotFound)
         {
             var request = new GetVacancyDetailsRequest { VacancyId = vacancyId };
 
@@ -43,10 +44,17 @@
                 if (IsThereAnyValidationErrorOn(response))
                 {
                     var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
+
                     Logger.Info("Legacy.GetVacancyDetails reported {0} validation error(s): {1}", response.ValidationErrors.Count(), responseAsJson);
+
                     if (VacancyDoesntExist(response))
                     {
-                        Logger.Info("Unknown vacancy ({0}). Returning null.", vacancyId);
+                        if (errorIfNotFound)
+                        {
+                            throw new CustomException("Vacancy not found with ID {0}.", MessagingErrorCodes.VacancyNotFoundError, vacancyId);
+                        }
+
+                        Logger.Info("Vacancy not found with ID {0}. Returning null.", vacancyId);
                         return null;
                     }
                 }
@@ -56,21 +64,18 @@
                 }
 
                 var message = string.Format("Legacy.GetVacancyDetails failed to retrieve vacancy details from legacy system for vacancyId {0}", vacancyId);
+
                 throw new CustomException(message, ErrorCodes.GatewayServiceFailed);
             }
 
             var vacancyDetail = GetVacancyDetailFrom(response);
 
-            if (IsClosingDateExpired(vacancyDetail))
+            if (HasClosingDatePassed(vacancyDetail) && vacancyDetail.VacancyStatus != VacancyStatuses.Expired)
             {
-                Logger.Info("Vacancy ({0}) closing date {1} has expired. Returning null.", vacancyId, vacancyDetail.ClosingDate);
-                return null;
-            }
+                Logger.Info("Vacancy ({0}) closing date {1} has passed. Setting status to {2} (was \"{3}\").",
+                    vacancyId, vacancyDetail.ClosingDate, VacancyStatuses.Expired, vacancyDetail.VacancyStatus);
 
-            if (vacancyDetail.VacancyStatus != VacancyStatuses.Live)
-            {
-                Logger.Info("Vacancy ({0}) is '\"{1}\". Returning null.", vacancyId, vacancyDetail.VacancyStatus);
-                return null;
+                vacancyDetail.VacancyStatus = VacancyStatuses.Expired;
             }
 
             return vacancyDetail;
@@ -81,7 +86,7 @@
             return response.ValidationErrors.Any(e => e.ErrorCode == UnknownVacancy);
         }
 
-        private static bool IsClosingDateExpired(TVacancyDetail vacancyDetail)
+        private static bool HasClosingDatePassed(TVacancyDetail vacancyDetail)
         {
             return vacancyDetail.ClosingDate < DateTime.Today.ToUniversalTime();
         }

@@ -10,16 +10,14 @@
 
         protected override VacancyStatuses ResolveCore(string source)
         {
-            // TODO: AG: US679: review 'magic' strings here.
             switch (source)
             {
                 case "Live":
                     return VacancyStatuses.Live;
 
-                case "Posted in error":
                 case "Withdrawn":
                 case "Deleted":
-                case "Pending deletion":
+                case "Posted In Error":
                     return VacancyStatuses.Unavailable;
 
                 case "Closed":
@@ -27,8 +25,8 @@
                     return VacancyStatuses.Expired;
 
                 default:
-                    Logger.Error("Unknown Vacancy Status received from NAS Gateway Service, defaulting to Unknown: \"{0}\".", source);
-                    return VacancyStatuses.Unknown;
+                    Logger.Error("Unknown Vacancy Status received from NAS Gateway Service, defaulting to Unavailable: \"{0}\".", source);
+                    return VacancyStatuses.Unavailable;
             }
         }
     }
