@@ -233,6 +233,7 @@
     <Compile Include="Validators\RegisterViewModelValidatorTests.cs" />
     <Compile Include="Validators\VacancySearchValidatorTests.cs" />
     <Compile Include="ViewModels\VacancySearchResponseViewModelTests.cs" />
+    <Compile Include="Views\TraineeshipSearch\DetailsTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\DetailsTests.cs" />
   </ItemGroup>
   <ItemGroup>

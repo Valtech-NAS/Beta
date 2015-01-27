@@ -21,9 +21,10 @@
         private const string SomeString = "some string";
         private const int SomeInteger = 1;
 
-        [TestFixtureSetUp]
-        public void SetUpFixture()
+        [SetUp]
+        public void SetUp()
         {
+            RouteTable.Routes.Clear();
             RouteConfig.RegisterRoutes(RouteTable.Routes);            
         }
 

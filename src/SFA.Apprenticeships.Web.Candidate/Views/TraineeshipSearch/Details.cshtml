@@ -24,7 +24,7 @@
             }
             else
             {
-                @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { @id="lnk-find-apprenticeship", @class = "page-link" })
+                @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { @id="lnk-find-traineeship", @class = "page-link" })
             }
         </div>
     </div>
@@ -46,13 +46,13 @@
                 <h3 class="bold-small">Contact</h3>
                 <p>@Model.Contact</p>                
                 <h3 class="bold-small">Traineeship duration</h3>
-                <p>@(string.IsNullOrWhiteSpace(@Model.ExpectedDuration) ? "Not specified" : @Model.ExpectedDuration)</p>
+                <p id="vacancy-expected-duration">@(string.IsNullOrWhiteSpace(@Model.ExpectedDuration) ? "Not specified" : @Model.ExpectedDuration)</p>
                 <h3 class="bold-small">Planned start date</h3>
                 <p id="vacancy-start-date">@Html.DisplayFor(m => Model.StartDate)</p>
-                @if (ViewBag.Distance != null)
+                @if (Model.Distance != null)
                 {
                     <h3 class="bold-small">Distance</h3>
-                    <p id="vacancy-distance">@ViewBag.Distance miles</p>
+                    <p id="vacancy-distance">@Model.Distance miles</p>
                 }
                 <h3 class="bold-small">Reference number</h3>
                 <p id="vacancy-reference-id">@Model.VacancyReference</p>
@@ -108,7 +108,7 @@
                 @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
                 {
                     <h3 class="heading-small">What this will lead to</h3>
-                    <p>@Html.Raw(Model.FutureProspects)</p>
+                    <p id="vacancy-future-prospects">@Html.Raw(Model.FutureProspects)</p>
                 }
             </div>
         </section>
@@ -118,7 +118,7 @@
              <section class="grid-wrapper">
                  <h2 class="heading-large">Other information</h2>
                  <div class="text">
-                     <p>@Html.Raw(Model.OtherInformation)</p>
+                     <p id="vacany-other-information">@Html.Raw(Model.OtherInformation)</p>
                  </div>
              </section>
          }

@@ -182,14 +182,14 @@ WriteLiteral(">Return to search results</a>\r\n");
             #line hidden
             
             #line 27 "..\..\Views\TraineeshipSearch\Details.cshtml"
-           Write(Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { @id="lnk-find-apprenticeship", @class = "page-link" }));
+           Write(Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { @id="lnk-find-traineeship", @class = "page-link" }));
 
             
             #line default
             #line hidden
             
             #line 27 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                                                                                                                               
+                                                                                                                                                            
             }
 
             
@@ -280,11 +280,15 @@ WriteLiteral("</p>                \r\n                <h3");
 
 WriteLiteral(" class=\"bold-small\"");
 
-WriteLiteral(">Traineeship duration</h3>\r\n                <p>");
+WriteLiteral(">Traineeship duration</h3>\r\n                <p");
+
+WriteLiteral(" id=\"vacancy-expected-duration\"");
+
+WriteLiteral(">");
 
             
             #line 49 "..\..\Views\TraineeshipSearch\Details.cshtml"
-               Write(string.IsNullOrWhiteSpace(@Model.ExpectedDuration) ? "Not specified" : @Model.ExpectedDuration);
+                                              Write(string.IsNullOrWhiteSpace(@Model.ExpectedDuration) ? "Not specified" : @Model.ExpectedDuration);
 
             
             #line default
@@ -316,7 +320,7 @@ WriteLiteral("</p>\r\n");
             #line hidden
             
             #line 52 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                 if (ViewBag.Distance != null)
+                 if (Model.Distance != null)
                 {
 
             
@@ -336,7 +340,7 @@ WriteLiteral(">");
 
             
             #line 55 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                        Write(ViewBag.Distance);
+                                        Write(Model.Distance);
 
             
             #line default
@@ -423,14 +427,14 @@ WriteLiteral(">Employer</h3>\r\n                        <p");
 
 WriteLiteral(" id=\"vacancy-employer-name\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3276), Tuple.Create("\"", 3346)
+WriteAttribute("class", Tuple.Create(" class=\"", 3300), Tuple.Create("\"", 3370)
             
             #line 71 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 3284), Tuple.Create<System.Object, System.Int32>(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : ""
+, Tuple.Create(Tuple.Create("", 3308), Tuple.Create<System.Object, System.Int32>(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : ""
             
             #line default
             #line hidden
-, 3284), false)
+, 3308), false)
 );
 
 WriteLiteral(">");
@@ -462,29 +466,29 @@ WriteLiteral("                            <p><a");
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3516), Tuple.Create("\"", 3545)
+WriteAttribute("href", Tuple.Create(" href=\"", 3540), Tuple.Create("\"", 3569)
             
             #line 74 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 3523), Tuple.Create<System.Object, System.Int32>(Model.EmployerWebsite
+, Tuple.Create(Tuple.Create("", 3547), Tuple.Create<System.Object, System.Int32>(Model.EmployerWebsite
             
             #line default
             #line hidden
-, 3523), false)
+, 3547), false)
 );
 
 WriteLiteral(" id=\"vacancy-employer-website\"");
 
 WriteLiteral(" target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 3592), Tuple.Create("\"", 3627)
+WriteAttribute("title", Tuple.Create(" title=\"", 3616), Tuple.Create("\"", 3651)
             
             #line 74 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                    , Tuple.Create(Tuple.Create("", 3600), Tuple.Create<System.Object, System.Int32>(Model.EmployerName
+                                                    , Tuple.Create(Tuple.Create("", 3624), Tuple.Create<System.Object, System.Int32>(Model.EmployerName
             
             #line default
             #line hidden
-, 3600), false)
-, Tuple.Create(Tuple.Create(" ", 3619), Tuple.Create("Website", 3620), true)
+, 3624), false)
+, Tuple.Create(Tuple.Create(" ", 3643), Tuple.Create("Website", 3644), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -639,16 +643,16 @@ WriteLiteral(" frameborder=\"0\"");
 
 WriteLiteral(" style=\"border:0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 5052), Tuple.Create("\"", 5207)
-, Tuple.Create(Tuple.Create("", 5058), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 5058), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 5076), Tuple.Create("\"", 5231)
+, Tuple.Create(Tuple.Create("", 5082), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 5082), true)
             
             #line 95 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                            , Tuple.Create(Tuple.Create("", 5103), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.VacancyAddress.Postcode)
+                                                            , Tuple.Create(Tuple.Create("", 5127), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.VacancyAddress.Postcode)
             
             #line default
             #line hidden
-, 5103), false)
-, Tuple.Create(Tuple.Create("", 5143), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 5143), true)
+, 5127), false)
+, Tuple.Create(Tuple.Create("", 5167), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 5167), true)
 );
 
 WriteLiteral("></iframe>\r\n                        <p");
@@ -717,11 +721,15 @@ WriteLiteral(" class=\"heading-small\"");
 
 WriteLiteral(">What this will lead to</h3>\r\n");
 
-WriteLiteral("                    <p>");
+WriteLiteral("                    <p");
+
+WriteLiteral(" id=\"vacancy-future-prospects\"");
+
+WriteLiteral(">");
 
             
             #line 111 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                  Write(Html.Raw(Model.FutureProspects));
+                                                Write(Html.Raw(Model.FutureProspects));
 
             
             #line default
@@ -758,11 +766,15 @@ WriteLiteral(">Other information</h2>\r\n                 <div");
 
 WriteLiteral(" class=\"text\"");
 
-WriteLiteral(">\r\n                     <p>");
+WriteLiteral(">\r\n                     <p");
+
+WriteLiteral(" id=\"vacany-other-information\"");
+
+WriteLiteral(">");
 
             
             #line 121 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                   Write(Html.Raw(Model.OtherInformation));
+                                                 Write(Html.Raw(Model.OtherInformation));
 
             
             #line default

@@ -10,7 +10,7 @@
         [ElementLocator(Id = "lnk-return-search-results")]
         public IWebElement ReturnToSearchResultsLink { get; set; }
 
-        [ElementLocator(Id = "lnk-find-apprenticeship")]
+        [ElementLocator(Id = "lnk-find-traineeship")]
         public IWebElement FindApprenticeshipLink { get; set; }
 
         [ElementLocator(Id = "apply-button")]
