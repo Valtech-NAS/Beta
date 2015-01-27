@@ -53,7 +53,13 @@
                     opt => opt.MapFrom(src => src.ApprenticeshipOccupation))
 
                 .ForMember(dest => dest.Framework,
-                    opt => opt.MapFrom(src => src.ApprenticeshipFrameworkDescription));
+                    opt => opt.MapFrom(src => src.ApprenticeshipFrameworkDescription))
+
+                .ForMember(dest => dest.SectorCode, opt => opt.Ignore())
+
+                .ForMember(dest => dest.FrameworkCode, opt => opt.Ignore());
+
+
         }
 
         private void CreateTraineeshipSummaryMap()
@@ -88,7 +94,11 @@
                     opt => opt.MapFrom(src => src.ApprenticeshipOccupation))
 
                 .ForMember(dest => dest.Framework,
-                    opt => opt.MapFrom(src => src.ApprenticeshipFrameworkDescription));
+                    opt => opt.MapFrom(src => src.ApprenticeshipFrameworkDescription))
+
+                .ForMember(dest => dest.SectorCode, opt => opt.Ignore())
+
+                .ForMember(dest => dest.FrameworkCode, opt => opt.Ignore());
         }
     }
 }

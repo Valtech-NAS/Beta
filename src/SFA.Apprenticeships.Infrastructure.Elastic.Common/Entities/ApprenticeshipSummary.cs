@@ -41,5 +41,11 @@
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public string Framework { get; set; }
+
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public string SectorCode { get; set; }
+
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public string FrameworkCode { get; set; }
     }
 }

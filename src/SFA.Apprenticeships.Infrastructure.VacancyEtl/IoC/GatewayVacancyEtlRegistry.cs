@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.IoC
 {
+    using Application.Interfaces.ReferenceData;
+    using Application.ReferenceData;
     using Application.VacancyEtl;
     using Consumers;
     using Domain.Interfaces.Mapping;
@@ -22,6 +24,7 @@
                 .Use<VacancyAboutToExpireConsumerAsync>()
                 .Ctor<IMapper>()
                 .Named("VacancyEtlMapper");
+            For<IReferenceDataService>().Use<ReferenceDataService>();
         }
     }
 }

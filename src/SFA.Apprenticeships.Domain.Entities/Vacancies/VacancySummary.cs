@@ -23,6 +23,10 @@
 
         public string Sector { get; set; }
 
+        public string SectorCode { get; set; }
+
         public string Framework { get; set; }
+
+        public string FrameworkCode { get; set; }
     }
 }
