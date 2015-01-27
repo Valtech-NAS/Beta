@@ -289,8 +289,8 @@ WriteLiteral(">\r\n                    <span");
 
 WriteLiteral(" class=\"form-hint text\"");
 
-WriteLiteral(">TODO: Click \"Add qualification\" to add the qualification.</span>\r\n              " +
-"  </div>\r\n                <div");
+WriteLiteral(">Remember to \'Add qualification\' to save your qualification</span>\r\n             " +
+"   </div>\r\n                <div");
 
 WriteLiteral(" class=\"form-group\"");
 

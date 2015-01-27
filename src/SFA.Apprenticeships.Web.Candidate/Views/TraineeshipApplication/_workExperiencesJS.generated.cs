@@ -361,8 +361,8 @@ WriteLiteral(">\r\n                        <span");
 
 WriteLiteral(" class=\"form-hint text\"");
 
-WriteLiteral(">TODO: Click \"Add work\" to add the work experience.</span>\r\n                    <" +
-"/div>\r\n                    <div");
+WriteLiteral(">Remember to \'Add work\' to save your work experience</span>\r\n                    " +
+"</div>\r\n                    <div");
 
 WriteLiteral(" class=\"form-group\"");
 
