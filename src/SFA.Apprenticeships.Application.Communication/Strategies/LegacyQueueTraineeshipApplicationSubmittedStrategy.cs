@@ -30,8 +30,6 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
         {
             var candidate = _candidateReadRepository.Get(candidateId);
 
-            if (!candidate.CommunicationPreferences.AllowEmail) return; //todo: move comm pref check out of this class
-
             var application = GetApplication(tokens);
             var vacancy = _vacancyDataProvider.GetVacancyDetails(application.Vacancy.Id);
 
