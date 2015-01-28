@@ -30,8 +30,16 @@ else if (Request.IsAuthenticated)
                 break;
 
             default:
-                <!-- TODO: AG: can we get here without a DateApplied? -->
-                <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
+                // TODO: AG: US680: can we get here without a DateApplied?
+                if (Model.DateApplied.HasValue)
+                {
+                    <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
+                }
+                else
+                {
+                    @:TODO: US680: content requested for draft application for vacancy that has expired
+                }
+                
                 <a href="@Url.Action("Track", "Account", new { id = Model.Id })">Track application status</a>
                 break;
         }
