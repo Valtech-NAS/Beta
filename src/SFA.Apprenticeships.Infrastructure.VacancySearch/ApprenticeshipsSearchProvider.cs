@@ -182,12 +182,6 @@
                         query = query && querySector;
                     }
 
-                    if (parameters.Frameworks != null)
-                    {
-                        var queryFrameworks = q.Terms(f => f.FrameworkCode, parameters.Frameworks);
-                        query = query && queryFrameworks;
-                    }
-
                     queryVacancyLocation =
                         q.Match(
                             m => m.OnField(f => f.VacancyLocationType).Query(parameters.VacancyLocationType.ToString()));
@@ -259,6 +253,11 @@
                 }
 
                 s.Aggregations(a => a.Terms(FrameworkAggregationName, st => st.Field(o => o.FrameworkCode).Size(0)));
+
+                if (parameters.Frameworks != null)
+                {
+                    s.Filter(ff => ff.Terms(f => f.FrameworkCode, parameters.Frameworks));
+                }
 
                 return s;
             });
