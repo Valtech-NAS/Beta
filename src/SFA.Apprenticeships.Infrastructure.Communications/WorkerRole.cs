@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
     using System.ServiceModel;
     using System.Threading;
     using Azure.Common.IoC;
+    using Common.Configuration;
     using Common.IoC;
     using Consumers;
     using EasyNetQ;
@@ -70,6 +71,11 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
 
             try
             {
+                var config = new ConfigurationManager();
+                var useCacheSetting = config.TryGetAppSetting("UseCaching");
+                bool useCache;
+                bool.TryParse(useCacheSetting, out useCache);
+
 #pragma warning disable 0618
                 // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
                 ObjectFactory.Initialize(x =>
@@ -77,7 +83,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
                     x.AddRegistry<CommonRegistry>();
                     x.AddRegistry<AzureCommonRegistry>();
                     x.AddRegistry<RabbitMqRegistry>();
-                    x.AddRegistry<LegacyWebServicesRegistry>();
+                    x.AddRegistry(new LegacyWebServicesRegistry(useCache));
                     x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<CommunicationsRegistry>();
                     x.AddRegistry<CommunicationRepositoryRegistry>();
