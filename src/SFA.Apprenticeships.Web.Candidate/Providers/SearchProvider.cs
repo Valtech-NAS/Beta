@@ -114,9 +114,9 @@
                 {
                     var searchParameters = new ApprenticeshipSearchParameters
                     {
-                        VacancyReference = vacancyReference
+                        VacancyReference = vacancyReference, PageNumber = 1, PageSize = 1
                     };
-                    var searchResults = _apprenticeshipSearchService.FindExactMatch(searchParameters);
+                    var searchResults = _apprenticeshipSearchService.Search(searchParameters);
                     //Expect only a single result. Any other number should be interpreted as no results
                     if (searchResults.Total == 1)
                     {

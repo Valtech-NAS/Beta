@@ -12,7 +12,6 @@
     using Mediators.Traineeships;
     using ViewModels.VacancySearch;
 
-    [TraineeshipsToggle]
     public class TraineeshipSearchController : CandidateControllerBase
     {
         private readonly ITraineeshipSearchMediator _traineeshipSearchMediator;

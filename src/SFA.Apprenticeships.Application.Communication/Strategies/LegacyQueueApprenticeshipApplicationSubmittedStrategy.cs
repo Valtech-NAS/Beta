@@ -31,14 +31,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
             var candidate = _candidateReadRepository.Get(candidateId);
 
             var application = GetApplication(tokens);
-            var vacancy = _vacancyDataProvider.GetVacancyDetails(application.Vacancy.Id);
-
-            if (vacancy == null) //todo: add flag to repo operation
-            {
-                throw new CustomException("Vacancy not found with ID {0}.",
-                    MessagingErrorCodes.VacancyNotFoundError,
-                    application.Vacancy.Id);
-            }
+            var vacancy = _vacancyDataProvider.GetVacancyDetails(application.Vacancy.Id, true);
 
             var applicationTokens = new[]
             {

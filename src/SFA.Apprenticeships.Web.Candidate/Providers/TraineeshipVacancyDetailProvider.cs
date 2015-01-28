@@ -42,24 +42,18 @@
             {
                 var vacancyDetail = _vacancySearchService.GetVacancyDetails(vacancyId);
 
-                if (vacancyDetail == null)
-                {
-                    return null;
-                }
+                if (vacancyDetail == null) return null;
 
                 var vacancyDetailViewModel = _mapper.Map<TraineeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
-                if (candidateId.HasValue)
-                {
-                    var traineeshipApplication = _candidateService.GetTraineeshipApplication(candidateId.Value,
-                        vacancyId);
-                    // Check if we've already applied for the vacancy
-                    if (traineeshipApplication  != null)
-                    {
-                        vacancyDetailViewModel.HasCandidateAlreadyApplied = true;
-                        vacancyDetailViewModel.DateApplied = traineeshipApplication.DateApplied;
-                    }
-                }
+                if (candidateId == null) return vacancyDetailViewModel;
+
+                var traineeshipApplication = _candidateService.GetTraineeshipApplication(candidateId.Value, vacancyId);
+
+                if (traineeshipApplication == null) return vacancyDetailViewModel;
+
+                // If candidate has applied for vacancy, include the details in the view model.
+                vacancyDetailViewModel.DateApplied = traineeshipApplication.DateApplied;
 
                 return vacancyDetailViewModel;
             }

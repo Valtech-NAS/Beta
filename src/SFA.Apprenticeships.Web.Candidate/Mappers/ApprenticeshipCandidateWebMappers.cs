@@ -30,6 +30,8 @@
                 .ForMember(d => d.Longitude, opt => opt.MapFrom(s => s.GeoPoint.Longitude));
 
             Mapper.CreateMap<ApprenticeshipVacancyDetail, VacancyDetailViewModel>()
+                .ForMember(d => d.VacancyStatus,
+                    opt => opt.MapFrom(src => src.VacancyStatus))
                 .ForMember(d => d.EmployerName,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.EmployerNameResolver>())
                 .ForMember(d => d.Wage,
@@ -42,10 +44,10 @@
                     opt => opt.MapFrom(src => src.ApplyViaEmployerWebsite))
                 .ForMember(d => d.VacancyUrl,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.UrlResolver>()
-                        .FromMember(src => src.VacancyUrl))
+                .FromMember(src => src.VacancyUrl))
                 .ForMember(d => d.IsWellFormedVacancyUrl,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.IsWellFormedUrlResolver>()
-                        .FromMember(src => src.VacancyUrl))
+                .FromMember(src => src.VacancyUrl))
                 .ForMember(d => d.ApplicationInstructions,
                     opt => opt.MapFrom(src => src.ApplicationInstructions))
                 .ForMember(d => d.IsRecruitmentAgencyAnonymous,
@@ -58,24 +60,22 @@
                     opt => opt.MapFrom(src => src.IsNasProvider))
                 .ForMember(d => d.EmployerWebsite,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.UrlResolver>()
-                        .FromMember(src => src.EmployerWebsite))
+                .FromMember(src => src.EmployerWebsite))
                 .ForMember(d => d.IsWellFormedEmployerWebsiteUrl,
                     opt => opt.ResolveUsing<VacancyDetailViewModelResolvers.IsWellFormedUrlResolver>()
-                        .FromMember(src => src.EmployerWebsite))
+                .FromMember(src => src.EmployerWebsite))
                 .ForMember(d => d.VacancyType,
-                        opt => opt.Ignore())
+                    opt => opt.Ignore())
                 .ForMember(d => d.CandidateApplicationStatus,
-                        opt => opt.Ignore())
+                    opt => opt.Ignore())
                 .ForMember(d => d.DateApplied,
-                        opt => opt.Ignore())
+                    opt => opt.Ignore())
                 .ForMember(d => d.ViewModelMessage,
-                        opt => opt.Ignore())
-                .ForMember(d => d.HasCandidateAlreadyApplied,
                     opt => opt.Ignore())
                 .ForMember(d => d.Distance,
-                        opt => opt.Ignore())
+                    opt => opt.Ignore())
                 .ForMember(d => d.SearchReturnUrl,
-                        opt => opt.Ignore());
+                    opt => opt.Ignore());
 
             Mapper.CreateMap<ApprenticeshipSummaryResponse, ApprenticeshipVacancySummaryViewModel>();
             

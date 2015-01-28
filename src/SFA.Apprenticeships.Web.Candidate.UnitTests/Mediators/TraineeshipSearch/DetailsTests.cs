@@ -9,6 +9,7 @@
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Common.Providers;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
     using Moq;
@@ -43,7 +44,12 @@
         {
             const string message = "The vacancy has an error";
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel { ViewModelMessage = message };
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Live,
+                ViewModelMessage = message
+            };
+
             var mediator = GetMediator(vacancyDetailViewModel);
 
             var response = mediator.Details(VacancyId, null, null);
@@ -53,7 +59,12 @@
         [Test]
         public void Ok()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel { Id = int.Parse(VacancyId) };
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                Id = int.Parse(VacancyId),
+                VacancyStatus = VacancyStatuses.Live
+            };
+
             var mediator = GetMediator(vacancyDetailViewModel);
             var response = mediator.Details(VacancyId, null, SearchReturnUrl);
 

@@ -34,9 +34,7 @@
 
             _configurationManager.Setup(cm => cm.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt"))
                 .Returns(UnsuccessfulApplications);
-
-            _featureToggle.Setup(ft => ft.IsActive(Feature.Traineeships)).Returns(true);
-
+            
             _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object, null, null, _configurationManager.Object, _featureToggle.Object);
         }
 
@@ -122,29 +120,6 @@
 
             _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>()))
                 .Returns(GetUnsuccessfulApplicationSummaries(unsuccessfulApplicationsThreshold));
-
-            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
-                .Returns(GetTraineeshipApplicationSummaries(0));
-
-            //Act
-            var results = _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
-
-            //Assert
-            results.TraineeshipFeature.ShowTraineeshipsPrompt.Should().BeFalse();
-            results.TraineeshipFeature.ShowTraineeshipsLink.Should().BeFalse();
-        }
-
-        [Test]
-        public void GivenTraineeshipsAreNotSwitchedOn_ShouldntSeeTheTraineeshipsPrompt()
-        {
-            //Arrange
-            _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>())).Returns(new Candidate());
-
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>()))
-                .Returns(GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications));
-
-            _featureToggle.Setup(ft => ft.IsActive(Feature.Traineeships))
-                .Returns(false);
 
             _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
                 .Returns(GetTraineeshipApplicationSummaries(0));

@@ -17,6 +17,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
     using Moq;
@@ -27,6 +28,7 @@
     {
         private AccountMediator _accountMediator;
         private Mock<IApprenticeshipApplicationProvider> _apprenticeshipApplicationProviderMock;
+        private Mock<IApprenticeshipVacancyDetailProvider> _apprenticeshipVacancyDetailProvider;
         private Mock<IAccountProvider> _accountProviderMock;
         private Mock<ICandidateServiceProvider> _candidateServiceProviderMock;
         private Mock<IConfigurationManager> _configurationManagerMock; 
@@ -37,14 +39,20 @@
         public void SetUp()
         {
             _apprenticeshipApplicationProviderMock = new Mock<IApprenticeshipApplicationProvider>();
+            _apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
 
             _accountProviderMock = new Mock<IAccountProvider>();
             _settingsViewModelServerValidator = new SettingsViewModelServerValidator();
             _emptyMyApplicationsView = new MyApplicationsViewModel(new List<MyApprenticeshipApplicationViewModel>(),new List<MyTraineeshipApplicationViewModel>(), new TraineeshipFeatureViewModel());
             _candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
             _configurationManagerMock = new Mock<IConfigurationManager>();
-            _accountMediator = new AccountMediator(_accountProviderMock.Object, _candidateServiceProviderMock.Object,
-                _settingsViewModelServerValidator, _apprenticeshipApplicationProviderMock.Object,
+            
+            _accountMediator = new AccountMediator(
+                _accountProviderMock.Object,
+                _candidateServiceProviderMock.Object,
+                _settingsViewModelServerValidator,
+                _apprenticeshipApplicationProviderMock.Object,
+                _apprenticeshipVacancyDetailProvider.Object,
                 _configurationManagerMock.Object);
         }
 
@@ -137,7 +145,7 @@
             {
                 //Expired or withdrawn vacancies will no longer exist in the system. See ApprenticeshipApplicationProvider.PatchWithVacancyDetail
                 VacancyDetail = null,
-                ViewModelMessage = MyApplicationsPageMessages.DraftExpired,
+                ViewModelMessage = MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable,
                 Status = ApplicationStatuses.ExpiredOrWithdrawn
             };
             _apprenticeshipApplicationProviderMock.Setup(x => x.GetApplicationViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(successApplicationView);
@@ -298,6 +306,7 @@
             {
                 RegistrationDetails = new RegistrationDetails { AcceptedTermsAndConditionsVersion = "1.1" }
             };
+
             _candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(candidate);
             _configurationManagerMock.Setup(x => x.GetAppSetting<string>("TermsAndConditionsVersion")).Returns("1.1");
             _candidateServiceProviderMock.Setup(x => x.AcceptTermsAndConditions(It.IsAny<Guid>(), It.IsAny<string>())).Returns(true);

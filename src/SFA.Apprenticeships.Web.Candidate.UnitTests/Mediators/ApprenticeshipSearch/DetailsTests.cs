@@ -4,6 +4,8 @@
     using Candidate.Mediators;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
     using Moq;
     using NUnit.Framework;
 
@@ -26,7 +28,12 @@
         {
             const string message = "The vacancy has an error";
             
-            var vacancyDetailViewModel = new VacancyDetailViewModel {ViewModelMessage = message};
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                ViewModelMessage = message,
+                VacancyStatus = VacancyStatuses.Live
+            };
+
             ApprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
             
             var response = Mediator.Details(Id, null);
@@ -35,9 +42,63 @@
         }
 
         [Test]
+        public void VacancyIsUnavailable_CandidateNotLoggedIn()
+        {
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Unavailable
+            };
+
+            ApprenticeshipVacancyDetailProvider.Setup(
+                p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+
+            var response = Mediator.Details(Id, null);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
+        }
+
+        [Test]
+        public void VacancyIsUnavailble_CandidateLoggedInButHasNeverAppliedForVacancy()
+        {
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Unavailable
+            };
+
+            ApprenticeshipVacancyDetailProvider.Setup(
+                p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+
+            var response = Mediator.Details(Id, Guid.NewGuid());
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
+        }
+
+        [Test]
+        public void VacancyIsUnavailable_CandidateLoggedInAndHasPreviouslyAppliedForVacancy()
+        {
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                DateApplied = DateTime.Today.AddDays(-1),
+                CandidateApplicationStatus = ApplicationStatuses.Submitted,
+                VacancyStatus = VacancyStatuses.Unavailable
+            };
+
+            ApprenticeshipVacancyDetailProvider.Setup(
+                p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+
+            var response = Mediator.Details(Id, Guid.NewGuid());
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
+        }
+
+        [Test]
         public void Ok()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel();
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Live
+            };
+
             ApprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
 
             var response = Mediator.Details(Id, null);
@@ -48,7 +109,11 @@
         [Test]
         public void PopulateDistance()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel();
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Live
+            };
+
             ApprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
 
             UserDataProvider.Setup(udp => udp.Pop(UserDataItemNames.VacancyDistance)).Returns(VacancyDistance);

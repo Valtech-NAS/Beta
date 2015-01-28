@@ -1,7 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.ApplicationUpdate
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Entities;
@@ -88,6 +91,60 @@
                 Logger.Warn("Unable to find/update apprenticeship of traineeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
             }
         }
+
+        public void ProcessApplicationStatuses(int legacyVacancyId, VacancyStatuses vacancyStatus, DateTime closingDate)
+        {
+            QueueApprenticeshipApplicationStatusSummaries(legacyVacancyId, vacancyStatus, closingDate);
+            QueueTraineeshipApplicationStatusSummaries(legacyVacancyId, vacancyStatus, closingDate);
+        }
+
+        private void QueueApprenticeshipApplicationStatusSummaries(int legacyVacancyId, VacancyStatuses vacancyStatus, DateTime closingDate)
+        {
+            var applicationSummaries = _apprenticeshipApplicationReadRepository.GetApplicationSummaries(legacyVacancyId);
+            var applicationStatusSummaries =
+                applicationSummaries.Select(
+                    x =>
+                        new ApplicationStatusSummary
+                        {
+                            ApplicationId = x.ApplicationId,
+                            LegacyApplicationId = x.LegacyVacancyId,
+                            ApplicationStatus = x.Status,
+                            VacancyStatus = vacancyStatus,
+                            LegacyVacancyId = x.LegacyVacancyId,
+                            ClosingDate = closingDate,
+                            UnsuccessfulReason = x.UnsuccessfulReason
+                        });
+
+            //TODO: Think how to reduce applications that need processed based on their status.
+            Parallel.ForEach(
+                applicationStatusSummaries,
+                new ParallelOptions { MaxDegreeOfParallelism = 5 },
+                applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
+        }
+
+        private void QueueTraineeshipApplicationStatusSummaries(int legacyVacancyId, VacancyStatuses vacancyStatus, DateTime closingDate)
+        {
+            var applicationSummaries = _traineeshipApplicationReadRepository.GetApplicationSummaries(legacyVacancyId);
+            var applicationStatusSummaries =
+                applicationSummaries.Select(
+                    x =>
+                        new ApplicationStatusSummary
+                        {
+                            ApplicationId = x.ApplicationId,
+                            LegacyApplicationId = x.LegacyVacancyId,
+                            ApplicationStatus = ApplicationStatuses.Submitted,
+                            VacancyStatus = vacancyStatus,
+                            LegacyVacancyId = x.LegacyVacancyId,
+                            ClosingDate = closingDate
+                        });
+
+            //TODO: Think how to reduce applications that need processed based on their status.
+            Parallel.ForEach(
+                applicationStatusSummaries,
+                new ParallelOptions { MaxDegreeOfParallelism = 5 },
+                applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
+        }
+
 
         private bool ProcessApprenticeshipsApplication(ApplicationStatusSummary applicationStatusSummary)
         {

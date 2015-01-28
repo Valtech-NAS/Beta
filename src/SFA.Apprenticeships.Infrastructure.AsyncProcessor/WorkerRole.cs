@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
     using System.Reflection;
     using System.Threading;
     using Azure.Common.IoC;
+    using Common.Configuration;
     using Common.IoC;
     using Communication.IoC;
     using Consumers;
@@ -108,6 +109,11 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
         {
             Logger.Debug("IoC container initialising");
 
+            var config = new ConfigurationManager();
+            var useCacheSetting = config.TryGetAppSetting("UseCaching");
+            bool useCache;
+            bool.TryParse(useCacheSetting, out useCache);
+
 #pragma warning disable 0618
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
             ObjectFactory.Initialize(x =>
@@ -119,7 +125,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(useCache));
                 x.AddRegistry<AsyncProcessorRegistry>();
             });
 #pragma warning restore 0618

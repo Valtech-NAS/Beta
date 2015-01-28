@@ -48,6 +48,13 @@
                 public const string AlreadyAccepted = "AlreadyAccepted";
                 public const string ErrorAccepting = "ErrorAccepting";
             }
+
+            public class ApprenticeshipDetails
+            {
+                public const string VacancyAvailable = "ApprenticeshipDetails.VacancyAvailable";
+                public const string VacancyUnavailable = "ApprenticeshipDetails.VacancyUnavailable";
+                public const string Error = "ApprenticeshipDetails.Error";
+            }
         }
     }
 }

@@ -4,6 +4,7 @@
     using Common.Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using Providers;
     using Validators;
@@ -13,6 +14,7 @@
     public class AccountMediator : MediatorBase, IAccountMediator
     {
         private readonly IApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
+        private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
         private readonly IConfigurationManager _configurationManager;
         private readonly IAccountProvider _accountProvider;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
@@ -23,12 +25,14 @@
             ICandidateServiceProvider candidateServiceProvider,
             SettingsViewModelServerValidator settingsViewModelServerValidator, 
             IApprenticeshipApplicationProvider apprenticeshipApplicationProvider,
+            IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
             IConfigurationManager configurationManager)
         {
             _accountProvider = accountProvider;
             _candidateServiceProvider = candidateServiceProvider;
             _settingsViewModelServerValidator = settingsViewModelServerValidator;
             _apprenticeshipApplicationProvider = apprenticeshipApplicationProvider;
+            _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
             _configurationManager = configurationManager;
         }
 

@@ -154,5 +154,6 @@
     <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Monitor\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Monitor.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Monitor" OverwriteReadOnlyFiles="true" />
     <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.AsyncProcessor\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.AsyncProcessor.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.AsyncProcessor" OverwriteReadOnlyFiles="true" />
     <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.ApplicationEtl\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.ApplicationEtl.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.ApplicationEtl" OverwriteReadOnlyFiles="true" />
+	<Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Communications\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Communications.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Communications" OverwriteReadOnlyFiles="true" />
   </Target>
 </Project>

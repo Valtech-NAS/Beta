@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Configuration;
+    using Domain.Entities.Vacancies;
     using NLog;
     using Application.Interfaces.Candidates;
     using Domain.Entities.Applications;
@@ -57,11 +58,14 @@
             try
             {
                 var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
+
                 if (applicationDetails == null)
                 {
                     return new ApprenticeshipApplicationViewModel(MyApplicationsPageMessages.ApplicationNotFound, ApplicationViewModelStatus.ApplicationNotFound);
                 }
+
                 var applicationViewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
+
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
             catch (CustomException e)
@@ -488,7 +492,6 @@
             var candididate = _candidateService.GetCandidate(candidateId);
 
             var unsuccessfulApplicationsToShowTraineeshipsPrompt = _configurationManager.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt");
-            var traineeshipsFeatureActive = _featureToggle.IsActive(Feature.Traineeships);
             var allowTraineeshipPrompts = candididate.CommunicationPreferences.AllowTraineeshipPrompts;
 
             var sufficentUnsuccessfulApprenticeshipApplicationsToPrompt = apprenticeshipApplicationSummaries.Count(each => each.Status == ApplicationStatuses.Unsuccessful) >= unsuccessfulApplicationsToShowTraineeshipsPrompt;
@@ -497,8 +500,8 @@
 
             var viewModel = new TraineeshipFeatureViewModel
             {
-                ShowTraineeshipsPrompt = traineeshipsFeatureActive && allowTraineeshipPrompts && sufficentUnsuccessfulApprenticeshipApplicationsToPrompt && !candidateHasSuccessfulApprenticeshipApplication && !candidateHasAppliedForTraineeship,
-                ShowTraineeshipsLink = traineeshipsFeatureActive && (sufficentUnsuccessfulApprenticeshipApplicationsToPrompt || candidateHasAppliedForTraineeship)
+                ShowTraineeshipsPrompt = allowTraineeshipPrompts && sufficentUnsuccessfulApprenticeshipApplicationsToPrompt && !candidateHasSuccessfulApprenticeshipApplication && !candidateHasAppliedForTraineeship,
+                ShowTraineeshipsLink = (sufficentUnsuccessfulApprenticeshipApplicationsToPrompt || candidateHasAppliedForTraineeship)
             };
 
             return viewModel;
@@ -507,7 +510,7 @@
         #region Helpers
 
         private static ApprenticeshipApplicationViewModel FailedApplicationViewModel(
-            int vacancyId, 
+            int vacancyId,
             Guid candidateId,
             string failure,
             string failMessage, Exception e)
@@ -517,15 +520,15 @@
             return new ApprenticeshipApplicationViewModel(failMessage, ApplicationViewModelStatus.Error);
         }
 
-        private ApprenticeshipApplicationViewModel PatchWithVacancyDetail(Guid candidateId, int vacancyId,
-            ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        private ApprenticeshipApplicationViewModel PatchWithVacancyDetail(
+            Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             // TODO: why have a patch method like this? should be done in mapper.
             var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
-            if (vacancyDetailViewModel == null)
+            if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
-                apprenticeshipApplicationViewModel.ViewModelMessage = MyApplicationsPageMessages.DraftExpired;
+                apprenticeshipApplicationViewModel.ViewModelMessage = MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable;
                 apprenticeshipApplicationViewModel.Status = ApplicationStatuses.ExpiredOrWithdrawn;
 
                 return apprenticeshipApplicationViewModel;

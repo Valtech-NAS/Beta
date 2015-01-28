@@ -1,14 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using Domain.Entities.Vacancies;
     using NLog;
-    using SFA.Apprenticeships.Application.Interfaces.Candidates;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Domain.Entities.Exceptions;
-    using SFA.Apprenticeships.Domain.Interfaces.Mapping;
-    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
-    using SFA.Apprenticeships.Web.Common.Models.Application;
+    using Application.Interfaces.Candidates;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Exceptions;
+    using Domain.Interfaces.Mapping;
+    using Constants.Pages;
+    using ViewModels.Applications;
+    using Common.Models.Application;
 
     public class TraineeshipApplicationProvider : ITraineeshipApplicationProvider
     {
@@ -29,7 +30,7 @@
         public TraineeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
         {
             Logger.Debug(
-                "Calling ApprenticeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
+                "Calling TraineeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
@@ -118,29 +119,26 @@
         public WhatHappensNextViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId)
         {
             Logger.Debug(
-                "Calling ApprenticeshipApplicationProvider to get the What Happens Next data for candidate ID: {0}, vacancy ID: {1}.",
+                "Calling TraineeshipApplicationProvider to get the What Happens Next data for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
             {
-                var applicationDetails = _candidateService.GetTraineeshipApplication(candidateId, vacancyId);
-                var applicationViewModel =
-                    _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(applicationDetails);
+                var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
-                var patchedModel = PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
-                var candidate = _candidateService.GetCandidate(candidateId);
-
-                if (patchedModel.HasError())
+                if (vacancyDetailViewModel.HasError())
                 {
-                    return new WhatHappensNextViewModel(patchedModel.ViewModelMessage);
+                    return new WhatHappensNextViewModel(vacancyDetailViewModel.ViewModelMessage);
                 }
+
+                var candidate = _candidateService.GetCandidate(candidateId);
 
                 return new WhatHappensNextViewModel
                 {
-                    VacancyReference = patchedModel.VacancyDetail.VacancyReference,
-                    VacancyTitle = patchedModel.VacancyDetail.Title,
+                    VacancyReference = vacancyDetailViewModel.VacancyReference,
+                    VacancyTitle = vacancyDetailViewModel.Title,
                     SentEmail = candidate.CommunicationPreferences.AllowEmail,
-                    ProviderContactInfo = patchedModel.VacancyDetail.Contact
+                    ProviderContactInfo = vacancyDetailViewModel.Contact
                 };
             }
             catch (Exception e)
@@ -151,8 +149,7 @@
 
                 Logger.Error(message, e);
 
-                return new WhatHappensNextViewModel(
-                    MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
+                return new WhatHappensNextViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
             }
         }
 
@@ -160,7 +157,7 @@
             TraineeshipApplicationViewModel savedModel, TraineeshipApplicationViewModel submittedModel)
         {
             Logger.Debug(
-                "Calling ApprenticeshipApplicationProvider to patch the Application View Model for candidate ID: {0}.",
+                "Calling TraineeshipApplicationProvider to patch the Application View Model for candidate ID: {0}.",
                 candidateId);
 
             try
@@ -183,39 +180,31 @@
             }
         }
 
-        public TraineeshipApplicationViewModel ArchiveApplication(Guid candidateId, int vacancyId)
-        {
-            throw new NotImplementedException();
-        }
-
         private TraineeshipApplicationViewModel PatchWithVacancyDetail(Guid candidateId, int vacancyId,
-            TraineeshipApplicationViewModel apprenticeshipApplicationViewModel)
+            TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
             // TODO: why have a patch method like this? should be done in mapper.
-            var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId,
-                vacancyId);
+            var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
-            if (vacancyDetailViewModel == null)
+            if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
-                apprenticeshipApplicationViewModel.ViewModelMessage = MyApplicationsPageMessages.DraftExpired;
-
-                return apprenticeshipApplicationViewModel;
+                traineeshipApplicationViewModel.ViewModelMessage = MyApplicationsPageMessages.TraineeshipNoLongerAvailable;
+                return traineeshipApplicationViewModel;
             }
 
             if (vacancyDetailViewModel.HasError())
             {
-                apprenticeshipApplicationViewModel.ViewModelMessage = vacancyDetailViewModel.ViewModelMessage;
-
-                return apprenticeshipApplicationViewModel;
+                traineeshipApplicationViewModel.ViewModelMessage = vacancyDetailViewModel.ViewModelMessage;
+                return traineeshipApplicationViewModel;
             }
 
-            apprenticeshipApplicationViewModel.VacancyDetail = vacancyDetailViewModel;
-            apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 =
+            traineeshipApplicationViewModel.VacancyDetail = vacancyDetailViewModel;
+            traineeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion1 =
                 vacancyDetailViewModel.SupplementaryQuestion1;
-            apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 =
+            traineeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 =
                 vacancyDetailViewModel.SupplementaryQuestion2;
 
-            return apprenticeshipApplicationViewModel;
+            return traineeshipApplicationViewModel;
         }
 
         private static TraineeshipApplicationViewModel FailedApplicationViewModel(int vacancyId, Guid candidateId,

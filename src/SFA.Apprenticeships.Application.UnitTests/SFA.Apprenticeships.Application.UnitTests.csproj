@@ -96,6 +96,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Applications\ApplicationStatusProcessorTests.cs" />
     <Compile Include="Candidate\Strategies\CreateApplicationStrategy\GivenAFaultedServer.cs" />
     <Compile Include="CodeGeneratorTests.cs" />
     <Compile Include="Communications\CommunicationProcessorTests.cs" />
@@ -109,6 +110,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.ApplicationUpdate\SFA.Apprenticeships.Application.ApplicationUpdate.csproj">
+      <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
+      <Name>SFA.Apprenticeships.Application.ApplicationUpdate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
       <Project>{984f8cd2-61b3-48a4-b0cc-5d05e235983d}</Project>
       <Name>SFA.Apprenticeships.Application.Candidate</Name>

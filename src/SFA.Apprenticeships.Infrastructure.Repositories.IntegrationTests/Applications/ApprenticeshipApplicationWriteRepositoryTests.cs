@@ -2,6 +2,7 @@
 {
     using System;
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using NUnit.Framework;
@@ -45,6 +46,7 @@
                 EntityId = Guid.NewGuid(),
                 CandidateId = Guid.NewGuid(),
                 LegacyApplicationId = 12345,
+                VacancyStatus = VacancyStatuses.Live,
                 CandidateDetails =
                 {
                     FirstName = "Johnny",

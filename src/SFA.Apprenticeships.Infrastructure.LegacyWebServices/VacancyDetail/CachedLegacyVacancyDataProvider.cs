@@ -19,10 +19,10 @@
             _vacancyDataProvider = vacancyDataProvider;
         }
 
-        public TVacancyDetail GetVacancyDetails(int vacancyId)
+        public TVacancyDetail GetVacancyDetails(int vacancyId, bool errorIfNotFound)
         {
             Logger.Debug("Calling GetVacancyDetails for VacancyId: {0}", vacancyId);
-            return _cacheService.Get(VacancyDataCacheKey, _vacancyDataProvider.GetVacancyDetails, vacancyId);
+            return _cacheService.Get(VacancyDataCacheKey, vacancyId1 => _vacancyDataProvider.GetVacancyDetails(vacancyId1, errorIfNotFound), vacancyId);
         }
     }
 }

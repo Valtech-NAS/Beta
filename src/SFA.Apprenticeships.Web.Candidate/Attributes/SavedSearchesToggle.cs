@@ -4,14 +4,14 @@
     using Configuration;
     using StructureMap.Attributes;
 
-    public class TraineeshipsToggle : ActionFilterAttribute
+    public class SavedSearchesToggle : ActionFilterAttribute
     {
         [SetterProperty]
         public IFeatureToggle FeatureToggle { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (!FeatureToggle.IsActive(Feature.Traineeships))
+            if (!FeatureToggle.IsActive(Feature.SavedSearches))
             {
                 filterContext.Result = new HttpNotFoundResult();
                 return;

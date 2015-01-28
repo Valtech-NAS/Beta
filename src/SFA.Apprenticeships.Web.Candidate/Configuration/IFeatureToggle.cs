@@ -7,6 +7,6 @@
 
     public enum Feature
     {
-        Traineeships
+        SavedSearches
     }
 }

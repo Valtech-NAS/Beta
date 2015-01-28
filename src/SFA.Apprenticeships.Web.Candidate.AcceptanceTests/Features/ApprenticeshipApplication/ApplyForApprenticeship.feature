@@ -420,6 +420,8 @@ Scenario: As a candidate I want to know that I have to add when recording qualif
 	Then I see
 		| Field                    | Rule   | Value |
 		| QualificationSaveWarning | Exists |       |
+	When I choose SaveButton
+	Then I wait to see ApplicationSavedMessage
 
 @US687
 Scenario: As a candidate I dont want to see the qualifications warning after adding a qualification
@@ -445,6 +447,8 @@ Given I have registered a new candidate
 	Then I see
 		| Field                    | Rule           | Value |
 		| QualificationSaveWarning | Does Not Exist |       |
+	When I choose SaveButton
+	Then I wait to see ApplicationSavedMessage
 
 @US687
 Scenario: As a candidate I want to know that I have to add when recording work experience
@@ -464,6 +468,8 @@ Scenario: As a candidate I want to know that I have to add when recording work e
 	Then I see
 		| Field                     | Rule   | Value |
 		| WorkExperienceSaveWarning | Exists |       |
+	When I choose SaveButton
+	Then I wait to see ApplicationSavedMessage
 
 @US687
 Scenario: As a candidate I dont want to see the work experience warning after adding a work experience
@@ -484,3 +490,5 @@ Scenario: As a candidate I dont want to see the work experience warning after ad
 	Then I see
 		| Field                     | Rule           | Value |
 		| WorkExperienceSaveWarning | Does Not Exist |       |
+	When I choose SaveButton
+	Then I wait to see ApplicationSavedMessage

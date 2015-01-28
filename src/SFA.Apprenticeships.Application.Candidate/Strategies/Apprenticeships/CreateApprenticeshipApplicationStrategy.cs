@@ -5,6 +5,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
     using Vacancy;
@@ -30,8 +31,7 @@
 
         public ApprenticeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId)
         {
-            var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(
-                candidateId, vacancyId);
+            var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
 
             if (applicationDetail == null)
             {
@@ -40,16 +40,6 @@
             }
 
             applicationDetail.AssertState("Create apprenticeshipApplication", ApplicationStatuses.Draft);
-
-            var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
-
-            if (vacancyDetails == null)
-            {
-                // Update apprenticeshipApplication status.
-                _apprenticeshipApplicationWriteRepository.ExpireOrWithdrawForCandidate(candidateId, vacancyId);
-
-                return _apprenticeshipApplicationReadRepository.Get(applicationDetail.EntityId);
-            }
 
             if (applicationDetail.IsArchived)
             {
@@ -71,7 +61,8 @@
         {
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
-            if (vacancyDetails == null)
+            // TODO: AG: US680: can we return null and handle this in the mediator?
+            if (vacancyDetails == null || vacancyDetails.VacancyStatus != VacancyStatuses.Live)
             {
                 return new ApprenticeshipApplicationDetail
                 {
@@ -97,6 +88,7 @@
                 CandidateId = candidate.EntityId,
                 // TODO: US354: AG: better way to clone? http://stackoverflow.com/questions/5713556/copy-object-to-object-with-automapper
                 CandidateDetails = Mapper.Map<RegistrationDetails, RegistrationDetails>(candidate.RegistrationDetails),
+                VacancyStatus = vacancyDetails.VacancyStatus,
                 Vacancy = new ApprenticeshipSummary
                 {
                     Id = vacancyDetails.Id,

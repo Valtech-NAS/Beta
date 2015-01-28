@@ -7,6 +7,7 @@
     using Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
     using Providers;
@@ -209,6 +210,7 @@
         public MediatorResponse<VacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId)
         {
             int vacancyId;
+
             if (!TryParseVacancyId(vacancyIdString, out vacancyId))
             {
                 return GetMediatorResponse<VacancyDetailViewModel>(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
@@ -224,6 +226,13 @@
             if (vacancyDetailViewModel.HasError())
             {
                 return GetMediatorResponse(Codes.ApprenticeshipSearch.Details.VacancyHasError, vacancyDetailViewModel, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Warning);
+            }
+
+            if ((!vacancyDetailViewModel.DateApplied.HasValue && vacancyDetailViewModel.VacancyStatus != VacancyStatuses.Live) ||
+                (vacancyDetailViewModel.DateApplied.HasValue && vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable))
+            {
+                // TODO: AG: US680: comment.
+                return GetMediatorResponse<VacancyDetailViewModel>(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
             }
 
             var distance = UserDataProvider.Pop(UserDataItemNames.VacancyDistance);

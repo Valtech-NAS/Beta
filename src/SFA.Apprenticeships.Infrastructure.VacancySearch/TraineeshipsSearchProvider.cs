@@ -59,7 +59,7 @@
             return results;
         }
 
-        public SearchResults<TraineeshipSummaryResponse> FindExactMatchVacancy(TraineeshipSearchParameters parameters)
+        public SearchResults<TraineeshipSummaryResponse> FindVacancy(string vacancyReference)
         {
             throw new NotImplementedException();
         }

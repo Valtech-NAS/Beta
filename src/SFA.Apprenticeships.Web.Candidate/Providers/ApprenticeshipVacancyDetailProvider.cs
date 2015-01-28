@@ -9,7 +9,6 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
-    using Domain.Interfaces.Repositories;
     using NLog;
     using ViewModels.VacancySearch;
 
@@ -17,18 +16,16 @@
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository; //todo: MG: remove this!!
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
         private readonly IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> _vacancySearchService;
 
         public ApprenticeshipVacancyDetailProvider(
-            IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> vacancySearchService,
+            IVacancySearchService<ApprenticeshipSummaryResponse,
+            ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> vacancySearchService,
             ICandidateService candidateService,
-            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IMapper mapper)
         {
-            _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _vacancySearchService = vacancySearchService;
             _candidateService = candidateService;
             _mapper = mapper;
@@ -44,29 +41,19 @@
             {
                 var vacancyDetail = _vacancySearchService.GetVacancyDetails(vacancyId);
 
-                if (vacancyDetail == null)
-                {
-                    if (candidateId != null)
-                    {
-                        // Vacancy is being viewed by a signed-in candidate, update application status.
-                        _apprenticeshipApplicationWriteRepository.ExpireOrWithdrawForCandidate(candidateId.Value, vacancyId);
-                    }
+                if (vacancyDetail == null) return null;
 
-                    return null;
-                }
+                var vacancyDetailViewModel = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
-                var vacancyDetailViewModel =
-                    _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+                if (candidateId == null) return vacancyDetailViewModel;
 
-                if (candidateId == null) { return vacancyDetailViewModel; }
-
-                // If candidate has applied for vacancy, include the details in the view model.
                 var applicationDetails = _candidateService
                     .GetApprenticeshipApplications(candidateId.Value)
                     .SingleOrDefault(a => a.LegacyVacancyId == vacancyId);
 
-                if (applicationDetails == null) { return vacancyDetailViewModel; }
+                if (applicationDetails == null) return vacancyDetailViewModel;
 
+                // If candidate has applied for vacancy, include the details in the view model.
                 vacancyDetailViewModel.CandidateApplicationStatus = applicationDetails.Status;
                 vacancyDetailViewModel.DateApplied = applicationDetails.DateApplied;
 

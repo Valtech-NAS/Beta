@@ -33,6 +33,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests.
             return new ApprenticeshipApplicationDetail
             {
                 EntityId = _entityid,
+                VacancyStatus = VacancyStatuses.Live,
                 Vacancy = new ApprenticeshipSummary
                 {
                     Id = _vacancyId
@@ -65,6 +66,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests.
             return new ApprenticeshipApplicationDetail
             {
                 EntityId = Guid.NewGuid(),
+                VacancyStatus = VacancyStatuses.Live,
                 Vacancy = new ApprenticeshipSummary
                 {
                     Id = 12345 // legacy vacancy id
@@ -84,6 +86,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests.
             return new ApprenticeshipApplicationDetail
             {
                 EntityId = Guid.NewGuid(),
+                VacancyStatus = VacancyStatuses.Live,
                 Vacancy = new ApprenticeshipSummary
                 {
                     Id = 12345 // legacy vacancy id

@@ -4,6 +4,7 @@
     using System.Linq;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
     using StructureMap;
@@ -47,6 +48,7 @@
                 CandidateId = _candidateId,
                 CandidateInformation = new ApplicationTemplate(),
                 DateApplied = DateTime.Now.AddDays(-1),
+                VacancyStatus = VacancyStatuses.Live,
                 Vacancy = new TraineeshipSummary
                 {
                     Id = _vacancyId,
