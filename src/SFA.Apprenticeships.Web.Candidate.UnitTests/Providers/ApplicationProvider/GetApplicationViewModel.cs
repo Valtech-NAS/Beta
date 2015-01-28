@@ -26,8 +26,6 @@
             _configurationManager = new Mock<IConfigurationManager>();
             _featureToggle = new Mock<IFeatureToggle>();
 
-            _featureToggle.Setup(ft => ft.IsActive(Feature.Traineeships)).Returns(true);
-
             _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object, null, null, _configurationManager.Object, _featureToggle.Object);
         }
 

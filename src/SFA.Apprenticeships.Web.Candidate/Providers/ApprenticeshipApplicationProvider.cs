@@ -488,7 +488,6 @@
             var candididate = _candidateService.GetCandidate(candidateId);
 
             var unsuccessfulApplicationsToShowTraineeshipsPrompt = _configurationManager.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt");
-            var traineeshipsFeatureActive = _featureToggle.IsActive(Feature.Traineeships);
             var allowTraineeshipPrompts = candididate.CommunicationPreferences.AllowTraineeshipPrompts;
 
             var sufficentUnsuccessfulApprenticeshipApplicationsToPrompt = apprenticeshipApplicationSummaries.Count(each => each.Status == ApplicationStatuses.Unsuccessful) >= unsuccessfulApplicationsToShowTraineeshipsPrompt;
@@ -497,8 +496,8 @@
 
             var viewModel = new TraineeshipFeatureViewModel
             {
-                ShowTraineeshipsPrompt = traineeshipsFeatureActive && allowTraineeshipPrompts && sufficentUnsuccessfulApprenticeshipApplicationsToPrompt && !candidateHasSuccessfulApprenticeshipApplication && !candidateHasAppliedForTraineeship,
-                ShowTraineeshipsLink = traineeshipsFeatureActive && (sufficentUnsuccessfulApprenticeshipApplicationsToPrompt || candidateHasAppliedForTraineeship)
+                ShowTraineeshipsPrompt = allowTraineeshipPrompts && sufficentUnsuccessfulApprenticeshipApplicationsToPrompt && !candidateHasSuccessfulApprenticeshipApplication && !candidateHasAppliedForTraineeship,
+                ShowTraineeshipsLink = (sufficentUnsuccessfulApprenticeshipApplicationsToPrompt || candidateHasAppliedForTraineeship)
             };
 
             return viewModel;

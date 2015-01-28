@@ -16,7 +16,7 @@
     [TestFixture]
     public class VacancySearchTests
     {
-        private const string RetailAndCommercialEnterprise = "MFP"; //"HBY"; //"Retail and Commercial Enterprise";
+        private const string RetailAndCommercialEnterprise = "HBY"; //"Retail and Commercial Enterprise";
         private IElasticsearchClientFactory _elasticsearchClientFactory;
         private IMapper _mapper;
 
@@ -67,7 +67,6 @@
         [Test]
         public void ShouldSearchBySectorAndFramework()
         {
-
             var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
                 SearchConfiguration.Instance);
 
@@ -96,7 +95,7 @@
                 },
                 PageNumber = 1,
                 PageSize = 5,
-                SearchRadius = 5,
+                SearchRadius = 50,
                 SortType = VacancySortType.ClosingDate,
                 VacancyLocationType = ApprenticeshipLocationType.NonNational
             };
