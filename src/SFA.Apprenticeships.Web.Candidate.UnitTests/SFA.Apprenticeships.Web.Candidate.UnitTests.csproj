@@ -118,7 +118,7 @@
     </Reference>
     <Reference Include="RazorGenerator.Testing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\tools\RazorGenerator.Testing\lib\RazorGenerator.Testing.dll</HintPath>
+      <HintPath>..\packages\RazorGenerator.Testing.2.3.1\lib\net40\RazorGenerator.Testing.dll</HintPath>
     </Reference>
     <Reference Include="ReflectionMagic">
       <HintPath>..\packages\ReflectionMagic.2.0.0\lib\net40\ReflectionMagic.dll</HintPath>
