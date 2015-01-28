@@ -10,7 +10,6 @@
     using Mediators;
     using ViewModels.Applications;
 
-    [TraineeshipsToggle]
     public class TraineeshipApplicationController : CandidateControllerBase
     {
         private readonly ITraineeshipApplicationMediator _traineeshipApplicationMediator;
