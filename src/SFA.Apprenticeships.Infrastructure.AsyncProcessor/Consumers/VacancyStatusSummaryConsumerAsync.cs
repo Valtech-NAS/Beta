@@ -45,11 +45,13 @@
 
                     if (cachedSummaryUpdate != null)
                     {
+                        // this vacancy has already been processed so return to prevent endless reprocessing
                         return;
                     }
 
                     _cacheService.PutObject(message.CacheKey(), message, message.CacheDuration());
 
+                    //todo: move the code below (and private methods) into the application process project. shouldn't be in infrastructure layer
                     QueueApprenticeshipApplicationStatusSummaries(message);
                     QueueTraineeshipApplicationStatusSummaries(message);
                 }
