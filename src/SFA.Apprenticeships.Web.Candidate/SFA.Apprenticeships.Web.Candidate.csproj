@@ -215,6 +215,7 @@
   <ItemGroup>
     <Content Include="403.aspx" />
     <Content Include="403.html" />
+    <Content Include="Content\_assets\js\nas\settingsform.js" />
     <Content Include="TraineeshipNotFound.html" />
     <Content Include="Content\_assets\img\icon-external-hover.svg" />
     <Content Include="Content\_assets\img\icon-external.png" />

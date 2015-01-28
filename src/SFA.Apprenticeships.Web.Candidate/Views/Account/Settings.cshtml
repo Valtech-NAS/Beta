@@ -36,21 +36,11 @@
         @Html.EditorFor(r => r.DateOfBirth)
         @Html.EditorFor(a => a.Address, new { AnalyticsDSCUri = "/settings/findaddress" })
         @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { @class = "form-control-1-3", type = "tel" })
-        
-        <div id="accountSettings2">
-            <h3 class="heading-large">How we contact you</h3>
-            <div class="panel-indent text">
-                <p>We'll notify you when you submit an application form</p>
-                @*<ul class="list-bullet">
-                    <li>you submit an application form</li>
-                    <li>the status of one of your applications changes</li>
-                    <li>an apprenticeship is approaching its closing date</li>
-                </ul>*@
-            </div>
-            @Html.FormRadioButtonsYesNo(c => c.AllowEmailComms)
-        </div>
-
     </fieldset>
+    
+    Html.RenderPartial("_communicationPreferencesJS", Model);
+
+    Html.RenderPartial("_communicationPreferencesNonJS", Model);
 
     <div class="form-group">
         <button id="update-details-button" class="button">Update details</button>
@@ -59,12 +49,14 @@
 
 @section scripts
 {
-    <script>
+    @Scripts.Render("~/bundles/knockout")
+
+    <script type="text/javascript">
         $(function () {
             $("#find-addresses").addressLookup({
                 url: '@Url.Action("Addresses", "Location")',
                 selectlist: '#address-select'
             });
         });
-    </script>
+</script>
 }

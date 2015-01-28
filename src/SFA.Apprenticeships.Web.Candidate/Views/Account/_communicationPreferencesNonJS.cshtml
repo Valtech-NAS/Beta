@@ -1,1 +1,18 @@
-﻿TODO: COMMUNICATION PREFERENCES NON JS
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Account.SettingsViewModel
+
+<noscript>
+    TODO: COMMUNICATION PREFERENCES NON JS
+
+    <div id="accountSettings2">
+        <h3 class="heading-large">How we contact you</h3>
+        <div class="panel-indent text">
+            <p>We'll notify you when:</p>
+            <ul class="list-bullet">
+                <li>you submit an application form</li>
+                <li>the status of one of your applications changes</li>
+                <li>an apprenticeship is approaching its closing date</li>
+            </ul>
+        </div>
+        @Html.FormRadioButtonsYesNo(c => c.AllowEmailComms)
+    </div>
+</noscript>
