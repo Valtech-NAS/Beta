@@ -38,8 +38,8 @@
                     }
 
                     _cacheService.PutObject(message.CacheKey(), message, message.CacheDuration());
+
                     _applicationStatusProcessor.ProcessApplicationStatuses(message.LegacyVacancyId, message.VacancyStatus, message.ClosingDate);
-                    //todo: move the code below (and private methods) into the application process project. shouldn't be in infrastructure layer
                 }
                 catch (Exception ex)
                 {
