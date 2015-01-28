@@ -15,7 +15,6 @@
         where TSearchParameters : SearchParametersBase
     {
         private const string CallingMessageFormat = "Calling VacancySearchService with the following parameters; {0}";
-
         private const string FailedMessageFormat = "Vacancy search failed for the following parameters; {0}";
 
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
@@ -40,26 +39,15 @@
 
             try
             {
+                if (!string.IsNullOrEmpty(parameters.VacancyReference))
+                {
+                    var exactMatch = _vacancySearchProvider.FindVacancy(parameters.VacancyReference);
+                    if (exactMatch != null && exactMatch.Total == 1)
+                    {
+                        return exactMatch;
+                    }
+                }
                 return _vacancySearchProvider.FindVacancies(parameters);
-            }
-            catch (Exception e)
-            {
-                var message = GetLoggerMessage(FailedMessageFormat, parameters);
-                _logger.Debug(message, e);
-                throw new CustomException(message, e, ErrorCodes.VacanciesSearchFailed);
-            }
-        }
-
-        public SearchResults<TVacancySummaryResponse> FindExactMatch(TSearchParameters parameters)
-        {
-            Condition.Requires(parameters).IsNotNull();
-
-            var enterMmessage = GetLoggerMessage(CallingMessageFormat, parameters);
-            _logger.Debug(enterMmessage);
-
-            try
-            {
-                return _vacancySearchProvider.FindExactMatchVacancy(parameters);
             }
             catch (Exception e)
             {

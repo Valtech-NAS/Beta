@@ -67,10 +67,10 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
 
         private void Initialise()
         {
-            VersionLogging.SetVersion();
-
             try
             {
+                VersionLogging.SetVersion();
+
                 var config = new ConfigurationManager();
                 var useCacheSetting = config.TryGetAppSetting("UseCaching");
                 bool useCache;

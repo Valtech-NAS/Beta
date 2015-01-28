@@ -14,8 +14,7 @@
     using Newtonsoft.Json.Linq;
     using NLog;
 
-    public class ApprenticeshipsSearchProvider :
-        IVacancySearchProvider<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>
+    public class ApprenticeshipsSearchProvider : IVacancySearchProvider<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>
     {
         private const string FrameworkAggregationName = "Frameworks";
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -80,8 +79,7 @@
         }
 
 
-        public SearchResults<ApprenticeshipSummaryResponse> FindExactMatchVacancy(
-            ApprenticeshipSearchParameters parameters)
+        public SearchResults<ApprenticeshipSummaryResponse> FindVacancy(string vacancyReference)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (ApprenticeshipSummary));
@@ -95,14 +93,10 @@
                 .Type(documentTypeName)
                 .Query(
                     q =>
-                        q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, parameters.VacancyReference)))));
+                        q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, vacancyReference)))));
 
-            var responses =
-                _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryResponse>>
-                    (searchResults.Documents).ToList();
-            var results = new SearchResults<ApprenticeshipSummaryResponse>(searchResults.Total, parameters.PageNumber,
-                responses, null);
-
+            var responses = _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryResponse>>(searchResults.Documents).ToList();
+            var results = new SearchResults<ApprenticeshipSummaryResponse>(searchResults.Total, 1, responses, null);
             return results;
         }
 
