@@ -124,6 +124,14 @@
         [ElementLocator(Id = "qualification-save-warning")]
         public IWebElement QualificationSaveWarning { get; set; }
 
+        public string QualificationsSummaryCount
+        {
+            get
+            {
+                return QualificationsSummaryItems.Count().ToString(CultureInfo.InvariantCulture);
+            }
+        }
+
         #endregion
 
         #region Work Experience
