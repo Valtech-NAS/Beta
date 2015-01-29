@@ -346,6 +346,7 @@
         }
 
         [Test]
+        [Ignore]
         public void ApprenticeshipDetailsLiveVacancyTest()
         {
             var vacancyDetailViewModel = new VacancyDetailViewModel
