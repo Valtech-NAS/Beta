@@ -310,16 +310,21 @@
             ApprenticeshipSearchViewModel search, Location searchLocation)
         {
             VacancySortType nationalSortType, nonNationalSortType;
+            int nationalPageNumber, nonNationalPageNumber;
 
             if (search.LocationType == ApprenticeshipLocationType.National)
             {
                 nationalSortType = search.SortType;
                 nonNationalSortType = VacancySortType.Distance;
+                nationalPageNumber = search.PageNumber;
+                nonNationalPageNumber = 1;
             }
             else
             {
                 nonNationalSortType = search.SortType;
                 nationalSortType = VacancySortType.ClosingDate;
+                nationalPageNumber = 1;
+                nonNationalPageNumber = search.PageNumber;
             }
             
             var searchparameters = new List<ApprenticeshipSearchParameters>
@@ -328,10 +333,9 @@
                 {
                     Keywords = search.Keywords,
                     Location = null,
-                    PageNumber = search.PageNumber,
+                    PageNumber = nationalPageNumber,
                     PageSize = search.ResultsPerPage,
                     SearchRadius = search.WithinDistance,
-                    // SortType = string.IsNullOrWhiteSpace(search.Keywords) ? VacancySortType.ClosingDate : VacancySortType.Relevancy,
                     SortType = nationalSortType,
                     VacancyLocationType = ApprenticeshipLocationType.National,
                     ApprenticeshipLevel = search.ApprenticeshipLevel,
@@ -342,10 +346,9 @@
                 {
                     Keywords = search.Keywords,
                     Location = searchLocation,
-                    PageNumber = search.PageNumber,
+                    PageNumber = nonNationalPageNumber,
                     PageSize = search.ResultsPerPage,
                     SearchRadius = search.WithinDistance,
-                    // SortType = search.SortType,
                     SortType = nonNationalSortType,
                     VacancyLocationType = ApprenticeshipLocationType.NonNational,
                     ApprenticeshipLevel = search.ApprenticeshipLevel,
