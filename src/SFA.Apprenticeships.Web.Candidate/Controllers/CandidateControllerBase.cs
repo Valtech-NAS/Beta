@@ -28,7 +28,8 @@
                     {
                         CandidateId = new Guid(User.Identity.Name),
                         FullName = context.FullName,
-                        UserName = context.UserName
+                        UserName = context.UserName,
+                        AcceptedTermsAndConditionsVersion = context.AcceptedTermsAndConditionsVersion
                     };
 
                     UserContext = candidateContext;
