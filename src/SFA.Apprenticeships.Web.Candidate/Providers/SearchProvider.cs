@@ -214,7 +214,7 @@
 
         private static void SetAggregationResults(ApprenticeshipSearchResponseViewModel response, IEnumerable<AggregationResult> aggregationResults)
         {
-            if (aggregationResults == null || response.VacancySearch.Categories == null) return;
+            if (aggregationResults == null || response.VacancySearch == null || response.VacancySearch.Categories == null) return;
 
             var aggregationResultsList = aggregationResults.ToList();
 
@@ -251,7 +251,6 @@
                     PageSize = search.ResultsPerPage,
                     SearchRadius = search.WithinDistance,
                     SortType = search.SortType,
-                    VacancyLocationType = ApprenticeshipLocationType.NonNational
                 };
 
                 var searchResults = _traineeshipSearchService.Search(searchRequest);
