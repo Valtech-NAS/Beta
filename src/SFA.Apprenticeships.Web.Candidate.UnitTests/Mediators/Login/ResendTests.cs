@@ -4,6 +4,7 @@
     using Candidate.ViewModels.Login;
     using Common.Constants;
     using Constants.Pages;
+    using FluentAssertions;
     using Moq;
     using NUnit.Framework;
 
@@ -15,7 +16,7 @@
         {
             var viewModel = new AccountUnlockViewModel();
             var response = Mediator.Resend(viewModel);
-            response.AssertCode(Codes.Login.Resend.ValidationError);
+            response.AssertValidationResult(Codes.Login.Resend.ValidationError);
         }
 
         [Test]

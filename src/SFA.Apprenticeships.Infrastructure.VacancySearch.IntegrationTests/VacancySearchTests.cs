@@ -76,7 +76,7 @@
 
             var vacancies = vacancySearchProvider.FindVacancies(searchParameters);
 
-            vacancies.AggregationResults.Should().HaveCount(1);
+            vacancies.AggregationResults.Should().HaveCount(n => n > 1);
         }
 
         private static ApprenticeshipSearchParameters GetCommonSearchParameters()

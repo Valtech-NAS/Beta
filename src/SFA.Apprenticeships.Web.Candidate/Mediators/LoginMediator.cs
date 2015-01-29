@@ -134,7 +134,7 @@
 
             if (!validationResult.IsValid)
             {
-                return GetMediatorResponse(Codes.Login.Resend.ValidationError, accountUnlockViewModel);
+                return GetMediatorResponse(Codes.Login.Resend.ValidationError, accountUnlockViewModel, validationResult);
             }
 
             accountUnlockViewModel = _candidateServiceProvider.RequestAccountUnlockCode(accountUnlockViewModel);
