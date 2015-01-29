@@ -66,20 +66,25 @@
                 success = true;
                 Logger.Debug("Call succeeded and client is now closed");
             }
+            catch (ServerTooBusyException ex)
+            {
+                Logger.Info("WCF ServerTooBusyException", (Exception)ex);
+                throw;
+            }
             catch (CommunicationException ex)
             {
                 Logger.Info("WCF CommunicationException", (Exception)ex);
-                throw; // handle WCF CommunicationException
+                throw;
             }
             catch (TimeoutException ex)
             {
                 Logger.Info("WCF TimeoutException", (Exception)ex);
-                throw; // handle WCF TimeoutException
+                throw;
             }
             catch (Exception exception)
             {
-                Logger.Info("Non-WCF TimeoutException", exception);
-                throw; // handle non-WCF Exception
+                Logger.Info("Non-WCF Exception", exception);
+                throw;
             }
             finally
             {
