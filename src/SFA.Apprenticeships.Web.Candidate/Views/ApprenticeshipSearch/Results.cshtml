@@ -104,14 +104,14 @@
                     <ul>
                         @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Keyword)
                         {
-                            @if (VacancyHelper.IsVacancyReference(Model.VacancySearch.Keywords))
-                             {
-                                 <li id="search-no-results-reference-number">try a different reference number</li>
-                             }
-                             else
-                             {
-                                 <li>using different keywords</li>
-                             }
+                            if (VacancyHelper.IsVacancyReference(Model.VacancySearch.Keywords))
+                            {
+                                <li id="search-no-results-reference-number">try a different reference number</li>
+                            }
+                            else
+                            {
+                                <li>using different keywords</li>
+                            }
                         }
                         @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Category)
                         {
@@ -121,7 +121,7 @@
                             }
                             else
                             {
-                                <li>select a different sub-category</li>
+                                <li>select a different sub-category or sub-categories</li>
                             }
                         }
                         <li>expanding your search location</li>

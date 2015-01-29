@@ -279,19 +279,13 @@ WriteLiteral("                    <ul>\r\n");
             #line 105 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                          if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Keyword)
                         {
-                            
-            
-            #line default
-            #line hidden
-            
-            #line 107 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-                             if (VacancyHelper.IsVacancyReference(Model.VacancySearch.Keywords))
-                             {
+                            if (VacancyHelper.IsVacancyReference(Model.VacancySearch.Keywords))
+                            {
 
             
             #line default
             #line hidden
-WriteLiteral("                                 <li");
+WriteLiteral("                                <li");
 
 WriteLiteral(" id=\"search-no-results-reference-number\"");
 
@@ -299,24 +293,18 @@ WriteLiteral(">try a different reference number</li>\r\n");
 
             
             #line 110 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-                             }
-                             else
-                             {
+                            }
+                            else
+                            {
 
             
             #line default
             #line hidden
-WriteLiteral("                                 <li>using different keywords</li>\r\n");
+WriteLiteral("                                <li>using different keywords</li>\r\n");
 
             
             #line 114 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-                             }
-            
-            #line default
-            #line hidden
-            
-            #line 114 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-                              
+                            }
                         }
 
             
@@ -345,7 +333,8 @@ WriteLiteral("                                <li>try a different category</li>\
             
             #line default
             #line hidden
-WriteLiteral("                                <li>select a different sub-category</li>\r\n");
+WriteLiteral("                                <li>select a different sub-category or sub-catego" +
+"ries</li>\r\n");
 
             
             #line 125 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
