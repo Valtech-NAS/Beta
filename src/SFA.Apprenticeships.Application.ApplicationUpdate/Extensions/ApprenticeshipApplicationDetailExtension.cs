@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.ApplicationUpdate.Extensions
 {
+    using System;
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
     using Entities;
 
     internal static class ApprenticeshipApplicationDetailExtension
@@ -42,6 +44,21 @@
             if (apprenticeshipApplication.UnsuccessfulReason != applicationStatusSummary.UnsuccessfulReason)
             {
                 apprenticeshipApplication.UnsuccessfulReason = applicationStatusSummary.UnsuccessfulReason;
+                updated = true;
+            }
+
+            return updated;
+        }
+
+        internal static bool UpdateApprenticeshipApplicationDetail(
+            this ApprenticeshipApplicationDetail apprenticeshipApplication,
+            VacancyStatuses vacancyStatus)
+        {
+            var updated = false;
+
+            if (apprenticeshipApplication.VacancyStatus != vacancyStatus)
+            {
+                apprenticeshipApplication.VacancyStatus = vacancyStatus;
                 updated = true;
             }
 

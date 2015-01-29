@@ -292,7 +292,7 @@ else
                                         }
                                     </td>
                                     <td class="ta-center">
-                                        @if (application.VacancyStatus == VacancyStatuses.Live)
+                                        @if (application.VacancyStatus == VacancyStatuses.Live || application.VacancyStatus == VacancyStatuses.Unknown)
                                         {
                                             @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = application.VacancyId }, new { @class = "resume-link" })
                                         }

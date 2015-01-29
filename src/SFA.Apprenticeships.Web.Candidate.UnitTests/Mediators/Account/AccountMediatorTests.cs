@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Application.Interfaces.Vacancies;
     using Candidate.Mediators;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
@@ -29,6 +30,7 @@
         private AccountMediator _accountMediator;
         private Mock<IApprenticeshipApplicationProvider> _apprenticeshipApplicationProviderMock;
         private Mock<IApprenticeshipVacancyDetailProvider> _apprenticeshipVacancyDetailProvider;
+        // TODO: AG: US680: private Mock<ITraineeshipVacancyDetailProvider> _traineeshipVacancyDetailProvider;
         private Mock<IAccountProvider> _accountProviderMock;
         private Mock<ICandidateServiceProvider> _candidateServiceProviderMock;
         private Mock<IConfigurationManager> _configurationManagerMock; 
@@ -341,6 +343,23 @@
             var response = _accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
 
             response.Code.Should().Be(Codes.AccountMediator.AcceptTermsAndConditions.ErrorAccepting);
+        }
+
+        [Test]
+        public void ApprenticeshipDetailsLiveVacancyTest()
+        {
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Live
+            };
+
+            _apprenticeshipVacancyDetailProvider.Setup(x =>
+                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(vacancyDetailViewModel);
+
+            var response = _accountMediator.ApprenticeshipVacancyDetails(42);
+
+            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Available);
         }
     }
 }

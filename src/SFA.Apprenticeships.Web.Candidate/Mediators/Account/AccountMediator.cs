@@ -155,5 +155,16 @@
 
             return GetMediatorResponse(Codes.AccountMediator.AcceptTermsAndConditions.ErrorAccepting);
         }
+
+        public MediatorResponse ApprenticeshipVacancyDetails(int vacancyId)
+        {
+            // TODO: AG: US680: incomplete.
+            // Get vacancy from gateway.
+            // Read application from repo.
+            // If vacancy status has changed, update repo.
+            // Return latest application detail based on repo.
+            // If vacancy status is unavailable, stay on dashboard and show message.
+            throw new NotImplementedException();
+        }
     }
 }

@@ -49,9 +49,9 @@
                 public const string ErrorAccepting = "ErrorAccepting";
             }
 
-            public class ApprenticeshipDetails
+            public class VacancyDetails
             {
-                public const string VacancyAvailable = "ApprenticeshipDetails.VacancyAvailable";
+                public const string Available = "ApprenticeshipDetails.VacancyAvailable";
                 public const string VacancyUnavailable = "ApprenticeshipDetails.VacancyUnavailable";
                 public const string Error = "ApprenticeshipDetails.Error";
             }

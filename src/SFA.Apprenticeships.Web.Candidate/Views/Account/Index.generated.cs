@@ -1466,7 +1466,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 295 "..\..\Views\Account\Index.cshtml"
-                                         if (application.VacancyStatus == VacancyStatuses.Live)
+                                         if (application.VacancyStatus == VacancyStatuses.Live || application.VacancyStatus == VacancyStatuses.Unknown)
                                         {
                                             
             
@@ -1510,14 +1510,14 @@ WriteLiteral(">\r\n                                        <a");
 
 WriteLiteral(" class=\"icon-black delete-draft\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 17685), Tuple.Create("\"", 17760)
+WriteAttribute("href", Tuple.Create(" href=\"", 17741), Tuple.Create("\"", 17816)
             
             #line 306 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 17692), Tuple.Create<System.Object, System.Int32>(Url.Action("Delete", "Account", new { id = application.VacancyId })
+, Tuple.Create(Tuple.Create("", 17748), Tuple.Create<System.Object, System.Int32>(Url.Action("Delete", "Account", new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 17692), false)
+, 17748), false)
 );
 
 WriteLiteral("><i");
