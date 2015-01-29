@@ -7,6 +7,7 @@
     using Candidate.Mediators;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
+    using Domain.Entities.ReferenceData;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -20,6 +21,9 @@
         private const string ACityWithoutSuggestedLocations = "Liverpool";
         private const string SomeErrorMessage = "SomeErrorMessage";
         private const string ACityWithMoreThanOneSuggestedLocation = "Manchester";
+
+        private ApprenticeshipSearchViewModel _searchSentToSearchProvider;
+
         [SetUp]
         public override void Setup()
         {
@@ -33,8 +37,8 @@
             };
             var emptyVacancies = new ApprenticeshipVacancySummaryViewModel[0];
             //This order is important. Moq will run though all matches and pick the last one
-            SearchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>())).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = emptyVacancies, VacancySearch = svm });
-            SearchProvider.Setup(sp => sp.FindVacancies(It.Is<ApprenticeshipSearchViewModel>(svm => svm.Location == ACityWithOneSuggestedLocation))).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm });
+            SearchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>())).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = emptyVacancies, VacancySearch = svm }).Callback<ApprenticeshipSearchViewModel>(svm => { _searchSentToSearchProvider = svm; });
+            SearchProvider.Setup(sp => sp.FindVacancies(It.Is<ApprenticeshipSearchViewModel>(svm => svm.Location == ACityWithOneSuggestedLocation))).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm }).Callback<ApprenticeshipSearchViewModel>(svm => { _searchSentToSearchProvider = svm; });
         }
 
         [Test]
@@ -227,7 +231,7 @@
                 Location = ACityWithOneSuggestedLocation
             };
 
-            SearchProvider.Setup(sp => sp.FindVacancies(searchViewModel))
+            SearchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>()))
                 .Returns(new ApprenticeshipSearchResponseViewModel
                 {
                     ViewModelMessage = SomeErrorMessage
@@ -267,7 +271,7 @@
                 Keywords = "VAC000123456"
             };
 
-            SearchProvider.Setup(sp => sp.FindVacancies(searchViewModel))
+            SearchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>()))
                 .Returns(new ApprenticeshipSearchResponseViewModel
                 {
                     ExactMatchFound = true,
@@ -324,6 +328,152 @@
             response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
 
             response.ViewModel.VacancySearch.SortType.Should().Be(originalSortType);
+        }
+
+        [Test]
+        public void TestCategorySearchModification()
+        {
+            const string selectedCategoryCode = "2";
+            const string selectedCategorySubCategory = "2_2";
+
+            ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(new List<Category>
+            {
+                new Category
+                {
+                    CodeName = "1",
+                    SubCategories = new List<Category>
+                    {
+                        new Category {CodeName = "1_1"},
+                        new Category {CodeName = "1_2"}
+                    }
+                },
+                new Category
+                {
+                    CodeName = selectedCategoryCode,
+                    SubCategories = new List<Category>
+                    {
+                        new Category {CodeName = "2_1"},
+                        new Category {CodeName = selectedCategorySubCategory}
+                    }
+                }
+            });
+
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Keywords = AKeyword,
+                Location = ACityWithOneSuggestedLocation,
+                LocationType = ApprenticeshipLocationType.NonNational,
+                Category = selectedCategoryCode,
+                //Select Sub Categories from a different category than the one selected plus a valid one
+                SubCategories = new[]
+                {
+                    "1_1",
+                    "1_2",
+                    selectedCategorySubCategory
+                },
+                SearchMode = ApprenticeshipSearchMode.Category
+            };
+
+            var response = Mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+
+            //The search sent to the search provider should have been modified based on the search mode
+            _searchSentToSearchProvider.Should().NotBeNull();
+            _searchSentToSearchProvider.Keywords.Should().BeNullOrEmpty();
+            _searchSentToSearchProvider.Location.Should().Be(ACityWithOneSuggestedLocation);
+            _searchSentToSearchProvider.LocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            _searchSentToSearchProvider.Categories.Should().NotBeNull();
+            _searchSentToSearchProvider.Categories.Count.Should().Be(2);
+            _searchSentToSearchProvider.Category.Should().Be(selectedCategoryCode);
+            _searchSentToSearchProvider.SubCategories.Length.Should().Be(1);
+            _searchSentToSearchProvider.SubCategories[0].Should().Be(selectedCategorySubCategory);
+            _searchSentToSearchProvider.SearchMode.Should().Be(ApprenticeshipSearchMode.Category);
+            
+            //But the returned search should be the original search the user submitted so as not to lose any of their changes
+            var returnedSearch = response.ViewModel.VacancySearch;
+            returnedSearch.Should().NotBeNull();
+            returnedSearch.Keywords.Should().Be(AKeyword);
+            returnedSearch.Location.Should().Be(ACityWithOneSuggestedLocation);
+            returnedSearch.LocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            returnedSearch.Categories.Should().NotBeNull();
+            returnedSearch.Categories.Count.Should().Be(2);
+            returnedSearch.Category.Should().Be(selectedCategoryCode);
+            returnedSearch.SubCategories.Length.Should().Be(1);
+            returnedSearch.SubCategories[0].Should().Be(selectedCategorySubCategory);
+            returnedSearch.SearchMode.Should().Be(ApprenticeshipSearchMode.Category);
+        }
+
+        [Test]
+        public void TestKeywordSearchModification()
+        {
+            const string selectedCategoryCode = "2";
+            const string selectedCategorySubCategory = "2_2";
+
+            ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(new List<Category>
+            {
+                new Category
+                {
+                    CodeName = "1",
+                    SubCategories = new List<Category>
+                    {
+                        new Category {CodeName = "1_1"},
+                        new Category {CodeName = "1_2"}
+                    }
+                },
+                new Category
+                {
+                    CodeName = selectedCategoryCode,
+                    SubCategories = new List<Category>
+                    {
+                        new Category {CodeName = "2_1"},
+                        new Category {CodeName = selectedCategorySubCategory}
+                    }
+                }
+            });
+
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Keywords = AKeyword,
+                Location = ACityWithOneSuggestedLocation,
+                LocationType = ApprenticeshipLocationType.NonNational,
+                Category = selectedCategoryCode,
+                //Select Sub Categories from a different category than the one selected plus a valid one
+                SubCategories = new[]
+                {
+                    "1_1",
+                    "1_2",
+                    selectedCategorySubCategory
+                },
+                SearchMode = ApprenticeshipSearchMode.Keyword
+            };
+
+            var response = Mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+
+            //The search sent to the search provider should have been modified based on the search mode
+            _searchSentToSearchProvider.Should().NotBeNull();
+            _searchSentToSearchProvider.Keywords.Should().Be(AKeyword);
+            _searchSentToSearchProvider.Location.Should().Be(ACityWithOneSuggestedLocation);
+            _searchSentToSearchProvider.LocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            _searchSentToSearchProvider.Categories.Should().BeNull();
+            _searchSentToSearchProvider.Category.Should().BeNullOrEmpty();
+            _searchSentToSearchProvider.SubCategories.Should().BeNull();
+            _searchSentToSearchProvider.SearchMode.Should().Be(ApprenticeshipSearchMode.Keyword);
+            
+            //But the returned search should be the original search the user submitted so as not to lose any of their changes
+            var returnedSearch = response.ViewModel.VacancySearch;
+            returnedSearch.Should().NotBeNull();
+            returnedSearch.Keywords.Should().Be(AKeyword);
+            returnedSearch.Location.Should().Be(ACityWithOneSuggestedLocation);
+            returnedSearch.LocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            returnedSearch.Categories.Should().NotBeNull();
+            returnedSearch.Categories.Count.Should().Be(2);
+            returnedSearch.Category.Should().Be(selectedCategoryCode);
+            returnedSearch.SubCategories.Length.Should().Be(1);
+            returnedSearch.SubCategories[0].Should().Be(selectedCategorySubCategory);
+            returnedSearch.SearchMode.Should().Be(ApprenticeshipSearchMode.Keyword);
         }
     }
 }

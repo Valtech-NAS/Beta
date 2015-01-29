@@ -48,6 +48,11 @@
             validator.RuleFor(x => x.Keywords)
                 .Matches(ApprenticeshipSearchViewModelMessages.KeywordMessages.WhiteList)
                 .WithMessage(ApprenticeshipSearchViewModelMessages.KeywordMessages.WhiteListErrorText);
+
+            validator.RuleFor(x => x.Category)
+                .NotEmpty()
+                .When(x => x.SearchMode == ApprenticeshipSearchMode.Category)
+                .WithMessage(ApprenticeshipSearchViewModelMessages.CategoryMessages.RequiredErrorText);
         }
 
         public static void AddServerRules(this AbstractValidator<ApprenticeshipSearchViewModel> validator)

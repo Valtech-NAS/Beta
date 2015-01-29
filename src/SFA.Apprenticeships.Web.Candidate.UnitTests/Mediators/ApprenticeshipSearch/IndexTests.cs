@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
     using Candidate.Mediators;
+    using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
@@ -10,9 +11,9 @@
     public class IndexTests : TestsBase
     {
         [Test]
-        public void Ok()
+        public void Ok_Keyword()
         {
-            var response = Mediator.Index();
+            var response = Mediator.Index(ApprenticeshipSearchMode.Keyword);
 
             response.AssertCode(Codes.ApprenticeshipSearch.Index.Ok, true);
 
@@ -23,6 +24,24 @@
             viewModel.Distances.SelectedValue.Should().Be(null);
             viewModel.ApprenticeshipLevels.Should().NotBeNull();
             viewModel.ApprenticeshipLevel.Should().Be("All");
+            viewModel.SearchMode.Should().Be(ApprenticeshipSearchMode.Keyword);
+        }
+
+        [Test]
+        public void Ok_Category()
+        {
+            var response = Mediator.Index(ApprenticeshipSearchMode.Category);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Index.Ok, true);
+
+            var viewModel = response.ViewModel;
+            viewModel.WithinDistance.Should().Be(5);
+            viewModel.LocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            viewModel.ResultsPerPage.Should().Be(5);
+            viewModel.Distances.SelectedValue.Should().Be(null);
+            viewModel.ApprenticeshipLevels.Should().NotBeNull();
+            viewModel.ApprenticeshipLevel.Should().Be("All");
+            viewModel.SearchMode.Should().Be(ApprenticeshipSearchMode.Category);
         }
 
         [Test]
@@ -30,7 +49,7 @@
         {
             UserDataProvider.Setup(udp => udp.Get(UserDataItemNames.ApprenticeshipLevel)).Returns("Advanced");
 
-            var response = Mediator.Index();
+            var response = Mediator.Index(ApprenticeshipSearchMode.Keyword);
 
             var viewModel = response.ViewModel;
             viewModel.ApprenticeshipLevel.Should().Be("Advanced");

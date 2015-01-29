@@ -177,8 +177,4 @@
     $('#editSearchToggle').on('click', function () {
         initialize();
     });
-
-    $(window).resize(function () {
-        initialize();
-    });
 });

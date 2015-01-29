@@ -1,0 +1,39 @@
+﻿@model ApprenticeshipSearchViewModel
+
+@{
+    //TODO: create style for tabbed-element that defaults to hidden like tabbed-content. Remove inline style
+    var divClass = "class=\"form-group tabbed-element tab2\"";
+    if (Model.SearchMode != ApprenticeshipSearchMode.Category)
+    {
+        divClass += " style=\"display: none\"";
+    }
+}
+<div @Html.Raw(divClass)>
+    <ul class="copy-16 list-text list-checkradio">
+        @foreach (var category in Model.Categories)
+        {
+            var inputId = string.Format("category{0}", category.CodeName);
+            var subCategories = category.SubCategories.ToList();
+            var checkedAttr = Model.Category == category.CodeName ? " checked" : "";
+            <li>
+                <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@category.FullName</label>
+                <details>
+                    <summary class="copy-16">@subCategories.Count more sub-categories</summary>
+                    <ul class="copy-16 list-text list-checkradio">
+                        @foreach (var subCategory in subCategories)
+                        {
+                            checkedAttr = Model.SubCategories != null && Model.SubCategories.Contains(subCategory.CodeName) ? " checked" : "";
+                            var checkboxId = string.Format("subCategory{0}", subCategory.CodeName);
+                            var labelText = subCategory.FullName;
+                            if (subCategory.Count.HasValue)
+                            {
+                                labelText = string.Format("{0} ({1})", labelText, subCategory.Count.Value);
+                            }
+                            <li><input @checkedAttr type="checkbox" name="SubCategories" id="@checkboxId" value="@subCategory.CodeName"><label for="@checkboxId">@labelText</label></li>
+                        }
+                    </ul>
+                </details>
+            </li>
+        }
+    </ul>
+</div>

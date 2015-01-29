@@ -12,6 +12,8 @@
 
         public Category ParentCategory { get; set; }
 
-        public IEnumerable<Category> SubCategories { get; set; }
+        public IList<Category> SubCategories { get; set; }
+
+        public long? Count { get; set; }
     }
 }

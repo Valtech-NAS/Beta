@@ -167,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\RegisterControllerTests\GivenAFaultedServer.cs" />
+    <Compile Include="Extensions\CollectionExtensionsTests.cs" />
     <Compile Include="Helpers\BaseExtensionTests.cs" />
     <Compile Include="Helpers\FormTextForTests.cs" />
     <Compile Include="Mappers\VacancyDetailViewModelMapperTests.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="Validators\RegisterViewModelValidatorTests.cs" />
     <Compile Include="Validators\VacancySearchValidatorTests.cs" />
     <Compile Include="ViewModels\VacancySearchResponseViewModelTests.cs" />
+    <Compile Include="Views\Dashboard\DashboardTests.cs" />
     <Compile Include="Views\TraineeshipSearch\DetailsTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\DetailsTests.cs" />
   </ItemGroup>

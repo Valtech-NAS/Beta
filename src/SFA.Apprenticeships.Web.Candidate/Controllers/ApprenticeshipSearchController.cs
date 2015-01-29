@@ -23,14 +23,14 @@
         [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [ApplyWebTrends]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(ApprenticeshipSearchMode searchMode = ApprenticeshipSearchMode.Keyword)
         {
             return await Task.Run<ActionResult>(() =>
             {
                 //Originally done in PopulateSortType
                 ModelState.Remove("SortType");
 
-                var response = _apprenticeshipSearchMediator.Index();
+                var response = _apprenticeshipSearchMediator.Index(searchMode);
 
                 return View(response.ViewModel);
             });

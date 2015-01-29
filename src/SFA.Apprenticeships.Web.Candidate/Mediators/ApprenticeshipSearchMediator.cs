@@ -1,13 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
+    using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
     using Domain.Entities.Vacancies;
+    using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
     using Providers;
@@ -18,6 +21,7 @@
     {
         private readonly ISearchProvider _searchProvider;
         private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
+        private readonly IReferenceDataService _referenceDataService;
         private readonly ApprenticeshipSearchViewModelServerValidator _searchRequestValidator;
         private readonly ApprenticeshipSearchViewModelLocationValidator _searchLocationValidator;
 
@@ -26,23 +30,26 @@
             ISearchProvider searchProvider,
             IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
             IUserDataProvider userDataProvider,
+            IReferenceDataService referenceDataService,
             ApprenticeshipSearchViewModelServerValidator searchRequestValidator,
             ApprenticeshipSearchViewModelLocationValidator searchLocationValidator)
             : base(configManager, userDataProvider)
         {
             _searchProvider = searchProvider;
             _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
+            _referenceDataService = referenceDataService;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
         }
 
-        public MediatorResponse<ApprenticeshipSearchViewModel> Index()
+        public MediatorResponse<ApprenticeshipSearchViewModel> Index(ApprenticeshipSearchMode searchMode)
         {
             var distances = GetDistances();
             var sortTypes = GetSortTypes();
             var resultsPerPage = GetResultsPerPage();
             var apprenticeshipLevels = GetApprenticeshipLevels();
             var apprenticeshipLevel = GetApprenticeshipLevel();
+            var categories = _referenceDataService.GetCategories();
 
             var viewModel = new ApprenticeshipSearchViewModel
             {
@@ -52,7 +59,9 @@
                 SortTypes = sortTypes,
                 ResultsPerPage = resultsPerPage,
                 ApprenticeshipLevels = apprenticeshipLevels,
-                ApprenticeshipLevel = apprenticeshipLevel
+                ApprenticeshipLevel = apprenticeshipLevel,
+                Categories = categories.ToList(),
+                SearchMode = searchMode
             };
 
             return GetMediatorResponse(Codes.ApprenticeshipSearch.Index.Ok, viewModel);
@@ -109,6 +118,7 @@
             model.Distances = GetDistances();
             model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
             model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
+            model.Categories = _referenceDataService.GetCategories().ToList();
 
             var clientResult = _searchRequestValidator.Validate(model);
 
@@ -146,7 +156,10 @@
                             PageNumber = model.PageNumber,
                             SortType = model.SortType,
                             WithinDistance = model.WithinDistance,
-                            ResultsPerPage = model.ResultsPerPage
+                            ResultsPerPage = model.ResultsPerPage,
+                            Category = model.Category,
+                            SubCategories = model.SubCategories,
+                            SearchMode = model.SearchMode
                         };
 
                         vsvm.Hash = vsvm.LatLonLocHash();
@@ -163,7 +176,10 @@
                 return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.Ok, new ApprenticeshipSearchResponseViewModel { VacancySearch = model });
             }
 
-            var results = _searchProvider.FindVacancies(model);
+            RemoveInvalidSubCategories(model);
+            var searchModel = GetSearchModel(model);
+            var results = _searchProvider.FindVacancies(searchModel);
+            results.VacancySearch = model;
 
             if (results.HasError())
             {
@@ -185,6 +201,34 @@
             results.VacancySearch.SortTypes = GetSortTypes(model.SortType, model.Keywords, isLocalLocationType);
 
             return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.Ok, results);
+        }
+
+        private static ApprenticeshipSearchViewModel GetSearchModel(ApprenticeshipSearchViewModel model)
+        {
+            //Create a new search view model based on the search mode and user data
+            var searchModel = new ApprenticeshipSearchViewModel(model);
+
+            switch (searchModel.SearchMode)
+            {
+                case ApprenticeshipSearchMode.Keyword:
+                    searchModel.Category = null;
+                    searchModel.SubCategories = null;
+                    break;
+                case ApprenticeshipSearchMode.Category:
+                    searchModel.Keywords = null;
+                    searchModel.Categories = model.Categories;
+                    break;
+            }
+
+            return searchModel;
+        }
+
+        private static void RemoveInvalidSubCategories(ApprenticeshipSearchViewModel model)
+        {
+            if (string.IsNullOrEmpty(model.Category) || model.SubCategories == null || model.Categories == null) return;
+            var selectedCategory = model.Categories.SingleOrDefault(c => c.CodeName == model.Category);
+            if (selectedCategory == null) return;
+            model.SubCategories = model.SubCategories.Where(c => selectedCategory.SubCategories.Any(sc => sc.CodeName == c)).ToArray();
         }
 
         private static void PopulateSortType(ApprenticeshipSearchViewModel model)

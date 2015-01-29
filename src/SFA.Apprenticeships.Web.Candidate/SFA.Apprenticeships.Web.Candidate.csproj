@@ -581,6 +581,8 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_TermsAndConditions.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\ApprenticeshipSearch\_categories.cshtml" />
+    <Content Include="Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -673,6 +675,8 @@
     <Compile Include="Constants\Pages\ApprenticeshipVacancyDetailPageMessages.cs" />
     <Compile Include="Constants\Pages\VacancySearchResultsPageMessages.cs" />
     <Compile Include="Constants\Settings.cs" />
+    <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="ViewModels\AddressSearchResult.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\TraineeshipSearchViewModelMessages.cs" />
@@ -821,6 +825,7 @@
     <Compile Include="ViewModels\Register\ActivationViewModel.cs" />
     <Compile Include="ViewModels\Register\PasswordResetViewModel.cs" />
     <Compile Include="ViewModels\Register\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\ApprenticeshipSearchMode.cs" />
     <Compile Include="ViewModels\VacancySearch\TraineeshipVacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\TraineeshipSearchResponseViewModel.cs" />

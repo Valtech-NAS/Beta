@@ -1,0 +1,46 @@
+﻿@model ApprenticeshipSearchViewModel
+
+@{
+    //TODO: create style for tabbed-element that defaults to hidden like tabbed-content. Remove inline style
+    var divClass = "class=\"form-group tabbed-element tab2\"";
+    if (Model.SearchMode != ApprenticeshipSearchMode.Category)
+    {
+        divClass += " style=\"display: none\"";
+    }
+}
+<div @Html.Raw(divClass)>
+    <span class="form-label">Browse by category</span>
+    <div class="grid-wrapper">
+        @{
+            var categories = Model.Categories.ToList();
+
+            <div class="grid grid-1-2">
+                <div class="inner-block-padr">
+                    <ul class="copy-16 list-text list-checkradio">
+                        @for (var i = 0; i < categories.Count / 2; i++)
+                        {
+                            var category = categories[i];
+                            var inputId = string.Format("category{0}", category.CodeName);
+                            <li>
+                                <input type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@category.FullName</label>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="grid grid-1-2">
+                <ul class="copy-16 list-text list-checkradio">
+                    @for (var i = categories.Count / 2; i < categories.Count; i++)
+                    {
+                        var category = categories[i];
+                        var inputId = string.Format("category{0}", category.CodeName);
+                        <li>
+                            <input type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@category.FullName</label>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+</div>

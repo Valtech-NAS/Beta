@@ -102,19 +102,33 @@
                     <p id="search-no-results-title">There are currently no apprenticeships that match your search.</p>
                     <p>Try editing your search:</p>
                     <ul>
-                    @if (VacancyHelper.IsVacancyReference(Model.VacancySearch.Keywords))
-                    {
-                        <li id="search-no-results-reference-number">try a different reference number</li>
-                    }
-                    else
-                    {
-                        <li>using different keywords</li>
-                    }
+                        @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Keyword)
+                        {
+                            @if (VacancyHelper.IsVacancyReference(Model.VacancySearch.Keywords))
+                             {
+                                 <li id="search-no-results-reference-number">try a different reference number</li>
+                             }
+                             else
+                             {
+                                 <li>using different keywords</li>
+                             }
+                        }
+                        @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Category)
+                        {
+                            if (Model.VacancySearch.SubCategories == null || Model.VacancySearch.SubCategories.Length == 0)
+                            {
+                                <li>try a different category</li>
+                            }
+                            else
+                            {
+                                <li>select a different sub-category</li>
+                            }
+                        }
                         <li>expanding your search location</li>
-                    @if (Model.VacancySearch.ApprenticeshipLevel != "All")
-                    {
-                        <li id="search-no-results-apprenticeship-levels">using a different level, or change to all levels</li>
-                    }
+                        @if (Model.VacancySearch.ApprenticeshipLevel != "All")
+                        {
+                            <li id="search-no-results-apprenticeship-levels">using a different level, or change to all levels</li>
+                        }
                     </ul>
                 }
                 else
@@ -155,6 +169,13 @@
 
             $('#search-button').click(function () {
                 $('#LocationType').val("NonNational");
+            });
+            $("#searchTabControl").click(function () {
+                $("#SearchMode").val("Keyword");
+            });
+
+            $("#browseTabControl").click(function () {
+                $("#SearchMode").val("Category");
             });
         });
     </script>

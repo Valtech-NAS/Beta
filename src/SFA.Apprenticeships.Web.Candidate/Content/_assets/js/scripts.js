@@ -221,23 +221,41 @@ $(function() {
     }
   });
 
-  //----------Tabbed content
+    //----------Tabbed content
 
-  $('.tabbed-tab').on('click', function () {
-    var $this = $(this),
-        $tabID = $this.attr('href');
+  $('.tabbed-tab').attr('href', "#");
 
-    console.log($tabID);
+  $('.tabbed-tab').not('.active').each(function() {
+      var $this = $(this),
+          $tabId = $this.attr('tab');
 
-    $this.addClass('active');
+      var $tabClass = '.' + $tabId.substr(1);
 
-    $('.tabbed-tab').not($('[href="' + $tabID + '"]')).removeClass('active');
+      $('.tabbed-element' + $tabClass).hide();
+  });
 
-    $($tabID).show();
+  $('.tabbed-tab').on('click', function() {
+      var $this = $(this),
+          $tabId = $this.attr('tab');
 
-    $('.tabbed-content').not($tabID).hide();
+      console.log($tabId);
 
-    return false;
+      $this.addClass('active');
+
+      $('.tabbed-tab').not($('[tab="' + $tabId + '"]')).removeClass('active');
+
+      if ($($tabId).length) {
+          $($tabId).show();
+
+          $('.tabbed-content').not($tabId).hide();
+      } else {
+          var $tabClass = '.' + $tabId.substr(1);
+
+          $('.tabbed-element' + $tabClass).show();
+          $('.tabbed-element').not($tabClass).hide();
+      }
+
+      return false;
   });
 
 });;/*
