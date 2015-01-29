@@ -82,13 +82,18 @@
             required: { message: validationMessageQualificationYearRequired }
         }).extend({
             number: {
-                message: validationMessageQualificationYearMustBeNumeric
+                message: validationMessageQualificationYearMustBeAFourDigitNumber
             }
         }).extend({
-            pattern: {
-                message: validationMessageQualificationYearMustBeARange,
-                params: self.itemYearRegexPattern,
+            max: {
+                params: new Date().getFullYear(),
+                message: validationMessageQualificationFutureYear,
                 onlyIf: function () { return (self.qualificationPredicted() === false); }
+            }
+        }).extend({
+            min: {
+                message: validationMessageQualificationYearMustBeARange,
+                params: new Date().getFullYear() - 100
             }
         });
 
