@@ -331,6 +331,88 @@
         }
 
         [Test]
+        public void ChangeLocationTypeOnNonNationalSearchWithKeywords()
+        {
+            const VacancySortType originalSortType = VacancySortType.Distance;
+
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = ACityWithOneSuggestedLocation,
+                LocationType = ApprenticeshipLocationType.NonNational,
+                SortType = originalSortType,
+                SearchAction = SearchAction.LocationTypeChanged,
+                Keywords = AKeyword
+            };
+
+            var response = Mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+
+            response.ViewModel.VacancySearch.SortType.Should().Be(VacancySortType.Relevancy);
+        }
+
+        [Test]
+        public void ChangeLocationTypeOnNonNationalSearchWithoutKeywords()
+        {
+            const VacancySortType originalSortType = VacancySortType.Distance;
+
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = ACityWithOneSuggestedLocation,
+                LocationType = ApprenticeshipLocationType.NonNational,
+                SortType = originalSortType,
+                SearchAction = SearchAction.LocationTypeChanged
+            };
+
+            var response = Mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+
+            response.ViewModel.VacancySearch.SortType.Should().Be(VacancySortType.Distance);
+        }
+
+        [Test]
+        public void ChangeLocationTypeOnNationalSearchWithKeywords()
+        {
+            const VacancySortType originalSortType = VacancySortType.Distance;
+
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = ACityWithOneSuggestedLocation,
+                LocationType = ApprenticeshipLocationType.National,
+                SortType = originalSortType,
+                SearchAction = SearchAction.LocationTypeChanged,
+                Keywords = AKeyword
+            };
+
+            var response = Mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+
+            response.ViewModel.VacancySearch.SortType.Should().Be(VacancySortType.Relevancy);
+        }
+
+        [Test]
+        public void ChangeLocationTypeOnNationalSearchWithoutKeywords()
+        {
+            const VacancySortType originalSortType = VacancySortType.Distance;
+
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = ACityWithOneSuggestedLocation,
+                LocationType = ApprenticeshipLocationType.National,
+                SortType = originalSortType,
+                SearchAction = SearchAction.LocationTypeChanged
+            };
+
+            var response = Mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+
+            response.ViewModel.VacancySearch.SortType.Should().Be(VacancySortType.ClosingDate);
+        }
+
+        [Test]
         public void TestCategorySearchModification()
         {
             const string selectedCategoryCode = "2";

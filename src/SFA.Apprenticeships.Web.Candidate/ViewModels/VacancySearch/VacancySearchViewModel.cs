@@ -6,7 +6,8 @@
     public enum SearchAction
     {
         Search,
-        Sort
+        Sort,
+        LocationTypeChanged
     }
 
     public abstract class VacancySearchViewModel

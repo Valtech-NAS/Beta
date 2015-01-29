@@ -229,6 +229,7 @@
             model.SubCategories = model.SubCategories.Where(c => selectedCategory.SubCategories.Any(sc => sc.CodeName == c)).ToArray();
         }
 
+        //TODO: Tell don't ask?
         private static void PopulateSortType(ApprenticeshipSearchViewModel model)
         {
             if (model.LocationType == ApprenticeshipLocationType.NonNational && model.SortType == VacancySortType.Relevancy &&
@@ -246,6 +247,22 @@
             if (model.SearchAction == SearchAction.Search && !string.IsNullOrWhiteSpace(model.Keywords))
             {
                 model.SortType = VacancySortType.Relevancy;
+            }
+
+            if (model.SearchAction == SearchAction.LocationTypeChanged)
+            {
+                if (!string.IsNullOrWhiteSpace(model.Keywords))
+                {
+                    model.SortType = VacancySortType.Relevancy;
+                }
+                else if (model.LocationType == ApprenticeshipLocationType.National)
+                {
+                    model.SortType = VacancySortType.ClosingDate;
+                }
+                else
+                {
+                    model.SortType = VacancySortType.Distance;
+                }
             }
         }
 

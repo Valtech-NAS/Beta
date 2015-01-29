@@ -309,6 +309,19 @@
         private SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>[] ProcessNationalAndNonNationalSearches(
             ApprenticeshipSearchViewModel search, Location searchLocation)
         {
+            VacancySortType nationalSortType, nonNationalSortType;
+
+            if (search.LocationType == ApprenticeshipLocationType.National)
+            {
+                nationalSortType = search.SortType;
+                nonNationalSortType = VacancySortType.Distance;
+            }
+            else
+            {
+                nonNationalSortType = search.SortType;
+                nationalSortType = VacancySortType.ClosingDate;
+            }
+            
             var searchparameters = new List<ApprenticeshipSearchParameters>
             {
                 new ApprenticeshipSearchParameters
@@ -318,7 +331,8 @@
                     PageNumber = search.PageNumber,
                     PageSize = search.ResultsPerPage,
                     SearchRadius = search.WithinDistance,
-                    SortType = string.IsNullOrWhiteSpace(search.Keywords) ? VacancySortType.ClosingDate : VacancySortType.Relevancy,
+                    // SortType = string.IsNullOrWhiteSpace(search.Keywords) ? VacancySortType.ClosingDate : VacancySortType.Relevancy,
+                    SortType = nationalSortType,
                     VacancyLocationType = ApprenticeshipLocationType.National,
                     ApprenticeshipLevel = search.ApprenticeshipLevel,
                     Sector = search.Category,
@@ -331,7 +345,8 @@
                     PageNumber = search.PageNumber,
                     PageSize = search.ResultsPerPage,
                     SearchRadius = search.WithinDistance,
-                    SortType = search.SortType,
+                    // SortType = search.SortType,
+                    SortType = nonNationalSortType,
                     VacancyLocationType = ApprenticeshipLocationType.NonNational,
                     ApprenticeshipLevel = search.ApprenticeshipLevel,
                     Sector = search.Category,
