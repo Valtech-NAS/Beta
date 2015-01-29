@@ -112,7 +112,7 @@
             }
 
             PopulateSortType(model);
-
+            
             model.Distances = GetDistances();
             model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
             model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
@@ -176,6 +176,8 @@
 
             RemoveInvalidSubCategories(model);
             var searchModel = GetSearchModel(model);
+            PopulateSortType(searchModel);
+            model.SortType = searchModel.SortType;
             var results = _searchProvider.FindVacancies(searchModel);
             results.VacancySearch = model;
 
@@ -196,7 +198,8 @@
             }
 
             var isLocalLocationType = results.VacancySearch.LocationType != ApprenticeshipLocationType.National;
-            results.VacancySearch.SortTypes = GetSortTypes(model.SortType, model.Keywords, isLocalLocationType);
+            
+            results.VacancySearch.SortTypes = GetSortTypes(searchModel.SortType, searchModel.Keywords, isLocalLocationType);
 
             return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.Ok, results);
         }

@@ -28,6 +28,7 @@
             SortType = viewModel.SortType;
             Hash = viewModel.Hash;
             ResultsPerPage = viewModel.ResultsPerPage;
+            SearchAction = viewModel.SearchAction;
         }
 
         public abstract string Location { get; set; }

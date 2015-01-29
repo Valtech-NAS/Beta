@@ -557,5 +557,30 @@
             returnedSearch.SubCategories[0].Should().Be(selectedCategorySubCategory);
             returnedSearch.SearchMode.Should().Be(ApprenticeshipSearchMode.Keyword);
         }
+
+
+
+        [Test]
+        public void CategorySearchWithKeywordsShouldNotShowBestMatchOption()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Keywords = AKeyword,
+                Location = ACityWithOneSuggestedLocation,
+                LocationType = ApprenticeshipLocationType.NonNational,
+                Category = "1",
+                SearchMode = ApprenticeshipSearchMode.Category
+            };
+
+            var response = Mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+
+            response.ViewModel.VacancySearch.SortType.Should().Be(VacancySortType.Distance);
+            var sortTypes = response.ViewModel.SortTypes.ToList();
+            sortTypes.Count.Should().Be(2);
+            sortTypes.Should().Contain(sli => sli.Value == VacancySortType.ClosingDate.ToString());
+            sortTypes.Should().Contain(sli => sli.Value == VacancySortType.Distance.ToString());
+        }
     }
 }
