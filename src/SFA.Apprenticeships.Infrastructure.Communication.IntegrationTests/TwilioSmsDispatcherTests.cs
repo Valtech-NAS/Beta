@@ -46,7 +46,7 @@
             Assert.IsInstanceOf<VoidSmsDispatcher>(_voidSmsDispatcher);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("Ignoring until a solution can be found that doesn't send the sms")]
         public void ShoudSendSms()
         {
             var request = new SmsRequest
@@ -59,7 +59,7 @@
             _dispatcher.SendSms(request);
         }
 
-        [Test, Category("Integration"), Category("SmokeTests")]
+        [Test, Category("Integration"), Ignore("Ignoring until a solution can be found that doesn't send the sms")]
         public void ShoudSendSmsWithFromEmailInTemplateConfiguration()
         {
             var request = new SmsRequest
@@ -72,7 +72,7 @@
             _dispatcher.SendSms(request);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("Ignoring until a solution can be found that doesn't send the sms")]
         public void ShouldSendAccountUnlockCode()
         {
             var request = new SmsRequest
@@ -85,7 +85,7 @@
             _dispatcher.SendSms(request);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("Ignoring until a solution can be found that doesn't send the sms")]
         public void ShouldSendApprenticeshipApplicationSubmittedSms()
         {
             var request = new SmsRequest
@@ -98,7 +98,7 @@
             _dispatcher.SendSms(request);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("Ignoring until a solution can be found that doesn't send the sms")]
         public void ShouldSendTraineeshipApplicationSubmittedSms()
         {
             var request = new SmsRequest
@@ -111,7 +111,7 @@
             _dispatcher.SendSms(request);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("Ignoring until a solution can be found that doesn't send the sms")]
         public void ShouldSendPasswordResetCodeSms()
         {
             var request = new SmsRequest
@@ -124,7 +124,7 @@
             _dispatcher.SendSms(request);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("Ignoring until a solution can be found that doesn't send the sms")]
         public void ShouldSendPasswordResetConfirmationSms()
         {
             var request = new SmsRequest
@@ -137,7 +137,7 @@
             _dispatcher.SendSms(request);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("Ignoring until a solution can be found that doesn't send the sms")]
         public void ShoudSendDailyDigestSms()
         {
             var request = new SmsRequest
