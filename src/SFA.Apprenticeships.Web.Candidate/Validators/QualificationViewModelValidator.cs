@@ -36,8 +36,11 @@
             RuleFor(x => x.Year)
                 .NotEmpty()
                 .WithMessage(QualificationViewModelMessages.YearMessages.RequiredErrorText)
-                .Matches(QualificationViewModelMessages.YearMessages.WhiteListRegularExpression)
-                .WithMessage(QualificationViewModelMessages.YearMessages.WhiteListErrorText);
+                .Matches(QualificationViewModelMessages.YearMessages.MustBeNumericRegularExpression)
+                .WithMessage(QualificationViewModelMessages.YearMessages.MustBeNumericErrorText)
+                .GreaterThanOrEqualTo(Convert.ToString(DateTime.Now.Year - 100));
+                //.Matches(QualificationViewModelMessages.YearMessages.WhiteListRegularExpression)
+                //.WithMessage(QualificationViewModelMessages.YearMessages.WhiteListErrorText);
 
             RuleFor(x => x.Year)
                 .Must(BeNowOrInThePast)

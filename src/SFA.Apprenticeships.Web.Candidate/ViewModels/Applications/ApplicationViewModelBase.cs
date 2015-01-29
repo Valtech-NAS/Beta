@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
-    using SFA.Apprenticeships.Web.Common.Constants;
-    using SFA.Apprenticeships.Web.Common.Models.Application;
+    using Common.Constants;
+    using Common.Models.Application;
+    using Constants.Pages;
+    using VacancySearch;
 
     [Serializable]
     public abstract class ApplicationViewModelBase : ViewModelBase

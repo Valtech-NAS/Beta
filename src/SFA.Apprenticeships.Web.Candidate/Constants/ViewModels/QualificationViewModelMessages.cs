@@ -31,10 +31,11 @@
         public static class YearMessages
         {
             public const string RequiredErrorText = "Please enter year";
-            public const string MustBeNumericText = "Year must be 4 digits, for example 1990";
+            public const string MustBeNumericErrorText = "Year must be 4 digits, for example 1990";
             public const string BeforeOrEqualErrorText = "For future qualifications, check 'Predicted'";
             public static string WhiteListRegularExpression = Whitelists.YearRangeWhiteList.RegularExpression();
             public static string WhiteListErrorText = "Qualification year " + Whitelists.YearRangeWhiteList.ErrorText();
+            public static string MustBeNumericRegularExpression = Whitelists.YearWhitelist.RegularExpression;
         }
     }
 }

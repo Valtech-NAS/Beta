@@ -11,6 +11,7 @@
     var validationMessageSubjectContainsInvalidCharacters = "Subject can't contain invalid characters, eg '/'";
     var validationMessageGradeRequired = "Please enter grade";
     var validationMessageGradeContainsInvalidCharacters = "Grade can't contain invalid characters, eg '/'";
+    var validationMessageQualificationFutureYear = "For future qualifications, check 'Predicted'";
 
     //Work Experience Validation Messages
     var validationMessageEmployerRequired = "Please enter employer name";
@@ -201,13 +202,18 @@
             required: { message: validationMessageQualificationYearRequired }
         }).extend({
             number: {
-                message: validationMessageQualificationYearMustBeNumeric
+                message: validationMessageQualificationYearMustBeAFourDigitNumber
             }
         }).extend({
-            pattern: {
+           max: {
+               params: new Date().getFullYear(),
+               message: validationMessageQualificationFutureYear,
+               onlyIf: function () { return (self.predicted() === false && self.yearValidationActivated() === true); }
+           }
+        }).extend({
+            min: {
                 message: validationMessageQualificationYearMustBeARange,
-                params: self.yearRegexPattern,
-                onlyIf: function () { return (self.predicted() === false && self.yearValidationActivated() === true); }
+                params: new Date().getFullYear() - 100
             }
         });
 
