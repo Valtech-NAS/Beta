@@ -166,7 +166,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral(" more sub-categories</summary>\r\n                    <ul");
+WriteLiteral(" sub-categories</summary>\r\n                    <ul");
 
 WriteLiteral(" class=\"copy-16 list-text list-checkradio\"");
 
@@ -222,14 +222,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 2016), Tuple.Create("\"", 2033)
+WriteAttribute("for", Tuple.Create(" for=\"", 2011), Tuple.Create("\"", 2028)
             
             #line 33 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                    , Tuple.Create(Tuple.Create("", 2022), Tuple.Create<System.Object, System.Int32>(checkboxId
+                                                                    , Tuple.Create(Tuple.Create("", 2017), Tuple.Create<System.Object, System.Int32>(checkboxId
             
             #line default
             #line hidden
-, 2022), false)
+, 2017), false)
 );
 
 WriteLiteral(">");

@@ -25,7 +25,7 @@
             _elasticsearchClientFactory = elasticsearchClientFactory;
         }
 
-        public SearchResults<TraineeshipSummaryResponse> FindVacancies(TraineeshipSearchParameters parameters)
+        public SearchResults<TraineeshipSummaryResponse, TraineeshipSearchParameters> FindVacancies(TraineeshipSearchParameters parameters)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (TraineeshipSummary));
@@ -54,12 +54,12 @@
 
             Logger.Debug("{0} search results returned", search.Total);
 
-            var results = new SearchResults<TraineeshipSummaryResponse>(search.Total, parameters.PageNumber, responses, null);
+            var results = new SearchResults<TraineeshipSummaryResponse, TraineeshipSearchParameters>(search.Total, parameters.PageNumber, responses, null, parameters);
 
             return results;
         }
 
-        public SearchResults<TraineeshipSummaryResponse> FindVacancy(string vacancyReference)
+        public SearchResults<TraineeshipSummaryResponse, TraineeshipSearchParameters> FindVacancy(string vacancyReference)
         {
             throw new NotImplementedException();
         }

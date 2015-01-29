@@ -2,12 +2,12 @@
 {
     using Interfaces.Search;
 
-    public interface IVacancySearchProvider<TVacancySummaryResponse, in TSearchParameters> 
+    public interface IVacancySearchProvider<TVacancySummaryResponse, TSearchParameters> 
         where TVacancySummaryResponse : class
         where TSearchParameters : SearchParametersBase
     {
-        SearchResults<TVacancySummaryResponse> FindVacancies(TSearchParameters parameters);
+        SearchResults<TVacancySummaryResponse, TSearchParameters> FindVacancies(TSearchParameters parameters);
 
-        SearchResults<TVacancySummaryResponse> FindVacancy(string vacancyReference);
+        SearchResults<TVacancySummaryResponse, TSearchParameters> FindVacancy(string vacancyReference);
     }
 }

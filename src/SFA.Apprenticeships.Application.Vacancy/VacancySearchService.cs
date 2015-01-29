@@ -27,7 +27,7 @@
             _vacancyDataProvider = vacancyDataProvider;
         }
 
-        public SearchResults<TVacancySummaryResponse> Search(TSearchParameters parameters)
+        public SearchResults<TVacancySummaryResponse, TSearchParameters> Search(TSearchParameters parameters)
         {
             Condition.Requires(parameters).IsNotNull();
             Condition.Requires(parameters.SearchRadius).IsGreaterOrEqual(0);

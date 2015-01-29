@@ -15,7 +15,7 @@
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<SearchResults<TraineeshipSummaryResponse>, TraineeshipSearchResponseViewModel>()
+            Mapper.CreateMap<SearchResults<TraineeshipSummaryResponse, TraineeshipSearchParameters>, TraineeshipSearchResponseViewModel>()
                 .ConvertUsing<TraineeshipSearchResultsResolver>();
 
             Mapper.CreateMap<TraineeshipSummaryResponse, TraineeshipVacancySummaryViewModel>();

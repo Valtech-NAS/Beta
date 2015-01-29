@@ -31,7 +31,7 @@
             _searchConfiguration = searchConfiguration;
         }
 
-        public SearchResults<ApprenticeshipSummaryResponse> FindVacancies(ApprenticeshipSearchParameters parameters)
+        public SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters> FindVacancies(ApprenticeshipSearchParameters parameters)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (ApprenticeshipSummary));
@@ -72,14 +72,14 @@
 
             var aggregationResults = GetAggregationResultsFrom(search.Aggs);
 
-            var results = new SearchResults<ApprenticeshipSummaryResponse>(search.Total, parameters.PageNumber,
-                responses, aggregationResults);
+            var results = new SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>(search.Total, parameters.PageNumber,
+                responses, aggregationResults, parameters);
 
             return results;
         }
 
 
-        public SearchResults<ApprenticeshipSummaryResponse> FindVacancy(string vacancyReference)
+        public SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters> FindVacancy(string vacancyReference)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (ApprenticeshipSummary));
@@ -96,7 +96,7 @@
                         q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, vacancyReference)))));
 
             var responses = _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryResponse>>(searchResults.Documents).ToList();
-            var results = new SearchResults<ApprenticeshipSummaryResponse>(searchResults.Total, 1, responses, null);
+            var results = new SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>(searchResults.Total, 1, responses, null, null);
             return results;
         }
 

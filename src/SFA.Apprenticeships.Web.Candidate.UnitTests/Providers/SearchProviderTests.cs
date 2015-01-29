@@ -160,17 +160,25 @@
 
         private void SetupReturnOneHundredResultsOfType(ApprenticeshipLocationType locationType)
         {
-            var results = new
-                SearchResults<ApprenticeshipSummaryResponse>(100, 1, new List<ApprenticeshipSummaryResponse>
+            _apprenticeshipSearchService.Setup(
+                x => x.Search(It.Is<ApprenticeshipSearchParameters>(asp => asp.VacancyLocationType == locationType))).Returns<ApprenticeshipSearchParameters>(asp => new
+                SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>(100, 1, new List<ApprenticeshipSummaryResponse>
                 {
                     new ApprenticeshipSummaryResponse
                     {
                         VacancyLocationType = locationType
                     }
-                }, new List<AggregationResult>(0));
+                }, new List<AggregationResult>(0), asp));
 
             _apprenticeshipSearchService.Setup(
-                x => x.Search(It.IsAny<ApprenticeshipSearchParameters>())).Returns(results);
+                x => x.Search(It.Is<ApprenticeshipSearchParameters>(asp => asp.VacancyLocationType != locationType))).Returns<ApprenticeshipSearchParameters>(asp => new
+                SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>(0, 1, new List<ApprenticeshipSummaryResponse>
+                {
+                    new ApprenticeshipSummaryResponse
+                    {
+                        VacancyLocationType = locationType
+                    }
+                }, new List<AggregationResult>(0), asp));
         }
 
         private SearchProvider GetSearchProvider()

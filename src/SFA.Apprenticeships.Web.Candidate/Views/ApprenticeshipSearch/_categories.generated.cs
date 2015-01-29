@@ -63,11 +63,15 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
             
             #line default
             #line hidden
-WriteLiteral("\r\n<div ");
+WriteLiteral("\r\n<div");
+
+WriteLiteral(" id=\"categories\"");
+
+WriteLiteral(" ");
 
             
             #line 11 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-Write(Html.Raw(divClass));
+                Write(Html.Raw(divClass));
 
             
             #line default
@@ -134,36 +138,36 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"Category\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1120), Tuple.Create("\"", 1133)
+WriteAttribute("id", Tuple.Create(" id=\"", 1136), Tuple.Create("\"", 1149)
             
             #line 26 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-, Tuple.Create(Tuple.Create("", 1125), Tuple.Create<System.Object, System.Int32>(inputId
+, Tuple.Create(Tuple.Create("", 1141), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 1125), false)
+, 1141), false)
 );
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1134), Tuple.Create("\"", 1160)
+WriteAttribute("value", Tuple.Create(" value=\"", 1150), Tuple.Create("\"", 1176)
             
             #line 26 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-         , Tuple.Create(Tuple.Create("", 1142), Tuple.Create<System.Object, System.Int32>(category.CodeName
+         , Tuple.Create(Tuple.Create("", 1158), Tuple.Create<System.Object, System.Int32>(category.CodeName
             
             #line default
             #line hidden
-, 1142), false)
+, 1158), false)
 );
 
 WriteLiteral("><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 1168), Tuple.Create("\"", 1182)
+WriteAttribute("for", Tuple.Create(" for=\"", 1184), Tuple.Create("\"", 1198)
             
             #line 26 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                         , Tuple.Create(Tuple.Create("", 1174), Tuple.Create<System.Object, System.Int32>(inputId
+                                         , Tuple.Create(Tuple.Create("", 1190), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 1174), false)
+, 1190), false)
 );
 
 WriteLiteral(">");
@@ -225,36 +229,36 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"Category\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1793), Tuple.Create("\"", 1806)
+WriteAttribute("id", Tuple.Create(" id=\"", 1809), Tuple.Create("\"", 1822)
             
             #line 40 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-, Tuple.Create(Tuple.Create("", 1798), Tuple.Create<System.Object, System.Int32>(inputId
+, Tuple.Create(Tuple.Create("", 1814), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 1798), false)
+, 1814), false)
 );
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1807), Tuple.Create("\"", 1833)
+WriteAttribute("value", Tuple.Create(" value=\"", 1823), Tuple.Create("\"", 1849)
             
             #line 40 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-     , Tuple.Create(Tuple.Create("", 1815), Tuple.Create<System.Object, System.Int32>(category.CodeName
+     , Tuple.Create(Tuple.Create("", 1831), Tuple.Create<System.Object, System.Int32>(category.CodeName
             
             #line default
             #line hidden
-, 1815), false)
+, 1831), false)
 );
 
 WriteLiteral("><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 1841), Tuple.Create("\"", 1855)
+WriteAttribute("for", Tuple.Create(" for=\"", 1857), Tuple.Create("\"", 1871)
             
             #line 40 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                     , Tuple.Create(Tuple.Create("", 1847), Tuple.Create<System.Object, System.Int32>(inputId
+                                     , Tuple.Create(Tuple.Create("", 1863), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 1847), false)
+, 1863), false)
 );
 
 WriteLiteral(">");

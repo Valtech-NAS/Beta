@@ -120,7 +120,7 @@
                     //Expect only a single result. Any other number should be interpreted as no results
                     if (searchResults.Total == 1)
                     {
-                        var exactMatchResponse = _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse>, ApprenticeshipSearchResponseViewModel>(searchResults);
+                        var exactMatchResponse = _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(searchResults);
                         exactMatchResponse.ExactMatchFound = true;
                         return exactMatchResponse;
                     }
@@ -143,23 +143,17 @@
                     IncrementVacancySearchPerformanceCounter();
                 }
 
-                var nationalResults =
-                    results[0].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.National)
-                    ? results[0]
-                    : results[1].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.National) ? results[1] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null, results[0].AggregationResults.Concat(results[1].AggregationResults));
+                var nationalResults = results.Single(r => r.SearchParameters.VacancyLocationType == ApprenticeshipLocationType.National);
 
-                var nonNationalResults = 
-                    results[1].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.NonNational) 
-                    ? results[1]
-                    : results[0].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.NonNational) ? results[0] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null, results[1].AggregationResults.Concat(results[0].AggregationResults));
+                var nonNationalResults = results.Single(r => r.SearchParameters.VacancyLocationType == ApprenticeshipLocationType.NonNational);
 
                 var nationalResponse =
-                    _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse>, ApprenticeshipSearchResponseViewModel>(
+                    _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(
                         nationalResults);
                 nationalResponse.VacancySearch = search;
 
                 var nonNationlResponse =
-                    _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse>, ApprenticeshipSearchResponseViewModel>(
+                    _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(
                         nonNationalResults);
                 nonNationlResponse.VacancySearch = search;
 
@@ -261,7 +255,7 @@
                 }
 
                 var searchResponse =
-                    _traineeshipSearchMapper.Map<SearchResults<TraineeshipSummaryResponse>, TraineeshipSearchResponseViewModel>(
+                    _traineeshipSearchMapper.Map<SearchResults<TraineeshipSummaryResponse, TraineeshipSearchParameters>, TraineeshipSearchResponseViewModel>(
                         searchResults);
 
                 searchResponse.TotalHits = searchResults.Total;
@@ -312,7 +306,7 @@
             return addressSearchViewModel;
         }
 
-        private SearchResults<ApprenticeshipSummaryResponse>[] ProcessNationalAndNonNationalSearches(
+        private SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>[] ProcessNationalAndNonNationalSearches(
             ApprenticeshipSearchViewModel search, Location searchLocation)
         {
             var searchparameters = new List<ApprenticeshipSearchParameters>
@@ -345,7 +339,7 @@
                 }
             };
 
-            var resultCollection = new ConcurrentBag<SearchResults<ApprenticeshipSummaryResponse>>();
+            var resultCollection = new ConcurrentBag<SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>>();
             Parallel.ForEach(searchparameters,
                 parameters =>
                 {

@@ -19,7 +19,7 @@
             <li>
                 <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@category.FullName</label>
                 <details @openAttr>
-                    <summary class="copy-16">@subCategories.Count more sub-categories</summary>
+                    <summary class="copy-16">@subCategories.Count sub-categories</summary>
                     <ul class="copy-16 list-text list-checkradio">
                         @foreach (var subCategory in subCategories)
                         {

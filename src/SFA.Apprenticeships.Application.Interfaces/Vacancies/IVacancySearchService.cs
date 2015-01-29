@@ -3,16 +3,17 @@
     using Domain.Entities.Vacancies;
     using Search;
 
-    public interface IVacancySearchService<TVacancySummaryResponse, out TVacancyDetail, in TSearchParameters> 
+    public interface IVacancySearchService<TVacancySummaryResponse, out TVacancyDetail, TSearchParameters> 
         where TVacancySummaryResponse : VacancySummary
         where TVacancyDetail : VacancyDetail
+        where TSearchParameters : SearchParametersBase
     {
         /// <summary>
         /// returns vacancies matching search criteria
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns>0..* matching vacancies</returns>
-        SearchResults<TVacancySummaryResponse> Search(TSearchParameters parameters);
+        SearchResults<TVacancySummaryResponse, TSearchParameters> Search(TSearchParameters parameters);
 
         /// <summary>
         /// returns vacancy details
