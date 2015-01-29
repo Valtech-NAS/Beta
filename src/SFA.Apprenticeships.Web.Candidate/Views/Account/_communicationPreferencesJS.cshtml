@@ -1,45 +1,17 @@
-﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Account.SettingsViewModel
+﻿@{
+    Layout = null;
+}
 
-<div class="hide-nojs" data-bind="visible: selectedSection() === 'contactSettings', stopBinding:true">
-    <div id="contactSettings">
-        <h3 class="heading-large">How we contact you</h3>
-        <div class="panel-indent text">
-            <p>We'll notify you when:</p>
-            <ul class="list-bullet">
-                <li>you submit an application form</li>
-                <li>the status of one of your applications changes</li>
-                <li>an apprenticeship is approaching its closing date</li>
-            </ul>
-        </div>
-        @*@Html.FormRadioButtonsYesNo(c => c.AllowEmailComms)*@
+<!DOCTYPE html>
 
-        <div class="form-group inline clearfix">
-            <p class="form-label" id="communicationQuestion">Receive notifications?</p>
-            <label data-target="communication-type-panel;" for="communications-yes" class="block-label" data-bind="css: {selected:showQualifications() }">
-                @Html.RadioButtonFor(m => m.AllowComms, true, new { id = "communications-yes", data_bind = "attr:{'checked': hasQualifications() }", aria_controls = "communication-type-panel", aria_expanded = "false", aria_labelledby = "communicationQuestion" })
-                Yes
-
-            </label>
-            <label for="communications-no" class="block-label" data-bind="css: {selected: !showQualifications() }">
-                @Html.RadioButtonFor(m => m.AllowComms, false, new { id = "communications-no", data_bind = "attr:{'checked': hasNoQualifications() }", aria_labelledby = "communicationQuestion" })
-                No
-            </label>
-        </div>
-
-        <div id="communication-type-panel" class="form-group inline clearfix">
-            <p class="form-label" id="communicationTypeLabel">How would you like to receive them?</p>
-            <label for="communication-type-text" class="block-label" data-bind="css: {selected:showQualifications() }">
-                @Html.RadioButton("communication-type", true, new { id = "communication-type-text", data_bind = "attr:{'checked': hasQualifications() }", aria_controls = "qualifications-panel", aria_expanded = "false", aria_labelledby = "communicationTypeLabel" })
-                Text
-            </label>
-            <label for="communication-type-email" class="block-label" data-bind="css: {selected: !showQualifications() }">
-                @Html.RadioButton("communication-type", false, new { id = "communication-type-email", data_bind = "attr:{'checked': hasNoQualifications() }", aria_labelledby = "communicationTypeLabel" })
-                Email
-            </label>
-            <label for="communication-type-both" class="block-label" data-bind="css: {selected: !showQualifications() }">
-                @Html.RadioButton("communication-type", false, new { id = "communication-type-both", data_bind = "attr:{'checked': hasNoQualifications() }", aria_labelledby = "communicationTypeLabel" })
-                Both
-            </label>
-        </div>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+    
     </div>
-</div>
+</body>
+</html>

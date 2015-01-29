@@ -33,7 +33,7 @@
 
         public static class AllowEmailCommsMessages
         {
-            public const string LabelText = "Receive notifications?";
+            public const string LabelText = "Receive notifications by email?";
         }
     }
 }

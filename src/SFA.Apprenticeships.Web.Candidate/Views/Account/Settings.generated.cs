@@ -215,14 +215,36 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </fieldset>\r\n");
+WriteLiteral("\r\n        \r\n        <div");
+
+WriteLiteral(" id=\"accountSettings2\"");
+
+WriteLiteral(">\r\n            <h3");
+
+WriteLiteral(" class=\"heading-large\"");
+
+WriteLiteral(">How we contact you</h3>\r\n            <div");
+
+WriteLiteral(" class=\"panel-indent text\"");
+
+WriteLiteral(">\r\n                <p>We\'ll notify you when you submit an application form</p>\r\n " +
+"               ");
+
+WriteLiteral("\r\n            </div>\r\n");
+
+WriteLiteral("            ");
 
             
-            #line 40 "..\..\Views\Account\Settings.cshtml"
-    
-    Html.RenderPartial("_communicationPreferencesJS", Model);
+            #line 50 "..\..\Views\Account\Settings.cshtml"
+       Write(Html.FormRadioButtonsYesNo(c => c.AllowEmailComms));
 
-    Html.RenderPartial("_communicationPreferencesNonJS", Model);
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n        </div>\r\n\r\n    </fieldset>\r\n");
+
+            
+            #line 54 "..\..\Views\Account\Settings.cshtml"
 
 
             
@@ -241,7 +263,7 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Update details</button>\r\n    </div>\r\n");
 
             
-            #line 48 "..\..\Views\Account\Settings.cshtml"
+            #line 58 "..\..\Views\Account\Settings.cshtml"
 }
 
             
@@ -251,33 +273,18 @@ WriteLiteral("\r\n");
 
 DefineSection("scripts", () => {
 
-WriteLiteral("\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 52 "..\..\Views\Account\Settings.cshtml"
-Write(Scripts.Render("~/bundles/knockout"));
+WriteLiteral("\r\n    <script>\r\n        $(function () {\r\n            $(\"#find-addresses\").address" +
+"Lookup({\r\n                url: \'");
 
             
-            #line default
-            #line hidden
-WriteLiteral("\r\n\r\n    <script");
-
-WriteLiteral(" type=\"text/javascript\"");
-
-WriteLiteral(">\r\n        $(function () {\r\n            $(\"#find-addresses\").addressLookup({\r\n   " +
-"             url: \'");
-
-            
-            #line 57 "..\..\Views\Account\Settings.cshtml"
+            #line 65 "..\..\Views\Account\Settings.cshtml"
                  Write(Url.Action("Addresses", "Location"));
 
             
             #line default
             #line hidden
 WriteLiteral("\',\r\n                selectlist: \'#address-select\'\r\n            });\r\n        });\r\n" +
-"</script>\r\n");
+"    </script>\r\n");
 
 });
 

@@ -26,10 +26,6 @@
         [Display(Name = SettingsViewModelMessages.AllowEmailCommsMessages.LabelText)]
         public bool AllowEmailComms { get; set; }
 
-        public bool AllowComms { get; set; }
-
-        public bool AllowTextComms { get; set; }
-
         public TraineeshipFeatureViewModel TraineeshipFeature { get; set; }
     }
 }
