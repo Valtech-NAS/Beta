@@ -285,7 +285,7 @@ else
                                             <br />
                                             
                                             <!-- TODO: AG: US680: only show Closing date when vacancy is Live -->
-                                            if (application.VacancyStatus == VacancyStatuses.Live)
+                                            if (application.VacancyStatus == VacancyStatuses.Live || application.VacancyStatus == VacancyStatuses.Unknown)
                                             {
                                                 <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
                                             }
