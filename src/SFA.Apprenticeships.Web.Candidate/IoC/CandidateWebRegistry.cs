@@ -112,7 +112,10 @@
             For<IAuthenticationService>().Use<AuthenticationService>();
             For<ICommunicationService>().Use<CommunicationService>();
             For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<LegacyGetCandidateApprenticeshipApplicationsStrategy>();
+            For<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
+            For<ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>();
             For<IApplicationStatusUpdater>().Use<ApplicationStatusUpdater>();
+            For<IApplicationVacancyStatusUpdater>().Use<ApplicationVacancyStatusUpdater>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IReferenceDataProvider>().Use<ReferenceDataProvider>();
             

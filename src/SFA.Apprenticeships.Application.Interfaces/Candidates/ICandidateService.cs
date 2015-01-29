@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.Traineeships;
 
     /// <summary>
     /// For candidate users to register, manage their profile and other dashboard entities
@@ -49,5 +51,9 @@
         void ResetForgottenPassword(string username, string passwordCode, string newPassword);
 
         void DeleteApplication(Guid candidateId, int vacancyId);
+
+        ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Guid candidateId, int vacancyId);
+
+        TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Guid candidateId, int vacancyId);
     }
 }

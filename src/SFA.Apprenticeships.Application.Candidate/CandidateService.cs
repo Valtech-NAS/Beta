@@ -5,6 +5,8 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
     using Domain.Entities.Exceptions;
@@ -37,6 +39,8 @@
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IDeleteApplicationStrategy _deleteApplicationStrategy;
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
+        private readonly ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> _candidateApprenticeshipVacancyDetailStrategy;
+        private readonly ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> _candidateTraineeshipVacancyDetailStrategy;
 
         public CandidateService(
             ICandidateReadRepository candidateReadRepository,
@@ -57,7 +61,9 @@
             ISubmitTraineeshipApplicationStrategy submitTraineeshipApplicationStrategy, 
             ISaveTraineeshipApplicationStrategy saveTraineeshipApplicationStrategy, 
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
-            IGetCandidateTraineeshipApplicationsStrategy getCandidateTraineeshipApplicationsStrategy)
+            IGetCandidateTraineeshipApplicationsStrategy getCandidateTraineeshipApplicationsStrategy,
+            ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> candidateApprenticeshipVacancyDetailStrategy,
+            ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> candidateTraineeshipVacancyDetailStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -78,6 +84,8 @@
             _saveTraineeshipApplicationStrategy = saveTraineeshipApplicationStrategy;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
             _getCandidateTraineeshipApplicationsStrategy = getCandidateTraineeshipApplicationsStrategy;
+            _candidateApprenticeshipVacancyDetailStrategy = candidateApprenticeshipVacancyDetailStrategy;
+            _candidateTraineeshipVacancyDetailStrategy = candidateTraineeshipVacancyDetailStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -305,6 +313,26 @@
                 candidateId);
 
             return _getCandidateTraineeshipApplicationsStrategy.GetApplications(candidateId);
+        }
+
+        public ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Guid candidateId, int vacancyId)
+        {
+            Condition.Requires(candidateId);
+            Condition.Requires(vacancyId).IsGreaterOrEqual(0);
+
+            Logger.Debug("Calling CandidateService to get the apprenticeship vacancy ID {0} for candidaqte ID {1}.", vacancyId, candidateId);
+
+            return _candidateApprenticeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
+        }
+
+        public TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Guid candidateId, int vacancyId)
+        {
+            Condition.Requires(candidateId);
+            Condition.Requires(vacancyId).IsGreaterOrEqual(0);
+
+            Logger.Debug("Calling CandidateService to get the traineeship vacancy ID {0} for candidaqte ID {1}.", vacancyId, candidateId);
+
+            return _candidateTraineeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
         }
     }
 }

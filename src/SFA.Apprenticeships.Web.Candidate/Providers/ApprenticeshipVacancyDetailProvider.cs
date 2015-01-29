@@ -16,8 +16,8 @@
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
+        private readonly ICandidateService _candidateService;
         private readonly IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> _vacancySearchService;
 
         public ApprenticeshipVacancyDetailProvider(
@@ -39,7 +39,9 @@
 
             try
             {
-                var vacancyDetail = _vacancySearchService.GetVacancyDetails(vacancyId);
+                var vacancyDetail = candidateId.HasValue ?
+                    _candidateService.GetApprenticeshipVacancyDetail(candidateId.Value, vacancyId) :
+                    _vacancySearchService.GetVacancyDetails(vacancyId);
 
                 if (vacancyDetail == null) return null;
 

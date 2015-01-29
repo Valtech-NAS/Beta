@@ -101,6 +101,8 @@
     <Compile Include="CandidateService.cs" />
     <Compile Include="CreateCandidateRequest.cs" />
     <Compile Include="Strategies\Apprenticeships\ArchiveApprenticeshipApplicationStrategy.cs" />
+    <Compile Include="Strategies\ILegacyGetCandidateVacancyDetailStrategy.cs" />
+    <Compile Include="Strategies\LegacyGetCandidateVacancyDetailStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\LegacySubmitApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ISubmitTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\Traineeships\CreateTraineeshipApplicationStrategy.cs" />
