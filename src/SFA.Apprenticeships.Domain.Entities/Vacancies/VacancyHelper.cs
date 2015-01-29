@@ -4,7 +4,7 @@
 
     public class VacancyHelper
     {
-        private static readonly Regex VacancyReferenceNumberRegex = new Regex(@"^(VAC)?(\d{6,9})");
+        private static readonly Regex VacancyReferenceNumberRegex = new Regex(@"^(VAC)?(\d*?\d{6})$", RegexOptions.IgnoreCase);
 
         public static bool IsVacancyReference(string value)
         {

@@ -7,7 +7,11 @@
     public class VacancyHelperTests
     {
         [TestCase("VAC000123456", true)]
+        [TestCase("vac000123456", true)]
+        [TestCase("vAc000123456", true)]
         [TestCase("000123456", true)]
+        [TestCase("00000123456", true)]
+        [TestCase("0000000000000000000123456", true)]
         [TestCase("123456", true)]
         [TestCase("VRN000123456", false)]
         [TestCase("chef", false)]
@@ -20,7 +24,11 @@
         }
 
         [TestCase("VAC000123456", true, "123456")]
+        [TestCase("vac000123456", true, "123456")]
+        [TestCase("vAc000123456", true, "123456")]
         [TestCase("000123456", true, "123456")]
+        [TestCase("00000123456", true, "123456")]
+        [TestCase("0000000000000000000123456", true, "123456")]
         [TestCase("123456", true, "123456")]
         [TestCase("VRN000123456", false, null)]
         [TestCase("chef", false, null)]
