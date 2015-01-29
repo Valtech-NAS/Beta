@@ -112,6 +112,7 @@
     <Compile Include="GatewayVacancySummaryMapperTests.cs" />
     <Compile Include="GatewayApprenticeshipVacancyDetailMapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReferenceData\FullNameFormatterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

@@ -167,7 +167,7 @@
                     {
                         VacancyLocationType = locationType
                     }
-                }, null);
+                }, new List<AggregationResult>(0));
 
             _apprenticeshipSearchService.Setup(
                 x => x.Search(It.IsAny<ApprenticeshipSearchParameters>())).Returns(results);

@@ -13,11 +13,12 @@
     <div class="grid-wrapper">
         @{
             var categories = Model.Categories.ToList();
+            var categorySplitCount = categories.Count/2 + categories.Count%2;
 
             <div class="grid grid-1-2">
                 <div class="inner-block-padr">
                     <ul class="copy-16 list-text list-checkradio">
-                        @for (var i = 0; i < categories.Count / 2; i++)
+                        @for (var i = 0; i < categorySplitCount; i++)
                         {
                             var category = categories[i];
                             var inputId = string.Format("category{0}", category.CodeName);
@@ -31,7 +32,7 @@
 
             <div class="grid grid-1-2">
                 <ul class="copy-16 list-text list-checkradio">
-                    @for (var i = categories.Count / 2; i < categories.Count; i++)
+                    @for (var i = categorySplitCount; i < categories.Count; i++)
                     {
                         var category = categories[i];
                         var inputId = string.Format("category{0}", category.CodeName);

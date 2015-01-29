@@ -146,27 +146,28 @@
                 var nationalResults =
                     results[0].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.National)
                     ? results[0]
-                    : results[1].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.National) ? results[1] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null, null);
+                    : results[1].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.National) ? results[1] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null, results[0].AggregationResults.Concat(results[1].AggregationResults));
 
                 var nonNationalResults = 
                     results[1].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.NonNational) 
                     ? results[1]
-                    : results[0].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.NonNational) ? results[0] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null, null);
+                    : results[0].Results.Any(x => x.VacancyLocationType == ApprenticeshipLocationType.NonNational) ? results[0] : new SearchResults<ApprenticeshipSummaryResponse>(0, 1, null, results[1].AggregationResults.Concat(results[0].AggregationResults));
 
                 var nationalResponse =
                     _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse>, ApprenticeshipSearchResponseViewModel>(
                         nationalResults);
+                nationalResponse.VacancySearch = search;
 
                 var nonNationlResponse =
                     _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse>, ApprenticeshipSearchResponseViewModel>(
                         nonNationalResults);
+                nonNationlResponse.VacancySearch = search;
 
                 if (search.LocationType == ApprenticeshipLocationType.NonNational)
                 {
                     nonNationlResponse.TotalLocalHits = nonNationalResults.Total;
                     nonNationlResponse.TotalNationalHits = nationalResults.Total;
                     nonNationlResponse.PageSize = search.ResultsPerPage;
-                    nonNationlResponse.VacancySearch = search;
 
                     if (nonNationalResults.Total == 0 && nationalResults.Total > 0)
                     {
@@ -185,7 +186,6 @@
                 nationalResponse.TotalLocalHits = nonNationalResults.Total;
                 nationalResponse.TotalNationalHits = nationalResults.Total;
                 nationalResponse.PageSize = search.ResultsPerPage;
-                nationalResponse.VacancySearch = search;
 
                 if (nationalResults.Total == 0 && nonNationalResults.Total != 0)
                 {

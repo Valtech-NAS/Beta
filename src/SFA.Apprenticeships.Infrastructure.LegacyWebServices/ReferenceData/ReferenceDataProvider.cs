@@ -15,11 +15,13 @@
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IWcfService<IReferenceData> _service;
         private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
+        private readonly string[] _blacklistedCategoryCodes;
 
         public ReferenceDataProvider(IWcfService<IReferenceData> service, ILegacyServicesConfiguration legacyServicesConfiguration)
         {
             _service = service;
             _legacyServicesConfiguration = legacyServicesConfiguration;
+            _blacklistedCategoryCodes = _legacyServicesConfiguration.BlacklistedCategoryCodes.Split(',');
         }
 
         public IEnumerable<Category> GetCategories()
@@ -38,13 +40,14 @@
             var categories = new List<Category>();
 
             var topLevelCategories =
-                response.ApprenticeshipFrameworks.Select(
-                    c =>
+                response.ApprenticeshipFrameworks
+                .Where(f => !_blacklistedCategoryCodes.Contains(f.ApprenticeshipOccupationCodeName))
+                .Select(c =>
                         new Category()
                         {
                             CodeName = c.ApprenticeshipOccupationCodeName,
                             ShortName = c.ApprenticeshipOccupationShortName,
-                            FullName = c.ApprenticeshipOccupationFullName
+                            FullName = FullNameFormatter.Format(c.ApprenticeshipOccupationFullName)
                         }).Distinct(new CategoryComparer()).OrderBy(c => c.FullName);
 
             foreach (var topLevelCategory in topLevelCategories)
@@ -57,8 +60,8 @@
                             ParentCategory = topLevelCategory,
                             CodeName = d.ApprenticeshipFrameworkCodeName,
                             ShortName = d.ApprenticeshipFrameworkShortName,
-                            FullName = d.ApprenticeshipFrameworkFullName
-                        }).ToList();
+                            FullName = FullNameFormatter.Format(d.ApprenticeshipFrameworkFullName)
+                        }).OrderBy(c => c.FullName).ToList();
 
                 categories.Add(topLevelCategory);
             }

@@ -283,7 +283,7 @@ WriteLiteral(" for=\"apprenticeship-level\"");
 
 WriteLiteral(" class=\"form-label\"");
 
-WriteLiteral(">Apprenticeship Level</label>\r\n");
+WriteLiteral(">Apprenticeship level</label>\r\n");
 
 WriteLiteral("                            ");
 
@@ -299,18 +299,60 @@ WriteLiteral("\r\n                        </div>\r\n                    </div>\r
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n                        <button");
+WriteLiteral(">\r\n");
 
-WriteLiteral(" class=\"button\"");
+            
+            #line 57 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+                        
+            
+            #line default
+            #line hidden
+            
+            #line 57 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+                          
+                            //TODO: create style for tabbed-element that defaults to hidden like tabbed-content. Remove inline style
+                            var searchButtonStyle = Model.SearchMode == ApprenticeshipSearchMode.Category ? " style=\"display: none\"" : "";
+                            var browseButtonStyle = Model.SearchMode == ApprenticeshipSearchMode.Keyword ? " style=\"display: none\"" : "";
+                        
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        <button");
+
+WriteLiteral(" class=\"button tabbed-element tab1\"");
 
 WriteLiteral(" id=\"search-button\"");
 
-WriteLiteral(">Search</button>\r\n                    </div>\r\n\r\n");
+WriteLiteral(" ");
+
+            
+            #line 62 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+                                                                                 Write(searchButtonStyle);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(">Search</button>\r\n                        <button");
+
+WriteLiteral(" class=\"button tabbed-element tab2\"");
+
+WriteLiteral(" id=\"search-button\"");
+
+WriteLiteral(" ");
+
+            
+            #line 63 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+                                                                                 Write(browseButtonStyle);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(">Browse</button>\r\n                    </div>\r\n\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 60 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 66 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                Write(Html.HiddenFor(m => m.Latitude));
 
             
@@ -321,7 +363,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 61 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 67 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                Write(Html.HiddenFor(m => m.Longitude));
 
             
@@ -332,7 +374,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 62 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 68 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                Write(Html.Hidden("Hash", Model.LatLonLocHash()));
 
             
@@ -343,7 +385,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 63 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 69 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                Write(Html.HiddenFor(m => m.LocationType));
 
             
@@ -354,7 +396,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 64 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 70 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                Write(Html.HiddenFor(m => m.ResultsPerPage));
 
             
@@ -365,7 +407,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 65 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 71 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                Write(Html.HiddenFor(m => m.SearchMode));
 
             
@@ -374,7 +416,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n\r\n                </div>\r\n");
 
             
-            #line 68 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 74 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
             }
 
             
@@ -426,7 +468,7 @@ WriteLiteral("   \r\n");
 WriteLiteral("    ");
 
             
-            #line 91 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 97 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/locationsearch"));
 
             
@@ -435,7 +477,7 @@ Write(Scripts.Render("~/bundles/nas/locationsearch"));
 WriteLiteral("\r\n    <script>\r\n        $(\"#Location\").locationMatch({\r\n            url: \'");
 
             
-            #line 94 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 100 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
              Write(Url.Action("location", "Location"));
 
             
@@ -444,7 +486,7 @@ WriteLiteral("\r\n    <script>\r\n        $(\"#Location\").locationMatch({\r\n  
 WriteLiteral("\',\r\n            longitude: \'#");
 
             
-            #line 95 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 101 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                      Write(Html.IdFor(m => m.Longitude));
 
             
@@ -453,7 +495,7 @@ WriteLiteral("\',\r\n            longitude: \'#");
 WriteLiteral("\',\r\n            latitude: \'#");
 
             
-            #line 96 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 102 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                     Write(Html.IdFor(m => m.Latitude));
 
             
@@ -462,7 +504,7 @@ WriteLiteral("\',\r\n            latitude: \'#");
 WriteLiteral("\',\r\n            latlonhash: \'#");
 
             
-            #line 97 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 103 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                       Write(Html.IdFor(m => m.Hash));
 
             

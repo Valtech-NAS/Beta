@@ -19,8 +19,6 @@
                 </nav>
                 <div class="tabbed-content active">
 
-                    @Html.Partial("_categoriesAndSubCategories", Model)
-
                     @if (Model.SearchMode == ApprenticeshipSearchMode.Keyword)
                     {
                         @Html.FormTextFor(m => m.Keywords, hintText: "", containerHtmlAttributes: new {@class = "tabbed-element tab1" })
@@ -51,8 +49,11 @@
                         <label for="loc-within" class="form-label">Within</label>
                         @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new {@id = "loc-within", @name = "WithinDistance"})
                     </div>
+
+                    @Html.Partial("_categoriesAndSubCategories", Model)
+                    
                     <div class="form-group">
-                        <label for="apprenticeship-level" class="form-label">Apprenticeship Level</label>
+                        <label for="apprenticeship-level" class="form-label">Apprenticeship level</label>
                         @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new {@id = "apprenticeship-level", @name = "ApprenticeshipLevel"})
                     </div>
                     <div class="form-group">

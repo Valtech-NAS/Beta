@@ -137,6 +137,7 @@
     <Compile Include="Mappers\WageTypeResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferenceData\CachedReferenceDataProvider.cs" />
+    <Compile Include="ReferenceData\FullNameFormatter.cs" />
     <Compile Include="ReferenceData\ReferenceDataProvider.cs" />
     <Compile Include="ReferenceData\ReferenceDataProviderCacheKeyEntry.cs" />
     <Compile Include="Service References\GatewayServiceProxy\Reference.cs">

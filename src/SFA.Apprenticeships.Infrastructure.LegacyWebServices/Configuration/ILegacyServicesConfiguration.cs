@@ -6,5 +6,6 @@
     {
         Guid SystemId { get; set; }
         string PublicKey { get; set; }
+        string BlacklistedCategoryCodes { get; set; }
     }
 }

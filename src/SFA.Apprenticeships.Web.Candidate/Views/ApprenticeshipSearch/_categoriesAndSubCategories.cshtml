@@ -15,9 +15,10 @@
             var inputId = string.Format("category{0}", category.CodeName);
             var subCategories = category.SubCategories.ToList();
             var checkedAttr = Model.Category == category.CodeName ? " checked" : "";
+            var openAttr = Model.Category == category.CodeName && Model.SubCategories != null && Model.SubCategories.Any() ? "open" : "";
             <li>
                 <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@category.FullName</label>
-                <details>
+                <details @openAttr>
                     <summary class="copy-16">@subCategories.Count more sub-categories</summary>
                     <ul class="copy-16 list-text list-checkradio">
                         @foreach (var subCategory in subCategories)

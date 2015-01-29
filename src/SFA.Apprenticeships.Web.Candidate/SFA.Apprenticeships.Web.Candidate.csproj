@@ -581,13 +581,20 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_TermsAndConditions.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\ApprenticeshipSearch\_categories.cshtml" />
-    <Content Include="Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml" />
+    <Content Include="Views\ApprenticeshipSearch\_categories.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_categories.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_categoriesAndSubCategories.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Dev.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Local.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -942,6 +949,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_Apply.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipSearch\_categories.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_categories.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipSearch\_categoriesAndSubCategories.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_categoriesAndSubCategories.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\ApprenticeshipSearch\_pagination.generated.cs">
       <AutoGen>True</AutoGen>
