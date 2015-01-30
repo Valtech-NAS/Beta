@@ -15,6 +15,7 @@
         private const string EmailAddressTokenName = "EmailAddressToken";
         private const string PasswordTokenName = "PasswordToken";
         private const string Password = "?Password01!";
+        private const int ExistentVacancyId = 445650;
 
         private readonly ITokenManager _tokenManager;
 
@@ -52,7 +53,7 @@
             {
                 var applicationStatus = (ApplicationStatuses)Enum.Parse(typeof(ApplicationStatuses), state);
                 _apprenticeshipApplicationBuilder
-                    .WithVacancyId(i + 1)
+                    .WithVacancyId(i + ExistentVacancyId)
                     .WithApplicationStatus(applicationStatus).Build();
             }
         }
