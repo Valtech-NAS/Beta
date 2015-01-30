@@ -14,9 +14,7 @@
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
-    using Infrastructure.PerformanceCounters;
     using NLog;
     using ViewModels;
     using ViewModels.Locations;
@@ -25,8 +23,6 @@
 
     public class SearchProvider : ISearchProvider
     {
-        private const string WebRolePerformanceCounterCategory = "SFA.Apprenticeships.Web.Candidate";
-        private const string VacancySearchCounter = "VacancySearch";
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IAddressSearchService _addressSearchService;
         private readonly ILocationSearchService _locationSearchService;
@@ -34,17 +30,13 @@
         private readonly IMapper _traineeshipSearchMapper;
         private readonly IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> _apprenticeshipSearchService;
         private readonly IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> _traineeshipSearchService;
-        private readonly IPerformanceCounterService _performanceCounterService;
-        private readonly IConfigurationManager _configurationManager;
 
         public SearchProvider(ILocationSearchService locationSearchService,
             IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> apprenticeshipSearchService,
             IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> traineeshipSearchService,
             IAddressSearchService addressSearchService,
             IMapper apprenticeshipSearchMapper,
-            IMapper traineeshipSearchMapper, 
-            IPerformanceCounterService performanceCounterService, 
-            IConfigurationManager configurationManager)
+            IMapper traineeshipSearchMapper)
         {
             _locationSearchService = locationSearchService;
             _apprenticeshipSearchService = apprenticeshipSearchService;
@@ -52,8 +44,6 @@
             _addressSearchService = addressSearchService;
             _apprenticeshipSearchMapper = apprenticeshipSearchMapper;
             _traineeshipSearchMapper = traineeshipSearchMapper;
-            _performanceCounterService = performanceCounterService;
-            _configurationManager = configurationManager;
         }
 
         public LocationsViewModel FindLocation(string placeNameOrPostcode)
@@ -137,11 +127,6 @@
                 }
 
                 var results = ProcessNationalAndNonNationalSearches(search, searchLocation);
-
-                if (IsANewSearch(search))
-                {
-                    IncrementVacancySearchPerformanceCounter();
-                }
 
                 var nationalResults = results.Single(r => r.SearchParameters.VacancyLocationType == ApprenticeshipLocationType.National);
 
@@ -248,11 +233,6 @@
                 };
 
                 var searchResults = _traineeshipSearchService.Search(searchRequest);
-
-                if (IsANewSearch(search))
-                {
-                    IncrementVacancySearchPerformanceCounter();
-                }
 
                 var searchResponse =
                     _traineeshipSearchMapper.Map<SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>, TraineeshipSearchResponseViewModel>(
@@ -366,19 +346,6 @@
                 });
 
             return resultCollection.ToArray();
-        }
-
-        private static bool IsANewSearch(VacancySearchViewModel search)
-        {
-            return search.SearchAction == SearchAction.Search && search.PageNumber == 1;
-        }
-
-        private void IncrementVacancySearchPerformanceCounter()
-        {
-            if(_configurationManager.GetCloudAppSetting<bool>("PerformanceCountersEnabled"))
-            {
-                _performanceCounterService.IncrementCounter(WebRolePerformanceCounterCategory, VacancySearchCounter);
-            }
         }
     }
 }

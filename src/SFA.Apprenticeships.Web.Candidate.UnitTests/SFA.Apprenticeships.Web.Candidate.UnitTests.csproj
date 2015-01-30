@@ -263,10 +263,6 @@
       <Project>{a2d82061-bcbd-4030-9eb4-5148aee79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.PerformanceCounters\SFA.Apprenticeships.Infrastructure.PerformanceCounters.csproj">
-      <Project>{AB4C03CD-F947-4CD5-BF12-8912E7FE97C3}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.PerformanceCounters</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Candidate\SFA.Apprenticeships.Web.Candidate.csproj">
       <Project>{470ba0c8-fe2e-4db9-92c8-6f37095688ee}</Project>
       <Name>SFA.Apprenticeships.Web.Candidate</Name>

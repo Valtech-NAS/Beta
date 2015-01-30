@@ -14,8 +14,6 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using Infrastructure.PerformanceCounters;
-    using Domain.Interfaces.Configuration;
 
     [TestFixture]
     public class SearchProviderTests
@@ -26,8 +24,6 @@
         private Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>> _apprenticeshipSearchService;
         private Mock<IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>> _traineeshipSearchService;
         private Mock<IAddressSearchService> _addressSearchService;
-        private Mock<IPerformanceCounterService> _performanceCounterService;
-        private Mock<IConfigurationManager> _configurationManager;
 
         private ApprenticeshipCandidateWebMappers _apprenticeshipMapper;
         private TraineeshipCandidateWebMappers _traineeeshipMapper;
@@ -39,8 +35,6 @@
             _apprenticeshipSearchService = new Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
             _traineeshipSearchService = new Mock<IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>();
             _addressSearchService = new Mock<IAddressSearchService>();
-            _performanceCounterService = new Mock<IPerformanceCounterService>();
-            _configurationManager = new Mock<IConfigurationManager>();
             
             _apprenticeshipMapper = new ApprenticeshipCandidateWebMappers();
             _traineeeshipMapper = new TraineeshipCandidateWebMappers();
@@ -61,9 +55,7 @@
                 _traineeshipSearchService.Object,
                 _addressSearchService.Object, 
                 _apprenticeshipMapper, 
-                _traineeeshipMapper,
-                _performanceCounterService.Object,
-                _configurationManager.Object);
+                _traineeeshipMapper);
 
             var results = searchProvider.FindLocation("Location1");
             var result = results.Locations.First();
@@ -84,9 +76,7 @@
                 _traineeshipSearchService.Object,
                 _addressSearchService.Object,
                 _apprenticeshipMapper,
-                _traineeeshipMapper,
-                _performanceCounterService.Object,
-                _configurationManager.Object);
+                _traineeeshipMapper);
 
             var results = searchProvider.FindLocation(string.Empty);
 
@@ -188,9 +178,7 @@
                 _traineeshipSearchService.Object,
                 _addressSearchService.Object,
                 _apprenticeshipMapper,
-                _traineeeshipMapper,
-                _performanceCounterService.Object,
-                _configurationManager.Object);
+                _traineeeshipMapper);
             return searchProvider;
         }
     }

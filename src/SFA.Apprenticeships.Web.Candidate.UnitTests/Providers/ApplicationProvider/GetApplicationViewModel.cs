@@ -4,7 +4,6 @@
     using Application.Interfaces.Candidates;
     using Candidate.Providers;
     using Common.Models.Application;
-    using Configuration;
     using Constants.Pages;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
@@ -16,7 +15,6 @@
     {
         private Mock<ICandidateService> _candidateService;
         private Mock<IConfigurationManager> _configurationManager;
-        private Mock<IFeatureToggle> _featureToggle;
         private ApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
 
         [SetUp]
@@ -24,9 +22,9 @@
         {
             _candidateService = new Mock<ICandidateService>();
             _configurationManager = new Mock<IConfigurationManager>();
-            _featureToggle = new Mock<IFeatureToggle>();
 
-            _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object, null, null, _configurationManager.Object, _featureToggle.Object);
+            _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object,
+                null, _configurationManager.Object);
         }
 
         [Test]

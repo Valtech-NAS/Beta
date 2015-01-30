@@ -5,26 +5,16 @@
     using System.Linq;
     using System.Threading.Tasks;
     using NLog;
-    using PerformanceCounters;
-    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
+    using Domain.Interfaces.Configuration;
 
     public class MonitorTasksRunner : IMonitorTasksRunner
     {
-        private const string MonitorPerformanceCounterCategory = "SFA.Apprenticeships.WorkerRoles.Monitor";
-        private const string MonitorCounter = "MonitorExecutions";
-
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IEnumerable<IMonitorTask> _monitorTasks;
-        private readonly IPerformanceCounterService _performanceCounterService;
-        private readonly IConfigurationManager _configurationManager;
 
-        public MonitorTasksRunner(IEnumerable<IMonitorTask> monitorTasks, 
-            IPerformanceCounterService performanceCounterService, 
-            IConfigurationManager configurationManager)
+        public MonitorTasksRunner(IEnumerable<IMonitorTask> monitorTasks)
         {
             _monitorTasks = monitorTasks;
-            _performanceCounterService = performanceCounterService;
-            _configurationManager = configurationManager;
         }
 
         public void RunMonitorTasks()
@@ -50,16 +40,7 @@
 
             Task.WaitAll(tasks);
 
-            IncrementCounter();
             Logger.Debug("Finished running monitor tasks");
-        }
-
-        private void IncrementCounter()
-        {
-            if(_configurationManager.GetCloudAppSetting<bool>("PerformanceCountersEnabled"))
-            {
-                _performanceCounterService.IncrementCounter(MonitorPerformanceCounterCategory, MonitorCounter);
-            }
         }
     }
 }

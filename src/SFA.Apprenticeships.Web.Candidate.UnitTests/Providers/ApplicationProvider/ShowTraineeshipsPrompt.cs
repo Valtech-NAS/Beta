@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using Configuration;
     using Domain.Entities.Candidates;
     using FluentAssertions;
     using Moq;
@@ -20,7 +19,6 @@
 
         private Mock<ICandidateService> _candidateService;
         private Mock<IConfigurationManager> _configurationManager;
-        private Mock<IFeatureToggle> _featureToggle;
 
         private ApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
 
@@ -29,13 +27,12 @@
         {
             _candidateService = new Mock<ICandidateService>();
             _configurationManager = new Mock<IConfigurationManager>();
-            _featureToggle = new Mock<IFeatureToggle>();
-
 
             _configurationManager.Setup(cm => cm.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt"))
                 .Returns(UnsuccessfulApplications);
-            
-            _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object, null, null, _configurationManager.Object, _featureToggle.Object);
+
+            _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object,
+                null, _configurationManager.Object);
         }
 
         [Test]

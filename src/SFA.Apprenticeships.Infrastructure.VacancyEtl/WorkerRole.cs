@@ -20,7 +20,6 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using NLog;
     using RabbitMq.Interfaces;
     using RabbitMq.IoC;
-    using PerformanceCounters.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Communication.IoC;
     using StructureMap;
@@ -84,7 +83,6 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                     x.AddRegistry(new LegacyWebServicesRegistry(useCache));
                     x.AddRegistry<GatewayVacancyEtlRegistry>();
                     x.AddRegistry<ElasticsearchCommonRegistry>();
-                    x.AddRegistry<PerformanceCounterRegistry>();
                     x.AddRegistry<ApplicationRepositoryRegistry>();
                     x.AddRegistry<CommunicationRepositoryRegistry>();
                 });

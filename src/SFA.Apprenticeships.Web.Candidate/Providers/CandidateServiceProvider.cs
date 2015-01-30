@@ -14,7 +14,6 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
-    using Infrastructure.PerformanceCounters;
     using Constants.Pages;
     using ViewModels;
     using ViewModels.Login;
@@ -25,9 +24,6 @@
 
     public class CandidateServiceProvider : ICandidateServiceProvider
     {
-        private const string WebRolePerformanceCounterCategory = "SFA.Apprenticeships.Web.Candidate";
-        private const string CandidateRegistrationCounter = "CandidateRegistration";
-
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IAuthenticationTicketService _authenticationTicketService;
 
@@ -35,7 +31,6 @@
         private readonly IConfigurationManager _configurationManager;
         private readonly HttpContextBase _httpContext;
         private readonly IMapper _mapper;
-        private readonly IPerformanceCounterService _performanceCounterService;
         private readonly IUserAccountService _userAccountService;
         private readonly IUserDataProvider _userDataProvider;
 
@@ -46,7 +41,6 @@
             IAuthenticationTicketService authenticationTicketService,
             IMapper mapper,
             HttpContextBase httpContext,
-            IPerformanceCounterService performanceCounterService,
             IConfigurationManager configurationManager)
         {
             _candidateService = candidateService;
@@ -55,7 +49,6 @@
             _authenticationTicketService = authenticationTicketService;
             _mapper = mapper;
             _httpContext = httpContext;
-            _performanceCounterService = performanceCounterService;
             _configurationManager = configurationManager;
         }
 
@@ -143,8 +136,6 @@
                 _candidateService.Register(candidate, model.Password);
 
                 SetUserCookies(candidate, UserRoleNames.Unactivated);
-
-                IncrementCandidateRegistrationCounter();
 
                 return true;
             }
@@ -499,14 +490,6 @@
 
         #endregion
 
-        private void IncrementCandidateRegistrationCounter()
-        {
-            if (_configurationManager.GetCloudAppSetting<bool>("PerformanceCountersEnabled"))
-            {
-                _performanceCounterService.IncrementCounter(WebRolePerformanceCounterCategory,
-                    CandidateRegistrationCounter);
-            }
-        }
 
         private static LoginResultViewModel GetLoginResultViewModel(LoginViewModel model, UserStatuses userStatus)
         {

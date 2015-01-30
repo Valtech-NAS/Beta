@@ -236,12 +236,6 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Startup\MonitorStartup.cmd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Startup\MonitorStartup.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configs\readme.txt">
@@ -316,10 +310,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Mongo.Common\SFA.Apprenticeships.Infrastructure.Mongo.Common.csproj">
       <Project>{ce62bde8-c127-4808-95f8-5f5e24485830}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Mongo.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.PerformanceCounters\SFA.Apprenticeships.Infrastructure.PerformanceCounters.csproj">
-      <Project>{ab4c03cd-f947-4cd5-bf12-8912e7fe97c3}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.PerformanceCounters</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
       <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>

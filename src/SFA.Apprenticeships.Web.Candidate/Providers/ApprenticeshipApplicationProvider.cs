@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Configuration;
     using Domain.Entities.Vacancies;
     using NLog;
     using Application.Interfaces.Candidates;
@@ -11,7 +10,6 @@
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
-    using Infrastructure.PerformanceCounters;
     using Constants.Pages;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
@@ -20,32 +18,23 @@
 
     public class ApprenticeshipApplicationProvider : IApprenticeshipApplicationProvider
     {
-        private const string WebRolePerformanceCounterCategory = "SFA.Apprenticeships.Web.Candidate";
-        private const string ApplicationSubmissionCounter = "ApplicationSubmission";
-
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
         private readonly ICandidateService _candidateService;
         private readonly IConfigurationManager _configurationManager;
-        private readonly IFeatureToggle _featureToggle;
         private readonly IMapper _mapper;
-        private readonly IPerformanceCounterService _performanceCounterService;
 
         public ApprenticeshipApplicationProvider(
             IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
             ICandidateService candidateService,
             IMapper mapper,
-            IPerformanceCounterService performanceCounterService,
-            IConfigurationManager configurationManager,
-            IFeatureToggle featureToggle)
+            IConfigurationManager configurationManager)
         {
             _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
             _candidateService = candidateService;
             _mapper = mapper;
-            _performanceCounterService = performanceCounterService;
             _configurationManager = configurationManager;
-            _featureToggle = featureToggle;
         }
 
         //TODO: Move all usages of GetOrCreateApplicationViewModel to this method
@@ -222,9 +211,6 @@
                 }
 
                 _candidateService.SubmitApplication(candidateId, vacancyId);
-
-                IncrementApplicationSubmissionCounter();
-
 
                 Logger.Debug("Application submitted for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
@@ -475,15 +461,6 @@
                 Logger.Error(message, e);
 
                 throw;
-            }
-        }
-
-        private void IncrementApplicationSubmissionCounter()
-        {
-            if (_configurationManager.GetCloudAppSetting<bool>("PerformanceCountersEnabled"))
-            {
-                _performanceCounterService.IncrementCounter(WebRolePerformanceCounterCategory,
-                    ApplicationSubmissionCounter);
             }
         }
 
