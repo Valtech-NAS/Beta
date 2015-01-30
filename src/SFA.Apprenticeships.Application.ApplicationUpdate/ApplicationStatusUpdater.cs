@@ -5,11 +5,11 @@
     using Domain.Interfaces.Repositories;
     using Entities;
     using Extensions;
-    using NLog;
+    using Interfaces.Logging;
 
     public class ApplicationStatusUpdater : IApplicationStatusUpdater
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
 
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
@@ -20,12 +20,13 @@
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
-            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
+            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository, ILogService logger)
         {
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
+            _logger = logger;
         }
 
         public void Update(Candidate candidate, IEnumerable<ApplicationStatusSummary> applicationStatuses)
@@ -59,7 +60,7 @@
                     }
                     else
                     {
-                        Logger.Warn("Unable to find apprenticeship or traineeship application with legacy ID \"{0}\".", applicationStatusSummary.LegacyApplicationId);   
+                        _logger.Warn("Unable to find apprenticeship or traineeship application with legacy ID \"{0}\".", applicationStatusSummary.LegacyApplicationId);   
                     }
                 }
             }

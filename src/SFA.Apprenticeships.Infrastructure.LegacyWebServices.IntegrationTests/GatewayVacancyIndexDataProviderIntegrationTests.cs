@@ -4,6 +4,7 @@
     using Common.IoC;
     using FluentAssertions;
     using IoC;
+    using Logging.IoC;
     using NUnit.Framework;
     using StructureMap;
     using VacancySummary;
@@ -17,6 +18,7 @@
             var container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
 
                 // Inject provider under test.

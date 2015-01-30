@@ -9,6 +9,7 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Messaging;
+    using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
     using VacancyEtl;
@@ -25,6 +26,7 @@
             _mapperMock = new Mock<IMapper>();
             _vacancyProviderMock = new Mock<IVacancyIndexDataProvider>();
             _configurationManagerMock = new Mock<IConfigurationManager>();
+            _loggerMock = new Mock<ILogService>();
         }
 
         private Mock<IMessageBus> _busMock;
@@ -32,8 +34,8 @@
         private Mock<IMapper> _mapperMock;
         private Mock<IVacancyIndexDataProvider> _vacancyProviderMock;
         private Mock<IConfigurationManager> _configurationManagerMock;
+        private Mock<ILogService> _loggerMock;
 
-        [TestCase(0)]
         [TestCase(1)]
         [TestCase(4)]
         [TestCase(10)]
@@ -121,7 +123,7 @@
         private VacancySummaryProcessor GetGatewayVacancySummaryProcessor()
         {
             var vacancyConsumer = new VacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object,
-                _mapperMock.Object, _messagingServiceMock.Object, _configurationManagerMock.Object);
+                _mapperMock.Object, _messagingServiceMock.Object, _configurationManagerMock.Object, _loggerMock.Object);
             return vacancyConsumer;
         }
 

@@ -120,6 +120,10 @@
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
+      <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancySearch\SFA.Apprenticeships.Infrastructure.VacancySearch.csproj">
       <Project>{913445EC-3175-4AFB-869C-F03B6FD2940A}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.VacancySearch</Name>

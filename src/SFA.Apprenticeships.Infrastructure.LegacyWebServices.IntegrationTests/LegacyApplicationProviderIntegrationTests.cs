@@ -8,6 +8,7 @@
     using Domain.Interfaces.Repositories;
     using Helpers;
     using IoC;
+    using Logging.IoC;
     using NUnit.Framework;
     using StructureMap;
     using Moq;
@@ -28,6 +29,7 @@
             var container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.For<ICandidateReadRepository>().Use(_candidateRepositoryMock.Object);
             });

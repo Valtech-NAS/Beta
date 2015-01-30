@@ -4,6 +4,7 @@
     using Common.IoC;
     using FluentAssertions;
     using IoC;
+    using Logging.IoC;
     using NUnit.Framework;
     using StructureMap;
 
@@ -16,8 +17,9 @@
         {
             _container = new Container(x =>
             {
-                x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<PostcodeRegistry>();
             });
         }
 

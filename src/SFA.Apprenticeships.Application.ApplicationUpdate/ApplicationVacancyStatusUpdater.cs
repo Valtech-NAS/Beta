@@ -1,14 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Application.ApplicationUpdate
 {
     using System;
-    using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
-    using NLog;
+    using Interfaces.Logging;
 
     public class ApplicationVacancyStatusUpdater : IApplicationVacancyStatusUpdater
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
 
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
@@ -19,12 +18,13 @@
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
-            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
+            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository, ILogService logger)
         {
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
+            _logger = logger;
         }
 
         public void Update(Guid candidateId, int vacancyId, VacancyStatuses currentVacancyStatus)
@@ -54,7 +54,7 @@
                 }
                 else
                 {
-                    Logger.Warn(
+                    _logger.Warn(
                         "Unable to find apprenticeship or traineeship application for candiate ID {0} with legacy vacancy ID \"{1}\".",
                         candidateId, vacancyId);
                 }

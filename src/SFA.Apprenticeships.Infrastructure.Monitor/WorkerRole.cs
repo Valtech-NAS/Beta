@@ -13,6 +13,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using LegacyWebServices.IoC;
     using LocationLookup.IoC;
     using Logging;
+    using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
     using Postcode.IoC;
@@ -71,6 +72,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 ObjectFactory.Initialize(x =>
                 {
                     x.AddRegistry<CommonRegistry>();
+                    x.AddRegistry<LoggingRegistry>();
                     x.AddRegistry<AzureCommonRegistry>();
                     x.AddRegistry<ElasticsearchCommonRegistry>();
                     x.AddRegistry<UserRepositoryRegistry>();

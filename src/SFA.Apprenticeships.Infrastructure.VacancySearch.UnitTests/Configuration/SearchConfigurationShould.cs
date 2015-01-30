@@ -3,6 +3,7 @@
     using Common.IoC;
     using FluentAssertions;
     using IoC;
+    using Logging.IoC;
     using NUnit.Framework;
     using StructureMap;
     using VacancySearch.Configuration;
@@ -14,10 +15,11 @@
         [SetUp]
         public void SetUp()
         {
-            _container = new Container(c =>
+            _container = new Container(x =>
             {
-                c.AddRegistry<CommonRegistry>();
-                c.AddRegistry<VacancySearchRegistry>();
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<VacancySearchRegistry>();
             });
         }
 

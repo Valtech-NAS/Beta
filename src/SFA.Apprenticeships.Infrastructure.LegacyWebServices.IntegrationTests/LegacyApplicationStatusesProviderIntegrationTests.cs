@@ -14,6 +14,7 @@
     using FluentAssertions;
     using Helpers;
     using IoC;
+    using Logging.IoC;
     using Moq;
     using NUnit.Framework;
     using Repositories.Applications.IoC;
@@ -36,6 +37,7 @@
             var container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.For<ICandidateReadRepository>().Use(_candidateReadRepositoryMock.Object);

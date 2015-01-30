@@ -4,6 +4,7 @@
     using Application.Authentication;
     using FluentAssertions;
     using IoC;
+    using Logging.IoC;
     using NUnit.Framework;
     using Common.IoC;
     using Repositories.Authentication.IoC;
@@ -21,6 +22,7 @@
             var container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry<AuthenticationRepositoryRegistry>();
             });

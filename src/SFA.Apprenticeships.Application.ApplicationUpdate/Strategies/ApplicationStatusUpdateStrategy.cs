@@ -4,25 +4,26 @@
     using Domain.Interfaces.Repositories;
     using Entities;
     using Extensions;
-    using NLog;
+    using Interfaces.Logging;
 
     public class ApplicationStatusUpdateStrategy : IApplicationStatusUpdateStrategy
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
 
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
 
-        public ApplicationStatusUpdateStrategy(IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository, ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository)
+        public ApplicationStatusUpdateStrategy(IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository, ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository, ILogService logger)
         {
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
+            _logger = logger;
         }
 
         public bool Update(ApprenticeshipApplicationDetail apprenticeshipApplication, ApplicationStatusSummary applicationStatusSummary)
         {
             // invoked because the status of the apprenticeshipApplication / vacancy has changed
-            Logger.Info(
+            _logger.Info(
                 "Updating status of apprenticeship application '{0}' for vacancy '{1}' from '{2}' to '{3}' for candidate {4}",
                 apprenticeshipApplication.EntityId,
                 applicationStatusSummary.LegacyVacancyId,
@@ -46,7 +47,7 @@
         public bool Update(TraineeshipApplicationDetail traineeeshipApplication, ApplicationStatusSummary applicationStatusSummary)
         {
             // invoked because the status of the apprenticeshipApplication / vacancy has changed
-            Logger.Info(
+            _logger.Info(
                 "Updating status of traineeship application '{0}' for vacancy '{1}' from '{2}' to '{3}' for candidate {4}",
                 traineeeshipApplication.EntityId,
                 applicationStatusSummary.LegacyVacancyId,

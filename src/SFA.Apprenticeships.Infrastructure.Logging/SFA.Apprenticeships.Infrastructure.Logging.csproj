@@ -108,6 +108,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="IoC\LoggingRegistry.cs" />
     <Compile Include="Layouts\JsonLayout.cs" />
     <Compile Include="Layouts\JsonProperty.cs" />
     <Compile Include="NLogLogService.cs" />

@@ -6,6 +6,7 @@
     using Infrastructure.Common.IoC;
     using Infrastructure.Communication.IoC;
     using Infrastructure.LegacyWebServices.IoC;
+    using Infrastructure.Logging.IoC;
     using Infrastructure.RabbitMq.Interfaces;
     using Infrastructure.RabbitMq.IoC;
     using Infrastructure.Repositories.Applications.IoC;
@@ -94,6 +95,7 @@
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<CommunicationRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();

@@ -14,6 +14,7 @@ namespace SFA.Apprenticeships.Web.Candidate
     using Infrastructure.Elastic.Common.IoC;
     using Infrastructure.LegacyWebServices.IoC;
     using Infrastructure.LocationLookup.IoC;
+    using Infrastructure.Logging.IoC;
     using Infrastructure.Postcode.IoC;
     using Infrastructure.RabbitMq.IoC;
     using Infrastructure.Repositories.Applications.IoC;
@@ -42,6 +43,7 @@ namespace SFA.Apprenticeships.Web.Candidate
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<SessionRegistry>();
 
                 // service layer

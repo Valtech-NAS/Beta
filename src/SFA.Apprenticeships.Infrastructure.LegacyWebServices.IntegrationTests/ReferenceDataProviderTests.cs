@@ -7,6 +7,7 @@
     using Domain.Entities.ReferenceData;
     using FluentAssertions;
     using IoC;
+    using Logging.IoC;
     using NUnit.Framework;
     using StructureMap;
 
@@ -21,6 +22,7 @@
             var container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<MemoryCacheRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
             });

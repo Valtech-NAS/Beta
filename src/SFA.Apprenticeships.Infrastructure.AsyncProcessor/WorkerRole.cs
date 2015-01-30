@@ -15,6 +15,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
     using IoC;
     using LegacyWebServices.IoC;
     using Logging;
+    using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
     using RabbitMq.Interfaces;
@@ -121,6 +122,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<CommunicationRegistry>();

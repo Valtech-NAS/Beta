@@ -14,12 +14,13 @@
         where TVacancyDetail : VacancyDetail
         where TSearchParameters : VacancySearchParametersBase
     {
+        private readonly ILogService _logger;
+
         private const string CallingMessageFormat = "Calling VacancySearchService with the following parameters; {0}";
         private const string FailedMessageFormat = "Vacancy search failed for the following parameters; {0}";
 
         private readonly IVacancySearchProvider<TVacancySummaryResponse, TSearchParameters> _vacancySearchProvider;
         private readonly IVacancyDataProvider<TVacancyDetail> _vacancyDataProvider;
-        private readonly ILogService _logger;
 
         public VacancySearchService(IVacancySearchProvider<TVacancySummaryResponse, TSearchParameters> vacancySearchProvider, IVacancyDataProvider<TVacancyDetail> vacancyDataProvider, ILogService logger)
         {

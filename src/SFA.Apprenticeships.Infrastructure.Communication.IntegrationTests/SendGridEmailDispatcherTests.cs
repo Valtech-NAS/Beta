@@ -4,6 +4,7 @@
     using Common.IoC;
     using Email;
     using IoC;
+    using Logging.IoC;
     using NUnit.Framework;
     using StructureMap;
 
@@ -19,10 +20,11 @@
         [SetUp]
         public void SetUp()
         {
-            var container = new Container(ce =>
+            var container = new Container(x =>
             {
-                ce.AddRegistry<CommunicationRegistry>();
-                ce.AddRegistry<CommonRegistry>();
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<CommunicationRegistry>();
             });
 
             _dispatcher = container.GetInstance<IEmailDispatcher>("SendGridEmailDispatcher");

@@ -9,6 +9,7 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using FizzWare.NBuilder;
+    using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
 
@@ -21,8 +22,8 @@
         private Mock<IApprenticeshipApplicationReadRepository> _apprenticeshipApplicationReadMock;
         private Mock<ITraineeshipApplicationReadRepository> _traineeshipApplicationReadMock;
         private Mock<IMessageBus> _bus;
+        private Mock<ILogService> _logger;
 
-        [SetUp]
         public void SetUp()
         {
             _legacyApplicationStatusProvider = new Mock<ILegacyApplicationStatusesProvider>();
@@ -30,9 +31,10 @@
             _traineeshipApplicationReadMock = new Mock<ITraineeshipApplicationReadRepository>();
             _applicationStatusUpdateStrategy = new Mock<IApplicationStatusUpdateStrategy>();
             _bus = new Mock<IMessageBus>();
+            _logger = new Mock<ILogService>();
             _applicationStatusProcessor = new ApplicationStatusProcessor(_legacyApplicationStatusProvider.Object,
                 _apprenticeshipApplicationReadMock.Object, _traineeshipApplicationReadMock.Object,
-                _applicationStatusUpdateStrategy.Object, _bus.Object);
+                _applicationStatusUpdateStrategy.Object, _bus.Object, _logger.Object);
         }
 
         [Test]

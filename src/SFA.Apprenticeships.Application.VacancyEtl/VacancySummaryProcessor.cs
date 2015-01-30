@@ -8,13 +8,13 @@
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Messaging;
     using Entities;
-    using NLog;
+    using Interfaces.Logging;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
 
     public class VacancySummaryProcessor : IVacancySummaryProcessor
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
 
         private const string VacancyAboutToExpireNotificationHours = "VacancyAboutToExpireNotificationHours";
         private readonly int _vacancyAboutToExpireNotificationHours;
@@ -28,26 +28,27 @@
                                        IVacancyIndexDataProvider vacancyIndexDataProvider,
                                        IMapper mapper,
                                        IProcessControlQueue<StorageQueueMessage> processControlQueue, 
-                                       IConfigurationManager configurationManager)
+                                       IConfigurationManager configurationManager, ILogService logger)
         {
             _messageBus = messageBus;
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
             _mapper = mapper;
             _processControlQueue = processControlQueue;
+            _logger = logger;
             _vacancyAboutToExpireNotificationHours = configurationManager.GetAppSetting<int>(VacancyAboutToExpireNotificationHours);
         }
 
         public void QueueVacancyPages(StorageQueueMessage scheduledQueueMessage)
         {
-            Logger.Debug("Retrieving vacancy summary page count");
+            _logger.Debug("Retrieving vacancy summary page count");
 
             var vacancyPageCount = _vacancyIndexDataProvider.GetVacancyPageCount();
 
-            Logger.Info("Retrieved vacancy summary page count of {0}", vacancyPageCount);
+            _logger.Info("Retrieved vacancy summary page count of {0}", vacancyPageCount);
 
             if (vacancyPageCount == 0)
             {
-                Logger.Warn("Expected vacancy page count to be greater than zero. Indexes will not be created successfully");
+                _logger.Warn("Expected vacancy page count to be greater than zero. Indexes will not be created successfully");
                 _processControlQueue.DeleteMessage(scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
                 return;
             }
@@ -62,18 +63,18 @@
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 vacancySummaryPage => _messageBus.PublishMessage(vacancySummaryPage));
 
-            Logger.Info("Queued {0} vacancy summary pages", vacancySumaries.Count());
+            _logger.Info("Queued {0} vacancy summary pages", vacancySumaries.Count());
         }
       
         public void QueueVacancySummaries(VacancySummaryPage vacancySummaryPage)
         {
-            Logger.Debug("Retrieving vacancy search page number: {0}/{1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
+            _logger.Debug("Retrieving vacancy search page number: {0}/{1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
 
             var vacancies = _vacancyIndexDataProvider.GetVacancySummaries(vacancySummaryPage.PageNumber);
             var apprenticeshipsExtended = _mapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryUpdate>>(vacancies.ApprenticeshipSummaries).ToList();
             var traineeshipsExtended = _mapper.Map<IEnumerable<TraineeshipSummary>, IEnumerable<TraineeshipSummaryUpdate>>(vacancies.TraineeshipSummaries).ToList();
 
-            Logger.Debug("Retrieved vacancy search page number: {0}/{1} with {2} apprenticeships and {3} traineeships", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages, apprenticeshipsExtended.Count(), traineeshipsExtended.Count());
+            _logger.Debug("Retrieved vacancy search page number: {0}/{1} with {2} apprenticeships and {3} traineeships", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages, apprenticeshipsExtended.Count(), traineeshipsExtended.Count());
 
             Parallel.ForEach(
                 apprenticeshipsExtended,
@@ -98,7 +99,7 @@
         {
             if (vacancySummary.ClosingDate < DateTime.Now.AddHours(_vacancyAboutToExpireNotificationHours))
             {
-                Logger.Debug("Queueing expiring vacancy");
+                _logger.Debug("Queueing expiring vacancy");
 
                 var vacancyAboutToExpireMessage = new VacancyAboutToExpire { Id = vacancySummary.Id };
                 _messageBus.PublishMessage(vacancyAboutToExpireMessage);

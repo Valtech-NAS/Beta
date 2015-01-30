@@ -6,6 +6,7 @@
     using Elastic.Common.IoC;
     using IoC;
     using LegacyWebServices.IoC;
+    using Logging.IoC;
     using RabbitMq.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Users.IoC;
@@ -21,6 +22,7 @@
             ObjectFactory.Initialize(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(false));

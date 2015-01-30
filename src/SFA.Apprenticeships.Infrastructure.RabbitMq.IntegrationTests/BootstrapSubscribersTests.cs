@@ -11,6 +11,7 @@
     using FluentAssertions;
     using Interfaces;
     using IoC;
+    using Logging.IoC;
     using NUnit.Framework;
     using StructureMap;
     using Tests.Consumers;
@@ -41,6 +42,7 @@
             _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
             });
 

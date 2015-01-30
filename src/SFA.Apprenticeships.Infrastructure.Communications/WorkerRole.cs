@@ -14,6 +14,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
     using IoC;
     using LegacyWebServices.IoC;
     using Logging;
+    using Logging.IoC;
     using Microsoft.WindowsAzure;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using NLog;
@@ -83,6 +84,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
                 ObjectFactory.Initialize(x =>
                 {
                     x.AddRegistry<CommonRegistry>();
+                    x.AddRegistry<LoggingRegistry>();
                     x.AddRegistry<AzureCommonRegistry>();
                     x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<AzureCacheRegistry>();

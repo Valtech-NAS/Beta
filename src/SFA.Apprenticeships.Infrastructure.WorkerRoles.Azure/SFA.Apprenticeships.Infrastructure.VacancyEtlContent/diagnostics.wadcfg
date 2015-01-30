@@ -26,6 +26,9 @@
     <PerformanceCounterConfiguration counterSpecifier="\Process(WaWorkerHost)\% Processor Time" sampleRate="PT30S" />
     <PerformanceCounterConfiguration counterSpecifier="\Process(WaWorkerHost)\Private Bytes" sampleRate="PT30S" />
     <PerformanceCounterConfiguration counterSpecifier="\Process(WaWorkerHost)\Thread Count" sampleRate="PT30S" />
+
+    <!-- Custom counters -->
+    <PerformanceCounterConfiguration counterSpecifier="\SFA.Apprenticeships.WorkerRoles.VacancyEtl\VacancyEtlExecutions" sampleRate="PT3M" />
   </PerformanceCounters>
   <WindowsEventLog bufferQuotaInMB="1024" scheduledTransferPeriod="PT1M" scheduledTransferLogLevelFilter="Warning">
     <DataSource name="Application!*" />

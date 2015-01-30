@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using FluentAssertions;
+    using Logging.IoC;
     using NUnit.Framework;
     using Application.Vacancy;
     using Application.VacancyEtl;
@@ -16,10 +17,11 @@
         [SetUp]
         public void SetUp()
         {
-            var container = new Container(ce =>
+            var container = new Container(x =>
             {
-                ce.AddRegistry<CommonRegistry>();
-                ce.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<LegacyWebServicesRegistry>();
             });
 
             _vacancyDataProvider = container.GetInstance<IVacancyDataProvider<ApprenticeshipVacancyDetail>>();

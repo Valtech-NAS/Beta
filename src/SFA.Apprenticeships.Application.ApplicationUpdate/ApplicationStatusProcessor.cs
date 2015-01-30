@@ -8,12 +8,12 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Entities;
-    using NLog;
+    using Interfaces.Logging;
     using Strategies;
 
     public class ApplicationStatusProcessor : IApplicationStatusProcessor
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
 
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
@@ -25,70 +25,71 @@
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy, 
-            IMessageBus messageBus)
+            IMessageBus messageBus, ILogService logger)
         {
             _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
             _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
             _messageBus = messageBus;
+            _logger = logger;
         }
 
         public void QueueApplicationStatusesPages()
         {
-            Logger.Debug("Starting to queue application summary status update pages");
+            _logger.Debug("Starting to queue application summary status update pages");
 
             var pageCount = _legacyApplicationStatusesProvider.GetApplicationStatusesPageCount();
 
             if (pageCount == 0)
             {
-                Logger.Debug("No application status update pages to queue");
+                _logger.Debug("No application status update pages to queue");
                 return;
             }
 
             var pages = Enumerable.Range(1, pageCount)
                 .Select(i => new ApplicationUpdatePage {PageNumber = i, TotalPages = pageCount});
 
-            Logger.Debug("Queueing {0} application summary status update pages", pageCount);
+            _logger.Debug("Queueing {0} application summary status update pages", pageCount);
 
             Parallel.ForEach(
                 pages,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 page => _messageBus.PublishMessage(page));
 
-            Logger.Debug("Queued {0} application status update pages", pageCount);
+            _logger.Debug("Queued {0} application status update pages", pageCount);
         }
 
         public void QueueApplicationStatuses(ApplicationUpdatePage applicationStatusSummaryPage)
         {
-            Logger.Debug("Starting to queue application status updates for page {0} of {1}", applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
+            _logger.Debug("Starting to queue application status updates for page {0} of {1}", applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
 
             // retrieve page of status updates from legacy... then queue each one for subsequent processing
             var applicationStatusSummaries = _legacyApplicationStatusesProvider.GetAllApplicationStatuses(applicationStatusSummaryPage.PageNumber).ToList();
 
             if (!applicationStatusSummaries.Any())
             {
-                Logger.Debug("No application status updates to queue");
+                _logger.Debug("No application status updates to queue");
                 return;
             }
 
-            Logger.Debug("Queueing {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
+            _logger.Debug("Queueing {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
 
             Parallel.ForEach(
                 applicationStatusSummaries,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
 
-            Logger.Debug("Queued {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
+            _logger.Debug("Queued {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
         }
 
         public void ProcessApplicationStatuses(ApplicationStatusSummary applicationStatusSummary)
         {
-            Logger.Debug("Processing application summary status update for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
+            _logger.Debug("Processing application summary status update for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
             
             if (!ProcessApprenticeshipsApplication(applicationStatusSummary) && !ProcessTraineeshipsApplication(applicationStatusSummary))
             {
-                Logger.Warn("Unable to find/update apprenticeship of traineeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
+                _logger.Warn("Unable to find/update apprenticeship of traineeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
             }
         }
 
@@ -152,7 +153,7 @@
 
             if (apprenticeshipApplicationDetail == null)
             {
-                Logger.Debug("Unable to find/update apprenticeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
+                _logger.Debug("Unable to find/update apprenticeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
                 return false;
             }
             return _applicationStatusUpdateStrategy.Update(apprenticeshipApplicationDetail, applicationStatusSummary);
@@ -164,7 +165,7 @@
 
             if (traineeshipApplicationDetail == null)
             {
-                Logger.Debug("Unable to find/update traineeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
+                _logger.Debug("Unable to find/update traineeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
                 return false;
             }
 
