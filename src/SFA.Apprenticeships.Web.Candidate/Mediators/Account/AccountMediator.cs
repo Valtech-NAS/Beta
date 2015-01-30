@@ -15,6 +15,7 @@
     {
         private readonly IApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
         private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
+        private readonly ITraineeshipVacancyDetailProvider _traineeshipVacancyDetailProvider;
         private readonly IConfigurationManager _configurationManager;
         private readonly IAccountProvider _accountProvider;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
@@ -26,6 +27,7 @@
             SettingsViewModelServerValidator settingsViewModelServerValidator, 
             IApprenticeshipApplicationProvider apprenticeshipApplicationProvider,
             IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
+            ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider,
             IConfigurationManager configurationManager)
         {
             _accountProvider = accountProvider;
@@ -34,6 +36,7 @@
             _apprenticeshipApplicationProvider = apprenticeshipApplicationProvider;
             _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
             _configurationManager = configurationManager;
+            _traineeshipVacancyDetailProvider = traineeshipVacancyDetailProvider;
         }
 
         public MediatorResponse<MyApplicationsViewModel> Index(Guid candidateId, string deletedVacancyId, string deletedVacancyTitle)
@@ -156,15 +159,38 @@
             return GetMediatorResponse(Codes.AccountMediator.AcceptTermsAndConditions.ErrorAccepting);
         }
 
-        public MediatorResponse ApprenticeshipVacancyDetails(int vacancyId)
+        public MediatorResponse ApprenticeshipVacancyDetails(Guid candidateId, int vacancyId)
         {
-            // TODO: AG: US680: incomplete.
-            // Get vacancy from gateway.
-            // Read application from repo.
-            // If vacancy status has changed, update repo.
-            // Return latest application detail based on repo.
-            // If vacancy status is unavailable, stay on dashboard and show message.
-            throw new NotImplementedException();
+            var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+
+            if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
+            {
+                return GetMediatorResponse(Codes.AccountMediator.VacancyDetails.Unavailable, MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable, UserMessageLevel.Warning);
+            }
+
+            if (vacancyDetailViewModel.HasError())
+            {
+                return GetMediatorResponse(Codes.AccountMediator.VacancyDetails.Error, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Error);
+            }
+
+            return GetMediatorResponse(Codes.AccountMediator.VacancyDetails.Available);
+        }
+
+        public MediatorResponse TraineeshipVacancyDetails(Guid candidateId, int vacancyId)
+        {
+            var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+
+            if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
+            {
+                return GetMediatorResponse(Codes.AccountMediator.VacancyDetails.Unavailable, MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable, UserMessageLevel.Warning);
+            }
+
+            if (vacancyDetailViewModel.HasError())
+            {
+                return GetMediatorResponse(Codes.AccountMediator.VacancyDetails.Error, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Error);
+            }
+
+            return GetMediatorResponse(Codes.AccountMediator.VacancyDetails.Available);
         }
     }
 }

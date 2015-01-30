@@ -30,7 +30,7 @@
         private AccountMediator _accountMediator;
         private Mock<IApprenticeshipApplicationProvider> _apprenticeshipApplicationProviderMock;
         private Mock<IApprenticeshipVacancyDetailProvider> _apprenticeshipVacancyDetailProvider;
-        // TODO: AG: US680: private Mock<ITraineeshipVacancyDetailProvider> _traineeshipVacancyDetailProvider;
+        private Mock<ITraineeshipVacancyDetailProvider> _traineeshipVacancyDetailProvider;
         private Mock<IAccountProvider> _accountProviderMock;
         private Mock<ICandidateServiceProvider> _candidateServiceProviderMock;
         private Mock<IConfigurationManager> _configurationManagerMock; 
@@ -42,6 +42,7 @@
         {
             _apprenticeshipApplicationProviderMock = new Mock<IApprenticeshipApplicationProvider>();
             _apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
+            _traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
 
             _accountProviderMock = new Mock<IAccountProvider>();
             _settingsViewModelServerValidator = new SettingsViewModelServerValidator();
@@ -55,6 +56,7 @@
                 _settingsViewModelServerValidator,
                 _apprenticeshipApplicationProviderMock.Object,
                 _apprenticeshipVacancyDetailProvider.Object,
+                _traineeshipVacancyDetailProvider.Object,
                 _configurationManagerMock.Object);
         }
 
@@ -345,9 +347,10 @@
             response.Code.Should().Be(Codes.AccountMediator.AcceptTermsAndConditions.ErrorAccepting);
         }
 
+        #region ApprenticeshipDetails
+
         [Test]
-        [Ignore]
-        public void ApprenticeshipDetailsLiveVacancyTest()
+        public void ApprenticeshipDetails_VacancyStatusLiveTest()
         {
             var vacancyDetailViewModel = new VacancyDetailViewModel
             {
@@ -358,9 +361,180 @@
                 x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
                 .Returns(vacancyDetailViewModel);
 
-            var response = _accountMediator.ApprenticeshipVacancyDetails(42);
+            var response = _accountMediator.ApprenticeshipVacancyDetails(Guid.NewGuid(), 42);
 
             response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Available);
+            response.Message.Should().BeNull();
         }
+
+        [Test]
+        public void ApprenticeshipDetails_VacancyStatusExpiredTest()
+        {
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Expired
+            };
+
+            _apprenticeshipVacancyDetailProvider.Setup(x =>
+                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(vacancyDetailViewModel);
+
+            var response = _accountMediator.ApprenticeshipVacancyDetails(Guid.NewGuid(), 42);
+
+            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Available);
+            response.Message.Should().BeNull();
+        }
+
+        [Test]
+        public void ApprenticeshipDetails_VacancyStatusUnavailableTest()
+        {
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Unavailable
+            };
+
+            _apprenticeshipVacancyDetailProvider.Setup(x =>
+                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(vacancyDetailViewModel);
+
+            var response = _accountMediator.ApprenticeshipVacancyDetails(Guid.NewGuid(), 42);
+
+            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Unavailable);
+            response.Message.Should().NotBeNull();
+            response.Message.Text.Should().Be(MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable);
+            response.Message.Level.Should().Be(UserMessageLevel.Warning);
+        }
+
+        [Test]
+        public void ApprenticeshipDetails_VacancyNotFoundTest()
+        {
+            _apprenticeshipVacancyDetailProvider.Setup(x =>
+                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(default(VacancyDetailViewModel));
+
+            var response = _accountMediator.ApprenticeshipVacancyDetails(Guid.NewGuid(), 42);
+
+            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Unavailable);
+            response.Message.Should().NotBeNull();
+            response.Message.Text.Should().Be(MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable);
+            response.Message.Level.Should().Be(UserMessageLevel.Warning);
+        }
+
+        [Test]
+        public void ApprenticeshipDetails_ErrorTest()
+        {
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                ViewModelMessage = "Has error"
+            };
+
+            _apprenticeshipVacancyDetailProvider.Setup(x =>
+                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(vacancyDetailViewModel);
+
+            var response = _accountMediator.ApprenticeshipVacancyDetails(Guid.NewGuid(), 42);
+
+            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Error);
+            response.Message.Should().NotBeNull();
+            response.Message.Text.Should().Be(vacancyDetailViewModel.ViewModelMessage);
+            response.Message.Level.Should().Be(UserMessageLevel.Error);
+        }
+
+        #endregion
+
+        #region TraineeshipDetails
+
+        [Test]
+        public void TraineeshipDetails_VacancyStatusLiveTest()
+        {
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Live
+            };
+
+            _traineeshipVacancyDetailProvider.Setup(x =>
+                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(vacancyDetailViewModel);
+
+            var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
+
+            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Available);
+            response.Message.Should().BeNull();
+        }
+
+        [Test]
+        public void TraineeshipDetails_VacancyStatusExpiredTest()
+        {
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Expired
+            };
+
+            _traineeshipVacancyDetailProvider.Setup(x =>
+                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(vacancyDetailViewModel);
+
+            var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
+
+            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Available);
+            response.Message.Should().BeNull();
+        }
+
+        [Test]
+        public void TraineeshipDetails_VacancyStatusUnavailableTest()
+        {
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Unavailable
+            };
+
+            _traineeshipVacancyDetailProvider.Setup(x =>
+                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(vacancyDetailViewModel);
+
+            var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
+
+            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Unavailable);
+            response.Message.Should().NotBeNull();
+            response.Message.Text.Should().Be(MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable);
+            response.Message.Level.Should().Be(UserMessageLevel.Warning);
+        }
+
+        [Test]
+        public void TraineeshipDetails_VacancyNotFoundTest()
+        {
+            _traineeshipVacancyDetailProvider.Setup(x =>
+                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(default(VacancyDetailViewModel));
+
+            var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
+
+            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Unavailable);
+            response.Message.Should().NotBeNull();
+            response.Message.Text.Should().Be(MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable);
+            response.Message.Level.Should().Be(UserMessageLevel.Warning);
+        }
+
+        [Test]
+        public void TraineeshipDetails_ErrorTest()
+        {
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                ViewModelMessage = "Has error"
+            };
+
+            _traineeshipVacancyDetailProvider.Setup(x =>
+                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(vacancyDetailViewModel);
+
+            var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
+
+            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Error);
+            response.Message.Should().NotBeNull();
+            response.Message.Text.Should().Be(vacancyDetailViewModel.ViewModelMessage);
+            response.Message.Level.Should().Be(UserMessageLevel.Error);
+        }
+
+        #endregion
     }
 }

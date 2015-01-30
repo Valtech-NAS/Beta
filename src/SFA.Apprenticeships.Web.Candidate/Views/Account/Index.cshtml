@@ -131,7 +131,7 @@ else
                                             }
                                             else
                                             {
-                                                @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                                @Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                             }
                                         </td>
                                         <td class="ta-center">@application.ApplicationStatusDescription</td>
@@ -173,7 +173,7 @@ else
                                             }
                                             else
                                             {
-                                                @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                                @Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                             }
                                         </td>
                                         <td class="ta-center">@application.ApplicationStatusDescription</td>
@@ -220,7 +220,7 @@ else
                                                 }
                                                 else
                                                 {
-                                                    @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                                    @Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                                 }
                                             </td>
                                             <td id="application-status-description" class="ta-center">@application.ApplicationStatusDescription</td>
@@ -281,7 +281,7 @@ else
                                         }
                                         else
                                         {
-                                            @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                            @Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                             <br />
                                             
                                             <!-- TODO: AG: US680: only show Closing date when vacancy is Live -->
@@ -332,7 +332,7 @@ else
                                         }
                                         else
                                         {
-                                            @Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "TraineeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                            @Html.ActionLink(application.Title + " with " + @application.EmployerName, "TraineeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                         }
                                     </td>
                                     <td class="ta-center">Applied</td>

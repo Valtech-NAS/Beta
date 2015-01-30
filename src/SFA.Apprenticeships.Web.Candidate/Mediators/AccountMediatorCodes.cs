@@ -51,8 +51,8 @@
 
             public class VacancyDetails
             {
-                public const string Available = "ApprenticeshipDetails.VacancyAvailable";
-                public const string VacancyUnavailable = "ApprenticeshipDetails.VacancyUnavailable";
+                public const string Available = "ApprenticeshipDetails.Available";
+                public const string Unavailable = "ApprenticeshipDetails.Unavailable";
                 public const string Error = "ApprenticeshipDetails.Error";
             }
         }

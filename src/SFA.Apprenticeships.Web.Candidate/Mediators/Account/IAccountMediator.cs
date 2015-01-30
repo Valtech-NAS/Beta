@@ -21,5 +21,9 @@
         MediatorResponse Track(Guid candidateId, int vacancyId);
 
         MediatorResponse AcceptTermsAndConditions(Guid candidateId);
+
+        MediatorResponse ApprenticeshipVacancyDetails(Guid candidateId, int vacancyId);
+
+        MediatorResponse TraineeshipVacancyDetails(Guid candidateId, int vacancyId);
     }
 }

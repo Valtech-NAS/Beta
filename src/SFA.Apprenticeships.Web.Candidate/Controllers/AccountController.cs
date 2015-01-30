@@ -4,6 +4,7 @@
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using System.Web.Routing;
     using Attributes;
     using Common.Constants;
     using Common.Providers;
@@ -265,6 +266,60 @@
                 return !string.IsNullOrEmpty(returnUrl)
                     ? RedirectToRoute(RouteNames.SignOut, new {ReturnUrl = returnUrl})
                     : RedirectToRoute(RouteNames.SignOut);
+            });
+        }
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
+        public async Task<ActionResult> ApprenticeshipVacancyDetails(int id)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.ApprenticeshipVacancyDetails(UserContext.CandidateId, id);
+
+                switch (response.Code)
+                {
+                    case Codes.AccountMediator.VacancyDetails.Available:
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
+
+                    case Codes.AccountMediator.VacancyDetails.Unavailable:
+                    case Codes.AccountMediator.VacancyDetails.Error:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        break;
+
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+
+                return RedirectToRoute(CandidateRouteNames.MyApplications);
+            });
+        }
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
+        public async Task<ActionResult> TraineeshipVacancyDetails(int id)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.TraineeshipVacancyDetails(UserContext.CandidateId, id);
+
+                switch (response.Code)
+                {
+                    case Codes.AccountMediator.VacancyDetails.Available:
+                        return RedirectToRoute(CandidateRouteNames.TraineeshipDetails, new { id });
+
+                    case Codes.AccountMediator.VacancyDetails.Unavailable:
+                    case Codes.AccountMediator.VacancyDetails.Error:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        break;
+
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+
+                return RedirectToRoute(CandidateRouteNames.MyApplications);
             });
         }
     }

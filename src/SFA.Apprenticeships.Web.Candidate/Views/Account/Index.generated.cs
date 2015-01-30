@@ -683,14 +683,14 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 134 "..\..\Views\Account\Index.cshtml"
-                                           Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" }));
+                                           Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
 
             
             #line default
             #line hidden
             
             #line 134 "..\..\Views\Account\Index.cshtml"
-                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                        
                                             }
 
             
@@ -718,14 +718,14 @@ WriteLiteral(">\r\n                                            <a");
 
 WriteLiteral(" class=\"icon-black archive-successful\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 7086), Tuple.Create("\"", 7162)
+WriteAttribute("href", Tuple.Create(" href=\"", 7094), Tuple.Create("\"", 7170)
             
             #line 139 "..\..\Views\Account\Index.cshtml"
-           , Tuple.Create(Tuple.Create("", 7093), Tuple.Create<System.Object, System.Int32>(Url.Action("Archive", "Account", new { id = application.VacancyId })
+           , Tuple.Create(Tuple.Create("", 7101), Tuple.Create<System.Object, System.Int32>(Url.Action("Archive", "Account", new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 7093), false)
+, 7101), false)
 );
 
 WriteLiteral("><i");
@@ -894,14 +894,14 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 176 "..\..\Views\Account\Index.cshtml"
-                                           Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" }));
+                                           Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
 
             
             #line default
             #line hidden
             
             #line 176 "..\..\Views\Account\Index.cshtml"
-                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                        
                                             }
 
             
@@ -1125,14 +1125,14 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 223 "..\..\Views\Account\Index.cshtml"
-                                               Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" }));
+                                               Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
 
             
             #line default
             #line hidden
             
             #line 223 "..\..\Views\Account\Index.cshtml"
-                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                            
                                                 }
 
             
@@ -1162,14 +1162,14 @@ WriteLiteral(">\r\n                                                <a");
 
 WriteLiteral(" class=\"icon-black archive-unsuccessful\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 13061), Tuple.Create("\"", 13137)
+WriteAttribute("href", Tuple.Create(" href=\"", 13085), Tuple.Create("\"", 13161)
             
             #line 228 "..\..\Views\Account\Index.cshtml"
-                , Tuple.Create(Tuple.Create("", 13068), Tuple.Create<System.Object, System.Int32>(Url.Action("Archive", "Account", new { id = application.VacancyId })
+                , Tuple.Create(Tuple.Create("", 13092), Tuple.Create<System.Object, System.Int32>(Url.Action("Archive", "Account", new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 13068), false)
+, 13092), false)
 );
 
 WriteLiteral("><i");
@@ -1395,14 +1395,14 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 284 "..\..\Views\Account\Index.cshtml"
-                                       Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "ApprenticeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" }));
+                                       Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
 
             
             #line default
             #line hidden
             
             #line 284 "..\..\Views\Account\Index.cshtml"
-                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                    
 
             
             #line default
@@ -1510,14 +1510,14 @@ WriteLiteral(">\r\n                                        <a");
 
 WriteLiteral(" class=\"icon-black delete-draft\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 17861), Tuple.Create("\"", 17936)
+WriteAttribute("href", Tuple.Create(" href=\"", 17893), Tuple.Create("\"", 17968)
             
             #line 306 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 17868), Tuple.Create<System.Object, System.Int32>(Url.Action("Delete", "Account", new { id = application.VacancyId })
+, Tuple.Create(Tuple.Create("", 17900), Tuple.Create<System.Object, System.Int32>(Url.Action("Delete", "Account", new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 17868), false)
+, 17900), false)
 );
 
 WriteLiteral("><i");
@@ -1661,14 +1661,14 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 335 "..\..\Views\Account\Index.cshtml"
-                                       Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "Details", "TraineeshipSearch", new { id = application.VacancyId }, new { @class = "link-unimp" }));
+                                       Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "TraineeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
 
             
             #line default
             #line hidden
             
             #line 335 "..\..\Views\Account\Index.cshtml"
-                                                                                                                                                                                                                         
+                                                                                                                                                                                                                                 
                                         }
 
             
