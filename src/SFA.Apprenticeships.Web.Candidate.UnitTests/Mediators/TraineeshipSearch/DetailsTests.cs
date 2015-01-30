@@ -40,6 +40,20 @@
         }
 
         [Test]
+        public void VacancyUnavailable()
+        {
+            var vacancyDetailViewModel = new VacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Unavailable,
+            };
+
+            var mediator = GetMediator(vacancyDetailViewModel);
+            var response = mediator.Details(VacancyId, null, null);
+
+            response.AssertCode(Codes.TraineeshipSearch.Details.VacancyNotFound, false);
+        }
+
+        [Test]
         public void VacancyHasError()
         {
             const string message = "The vacancy has an error";
@@ -56,6 +70,7 @@
 
             response.AssertMessage(Codes.TraineeshipSearch.Details.VacancyHasError, message, UserMessageLevel.Warning, true);
         }
+
         [Test]
         public void Ok()
         {

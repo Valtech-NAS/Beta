@@ -293,7 +293,7 @@
             if ((!vacancyDetailViewModel.DateApplied.HasValue && vacancyDetailViewModel.VacancyStatus != VacancyStatuses.Live) ||
                 (vacancyDetailViewModel.DateApplied.HasValue && vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable))
             {
-                // TODO: AG: US680: comment.
+                // If candidate has never applied for vacancy, it must be live. If candidate has applied for vacancy, it must still be available.
                 return GetMediatorResponse<VacancyDetailViewModel>(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
             }
 

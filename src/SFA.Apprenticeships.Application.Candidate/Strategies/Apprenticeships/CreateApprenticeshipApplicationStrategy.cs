@@ -61,7 +61,7 @@
         {
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
-            // TODO: AG: US680: can we return null and handle this in the mediator?
+            // TODO: can we return null here and handle in the caller?
             if (vacancyDetails == null || vacancyDetails.VacancyStatus != VacancyStatuses.Live)
             {
                 return new ApprenticeshipApplicationDetail
