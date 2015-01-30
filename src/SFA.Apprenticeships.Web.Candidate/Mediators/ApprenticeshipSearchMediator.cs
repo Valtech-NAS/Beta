@@ -239,36 +239,36 @@
         //TODO: Tell don't ask?
         private static void PopulateSortType(ApprenticeshipSearchViewModel model)
         {
-            if (model.LocationType == ApprenticeshipLocationType.NonNational && model.SortType == VacancySortType.Relevancy &&
+            if (model.LocationType == ApprenticeshipLocationType.NonNational && model.SortType == VacancySearchSortType.Relevancy &&
                 string.IsNullOrWhiteSpace(model.Keywords))
             {
-                model.SortType = VacancySortType.Distance;
+                model.SortType = VacancySearchSortType.Distance;
             }
 
             if (model.LocationType == ApprenticeshipLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) &&
-                model.SortType != VacancySortType.ClosingDate)
+                model.SortType != VacancySearchSortType.ClosingDate)
             {
-                model.SortType = VacancySortType.ClosingDate;
+                model.SortType = VacancySearchSortType.ClosingDate;
             }
 
             if (model.SearchAction == SearchAction.Search && !string.IsNullOrWhiteSpace(model.Keywords))
             {
-                model.SortType = VacancySortType.Relevancy;
+                model.SortType = VacancySearchSortType.Relevancy;
             }
 
             if (model.SearchAction == SearchAction.LocationTypeChanged)
             {
                 if (!string.IsNullOrWhiteSpace(model.Keywords))
                 {
-                    model.SortType = VacancySortType.Relevancy;
+                    model.SortType = VacancySearchSortType.Relevancy;
                 }
                 else if (model.LocationType == ApprenticeshipLocationType.National)
                 {
-                    model.SortType = VacancySortType.ClosingDate;
+                    model.SortType = VacancySearchSortType.ClosingDate;
                 }
                 else
                 {
-                    model.SortType = VacancySortType.Distance;
+                    model.SortType = VacancySearchSortType.Distance;
                 }
             }
         }

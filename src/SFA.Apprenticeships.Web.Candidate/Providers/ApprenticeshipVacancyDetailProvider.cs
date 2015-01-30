@@ -18,10 +18,10 @@
 
         private readonly IMapper _mapper;
         private readonly ICandidateService _candidateService;
-        private readonly IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> _vacancySearchService;
+        private readonly IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> _vacancySearchService;
 
         public ApprenticeshipVacancyDetailProvider(
-            IVacancySearchService<ApprenticeshipSummaryResponse,
+            IVacancySearchService<ApprenticeshipSearchResponse,
             ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> vacancySearchService,
             ICandidateService candidateService,
             IMapper mapper)

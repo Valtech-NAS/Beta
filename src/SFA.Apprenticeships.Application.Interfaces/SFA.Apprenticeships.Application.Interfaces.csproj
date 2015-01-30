@@ -111,10 +111,10 @@
     <Compile Include="Search\SearchResults.cs" />
     <Compile Include="Users\IAuthenticationService.cs" />
     <Compile Include="Vacancies\ErrorCodes.cs" />
-    <Compile Include="Vacancies\VacancySortType.cs" />
+    <Compile Include="Vacancies\VacancySearchSortType.cs" />
     <Compile Include="Vacancies\IVacancySearchService.cs" />
-    <Compile Include="Vacancies\TraineeshipSummaryResponse.cs" />
-    <Compile Include="Vacancies\ApprenticeshipSummaryResponse.cs" />
+    <Compile Include="Vacancies\TraineeshipSearchResponse.cs" />
+    <Compile Include="Vacancies\ApprenticeshipSearchResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">

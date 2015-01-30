@@ -41,7 +41,7 @@
 
         public int WithinDistance { get; set; }
 
-        public VacancySortType SortType { get; set; }
+        public VacancySearchSortType SortType { get; set; }
 
         public int PageNumber
         {

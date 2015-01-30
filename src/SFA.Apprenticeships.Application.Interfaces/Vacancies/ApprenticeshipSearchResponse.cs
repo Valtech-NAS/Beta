@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
 {
-    using Domain.Entities.Vacancies.Traineeships;
+    using Domain.Entities.Vacancies.Apprenticeships;
 
-    public class TraineeshipSummaryResponse : TraineeshipSummary
+    public class ApprenticeshipSearchResponse : ApprenticeshipSummary
     {
         public double Distance { get; set; }
 

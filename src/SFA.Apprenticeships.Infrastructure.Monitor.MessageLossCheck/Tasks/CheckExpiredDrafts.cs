@@ -14,9 +14,9 @@
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IApprenticeshipApplicationDiagnosticsRepository _applicationDiagnosticsRepository;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
-        private readonly IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> _vacancySearchService;
+        private readonly IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> _vacancySearchService;
 
-        public CheckExpiredDrafts(IApprenticeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository, IElasticsearchClientFactory elasticsearchClientFactory, IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> vacancySearchService)
+        public CheckExpiredDrafts(IApprenticeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository, IElasticsearchClientFactory elasticsearchClientFactory, IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> vacancySearchService)
         {
             _applicationDiagnosticsRepository = applicationDiagnosticsRepository;
             _elasticsearchClientFactory = elasticsearchClientFactory;

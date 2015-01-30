@@ -14,8 +14,8 @@
         {
             For<SearchConfiguration>().Singleton().Use(SearchConfiguration.Instance);
             For<IMapper>().Use<VacancySearchMapper>().Name = "VacancySearchMapper";
-            For<IVacancySearchProvider<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>>().Use<ApprenticeshipsSearchProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
-            For<IVacancySearchProvider<TraineeshipSummaryResponse, TraineeshipSearchParameters>>().Use<TraineeshipsSearchProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
+            For<IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>>().Use<ApprenticeshipsSearchProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
+            For<IVacancySearchProvider<TraineeshipSearchResponse, TraineeshipSearchParameters>>().Use<TraineeshipsSearchProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
         }
     }
 }

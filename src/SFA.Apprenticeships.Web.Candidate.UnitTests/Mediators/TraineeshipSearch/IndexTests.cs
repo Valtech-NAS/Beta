@@ -26,14 +26,14 @@
 
             viewModel.WithinDistance.Should().Be(40);
             viewModel.ResultsPerPage.Should().Be(5);
-            viewModel.SortType.Should().Be(VacancySortType.Distance);
+            viewModel.SortType.Should().Be(VacancySearchSortType.Distance);
 
             viewModel.Distances.Should().NotBeNull();
             viewModel.Distances.SelectedValue.Should().Be(null);
 
             viewModel.SortTypes.Should().NotBeNull();
             viewModel.SortTypes.Count().Should().BeGreaterThan(0);
-            viewModel.SortTypes.SelectedValue.Should().Be(VacancySortType.Distance);
+            viewModel.SortTypes.SelectedValue.Should().Be(VacancySearchSortType.Distance);
         }
 
         private static ITraineeshipSearchMediator GetMediator()

@@ -14,7 +14,7 @@
     using Newtonsoft.Json.Linq;
     using NLog;
 
-    public class ApprenticeshipsSearchProvider : IVacancySearchProvider<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>
+    public class ApprenticeshipsSearchProvider : IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>
     {
         private const string FrameworkAggregationName = "Frameworks";
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -31,7 +31,7 @@
             _searchConfiguration = searchConfiguration;
         }
 
-        public SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters> FindVacancies(ApprenticeshipSearchParameters parameters)
+        public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> FindVacancies(ApprenticeshipSearchParameters parameters)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (ApprenticeshipSummary));
@@ -42,7 +42,7 @@
 
             var search = PerformSearch(parameters, client, indexName, documentTypeName);
             var responses =
-                _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryResponse>>
+                _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSearchResponse>>
                     (search.Documents).ToList();
 
             responses.ForEach(r =>
@@ -51,8 +51,8 @@
 
                 if (parameters.Location != null)
                 {
-                    if (parameters.SortType == VacancySortType.ClosingDate ||
-                        parameters.SortType == VacancySortType.Distance)
+                    if (parameters.SortType == VacancySearchSortType.ClosingDate ||
+                        parameters.SortType == VacancySearchSortType.Distance)
                     {
                         r.Distance = double.Parse(hitMd.Sorts.Skip(hitMd.Sorts.Count() - 1).First().ToString());
                     }
@@ -72,14 +72,14 @@
 
             var aggregationResults = GetAggregationResultsFrom(search.Aggs);
 
-            var results = new SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>(search.Total, parameters.PageNumber,
+            var results = new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(search.Total, parameters.PageNumber,
                 responses, aggregationResults, parameters);
 
             return results;
         }
 
 
-        public SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters> FindVacancy(string vacancyReference)
+        public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> FindVacancy(string vacancyReference)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (ApprenticeshipSummary));
@@ -95,8 +95,8 @@
                     q =>
                         q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, vacancyReference)))));
 
-            var responses = _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryResponse>>(searchResults.Documents).ToList();
-            var results = new SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>(searchResults.Total, 1, responses, null, null);
+            var responses = _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSearchResponse>>(searchResults.Documents).ToList();
+            var results = new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(searchResults.Total, 1, responses, null, null);
             return results;
         }
 
@@ -210,7 +210,7 @@
 
                 switch (parameters.SortType)
                 {
-                    case VacancySortType.Distance:
+                    case VacancySearchSortType.Distance:
                         s.SortGeoDistance(g =>
                         {
                             g.PinTo(parameters.Location.GeoPoint.Latitude, parameters.Location.GeoPoint.Longitude)
@@ -218,7 +218,7 @@
                             return g;
                         });
                         break;
-                    case VacancySortType.ClosingDate:
+                    case VacancySearchSortType.ClosingDate:
                         s.Sort(v => v.OnField(f => f.ClosingDate).Ascending());
                         if (parameters.Location == null)
                         {
@@ -233,7 +233,7 @@
                             return g;
                         });
                         break;
-                    case VacancySortType.Relevancy:
+                    case VacancySearchSortType.Relevancy:
                         s.Fields("_source");
                         if (parameters.Location == null)
                         {

@@ -9,7 +9,7 @@
 
         public int SearchRadius { get; set; }
 
-        public VacancySortType SortType { get; set; }
+        public VacancySearchSortType SortType { get; set; }
 
         public string VacancyReference { get; set; }
 

@@ -11,7 +11,7 @@
     {
         public TraineeshipSearchViewModel()
         {
-            SortType = VacancySortType.Distance;
+            SortType = VacancySearchSortType.Distance;
         }
 
         public TraineeshipSearchViewModel(TraineeshipSearchViewModel viewModel) : base(viewModel)

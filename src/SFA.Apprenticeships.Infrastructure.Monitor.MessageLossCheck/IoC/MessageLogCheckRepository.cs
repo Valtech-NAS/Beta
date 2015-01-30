@@ -13,7 +13,7 @@
     {
         public MessageLogCheckRepository()
         {
-            For<IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>().Use<VacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
+            For<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>().Use<VacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
             
             For<ICandidateDiagnosticsRepository>().Use<CandidateDiagnosticsRepository>();
             For<IApprenticeshipApplicationDiagnosticsRepository>().Use<ApprenticeshipApplicationDiagnosticsRepository>();

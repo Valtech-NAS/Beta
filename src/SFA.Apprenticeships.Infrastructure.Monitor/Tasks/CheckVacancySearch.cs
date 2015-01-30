@@ -8,9 +8,9 @@
 
     public class CheckVacancySearch : IMonitorTask
     {
-        private readonly IVacancySearchProvider<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters> _vacancySearchProvider;
+        private readonly IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> _vacancySearchProvider;
 
-        public CheckVacancySearch(IVacancySearchProvider<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters> vacancySearchProvider)
+        public CheckVacancySearch(IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> vacancySearchProvider)
         {
             _vacancySearchProvider = vacancySearchProvider;
         }
@@ -29,7 +29,7 @@
                 PageNumber = 1,
                 PageSize = 10,
                 SearchRadius = 10,
-                SortType = VacancySortType.Distance,
+                SortType = VacancySearchSortType.Distance,
                 VacancyLocationType = ApprenticeshipLocationType.National
             };
 

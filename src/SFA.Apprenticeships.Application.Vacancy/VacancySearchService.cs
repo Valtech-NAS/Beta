@@ -12,7 +12,7 @@
     public class VacancySearchService<TVacancySummaryResponse, TVacancyDetail, TSearchParameters> : IVacancySearchService<TVacancySummaryResponse, TVacancyDetail, TSearchParameters>
         where TVacancySummaryResponse : VacancySummary
         where TVacancyDetail : VacancyDetail
-        where TSearchParameters : SearchParametersBase
+        where TSearchParameters : VacancySearchParametersBase
     {
         private const string CallingMessageFormat = "Calling VacancySearchService with the following parameters; {0}";
         private const string FailedMessageFormat = "Vacancy search failed for the following parameters; {0}";

@@ -44,20 +44,20 @@
             return distances;
         }
 
-        protected SelectList GetSortTypes(VacancySortType selectedSortType = VacancySortType.Distance, string keywords = null, bool isLocalLocationType = true)
+        protected SelectList GetSortTypes(VacancySearchSortType selectedSortType = VacancySearchSortType.Distance, string keywords = null, bool isLocalLocationType = true)
         {
             var sortTypeOptions = new ArrayList();
 
             if (!string.IsNullOrWhiteSpace(keywords))
             {
-                sortTypeOptions.Add(new { SortType = VacancySortType.Relevancy, Name = "Best Match" });
+                sortTypeOptions.Add(new { SortType = VacancySearchSortType.Relevancy, Name = "Best Match" });
             }
 
-            sortTypeOptions.Add(new { SortType = VacancySortType.ClosingDate, Name = "Closing Date" });
+            sortTypeOptions.Add(new { SortType = VacancySearchSortType.ClosingDate, Name = "Closing Date" });
 
             if (isLocalLocationType)
             {
-                sortTypeOptions.Add(new { SortType = VacancySortType.Distance, Name = "Distance" });
+                sortTypeOptions.Add(new { SortType = VacancySearchSortType.Distance, Name = "Distance" });
             }
 
             var sortTypes = new SelectList(

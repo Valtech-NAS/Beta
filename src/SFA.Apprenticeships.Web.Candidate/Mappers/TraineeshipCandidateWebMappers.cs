@@ -15,10 +15,10 @@
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<SearchResults<TraineeshipSummaryResponse, TraineeshipSearchParameters>, TraineeshipSearchResponseViewModel>()
+            Mapper.CreateMap<SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>, TraineeshipSearchResponseViewModel>()
                 .ConvertUsing<TraineeshipSearchResultsResolver>();
 
-            Mapper.CreateMap<TraineeshipSummaryResponse, TraineeshipVacancySummaryViewModel>();
+            Mapper.CreateMap<TraineeshipSearchResponse, TraineeshipVacancySummaryViewModel>();
 
             Mapper.CreateMap<TraineeshipSearchViewModel, Location>()
                 .ConvertUsing<LocationResolver>();

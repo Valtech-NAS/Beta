@@ -16,12 +16,12 @@
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IMapper _mapper;
-        private readonly IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> _vacancySearchService;
+        private readonly IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> _vacancySearchService;
         private readonly ICandidateService _candidateService;
 
         public TraineeshipVacancyDetailProvider(
             IMapper mapper,
-            IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> vacancySearchService, 
+            IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> vacancySearchService, 
             ICandidateService candidateService)
         {
             _mapper = mapper;

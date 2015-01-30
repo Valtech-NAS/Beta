@@ -6,7 +6,7 @@
     public interface IVacancySearchService<TVacancySummaryResponse, out TVacancyDetail, TSearchParameters> 
         where TVacancySummaryResponse : VacancySummary
         where TVacancyDetail : VacancyDetail
-        where TSearchParameters : SearchParametersBase
+        where TSearchParameters : VacancySearchParametersBase
     {
         /// <summary>
         /// returns vacancies matching search criteria

@@ -6,15 +6,15 @@
     using Application.Interfaces.Vacancies;
     using ViewModels.VacancySearch;
 
-    internal class ApprenticeshipSearchResultsResolver : ITypeConverter<SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>
+    internal class ApprenticeshipSearchResultsResolver : ITypeConverter<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>
     {
         public ApprenticeshipSearchResponseViewModel Convert(ResolutionContext context)
         {
-            var source = (SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>)context.SourceValue;
+            var source = (SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>)context.SourceValue;
 
             var viewModel = new ApprenticeshipSearchResponseViewModel
             {
-                Vacancies = context.Engine.Map<IEnumerable<ApprenticeshipSummaryResponse>, IEnumerable<ApprenticeshipVacancySummaryViewModel>>(source.Results)
+                Vacancies = context.Engine.Map<IEnumerable<ApprenticeshipSearchResponse>, IEnumerable<ApprenticeshipVacancySummaryViewModel>>(source.Results)
             };
 
             return viewModel;

@@ -41,7 +41,7 @@
                 WithinDistance = 40,
                 Distances = GetDistances(),
                 SortTypes = GetSortTypes(),
-                SortType = VacancySortType.Distance,
+                SortType = VacancySearchSortType.Distance,
                 ResultsPerPage = GetResultsPerPage()
             };
 

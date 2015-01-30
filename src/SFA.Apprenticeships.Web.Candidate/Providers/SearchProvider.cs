@@ -32,14 +32,14 @@
         private readonly ILocationSearchService _locationSearchService;
         private readonly IMapper _apprenticeshipSearchMapper;
         private readonly IMapper _traineeshipSearchMapper;
-        private readonly IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> _apprenticeshipSearchService;
-        private readonly IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> _traineeshipSearchService;
+        private readonly IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> _apprenticeshipSearchService;
+        private readonly IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> _traineeshipSearchService;
         private readonly IPerformanceCounterService _performanceCounterService;
         private readonly IConfigurationManager _configurationManager;
 
         public SearchProvider(ILocationSearchService locationSearchService,
-            IVacancySearchService<ApprenticeshipSummaryResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> apprenticeshipSearchService,
-            IVacancySearchService<TraineeshipSummaryResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> traineeshipSearchService,
+            IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> apprenticeshipSearchService,
+            IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> traineeshipSearchService,
             IAddressSearchService addressSearchService,
             IMapper apprenticeshipSearchMapper,
             IMapper traineeshipSearchMapper, 
@@ -120,7 +120,7 @@
                     //Expect only a single result. Any other number should be interpreted as no results
                     if (searchResults.Total == 1)
                     {
-                        var exactMatchResponse = _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(searchResults);
+                        var exactMatchResponse = _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(searchResults);
                         exactMatchResponse.ExactMatchFound = true;
                         return exactMatchResponse;
                     }
@@ -148,12 +148,12 @@
                 var nonNationalResults = results.Single(r => r.SearchParameters.VacancyLocationType == ApprenticeshipLocationType.NonNational);
 
                 var nationalResponse =
-                    _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(
+                    _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(
                         nationalResults);
                 nationalResponse.VacancySearch = search;
 
                 var nonNationlResponse =
-                    _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(
+                    _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(
                         nonNationalResults);
                 nonNationlResponse.VacancySearch = search;
 
@@ -255,7 +255,7 @@
                 }
 
                 var searchResponse =
-                    _traineeshipSearchMapper.Map<SearchResults<TraineeshipSummaryResponse, TraineeshipSearchParameters>, TraineeshipSearchResponseViewModel>(
+                    _traineeshipSearchMapper.Map<SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>, TraineeshipSearchResponseViewModel>(
                         searchResults);
 
                 searchResponse.TotalHits = searchResults.Total;
@@ -306,23 +306,23 @@
             return addressSearchViewModel;
         }
 
-        private SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>[] ProcessNationalAndNonNationalSearches(
+        private SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>[] ProcessNationalAndNonNationalSearches(
             ApprenticeshipSearchViewModel search, Location searchLocation)
         {
-            VacancySortType nationalSortType, nonNationalSortType;
+            VacancySearchSortType nationalSortType, nonNationalSortType;
             int nationalPageNumber, nonNationalPageNumber;
 
             if (search.LocationType == ApprenticeshipLocationType.National)
             {
                 nationalSortType = search.SortType;
-                nonNationalSortType = VacancySortType.Distance;
+                nonNationalSortType = VacancySearchSortType.Distance;
                 nationalPageNumber = search.PageNumber;
                 nonNationalPageNumber = 1;
             }
             else
             {
                 nonNationalSortType = search.SortType;
-                nationalSortType = VacancySortType.ClosingDate;
+                nationalSortType = VacancySearchSortType.ClosingDate;
                 nationalPageNumber = 1;
                 nonNationalPageNumber = search.PageNumber;
             }
@@ -357,7 +357,7 @@
                 }
             };
 
-            var resultCollection = new ConcurrentBag<SearchResults<ApprenticeshipSummaryResponse, ApprenticeshipSearchParameters>>();
+            var resultCollection = new ConcurrentBag<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>>();
             Parallel.ForEach(searchparameters,
                 parameters =>
                 {

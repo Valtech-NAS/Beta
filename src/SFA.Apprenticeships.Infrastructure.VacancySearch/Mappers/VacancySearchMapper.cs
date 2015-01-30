@@ -9,11 +9,11 @@
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<ApprenticeshipSummary, ApprenticeshipSummaryResponse>()
+            Mapper.CreateMap<ApprenticeshipSummary, ApprenticeshipSearchResponse>()
                 .ForMember(d => d.Location,
                     opt => opt.ResolveUsing<GeoPointElasticToDomainResolver>().FromMember(src => src.Location));
 
-            Mapper.CreateMap<TraineeshipSummary, TraineeshipSummaryResponse>()
+            Mapper.CreateMap<TraineeshipSummary, TraineeshipSearchResponse>()
                 .ForMember(d => d.Location,
                     opt => opt.ResolveUsing<GeoPointElasticToDomainResolver>().FromMember(src => src.Location));
         }

@@ -90,8 +90,8 @@
 
             var sortTypes = viewModel.SortTypes.ToList();
             sortTypes.Count.Should().Be(2);
-            sortTypes.Should().Contain(sli => sli.Value == VacancySortType.ClosingDate.ToString());
-            sortTypes.Should().Contain(sli => sli.Value == VacancySortType.Distance.ToString());
+            sortTypes.Should().Contain(sli => sli.Value == VacancySearchSortType.ClosingDate.ToString());
+            sortTypes.Should().Contain(sli => sli.Value == VacancySearchSortType.Distance.ToString());
         }
 
         [Test]

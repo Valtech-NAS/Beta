@@ -13,7 +13,7 @@
     using Nest;
     using NLog;
 
-    public class TraineeshipsSearchProvider : IVacancySearchProvider<TraineeshipSummaryResponse, TraineeshipSearchParameters>
+    public class TraineeshipsSearchProvider : IVacancySearchProvider<TraineeshipSearchResponse, TraineeshipSearchParameters>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
@@ -25,7 +25,7 @@
             _elasticsearchClientFactory = elasticsearchClientFactory;
         }
 
-        public SearchResults<TraineeshipSummaryResponse, TraineeshipSearchParameters> FindVacancies(TraineeshipSearchParameters parameters)
+        public SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters> FindVacancies(TraineeshipSearchParameters parameters)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (TraineeshipSummary));
@@ -34,7 +34,7 @@
             Logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName, indexName);
 
             var search = PerformSearch(parameters, client, indexName, documentTypeName);
-            var responses = _vacancySearchMapper.Map<IEnumerable<TraineeshipSummary>, IEnumerable<TraineeshipSummaryResponse>>(search.Documents).ToList();
+            var responses = _vacancySearchMapper.Map<IEnumerable<TraineeshipSummary>, IEnumerable<TraineeshipSearchResponse>>(search.Documents).ToList();
 
             responses.ForEach(r =>
             {
@@ -42,8 +42,8 @@
 
                 if (parameters.Location != null)
                 {
-                    if (parameters.SortType == VacancySortType.ClosingDate ||
-                        parameters.SortType == VacancySortType.Distance)
+                    if (parameters.SortType == VacancySearchSortType.ClosingDate ||
+                        parameters.SortType == VacancySearchSortType.Distance)
                     {
                         r.Distance = double.Parse(hitMd.Sorts.Skip(hitMd.Sorts.Count() - 1).First().ToString());
                     }
@@ -54,12 +54,12 @@
 
             Logger.Debug("{0} search results returned", search.Total);
 
-            var results = new SearchResults<TraineeshipSummaryResponse, TraineeshipSearchParameters>(search.Total, parameters.PageNumber, responses, null, parameters);
+            var results = new SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>(search.Total, parameters.PageNumber, responses, null, parameters);
 
             return results;
         }
 
-        public SearchResults<TraineeshipSummaryResponse, TraineeshipSearchParameters> FindVacancy(string vacancyReference)
+        public SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters> FindVacancy(string vacancyReference)
         {
             throw new NotImplementedException();
         }
@@ -78,7 +78,7 @@
 
                 switch (parameters.SortType)
                 {
-                    case VacancySortType.Distance:
+                    case VacancySearchSortType.Distance:
                         s.SortGeoDistance(g =>
                         {
                             g.PinTo(parameters.Location.GeoPoint.Latitude, parameters.Location.GeoPoint.Longitude)
@@ -86,7 +86,7 @@
                             return g;
                         });
                         break;
-                    case VacancySortType.ClosingDate:
+                    case VacancySearchSortType.ClosingDate:
                         s.Sort(v => v.OnField(f => f.ClosingDate).Ascending());
                         if (parameters.Location == null) 
                         {

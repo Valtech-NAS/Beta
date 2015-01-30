@@ -96,7 +96,7 @@
                 PageNumber = 1,
                 PageSize = 5,
                 SearchRadius = 50,
-                SortType = VacancySortType.ClosingDate,
+                SortType = VacancySearchSortType.ClosingDate,
                 VacancyLocationType = ApprenticeshipLocationType.NonNational
             };
         }
