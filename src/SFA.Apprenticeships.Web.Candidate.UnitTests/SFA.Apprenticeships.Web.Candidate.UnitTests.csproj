@@ -172,7 +172,15 @@
     <Compile Include="Helpers\FormTextForTests.cs" />
     <Compile Include="Helpers\FullNameFormatterTests.cs" />
     <Compile Include="Mappers\VacancyDetailViewModelMapperTests.cs" />
-    <Compile Include="Mediators\Account\AccountMediatorTests.cs" />
+    <Compile Include="Mediators\Account\AcceptTermsAndConditionsTests.cs" />
+    <Compile Include="Mediators\Account\ApprenticeshipVacancyDetailsTests.cs" />
+    <Compile Include="Mediators\Account\ArchiveTests.cs" />
+    <Compile Include="Mediators\Account\DeleteTests.cs" />
+    <Compile Include="Mediators\Account\DismissTests.cs" />
+    <Compile Include="Mediators\Account\IndexTests.cs" />
+    <Compile Include="Mediators\Account\SettingsTests.cs" />
+    <Compile Include="Mediators\Account\TrackTests.cs" />
+    <Compile Include="Mediators\Account\TraineeshipVacancyDetailsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyQualificationRowsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyWorkExperienceRowsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\ApplyTests.cs" />
