@@ -1,7 +1,7 @@
 namespace SFA.Apprenticeships.Infrastructure.Communication.Email
 {
     using System;
-    using Application.Interfaces.Messaging;
+    using Application.Interfaces.Communications;
 
     public static class SendGridTokenManager
     {

@@ -4,12 +4,12 @@ namespace SFA.Apprenticeships.Application.UnitTests.Services.Candidate.Strategie
     using System;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.Candidate.Strategies;
-    using SFA.Apprenticeships.Application.Interfaces.Users;
-    using SFA.Apprenticeships.Application.UserAccount.Strategies;
-    using SFA.Apprenticeships.Domain.Entities.Users;
-    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-    using SFA.Apprenticeships.Domain.Interfaces.Repositories;
+    using Application.Candidate.Strategies;
+    using Interfaces.Users;
+    using UserAccount.Strategies;
+    using Domain.Entities.Users;
+    using Domain.Interfaces.Configuration;
+    using Domain.Interfaces.Repositories;
 
     [TestFixture]
     public class GivenAUserWithSomeFailedLoginAttempts

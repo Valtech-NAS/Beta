@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Email
 {
-    using Application.Interfaces.Messaging;
+    using Application.Interfaces.Communications;
 
     public class VoidEmailDispatcher : IEmailDispatcher
     {

@@ -4,16 +4,12 @@
     using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
-    using NLog;
 
     public class GetCandidateTraineeshipApplicationsStrategy : IGetCandidateTraineeshipApplicationsStrategy
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
 
-        public GetCandidateTraineeshipApplicationsStrategy(
-            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
+        public GetCandidateTraineeshipApplicationsStrategy(ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
         {
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
         }

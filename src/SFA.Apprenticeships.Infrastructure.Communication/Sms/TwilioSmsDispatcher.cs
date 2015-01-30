@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
-    using Application.Interfaces.Messaging;
+    using Application.Interfaces.Communications;
     using Domain.Entities.Exceptions;
     using NLog;
     using Twilio;
-    using ErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
+    using ErrorCodes = Application.Interfaces.Communications.ErrorCodes;
 
     public class TwilioSmsDispatcher : ISmsDispatcher
     {

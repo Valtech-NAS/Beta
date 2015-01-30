@@ -9,7 +9,7 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using FizzWare.NBuilder;
-    using Interfaces.Messaging;
+    using Interfaces.Communications;
     using Moq;
     using NUnit.Framework;
 

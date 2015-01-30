@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Interfaces.Messaging;
+    using Interfaces.Communications;
     using NLog;
     using Strategies;
 

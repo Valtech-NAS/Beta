@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Sms
 {
-    using Application.Interfaces.Messaging;
+    using Application.Interfaces.Communications;
 
     public class VoidSmsDispatcher : ISmsDispatcher
     {

@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
 {
+    using Application.Interfaces.Communications;
     using NUnit.Framework;
-    using Application.Interfaces.Messaging;
     using Domain.Entities.Exceptions;
     using Common.IoC;
     using IoC;

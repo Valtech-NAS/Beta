@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Messaging
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Communications
 {
     public enum MessageTypes
     {

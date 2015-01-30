@@ -2,8 +2,7 @@
 {
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Application.Interfaces.Locations;
-    using SFA.Apprenticeships.Application.Location;
+    using Application.Location;
 
     [TestFixture]
     public class LocationSearchServiceTests

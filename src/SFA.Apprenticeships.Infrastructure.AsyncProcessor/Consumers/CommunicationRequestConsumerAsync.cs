@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Application.Interfaces.Messaging;
+    using Application.Interfaces.Communications;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;

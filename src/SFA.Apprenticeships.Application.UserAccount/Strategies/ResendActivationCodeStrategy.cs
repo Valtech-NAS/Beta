@@ -6,9 +6,9 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Messaging;
+    using Interfaces.Communications;
     using Interfaces.Users;
-    using exceptions = SFA.Apprenticeships.Domain.Entities.Exceptions;
+    using exceptions = Domain.Entities.Exceptions;
 
     public class ResendActivationCodeStrategy : IResendActivationCodeStrategy
     {

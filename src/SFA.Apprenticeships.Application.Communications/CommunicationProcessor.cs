@@ -6,7 +6,7 @@
     using System.Linq;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Messaging;
+    using Interfaces.Communications;
 
     public class CommunicationProcessor : ICommunicationProcessor
     {

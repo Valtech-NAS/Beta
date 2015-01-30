@@ -2,7 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
-    using Application.Interfaces.Messaging;
+    using Application.Interfaces.Communications;
     using EasyNetQ.AutoSubscribe;
     using NLog;
 

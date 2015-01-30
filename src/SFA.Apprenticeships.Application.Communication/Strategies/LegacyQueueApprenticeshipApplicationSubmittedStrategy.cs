@@ -4,10 +4,9 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Applications;
-    using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Messaging;
+    using Interfaces.Communications;
     using Vacancy;
     using MessagingErrorCodes = Interfaces.Messaging.ErrorCodes;
 

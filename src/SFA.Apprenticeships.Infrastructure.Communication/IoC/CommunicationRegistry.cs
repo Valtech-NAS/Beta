@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IoC
 {
     using System.Collections.Generic;
-    using Application.Interfaces.Messaging;
+    using Application.Interfaces.Communications;
     using Email;
     using Email.EmailMessageFormatters;
     using Sms;

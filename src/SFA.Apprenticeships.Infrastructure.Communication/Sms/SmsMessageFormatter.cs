@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
-    using Application.Interfaces.Messaging;
+    using Application.Interfaces.Communications;
     using NLog;
 
     public abstract class SmsMessageFormatter

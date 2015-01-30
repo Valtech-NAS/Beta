@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Messaging;
+    using Application.Interfaces.Communications;
 
     public static class TokenGenerator
     {

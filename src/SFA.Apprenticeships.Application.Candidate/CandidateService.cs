@@ -15,6 +15,7 @@
     using Strategies.Apprenticeships;
     using Strategies.Traineeships;
     using UserAccount.Strategies;
+    using ErrorCodes = Interfaces.Candidates.ErrorCodes;
 
     public class CandidateService : ICandidateService
     {
@@ -116,13 +117,13 @@
             {
                 var message = string.Format("Activate user failed for user {0}", username);
                 Logger.Debug(message, e);
-                throw new CustomException(message, Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode);
+                throw new CustomException(message, ErrorCodes.ActivateUserInvalidCode);
             }
             catch (Exception e)
             {
                 var message = string.Format("Activate user failed for user {0}", username);
                 Logger.Debug(message, e);
-                throw new CustomException(message, Interfaces.Candidates.ErrorCodes.ActivateUserFailed);
+                throw new CustomException(message, ErrorCodes.ActivateUserFailed);
             }
         }
 

@@ -1,14 +1,14 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Messaging
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Communications
 {
     using System;
     using System.Collections.Generic;
 
     /// <summary>
-    /// DTO to represent an email that should be sent
+    /// DTO to represent an SMS that should be sent
     /// </summary>
-    public class EmailRequest
+    public class SmsRequest
     {
-        public string ToEmail { get; set; }
+        public string ToNumber { get; set; }
 
         public MessageTypes MessageType { get; set; }
 

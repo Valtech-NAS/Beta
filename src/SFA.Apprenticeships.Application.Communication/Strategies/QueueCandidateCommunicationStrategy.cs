@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Interfaces.Messaging;
+    using Interfaces.Communications;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 

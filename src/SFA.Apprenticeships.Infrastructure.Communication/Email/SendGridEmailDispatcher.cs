@@ -6,11 +6,11 @@
     using System.Linq;
     using System.Net;
     using System.Net.Mail;
-    using Application.Interfaces.Messaging;
+    using Application.Interfaces.Communications;
     using Domain.Entities.Exceptions;
     using NLog;
     using SendGrid;
-    using ErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
+    using ErrorCodes = Application.Interfaces.Communications.ErrorCodes;
 
     public class SendGridEmailDispatcher : IEmailDispatcher
     {

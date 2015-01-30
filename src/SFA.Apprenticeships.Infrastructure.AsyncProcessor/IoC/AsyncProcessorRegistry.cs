@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.IoC
 {
+    using Application.Interfaces.Communications;
     using Microsoft.WindowsAzure;
-    using Application.Interfaces.Messaging;
     using Consumers;
     using StructureMap.Configuration.DSL;
 

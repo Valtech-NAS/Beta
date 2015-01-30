@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Email.EmailMessageFormatters
 {
     using System.Collections.Generic;
-    using Application.Interfaces.Messaging;
+    using Application.Interfaces.Communications;
     using SendGrid;
 
     public class EmailSimpleMessageFormatter : EmailMessageFormatter

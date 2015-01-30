@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Messaging;
+    using Application.Interfaces.Communications;
     using SendGrid;
 
     public class EmailDailyDigestMessageFormatter : EmailMessageFormatter

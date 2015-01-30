@@ -11,10 +11,9 @@
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Interfaces.Candidates;
+    using Application.Interfaces.Communications;
     using Application.Interfaces.Locations;
-    using Application.Interfaces.Messaging;
     using Application.Interfaces.ReferenceData;
-    using Application.Interfaces.Search;
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Location;

@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Sms.SmsMessageFormatters
 {
     using System.Collections.Generic;
-    using Application.Interfaces.Messaging;
+    using Application.Interfaces.Communications;
 
     public class SmsPasswordChangedMessageFormatter : SmsMessageFormatter
     {

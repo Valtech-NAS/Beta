@@ -5,9 +5,9 @@
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Messaging;
+    using Interfaces.Communications;
     using NLog;
-    using MessagingErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
+    using MessagingErrorCodes = Interfaces.Messaging.ErrorCodes;
 
     public class LegacySubmitApprenticeshipApplicationStrategy : ISubmitApprenticeshipApplicationStrategy
     {
