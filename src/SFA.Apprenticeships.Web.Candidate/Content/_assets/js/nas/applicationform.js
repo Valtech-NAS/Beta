@@ -4,35 +4,32 @@
     var validationMessageOtherQualificationRequired = "Please enter other qualification";
     var validationMessageOtherQualificationContainsInvalidCharacters = "Other qualification can't contain invalid characters, eg '/'";
     var validationMessageQualificationYearRequired = "Please enter year of qualification";
-    var validationMessageQualificationYearMustBeAFourDigitNumber = "Year must be 4 digits, eg 1990";
-    var validationMessageQualificationYearMustBeARange = "Year must be 4 digits, between " + ( new Date().getFullYear() - 100 ) + " and " + ( new Date().getFullYear() );
-    var validationMessageQualificationYearMustBeNumeric = "Year must be numeric";
+    var validationMessageQualificationYearMustBeAFourDigitNumber = "Year must be 4 digits, e.g. 1990";
+    var validationMessageQualificationYearMustBeAfter = "Year must be 4 digits, and not before " + ( new Date().getFullYear() - 100 );
     var validationMessageSubjectRequired = "Please enter subject";
-    var validationMessageSubjectContainsInvalidCharacters = "Subject can't contain invalid characters, eg '/'";
+    var validationMessageSubjectContainsInvalidCharacters = "Subject can't contain invalid characters, e.g. '/'";
     var validationMessageGradeRequired = "Please enter grade";
-    var validationMessageGradeContainsInvalidCharacters = "Grade can't contain invalid characters, eg '/'";
-    var validationMessageQualificationFutureYear = "For future qualifications, check 'Predicted'";
+    var validationMessageGradeContainsInvalidCharacters = "Grade can't contain invalid characters, e.g. '/'";
+    var validationMessageQualificationFutureYear = "Please select 'Predicted' if you're adding a grade in the future";
 
     //Work Experience Validation Messages
     var validationMessageEmployerRequired = "Please enter employer name";
     var validationMessageEmployerExceedsFiftyCharacters = "Employer name can't exceed 50 characters";
-    var validationMessageEmployerContainsInvalidCharacters = "Employer name can't contain invalid characters, eg '/'";
+    var validationMessageEmployerContainsInvalidCharacters = "Employer name can't contain invalid characters, e.g. '/'";
     var validationMessageJobTitleRequired = "Please enter job title";
     var validationMessageJobTitleExceedsFiftyCharacters = "Job title can't exceed 50 characters";
-    var validationMessageJobTitleContainsInvalidCharacters = "Job title can't contain invalid characters, eg '/'";
+    var validationMessageJobTitleContainsInvalidCharacters = "Job title can't contain invalid characters, e.g. '/'";
     var validationMessageMainDutiesRequired = "Please provide main duties";
     var validationMessageMainDutiesExceedsTwoHundredCharacters = "Main duties can't exceed 200 characters";
-    var validationMessageMainDutiesContainInvalidCharacters = "Main duties can't contain invalid characters, eg '/'";
+    var validationMessageMainDutiesContainInvalidCharacters = "Main duties can't contain invalid characters, e.g. '/'";
     var validationMessageFromMonthRequired = "Please enter month started";
     var validationMessageFromYearRequired = "Please enter year started";
-    var validationMessageFromYearMustBeNumeric = "Year started must contain 4 digits, eg 1990";
+    var validationMessageFromYearMustBeNumeric = "Year started must contain 4 digits, e.g. 1990";
     var validationMessageFromYearMustNotBeInFuture = "Year started can't be in the future";
-    var validationMessageFromYearMustBeFourDigits = "Year started must be 4 digits, eg 1990";
     var validationMessageYearMustBeARange = "Year must be 4 digits, between " + (new Date().getFullYear() - 100) + " and " + (new Date().getFullYear());
     var validationMessageToMonthRequired = "Please enter month you finished";
     var validationMessageToYearRequired = "Please enter year you finished";
-    var validationMessageToYearMustBeNumeric = "Year finished must be 4 digits, eg 1990";
-    var validationMessageToYearMustBeFourDigits = "Year finished must be 4 digits, eg 1990";
+    var validationMessageToYearMustBeNumeric = "Year finished must be 4 digits, e.g. 1990";
     var validationMessageToYearMustNotBeInFuture = "Year finished can't be in the future";
     var validationMessageToYearMustBeAfterFromYear = 'Year finished must be after year started';
     var validationMessageDateFinishedMustBeAfterDateStarted = "Date finished must be after date started";
@@ -92,7 +89,7 @@
             }
         }).extend({
             min: {
-                message: validationMessageQualificationYearMustBeARange,
+                message: validationMessageQualificationYearMustBeAfter,
                 params: new Date().getFullYear() - 100
             }
         });
@@ -217,7 +214,7 @@
            }
         }).extend({
             min: {
-                message: validationMessageQualificationYearMustBeARange,
+                message: validationMessageQualificationYearMustBeAfter,
                 params: new Date().getFullYear() - 100
             }
         });

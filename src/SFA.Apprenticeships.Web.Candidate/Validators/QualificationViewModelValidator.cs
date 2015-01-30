@@ -33,14 +33,14 @@
                 .Matches(QualificationViewModelMessages.GradeMessages.WhiteListRegularExpression)
                 .WithMessage(QualificationViewModelMessages.GradeMessages.WhiteListErrorText);
 
+            var maxYear = Convert.ToString(DateTime.Now.Year - 100);
             RuleFor(x => x.Year)
                 .NotEmpty()
                 .WithMessage(QualificationViewModelMessages.YearMessages.RequiredErrorText)
                 .Matches(QualificationViewModelMessages.YearMessages.MustBeNumericRegularExpression)
                 .WithMessage(QualificationViewModelMessages.YearMessages.MustBeNumericErrorText)
-                .GreaterThanOrEqualTo(Convert.ToString(DateTime.Now.Year - 100));
-                //.Matches(QualificationViewModelMessages.YearMessages.WhiteListRegularExpression)
-                //.WithMessage(QualificationViewModelMessages.YearMessages.WhiteListErrorText);
+                .GreaterThanOrEqualTo(maxYear)
+                .WithMessage(QualificationViewModelMessages.YearMessages.MustBeGreaterThan(maxYear));
 
             RuleFor(x => x.Year)
                 .Must(BeNowOrInThePast)
