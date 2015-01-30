@@ -179,6 +179,10 @@
             PopulateSortType(searchModel);
             model.SortType = searchModel.SortType;
             var results = _searchProvider.FindVacancies(searchModel);
+            if (results.VacancySearch != null)
+            {
+                model.LocationType = results.VacancySearch.LocationType;
+            }
             results.VacancySearch = model;
 
             if (results.HasError())

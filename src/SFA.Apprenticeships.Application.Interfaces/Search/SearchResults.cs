@@ -17,6 +17,7 @@
 
         public long Total { get; private set; }
 
+        //TODO DFSW This is not required now that we are returning the initial request
         public int PageNumber { get; private set; }
 
         public IEnumerable<TResult> Results { get; private set; }

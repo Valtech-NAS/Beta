@@ -558,8 +558,6 @@
             returnedSearch.SearchMode.Should().Be(ApprenticeshipSearchMode.Keyword);
         }
 
-
-
         [Test]
         public void CategorySearchWithKeywordsShouldNotShowBestMatchOption()
         {
@@ -581,6 +579,33 @@
             sortTypes.Count.Should().Be(2);
             sortTypes.Should().Contain(sli => sli.Value == VacancySortType.ClosingDate.ToString());
             sortTypes.Should().Contain(sli => sli.Value == VacancySortType.Distance.ToString());
+        }
+
+        [Test]
+        public void LocationTypeShouldBeCopiedOver()
+        {
+            SearchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>()))
+                .Callback<ApprenticeshipSearchViewModel>(svm =>
+                {
+                    svm.LocationType = ApprenticeshipLocationType.National;
+                    _searchSentToSearchProvider = svm;
+                })
+                .Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel {Vacancies = new ApprenticeshipVacancySummaryViewModel[0], VacancySearch = svm});
+
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Keywords = AKeyword,
+                Location = ACityWithOneSuggestedLocation,
+                LocationType = ApprenticeshipLocationType.NonNational,
+                Category = "1",
+                SearchMode = ApprenticeshipSearchMode.Category
+            };
+
+            var response = Mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+
+            response.ViewModel.VacancySearch.LocationType.Should().Be(ApprenticeshipLocationType.National);
         }
     }
 }
