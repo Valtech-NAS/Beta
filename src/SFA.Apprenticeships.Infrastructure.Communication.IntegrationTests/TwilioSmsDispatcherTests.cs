@@ -19,17 +19,14 @@
         [SetUp]
         public void SetUp()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            var container = new Container(ce =>
             {
-                x.AddRegistry<CommunicationRegistry>();
-                x.AddRegistry<CommonRegistry>();
+                ce.AddRegistry<CommunicationRegistry>();
+                ce.AddRegistry<CommonRegistry>();
             });
 
-            _dispatcher = ObjectFactory.GetNamedInstance<ISmsDispatcher>("TwilioSmsDispatcher");
-            _voidSmsDispatcher = ObjectFactory.GetNamedInstance<ISmsDispatcher>("VoidSmsDispatcher");
-#pragma warning restore 0618
+            _dispatcher = container.GetInstance<ISmsDispatcher>("TwilioSmsDispatcher");
+            _voidSmsDispatcher = container.GetInstance<ISmsDispatcher>("VoidSmsDispatcher");
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]

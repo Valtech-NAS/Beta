@@ -1,28 +1,20 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
-    using Application.Vacancy;
     using Application.VacancyEtl;
     using Common.IoC;
-    using Domain.Entities.Vacancies;
+    using FluentAssertions;
     using IoC;
     using NUnit.Framework;
-    using Repositories.Applications.IoC;
-    using Repositories.Candidates.IoC;
     using StructureMap;
-    using VacancyDetail;
     using VacancySummary;
-    using FluentAssertions;
 
     [TestFixture]
     public class GatewayVacancyIndexDataProviderIntegrationTests
     {
-        private IVacancyIndexDataProvider _vacancyIndexDataProvider;
         [SetUp]
         public void SetUp()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            var container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
@@ -32,8 +24,17 @@
             });
 
             // Providers.
-            _vacancyIndexDataProvider = ObjectFactory.GetInstance<IVacancyIndexDataProvider>();
-#pragma warning restore 0618
+            _vacancyIndexDataProvider = container.GetInstance<IVacancyIndexDataProvider>();
+        }
+
+        private IVacancyIndexDataProvider _vacancyIndexDataProvider;
+
+        [Test, Category("Integration"), Category("SmokeTests")]
+        public void ShouldReturnTheFirstPageResultForVacancies()
+        {
+            var response = _vacancyIndexDataProvider.GetVacancySummaries(1);
+
+            response.Should().NotBeNull();
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
@@ -44,14 +45,5 @@
             // Assert.
             result.Should().BePositive();
         }
-
-        [Test, Category("Integration"), Category("SmokeTests")]
-        public void ShouldReturnTheFirstPageResultForVacancies()
-        {
-            var response = _vacancyIndexDataProvider.GetVacancySummaries(1);
-
-            response.Should().NotBeNull();
-        }
-
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch.IntegrationTests
 {
-    using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Configuration;
     using Domain.Entities.Locations;
@@ -20,27 +19,22 @@
         private IElasticsearchClientFactory _elasticsearchClientFactory;
         private IMapper _mapper;
 
-        [TestFixtureSetUp]
+        [SetUp]
         public void FixtureSetUp()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            var container = new Container(x =>
             {
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
             });
 
-            _elasticsearchClientFactory = ObjectFactory.GetInstance<IElasticsearchClientFactory>();
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            _mapper = ObjectFactory.GetInstance<IMapper>();
-#pragma warning restore 0618
+            _elasticsearchClientFactory = container.GetInstance<IElasticsearchClientFactory>();
+            _mapper = container.GetInstance<IMapper>();
         }
 
         [Test]
         public void ShouldReturnFrameworksCount()
         {
-
             var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
                 SearchConfiguration.Instance);
 

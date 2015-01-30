@@ -9,27 +9,23 @@
 
     public class LocationLookupProviderTests
     {
+        private Container _container;
+
         [SetUp]
         public void SetUp()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            _container = new Container(x =>
             {
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
             });
-#pragma warning restore 0618
         }
 
         [Test, Category("Integration")]
         public void ShouldMatchExactPlaceName()
         {
             // arrange
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var service = ObjectFactory.GetInstance<ILocationLookupProvider>();
-#pragma warning restore 0618
+            var service = _container.GetInstance<ILocationLookupProvider>();
 
             const string term = "Cheylesmore";
 
@@ -45,10 +41,8 @@
         public void ShouldMatchFuzzyPlaceName()
         {
             // arrange
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var service = ObjectFactory.GetInstance<ILocationLookupProvider>();
-#pragma warning restore 0618
+
+            var service = _container.GetInstance<ILocationLookupProvider>();
 
             const string term = "Chellsmore";
 
@@ -64,10 +58,7 @@
         public void ShouldMatchPlaceNamesWithSamePrefix()
         {
             // arrange
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var service = ObjectFactory.GetInstance<ILocationLookupProvider>();
-#pragma warning restore 0618
+            var service = _container.GetInstance<ILocationLookupProvider>();
 
             const string term = "Coven";
 
@@ -89,10 +80,7 @@
         public void ShouldMatchPlaceNameWithUniquePrefix()
         {
             // arrange
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var service = ObjectFactory.GetInstance<ILocationLookupProvider>();
-#pragma warning restore 0618
+            var service = _container.GetInstance<ILocationLookupProvider>();
 
             const string term = "Covent";
 

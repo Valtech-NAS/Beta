@@ -29,6 +29,8 @@
 
         private IManagementClient _managementClient;
 
+        private Container _container;
+
         [TestFixtureSetUp]
         public void BeforeAllTests()
         {
@@ -36,16 +38,13 @@
             _managementClient = new ManagementClient(string.Format("http://{0}", rabitConfig.HostName),
                 rabitConfig.UserName, rabitConfig.Password);
 
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
             });
 
-            var bs = ObjectFactory.GetInstance<IBootstrapSubcribers>();
-#pragma warning restore 0618
+            var bs = _container.GetInstance<IBootstrapSubcribers>();
 
             bs.LoadSubscribers(Assembly.GetExecutingAssembly(), "VacancyEtl"); //previously was test_app
         }
@@ -72,10 +71,7 @@
             }
 
             // Needed or tests were hanging.
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var bus = ObjectFactory.GetInstance<IBus>();
-#pragma warning restore 0618
+            var bus = _container.GetInstance<IBus>();
 
             bus.Advanced.Dispose();
         }
@@ -97,10 +93,7 @@
         [Test, Category("Integration")]
         public void ConsumesSyncAndAsyncMessagesFromQueue()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var bus = ObjectFactory.GetInstance<IBus>();
-#pragma warning restore 0618
+            var bus = _container.GetInstance<IBus>();
 
             var testMessage = new TestMessage { TestString = "Testing 123" };
 

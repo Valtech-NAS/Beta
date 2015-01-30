@@ -16,21 +16,17 @@
 
         private const string TestToEmail = "valtechnas@gmail.com";
 
-
         [SetUp]
         public void SetUp()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            var container = new Container(ce =>
             {
-                x.AddRegistry<CommunicationRegistry>();
-                x.AddRegistry<CommonRegistry>();
+                ce.AddRegistry<CommunicationRegistry>();
+                ce.AddRegistry<CommonRegistry>();
             });
 
-            _dispatcher = ObjectFactory.GetNamedInstance<IEmailDispatcher>("SendGridEmailDispatcher");
-            _voidEmailDispatcher = ObjectFactory.GetNamedInstance<IEmailDispatcher>("VoidEmailDispatcher");
-#pragma warning restore 0618
+            _dispatcher = container.GetInstance<IEmailDispatcher>("SendGridEmailDispatcher");
+            _voidEmailDispatcher = container.GetInstance<IEmailDispatcher>("VoidEmailDispatcher");
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]

@@ -18,52 +18,46 @@
         [SetUp]
         public void Setup()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            var container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry<AuthenticationRepositoryRegistry>();
             });
                                             
-#pragma warning restore 0618
-
-#pragma warning disable 618
-            _service = ObjectFactory.GetInstance<IUserDirectoryProvider>();
-#pragma warning restore 618
+            _service = container.GetInstance<IUserDirectoryProvider>();
         }
 
         [Test, Category("Integration")]
         public void ShouldCreateUser()
         {
-            string username = CreateUserId();
-            bool succeeded = _service.CreateUser(username, Password);
+            var username = CreateUserId();
+            var succeeded = _service.CreateUser(username, Password);
             succeeded.Should().BeTrue();
         }
 
         [Test, Category("Integration")]
         public void ShouldCreateUserAndAuthenticate()
         {
-            string username = Guid.NewGuid().ToString();
-            bool succeeded = _service.CreateUser(username, Password);
+            var username = Guid.NewGuid().ToString();
+            var succeeded = _service.CreateUser(username, Password);
             succeeded.Should().BeTrue();
 
-            bool authenticationSucceeded = _service.AuthenticateUser(username, Password);
+            var authenticationSucceeded = _service.AuthenticateUser(username, Password);
             authenticationSucceeded.Should().BeTrue();
         }
 
         [Test, Category("Integration")]
         public void ShouldCreateUserAndChangePassword()
         {
-            string username = Guid.NewGuid().ToString();
-            bool succeeded = _service.CreateUser(username, Password);
+            var username = Guid.NewGuid().ToString();
+            var succeeded = _service.CreateUser(username, Password);
             succeeded.Should().BeTrue();
 
-            bool changePasswordSucceeded = _service.ChangePassword(username, Password, NewPassword);
+            var changePasswordSucceeded = _service.ChangePassword(username, Password, NewPassword);
             changePasswordSucceeded.Should().BeTrue();
 
-            bool authenticationSucceeded = _service.AuthenticateUser(username, NewPassword);
+            var authenticationSucceeded = _service.AuthenticateUser(username, NewPassword);
             authenticationSucceeded.Should().BeTrue();
         }
 

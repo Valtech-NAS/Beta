@@ -2,7 +2,9 @@
 {
     using System;
     using Application.VacancyEtl.Entities;
+    using Elastic.Common.IoC;
     using FluentAssertions;
+    using IoC;
     using Nest;
     using NUnit.Framework;
     using Elastic.Common.Configuration;
@@ -17,19 +19,47 @@
         private IElasticsearchClientFactory _elasticsearchClientFactory;
         private ElasticClient _elasticClient;
         private readonly ElasticsearchConfiguration _elasticsearchConfiguration = ElasticsearchConfiguration.Instance;
+        private Container _container;
 
         [SetUp]
         public void SetUp()
         {
+            _container = new Container(x =>
+            {
+                x.AddRegistry<ElasticsearchCommonRegistry>();
+                x.AddRegistry<VacancyIndexerRegistry>();
+            });
+
             var settings = new ConnectionSettings(_elasticsearchConfiguration.DefaultHost);
             _elasticClient = new ElasticClient(settings);
 
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            _elasticsearchClientFactory = ObjectFactory.GetInstance<IElasticsearchClientFactory>();
-#pragma warning restore 0618
+            foreach (
+                IElasticsearchIndexConfiguration elasticsearchIndexConfiguration in _elasticsearchConfiguration.Indexes)
+            {
+                if (elasticsearchIndexConfiguration.Name.EndsWith("_integration_test"))
+                {
+                    _elasticClient.DeleteIndex(i => i.Index(elasticsearchIndexConfiguration.Name));
+                }
+            }
+
+            _elasticClient = new ElasticClient(settings);
+
+            _elasticsearchClientFactory = _container.GetInstance<IElasticsearchClientFactory>();
 
             _vacancyIndexAlias = _elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary));
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            foreach (
+                IElasticsearchIndexConfiguration elasticsearchIndexConfiguration in _elasticsearchConfiguration.Indexes)
+            {
+                if (elasticsearchIndexConfiguration.Name.EndsWith("_integration_test"))
+                {
+                    _elasticClient.DeleteIndex(i => i.Index(elasticsearchIndexConfiguration.Name));
+                }
+            }
         }
 
         [Test, Category("Integration")]
@@ -38,10 +68,7 @@
             var scheduledDate = new DateTime(2000, 1, 1);
             var indexName = string.Format("{0}.{1}", _vacancyIndexAlias, scheduledDate.ToString("yyyy-MM-dd-HH"));
 
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var vis = ObjectFactory.GetInstance<IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>>();
-#pragma warning restore 0618
+            var vis = _container.GetInstance<IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>>();
 
             DeleteIndexIfExists(indexName);
             _elasticClient.IndexExists(i => i.Index(indexName)).Exists.Should().BeFalse();

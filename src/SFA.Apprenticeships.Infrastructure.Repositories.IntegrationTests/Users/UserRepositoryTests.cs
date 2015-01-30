@@ -1,16 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.IntegrationTests.Users
 {
     using System;
-    using Common.IoC;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using NUnit.Framework;
-    using Repositories.Users.IoC;
-    using StructureMap;
 
     [TestFixture]
-    public class UserRepositoryTests
+    public class UserRepositoryTests : RepositoryIntegrationTest
     {
         private IUserWriteRepository _userWriteRepository;
         private IUserReadRepository _userReadRepository;
@@ -18,10 +15,8 @@
         [SetUp]
         public void SetUp()
         {
-            #pragma warning disable 0618
-            _userWriteRepository = ObjectFactory.GetInstance<IUserWriteRepository>();
-            _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
-            #pragma warning restore 0618
+            _userWriteRepository = Container.GetInstance<IUserWriteRepository>();
+            _userReadRepository = Container.GetInstance<IUserReadRepository>();
         }
 
         [Test, Category("Integration")]

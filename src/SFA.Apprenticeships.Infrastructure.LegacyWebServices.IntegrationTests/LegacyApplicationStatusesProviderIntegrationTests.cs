@@ -33,9 +33,7 @@
         [SetUp]
         public void SetUp()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            var container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
@@ -44,10 +42,9 @@
             });
 
             // Providers.
-            _legacyCandidateProvider = ObjectFactory.GetInstance<ILegacyCandidateProvider>();
-            _legacyApplicationProvider = ObjectFactory.GetInstance<ILegacyApplicationProvider>();
-            _legacyApplicationStatusesProvider = ObjectFactory.GetInstance<ILegacyApplicationStatusesProvider>();
-#pragma warning restore 0618
+            _legacyCandidateProvider = container.GetInstance<ILegacyCandidateProvider>();
+            _legacyApplicationProvider = container.GetInstance<ILegacyApplicationProvider>();
+            _legacyApplicationStatusesProvider = container.GetInstance<ILegacyApplicationStatusesProvider>();
         }
 
         [Test, Category("Integration")]

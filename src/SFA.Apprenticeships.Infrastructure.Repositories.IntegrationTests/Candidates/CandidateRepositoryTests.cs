@@ -4,21 +4,16 @@
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
     using NUnit.Framework;
-    using StructureMap;
 
     [TestFixture]
-    public class CandidateRepositoryTests
+    public class CandidateRepositoryTests : RepositoryIntegrationTest
     {
         [Test, Category("Integration")]
         public void ShouldCreateUpdateAndRemoveCandidate()
         {
             // arrange
-
-            #pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var writer = ObjectFactory.GetInstance<ICandidateWriteRepository>();
-            var reader = ObjectFactory.GetInstance<ICandidateReadRepository>();
-            #pragma warning restore 0618
+            var writer = Container.GetInstance<ICandidateWriteRepository>();
+            var reader = Container.GetInstance<ICandidateReadRepository>();
 
             var candidate = CreateTestCandidate();
 

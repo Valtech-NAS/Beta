@@ -118,7 +118,6 @@
     <Compile Include="LegacyApplicationStatusesProviderIntegrationTests.cs" />
     <Compile Include="LegacyCandidateProviderIntegrationTests.cs" />
     <Compile Include="ReferenceDataProviderTests.cs" />
-    <Compile Include="SetUp.cs" />
     <Compile Include="VacancyServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

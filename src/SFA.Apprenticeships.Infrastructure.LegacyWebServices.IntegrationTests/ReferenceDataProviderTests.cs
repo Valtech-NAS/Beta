@@ -18,16 +18,14 @@
         [SetUp]
         public void SetUp()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            var container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<MemoryCacheRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
             });
-            _referenceDataProvider = ObjectFactory.GetInstance<IReferenceDataProvider>();
-#pragma warning restore 0618            
+            
+            _referenceDataProvider = container.GetInstance<IReferenceDataProvider>();
         }
 
         [Test, Category("Integration")]

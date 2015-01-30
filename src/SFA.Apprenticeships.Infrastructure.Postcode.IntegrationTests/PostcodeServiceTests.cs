@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Postcode.IntegrationTests
 {
-    using System;
     using Application.Location;
     using Common.IoC;
     using FluentAssertions;
@@ -11,26 +10,21 @@
     [TestFixture]
     public class PostcodeServiceTests
     {
+        private Container _container;
         [SetUp]
         public void SetUp()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            _container = new Container(x =>
             {
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<CommonRegistry>();
             });
-#pragma warning restore 0618
         }
 
         [Test, Category("Integration")]
         public void ShouldReturnCorrectLocationForPostcode()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var service = ObjectFactory.GetInstance<IPostcodeLookupProvider>();
-#pragma warning restore 0618
+            var service = _container.GetInstance<IPostcodeLookupProvider>();
 
             var location = service.GetLocation("CV1 2WT");
             location.GeoPoint.Latitude.Should().Be(52.4009991288043);
@@ -40,10 +34,7 @@
         [Test, Category("Integration")]
         public void ShouldReturnCorrectLocationForPartialPostcode()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var service = ObjectFactory.GetInstance<IPostcodeLookupProvider>();
-#pragma warning restore 0618
+            var service = _container.GetInstance<IPostcodeLookupProvider>();
 
             var location = service.GetLocation("CV1");
             location.GeoPoint.Latitude.Should().Be(52.4084714696457);
@@ -53,10 +44,7 @@
         [Test, Category("Integration")]
         public void ShouldReturnNullForNonExistentPostcode()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var service = ObjectFactory.GetInstance<IPostcodeLookupProvider>();
-#pragma warning restore 0618
+            var service = _container.GetInstance<IPostcodeLookupProvider>();
 
             var location = service.GetLocation("ZZ1 0ZZ");
             location.Should().BeNull();

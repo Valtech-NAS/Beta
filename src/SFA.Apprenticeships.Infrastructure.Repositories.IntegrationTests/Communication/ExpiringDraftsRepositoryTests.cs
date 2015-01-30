@@ -11,25 +11,22 @@
     using MongoDB.Driver.Builders;
     using NUnit.Framework;
     using Repositories.Communication.Entities;
-    using StructureMap;
 
     [TestFixture]
-    public class ExpiringDraftsRepositoryTests
+    public class ExpiringDraftsRepositoryTests : RepositoryIntegrationTest
     {
         private IConfigurationManager _configurationManager;
         private IExpiringDraftRepository _expiringDraftRepository;
         private MongoDatabase _database;
         private MongoCollection<MongoExpiringDraft> _collection;
 
-        private const int _testVacancyId = -200;
+        private const int TestVacancyId = -200;
 
-        [TestFixtureSetUp]
+        [SetUp]
         public void SetUp()
         {
-            #pragma warning disable 0618
-            _configurationManager = ObjectFactory.GetInstance<IConfigurationManager>();
-            _expiringDraftRepository = ObjectFactory.GetInstance<IExpiringDraftRepository>();
-            #pragma warning restore 0618
+            _configurationManager = Container.GetInstance<IConfigurationManager>();
+            _expiringDraftRepository = Container.GetInstance<IExpiringDraftRepository>();
 
             var mongoConnectionString = _configurationManager.GetAppSetting("Communications.mongoDB");
             var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
@@ -40,10 +37,10 @@
             _collection = _database.GetCollection<MongoExpiringDraft>("expiringdrafts");
         }
 
-        [TestFixtureTearDown]
+        [TearDown]
         public void TearDown()
         {
-            _collection.Remove(Query.EQ("VacancyId", _testVacancyId));
+            _collection.Remove(Query.EQ("VacancyId", TestVacancyId));
         }
 
         [Test, Category("Integration")]
@@ -55,7 +52,7 @@
             var expiringDrafts =
                 Builder<ExpiringDraft>.CreateListOfSize(3)
                     .All()
-                    .With(ed => ed.VacancyId = _testVacancyId)
+                    .With(ed => ed.VacancyId = TestVacancyId)
                     .With(ed => ed.BatchId = batchId)
                     .With(ed => ed.SentDateTime = sentDateTime)
                     .Build().ToList();
@@ -74,7 +71,7 @@
             var candidatesDailyDigest = _expiringDraftRepository.GetCandidatesDailyDigest();
             candidatesDailyDigest.Count().Should().Be(3);
             var returnedExpiringDrafts = candidatesDailyDigest.SelectMany(cand => cand.Value.ToArray());
-            returnedExpiringDrafts.Count(ed => ed.VacancyId == _testVacancyId && ed.BatchId == null && ed.SentDateTime == null)
+            returnedExpiringDrafts.Count(ed => ed.VacancyId == TestVacancyId && ed.BatchId == null && ed.SentDateTime == null)
                 .Should()
                 .Be(3);
 

@@ -16,17 +16,14 @@
         [SetUp]
         public void SetUp()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            var container = new Container(ce =>
             {
-                x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
+                ce.AddRegistry<CommonRegistry>();
+                ce.AddRegistry<LegacyWebServicesRegistry>();
             });
 
-            _vacancyDataProvider = ObjectFactory.GetInstance<IVacancyDataProvider<ApprenticeshipVacancyDetail>>();
-            _vacancyIndexDataProvider = ObjectFactory.GetInstance<IVacancyIndexDataProvider>();
-#pragma warning restore 0618
+            _vacancyDataProvider = container.GetInstance<IVacancyDataProvider<ApprenticeshipVacancyDetail>>();
+            _vacancyIndexDataProvider = container.GetInstance<IVacancyIndexDataProvider>();
         }
 
         private IVacancyDataProvider<ApprenticeshipVacancyDetail> _vacancyDataProvider;

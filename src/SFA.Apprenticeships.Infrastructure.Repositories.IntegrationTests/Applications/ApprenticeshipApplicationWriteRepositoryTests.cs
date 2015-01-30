@@ -3,24 +3,42 @@
     using System;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
+    using MongoDB.Driver;
+    using MongoDB.Driver.Builders;
     using NUnit.Framework;
-    using StructureMap;
+    using Repositories.Applications.Entities;
 
     [TestFixture]
-    public class ApprenticeshipApplicationWriteRepositoryTests
+    public class ApprenticeshipApplicationWriteRepositoryTests : RepositoryIntegrationTest
     {
+        private const int LegacyApplicationId = 12345;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var configurationManager = Container.GetInstance<IConfigurationManager>();
+            var mongoConnectionString = configurationManager.GetAppSetting("Applications.mongoDB");
+            var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
+
+            var database = new MongoClient(mongoConnectionString)
+                .GetServer()
+                .GetDatabase(mongoDbName);
+            
+            var collection = database.GetCollection<MongoApprenticeshipApplicationDetail>("apprenticeships");
+            collection.Remove(Query.EQ("LegacyApplicationId", LegacyApplicationId));
+        }
+
         [Test, Category("Integration")]
         public void ShouldCreateAndDeleteApplication()
         {
             // arrange
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var writer = ObjectFactory.GetInstance<IApprenticeshipApplicationWriteRepository>();
-            var reader = ObjectFactory.GetInstance<IApprenticeshipApplicationReadRepository>();
-#pragma warning restore 0618
-
+            var writer = Container.GetInstance<IApprenticeshipApplicationWriteRepository>();
+            var reader = Container.GetInstance<IApprenticeshipApplicationReadRepository>();
+            
+            
             var application = CreateTestApplication();
 
             // act
@@ -45,7 +63,7 @@
             {
                 EntityId = Guid.NewGuid(),
                 CandidateId = Guid.NewGuid(),
-                LegacyApplicationId = 12345,
+                LegacyApplicationId = LegacyApplicationId,
                 VacancyStatus = VacancyStatuses.Live,
                 CandidateDetails =
                 {

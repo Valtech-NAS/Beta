@@ -3,36 +3,13 @@
     using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Interfaces.Mapping;
     using FluentAssertions;
-    using IoC;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Web.Candidate.Mappers;
-    using StructureMap;
-
+    using Candidate.Mappers;
 
     [TestFixture]
     public class VacancyDetailViewModelMapperTests
     {
-        private IMapper _mapper;
-
-        public VacancyDetailViewModelMapperTests()
-        {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x => x.AddRegistry<CandidateWebRegistry>());
-#pragma warning restore 0618
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            _mapper = ObjectFactory.GetInstance<ApprenticeshipCandidateWebMappers>();
-#pragma warning restore 0618
-        }
-
         [Test]
         public void ShouldCreateMap()
         {
@@ -54,7 +31,7 @@
                 IsEmployerAnonymous = false
             };
 
-            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.EmployerName.Should().Be(vacancyDetail.EmployerName);
@@ -70,7 +47,7 @@
                 IsEmployerAnonymous = true
             };
 
-            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.EmployerName.Should().Be(vacancyDetail.AnonymousEmployerName);
@@ -85,7 +62,7 @@
                 Wage = 101.19m
             };
 
-            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
             const string expectedWage = "£101.19";
 
             model.Should().NotBeNull();
@@ -101,7 +78,7 @@
                 WageDescription = "Competetive"
             };
 
-            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.Wage.Should().Be(vacancyDetail.WageDescription);
@@ -115,7 +92,7 @@
                 EmployerWebsite = "http://wwww.someweb.com"
             };
 
-            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.EmployerWebsite.Should().StartWith("http://");
@@ -128,9 +105,9 @@
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 EmployerWebsite = "wwww.someweb.com"
-            };  
+            };
 
-            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.EmployerWebsite.Should().StartWith("http://");
@@ -145,7 +122,7 @@
                 EmployerWebsite = "https://wwww.someweb.com"
             };
 
-            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.EmployerWebsite.Should().StartWith("https://");
@@ -160,7 +137,7 @@
                 EmployerWebsite = "www.somedomain.co.uk / www.anotherdomain.co.uk"
             };
 
-            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.EmployerWebsite.Should().Be(vacancyDetail.EmployerWebsite);
@@ -175,7 +152,7 @@
                 VacancyUrl = "http://wwww.someweb.com"
             };
 
-            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.VacancyUrl.Should().StartWith("http://");
@@ -190,7 +167,7 @@
                 VacancyUrl = "wwww.someweb.com"
             };
 
-            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.VacancyUrl.Should().StartWith("http://");
@@ -205,7 +182,7 @@
                 VacancyUrl = "https://wwww.someweb.com"
             };
 
-            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.VacancyUrl.Should().StartWith("https://");
@@ -220,7 +197,7 @@
                 VacancyUrl = "www.somedomain.co.uk / www.anotherdomain.co.uk"
             };
 
-            var model = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+            var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
             model.Should().NotBeNull();
             model.VacancyUrl.Should().Be(vacancyDetail.VacancyUrl);

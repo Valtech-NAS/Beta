@@ -119,7 +119,7 @@
     <Compile Include="Applications\TraineeshipApplicationReadRepositoryTests.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationWriteRepositoryTests.cs" />
     <Compile Include="Communication\ExpiringDraftsRepositoryTests.cs" />
-    <Compile Include="SetUp.cs" />
+    <Compile Include="RepositoryIntegrationTest.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationReadRepositoryTests.cs" />
     <Compile Include="Candidates\CandidateRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

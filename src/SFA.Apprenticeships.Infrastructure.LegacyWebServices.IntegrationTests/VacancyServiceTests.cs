@@ -1,12 +1,10 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
-
-namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Application.VacancyEtl;
-    using Domain.Entities.Vacancies;
+    using Caching.Memory.IoC;
+    using Common.IoC;
     using FluentAssertions;
+    using IoC;
     using NUnit.Framework;
     using StructureMap;
 
@@ -16,10 +14,14 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
         [TestCase, Category("Integration"), Category("SmokeTests")]
         public void ShouldReturnMappedCollectionFromGetVacancySummary()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var service = ObjectFactory.GetInstance<IVacancyIndexDataProvider>();
-#pragma warning restore 0618
+            var container = new Container(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<MemoryCacheRegistry>();
+                x.AddRegistry<LegacyWebServicesRegistry>();
+            });
+
+            var service = container.GetInstance<IVacancyIndexDataProvider>();
 
             var result = service.GetVacancySummaries(1);
 

@@ -12,10 +12,9 @@
     using MongoDB.Driver.Builders;
     using NUnit.Framework;
     using Repositories.Applications.Entities;
-    using StructureMap;
 
     [TestFixture]
-    public class ApprenticeshipApplicationReadRepositoryTests
+    public class ApprenticeshipApplicationReadRepositoryTests : RepositoryIntegrationTest
     {
         private IConfigurationManager _configurationManager;
         private IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
@@ -25,14 +24,12 @@
 
         private const int TestVacancyId = -100;
 
-        [TestFixtureSetUp]
+        [SetUp]
         public void SetUp()
         {
-            #pragma warning disable 0618
-            _configurationManager = ObjectFactory.GetInstance<IConfigurationManager>();
-            _apprenticeshipApplicationReadRepository = ObjectFactory.GetInstance<IApprenticeshipApplicationReadRepository>();
-            _apprenticeshipApplicationWriteRepository = ObjectFactory.GetInstance<IApprenticeshipApplicationWriteRepository>();
-            #pragma warning restore 0618
+            _configurationManager = Container.GetInstance<IConfigurationManager>();
+            _apprenticeshipApplicationReadRepository = Container.GetInstance<IApprenticeshipApplicationReadRepository>();
+            _apprenticeshipApplicationWriteRepository = Container.GetInstance<IApprenticeshipApplicationWriteRepository>();
 
             var mongoConnectionString = _configurationManager.GetAppSetting("Applications.mongoDB");
             var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
@@ -43,7 +40,7 @@
             _collection = _database.GetCollection<MongoApprenticeshipApplicationDetail>("apprenticeships");
         }
 
-        [TestFixtureTearDown]
+        [TearDown]
         public void TearDown()
         {
             _collection.Remove(Query.EQ("Vacancy._id", TestVacancyId));
