@@ -3,9 +3,11 @@
     using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Interfaces.Locations;
     using NLog;
+    using ErrorCodes = Interfaces.Locations.ErrorCodes;
 
     public class AddressSearchService : IAddressSearchService
     {
@@ -30,8 +32,7 @@
             {
                 var message = string.Format("FindAddress failed for postcode {0}.", postcode);
                 Logger.Debug(message, e);
-                throw new Domain.Entities.Exceptions.CustomException(
-                    message, e, ErrorCodes.AddressSearchFailed);
+                throw new CustomException(message, e, ErrorCodes.AddressSearchFailed);
             }
         }
     }
