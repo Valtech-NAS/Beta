@@ -141,7 +141,7 @@ WriteLiteral("                    ");
 
             
             #line 24 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-               Write(Html.RouteLink("Keywords", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Keyword }, new { @id = "keywordTabControl", @class = "tabbed-tab" + keywordTabControlClass, tab = "#tab1" }));
+               Write(Html.RouteLink("Keywords", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Keyword }, new { @id = "keywords-tab-control", @class = "tabbed-tab" + keywordTabControlClass, tab = "#tab1" }));
 
             
             #line default
@@ -152,7 +152,7 @@ WriteLiteral("                    ");
 
             
             #line 25 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-               Write(Html.RouteLink("Categories", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Category }, new { @id = "categoriesTabControl", @class = "tabbed-tab" + categoriesTabControlClass, tab = "#tab2" }));
+               Write(Html.RouteLink("Categories", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Category }, new { @id = "categories-tab-control", @class = "tabbed-tab" + categoriesTabControlClass, tab = "#tab2" }));
 
             
             #line default
@@ -170,7 +170,7 @@ WriteLiteral("                <div");
 
 WriteLiteral(" class=\"tabbed-content active\"");
 
-WriteLiteral(">\r\n                    \r\n");
+WriteLiteral(">\r\n\r\n");
 
 WriteLiteral("                    ");
 
@@ -299,37 +299,37 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("\r\n                        <button");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3462), Tuple.Create("\"", 3515)
-, Tuple.Create(Tuple.Create("", 3470), Tuple.Create("button", 3470), true)
-, Tuple.Create(Tuple.Create(" ", 3476), Tuple.Create("tabbed-element", 3477), true)
-, Tuple.Create(Tuple.Create(" ", 3491), Tuple.Create("tab1", 3492), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3447), Tuple.Create("\"", 3500)
+, Tuple.Create(Tuple.Create("", 3455), Tuple.Create("button", 3455), true)
+, Tuple.Create(Tuple.Create(" ", 3461), Tuple.Create("tabbed-element", 3462), true)
+, Tuple.Create(Tuple.Create(" ", 3476), Tuple.Create("tab1", 3477), true)
             
             #line 56 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create(" ", 3496), Tuple.Create<System.Object, System.Int32>(searchButtonClass
+, Tuple.Create(Tuple.Create(" ", 3481), Tuple.Create<System.Object, System.Int32>(searchButtonClass
             
             #line default
             #line hidden
-, 3497), false)
+, 3482), false)
 );
 
 WriteLiteral(" id=\"search-button\"");
 
 WriteLiteral(">Search</button>\r\n                        <button");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3584), Tuple.Create("\"", 3637)
-, Tuple.Create(Tuple.Create("", 3592), Tuple.Create("button", 3592), true)
-, Tuple.Create(Tuple.Create(" ", 3598), Tuple.Create("tabbed-element", 3599), true)
-, Tuple.Create(Tuple.Create(" ", 3613), Tuple.Create("tab2", 3614), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3569), Tuple.Create("\"", 3622)
+, Tuple.Create(Tuple.Create("", 3577), Tuple.Create("button", 3577), true)
+, Tuple.Create(Tuple.Create(" ", 3583), Tuple.Create("tabbed-element", 3584), true)
+, Tuple.Create(Tuple.Create(" ", 3598), Tuple.Create("tab2", 3599), true)
             
             #line 57 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create(" ", 3618), Tuple.Create<System.Object, System.Int32>(browseButtonClass
+, Tuple.Create(Tuple.Create(" ", 3603), Tuple.Create<System.Object, System.Int32>(browseButtonClass
             
             #line default
             #line hidden
-, 3619), false)
+, 3604), false)
 );
 
-WriteLiteral(" id=\"search-button\"");
+WriteLiteral(" id=\"browse-button\"");
 
 WriteLiteral(">Browse</button>\r\n                    </div>\r\n\r\n");
 
@@ -497,11 +497,11 @@ WriteLiteral("\',\r\n            latlonhash: \'#");
 WriteLiteral(@"'
         });
 
-        $(""#keywordTabControl"").click(function () {
+        $(""#keywords-tab-control"").click(function () {
             $(""#SearchMode"").val(""Keyword"");
         });
 
-        $(""#categoriesTabControl"").click(function () {
+        $(""#categories-tab-control"").click(function () {
             $(""#SearchMode"").val(""Category"");
         });
     </script>

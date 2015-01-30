@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using ApprenticeshipSearch;
     using OpenQA.Selenium;
     using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.VacancySearch;
     using SpecBind.Pages;

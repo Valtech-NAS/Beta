@@ -7,38 +7,40 @@
     using RazorGenerator.Testing;
 
     [TestFixture]
-    public class IndexTests : MediatorTestsBase
+    public class ResultsSearchUpdateTests : MediatorTestsBase
     {
         [Test]
         public void SearchModeKeywordBasicVisibilityTest()
         {
-            var index = new Index();
+            var searchUpdate = new searchUpdate();
 
             var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Keyword).ViewModel;
-            var view = index.RenderAsHtml(searchViewModel);
+            var searchResultsViewModel = Mediator.Results(searchViewModel).ViewModel;
+            var view = searchUpdate.RenderAsHtml(searchResultsViewModel.VacancySearch);
 
+            view.GetElementbyId("validation-summary").Should().BeNull();
             view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
             view.GetElementbyId("Location").Should().NotBeNull();
             view.GetElementbyId("loc-within").Should().NotBeNull();
             view.GetElementbyId("apprenticeship-level").Should().NotBeNull();
-            view.GetElementbyId("search-button").Attributes["class"].Value.Contains(" active").Should().BeTrue();
-            view.GetElementbyId("browse-button").Attributes["class"].Value.Contains(" active").Should().BeFalse();
+            view.GetElementbyId("search-button").Should().NotBeNull();
         }
 
         [Test]
         public void SearchModeCategoryBasicVisibilityTest()
         {
-            var index = new Index();
+            var searchUpdate = new searchUpdate();
 
             var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Category).ViewModel;
-            var view = index.RenderAsHtml(searchViewModel);
+            var searchResultsViewModel = Mediator.Results(searchViewModel).ViewModel;
+            var view = searchUpdate.RenderAsHtml(searchResultsViewModel.VacancySearch);
 
+            view.GetElementbyId("validation-summary").Should().BeNull();
             view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeFalse();
             view.GetElementbyId("Location").Should().NotBeNull();
             view.GetElementbyId("loc-within").Should().NotBeNull();
             view.GetElementbyId("apprenticeship-level").Should().NotBeNull();
-            view.GetElementbyId("search-button").Attributes["class"].Value.Contains(" active").Should().BeFalse();
-            view.GetElementbyId("browse-button").Attributes["class"].Value.Contains(" active").Should().BeTrue();
+            view.GetElementbyId("search-button").Should().NotBeNull();
         }
     }
 }

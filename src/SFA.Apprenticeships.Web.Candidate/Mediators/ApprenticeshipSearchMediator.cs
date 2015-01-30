@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
@@ -8,6 +9,7 @@
     using Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
+    using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
@@ -22,6 +24,7 @@
         private readonly IReferenceDataService _referenceDataService;
         private readonly ApprenticeshipSearchViewModelServerValidator _searchRequestValidator;
         private readonly ApprenticeshipSearchViewModelLocationValidator _searchLocationValidator;
+        private readonly string[] _blacklistedCategoryCodes;
 
         public ApprenticeshipSearchMediator(
             IConfigurationManager configManager,
@@ -38,6 +41,7 @@
             _referenceDataService = referenceDataService;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
+            _blacklistedCategoryCodes = configManager.GetAppSetting("BlacklistedCategoryCodes").Split(',');
         }
 
         public MediatorResponse<ApprenticeshipSearchViewModel> Index(ApprenticeshipSearchMode searchMode)
@@ -47,7 +51,7 @@
             var resultsPerPage = GetResultsPerPage();
             var apprenticeshipLevels = GetApprenticeshipLevels();
             var apprenticeshipLevel = GetApprenticeshipLevel();
-            var categories = _referenceDataService.GetCategories();
+            var categories = GetCategories();
 
             var viewModel = new ApprenticeshipSearchViewModel
             {
@@ -88,6 +92,11 @@
             return UserDataProvider.Get(UserDataItemNames.ApprenticeshipLevel) ?? "All";
         }
 
+        private IEnumerable<Category> GetCategories()
+        {
+            return _referenceDataService.GetCategories().Where(c => !_blacklistedCategoryCodes.Contains(c.CodeName));
+        }
+
         public MediatorResponse<ApprenticeshipSearchViewModel> SearchValidation(ApprenticeshipSearchViewModel model)
         {
             var clientResult = _searchRequestValidator.Validate(model);
@@ -97,7 +106,7 @@
                 model.Distances = GetDistances();
                 model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
                 model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
-                model.Categories = _referenceDataService.GetCategories().ToList();
+                model.Categories = GetCategories().ToList();
 
                 return GetMediatorResponse(Codes.ApprenticeshipSearch.SearchValidation.ValidationError, model, clientResult);
             }
@@ -133,7 +142,7 @@
             model.Distances = GetDistances();
             model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
             model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
-            model.Categories = _referenceDataService.GetCategories().ToList();
+            model.Categories = GetCategories().ToList();
 
             var clientResult = _searchRequestValidator.Validate(model);
 

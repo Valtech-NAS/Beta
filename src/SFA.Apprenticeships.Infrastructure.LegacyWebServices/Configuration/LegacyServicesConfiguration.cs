@@ -8,7 +8,6 @@
     {
         private const string SystemIdConst = "SystemId";
         private const string PublicKeyConst = "PublicKey";
-        private const string BlacklistedCategoryCodesConst = "BlacklistedCategoryCodes";
 
         public LegacyServicesConfiguration() : base("LegacyServicesConfiguration")
         {
@@ -26,13 +25,6 @@
         {
             get { return (string)this[PublicKeyConst]; }
             set { this[PublicKeyConst] = value; }
-        }
-
-        [ConfigurationProperty(BlacklistedCategoryCodesConst, IsRequired = true, IsKey = false)]
-        public string BlacklistedCategoryCodes
-        {
-            get { return (string)this[BlacklistedCategoryCodesConst]; }
-            set { this[BlacklistedCategoryCodesConst] = value; }
         }
     }
 }

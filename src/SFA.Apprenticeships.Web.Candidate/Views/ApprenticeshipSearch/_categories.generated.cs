@@ -111,6 +111,8 @@ WriteLiteral(" class=\"inner-block-padr\"");
 
 WriteLiteral(">\r\n                    <ul");
 
+WriteLiteral(" id=\"category-list-left\"");
+
 WriteLiteral(" class=\"copy-16 list-text list-checkradio\"");
 
 WriteLiteral(">\r\n");
@@ -126,7 +128,7 @@ WriteLiteral(">\r\n");
                          for (var i = 0; i < categorySplitCount; i++)
                         {
                             var category = categories[i];
-                            var inputId = string.Format("category{0}", category.CodeName);
+                            var inputId = string.Format("category-{0}", category.CodeName.ToLower());
                             var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
 
             
@@ -161,14 +163,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 1121), Tuple.Create("\"", 1135)
+WriteAttribute("for", Tuple.Create(" for=\"", 1156), Tuple.Create("\"", 1170)
             
             #line 22 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                      , Tuple.Create(Tuple.Create("", 1127), Tuple.Create<System.Object, System.Int32>(inputId
+                                                      , Tuple.Create(Tuple.Create("", 1162), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 1127), false)
+, 1162), false)
 );
 
 WriteLiteral(">");
@@ -204,6 +206,8 @@ WriteLiteral(" class=\"grid grid-1-2\"");
 
 WriteLiteral(">\r\n                <ul");
 
+WriteLiteral(" id=\"category-list-right\"");
+
 WriteLiteral(" class=\"copy-16 list-text list-checkradio\"");
 
 WriteLiteral(">\r\n");
@@ -219,7 +223,7 @@ WriteLiteral(">\r\n");
                      for (var i = categorySplitCount; i < categories.Count; i++)
                     {
                         var category = categories[i];
-                        var inputId = string.Format("category{0}", category.CodeName);
+                        var inputId = string.Format("category-{0}", category.CodeName.ToLower());
                         var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
 
             
@@ -254,14 +258,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 1930), Tuple.Create("\"", 1944)
+WriteAttribute("for", Tuple.Create(" for=\"", 2001), Tuple.Create("\"", 2015)
             
             #line 37 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                  , Tuple.Create(Tuple.Create("", 1936), Tuple.Create<System.Object, System.Int32>(inputId
+                                                  , Tuple.Create(Tuple.Create("", 2007), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 1936), false)
+, 2007), false)
 );
 
 WriteLiteral(">");

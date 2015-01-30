@@ -111,44 +111,44 @@ WriteAttribute("href", Tuple.Create(" href=\"", 1117), Tuple.Create("\"", 1144)
 , 1124), false)
 );
 
-WriteLiteral(" id=\"searchTabControl\"");
+WriteLiteral(" id=\"search-tab-control\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1167), Tuple.Create("\"", 1208)
-, Tuple.Create(Tuple.Create("", 1175), Tuple.Create("tabbed-tab", 1175), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 1169), Tuple.Create("\"", 1210)
+, Tuple.Create(Tuple.Create("", 1177), Tuple.Create("tabbed-tab", 1177), true)
             
             #line 17 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-          , Tuple.Create(Tuple.Create(" ", 1185), Tuple.Create<System.Object, System.Int32>(searchTabControlClass
+            , Tuple.Create(Tuple.Create(" ", 1187), Tuple.Create<System.Object, System.Int32>(searchTabControlClass
             
             #line default
             #line hidden
-, 1186), false)
+, 1188), false)
 );
 
 WriteLiteral(" tab=\"#tab1\"");
 
 WriteLiteral(">Search</a>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1256), Tuple.Create("\"", 1283)
+WriteAttribute("href", Tuple.Create(" href=\"", 1258), Tuple.Create("\"", 1285)
             
             #line 18 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 1263), Tuple.Create<System.Object, System.Int32>(browseTabControlUrl
+, Tuple.Create(Tuple.Create("", 1265), Tuple.Create<System.Object, System.Int32>(browseTabControlUrl
             
             #line default
             #line hidden
-, 1263), false)
+, 1265), false)
 );
 
-WriteLiteral(" id=\"browseTabControl\"");
+WriteLiteral(" id=\"browse-tab-control\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1306), Tuple.Create("\"", 1347)
-, Tuple.Create(Tuple.Create("", 1314), Tuple.Create("tabbed-tab", 1314), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 1310), Tuple.Create("\"", 1351)
+, Tuple.Create(Tuple.Create("", 1318), Tuple.Create("tabbed-tab", 1318), true)
             
             #line 18 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-          , Tuple.Create(Tuple.Create(" ", 1324), Tuple.Create<System.Object, System.Int32>(browseTabControlClass
+            , Tuple.Create(Tuple.Create(" ", 1328), Tuple.Create<System.Object, System.Int32>(browseTabControlClass
             
             #line default
             #line hidden
-, 1325), false)
+, 1329), false)
 );
 
 WriteLiteral(" tab=\"#tab2\"");
@@ -273,14 +273,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                        <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2704), Tuple.Create("\"", 2749)
+WriteAttribute("href", Tuple.Create(" href=\"", 2708), Tuple.Create("\"", 2753)
             
             #line 40 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 2711), Tuple.Create<System.Object, System.Int32>(Url.Action("results", locationSearch)
+, Tuple.Create(Tuple.Create("", 2715), Tuple.Create<System.Object, System.Int32>(Url.Action("results", locationSearch)
             
             #line default
             #line hidden
-, 2711), false)
+, 2715), false)
 );
 
 WriteLiteral(">");

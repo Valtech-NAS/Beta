@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.VacancySearch
 {
+    using System.Linq;
+    using ApprenticeshipSearch;
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
 
@@ -37,5 +39,25 @@
 
         [ElementLocator(Class = "ui-autocomplete")]
         public IElementList<IWebElement, LocationAutoCompleteItem> LocationAutoCompletItems { get; set; }
+
+        [ElementLocator(Id = "keywords-tab-control")]
+        public IWebElement KeywordsTab { get; set; }
+
+        [ElementLocator(Id = "categories-tab-control")]
+        public IWebElement CategoriesTab { get; set; }
+
+        [ElementLocator(Id = "categories")]
+        public IWebElement Categories { get; set; }
+
+        [ElementLocator(Id = "categories")]
+        public IElementList<IWebElement, CategoryItem> CategoryItems { get; set; }
+
+        public string CategoryItemsCount
+        {
+            get { return CategoryItems.Count().ToString(); }
+        }
+
+        [ElementLocator(Id = "browse-button")]
+        public IWebElement Browse { get; set; }
     }
 }

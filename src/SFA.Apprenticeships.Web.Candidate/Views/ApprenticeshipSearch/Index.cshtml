@@ -21,12 +21,12 @@
                         var keywordTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.Keyword ? " active" : "";
                         var categoriesTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.Category ? " active" : "";
                     }
-                    @Html.RouteLink("Keywords", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Keyword }, new { @id = "keywordTabControl", @class = "tabbed-tab" + keywordTabControlClass, tab = "#tab1" })
-                    @Html.RouteLink("Categories", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Category }, new { @id = "categoriesTabControl", @class = "tabbed-tab" + categoriesTabControlClass, tab = "#tab2" })
+                    @Html.RouteLink("Keywords", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Keyword }, new { @id = "keywords-tab-control", @class = "tabbed-tab" + keywordTabControlClass, tab = "#tab1" })
+                    @Html.RouteLink("Categories", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Category }, new { @id = "categories-tab-control", @class = "tabbed-tab" + categoriesTabControlClass, tab = "#tab2" })
                 </nav>
 
                 <div class="tabbed-content active">
-                    
+
                     @Html.Partial("_categories", Model)
 
                     @{
@@ -54,7 +54,7 @@
                             var browseButtonClass = Model.SearchMode == ApprenticeshipSearchMode.Category ? "active" : "";
                         }
                         <button class="button tabbed-element tab1 @searchButtonClass" id="search-button">Search</button>
-                        <button class="button tabbed-element tab2 @browseButtonClass" id="search-button">Browse</button>
+                        <button class="button tabbed-element tab2 @browseButtonClass" id="browse-button">Browse</button>
                     </div>
 
                     @Html.HiddenFor(m => m.Latitude)
@@ -97,11 +97,11 @@
             latlonhash: '#@(Html.IdFor(m => m.Hash))'
         });
 
-        $("#keywordTabControl").click(function () {
+        $("#keywords-tab-control").click(function () {
             $("#SearchMode").val("Keyword");
         });
 
-        $("#categoriesTabControl").click(function () {
+        $("#categories-tab-control").click(function () {
             $("#SearchMode").val("Category");
         });
     </script>

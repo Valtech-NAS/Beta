@@ -3,23 +3,24 @@
 @{
     var divClass = Model.SearchMode == ApprenticeshipSearchMode.Category ? "active" : "";
 }
-<div class="form-group tabbed-element tab2 @divClass">
-    <ul class="copy-16 list-text list-checkradio">
+<div id="categories" class="form-group tabbed-element tab2 @divClass">
+    <ul id="category-list" class="copy-16 list-text list-checkradio">
         @foreach (var category in Model.Categories)
         {
-            var inputId = string.Format("category{0}", category.CodeName);
+            var inputId = string.Format("category-{0}", category.CodeName.ToLower());
             var subCategories = category.SubCategories.ToList();
             var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
             var openAttr = Model.Category == category.CodeName && Model.SubCategories != null && Model.SubCategories.Any() ? "open" : "";
+            var subCategoryListId = string.Format("sub-category-{0}-list", category.CodeName.ToLower());
             <li>
                 <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@FullNameFormatter.Format(category.FullName)</label>
                 <details @openAttr>
                     <summary class="copy-16">@subCategories.Count sub-categories</summary>
-                    <ul class="copy-16 list-text list-checkradio">
+                    <ul id="@subCategoryListId" class="copy-16 list-text list-checkradio">
                         @foreach (var subCategory in subCategories)
                         {
                             checkedAttr = Model.SubCategories != null && Model.SubCategories.Contains(subCategory.CodeName) ? " checked" : "";
-                            var checkboxId = string.Format("subCategory{0}", subCategory.CodeName);
+                            var checkboxId = string.Format("sub-category-{0}", subCategory.CodeName.ToLower());
                             var labelText = FullNameFormatter.Format(subCategory.FullName);
                             if (subCategory.Count.HasValue)
                             {

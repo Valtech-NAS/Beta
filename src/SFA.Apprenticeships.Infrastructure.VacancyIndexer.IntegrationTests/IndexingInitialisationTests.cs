@@ -9,6 +9,7 @@
     using NUnit.Framework;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
+    using Logging.IoC;
     using StructureMap;
     using VacancyLocationType = Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLocationType;
 
@@ -26,6 +27,7 @@
         {
             _container = new Container(x =>
             {
+                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<VacancyIndexerRegistry>();
             });

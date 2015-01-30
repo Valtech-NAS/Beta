@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using ApprenticeshipSearch;
     using global::SpecBind.Pages;
     using global::SpecBind.Selenium;
     using OpenQA.Selenium;
@@ -124,6 +125,23 @@
 
         [ElementLocator(Id = "search-no-results-reference-number")]
         public IWebElement ReferenceNumberAdvice { get; set; }
+
+        [ElementLocator(Id = "search-tab-control")]
+        public IWebElement SearchTab { get; set; }
+
+        [ElementLocator(Id = "browse-tab-control")]
+        public IWebElement BrowseTab { get; set; }
+
+        [ElementLocator(Id = "categories")]
+        public IWebElement Categories { get; set; }
+
+        [ElementLocator(Id = "categories")]
+        public IElementList<IWebElement, CategoryItem> CategoryItems { get; set; }
+
+        public string CategoryItemsCount
+        {
+            get { return CategoryItems.Count().ToString(); }
+        }
         
         public string ResultsAreInDistanceOrder
         {

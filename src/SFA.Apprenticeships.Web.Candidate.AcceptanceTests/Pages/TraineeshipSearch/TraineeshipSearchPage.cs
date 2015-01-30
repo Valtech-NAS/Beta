@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.TraineeshipSearch
 {
+    using ApprenticeshipSearch;
     using OpenQA.Selenium;
     using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.VacancySearch;
     using SpecBind.Pages;

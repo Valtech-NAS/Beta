@@ -101,7 +101,7 @@
                 {
                     <p id="search-no-results-title">There are currently no apprenticeships that match your search.</p>
                     <p>Try editing your search:</p>
-                    <ul>
+                    <ul id="search-no-results">
                         @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Keyword)
                         {
                             if (VacancyHelper.IsVacancyReference(Model.VacancySearch.Keywords))
@@ -110,18 +110,18 @@
                             }
                             else
                             {
-                                <li>using different keywords</li>
+                                <li id="search-no-results-keywords">using different keywords</li>
                             }
                         }
                         @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Category)
                         {
                             if (Model.VacancySearch.SubCategories == null || Model.VacancySearch.SubCategories.Length == 0)
                             {
-                                <li>try a different category</li>
+                                <li id="search-no-results-category">try a different category</li>
                             }
                             else
                             {
-                                <li>select a different sub-category or sub-categories</li>
+                                <li id="search-no-results-sub-category">select a different sub-category or sub-categories</li>
                             }
                         }
                         <li>expanding your search location</li>
@@ -170,11 +170,11 @@
             $('#search-button').click(function () {
                 $('#LocationType').val("NonNational");
             });
-            $("#searchTabControl").click(function () {
+            $("#search-tab-control").click(function () {
                 $("#SearchMode").val("Keyword");
             });
 
-            $("#browseTabControl").click(function () {
+            $("#browse-tab-control").click(function () {
                 $("#SearchMode").val("Category");
             });
         });

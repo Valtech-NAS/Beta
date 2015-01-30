@@ -4,6 +4,7 @@
     using Application.Location;
     using Elastic.Common.IoC;
     using IoC;
+    using Logging.IoC;
     using NUnit.Framework;
     using StructureMap;
 
@@ -16,6 +17,7 @@
         {
             _container = new Container(x =>
             {
+                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
             });

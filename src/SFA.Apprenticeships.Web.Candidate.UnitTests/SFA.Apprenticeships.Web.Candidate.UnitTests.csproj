@@ -233,7 +233,12 @@
     <Compile Include="Validators\RegisterViewModelValidatorTests.cs" />
     <Compile Include="Validators\VacancySearchValidatorTests.cs" />
     <Compile Include="ViewModels\VacancySearchResponseViewModelTests.cs" />
+    <Compile Include="Views\ApprenticeshipSearch\IndexCategoriesTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\IndexTests.cs" />
+    <Compile Include="Views\ApprenticeshipSearch\MediatorTestsBase.cs" />
+    <Compile Include="Views\ApprenticeshipSearch\ResultsSearchUpdateTests.cs" />
+    <Compile Include="Views\ApprenticeshipSearch\ResultsSearchUpdateCategoriesAndSubCategoriesTests.cs" />
+    <Compile Include="Views\ApprenticeshipSearch\ResultsTests.cs" />
     <Compile Include="Views\Dashboard\DashboardTests.cs" />
     <Compile Include="Views\TraineeshipSearch\DetailsTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\DetailsTests.cs" />

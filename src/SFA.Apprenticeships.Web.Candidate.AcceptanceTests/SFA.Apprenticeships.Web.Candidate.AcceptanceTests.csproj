@@ -197,6 +197,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ApprenticeshipSearchByReferenceNumber.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\ApprenticeshipSearch\BrowseBasedSearch.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BrowseBasedSearch.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Dashboard\ViewApprenticeshipApplications.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -316,6 +321,7 @@
     <Compile Include="Pages\ApprenticeshipApplication\ApprenticeshipApplicationPage.cs" />
     <Compile Include="Pages\ApprenticeshipApplication\SummaryItems\QualificationSummaryItem.cs" />
     <Compile Include="Pages\ApprenticeshipApplication\SummaryItems\WorkExperienceSummaryItem.cs" />
+    <Compile Include="Pages\ApprenticeshipSearch\CategoryItem.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\BaseValidationPage.cs" />
     <Compile Include="Pages\Dashboard\MyApplicationsPage.cs" />
@@ -417,6 +423,10 @@
     <None Include="Features\ApprenticeshipSearch\ApprenticeshipSearchByReferenceNumber.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ApprenticeshipSearchByReferenceNumber.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\ApprenticeshipSearch\BrowseBasedSearch.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>BrowseBasedSearch.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Dashboard\ViewApprenticeshipApplications.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

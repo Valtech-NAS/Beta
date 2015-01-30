@@ -15,14 +15,12 @@
         private readonly ILogService _logger;
         private readonly IWcfService<IReferenceData> _service;
         private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
-        private readonly string[] _blacklistedCategoryCodes;
 
         public ReferenceDataProvider(IWcfService<IReferenceData> service, ILegacyServicesConfiguration legacyServicesConfiguration, ILogService logger)
         {
             _service = service;
             _legacyServicesConfiguration = legacyServicesConfiguration;
             _logger = logger;
-            _blacklistedCategoryCodes = _legacyServicesConfiguration.BlacklistedCategoryCodes.Split(',');
         }
 
         public IEnumerable<Category> GetCategories()
@@ -42,7 +40,6 @@
 
             var topLevelCategories =
                 response.ApprenticeshipFrameworks
-                .Where(f => !_blacklistedCategoryCodes.Contains(f.ApprenticeshipOccupationCodeName))
                 .Select(c =>
                         new Category()
                         {

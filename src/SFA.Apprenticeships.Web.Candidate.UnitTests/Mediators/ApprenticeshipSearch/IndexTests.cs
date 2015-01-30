@@ -1,8 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Candidate.Mediators;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
+    using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using NUnit.Framework;
@@ -45,6 +48,19 @@
         }
 
         [Test]
+        public void BlacklistedCategoryCodes()
+        {
+            ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(GetCategories);
+
+            var response = Mediator.Index(ApprenticeshipSearchMode.Category);
+
+            var categories = response.ViewModel.Categories;
+            categories.Count.Should().Be(3);
+            categories.Any(c => c.CodeName == "00").Should().BeFalse();
+            categories.Any(c => c.CodeName == "99").Should().BeFalse();
+        }
+
+        [Test]
         public void RememberApprenticeshipLevel()
         {
             UserDataProvider.Setup(udp => udp.Get(UserDataItemNames.ApprenticeshipLevel)).Returns("Advanced");
@@ -53,6 +69,56 @@
 
             var viewModel = response.ViewModel;
             viewModel.ApprenticeshipLevel.Should().Be("Advanced");
+        }
+
+        private static IEnumerable<Category> GetCategories()
+        {
+            return new List<Category>
+            {
+                new Category
+                {
+                    CodeName = "1",
+                    SubCategories = new List<Category>
+                    {
+                        new Category {CodeName = "1_1"},
+                        new Category {CodeName = "1_2"}
+                    }
+                },
+                new Category
+                {
+                    CodeName = "2",
+                    SubCategories = new List<Category>
+                    {
+                        new Category {CodeName = "2_1"},
+                        new Category {CodeName = "2_2"},
+                        new Category {CodeName = "2_3"}
+                    }
+                },
+                new Category
+                {
+                    CodeName = "3",
+                    SubCategories = new List<Category>
+                    {
+                        new Category {CodeName = "3_1"}
+                    }
+                },
+                new Category
+                {
+                    CodeName = "00",
+                    SubCategories = new List<Category>
+                    {
+                        new Category {CodeName = "00_1"}
+                    }
+                },
+                new Category
+                {
+                    CodeName = "99",
+                    SubCategories = new List<Category>
+                    {
+                        new Category {CodeName = "99_1"}
+                    }
+                }
+            };
         }
     }
 }
