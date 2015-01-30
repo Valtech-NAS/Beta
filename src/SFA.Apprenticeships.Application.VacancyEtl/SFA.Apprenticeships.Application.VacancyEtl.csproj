@@ -96,7 +96,7 @@
     <Compile Include="Entities\VacancySummaryPageComplete.cs" />
     <Compile Include="Entities\ApprenticeshipSummaryUpdate.cs" />
     <Compile Include="ErrorCodes.cs" />
-    <Compile Include="GatewayVacancySummaryProcessor.cs" />
+    <Compile Include="VacancySummaryProcessor.cs" />
     <Compile Include="IVacancyIndexDataProvider.cs" />
     <Compile Include="IVacancySummaryProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

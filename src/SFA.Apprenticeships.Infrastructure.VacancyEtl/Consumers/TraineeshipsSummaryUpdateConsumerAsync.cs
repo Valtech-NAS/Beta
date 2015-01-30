@@ -8,18 +8,18 @@
     using NLog;
     using VacancyIndexer;
 
-    public class TraineeshipsSummaryConsumerAsync : IConsumeAsync<TraineeshipSummaryUpdate>
+    public class TraineeshipsSummaryUpdateConsumerAsync : IConsumeAsync<TraineeshipSummaryUpdate>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _vacancyIndexer;
 
-        public TraineeshipsSummaryConsumerAsync(IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> vacancyIndexer)
+        public TraineeshipsSummaryUpdateConsumerAsync(IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> vacancyIndexer)
         {
             _vacancyIndexer = vacancyIndexer;
         }
 
         [SubscriptionConfiguration(PrefetchCount = 20)]
-        [AutoSubscriberConsumer(SubscriptionId = "TraineeshipsSummaryConsumerAsync")]
+        [AutoSubscriberConsumer(SubscriptionId = "TraineeshipsSummaryUpdateConsumerAsync")]
         public Task Consume(TraineeshipSummaryUpdate vacancySummaryToIndex)
         {
             return Task.Run(() =>
@@ -30,8 +30,8 @@
                 }
                 catch(Exception ex)
                 {
-                    var message = string.Format("Failed indexing vacancy summary {0}", vacancySummaryToIndex.Id);
-                    Logger.Error(message, ex);
+                    var message = string.Format("Failed indexing traineeship vacancy summary {0}", vacancySummaryToIndex.Id);
+                    Logger.Warn(message, ex);
                 }
             });
         }

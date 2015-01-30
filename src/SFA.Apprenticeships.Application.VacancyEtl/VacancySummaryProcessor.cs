@@ -12,18 +12,19 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
 
-    public class GatewayVacancySummaryProcessor : IVacancySummaryProcessor
+    public class VacancySummaryProcessor : IVacancySummaryProcessor
     {
-        private const string VacancyAboutToExpireNotificationHours = "VacancyAboutToExpireNotificationHours";
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+        private const string VacancyAboutToExpireNotificationHours = "VacancyAboutToExpireNotificationHours";
+        private readonly int _vacancyAboutToExpireNotificationHours;
 
         private readonly IMessageBus _messageBus;
         private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
         private readonly IMapper _mapper;
         private readonly IProcessControlQueue<StorageQueueMessage> _processControlQueue;
-        private readonly IConfigurationManager _configurationManager;
 
-        public GatewayVacancySummaryProcessor(IMessageBus messageBus,
+        public VacancySummaryProcessor(IMessageBus messageBus,
                                        IVacancyIndexDataProvider vacancyIndexDataProvider,
                                        IMapper mapper,
                                        IProcessControlQueue<StorageQueueMessage> processControlQueue, 
@@ -33,7 +34,7 @@
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
             _mapper = mapper;
             _processControlQueue = processControlQueue;
-            _configurationManager = configurationManager;
+            _vacancyAboutToExpireNotificationHours = configurationManager.GetAppSetting<int>(VacancyAboutToExpireNotificationHours);
         }
 
         public void QueueVacancyPages(StorageQueueMessage scheduledQueueMessage)
@@ -95,18 +96,17 @@
 
         public void QueueVacancyIfExpiring(ApprenticeshipSummary vacancySummary)
         {
-            var notificationHours = _configurationManager.GetAppSetting<int>(VacancyAboutToExpireNotificationHours);
-
-            if (vacancySummary.ClosingDate < DateTime.Now.AddHours(notificationHours))
+            if (vacancySummary.ClosingDate < DateTime.Now.AddHours(_vacancyAboutToExpireNotificationHours))
             {
-                var vacancyAboutToExpireMessage = new VacancyAboutToExpire {Id = vacancySummary.Id};
+                Logger.Debug("Queueing expiring vacancy");
+
+                var vacancyAboutToExpireMessage = new VacancyAboutToExpire { Id = vacancySummary.Id };
                 _messageBus.PublishMessage(vacancyAboutToExpireMessage);
             }
         }
 
         #region Helpers
-
-        private IEnumerable<VacancySummaryPage> BuildVacancySummaryPages(DateTime scheduledRefreshDateTime, int count)
+        private static IEnumerable<VacancySummaryPage> BuildVacancySummaryPages(DateTime scheduledRefreshDateTime, int count)
         {           
             var vacancySumaries = new List<VacancySummaryPage>(count);
 

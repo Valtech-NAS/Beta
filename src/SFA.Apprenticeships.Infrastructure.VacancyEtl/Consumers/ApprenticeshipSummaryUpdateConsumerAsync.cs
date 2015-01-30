@@ -11,14 +11,14 @@
     using NLog;
     using VacancyIndexer;
 
-    public class ApprenticeshipSummaryConsumerAsync : IConsumeAsync<ApprenticeshipSummaryUpdate>
+    public class ApprenticeshipSummaryUpdateConsumerAsync : IConsumeAsync<ApprenticeshipSummaryUpdate>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IReferenceDataService _referenceDataService;
         private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> _vacancyIndexer;
         private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
 
-        public ApprenticeshipSummaryConsumerAsync(
+        public ApprenticeshipSummaryUpdateConsumerAsync(
             IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> vacancyIndexer,
             IVacancySummaryProcessor vacancySummaryProcessor, IReferenceDataService referenceDataService)
         {
@@ -28,7 +28,7 @@
         }
 
         [SubscriptionConfiguration(PrefetchCount = 20)]
-        [AutoSubscriberConsumer(SubscriptionId = "ApprenticeshipSummaryConsumerAsync")]
+        [AutoSubscriberConsumer(SubscriptionId = "ApprenticeshipSummaryUpdateConsumerAsync")]
         public Task Consume(ApprenticeshipSummaryUpdate vacancySummaryToIndex)
         {
             return Task.Run(() =>
@@ -43,22 +43,22 @@
                 catch (Exception ex)
                 {
                     var message = string.Format("Failed indexing vacancy summary {0}", vacancySummaryToIndex.Id);
-                    Logger.Error(message, ex);
+                    Logger.Warn(message, ex);
                 }
             });
         }
 
         private void PopulateCategoriesCodes(ApprenticeshipSummaryUpdate vacancySummaryToIndex)
         {
-            var categories = _referenceDataService.GetCategories();
+            var categories = _referenceDataService.GetCategories().ToArray();
 
-            vacancySummaryToIndex.SectorCode =
-                categories.First(c => c.FullName == vacancySummaryToIndex.Sector).CodeName;
+            vacancySummaryToIndex.SectorCode = categories
+                .First(c => c.FullName == vacancySummaryToIndex.Sector).CodeName;
 
-            vacancySummaryToIndex.FrameworkCode =
-                categories.First(c => c.FullName == vacancySummaryToIndex.Sector)
-                    .SubCategories.First(sc => sc.FullName == vacancySummaryToIndex.Framework)
-                    .CodeName;
+            vacancySummaryToIndex.FrameworkCode = categories
+                .First(c => c.FullName == vacancySummaryToIndex.Sector)
+                .SubCategories.First(sc => sc.FullName == vacancySummaryToIndex.Framework)
+                .CodeName;
         }
     }
 }

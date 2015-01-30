@@ -118,9 +118,9 @@
             _busMock.Verify(x => x.PublishMessage(It.IsAny<ApprenticeshipSummary>()), Times.Exactly(vacanciesReturned));
         }
 
-        private GatewayVacancySummaryProcessor GetGatewayVacancySummaryProcessor()
+        private VacancySummaryProcessor GetGatewayVacancySummaryProcessor()
         {
-            var vacancyConsumer = new GatewayVacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object,
+            var vacancyConsumer = new VacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object,
                 _mapperMock.Object, _messagingServiceMock.Object, _configurationManagerMock.Object);
             return vacancyConsumer;
         }
