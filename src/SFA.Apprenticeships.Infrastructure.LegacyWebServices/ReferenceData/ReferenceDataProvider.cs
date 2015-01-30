@@ -47,7 +47,7 @@
                         {
                             CodeName = c.ApprenticeshipOccupationCodeName,
                             ShortName = c.ApprenticeshipOccupationShortName,
-                            FullName = FullNameFormatter.Format(c.ApprenticeshipOccupationFullName)
+                            FullName = c.ApprenticeshipOccupationFullName
                         }).Distinct(new CategoryComparer()).OrderBy(c => c.FullName);
 
             foreach (var topLevelCategory in topLevelCategories)
@@ -60,7 +60,7 @@
                             ParentCategory = topLevelCategory,
                             CodeName = d.ApprenticeshipFrameworkCodeName,
                             ShortName = d.ApprenticeshipFrameworkShortName,
-                            FullName = FullNameFormatter.Format(d.ApprenticeshipFrameworkFullName)
+                            FullName = d.ApprenticeshipFrameworkFullName
                         }).OrderBy(c => c.FullName).ToList();
 
                 categories.Add(topLevelCategory);

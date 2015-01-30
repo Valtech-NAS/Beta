@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests.ReferenceData
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Helpers
 {
     using FluentAssertions;
-    using LegacyWebServices.ReferenceData;
     using NUnit.Framework;
+    using Candidate.Helpers;
 
     [TestFixture]
     public class FullNameFormatterTests

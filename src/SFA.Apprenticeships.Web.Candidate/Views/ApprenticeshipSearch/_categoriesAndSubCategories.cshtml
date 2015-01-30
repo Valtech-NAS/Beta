@@ -17,7 +17,7 @@
             var checkedAttr = Model.Category == category.CodeName ? " checked" : "";
             var openAttr = Model.Category == category.CodeName && Model.SubCategories != null && Model.SubCategories.Any() ? "open" : "";
             <li>
-                <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@category.FullName</label>
+                <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@FullNameFormatter.Format(category.FullName)</label>
                 <details @openAttr>
                     <summary class="copy-16">@subCategories.Count sub-categories</summary>
                     <ul class="copy-16 list-text list-checkradio">
@@ -25,7 +25,7 @@
                         {
                             checkedAttr = Model.SubCategories != null && Model.SubCategories.Contains(subCategory.CodeName) ? " checked" : "";
                             var checkboxId = string.Format("subCategory{0}", subCategory.CodeName);
-                            var labelText = subCategory.FullName;
+                            var labelText = FullNameFormatter.Format(subCategory.FullName);
                             if (subCategory.Count.HasValue)
                             {
                                 labelText = string.Format("{0} ({1})", labelText, subCategory.Count.Value);

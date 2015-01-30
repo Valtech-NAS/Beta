@@ -139,7 +139,7 @@ WriteLiteral(">");
 
             
             #line 20 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                                                                           Write(category.FullName);
+                                                                                                                           Write(FullNameFormatter.Format(category.FullName));
 
             
             #line default
@@ -184,7 +184,7 @@ WriteLiteral(">\r\n");
                         {
                             checkedAttr = Model.SubCategories != null && Model.SubCategories.Contains(subCategory.CodeName) ? " checked" : "";
                             var checkboxId = string.Format("subCategory{0}", subCategory.CodeName);
-                            var labelText = subCategory.FullName;
+                            var labelText = FullNameFormatter.Format(subCategory.FullName);
                             if (subCategory.Count.HasValue)
                             {
                                 labelText = string.Format("{0} ({1})", labelText, subCategory.Count.Value);
@@ -222,14 +222,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 2011), Tuple.Create("\"", 2028)
+WriteAttribute("for", Tuple.Create(" for=\"", 2063), Tuple.Create("\"", 2080)
             
             #line 33 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                    , Tuple.Create(Tuple.Create("", 2017), Tuple.Create<System.Object, System.Int32>(checkboxId
+                                                                    , Tuple.Create(Tuple.Create("", 2069), Tuple.Create<System.Object, System.Int32>(checkboxId
             
             #line default
             #line hidden
-, 2017), false)
+, 2069), false)
 );
 
 WriteLiteral(">");

@@ -683,6 +683,7 @@
     <Compile Include="Constants\Settings.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
+    <Compile Include="Helpers\FullNameFormatter.cs" />
     <Compile Include="ViewModels\AddressSearchResult.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\TraineeshipSearchViewModelMessages.cs" />

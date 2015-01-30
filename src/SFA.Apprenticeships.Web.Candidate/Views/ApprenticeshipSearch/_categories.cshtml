@@ -23,7 +23,7 @@
                             var category = categories[i];
                             var inputId = string.Format("category{0}", category.CodeName);
                             <li>
-                                <input type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@category.FullName</label>
+                                <input type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@FullNameFormatter.Format(category.FullName)</label>
                             </li>
                         }
                     </ul>
@@ -37,7 +37,7 @@
                         var category = categories[i];
                         var inputId = string.Format("category{0}", category.CodeName);
                         <li>
-                            <input type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@category.FullName</label>
+                            <input type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@FullNameFormatter.Format(category.FullName)</label>
                         </li>
                     }
                 </ul>

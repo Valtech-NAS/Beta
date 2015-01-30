@@ -174,7 +174,7 @@ WriteLiteral(">");
 
             
             #line 26 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                                                                                              Write(category.FullName);
+                                                                                                                              Write(FullNameFormatter.Format(category.FullName));
 
             
             #line default
@@ -229,43 +229,43 @@ WriteLiteral(" type=\"radio\"");
 
 WriteLiteral(" name=\"Category\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1809), Tuple.Create("\"", 1822)
+WriteAttribute("id", Tuple.Create(" id=\"", 1835), Tuple.Create("\"", 1848)
             
             #line 40 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-, Tuple.Create(Tuple.Create("", 1814), Tuple.Create<System.Object, System.Int32>(inputId
+, Tuple.Create(Tuple.Create("", 1840), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 1814), false)
+, 1840), false)
 );
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1823), Tuple.Create("\"", 1849)
+WriteAttribute("value", Tuple.Create(" value=\"", 1849), Tuple.Create("\"", 1875)
             
             #line 40 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-     , Tuple.Create(Tuple.Create("", 1831), Tuple.Create<System.Object, System.Int32>(category.CodeName
+     , Tuple.Create(Tuple.Create("", 1857), Tuple.Create<System.Object, System.Int32>(category.CodeName
             
             #line default
             #line hidden
-, 1831), false)
+, 1857), false)
 );
 
 WriteLiteral("><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 1857), Tuple.Create("\"", 1871)
+WriteAttribute("for", Tuple.Create(" for=\"", 1883), Tuple.Create("\"", 1897)
             
             #line 40 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                     , Tuple.Create(Tuple.Create("", 1863), Tuple.Create<System.Object, System.Int32>(inputId
+                                     , Tuple.Create(Tuple.Create("", 1889), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 1863), false)
+, 1889), false)
 );
 
 WriteLiteral(">");
 
             
             #line 40 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                                                                                          Write(category.FullName);
+                                                                                                                          Write(FullNameFormatter.Format(category.FullName));
 
             
             #line default

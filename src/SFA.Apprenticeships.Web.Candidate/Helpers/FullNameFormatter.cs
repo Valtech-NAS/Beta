@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceData
+﻿namespace SFA.Apprenticeships.Web.Candidate.Helpers
 {
     using System.Text.RegularExpressions;
 
