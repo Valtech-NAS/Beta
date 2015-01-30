@@ -24,6 +24,7 @@
         private Mock<IMessageBus> _bus;
         private Mock<ILogService> _logger;
 
+        [SetUp]
         public void SetUp()
         {
             _legacyApplicationStatusProvider = new Mock<ILegacyApplicationStatusesProvider>();
