@@ -1,8 +1,9 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Search
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
 {
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Search;
 
-    public class ApprenticeshipSearchParameters : SearchParametersBase
+    public class ApprenticeshipSearchParameters : VacancySearchParametersBase
     {
         public string Keywords { get; set; }
 

@@ -1,5 +1,7 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Search
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
 {
+    using Search;
+
     public class TraineeshipSearchParameters : SearchParametersBase
     {
          
