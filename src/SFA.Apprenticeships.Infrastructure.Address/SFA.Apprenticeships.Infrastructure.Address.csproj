@@ -124,6 +124,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Address\SFA.Apprenticeships.Application.Address.csproj">
+      <Project>{1B386440-4479-4A2C-93CA-42A98426019F}</Project>
+      <Name>SFA.Apprenticeships.Application.Address</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>

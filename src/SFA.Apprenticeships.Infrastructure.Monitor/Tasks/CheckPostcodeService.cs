@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
-    using SFA.Apprenticeships.Application.Interfaces.Locations;
+    using Application.Location;
 
     public class CheckPostcodeService : IMonitorTask
     {

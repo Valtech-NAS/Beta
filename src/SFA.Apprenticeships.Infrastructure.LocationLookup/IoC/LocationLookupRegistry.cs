@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LocationLookup.IoC
 {
     using System;
-    using Application.Interfaces.Locations;
+    using Application.Location;
     using StructureMap.Configuration.DSL;
 
     public class LocationLookupRegistry : Registry

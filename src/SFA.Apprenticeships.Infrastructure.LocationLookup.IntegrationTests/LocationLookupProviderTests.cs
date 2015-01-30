@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LocationLookup.IntegrationTests
 {
     using System.Linq;
-    using Application.Interfaces.Locations;
+    using Application.Location;
     using Elastic.Common.IoC;
     using IoC;
     using NUnit.Framework;

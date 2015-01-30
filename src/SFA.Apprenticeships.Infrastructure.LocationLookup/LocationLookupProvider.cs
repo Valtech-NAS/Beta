@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Locations;
+    using Application.Location;
     using Domain.Entities.Locations;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;

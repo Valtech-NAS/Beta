@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Address.IoC
 {
     using System;
-    using Application.Interfaces.Locations;
+    using Application.Address;
     using Domain.Interfaces.Mapping;
     using Mappers;
     using StructureMap.Configuration.DSL;

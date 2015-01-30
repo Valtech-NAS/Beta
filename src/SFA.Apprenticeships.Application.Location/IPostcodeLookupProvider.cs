@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Locations
+﻿namespace SFA.Apprenticeships.Application.Location
 {
     using Domain.Entities.Locations;
 

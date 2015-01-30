@@ -90,6 +90,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ILocationLookupProvider.cs" />
+    <Compile Include="IPostcodeLookupProvider.cs" />
     <Compile Include="LocationLookupService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

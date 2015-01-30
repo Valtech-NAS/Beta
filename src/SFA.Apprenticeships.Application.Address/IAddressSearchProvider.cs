@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Locations
+﻿namespace SFA.Apprenticeships.Application.Address
 {
     using System;
     using System.Collections.Generic;

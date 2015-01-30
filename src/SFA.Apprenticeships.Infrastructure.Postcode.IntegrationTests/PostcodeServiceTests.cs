@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Postcode.IntegrationTests
 {
     using System;
-    using Application.Interfaces.Locations;
+    using Application.Location;
     using Common.IoC;
     using FluentAssertions;
     using IoC;

@@ -7,22 +7,16 @@
 
     public class ReferenceDataService : IReferenceDataService
     {
-        private readonly IReferenceDataProvider _service;
+        private readonly IReferenceDataProvider _referenceDataProvider;
 
-        public ReferenceDataService(IReferenceDataProvider service)
+        public ReferenceDataService(IReferenceDataProvider referenceDataProvider)
         {
-            _service = service;
-        }
-
-        public IEnumerable<ReferenceDataItem> GetReferenceData(string type)
-        {
-            throw new NotImplementedException();
-            //return _service.GetReferenceData(type);
+            _referenceDataProvider = referenceDataProvider;
         }
 
         public IEnumerable<Category> GetCategories()
         {
-            return _service.GetCategories();
+            return _referenceDataProvider.GetCategories();
         }
     }
 }

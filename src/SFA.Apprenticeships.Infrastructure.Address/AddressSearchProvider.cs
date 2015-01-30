@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Locations;
+    using Application.Address;
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
     using Domain.Interfaces.Mapping;

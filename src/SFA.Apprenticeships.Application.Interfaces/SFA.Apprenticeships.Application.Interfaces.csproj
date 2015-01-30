@@ -84,7 +84,6 @@
     <Compile Include="Applications\ErrorCodes.cs" />
     <Compile Include="Candidates\ErrorCodes.cs" />
     <Compile Include="Locations\ErrorCodes.cs" />
-    <Compile Include="Locations\IAddressSearchProvider.cs" />
     <Compile Include="Messaging\BaseRequest.cs" />
     <Compile Include="Messaging\CommunicationToken.cs" />
     <Compile Include="Messaging\ErrorCodes.cs" />
@@ -106,8 +105,6 @@
     <Compile Include="Users\IUserAccountService.cs" />
     <Compile Include="Candidates\ICandidateService.cs" />
     <Compile Include="Locations\ILocationSearchService.cs" />
-    <Compile Include="Locations\IPostcodeLookupProvider.cs" />
-    <Compile Include="Locations\ILocationLookupProvider.cs" />
     <Compile Include="Locations\IAddressSearchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\SearchResults.cs" />

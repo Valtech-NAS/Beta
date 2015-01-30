@@ -249,6 +249,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Address\SFA.Apprenticeships.Application.Address.csproj">
+      <Project>{1B386440-4479-4A2C-93CA-42A98426019F}</Project>
+      <Name>SFA.Apprenticeships.Application.Address</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Authentication\SFA.Apprenticeships.Application.Authentication.csproj">
       <Project>{2752E3B6-358D-4C06-A31F-867304CAC53D}</Project>
       <Name>SFA.Apprenticeships.Application.Authentication</Name>
@@ -256,6 +260,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
+      <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
+      <Name>SFA.Apprenticeships.Application.Location</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyEtl\SFA.Apprenticeships.Application.VacancyEtl.csproj">
       <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>

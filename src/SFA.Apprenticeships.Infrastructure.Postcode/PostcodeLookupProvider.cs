@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Locations;
+    using Application.Location;
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
     using Domain.Interfaces.Configuration;
@@ -10,10 +10,10 @@
     using NLog;
     using Rest;
 
-    public class PostcodeService : RestService, IPostcodeLookupProvider
+    public class PostcodeLookupProvider : RestService, IPostcodeLookupProvider
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        public PostcodeService(IConfigurationManager configurationManager) : 
+        public PostcodeLookupProvider(IConfigurationManager configurationManager) : 
             base(configurationManager.GetAppSetting("PostcodeServiceEndpoint")) { }
 
         public Location GetLocation(string postcode)
