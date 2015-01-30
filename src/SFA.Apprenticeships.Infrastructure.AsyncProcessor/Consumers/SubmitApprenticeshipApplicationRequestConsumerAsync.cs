@@ -13,7 +13,7 @@
     using CandidatesErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
     using VacanciesErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
 
-    public class SubmitApprenticeshipApplicationRequestConsumerAsync : IConsumeAsync<SubmitApplicationRequest>
+    public class SubmitApprenticeshipApplicationRequestConsumerAsync : IConsumeAsync<SubmitApprenticeshipApplicationRequest>
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -39,7 +39,7 @@
 
         [SubscriptionConfiguration(PrefetchCount = 2)]
         [AutoSubscriberConsumer(SubscriptionId = "SubmitApprenticeshipApplicationRequestConsumerAsync")]
-        public Task Consume(SubmitApplicationRequest request)
+        public Task Consume(SubmitApprenticeshipApplicationRequest request)
         {
             return Task.Run(() =>
             {
@@ -63,7 +63,7 @@
             });
         }
 
-        public void CreateApplication(SubmitApplicationRequest request)
+        public void CreateApplication(SubmitApprenticeshipApplicationRequest request)
         {
             var applicationDetail = _apprenticeshipApplicationReadRepository.Get(request.ApplicationId, true);
 
@@ -98,7 +98,7 @@
             }
         }
 
-        private void HandleCustomException(SubmitApplicationRequest request, CustomException ex, ApprenticeshipApplicationDetail apprenticeshipApplication)
+        private void HandleCustomException(SubmitApprenticeshipApplicationRequest request, CustomException ex, ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
             switch (ex.Code)
             {
@@ -143,7 +143,7 @@
             _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
         }
 
-        private void Requeue(SubmitApplicationRequest request)
+        private void Requeue(SubmitApprenticeshipApplicationRequest request)
         {
             request.ProcessTime = request.ProcessTime.HasValue ? DateTime.Now.AddMinutes(5) : DateTime.Now.AddSeconds(30);
             _messageBus.PublishMessage(request);
@@ -154,7 +154,7 @@
             apprenticeshipApplicationDetail.AssertState(string.Format("Create apprenticeship application for candidate '{0}'", apprenticeshipApplicationDetail.CandidateId), ApplicationStatuses.Submitting);
         }
 
-        private static void Log(string narrative, SubmitApplicationRequest request)
+        private static void Log(string narrative, SubmitApprenticeshipApplicationRequest request)
         {
             Logger.Debug("{0}: Apprenticeship application Id: \"{1}\"", narrative, request.ApplicationId);
         }

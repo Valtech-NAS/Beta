@@ -38,7 +38,7 @@
             {
                 Logger.Info("Requeuing create apprenticeship application message for application id: {0}", application.EntityId);
 
-                var message = new SubmitApplicationRequest
+                var message = new SubmitApprenticeshipApplicationRequest
                 {
                     ApplicationId = application.EntityId
                 };

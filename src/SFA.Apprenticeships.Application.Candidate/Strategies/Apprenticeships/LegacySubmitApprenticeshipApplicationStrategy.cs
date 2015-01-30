@@ -53,7 +53,7 @@
         {
             try
             {
-                var message = new SubmitApplicationRequest
+                var message = new SubmitApprenticeshipApplicationRequest
                 {
                     ApplicationId = apprenticeshipApplicationDetail.EntityId
                 };

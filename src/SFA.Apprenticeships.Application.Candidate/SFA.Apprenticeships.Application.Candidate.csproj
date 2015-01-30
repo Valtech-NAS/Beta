@@ -138,7 +138,7 @@
     <Compile Include="Strategies\Traineeships\SaveTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\SaveApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\SaveCandidateStrategy.cs" />
-    <Compile Include="SubmitApplicationRequest.cs" />
+    <Compile Include="SubmitApprenticeshipApplicationRequest.cs" />
     <Compile Include="SubmitTraineeshipApplicationRequest.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,7 @@
     using System;
     using Interfaces.Messaging;
 
-    public class SubmitApplicationRequest : BaseRequest
+    public class SubmitApprenticeshipApplicationRequest : BaseRequest
     {
         public Guid ApplicationId { get; set; }
     }
