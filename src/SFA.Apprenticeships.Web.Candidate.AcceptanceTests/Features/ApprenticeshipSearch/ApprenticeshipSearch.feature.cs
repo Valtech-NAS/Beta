@@ -762,30 +762,20 @@ this.ScenarioSetup(scenarioInfo);
 #line 7
 this.FeatureBackground();
 #line 224
- testRunner.Given("I select the \"first\" apprenticeship vacancy in location \"N7 8LS\" that can apply b" +
-                    "y this website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.When("I navigate to the details of the apprenticeship vacancy 445650", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 225
- testRunner.When("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 226
- testRunner.And("I navigate to the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table34 = new TechTalk.SpecFlow.Table(new string[] {
-                        "VacancyId"});
-            table34.AddRow(new string[] {
-                        "{VacancyId}"});
-#line 227
- testRunner.And("I navigate to the ApprenticeshipDetailsPage page with parameters", ((string)(null)), table34, "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table35 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
-            table35.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "FindApprenticeshipLink",
                         "Exists",
                         ""});
-#line 230
- testRunner.Then("I see", ((string)(null)), table35, "Then ");
+#line 226
+ testRunner.Then("I see", ((string)(null)), table34, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
