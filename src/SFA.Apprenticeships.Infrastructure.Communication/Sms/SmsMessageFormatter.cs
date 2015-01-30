@@ -33,6 +33,6 @@
             throw new ConfigurationErrorsException(errorMessage);
         }
 
-        public abstract string GetMessage(IEnumerable<KeyValuePair<CommunicationTokens, string>> communicationTokens);
+        public abstract string GetMessage(IEnumerable<CommunicationToken> communicationTokens);
     }
 }

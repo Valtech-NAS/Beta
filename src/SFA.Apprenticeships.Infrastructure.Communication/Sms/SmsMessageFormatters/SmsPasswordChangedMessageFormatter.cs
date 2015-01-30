@@ -11,7 +11,7 @@
             Message = GetTemplateConfiguration("MessageTypes.PasswordChanged").Message;
         }
 
-        public override string GetMessage(IEnumerable<KeyValuePair<CommunicationTokens, string>> communicationTokens)
+        public override string GetMessage(IEnumerable<CommunicationToken> communicationTokens)
         {
             return Message;
         }

@@ -11,7 +11,7 @@
             Message = GetTemplateConfiguration("MessageTypes.DailyDigest").Message;
         }
 
-        public override string GetMessage(IEnumerable<KeyValuePair<CommunicationTokens, string>> communicationTokens)
+        public override string GetMessage(IEnumerable<CommunicationToken> communicationTokens)
         {
             var itemCount = communicationTokens.First(t => t.Key == CommunicationTokens.TotalItems).Value;
 

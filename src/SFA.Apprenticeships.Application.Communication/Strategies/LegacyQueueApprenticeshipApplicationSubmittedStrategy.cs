@@ -26,7 +26,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
             _queueCommunicationRequestStrategy = queueCommunicationRequestStrategy;
         }
 
-        public void Send(Guid candidateId, IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
+        public void Send(Guid candidateId, IEnumerable<CommunicationToken> tokens)
         {
             var candidate = _candidateReadRepository.Get(candidateId);
 
@@ -35,15 +35,15 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
 
             var applicationTokens = new[]
             {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName), 
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyTitle, vacancy.Title),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference, vacancy.VacancyReference)
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName), 
+                new CommunicationToken(CommunicationTokens.ApplicationVacancyTitle, vacancy.Title),
+                new CommunicationToken(CommunicationTokens.ApplicationVacancyReference, vacancy.VacancyReference)
             };
 
             _queueCommunicationRequestStrategy.Queue(candidateId, MessageTypes.ApprenticeshipApplicationSubmitted, applicationTokens);
         }
 
-        private ApprenticeshipApplicationDetail GetApplication(IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
+        private ApprenticeshipApplicationDetail GetApplication(IEnumerable<CommunicationToken> tokens)
         {
             var applicationId = Guid.Parse(tokens.First(m => m.Key == CommunicationTokens.ApplicationId).Value);
 

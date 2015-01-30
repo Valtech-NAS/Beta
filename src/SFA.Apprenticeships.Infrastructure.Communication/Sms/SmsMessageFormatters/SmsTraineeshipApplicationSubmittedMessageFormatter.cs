@@ -12,7 +12,7 @@
             Message = GetTemplateConfiguration("MessageTypes.TraineeshipApplicationSubmitted").Message;
         }
 
-        public override string GetMessage(IEnumerable<KeyValuePair<CommunicationTokens, string>> communicationTokens)
+        public override string GetMessage(IEnumerable<CommunicationToken> communicationTokens)
         {
             return string.Format(Message, communicationTokens.First(ct => ct.Key == CommunicationTokens.ApplicationVacancyReference).Value);
         }

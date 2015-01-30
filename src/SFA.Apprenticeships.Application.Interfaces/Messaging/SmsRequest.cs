@@ -12,6 +12,6 @@
 
         public MessageTypes MessageType { get; set; }
 
-        public IEnumerable<KeyValuePair<CommunicationTokens, string>> Tokens { get; set; }
+        public IEnumerable<CommunicationToken> Tokens { get; set; }
     }
 }

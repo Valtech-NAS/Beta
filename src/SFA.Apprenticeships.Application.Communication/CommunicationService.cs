@@ -32,11 +32,11 @@
             _sendAccountUnlockCodeStrategy = sendAccountUnlockCodeStrategy;
         }
 
-        public void SendMessageToCandidate(Guid candidateId, MessageTypes messageType, IList<KeyValuePair<CommunicationTokens, string>> tokens)
+        public void SendMessageToCandidate(Guid candidateId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
         {
             Logger.Debug("CommunicationService called to send a message of type {0} to candidate with Id={1}", messageType, candidateId);
 
-            //TODO: MG: design breaks OCP - may refactor as all signatures are same
+            //TODO: MG: design breaks OCP - may refactor as all signatures are same. use base type
             switch (messageType)
             {
                 case MessageTypes.SendActivationCode:

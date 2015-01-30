@@ -17,7 +17,7 @@
         ProviderContact,
         CandidateEmailAddress,
         CandidateMobileNumber,
-        TotalItems,
+        TotalItems, //todo: these tokens are *email* substitution tokens and not data items - consider moving to dispatcher project
         Item1,
         Item2,
         Item3,

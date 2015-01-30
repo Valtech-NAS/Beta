@@ -11,87 +11,83 @@
         private const string TestActivationCode = "ABC123";
         private const string TestToEmail = "valtechnas@gmail.com";
 
-        public static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateActivationEmailTokens()
+        public static IEnumerable<CommunicationToken> CreateActivationEmailTokens()
         {
             return new[]
             {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
-                new KeyValuePair<CommunicationTokens, string>(
-                    CommunicationTokens.ActivationCode, TestActivationCode),
-                new KeyValuePair<CommunicationTokens, string>(
-                    CommunicationTokens.Username, TestToEmail),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ActivationCodeExpiryDays,
-                    " 30 days")
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new CommunicationToken(CommunicationTokens.ActivationCode, TestActivationCode),
+                new CommunicationToken(CommunicationTokens.Username, TestToEmail),
+                new CommunicationToken(CommunicationTokens.ActivationCodeExpiryDays, " 30 days")
             };
         }
 
-        public static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateAccountUnlockCodeTokens()
+        public static IEnumerable<CommunicationToken> CreateAccountUnlockCodeTokens()
         {
             return new[]
             {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, TestToEmail),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.AccountUnlockCode, TestActivationCode),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.AccountUnlockCodeExpiryDays,
-                    " 1 day")
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new CommunicationToken(CommunicationTokens.Username, TestToEmail),
+                new CommunicationToken(CommunicationTokens.AccountUnlockCode, TestActivationCode),
+                new CommunicationToken(CommunicationTokens.AccountUnlockCodeExpiryDays, " 1 day")
             };
         }
 
-        public static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreatePasswordResetConfirmationTokens()
+        public static IEnumerable<CommunicationToken> CreatePasswordResetConfirmationTokens()
         {
             return new[]
             {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, TestToEmail)
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new CommunicationToken(CommunicationTokens.Username, TestToEmail)
             };
         }
 
-        public static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreatePasswordResetTokens()
+        public static IEnumerable<CommunicationToken> CreatePasswordResetTokens()
         {
             return new[]
             {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, TestToEmail),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.PasswordResetCode, TestActivationCode),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.PasswordResetCodeExpiryDays, "1 day")
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new CommunicationToken(CommunicationTokens.Username, TestToEmail),
+                new CommunicationToken(CommunicationTokens.PasswordResetCode, TestActivationCode),
+                new CommunicationToken(CommunicationTokens.PasswordResetCodeExpiryDays, "1 day")
             };
         }
 
-        public static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateApprenticeshipApplicationSubmittedTokens()
+        public static IEnumerable<CommunicationToken> CreateApprenticeshipApplicationSubmittedTokens()
         {
             return new[]
             {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyTitle,
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new CommunicationToken(CommunicationTokens.ApplicationVacancyTitle,
                     "Application Vacancy Title"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference,
+                new CommunicationToken(CommunicationTokens.ApplicationVacancyReference,
                     "Application Vacancy Reference")
             };
         }
 
-        public static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateTraineeshipApplicationSubmittedTokens()
+        public static IEnumerable<CommunicationToken> CreateTraineeshipApplicationSubmittedTokens()
         {
             return new[]
             {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, "FirstName"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyTitle,
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new CommunicationToken(CommunicationTokens.ApplicationVacancyTitle,
                     "Application Vacancy Title"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationVacancyReference,
+                new CommunicationToken(CommunicationTokens.ApplicationVacancyReference,
                     "Application Vacancy Reference"),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ProviderContact,
+                new CommunicationToken(CommunicationTokens.ProviderContact,
                     "Provider Contact")
             };
         }
 
-        public static IEnumerable<KeyValuePair<CommunicationTokens, string>> CreateVacanciesAboutToExpireTokens(int numOfVacancies)
+        public static IEnumerable<CommunicationToken> CreateVacanciesAboutToExpireTokens(int numOfVacancies)
         {
-            var tokens = new List<KeyValuePair<CommunicationTokens, string>>
+            var tokens = new List<CommunicationToken>
             {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.TotalItems, Convert.ToString(numOfVacancies))
+                new CommunicationToken(CommunicationTokens.TotalItems, Convert.ToString(numOfVacancies))
             };
 
             tokens.AddRange(Enumerable.Range(1, numOfVacancies).Select(i =>
-                new KeyValuePair<CommunicationTokens, string>((CommunicationTokens)Enum.Parse(typeof(CommunicationTokens), "Item"+i),
+                new CommunicationToken((CommunicationTokens)Enum.Parse(typeof(CommunicationTokens), "Item" + i),
                     string.Format("Application Vacancy Title {0}|Employer name {0}|15 Jan 15", i))));
 
             return tokens;

@@ -78,10 +78,10 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             _communicationService.SendMessageToCandidate(candidate.EntityId, MessageTypes.SendPasswordResetCode,
                 new[]
                 {
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, firstName),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, emailAddress),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.PasswordResetCode, passwordResetCode),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.PasswordResetCodeExpiryDays, expiry)
+                    new CommunicationToken(CommunicationTokens.CandidateFirstName, firstName),
+                    new CommunicationToken(CommunicationTokens.Username, emailAddress),
+                    new CommunicationToken(CommunicationTokens.PasswordResetCode, passwordResetCode),
+                    new CommunicationToken(CommunicationTokens.PasswordResetCodeExpiryDays, expiry)
                 });
         }
     }

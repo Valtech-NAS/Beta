@@ -52,10 +52,10 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             var tokens = new[]
             {
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, firstName),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, emailAddress),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.AccountUnlockCode, accountUnlockCode),
-                new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.AccountUnlockCodeExpiryDays, expiryInDays)
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, firstName),
+                new CommunicationToken(CommunicationTokens.Username, emailAddress),
+                new CommunicationToken(CommunicationTokens.AccountUnlockCode, accountUnlockCode),
+                new CommunicationToken(CommunicationTokens.AccountUnlockCodeExpiryDays, expiryInDays)
             };
 
             _communicationService.SendMessageToCandidate(

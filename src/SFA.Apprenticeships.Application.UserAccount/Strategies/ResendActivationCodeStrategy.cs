@@ -74,10 +74,10 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             _communicationService.SendMessageToCandidate(candidate.EntityId, MessageTypes.SendActivationCode,
                 new[]
                 {
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, firstName),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ActivationCode, activationCode),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ActivationCodeExpiryDays, expiry),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, emailAddress)
+                    new CommunicationToken(CommunicationTokens.CandidateFirstName, firstName),
+                    new CommunicationToken(CommunicationTokens.ActivationCode, activationCode),
+                    new CommunicationToken(CommunicationTokens.ActivationCodeExpiryDays, expiry),
+                    new CommunicationToken(CommunicationTokens.Username, emailAddress)
                 });
         }
 

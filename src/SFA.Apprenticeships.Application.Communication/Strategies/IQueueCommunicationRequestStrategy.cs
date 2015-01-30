@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using SFA.Apprenticeships.Application.Interfaces.Messaging;
+    using Interfaces.Messaging;
 
     public interface IQueueCommunicationRequestStrategy
     {
-        void Queue(Guid candidateId, MessageTypes messageType, IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens);
+        void Queue(Guid candidateId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens);
     }
 }

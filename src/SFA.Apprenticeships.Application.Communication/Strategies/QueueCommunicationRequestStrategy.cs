@@ -18,14 +18,14 @@
             _messageBus = messageBus;
         }
 
-        public void Queue(Guid candidateId, MessageTypes messageType, IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
+        public void Queue(Guid candidateId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
         {
             var candidate = _candidateReadRepository.Get(candidateId);
 
             tokens = tokens.Union(new[]
                 {
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateEmailAddress, candidate.RegistrationDetails.EmailAddress),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber) //TODO: change when we have the mobile number
+                    new CommunicationToken(CommunicationTokens.CandidateEmailAddress, candidate.RegistrationDetails.EmailAddress),
+                    new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber) //TODO: change when we have the mobile number
                 });
 
             var request = new CommunicationRequest

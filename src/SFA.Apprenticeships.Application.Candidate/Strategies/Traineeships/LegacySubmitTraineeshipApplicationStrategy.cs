@@ -74,7 +74,7 @@
             _communicationService.SendMessageToCandidate(traineeshipApplicationDetail.CandidateId, MessageTypes.TraineeshipApplicationSubmitted,
                 new[]
                 {
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.ApplicationId, traineeshipApplicationDetail.EntityId.ToString())
+                    new CommunicationToken(CommunicationTokens.ApplicationId, traineeshipApplicationDetail.EntityId.ToString())
                 });
         }
     }

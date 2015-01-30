@@ -10,7 +10,6 @@
     /// </summary>
     public interface ICommunicationService
     {
-        void SendMessageToCandidate(Guid candidateId, MessageTypes messageType,
-            IList<KeyValuePair<CommunicationTokens, string>> tokens);
+        void SendMessageToCandidate(Guid candidateId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens);
     }
 }

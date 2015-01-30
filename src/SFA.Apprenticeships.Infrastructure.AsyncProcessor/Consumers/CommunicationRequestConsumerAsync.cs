@@ -73,7 +73,7 @@
             _messageBus.PublishMessage(request);
         }
 
-        private static IEnumerable<KeyValuePair<CommunicationTokens, string>> GetMessageTokens(
+        private static IEnumerable<CommunicationToken> GetMessageTokens(
             CommunicationRequest message)
         {
             return

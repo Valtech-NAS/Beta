@@ -13,7 +13,7 @@
             _queueCommunicationRequestStrategy = queueCommunicationRequestStrategy;
         }
 
-        public void Send(Guid candidateId, IEnumerable<KeyValuePair<CommunicationTokens, string>> tokens)
+        public void Send(Guid candidateId, IEnumerable<CommunicationToken> tokens)
         {
             _queueCommunicationRequestStrategy.Queue(candidateId, MessageTypes.SendActivationCode, tokens);
         }

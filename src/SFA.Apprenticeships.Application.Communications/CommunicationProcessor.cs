@@ -37,12 +37,12 @@
                         MessageType = MessageTypes.DailyDigest
                     };
 
-                    var commTokens = new List<KeyValuePair<CommunicationTokens, string>>();
+                    var commTokens = new List<CommunicationToken>();
                     int counter = 1;
 
-                    commTokens.Add(new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateEmailAddress, candidate.RegistrationDetails.EmailAddress));
-                    commTokens.Add(new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber));
-                    commTokens.Add(new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.TotalItems, candidateDailyDigest.Value.Count().ToString(CultureInfo.InvariantCulture)));
+                    commTokens.Add(new CommunicationToken(CommunicationTokens.CandidateEmailAddress, candidate.RegistrationDetails.EmailAddress));
+                    commTokens.Add(new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber));
+                    commTokens.Add(new CommunicationToken(CommunicationTokens.TotalItems, candidateDailyDigest.Value.Count().ToString(CultureInfo.InvariantCulture)));
 
                     foreach (var draft in candidateDailyDigest.Value)
                     {
@@ -51,8 +51,7 @@
                             var pipeDelimitedDraftValues = string.Join("|",
                                 new[] {draft.Title, draft.EmployerName, draft.ClosingDate.ToLongDateString()});
                             var token =
-                                new KeyValuePair<CommunicationTokens, string>(
-                                    (CommunicationTokens) Enum.Parse(typeof (CommunicationTokens), "Item" + counter++),
+                                new CommunicationToken((CommunicationTokens) Enum.Parse(typeof (CommunicationTokens), "Item" + counter++),
                                     pipeDelimitedDraftValues);
                             commTokens.Add(token);
                         }

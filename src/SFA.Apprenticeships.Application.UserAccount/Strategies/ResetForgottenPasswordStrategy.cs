@@ -88,8 +88,8 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             _communicationService.SendMessageToCandidate(candidate.EntityId, MessageTypes.PasswordChanged,
                 new[]
                 {
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.CandidateFirstName, firstName),
-                    new KeyValuePair<CommunicationTokens, string>(CommunicationTokens.Username, emailAddress)
+                    new CommunicationToken(CommunicationTokens.CandidateFirstName, firstName),
+                    new CommunicationToken(CommunicationTokens.Username, emailAddress)
                 });
         }
 
