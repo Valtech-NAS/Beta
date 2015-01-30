@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using Interfaces.Messaging;
 
-    public interface IQueueCommunicationRequestStrategy
+    public interface ISendCandidateCommunicationStrategy
     {
-        void Queue(Guid candidateId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens);
+        void Send(Guid candidateId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens);
     }
 }

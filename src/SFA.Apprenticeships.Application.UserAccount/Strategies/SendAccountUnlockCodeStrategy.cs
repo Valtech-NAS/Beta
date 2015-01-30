@@ -1,7 +1,6 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
     using System;
-    using System.Collections.Generic;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;

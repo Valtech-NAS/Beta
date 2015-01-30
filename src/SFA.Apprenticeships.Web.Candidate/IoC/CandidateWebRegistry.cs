@@ -52,7 +52,7 @@
                 .Ctor<ISubmitApprenticeshipApplicationStrategy>("submitApprenticeshipApplicationStrategy").Is<LegacySubmitApprenticeshipApplicationStrategy>()
                 .Ctor<ISubmitTraineeshipApplicationStrategy>("submitTraineeshipApplicationStrategy").Is<LegacySubmitTraineeshipApplicationStrategy>();
 
-            For<IQueueCommunicationRequestStrategy>().Use<QueueCommunicationRequestStrategy>();
+            For<ISendCandidateCommunicationStrategy>().Use<QueueCandidateCommunicationStrategy>();
             For<IActivateCandidateStrategy>().Use<QueuedLegacyActivateCandidateStrategy>();
             For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
@@ -74,18 +74,11 @@
 
             For<ISendPasswordResetCodeStrategy>().Use<SendPasswordResetCodeStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
-            For<Application.Communication.Strategies.ISendPasswordResetCodeStrategy>()
-                .Use<QueuePasswordResetCodeStrategy>();
             For<ISubmitApprenticeshipApplicationStrategy>().Use<LegacySubmitApprenticeshipApplicationStrategy>();
-            For<ISendActivationCodeStrategy>().Use<QueueActivationCodeStrategy>();
             For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
-            For<ISendTraineeshipApplicationSubmittedStrategy>()
-                .Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>(); 
-            For<ISendPasswordChangedStrategy>().Use<QueuePasswordChangedStrategy>();
-            For<Application.Communication.Strategies.ISendAccountUnlockCodeStrategy>().Use<QueueAccountUnlockCodeStrategy>();
-            For<IResendActivationCodeStrategy>().Use<ResendActivationCodeStrategy>()
-                .Ctor<ICodeGenerator>().Named(codeGenerator);
-            For<Application.UserAccount.Strategies.ISendAccountUnlockCodeStrategy>().Use<SendAccountUnlockCodeStrategy>();
+            For<ISendTraineeshipApplicationSubmittedStrategy>().Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>(); 
+            For<IResendActivationCodeStrategy>().Use<ResendActivationCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
+            For<ISendAccountUnlockCodeStrategy>().Use<SendAccountUnlockCodeStrategy>();
             For<ISaveCandidateStrategy>().Use<SaveCandidateStrategy>();
 
             For<IUnlockAccountStrategy>()

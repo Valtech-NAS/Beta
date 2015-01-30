@@ -7,18 +7,18 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
-    public class QueueCommunicationRequestStrategy : IQueueCommunicationRequestStrategy
+    public class QueueCandidateCommunicationStrategy : ISendCandidateCommunicationStrategy
     {
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IMessageBus _messageBus;
 
-        public QueueCommunicationRequestStrategy(ICandidateReadRepository candidateReadRepository, IMessageBus messageBus)
+        public QueueCandidateCommunicationStrategy(ICandidateReadRepository candidateReadRepository, IMessageBus messageBus)
         {
             _candidateReadRepository = candidateReadRepository;
             _messageBus = messageBus;
         }
 
-        public void Queue(Guid candidateId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
+        public void Send(Guid candidateId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
         {
             var candidate = _candidateReadRepository.Get(candidateId);
 
