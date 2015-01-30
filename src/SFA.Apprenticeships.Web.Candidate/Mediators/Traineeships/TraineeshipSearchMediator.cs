@@ -133,7 +133,6 @@
 
             var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
-            // TODO: AG: US680: unit test.
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
                 return GetMediatorResponse<VacancyDetailViewModel>(Codes.TraineeshipSearch.Details.VacancyNotFound);
