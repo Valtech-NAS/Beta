@@ -151,6 +151,12 @@ Scenario: As a candidate applying for a traineeship I want to know that I have t
 	Then I see
 		| Field                    | Rule   | Value |
 		| QualificationSaveWarning | Exists |       |
+	When I enter employer question data if present
+		| Field                                              | Value |
+		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
+		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
+	And I choose ApplyButton
+	Then I am on the TraineeshipWhatsNextPage page
 
 @US687
 Scenario: As a candidate applying for a traineeship I dont want to see the qualifications warning after adding a qualification
@@ -176,6 +182,12 @@ Given I have registered a new candidate
 	Then I see
 		| Field                    | Rule           | Value |
 		| QualificationSaveWarning | Does Not Exist |       |
+	When I enter employer question data if present
+		| Field                                              | Value |
+		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
+		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
+	And I choose ApplyButton
+	Then I am on the TraineeshipWhatsNextPage page
 
 @US687
 Scenario: As a candidate applying for a traineeship I want to know that I have to add when recording work experience
@@ -195,6 +207,12 @@ Scenario: As a candidate applying for a traineeship I want to know that I have t
 	Then I see
 		| Field                     | Rule   | Value |
 		| WorkExperienceSaveWarning | Exists |       |
+	When I enter employer question data if present
+		| Field                                              | Value |
+		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
+		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
+	And I choose ApplyButton
+	Then I am on the TraineeshipWhatsNextPage page
 
 @US687
 Scenario: As a candidate applying for a traineeship I dont want to see the work experience warning after adding a work experience
@@ -215,3 +233,9 @@ Scenario: As a candidate applying for a traineeship I dont want to see the work 
 	Then I see
 		| Field                     | Rule           | Value |
 		| WorkExperienceSaveWarning | Does Not Exist |       |
+	When I enter employer question data if present
+		| Field                                              | Value |
+		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
+		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
+	And I choose ApplyButton
+	Then I am on the TraineeshipWhatsNextPage page
