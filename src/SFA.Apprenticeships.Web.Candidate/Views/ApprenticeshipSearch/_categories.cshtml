@@ -1,19 +1,14 @@
 ﻿@model ApprenticeshipSearchViewModel
 
 @{
-    //TODO: create style for tabbed-element that defaults to hidden like tabbed-content. Remove inline style
-    var divClass = "class=\"form-group tabbed-element tab2\"";
-    if (Model.SearchMode != ApprenticeshipSearchMode.Category)
-    {
-        divClass += " style=\"display: none\"";
-    }
+    var divClass = Model.SearchMode == ApprenticeshipSearchMode.Category ? "active" : "";
 }
-<div id="categories" @Html.Raw(divClass)>
+<div id="categories" class="form-group tabbed-element tab2 @divClass">
     <span class="form-label">Browse by category</span>
     <div class="grid-wrapper">
         @{
             var categories = Model.Categories.ToList();
-            var categorySplitCount = categories.Count/2 + categories.Count%2;
+            var categorySplitCount = categories.Count / 2 + categories.Count % 2;
 
             <div class="grid grid-1-2">
                 <div class="inner-block-padr">

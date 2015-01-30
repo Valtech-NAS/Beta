@@ -221,18 +221,9 @@ $(function() {
     }
   });
 
-    //----------Tabbed content
+  //----------Tabbed content
 
   $('.tabbed-tab').attr('href', "#");
-
-  $('.tabbed-tab').not('.active').each(function() {
-      var $this = $(this),
-          $tabId = $this.attr('tab');
-
-      var $tabClass = '.' + $tabId.substr(1);
-
-      $('.tabbed-element' + $tabClass).hide();
-  });
 
   $('.tabbed-tab').on('click', function() {
       var $this = $(this),

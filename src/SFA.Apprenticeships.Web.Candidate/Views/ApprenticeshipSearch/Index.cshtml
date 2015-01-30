@@ -18,25 +18,20 @@
 
                 <nav class="tabbed-nav">
                     @{
-                        var keywordTabControlClass = "tabbed-tab" + (Model.SearchMode == ApprenticeshipSearchMode.Keyword ? " active" : "");
-                        var categoriesTabControlClass = "tabbed-tab" + (Model.SearchMode == ApprenticeshipSearchMode.Category ? " active" : "");
+                        var keywordTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.Keyword ? " active" : "";
+                        var categoriesTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.Category ? " active" : "";
                     }
-                    @Html.RouteLink("Keywords", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Keyword }, new { @id = "keywordTabControl", @class = keywordTabControlClass, tab = "#tab1" })
-                    @Html.RouteLink("Categories", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Category }, new { @id = "categoriesTabControl", @class = categoriesTabControlClass, tab = "#tab2" })
+                    @Html.RouteLink("Keywords", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Keyword }, new { @id = "keywordTabControl", @class = "tabbed-tab" + keywordTabControlClass, tab = "#tab1" })
+                    @Html.RouteLink("Categories", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Category }, new { @id = "categoriesTabControl", @class = "tabbed-tab" + categoriesTabControlClass, tab = "#tab2" })
                 </nav>
 
                 <div class="tabbed-content active">
                     
                     @Html.Partial("_categories", Model)
 
-                    @if (Model.SearchMode == ApprenticeshipSearchMode.Keyword)
-                    {
-                        @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new {autofocus = "autofocus", aria_describedby = "keywordsHint"}, containerHtmlAttributes: new {@class = "tabbed-element tab1" })
-                    }
-                    else
-                    {
-                        //TODO: create style for tabbed-element that defaults to hidden like tabbed-content. Remove inline style
-                        @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new {autofocus = "autofocus", aria_describedby = "keywordsHint"}, containerHtmlAttributes: new {@class = "tabbed-element tab1", style = "display: none" })
+                    @{
+                        var keywordsClass = Model.SearchMode == ApprenticeshipSearchMode.Keyword ? " active" : "";
+                        @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new { autofocus = "autofocus", aria_describedby = "keywordsHint" }, containerHtmlAttributes: new { @class = "tabbed-element tab1" + keywordsClass })
                     }
                     <p class="visuallyhidden" id="keywordsHint">Try words that describe the type of apprenticeship you want, for example “carpentry” or “mechanics”.</p>
                     
@@ -55,12 +50,11 @@
 
                     <div class="form-group">
                         @{
-                            //TODO: create style for tabbed-element that defaults to hidden like tabbed-content. Remove inline style
-                            var searchButtonStyle = Model.SearchMode == ApprenticeshipSearchMode.Category ? " style=\"display: none\"" : "";
-                            var browseButtonStyle = Model.SearchMode == ApprenticeshipSearchMode.Keyword ? " style=\"display: none\"" : "";
+                            var searchButtonClass = Model.SearchMode == ApprenticeshipSearchMode.Keyword ? "active" : "";
+                            var browseButtonClass = Model.SearchMode == ApprenticeshipSearchMode.Category ? "active" : "";
                         }
-                        <button class="button tabbed-element tab1" id="search-button" @searchButtonStyle>Search</button>
-                        <button class="button tabbed-element tab2" id="search-button" @browseButtonStyle>Browse</button>
+                        <button class="button tabbed-element tab1 @searchButtonClass" id="search-button">Search</button>
+                        <button class="button tabbed-element tab2 @browseButtonClass" id="search-button">Browse</button>
                     </div>
 
                     @Html.HiddenFor(m => m.Latitude)

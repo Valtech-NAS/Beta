@@ -11,24 +11,19 @@
                     @{
                         var searchTabControlUrl = Url.ApprenticeshipSearchViewModelAction("results", new ApprenticeshipSearchViewModel(Model) {SearchMode = ApprenticeshipSearchMode.Keyword});
                         var browseTabControlUrl = Url.ApprenticeshipSearchViewModelAction("results", new ApprenticeshipSearchViewModel(Model) {SearchMode = ApprenticeshipSearchMode.Category});
-                        var searchTabControlClass = "tabbed-tab" + (Model.SearchMode == ApprenticeshipSearchMode.Keyword ? " active" : "");
-                        var browseTabControlClass = "tabbed-tab" + (Model.SearchMode == ApprenticeshipSearchMode.Category ? " active" : "");
+                        var searchTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.Keyword ? "active" : "";
+                        var browseTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.Category ? "active" : "";
                     }
-                    <a href="@searchTabControlUrl" id="searchTabControl" class="@searchTabControlClass" tab="#tab1">Search</a>
-                    <a href="@browseTabControlUrl" id="browseTabControl" class="@browseTabControlClass" tab="#tab2">Browse</a>
+                    <a href="@searchTabControlUrl" id="searchTabControl" class="tabbed-tab @searchTabControlClass" tab="#tab1">Search</a>
+                    <a href="@browseTabControlUrl" id="browseTabControl" class="tabbed-tab @browseTabControlClass" tab="#tab2">Browse</a>
                 </nav>
                 <div class="tabbed-content active">
 
                     @Html.Partial("_categoriesAndSubCategories", Model)
 
-                    @if (Model.SearchMode == ApprenticeshipSearchMode.Keyword)
-                    {
-                        @Html.FormTextFor(m => m.Keywords, hintText: "", containerHtmlAttributes: new {@class = "tabbed-element tab1" })
-                    }
-                    else
-                    {
-                        //TODO: create style for tabbed-element that defaults to hidden like tabbed-content. Remove inline style
-                        @Html.FormTextFor(m => m.Keywords, hintText: "", containerHtmlAttributes: new {@class = "tabbed-element tab1", style = "display: none" })
+                    @{
+                        var keywordsClass = Model.SearchMode == ApprenticeshipSearchMode.Keyword ? " active" : "";
+                        @Html.FormTextFor(m => m.Keywords, hintText: "", containerHtmlAttributes: new {@class = "tabbed-element tab1" + keywordsClass })
                     }
 
                     @Html.FormTextFor(m => m.Location, hintText: "")

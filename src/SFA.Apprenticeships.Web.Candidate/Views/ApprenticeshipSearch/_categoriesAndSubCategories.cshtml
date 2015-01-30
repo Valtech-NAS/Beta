@@ -1,14 +1,9 @@
 ﻿@model ApprenticeshipSearchViewModel
 
 @{
-    //TODO: create style for tabbed-element that defaults to hidden like tabbed-content. Remove inline style
-    var divClass = "class=\"form-group tabbed-element tab2\"";
-    if (Model.SearchMode != ApprenticeshipSearchMode.Category)
-    {
-        divClass += " style=\"display: none\"";
-    }
+    var divClass = Model.SearchMode == ApprenticeshipSearchMode.Category ? "active" : "";
 }
-<div @Html.Raw(divClass)>
+<div class="form-group tabbed-element tab2 @divClass">
     <ul class="copy-16 list-text list-checkradio">
         @foreach (var category in Model.Categories)
         {
