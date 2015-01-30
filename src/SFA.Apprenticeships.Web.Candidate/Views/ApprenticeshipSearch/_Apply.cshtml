@@ -1,4 +1,6 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Applications
+@using SFA.Apprenticeships.Domain.Entities.Vacancies
+
 @model VacancyDetailViewModel
 
 @{
@@ -30,17 +32,21 @@ else if (Request.IsAuthenticated)
                 break;
 
             default:
-                // TODO: AG: US680: can we get here without a DateApplied?
                 if (Model.DateApplied.HasValue)
                 {
                     <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
                 }
-                else
+
+                switch (Model.VacancyStatus)
                 {
-                    @:TODO: US680: content requested for draft application for vacancy that has expired
+                    case VacancyStatuses.Live:
+                        <a href="@Url.Action("Track", "Account", new { id = Model.Id })">Track application status</a>
+                        break;
+                    case VacancyStatuses.Expired:
+                        <a href="@Url.Action("Index", "Account")">Return to my applications</a>
+                        break;
                 }
-                
-                <a href="@Url.Action("Track", "Account", new { id = Model.Id })">Track application status</a>
+
                 break;
         }
     }
@@ -55,4 +61,13 @@ else
     // Vacancy is not being viewed by a signed-in candidate.
     <a role="button" id="apply-button" class="button button-with-hint" title="Sign in to apply" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signin/", "Apprenticeship – Sign In to Apply", ViewData["AnalyticsButtonPosition"]))>Sign in to apply</a>
 }
-<p class="copy-16">Closing date: @Model.ClosingDate.ToFriendlyClosingToday()</p>
+
+@switch (Model.VacancyStatus)
+{
+    case VacancyStatuses.Live:
+        <p class="copy-16">Closing date: @Model.ClosingDate.ToFriendlyClosingToday()</p>
+        break;
+    case VacancyStatuses.Expired:
+        <strong>Closed on:</strong> @Html.DisplayFor(m => m.ClosingDate)
+        break;
+}

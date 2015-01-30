@@ -283,11 +283,16 @@ else
                                         {
                                             @Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                             <br />
-                                            
-                                            <!-- TODO: AG: US680: only show Closing date when vacancy is Live -->
-                                            if (application.VacancyStatus == VacancyStatuses.Live || application.VacancyStatus == VacancyStatuses.Unknown)
+
+                                            switch (application.VacancyStatus)
                                             {
-                                                <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
+                                                case VacancyStatuses.Live:
+                                                case VacancyStatuses.Unknown:
+                                                    <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
+                                                    break;
+                                                case VacancyStatuses.Expired:
+                                                    <strong>Closed on:</strong> @Html.DisplayFor(m => application.ClosingDate)
+                                                    break;
                                             }
                                         }
                                     </td>
@@ -298,8 +303,15 @@ else
                                         }
                                         else
                                         {
-                                            // TODO: AG: US680: status description could / should be based on Vacancy Status.
-                                            @:Apprenticeship no longer available
+                                            switch (application.VacancyStatus)
+                                            {
+                                                case VacancyStatuses.Expired:
+                                                    @:Apprenticeship closed
+                                                    break;
+                                                case VacancyStatuses.Unavailable:
+                                                    @:Apprenticeship no longer available
+                                                    break;
+                                            }
                                         }
                                     </td>
                                     <td class="ta-center">
