@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Traineeships
 {
     using System;
-    using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;

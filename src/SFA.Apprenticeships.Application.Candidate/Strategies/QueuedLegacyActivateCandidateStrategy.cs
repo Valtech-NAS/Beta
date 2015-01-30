@@ -3,7 +3,6 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Messaging;
     using Interfaces.Users;
 
     public class QueuedLegacyActivateCandidateStrategy : IActivateCandidateStrategy

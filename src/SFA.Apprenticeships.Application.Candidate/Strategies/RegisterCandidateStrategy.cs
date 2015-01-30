@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using System;
-    using System.Collections.Generic;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
