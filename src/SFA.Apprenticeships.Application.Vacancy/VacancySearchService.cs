@@ -4,9 +4,9 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
+    using Interfaces.Logging;
     using Interfaces.Search;
     using Interfaces.Vacancies;
-    using NLog;
     using ErrorCodes = Interfaces.Vacancies.ErrorCodes;
 
     public class VacancySearchService<TVacancySummaryResponse, TVacancyDetail, TSearchParameters> : IVacancySearchService<TVacancySummaryResponse, TVacancyDetail, TSearchParameters>
@@ -17,14 +17,15 @@
         private const string CallingMessageFormat = "Calling VacancySearchService with the following parameters; {0}";
         private const string FailedMessageFormat = "Vacancy search failed for the following parameters; {0}";
 
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly IVacancySearchProvider<TVacancySummaryResponse, TSearchParameters> _vacancySearchProvider;
         private readonly IVacancyDataProvider<TVacancyDetail> _vacancyDataProvider;
+        private readonly ILogService _logger;
 
-        public VacancySearchService(IVacancySearchProvider<TVacancySummaryResponse, TSearchParameters> vacancySearchProvider, IVacancyDataProvider<TVacancyDetail> vacancyDataProvider)
+        public VacancySearchService(IVacancySearchProvider<TVacancySummaryResponse, TSearchParameters> vacancySearchProvider, IVacancyDataProvider<TVacancyDetail> vacancyDataProvider, ILogService logger)
         {
             _vacancySearchProvider = vacancySearchProvider;
             _vacancyDataProvider = vacancyDataProvider;
+            _logger = logger;
         }
 
         public SearchResults<TVacancySummaryResponse, TSearchParameters> Search(TSearchParameters parameters)
@@ -34,8 +35,8 @@
             Condition.Requires(parameters.PageNumber).IsGreaterOrEqual(1);
             Condition.Requires(parameters.PageSize).IsGreaterOrEqual(1);
 
-            var enterMmessage = GetLoggerMessage(CallingMessageFormat, parameters);
-            _logger.Debug(enterMmessage);
+            var enterMessage = GetLoggerMessage(CallingMessageFormat, parameters);
+            _logger.Debug(enterMessage);
 
             try
             {

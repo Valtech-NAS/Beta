@@ -10,7 +10,7 @@
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
     using Domain.Entities.Exceptions;
-    using NLog;
+    using Interfaces.Logging;
     using Strategies;
     using Strategies.Apprenticeships;
     using Strategies.Traineeships;
@@ -19,7 +19,7 @@
 
     public class CandidateService : ICandidateService
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService Logger;
 
         private readonly IActivateCandidateStrategy _activateCandidateStrategy;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
@@ -64,7 +64,7 @@
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             IGetCandidateTraineeshipApplicationsStrategy getCandidateTraineeshipApplicationsStrategy,
             ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> candidateApprenticeshipVacancyDetailStrategy,
-            ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> candidateTraineeshipVacancyDetailStrategy)
+            ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> candidateTraineeshipVacancyDetailStrategy, ILogService logService)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -87,6 +87,7 @@
             _getCandidateTraineeshipApplicationsStrategy = getCandidateTraineeshipApplicationsStrategy;
             _candidateApprenticeshipVacancyDetailStrategy = candidateApprenticeshipVacancyDetailStrategy;
             _candidateTraineeshipVacancyDetailStrategy = candidateTraineeshipVacancyDetailStrategy;
+            Logger = logService;
         }
 
         public Candidate Register(Candidate newCandidate, string password)

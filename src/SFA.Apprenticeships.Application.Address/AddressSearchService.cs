@@ -6,22 +6,23 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Interfaces.Locations;
-    using NLog;
+    using Interfaces.Logging;
     using ErrorCodes = Interfaces.Locations.ErrorCodes;
 
     public class AddressSearchService : IAddressSearchService
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IAddressSearchProvider _addressSearchProvider;
 
-        public AddressSearchService(IAddressSearchProvider addressSearchProvider)
+        public AddressSearchService(IAddressSearchProvider addressSearchProvider, ILogService logger)
         {
             _addressSearchProvider = addressSearchProvider;
+            _logger = logger;
         }
 
         public IEnumerable<Address> FindAddress(string postcode)
         {
-            Logger.Debug("Calling AddressSearchService to find address for postcode={0}", postcode);
+            _logger.Debug("Calling AddressSearchService to find address for postcode={0}", postcode);
             Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
 
             try
@@ -31,7 +32,7 @@
             catch (Exception e)
             {
                 var message = string.Format("FindAddress failed for postcode {0}.", postcode);
-                Logger.Debug(message, e);
+                _logger.Debug(message, e);
                 throw new CustomException(message, e, ErrorCodes.AddressSearchFailed);
             }
         }

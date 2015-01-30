@@ -6,26 +6,27 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Interfaces.Locations;
-    using NLog;
+    using Interfaces.Logging;
     using ErrorCodes = Interfaces.Locations.ErrorCodes;
 
     public class LocationSearchService : ILocationSearchService
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly ILocationLookupProvider _locationLookupProvider;
         private readonly IPostcodeLookupProvider _postcodeLookupProvider;
 
-        public LocationSearchService(ILocationLookupProvider locationLookupProvider, IPostcodeLookupProvider postcodeLookupProvider)
+        public LocationSearchService(ILocationLookupProvider locationLookupProvider, IPostcodeLookupProvider postcodeLookupProvider, ILogService logger)
         {
             _locationLookupProvider = locationLookupProvider;
             _postcodeLookupProvider = postcodeLookupProvider;
+            _logger = logger;
         }
 
         public IEnumerable<Location> FindLocation(string placeNameOrPostcode)
         {
             Condition.Requires(placeNameOrPostcode, "placeNameOrPostcode").IsNotNullOrWhiteSpace();
 
-            Logger.Debug("Calling LocationLookupService to find location for place name or postcode {0}.",
+            _logger.Debug("Calling LocationLookupService to find location for place name or postcode {0}.",
                 placeNameOrPostcode);
 
             if (LocationHelper.IsPostcode(placeNameOrPostcode) || LocationHelper.IsPartialPostcode(placeNameOrPostcode))
@@ -45,7 +46,7 @@
             catch (Exception e)
             {
                 const string message = "Location lookup failed.";
-                Logger.Debug(message, e);
+                _logger.Debug(message, e);
                 throw new CustomException(
                     message, e, ErrorCodes.LocationLookupFailed);
             }
@@ -62,13 +63,13 @@
             catch (Exception e)
             {
                 var message = string.Format("Postcode lookup failed for postcode {0}.", placeName);
-                Logger.Debug(message, e);
+                _logger.Debug(message, e);
                 throw new CustomException(message, e, ErrorCodes.PostcodeLookupFailed);
             }
 
             if (location == null)
             {
-                Logger.Debug("Cannot find any match for place name or postcode {0}.", placeName);
+                _logger.Debug("Cannot find any match for place name or postcode {0}.", placeName);
                 return null; // no match
             }
 

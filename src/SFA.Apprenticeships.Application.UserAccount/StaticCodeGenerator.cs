@@ -1,16 +1,21 @@
 ﻿namespace SFA.Apprenticeships.Application.UserAccount
 {
+    using Interfaces.Logging;
     using Interfaces.Users;
-    using NLog;
 
     public class StaticCodeGenerator : ICodeGenerator
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
+        public StaticCodeGenerator(ILogService logger)
+        {
+            _logger = logger;
+        }
+
         private const string DefaultCode = "ABC123";
 
         public string Generate()
         {
-            Logger.Debug("Generating new default code.");
+            _logger.Debug("Generating new default code.");
             return DefaultCode;
         }
     }

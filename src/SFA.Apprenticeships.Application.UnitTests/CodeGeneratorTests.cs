@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Interfaces.Logging;
+    using Moq;
     using NUnit.Framework;
     using UserAccount;
 
@@ -18,7 +20,7 @@
             for (var i = 0; i < sampleSize; i++)
             {
                 // Arrange.
-                var generator = new RandomCodeGenerator();
+                var generator = new RandomCodeGenerator(new Mock<ILogService>().Object);
 
                 // Act.
                 var code = generator.Generate();

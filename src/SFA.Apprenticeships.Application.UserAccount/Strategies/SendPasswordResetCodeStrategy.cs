@@ -6,11 +6,13 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
+    using Interfaces.Logging;
     using Interfaces.Users;
-    using NLog;
 
     public class SendPasswordResetCodeStrategy : ISendPasswordResetCodeStrategy
     {
+        private readonly ILogService _logger;
+
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICodeGenerator _codeGenerator;
         private readonly ICommunicationService _communicationService;
@@ -18,18 +20,17 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
 
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
         public SendPasswordResetCodeStrategy(IConfigurationManager configurationManager,
             ICommunicationService communicationService, ICodeGenerator codeGenerator,
             IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository,
-            ICandidateReadRepository candidateReadRepository)
+            ICandidateReadRepository candidateReadRepository, ILogService logger)
         {
             _communicationService = communicationService;
             _codeGenerator = codeGenerator;
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
             _candidateReadRepository = candidateReadRepository;
+            _logger = logger;
             _passwordResetCodeExpiryDays = configurationManager.GetAppSetting<int>("PasswordResetCodeExpiryDays");
         }
 
@@ -39,7 +40,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             if (user == null)
             {
-                Logger.Info(string.Format("Cannot send password reset code, username not found: \"{0}\".", username));
+                _logger.Info(string.Format("Cannot send password reset code, username not found: \"{0}\".", username));
                 return;
             }
 

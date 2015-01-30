@@ -85,6 +85,7 @@
     <Compile Include="Candidates\ErrorCodes.cs" />
     <Compile Include="Communications\ErrorCodes.cs" />
     <Compile Include="Locations\ErrorCodes.cs" />
+    <Compile Include="Logging\ILogService.cs" />
     <Compile Include="Messaging\BaseRequest.cs" />
     <Compile Include="Communications\CommunicationToken.cs" />
     <Compile Include="Messaging\ErrorCodes.cs" />

@@ -13,6 +13,7 @@
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Locations;
+    using Application.Interfaces.Logging;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
@@ -26,6 +27,7 @@
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Mapping;
     using Infrastructure.LegacyWebServices.ReferenceData;
+    using Infrastructure.Logging;
     using Mappers;
     using Mediators;
     using Mediators.Account;
@@ -40,6 +42,9 @@
     {
         public CandidateWebRegistry()
         {
+            //todo: split this lot into helpers methods
+            For<ILogService>().Use<NLogLogService>(); //todo: move this
+
             var codeGenerator = CloudConfigurationManager.GetSetting("CodeGenerator");
 
             // services (app)

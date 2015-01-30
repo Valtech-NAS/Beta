@@ -17,7 +17,7 @@
 
         public static string GetVersion()
         {
-            var fileVersion = FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof(VersionLogging)).Location).FileVersion;
+            var fileVersion = FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof (VersionLogging)).Location).FileVersion;
             return fileVersion;
         }
     }

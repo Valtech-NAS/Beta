@@ -6,11 +6,11 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
-    using NLog;
+    using Interfaces.Logging;
 
     public class SaveCandidateStrategy : ISaveCandidateStrategy
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
 
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
@@ -22,13 +22,14 @@
             IGetCandidateApprenticeshipApplicationsStrategy getCandidateApplicationsStrategy,
             ICandidateReadRepository candidateReadRepository,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
-            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository)
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, ILogService logger)
         {
             _candidateWriteRepository = candidateWriteRepository;
             _getCandidateApplicationsStrategy = getCandidateApplicationsStrategy;
             _candidateReadRepository = candidateReadRepository;
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
+            _logger = logger;
         }
 
         public Candidate SaveCandidate(Candidate candidate)
@@ -55,7 +56,7 @@
                         "Error while updating a draft application with the updated user personal details for user {0}",
                         candidate.EntityId);
 
-                    Logger.Warn(message, e);
+                    _logger.Warn(message, e);
                 }
             });
 

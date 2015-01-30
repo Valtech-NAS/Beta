@@ -3,12 +3,12 @@
     using System;
     using System.Collections.Generic;
     using Interfaces.Communications;
-    using NLog;
+    using Interfaces.Logging;
     using Strategies;
 
     public class CommunicationService : ICommunicationService
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
 
         private readonly ISendApplicationSubmittedStrategy _sendApplicationSubmittedStrategy;
         private readonly ISendTraineeshipApplicationSubmittedStrategy _sendTraineeshipApplicationSubmittedStrategy;
@@ -16,16 +16,17 @@
 
         public CommunicationService(ISendApplicationSubmittedStrategy sendApplicationSubmittedStrategy,
             ISendTraineeshipApplicationSubmittedStrategy sendTraineeshipApplicationSubmittedStrategy, 
-            ISendCandidateCommunicationStrategy sendCandidateCommunicationStrategy)
+            ISendCandidateCommunicationStrategy sendCandidateCommunicationStrategy, ILogService logger)
         {
             _sendApplicationSubmittedStrategy = sendApplicationSubmittedStrategy;
             _sendTraineeshipApplicationSubmittedStrategy = sendTraineeshipApplicationSubmittedStrategy;
             _sendCandidateCommunicationStrategy = sendCandidateCommunicationStrategy;
+            _logger = logger;
         }
 
         public void SendMessageToCandidate(Guid candidateId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
         {
-            Logger.Debug("CommunicationService called to send a message of type {0} to candidate with Id={1}", messageType, candidateId);
+            _logger.Debug("CommunicationService called to send a message of type {0} to candidate with Id={1}", messageType, candidateId);
 
             switch (messageType)
             {

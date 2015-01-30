@@ -6,12 +6,12 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
-    using NLog;
+    using Interfaces.Logging;
     using MessagingErrorCodes = Interfaces.Messaging.ErrorCodes;
 
     public class LegacySubmitTraineeshipApplicationStrategy : ISubmitTraineeshipApplicationStrategy
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
 
         private readonly ICommunicationService _communicationService;
         private readonly IMessageBus _messageBus;
@@ -23,12 +23,13 @@
             IMessageBus messageBus,
             ICommunicationService communicationService,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
-            ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository)
+            ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository, ILogService logger)
         {
             _messageBus = messageBus;
             _communicationService = communicationService;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
+            _logger = logger;
         }
 
         public void SubmitApplication(Guid applicationId)
@@ -42,7 +43,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Debug("SubmitTraineeshipApplicationRequest could not be queued for ApplicationId={0}", applicationId);
+                _logger.Debug("SubmitTraineeshipApplicationRequest could not be queued for ApplicationId={0}", applicationId);
 
                 throw new CustomException("SubmitTraineeshipApplicationRequest could not be queued", ex,
                     MessagingErrorCodes.ApplicationQueuingError);

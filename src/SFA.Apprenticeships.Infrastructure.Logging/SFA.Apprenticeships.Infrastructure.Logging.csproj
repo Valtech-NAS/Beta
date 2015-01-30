@@ -110,6 +110,7 @@
     </Compile>
     <Compile Include="Layouts\JsonLayout.cs" />
     <Compile Include="Layouts\JsonProperty.cs" />
+    <Compile Include="NLogLogService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabbitMQTarget.cs" />
     <Compile Include="VersionLogging.cs" />

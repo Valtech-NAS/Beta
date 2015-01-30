@@ -2,12 +2,17 @@
 {
     using System.Text;
     using System.Security.Cryptography;
+    using Interfaces.Logging;
     using Interfaces.Users;
-    using NLog;
 
     public class RandomCodeGenerator : ICodeGenerator
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
+        public RandomCodeGenerator(ILogService logger)
+        {
+            _logger = logger;
+        }
+
         public const int CodeLength = 6;
 
         // Vowels are omitted to avoid confusion with numbers (e.g. O and I) and to avoid profanities,
@@ -17,7 +22,7 @@
 
         public string Generate()
         {
-            Logger.Debug("Generating new code.");
+            _logger.Debug("Generating new code.");
             var bytes = GenerateRandomBytes(CodeLength);
             var sb = new StringBuilder(CodeLength);
 

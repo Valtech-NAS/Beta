@@ -6,24 +6,26 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
-    using NLog;
+    using Interfaces.Logging;
     using MessagingErrorCodes = Interfaces.Messaging.ErrorCodes;
 
     public class LegacySubmitApprenticeshipApplicationStrategy : ISubmitApprenticeshipApplicationStrategy
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
+
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly IMessageBus _messageBus;
         private readonly ICommunicationService _communicationService;
 
         public LegacySubmitApprenticeshipApplicationStrategy(IMessageBus messageBus, IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
-            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository, ICommunicationService communicationService)
+            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository, ICommunicationService communicationService, ILogService logger)
         {
             _messageBus = messageBus;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _communicationService = communicationService;
+            _logger = logger;
         }
 
         public void SubmitApplication(Guid candidateId, int vacancyId)
@@ -42,7 +44,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Debug("SubmitApplicationRequest could not be queued for ApplicationId={0}", applicationDetail.EntityId);
+                _logger.Debug("SubmitApplicationRequest could not be queued for ApplicationId={0}", applicationDetail.EntityId);
 
                 throw new CustomException("SubmitApplicationRequest could not be queued", ex,
                     MessagingErrorCodes.ApplicationQueuingError);

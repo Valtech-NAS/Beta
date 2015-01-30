@@ -5,11 +5,11 @@
     using ApplicationUpdate;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
-    using NLog;
+    using Interfaces.Logging;
 
     public class LegacyGetCandidateApprenticeshipApplicationsStrategy : IGetCandidateApprenticeshipApplicationsStrategy
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
 
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
@@ -20,12 +20,13 @@
             ICandidateReadRepository candidateReadRepository,
             ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider,
             IApplicationStatusUpdater applicationStatusUpdater,
-            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository)
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, ILogService logger)
         {
             _candidateReadRepository = candidateReadRepository;
             _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
             _applicationStatusUpdater = applicationStatusUpdater;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
+            _logger = logger;
         }
 
         public IList<ApprenticeshipApplicationSummary> GetApplications(Guid candidateId)
@@ -44,7 +45,7 @@
             catch (Exception ex)
             {
                 // if fails just return apps with their current status
-                Logger.Error("Failed to update candidate's application statuses from legacy", ex);
+                _logger.Error("Failed to update candidate's application statuses from legacy", ex);
             }
 
             return _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId);

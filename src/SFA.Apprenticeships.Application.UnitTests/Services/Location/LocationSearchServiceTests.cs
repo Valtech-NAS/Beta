@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Services.Location
 {
+    using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
     using Application.Location;
@@ -12,12 +13,13 @@
         private const string ALocation = "Coventry";
         private readonly Mock<ILocationLookupProvider> _locationLookupProvider = new Mock<ILocationLookupProvider>();
         private readonly Mock<IPostcodeLookupProvider> _postcodeLookupProvider = new Mock<IPostcodeLookupProvider>();
+        private readonly Mock<ILogService> _logger = new Mock<ILogService>();
 
         [Test]
         public void ShouldCallToPostcodeProviderIfTheInputIsAPostcode()
         {
             var locationLookupService = new LocationSearchService(_locationLookupProvider.Object,
-                _postcodeLookupProvider.Object);
+                _postcodeLookupProvider.Object, _logger.Object);
 
             locationLookupService.FindLocation(ValidCompletePostcode);
 
@@ -28,7 +30,7 @@
         public void ShouldCallToPostcodeProviderIfTheInputIsAPartialPostcode()
         {
             var locationLookupService = new LocationSearchService(_locationLookupProvider.Object,
-                _postcodeLookupProvider.Object);
+                _postcodeLookupProvider.Object, _logger.Object);
 
             locationLookupService.FindLocation(ValidPartialPostcode);
 
@@ -39,7 +41,7 @@
         public void ShouldCallToLocationProviderIfTheInputIsALocation()
         {
             var locationLookupService = new LocationSearchService(_locationLookupProvider.Object,
-                _postcodeLookupProvider.Object);
+                _postcodeLookupProvider.Object, _logger.Object);
 
             locationLookupService.FindLocation(ALocation);
 
