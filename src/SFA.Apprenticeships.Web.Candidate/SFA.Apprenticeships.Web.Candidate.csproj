@@ -628,7 +628,6 @@
     <Content Include="Content\_assets\img\govuk-crest-2x.png" />
     <Content Include="Content\_assets\img\open-government-licence.png" />
     <Content Include="Content\_assets\img\open-government-licence_2x.png" />
-    <Content Include="Content\_assets\js\scripts.min.js" />
     <Content Include="Content\_assets\js\vendor\goog\webfont-debug.js" />
     <Content Include="Content\_assets\js\vendor\jquery-1.11.1.min.js" />
     <Content Include="Content\_assets\js\vendor\modernizr-custom.js" />
