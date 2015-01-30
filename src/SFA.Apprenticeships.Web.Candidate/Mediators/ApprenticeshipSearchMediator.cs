@@ -294,10 +294,11 @@
                 return GetMediatorResponse(Codes.ApprenticeshipSearch.Details.VacancyHasError, vacancyDetailViewModel, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Warning);
             }
 
-            if ((!vacancyDetailViewModel.DateApplied.HasValue && vacancyDetailViewModel.VacancyStatus != VacancyStatuses.Live) ||
-                (vacancyDetailViewModel.DateApplied.HasValue && vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable))
+            if ((!vacancyDetailViewModel.CandidateApplicationStatus.HasValue && vacancyDetailViewModel.VacancyStatus != VacancyStatuses.Live) ||
+                (vacancyDetailViewModel.CandidateApplicationStatus.HasValue && vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable))
             {
-                // If candidate has never applied for vacancy, it must be live. If candidate has applied for vacancy, it must still be available.
+                // Candidate has no application for the vacancy and the vacancy is no longer live OR
+                // candidate has an application (at least a draft) but the vacancy is no longer available.
                 return GetMediatorResponse<VacancyDetailViewModel>(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
             }
 

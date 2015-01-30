@@ -78,7 +78,6 @@
         {
             var vacancyDetailViewModel = new VacancyDetailViewModel
             {
-                DateApplied = DateTime.Today.AddDays(-1),
                 CandidateApplicationStatus = ApplicationStatuses.Submitted,
                 VacancyStatus = VacancyStatuses.Unavailable
             };
