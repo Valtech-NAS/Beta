@@ -1,18 +1,20 @@
 ﻿using System;
 using MongoDB.Driver;
-using NLog;
 using SFA.Apprenticeships.Domain.Interfaces.Configuration;
 
 namespace SFA.Apprenticeships.Infrastructure.Mongo.Common
 {
+    using Application.Interfaces.Logging;
+
     public class MongoAdminClient : IMongoAdminClient
     {
+        private readonly ILogService _logger;
         private const string ConnectionStringAppSetting = "Admin.mongoDB";
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly MongoDatabase _database;
 
-        public MongoAdminClient(IConfigurationManager configurationManager)
+        public MongoAdminClient(IConfigurationManager configurationManager, ILogService logger)
         {
+            _logger = logger;
             var mongoConnectionString = configurationManager.GetAppSetting(ConnectionStringAppSetting);
             var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
 
@@ -33,9 +35,9 @@ namespace SFA.Apprenticeships.Infrastructure.Mongo.Common
 
         public CommandResult RunCommand(string command)
         {
-            Logger.Info("Running command {0}", command);
+            _logger.Info("Running command {0}", command);
             var result = _database.RunCommand(command);
-            Logger.Info("Command Result {0} {1}", result.Ok, result.Response);
+            _logger.Info("Command Result {0} {1}", result.Ok, result.Response);
             
             return result;
         }

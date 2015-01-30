@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Logging;
     using Domain.Entities.Communication;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
@@ -10,17 +11,18 @@
     using Entities;
     using MongoDB.Bson;
     using MongoDB.Driver.Builders;
-    using NLog;
 
+    //todo: add logging
     public class ExpiringDraftRepository : CommunicationRepository<ExpiringDraft>, IExpiringDraftRepository
     {
+        private readonly ILogService _logger;
         private readonly IMapper _mapper;
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public ExpiringDraftRepository(IConfigurationManager configurationManager, IMapper mapper)
+        public ExpiringDraftRepository(IConfigurationManager configurationManager, IMapper mapper, ILogService logger)
             : base(configurationManager, "expiringdrafts")
         {
             _mapper = mapper;
+            _logger = logger;
         }
 
         public void Save(ExpiringDraft expiringDraft)
