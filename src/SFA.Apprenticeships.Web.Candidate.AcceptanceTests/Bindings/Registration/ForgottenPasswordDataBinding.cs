@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings.Registration
 {
     using Domain.Interfaces.Repositories;
+    using IoC;
     using SpecBind.Helpers;
     using StructureMap;
     using FluentAssertions;
@@ -22,11 +23,7 @@
         public ForgottenPasswordDataBinding(ITokenManager tokenManager)
         {
             _tokenManager = tokenManager;
-
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
-#pragma warning restore 0618
+            _userReadRepository = WebTestRegistry.Container.GetInstance<IUserReadRepository>();
 
             SetTokens();
         }

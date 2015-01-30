@@ -3,6 +3,7 @@
     using System;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using IoC;
     using StructureMap;
 
     public class UserBuilder
@@ -82,11 +83,8 @@
 
         public User Build()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var repo = ObjectFactory.GetInstance<IUserWriteRepository>();
-            var repoRead = ObjectFactory.GetInstance<IUserReadRepository>();
-#pragma warning restore 0618
+            var repo = WebTestRegistry.Container.GetInstance<IUserWriteRepository>();
+            var repoRead = WebTestRegistry.Container.GetInstance<IUserReadRepository>();
 
             var userRead = repoRead.Get(User.Username);
             if ( userRead != null)

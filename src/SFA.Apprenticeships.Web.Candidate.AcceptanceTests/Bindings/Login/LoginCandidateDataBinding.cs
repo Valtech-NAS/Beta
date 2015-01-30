@@ -8,6 +8,7 @@
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using global::SpecBind.Helpers;
+    using IoC;
     using StructureMap;
     using TechTalk.SpecFlow;
 
@@ -34,11 +35,7 @@
         public LoginCandidateDataBinding(ITokenManager tokenManager)
         {
             _tokenManager = tokenManager;
-
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
-#pragma warning restore 0618
+            _userReadRepository = WebTestRegistry.Container.GetInstance<IUserReadRepository>();
         }
 
         //TODO: create a mechanism where we won't need to login - just get the webdriver and set the auth cookie directly or similar

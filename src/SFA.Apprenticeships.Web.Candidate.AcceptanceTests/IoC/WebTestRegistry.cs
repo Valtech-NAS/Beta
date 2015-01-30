@@ -11,12 +11,12 @@
     [Binding]
     public class WebTestRegistry
     {
+        public static Container Container;
+
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            Container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
@@ -24,7 +24,6 @@
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
             });
-#pragma warning restore 0618
         }
     }
 }

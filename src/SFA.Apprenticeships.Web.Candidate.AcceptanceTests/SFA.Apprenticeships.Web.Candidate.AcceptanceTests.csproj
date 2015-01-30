@@ -309,7 +309,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Generators\EmailGenerator.cs" />
-    <Compile Include="Hooks\BeforeAllScenarios.cs" />
     <Compile Include="IoC\WebTestRegistry.cs" />
     <Compile Include="Pages\Account\SettingsPage.cs" />
     <Compile Include="Pages\ApprenticeshipApplication\ApprenticeshipApplicationCompletePage.cs" />
@@ -566,7 +565,9 @@
       <Name>SFA.Apprenticeships.Infrastructure.UserDirectory</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Hooks\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

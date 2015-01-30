@@ -7,6 +7,7 @@
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
+    using IoC;
     using StructureMap;
 
     public class TraineeshipApplicationBuilder
@@ -56,10 +57,7 @@
                 }
             };
 
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var repo = ObjectFactory.GetInstance<ITraineeshipApplicationWriteRepository>();
-#pragma warning restore 0618
+            var repo = WebTestRegistry.Container.GetInstance<ITraineeshipApplicationWriteRepository>();
 
             TraineeshipApplicationDetail.CandidateDetails = RegistrationBuilder.Build();
 
@@ -70,11 +68,8 @@
 
         public void DeleteTraineeshipApplications(Guid userCandidateId)
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var writerepo = ObjectFactory.GetInstance<ITraineeshipApplicationWriteRepository>();
-            var readrepo = ObjectFactory.GetInstance<ITraineeshipApplicationReadRepository>();
-#pragma warning restore 0618
+            var writerepo = WebTestRegistry.Container.GetInstance<ITraineeshipApplicationWriteRepository>();
+            var readrepo = WebTestRegistry.Container.GetInstance<ITraineeshipApplicationReadRepository>();
 
             var candidateApplications = readrepo.GetForCandidate(userCandidateId);
             candidateApplications.ToList().ForEach(a => writerepo.Delete(a.ApplicationId));

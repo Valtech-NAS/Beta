@@ -8,6 +8,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
     using Domain.Entities.Candidates;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
+    using IoC;
     using StructureMap;
 
     public class ApprenticeshipApplicationBuilder
@@ -72,10 +73,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
                 }
             };
 
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var repo = ObjectFactory.GetInstance<IApprenticeshipApplicationWriteRepository>();
-#pragma warning restore 0618
+            var repo = WebTestRegistry.Container.GetInstance<IApprenticeshipApplicationWriteRepository>();
 
             ApprenticeshipApplicationDetail.CandidateDetails = RegistrationBuilder.Build();
 
@@ -86,11 +84,8 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
 
         public void DeleteApprenticeshipApplications(Guid userCandidateId)
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var writerepo = ObjectFactory.GetInstance<IApprenticeshipApplicationWriteRepository>();
-            var readrepo = ObjectFactory.GetInstance<IApprenticeshipApplicationReadRepository>();
-#pragma warning restore 0618
+            var writerepo = WebTestRegistry.Container.GetInstance<IApprenticeshipApplicationWriteRepository>();
+            var readrepo = WebTestRegistry.Container.GetInstance<IApprenticeshipApplicationReadRepository>();
 
             var candidateApplications = readrepo.GetForCandidate(userCandidateId);
             candidateApplications.ToList().ForEach(a => writerepo.Delete(a.ApplicationId));

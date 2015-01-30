@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
     using FluentAssertions;
     using Generators;
     using global::SpecBind.Helpers;
+    using IoC;
     using OpenQA.Selenium;
     using SpecBind.BrowserSupport;
     using StructureMap;
@@ -35,11 +36,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
         public DataGeneratorBinding(ITokenManager tokenManager, IBrowser browser)
         {
             _tokenManager = tokenManager;
-
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            _userReadRepository = ObjectFactory.GetInstance<IUserReadRepository>();
-#pragma warning restore 0618
+            _userReadRepository = WebTestRegistry.Container.GetInstance<IUserReadRepository>();
             _driver = BindingUtils.Driver(browser);
         }
 
