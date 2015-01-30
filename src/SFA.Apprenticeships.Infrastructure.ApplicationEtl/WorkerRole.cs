@@ -6,6 +6,8 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
     using System.ServiceModel;
     using System.Threading;
     using Azure.Common.IoC;
+    using Caching.Azure.IoC;
+    using Caching.Memory.IoC;
     using Common.Configuration;
     using Common.IoC;
     using Consumers;
@@ -72,6 +74,8 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                     x.AddRegistry<CommonRegistry>();
                     x.AddRegistry<AzureCommonRegistry>();
                     x.AddRegistry<RabbitMqRegistry>();
+                    x.AddRegistry<AzureCacheRegistry>();
+                    x.AddRegistry<MemoryCacheRegistry>();
                     x.AddRegistry(new LegacyWebServicesRegistry(useCache));
                     x.AddRegistry<RabbitMqRegistry>();
                     x.AddRegistry<ApplicationEtlRegistry>();

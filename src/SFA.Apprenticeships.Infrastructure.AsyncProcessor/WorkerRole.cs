@@ -5,6 +5,8 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
     using System.Reflection;
     using System.Threading;
     using Azure.Common.IoC;
+    using Caching.Azure.IoC;
+    using Caching.Memory.IoC;
     using Common.Configuration;
     using Common.IoC;
     using Communication.IoC;
@@ -125,6 +127,8 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
+                x.AddRegistry<AzureCacheRegistry>();
+                x.AddRegistry<MemoryCacheRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(useCache));
                 x.AddRegistry<AsyncProcessorRegistry>();
             });
