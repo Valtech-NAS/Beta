@@ -3,38 +3,38 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Vacancies;
+    using Application.Interfaces.Logging;
     using Application.VacancyEtl.Entities;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
-    using NLog;
     using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
 
     public class VacancyIndexerService<TSourceSummary, TDestinationSummary> : IVacancyIndexerService<TSourceSummary, TDestinationSummary>
         where TSourceSummary : Domain.Entities.Vacancies.VacancySummary, IVacancyUpdate
         where TDestinationSummary : class, IVacancySummary
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
+        private readonly IMapper _mapper;
+        private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
+
         private const int PageSize = 5;
         private const double LondonLatitude = 51;
         private const double LondonLongitude = -0.1;
         private const int SearchRadius = 30;
 
-        private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
-        private readonly IMapper _mapper;
-
-        public VacancyIndexerService(IElasticsearchClientFactory elasticsearchClientFactory, IMapper mapper)
+        public VacancyIndexerService(IElasticsearchClientFactory elasticsearchClientFactory, IMapper mapper, ILogService logger)
         {
             _elasticsearchClientFactory = elasticsearchClientFactory;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public void Index(TSourceSummary vacancySummaryToIndex)
         {
-            Logger.Trace("Indexing vacancy item : {0} ({1})", vacancySummaryToIndex.Title, vacancySummaryToIndex.Id);
+            _logger.Debug("Indexing vacancy item : {0} ({1})", vacancySummaryToIndex.Title, vacancySummaryToIndex.Id);
             
             var indexAlias = GetIndexAlias();
             var newIndexName = GetIndexNameAndDateExtension(indexAlias, vacancySummaryToIndex.ScheduledRefreshDateTime);
@@ -43,12 +43,12 @@
             var client = _elasticsearchClientFactory.GetElasticClient();
             client.Index(vacancySummaryElastic, f => f.Index(newIndexName));
 
-            Logger.Trace("Indexed vacancy item : {0} ({1})", vacancySummaryToIndex.Title, vacancySummaryToIndex.Id);
+            _logger.Debug("Indexed vacancy item : {0} ({1})", vacancySummaryToIndex.Title, vacancySummaryToIndex.Id);
         }
 
         public void CreateScheduledIndex(DateTime scheduledRefreshDateTime)
         {
-            Logger.Info("Creating new vacancy search index for date: {0}", scheduledRefreshDateTime);
+            _logger.Info("Creating new vacancy search index for date: {0}", scheduledRefreshDateTime);
 
             var indexAlias = GetIndexAlias();
             var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
@@ -92,24 +92,24 @@
 
                 client.Map<TDestinationSummary>(p => p.Index(newIndexName).MapFromAttributes().Properties(prop =>
                     prop.GeoPoint(g => g.Name(n => n.Location))));
-                Logger.Info("Created new vacancy search index named: {0}", newIndexName);
+                _logger.Info("Created new vacancy search index named: {0}", newIndexName);
             }
             else
             {
-                Logger.Error("Vacancy search index already exists: {0}", newIndexName);
+                _logger.Error("Vacancy search index already exists: {0}", newIndexName);
                 throw new CustomException(string.Format("Index already created: {0}", newIndexName), ErrorCodes.VacancyIndexerServiceError);
             }
         }
 
         public void SwapIndex(DateTime scheduledRefreshDateTime)
         {
-            Logger.Debug("Swapping vacancy search index for date: {0}", scheduledRefreshDateTime);
+            _logger.Debug("Swapping vacancy search index for date: {0}", scheduledRefreshDateTime);
 
             var indexAlias = GetIndexAlias();
             var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
             var client = _elasticsearchClientFactory.GetElasticClient();
 
-            Logger.Debug("Swapping vacancy search index alias to new index: {0}", newIndexName);
+            _logger.Debug("Swapping vacancy search index alias to new index: {0}", newIndexName);
 
             var existingIndexesOnAlias = client.GetIndicesPointingToAlias(indexAlias);
             var aliasRequest = new AliasRequest {Actions = new List<IAliasAction>()};
@@ -122,12 +122,12 @@
             aliasRequest.Actions.Add(new AliasAddAction { Add = new AliasAddOperation { Alias = indexAlias, Index = newIndexName } });
             client.Alias(aliasRequest);
 
-            Logger.Debug("Swapped vacancy search index alias to new index: {0}", newIndexName);
+            _logger.Debug("Swapped vacancy search index alias to new index: {0}", newIndexName);
         }
 
         public bool IsIndexCorrectlyCreated(DateTime scheduledRefreshDateTime)
         {
-            Logger.Debug("Checking if the index is correctly created.");
+            _logger.Debug("Checking if the index is correctly created.");
 
             var indexAlias = GetIndexAlias();
             var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
@@ -157,7 +157,7 @@
             return result;
         }
 
-        private static void LogResult(bool result, string newIndexName)
+        private void LogResult(bool result, string newIndexName)
         {
             var logMessage =
                 string.Format(
@@ -166,7 +166,7 @@
                         : "The index {0} is correctly created.",
                     newIndexName);
 
-            Logger.Debug(string.Format("Checked if the index is correctly created. {0}", logMessage));
+            _logger.Debug(string.Format("Checked if the index is correctly created. {0}", logMessage));
         }
 
         private string GetIndexAlias()

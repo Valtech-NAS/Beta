@@ -3,29 +3,31 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Address;
+    using Application.Interfaces.Logging;
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
-    using NLog;
 
     public class AddressSearchProvider : IAddressSearchProvider
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
+
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
         private readonly IMapper _mapper;
 
-        public AddressSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory, IMapper mapper)
+        public AddressSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory, IMapper mapper, ILogService logger)
         {
             _elasticsearchClientFactory = elasticsearchClientFactory;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public IEnumerable<Address> FindAddress(string postcode)
         {
             Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
 
-            Logger.Debug("FindAddress for postcode {0}", postcode);
+            _logger.Debug("FindAddress for postcode {0}", postcode);
             
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(Elastic.Common.Entities.Address));

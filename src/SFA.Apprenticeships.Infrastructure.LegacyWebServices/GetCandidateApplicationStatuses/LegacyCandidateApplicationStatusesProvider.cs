@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.ApplicationUpdate.Entities;
+    using Application.Interfaces.Logging;
     using Newtonsoft.Json;
-    using NLog;
     using Application.ApplicationUpdate;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
@@ -16,16 +16,18 @@
 
     public class LegacyCandidateApplicationStatusesProvider : ILegacyApplicationStatusesProvider
     {
-        private const int ApplicationStatusExtractWindow = 4*60; // todo: temp code to define 4 hour window for application ETL
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
+
         private readonly IMapper _mapper;
         private readonly IWcfService<GatewayServiceContract> _service;
+        private const int ApplicationStatusExtractWindow = 4*60; // todo: temp code to define 4 hour window for application ETL
 
         public LegacyCandidateApplicationStatusesProvider
-            (IWcfService<GatewayServiceContract> service, IMapper mapper)
+            (IWcfService<GatewayServiceContract> service, IMapper mapper, ILogService logger)
         {
             _service = service;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public IEnumerable<ApplicationStatusSummary> GetCandidateApplicationStatuses(Candidate candidate)
@@ -37,7 +39,7 @@
 
             var response = default(GetCandidateInfoResponse);
 
-            Logger.Debug("Calling Legacy.GetCandidateInfo for candidate '{0}'", candidate.EntityId);
+            _logger.Debug("Calling Legacy.GetCandidateInfo for candidate '{0}'", candidate.EntityId);
 
             _service.Use("SecureService", client => response = client.GetCandidateInfo(request).GetCandidateInfoResponse);
 
@@ -47,13 +49,13 @@
                 {
                     var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
-                    Logger.Error("Legacy.GetCandidateInfo reported {0} validation error(s): {1}",
+                    _logger.Error("Legacy.GetCandidateInfo reported {0} validation error(s): {1}",
                         response.ValidationErrors.Count(), 
                         responseAsJson);
                 }
                 else
                 {
-                    Logger.Error("Legacy.GetCandidateInfo did not respond");
+                    _logger.Error("Legacy.GetCandidateInfo did not respond");
                 }
 
                 var message =
@@ -63,7 +65,7 @@
                 throw new CustomException(message, ErrorCodes.GatewayServiceFailed);
             }
 
-            Logger.Debug("Candidate applications were successfully retrieved from Legacy.GetCandidateInfo ({0})",
+            _logger.Debug("Candidate applications were successfully retrieved from Legacy.GetCandidateInfo ({0})",
                 response.CandidateApplications.Count());
 
             return _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications);
@@ -82,19 +84,19 @@
 
             var response = default(GetApplicationsStatusResponse);
 
-            Logger.Debug("Calling Legacy.GetApplicationsStatus for page count");
+            _logger.Debug("Calling Legacy.GetApplicationsStatus for page count");
 
             _service.Use("SecureService", client => response = client.GetApplicationsStatus(request));
 
             if (response == null)
             {
-                Logger.Error("Legacy.GetApplicationsStatus for page count did not respond");
+                _logger.Error("Legacy.GetApplicationsStatus for page count did not respond");
 
                 throw new CustomException("Failed to retrieve application status pages from Legacy.GetApplicationsStatus",
                     ErrorCodes.GatewayServiceFailed);
             }
 
-            Logger.Debug("Application statuses page count retrieved from Legacy.GetApplicationsStatus ({0})", response.TotalPages);
+            _logger.Debug("Application statuses page count retrieved from Legacy.GetApplicationsStatus ({0})", response.TotalPages);
 
             return response.TotalPages;
         }
@@ -112,19 +114,19 @@
 
             var response = default(GetApplicationsStatusResponse);
 
-            Logger.Debug("Calling Legacy.GetApplicationsStatus for page {0}", page);
+            _logger.Debug("Calling Legacy.GetApplicationsStatus for page {0}", page);
 
             _service.Use("SecureService", client => response = client.GetApplicationsStatus(request));
 
             if (response == null)
             {
-                Logger.Error("Legacy.GetApplicationsStatus did not respond");
+                _logger.Error("Legacy.GetApplicationsStatus did not respond");
 
                 throw new CustomException("Failed to retrieve page '" + page + "' from Legacy.GetApplicationsStatus",
                     ErrorCodes.GatewayServiceFailed);
             }
 
-            Logger.Debug("Application statuses (page {0}) were successfully retrieved from Legacy.GetApplicationsStatus ({1})",
+            _logger.Debug("Application statuses (page {0}) were successfully retrieved from Legacy.GetApplicationsStatus ({1})",
                 page, response.CandidateApplications.Count());
 
             return _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications);

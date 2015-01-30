@@ -3,24 +3,25 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Logging;
     using Application.ReferenceData;
     using Configuration;
     using Domain.Entities.ReferenceData;
     using LegacyReferenceDataProxy;
-    using NLog;
     using Wcf;
 
     public class ReferenceDataProvider : IReferenceDataProvider
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IWcfService<IReferenceData> _service;
         private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
         private readonly string[] _blacklistedCategoryCodes;
 
-        public ReferenceDataProvider(IWcfService<IReferenceData> service, ILegacyServicesConfiguration legacyServicesConfiguration)
+        public ReferenceDataProvider(IWcfService<IReferenceData> service, ILegacyServicesConfiguration legacyServicesConfiguration, ILogService logger)
         {
             _service = service;
             _legacyServicesConfiguration = legacyServicesConfiguration;
+            _logger = logger;
             _blacklistedCategoryCodes = _legacyServicesConfiguration.BlacklistedCategoryCodes.Split(',');
         }
 
@@ -33,7 +34,7 @@
 
             if (response == null || response.ApprenticeshipFrameworks == null || response.ApprenticeshipFrameworks.Length == 0)
             {
-                Logger.Warn("No ApprenticeshipFrameworks data returned from the legacy GetApprenticeshipFrameworks service");
+                _logger.Warn("No ApprenticeshipFrameworks data returned from the legacy GetApprenticeshipFrameworks service");
                 return null;
             }
 

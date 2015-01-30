@@ -2,23 +2,27 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Logging;
     using Application.Location;
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
     using Domain.Interfaces.Configuration;
     using Entities;
-    using NLog;
     using Rest;
 
     public class PostcodeLookupProvider : RestService, IPostcodeLookupProvider
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        public PostcodeLookupProvider(IConfigurationManager configurationManager) : 
-            base(configurationManager.GetAppSetting("PostcodeServiceEndpoint")) { }
+        private readonly ILogService _logger;
+
+        public PostcodeLookupProvider(IConfigurationManager configurationManager, ILogService logger) : 
+            base(configurationManager.GetAppSetting("PostcodeServiceEndpoint"))
+        {
+            _logger = logger;
+        }
 
         public Location GetLocation(string postcode)
         {
-            Logger.Debug("Calling GetLocation for Postcode={0}", postcode);
+            _logger.Debug("Calling GetLocation for Postcode={0}", postcode);
             var result = GetPartialMatches(postcode).FirstOrDefault();
 
             return result == null

@@ -4,21 +4,20 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Candidate;
+    using Application.Interfaces.Logging;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
-    using NLog;
     using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
     using WorkExperience = GatewayServiceProxy.WorkExperience;
 
     public class LegacyApplicationProvider : ILegacyApplicationProvider
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private readonly ILogService _logger;
         private readonly IWcfService<GatewayServiceContract> _service;
         private readonly ICandidateReadRepository _candidateReadRepository;
 
@@ -33,10 +32,11 @@
 
         public LegacyApplicationProvider(
             IWcfService<GatewayServiceContract> service,
-            ICandidateReadRepository candidateReadRepository)
+            ICandidateReadRepository candidateReadRepository, ILogService logger)
         {
             _service = service;
             _candidateReadRepository = candidateReadRepository;
+            _logger = logger;
         }
 
         public int CreateApplication(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
@@ -46,7 +46,7 @@
 
             CreateApplicationResponse response = null;
 
-            Logger.Debug("Calling Legacy.CreateApplication for candidate '{0}' and apprenticeship vacancy '{1}'",
+            _logger.Debug("Calling Legacy.CreateApplication for candidate '{0}' and apprenticeship vacancy '{1}'",
                 apprenticeshipApplicationDetail.CandidateId,
                 apprenticeshipApplicationDetail.Vacancy.Id);
 
@@ -67,13 +67,13 @@
 
                 var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
-                Logger.Error("Legacy CreateApplication for apprenticeship reported {0} validation error(s): {1}",
+                _logger.Error("Legacy CreateApplication for apprenticeship reported {0} validation error(s): {1}",
                     response.ValidationErrors.Count(),
                     responseAsJson);
             }
             else
             {
-                Logger.Error("Legacy.CreateApplication did not respond");
+                _logger.Error("Legacy.CreateApplication did not respond");
             }
 
             throw new CustomException(
@@ -90,7 +90,7 @@
 
             CreateApplicationResponse response = null;
 
-            Logger.Debug("Calling Legacy.CreateApplication for candidate '{0}' and traineeship vacancy '{1}'",
+            _logger.Debug("Calling Legacy.CreateApplication for candidate '{0}' and traineeship vacancy '{1}'",
                 traineeshipApplicationDetail.CandidateId,
                 traineeshipApplicationDetail.Vacancy.Id);
 
@@ -111,13 +111,13 @@
 
                 var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
-                Logger.Error("Legacy CreateApplication for traineeship reported {0} validation error(s): {1}",
+                _logger.Error("Legacy CreateApplication for traineeship reported {0} validation error(s): {1}",
                     response.ValidationErrors.Count(),
                     responseAsJson);
             }
             else
             {
-                Logger.Error("Legacy.CreateApplication did not respond");
+                _logger.Error("Legacy.CreateApplication did not respond");
             }
 
             throw new CustomException(
@@ -127,7 +127,7 @@
                     ErrorCodes.ApplicationGatewayCreationError);
         }
 
-        private static void CheckDuplicateError(ApplicationDetail applicationDetail,
+        private void CheckDuplicateError(ApplicationDetail applicationDetail,
             int vacancyId, CreateApplicationResponse response)
         {
             if (response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.DuplicateApplication))
@@ -135,13 +135,13 @@
                 var warnMessage = string.Format("Duplicate application for candidate '{0}' and vacancy '{1}'",
                     applicationDetail.CandidateId, vacancyId);
 
-                Logger.Warn(warnMessage);
+                _logger.Warn(warnMessage);
 
                 throw new CustomException(warnMessage, Apprenticeships.Application.Interfaces.Applications.ErrorCodes.ApplicationDuplicatedError);
             }
         }
 
-        private static void CheckValidationErrors(ApplicationDetail apprenticeshipApplicationDetail, CreateApplicationResponse response, string validationErrorCode, string errorCode)
+        private void CheckValidationErrors(ApplicationDetail apprenticeshipApplicationDetail, CreateApplicationResponse response, string validationErrorCode, string errorCode)
         {
             if (response.ValidationErrors.Any(e => e.ErrorCode == validationErrorCode))
             {
@@ -151,7 +151,7 @@
                 var warnMessage = string.Format("Unable to create application {0} for candidate {1} in legacy system: \"{2}\".",
                     apprenticeshipApplicationDetail.EntityId, apprenticeshipApplicationDetail.CandidateId, validationError.Message);
 
-                Logger.Warn(warnMessage);
+                _logger.Warn(warnMessage);
 
                 throw new CustomException(warnMessage, errorCode);
             }

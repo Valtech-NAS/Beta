@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch.IntegrationTests
 {
+    using Application.Interfaces.Logging;
     using Application.Interfaces.Vacancies;
     using Configuration;
     using Domain.Entities.Locations;
@@ -9,6 +10,7 @@
     using Elastic.Common.IoC;
     using FluentAssertions;
     using IoC;
+    using Moq;
     using NUnit.Framework;
     using StructureMap;
 
@@ -18,6 +20,7 @@
         private const string RetailAndCommercialEnterprise = "HBY"; //"Retail and Commercial Enterprise";
         private IElasticsearchClientFactory _elasticsearchClientFactory;
         private IMapper _mapper;
+        private Mock<ILogService> _logger = new Mock<ILogService>();
 
         [SetUp]
         public void FixtureSetUp()
@@ -36,7 +39,7 @@
         public void ShouldReturnFrameworksCount()
         {
             var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
-                SearchConfiguration.Instance);
+                SearchConfiguration.Instance, _logger.Object);
 
             var vacancies = vacancySearchProvider.FindVacancies(GetCommonSearchParameters());
 
@@ -48,7 +51,7 @@
         {
 
             var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
-                SearchConfiguration.Instance);
+                SearchConfiguration.Instance, _logger.Object);
 
             var searchParameters = GetCommonSearchParameters();
             searchParameters.Sector = RetailAndCommercialEnterprise;
@@ -62,7 +65,7 @@
         public void ShouldSearchBySectorAndFramework()
         {
             var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
-                SearchConfiguration.Instance);
+                SearchConfiguration.Instance, _logger.Object);
 
             var searchParameters = GetCommonSearchParameters();
             searchParameters.Sector = RetailAndCommercialEnterprise;

@@ -2,13 +2,13 @@
 {
     using System;
     using System.Linq;
+    using Application.Interfaces.Logging;
     using Application.Vacancy;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
-    using NLog;
     using Wcf;
     using ErrorCodes = Application.VacancyEtl.ErrorCodes;
     using MessagingErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
@@ -16,17 +16,17 @@
     public class LegacyVacancyDataProvider<TVacancyDetail> : IVacancyDataProvider<TVacancyDetail> where TVacancyDetail : VacancyDetail
     {
         private const string UnknownVacancy = "UNKNOWN_VACANCY";
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private readonly ILogService _logger;
         private readonly IWcfService<GatewayServiceContract> _service;
         private readonly IMapper _mapper;
 
         public LegacyVacancyDataProvider(
             IWcfService<GatewayServiceContract> service,
-            IMapper mapper)
+            IMapper mapper, ILogService logger)
         {
             _service = service;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public TVacancyDetail GetVacancyDetails(int vacancyId, bool errorIfNotFound)
@@ -35,7 +35,7 @@
 
             var response = default(GetVacancyDetailsResponse);
 
-            Logger.Debug("Calling Legacy.GetVacancyDetails webservice for vacancy details with ID {0}", vacancyId);
+            _logger.Debug("Calling Legacy.GetVacancyDetails webservice for vacancy details with ID {0}", vacancyId);
 
             _service.Use("SecureService", client => response = client.GetVacancyDetails(request).GetVacancyDetailsResponse);
 
@@ -45,7 +45,7 @@
                 {
                     var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
-                    Logger.Info("Legacy.GetVacancyDetails reported {0} validation error(s): {1}", response.ValidationErrors.Count(), responseAsJson);
+                    _logger.Info("Legacy.GetVacancyDetails reported {0} validation error(s): {1}", response.ValidationErrors.Count(), responseAsJson);
 
                     if (VacancyDoesntExist(response))
                     {
@@ -54,13 +54,13 @@
                             throw new CustomException("Vacancy not found with ID {0}.", MessagingErrorCodes.VacancyNotFoundError, vacancyId);
                         }
 
-                        Logger.Info("Vacancy not found with ID {0}. Returning null.", vacancyId);
+                        _logger.Info("Vacancy not found with ID {0}. Returning null.", vacancyId);
                         return null;
                     }
                 }
                 else
                 {
-                    Logger.Info("Legacy.GetVacancyDetails did not respond");
+                    _logger.Info("Legacy.GetVacancyDetails did not respond");
                 }
 
                 var message = string.Format("Legacy.GetVacancyDetails failed to retrieve vacancy details from legacy system for vacancyId {0}", vacancyId);
@@ -72,7 +72,7 @@
 
             if (HasClosingDatePassed(vacancyDetail) && vacancyDetail.VacancyStatus != VacancyStatuses.Expired)
             {
-                Logger.Info("Vacancy ({0}) closing date {1} has passed. Setting status to {2} (was \"{3}\").",
+                _logger.Info("Vacancy ({0}) closing date {1} has passed. Setting status to {2} (was \"{3}\").",
                     vacancyId, vacancyDetail.ClosingDate, VacancyStatuses.Expired, vacancyDetail.VacancyStatus);
 
                 vacancyDetail.VacancyStatus = VacancyStatuses.Expired;

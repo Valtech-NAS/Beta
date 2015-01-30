@@ -7,25 +7,24 @@
     using System.Net;
     using System.Net.Mail;
     using Application.Interfaces.Communications;
+    using Application.Interfaces.Logging;
     using Domain.Entities.Exceptions;
-    using NLog;
     using SendGrid;
     using ErrorCodes = Application.Interfaces.Communications.ErrorCodes;
 
     public class SendGridEmailDispatcher : IEmailDispatcher
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
 
         private readonly string _password;
-
         private readonly SendGridTemplateConfiguration[] _templates;
         private readonly string _userName;
-
         private readonly IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> _messageFormatters;
 
-        public SendGridEmailDispatcher(SendGridConfiguration configuration, IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> messageFormatters)
+        public SendGridEmailDispatcher(SendGridConfiguration configuration, IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> messageFormatters, ILogService logger)
         {
             _messageFormatters = messageFormatters;
+            _logger = logger;
             _userName = configuration.UserName;
             _password = configuration.Password;
             _templates = configuration.Templates.ToArray();
@@ -33,7 +32,7 @@
 
         public void SendEmail(EmailRequest request)
         {
-            Logger.Debug("Dispatching email To:{0}, Template:{1}", request.ToEmail, request.MessageType);
+            _logger.Debug("Dispatching email To:{0}, Template:{1}", request.ToEmail, request.MessageType);
 
             var message = ComposeMessage(request);
             DispatchMessage(message);
@@ -76,7 +75,7 @@
             if (!_messageFormatters.Any(mf => mf.Key == request.MessageType))
             {
                 var errorMessage = string.Format("Populate template: No message formatter exists for MessageType name: {0}", request.MessageType);
-                Logger.Error(errorMessage);
+                _logger.Error(errorMessage);
 
                 throw new ConfigurationErrorsException(errorMessage);
             }
@@ -93,11 +92,11 @@
             message.EnableTemplateEngine(template.Id);
         }
 
-        private static string GetTemplateName(Enum messageType)
+        private string GetTemplateName(Enum messageType)
         {
             var enumType = messageType.GetType();
             var templateName = string.Format("{0}.{1}", enumType.Name, Enum.GetName(enumType, messageType));
-            Logger.Debug("Determined email template: EnumType={0} Name={1} TemplateName={2} MessageType={3}", enumType,
+            _logger.Debug("Determined email template: EnumType={0} Name={1} TemplateName={2} MessageType={3}", enumType,
                 enumType.Name, templateName, messageType);
             return templateName;
         }
@@ -113,7 +112,7 @@
 
             var errorMessage = string.Format("GetTemplateConfiguration : Invalid email template name: {0}",
                 templateName);
-            Logger.Error(errorMessage);
+            _logger.Error(errorMessage);
 
             throw new ConfigurationErrorsException(errorMessage);
         }
@@ -125,14 +124,14 @@
                 var credentials = new NetworkCredential(_userName, _password);
                 var web = new Web(credentials);
 
-                Logger.Debug("Dispatching email: {0}", LogSendGridMessage(message));
+                _logger.Debug("Dispatching email: {0}", LogSendGridMessage(message));
                 web.Deliver(message);
-                Logger.Info("Dispatched email: {0} to {1}", message.Subject,
+                _logger.Info("Dispatched email: {0} to {1}", message.Subject,
                     string.Join(", ", message.To.Select(a => a.Address)));
             }
             catch (Exception e)
             {
-                Logger.Error("Failed to dispatch email", e);
+                _logger.Error("Failed to dispatch email", e);
                 throw new CustomException("Failed to dispatch email", e, ErrorCodes.EmailError);
             }
         }

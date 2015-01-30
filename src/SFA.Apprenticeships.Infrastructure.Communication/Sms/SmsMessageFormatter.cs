@@ -4,11 +4,9 @@
     using System.Configuration;
     using System.Linq;
     using Application.Interfaces.Communications;
-    using NLog;
 
     public abstract class SmsMessageFormatter
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly TwilioConfiguration _configuration;
         protected string Message;
 
@@ -26,9 +24,7 @@
                 return template;
             }
 
-            var errorMessage = string.Format("GetTemplateConfiguration : Invalid SMS template name: {0}",
-                templateName);
-            Logger.Error(errorMessage);
+            var errorMessage = string.Format("GetTemplateConfiguration : Invalid SMS template name: {0}", templateName);
 
             throw new ConfigurationErrorsException(errorMessage);
         }

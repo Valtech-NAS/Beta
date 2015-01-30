@@ -3,22 +3,23 @@
     using System;
     using System.Linq;
     using Application.Candidate;
+    using Application.Interfaces.Logging;
     using Domain.Entities.Exceptions;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
-    using NLog;
     using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
     using CreateCandidateRequest = GatewayServiceProxy.CreateCandidateRequest;
 
     public class LegacyCandidateProvider : ILegacyCandidateProvider
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IWcfService<GatewayServiceContract> _service;
 
-        public LegacyCandidateProvider(IWcfService<GatewayServiceContract> service)
+        public LegacyCandidateProvider(IWcfService<GatewayServiceContract> service, ILogService logger)
         {
             _service = service;
+            _logger = logger;
         }
 
         public int CreateCandidate(Candidate candidate)
@@ -45,7 +46,7 @@
 
             var response = default(CreateCandidateResponse);
 
-            Logger.Debug("Calling Legacy.CreateCandidate for candidate '{0}'", candidate.EntityId);
+            _logger.Debug("Calling Legacy.CreateCandidate for candidate '{0}'", candidate.EntityId);
 
             _service.Use("SecureService", client => response = client.CreateCandidate(request));
 
@@ -55,14 +56,14 @@
                 {
                     var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
-                    Logger.Error("Legacy.CreateCandidate reported {0} validation error(s): {1} for NAS candidate id: {2}", 
+                    _logger.Error("Legacy.CreateCandidate reported {0} validation error(s): {1} for NAS candidate id: {2}", 
                         response.ValidationErrors.Count(), 
                         responseAsJson,
                         candidate.EntityId);
                 }
                 else
                 {
-                    Logger.Error("Legacy.CreateCandidate did not respond");
+                    _logger.Error("Legacy.CreateCandidate did not respond");
                 }
 
                 throw new CustomException("Failed to create candidate in Legacy.CreateCandidate", ErrorCodes.CandidateCreationError);
@@ -70,7 +71,7 @@
 
             var legacyCandidateId = response.CandidateId;
 
-            Logger.Debug("Candidate created in Legacy.CreateCandidate (candidate '{0}'/'{1}')", candidate.EntityId, legacyCandidateId);
+            _logger.Debug("Candidate created in Legacy.CreateCandidate (candidate '{0}'/'{1}')", candidate.EntityId, legacyCandidateId);
 
             return legacyCandidateId;
         }

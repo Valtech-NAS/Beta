@@ -2,22 +2,23 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Logging;
     using Application.Location;
     using Domain.Entities.Locations;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
-    using NLog;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
 
     internal class LocationLookupProvider : ILocationLookupProvider
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
 
-        public LocationLookupProvider(IElasticsearchClientFactory elasticsearchClientFactory)
+        public LocationLookupProvider(IElasticsearchClientFactory elasticsearchClientFactory, ILogService logger)
         {
             _elasticsearchClientFactory = elasticsearchClientFactory;
+            _logger = logger;
         }
 
         public IEnumerable<Location> FindLocation(string placeName, int maxResults = 50)
@@ -26,7 +27,7 @@
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(LocationLookup));
             var term = placeName.ToLowerInvariant();
 
-            Logger.Debug("Calling FindLocation for Term={0} on IndexName={1}", term, indexName);
+            _logger.Debug("Calling FindLocation for Term={0} on IndexName={1}", term, indexName);
 
             // NOTE: this function executes 3 Elasticsearch queries and then combines the results.
 
@@ -73,7 +74,7 @@
                 .Take(maxResults)
                 .ToList();
 
-            Logger.Debug("{0} search results were returned", results.Count);
+            _logger.Debug("{0} search results were returned", results.Count);
 
             return results.Select(location => new Location
             {

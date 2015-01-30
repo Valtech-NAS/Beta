@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using Application.Interfaces.Logging;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
@@ -12,23 +13,23 @@
     using Elastic.Common.Entities;
     using Nest;
     using Newtonsoft.Json.Linq;
-    using NLog;
 
     public class ApprenticeshipsSearchProvider : IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>
     {
-        private const string FrameworkAggregationName = "Frameworks";
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
+        private readonly IMapper _vacancySearchMapper;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
         private readonly SearchConfiguration _searchConfiguration;
-        private readonly IMapper _vacancySearchMapper;
+        private const string FrameworkAggregationName = "Frameworks";
 
         public ApprenticeshipsSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory,
             IMapper vacancySearchMapper,
-            SearchConfiguration searchConfiguration)
+            SearchConfiguration searchConfiguration, ILogService logger)
         {
             _elasticsearchClientFactory = elasticsearchClientFactory;
             _vacancySearchMapper = vacancySearchMapper;
             _searchConfiguration = searchConfiguration;
+            _logger = logger;
         }
 
         public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> FindVacancies(ApprenticeshipSearchParameters parameters)
@@ -37,7 +38,7 @@
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (ApprenticeshipSummary));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (ApprenticeshipSummary));
 
-            Logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
+            _logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
                 indexName);
 
             var search = PerformSearch(parameters, client, indexName, documentTypeName);
@@ -68,7 +69,7 @@
                 r.Score = hitMd.Score;
             });
 
-            Logger.Debug("{0} search results returned", search.Total);
+            _logger.Debug("{0} search results returned", search.Total);
 
             var aggregationResults = GetAggregationResultsFrom(search.Aggs);
 
@@ -85,7 +86,7 @@
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (ApprenticeshipSummary));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (ApprenticeshipSummary));
 
-            Logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
+            _logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
                 indexName);
 
             var searchResults = client.Search<ApprenticeshipSummary>(s => s

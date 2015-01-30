@@ -4,18 +4,19 @@
     using System.Configuration;
     using System.ServiceModel;
     using System.ServiceModel.Configuration;
+    using Application.Interfaces.Logging;
     using Domain.Interfaces.Configuration;
-    using NLog;
 
     public class WcfService<T> : IWcfService<T>
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
 
         private static Configuration _configuration;
         private static readonly object _lock = new object();
 
-        public WcfService(IConfigurationManager configurationManager)
+        public WcfService(IConfigurationManager configurationManager, ILogService logger)
         {
+            _logger = logger;
             if (_configuration != null) return;
 
             lock (_lock)
@@ -58,32 +59,32 @@
 
             try
             {
-                Logger.Debug("Calling service {0}", factory.Endpoint.Address);
+                _logger.Debug("Calling service {0}", factory.Endpoint.Address);
 
                 action(client);
                 ((IClientChannel)client).Close();
                 factory.Close();
                 success = true;
-                Logger.Debug("Call succeeded and client is now closed");
+                _logger.Debug("Call succeeded and client is now closed");
             }
             catch (ServerTooBusyException ex)
             {
-                Logger.Info("WCF ServerTooBusyException", (Exception)ex);
+                _logger.Info("WCF ServerTooBusyException", (Exception)ex);
                 throw;
             }
             catch (CommunicationException ex)
             {
-                Logger.Info("WCF CommunicationException", (Exception)ex);
+                _logger.Info("WCF CommunicationException", (Exception)ex);
                 throw;
             }
             catch (TimeoutException ex)
             {
-                Logger.Info("WCF TimeoutException", (Exception)ex);
+                _logger.Info("WCF TimeoutException", (Exception)ex);
                 throw;
             }
             catch (Exception exception)
             {
-                Logger.Info("Non-WCF Exception", exception);
+                _logger.Info("Non-WCF Exception", exception);
                 throw;
             }
             finally
@@ -96,7 +97,7 @@
                     }
                     catch (Exception ex)
                     {
-                        Logger.Info("Failed to abort client", ex);
+                        _logger.Info("Failed to abort client", ex);
                     }
                     try
                     {
@@ -104,7 +105,7 @@
                     }
                     catch (Exception ex)
                     {
-                        Logger.Info("Failed to abort factory", ex);
+                        _logger.Info("Failed to abort factory", ex);
                     }
                 }
             }

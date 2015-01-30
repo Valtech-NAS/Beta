@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using Application.Interfaces.Logging;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
@@ -11,17 +12,17 @@
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
-    using NLog;
 
     public class TraineeshipsSearchProvider : IVacancySearchProvider<TraineeshipSearchResponse, TraineeshipSearchParameters>
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
         private readonly IMapper _vacancySearchMapper;
 
-        public TraineeshipsSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory, IMapper vacancySearchMapper)
+        public TraineeshipsSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory, IMapper vacancySearchMapper, ILogService logger)
         {
             _vacancySearchMapper = vacancySearchMapper;
+            _logger = logger;
             _elasticsearchClientFactory = elasticsearchClientFactory;
         }
 
@@ -31,7 +32,7 @@
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (TraineeshipSummary));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(TraineeshipSummary));
 
-            Logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName, indexName);
+            _logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName, indexName);
 
             var search = PerformSearch(parameters, client, indexName, documentTypeName);
             var responses = _vacancySearchMapper.Map<IEnumerable<TraineeshipSummary>, IEnumerable<TraineeshipSearchResponse>>(search.Documents).ToList();
@@ -52,7 +53,7 @@
                 r.Score = hitMd.Score;
             });
 
-            Logger.Debug("{0} search results returned", search.Total);
+            _logger.Debug("{0} search results returned", search.Total);
 
             var results = new SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>(search.Total, parameters.PageNumber, responses, null, parameters);
 
