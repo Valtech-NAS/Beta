@@ -88,6 +88,23 @@
             return UserDataProvider.Get(UserDataItemNames.ApprenticeshipLevel) ?? "All";
         }
 
+        public MediatorResponse<ApprenticeshipSearchViewModel> SearchValidation(ApprenticeshipSearchViewModel model)
+        {
+            var clientResult = _searchRequestValidator.Validate(model);
+
+            if (!clientResult.IsValid)
+            {
+                model.Distances = GetDistances();
+                model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
+                model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
+                model.Categories = _referenceDataService.GetCategories().ToList();
+
+                return GetMediatorResponse(Codes.ApprenticeshipSearch.SearchValidation.ValidationError, model, clientResult);
+            }
+
+            return GetMediatorResponse(Codes.ApprenticeshipSearch.SearchValidation.Ok, model);
+        }
+
         public MediatorResponse<ApprenticeshipSearchResponseViewModel> Results(ApprenticeshipSearchViewModel model)
         {
             UserDataProvider.Pop(UserDataItemNames.VacancyDistance);

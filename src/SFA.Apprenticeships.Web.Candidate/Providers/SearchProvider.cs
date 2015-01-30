@@ -206,7 +206,7 @@
                 }
             }
 
-            foreach (var category in response.VacancySearch.Categories.Where(c => c.SubCategories.Any(sc => sc.Count.HasValue)))
+            foreach (var category in response.VacancySearch.Categories.Where(c => c.CodeName == response.VacancySearch.Category || c.SubCategories.Any(sc => sc.Count.HasValue)))
             {
                 foreach (var subCategory in category.SubCategories)
                 {

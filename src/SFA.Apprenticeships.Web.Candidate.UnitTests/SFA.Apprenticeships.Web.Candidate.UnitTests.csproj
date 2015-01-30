@@ -194,6 +194,7 @@
     <Compile Include="Mediators\ApprenticeshipSearch\DetailsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\IndexTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\ResultsTests.cs" />
+    <Compile Include="Mediators\ApprenticeshipSearch\SearchValidationTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\TestsBase.cs" />
     <Compile Include="Mediators\Login\IndexTests.cs" />
     <Compile Include="Mediators\Login\ResendTests.cs" />

@@ -9,6 +9,12 @@
                 public const string Ok = "search";
             }
 
+            public class SearchValidation
+            {
+                public const string Ok = "results";
+                public const string ValidationError = "validationError";
+            }
+
             public class Results
             {
                 public const string HasError = "message";

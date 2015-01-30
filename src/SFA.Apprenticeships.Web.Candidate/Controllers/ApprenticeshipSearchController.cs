@@ -40,6 +40,32 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [ApplyWebTrends]
         [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        public async Task<ActionResult> SearchValidation(ApprenticeshipSearchViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                ViewBag.SearchReturnUrl = (Request != null && Request.Url != null) ? Request.Url.PathAndQuery : null;
+
+                var response = _apprenticeshipSearchMediator.SearchValidation(model);
+
+                switch (response.Code)
+                {
+                    case Codes.ApprenticeshipSearch.SearchValidation.ValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View("Index", response.ViewModel);
+                    case Codes.ApprenticeshipSearch.SearchValidation.Ok:
+                        return RedirectToAction("Results", model);
+                }
+
+                throw new InvalidMediatorCodeException(response.Code);
+            });
+        }
+
+        [HttpGet]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
         public async Task<ActionResult> Results(ApprenticeshipSearchViewModel model)
         {
             return await Task.Run<ActionResult>(() =>

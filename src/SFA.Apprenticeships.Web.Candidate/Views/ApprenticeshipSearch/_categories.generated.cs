@@ -127,53 +127,55 @@ WriteLiteral(">\r\n");
                         {
                             var category = categories[i];
                             var inputId = string.Format("category{0}", category.CodeName);
+                            var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
 
             
             #line default
             #line hidden
-WriteLiteral("                            <li>\r\n                                <input");
+WriteLiteral("                            <li>\r\n                                <input ");
 
-WriteLiteral(" type=\"radio\"");
-
-WriteLiteral(" name=\"Category\"");
-
-WriteAttribute("id", Tuple.Create(" id=\"", 959), Tuple.Create("\"", 972)
             
-            #line 21 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-, Tuple.Create(Tuple.Create("", 964), Tuple.Create<System.Object, System.Int32>(inputId
+            #line 22 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+                                  Write(checkedAttr);
+
             
             #line default
             #line hidden
-, 964), false)
-);
+WriteLiteral(" type=\"radio\" name=\"Category\" id=\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 973), Tuple.Create("\"", 999)
             
-            #line 21 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-          , Tuple.Create(Tuple.Create("", 981), Tuple.Create<System.Object, System.Int32>(category.CodeName
+            #line 22 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+                                                                                Write(inputId);
+
             
             #line default
             #line hidden
-, 981), false)
-);
+WriteLiteral("\" value=\"");
 
-WriteLiteral("><label");
-
-WriteAttribute("for", Tuple.Create(" for=\"", 1007), Tuple.Create("\"", 1021)
             
-            #line 21 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                         , Tuple.Create(Tuple.Create("", 1013), Tuple.Create<System.Object, System.Int32>(inputId
+            #line 22 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+                                                                                                 Write(category.CodeName);
+
             
             #line default
             #line hidden
-, 1013), false)
+WriteLiteral("\"><label");
+
+WriteAttribute("for", Tuple.Create(" for=\"", 1121), Tuple.Create("\"", 1135)
+            
+            #line 22 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+                                                      , Tuple.Create(Tuple.Create("", 1127), Tuple.Create<System.Object, System.Int32>(inputId
+            
+            #line default
+            #line hidden
+, 1127), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 21 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                                                                                              Write(FullNameFormatter.Format(category.FullName));
+            #line 22 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+                                                                                                                                           Write(FullNameFormatter.Format(category.FullName));
 
             
             #line default
@@ -181,7 +183,7 @@ WriteLiteral(">");
 WriteLiteral("</label>\r\n                            </li>\r\n");
 
             
-            #line 23 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+            #line 24 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
                         }
 
             
@@ -190,7 +192,7 @@ WriteLiteral("</label>\r\n                            </li>\r\n");
 WriteLiteral("                    </ul>\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 27 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+            #line 28 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
 
 
             
@@ -207,64 +209,66 @@ WriteLiteral(" class=\"copy-16 list-text list-checkradio\"");
 WriteLiteral(">\r\n");
 
             
-            #line 30 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+            #line 31 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 30 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+            #line 31 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
                      for (var i = categorySplitCount; i < categories.Count; i++)
                     {
                         var category = categories[i];
                         var inputId = string.Format("category{0}", category.CodeName);
+                        var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
 
             
             #line default
             #line hidden
-WriteLiteral("                        <li>\r\n                            <input");
+WriteLiteral("                        <li>\r\n                            <input ");
 
-WriteLiteral(" type=\"radio\"");
-
-WriteLiteral(" name=\"Category\"");
-
-WriteAttribute("id", Tuple.Create(" id=\"", 1658), Tuple.Create("\"", 1671)
             
-            #line 35 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-, Tuple.Create(Tuple.Create("", 1663), Tuple.Create<System.Object, System.Int32>(inputId
+            #line 37 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+                              Write(checkedAttr);
+
             
             #line default
             #line hidden
-, 1663), false)
-);
+WriteLiteral(" type=\"radio\" name=\"Category\" id=\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1672), Tuple.Create("\"", 1698)
             
-            #line 35 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-     , Tuple.Create(Tuple.Create("", 1680), Tuple.Create<System.Object, System.Int32>(category.CodeName
+            #line 37 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+                                                                            Write(inputId);
+
             
             #line default
             #line hidden
-, 1680), false)
-);
+WriteLiteral("\" value=\"");
 
-WriteLiteral("><label");
-
-WriteAttribute("for", Tuple.Create(" for=\"", 1706), Tuple.Create("\"", 1720)
             
-            #line 35 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                     , Tuple.Create(Tuple.Create("", 1712), Tuple.Create<System.Object, System.Int32>(inputId
+            #line 37 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+                                                                                             Write(category.CodeName);
+
             
             #line default
             #line hidden
-, 1712), false)
+WriteLiteral("\"><label");
+
+WriteAttribute("for", Tuple.Create(" for=\"", 1930), Tuple.Create("\"", 1944)
+            
+            #line 37 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+                                                  , Tuple.Create(Tuple.Create("", 1936), Tuple.Create<System.Object, System.Int32>(inputId
+            
+            #line default
+            #line hidden
+, 1936), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 35 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
-                                                                                                                          Write(FullNameFormatter.Format(category.FullName));
+            #line 37 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+                                                                                                                                       Write(FullNameFormatter.Format(category.FullName));
 
             
             #line default
@@ -272,7 +276,7 @@ WriteLiteral(">");
 WriteLiteral("</label>\r\n                        </li>\r\n");
 
             
-            #line 37 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+            #line 39 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
                     }
 
             
@@ -281,7 +285,7 @@ WriteLiteral("</label>\r\n                        </li>\r\n");
 WriteLiteral("                </ul>\r\n            </div>\r\n");
 
             
-            #line 40 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
+            #line 42 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
         
             
             #line default

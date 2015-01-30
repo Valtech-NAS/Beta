@@ -9,6 +9,7 @@
         public const string Maintenance = "Maintenance";
         public const string MyApplications = "MyApplications";
         public const string ApprenticeshipSearch = "ApprenticeshipSearch";
+        public const string ApprenticeshipSearchValidation = "ApprenticeshipSearchValidation";
         public const string ApprenticeshipResults = "ApprenticeshipResults";
         public const string ApprenticeshipDetails = "ApprenticeshipDetails";
         public const string ApprenticeshipDetailsWithDistance = "ApprenticeshipDetailsWithDistance";

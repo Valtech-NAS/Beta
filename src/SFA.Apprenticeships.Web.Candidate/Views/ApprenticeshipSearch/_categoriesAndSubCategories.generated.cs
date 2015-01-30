@@ -91,7 +91,7 @@ WriteLiteral(">\r\n");
         {
             var inputId = string.Format("category{0}", category.CodeName);
             var subCategories = category.SubCategories.ToList();
-            var checkedAttr = Model.Category == category.CodeName ? " checked" : "";
+            var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
             var openAttr = Model.Category == category.CodeName && Model.SubCategories != null && Model.SubCategories.Any() ? "open" : "";
 
             
@@ -126,14 +126,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 807), Tuple.Create("\"", 821)
+WriteAttribute("for", Tuple.Create(" for=\"", 806), Tuple.Create("\"", 820)
             
             #line 15 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                       , Tuple.Create(Tuple.Create("", 813), Tuple.Create<System.Object, System.Int32>(inputId
+                                       , Tuple.Create(Tuple.Create("", 812), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 813), false)
+, 812), false)
 );
 
 WriteLiteral(">");
@@ -223,14 +223,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 1882), Tuple.Create("\"", 1899)
+WriteAttribute("for", Tuple.Create(" for=\"", 1881), Tuple.Create("\"", 1898)
             
             #line 28 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                    , Tuple.Create(Tuple.Create("", 1888), Tuple.Create<System.Object, System.Int32>(checkboxId
+                                                                    , Tuple.Create(Tuple.Create("", 1887), Tuple.Create<System.Object, System.Int32>(checkboxId
             
             #line default
             #line hidden
-, 1888), false)
+, 1887), false)
 );
 
 WriteLiteral(">");
