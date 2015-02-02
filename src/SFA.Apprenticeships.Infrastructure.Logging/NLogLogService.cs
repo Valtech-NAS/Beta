@@ -2,11 +2,14 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
     using Application.Interfaces.Logging;
     using NLog;
 
     public class NLogLogService : ILogService
     {
+        private Logger _logger;
+
         public void Debug(string message, params object[] args)
         {
             LogMessage(LogLevel.Debug, null, message, args);
@@ -38,6 +41,15 @@
         }
 
         #region Helpers
+        private void LogMessage(LogLevel logLevel, Exception exception, string message, params object[] args)
+        {
+            var logMessage = string.Format(message, args);
+
+            _logger = _logger ?? GetCallingLogger();
+            _logger.Log(logLevel, logMessage, exception);
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static Logger GetCallingLogger()
         {
             var fullClassName = GetFullClassName();
@@ -69,14 +81,6 @@
             } while (declaringType.Module.Name.Equals("mscorlib.dll", StringComparison.OrdinalIgnoreCase));
 
             return className;
-        }
-
-        private static void LogMessage(LogLevel logLevel, Exception exception, string message, params object[] args)
-        {
-            var logger = GetCallingLogger();
-            var logMessage = string.Format(message, args);
-
-            logger.Log(logLevel, logMessage, exception);
         }
 
         #endregion

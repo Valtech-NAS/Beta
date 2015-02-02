@@ -29,13 +29,13 @@
 
                 return FormsAuthentication.Decrypt(cookie.Value);
             }
-            catch (CryptographicException ex)
+            catch (CryptographicException)
             {
                 //Logger.Debug("Error decrypting ticket from cookie. Cookie is no longer valid and will be removed.", (Exception)ex);
                 RemoveCookie(cookies);
                 return null;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Logger.Error("Error getting/decrypting ticket from cookie. Cookie is no longer valid and will be removed.", ex);
                 RemoveCookie(cookies);
@@ -49,7 +49,7 @@
             {
                 cookies.Remove(CookieName);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Logger.Error(string.Format("Error removing cookie {0}", CookieName), ex);
             }
