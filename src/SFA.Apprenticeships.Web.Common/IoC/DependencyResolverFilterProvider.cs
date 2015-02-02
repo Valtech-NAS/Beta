@@ -7,22 +7,17 @@ namespace SFA.Apprenticeships.Web.Common.IoC
 
     public class DependencyResolverFilterProvider : FilterAttributeFilterProvider
     {
-        private readonly IContainer _container;
-        
-        public DependencyResolverFilterProvider(IContainer container)
-        {
-            _container = container;
-        }
-
-        public override IEnumerable<Filter> GetFilters(ControllerContext controllerContext,
-            ActionDescriptor actionDescriptor)
+        public override IEnumerable<Filter> GetFilters(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
         {
             var filters = base.GetFilters(controllerContext, actionDescriptor).ToList();
 
             foreach (var filter in filters)
             {
                 //DI via Setter Injection
-                _container.BuildUp(filter.Instance);
+#pragma warning disable 0618
+                // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
+                ObjectFactory.BuildUp(filter.Instance);
+#pragma warning restore 0618
             }
 
             return filters;
