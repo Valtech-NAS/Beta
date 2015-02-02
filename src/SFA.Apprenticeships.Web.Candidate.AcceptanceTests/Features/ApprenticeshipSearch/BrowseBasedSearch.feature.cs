@@ -166,7 +166,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 33
  testRunner.When("I am on CategoryItems list item matching criteria", ((string)(null)), table4, "When ");
 #line 36
- testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I choose CategoryRadioButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 37
  testRunner.And("I am on the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
