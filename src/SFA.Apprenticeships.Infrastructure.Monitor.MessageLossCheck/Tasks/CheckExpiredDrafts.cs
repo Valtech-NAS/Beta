@@ -1,26 +1,26 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck.Tasks
 {
     using System.Linq;
-    using Application.Interfaces.Search;
+    using Application.Interfaces.Logging;
     using Application.Interfaces.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Elastic.Common.Configuration;
     using Monitor.Tasks;
-    using NLog;
     using Repository;
 
     public class CheckExpiredDrafts : IMonitorTask
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IApprenticeshipApplicationDiagnosticsRepository _applicationDiagnosticsRepository;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
         private readonly IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> _vacancySearchService;
 
-        public CheckExpiredDrafts(IApprenticeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository, IElasticsearchClientFactory elasticsearchClientFactory, IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> vacancySearchService)
+        public CheckExpiredDrafts(IApprenticeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository, IElasticsearchClientFactory elasticsearchClientFactory, IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> vacancySearchService, ILogService logger)
         {
             _applicationDiagnosticsRepository = applicationDiagnosticsRepository;
             _elasticsearchClientFactory = elasticsearchClientFactory;
             _vacancySearchService = vacancySearchService;
+            _logger = logger;
         }
 
         public string TaskName
@@ -30,17 +30,17 @@
 
         public void Run()
         {
-            Logger.Info("Getting draft vacancy ids");
+            _logger.Info("Getting draft vacancy ids");
 
             var draftVacancyIds = _applicationDiagnosticsRepository.GetDraftApplicationVacancyIds().ToList();
 
             var draftVacancyIdsString = string.Join(", ", draftVacancyIds);
-            Logger.Info("Draft vacancy ids {0}: {1}", draftVacancyIds.Count, draftVacancyIdsString);
+            _logger.Info("Draft vacancy ids {0}: {1}", draftVacancyIds.Count, draftVacancyIdsString);
 
             var client = _elasticsearchClientFactory.GetElasticClient();
             var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(Elastic.Common.Entities.ApprenticeshipSummary));
 
-            Logger.Info("Getting vacancy ids in index");
+            _logger.Info("Getting vacancy ids in index");
 
             var searchResponse = client.Search<Elastic.Common.Entities.ApprenticeshipSummary>(s => s
                 .Index(indexName)
@@ -51,12 +51,12 @@
             var vacancyIdsInIndex = searchResponse.Hits.Select(v => v.Id).ToList();
 
             var vacancyIdsInIndexString = string.Join(", ", vacancyIdsInIndex);
-            Logger.Info("Vacancy ids in index {0}: {1}", vacancyIdsInIndex.Count, vacancyIdsInIndexString);
+            _logger.Info("Vacancy ids in index {0}: {1}", vacancyIdsInIndex.Count, vacancyIdsInIndexString);
 
             var expiredVacancyIds = draftVacancyIds.Except(vacancyIdsInIndex).ToList();
 
             var expiredVacancyIdsString = string.Join(", ", expiredVacancyIds);
-            Logger.Info("Expired vacancy ids {0}: {1}", expiredVacancyIds.Count, expiredVacancyIdsString);
+            _logger.Info("Expired vacancy ids {0}: {1}", expiredVacancyIds.Count, expiredVacancyIdsString);
 
             /*var verifiedExpiredVacancyIds = expiredVacancyIds.ToList();
 

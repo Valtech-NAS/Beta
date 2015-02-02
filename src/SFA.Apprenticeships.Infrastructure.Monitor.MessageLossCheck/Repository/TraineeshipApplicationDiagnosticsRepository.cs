@@ -3,26 +3,27 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Logging;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Mongo.Common;
     using MongoDB.Driver.Linq;
-    using NLog;
     using Repositories.Applications.Entities;
 
     public class TraineeshipApplicationDiagnosticsRepository : GenericMongoClient<MongoTraineeshipApplicationDetail>, ITraineeshipApplicationDiagnosticsRepository
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IMapper _mapper;
         private readonly ICandidateReadRepository _candidateReadRepository;
 
-        public TraineeshipApplicationDiagnosticsRepository(IConfigurationManager configurationManager, IMapper mapper, ICandidateReadRepository candidateReadRepository)
+        public TraineeshipApplicationDiagnosticsRepository(IConfigurationManager configurationManager, IMapper mapper, ICandidateReadRepository candidateReadRepository, ILogService logger)
             : base(configurationManager, "Applications.mongoDB", "traineeships")
         {
             _mapper = mapper;
             _candidateReadRepository = candidateReadRepository;
+            _logger = logger;
         }
 
         public IEnumerable<TraineeshipApplicationDetail> GetApplicationsForValidCandidatesWithUnsetLegacyId()
@@ -43,7 +44,7 @@
                 if (candidate.LegacyCandidateId == 0) continue;
 
                 var traineeshipApplicationDetail = _mapper.Map<MongoTraineeshipApplicationDetail, TraineeshipApplicationDetail>(mongoTraineeshipApplicationDetail);
-                Logger.Debug("Traineeship application {0} is associated with a valid candidate but does not have a valid legacy application id from the legacy service", traineeshipApplicationDetail.EntityId);
+                _logger.Debug("Traineeship application {0} is associated with a valid candidate but does not have a valid legacy application id from the legacy service", traineeshipApplicationDetail.EntityId);
                 applicationsForValidCandidatesWithUnsetLegacyId.Add(traineeshipApplicationDetail);
             }
 

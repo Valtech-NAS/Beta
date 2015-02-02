@@ -5,21 +5,22 @@
     using System.Text;
     using System.Threading;
     using Application.Candidate;
+    using Application.Interfaces.Logging;
     using Domain.Interfaces.Messaging;
     using Monitor.Tasks;
-    using NLog;
     using Repository;
 
     public class CheckUnsentCandidateMessages : IMonitorTask
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly ICandidateDiagnosticsRepository _candidateDiagnosticsRepository;
         private readonly IMessageBus _messageBus;
 
-        public CheckUnsentCandidateMessages(ICandidateDiagnosticsRepository candidateDiagnosticsRepository, IMessageBus messageBus)
+        public CheckUnsentCandidateMessages(ICandidateDiagnosticsRepository candidateDiagnosticsRepository, IMessageBus messageBus, ILogService logger)
         {
             _candidateDiagnosticsRepository = candidateDiagnosticsRepository;
             _messageBus = messageBus;
+            _logger = logger;
         }
 
         public string TaskName
@@ -36,7 +37,7 @@
             
             foreach (var candidate in candidatesToRequeue)
             {
-                Logger.Info("Requeuing create candidate message for candidate id: {0}", candidate.EntityId);
+                _logger.Info("Requeuing create candidate message for candidate id: {0}", candidate.EntityId);
 
                 var message = new CreateCandidateRequest
                 {
@@ -46,7 +47,7 @@
                 _messageBus.PublishMessage(message);
 
                 var requeuedMessage = string.Format("Requeued create candidate message for candidate id: {0}", candidate.EntityId);
-                Logger.Info(requeuedMessage);
+                _logger.Info(requeuedMessage);
                 sb.AppendLine(requeuedMessage);
             }
 
@@ -66,13 +67,13 @@
             {
                 sb.AppendLine("The actions taken did not resolve the following issues with candidates:");
                 activatedCandidatesWithUnsetLegacyId.ForEach(c => sb.AppendLine(string.Format("Candidate with id: {0} is activated but has an unset legacy candidate id", c.EntityId)));
-                Logger.Error(sb.ToString());
+                _logger.Error(sb.ToString());
                 ActionsSuccessful = false;
             }
             else
             {
                 sb.AppendLine("The actions taken appear to have resolved the issues");
-                Logger.Warn(sb.ToString());
+                _logger.Warn(sb.ToString());
                 ActionsSuccessful = true;
             }
         }

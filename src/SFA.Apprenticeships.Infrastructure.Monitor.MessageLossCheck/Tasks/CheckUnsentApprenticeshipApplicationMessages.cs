@@ -5,21 +5,22 @@
     using System.Text;
     using System.Threading;
     using Application.Candidate;
+    using Application.Interfaces.Logging;
     using Domain.Interfaces.Messaging;
     using Monitor.Tasks;
-    using NLog;
     using Repository;
 
     public class CheckUnsentApprenticeshipApplicationMessages : IMonitorTask
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IApprenticeshipApplicationDiagnosticsRepository _applicationDiagnosticsRepository;
         private readonly IMessageBus _messageBus;
 
-        public CheckUnsentApprenticeshipApplicationMessages(IApprenticeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository, IMessageBus messageBus)
+        public CheckUnsentApprenticeshipApplicationMessages(IApprenticeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository, IMessageBus messageBus, ILogService logger)
         {
             _applicationDiagnosticsRepository = applicationDiagnosticsRepository;
             _messageBus = messageBus;
+            _logger = logger;
         }
 
         public string TaskName
@@ -36,7 +37,7 @@
 
             foreach (var application in applicationsToRequeue)
             {
-                Logger.Info("Requeuing create apprenticeship application message for application id: {0}", application.EntityId);
+                _logger.Info("Requeuing create apprenticeship application message for application id: {0}", application.EntityId);
 
                 var message = new SubmitApprenticeshipApplicationRequest
                 {
@@ -46,7 +47,7 @@
                 _messageBus.PublishMessage(message);
 
                 var requeuedMessage = string.Format("Requeued create apprenticeship application message for candidate id: {0}", application.EntityId);
-                Logger.Info(requeuedMessage);
+                _logger.Info(requeuedMessage);
                 sb.AppendLine(requeuedMessage);
             }
 
@@ -60,12 +61,12 @@
             {
                 sb.AppendLine("The actions taken did not resolve the following issues with apprenticeship applications:");
                 applicationsForValidCandidatesWithUnsetLegacyId.ForEach(a => sb.AppendLine(string.Format("Application with id: {0} is associated with a valid candidate but has an unset legacy application id", a.EntityId)));
-                Logger.Error(sb.ToString());
+                _logger.Error(sb.ToString());
             }
             else
             {
                 sb.AppendLine("The actions taken appear to have resolved the issues");
-                Logger.Warn(sb.ToString());
+                _logger.Warn(sb.ToString());
             }
         }
     }

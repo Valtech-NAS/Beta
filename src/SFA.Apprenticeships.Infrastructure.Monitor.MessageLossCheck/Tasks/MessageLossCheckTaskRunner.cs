@@ -3,29 +3,31 @@
     using System;
     using System.Collections.Generic;
     using System.Threading;
+    using Application.Interfaces.Logging;
     using Monitor.Tasks;
-    using NLog;
 
     public class MessageLossCheckTaskRunner : IMessageLossCheckTaskRunner
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IEnumerable<IMonitorTask> _monitorTasks;
 
-        public MessageLossCheckTaskRunner(IEnumerable<IMonitorTask> monitorTasks)
+        public MessageLossCheckTaskRunner(IEnumerable<IMonitorTask> monitorTasks, ILogService logger)
         {
             _monitorTasks = monitorTasks;
+            _logger = logger;
         }
 
         public void RunMonitorTasks()
         {
             foreach (var monitorTask in _monitorTasks)
             {
-                Logger.Info("Running " + monitorTask.TaskName);
+                _logger.Info("Running " + monitorTask.TaskName);
                 monitorTask.Run();
+ 
                 var checkUnsentCandidateMessages = monitorTask as CheckUnsentCandidateMessages;
                 if (checkUnsentCandidateMessages != null && checkUnsentCandidateMessages.ActionsTaken)
                 {
-                    Logger.Info("Waiting for 5 minutes to allow any application queue messages to be processed after fixing the associated candidate");
+                    _logger.Info("Waiting for 5 minutes to allow any application queue messages to be processed after fixing the associated candidate");
                     Thread.Sleep(TimeSpan.FromMinutes(5));
                 }
             }

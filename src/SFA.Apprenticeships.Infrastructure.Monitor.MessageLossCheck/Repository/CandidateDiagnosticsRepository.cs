@@ -3,26 +3,27 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Logging;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Mongo.Common;
     using MongoDB.Driver.Linq;
-    using NLog;
     using Repositories.Candidates.Entities;
 
     public class CandidateDiagnosticsRepository : GenericMongoClient<MongoCandidate>, ICandidateDiagnosticsRepository
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IMapper _mapper;
         private readonly IUserReadRepository _userReadRepository;
 
-        public CandidateDiagnosticsRepository(IConfigurationManager configurationManager, IMapper mapper, IUserReadRepository userReadRepository)
+        public CandidateDiagnosticsRepository(IConfigurationManager configurationManager, IMapper mapper, IUserReadRepository userReadRepository, ILogService logger)
             : base(configurationManager, "Candidates.mongoDB", "candidates")
         {
             _mapper = mapper;
             _userReadRepository = userReadRepository;
+            _logger = logger;
         }
 
         public IEnumerable<Candidate> GetActivatedCandidatesWithUnsetLegacyId()
@@ -41,7 +42,7 @@
                 if (user.ActivationCode != null) continue;
                 
                 var candidate = _mapper.Map<MongoCandidate, Candidate>(mongoCandidate);
-                Logger.Debug("Candidate {0} is associated with an activated user but does not have a valid legacy candidate id from the legacy service", candidate.EntityId);
+                _logger.Debug("Candidate {0} is associated with an activated user but does not have a valid legacy candidate id from the legacy service", candidate.EntityId);
                 activatedCandidatesWithUnsetLegacyId.Add(candidate);
             }
 

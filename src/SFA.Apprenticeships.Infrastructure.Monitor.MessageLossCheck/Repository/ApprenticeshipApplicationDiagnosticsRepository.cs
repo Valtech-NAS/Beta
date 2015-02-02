@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Logging;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
@@ -10,20 +11,20 @@
     using Mongo.Common;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
-    using NLog;
     using Repositories.Applications.Entities;
 
     public class ApprenticeshipApplicationDiagnosticsRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApprenticeshipApplicationDiagnosticsRepository
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IMapper _mapper;
         private readonly ICandidateReadRepository _candidateReadRepository;
 
-        public ApprenticeshipApplicationDiagnosticsRepository(IConfigurationManager configurationManager, IMapper mapper, ICandidateReadRepository candidateReadRepository)
+        public ApprenticeshipApplicationDiagnosticsRepository(IConfigurationManager configurationManager, IMapper mapper, ICandidateReadRepository candidateReadRepository, ILogService logger)
             : base(configurationManager, "Applications.mongoDB", "apprenticeships")
         {
             _mapper = mapper;
             _candidateReadRepository = candidateReadRepository;
+            _logger = logger;
         }
 
         public IEnumerable<ApprenticeshipApplicationDetail> GetApplicationsForValidCandidatesWithUnsetLegacyId()
@@ -44,7 +45,7 @@
                 if (candidate.LegacyCandidateId == 0) continue;
 
                 var apprenticeshipApplicationDetail = _mapper.Map<MongoApprenticeshipApplicationDetail, ApprenticeshipApplicationDetail>(mongoApprenticeshipApplicationDetail);
-                Logger.Debug("Apprenticeship application {0} is associated with a valid candidate but does not have a valid legacy application id from the legacy service", apprenticeshipApplicationDetail.EntityId);
+                _logger.Debug("Apprenticeship application {0} is associated with a valid candidate but does not have a valid legacy application id from the legacy service", apprenticeshipApplicationDetail.EntityId);
                 applicationsForValidCandidatesWithUnsetLegacyId.Add(apprenticeshipApplicationDetail);
             }
 
