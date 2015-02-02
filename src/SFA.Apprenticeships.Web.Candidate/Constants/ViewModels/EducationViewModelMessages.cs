@@ -16,7 +16,7 @@
 
         public static class FromYearMessages
         {
-            public const string LabelText = "From";
+            public const string LabelText = "Started";
             public const string RequiredErrorText = "Please enter year started";
             public const string NotInFutureErrorText = "Year started can’t be in the future";
             public static string WhiteListRegularExpression = Whitelists.YearRangeWhiteList.RegularExpression();
@@ -25,7 +25,7 @@
 
         public static class ToYearMessages
         {
-            public const string LabelText = "To";
+            public const string LabelText = "Finished";
             public const string RequiredErrorText = "Please enter year finished";
             public const string BeforeOrEqualErrorText = "Year started can’t be after year finished";
             public static string WhiteListRegularExpression = Whitelists.YearRangeWhiteList.RegularExpression();

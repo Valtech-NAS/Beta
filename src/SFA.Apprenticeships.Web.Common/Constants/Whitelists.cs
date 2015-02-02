@@ -35,7 +35,7 @@
         public static class YearWhitelist
         {
             public const string RegularExpression = @"^[0-9]{4}$";
-            public const string ErrorText = @"must contain a 4 digit year";
+            public const string ErrorText = @"must contain 4 digits, eg 1990";
         }
 
         public static class YearRangeWhiteList

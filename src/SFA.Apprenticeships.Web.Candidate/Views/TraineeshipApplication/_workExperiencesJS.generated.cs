@@ -239,7 +239,7 @@ WriteLiteral(" for=\"work-from\"");
 
 WriteLiteral(" class=\"form-label\"");
 
-WriteLiteral(">From</label>\r\n                            <div");
+WriteLiteral(">Started</label>\r\n                            <div");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
@@ -292,7 +292,7 @@ WriteLiteral(" for=\"work-to\"");
 
 WriteLiteral(" class=\"form-label\"");
 
-WriteLiteral(">To</label>\r\n                            <div");
+WriteLiteral(">Finished</label>\r\n                            <div");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
@@ -599,13 +599,13 @@ WriteLiteral(@">
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(">From</span>\r\n                                            </th>\r\n                " +
-"                            <th>\r\n                                              " +
-"  <span");
+WriteLiteral(">Started</span>\r\n                                            </th>\r\n             " +
+"                               <th>\r\n                                           " +
+"     <span");
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(@">To</span>
+WriteLiteral(@">Finished</span>
                                             </th>
                                             <th></th>
                                             <th></th>

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
+    using System;
     using Constants.ViewModels;
     using FluentValidation;
     using Helpers;
@@ -33,19 +34,26 @@
                 .Matches(WorkExperienceViewModelMessages.JobTitleMessages.WhiteListRegularExpression)
                 .WithMessage(WorkExperienceViewModelMessages.JobTitleMessages.WhiteListErrorText);
 
+            var maxYear = Convert.ToString(DateTime.Now.Year - 100);
             RuleFor(x => x.FromYear)
                 .NotEmpty()
                 .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.RequiredErrorText)
                 .Matches(WorkExperienceViewModelMessages.FromYearMessages.WhiteListRegularExpression)
                 .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.WhiteListErrorText)
                 .Must(ValidatorsHelper.BeNowOrInThePast)
-                .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.MustNotBeInTheFutureErrorText);
-                
+                .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.CanNotBeInTheFutureErrorText)
+                .GreaterThanOrEqualTo(maxYear)
+                .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.MustBeGreaterThan(maxYear));
+
             RuleFor(x => x.ToYear)
-                .Must(ValidatorsHelper.BeNowOrInThePast)
-                .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.BeforeOrEqualErrorText)
+                .NotEmpty()
+                .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.RequiredErrorText)
                 .Matches(WorkExperienceViewModelMessages.ToYearMessages.WhiteListRegularExpression)
                 .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.WhiteListErrorText)
+                .Must(ValidatorsHelper.BeNowOrInThePast)
+                .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.CanNotBeInTheFutureErrorText)
+                .GreaterThanOrEqualTo(maxYear)
+                .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.MustBeGreaterThan(maxYear))
                 .Must(ValidatorsHelper.WorkExperienceYearBeBeforeOrEqual)
                 .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.BeforeOrEqualErrorText);
         }

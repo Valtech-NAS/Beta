@@ -61,10 +61,10 @@
                                     <thead>
                                         <tr>
                                             <th>
-                                                <span class="heading-span">From</span>
+                                                <span class="heading-span">Started</span>
                                             </th>
                                             <th>
-                                                <span class="heading-span">To</span>
+                                                <span class="heading-span">Finished</span>
                                             </th>
                                             <th></th>
                                             <th></th>
@@ -73,7 +73,7 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <span class="cell-span">From</span>
+                                                <span class="cell-span">Started</span>
                                                 <div class="form-group form-group-compound">
                                                     @Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].FromMonth), new { @id = "candidate_workexperience_" + i + "__frommonth", Name = "Candidate.WorkExperience[" + i + "].FromMonth" })
 
@@ -85,7 +85,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <span class="cell-span">To</span>
+                                                <span class="cell-span">Finished</span>
                                                 <div class="form-group form-group-compound">
                                                     @Html.DropDownListFor(m => Model.Candidate.WorkExperience.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.WorkExperience.ToList()[i].ToMonth), new { @id = "candidate_workexperience_" + i + "__tomonth", Name = "Candidate.WorkExperience[" + i + "].ToMonth" })
 
@@ -153,10 +153,10 @@
                                     <thead>
                                         <tr>
                                             <th>
-                                                <span class="heading-span">From</span>
+                                                <span class="heading-span">Started</span>
                                             </th>
                                             <th>
-                                                <span class="heading-span">To</span>
+                                                <span class="heading-span">Finished</span>
                                             </th>
                                             <th></th>
                                             <th></th>
@@ -165,7 +165,7 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <span class="cell-span">From</span>
+                                                <span class="cell-span">Started</span>
                                                 <div class="form-group form-group-compound">
                                                     @Html.DropDownList("Candidate.WorkExperience[" + i + "].FromMonth", new SelectList(Model.Months, "Value","Text",1), new { @id = "candidate_workexperience_" + i + "__frommonth", Name = "Candidate.WorkExperience[" + i + "].FromMonth" })
 
@@ -176,7 +176,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <span class="cell-span">To</span>
+                                                <span class="cell-span">Finished</span>
                                                 <div class="form-group form-group-compound">
                                                     @Html.DropDownList("Candidate.WorkExperience[" + i + "].ToMonth", new SelectList(Model.Months, "Value", "Text", 1), new { @id = "candidate_workexperience_" + i + "__tomonth", Name = "Candidate.WorkExperience[" + i + "].ToMonth" })
 

@@ -28,10 +28,11 @@
     var validationMessageFromYearMustNotBeInFuture = "Year started can't be in the future";
     var validationMessageYearMustBeARange = "Year must be 4 digits, between " + (new Date().getFullYear() - 100) + " and " + (new Date().getFullYear());
     var validationMessageToMonthRequired = "Please enter month you finished";
-    var validationMessageToYearRequired = "Please enter year you finished";
-    var validationMessageToYearMustBeNumeric = "Year finished must be 4 digits, eg 1990";
+    var validationMessageToYearRequired = "Please enter year finished";
+    var validationMessageToYearMustBeNumeric = "Year finished must contain 4 digits, eg 1990";
     var validationMessageToYearMustNotBeInFuture = "Year finished can't be in the future";
     var validationMessageToYearMustBeAfterFromYear = 'Year finished must be after year started';
+    var validationMessageYearMustBeAfter = "Year must be 4 digits, and not before 1915";
     var validationMessageDateFinishedMustBeAfterDateStarted = "Date finished must be after date started";
 
     var qualificationTypeModel = function (name) {
@@ -432,14 +433,14 @@
                 message: validationMessageFromYearMustBeNumeric
             }
         }).extend({
+            min: {
+                message: validationMessageYearMustBeAfter,
+                params: new Date().getFullYear() - 100
+            }
+        }).extend({
             max: {
                 message: validationMessageFromYearMustNotBeInFuture,
                 params: self.itemCurrentYear
-            }
-        }).extend({
-            pattern: {               
-                message: validationMessageYearMustBeARange,
-                params: self.itemYearRegexPattern,
             }
         });
 
@@ -454,17 +455,14 @@
                 onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
             }
         }).extend({
+            min: {
+                message: validationMessageYearMustBeAfter,
+                params: new Date().getFullYear() - 100
+            }
+        }).extend({
             max: {
                 message: validationMessageToYearMustNotBeInFuture,
                 params: self.itemCurrentYear,
-                onlyIf: function () {
-                    return (self.itemIsCurrentEmployment() === false);
-                }
-            }
-        }).extend({
-            pattern: {
-                message:validationMessageYearMustBeARange,
-                params: self.itemYearRegexPattern,
                 onlyIf: function () {
                     return (self.itemIsCurrentEmployment() === false);
                 }
@@ -475,12 +473,12 @@
                     return val >= fromYearValue;
                 },
                 message: validationMessageToYearMustBeAfterFromYear,
-                params: self.itemFromYear,
+                params: self.fromYear,
                 onlyIf: function () {
                     return (self.itemIsCurrentEmployment() === false);
                 }
             }
-        });       
+        });
 
         self.itemToMonth = ko.observable(itemToMonth).extend({
             required: {
@@ -609,9 +607,9 @@
                 params: self.currentYear
             }
         }).extend({
-            pattern: {
-                message: validationMessageYearMustBeARange,
-                params: self.yearRegexPattern
+            min: {
+                message: validationMessageYearMustBeAfter,
+                params: new Date().getFullYear() - 100
             }
         });
 
@@ -639,9 +637,8 @@
                 onlyIf: function () { return (self.isCurrentEmployment() === false); }
             }
         }).extend({
-            pattern: {
-                message: validationMessageYearMustBeARange,
-                params: self.yearRegexPattern,
+            number: {
+                message: validationMessageToYearMustBeNumeric,
                 onlyIf: function () { return (self.isCurrentEmployment() === false); }
             }
         }).extend({
@@ -651,6 +648,11 @@
                 onlyIf: function () {
                     return (self.isCurrentEmployment() === false);
                 }
+            }
+        }).extend({
+            min: {
+                message: validationMessageYearMustBeAfter,
+                params: new Date().getFullYear() - 100
             }
         }).extend({
             validation: {

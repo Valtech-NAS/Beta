@@ -239,13 +239,13 @@ WriteLiteral(@">
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(">From</span>\r\n                                            </th>\r\n                " +
-"                            <th>\r\n                                              " +
-"  <span");
+WriteLiteral(">Started</span>\r\n                                            </th>\r\n             " +
+"                               <th>\r\n                                           " +
+"     <span");
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(@">To</span>
+WriteLiteral(@">Finished</span>
                                             </th>
                                             <th></th>
                                             <th></th>
@@ -258,7 +258,7 @@ WriteLiteral(@">To</span>
 
 WriteLiteral(" class=\"cell-span\"");
 
-WriteLiteral(">From</span>\r\n                                                <div");
+WriteLiteral(">Started</span>\r\n                                                <div");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
@@ -306,7 +306,7 @@ WriteLiteral("\r\n                                                </div>\r\n    
 
 WriteLiteral(" class=\"cell-span\"");
 
-WriteLiteral(">To</span>\r\n                                                <div");
+WriteLiteral(">Finished</span>\r\n                                                <div");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
@@ -527,13 +527,13 @@ WriteLiteral(@">
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(">From</span>\r\n                                            </th>\r\n                " +
-"                            <th>\r\n                                              " +
-"  <span");
+WriteLiteral(">Started</span>\r\n                                            </th>\r\n             " +
+"                               <th>\r\n                                           " +
+"     <span");
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(@">To</span>
+WriteLiteral(@">Finished</span>
                                             </th>
                                             <th></th>
                                             <th></th>
@@ -546,7 +546,7 @@ WriteLiteral(@">To</span>
 
 WriteLiteral(" class=\"cell-span\"");
 
-WriteLiteral(">From</span>\r\n                                                <div");
+WriteLiteral(">Started</span>\r\n                                                <div");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
@@ -594,7 +594,7 @@ WriteLiteral("\r\n                                                </div>\r\n    
 
 WriteLiteral(" class=\"cell-span\"");
 
-WriteLiteral(">To</span>\r\n                                                <div");
+WriteLiteral(">Finished</span>\r\n                                                <div");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
