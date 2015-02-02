@@ -15,6 +15,7 @@
 
             testconfig.SystemId.Should().Be(Guid.Parse("9a9d226168c94be1bfe50db189d5fdfe"));
             testconfig.PublicKey.Should().Be("this is the public key :)");
+            testconfig.BlacklistedCategoryCodes.Should().Be("00,99");
         }
     }
 }
