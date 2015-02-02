@@ -1,8 +1,3 @@
-using SFA.Apprenticeships.Web.Candidate;
-using WebActivatorEx;
-
-[assembly: PreApplicationStartMethod(typeof (StructuremapMvc), "Start")]
-
 namespace SFA.Apprenticeships.Web.Candidate
 {
     using Common.IoC;
@@ -31,16 +26,14 @@ namespace SFA.Apprenticeships.Web.Candidate
     /// </summary>
     public static class StructuremapMvc
     {
-        public static void Start()
+        public static IContainer Start()
         {
             var config = new ConfigurationManager();
             var useCacheSetting = config.TryGetAppSetting("UseCaching");
             bool useCache;
             bool.TryParse(useCacheSetting, out useCache);
 
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            var container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
@@ -48,8 +41,6 @@ namespace SFA.Apprenticeships.Web.Candidate
 
                 // service layer
                 x.AddRegistry<AzureCacheRegistry>();
-                //x.AddRegistry<MemoryCacheRegistry>();
-
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(useCache));
@@ -69,8 +60,9 @@ namespace SFA.Apprenticeships.Web.Candidate
                 x.AddRegistry<CandidateWebRegistry>();
             });
 
-            WebCommonRegistry.Configure(ObjectFactory.Container);
-#pragma warning restore 0618
+            WebCommonRegistry.Configure(container);
+
+            return container;
         }
     }
 }

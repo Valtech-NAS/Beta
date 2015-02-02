@@ -129,11 +129,15 @@ WriteLiteral(">Apply now</a>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("        <p>");
+WriteLiteral("        <p");
+
+WriteLiteral(" id=\"external-employer-raw-vacancy-url\"");
+
+WriteLiteral(">");
 
             
             #line 19 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-      Write(Model.VacancyUrl);
+                                             Write(Model.VacancyUrl);
 
             
             #line default
@@ -154,13 +158,15 @@ else if (Request.IsAuthenticated)
             #line hidden
 WriteLiteral("        <p");
 
+WriteLiteral(" id=\"date-applied\"");
+
 WriteLiteral(" class=\"no-btm-margin\"");
 
 WriteLiteral(">You applied on ");
 
             
             #line 26 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-                                           Write(Html.DisplayFor(m => m.DateApplied, "Date"));
+                                                             Write(Html.DisplayFor(m => m.DateApplied, "Date"));
 
             
             #line default
@@ -187,14 +193,14 @@ WriteLiteral(" class=\"button button-with-hint\"");
 
 WriteLiteral(" title=\"Apply for traineeship\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1231), Tuple.Create("\"", 1313)
+WriteAttribute("href", Tuple.Create(" href=\"", 1288), Tuple.Create("\"", 1370)
             
             #line 31 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-                               , Tuple.Create(Tuple.Create("", 1238), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })
+                               , Tuple.Create(Tuple.Create("", 1295), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })
             
             #line default
             #line hidden
-, 1238), false)
+, 1295), false)
 );
 
 WriteLiteral(" ");
@@ -211,10 +217,34 @@ WriteLiteral(">Apply for traineeship</a>\r\n");
             
             #line 32 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
     }
+    else
+    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        <a");
+
+WriteLiteral(" id=\"return-to-my-applications\"");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 1605), Tuple.Create("\"", 1643)
+            
+            #line 35 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
+, Tuple.Create(Tuple.Create("", 1612), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
+            
+            #line default
+            #line hidden
+, 1612), false)
+);
+
+WriteLiteral(">Return to my applications</a>\r\n");
+
+            
+            #line 36 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
+    }
 }
-else
+else if (Model.VacancyStatus == VacancyStatuses.Live)
 {
-    // Vacancy is not being viewed by a signed-in candidate.
 
             
             #line default
@@ -229,20 +259,20 @@ WriteLiteral(" class=\"button button-with-hint\"");
 
 WriteLiteral(" title=\"Sign in to apply\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1659), Tuple.Create("\"", 1741)
+WriteAttribute("href", Tuple.Create(" href=\"", 1839), Tuple.Create("\"", 1921)
             
-            #line 37 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-                      , Tuple.Create(Tuple.Create("", 1666), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })
+            #line 40 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
+                      , Tuple.Create(Tuple.Create("", 1846), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })
             
             #line default
             #line hidden
-, 1666), false)
+, 1846), false)
 );
 
 WriteLiteral(" ");
 
             
-            #line 37 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
+            #line 40 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
                                                                                                                                                                               Write(Html.Raw(string.Format(AnalyticsTag, "/traineeship/apply/signin/", "Traineeship – Sign In to Apply", ViewData["AnalyticsButtonPosition"])));
 
             
@@ -251,7 +281,7 @@ WriteLiteral(" ");
 WriteLiteral(">Sign in to apply</a>\r\n");
 
             
-            #line 38 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
+            #line 41 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
 }
 
             
@@ -260,7 +290,7 @@ WriteLiteral(">Sign in to apply</a>\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 40 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
+            #line 43 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
  switch (Model.VacancyStatus)
 {
     case VacancyStatuses.Live:
@@ -270,13 +300,15 @@ WriteLiteral("\r\n");
             #line hidden
 WriteLiteral("        <p");
 
+WriteLiteral(" id=\"vacancy-closing-date\"");
+
 WriteLiteral(" class=\"copy-16\"");
 
 WriteLiteral(">Closing date: ");
 
             
-            #line 43 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-                                    Write(Model.ClosingDate.ToFriendlyClosingToday());
+            #line 46 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
+                                                              Write(Model.ClosingDate.ToFriendlyClosingToday());
 
             
             #line default
@@ -284,31 +316,30 @@ WriteLiteral(">Closing date: ");
 WriteLiteral("</p>\r\n");
 
             
-            #line 44 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
+            #line 47 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
         break;
     case VacancyStatuses.Expired:
 
             
             #line default
             #line hidden
-WriteLiteral("        <strong>Closed on:</strong> ");
+WriteLiteral("        <p");
+
+WriteLiteral(" id=\"vacancy-closed-on-date\"");
+
+WriteLiteral("><strong>Closed on:</strong> ");
 
             
-            #line 46 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-                                    
+            #line 49 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
+                                                              Write(Html.DisplayFor(m => m.ClosingDate));
+
             
             #line default
             #line hidden
-            
-            #line 46 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-                               Write(Html.DisplayFor(m => m.ClosingDate));
+WriteLiteral("</p>\r\n");
 
             
-            #line default
-            #line hidden
-            
-            #line 46 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-                                                                        
+            #line 50 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
         break;
 }
 
