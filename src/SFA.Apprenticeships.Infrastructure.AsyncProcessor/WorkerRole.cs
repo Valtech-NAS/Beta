@@ -33,37 +33,20 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
 
         public override void Run()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            _logger = ObjectFactory.GetInstance<ILogService>();
-#pragma warning restore 0618
-
-            _logger.Debug(ProcessName + " Run called");
-
             Initialise();
 
             _cancelSource.Token.WaitHandle.WaitOne();
-
-            _logger.Debug(ProcessName + " Run exiting");
         }
 
         public override bool OnStart()
         {
-            _logger.Debug(ProcessName + " OnStart called");
-
-            // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
-
-            // For information on handling configuration changes
-            // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
 
             return base.OnStart();
         }
 
         public override void OnStop()
         {
-            _logger.Debug(ProcessName + " OnStop called");
-
             // Kill the bus which will kill any subscriptions
 #pragma warning disable 0618
             // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
@@ -80,44 +63,22 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
 
         private static void Initialise()
         {
-            _logger.Debug(ProcessName + " initialising...");
-
             VersionLogging.SetVersion();
 
             try
             {
                 InitializeIoC();
                 InitialiseRabbitMQSubscribers();
-
-                _logger.Debug(ProcessName + " initialisation complete");
             }
             catch (Exception ex)
             {
-                _logger.Error(ProcessName + " failed to initialise", ex);
+                if (_logger != null) _logger.Error(ProcessName + " failed to initialise", ex);
                 throw;
             }
         }
 
-        private static void InitialiseRabbitMQSubscribers()
-        {
-            const string asyncProcessorSubscriptionId = "AsyncProcessor";
-
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var bootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
-#pragma warning restore 0618
-
-            _logger.Debug("RabbitMQ initialising");
-
-            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(EmailRequestConsumerAsync)), asyncProcessorSubscriptionId);
-
-            _logger.Debug("RabbitMQ initialised");
-        }
-
         private static void InitializeIoC()
         {
-            _logger.Debug("IoC container initialising");
-
             var config = new ConfigurationManager();
             var useCacheSetting = config.TryGetAppSetting("UseCaching");
             bool useCache;
@@ -140,9 +101,23 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
                 x.AddRegistry(new LegacyWebServicesRegistry(useCache));
                 x.AddRegistry<AsyncProcessorRegistry>();
             });
+
+            _logger = ObjectFactory.GetInstance<ILogService>();
+#pragma warning restore 0618
+        }
+
+        private static void InitialiseRabbitMQSubscribers()
+        {
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
+            var bootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
 #pragma warning restore 0618
 
-            _logger.Debug("IoC container initialised");
+            _logger.Debug("RabbitMQ initialising");
+
+            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(EmailRequestConsumerAsync)), "AsyncProcessor");
+
+            _logger.Debug("RabbitMQ initialised");
         }
     }
 }
