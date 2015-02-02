@@ -107,16 +107,12 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Configuration\LegacyServicesConfigurationTests.cs" />
     <Compile Include="GatewayTraineeshipVacancyDetailMapperTests.cs" />
     <Compile Include="GatewayVacancySummaryMapperTests.cs" />
     <Compile Include="GatewayApprenticeshipVacancyDetailMapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
