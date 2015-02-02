@@ -4,7 +4,6 @@
     using AutoMapper;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Entities.Vacancies.Traineeships;
     using FluentAssertions;
     using GatewayServiceProxy;
     using Mappers.Apprenticeships;
