@@ -17,7 +17,7 @@
     }
     else
     {
-        <p>@Model.VacancyUrl</p>
+        <p id="external-employer-raw-vacancy-url">@Model.VacancyUrl</p>
     }
 }
 else if (Request.IsAuthenticated)
@@ -35,37 +35,35 @@ else if (Request.IsAuthenticated)
         {
             if (Model.DateApplied.HasValue)
             {
-                <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
+                <p id="date-applied" class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
             }
 
             if (Model.VacancyStatus == VacancyStatuses.Live)
             {
-                <a href="@Url.Action("Track", "Account", new {id = Model.Id})">Track application status</a>
+                <a id="track-application-status" href="@Url.Action("Track", "Account", new { id = Model.Id })">Track application status</a>
             }
             else
             {
-                <a href="@Url.Action("Index", "Account")">Return to my applications</a>
+                <a id="return-to-my-applications" href="@Url.Action("Index", "Account")">Return to my applications</a>
             }
         }
     }
     else if (Model.VacancyStatus == VacancyStatuses.Live)
     {
-        // Vacancy is live and candidate has not applied for this vacancy.
         <a role="button" id="apply-button" class="button button-with-hint" title="Apply for apprenticeship" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signedin/", "Apprenticeship – Signed In Apply", ViewData["AnalyticsButtonPosition"]))>Apply for apprenticeship</a>
     }
 }
 else if (Model.VacancyStatus == VacancyStatuses.Live)
 {
-    // Vacancy is live and is not being viewed by a signed-in candidate.
     <a role="button" id="apply-button" class="button button-with-hint" title="Sign in to apply" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signin/", "Apprenticeship – Sign In to Apply", ViewData["AnalyticsButtonPosition"]))>Sign in to apply</a>
 }
 
 @switch (Model.VacancyStatus)
 {
     case VacancyStatuses.Live:
-        <p class="copy-16">Closing date: @Model.ClosingDate.ToFriendlyClosingToday()</p>
+        <p id="vacancy-closing-date" class="copy-16">Closing date: @Model.ClosingDate.ToFriendlyClosingToday()</p>
         break;
     case VacancyStatuses.Expired:
-        <strong>Closed on:</strong> @Html.DisplayFor(m => m.ClosingDate)
+        <p id="vacancy-closed-on-date"><strong>Closed on:</strong> @Html.DisplayFor(m => m.ClosingDate)</p>
         break;
 }
