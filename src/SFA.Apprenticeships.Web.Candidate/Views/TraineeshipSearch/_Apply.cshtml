@@ -1,4 +1,6 @@
-﻿@model VacancyDetailViewModel
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
+
+@model VacancyDetailViewModel
 
 @{
     var AnalyticsTag = "onclick=\"Webtrends.multiTrack({{ element: this, argsa: ['DCS.dcsuri', '{0}" + Model.Id + "', 'WT.dl', '99', 'WT.ti', '{1}', 'DCSext.buttonPos', '{2}'] }});\"";
@@ -23,9 +25,9 @@ else if (Request.IsAuthenticated)
     {
         <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
     }
-    else
+    else if (Model.VacancyStatus == VacancyStatuses.Live)
     {
-        // Candidate has not applied for this vacancy.
+        // Vacancy is live and candidate has not applied for this vacancy.
         <a role="button" id="apply-button" class="button button-with-hint" title="Apply for traineeship" href="@Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/traineeship/apply/signedin/", "Traineeship – Signed In Apply", ViewData["AnalyticsButtonPosition"]))>Apply for traineeship</a>
     }
 }
@@ -34,4 +36,13 @@ else
     // Vacancy is not being viewed by a signed-in candidate.
     <a role="button" id="apply-button" class="button button-with-hint" title="Sign in to apply" href="@Url.RouteUrl(CandidateRouteNames.TraineeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/traineeship/apply/signin/", "Traineeship – Sign In to Apply", ViewData["AnalyticsButtonPosition"]))>Sign in to apply</a>
 }
-<p class="copy-16">Closing date: @Html.DisplayFor(m => m.ClosingDate, "Date")</p>
+
+@switch (Model.VacancyStatus)
+{
+    case VacancyStatuses.Live:
+        <p class="copy-16">Closing date: @Model.ClosingDate.ToFriendlyClosingToday()</p>
+        break;
+    case VacancyStatuses.Expired:
+        <strong>Closed on:</strong> @Html.DisplayFor(m => m.ClosingDate)
+        break;
+}

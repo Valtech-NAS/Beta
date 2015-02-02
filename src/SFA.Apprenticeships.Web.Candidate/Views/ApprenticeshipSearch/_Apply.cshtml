@@ -22,43 +22,41 @@
 }
 else if (Request.IsAuthenticated)
 {
-    if (Model.CandidateApplicationStatus.HasValue && Model.CandidateApplicationStatus.Value != ApplicationStatuses.Unknown)
+    if (Model.CandidateApplicationStatus.HasValue &&
+        Model.CandidateApplicationStatus.Value != ApplicationStatuses.Unknown)
     {
         // Candidate has applied for this vacancy.
-        switch (Model.CandidateApplicationStatus.Value)
+        if (Model.CandidateApplicationStatus.Value == ApplicationStatuses.Draft &&
+            Model.VacancyStatus == VacancyStatuses.Live)
         {
-            case ApplicationStatuses.Draft:
-                <a role="button" id="apply-button" class="button button-with-hint" title="Resume application" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/resume/", "Apprenticeship – Resume Application", ViewData["AnalyticsButtonPosition"]))>Resume application</a>
-                break;
+            <a role="button" id="apply-button" class="button button-with-hint" title="Resume application" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {@id = Model.Id})" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/resume/", "Apprenticeship – Resume Application", ViewData["AnalyticsButtonPosition"]))>Resume application</a>
+        }
+        else
+        {
+            if (Model.DateApplied.HasValue)
+            {
+                <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
+            }
 
-            default:
-                if (Model.DateApplied.HasValue)
-                {
-                    <p class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
-                }
-
-                switch (Model.VacancyStatus)
-                {
-                    case VacancyStatuses.Live:
-                        <a href="@Url.Action("Track", "Account", new { id = Model.Id })">Track application status</a>
-                        break;
-                    case VacancyStatuses.Expired:
-                        <a href="@Url.Action("Index", "Account")">Return to my applications</a>
-                        break;
-                }
-
-                break;
+            if (Model.VacancyStatus == VacancyStatuses.Live)
+            {
+                <a href="@Url.Action("Track", "Account", new {id = Model.Id})">Track application status</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Index", "Account")">Return to my applications</a>
+            }
         }
     }
-    else
+    else if (Model.VacancyStatus == VacancyStatuses.Live)
     {
-        // Candidate has not applied for this vacancy.
+        // Vacancy is live and candidate has not applied for this vacancy.
         <a role="button" id="apply-button" class="button button-with-hint" title="Apply for apprenticeship" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signedin/", "Apprenticeship – Signed In Apply", ViewData["AnalyticsButtonPosition"]))>Apply for apprenticeship</a>
     }
 }
-else
+else if (Model.VacancyStatus == VacancyStatuses.Live)
 {
-    // Vacancy is not being viewed by a signed-in candidate.
+    // Vacancy is live and is not being viewed by a signed-in candidate.
     <a role="button" id="apply-button" class="button button-with-hint" title="Sign in to apply" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signin/", "Apprenticeship – Sign In to Apply", ViewData["AnalyticsButtonPosition"]))>Sign in to apply</a>
 }
 

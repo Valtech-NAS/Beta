@@ -18,9 +18,11 @@
                 case "Withdrawn":
                 case "Deleted":
                 case "Posted In Error":
+                case "PostedInError":
                     return VacancyStatuses.Unavailable;
 
                 case "Closed":
+                case "ClosingDatePassed":
                 case "Completed":
                     return VacancyStatuses.Expired;
 
