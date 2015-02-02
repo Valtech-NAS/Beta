@@ -6,13 +6,10 @@
     using System.Security.Cryptography;
     using System.Web;
     using System.Web.Security;
-    using NLog;
 
     public class AuthenticationTicketService : IAuthenticationTicketService
     {
         private static readonly string CookieName = FormsAuthentication.FormsCookieName;
-
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public FormsAuthenticationTicket GetTicket(HttpCookieCollection cookies)
         {
@@ -34,13 +31,13 @@
             }
             catch (CryptographicException ex)
             {
-                Logger.Debug("Error decrypting ticket from cookie. Cookie is no longer valid and will be removed.", (Exception)ex);
+                //Logger.Debug("Error decrypting ticket from cookie. Cookie is no longer valid and will be removed.", (Exception)ex);
                 RemoveCookie(cookies);
                 return null;
             }
             catch (Exception ex)
             {
-                Logger.Error("Error getting/decrypting ticket from cookie. Cookie is no longer valid and will be removed.", ex);
+                //Logger.Error("Error getting/decrypting ticket from cookie. Cookie is no longer valid and will be removed.", ex);
                 RemoveCookie(cookies);
                 return null;
             }
@@ -54,7 +51,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Error(string.Format("Error removing cookie {0}", CookieName), ex);
+                //Logger.Error(string.Format("Error removing cookie {0}", CookieName), ex);
             }
         }
 
@@ -85,8 +82,7 @@
 
             AddTicket(httpContext.Response.Cookies, newTicket);
 
-            Logger.Debug("Ticket issued for {0} because it only had {1}s to expire and the update window is {2}s",
-                ticket.Name, timeToExpiry, (FormsAuthentication.Timeout.TotalSeconds / 2));
+            //Logger.Debug("Ticket issued for {0} because it only had {1}s to expire and the update window is {2}s", ticket.Name, timeToExpiry, (FormsAuthentication.Timeout.TotalSeconds / 2));
         }
 
         public string[] GetClaims(FormsAuthenticationTicket ticket)
@@ -132,8 +128,7 @@
                 isPersistent: false,
                 userData: StringifyUserData(claims, expiration));
 
-            Logger.Debug("Ticket created for {0} with {1} at {2} expires {3}",
-                ticket.Name, ticket.UserData, ticket.IssueDate, ticket.Expiration);
+            //Logger.Debug("Ticket created for {0} with {1} at {2} expires {3}", ticket.Name, ticket.UserData, ticket.IssueDate, ticket.Expiration);
 
             return ticket;
         }

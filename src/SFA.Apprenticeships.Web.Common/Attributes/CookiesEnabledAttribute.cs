@@ -2,7 +2,6 @@
 {
     using System;
     using System.Web.Mvc;
-    using Constants;
     using Providers;
     using StructureMap.Attributes;
 

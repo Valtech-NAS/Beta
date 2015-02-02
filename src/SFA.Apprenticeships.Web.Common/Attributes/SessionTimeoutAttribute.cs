@@ -6,23 +6,16 @@
     using System.Web.Security;
     using Constants;
     using Controllers;
-    using NLog;
 
     public class SessionTimeoutAttribute : ActionFilterAttribute
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var controller = filterContext.Controller as IUserController;
             if (controller == null)
             {
-                var message = string.Format("Controller {0} must inherit from IUserController",
-                    filterContext.ActionDescriptor.ControllerDescriptor.ControllerName);
-
-                Logger.Error(message);
-
-                throw new ConfigurationErrorsException(message);
+                throw new ConfigurationErrorsException(string.Format("Controller {0} must inherit from IUserController",
+                    filterContext.ActionDescriptor.ControllerDescriptor.ControllerName));
             }
 
             var controllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;

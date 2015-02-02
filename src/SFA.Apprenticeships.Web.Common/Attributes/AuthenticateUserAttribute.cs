@@ -7,13 +7,10 @@
     using System.Web.Routing;
     using System.Web.Security;
     using Constants;
-    using NLog;
     using Services;
 
     public class AuthenticateUserAttribute : ActionFilterAttribute, IAuthenticationFilter
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
         public void OnAuthentication(AuthenticationContext filterContext)
         {
             var httpContext = filterContext.RequestContext.HttpContext;
@@ -23,15 +20,15 @@
 
             if (ticket == null)
             {
-                Logger.Debug("User is not logged in (no authentication ticket)");
-                Logger.Debug("User.IsAuthenticated {0}", httpContext.User.Identity.IsAuthenticated);
+                //Logger.Debug("User is not logged in (no authentication ticket)");
+                //Logger.Debug("User.IsAuthenticated {0}", httpContext.User.Identity.IsAuthenticated);
 
                 return;
             }
 
             if (IsCookieExpired(filterContext, service, ticket))
             {
-                Logger.Debug("User cookie is expired.");
+                //Logger.Debug("User cookie is expired.");
 
                 filterContext.Result = new RedirectToRouteResult(RouteNames.SignOut, new RouteValueDictionary());
             }
@@ -40,11 +37,11 @@
 
             httpContext.User = new GenericPrincipal(new FormsIdentity(ticket), claims);
 
-            Logger.Debug("User.IsAuthenticated {0}", httpContext.User.Identity.IsAuthenticated);
-            Logger.Debug("Claims {0}", string.Join(",", claims));
+            //Logger.Debug("User.IsAuthenticated {0}", httpContext.User.Identity.IsAuthenticated);
+            //Logger.Debug("Claims {0}", string.Join(",", claims));
 
-            Logger.Debug("Activated: {0}", httpContext.User.IsInRole(UserRoleNames.Activated));
-            Logger.Debug("Unactivated: {0}", httpContext.User.IsInRole(UserRoleNames.Unactivated));
+            //Logger.Debug("Activated: {0}", httpContext.User.IsInRole(UserRoleNames.Activated));
+            //Logger.Debug("Unactivated: {0}", httpContext.User.IsInRole(UserRoleNames.Unactivated));
         }
 
         public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)
