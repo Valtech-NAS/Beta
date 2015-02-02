@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Runtime.CompilerServices;
     using Application.Interfaces.Logging;
     using NLog;
 
@@ -38,6 +39,7 @@
         }
 
         #region Helpers
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static Logger GetCallingLogger()
         {
             var fullClassName = GetFullClassName();
