@@ -48,14 +48,12 @@
 
         protected void Application_Start()
         {
-            var container = StructuremapMvc.Start();
-
             VersionLogging.SetVersion();
             RuntimeHelper.SetRuntimeName("SFA.Apprenticeships.Web.Candidate");
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters, container);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
