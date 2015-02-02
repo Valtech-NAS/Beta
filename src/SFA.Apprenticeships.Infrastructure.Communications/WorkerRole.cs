@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
     using System.Net;
     using System.ServiceModel;
     using System.Threading;
+    using Application.Interfaces.Logging;
     using Azure.Common.IoC;
     using Caching.Azure.IoC;
     using Caching.Memory.IoC;
@@ -17,7 +18,6 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
     using Logging.IoC;
     using Microsoft.WindowsAzure;
     using Microsoft.WindowsAzure.ServiceRuntime;
-    using NLog;
     using RabbitMq.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Communication.IoC;
@@ -25,12 +25,18 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
 
     public class WorkerRole : RoleEntryPoint
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private static ILogService _logger;
+        private const string ProcessName = "Communications Process";
         private CommunicationsControlQueueConsumer _communicationsControlQueueConsumer;
 
         public override void Run()
         {
-            Logger.Debug("Communications Process Run Called");
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
+            _logger = ObjectFactory.GetInstance<ILogService>();
+#pragma warning restore 0618
+
+            _logger.Debug(ProcessName + " Run called");
 
             Initialise();
 
@@ -42,26 +48,26 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
 
                     if (isEnabled)
                     {
-                        Logger.Debug("Communications worker role enabled");
+                        _logger.Debug(ProcessName + " worker role enabled");
                         _communicationsControlQueueConsumer.CheckScheduleQueue().Wait();
                     }
                     else
                     {
-                        Logger.Debug("Communications worker role disabled");
+                        _logger.Debug(ProcessName + " worker role disabled");
                     }
 
                 }
                 catch (CommunicationException ce)
                 {
-                    Logger.Warn("CommunicationException from CommunicationsSchedulerConsumer", ce);
+                    _logger.Warn("CommunicationException from " + ProcessName, ce);
                 }
                 catch (TimeoutException te)
                 {
-                    Logger.Warn("TimeoutException from CommunicationsSchedulerConsumer", te);
+                    _logger.Warn("TimeoutException from  " + ProcessName, te);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("Exception from CommunicationsSchedulerConsumer", ex);
+                    _logger.Error("Exception from  " + ProcessName, ex);
                 }
 
                 Thread.Sleep(TimeSpan.FromMinutes(1));
@@ -70,10 +76,12 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
 
         private void Initialise()
         {
+            _logger.Debug(ProcessName + " initialising...");
+
+            VersionLogging.SetVersion();
+
             try
             {
-                VersionLogging.SetVersion();
-
                 var config = new ConfigurationManager();
                 var useCacheSetting = config.TryGetAppSetting("UseCaching");
                 bool useCache;
@@ -97,30 +105,30 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
                 });
 #pragma warning restore 0618
 
-                Logger.Debug("Communications Process IoC initialized");
+                _logger.Debug(ProcessName + " IoC initialised");
 
 #pragma warning disable 618
                 //var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
 #pragma warning restore 618
                 //subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(CommunicationsControlQueueConsumer)), "Communications");
-                //Logger.Debug("Rabbit subscriptions setup complete");
+                //_logger.Debug("Rabbit subscriptions setup complete");
 
 #pragma warning disable 618
                 _communicationsControlQueueConsumer = ObjectFactory.GetInstance<CommunicationsControlQueueConsumer>();
 #pragma warning restore 618
 
-                Logger.Debug("Communications Process setup complete");
+                _logger.Debug(ProcessName + " initialisation complete");
             }
             catch (Exception ex)
             {
-                Logger.Fatal("Communications Process failed to initialise", ex);
+                _logger.Error(ProcessName + " failed to initialise", ex);
                 throw;
             }
         }
 
         public override bool OnStart()
         {
-            Logger.Debug("Communications Process OnStart called");
+            _logger.Debug(ProcessName + " OnStart called");
 
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
@@ -133,7 +141,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
 
         public override void OnStop()
         {
-            Logger.Debug("Communications Process OnStop called");
+            _logger.Debug(ProcessName + " OnStop called");
 
             // Kill the bus which will kill any subscriptions
 #pragma warning disable 0618

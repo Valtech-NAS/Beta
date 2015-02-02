@@ -3,16 +3,15 @@
     using System;
     using System.Threading.Tasks;
     using Application.Candidate;
+    using Application.Interfaces.Logging;
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;
-    using NLog;
 
     public class CreateCandidateRequestConsumerAsync : IConsumeAsync<CreateCandidateRequest>
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private readonly ILogService _logger;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IUserReadRepository _userReadRepository;
         private readonly ILegacyCandidateProvider _legacyCandidateProvider;
@@ -24,13 +23,14 @@
             IUserReadRepository userReadRepository,
             ILegacyCandidateProvider legacyCandidateProvider,
             ICandidateWriteRepository candidateWriteRepository,
-            IMessageBus messageBus)
+            IMessageBus messageBus, ILogService logger)
         {
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
             _legacyCandidateProvider = legacyCandidateProvider;
             _candidateWriteRepository = candidateWriteRepository;
             _messageBus = messageBus;
+            _logger = logger;
         }
 
         [SubscriptionConfiguration(PrefetchCount = 2)]
@@ -48,12 +48,10 @@
                     }
                     catch
                     {
-                        Logger.Error("Failed to re-queue deferred 'Create Candidate' request: {{ 'CandidateId': '{0}' }}", request.CandidateId);
+                        _logger.Error("Failed to re-queue deferred 'Create Candidate' request: {{ 'CandidateId': '{0}' }}", request.CandidateId);
                         throw;
                     }
                 }
-
-                Log("Creating", request);
 
                 CreateCandidate(request);
             });
@@ -63,6 +61,8 @@
         {
             try
             {
+                _logger.Debug("Creating candidate Id: {0}", request.CandidateId);
+
                 var user = _userReadRepository.Get(request.CandidateId);
                 user.AssertState("Create legacy user", UserStatuses.Active, UserStatuses.Locked);
 
@@ -75,12 +75,12 @@
                 }
                 else
                 {
-                    Logger.Warn("User has already been activated in legacy system: Candidate Id: \"{0}\"", request.CandidateId);
+                    _logger.Warn("User has already been activated in legacy system: Candidate Id: \"{0}\"", request.CandidateId);
                 }
             }
             catch (Exception ex)
             {
-                Logger.Error(string.Format("Create candidate with id {0} request async process failed", request.CandidateId), ex);
+                _logger.Error(string.Format("Create candidate with id {0} request async process failed", request.CandidateId), ex);
                 Requeue(request);
             }
         }
@@ -89,11 +89,6 @@
         {
             request.ProcessTime = request.ProcessTime.HasValue ? DateTime.Now.AddMinutes(5) : DateTime.Now.AddSeconds(30);
             _messageBus.PublishMessage(request);
-        }
-
-        private static void Log(string narrative, CreateCandidateRequest request)
-        {
-            Logger.Debug("{0}: Candidate Id: \"{1}\"", narrative, request.CandidateId);
         }
     }
 }

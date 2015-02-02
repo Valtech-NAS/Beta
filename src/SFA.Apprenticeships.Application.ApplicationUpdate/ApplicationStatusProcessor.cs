@@ -95,8 +95,15 @@
 
         public void ProcessApplicationStatuses(int legacyVacancyId, VacancyStatuses vacancyStatus, DateTime closingDate)
         {
-            QueueApprenticeshipApplicationStatusSummaries(legacyVacancyId, vacancyStatus, closingDate);
-            QueueTraineeshipApplicationStatusSummaries(legacyVacancyId, vacancyStatus, closingDate);
+            try
+            {
+                QueueApprenticeshipApplicationStatusSummaries(legacyVacancyId, vacancyStatus, closingDate);
+                QueueTraineeshipApplicationStatusSummaries(legacyVacancyId, vacancyStatus, closingDate);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error processing application statuses", ex);
+            }
         }
 
         private void QueueApprenticeshipApplicationStatusSummaries(int legacyVacancyId, VacancyStatuses vacancyStatus, DateTime closingDate)
@@ -145,7 +152,6 @@
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
         }
-
 
         private bool ProcessApprenticeshipsApplication(ApplicationStatusSummary applicationStatusSummary)
         {

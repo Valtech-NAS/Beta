@@ -8,12 +8,10 @@
     using Application.VacancyEtl.Entities;
     using EasyNetQ.AutoSubscribe;
     using Elastic.Common.Entities;
-    using NLog;
     using VacancyIndexer;
 
     public class ApprenticeshipSummaryUpdateConsumerAsync : IConsumeAsync<ApprenticeshipSummaryUpdate>
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IReferenceDataService _referenceDataService;
         private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> _vacancyIndexer;
         private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
@@ -33,18 +31,10 @@
         {
             return Task.Run(() =>
             {
-                try
-                {
-                    PopulateCategoriesCodes(vacancySummaryToIndex);
+                PopulateCategoriesCodes(vacancySummaryToIndex);
 
-                    _vacancyIndexer.Index(vacancySummaryToIndex);
-                    _vacancySummaryProcessor.QueueVacancyIfExpiring(vacancySummaryToIndex);
-                }
-                catch (Exception ex)
-                {
-                    var message = string.Format("Failed indexing vacancy summary {0}", vacancySummaryToIndex.Id);
-                    Logger.Warn(message, ex);
-                }
+                _vacancyIndexer.Index(vacancySummaryToIndex);
+                _vacancySummaryProcessor.QueueVacancyIfExpiring(vacancySummaryToIndex);
             });
         }
 

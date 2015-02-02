@@ -7,13 +7,11 @@
     using Domain.Interfaces.Caching;
     using EasyNetQ.AutoSubscribe;
     using Extensions;
-    using NLog;
 
     public class VacancyStatusSummaryConsumerAsync : IConsumeAsync<VacancyStatusSummary>
     {
         private readonly ICacheService _cacheService;
         private readonly IApplicationStatusProcessor _applicationStatusProcessor;
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public VacancyStatusSummaryConsumerAsync(ICacheService cacheService, IApplicationStatusProcessor applicationStatusProcessor)
         {
@@ -27,24 +25,16 @@
         {
             return Task.Run(() =>
             {
-                try
+                var cachedSummaryUpdate = _cacheService.Get<VacancyStatusSummary>(message.CacheKey());
+
+                if (cachedSummaryUpdate != null)
                 {
-                    var cachedSummaryUpdate = _cacheService.Get<VacancyStatusSummary>(message.CacheKey());
-
-                    if (cachedSummaryUpdate != null)
-                    {
-                        // this vacancy has already been processed so return to prevent endless reprocessing
-                        return;
-                    }
-
-                    _cacheService.PutObject(message.CacheKey(), message, message.CacheDuration());
-
-                    _applicationStatusProcessor.ProcessApplicationStatuses(message.LegacyVacancyId, message.VacancyStatus, message.ClosingDate);
+                    return; // this vacancy has already been processed so return to prevent endless reprocessing
                 }
-                catch (Exception ex)
-                {
-                    Logger.Error("Error processing application summaries", ex);
-                }
+
+                _cacheService.PutObject(message.CacheKey(), message, message.CacheDuration());
+
+                _applicationStatusProcessor.ProcessApplicationStatuses(message.LegacyVacancyId, message.VacancyStatus, message.ClosingDate);
             });
         }
     }

@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using System.ServiceModel;
     using System.Threading;
     using Address.IoC;
+    using Application.Interfaces.Logging;
     using Azure.Common.IoC;
     using Common.IoC;
     using Consumers;
@@ -15,7 +16,6 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Logging;
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
-    using NLog;
     using Postcode.IoC;
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
@@ -28,12 +28,18 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
     public class WorkerRole : RoleEntryPoint
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private static ILogService _logger;
+        private const string ProcessName = "Monitor Process";
         private MonitorControlQueueConsumer _monitorControlQueueConsumer;
 
         public override void Run()
         {
-            Logger.Debug("Monitor Process Run Called");
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
+            _logger = ObjectFactory.GetInstance<ILogService>();
+#pragma warning restore 0618
+
+            _logger.Debug(ProcessName + " Run called");
 
             Initialise();
 
@@ -45,15 +51,15 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 }
                 catch (CommunicationException ce)
                 {
-                    Logger.Warn("CommunicationException from MonitorSchedulerConsumer", ce);
+                    _logger.Warn("CommunicationException from " + ProcessName, ce);
                 }
                 catch (TimeoutException te)
                 {
-                    Logger.Warn("TimeoutException from MonitorSchedulerConsumer", te);
+                    _logger.Warn("TimeoutException from  " + ProcessName, te);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("Exception from MonitorSchedulerConsumer", ex);
+                    _logger.Error("Exception from  " + ProcessName, ex);
                 }
 
                 Thread.Sleep(TimeSpan.FromMinutes(1));
@@ -63,6 +69,8 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
         #region Helpers
         private void Initialise()
         {
+            _logger.Debug(ProcessName + " initialising...");
+
             VersionLogging.SetVersion();
 
             try
@@ -89,23 +97,23 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                     x.AddRegistry<MonitorRegistry>();
                 });
 
-                Logger.Debug("Monitor Process IoC initialized");
+                _logger.Debug(ProcessName + " IoC initialised");
 
                 _monitorControlQueueConsumer = ObjectFactory.GetInstance<MonitorControlQueueConsumer>();
 #pragma warning restore 0618
 
-                Logger.Debug("Monitor Process setup complete");
+                _logger.Debug(ProcessName + " initialisation complete");
             }
             catch (Exception ex)
             {
-                Logger.Fatal("Monitor Process failed to initialise", ex);
+                _logger.Error(ProcessName + " failed to initialise", ex);
                 throw;
             }
         }
 
         public override bool OnStart()
         {
-            Logger.Debug("Monitor Process OnStart called");
+            _logger.Debug(ProcessName + " OnStart called");
 
             ServicePointManager.DefaultConnectionLimit = 12;
 
@@ -114,7 +122,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
         public override void OnStop()
         {
-            Logger.Debug("Monitor Process OnStop called");
+            _logger.Debug(ProcessName + " OnStop called");
 
             // Give it 5 seconds to finish processing any in flight subscriptions.
             Thread.Sleep(TimeSpan.FromSeconds(5));

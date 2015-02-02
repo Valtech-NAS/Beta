@@ -35,15 +35,22 @@
         public void Index(TSourceSummary vacancySummaryToIndex)
         {
             _logger.Debug("Indexing vacancy item : {0} ({1})", vacancySummaryToIndex.Title, vacancySummaryToIndex.Id);
-            
-            var indexAlias = GetIndexAlias();
-            var newIndexName = GetIndexNameAndDateExtension(indexAlias, vacancySummaryToIndex.ScheduledRefreshDateTime);
-            var vacancySummaryElastic = _mapper.Map<TSourceSummary, TDestinationSummary>(vacancySummaryToIndex);
 
-            var client = _elasticsearchClientFactory.GetElasticClient();
-            client.Index(vacancySummaryElastic, f => f.Index(newIndexName));
+            try
+            {
+                var indexAlias = GetIndexAlias();
+                var newIndexName = GetIndexNameAndDateExtension(indexAlias, vacancySummaryToIndex.ScheduledRefreshDateTime);
+                var vacancySummaryElastic = _mapper.Map<TSourceSummary, TDestinationSummary>(vacancySummaryToIndex);
 
-            _logger.Debug("Indexed vacancy item : {0} ({1})", vacancySummaryToIndex.Title, vacancySummaryToIndex.Id);
+                var client = _elasticsearchClientFactory.GetElasticClient();
+                client.Index(vacancySummaryElastic, f => f.Index(newIndexName));
+
+                _logger.Debug("Indexed vacancy item : {0} ({1})", vacancySummaryToIndex.Title, vacancySummaryToIndex.Id);
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn("Failed indexing traineeship vacancy summary {0}", ex, vacancySummaryToIndex.Id);
+            }
         }
 
         public void CreateScheduledIndex(DateTime scheduledRefreshDateTime)
@@ -159,14 +166,14 @@
 
         private void LogResult(bool result, string newIndexName)
         {
-            var logMessage =
-                string.Format(
-                    result
-                        ? "The index {0} is not correctly created."
-                        : "The index {0} is correctly created.",
-                    newIndexName);
-
-            _logger.Debug(string.Format("Checked if the index is correctly created. {0}", logMessage));
+            if (result)
+            {
+                _logger.Debug("The index {0} is correctly created", newIndexName);
+            }
+            else
+            {
+                _logger.Error("The index {0} is not correctly created", newIndexName);
+            }
         }
 
         private string GetIndexAlias()

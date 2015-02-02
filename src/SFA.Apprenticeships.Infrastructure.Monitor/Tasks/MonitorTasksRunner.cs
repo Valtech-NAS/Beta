@@ -4,27 +4,27 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using NLog;
-    using Domain.Interfaces.Configuration;
+    using Application.Interfaces.Logging;
 
     public class MonitorTasksRunner : IMonitorTasksRunner
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IEnumerable<IMonitorTask> _monitorTasks;
 
-        public MonitorTasksRunner(IEnumerable<IMonitorTask> monitorTasks)
+        public MonitorTasksRunner(IEnumerable<IMonitorTask> monitorTasks, ILogService logger)
         {
             _monitorTasks = monitorTasks;
+            _logger = logger;
         }
 
         public void RunMonitorTasks()
         {
-            Logger.Info("Starting to run monitor tasks");
+            _logger.Info("Starting to run monitor tasks");
 
             var tasks = _monitorTasks.Select(mt => Task.Factory
                 .StartNew(() =>
                 {
-                    Logger.Debug(string.Format("Start running task {0}", mt.TaskName));
+                    _logger.Debug(string.Format("Start running task {0}", mt.TaskName));
 
                     try
                     {
@@ -32,15 +32,15 @@
                     }
                     catch (Exception exception)
                     {
-                        Logger.Error(string.Format("Error while running task {0}", mt.TaskName), exception);
+                        _logger.Error(string.Format("Error while running task {0}", mt.TaskName), exception);
                     }
 
-                    Logger.Debug(string.Format("Finished running task {0}", mt.TaskName));
+                    _logger.Debug(string.Format("Finished running task {0}", mt.TaskName));
                 })).ToArray();
 
             Task.WaitAll(tasks);
 
-            Logger.Debug("Finished running monitor tasks");
+            _logger.Debug("Finished running monitor tasks");
         }
     }
 }

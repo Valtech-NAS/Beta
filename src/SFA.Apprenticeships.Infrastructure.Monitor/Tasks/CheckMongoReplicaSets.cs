@@ -1,23 +1,24 @@
-﻿using System;
-using System.Linq;
-using MongoDB.Bson;
-using NLog;
-using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-using SFA.Apprenticeships.Infrastructure.Mongo.Common;
-
-namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
+﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
+    using System;
+    using System.Linq;
+    using MongoDB.Bson;
+    using Domain.Interfaces.Configuration;
+    using Mongo.Common;
+    using Application.Interfaces.Logging;
+
     public class CheckMongoReplicaSets : IMonitorTask
     {
+        private readonly ILogService _logger;
         private const string MonitorAppSetting = "Monitor.ExpectedReplicaSetCount";
         private const string ReplicaSetGetStatusCommand = "replSetGetStatus";
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IMongoAdminClient _mongoAdminClient;
         private readonly int _expectedReplicaSetCount;
 
-        public CheckMongoReplicaSets(IMongoAdminClient mongoAdminClient, IConfigurationManager configurationManager)
+        public CheckMongoReplicaSets(IMongoAdminClient mongoAdminClient, IConfigurationManager configurationManager, ILogService logger)
         {
             _mongoAdminClient = mongoAdminClient;
+            _logger = logger;
             _expectedReplicaSetCount = int.Parse(configurationManager.GetAppSetting(MonitorAppSetting));
         }
 
@@ -33,14 +34,14 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
             if (_expectedReplicaSetCount > 1 && isReplicaSet)
             {
                 verifyReplicaSets = true;
-                Logger.Debug("Replica set members will be verified");
+                _logger.Debug("Replica set members will be verified");
             }
             else if (_expectedReplicaSetCount == 1 && !isReplicaSet)
             {
-                Logger.Debug("Replica set members will not be verified");
+                _logger.Debug("Replica set members will not be verified");
             }
             else
-                Logger.Error("{0} config is invalid. ExpectedReplicaSetCount: {1}, IsReplicaSet: {2}", TaskName, _expectedReplicaSetCount, isReplicaSet);
+                _logger.Error("{0} config is invalid. ExpectedReplicaSetCount: {1}, IsReplicaSet: {2}", TaskName, _expectedReplicaSetCount, isReplicaSet);
 
             if (verifyReplicaSets)
             {

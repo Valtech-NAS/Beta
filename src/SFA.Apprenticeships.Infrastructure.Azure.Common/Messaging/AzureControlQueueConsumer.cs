@@ -22,6 +22,7 @@
 
             if (queueMessage == null)
             {
+                Logger.Debug("No control message found for " + _processName);
                 return null;
             }
 

@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using System.Reflection;
     using System.ServiceModel;
     using System.Threading;
+    using Application.Interfaces.Logging;
     using Azure.Common.IoC;
     using Caching.Azure.IoC;
     using Caching.Memory.IoC;
@@ -18,7 +19,6 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using Logging;
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
-    using NLog;
     using RabbitMq.Interfaces;
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
@@ -28,13 +28,18 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
     public class WorkerRole : RoleEntryPoint
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private static ILogService _logger;
+        private const string ProcessName = "Vacancy Processor";
         private VacancyEtlControlQueueConsumer _vacancyEtlControlQueueConsumer;
 
         public override void Run()
         {
-            Logger.Debug("Vacancy Etl Process Run Called");
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
+            _logger = ObjectFactory.GetInstance<ILogService>();
+#pragma warning restore 0618
+
+            _logger.Debug(ProcessName + " Run called");
 
             Initialise();
 
@@ -46,15 +51,15 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 }
                 catch (CommunicationException ce)
                 {
-                    Logger.Warn("CommunicationException from legacy web services", ce);
+                    _logger.Warn("CommunicationException from " + ProcessName, ce);
                 }
                 catch (TimeoutException te)
                 {
-                    Logger.Warn("TimeoutException from legacy web services", te);
+                    _logger.Warn("TimeoutException from  " + ProcessName, te);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("Exception from VacancySchedulerConsumer", ex);
+                    _logger.Error("Exception from  " + ProcessName, ex);
                 }
 
                 Thread.Sleep(TimeSpan.FromMinutes(1));
@@ -63,7 +68,10 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
         private void Initialise()
         {
+            _logger.Debug(ProcessName + " initialising...");
+
             VersionLogging.SetVersion();
+
             try
             {
                 var config = new ConfigurationManager();
@@ -90,31 +98,30 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 });
 #pragma warning restore 0618
 
-                Logger.Debug("Vacancy Etl Process IoC initialized");
+                _logger.Debug(ProcessName + " IoC initialised");
 
 #pragma warning disable 618
                 var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
 #pragma warning restore 618
-                subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(VacancySummaryPageConsumerAsync)),
-                    "VacancyEtl");
-                Logger.Debug("Rabbit subscriptions setup");
+                subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(VacancySummaryPageConsumerAsync)), "VacancyEtl");
+                _logger.Debug("Rabbit subscriptions setup");
 
 #pragma warning disable 618
                 _vacancyEtlControlQueueConsumer = ObjectFactory.GetInstance<VacancyEtlControlQueueConsumer>();
 #pragma warning restore 618
 
-                Logger.Debug("Vacancy Etl Process setup complete");
+                _logger.Debug(ProcessName + " initialisation complete");
             }
             catch (Exception ex)
             {
-                Logger.Fatal("Vacancy Etl Process failed to initialise", ex);
+                _logger.Error(ProcessName + " failed to initialise", ex);
                 throw;
             }
         }
 
         public override bool OnStart()
         {
-            Logger.Debug("Vacancy Etl Process OnStart called");
+            _logger.Debug(ProcessName + " OnStart called");
 
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
@@ -127,7 +134,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 
         public override void OnStop()
         {
-            Logger.Debug("Vacancy Etl Process OnStop called");
+            _logger.Debug(ProcessName + " OnStop called");
 
             // Kill the bus which will kill any subscriptions
 #pragma warning disable 0618

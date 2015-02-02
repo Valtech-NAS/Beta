@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
     using System.Reflection;
     using System.ServiceModel;
     using System.Threading;
+    using Application.Interfaces.Logging;
     using Azure.Common.IoC;
     using Caching.Azure.IoC;
     using Caching.Memory.IoC;
@@ -17,7 +18,6 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
     using Logging;
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
-    using NLog;
     using RabbitMq.Interfaces;
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
@@ -25,12 +25,18 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
 
     public class WorkerRole : RoleEntryPoint
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private static ILogService _logger;
+        private const string ProcessName = "Application Processor";
         private ApplicationEtlControlQueueConsumer _applicationEtlControlQueueConsumer;
 
         public override void Run()
         {
-            Logger.Debug("Application Etl Process Run Called");
+#pragma warning disable 0618
+            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
+            _logger = ObjectFactory.GetInstance<ILogService>();
+#pragma warning restore 0618
+
+            _logger.Debug(ProcessName + " Run called");
 
             Initialise();
 
@@ -42,15 +48,15 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                 }
                 catch (CommunicationException ce)
                 {
-                    Logger.Warn("CommunicationException from ApplicationSchedulerConsumer", ce);
+                    _logger.Warn("CommunicationException from " + ProcessName, ce);
                 }
                 catch (TimeoutException te)
                 {
-                    Logger.Warn("TimeoutException from ApplicationSchedulerConsumer", te);
+                    _logger.Warn("TimeoutException from  " + ProcessName, te);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("Exception from ApplicationSchedulerConsumer", ex);
+                    _logger.Error("Exception from  " + ProcessName, ex);
                 }
 
                 Thread.Sleep(TimeSpan.FromMinutes(1));
@@ -59,6 +65,8 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
 
         private void Initialise()
         {
+            _logger.Debug(ProcessName + " initialising...");
+
             VersionLogging.SetVersion();
 
             try
@@ -85,30 +93,30 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                 });
 #pragma warning restore 0618
 
-                Logger.Debug("Application Etl Process IoC initialized");
+                _logger.Debug(ProcessName + " IoC initialised");
 
 #pragma warning disable 618
                 var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
 #pragma warning restore 618
                 subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(ApplicationStatusSummaryConsumerAsync)), "ApplicationEtl");
-                Logger.Debug("Rabbit subscriptions setup complete");
+                _logger.Debug("Rabbit subscriptions setup complete");
 
 #pragma warning disable 618
                 _applicationEtlControlQueueConsumer = ObjectFactory.GetInstance<ApplicationEtlControlQueueConsumer>();
 #pragma warning restore 618
 
-                Logger.Debug("Application Etl Process setup complete");
+                _logger.Debug(ProcessName + " initialisation complete");
             }
             catch (Exception ex)
             {
-                Logger.Fatal("Application Etl Process failed to initialise", ex);
+                _logger.Error(ProcessName + " failed to initialise", ex);
                 throw;
             }
         }
 
         public override bool OnStart()
         {
-            Logger.Debug("Application Etl Process OnStart called");
+            _logger.Debug(ProcessName + " OnStart called");
 
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
@@ -121,7 +129,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
 
         public override void OnStop()
         {
-            Logger.Debug("Application Etl Process OnStop called");
+            _logger.Debug(ProcessName + " OnStop called");
 
             // Stop consumers
 #pragma warning disable 618

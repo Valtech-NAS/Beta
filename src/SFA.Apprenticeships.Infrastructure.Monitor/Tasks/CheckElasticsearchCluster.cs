@@ -1,22 +1,23 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
     using System;
+    using Application.Interfaces.Logging;
     using Elastic.Common.Configuration;
     using Elasticsearch.Net;
     using Nest;
-    using NLog;
 
     internal class CheckElasticsearchCluster : IMonitorTask
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
 
         private readonly ElasticsearchConfiguration _elasticsearchConfiguration;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
 
-        public CheckElasticsearchCluster(ElasticsearchConfiguration elasticsearchConfiguration, IElasticsearchClientFactory elasticsearchClientFactory)
+        public CheckElasticsearchCluster(ElasticsearchConfiguration elasticsearchConfiguration, IElasticsearchClientFactory elasticsearchClientFactory, ILogService logger)
         {
             _elasticsearchConfiguration = elasticsearchConfiguration;
             _elasticsearchClientFactory = elasticsearchClientFactory;
+            _logger = logger;
         }
 
         public string TaskName
@@ -85,13 +86,13 @@
             if ((health.Status == "yellow" && ExpectedNodeCount > 1) || health.Status == "red")
             {
                 var statusMessage = string.Format("Cluster is unhealthy: \"{0}\". Advise checking cluster if this message is logged again.", health.Status);
-                Logger.Warn(statusMessage);
+                _logger.Warn(statusMessage);
             }
 
             if (health.NumberOfNodes != ExpectedNodeCount)
             {
                 var message = string.Format("Cluster should contain {0} nodes, but only has {1}.", ExpectedNodeCount, health.NumberOfNodes);
-                Logger.Warn(message);
+                _logger.Warn(message);
             }
         }
 

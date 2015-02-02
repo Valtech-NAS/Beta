@@ -32,10 +32,17 @@
 
         public void SendEmail(EmailRequest request)
         {
-            _logger.Debug("Dispatching email To:{0}, Template:{1}", request.ToEmail, request.MessageType);
+            try
+            {
+                _logger.Debug("Dispatching email To:{0}, Template:{1}", request.ToEmail, request.MessageType);
 
-            var message = ComposeMessage(request);
-            DispatchMessage(message);
+                var message = ComposeMessage(request);
+                DispatchMessage(message);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error sending email", ex);
+            }
         }
 
         private SendGridMessage ComposeMessage(EmailRequest request)

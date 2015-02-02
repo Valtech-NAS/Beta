@@ -97,12 +97,19 @@
 
         public void QueueVacancyIfExpiring(ApprenticeshipSummary vacancySummary)
         {
-            if (vacancySummary.ClosingDate < DateTime.Now.AddHours(_vacancyAboutToExpireNotificationHours))
+            try
             {
-                _logger.Debug("Queueing expiring vacancy");
+                if (vacancySummary.ClosingDate < DateTime.Now.AddHours(_vacancyAboutToExpireNotificationHours))
+                {
+                    _logger.Debug("Queueing expiring vacancy");
 
-                var vacancyAboutToExpireMessage = new VacancyAboutToExpire { Id = vacancySummary.Id };
-                _messageBus.PublishMessage(vacancyAboutToExpireMessage);
+                    var vacancyAboutToExpireMessage = new VacancyAboutToExpire { Id = vacancySummary.Id };
+                    _messageBus.PublishMessage(vacancyAboutToExpireMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn("Failed queueing expiring vacancy {0}", ex, vacancySummary.Id);
             }
         }
 

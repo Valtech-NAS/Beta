@@ -1,26 +1,26 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
-
-namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
+﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Logging;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
-    using NLog;
     using Application.Vacancy;
     using Application.VacancyEtl;
 
     public class CheckNasGateway : IMonitorTask
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IVacancyDataProvider<ApprenticeshipVacancyDetail> _vacancyDataProvider;
         private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
 
         public CheckNasGateway(IVacancyIndexDataProvider vacancyIndexDataProvider,
-            IVacancyDataProvider<ApprenticeshipVacancyDetail> vacancyDataProvider)
+            IVacancyDataProvider<ApprenticeshipVacancyDetail> vacancyDataProvider, ILogService logger)
         {
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
             _vacancyDataProvider = vacancyDataProvider;
+            _logger = logger;
         }
 
         public string TaskName
@@ -45,12 +45,12 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
                 }
                 else
                 {
-                    Logger.Error("Monitor get vacancy summary returned {0} records", apprenticeshipSummaries.Count() + traineeshipSummaries.Count());
+                    _logger.Error("Monitor get vacancy summary returned {0} records", apprenticeshipSummaries.Count() + traineeshipSummaries.Count());
                 }
             }
             catch (Exception exception)
             {
-                Logger.Error("Error connecting to NAS Gateway vacancy index", exception);
+                _logger.Error("Error connecting to NAS Gateway vacancy index", exception);
             }
         }
     }

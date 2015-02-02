@@ -8,7 +8,6 @@
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;
-    using NLog;
     using Application.VacancyEtl.Entities;
 
     public class VacancyAboutToExpireConsumerAsync : IConsumeAsync<VacancyAboutToExpire>
@@ -16,8 +15,6 @@
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IExpiringDraftRepository _expiringDraftRepository;
         private readonly IMapper _mapper;
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
 
         public VacancyAboutToExpireConsumerAsync(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, IExpiringDraftRepository expiringDraftRepository, IMapper mapper)
         {
@@ -30,8 +27,6 @@
         [AutoSubscriberConsumer(SubscriptionId = "VacancyAboutToExpireConsumerAsync")]
         public Task Consume(VacancyAboutToExpire vacancy)
         {
-            Logger.Debug("Received vacancy about to expire message.");
-
             return Task.Run(() =>
             {
                 //Get draft applications for expiring vacancy

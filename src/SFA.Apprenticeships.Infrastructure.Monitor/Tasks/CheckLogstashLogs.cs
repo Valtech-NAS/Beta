@@ -1,16 +1,14 @@
-﻿using EasyNetQ.Management.Client.Model;
-using Elasticsearch.Net;
-using Nest;
-
-namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
+﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
+    using Application.Interfaces.Logging;
     using Domain.Interfaces.Configuration;
+    using Elasticsearch.Net;
+    using Nest;
     using Newtonsoft.Json;
-    using NLog;
     using RestSharp;
     using RestSharp.Deserializers;
 
@@ -19,15 +17,14 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
     /// </summary>
     internal class CheckLogstashLogs : IMonitorTask
     {
+        private readonly ILogService _logger;
+        private readonly IConfigurationManager _configurationManager;
+
         private const string ExpectedLogCountSettingName = "Monitor.Logstash.ExpectedLogCount";
         private const string ExpectedLogTimeframeInMinutesSettingName = "Monitor.Logstash.ExpectedLogTimeframeInMinutes";
         private const string TimeoutSettingName = "Monitor.Logstash.Timeout";
         private const string BaseUrlSettingName = "Monitor.Logstash.BaseUrl";
         private const string NodeCountSettingName = "Monitor.Logstash.NodeCount";
-
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
-        private readonly IConfigurationManager _configurationManager;
 
         public class DynamicJsonDeserializer : IDeserializer
         {
@@ -41,9 +38,10 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
             }
         }
 
-        public CheckLogstashLogs(IConfigurationManager configurationManager)
+        public CheckLogstashLogs(IConfigurationManager configurationManager, ILogService logger)
         {
             _configurationManager = configurationManager;
+            _logger = logger;
         }
 
         public string TaskName
@@ -66,7 +64,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
             var timestamps = GetRecentLogEntryTimestamps();
             var actualLogCount = timestamps.Count(timestamp => timestamp >= timeframeStart);
 
-            Logger.Debug("Looking for {0} Logstash message(s) in last {1} minute(s), saw {2}.",
+            _logger.Debug("Looking for {0} Logstash message(s) in last {1} minute(s), saw {2}.",
                 ExpectedMinimumLogCount, ExpectedTimeframeInMinutes, actualLogCount);
 
             if (actualLogCount >= ExpectedMinimumLogCount)
@@ -201,13 +199,13 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
             if ((health.Status == "yellow" && NodeCount > 1) || health.Status == "red")
             {
                 var statusMessage = string.Format("Cluster is unhealthy: \"{0}\". Advise checking cluster if this message is logged again.", health.Status);
-                Logger.Warn(statusMessage);
+                _logger.Warn(statusMessage);
             }
 
             if (health.NumberOfNodes != NodeCount)
             {
                 var message = string.Format("Cluster should contain {0} nodes, but only has {1}.", NodeCount, health.NumberOfNodes);
-                Logger.Warn(message);
+                _logger.Warn(message);
             }
         }
 

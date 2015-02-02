@@ -73,14 +73,10 @@
             _messageBus.PublishMessage(request);
         }
 
-        private static IEnumerable<CommunicationToken> GetMessageTokens(
-            CommunicationRequest message)
+        private static IEnumerable<CommunicationToken> GetMessageTokens(CommunicationRequest message)
         {
-            return
-                message.Tokens.Where(
-                    t =>
-                        t.Key != CommunicationTokens.CandidateEmailAddress &&
-                        t.Key != CommunicationTokens.CandidateMobileNumber);
+            return message.Tokens
+                .Where(t => t.Key != CommunicationTokens.CandidateEmailAddress && t.Key != CommunicationTokens.CandidateMobileNumber);
         }
     }
 }
