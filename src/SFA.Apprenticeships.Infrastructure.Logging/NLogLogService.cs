@@ -1,14 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Logging
 {
     using System;
-    using System.Diagnostics;
-    using System.Runtime.CompilerServices;
     using Application.Interfaces.Logging;
     using NLog;
 
     public class NLogLogService : ILogService
     {
-        private Logger _logger;
+        private readonly Logger _logger;
+
+        public NLogLogService(Type parentType)
+        {
+            _logger = LogManager.GetLogger(parentType.FullName);
+        }
 
         public void Debug(string message, params object[] args)
         {
@@ -44,45 +47,9 @@
         private void LogMessage(LogLevel logLevel, Exception exception, string message, params object[] args)
         {
             var logMessage = string.Format(message, args);
-
-            _logger = _logger ?? GetCallingLogger();
+            
             _logger.Log(logLevel, logMessage, exception);
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static Logger GetCallingLogger()
-        {
-            var fullClassName = GetFullClassName();
-            var logger = LogManager.GetLogger(fullClassName);
-
-            return logger;
-        }
-
-        private static string GetFullClassName()
-        {
-            string className;
-            Type declaringType;
-            var framesToSkip = 4;
-
-            do
-            {
-                var frame = new StackFrame(framesToSkip, false);
-                var method = frame.GetMethod();
-                declaringType = method.DeclaringType;
-
-                if (declaringType == null)
-                {
-                    className = method.Name;
-                    break;
-                }
-
-                framesToSkip++;
-                className = declaringType.FullName;
-            } while (declaringType.Module.Name.Equals("mscorlib.dll", StringComparison.OrdinalIgnoreCase));
-
-            return className;
-        }
-
         #endregion
     }
 }

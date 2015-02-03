@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Logging.IoC
 {
+    using System;
     using Application.Interfaces.Logging;
     using Logging;
     using StructureMap.Configuration.DSL;
@@ -8,7 +9,7 @@
     {
         public LoggingRegistry()
         {
-            For<ILogService>().Use<NLogLogService>();
+            For<ILogService>().AlwaysUnique().Use<NLogLogService>().Ctor<Type>().Is(c => c.ParentType);
         }
     }
 }
