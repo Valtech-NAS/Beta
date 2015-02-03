@@ -41,7 +41,6 @@
 
                 _applicationVacancyUpdater.Update(candidateId, vacancyId, vacancyDetails);
 
-                // TODO: AG: review with MG: always queue vacancy status summary update?
                 QueueVacancyStatusSummaryUpdate(vacancyDetails);
 
                 return vacancyDetails;
