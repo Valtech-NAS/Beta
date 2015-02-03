@@ -24,7 +24,6 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
     using Configuration;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Address.IoC;
-    using Infrastructure.Azure.Session.IoC;
     using Infrastructure.Caching.Azure.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
@@ -54,7 +53,6 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry<SessionRegistry>();
 
                 // service layer
                 x.AddRegistry<AzureCacheRegistry>();
