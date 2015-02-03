@@ -92,11 +92,11 @@
     <Compile Include="IApplicationStatusProcessor.cs" />
     <Compile Include="IApplicationStatusUpdater.cs" />
     <Compile Include="ILegacyApplicationStatusesProvider.cs" />
-    <Compile Include="IApplicationVacancyStatusUpdater.cs" />
+    <Compile Include="IApplicationVacancyUpdater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\ApplicationStatusUpdateStrategy.cs" />
     <Compile Include="Strategies\IApplicationStatusUpdateStrategy.cs" />
-    <Compile Include="ApplicationVacancyStatusUpdater.cs" />
+    <Compile Include="ApplicationVacancyUpdater.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

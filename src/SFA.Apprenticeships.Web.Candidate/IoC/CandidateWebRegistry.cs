@@ -109,7 +109,7 @@
             For<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
             For<ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>();
             For<IApplicationStatusUpdater>().Use<ApplicationStatusUpdater>();
-            For<IApplicationVacancyStatusUpdater>().Use<ApplicationVacancyStatusUpdater>();
+            For<IApplicationVacancyUpdater>().Use<ApplicationVacancyUpdater>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IReferenceDataProvider>().Use<ReferenceDataProvider>();
             
