@@ -1,10 +1,9 @@
-﻿using SFA.Apprenticeships.Infrastructure.Mongo.Common;
-
-namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
+﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
 {
+    using Common.Configuration;
     using Consumers;
-    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-    using SFA.Apprenticeships.Infrastructure.Common.Configuration;
+    using Domain.Interfaces.Configuration;
+    using Mongo.Common;
     using StructureMap.Configuration.DSL;
     using Tasks;
 
