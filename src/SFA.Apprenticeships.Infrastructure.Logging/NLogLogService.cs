@@ -10,7 +10,15 @@
 
         public NLogLogService(Type parentType)
         {
-            _logger = LogManager.GetLogger(parentType.FullName);
+            if (parentType == null)
+            {
+                _logger = LogManager.GetLogger(GetType().FullName);
+                _logger.Warn("parentType was null. Using default for logger name");
+            }
+            else
+            {
+                _logger = LogManager.GetLogger(parentType.FullName);
+            }
         }
 
         public void Debug(string message, params object[] args)
