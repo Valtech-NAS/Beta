@@ -8,16 +8,16 @@
     {
         private readonly Logger _logger;
 
-        public NLogLogService(Type parentType)
+        public NLogLogService(Type type)
         {
-            if (parentType == null)
+            if (type == null)
             {
                 _logger = LogManager.GetLogger(GetType().FullName);
                 _logger.Warn("parentType was null. Using default for logger name");
             }
             else
             {
-                _logger = LogManager.GetLogger(parentType.FullName);
+                _logger = LogManager.GetLogger(type.FullName);
             }
         }
 
