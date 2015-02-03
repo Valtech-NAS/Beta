@@ -214,7 +214,6 @@
     <Compile Include="Providers\CookieUserDataProvider.cs" />
     <Compile Include="Services\AuthenticationTicketService.cs" />
     <Compile Include="Services\IAuthenticationTicketService.cs" />
-    <Compile Include="Providers\ISessionStateProvider.cs" />
     <Compile Include="Validations\EqualToValueFluentValidationPropertyValidator.cs" />
     <Compile Include="Validations\ValidationExtensions.cs" />
   </ItemGroup>

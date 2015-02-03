@@ -1258,10 +1258,6 @@
       <Project>{969662B6-BB64-48EE-880D-9646AB6146A4}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Address</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.Session\SFA.Apprenticeships.Infrastructure.Azure.Session.csproj">
-      <Project>{2FC1A9D8-E66E-49D0-BEFF-C845AFDF34F6}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Azure.Session</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Azure\SFA.Apprenticeships.Infrastructure.Caching.Azure.csproj">
       <Project>{B3285E4A-29DD-4CB6-B8C9-51AA06DB4F83}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Caching.Azure</Name>

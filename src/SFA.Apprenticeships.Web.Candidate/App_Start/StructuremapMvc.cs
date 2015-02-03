@@ -7,7 +7,6 @@ namespace SFA.Apprenticeships.Web.Candidate
 {
     using Common.IoC;
     using Infrastructure.Address.IoC;
-    using Infrastructure.Azure.Session.IoC;
     using Infrastructure.Caching.Azure.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
@@ -44,7 +43,6 @@ namespace SFA.Apprenticeships.Web.Candidate
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry<SessionRegistry>();
 
                 // service layer
                 x.AddRegistry<AzureCacheRegistry>();
