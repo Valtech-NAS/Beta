@@ -243,6 +243,10 @@
 
                 switch (response.Code)
                 {
+                    case Codes.ApprenticeshipApplication.PreviewAndSubmit.ValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View("Apply", response.ViewModel);
                     case Codes.ApprenticeshipApplication.Submit.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
                     case Codes.ApprenticeshipApplication.Submit.IncorrectState:

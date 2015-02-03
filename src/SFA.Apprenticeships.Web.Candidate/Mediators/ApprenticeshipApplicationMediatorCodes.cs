@@ -17,6 +17,7 @@
                 public const string IncorrectState = "incorrectState";
                 public const string Error = "error";
                 public const string Ok = "ok";
+                public const string ValidationError = "validationError";
             }
 
             public class AddEmptyQualificationRows

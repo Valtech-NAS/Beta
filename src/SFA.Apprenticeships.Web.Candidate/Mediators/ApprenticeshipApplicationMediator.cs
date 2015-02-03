@@ -174,9 +174,18 @@
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Submit(Guid candidateId, int vacancyId)
         {
+            var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+
+            var result = _apprenticeshipApplicationViewModelSaveValidator.Validate(savedModel);
+
+            if (!result.IsValid)
+            {
+                return GetMediatorResponse(Codes.ApprenticeshipApplication.Submit.ValidationError, savedModel, result);
+            }
+
             var model = _apprenticeshipApplicationProvider.SubmitApplication(candidateId, vacancyId);
 
-            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(Codes.ApprenticeshipApplication.Submit.VacancyNotFound);
             }
