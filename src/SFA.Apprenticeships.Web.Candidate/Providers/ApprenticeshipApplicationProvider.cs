@@ -360,6 +360,18 @@
             {
                 var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
                 var candidate = _candidateService.GetCandidate(candidateId);
+
+                if (applicationDetails == null || candidate == null)
+                {
+                    var message =
+                    string.Format("Get What Happens Next View Model failed as no application was found for candidate ID: {0}, vacancy ID: {1}.",
+                        candidateId, vacancyId);
+
+                    _logger.Info(message);
+
+                    return new WhatHappensNextViewModel(MyApplicationsPageMessages.ApplicationNotFound);
+                }
+
                 var model =
                     _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
                 var patchedModel = PatchWithVacancyDetail(candidateId, vacancyId, model);
