@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Caching.IntegrationTests
 {
     using System;
+    using Application.Interfaces.Logging;
     using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
     using Domain.Interfaces.Caching;
     using Memory;
@@ -17,7 +19,7 @@
         [SetUp]
         public void Setup()
         {
-            _memoryCacheService = new MemoryCacheService();
+            _memoryCacheService = new MemoryCacheService(new Mock<ILogService>().Object);
             _cacheKeyEntry = new TestCacheKeyEntry();
             _testCachedObject = new TestCachedObject { DateTimeCached = DateTime.Now };
             _testFunc = ((i, s) => _testCachedObject);
