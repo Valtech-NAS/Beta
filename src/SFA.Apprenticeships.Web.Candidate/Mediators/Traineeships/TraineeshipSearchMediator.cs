@@ -107,7 +107,6 @@
                 }
             }
 
-            // TODO: AG: MEDIATORS: test location result validation.
             var locationResult = _searchLocationValidator.Validate(model);
 
             if (!locationResult.IsValid)
