@@ -30,7 +30,7 @@
 
         public void Run()
         {
-            var sb = new StringBuilder("The following actions were taken to resolve issues with apprenticeship application:");
+            var sb = new StringBuilder("The following actions were taken to resolve issues with apprenticeship applications:");
             sb.AppendLine();
 
             var applicationsToRequeue = _applicationDiagnosticsRepository.GetApplicationsForValidCandidatesWithUnsetLegacyId().ToList();

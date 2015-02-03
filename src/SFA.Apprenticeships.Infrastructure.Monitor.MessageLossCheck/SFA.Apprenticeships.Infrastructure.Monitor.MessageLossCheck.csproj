@@ -119,6 +119,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\CandidateTraineeshipApplicationDetail.cs" />
+    <Compile Include="Entities\CandidateApprenticeshipApplicationDetail.cs" />
     <Compile Include="IoC\MessageLogCheckRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -132,6 +134,8 @@
     <Compile Include="Tasks\CheckUnsentTraineeshipApplicationMessages.cs" />
     <Compile Include="Tasks\CheckUnsentApprenticeshipApplicationMessages.cs" />
     <Compile Include="Tasks\CheckUnsentCandidateMessages.cs" />
+    <Compile Include="Tasks\CheckUnsetTraineeshipApplicationLegacyId.cs" />
+    <Compile Include="Tasks\CheckUnsetApprenticeshipApplicationLegacyId.cs" />
     <Compile Include="Tasks\IMessageLossCheckTaskRunner.cs" />
     <Compile Include="Tasks\MessageLossCheckTaskRunner.cs" />
   </ItemGroup>
@@ -142,6 +146,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.ApplicationUpdate\SFA.Apprenticeships.Application.ApplicationUpdate.csproj">
+      <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
+      <Name>SFA.Apprenticeships.Application.ApplicationUpdate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
       <Project>{984F8CD2-61B3-48A4-B0CC-5D05E235983D}</Project>
       <Name>SFA.Apprenticeships.Application.Candidate</Name>

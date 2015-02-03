@@ -25,7 +25,9 @@
                 {
                     x.Type<CheckUnsentCandidateMessages>();
                     x.Type<CheckUnsentApprenticeshipApplicationMessages>();
-                    x.Type<CheckUnsentTraineeshipApplicationMessages>();
+                    //x.Type<CheckUnsentTraineeshipApplicationMessages>();
+                    x.Type<CheckUnsetApprenticeshipApplicationLegacyId>();
+                    x.Type<CheckUnsetTraineeshipApplicationLegacyId>();
                     //x.Type<CheckExpiredDrafts>();
                 });
         }
