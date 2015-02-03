@@ -29,20 +29,5 @@
             autosubscriber.Subscribe(assembly);
             autosubscriber.SubscribeAsync(assembly);
         }
-
-        public void LoadSubscribers(Assembly assembly, string subscriptionId)
-        {
-            var autosubscriber = new AutoSubscriber(_bus, subscriptionId)
-            {
-                ConfigureSubscriptionConfiguration = configuration => configuration.WithPrefetchCount(_defaultHostConfiguration.PreFetchCount),
-#pragma warning disable 0618
-                // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-                AutoSubscriberMessageDispatcher = new StructureMapMessageDispatcher(ObjectFactory.Container)
-#pragma warning restore 0618
-            };
-
-            autosubscriber.Subscribe(assembly);
-            autosubscriber.SubscribeAsync(assembly);
-        }
     }
 }

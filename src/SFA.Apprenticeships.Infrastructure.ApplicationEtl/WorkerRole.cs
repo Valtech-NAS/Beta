@@ -28,6 +28,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
         private static ILogService _logger;
         private const string ProcessName = "Application Processor";
         private ApplicationEtlControlQueueConsumer _applicationEtlControlQueueConsumer;
+        private StructureMap.IContainer _container;
 
         public override void Run()
         {
@@ -66,16 +67,11 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
         public override void OnStop()
         {
             // Stop consumers
-#pragma warning disable 618
-            ObjectFactory.GetInstance<ApplicationStatusSummaryPageConsumerAsync>().Stop();
-            ObjectFactory.GetInstance<ApplicationStatusSummaryConsumerAsync>().Stop();
-#pragma warning restore 618
+            _container.GetInstance<ApplicationStatusSummaryPageConsumerAsync>().Stop();
+            _container.GetInstance<ApplicationStatusSummaryConsumerAsync>().Stop();
 
             // Kill the bus which will kill any subscriptions
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.GetInstance<IBus>().Advanced.Dispose();
-#pragma warning restore 0618
+            _container.GetInstance<IBus>().Advanced.Dispose();
 
             // Give it 5 seconds to finish processing any in flight subscriptions.
             Thread.Sleep(TimeSpan.FromSeconds(5));
@@ -99,16 +95,14 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
             }
         }
 
-        private static void InitializeIoC()
+        private void InitializeIoC()
         {
             var config = new ConfigurationManager();
             var useCacheSetting = config.TryGetAppSetting("UseCaching");
             bool useCache;
             bool.TryParse(useCacheSetting, out useCache);
 
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
@@ -122,25 +116,20 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                 x.AddRegistry<ApplicationRepositoryRegistry>();
             });
 
-            _logger = ObjectFactory.GetInstance<ILogService>();
-#pragma warning restore 0618
+            _logger = _container.GetInstance<ILogService>();
         }
 
         private void InitialiseRabbitMQSubscribers()
         {
-#pragma warning disable 618
-            var bootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
-#pragma warning restore 618
+            var bootstrapper = _container.GetInstance<IBootstrapSubcribers>();
 
             _logger.Debug("RabbitMQ initialising");
 
-            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(ApplicationStatusSummaryConsumerAsync)), "ApplicationEtl");
+            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(ApplicationStatusSummaryConsumerAsync)), "ApplicationEtl", _container);
 
             _logger.Debug("RabbitMQ initialised");
 
-#pragma warning disable 618
-            _applicationEtlControlQueueConsumer = ObjectFactory.GetInstance<ApplicationEtlControlQueueConsumer>();
-#pragma warning restore 618
+            _applicationEtlControlQueueConsumer = _container.GetInstance<ApplicationEtlControlQueueConsumer>();
         }
     }
 }

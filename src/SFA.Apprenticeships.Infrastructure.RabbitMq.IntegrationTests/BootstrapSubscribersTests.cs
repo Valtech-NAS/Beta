@@ -48,7 +48,7 @@
 
             var bs = _container.GetInstance<IBootstrapSubcribers>();
 
-            bs.LoadSubscribers(Assembly.GetExecutingAssembly(), "VacancyEtl"); //previously was test_app
+            bs.LoadSubscribers(Assembly.GetExecutingAssembly(), "VacancyEtl", _container); //previously was test_app
         }
 
         [TestFixtureTearDown]

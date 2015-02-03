@@ -15,7 +15,7 @@
         protected Container Container;
 
         [SetUp]
-        public void SetUpObjectFactory()
+        public void SetUpContainer()
         {
             Container = new Container(x =>
             {
