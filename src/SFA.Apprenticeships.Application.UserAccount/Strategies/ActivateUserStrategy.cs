@@ -23,7 +23,9 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             user.AssertState("Activate user", UserStatuses.PendingActivation);
 
             if (!user.ActivationCode.Equals(activationCode, StringComparison.InvariantCultureIgnoreCase))
-                throw new CustomException("Invalid activation code", ErrorCodes.UserActivationCodeError); 
+            {
+                throw new CustomException("Invalid activation code \"{0}\" for user \"{1}\"", ErrorCodes.UserActivationCodeError, activationCode, username);
+            }
 
             user.SetStateActive();
             _userWriteRepository.Save(user);

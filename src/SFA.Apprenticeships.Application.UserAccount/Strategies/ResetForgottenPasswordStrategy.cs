@@ -61,7 +61,8 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             else
             {
                 RegisterFailedPasswordReset(user);
-                throw new CustomException("Password reset code is invalid.", ErrorCodes.UserPasswordResetCodeIsInvalid);
+
+                throw new CustomException("Password reset code \"{0}\" is invalid for user \"{1}\"", ErrorCodes.UserPasswordResetCodeIsInvalid, passwordCode, username);
             }
         }
 

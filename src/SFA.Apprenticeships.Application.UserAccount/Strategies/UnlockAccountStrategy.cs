@@ -38,7 +38,7 @@
 
             if (!user.AccountUnlockCode.Equals(accountUnlockCode, StringComparison.InvariantCultureIgnoreCase))
             {
-                throw new CustomException("Invalid account unlock code.", ErrorCodes.AccountUnlockCodeInvalid);
+                throw new CustomException("Account unlock code \"{0}\" is invalid for user \"{1}\"", ErrorCodes.AccountUnlockCodeInvalid, accountUnlockCode, username);
             }
 
             user.SetStateActive();
