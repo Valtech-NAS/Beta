@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Consumers
 {
     using System.Threading.Tasks;
+    using Application.Interfaces.Logging;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Azure.Common.Messaging;
@@ -12,7 +13,8 @@
         private readonly IConfigurationManager _configurationManager;
 
         public MonitorControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService,
-            IMonitorTasksRunner monitorTasksRunner, IConfigurationManager configurationManager) : base(messageService, "Monitor")
+            IMonitorTasksRunner monitorTasksRunner, IConfigurationManager configurationManager, ILogService logger)
+            : base(messageService, logger, "Monitor")
         {
             _monitorTasksRunner = monitorTasksRunner;
             _configurationManager = configurationManager;
@@ -29,7 +31,7 @@
                     {
                         _monitorTasksRunner.RunMonitorTasks();
                     }
-                    _messageService.DeleteMessage(monitorScheduleMessage.MessageId, monitorScheduleMessage.PopReceipt);
+                    MessageService.DeleteMessage(monitorScheduleMessage.MessageId, monitorScheduleMessage.PopReceipt);
                 }
             });
         }

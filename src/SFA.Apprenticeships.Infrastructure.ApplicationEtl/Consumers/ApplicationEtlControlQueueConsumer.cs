@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using Application.ApplicationUpdate;
+    using Application.Interfaces.Logging;
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;
 
@@ -10,7 +11,8 @@
         private readonly IApplicationStatusProcessor _applicationStatusProcessor;
 
         public ApplicationEtlControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService,
-            IApplicationStatusProcessor applicationStatusProcessor) : base(messageService, "Application ETL")
+            IApplicationStatusProcessor applicationStatusProcessor, ILogService logger)
+            : base(messageService, logger, "Application ETL")
         {
             _applicationStatusProcessor = applicationStatusProcessor;
         }
@@ -23,7 +25,7 @@
                 if (scheduleerNotification != null)
                 {
                     _applicationStatusProcessor.QueueApplicationStatusesPages();
-                    _messageService.DeleteMessage(scheduleerNotification.MessageId, scheduleerNotification.PopReceipt);
+                    MessageService.DeleteMessage(scheduleerNotification.MessageId, scheduleerNotification.PopReceipt);
                 }
             });
         }

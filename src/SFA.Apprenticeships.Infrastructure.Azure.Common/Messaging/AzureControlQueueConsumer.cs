@@ -1,28 +1,29 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Azure.Common.Messaging
 {
+    using Application.Interfaces.Logging;
     using Domain.Interfaces.Messaging;
-    using NLog;
 
     public abstract class AzureControlQueueConsumer
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        protected readonly IProcessControlQueue<StorageQueueMessage> _messageService;
+        private readonly ILogService _logger;
+        protected readonly IProcessControlQueue<StorageQueueMessage> MessageService;
         private readonly string _processName;
 
-        protected AzureControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService, string processName)
+        protected AzureControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService, ILogService logger, string processName)
         {
-            _messageService = messageService;
+            MessageService = messageService;
             _processName = processName;
+            _logger = logger;
         }
 
         protected StorageQueueMessage GetLatestQueueMessage()
         {
-            Logger.Debug("Checking control queue for " + _processName + " process");
-            var queueMessage = _messageService.GetMessage();
+            _logger.Debug("Checking control queue for " + _processName + " process");
+            var queueMessage = MessageService.GetMessage();
 
             if (queueMessage == null)
             {
-                Logger.Debug("No control message found for " + _processName);
+                _logger.Debug("No control message found for " + _processName);
                 return null;
             }
 
@@ -30,24 +31,24 @@
 
             while (true)
             {
-                var nextQueueMessage = _messageService.GetMessage();
+                var nextQueueMessage = MessageService.GetMessage();
                 if (nextQueueMessage == null)
                 {
                     // We have the latest message on the queue.
                     break;
                 }
 
-                _messageService.DeleteMessage(queueMessage.MessageId, queueMessage.PopReceipt);
+                MessageService.DeleteMessage(queueMessage.MessageId, queueMessage.PopReceipt);
                 queueMessage = nextQueueMessage;
                 foundSurplusMessages = true;
             }
 
             if (foundSurplusMessages)
             {
-                Logger.Warn("Found more than 1 control message for " + _processName + " process");
+                _logger.Warn("Found more than 1 control message for " + _processName + " process");
             }
 
-            Logger.Info("Found valid control message to start " + _processName + " process");
+            _logger.Info("Found valid control message to start " + _processName + " process");
 
             return queueMessage;
         }
