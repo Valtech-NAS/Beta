@@ -136,6 +136,7 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 ApplyViaEmployerWebsite = true,
                 ApplyViaEmployerWebsiteSpecified = false
@@ -155,6 +156,7 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 ApplyViaEmployerWebsite = true,
                 ApplyViaEmployerWebsiteSpecified = true
@@ -174,6 +176,7 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 EmployerAnonymous = true,
                 EmployerAnonymousSpecified = false
@@ -193,6 +196,7 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 EmployerAnonymous = true,
                 EmployerAnonymousSpecified = true
@@ -212,6 +216,7 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 ApprFrameworkSuccessRate = 42,
                 ApprFrameworkSuccessRateSpecified = false
@@ -231,6 +236,7 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 ApprFrameworkSuccessRate = 42,
                 ApprFrameworkSuccessRateSpecified = true
@@ -250,6 +256,7 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 VacancyAddress = null
             };
@@ -281,6 +288,7 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 VacancyAddress = new AddressDetails
                 {
@@ -320,13 +328,12 @@
         }
 
         [TestCase("Live", VacancyStatuses.Live)]
-        [TestCase("Posted in error", VacancyStatuses.Unavailable)]
+        [TestCase("Posted In Error", VacancyStatuses.Unavailable)]
+        [TestCase("PostedInError", VacancyStatuses.Unavailable)]
         [TestCase("Withdrawn", VacancyStatuses.Unavailable)]
         [TestCase("Deleted", VacancyStatuses.Unavailable)]
-        [TestCase("Pending deletion", VacancyStatuses.Unavailable)]
         [TestCase("Closed", VacancyStatuses.Expired)]
         [TestCase("Completed", VacancyStatuses.Expired)]
-        [TestCase("Wrong", VacancyStatuses.Unavailable)]
         public void ShouldMapVacancyStatus(string vacancyStatusString, VacancyStatuses vacancyStatus)
         {
             // Arrange.
@@ -342,6 +349,23 @@
             // Assert.
             dest.Should().NotBeNull();
             dest.VacancyStatus.Should().Be(vacancyStatus);
+        }
+
+        [TestCase]
+        [ExpectedException(typeof(AutoMapperMappingException))]
+        public void ShouldThrowIfUnknownVacancyStatus()
+        {
+            // Arrange.
+            var src = new Vacancy
+            {
+                Status = "Wrong",
+                VacancyType = "Traineeship",
+            };
+
+            // Act.
+            var dest = _mapper.Map<Vacancy, TraineeshipVacancyDetail>(src);
+
+            // Assert: exception expected.
         }
     }
 }

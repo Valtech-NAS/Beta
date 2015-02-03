@@ -518,6 +518,7 @@
 
         [TestCase("Live", VacancyStatuses.Live)]
         [TestCase("Posted In Error", VacancyStatuses.Unavailable)]
+        [TestCase("PostedInError", VacancyStatuses.Unavailable)]
         [TestCase("Withdrawn", VacancyStatuses.Unavailable)]
         [TestCase("Deleted", VacancyStatuses.Unavailable)]
         [TestCase("Closed", VacancyStatuses.Expired)]
