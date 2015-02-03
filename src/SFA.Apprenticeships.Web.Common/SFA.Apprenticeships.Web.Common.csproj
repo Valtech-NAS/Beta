@@ -193,8 +193,6 @@
     <Compile Include="Framework\HtmlExtensions.cs" />
     <Compile Include="Framework\UrlHelperExtensions.cs" />
     <Compile Include="IoC\DependencyResolverFilterProvider.cs" />
-    <Compile Include="IoC\StructureMapDependencyResolver.cs" />
-    <Compile Include="IoC\StructureMapDependencyScope.cs" />
     <Compile Include="IoC\WebCommonRegistry.cs" />
     <Compile Include="Models\Application\ApplicationViewModelStatus.cs" />
     <Compile Include="Models\Common\ReferenceDataTypes.cs" />

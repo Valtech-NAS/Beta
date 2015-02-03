@@ -14,6 +14,7 @@
     using FluentValidation.Validators;
     using Microsoft.WindowsAzure;
     using Infrastructure.Logging;
+    using StructureMap;
 
     public class MvcApplication : HttpApplication
     {
@@ -53,7 +54,9 @@
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+
+            var container = (IContainer) DependencyResolver.Current.GetService(typeof(IContainer));
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters, container);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 

@@ -3,14 +3,11 @@
     using System;
     using System.Web.Mvc;
     using Providers;
-    using StructureMap.Attributes;
 
     public class CookiesEnabledAttribute : ActionFilterAttribute
     {
-        [SetterProperty]
         public ICookieDetectionProvider CookieDetectionProvider { get; set; }
 
-        [SetterProperty]
         public IEuCookieDirectiveProvider EuCookieDirectiveProvider { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)

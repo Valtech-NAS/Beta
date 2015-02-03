@@ -7,11 +7,9 @@
     using Common.Providers;
     using Constants;
     using Domain.Interfaces.Configuration;
-    using StructureMap.Attributes;
 
     public class AuthorizeCandidateAttribute : AuthorizeAttribute
     {
-        [SetterProperty]
         public IConfigurationManager ConfigurationManager { get; set; }
 
         public override void OnAuthorization(AuthorizationContext filterContext)
