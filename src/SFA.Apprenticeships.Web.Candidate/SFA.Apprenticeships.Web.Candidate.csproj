@@ -593,6 +593,7 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_categoriesAndSubCategories.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\razorgenerator.directives" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
