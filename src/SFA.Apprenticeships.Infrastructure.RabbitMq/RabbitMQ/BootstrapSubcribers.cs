@@ -18,6 +18,18 @@
             _bus = bus;
         }
 
+        public void LoadSubscribers(Assembly assembly, string subscriptionId, StructureMap.IContainer container)
+        {
+            var autosubscriber = new AutoSubscriber(_bus, subscriptionId)
+            {
+                ConfigureSubscriptionConfiguration = configuration => configuration.WithPrefetchCount(_defaultHostConfiguration.PreFetchCount),
+                AutoSubscriberMessageDispatcher = new StructureMapMessageDispatcher(container)
+            };
+
+            autosubscriber.Subscribe(assembly);
+            autosubscriber.SubscribeAsync(assembly);
+        }
+
         public void LoadSubscribers(Assembly assembly, string subscriptionId)
         {
             var autosubscriber = new AutoSubscriber(_bus, subscriptionId)
