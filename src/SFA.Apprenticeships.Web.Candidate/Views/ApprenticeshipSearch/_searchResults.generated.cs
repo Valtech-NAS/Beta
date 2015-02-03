@@ -259,7 +259,7 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</span></li>\r\n\r\n                    <li><b>Planned start date:</b> <span");
+WriteLiteral("</span></li>\r\n\r\n                    <li><b>Possible start date:</b> <span");
 
 WriteLiteral(" class=\"start-date-value\"");
 

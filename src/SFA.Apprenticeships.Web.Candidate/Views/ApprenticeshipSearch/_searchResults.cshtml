@@ -45,7 +45,7 @@
 
                     <li><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
 
-                    <li><b>Planned start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
+                    <li><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
 
                     @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.National)
                     {

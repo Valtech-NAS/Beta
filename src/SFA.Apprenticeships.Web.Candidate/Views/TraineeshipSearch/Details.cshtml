@@ -47,7 +47,7 @@
                 <p>@Model.Contact</p>                
                 <h3 class="bold-small">Traineeship duration</h3>
                 <p id="vacancy-expected-duration">@(string.IsNullOrWhiteSpace(@Model.ExpectedDuration) ? "Not specified" : @Model.ExpectedDuration)</p>
-                <h3 class="bold-small">Planned start date</h3>
+                <h3 class="bold-small">Possible start date</h3>
                 <p id="vacancy-start-date">@Html.DisplayFor(m => Model.StartDate)</p>
                 @if (Model.Distance != null)
                 {
