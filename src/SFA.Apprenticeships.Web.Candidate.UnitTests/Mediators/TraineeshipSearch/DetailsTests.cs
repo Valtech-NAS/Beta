@@ -9,6 +9,7 @@
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Common.Providers;
+    using Constants;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
@@ -88,11 +89,11 @@
             response.ViewModel.Distance.Should().Be(Distance);
             response.ViewModel.SearchReturnUrl.Should().Be(SearchReturnUrl);
 
-            _userData.ContainsKey(UserDataItemNames.VacancyDistance).Should().BeTrue();
-            _userData[UserDataItemNames.VacancyDistance].Should().Be(Distance);
-            
-            _userData.ContainsKey(UserDataItemNames.LastViewedVacancyId).Should().BeTrue();
-            _userData[UserDataItemNames.LastViewedVacancyId].Should().Be(VacancyId.ToString(CultureInfo.InvariantCulture));
+            _userData.ContainsKey(CandidateDataItemNames.VacancyDistance).Should().BeTrue();
+            _userData[CandidateDataItemNames.VacancyDistance].Should().Be(Distance);
+
+            _userData.ContainsKey(CandidateDataItemNames.LastViewedVacancyId).Should().BeTrue();
+            _userData[CandidateDataItemNames.LastViewedVacancyId].Should().Be(VacancyId.ToString(CultureInfo.InvariantCulture));
         }
 
         private Mock<IUserDataProvider> GetUserDataProvider()
@@ -100,11 +101,11 @@
             var userDataProvider = new Mock<IUserDataProvider>();
 
             userDataProvider.Setup(p => p.Pop(
-                It.Is<string>(s => s == UserDataItemNames.VacancyDistance)))
+                It.Is<string>(s => s == CandidateDataItemNames.VacancyDistance)))
                 .Returns(Distance);
 
             userDataProvider.Setup(p => p.Pop(
-                It.Is<string>(s => s == UserDataItemNames.LastViewedVacancyId)))
+                It.Is<string>(s => s == CandidateDataItemNames.LastViewedVacancyId)))
                 .Returns(VacancyId.ToString(CultureInfo.InvariantCulture));
 
             userDataProvider.Setup(p => p.Push(

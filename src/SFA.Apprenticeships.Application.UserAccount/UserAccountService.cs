@@ -130,12 +130,7 @@
 
             var user = _userReadRepository.Get(username, false);
 
-            if (user == null)
-            {
-                return UserStatuses.Unknown;
-            }
-
-            return user.Status;
+            return user == null ? UserStatuses.Unknown : user.Status;
         }
 
         public string[] GetRoleNames(string username)
@@ -169,7 +164,7 @@
             Condition.Requires(username).IsNotNullOrEmpty();
             Condition.Requires(profileDetails);
 
-            //todo: allow update of name, DOB, address, contact number (not email address)
+            //todo: allow update of name, DOB, address, contact number (not email address as new addresses must be confirmed)
 
             throw new NotImplementedException();
         }

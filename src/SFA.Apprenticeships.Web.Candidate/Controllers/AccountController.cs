@@ -4,7 +4,6 @@
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using System.Web.Routing;
     using Attributes;
     using Common.Constants;
     using Common.Providers;
@@ -33,7 +32,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.Index(UserContext.CandidateId, UserData.Pop(UserDataItemNames.DeletedVacancyId), UserData.Pop(UserDataItemNames.DeletedVacancyTitle));
+                var response = _accountMediator.Index(UserContext.CandidateId, UserData.Pop(CandidateDataItemNames.DeletedVacancyId), UserData.Pop(CandidateDataItemNames.DeletedVacancyTitle));
                 return View(response.ViewModel);
             });
         }
@@ -116,8 +115,8 @@
                 switch (response.Code)
                 {
                     case Codes.AccountMediator.Delete.SuccessfullyDeleted:
-                        UserData.Push(UserDataItemNames.DeletedVacancyId, id.ToString(CultureInfo.InvariantCulture));
-                        UserData.Push(UserDataItemNames.DeletedVacancyTitle, response.Message.Text);
+                        UserData.Push(CandidateDataItemNames.DeletedVacancyId, id.ToString(CultureInfo.InvariantCulture));
+                        UserData.Push(CandidateDataItemNames.DeletedVacancyTitle, response.Message.Text);
                         break;
                     case Codes.AccountMediator.Delete.AlreadyDeleted:
                     case Codes.AccountMediator.Delete.ErrorDeleting:

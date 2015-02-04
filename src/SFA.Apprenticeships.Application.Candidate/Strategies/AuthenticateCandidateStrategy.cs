@@ -50,8 +50,6 @@
                         _userWriteRepository.Save(user);
                     }
 
-                    //_auditLog.Info(AuditEvents.SuccessfulLogon, username); // TODO: audit successful logon (named logger)
-
                     return candidate;
                 }
 

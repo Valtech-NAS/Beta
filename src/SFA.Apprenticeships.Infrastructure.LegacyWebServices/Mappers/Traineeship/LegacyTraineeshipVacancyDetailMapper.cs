@@ -87,7 +87,7 @@
                 .ForMember(dest => dest.IsSmallEmployerWageIncentive,
                     opt => opt.MapFrom(src => src.IsSmallEmployerWageIncentiveSpecified && src.IsSmallEmployerWageIncentive))
 
-                // TODO: there is also a Gateway field called LearningProviderSectorPassRate. We are mapping from ApprFrameworkSuccessRate deliberately here.
+                // note: there is also a Gateway field called LearningProviderSectorPassRate. We are mapping from ApprFrameworkSuccessRate deliberately here.
                 .ForMember(d => d.ProviderSectorPassRate,
                     opt => opt.MapFrom(src => src.ApprFrameworkSuccessRateSpecified
                         ? src.ApprFrameworkSuccessRate
@@ -126,9 +126,7 @@
                 .ForMember(dest => dest.ProviderDescription,
                     opt => opt.MapFrom(src => src.TrainingProviderDesc))
 
-                // TODO: AG: US483: check mapping, 'to be provided' versus 'required' does not sound right.
-                .ForMember(dest => dest.TrainingToBeProvided,
-                    opt => opt.MapFrom(src => src.TrainingRequired))
+                .ForMember(dest => dest.TrainingToBeProvided, opt => opt.MapFrom(src => src.TrainingRequired))
 
                 .ForMember(dest => dest.VacancyAddress,
                     opt => opt.ResolveUsing<LegacyVacancyDetailAddressDetailsResolver>()

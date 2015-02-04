@@ -10,6 +10,7 @@
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Common.Providers;
+    using Constants;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
     using Moq;
@@ -223,7 +224,7 @@
             var userDataProvider = new Mock<IUserDataProvider>();
 
             userDataProvider.Setup(p => p.Pop(
-                It.Is<string>(s => s == UserDataItemNames.VacancyDistance)))
+                It.Is<string>(s => s == CandidateDataItemNames.VacancyDistance)))
                 .Returns(Distance);
 
             userDataProvider.Setup(p => p.Push(

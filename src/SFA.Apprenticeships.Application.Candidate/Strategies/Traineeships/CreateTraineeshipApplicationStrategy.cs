@@ -46,7 +46,6 @@
                 EntityId = Guid.NewGuid(),
                 DateCreated = DateTime.Now,
                 CandidateId = candidate.EntityId,
-                // TODO: US354: AG: better way to clone? http://stackoverflow.com/questions/5713556/copy-object-to-object-with-automapper
                 CandidateDetails = Mapper.Map<RegistrationDetails, RegistrationDetails>(candidate.RegistrationDetails),
                 VacancyStatus = vacancyDetails.VacancyStatus,
                 Vacancy = new TraineeshipSummary

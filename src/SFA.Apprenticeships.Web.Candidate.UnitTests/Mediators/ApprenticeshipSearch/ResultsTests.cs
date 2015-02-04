@@ -7,6 +7,7 @@
     using Candidate.Mediators;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
+    using Constants;
     using Domain.Entities.ReferenceData;
     using FluentAssertions;
     using Moq;
@@ -80,7 +81,7 @@
             vacancies.Count.Should().Be(1);
             viewModel.ApprenticeshipLevels.Should().NotBeNull();
             viewModel.VacancySearch.ApprenticeshipLevel.Should().Be("Higher");
-            UserDataProvider.Verify(udp => udp.Push(UserDataItemNames.ApprenticeshipLevel, "Higher"), Times.Once);
+            UserDataProvider.Verify(udp => udp.Push(CandidateDataItemNames.ApprenticeshipLevel, "Higher"), Times.Once);
         }
 
         [Test]

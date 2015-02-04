@@ -73,8 +73,6 @@
                     .Named("LegacyTraineeshipVacancyDataProvider");
             }
 
-            For<IVacancyStatusProvider>().Use<LegacyVacancyStatusProvider>();
-
             #endregion
 
             #region Candidate and Application Providers

@@ -62,7 +62,7 @@
 
         public SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters> FindVacancy(string vacancyReference)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("Vacancy number search is not supported for traineeships");
         }
 
         private ISearchResponse<TraineeshipSummary> PerformSearch(TraineeshipSearchParameters parameters, ElasticClient client, string indexName,

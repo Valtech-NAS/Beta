@@ -5,7 +5,6 @@
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Caching;
 
-    //TODO: replace once new NAS Gateway operation available
     public class CachedLegacyVacancyDataProvider<TVacancyDetail> : IVacancyDataProvider<TVacancyDetail> where TVacancyDetail : VacancyDetail
     {
         private readonly ILogService _logger;

@@ -5,7 +5,6 @@
     using System.Web.Mvc;
     using ActionResults;
     using Attributes;
-    using Common.Constants;
     using Constants;
     using FluentValidation.Mvc;
     using Mediators;
@@ -85,8 +84,8 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                UserData.Push(UserDataItemNames.VacancyDistance, distance);
-                UserData.Push(UserDataItemNames.LastViewedVacancyId, id.ToString(CultureInfo.InvariantCulture));
+                UserData.Push(CandidateDataItemNames.VacancyDistance, distance);
+                UserData.Push(CandidateDataItemNames.LastViewedVacancyId, id.ToString(CultureInfo.InvariantCulture));
 
                 return RedirectToRoute(CandidateRouteNames.TraineeshipDetails, new { id });
             });

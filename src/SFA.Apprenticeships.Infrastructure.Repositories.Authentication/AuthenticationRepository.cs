@@ -66,7 +66,7 @@
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public UserCredentials Save(UserCredentials entity)

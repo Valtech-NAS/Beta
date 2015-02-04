@@ -73,9 +73,6 @@
         {
             var response = Client.Execute<T>(request);
 
-            /* Restsharp deserializer doesn't appear to handle property names that differ from response */
-            // TODO: DEADCODE: var result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(response.Content);
-
             if (response.ResponseStatus != ResponseStatus.Completed)
             {
                 ThrowIncompleteResponseException(response);

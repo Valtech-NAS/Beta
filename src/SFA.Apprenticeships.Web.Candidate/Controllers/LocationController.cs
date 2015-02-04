@@ -38,7 +38,7 @@
                     return Json(result.Locations.Take(_locationResultLimit), JsonRequestBehavior.AllowGet);
                 }
 
-                throw new NotImplementedException("Non-js not yet implemented!");
+                throw new NotSupportedException("Non-js not yet implemented!");
             });
         }
 
@@ -55,7 +55,7 @@
                     return Json(addresses, JsonRequestBehavior.AllowGet);
                 }
 
-                throw new NotImplementedException("Non-js not yet implemented!");
+                throw new NotSupportedException("Non-js not yet implemented!");
             });
         }
     }

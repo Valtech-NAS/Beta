@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Constants
 {
-    //todo: move some of these as they are candidate web specific (not common)
     public class UserDataItemNames
     {
         public const string ResultsPerPage = "Data.ResultsPerPage";
@@ -8,11 +7,6 @@
         public const string SessionReturnUrl = "Data.SessionReturnUrl";
         public const string EmailAddress = "Data.UserEmail";
         public const string UnlockEmailAddress = "Data.UnlockEmail";
-        public const string LastViewedVacancyId = "Data.LastVacancyID";
-        public const string VacancyDistance = "Data.VacancyDistance";
         public const string LoggingSessionId = "Data.SessionId";
-        public const string DeletedVacancyId = "Data.DeletedVacancyId";
-        public const string DeletedVacancyTitle = "Data.DeletedVacancyTitle";
-        public const string ApprenticeshipLevel = "Data.ApprenticeshipLevel";
     }
 }

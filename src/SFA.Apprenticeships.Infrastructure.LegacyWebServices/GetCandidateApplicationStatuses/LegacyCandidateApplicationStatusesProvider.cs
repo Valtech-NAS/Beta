@@ -20,10 +20,9 @@
 
         private readonly IMapper _mapper;
         private readonly IWcfService<GatewayServiceContract> _service;
-        private const int ApplicationStatusExtractWindow = 4*60; // todo: temp code to define 4 hour window for application ETL
+        private const int ApplicationStatusExtractWindow = 4*60; // todo: temp code to define 4 hour window for application ETL. should be from config
 
-        public LegacyCandidateApplicationStatusesProvider
-            (IWcfService<GatewayServiceContract> service, IMapper mapper, ILogService logger)
+        public LegacyCandidateApplicationStatusesProvider(IWcfService<GatewayServiceContract> service, IMapper mapper, ILogService logger)
         {
             _service = service;
             _mapper = mapper;

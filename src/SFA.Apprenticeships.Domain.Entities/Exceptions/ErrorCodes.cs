@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Exceptions
 {
-    //todo: should not be in the domain project - error codes belong to Application.Services
+    //todo: should not be in the domain project - error codes belong to Application.Interfaces
     public static class ErrorCodes
     {
         

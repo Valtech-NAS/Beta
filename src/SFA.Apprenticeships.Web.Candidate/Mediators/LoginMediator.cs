@@ -80,7 +80,7 @@
                 }
 
                 // Redirect to last viewed vacancy (if any).
-                var lastViewedVacancyId = _userDataProvider.Pop(UserDataItemNames.LastViewedVacancyId);
+                var lastViewedVacancyId = _userDataProvider.Pop(CandidateDataItemNames.LastViewedVacancyId);
 
                 if (lastViewedVacancyId != null)
                 {

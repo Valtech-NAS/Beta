@@ -2,6 +2,8 @@
 {
     public static class ErrorCodes
     {
+        public const string VacancyNotFoundError = "VacancyNotFound.Error";
+
         public const string VacanciesSearchFailed = "VacanciesSearch.Failed";
 
         public const string GetVacancyDetailsFailed = "GetVacancyDetails.Failed";
