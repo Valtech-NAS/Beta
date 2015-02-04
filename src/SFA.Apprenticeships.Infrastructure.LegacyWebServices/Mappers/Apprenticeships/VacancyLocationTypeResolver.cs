@@ -20,7 +20,7 @@
                     throw new ArgumentException(
                         string.Format(
                             "The vacancy location type is not valid: \"{0}\", it must be either \"National\" or \"Standard\" to map correctly",
-                            source));
+                            source ?? "null"));
             }
         }
     }

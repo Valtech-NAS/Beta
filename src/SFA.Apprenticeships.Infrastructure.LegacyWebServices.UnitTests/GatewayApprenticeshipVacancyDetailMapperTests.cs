@@ -34,7 +34,7 @@
             // Arrange.
             var src = new Vacancy
             {
-                VacancyType = "Traineeship",
+                VacancyType = "Traineeship"
             };
 
             // Act.
@@ -79,13 +79,14 @@
                 TradingName = "TradingName",
                 TrainingProviderDesc = "TrainingProviderDesc",
                 TrainingRequired = "TrainingRequired",
+                VacancyLocationType = "Standard",
                 VacancyType = "IntermediateLevelApprenticeship",
                 VacancyManager = "VacancyManager",
                 VacancyOwner = "VacancyOwner",
                 VacancyTitle = "VacancyTitle",
                 VacancyUrl = "VacancyUrl",
                 WeeklyWage = 42.42m,
-                WorkingWeek = "WorkingWeek",
+                WorkingWeek = "WorkingWeek"
             };
 
             // Act.
@@ -141,8 +142,9 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard",
                 ApplyViaEmployerWebsite = true,
-                ApplyViaEmployerWebsiteSpecified = false,
+                ApplyViaEmployerWebsiteSpecified = false
             };
 
             // Act.
@@ -161,6 +163,7 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard",
                 ApplyViaEmployerWebsite = true,
                 ApplyViaEmployerWebsiteSpecified = true
             };
@@ -181,6 +184,7 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard",
                 EmployerAnonymous = true,
                 EmployerAnonymousSpecified = false
             };
@@ -201,6 +205,7 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard",
                 EmployerAnonymous = true,
                 EmployerAnonymousSpecified = true
             };
@@ -221,6 +226,7 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard",
                 ApprFrameworkSuccessRate = 42,
                 ApprFrameworkSuccessRateSpecified = false
             };
@@ -241,6 +247,7 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard",
                 ApprFrameworkSuccessRate = 42,
                 ApprFrameworkSuccessRateSpecified = true
             };
@@ -261,6 +268,7 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard",
                 VacancyAddress = null
             };
 
@@ -293,6 +301,7 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard",
                 VacancyAddress = new AddressDetails
                 {
                     AddressLine1 = "AddressLine1",
@@ -306,7 +315,7 @@
                     LatitudeSpecified = true,
                     Latitude = 1.0m,
                     LongitudeSpecified = true,
-                    Longitude = 2.0m,
+                    Longitude = 2.0m
                 }
             };
 
@@ -388,14 +397,15 @@
         }
 
         [TestCase]
-        public void ShouldMapVacancyLocationTypeUnknown()
+        [ExpectedException(typeof(AutoMapperMappingException))]
+        public void ShouldThrowIfUnknownVacancyLocationType()
         {
             // Arrange.
             var src = new Vacancy
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
-                VacancyLocationType = null
+                VacancyLocationType = "Wrong"
             };
 
             // Act.
@@ -414,6 +424,7 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard",
                 WageType = "Weekly"
             };
 
@@ -433,6 +444,7 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard",
                 WageType = "Text"
             };
 
@@ -452,6 +464,7 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard",
                 WageType = "Wrong"
             };
 
@@ -470,7 +483,8 @@
             var src = new Vacancy
             {
                 Status = "Live",
-                VacancyType = "IntermediateLevelApprenticeship"
+                VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard"
             };
 
             // Act.
@@ -489,11 +503,12 @@
             var src = new Vacancy
             {
                 Status = "Live",
-                VacancyType = "Wrong"
+                VacancyType = "Wrong",
+                VacancyLocationType = "Standard"
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert: exception expected.
         }
@@ -505,7 +520,8 @@
             var src = new Vacancy
             {
                 Status = "Live",
-                VacancyType = "AdvancedLevelApprenticeship"
+                VacancyType = "AdvancedLevelApprenticeship",
+                VacancyLocationType = "Standard"
             };
 
             // Act.
@@ -530,6 +546,7 @@
             {
                 Status = vacancyStatusString,
                 VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard"
             };
 
             // Act.
@@ -549,10 +566,11 @@
             {
                 Status = "Wrong",
                 VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard"
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert: exception expected.
         }
