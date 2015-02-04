@@ -170,3 +170,4 @@ $RECYCLE.BIN/
 [Ww]sdl
 
 *.dgml
+/src/SFA.Apprenticeships.Web.Candidate/ApplicationInsights.config
