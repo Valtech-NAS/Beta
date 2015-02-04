@@ -65,8 +65,10 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
 
         private HttpContextBase HttpContext {
             get {
-                var ctx = Container.TryGetInstance<HttpContextBase>();
-                return ctx ?? new HttpContextWrapper(System.Web.HttpContext.Current);
+                return (System.Web.HttpContext.Current == null
+                    ? null
+                    : (Container.TryGetInstance<HttpContextBase>() ??
+                       new HttpContextWrapper(System.Web.HttpContext.Current)));
             }
         }
 
@@ -87,6 +89,10 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
         }
 
         public void DisposeNestedContainer() {
+            if (HttpContext == null) {
+                return;
+            }
+
             if (CurrentNestedContainer != null) {
                 CurrentNestedContainer.Dispose();
 				CurrentNestedContainer = null;
