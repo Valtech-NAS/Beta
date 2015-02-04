@@ -291,7 +291,6 @@
                 self.predicted(false);
 
                 self.errors.showAllMessages(false);
-                $("#qualification-save-warning").addClass("hidden");
                 self.yearValidationActivated(false);
             } else {
                 self.errors.showAllMessages();
@@ -710,7 +709,6 @@
                 self.errors.showAllMessages(false);
 
                 $('#workAddConfirmText').text("Work experience has been added to table below");
-                $("#work-experience-save-warning").addClass("hidden");
 
             } else {
                 self.errors.showAllMessages();
@@ -787,54 +785,6 @@
         }
     };
 
-    function setUpWorkExperienceChangeDetection() {
-        $("#workexperience-apply input[type=text]").change(toggleSaveWorkExperienceWarning);
-        $("#workexperience-apply input[type=tel]").change(toggleSaveWorkExperienceWarning);
-        $("#workexperience-apply textarea").change(toggleSaveWorkExperienceWarning);
-    }
-
-    function setUpQualificationChangeDetection() {
-        $("#subject-name").change(toggleSaveQualificationSaveWarning);
-        $("#subject-grade").change(toggleSaveQualificationSaveWarning);
-    }
-
-    function toggleSaveWorkExperienceWarning() {
-        if (isWorkExperienceDirty()) {
-            $("#work-experience-save-warning").removeClass("hidden");
-        } else {
-            $("#work-experience-save-warning").addClass("hidden");
-        }
-    }
-
-    function toggleSaveQualificationSaveWarning() {
-        if (isQualificationDirty()) {
-            $("#qualification-save-warning").removeClass("hidden");
-        } else {
-            $("#qualification-save-warning").addClass("hidden");
-        }
-    }
-
-    function isQualificationDirty() {
-        var subject = $("#subject-name").val(),
-            grade = $("#subject-grade").val();
-
-        return (!isEmpty(subject) || !isEmpty(grade));
-    }
-
-    function isWorkExperienceDirty() {
-        var employer = $("#work-employer").val(),
-            jobTitle = $("#work-title").val(),
-            mainDuties = $("#work-role").val(),
-            fromYear = $("work-from-year").val(),
-            toYear = $("work-to-year").val();
-
-        return (!isEmpty(employer) || !isEmpty(jobTitle) || !isEmpty(mainDuties) || !isEmpty(fromYear) || !isEmpty(toYear));
-    }
-
-    function isEmpty(value) {
-        return !value;
-    }
-
     $(function () {
         //override default knockout validation - insert validation message
         ko.validation.insertValidationMessage = function (element) {
@@ -903,7 +853,5 @@
 
         ko.applyBindings(experienceViewModel, document.getElementById('applyWorkExperience'));
 
-        setUpWorkExperienceChangeDetection();
-        setUpQualificationChangeDetection();
     });
 }());
