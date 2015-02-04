@@ -4,8 +4,6 @@
     {
         public const string ApplicationNotFoundError = "ApplicationNotFoundError";
         public const string ApplicationInIncorrectStateError = "ApplicationInIncorrectStateError";
-        public const string ApplicationViewIdNotFound = "ApplicationViewIdNotFound";
-        public const string ApplicationCreationError = "ApplicationCreationError";
         public const string ApplicationGatewayCreationError = "ApplicationGatewayCreationError";
         public const string ApplicationTypeMismatch = "ApplicationTypeMismatch";
         public const string ApplicationDuplicatedError = "ApplicationDuplicatedError";

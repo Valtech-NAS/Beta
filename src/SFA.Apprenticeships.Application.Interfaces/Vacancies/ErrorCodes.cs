@@ -6,6 +6,5 @@
         public const string VacanciesSearchFailed = "VacanciesSearch.Failed";
         public const string GetVacancyDetailsFailed = "GetVacancyDetails.Failed";
         public const string LegacyVacancyStateError = "LegacyVacancyState.Error";
-        public const string VacancyExpired = "Vacancy002";
     }
 }

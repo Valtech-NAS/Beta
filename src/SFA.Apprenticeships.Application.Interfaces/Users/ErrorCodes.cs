@@ -13,14 +13,10 @@
         public const string UserChangePasswordError = "User009";
         public const string UnknownUserError = "UserRepository.UserNotFound";
 
-        public const string ActivationCodeResendingFailed = "ActivationCodeResending.Failed";
         public const string AccountUnlockCodeExpired = "AccountUnlockCode.Expired";
         public const string AccountUnlockCodeInvalid = "AccountUnlockCode.Invalid";
 
         public const string UserDirectoryAccountExistsError = "UserDirectory.AccountExists";
         public const string UserDirectoryAccountDoesNotExistError = "UserDirectory.AccountDoesNotExist";
-        public const string UserDirectoryEmptyNewPasswordError = "UserDirectory.EmptyNewPassword";
-        public const string UserDirectoryChangePasswordError = "UserDirectory.ChangePassword.Error";
-        public const string UserDirectorySetPasswordError = "UserDirectory.SetPassword.Error";
     }
 }
