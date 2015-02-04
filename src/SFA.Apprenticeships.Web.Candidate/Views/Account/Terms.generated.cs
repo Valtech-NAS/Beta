@@ -82,8 +82,7 @@ WriteLiteral(">\r\n        <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Please note there have been changes to our terms and conditions</h1>\r\n        <h" +
-"2");
+WriteLiteral(">Terms and conditions</h1>\r\n        <h2");
 
 WriteLiteral(" class=\"subtitle\"");
 
