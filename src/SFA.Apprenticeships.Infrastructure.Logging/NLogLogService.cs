@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Interfaces.Logging;
+    using Domain.Entities.Exceptions;
     using NLog;
 
     public class NLogLogService : ILogService
@@ -55,8 +56,19 @@
         private void LogMessage(LogLevel logLevel, Exception exception, string message, params object[] args)
         {
             var logMessage = string.Format(message, args);
-            
-            _logger.Log(logLevel, logMessage, exception);
+            var logEvent = new LogEventInfo
+            {
+                Level = logLevel,
+                Exception = exception,
+                Message = logMessage
+            };
+
+            if (exception is CustomException)
+            {
+                logEvent.Properties["ErrorCode"] = (exception as CustomException).Code;
+            }
+
+            _logger.Log(logEvent);
         }
         #endregion
     }
