@@ -13,6 +13,8 @@
     using StructureMap;
     using Moq;
     using FluentAssertions;
+    using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
+    using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
 
     public class LegacyApplicationProviderIntegrationTests
     {
@@ -140,7 +142,7 @@
 
             var cex = ex as CustomException;
 // ReSharper disable once PossibleNullReferenceException
-            cex.Code.Should().Be(ErrorCodes.ApplicationGatewayCreationError);
+            cex.Code.Should().Be(ApplicationErrorCodes.ApplicationGatewayCreationError);
         }
 
         public void CheckForLegacyCandidateNotFoundErrorException(Exception ex)
@@ -149,7 +151,7 @@
 
             var cex = ex as CustomException;
 // ReSharper disable once PossibleNullReferenceException
-            cex.Code.Should().Be(Application.Interfaces.Candidates.ErrorCodes.LegacyCandidateNotFoundError);
+            cex.Code.Should().Be(CandidateErrorCodes.LegacyCandidateNotFoundError);
         }
 
         private int CreateLegacyCandidateId()

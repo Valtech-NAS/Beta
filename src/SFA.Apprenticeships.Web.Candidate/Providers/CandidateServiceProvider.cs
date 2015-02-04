@@ -20,7 +20,8 @@
     using ViewModels.Register;
     using Common.Constants;
     using Common.Services;
-    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
+    using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
+    using UserErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
     public class CandidateServiceProvider : ICandidateServiceProvider
     {
@@ -143,7 +144,7 @@
             {
                 var message = string.Format("Candidate registration failed for {0}.", model.EmailAddress);
 
-                if (e.Code == ErrorCodes.UserInIncorrectStateError)
+                if (e.Code == Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError)
                 {
                     _logger.Info(message, e);
                 }
@@ -274,7 +275,7 @@
             {
                 switch (e.Code)
                 {
-                    case ErrorCodes.UserInIncorrectStateError:
+                    case Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError:
                     case Application.Interfaces.Users.ErrorCodes.UnknownUserError:
                         _logger.Info(e.Message, e);
                         break;
@@ -307,7 +308,7 @@
             {
                 switch (e.Code)
                 {
-                    case ErrorCodes.UserInIncorrectStateError:
+                    case Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError:
                     case Application.Interfaces.Users.ErrorCodes.UnknownUserError:
                         _logger.Info(e.Message, e);
                         break;
@@ -342,18 +343,18 @@
 
                 switch (e.Code)
                 {
-                    case ErrorCodes.UnknownUserError:
-                    case ErrorCodes.UserInIncorrectStateError:
-                    case ErrorCodes.UserPasswordResetCodeExpiredError:
-                    case ErrorCodes.UserPasswordResetCodeIsInvalid:
+                    case UserErrorCodes.UnknownUserError:
+                    case Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError:
+                    case Application.Interfaces.Users.ErrorCodes.UserPasswordResetCodeExpiredError:
+                    case Application.Interfaces.Users.ErrorCodes.UserPasswordResetCodeIsInvalid:
                         passwordResetViewModel.IsPasswordResetCodeValid = false;
                         break;
 
-                    case ErrorCodes.UserAccountLockedError:
+                    case Application.Interfaces.Users.ErrorCodes.UserAccountLockedError:
                         passwordResetViewModel.UserStatus = UserStatuses.Locked;
                         break;
 
-                    case ErrorCodes.CandidateCreationError:
+                    case CandidateErrorCodes.CandidateCreationError:
                         passwordResetViewModel.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
                         _logger.Error("Reset forgotten password failed for " + passwordResetViewModel.EmailAddress, e);
                         break;
@@ -386,7 +387,7 @@
             {
                 switch (e.Code)
                 {
-                    case ErrorCodes.UserInIncorrectStateError:
+                    case Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError:
                         _logger.Info(e.Message, e);
                         return new AccountUnlockViewModel {Status = AccountUnlockState.UserInIncorrectState};
                     case Application.Interfaces.Users.ErrorCodes.AccountUnlockCodeExpired:

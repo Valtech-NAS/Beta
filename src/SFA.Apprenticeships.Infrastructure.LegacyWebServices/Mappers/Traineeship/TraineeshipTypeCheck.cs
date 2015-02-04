@@ -3,6 +3,7 @@
     using AutoMapper;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Traineeships;
+    using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     internal class TraineeshipTypeCheck : IMappingAction<GatewayServiceProxy.Vacancy, TraineeshipVacancyDetail>
     {
@@ -10,7 +11,7 @@
         {
             if (source.VacancyType != "Traineeship" && source.VacancyType != "LegacyTestServiceType")
             {
-                throw new CustomException("Expected a traineeship, got an apprenticeship.", ErrorCodes.ApplicationTypeMismatch);
+                throw new CustomException("Expected a traineeship, got an apprenticeship.", ApplicationErrorCodes.ApplicationTypeMismatch);
             }
         }
     }

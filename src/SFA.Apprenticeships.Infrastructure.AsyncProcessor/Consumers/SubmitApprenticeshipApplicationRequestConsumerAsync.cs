@@ -11,6 +11,7 @@
     using EasyNetQ.AutoSubscribe;
     using ApplicationsErrorCodes = Application.Interfaces.Applications.ErrorCodes;
     using CandidatesErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
+    using CommonErrorCodes = Domain.Entities.ErrorCodes;
     using VacanciesErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
 
     public class SubmitApprenticeshipApplicationRequestConsumerAsync : IConsumeAsync<SubmitApprenticeshipApplicationRequest>
@@ -119,7 +120,7 @@
                     SetStateExpiredOrWithdrawn(apprenticeshipApplication);
                     break;
 
-                case ErrorCodes.ApplicationInIncorrectStateError:
+                case CommonErrorCodes.EntityStateError:
                     _logger.Error(string.Format("Apprenticeship application is in an invalid state: Application Id: \"{0}\"", request.ApplicationId), ex);
                     break;
 

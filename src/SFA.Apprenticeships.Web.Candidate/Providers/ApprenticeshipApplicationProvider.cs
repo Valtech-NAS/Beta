@@ -14,7 +14,8 @@
     using ViewModels.Applications;
     using ViewModels.MyApplications;
     using Common.Models.Application;
-    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
+    using ErrorCodes = Domain.Entities.ErrorCodes;
+    using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     public class ApprenticeshipApplicationProvider : IApprenticeshipApplicationProvider
     {
@@ -59,7 +60,7 @@
             }
             catch (CustomException e)
             {
-                if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
+                if (e.Code == ErrorCodes.EntityStateError)
                 {
                     _logger.Info(e.Message, e);
                     return
@@ -102,7 +103,7 @@
             }
             catch (CustomException e)
             {
-                if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
+                if (e.Code == ErrorCodes.EntityStateError)
                 {
                     _logger.Info(e.Message, e);
                     return
@@ -219,7 +220,7 @@
             }
             catch (CustomException e)
             {
-                if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
+                if (e.Code == ApplicationErrorCodes.ApplicationInIncorrectStateError)
                 {
                     _logger.Info(e.Message, e);
                     return
@@ -320,7 +321,7 @@
             }
             catch (CustomException e)
             {
-                if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
+                if (e.Code == ErrorCodes.EntityStateError)
                 {
                     _logger.Info(e.Message, e);
                     return new ApprenticeshipApplicationViewModel();

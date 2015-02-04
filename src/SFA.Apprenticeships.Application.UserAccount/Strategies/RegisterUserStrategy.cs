@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
+    using ErrorCodes = Interfaces.Users.ErrorCodes;
 
     public class RegisterUserStrategy : IRegisterUserStrategy
     {

@@ -14,6 +14,7 @@
     using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
     using WorkExperience = GatewayServiceProxy.WorkExperience;
+    using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     public class LegacyApplicationProvider : ILegacyApplicationProvider
     {
@@ -80,7 +81,7 @@
                 string.Format("Failed to create apprenticeship application for candidate '{0}' and vacancy '{1}' in Legacy.CreateApplication",
                     apprenticeshipApplicationDetail.CandidateId, 
                     apprenticeshipApplicationDetail.Vacancy.Id), 
-                    ErrorCodes.ApplicationGatewayCreationError);
+                    ApplicationErrorCodes.ApplicationGatewayCreationError);
         }
 
         public int CreateApplication(TraineeshipApplicationDetail traineeshipApplicationDetail)
@@ -124,7 +125,7 @@
                 string.Format("Failed to create traineeship application for candidate '{0}' and vacancy '{1}' in Legacy.CreateApplication",
                     traineeshipApplicationDetail.CandidateId,
                     traineeshipApplicationDetail.Vacancy.Id),
-                    ErrorCodes.ApplicationGatewayCreationError);
+                    ApplicationErrorCodes.ApplicationGatewayCreationError);
         }
 
         private void CheckDuplicateError(ApplicationDetail applicationDetail, int vacancyId, CreateApplicationResponse response)

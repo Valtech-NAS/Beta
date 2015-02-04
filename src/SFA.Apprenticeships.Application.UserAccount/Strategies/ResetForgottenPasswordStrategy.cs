@@ -8,7 +8,6 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Interfaces.Users;
-    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
 
     public class ResetForgottenPasswordStrategy : IResetForgottenPasswordStrategy
     {
@@ -47,7 +46,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             {
                 if (user.PasswordResetCodeExpiry != null && DateTime.Now > user.PasswordResetCodeExpiry)
                 {
-                    throw new CustomException("Password reset code has expired.", ErrorCodes.UserPasswordResetCodeExpiredError);
+                    throw new CustomException("Password reset code has expired.", Interfaces.Users.ErrorCodes.UserPasswordResetCodeExpiredError);
                 }
 
                 _authenticationService.ResetUserPassword(user.EntityId, newPassword);
@@ -62,7 +61,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             {
                 RegisterFailedPasswordReset(user);
 
-                throw new CustomException("Password reset code \"{0}\" is invalid for user \"{1}\"", ErrorCodes.UserPasswordResetCodeIsInvalid, passwordCode, username);
+                throw new CustomException("Password reset code \"{0}\" is invalid for user \"{1}\"", Interfaces.Users.ErrorCodes.UserPasswordResetCodeIsInvalid, passwordCode, username);
             }
         }
 
@@ -73,7 +72,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             if (user.PasswordResetIncorrectAttempts == _maximumPasswordAttemptsAllowed)
             {
                 _lockAccountStrategy.LockAccount(user);
-                throw new CustomException("Maximum password attempts allowed reached, account is now locked.", ErrorCodes.UserAccountLockedError);
+                throw new CustomException("Maximum password attempts allowed reached, account is now locked.", Interfaces.Users.ErrorCodes.UserAccountLockedError);
             }
 
             user.PasswordResetIncorrectAttempts++;
