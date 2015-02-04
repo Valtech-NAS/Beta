@@ -228,7 +228,7 @@
     <Compile Include="Validators\AboutYouViewModelValidatorTests.cs" />
     <Compile Include="Validators\RegisterViewModelValidatorTests.cs" />
     <Compile Include="Validators\VacancySearchValidatorTests.cs" />
-    <Compile Include="ViewModels\VacancySearchResponseViewModelTests.cs" />
+    <Compile Include="ViewModels\PaginationTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\IndexCategoriesTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\ApplyPartialTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\IndexTests.cs" />
