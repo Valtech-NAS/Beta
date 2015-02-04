@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
+    using System;
     using AutoMapper;
     using Domain.Entities.Vacancies;
 
@@ -16,7 +17,8 @@
                     return WageType.Text;
 
                 default:
-                    return WageType.Unknown;
+                    throw new ArgumentOutOfRangeException("source",
+                        string.Format("Unknown Wage Type received from NAS Gateway Service: \"{0}\"", source));
             }
         }
     }

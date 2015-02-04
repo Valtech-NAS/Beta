@@ -25,7 +25,8 @@
                     return VacancyStatuses.Expired;
 
                 default:
-                    throw new ArgumentOutOfRangeException("source", "Unknown Vacancy Status received from NAS Gateway Service: " + source);
+                    throw new ArgumentOutOfRangeException("source",
+                        string.Format("Unknown Vacancy Status received from NAS Gateway Service: \"{0}\"", source));
             }
         }
     }

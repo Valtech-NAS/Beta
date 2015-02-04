@@ -84,7 +84,8 @@
                 VacancyOwner = "VacancyOwner",
                 VacancyTitle = "VacancyTitle",
                 VacancyUrl = "VacancyUrl",
-                WorkingWeek = "WorkingWeek",
+                WageType = "Weekly",
+                WorkingWeek = "WorkingWeek"
             };
 
             // Act.
@@ -128,6 +129,7 @@
             dest.Title.Should().Be(src.VacancyTitle);
             dest.VacancyUrl.Should().Be(src.VacancyUrl);
             dest.WorkingWeek.Should().Be(src.WorkingWeek);
+            dest.WageType.Should().Be(WageType.Weekly);
         }
 
         [TestCase]
@@ -139,7 +141,8 @@
                 Status = "Live",
                 VacancyType = "Traineeship",
                 ApplyViaEmployerWebsite = true,
-                ApplyViaEmployerWebsiteSpecified = false
+                ApplyViaEmployerWebsiteSpecified = false,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -159,7 +162,8 @@
                 Status = "Live",
                 VacancyType = "Traineeship",
                 ApplyViaEmployerWebsite = true,
-                ApplyViaEmployerWebsiteSpecified = true
+                ApplyViaEmployerWebsiteSpecified = true,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -179,7 +183,8 @@
                 Status = "Live",
                 VacancyType = "Traineeship",
                 EmployerAnonymous = true,
-                EmployerAnonymousSpecified = false
+                EmployerAnonymousSpecified = false,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -199,7 +204,8 @@
                 Status = "Live",
                 VacancyType = "Traineeship",
                 EmployerAnonymous = true,
-                EmployerAnonymousSpecified = true
+                EmployerAnonymousSpecified = true,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -219,7 +225,8 @@
                 Status = "Live",
                 VacancyType = "Traineeship",
                 ApprFrameworkSuccessRate = 42,
-                ApprFrameworkSuccessRateSpecified = false
+                ApprFrameworkSuccessRateSpecified = false,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -239,7 +246,8 @@
                 Status = "Live",
                 VacancyType = "Traineeship",
                 ApprFrameworkSuccessRate = 42,
-                ApprFrameworkSuccessRateSpecified = true
+                ApprFrameworkSuccessRateSpecified = true,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -258,7 +266,8 @@
             {
                 Status = "Live",
                 VacancyType = "Traineeship",
-                VacancyAddress = null
+                VacancyAddress = null,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -304,7 +313,8 @@
                     Latitude = 1.0m,
                     LongitudeSpecified = true,
                     Longitude = 2.0m,
-                }
+                },
+                WageType = "Weekly"
             };
 
             // Act.
@@ -340,7 +350,8 @@
             var src = new Vacancy
             {
                 VacancyType = "Traineeship",
-                Status = vacancyStatusString
+                Status = vacancyStatusString,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -360,6 +371,25 @@
             {
                 Status = "Wrong",
                 VacancyType = "Traineeship",
+                WageType = "Weekly"
+            };
+
+            // Act.
+            var dest = _mapper.Map<Vacancy, TraineeshipVacancyDetail>(src);
+
+            // Assert: exception expected.
+        }
+
+        [TestCase]
+        [ExpectedException(typeof(AutoMapperMappingException))]
+        public void ShouldThrowIfUnknownWageType()
+        {
+            // Arrange.
+            var src = new Vacancy
+            {
+                Status = "Live",
+                VacancyType = "Traineeship",
+                WageType = "Wrong"
             };
 
             // Act.

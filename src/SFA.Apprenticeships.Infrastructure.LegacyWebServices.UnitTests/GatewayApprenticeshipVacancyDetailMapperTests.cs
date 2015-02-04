@@ -85,6 +85,7 @@
                 VacancyOwner = "VacancyOwner",
                 VacancyTitle = "VacancyTitle",
                 VacancyUrl = "VacancyUrl",
+                WageType = "Weekly",
                 WeeklyWage = 42.42m,
                 WorkingWeek = "WorkingWeek"
             };
@@ -144,7 +145,8 @@
                 VacancyType = "IntermediateLevelApprenticeship",
                 VacancyLocationType = "Standard",
                 ApplyViaEmployerWebsite = true,
-                ApplyViaEmployerWebsiteSpecified = false
+                ApplyViaEmployerWebsiteSpecified = false,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -165,7 +167,8 @@
                 VacancyType = "IntermediateLevelApprenticeship",
                 VacancyLocationType = "Standard",
                 ApplyViaEmployerWebsite = true,
-                ApplyViaEmployerWebsiteSpecified = true
+                ApplyViaEmployerWebsiteSpecified = true,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -186,7 +189,8 @@
                 VacancyType = "IntermediateLevelApprenticeship",
                 VacancyLocationType = "Standard",
                 EmployerAnonymous = true,
-                EmployerAnonymousSpecified = false
+                EmployerAnonymousSpecified = false,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -207,7 +211,8 @@
                 VacancyType = "IntermediateLevelApprenticeship",
                 VacancyLocationType = "Standard",
                 EmployerAnonymous = true,
-                EmployerAnonymousSpecified = true
+                EmployerAnonymousSpecified = true,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -228,7 +233,8 @@
                 VacancyType = "IntermediateLevelApprenticeship",
                 VacancyLocationType = "Standard",
                 ApprFrameworkSuccessRate = 42,
-                ApprFrameworkSuccessRateSpecified = false
+                ApprFrameworkSuccessRateSpecified = false,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -249,7 +255,8 @@
                 VacancyType = "IntermediateLevelApprenticeship",
                 VacancyLocationType = "Standard",
                 ApprFrameworkSuccessRate = 42,
-                ApprFrameworkSuccessRateSpecified = true
+                ApprFrameworkSuccessRateSpecified = true,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -269,7 +276,8 @@
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
                 VacancyLocationType = "Standard",
-                VacancyAddress = null
+                VacancyAddress = null,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -316,7 +324,8 @@
                     Latitude = 1.0m,
                     LongitudeSpecified = true,
                     Longitude = 2.0m
-                }
+                },
+                WageType = "Weekly"
             };
 
             // Act.
@@ -347,7 +356,8 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
-                VacancyLocationType = "Standard"
+                VacancyLocationType = "Standard",
+                WageType = "Weekly"
             };
 
             // Act.
@@ -366,7 +376,8 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
-                VacancyLocationType = "MultipleLocation"
+                VacancyLocationType = "MultipleLocation",
+                WageType = "Weekly"
             };
 
             // Act.
@@ -385,7 +396,8 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
-                VacancyLocationType = "National"
+                VacancyLocationType = "National",
+                WageType = "Weekly"
             };
 
             // Act.
@@ -405,7 +417,8 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
-                VacancyLocationType = "Wrong"
+                VacancyLocationType = "Wrong",
+                WageType = "Weekly"
             };
 
             // Act.
@@ -457,7 +470,8 @@
         }
 
         [TestCase]
-        public void ShouldMapWageTypeUnknown()
+        [ExpectedException(typeof(AutoMapperMappingException))]
+        public void ShouldThrowIfUnknownWageType()
         {
             // Arrange.
             var src = new Vacancy
@@ -471,9 +485,7 @@
             // Act.
             var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
-            // Assert.
-            dest.Should().NotBeNull();
-            dest.WageType.Should().Be(WageType.Unknown);
+            // Assert: exception expected.
         }
 
         [TestCase]
@@ -484,7 +496,8 @@
             {
                 Status = "Live",
                 VacancyType = "IntermediateLevelApprenticeship",
-                VacancyLocationType = "Standard"
+                VacancyLocationType = "Standard",
+                WageType = "Weekly"
             };
 
             // Act.
@@ -504,7 +517,8 @@
             {
                 Status = "Live",
                 VacancyType = "Wrong",
-                VacancyLocationType = "Standard"
+                VacancyLocationType = "Standard",
+                WageType = "Weekly"
             };
 
             // Act.
@@ -521,7 +535,8 @@
             {
                 Status = "Live",
                 VacancyType = "AdvancedLevelApprenticeship",
-                VacancyLocationType = "Standard"
+                VacancyLocationType = "Standard",
+                WageType = "Weekly"
             };
 
             // Act.
@@ -546,7 +561,8 @@
             {
                 Status = vacancyStatusString,
                 VacancyType = "IntermediateLevelApprenticeship",
-                VacancyLocationType = "Standard"
+                VacancyLocationType = "Standard",
+                WageType = "Weekly"
             };
 
             // Act.
@@ -566,7 +582,8 @@
             {
                 Status = "Wrong",
                 VacancyType = "IntermediateLevelApprenticeship",
-                VacancyLocationType = "Standard"
+                VacancyLocationType = "Standard",
+                WageType = "Weekly"
             };
 
             // Act.
