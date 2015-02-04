@@ -159,7 +159,16 @@ WriteLiteral("</label>\r\n                <details ");
             
             #line default
             #line hidden
-WriteLiteral(">\r\n                    <summary");
+WriteLiteral(" class=\"");
+
+            
+            #line 17 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                     Write(openAttr);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\">\r\n                    <summary");
 
 WriteLiteral(" class=\"copy-16\"");
 
@@ -174,14 +183,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral(" sub-categories</summary>\r\n                    <ul");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1180), Tuple.Create("\"", 1203)
+WriteAttribute("id", Tuple.Create(" id=\"", 1198), Tuple.Create("\"", 1221)
             
             #line 19 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-, Tuple.Create(Tuple.Create("", 1185), Tuple.Create<System.Object, System.Int32>(subCategoryListId
+, Tuple.Create(Tuple.Create("", 1203), Tuple.Create<System.Object, System.Int32>(subCategoryListId
             
             #line default
             #line hidden
-, 1185), false)
+, 1203), false)
 );
 
 WriteLiteral(" class=\"detail-content copy-16 list-text list-checkradio\"");
@@ -238,14 +247,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 2084), Tuple.Create("\"", 2101)
+WriteAttribute("for", Tuple.Create(" for=\"", 2102), Tuple.Create("\"", 2119)
             
             #line 29 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                    , Tuple.Create(Tuple.Create("", 2090), Tuple.Create<System.Object, System.Int32>(checkboxId
+                                                                    , Tuple.Create(Tuple.Create("", 2108), Tuple.Create<System.Object, System.Int32>(checkboxId
             
             #line default
             #line hidden
-, 2090), false)
+, 2108), false)
 );
 
 WriteLiteral(">");
