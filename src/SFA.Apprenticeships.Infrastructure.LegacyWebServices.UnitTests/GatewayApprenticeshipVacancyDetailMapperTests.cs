@@ -424,9 +424,7 @@
             // Act.
             var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
-            // Assert.
-            dest.Should().NotBeNull();
-            dest.VacancyLocationType.Should().Be(ApprenticeshipLocationType.Unknown);
+            // Assert: exception expected.
         }
 
         [TestCase]
