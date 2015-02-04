@@ -109,23 +109,7 @@
 
             Logger.Debug("Calling CandidateService to activate the user {0}.", username);
 
-            //todo: this error "handling" block shouldn't be here
-            try
-            {
-                _activateCandidateStrategy.ActivateCandidate(username, activationCode);
-            }
-            catch (CustomException e)
-            {
-                var message = string.Format("Activate user failed for user {0}", username);
-                Logger.Debug(message, e);
-                throw new CustomException(message, ErrorCodes.ActivateUserInvalidCode);
-            }
-            catch (Exception e)
-            {
-                var message = string.Format("Activate user failed for user {0}", username);
-                Logger.Debug(message, e);
-                throw new CustomException(message, ErrorCodes.ActivateUserFailed);
-            }
+            _activateCandidateStrategy.ActivateCandidate(username, activationCode);
         }
 
         public Candidate Authenticate(string username, string password)

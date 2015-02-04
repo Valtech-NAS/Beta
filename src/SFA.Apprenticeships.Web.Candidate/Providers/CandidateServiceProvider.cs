@@ -178,34 +178,22 @@
             }
             catch (CustomException e)
             {
-                string message;
-
                 switch (e.Code)
                 {
-                    case Application.Interfaces.Candidates.ErrorCodes.ActivateUserFailed:
-                        _logger.Error("Candidate activation failed for " + model.EmailAddress, e);
-                        message = ActivationPageMessages.ActivationFailed;
-                        return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error,
-                            message);
+                    case Domain.Entities.ErrorCodes.EntityStateError:
+                        _logger.Error("Candidate was in an invalid state for activation:" + model.EmailAddress, e);
+                        return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error, ActivationPageMessages.ActivationFailed);
 
-                    case Application.Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode:
-                        _logger.Info("Candidate activation failed for " + model.EmailAddress, e);
-                        message = ActivationPageMessages.ActivationCodeIncorrect;
-                        return new ActivationViewModel(model.EmailAddress, model.ActivationCode,
-                            ActivateUserState.InvalidCode,
-                            message);
                     default:
-                        _logger.Error("Candidate activation failed for " + model.EmailAddress, e);
-                        break;
+                        _logger.Info("Candidate activation failed for " + model.EmailAddress, e);
+                        return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.InvalidCode, ActivationPageMessages.ActivationCodeIncorrect);
                 }
             }
             catch (Exception e)
             {
                 _logger.Error("Candidate activation failed for " + model.EmailAddress, e);
-                throw;
+                return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error, ActivationPageMessages.ActivationFailed);
             }
-
-            return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error);
         }
 
         public LoginResultViewModel Login(LoginViewModel model)
