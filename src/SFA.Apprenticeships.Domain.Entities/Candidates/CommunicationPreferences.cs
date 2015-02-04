@@ -16,5 +16,7 @@
         public bool VerifiedMobile { get; set; }
 
         public bool AllowTraineeshipPrompts { get; set; }
+
+        //todo: marketing opt-in
     }
 }
