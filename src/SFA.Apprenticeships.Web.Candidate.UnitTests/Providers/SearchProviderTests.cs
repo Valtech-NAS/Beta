@@ -157,7 +157,7 @@
         {
             _apprenticeshipSearchService.Setup(
                 x => x.Search(It.Is<ApprenticeshipSearchParameters>(asp => asp.VacancyLocationType == locationType))).Returns<ApprenticeshipSearchParameters>(asp => new
-                SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(100, 1, new List<ApprenticeshipSearchResponse>
+                SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(100, new List<ApprenticeshipSearchResponse>
                 {
                     new ApprenticeshipSearchResponse
                     {
@@ -167,7 +167,7 @@
 
             _apprenticeshipSearchService.Setup(
                 x => x.Search(It.Is<ApprenticeshipSearchParameters>(asp => asp.VacancyLocationType != locationType))).Returns<ApprenticeshipSearchParameters>(asp => new
-                SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(0, 1, new List<ApprenticeshipSearchResponse>
+                SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(0, new List<ApprenticeshipSearchResponse>
                 {
                     new ApprenticeshipSearchResponse
                     {

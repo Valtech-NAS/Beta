@@ -55,7 +55,7 @@
 
             _logger.Debug("{0} search results returned", search.Total);
 
-            var results = new SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>(search.Total, parameters.PageNumber, responses, null, parameters);
+            var results = new SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>(search.Total, responses, null, parameters);
 
             return results;
         }
