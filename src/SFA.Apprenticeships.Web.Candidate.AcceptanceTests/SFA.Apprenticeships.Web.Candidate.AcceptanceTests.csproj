@@ -173,11 +173,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PrePopulate.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\ApprenticeshipApplication\Validation.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Validation.feature</DependentUpon>
-    </Compile>
     <Compile Include="Features\ApprenticeshipApplication\WarningWhenNavigatingOutOfApprenticeshipApplyPage.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -232,11 +227,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GdsRedirect.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\HomePage.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HomePage.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Login\AccountUnlock.feature.cs">
       <AutoGen>True</AutoGen>
@@ -409,10 +399,6 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>PrePopulate.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\ApprenticeshipApplication\Validation.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>Validation.feature.cs</LastGenOutput>
-    </None>
     <None Include="Features\ApprenticeshipApplication\WarningWhenNavigatingOutOfApprenticeshipApplyPage.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>WarningWhenNavigatingOutOfApprenticeshipApplyPage.feature.cs</LastGenOutput>
@@ -452,10 +438,6 @@
     <None Include="Features\Gds\GdsRedirect.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>GdsRedirect.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\HomePage.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>HomePage.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Login\AccountUnlock.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

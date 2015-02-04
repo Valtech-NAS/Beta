@@ -21,8 +21,8 @@ Scenario: When searching by keyword the keyword is shown
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see 
-        | Field                          | Rule         | Value                            |
-        | Keywords                       | Equals       | Mechanical                       |
+        | Field    | Rule   | Value      |
+        | Keywords | Equals | Mechanical |
 
 @US449 @SmokeTests
 Scenario: When searching by keyword the results are ordered by best match
@@ -33,24 +33,6 @@ Scenario: When searching by keyword the results are ordered by best match
 		 | Location            | Birmingham |
 		 | WithInDistance      | 40 miles   |
 		 | ApprenticeshipLevel | All levels |
-	And I choose Search
-	And I am on the ApprenticeshipSearchResultPage page
-	Then I see 
-        | Field                          | Rule         | Value                            |
-        | SearchResultItemsCount         | Greater Than | 0                                |
-        | SortOrderingDropDownItemsCount | Equals       | 3                                |
-        | SortOrderingDropDownItemsText  | Equals       | Best Match,Closing Date,Distance |
-        | SortOrderingDropDown           | Equals       | Best Match                       |
-
-@US449 @SmokeTests
-Scenario: When searching by keywords the results are ordered by best match
-	Given I navigated to the ApprenticeshipSearchPage page
-	When I enter data
-		 | Field               | Value                  |
-		 | Keywords            | Mechanical Engineering |
-		 | Location            | Birmingham             |
-		 | WithInDistance      | 40 miles               |
-		 | ApprenticeshipLevel | All levels             |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see 
@@ -169,9 +151,6 @@ Scenario: Find apprenticeships by keyword and change ordering to distance
 	Then I see
         | Field                           | Rule   | Value |
         | SearchResultItemsCount          | Equals | 5     |
-        #| ResultsAreInBestMatchScoreOrder | Equals | True  |
-        #| ResultsAreInDistanceOrder       | Equals | False |
-        #| ResultsAreInClosingDateOrder    | Equals | False |
 	And I enter data
 		| Field                | Value    |
 		| SortOrderingDropDown | Distance |
@@ -180,8 +159,6 @@ Scenario: Find apprenticeships by keyword and change ordering to distance
         | Field                     | Rule   | Value |
         | SearchResultItemsCount    | Equals | 5     |
         | ResultsAreInDistanceOrder | Equals | True  |
-        #| ResultsAreInClosingDateOrder | Equals | True  |
-        #| ResultsAreInBestMatchScoreOrder | Equals | False |
 
 @SmokeTests
 Scenario: Find apprenticeships by keyword and change ordering to closing date
@@ -197,9 +174,6 @@ Scenario: Find apprenticeships by keyword and change ordering to closing date
 	Then I see
         | Field                           | Rule   | Value |
         | SearchResultItemsCount          | Equals | 5     |
-        #| ResultsAreInBestMatchScoreOrder | Equals | True  |
-        #| ResultsAreInDistanceOrder       | Equals | False |
-        #| ResultsAreInClosingDateOrder    | Equals | False |
 	And I enter data
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing Date |
@@ -208,5 +182,3 @@ Scenario: Find apprenticeships by keyword and change ordering to closing date
         | Field                        | Rule   | Value |
         | SearchResultItemsCount       | Equals | 5     |
         | ResultsAreInClosingDateOrder | Equals | True  |
-        #| ResultsAreInDistanceOrder       | Equals | False |
-        #| ResultsAreInBestMatchScoreOrder | Equals | False |

@@ -206,8 +206,6 @@ Scenario: Find apprenticeships by location and change ordering to closing date
         | Field                     | Rule   | Value |
         | SearchResultItemsCount    | Equals | 5     |
         | ResultsAreInDistanceOrder | Equals | True  |
-        #| ResultsAreInBestMatchScoreOrder | Equals | True  |
-        #| ResultsAreInClosingDateOrder    | Equals | False |
 	And I enter data
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing Date |
@@ -216,8 +214,6 @@ Scenario: Find apprenticeships by location and change ordering to closing date
         | Field                        | Rule   | Value |
         | SearchResultItemsCount       | Equals | 5     |
         | ResultsAreInClosingDateOrder | Equals | True  |
-        #| ResultsAreInDistanceOrder       | Equals | False |
-        #| ResultsAreInBestMatchScoreOrder | Equals | False |
 
 @SmokeTests
 Scenario: Find apprenticeships by location and change ordering to closing date and back again
@@ -233,8 +229,6 @@ Scenario: Find apprenticeships by location and change ordering to closing date a
         | Field                     | Rule   | Value |
         | SearchResultItemsCount    | Equals | 5     |
         | ResultsAreInDistanceOrder | Equals | True  |
-        #| ResultsAreInBestMatchScoreOrder | Equals | True  |
-        #| ResultsAreInClosingDateOrder    | Equals | False |
 	And I enter data
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing Date |
@@ -243,8 +237,6 @@ Scenario: Find apprenticeships by location and change ordering to closing date a
         | Field                        | Rule   | Value |
         | SearchResultItemsCount       | Equals | 5     |
         | ResultsAreInClosingDateOrder | Equals | True  |
-        #| ResultsAreInDistanceOrder       | Equals | False |
-        #| ResultsAreInBestMatchScoreOrder | Equals | False |
 	And I enter data
 		| Field                | Value        |
 		| SortOrderingDropDown | Distance |
@@ -253,5 +245,3 @@ Scenario: Find apprenticeships by location and change ordering to closing date a
         | Field                     | Rule   | Value |
         | SearchResultItemsCount    | Equals | 5     |
         | ResultsAreInDistanceOrder | Equals | True  |
-        #| ResultsAreInBestMatchScoreOrder | Equals | True  |
-        #| ResultsAreInClosingDateOrder    | Equals | False |

@@ -11,16 +11,6 @@ Background:
 	And I navigated to the ApprenticeshipSearchPage page
 	Then I am on the ApprenticeshipSearchPage page
 
-@US415 @SmokeTests
-Scenario: As a candidate all required fields are present
-	Given I navigated to the LoginPage page
-	When I am on the LoginPage page
-	Then I wait to see EmailAddress
-	And I wait to see Password
-	And I see
-		| Field                     | Rule   | Value |
-		| ValidationFieldErrorCount | Equals | 0     |
-
 @US415
 Scenario: As a candidate I can login with a registered and activated email address and password
 	Given I registered an account and activated it

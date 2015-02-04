@@ -87,12 +87,10 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Login
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("I have the option \'I can\'t access my account\'")]
         [NUnit.Framework.CategoryAttribute("US491")]
-        [NUnit.Framework.CategoryAttribute("AC1")]
         public virtual void IHaveTheOptionICanTAccessMyAccount()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I have the option \'I can\'t access my account\'", new string[] {
-                        "US491",
-                        "AC1"});
+                        "US491"});
 #line 14
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -112,12 +110,10 @@ this.FeatureBackground();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("I have the option to unlock my account")]
         [NUnit.Framework.CategoryAttribute("US491")]
-        [NUnit.Framework.CategoryAttribute("AC2")]
         public virtual void IHaveTheOptionToUnlockMyAccount()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I have the option to unlock my account", new string[] {
-                        "US491",
-                        "AC2"});
+                        "US491"});
 #line 21
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -152,12 +148,10 @@ this.FeatureBackground();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Account is locked after three unsuccesful login attempts")]
         [NUnit.Framework.CategoryAttribute("US491")]
-        [NUnit.Framework.CategoryAttribute("AC3")]
         public virtual void AccountIsLockedAfterThreeUnsuccesfulLoginAttempts()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Account is locked after three unsuccesful login attempts", new string[] {
-                        "US491",
-                        "AC3"});
+                        "US491"});
 #line 33
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -174,7 +168,7 @@ this.FeatureBackground();
                         "Value"});
             table2.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table2.AddRow(new string[] {
                         "Password",
                         "S3cret!"});
@@ -192,7 +186,7 @@ this.FeatureBackground();
             table3.AddRow(new string[] {
                         "EmailAddress",
                         "Equals",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table3.AddRow(new string[] {
                         "AccountUnlockCode",
                         "Empty",
@@ -206,12 +200,10 @@ this.FeatureBackground();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Account can be unlocked with a valid, non-expired account unlock code")]
         [NUnit.Framework.CategoryAttribute("US491")]
-        [NUnit.Framework.CategoryAttribute("AC4")]
         public virtual void AccountCanBeUnlockedWithAValidNon_ExpiredAccountUnlockCode()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Account can be unlocked with a valid, non-expired account unlock code", new string[] {
-                        "US491",
-                        "AC4"});
+                        "US491"});
 #line 49
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -228,7 +220,7 @@ this.FeatureBackground();
                         "Value"});
             table4.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table4.AddRow(new string[] {
                         "Password",
                         "S3cret!"});
@@ -246,7 +238,7 @@ this.FeatureBackground();
             table5.AddRow(new string[] {
                         "EmailAddress",
                         "Equals",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table5.AddRow(new string[] {
                         "AccountUnlockCode",
                         "Empty",
@@ -304,7 +296,7 @@ this.FeatureBackground();
                         "Value"});
             table8.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table8.AddRow(new string[] {
                         "Password",
                         "S3cret!"});
@@ -322,7 +314,7 @@ this.FeatureBackground();
             table9.AddRow(new string[] {
                         "EmailAddress",
                         "Equals",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table9.AddRow(new string[] {
                         "AccountUnlockCode",
                         "Empty",
@@ -474,12 +466,10 @@ this.FeatureBackground();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Account cannot be unlocked with an invalid code")]
         [NUnit.Framework.CategoryAttribute("US491")]
-        [NUnit.Framework.CategoryAttribute("AC5")]
         public virtual void AccountCannotBeUnlockedWithAnInvalidCode()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Account cannot be unlocked with an invalid code", new string[] {
-                        "US491",
-                        "AC5"});
+                        "US491"});
 #line 136
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -582,12 +572,10 @@ this.FeatureBackground();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Account unlock code can be resent")]
         [NUnit.Framework.CategoryAttribute("US491")]
-        [NUnit.Framework.CategoryAttribute("AC6")]
         public virtual void AccountUnlockCodeCanBeResent()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Account unlock code can be resent", new string[] {
-                        "US491",
-                        "AC6"});
+                        "US491"});
 #line 172
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -627,7 +615,7 @@ this.FeatureBackground();
                         "Value"});
             table24.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
 #line 184
  testRunner.When("I enter data", ((string)(null)), table24, "When ");
 #line 187
@@ -652,12 +640,10 @@ this.FeatureBackground();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Account unlock code is renewed if it has expired")]
         [NUnit.Framework.CategoryAttribute("US491")]
-        [NUnit.Framework.CategoryAttribute("AC6")]
         public virtual void AccountUnlockCodeIsRenewedIfItHasExpired()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Account unlock code is renewed if it has expired", new string[] {
-                        "US491",
-                        "AC6"});
+                        "US491"});
 #line 194
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -674,7 +660,7 @@ this.FeatureBackground();
                         "Value"});
             table26.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table26.AddRow(new string[] {
                         "Password",
                         "S3cret!"});
@@ -706,12 +692,10 @@ this.FeatureBackground();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Account unlock code is renewed before being resent if it has expired")]
         [NUnit.Framework.CategoryAttribute("US491")]
-        [NUnit.Framework.CategoryAttribute("AC6")]
         public virtual void AccountUnlockCodeIsRenewedBeforeBeingResentIfItHasExpired()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Account unlock code is renewed before being resent if it has expired", new string[] {
-                        "US491",
-                        "AC6"});
+                        "US491"});
 #line 212
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -728,7 +712,7 @@ this.FeatureBackground();
                         "Value"});
             table28.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table28.AddRow(new string[] {
                         "Password",
                         "S3cret!"});
@@ -762,12 +746,10 @@ this.FeatureBackground();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Resend code request with an unrecognised email address")]
         [NUnit.Framework.CategoryAttribute("US491")]
-        [NUnit.Framework.CategoryAttribute("AC7")]
         public virtual void ResendCodeRequestWithAnUnrecognisedEmailAddress()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Resend code request with an unrecognised email address", new string[] {
-                        "US491",
-                        "AC7"});
+                        "US491"});
 #line 230
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -830,12 +812,10 @@ this.FeatureBackground();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Reset password after locking an account unlocks the account")]
         [NUnit.Framework.CategoryAttribute("US491")]
-        [NUnit.Framework.CategoryAttribute("AC8")]
         public virtual void ResetPasswordAfterLockingAnAccountUnlocksTheAccount()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Reset password after locking an account unlocks the account", new string[] {
-                        "US491",
-                        "AC8"});
+                        "US491"});
 #line 251
 this.ScenarioSetup(scenarioInfo);
 #line 7
