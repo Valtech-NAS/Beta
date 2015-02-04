@@ -353,17 +353,6 @@ WriteLiteral(" for=\"work-current\"");
 WriteLiteral(">Current</label>\r\n                            </div>\r\n                        </d" +
 "iv>\r\n                    </div>\r\n                    <div");
 
-WriteLiteral(" id=\"work-experience-save-warning\"");
-
-WriteLiteral(" class=\"hidden\"");
-
-WriteLiteral(">\r\n                        <span");
-
-WriteLiteral(" class=\"form-hint text\"");
-
-WriteLiteral(">Remember to \'Add work\' to save your work experience </span>\r\n                   " +
-" </div>\r\n                    <div");
-
 WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                        <a");
@@ -378,7 +367,7 @@ WriteLiteral(" id=\"addWorkBtn\"");
 
 WriteLiteral(" data-bind=\"click: addWorkExperience\"");
 
-WriteLiteral(">Add work</a>\r\n                        <span");
+WriteLiteral(">Save this work experience</a>\r\n                        <span");
 
 WriteLiteral(" class=\"visuallyhidden\"");
 

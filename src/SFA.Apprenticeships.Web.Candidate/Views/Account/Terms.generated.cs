@@ -61,21 +61,37 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
+WriteLiteral(" role=\"alert\"");
+
+WriteLiteral(" class=\"panel-info\"");
+
+WriteLiteral(">\r\n    <p");
+
+WriteLiteral(" id=\"InfoMessageText\"");
+
+WriteLiteral(">To use this service you must accept our updated terms and conditions.</p>\r\n</div" +
+">\r\n\r\n<div");
+
 WriteLiteral(" class=\"hgroup\"");
 
-WriteLiteral(">\r\n    <h1");
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"text\"");
+
+WriteLiteral(">\r\n        <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">There have been changes to our terms and conditions</h1>\r\n    <h2");
+WriteLiteral(">Please note there have been changes to our terms and conditions</h1>\r\n        <h" +
+"2");
 
-WriteLiteral(" class=\"heading-large\"");
+WriteLiteral(" class=\"subtitle\"");
 
-WriteLiteral(">Please read and accept below:</h2>\r\n    (TODO: David to re-work header text)\r\n</" +
-"div>\r\n");
+WriteLiteral(">Please read and accept our updated terms and conditions​</h2>\r\n    </div>\r\n</div" +
+">\r\n");
 
             
-            #line 12 "..\..\Views\Account\Terms.cshtml"
+            #line 17 "..\..\Views\Account\Terms.cshtml"
 Write(Html.Partial("_TermsAndConditions"));
 
             
@@ -84,8 +100,8 @@ Write(Html.Partial("_TermsAndConditions"));
 WriteLiteral("\r\n");
 
             
-            #line 13 "..\..\Views\Account\Terms.cshtml"
-Write(Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, new { @class ="button" }));
+            #line 18 "..\..\Views\Account\Terms.cshtml"
+Write(Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, new { @class = "button" }));
 
             
             #line default
@@ -93,8 +109,8 @@ Write(Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, ne
 WriteLiteral("\r\n");
 
             
-            #line 14 "..\..\Views\Account\Terms.cshtml"
-Write(Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new {}));
+            #line 19 "..\..\Views\Account\Terms.cshtml"
+Write(Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new { }));
 
             
             #line default
