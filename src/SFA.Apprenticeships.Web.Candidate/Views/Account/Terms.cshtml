@@ -4,11 +4,16 @@
     Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
 }
 
+<div role="alert" class="panel-warning">
+    <p id="WarningMessageText">To use this service you must accept our updated terms and conditions.</p>
+</div>
+
 <div class="hgroup">
-    <h1 class="heading-xlarge">Our terms and conditions have been updated</h1>
-    <h2 class="subtitle">Please read and accept below:</h2>
-    (TODO: David to re-work header text)
+    <div class="text">
+        <h1 class="heading-xlarge">Please note there have been changes to our terms and conditions</h1>
+        <h2 class="subtitle">Please read and accept our updated terms and conditions​</h2>
+    </div>
 </div>
 @Html.Partial("_TermsAndConditions")
-@Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, new { @class ="button" })
-@Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new {})
+@Html.ActionLink("Accept", "AcceptTermsAndConditions", "Account", Model, new { @class = "button" })
+@Html.ActionLink("Decline", "DeclineTermsAndConditions", "Account", Model, new { })
