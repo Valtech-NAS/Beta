@@ -127,15 +127,12 @@
                     ErrorCodes.ApplicationGatewayCreationError);
         }
 
-        private void CheckDuplicateError(ApplicationDetail applicationDetail,
-            int vacancyId, CreateApplicationResponse response)
+        private void CheckDuplicateError(ApplicationDetail applicationDetail, int vacancyId, CreateApplicationResponse response)
         {
             if (response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.DuplicateApplication))
             {
                 var warnMessage = string.Format("Duplicate application for candidate '{0}' and vacancy '{1}'",
                     applicationDetail.CandidateId, vacancyId);
-
-                _logger.Warn(warnMessage);
 
                 throw new CustomException(warnMessage, Apprenticeships.Application.Interfaces.Applications.ErrorCodes.ApplicationDuplicatedError);
             }
