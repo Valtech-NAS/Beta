@@ -107,7 +107,7 @@
             Condition.Requires(username).IsNotNullOrEmpty();
             Condition.Requires(activationCode).IsNotNullOrEmpty();
 
-            Logger.Debug("Calling CandidateService to activate the user {0}.", username);
+            Logger.Info("Calling CandidateService to activate the user {0}.", username);
 
             _activateCandidateStrategy.ActivateCandidate(username, activationCode);
         }

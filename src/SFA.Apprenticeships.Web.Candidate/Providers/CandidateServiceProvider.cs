@@ -163,7 +163,7 @@
 
         public ActivationViewModel Activate(ActivationViewModel model, Guid candidateId)
         {
-            _logger.Debug(
+            _logger.Info(
                 "Calling CandidateServiceProvider to activate user with Id={0}",
                 candidateId);
 
