@@ -2,22 +2,20 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Routing;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.MyApplications;
     using Candidate.Views.Account;
     using Domain.Entities.Applications;
     using FluentAssertions;
-    using FluentValidation.Validators;
     using NUnit.Framework;
     using RazorGenerator.Testing;
 
     [TestFixture]
     public class DashboardTests
     {
-        private IList<MyApprenticeshipApplicationViewModel> _apprenticeshipApplications;
-        private IList<MyTraineeshipApplicationViewModel> _traineeshipApplications;
+        private IList<MyApprenticeshipApplicationViewModel> _apprenticeships;
+        private IList<MyTraineeshipApplicationViewModel> _traineeships;
         private TraineeshipFeatureViewModel _traineeshipFeature;
 
         [SetUp]
@@ -29,25 +27,17 @@
             SetUpEmptyViewModels();
         }
 
-        private void SetUpEmptyViewModels()
-        {
-            _apprenticeshipApplications = new List<MyApprenticeshipApplicationViewModel>();
-            _traineeshipApplications = new List<MyTraineeshipApplicationViewModel>();
-            _traineeshipFeature = new TraineeshipFeatureViewModel();
-        }
-
         [TestCase(0, 0, true)]
         [TestCase(1, 0, false)]
         [TestCase(0, 1, false)]
-        public void ShouldShowBigFindApprenticeshipButton(
-            int apprenticeshipApplicationCount, int traineeshipApplicationCount, bool shouldShow)
+        public void ShouldShowFindApprenticeshipButton(int apprenticeshipCount, int traineeshipCount, bool shouldShow)
         {
             // Arrange.
-            AddApprenticeshipApplications(apprenticeshipApplicationCount);
-            AddTraineeshipApplications(traineeshipApplicationCount);
+            AddApprenticeships(apprenticeshipCount);
+            AddTraineeships(traineeshipCount);
 
             var myApplications = new MyApplicationsViewModel(
-                _apprenticeshipApplications, _traineeshipApplications, _traineeshipFeature);
+                _apprenticeships, _traineeships, _traineeshipFeature);
 
             // Act.
             var view = new Index().RenderAsHtml(myApplications);
@@ -72,7 +62,7 @@
         {
             // Arrange.
             var myApplications = new MyApplicationsViewModel(
-                _apprenticeshipApplications, _traineeshipApplications, _traineeshipFeature)
+                _apprenticeships, _traineeships, _traineeshipFeature)
             {
                 DeletedVacancyId = deletedVacancyId,
                 DeletedVacancyTitle = deletedVacancyTitle
@@ -104,7 +94,7 @@
             _traineeshipFeature.ShowTraineeshipsPrompt = shouldShow;
 
             var myApplications = new MyApplicationsViewModel(
-                _apprenticeshipApplications, _traineeshipApplications, _traineeshipFeature);
+                _apprenticeships, _traineeships, _traineeshipFeature);
 
             // Act.
             var view = new Index().RenderAsHtml(myApplications);
@@ -125,15 +115,14 @@
         [TestCase(0, 0, false)]
         [TestCase(2, 0, true)]
         [TestCase(2, 3, true)]
-        public void ShouldShowFindApprenticeshipLink(
-            int apprenticeshipApplicationCount, int traineeshipApplicationCount, bool shouldShow)
+        public void ShouldShowFindApprenticeshipLink(int apprenticeshipCount, int traineeshipCount, bool shouldShow)
         {
             // Arrange.
-            AddApprenticeshipApplications(apprenticeshipApplicationCount);
-            AddTraineeshipApplications(traineeshipApplicationCount);
+            AddApprenticeships(apprenticeshipCount);
+            AddTraineeships(traineeshipCount);
 
             var myApplications = new MyApplicationsViewModel(
-                _apprenticeshipApplications, _traineeshipApplications, _traineeshipFeature);
+                _apprenticeships, _traineeships, _traineeshipFeature);
 
             // Act.
             var view = new Index().RenderAsHtml(myApplications);
@@ -158,7 +147,7 @@
             _traineeshipFeature.ShowTraineeshipsLink = shouldShow;
 
             var myApplications = new MyApplicationsViewModel(
-                _apprenticeshipApplications, _traineeshipApplications, _traineeshipFeature);
+                _apprenticeships, _traineeships, _traineeshipFeature);
 
             // Act.
             var view = new Index().RenderAsHtml(myApplications);
@@ -178,14 +167,13 @@
 
         [TestCase(0, false)]
         [TestCase(2, true)]
-        public void ShouldShowSuccessfulApprenticeshipApplicationsCount(
-            int successfulApplicationsCount, bool shouldShow)
+        public void ShouldShowSuccessfulCount(int successfulCount, bool shouldShow)
         {
             // Arrange.
-            AddApprenticeshipApplications(successfulApplicationsCount, ApplicationStatuses.Successful);
+            AddApprenticeships(successfulCount, ApplicationStatuses.Successful);
 
             var myApplications = new MyApplicationsViewModel(
-                _apprenticeshipApplications, _traineeshipApplications, _traineeshipFeature);
+                _apprenticeships, _traineeships, _traineeshipFeature);
 
             // Act.
             var view = new Index().RenderAsHtml(myApplications);
@@ -196,7 +184,7 @@
             if (shouldShow)
             {
                 elem.Should().NotBeNull();
-                elem.InnerHtml.Should().Be(Convert.ToString(successfulApplicationsCount));
+                elem.InnerHtml.Should().Be(Convert.ToString(successfulCount));
             }
             else
             {
@@ -208,15 +196,14 @@
         [TestCase(2, 0, true)]
         [TestCase(0, 3, true)]
         [TestCase(2, 3, true)]
-        public void ShouldShowSubmittedApprenticeshipApplicationsCount(
-            int submittingApplicationsCount, int submittedApplicationsCount, bool shouldShow)
+        public void ShouldShowSubmittedCount(int submittingCount, int submittedCount, bool shouldShow)
         {
             // Arrange.
-            AddApprenticeshipApplications(submittingApplicationsCount, ApplicationStatuses.Submitting);
-            AddApprenticeshipApplications(submittedApplicationsCount, ApplicationStatuses.Submitted);
+            AddApprenticeships(submittingCount, ApplicationStatuses.Submitting);
+            AddApprenticeships(submittedCount, ApplicationStatuses.Submitted);
 
             var myApplications = new MyApplicationsViewModel(
-                _apprenticeshipApplications, _traineeshipApplications, _traineeshipFeature);
+                _apprenticeships, _traineeships, _traineeshipFeature);
 
             // Act.
             var view = new Index().RenderAsHtml(myApplications);
@@ -228,7 +215,7 @@
             {
                 elem.Should().NotBeNull();
                 elem.InnerHtml.Should().Be(Convert.ToString(
-                    submittingApplicationsCount + submittedApplicationsCount));
+                    submittingCount + submittedCount));
             }
             else
             {
@@ -238,14 +225,13 @@
 
         [TestCase(0, false)]
         [TestCase(2, true)]
-        public void ShouldShowUnsuccessfulApprenticeshipApplicationsCount(
-            int unsuccessfulApplicationsCount, bool shouldShow)
+        public void ShouldShowUnsuccessfulCount(int unsuccessfulCount, bool shouldShow)
         {
             // Arrange.
-            AddApprenticeshipApplications(unsuccessfulApplicationsCount, ApplicationStatuses.Unsuccessful);
+            AddApprenticeships(unsuccessfulCount, ApplicationStatuses.Unsuccessful);
 
             var myApplications = new MyApplicationsViewModel(
-                _apprenticeshipApplications, _traineeshipApplications, _traineeshipFeature);
+                _apprenticeships, _traineeships, _traineeshipFeature);
 
             // Act.
             var view = new Index().RenderAsHtml(myApplications);
@@ -256,7 +242,7 @@
             if (shouldShow)
             {
                 elem.Should().NotBeNull();
-                elem.InnerHtml.Should().Be(Convert.ToString(unsuccessfulApplicationsCount));
+                elem.InnerHtml.Should().Be(Convert.ToString(unsuccessfulCount));
             }
             else
             {
@@ -266,14 +252,13 @@
 
         [TestCase(0, false)]
         [TestCase(2, true)]
-        public void ShouldShowDraftApprenticeshipApplicationsCount(
-            int draftApplicationsCount, bool shouldShow)
+        public void ShouldShowDraftCount(int draftCount, bool shouldShow)
         {
             // Arrange.
-            AddApprenticeshipApplications(draftApplicationsCount, ApplicationStatuses.Draft);
+            AddApprenticeships(draftCount, ApplicationStatuses.Draft);
 
             var myApplications = new MyApplicationsViewModel(
-                _apprenticeshipApplications, _traineeshipApplications, _traineeshipFeature);
+                _apprenticeships, _traineeships, _traineeshipFeature);
 
             // Act.
             var view = new Index().RenderAsHtml(myApplications);
@@ -284,7 +269,7 @@
             if (shouldShow)
             {
                 elem.Should().NotBeNull();
-                elem.InnerHtml.Should().Be(Convert.ToString(draftApplicationsCount));
+                elem.InnerHtml.Should().Be(Convert.ToString(draftCount));
             }
             else
             {
@@ -294,22 +279,29 @@
 
         #region Helpers
 
-        private void AddApprenticeshipApplications(int count, ApplicationStatuses applicationStatus = ApplicationStatuses.Unknown)
+        private void SetUpEmptyViewModels()
+        {
+            _apprenticeships = new List<MyApprenticeshipApplicationViewModel>();
+            _traineeships = new List<MyTraineeshipApplicationViewModel>();
+            _traineeshipFeature = new TraineeshipFeatureViewModel();
+        }
+
+        private void AddApprenticeships(int count, ApplicationStatuses applicationStatus = ApplicationStatuses.Unknown)
         {
             for (var i = 0; i < count; i++)
             {
-                _apprenticeshipApplications.Add(new MyApprenticeshipApplicationViewModel
+                _apprenticeships.Add(new MyApprenticeshipApplicationViewModel
                 {
                     ApplicationStatus = applicationStatus
                 });
             }
         }
 
-        private void AddTraineeshipApplications(int count)
+        private void AddTraineeships(int count)
         {
             for (var i = 0; i < count; i++)
             {
-                _traineeshipApplications.Add(new MyTraineeshipApplicationViewModel());
+                _traineeships.Add(new MyTraineeshipApplicationViewModel());
             }
         }
 
