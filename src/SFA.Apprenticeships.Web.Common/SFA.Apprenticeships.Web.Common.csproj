@@ -212,7 +212,6 @@
     <Compile Include="Services\AuthenticationTicketService.cs" />
     <Compile Include="Services\IAuthenticationTicketService.cs" />
     <Compile Include="Validations\EqualToValueFluentValidationPropertyValidator.cs" />
-    <Compile Include="Validations\ValidationExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
