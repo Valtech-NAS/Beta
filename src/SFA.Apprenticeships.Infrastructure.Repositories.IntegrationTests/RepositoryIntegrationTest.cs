@@ -10,7 +10,7 @@
     using StructureMap;
 
     [SetUpFixture]
-    public class RepositoryIntegrationTest
+    public abstract class RepositoryIntegrationTest
     {
         protected Container Container;
 

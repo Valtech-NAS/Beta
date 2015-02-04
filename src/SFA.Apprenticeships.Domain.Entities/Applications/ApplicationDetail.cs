@@ -11,8 +11,6 @@
         {
             CandidateDetails = new RegistrationDetails();
             CandidateInformation = new ApplicationTemplate();
-            Status = ApplicationStatuses.Unknown;
-            VacancyStatus = VacancyStatuses.Unknown;
         }
 
         public VacancyStatuses VacancyStatus { get; set; }
@@ -25,8 +23,8 @@
         
         public Guid CandidateId { get; set; }
 
+        // Temporary "weak link" to legacy application record (could be via an index)
         public int LegacyApplicationId { get; set; }
-        // temporary "weak link" to legacy application record (could be via an index)
 
         public RegistrationDetails CandidateDetails { get; set; }
 

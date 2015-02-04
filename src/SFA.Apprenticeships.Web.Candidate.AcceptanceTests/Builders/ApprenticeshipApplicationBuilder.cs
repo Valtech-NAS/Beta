@@ -9,14 +9,13 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
     using IoC;
-    using StructureMap;
 
     public class ApprenticeshipApplicationBuilder
     {
         private readonly Guid _candidateId = new Guid("00000000-0000-0000-0000-000000000001");
         private int _vacancyId;
         private readonly string _emailAddress = string.Empty;
-        private ApplicationStatuses _applicationStatus = ApplicationStatuses.Unknown;
+        private ApplicationStatuses _applicationStatus;
         private DateTime? _dateApplied = DateTime.Now;
         private DateTime _expirationDate = DateTime.Now.AddDays(30);
 

@@ -286,7 +286,7 @@
             _traineeshipFeature = new TraineeshipFeatureViewModel();
         }
 
-        private void AddApprenticeships(int count, ApplicationStatuses applicationStatus = ApplicationStatuses.Unknown)
+        private void AddApprenticeships(int count, ApplicationStatuses applicationStatus = ApplicationStatuses.Draft)
         {
             for (var i = 0; i < count; i++)
             {
