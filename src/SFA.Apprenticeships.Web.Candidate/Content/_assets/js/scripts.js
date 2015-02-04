@@ -221,6 +221,23 @@ $(function() {
     }
   });
 
+    //----------Radio expanding lists IE8
+
+     if($('html').hasClass('lt-ie9')) {
+         $('.list-checkradio input[type=radio]:checked').siblings('details').addClass('ie8-details');
+
+         $('.list-checkradio > li').on('click', function () {
+             var $this = $(this),
+                 $thisDetails = $this.find('details');
+
+             $('.list-checkradio input[type=radio]').not(':checked').siblings('details').removeClass('ie8-details');
+
+             $thisDetails.addClass('ie8-details');
+
+         });
+     }
+
+
   //----------Tabbed content
 
   $('.tabbed-tab').attr('href', "#");
@@ -228,8 +245,6 @@ $(function() {
   $('.tabbed-tab').on('click', function() {
       var $this = $(this),
           $tabId = $this.attr('tab');
-
-      console.log($tabId);
 
       $this.addClass('active');
 
