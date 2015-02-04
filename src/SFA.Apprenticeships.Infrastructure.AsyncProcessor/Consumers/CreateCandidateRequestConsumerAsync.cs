@@ -69,9 +69,11 @@
                 var candidate = _candidateReadRepository.Get(request.CandidateId, true);
                 if (candidate.LegacyCandidateId == 0)
                 {
+                    _logger.Info("Sending request to create candidate in legacy system: Candidate Id: \"{0}\"", request.CandidateId);
                     var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
                     candidate.LegacyCandidateId = legacyCandidateId;
                     _candidateWriteRepository.Save(candidate);
+                    _logger.Info("Candidate created in legacy system: Candidate Id: \"{0}\", Legacy Candidate Id: \"{1}\"", request.CandidateId);
                 }
                 else
                 {
