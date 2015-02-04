@@ -184,7 +184,7 @@ WriteAttribute("id", Tuple.Create(" id=\"", 1180), Tuple.Create("\"", 1203)
 , 1185), false)
 );
 
-WriteLiteral(" class=\"copy-16 list-text list-checkradio\"");
+WriteLiteral(" class=\"detail-content copy-16 list-text list-checkradio\"");
 
 WriteLiteral(">\r\n");
 
@@ -238,14 +238,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 2069), Tuple.Create("\"", 2086)
+WriteAttribute("for", Tuple.Create(" for=\"", 2084), Tuple.Create("\"", 2101)
             
             #line 29 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                    , Tuple.Create(Tuple.Create("", 2075), Tuple.Create<System.Object, System.Int32>(checkboxId
+                                                                    , Tuple.Create(Tuple.Create("", 2090), Tuple.Create<System.Object, System.Int32>(checkboxId
             
             #line default
             #line hidden
-, 2075), false)
+, 2090), false)
 );
 
 WriteLiteral(">");
