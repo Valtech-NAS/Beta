@@ -14,9 +14,9 @@ Scenario: I have applied for neither traineeships nor apprenticeships
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see
@@ -40,9 +40,9 @@ Scenario: I have applied for one or more apprenticeship and no traineeships
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see
@@ -66,9 +66,9 @@ Scenario: I have applied for six or more unsuccessful apprenticeships and no tra
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see
@@ -93,9 +93,9 @@ Scenario: I have applied for six or more unsuccessful apprenticeships one succes
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see
@@ -119,9 +119,9 @@ Scenario: I have applied for one or more traineeships and no apprenticeships
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see
@@ -145,9 +145,9 @@ Scenario: I am not interested in traineeships and I want to dismiss the trainees
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see

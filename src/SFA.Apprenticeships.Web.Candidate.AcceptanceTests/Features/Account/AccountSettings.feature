@@ -15,7 +15,7 @@ Background:
 	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
+		| EmailAddress | {EmailToken} |
 		| Password     | {PasswordToken}     |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page

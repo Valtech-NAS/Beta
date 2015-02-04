@@ -14,9 +14,9 @@ Scenario: I have not applied for any traineeships
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see
@@ -31,9 +31,9 @@ Scenario: I have applied for two traineeships
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see
@@ -48,9 +48,9 @@ Scenario: I have applied for six traineeships
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see

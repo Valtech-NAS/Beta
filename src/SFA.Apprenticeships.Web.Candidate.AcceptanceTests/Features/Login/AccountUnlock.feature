@@ -36,13 +36,13 @@ Scenario: Account is locked after three unsuccesful login attempts
 	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
+		| EmailAddress | {EmailToken} |
 		| Password     | S3cret!             |
 	And I choose SignInButton
 	Then I am on the UnlockPage page
 	And I see
          | Field             | Rule   | Value               |
-         | EmailAddress      | Equals | {EmailAddressToken} |
+         | EmailAddress      | Equals | {EmailToken} |
          | AccountUnlockCode | Empty  |                     |
 
 @US491 @AC4
@@ -52,13 +52,13 @@ Scenario: Account can be unlocked with a valid, non-expired account unlock code
 	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
+		| EmailAddress | {EmailToken} |
 		| Password     | S3cret!             |
 	And I choose SignInButton
 	Then I am on the UnlockPage page	
 	And I see
          | Field             | Rule   | Value               |
-         | EmailAddress      | Equals | {EmailAddressToken} |
+         | EmailAddress      | Equals | {EmailToken} |
          | AccountUnlockCode | Empty  |                     |
 	When I enter data
 		| Field             | Value                    |
@@ -76,13 +76,13 @@ Scenario: Email is not pre populated when navigating to unlock page directly
 	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
+		| EmailAddress | {EmailToken} |
 		| Password     | S3cret!             |
 	And I choose SignInButton
 	Then I am on the UnlockPage page	
 	And I see
          | Field             | Rule   | Value               |
-         | EmailAddress      | Equals | {EmailAddressToken} |
+         | EmailAddress      | Equals | {EmailToken} |
          | AccountUnlockCode | Empty  |                     |
 	When I choose SignInLink
 	Then I am on the LoginPage page
@@ -183,7 +183,7 @@ Scenario: Account unlock code can be resent
          | AccountUnlockCode | Empty |       |
 	When I enter data
 		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
+		| EmailAddress | {EmailToken} |
 	And I choose ResendAccountUnlockCodeLink
 	Then I am on the UnlockPage page
 	And I see
@@ -197,7 +197,7 @@ Scenario: Account unlock code is renewed if it has expired
 	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
+		| EmailAddress | {EmailToken} |
 		| Password     | S3cret!             |
 	And I choose SignInButton
 	And I am on the UnlockPage page
@@ -215,7 +215,7 @@ Scenario: Account unlock code is renewed before being resent if it has expired
 	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
+		| EmailAddress | {EmailToken} |
 		| Password     | S3cret!             |
 	And I choose SignInButton
 	And I am on the UnlockPage page

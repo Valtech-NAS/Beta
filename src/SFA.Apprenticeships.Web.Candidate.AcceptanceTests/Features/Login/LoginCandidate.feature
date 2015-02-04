@@ -28,7 +28,7 @@ Scenario: As a candidate I can login with a registered and activated email addre
 	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
+		| EmailAddress | {EmailToken} |
 		| Password     | {PasswordToken}     |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
@@ -50,7 +50,7 @@ Scenario: As a candidate I want to be redirected to the previous page when I log
 	And I am on the LoginPage page
 	And I enter data
 		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
+		| EmailAddress | {EmailToken} |
 		| Password     | {PasswordToken}     |
 	And I choose SignInButton
 	Then I am on the ApprenticeshipSearchPage page
@@ -62,7 +62,7 @@ Scenario: As a candidate I cannot login with an invalid password
 	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value                  |
-		| EmailAddress | {EmailAddressToken}    |
+		| EmailAddress | {EmailToken}    |
 		| Password     | {InvalidPasswordToken} |
 	And I choose SignInButton
 	And I wait to see ValidationSummary
@@ -80,7 +80,7 @@ Scenario: As a candidate I can login with a registered but unactivated account a
 	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
+		| EmailAddress | {EmailToken} |
 		| Password     | {PasswordToken}     |
 	And I choose SignInButton
 	And I am on the ActivationPage page

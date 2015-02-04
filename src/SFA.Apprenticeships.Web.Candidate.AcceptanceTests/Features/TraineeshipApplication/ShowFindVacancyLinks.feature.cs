@@ -101,7 +101,7 @@ this.FeatureBackground();
                         "Value"});
             table1.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table1.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
@@ -184,7 +184,7 @@ this.FeatureBackground();
                         "Value"});
             table4.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table4.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
@@ -267,7 +267,7 @@ this.FeatureBackground();
                         "Value"});
             table7.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table7.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
@@ -354,7 +354,7 @@ this.FeatureBackground();
                         "Value"});
             table10.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table10.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
@@ -437,7 +437,7 @@ this.FeatureBackground();
                         "Value"});
             table13.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table13.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
@@ -522,7 +522,7 @@ this.FeatureBackground();
                         "Value"});
             table16.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table16.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});

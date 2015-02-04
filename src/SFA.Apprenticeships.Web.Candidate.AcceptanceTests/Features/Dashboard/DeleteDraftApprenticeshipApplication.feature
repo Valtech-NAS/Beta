@@ -16,9 +16,9 @@ Scenario: As an candidate I want to be able to delete draft applications
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	When I choose DeleteDraftLink	
@@ -34,9 +34,9 @@ Scenario: As an candidate I want to be able to delete expired or withdrawn draft
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	When I choose DeleteDraftLink	
