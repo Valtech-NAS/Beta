@@ -10,8 +10,7 @@
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
-    using VacancyErrorCodes = Application.VacancyEtl.ErrorCodes;
-
+    
     public class VacancyIndexerService<TSourceSummary, TDestinationSummary> : IVacancyIndexerService<TSourceSummary, TDestinationSummary>
         where TSourceSummary : Domain.Entities.Vacancies.VacancySummary, IVacancyUpdate
         where TDestinationSummary : class, IVacancySummary
@@ -103,8 +102,10 @@
             }
             else
             {
-                _logger.Error("Vacancy search index already exists: {0}", newIndexName);
-                throw new CustomException(string.Format("Index already created: {0}", newIndexName), VacancyErrorCodes.VacancyIndexerServiceError);
+                var message = string.Format("Vacancy search index already created: {0}", newIndexName);
+
+                _logger.Error(message);
+                throw new CustomException(message, ErrorCodes.VacancyIndexerServiceError);
             }
         }
 

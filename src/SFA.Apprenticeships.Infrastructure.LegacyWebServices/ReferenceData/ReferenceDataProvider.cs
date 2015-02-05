@@ -41,7 +41,7 @@
             var topLevelCategories =
                 response.ApprenticeshipFrameworks
                 .Select(c =>
-                        new Category()
+                        new Category
                         {
                             CodeName = c.ApprenticeshipOccupationCodeName,
                             ShortName = c.ApprenticeshipOccupationShortName,
@@ -53,7 +53,7 @@
                 topLevelCategory.SubCategories =
                     response.ApprenticeshipFrameworks.Where(c => c.ApprenticeshipOccupationCodeName == topLevelCategory.CodeName)
                     .Select(d =>
-                        new Category()
+                        new Category
                         {
                             ParentCategory = topLevelCategory,
                             CodeName = d.ApprenticeshipFrameworkCodeName,

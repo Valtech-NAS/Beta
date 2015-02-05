@@ -13,7 +13,6 @@
     using GatewayServiceProxy;
     using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
-    using ErrorCodes = Application.VacancyEtl.ErrorCodes;
 
     public class LegacyCandidateApplicationStatusesProvider : ILegacyApplicationStatusesProvider
     {
@@ -64,7 +63,8 @@
                     string.Format("Failed to retrieve applications from Legacy.GetCandidateInfo for candidate '{0}'/'{1}'",
                         candidate.EntityId,
                         candidate.LegacyCandidateId);
-                throw new CustomException(message, ErrorCodes.GatewayServiceFailed);
+
+                throw new CustomException(message, ErrorCodes.GetCandidateInfoServiceFailed);
             }
 
             _logger.Debug("Candidate applications were successfully retrieved from Legacy.GetCandidateInfo ({0})",
@@ -92,10 +92,9 @@
 
             if (response == null)
             {
-                _logger.Error("Legacy.GetApplicationsStatus for page count did not respond");
+                var message = string.Format("Failed to retrieve page '{0}' from Legacy.GetApplicationsStatus", request.PageNumber);
 
-                throw new CustomException("Failed to retrieve application status pages from Legacy.GetApplicationsStatus",
-                    ErrorCodes.GatewayServiceFailed);
+                throw new CustomException(message, ErrorCodes.GetApplicationsStatusServiceFailed);
             }
 
             _logger.Debug("Application statuses page count retrieved from Legacy.GetApplicationsStatus ({0})", response.TotalPages);
@@ -122,10 +121,10 @@
 
             if (response == null)
             {
-                _logger.Error("Legacy.GetApplicationsStatus did not respond");
+                var message = string.Format("Failed to retrieve page '{0}' from Legacy.GetApplicationsStatus", page);
 
-                throw new CustomException("Failed to retrieve page '" + page + "' from Legacy.GetApplicationsStatus",
-                    ErrorCodes.GatewayServiceFailed);
+                _logger.Error(message);
+                throw new CustomException(message, ErrorCodes.GetApplicationsStatusServiceFailed);
             }
 
             _logger.Debug("Application statuses (page {0}) were successfully retrieved from Legacy.GetApplicationsStatus ({1})",

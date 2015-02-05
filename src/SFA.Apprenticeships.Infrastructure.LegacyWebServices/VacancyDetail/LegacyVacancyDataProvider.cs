@@ -10,7 +10,6 @@
     using GatewayServiceProxy;
     using Newtonsoft.Json;
     using Wcf;
-    using ErrorCodes = Application.VacancyEtl.ErrorCodes;
     using VacancyErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
     using MessagingErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
 
@@ -66,7 +65,7 @@
 
                 var message = string.Format("Legacy.GetVacancyDetails failed to retrieve vacancy details from legacy system for vacancyId {0}", vacancyId);
 
-                throw new CustomException(message, ErrorCodes.GatewayServiceFailed);
+                throw new CustomException(message, ErrorCodes.GetVacancyDetailsServiceFailed);
             }
 
             var vacancyDetail = GetVacancyDetailFrom(response);

@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.CreateCandidate
 {
-    using System;
     using System.Linq;
     using Application.Candidate;
     using Application.Interfaces.Logging;
