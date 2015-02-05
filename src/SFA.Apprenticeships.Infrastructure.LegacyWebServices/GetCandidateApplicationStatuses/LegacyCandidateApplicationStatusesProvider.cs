@@ -7,6 +7,7 @@
     using Application.Interfaces.Logging;
     using Newtonsoft.Json;
     using Application.ApplicationUpdate;
+    using Configuration;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
@@ -20,13 +21,15 @@
 
         private readonly IMapper _mapper;
         private readonly IWcfService<GatewayServiceContract> _service;
-        private const int ApplicationStatusExtractWindow = 4*60; // todo: temp code to define 4 hour window for application ETL. should be from config
+        private readonly int _applicationStatusExtractWindow;
 
-        public LegacyCandidateApplicationStatusesProvider(IWcfService<GatewayServiceContract> service, IMapper mapper, ILogService logger)
+        public LegacyCandidateApplicationStatusesProvider(IWcfService<GatewayServiceContract> service, IMapper mapper, ILegacyServicesConfiguration legacyServicesConfiguration, ILogService logger)
         {
             _service = service;
             _mapper = mapper;
             _logger = logger;
+
+            _applicationStatusExtractWindow = legacyServicesConfiguration.ApplicationStatusExtractWindow;
         }
 
         public IEnumerable<ApplicationStatusSummary> GetCandidateApplicationStatuses(Candidate candidate)
@@ -78,7 +81,7 @@
             {
                 PageNumber = 1,
                 RangeTo = DateTime.UtcNow,
-                RangeFrom = DateTime.UtcNow.AddMinutes(ApplicationStatusExtractWindow * -1)
+                RangeFrom = DateTime.UtcNow.AddMinutes(_applicationStatusExtractWindow * -1)
             };
 
             var response = default(GetApplicationsStatusResponse);
@@ -108,7 +111,7 @@
             {
                 PageNumber = page,
                 RangeTo = DateTime.UtcNow,
-                RangeFrom = DateTime.UtcNow.AddMinutes(ApplicationStatusExtractWindow * -1)
+                RangeFrom = DateTime.UtcNow.AddMinutes(_applicationStatusExtractWindow * -1)
             };
 
             var response = default(GetApplicationsStatusResponse);
