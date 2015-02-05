@@ -42,7 +42,7 @@
         <div id="planned-outage-message" class="maintenance-banner">
             <div class="content-container" role="alert">
                 <div class="font-xsmall maintenance-content">
-                    <p>@Html.Raw(ViewBag.PlannedOutageMessage)</p>
+                    <div>@Html.Raw(ViewBag.PlannedOutageMessage)</div>
                     <a href="@Url.Action("DismissPlannedOutageMessage", "Account", new { isJavascript = false })" class="maintenance-close">
                         <i id="dismiss-planned-outage-message" class="icon-black fa fa-times-circle"></i>
                     </a>

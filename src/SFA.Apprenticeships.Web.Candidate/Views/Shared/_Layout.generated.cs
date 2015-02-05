@@ -303,16 +303,16 @@ WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"font-xsmall maintenance-content\"");
 
-WriteLiteral(">\r\n                    <p>");
+WriteLiteral(">\r\n                    <div>");
 
             
             #line 45 "..\..\Views\Shared\_Layout.cshtml"
-                  Write(Html.Raw(ViewBag.PlannedOutageMessage));
+                    Write(Html.Raw(ViewBag.PlannedOutageMessage));
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n                    <a");
+WriteLiteral("</div>\r\n                    <a");
 
 WriteAttribute("href", Tuple.Create(" href=\"", 2498), Tuple.Create("\"", 2588)
             
