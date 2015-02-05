@@ -3,7 +3,6 @@
     using System;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Application.Interfaces.Locations;
     using Application.Location;
     using Domain.Interfaces.Repositories;
 
