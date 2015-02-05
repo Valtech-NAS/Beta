@@ -236,7 +236,7 @@ WriteLiteral("            ");
 
             
             #line 50 "..\..\Views\Account\Settings.cshtml"
-       Write(Html.FormRadioButtonsYesNo(c => c.AllowEmailComms));
+       Write(Html.FormRadioButtonsYesNo(m => m.AllowEmailComms));
 
             
             #line default

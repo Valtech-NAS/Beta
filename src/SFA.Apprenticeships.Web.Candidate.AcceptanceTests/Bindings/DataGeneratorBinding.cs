@@ -318,7 +318,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
         private Table GetActivationCodeData()
         {
             string[] header = { "Field", "Value" };
-            string[] row1 = { "ActivationCode", "{ActivationToken}" };
+            string[] row1 = { "ActivationCode", "{ActivationCodeToken}" };
             var t = new Table(header);
             t.AddRow(row1);
             return t;

@@ -220,7 +220,7 @@
     <Compile Include="Mocks\HttpContextFactory.cs" />
     <Compile Include="Providers\ApplicationProvider\GetOrCreateApplicationViewModel.cs" />
     <Compile Include="Providers\ApplicationProvider\GetApplicationViewModel.cs" />
-    <Compile Include="Providers\ApplicationProvider\ShowTraineeshipsPrompt.cs" />
+    <Compile Include="Providers\ApplicationProvider\TraineeshipsFeatureViewModel.cs" />
     <Compile Include="Providers\SearchProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderTest.cs" />

@@ -14,7 +14,7 @@
     using System.Linq;
 
     [TestFixture]
-    public class ShowTraineeshipsPrompt
+    public class TraineeshipsFeatureViewModel
     {
         const int UnsuccessfulApplications = 3;
 

@@ -19,7 +19,7 @@
 
         public const string PasswordResetCodeTokenName = "PasswordResetCodeToken";
 
-        public const string ActivationCodeTokenName = "ActivationToken";
+        public const string ActivationCodeTokenName = "ActivationCodeToken";
         public const string ActivationCode = "ACTIV1";
 
         public const string AccountUnlockCodeTokenName = "AccountUnlockCodeToken";

@@ -54,7 +54,7 @@
         {
             var settingsViewModel = new SettingsViewModel();
 
-            var response = _accountMediator.Settings(Guid.NewGuid(), settingsViewModel);
+            var response = _accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
             response.Code.Should().Be(Codes.AccountMediator.Settings.ValidationError);
             response.ViewModel.Should().Be(settingsViewModel);
             response.ValidationResult.Should().NotBeNull();
@@ -81,7 +81,7 @@
 
             _accountProviderMock.Setup(x => x.SaveSettings(It.IsAny<Guid>(), It.IsAny<SettingsViewModel>())).Returns(true);
 
-            var response = _accountMediator.Settings(Guid.NewGuid(), settingsViewModel);
+            var response = _accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
             response.Code.Should().Be(Codes.AccountMediator.Settings.Success);
             response.ViewModel.Should().Be(settingsViewModel);
         }
@@ -107,7 +107,7 @@
 
             _accountProviderMock.Setup(x => x.SaveSettings(It.IsAny<Guid>(), It.IsAny<SettingsViewModel>())).Returns(false);
 
-            var response = _accountMediator.Settings(Guid.NewGuid(), settingsViewModel);
+            var response = _accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
             response.Code.Should().Be(Codes.AccountMediator.Settings.SaveError);
             response.ViewModel.Should().Be(settingsViewModel);
             response.Message.Text.Should().Be(AccountPageMessages.SettingsUpdateFailed);

@@ -57,7 +57,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.Settings(UserContext.CandidateId, model);
+                var response = _accountMediator.SaveSettings(UserContext.CandidateId, model);
                 ModelState.Clear();
 
                 switch (response.Code)

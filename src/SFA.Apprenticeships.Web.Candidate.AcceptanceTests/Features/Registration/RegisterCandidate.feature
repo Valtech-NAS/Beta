@@ -133,8 +133,8 @@ Scenario: As a candidate I want to submit my registration details so that I can 
 	And I wait to see EmailAddress
 	And I am on the ActivationPage page
 	And I enter data
-		| Field          | Value             |
-		| ActivationCode | {ActivationToken} |
+		| Field          | Value                 |
+		| ActivationCode | {ActivationCodeToken} |
 	And I am on the ActivationPage page
 	And I choose ActivateButton
 	And I am on the ApprenticeshipSearchPage page

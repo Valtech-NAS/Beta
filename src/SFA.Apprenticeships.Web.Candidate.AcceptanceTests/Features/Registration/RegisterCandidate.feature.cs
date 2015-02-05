@@ -480,7 +480,7 @@ this.FeatureBackground();
                         "Value"});
             table14.AddRow(new string[] {
                         "ActivationCode",
-                        "{ActivationToken}"});
+                        "{ActivationCodeToken}"});
 #line 135
  testRunner.And("I enter data", ((string)(null)), table14, "And ");
 #line 138

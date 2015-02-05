@@ -104,7 +104,7 @@
             return GetMediatorResponse(Codes.AccountMediator.Settings.Success, model);
         }
 
-        public MediatorResponse<SettingsViewModel> Settings(Guid candidateId, SettingsViewModel settingsViewModel)
+        public MediatorResponse<SettingsViewModel> SaveSettings(Guid candidateId, SettingsViewModel settingsViewModel)
         {
             var validationResult = _settingsViewModelServerValidator.Validate(settingsViewModel);
             var traineeshipFeature = _apprenticeshipApplicationProvider.GetTraineeshipFeatureViewModel(candidateId);
