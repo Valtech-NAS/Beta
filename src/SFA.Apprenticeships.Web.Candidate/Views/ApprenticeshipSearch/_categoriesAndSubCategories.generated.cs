@@ -193,7 +193,8 @@ WriteAttribute("id", Tuple.Create(" id=\"", 1198), Tuple.Create("\"", 1221)
 , 1203), false)
 );
 
-WriteLiteral(" class=\"detail-content copy-16 list-text list-checkradio\"");
+WriteLiteral(" class=\"detail-content copy-16 list-text list-checkradio scrolling-panel max-heig" +
+"ht-6ish\"");
 
 WriteLiteral(">\r\n");
 
@@ -247,14 +248,14 @@ WriteLiteral("\" value=\"");
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 2102), Tuple.Create("\"", 2119)
+WriteAttribute("for", Tuple.Create(" for=\"", 2134), Tuple.Create("\"", 2151)
             
             #line 29 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                    , Tuple.Create(Tuple.Create("", 2108), Tuple.Create<System.Object, System.Int32>(checkboxId
+                                                                    , Tuple.Create(Tuple.Create("", 2140), Tuple.Create<System.Object, System.Int32>(checkboxId
             
             #line default
             #line hidden
-, 2108), false)
+, 2140), false)
 );
 
 WriteLiteral(">");

@@ -16,7 +16,7 @@
                 <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@FullNameFormatter.Format(category.FullName)</label>
                 <details @openAttr class="@openAttr">
                     <summary class="copy-16">@subCategories.Count sub-categories</summary>
-                    <ul id="@subCategoryListId" class="detail-content copy-16 list-text list-checkradio">
+                    <ul id="@subCategoryListId" class="detail-content copy-16 list-text list-checkradio scrolling-panel max-height-6ish">
                         @foreach (var subCategory in subCategories)
                         {
                             checkedAttr = Model.SubCategories != null && Model.SubCategories.Contains(subCategory.CodeName) ? " checked" : "";
