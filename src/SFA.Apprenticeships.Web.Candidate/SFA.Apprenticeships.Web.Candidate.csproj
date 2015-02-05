@@ -518,6 +518,12 @@
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Startup\AppInsightsAgent\UnifiedBootstrap.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Startup\AppInsightsAgent\UnifiedBootstrap.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Startup\DisableSslv3.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
