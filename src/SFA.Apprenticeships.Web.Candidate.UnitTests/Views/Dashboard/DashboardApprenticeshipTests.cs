@@ -1,9 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Dashboard
 {
     using System;
-    using System.Collections.Generic;
     using System.Web.Routing;
-    using Candidate.ViewModels.MyApplications;
     using Candidate.Views.Account;
     using Domain.Entities.Applications;
     using FluentAssertions;
@@ -26,7 +24,7 @@
         public void ShouldShowFindApprenticeshipButton(int apprenticeshipCount, int traineeshipCount, bool shouldShow)
         {
             var myApplications =
-                new MyApplicationViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(apprenticeshipCount))
+                new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(apprenticeshipCount))
                     .With(DashboardTestsHelper.GetTraineeships(traineeshipCount))
                     .Build();
 
@@ -52,7 +50,7 @@
         public void ShouldShowDeletedVacancy(string deletedVacancyId, string deletedVacancyTitle, bool shouldShow)
         {
             // Arrange.
-            var myApplications = new MyApplicationViewModelBuilder().Build();
+            var myApplications = new MyApplicationsViewModelBuilder().Build();
             myApplications.DeletedVacancyId = deletedVacancyId;
             myApplications.DeletedVacancyTitle = deletedVacancyTitle;
 
@@ -74,7 +72,7 @@
             }
         }
 
-        
+
         [TestCase(0, 0, false)]
         [TestCase(2, 0, true)]
         [TestCase(2, 3, true)]
@@ -82,7 +80,7 @@
         {
             // Arrange.
             var myApplications =
-                new MyApplicationViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(apprenticeshipCount))
+                new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(apprenticeshipCount))
                     .With(DashboardTestsHelper.GetTraineeships(traineeshipCount))
                     .Build();
 
@@ -107,7 +105,7 @@
         {
             // Arrange.
             var myApplications =
-                new MyApplicationViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(successfulCount,
+                new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(successfulCount,
                     ApplicationStatuses.Successful)).Build();
 
             // Act.
@@ -134,11 +132,13 @@
         public void ShouldShowSubmittedCount(int submittingCount, int submittedCount, bool shouldShow)
         {
             // Arrange.
-            var apprenticeships = DashboardTestsHelper.GetApprenticeships(submittingCount, ApplicationStatuses.Submitting);
-            apprenticeships.AddRange(DashboardTestsHelper.GetApprenticeships(submittedCount, ApplicationStatuses.Submitted));
+            var apprenticeships = DashboardTestsHelper.GetApprenticeships(submittingCount,
+                ApplicationStatuses.Submitting);
+            apprenticeships.AddRange(DashboardTestsHelper.GetApprenticeships(submittedCount,
+                ApplicationStatuses.Submitted));
 
-            var myApplications = new MyApplicationViewModelBuilder().With(apprenticeships).Build();
-            
+            var myApplications = new MyApplicationsViewModelBuilder().With(apprenticeships).Build();
+
             // Act.
             var view = new Index().RenderAsHtml(myApplications);
 
@@ -163,7 +163,7 @@
         {
             // Arrange.
             var myApplications =
-                new MyApplicationViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(unsuccessfulCount,
+                new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(unsuccessfulCount,
                     ApplicationStatuses.Unsuccessful)).Build();
 
 
@@ -190,7 +190,7 @@
         {
             // Arrange.
             var myApplications =
-                new MyApplicationViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(draftCount,
+                new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(draftCount,
                     ApplicationStatuses.Draft)).Build();
 
             // Act.
@@ -210,12 +210,12 @@
             }
         }
 
-        
+
         public void ShouldShowCandidateSupportMessage()
         {
             // Arrange.
             var myApplications =
-                new MyApplicationViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(1,
+                new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(1,
                     ApplicationStatuses.Unsuccessful)).Build();
 
             // Act.
@@ -223,7 +223,7 @@
 
             // Assert.
             var elem = view.GetElementbyId("candidate-support-message");
-            
+
             elem.Should().NotBeNull();
         }
 
@@ -232,7 +232,7 @@
         {
             // Arrange.
             var myApplications =
-                new MyApplicationViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(1,
+                new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(1,
                     ApplicationStatuses.Successful)).Build();
 
             // Act.
@@ -249,7 +249,7 @@
         {
             // Arrange.
             var myApplications =
-                new MyApplicationViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(1,
+                new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(1,
                     ApplicationStatuses.ExpiredOrWithdrawn)).Build();
 
             // Act.
@@ -260,7 +260,5 @@
 
             elem.Should().BeNull();
         }
-
-
     }
 }

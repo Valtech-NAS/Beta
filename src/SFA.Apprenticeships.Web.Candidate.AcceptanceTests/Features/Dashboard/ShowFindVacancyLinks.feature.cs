@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.TraineeshipApplication
+namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Dashboard
 {
     using TechTalk.SpecFlow;
     

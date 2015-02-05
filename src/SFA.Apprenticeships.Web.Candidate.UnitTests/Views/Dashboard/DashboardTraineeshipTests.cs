@@ -23,7 +23,7 @@
         {
             // Arrange.
             var myApplications =
-                new MyApplicationViewModelBuilder().With(new TraineeshipFeatureViewModel
+                new MyApplicationsViewModelBuilder().With(new TraineeshipFeatureViewModel
                 {
                     ShowTraineeshipsPrompt = shouldShow
                 }).Build();
@@ -51,7 +51,7 @@
         {
             // Arrange.
             var myApplications =
-                new MyApplicationViewModelBuilder().With(new TraineeshipFeatureViewModel
+                new MyApplicationsViewModelBuilder().With(new TraineeshipFeatureViewModel
                 {
                     ShowTraineeshipsLink = shouldShow
                 }).Build();
@@ -78,7 +78,7 @@
         {
             // Arrange.
             var myApplications =
-                new MyApplicationViewModelBuilder().With(DashboardTestsHelper.GetTraineeships(traineeshipCount)).Build();
+                new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetTraineeships(traineeshipCount)).Build();
 
             // Act.
             var view = new Index().RenderAsHtml(myApplications);
@@ -98,8 +98,5 @@
                 traineeshipsTable.Should().BeNull();
             }
         }
-
-
-
     }
 }

@@ -17,9 +17,9 @@ Scenario: As a candidate I can login with a registered and activated email addre
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 
@@ -52,7 +52,7 @@ Scenario: As a candidate I cannot login with an invalid password
 	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value                  |
-		| EmailAddress | {EmailToken}    |
+		| EmailAddress | {EmailToken}           |
 		| Password     | {InvalidPasswordToken} |
 	And I choose SignInButton
 	And I wait to see ValidationSummary
@@ -69,9 +69,9 @@ Scenario: As a candidate I can login with a registered but unactivated account a
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	And I am on the ActivationPage page
 	And I enter data

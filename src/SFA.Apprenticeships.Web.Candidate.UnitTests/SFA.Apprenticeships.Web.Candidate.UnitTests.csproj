@@ -239,7 +239,8 @@
     <Compile Include="Views\Dashboard\DashboardApprenticeshipTests.cs" />
     <Compile Include="Views\Dashboard\DashboardTestsHelper.cs" />
     <Compile Include="Views\Dashboard\DashboardTraineeshipTests.cs" />
-    <Compile Include="Views\Dashboard\MyApplicationViewModelBuilder.cs" />
+    <Compile Include="Views\Dashboard\MyApplicationsViewModelBuilder.cs" />
+    <Compile Include="Views\Settings\SettingsTests.cs" />
     <Compile Include="Views\TraineeshipSearch\ApplyPartialTests.cs" />
     <Compile Include="Views\TraineeshipSearch\DetailsTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\DetailsTests.cs" />
