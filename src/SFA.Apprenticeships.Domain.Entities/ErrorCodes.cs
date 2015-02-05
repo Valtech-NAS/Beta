@@ -2,6 +2,6 @@
 {
     public static class ErrorCodes
     {
-        public const string EntityStateError = "EntityStateError";
+        public const string EntityStateError = "Entity.EntityStateError";
     }
 }

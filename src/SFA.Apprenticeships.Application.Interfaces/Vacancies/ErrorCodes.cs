@@ -3,9 +3,9 @@
     public static class ErrorCodes
     {
         //todo: use meaningful/consistent error code strings
-        public const string VacancyNotFoundError = "VacancyNotFound.Error";
-        public const string VacanciesSearchFailed = "VacanciesSearch.Failed";
-        public const string GetVacancyDetailsFailed = "GetVacancyDetails.Failed";
-        public const string LegacyVacancyStateError = "LegacyVacancyState.Error";
+        public const string VacancyNotFoundError = "Vacancy.VacancyNotFoundError";
+        public const string VacanciesSearchFailed = "Vacancy.VacanciesSearchFailed";
+        public const string GetVacancyDetailsFailed = "Vacancy.GetVacancyDetailsFailed";
+        public const string LegacyVacancyStateError = "Vacancy.LegacyVacancyStateError";
     }
 }

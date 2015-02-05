@@ -2,10 +2,10 @@
 {
     public static class ErrorCodes
     {
-        public const string ApplicationNotFoundError = "ApplicationNotFound";
-        public const string ApplicationInIncorrectStateError = "ApplicationInIncorrectState";
-        public const string ApplicationGatewayCreationError = "ApplicationGatewayCreation";
-        public const string ApplicationTypeMismatch = "ApplicationTypeMismatch";
-        public const string ApplicationDuplicatedError = "ApplicationDuplicated";
+        public const string ApplicationNotFoundError = "Application.ApplicationNotFoundError";
+        public const string ApplicationInIncorrectStateError = "Application.ApplicationInIncorrectStateError";
+        public const string ApplicationGatewayCreationError = "Application.ApplicationGatewayCreationError";
+        public const string ApplicationTypeMismatch = "Application.ApplicationTypeMismatch";
+        public const string ApplicationDuplicatedError = "Application.ApplicationDuplicatedError";
     }
 }
