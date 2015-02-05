@@ -39,5 +39,87 @@
             view.GetElementbyId("search-no-results-category").Should().BeNull();
             view.GetElementbyId("search-no-results-sub-category").Should().NotBeNull();
         }
+
+        [Test]
+        public void NoResults()
+        {
+            var results = new Results();
+
+            var view = results.RenderAsHtml(new ApprenticeshipSearchResponseViewModel
+            {
+                VacancySearch = new ApprenticeshipSearchViewModel()
+            });
+
+            view.GetElementbyId("sort-results").Should().BeNull();
+            view.GetElementbyId("search-no-results-title").Should().NotBeNull();
+        }
+
+        [Test]
+        public void ShowApprenticeshipLevelAdvice()
+        {
+            var results = new Results();
+
+            var view = results.RenderAsHtml(new ApprenticeshipSearchResponseViewModel
+            {
+                VacancySearch = new ApprenticeshipSearchViewModel
+                {
+                    ApprenticeshipLevel = "Intermediate"
+                },
+            });
+
+            view.GetElementbyId("search-no-results-apprenticeship-levels").Should().NotBeNull();
+        }
+
+        [Test]
+        public void HideApprenticeshipLevelAdvice()
+        {
+            var results = new Results();
+
+            var view = results.RenderAsHtml(new ApprenticeshipSearchResponseViewModel
+            {
+                VacancySearch = new ApprenticeshipSearchViewModel
+                {
+                    ApprenticeshipLevel = "All"
+                },
+            });
+
+            view.GetElementbyId("search-no-results-apprenticeship-levels").Should().BeNull();
+        }
+
+        [Test]
+        public void ShowNoResultsReferenceNumber()
+        {
+            var results = new Results();
+
+            var view = results.RenderAsHtml(new ApprenticeshipSearchResponseViewModel
+            {
+                VacancySearch = new ApprenticeshipSearchViewModel
+                {
+                    SearchMode = ApprenticeshipSearchMode.Keyword,
+                    Keywords = "VAC000514705"
+                },
+            });
+
+            view.GetElementbyId("search-no-results-reference-number").Should().NotBeNull();
+            view.GetElementbyId("search-no-results-keywords").Should().BeNull();
+        }
+
+        [Test]
+        public void ShowNoResultsKeywords()
+        {
+            var results = new Results();
+
+            var view = results.RenderAsHtml(new ApprenticeshipSearchResponseViewModel
+            {
+                VacancySearch = new ApprenticeshipSearchViewModel
+                {
+                    SearchMode = ApprenticeshipSearchMode.Keyword,
+                    Keywords = "Chef"
+                },
+            });
+
+            view.GetElementbyId("search-no-results-reference-number").Should().BeNull();
+            view.GetElementbyId("search-no-results-keywords").Should().NotBeNull();
+        }
     }
 }

@@ -10,7 +10,7 @@ Background:
 	Then I am on the ApprenticeshipSearchPage page
 
 @US461
-Scenario: Pre-populate my personal and contact details
+Scenario: Pre-populate my Education Qualifications Work Experience About You details
 	Given I have registered a new candidate
 	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
@@ -34,15 +34,6 @@ Scenario: Pre-populate my personal and contact details
 		| EducationToYear         | Equals |                    |
 		| WhatAreYourStrengths    | Equals |                    |
 		| WhatCanYouImprove       | Equals |                    |
-		| HobbiesAndInterests     | Equals |                    |
-
-@US461
-Scenario: Pre-populate my Education Qualifications Work Experience About You details
-	Given I have registered a new candidate
-	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
-	Then I am on the ApprenticeshipDetailsPage page
-	When I choose ApplyButton
-	Then I am on the ApprenticeshipApplicationPage page
 	When I enter data
 		| Field                   | Value                         |
 		| EducationNameOfSchool   | SchoolName                    |

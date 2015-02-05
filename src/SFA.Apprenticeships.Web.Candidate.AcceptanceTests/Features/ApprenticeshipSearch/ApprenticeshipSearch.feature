@@ -127,21 +127,6 @@ Scenario: Find apprenticeships and test paging
         | NextPage | Contains | 2 of  |
 
 @SmokeTests
-Scenario: Search when no results are returned for location
-	Given I navigated to the ApprenticeshipSearchPage page
-	When I enter data
-		 | Field               | Value      |
-		 | Keywords            | Chef       |
-		 | Location            | Dundee     |
-		 | ApprenticeshipLevel | All levels |
-	And I choose Search
-	And I am on the ApprenticeshipSearchResultPage page
-	Then I see
-        | Field                | Rule           | Value |
-        | SortOrderingDropDown | Does Not Exist |       |
-        | NoResultsTitle       | Exists         |       |
-
-@SmokeTests
 Scenario: Search doesn't error when location doesn't exist
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
