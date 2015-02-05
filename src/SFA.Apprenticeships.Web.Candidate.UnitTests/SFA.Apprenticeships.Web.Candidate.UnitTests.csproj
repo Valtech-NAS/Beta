@@ -236,6 +236,7 @@
     <Compile Include="Views\ApprenticeshipSearch\ApplyPartialTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\IndexTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\MediatorTestsBase.cs" />
+    <Compile Include="Views\ApprenticeshipSearch\NationwideResultsTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\ResultsSearchUpdateTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\ResultsSearchUpdateCategoriesAndSubCategoriesTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\ResultsTests.cs" />

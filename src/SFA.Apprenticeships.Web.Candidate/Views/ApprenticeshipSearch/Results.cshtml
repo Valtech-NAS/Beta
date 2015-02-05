@@ -32,7 +32,7 @@
     {
         if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.National)
         {
-            var message = "We've found <b class=\"bold-medium\">{0}</b> <a id='localLocationTypeLink' href=" + locationTypeLink + ">apprenticeships in your selected area.</a>";
+            var message = "We've found <b class=\"bold-medium\">{0}</b> <a id='localLocationTypeLink' href=" + locationTypeLink + ">apprenticeships in your selected area</a>.";
             resultMessage = string.Format(message, Model.TotalLocalHits);
         }
         else
@@ -54,7 +54,7 @@
 
             if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
             {
-                nationalResultsMessage = string.Format("{1} <a id='nationwideLocationTypeLink' href={0}>1 apprenticeship nationwide.</a>", locationTypeLink, nationalResultsMessagePrefix);
+                nationalResultsMessage = string.Format("{1} <a id='nationwideLocationTypeLink' href={0}>1 apprenticeship nationwide</a>.", locationTypeLink, nationalResultsMessagePrefix);
             }
             else
             {
@@ -65,7 +65,7 @@
         {
             if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
             {
-                nationalResultsMessage = string.Format("{2} <a id='nationwideLocationTypeLink' href={1}>{0} apprenticeships nationwide.</a>", Model.TotalNationalHits, locationTypeLink, nationalResultsMessagePrefix);
+                nationalResultsMessage = string.Format("{2} <a id='nationwideLocationTypeLink' href={1}>{0} apprenticeships nationwide</a>.", Model.TotalNationalHits, locationTypeLink, nationalResultsMessagePrefix);
             }
             else
             {
@@ -85,8 +85,8 @@
     <div class="hgroup">
         <h1 class="heading-xlarge">Search results</h1>
         <div id="vacancy-result-summary">
-            <p class="small-btm-margin">@Html.Raw(resultMessage)</p>
-            <p>@Html.Raw(nationalResultsMessage)</p>
+            <p id="result-message" class="small-btm-margin">@Html.Raw(resultMessage)</p>
+            <p id="national-results-message">@Html.Raw(nationalResultsMessage)</p>
         </div>
     </div>
 

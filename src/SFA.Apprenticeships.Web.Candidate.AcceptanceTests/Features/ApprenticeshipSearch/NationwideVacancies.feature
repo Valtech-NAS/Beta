@@ -11,21 +11,6 @@ Background:
 	Then I am on the ApprenticeshipSearchPage page
 
 @SmokeTests
-Scenario: After search I see the local apprenticeships
-	Given I navigated to the ApprenticeshipSearchPage page
-	When I enter data
-		 | Field               | Value      |
-		 | Location            | London     |
-		 | WithInDistance      | 40 miles   |
-		 | ApprenticeshipLevel | All levels |
-	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
-	And I see
-        | Field                      | Rule           | Value |
-        | LocalLocationTypeLink      | Does Not Exist |       |
-        | NationwideLocationTypeLink | Exists         |       |
-
-@SmokeTests
 Scenario: After clicking on nationwide apprenticeships I see them
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
@@ -43,20 +28,7 @@ Scenario: After clicking on nationwide apprenticeships I see them
         | NationwideLocationTypeLink   | Does Not Exist |       |
 
 @SmokeTests
-Scenario: Nationwide apprenticeships cannot have their sort order changed
-	Given I navigated to the ApprenticeshipSearchPage page
-	When I enter data
-		 | Field               | Value      |
-		 | Location            | London     |
-		 | WithInDistance      | 40 miles   |
-		 | ApprenticeshipLevel | All levels |
-	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
-	When I choose NationwideLocationTypeLink
-	Then I am on the ApprenticeshipSearchResultPage page
-	Then I wait 0 seconds for SortOrderingDropDown to become disabled
-
-@SmokeTests
+#TODO: replace it with view unit tests?
 Scenario: Nationwide apprenticeships do not show distance
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
@@ -75,6 +47,7 @@ Scenario: Nationwide apprenticeships do not show distance
         | NationwideDisplayed  | Equals | True  |
 
 @SmokeTests
+#TODO: replace it with integration tests?
 Scenario: Nationwide apprenticeships are in closing date order
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
@@ -91,6 +64,7 @@ Scenario: Nationwide apprenticeships are in closing date order
         | ResultsAreInClosingDateOrder | Equals | True  |
 
 @SmokeTests
+#TODO: replace it with integration tests?
 Scenario: Nationwide apprenticeships found by keyword are in best match order
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
@@ -175,19 +149,4 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the sort order
 	And I see
         | Field                      | Rule           | Value |
         | LocalLocationTypeLink      | Exists         |       |
-        | NationwideLocationTypeLink | Does Not Exist |       |
-
-@SmokeTests
-Scenario: If there are only nationwide apprenticeships do not show any link
-	Given I navigated to the ApprenticeshipSearchPage page
-	When I enter data
-		 | Field               | Value      |
-		 | Location            | Stanton    |
-		 | WithInDistance      | 2 miles    |
-		 | ApprenticeshipLevel | All levels |
-	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
-	When I am on the ApprenticeshipSearchResultPage page
-	Then I see
-		| Field                      | Rule           | Value |
         | NationwideLocationTypeLink | Does Not Exist |       |
