@@ -91,7 +91,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Account
                         "Value"});
             table1.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table1.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});

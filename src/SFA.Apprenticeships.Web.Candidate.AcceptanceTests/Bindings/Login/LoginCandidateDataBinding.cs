@@ -3,6 +3,7 @@
     using System;
     using Builders;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using global::SpecBind.Helpers;
@@ -28,6 +29,9 @@
         {
             var candidate = new CandidateBuilder(BindingData.UserEmailAddress)
                 .Build();
+
+            var user = new UserBuilder(BindingData.UserEmailAddress)
+                .Build();
             
             SetTokens(candidate);
         }
@@ -37,6 +41,9 @@
         {
             var candidate = new CandidateBuilder(BindingData.UserEmailAddress)
                 .Build();
+
+            var user = new UserBuilder(BindingData.UserEmailAddress, UserStatuses.PendingActivation)
+                .WithActivationCode(BindingData.ActivationCode).Build();
             
             SetTokens(candidate);
         }
@@ -46,6 +53,9 @@
         {
             var candidate = new CandidateBuilder(BindingData.UserEmailAddress)
                 .Build();
+
+            var user = new UserBuilder(BindingData.UserEmailAddress)
+                .WithLoginIncorrectAttempts(2).Build();
             
             SetTokens(candidate);
         }
@@ -54,6 +64,11 @@
         public void GivenILockedMyAccount()
         {
             var candidate = new CandidateBuilder(BindingData.UserEmailAddress)
+                .Build();
+
+            var user = new UserBuilder(BindingData.UserEmailAddress, UserStatuses.Locked)
+                .WithAccountUnlockCodeExpiry(DateTime.Now.AddDays(1))
+                .WithAccountUnlockCode(BindingData.AccountUnlockCode)
                 .Build();
             
             SetTokens(candidate);
@@ -65,6 +80,10 @@
         {
             var candidate = new CandidateBuilder(BindingData.UserEmailAddress)
                 .Build();
+
+            var user = new UserBuilder(BindingData.UserEmailAddress, UserStatuses.Locked)
+                .WithAccountUnlockCodeExpiry(DateTime.Now.AddDays(-7))
+                .WithAccountUnlockCode(BindingData.AccountUnlockCode).Build();
 
             SetTokens(candidate);
         }

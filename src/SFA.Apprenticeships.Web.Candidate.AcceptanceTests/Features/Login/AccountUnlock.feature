@@ -214,9 +214,9 @@ Scenario: Account unlock code is renewed before being resent if it has expired
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
+		| Field        | Value        |
 		| EmailAddress | {EmailToken} |
-		| Password     | S3cret!             |
+		| Password     | S3cret!      |
 	And I choose SignInButton
 	And I am on the UnlockPage page
 	And I choose ResendAccountUnlockCodeLink
