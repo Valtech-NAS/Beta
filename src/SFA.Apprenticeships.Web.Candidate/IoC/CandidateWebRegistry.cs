@@ -40,58 +40,80 @@
     {
         public CandidateWebRegistry()
         {
-            //todo: split this lot into helpers methods
-
-            var codeGenerator = CloudConfigurationManager.GetSetting("CodeGenerator");
-
-            // services (app)
-            For<ILocationSearchService>().Use<LocationSearchService>();
-            For<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>().Use<VacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
-            For<IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>().Use<VacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>();
-
-            For<ICandidateService>().Use<CandidateService>()
-                .Ctor<ISubmitApprenticeshipApplicationStrategy>("submitApprenticeshipApplicationStrategy").Is<LegacySubmitApprenticeshipApplicationStrategy>()
-                .Ctor<ISubmitTraineeshipApplicationStrategy>("submitTraineeshipApplicationStrategy").Is<LegacySubmitTraineeshipApplicationStrategy>();
-
-            For<ISendCandidateCommunicationStrategy>().Use<QueueCandidateCommunicationStrategy>();
-            For<IActivateCandidateStrategy>().Use<QueuedLegacyActivateCandidateStrategy>();
-            For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>()
-                .Ctor<ICodeGenerator>().Named(codeGenerator);
-            For<IRegisterUserStrategy>().Use<RegisterUserStrategy>();
-            For<IActivateUserStrategy>().Use<ActivateUserStrategy>();
-
             For<ICodeGenerator>().Use<RandomCodeGenerator>().Name = "RandomCodeGenerator";
             For<ICodeGenerator>().Use<StaticCodeGenerator>().Name = "StaticCodeGenerator";
 
-            For<IResetForgottenPasswordStrategy>()
-                .Use<ResetForgottenPasswordStrategy>()
-                .Name = "ResetForgottenPasswordStrategy";
+            For<IApplicationStatusUpdater>().Use<ApplicationStatusUpdater>();
+            For<IApplicationVacancyUpdater>().Use<ApplicationVacancyUpdater>();
 
-            For<IResetForgottenPasswordStrategy>()
-                .Use<LegacyResetForgottenPasswordStrategy>()
-                .Ctor<IResetForgottenPasswordStrategy>()
-                .Named("ResetForgottenPasswordStrategy")
-                .Name = "LegacyResetForgottenPasswordStrategy";
+            For<IMapper>().Singleton().Use<ApprenticeshipCandidateWebMappers>().Name = "ApprenticeshipCandidateWebMappers";
+            For<IMapper>().Singleton().Use<TraineeshipCandidateWebMappers>().Name = "TraineeshipCandidateWebMappers";
 
-            For<ISendPasswordResetCodeStrategy>().Use<SendPasswordResetCodeStrategy>()
-                .Ctor<ICodeGenerator>().Named(codeGenerator);
+            For<IFeatureToggle>().Use<FeatureToggle>();
+
+            For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
+
+            RegisterServices();
+
+            RegisterStrategies();
+
+            RegisterProviders();
+
+            RegisterMediators();
+        }
+
+        private void RegisterProviders()
+        {
+            For<IReferenceDataProvider>().Use<ReferenceDataProvider>();
+            For<ISearchProvider>().Use<SearchProvider>()
+                .Ctor<IMapper>("apprenticeshipSearchMapper").Named("ApprenticeshipCandidateWebMappers")
+                .Ctor<IMapper>("traineeshipSearchMapper").Named("TraineeshipCandidateWebMappers");
+            For<IApprenticeshipVacancyDetailProvider>().Use<ApprenticeshipVacancyDetailProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
+            For<IApprenticeshipApplicationProvider>().Use<ApprenticeshipApplicationProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
+            For<IAccountProvider>().Use<AccountProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
+            For<ICandidateServiceProvider>().Use<CandidateServiceProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
+            For<ITraineeshipVacancyDetailProvider>().Use<TraineeshipVacancyDetailProvider>().Ctor<IMapper>().Named("TraineeshipCandidateWebMappers");
+            For<ITraineeshipApplicationProvider>().Use<TraineeshipApplicationProvider>();
+        }
+
+        private void RegisterServices()
+        {
+            For<ILocationSearchService>().Use<LocationSearchService>();
+            For<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>().Use<VacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
+            For<IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>().Use<VacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>();
+            For<ICandidateService>().Use<CandidateService>()
+                .Ctor<ISubmitApprenticeshipApplicationStrategy>("submitApprenticeshipApplicationStrategy").Is<LegacySubmitApprenticeshipApplicationStrategy>()
+                .Ctor<ISubmitTraineeshipApplicationStrategy>("submitTraineeshipApplicationStrategy").Is<LegacySubmitTraineeshipApplicationStrategy>();
+            For<IUserAccountService>().Use<UserAccountService>();
+            For<IAddressSearchService>().Use<AddressSearchService>();
+            For<IAuthenticationService>().Use<AuthenticationService>();
+            For<ICommunicationService>().Use<CommunicationService>();
+            For<IReferenceDataService>().Use<ReferenceDataService>();
+        }
+
+        private void RegisterStrategies()
+        {
+            var codeGenerator = CloudConfigurationManager.GetSetting("CodeGenerator");
+
+            For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<LegacyGetCandidateApprenticeshipApplicationsStrategy>();
+            For<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
+            For<ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>();
+            For<ISendCandidateCommunicationStrategy>().Use<QueueCandidateCommunicationStrategy>();
+            For<IActivateCandidateStrategy>().Use<QueuedLegacyActivateCandidateStrategy>();
+            For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
+            For<IRegisterUserStrategy>().Use<RegisterUserStrategy>();
+            For<IActivateUserStrategy>().Use<ActivateUserStrategy>();
+            For<IResetForgottenPasswordStrategy>().Use<ResetForgottenPasswordStrategy>().Name = "ResetForgottenPasswordStrategy";
+            For<IResetForgottenPasswordStrategy>().Use<LegacyResetForgottenPasswordStrategy>().Ctor<IResetForgottenPasswordStrategy>().Named("ResetForgottenPasswordStrategy").Name = "LegacyResetForgottenPasswordStrategy";
+            For<IUnlockAccountStrategy>().Use<UnlockAccountStrategy>().Name = "UnlockAccountStrategy";
+            For<IUnlockAccountStrategy>().Use<LegacyUnlockAccountStrategy>().Ctor<IUnlockAccountStrategy>().Named("UnlockAccountStrategy").Name = "LegacyUnlockAccountStrategy";
+            For<ISendPasswordResetCodeStrategy>().Use<SendPasswordResetCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ISubmitApprenticeshipApplicationStrategy>().Use<LegacySubmitApprenticeshipApplicationStrategy>();
             For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
-            For<ISendTraineeshipApplicationSubmittedStrategy>().Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>(); 
+            For<ISendTraineeshipApplicationSubmittedStrategy>().Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>();
             For<IResendActivationCodeStrategy>().Use<ResendActivationCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ISendAccountUnlockCodeStrategy>().Use<SendAccountUnlockCodeStrategy>();
             For<ISaveCandidateStrategy>().Use<SaveCandidateStrategy>();
-
-            For<IUnlockAccountStrategy>()
-                .Use<UnlockAccountStrategy>()
-                .Name = "UnlockAccountStrategy";
-
-            For<IUnlockAccountStrategy>()
-               .Use<LegacyUnlockAccountStrategy>()
-               .Ctor<IUnlockAccountStrategy>()
-               .Named("UnlockAccountStrategy")
-               .Name = "LegacyUnlockAccountStrategy";
-            
             For<ILockAccountStrategy>().Use<LockAccountStrategy>();
             For<ILockUserStrategy>().Use<LockUserStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ICreateApprenticeshipApplicationStrategy>().Use<CreateApprenticeshipApplicationStrategy>();
@@ -101,52 +123,11 @@
             For<IArchiveApplicationStrategy>().Use<ArchiveApprenticeshipApplicationStrategy>();
             For<IDeleteApplicationStrategy>().Use<DeleteApprenticeshipApplicationStrategy>();
             For<IAuthenticateCandidateStrategy>().Use<AuthenticateCandidateStrategy>();
-            For<IUserAccountService>().Use<UserAccountService>();
-            For<IAddressSearchService>().Use<AddressSearchService>();
-            For<IAuthenticationService>().Use<AuthenticationService>();
-            For<ICommunicationService>().Use<CommunicationService>();
-            For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<LegacyGetCandidateApprenticeshipApplicationsStrategy>();
-            For<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
-            For<ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>();
-            For<IApplicationStatusUpdater>().Use<ApplicationStatusUpdater>();
-            For<IApplicationVacancyUpdater>().Use<ApplicationVacancyUpdater>();
-            For<IReferenceDataService>().Use<ReferenceDataService>();
-            For<IReferenceDataProvider>().Use<ReferenceDataProvider>();
-            
-            // Apprenticeship providers (web)
-            For<IMapper>().Singleton().Use<ApprenticeshipCandidateWebMappers>().Name = "ApprenticeshipCandidateWebMappers";
-            For<IMapper>().Singleton().Use<TraineeshipCandidateWebMappers>().Name = "TraineeshipCandidateWebMappers";
-
-            For<ISearchProvider>().Use<SearchProvider>()
-                .Ctor<IMapper>("apprenticeshipSearchMapper").Named("ApprenticeshipCandidateWebMappers")
-                .Ctor<IMapper>("traineeshipSearchMapper").Named("TraineeshipCandidateWebMappers"); 
-
-            For<IApprenticeshipVacancyDetailProvider>().Use<ApprenticeshipVacancyDetailProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
-            For<IApprenticeshipApplicationProvider>().Use<ApprenticeshipApplicationProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
-            For<IAccountProvider>().Use<AccountProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
-            For<ICandidateServiceProvider>()
-                .Use<CandidateServiceProvider>()
-                .Ctor<IMapper>()
-                .Named("ApprenticeshipCandidateWebMappers");
-
-            For<IFeatureToggle>().Use<FeatureToggle>();
-
-            // Traineeship providers (web)
-            For<IMapper>().Singleton().Use<TraineeshipCandidateWebMappers>().Name = "TraineeshipCandidateWebMappers";
-            For<ITraineeshipVacancyDetailProvider>()
-                .Use<TraineeshipVacancyDetailProvider>()
-                .Ctor<IMapper>()
-                .Named("TraineeshipCandidateWebMappers");
-            For<ITraineeshipApplicationProvider>().Use<TraineeshipApplicationProvider>();
             For<IGetCandidateTraineeshipApplicationsStrategy>().Use<GetCandidateTraineeshipApplicationsStrategy>();
+        }
 
-            For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
-
-            // Would be good if we could do this for the base class CandidateControllerBase rather than each controller
-            //ForConcreteType<HomeController>().Configure.Setter<IUserDataProvider>();
-            //ForConcreteType<HomeController>().Configure.Setter<IEuCookieDirectiveProvider>();
-
-            //Mediators
+        private void RegisterMediators()
+        {
             For<IApprenticeshipApplicationMediator>().Use<ApprenticeshipApplicationMediator>();
             For<IApprenticeshipSearchMediator>().Use<ApprenticeshipSearchMediator>();
             For<ITraineeshipApplicationMediator>().Use<TraineeshipApplicationMediator>();
