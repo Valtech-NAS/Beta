@@ -75,7 +75,7 @@ Scenario: Nationwide apprenticeships do not show distance
         | NationwideDisplayed  | Equals | True  |
 
 @SmokeTests
-Scenario: nationwide apprenticeships are in closing date order
+Scenario: Nationwide apprenticeships are in closing date order
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field               | Value      |
@@ -91,7 +91,7 @@ Scenario: nationwide apprenticeships are in closing date order
         | ResultsAreInClosingDateOrder | Equals | True  |
 
 @SmokeTests
-Scenario: nationwide apprenticeships found by keyword are in best match order
+Scenario: Nationwide apprenticeships found by keyword are in best match order
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field               | Value      |

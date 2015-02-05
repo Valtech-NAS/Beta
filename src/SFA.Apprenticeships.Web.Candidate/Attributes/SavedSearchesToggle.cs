@@ -2,11 +2,9 @@
 {
     using System.Web.Mvc;
     using Configuration;
-    using StructureMap.Attributes;
 
     public class SavedSearchesToggle : ActionFilterAttribute
     {
-        [SetterProperty]
         public IFeatureToggle FeatureToggle { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)

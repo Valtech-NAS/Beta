@@ -10,6 +10,7 @@
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Common.Providers;
+    using Constants;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
     using Moq;
@@ -20,6 +21,7 @@
     {
         private const string ResultsPerPage = "5";
         private const string Distance = "42";
+        private const string InvalidLocation = "InvalidLocation";
 
         private Dictionary<string, string> _userData;
 
@@ -169,6 +171,24 @@
             response.AssertValidationResult(Codes.TraineeshipSearch.Results.ValidationError, true);
         }
 
+        [Test]
+        public void LocationValidationError()
+        {
+            var mediator = GetMediator();
+
+            var searchViewModel = new TraineeshipSearchViewModel
+            {
+                Location = InvalidLocation
+            };
+
+            var response = mediator.Results(searchViewModel);
+
+            response.AssertCode(Codes.TraineeshipSearch.Results.Ok, true);
+
+            var viewModel = response.ViewModel;
+            viewModel.VacancySearch.ShouldBeEquivalentTo(searchViewModel);
+        }
+
         private static Mock<ISearchProvider> GetSearchProvider()
         {
             var searchProvider = new Mock<ISearchProvider>();
@@ -180,6 +200,10 @@
                     new LocationViewModel { Name = l }, 
                     new LocationViewModel { Name = Guid.NewGuid().ToString() }
                 }));
+
+            searchProvider.Setup(sp => sp.FindLocation(
+                InvalidLocation)).
+                Returns<string>(l => new LocationsViewModel(new LocationViewModel[0]));
 
             var londonVacancies = new[]
             {
@@ -200,7 +224,7 @@
             var userDataProvider = new Mock<IUserDataProvider>();
 
             userDataProvider.Setup(p => p.Pop(
-                It.Is<string>(s => s == UserDataItemNames.VacancyDistance)))
+                It.Is<string>(s => s == CandidateDataItemNames.VacancyDistance)))
                 .Returns(Distance);
 
             userDataProvider.Setup(p => p.Push(

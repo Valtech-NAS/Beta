@@ -18,15 +18,12 @@
             _bus = bus;
         }
 
-        public void LoadSubscribers(Assembly assembly, string subscriptionId)
+        public void LoadSubscribers(Assembly assembly, string subscriptionId, StructureMap.IContainer container)
         {
             var autosubscriber = new AutoSubscriber(_bus, subscriptionId)
             {
                 ConfigureSubscriptionConfiguration = configuration => configuration.WithPrefetchCount(_defaultHostConfiguration.PreFetchCount),
-#pragma warning disable 0618
-                // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-                AutoSubscriberMessageDispatcher = new StructureMapMessageDispatcher(ObjectFactory.Container)
-#pragma warning restore 0618
+                AutoSubscriberMessageDispatcher = new StructureMapMessageDispatcher(container)
             };
 
             autosubscriber.Subscribe(assembly);

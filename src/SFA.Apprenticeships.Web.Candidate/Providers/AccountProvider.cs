@@ -2,25 +2,25 @@
 {
     using System;
     using Application.Interfaces.Candidates;
+    using Application.Interfaces.Logging;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using Domain.Interfaces.Mapping;
-    using NLog;
     using ViewModels.Account;
     using ViewModels.Locations;
 
     public class AccountProvider : IAccountProvider
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private readonly ILogService _logger;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
 
         public AccountProvider(
             ICandidateService candidateService,
-            IMapper mapper)
+            IMapper mapper, ILogService logger)
         {
             _mapper = mapper;
+            _logger = logger;
             _candidateService = candidateService;
         }
 
@@ -28,7 +28,7 @@
         {
             try
             {
-                Logger.Debug("Calling AccountProvider to get Settings View Model for candidate with Id={0}", candidateId);
+                _logger.Debug("Calling AccountProvider to get Settings View Model for candidate with Id={0}", candidateId);
                 
                 var candidate = _candidateService.GetCandidate(candidateId);
                 var settings = _mapper.Map<RegistrationDetails, SettingsViewModel>(candidate.RegistrationDetails);
@@ -41,7 +41,7 @@
                     string.Format(
                         "Unexpected error while getting settings view model on AccountProvider for candidate with Id={0}.",
                         candidateId);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
                 throw;
             }
         }
@@ -50,19 +50,19 @@
         {
             try
             {
-                Logger.Debug("Calling AccountProvider to save the settings for candidate with Id={0}", candidateId);
+                _logger.Debug("Calling AccountProvider to save the settings for candidate with Id={0}", candidateId);
                 var candidate = _candidateService.GetCandidate(candidateId);
 
                 candidate.CommunicationPreferences.AllowEmail = model.AllowEmailComms;
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
                 _candidateService.SaveCandidate(candidate);
-                Logger.Debug("Settings saved for candidate with Id={0}", candidateId);
+                _logger.Debug("Settings saved for candidate with Id={0}", candidateId);
 
                 return true;
             }
             catch (Exception e)
             {
-                Logger.Error("Save settings failed for candidate " + candidateId, e);
+                _logger.Error("Save settings failed for candidate " + candidateId, e);
 
                 return false;
             }
@@ -72,19 +72,19 @@
         {
             try
             {
-                Logger.Debug("Calling AccountProvider to dismiss traineeship prompts for candidate with Id={0}", candidateId);
+                _logger.Debug("Calling AccountProvider to dismiss traineeship prompts for candidate with Id={0}", candidateId);
 
                 var candidate = _candidateService.GetCandidate(candidateId);
 
                 candidate.CommunicationPreferences.AllowTraineeshipPrompts = false;
                 _candidateService.SaveCandidate(candidate);
 
-                Logger.Debug("Settings saved for candidate with Id={0}", candidateId);
+                _logger.Debug("Settings saved for candidate with Id={0}", candidateId);
                 return true;
             }
             catch (Exception e)
             {
-                Logger.Error("Dismiss traineeship prompts failed for candidate " + candidateId, e);
+                _logger.Error("Dismiss traineeship prompts failed for candidate " + candidateId, e);
 
                 return false;
             }
@@ -103,3 +103,4 @@
         }
     }
 }
+        

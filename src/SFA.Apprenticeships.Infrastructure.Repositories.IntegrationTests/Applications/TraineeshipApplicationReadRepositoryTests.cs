@@ -59,21 +59,18 @@
                 .ToList();
 
             //Assert - the correct number of applicaitons with the correct vacancy state
-            summaries.Count(v => v.VacancyStatus == VacancyStatuses.Unknown).Should().Be(10);
-            summaries.Count(v => v.VacancyStatus == VacancyStatuses.Live).Should().Be(8);
+            summaries.Count(v => v.VacancyStatus == VacancyStatuses.Live).Should().Be(10);
             summaries.Count(v => v.VacancyStatus == VacancyStatuses.Unavailable).Should().Be(7);
             summaries.Count(v => v.VacancyStatus == VacancyStatuses.Expired).Should().Be(6);
         }
 
-        public List<TraineeshipApplicationDetail> BuildApprenticeshipApplicationDetails()
+        private static List<TraineeshipApplicationDetail> BuildApprenticeshipApplicationDetails()
         {
             var vacancyStatus =
-                Builder<TraineeshipApplicationDetail>.CreateListOfSize(31)
+                Builder<TraineeshipApplicationDetail>.CreateListOfSize(23)
                     .All()
                     .With(a => a.Vacancy.Id = TestVacancyId)
                     .TheFirst(10)
-                    .With(a => a.VacancyStatus = VacancyStatuses.Unknown)
-                    .TheNext(8)
                     .With(a => a.VacancyStatus = VacancyStatuses.Live)
                     .TheNext(7)
                     .With(a => a.VacancyStatus = VacancyStatuses.Unavailable)

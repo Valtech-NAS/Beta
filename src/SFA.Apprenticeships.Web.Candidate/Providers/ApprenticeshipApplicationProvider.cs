@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Logging;
     using Domain.Entities.Vacancies;
-    using NLog;
     using Application.Interfaces.Candidates;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
@@ -14,33 +14,34 @@
     using ViewModels.Applications;
     using ViewModels.MyApplications;
     using Common.Models.Application;
-    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
+    using ErrorCodes = Domain.Entities.ErrorCodes;
+    using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     public class ApprenticeshipApplicationProvider : IApprenticeshipApplicationProvider
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private readonly ILogService _logger;
+        private readonly IMapper _mapper;
         private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
         private readonly ICandidateService _candidateService;
         private readonly IConfigurationManager _configurationManager;
-        private readonly IMapper _mapper;
 
         public ApprenticeshipApplicationProvider(
             IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
             ICandidateService candidateService,
             IMapper mapper,
-            IConfigurationManager configurationManager)
+            IConfigurationManager configurationManager, ILogService logger)
         {
             _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
             _candidateService = candidateService;
             _mapper = mapper;
             _configurationManager = configurationManager;
+            _logger = logger;
         }
 
         //TODO: Move all usages of GetOrCreateApplicationViewModel to this method
         public ApprenticeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
         {
-            Logger.Debug(
+            _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
@@ -59,9 +60,9 @@
             }
             catch (CustomException e)
             {
-                if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
+                if (e.Code == ErrorCodes.EntityStateError)
                 {
-                    Logger.Info(e.Message, e);
+                    _logger.Info(e.Message, e);
                     return
                         new ApprenticeshipApplicationViewModel(MyApplicationsPageMessages.ApplicationInIncorrectState,
                             ApplicationViewModelStatus.ApplicationInIncorrectState);
@@ -71,7 +72,7 @@
                     string.Format(
                         "Unhandled custom exception while getting the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
                 return new ApprenticeshipApplicationViewModel("Unhandled error", ApplicationViewModelStatus.Error);
             }
             catch (Exception e)
@@ -79,7 +80,7 @@
                 var message = string.Format("Get Application View Model failed for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
-                Logger.Error(message, e);
+                _logger.Error(message, e);
 
                 return
                     new ApprenticeshipApplicationViewModel(
@@ -90,7 +91,7 @@
 
         public ApprenticeshipApplicationViewModel GetOrCreateApplicationViewModel(Guid candidateId, int vacancyId)
         {
-            Logger.Debug(
+            _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
@@ -102,9 +103,9 @@
             }
             catch (CustomException e)
             {
-                if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
+                if (e.Code == ErrorCodes.EntityStateError)
                 {
-                    Logger.Info(e.Message, e);
+                    _logger.Info(e.Message, e);
                     return
                         new ApprenticeshipApplicationViewModel(MyApplicationsPageMessages.ApplicationInIncorrectState,
                             ApplicationViewModelStatus.ApplicationInIncorrectState);
@@ -114,7 +115,7 @@
                     string.Format(
                         "Unhandled custom exception while getting the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
                 return new ApprenticeshipApplicationViewModel("Unhandled error", ApplicationViewModelStatus.Error);
             }
             catch (Exception e)
@@ -122,7 +123,7 @@
                 var message = string.Format("Get Application View Model failed for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
-                Logger.Error(message, e);
+                _logger.Error(message, e);
 
                 return
                     new ApprenticeshipApplicationViewModel(
@@ -134,7 +135,7 @@
         public ApprenticeshipApplicationViewModel PatchApplicationViewModel(Guid candidateId,
             ApprenticeshipApplicationViewModel savedModel, ApprenticeshipApplicationViewModel submittedModel)
         {
-            Logger.Debug(
+            _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to patch the Application View Model for candidate ID: {0}.",
                 candidateId);
 
@@ -160,7 +161,7 @@
                 var message =
                     string.Format(
                         "Patch application View Model failed for user {0}.", candidateId);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
                 throw;
             }
         }
@@ -168,7 +169,7 @@
         public void SaveApplication(Guid candidateId, int vacancyId,
             ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            Logger.Debug(
+            _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to save the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
@@ -179,7 +180,7 @@
                         apprenticeshipApplicationViewModel);
 
                 _candidateService.SaveApplication(candidateId, vacancyId, application);
-                Logger.Debug("Application View Model saved for candidate ID: {0}, vacancy ID: {1}.",
+                _logger.Debug("Application View Model saved for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
             }
             catch (Exception e)
@@ -188,14 +189,14 @@
                     string.Format(
                         "Save application failed for user {0}.",
                         candidateId);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
                 throw;
             }
         }
 
         public ApprenticeshipApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId)
         {
-            Logger.Debug(
+            _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to submit the Application for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
@@ -212,16 +213,16 @@
 
                 _candidateService.SubmitApplication(candidateId, vacancyId);
 
-                Logger.Debug("Application submitted for candidate ID: {0}, vacancy ID: {1}.",
+                _logger.Debug("Application submitted for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
                 return model;
             }
             catch (CustomException e)
             {
-                if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
+                if (e.Code == ApplicationErrorCodes.ApplicationInIncorrectStateError)
                 {
-                    Logger.Info(e.Message, e);
+                    _logger.Info(e.Message, e);
                     return
                         new ApprenticeshipApplicationViewModel(ApplicationViewModelStatus.ApplicationInIncorrectState)
                         {
@@ -233,7 +234,7 @@
                     string.Format(
                         "Unhandled custom exception while submitting the Application for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
 
                 return FailedApplicationViewModel(vacancyId, candidateId, "Submission of application",
                     ApplicationPageMessages.SubmitApplicationFailed, e);
@@ -244,7 +245,7 @@
                     string.Format(
                         "Submit Application failed for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
 
                 return FailedApplicationViewModel(vacancyId, candidateId, "Submission of application",
                     ApplicationPageMessages.SubmitApplicationFailed, e);
@@ -253,14 +254,14 @@
 
         public ApprenticeshipApplicationViewModel ArchiveApplication(Guid candidateId, int vacancyId)
         {
-            Logger.Debug(
+            _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to archive the Application for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
             {
                 _candidateService.ArchiveApplication(candidateId, vacancyId);
-                Logger.Debug("Application archived for candidate ID: {0}, vacancy ID: {1}.",
+                _logger.Debug("Application archived for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
             }
             catch (Exception e)
@@ -269,7 +270,7 @@
                     string.Format(
                         "Archive application failed for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
 
                 return FailedApplicationViewModel(vacancyId, candidateId, "Archive of application",
                     ApplicationPageMessages.ArchiveFailed, e);
@@ -280,7 +281,7 @@
 
         public ApprenticeshipApplicationViewModel UnarchiveApplication(Guid candidateId, int vacancyId)
         {
-            Logger.Debug(
+            _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to ensure Application is unarchived for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
@@ -288,7 +289,7 @@
             {
                 _candidateService.UnarchiveApplication(candidateId, vacancyId);
 
-                Logger.Debug("Application unarchived for candidate ID: {0}, vacancy ID: {1}.",
+                _logger.Debug("Application unarchived for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
             }
             catch (Exception e)
@@ -297,7 +298,7 @@
                     string.Format(
                         "Unarchive application failed for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
 
                 return FailedApplicationViewModel(vacancyId, candidateId, "Unarchive of application",
                     ApplicationPageMessages.UnarchiveFailed, e);
@@ -308,21 +309,21 @@
 
         public ApprenticeshipApplicationViewModel DeleteApplication(Guid candidateId, int vacancyId)
         {
-            Logger.Debug(
+            _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to delete the Application for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
             try
             {
                 _candidateService.DeleteApplication(candidateId, vacancyId);
-                Logger.Debug("Application deleted for candidate ID: {0}, vacancy ID: {1}.",
+                _logger.Debug("Application deleted for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
             }
             catch (CustomException e)
             {
-                if (e.Code == ErrorCodes.ApplicationInIncorrectStateError)
+                if (e.Code == ErrorCodes.EntityStateError)
                 {
-                    Logger.Info(e.Message, e);
+                    _logger.Info(e.Message, e);
                     return new ApprenticeshipApplicationViewModel();
                 }
 
@@ -330,7 +331,7 @@
                     string.Format(
                         "Unhandled custom exception while deleting the Application for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
 
                 return FailedApplicationViewModel(vacancyId, candidateId, "Delete of application",
                     ApplicationPageMessages.DeleteFailed, e);
@@ -341,7 +342,7 @@
                     string.Format(
                         "Delete application failed for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
 
                 return FailedApplicationViewModel(vacancyId, candidateId, "Delete of application",
                     ApplicationPageMessages.DeleteFailed, e);
@@ -352,7 +353,7 @@
 
         public WhatHappensNextViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId)
         {
-            Logger.Debug(
+            _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to get the What Happens Next data for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
@@ -360,6 +361,18 @@
             {
                 var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
                 var candidate = _candidateService.GetCandidate(candidateId);
+
+                if (applicationDetails == null || candidate == null)
+                {
+                    var message =
+                    string.Format("Get What Happens Next View Model failed as no application was found for candidate ID: {0}, vacancy ID: {1}.",
+                        candidateId, vacancyId);
+
+                    _logger.Info(message);
+
+                    return new WhatHappensNextViewModel(MyApplicationsPageMessages.ApplicationNotFound);
+                }
+
                 var model =
                     _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
                 var patchedModel = PatchWithVacancyDetail(candidateId, vacancyId, model);
@@ -383,7 +396,7 @@
                     string.Format("Get What Happens Next View Model failed for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
 
-                Logger.Error(message, e);
+                _logger.Error(message, e);
 
                 return new WhatHappensNextViewModel(
                     MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
@@ -392,7 +405,7 @@
 
         public MyApplicationsViewModel GetMyApplications(Guid candidateId)
         {
-            Logger.Debug("Calling ApprenticeshipApplicationProvider to get the applications for candidate ID: {0}.",
+            _logger.Debug("Calling ApprenticeshipApplicationProvider to get the applications for candidate ID: {0}.",
                 candidateId);
 
             try
@@ -438,7 +451,7 @@
             {
                 var message = string.Format("Get MyApplications failed for candidate ID: {0}.", candidateId);
 
-                Logger.Error(message, e);
+                _logger.Error(message, e);
 
                 throw;
             }
@@ -458,7 +471,7 @@
             {
                 var message = string.Format("Get Traineeship Feature View Model failed for candidate ID: {0}.", candidateId);
 
-                Logger.Error(message, e);
+                _logger.Error(message, e);
 
                 throw;
             }
@@ -486,14 +499,14 @@
 
         #region Helpers
 
-        private static ApprenticeshipApplicationViewModel FailedApplicationViewModel(
+        private ApprenticeshipApplicationViewModel FailedApplicationViewModel(
             int vacancyId,
             Guid candidateId,
             string failure,
             string failMessage, Exception e)
         {
             var message = string.Format("{0} {1} failed for user {2}", failure, vacancyId, candidateId);
-            Logger.Error(message, e);
+            _logger.Error(message, e);
             return new ApprenticeshipApplicationViewModel(failMessage, ApplicationViewModelStatus.Error);
         }
 

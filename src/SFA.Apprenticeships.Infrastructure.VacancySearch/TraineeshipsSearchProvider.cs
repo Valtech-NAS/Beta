@@ -55,14 +55,14 @@
 
             _logger.Debug("{0} search results returned", search.Total);
 
-            var results = new SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>(search.Total, parameters.PageNumber, responses, null, parameters);
+            var results = new SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters>(search.Total, responses, null, parameters);
 
             return results;
         }
 
         public SearchResults<TraineeshipSearchResponse, TraineeshipSearchParameters> FindVacancy(string vacancyReference)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("Vacancy number search is not supported for traineeships");
         }
 
         private ISearchResponse<TraineeshipSummary> PerformSearch(TraineeshipSearchParameters parameters, ElasticClient client, string indexName,

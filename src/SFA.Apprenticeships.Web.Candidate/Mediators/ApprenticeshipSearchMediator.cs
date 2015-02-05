@@ -9,6 +9,7 @@
     using Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
+    using Constants;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -89,7 +90,7 @@
 
         private string GetApprenticeshipLevel()
         {
-            return UserDataProvider.Get(UserDataItemNames.ApprenticeshipLevel) ?? "All";
+            return UserDataProvider.Get(CandidateDataItemNames.ApprenticeshipLevel) ?? "All";
         }
 
         private IEnumerable<Category> GetCategories()
@@ -116,7 +117,7 @@
 
         public MediatorResponse<ApprenticeshipSearchResponseViewModel> Results(ApprenticeshipSearchViewModel model)
         {
-            UserDataProvider.Pop(UserDataItemNames.VacancyDistance);
+            UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
 
             if (model.ResultsPerPage == 0)
             {
@@ -130,7 +131,7 @@
                 model.ApprenticeshipLevel = GetApprenticeshipLevel();
             }
 
-            UserDataProvider.Push(UserDataItemNames.ApprenticeshipLevel, model.ApprenticeshipLevel.ToString(CultureInfo.InvariantCulture));
+            UserDataProvider.Push(CandidateDataItemNames.ApprenticeshipLevel, model.ApprenticeshipLevel.ToString(CultureInfo.InvariantCulture));
 
             if (model.SearchAction == SearchAction.Search && model.LocationType != ApprenticeshipLocationType.NonNational)
             {
@@ -328,16 +329,16 @@
                 return GetMediatorResponse<VacancyDetailViewModel>(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
             }
 
-            var distance = UserDataProvider.Pop(UserDataItemNames.VacancyDistance);
-            var lastVacancyId = UserDataProvider.Pop(UserDataItemNames.LastViewedVacancyId);
+            var distance = UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
+            var lastVacancyId = UserDataProvider.Pop(CandidateDataItemNames.LastViewedVacancyId);
 
             if (HasToPopulateDistance(vacancyId, distance, lastVacancyId))
             {
                 vacancyDetailViewModel.Distance = distance;
-                UserDataProvider.Push(UserDataItemNames.VacancyDistance, distance);
+                UserDataProvider.Push(CandidateDataItemNames.VacancyDistance, distance);
             }
 
-            UserDataProvider.Push(UserDataItemNames.LastViewedVacancyId, vacancyId.ToString(CultureInfo.InvariantCulture));
+            UserDataProvider.Push(CandidateDataItemNames.LastViewedVacancyId, vacancyId.ToString(CultureInfo.InvariantCulture));
 
             return GetMediatorResponse(Codes.ApprenticeshipSearch.Details.Ok, vacancyDetailViewModel);
         }

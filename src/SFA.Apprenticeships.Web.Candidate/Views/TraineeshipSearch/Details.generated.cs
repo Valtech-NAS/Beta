@@ -297,7 +297,7 @@ WriteLiteral("</p>\r\n                <h3");
 
 WriteLiteral(" class=\"bold-small\"");
 
-WriteLiteral(">Planned start date</h3>\r\n                <p");
+WriteLiteral(">Possible start date</h3>\r\n                <p");
 
 WriteLiteral(" id=\"vacancy-start-date\"");
 

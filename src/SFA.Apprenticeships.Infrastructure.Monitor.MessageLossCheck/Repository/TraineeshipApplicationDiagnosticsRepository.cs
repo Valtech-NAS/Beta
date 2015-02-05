@@ -8,6 +8,7 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
+    using Entities;
     using Mongo.Common;
     using MongoDB.Driver.Linq;
     using Repositories.Applications.Entities;
@@ -32,9 +33,9 @@
 
             //Message queue back off strategy is to wait 30 seconds before initial retry then 5 minutes for each subsequent retry
             //6 Minutes provides enough time for three attempts
-            var outsideLikelyUpdateTime = DateTime.Now.AddMinutes(6);
+            var outsideLikelyUpdateTime = DateTime.Now.AddMinutes(60);
 
-            var applicationWithUnsetLegacyId = Collection.AsQueryable().Where(a => a.DateUpdated < outsideLikelyUpdateTime && a.LegacyApplicationId == 0);
+            var applicationWithUnsetLegacyId = Collection.AsQueryable().Where(a => (a.DateUpdated == null || a.DateUpdated < outsideLikelyUpdateTime) && a.LegacyApplicationId == 0);
 
             foreach (var mongoTraineeshipApplicationDetail in applicationWithUnsetLegacyId)
             {
@@ -49,6 +50,36 @@
             }
 
             return applicationsForValidCandidatesWithUnsetLegacyId;
+        }
+
+        public IEnumerable<CandidateTraineeshipApplicationDetail> GetSubmittedApplicationsWithUnsetLegacyId()
+        {
+            var submittedApplicationsWithUnsetLegacyId = new List<CandidateTraineeshipApplicationDetail>();
+
+            //Message queue back off strategy is to wait 30 seconds before initial retry then 5 minutes for each subsequent retry
+            //6 Minutes provides enough time for three attempts
+            var outsideLikelyUpdateTime = DateTime.Now.AddMinutes(60);
+
+            var applicationWithUnsetLegacyId = Collection.AsQueryable().Where(a => (a.DateUpdated == null || a.DateUpdated < outsideLikelyUpdateTime) && a.LegacyApplicationId == 0);
+
+            foreach (var mongoTraineeshipApplicationDetail in applicationWithUnsetLegacyId)
+            {
+                var candidate = _candidateReadRepository.Get(mongoTraineeshipApplicationDetail.CandidateId);
+                //Exclude any applications associated with a candidate that does not yet have a valid legacy candidate id.
+                //These candidates need updating first before any applications will go through.
+                if (candidate.LegacyCandidateId == 0) continue;
+
+                var traineeshipApplicationDetail = _mapper.Map<MongoTraineeshipApplicationDetail, TraineeshipApplicationDetail>(mongoTraineeshipApplicationDetail);
+                var candidateTraineeshipApplicationDetail = new CandidateTraineeshipApplicationDetail
+                {
+                    Candidate = candidate,
+                    TraineeshipApplicationDetail = traineeshipApplicationDetail
+                };
+                _logger.Debug("Traineeship application {0} is associated with a valid candidate but does not have a valid legacy application id from the legacy service", traineeshipApplicationDetail.EntityId);
+                submittedApplicationsWithUnsetLegacyId.Add(candidateTraineeshipApplicationDetail);
+            }
+
+            return submittedApplicationsWithUnsetLegacyId;
         }
     }
 }

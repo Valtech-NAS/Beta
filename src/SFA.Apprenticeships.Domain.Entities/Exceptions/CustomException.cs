@@ -42,7 +42,7 @@
 
         private void StoreData(string code)
         {
-            Data.Add("error_code", code);
+            Data.Add("error_code", code); //todo: temp code, will be handled in log handler
         }
     }
 }

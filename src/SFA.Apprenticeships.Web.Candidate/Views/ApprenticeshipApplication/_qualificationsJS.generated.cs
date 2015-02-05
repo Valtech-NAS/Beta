@@ -281,17 +281,6 @@ WriteLiteral(" for=\"qual-predicted\"");
 WriteLiteral(">Predicted?</label>\r\n                    </div>\r\n                </div>\r\n        " +
 "        <div");
 
-WriteLiteral(" id=\"qualification-save-warning\"");
-
-WriteLiteral(" class=\"hidden\"");
-
-WriteLiteral(">\r\n                    <span");
-
-WriteLiteral(" class=\"form-hint text\"");
-
-WriteLiteral(">Remember to \'Add qualification\' to save your qualification</span>\r\n             " +
-"   </div>\r\n                <div");
-
 WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                    <a");
@@ -306,7 +295,7 @@ WriteLiteral(" id=\"saveQualification\"");
 
 WriteLiteral(" data-bind=\"click: addQualification\"");
 
-WriteLiteral(">Add qualification</a>\r\n                    <span");
+WriteLiteral(">Save this qualification</a>\r\n                    <span");
 
 WriteLiteral(" class=\"visuallyhidden\"");
 
@@ -314,7 +303,7 @@ WriteLiteral(" aria-live=\"polite\"");
 
 WriteLiteral(" id=\"qualAddConfirmText\"");
 
-WriteLiteral("></span>\r\n                </div>\r\n            </div>\r\n            <div");
+WriteLiteral("></span>\r\n                </div>\r\n\r\n            </div>\r\n            <div");
 
 WriteLiteral(" data-bind=\"foreach: qualifications\"");
 

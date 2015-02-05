@@ -120,14 +120,12 @@
     <Compile Include="Strategies\Apprenticeships\ISaveApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ISaveCandidateStrategy.cs" />
     <Compile Include="Strategies\ISubmitApprenticeshipApplicationStrategy.cs" />
-    <Compile Include="IVacancyStatusProvider.cs" />
     <Compile Include="Strategies\LegacyActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\LegacyGetCandidateApprenticeshipApplicationsStrategy.cs" />
     <Compile Include="Strategies\LegacyResetForgottenPasswordStrategy.cs" />
     <Compile Include="Strategies\Traineeships\GetCandidateTraineeshipApplicationsStrategy.cs" />
     <Compile Include="Strategies\Traineeships\LegacySubmitTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\LegacyUnlockAccountStrategy .cs" />
-    <Compile Include="LegacyVacancyStatusProvider.cs" />
     <Compile Include="Strategies\QueuedLegacyActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\RegisterCandidateStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\DeleteApprenticeshipApplicationStrategy.cs" />
@@ -149,6 +147,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>
       <Name>SFA.Apprenticeships.Application.UserAccount</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyEtl\SFA.Apprenticeships.Application.VacancyEtl.csproj">
+      <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
+      <Name>SFA.Apprenticeships.Application.VacancyEtl</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
       <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>

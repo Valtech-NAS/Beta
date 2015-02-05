@@ -4,7 +4,7 @@
     using System.Linq;
     using Candidate.Mediators;
     using Candidate.ViewModels.VacancySearch;
-    using Common.Constants;
+    using Constants;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
@@ -63,7 +63,7 @@
         [Test]
         public void RememberApprenticeshipLevel()
         {
-            UserDataProvider.Setup(udp => udp.Get(UserDataItemNames.ApprenticeshipLevel)).Returns("Advanced");
+            UserDataProvider.Setup(udp => udp.Get(CandidateDataItemNames.ApprenticeshipLevel)).Returns("Advanced");
 
             var response = Mediator.Index(ApprenticeshipSearchMode.Keyword);
 

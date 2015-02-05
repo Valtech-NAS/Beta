@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Locations;
+    using Application.Interfaces.Logging;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Candidate.Mappers;
@@ -20,6 +21,7 @@
     {
         private const int PageSize = 10;
 
+        private Mock<ILogService> _logService;
         private Mock<ILocationSearchService> _locationSearchService;
         private Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>> _apprenticeshipSearchService;
         private Mock<IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>> _traineeshipSearchService;
@@ -31,6 +33,7 @@
         [SetUp]
         public void Setup()
         {
+            _logService = new Mock<ILogService>();
             _locationSearchService = new Mock<ILocationSearchService>();
             _apprenticeshipSearchService = new Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
             _traineeshipSearchService = new Mock<IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>();
@@ -55,7 +58,8 @@
                 _traineeshipSearchService.Object,
                 _addressSearchService.Object, 
                 _apprenticeshipMapper, 
-                _traineeeshipMapper);
+                _traineeeshipMapper,
+                _logService.Object);
 
             var results = searchProvider.FindLocation("Location1");
             var result = results.Locations.First();
@@ -76,7 +80,8 @@
                 _traineeshipSearchService.Object,
                 _addressSearchService.Object,
                 _apprenticeshipMapper,
-                _traineeeshipMapper);
+                _traineeeshipMapper,
+                _logService.Object);
 
             var results = searchProvider.FindLocation(string.Empty);
 
@@ -152,7 +157,7 @@
         {
             _apprenticeshipSearchService.Setup(
                 x => x.Search(It.Is<ApprenticeshipSearchParameters>(asp => asp.VacancyLocationType == locationType))).Returns<ApprenticeshipSearchParameters>(asp => new
-                SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(100, 1, new List<ApprenticeshipSearchResponse>
+                SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(100, new List<ApprenticeshipSearchResponse>
                 {
                     new ApprenticeshipSearchResponse
                     {
@@ -162,7 +167,7 @@
 
             _apprenticeshipSearchService.Setup(
                 x => x.Search(It.Is<ApprenticeshipSearchParameters>(asp => asp.VacancyLocationType != locationType))).Returns<ApprenticeshipSearchParameters>(asp => new
-                SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(0, 1, new List<ApprenticeshipSearchResponse>
+                SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(0, new List<ApprenticeshipSearchResponse>
                 {
                     new ApprenticeshipSearchResponse
                     {
@@ -178,7 +183,8 @@
                 _traineeshipSearchService.Object,
                 _addressSearchService.Object,
                 _apprenticeshipMapper,
-                _traineeeshipMapper);
+                _traineeeshipMapper,
+                _logService.Object);
             return searchProvider;
         }
     }

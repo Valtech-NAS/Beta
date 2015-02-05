@@ -10,14 +10,14 @@ Background:
 	And I navigated to the ApprenticeshipSearchPage page
 	Then I am on the ApprenticeshipSearchPage page
 
-@US491 @AC1
+@US491
 Scenario: I have the option 'I can't access my account'
 	Given I navigated to the LoginPage page
 	Then I am on the LoginPage page
 	When I choose CannotAccessMyAccountLink
 	Then I am on the ForgottenPasswordPage page
 
-@US491 @AC2
+@US491
 Scenario: I have the option to unlock my account
 	Given I navigated to the LoginPage page
 	Then I am on the LoginPage page
@@ -29,37 +29,37 @@ Scenario: I have the option to unlock my account
          | Field        | Rule  | Value |
          | EmailAddress | Empty |       |
 
-@US491 @AC3
+@US491
 Scenario: Account is locked after three unsuccesful login attempts
 	Given I made two unsuccessful login attempts
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | S3cret!             |
+		| Field        | Value        |
+		| EmailAddress | {EmailToken} |
+		| Password     | S3cret!      |
 	And I choose SignInButton
 	Then I am on the UnlockPage page
 	And I see
-         | Field             | Rule   | Value               |
-         | EmailAddress      | Equals | {EmailAddressToken} |
-         | AccountUnlockCode | Empty  |                     |
+         | Field             | Rule   | Value        |
+         | EmailAddress      | Equals | {EmailToken} |
+         | AccountUnlockCode | Empty  |              |
 
-@US491 @AC4
+@US491
 Scenario: Account can be unlocked with a valid, non-expired account unlock code
 	Given I locked my account
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | S3cret!             |
+		| Field        | Value        |
+		| EmailAddress | {EmailToken} |
+		| Password     | S3cret!      |
 	And I choose SignInButton
 	Then I am on the UnlockPage page	
 	And I see
-         | Field             | Rule   | Value               |
-         | EmailAddress      | Equals | {EmailAddressToken} |
-         | AccountUnlockCode | Empty  |                     |
+         | Field             | Rule   | Value        |
+         | EmailAddress      | Equals | {EmailToken} |
+         | AccountUnlockCode | Empty  |              |
 	When I enter data
 		| Field             | Value                    |
 		| AccountUnlockCode | {AccountUnlockCodeToken} |
@@ -75,15 +75,15 @@ Scenario: Email is not pre populated when navigating to unlock page directly
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | S3cret!             |
+		| Field        | Value        |
+		| EmailAddress | {EmailToken} |
+		| Password     | S3cret!      |
 	And I choose SignInButton
 	Then I am on the UnlockPage page	
 	And I see
-         | Field             | Rule   | Value               |
-         | EmailAddress      | Equals | {EmailAddressToken} |
-         | AccountUnlockCode | Empty  |                     |
+         | Field             | Rule   | Value        |
+         | EmailAddress      | Equals | {EmailToken} |
+         | AccountUnlockCode | Empty  |              |
 	When I choose SignInLink
 	Then I am on the LoginPage page
 	When I choose CannotAccessMyAccountLink
@@ -132,7 +132,7 @@ Scenario: Account cannot be unlocked with an invalid email
          | Field            | Rule   | Value |
          | ErrorMessageText | Exists |       |
 
-@US491 @AC5
+@US491
 Scenario: Account cannot be unlocked with an invalid code
 	Given I have registered a new candidate
 	When I choose SignoutLink
@@ -168,7 +168,7 @@ Scenario: Account cannot be unlocked with an invalid code
          | Field            | Rule   | Value |
          | ErrorMessageText | Exists |       |
 
-@US491 @AC6
+@US491
 Scenario: Account unlock code can be resent
 	Given I locked my account
 	And I navigated to the LoginPage page
@@ -183,22 +183,22 @@ Scenario: Account unlock code can be resent
          | AccountUnlockCode | Empty |       |
 	When I enter data
 		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
+		| EmailAddress | {EmailToken} |
 	And I choose ResendAccountUnlockCodeLink
 	Then I am on the UnlockPage page
 	And I see
          | Field          | Rule   | Value |
          | ResentCodeText | Exists |       |
 
-@US491 @AC6
+@US491
 Scenario: Account unlock code is renewed if it has expired
 	Given I locked my account and my account unlock code has expired
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | S3cret!             |
+		| Field        | Value        |
+		| EmailAddress | {EmailToken} |
+		| Password     | S3cret!      |
 	And I choose SignInButton
 	And I am on the UnlockPage page
 	And I enter data
@@ -208,14 +208,14 @@ Scenario: Account unlock code is renewed if it has expired
 	Then I am on the UnlockPage page
 	And my account unlock code has been renewed
 
-@US491 @AC6
+@US491
 Scenario: Account unlock code is renewed before being resent if it has expired
 	Given I locked my account and my account unlock code has expired
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
+		| EmailAddress | {EmailToken} |
 		| Password     | S3cret!             |
 	And I choose SignInButton
 	And I am on the UnlockPage page
@@ -226,7 +226,7 @@ Scenario: Account unlock code is renewed before being resent if it has expired
          | ResentCodeText | Exists |       |
 	And my account unlock code has been renewed
 
-@US491 @AC7
+@US491
 Scenario: Resend code request with an unrecognised email address
 	Given I navigated to the LoginPage page
 	Then I am on the LoginPage page
@@ -247,7 +247,7 @@ Scenario: Resend code request with an unrecognised email address
          | Field              | Rule   | Value |
          | WarningMessageText | Exists |       |
 
-@US491 @AC8
+@US491
 Scenario: Reset password after locking an account unlocks the account
 	Given I have registered a new candidate
 	When I choose SignoutLink

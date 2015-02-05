@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using ErrorCodes = Interfaces.Users.ErrorCodes;
 
     public class ActivateUserStrategy : IActivateUserStrategy
     {
@@ -23,7 +24,9 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             user.AssertState("Activate user", UserStatuses.PendingActivation);
 
             if (!user.ActivationCode.Equals(activationCode, StringComparison.InvariantCultureIgnoreCase))
-                throw new CustomException("Invalid activation code", ErrorCodes.UserActivationCodeError); 
+            {
+                throw new CustomException("Invalid activation code \"{0}\" for user \"{1}\"", ErrorCodes.UserActivationCodeError, activationCode, username);
+            }
 
             user.SetStateActive();
             _userWriteRepository.Save(user);

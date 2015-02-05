@@ -97,10 +97,6 @@
     <Reference Include="Microsoft.WindowsFabric.Data.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.4.0.0\lib\net40-full\Microsoft.WindowsFabric.Data.Common.dll</HintPath>
     </Reference>
-    <Reference Include="NLog, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
-    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -121,6 +117,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>

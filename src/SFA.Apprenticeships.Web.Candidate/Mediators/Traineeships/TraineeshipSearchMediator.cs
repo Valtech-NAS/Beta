@@ -6,6 +6,7 @@
     using Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
+    using Constants;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using Providers;
@@ -50,7 +51,7 @@
 
         public MediatorResponse<TraineeshipSearchResponseViewModel> Results(TraineeshipSearchViewModel model)
         {
-            UserDataProvider.Pop(UserDataItemNames.VacancyDistance);
+            UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
 
             if (model.ResultsPerPage == 0)
             {
@@ -107,7 +108,6 @@
                 }
             }
 
-            // TODO: AG: MEDIATORS: test location result validation.
             var locationResult = _searchLocationValidator.Validate(model);
 
             if (!locationResult.IsValid)
@@ -143,18 +143,18 @@
                 return GetMediatorResponse(Codes.TraineeshipSearch.Details.VacancyHasError, vacancyDetailViewModel, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Warning);
             }
 
-            var distance = UserDataProvider.Pop(UserDataItemNames.VacancyDistance);
-            var lastVacancyId = UserDataProvider.Pop(UserDataItemNames.LastViewedVacancyId);
+            var distance = UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
+            var lastVacancyId = UserDataProvider.Pop(CandidateDataItemNames.LastViewedVacancyId);
 
             if (HasToPopulateDistance(vacancyId, distance, lastVacancyId))
             {
                 vacancyDetailViewModel.Distance = distance;
-                UserDataProvider.Push(UserDataItemNames.VacancyDistance, distance);
+                UserDataProvider.Push(CandidateDataItemNames.VacancyDistance, distance);
             }
 
             vacancyDetailViewModel.SearchReturnUrl = searchReturnUrl;
 
-            UserDataProvider.Push(UserDataItemNames.LastViewedVacancyId, vacancyId.ToString(CultureInfo.InvariantCulture));
+            UserDataProvider.Push(CandidateDataItemNames.LastViewedVacancyId, vacancyId.ToString(CultureInfo.InvariantCulture));
 
             return GetMediatorResponse(Codes.TraineeshipSearch.Details.Ok, vacancyDetailViewModel);
         }

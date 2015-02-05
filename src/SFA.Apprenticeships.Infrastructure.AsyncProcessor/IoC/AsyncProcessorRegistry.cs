@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.IoC
 {
     using Application.ApplicationUpdate;
+    using Application.ApplicationUpdate.Strategies;
     using Application.Interfaces.Communications;
     using Microsoft.WindowsAzure;
     using Consumers;
@@ -20,6 +21,7 @@
             For<CreateCandidateRequestConsumerAsync>().Use<CreateCandidateRequestConsumerAsync>();
             For<CommunicationRequestConsumerAsync>().Use<CommunicationRequestConsumerAsync>();
             For<IApplicationStatusProcessor>().Use<ApplicationStatusProcessor>();
+            For<IApplicationStatusUpdateStrategy>().Use<ApplicationStatusUpdateStrategy>();
         }
     }
 }

@@ -5,7 +5,7 @@
     using Domain.Interfaces.Repositories;
     using Interfaces.Logging;
 
-    public class ApplicationVacancyStatusUpdater : IApplicationVacancyStatusUpdater
+    public class ApplicationVacancyUpdater : IApplicationVacancyUpdater
     {
         private readonly ILogService _logger;
 
@@ -14,7 +14,7 @@
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
         private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
 
-        public ApplicationVacancyStatusUpdater(
+        public ApplicationVacancyUpdater(
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
@@ -27,17 +27,29 @@
             _logger = logger;
         }
 
-        public void Update(Guid candidateId, int vacancyId, VacancyStatuses currentVacancyStatus)
+        public void Update(Guid candidateId, int vacancyId, VacancyDetail vacancyDetail)
         {
             // Try apprenticeships first, the majority should be apprenticeships.
             var apprenticeshipApplication = _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
+            var updated = false;
 
             if (apprenticeshipApplication != null)
             {
-                if (apprenticeshipApplication.VacancyStatus != currentVacancyStatus)
+                if (apprenticeshipApplication.VacancyStatus != vacancyDetail.VacancyStatus)
                 {
-                    apprenticeshipApplication.VacancyStatus = currentVacancyStatus;
-                    _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
+                    apprenticeshipApplication.VacancyStatus = vacancyDetail.VacancyStatus;
+                    updated = true;
+                }
+
+                if (apprenticeshipApplication.Vacancy.ClosingDate != vacancyDetail.ClosingDate)
+                {
+                    apprenticeshipApplication.Vacancy.ClosingDate = vacancyDetail.ClosingDate;
+                    updated = true;
+                }
+
+                if (updated)
+                {
+                    _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);                    
                 }
             }
             else
@@ -46,9 +58,20 @@
 
                 if (traineeshipApplication != null)
                 {
-                    if (traineeshipApplication.VacancyStatus != currentVacancyStatus)
+                    if (traineeshipApplication.VacancyStatus != vacancyDetail.VacancyStatus)
                     {
-                        traineeshipApplication.VacancyStatus = currentVacancyStatus;
+                        traineeshipApplication.VacancyStatus = vacancyDetail.VacancyStatus;
+                        updated = true;
+                    }
+
+                    if (traineeshipApplication.Vacancy.ClosingDate != vacancyDetail.ClosingDate)
+                    {
+                        traineeshipApplication.Vacancy.ClosingDate = vacancyDetail.ClosingDate;
+                        updated = true;
+                    }
+
+                    if (updated)
+                    {
                         _traineeshipApplicationWriteRepository.Save(traineeshipApplication);
                     }
                 }

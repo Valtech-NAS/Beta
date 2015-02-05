@@ -21,17 +21,15 @@
             var savedCandidate = writer.Save(candidate);
             Assert.AreEqual(candidate.RegistrationDetails.FirstName, savedCandidate.RegistrationDetails.FirstName);
 
-            //// act, assert
+            // act, assert
             savedCandidate.RegistrationDetails.FirstName = "Lois";
             savedCandidate = writer.Save(savedCandidate);
             Assert.AreEqual("Lois", savedCandidate.RegistrationDetails.FirstName);
 
-            //// act, assert
+            // act, assert
             writer.Delete(savedCandidate.EntityId);
             Assert.IsNull(reader.Get(savedCandidate.EntityId));
         }
-
-        //todo: assert update of create and update timestamps for create, update, save of entity
 
         #region Helpers
         private static Candidate CreateTestCandidate()

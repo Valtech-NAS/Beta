@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
 {
     using System.Threading.Tasks;
+    using Application.Interfaces.Logging;
     using Application.VacancyEtl;
     using Application.VacancyEtl.Entities;
     using Azure.Common.Messaging;
@@ -16,8 +17,9 @@
 
         public VacancyEtlControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService,
             IVacancySummaryProcessor vacancySummaryProcessor,
-            IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> apprenticeshipIndexer, 
-            IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> trainseeshipIndexer) : base(messageService, "Vacancy ETL")
+            IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> apprenticeshipIndexer,
+            IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> trainseeshipIndexer, ILogService logger)
+            : base(messageService, logger, "Vacancy ETL")
         {
             _vacancySummaryProcessor = vacancySummaryProcessor;
             _apprenticeshipIndexer = apprenticeshipIndexer;

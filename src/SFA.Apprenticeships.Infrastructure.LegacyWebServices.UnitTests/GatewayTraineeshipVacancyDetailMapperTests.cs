@@ -84,7 +84,8 @@
                 VacancyOwner = "VacancyOwner",
                 VacancyTitle = "VacancyTitle",
                 VacancyUrl = "VacancyUrl",
-                WorkingWeek = "WorkingWeek",
+                WageType = "Weekly",
+                WorkingWeek = "WorkingWeek"
             };
 
             // Act.
@@ -128,6 +129,7 @@
             dest.Title.Should().Be(src.VacancyTitle);
             dest.VacancyUrl.Should().Be(src.VacancyUrl);
             dest.WorkingWeek.Should().Be(src.WorkingWeek);
+            dest.WageType.Should().Be(WageType.Weekly);
         }
 
         [TestCase]
@@ -136,9 +138,11 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 ApplyViaEmployerWebsite = true,
-                ApplyViaEmployerWebsiteSpecified = false
+                ApplyViaEmployerWebsiteSpecified = false,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -155,9 +159,11 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 ApplyViaEmployerWebsite = true,
-                ApplyViaEmployerWebsiteSpecified = true
+                ApplyViaEmployerWebsiteSpecified = true,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -174,9 +180,11 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 EmployerAnonymous = true,
-                EmployerAnonymousSpecified = false
+                EmployerAnonymousSpecified = false,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -193,9 +201,11 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 EmployerAnonymous = true,
-                EmployerAnonymousSpecified = true
+                EmployerAnonymousSpecified = true,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -212,9 +222,11 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 ApprFrameworkSuccessRate = 42,
-                ApprFrameworkSuccessRateSpecified = false
+                ApprFrameworkSuccessRateSpecified = false,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -231,9 +243,11 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 ApprFrameworkSuccessRate = 42,
-                ApprFrameworkSuccessRateSpecified = true
+                ApprFrameworkSuccessRateSpecified = true,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -250,8 +264,10 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
-                VacancyAddress = null
+                VacancyAddress = null,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -281,6 +297,7 @@
             // Arrange.
             var src = new Vacancy
             {
+                Status = "Live",
                 VacancyType = "Traineeship",
                 VacancyAddress = new AddressDetails
                 {
@@ -296,7 +313,8 @@
                     Latitude = 1.0m,
                     LongitudeSpecified = true,
                     Longitude = 2.0m,
-                }
+                },
+                WageType = "Weekly"
             };
 
             // Act.
@@ -320,20 +338,20 @@
         }
 
         [TestCase("Live", VacancyStatuses.Live)]
-        [TestCase("Posted in error", VacancyStatuses.Unavailable)]
+        [TestCase("Posted In Error", VacancyStatuses.Unavailable)]
+        [TestCase("PostedInError", VacancyStatuses.Unavailable)]
         [TestCase("Withdrawn", VacancyStatuses.Unavailable)]
         [TestCase("Deleted", VacancyStatuses.Unavailable)]
-        [TestCase("Pending deletion", VacancyStatuses.Unavailable)]
         [TestCase("Closed", VacancyStatuses.Expired)]
         [TestCase("Completed", VacancyStatuses.Expired)]
-        [TestCase("Wrong", VacancyStatuses.Unavailable)]
         public void ShouldMapVacancyStatus(string vacancyStatusString, VacancyStatuses vacancyStatus)
         {
             // Arrange.
             var src = new Vacancy
             {
                 VacancyType = "Traineeship",
-                Status = vacancyStatusString
+                Status = vacancyStatusString,
+                WageType = "Weekly"
             };
 
             // Act.
@@ -342,6 +360,42 @@
             // Assert.
             dest.Should().NotBeNull();
             dest.VacancyStatus.Should().Be(vacancyStatus);
+        }
+
+        [TestCase]
+        [ExpectedException(typeof(AutoMapperMappingException))]
+        public void ShouldThrowIfUnknownVacancyStatus()
+        {
+            // Arrange.
+            var src = new Vacancy
+            {
+                Status = "Wrong",
+                VacancyType = "Traineeship",
+                WageType = "Weekly"
+            };
+
+            // Act.
+            var dest = _mapper.Map<Vacancy, TraineeshipVacancyDetail>(src);
+
+            // Assert: exception expected.
+        }
+
+        [TestCase]
+        [ExpectedException(typeof(AutoMapperMappingException))]
+        public void ShouldThrowIfUnknownWageType()
+        {
+            // Arrange.
+            var src = new Vacancy
+            {
+                Status = "Live",
+                VacancyType = "Traineeship",
+                WageType = "Wrong"
+            };
+
+            // Act.
+            var dest = _mapper.Map<Vacancy, TraineeshipVacancyDetail>(src);
+
+            // Assert: exception expected.
         }
     }
 }

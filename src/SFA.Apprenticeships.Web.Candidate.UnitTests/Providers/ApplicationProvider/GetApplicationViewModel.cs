@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Interfaces.Candidates;
+    using Application.Interfaces.Logging;
     using Candidate.Providers;
     using Common.Models.Application;
     using Constants.Pages;
@@ -13,6 +14,7 @@
     [TestFixture]
     public class GetApplicationViewModel
     {
+        private Mock<ILogService> _logService;
         private Mock<ICandidateService> _candidateService;
         private Mock<IConfigurationManager> _configurationManager;
         private ApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
@@ -20,11 +22,12 @@
         [SetUp]
         public void SetUp()
         {
+            _logService = new Mock<ILogService>();
             _candidateService = new Mock<ICandidateService>();
             _configurationManager = new Mock<IConfigurationManager>();
 
             _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object,
-                null, _configurationManager.Object);
+                null, _configurationManager.Object, _logService.Object);
         }
 
         [Test]

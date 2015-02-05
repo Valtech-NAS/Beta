@@ -13,6 +13,7 @@
     using Mongo.Common;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
+    using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     public class TraineeshipApplicationRepository : GenericMongoClient<MongoTraineeshipApplicationDetail>, ITraineeshipApplicationReadRepository, ITraineeshipApplicationWriteRepository
     {
@@ -65,7 +66,7 @@
             {
                 message = string.Format("Unknown TraineeshipApplicationDetail with Id={0}", id);
 
-                throw new CustomException(message, ErrorCodes.ApplicationNotFoundError);
+                throw new CustomException(message, ApplicationErrorCodes.ApplicationNotFoundError);
             }
 
             message = mongoEntity == null ? "Found no TraineeshipApplicationDetail with Id={0}" : "Found TraineeshipApplicationDetail with Id={0}";
@@ -139,7 +140,7 @@
             {
                 var message = string.Format("No TraineeshipApplicationDetail found for candidateId={0} and vacancyId={1}", candidateId, vacancyId);
 
-                throw new CustomException(message, ErrorCodes.ApplicationNotFoundError);
+                throw new CustomException(message, ApplicationErrorCodes.ApplicationNotFoundError);
             }
 
             _logger.Debug("{0} MongoTraineeshipApplicationDetail items returned in collection for candidate with Id={1}", mongoApplicationDetailsList.Count(), candidateId);

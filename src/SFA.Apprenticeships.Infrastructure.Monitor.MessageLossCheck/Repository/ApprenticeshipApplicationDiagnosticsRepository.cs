@@ -8,6 +8,7 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
+    using Entities;
     using Mongo.Common;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
@@ -50,6 +51,36 @@
             }
 
             return applicationsForValidCandidatesWithUnsetLegacyId;
+        }
+
+        public IEnumerable<CandidateApprenticeshipApplicationDetail> GetSubmittedApplicationsWithUnsetLegacyId()
+        {
+            var submittedApplicationsWithUnsetLegacyId = new List<CandidateApprenticeshipApplicationDetail>();
+
+            //Message queue back off strategy is to wait 30 seconds before initial retry then 5 minutes for each subsequent retry
+            //6 Minutes provides enough time for three attempts
+            var outsideLikelyUpdateTime = DateTime.Now.AddMinutes(60);
+
+            var applicationWithUnsetLegacyId = Collection.AsQueryable().Where(a => a.Status == ApplicationStatuses.Submitted && a.DateUpdated < outsideLikelyUpdateTime && a.LegacyApplicationId == 0);
+
+            foreach (var mongoApprenticeshipApplicationDetail in applicationWithUnsetLegacyId)
+            {
+                var candidate = _candidateReadRepository.Get(mongoApprenticeshipApplicationDetail.CandidateId);
+                //Exclude any applications associated with a candidate that does not yet have a valid legacy candidate id.
+                //These candidates need updating first before any applications will go through.
+                if (candidate.LegacyCandidateId == 0) continue;
+
+                var apprenticeshipApplicationDetail = _mapper.Map<MongoApprenticeshipApplicationDetail, ApprenticeshipApplicationDetail>(mongoApprenticeshipApplicationDetail);
+                var candidateApprenticeshipApplicationDetail = new CandidateApprenticeshipApplicationDetail
+                {
+                    Candidate = candidate,
+                    ApprenticeshipApplicationDetail = apprenticeshipApplicationDetail
+                };
+                _logger.Debug("Apprenticeship application {0} is associated with a valid candidate but does not have a valid legacy application id from the legacy service", apprenticeshipApplicationDetail.EntityId);
+                submittedApplicationsWithUnsetLegacyId.Add(candidateApprenticeshipApplicationDetail);
+            }
+
+            return submittedApplicationsWithUnsetLegacyId;
         }
 
         public IEnumerable<string> GetDraftApplicationVacancyIds()

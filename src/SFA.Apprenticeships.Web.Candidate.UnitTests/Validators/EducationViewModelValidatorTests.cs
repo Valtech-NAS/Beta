@@ -50,5 +50,31 @@
             _viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.FromYear, viewModel);
             _viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.ToYear, viewModel);
         }
+
+        [Test]
+        public void ShouldHaveErrorsOnSaveWhenSchoolIsSet()
+        {
+            var viewModel = new EducationViewModel
+            {
+                NameOfMostRecentSchoolCollege = "A School"
+            };
+            _viewModelServerValidator.ShouldNotHaveValidationErrorFor(x => x.NameOfMostRecentSchoolCollege, viewModel);
+            _viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.FromYear, viewModel);
+            _viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.ToYear, viewModel);
+        }
+
+        [Test]
+        public void ShouldHaveErrorsOnSaveWhenDatesAreZero()
+        {
+            var viewModel = new EducationViewModel
+            {
+                NameOfMostRecentSchoolCollege = "A School",
+                FromYear = "0",
+                ToYear = "0"
+            };
+            _viewModelServerValidator.ShouldNotHaveValidationErrorFor(x => x.NameOfMostRecentSchoolCollege, viewModel);
+            _viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.FromYear, viewModel);
+            _viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.ToYear, viewModel);
+        }
     }
 }

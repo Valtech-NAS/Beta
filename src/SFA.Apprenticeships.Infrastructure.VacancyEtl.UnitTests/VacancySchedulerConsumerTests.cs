@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using Application.Interfaces.Logging;
     using Domain.Interfaces.Messaging;
     using Elastic.Common.Entities;
     using Moq;
@@ -15,6 +16,7 @@
     [TestFixture]
     public class VacancySchedulerConsumerTests
     {
+        private Mock<ILogService> _logService;
         private Mock<IProcessControlQueue<StorageQueueMessage>> _messageServiceMock;
         private Mock<IVacancySummaryProcessor> _vacancySummaryProcessorMock;
         private Mock<IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>> _apprenticeshipIndexerService;
@@ -23,6 +25,7 @@
         [SetUp]
         public void SetUp()
         {
+            _logService = new Mock<ILogService>();
             _messageServiceMock = new Mock<IProcessControlQueue<StorageQueueMessage>>();
             _vacancySummaryProcessorMock = new Mock<IVacancySummaryProcessor>();
             _apprenticeshipIndexerService = new Mock<IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>>();
@@ -36,7 +39,7 @@
         {
             var scheduledMessageQueue = GetScheduledMessagesQueue(queuedScheduledMessages);
             _messageServiceMock.Setup(x => x.GetMessage()).Returns(scheduledMessageQueue.Dequeue);
-            var vacancyConsumer = new VacancyEtlControlQueueConsumer(_messageServiceMock.Object, _vacancySummaryProcessorMock.Object, _apprenticeshipIndexerService.Object, _traineeshipsIndexerService.Object);
+            var vacancyConsumer = new VacancyEtlControlQueueConsumer(_messageServiceMock.Object, _vacancySummaryProcessorMock.Object, _apprenticeshipIndexerService.Object, _traineeshipsIndexerService.Object, _logService.Object);
             var task = vacancyConsumer.CheckScheduleQueue();
             task.Wait();
 

@@ -2,11 +2,9 @@
 {
     using System.Web.Mvc;
     using Domain.Interfaces.Configuration;
-    using StructureMap.Attributes;
 
     public class ApplyWebTrendsAttribute : ActionFilterAttribute
     {
-        [SetterProperty]
         public IConfigurationManager ConfigurationManager { get; set; }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)

@@ -16,9 +16,9 @@ Scenario: As an candidate I want to be able to archive succesful applications
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	
 	Given I was on the MyApplicationsPage page
@@ -36,7 +36,7 @@ Scenario: As an candidate I want to be able to archive unsuccesful applications
 	When I am on the LoginPage page
 	And I enter data
 		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
+		| EmailAddress | {EmailToken} |
 		| Password     | {PasswordToken}     |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page

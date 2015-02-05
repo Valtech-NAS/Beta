@@ -92,7 +92,7 @@
     <Compile Include="Candidates\CommunicationPreferences.cs" />
     <Compile Include="Communication\ExpiringDraft.cs" />
     <Compile Include="Exceptions\CustomException.cs" />
-    <Compile Include="Exceptions\ErrorCodes.cs" />
+    <Compile Include="ErrorCodes.cs" />
     <Compile Include="ReferenceData\Category.cs" />
     <Compile Include="Users\UserCredentials.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipVacancyDetail.cs" />

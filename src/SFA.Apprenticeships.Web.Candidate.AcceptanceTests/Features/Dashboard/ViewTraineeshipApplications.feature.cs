@@ -102,7 +102,7 @@ this.FeatureBackground();
                         "Value"});
             table1.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table1.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
@@ -156,7 +156,7 @@ this.FeatureBackground();
                         "Value"});
             table3.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table3.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
@@ -210,7 +210,7 @@ this.FeatureBackground();
                         "Value"});
             table5.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table5.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});

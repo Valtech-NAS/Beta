@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using Application.Communications;
+    using Application.Interfaces.Logging;
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;
 
@@ -9,7 +10,9 @@
     {
         private readonly ICommunicationProcessor _communicationProcessor;
 
-        public CommunicationsControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService, ICommunicationProcessor communicationProcessor) : base(messageService, "Communications")
+        public CommunicationsControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService,
+            ICommunicationProcessor communicationProcessor, ILogService logger)
+            : base(messageService, logger, "Communications")
         {
             _communicationProcessor = communicationProcessor;
         }
@@ -22,7 +25,7 @@
                 if (scheduleerNotification != null)
                 {
                     _communicationProcessor.SendDailyDigests(scheduleerNotification.ClientRequestId);
-                    _messageService.DeleteMessage(scheduleerNotification.MessageId, scheduleerNotification.PopReceipt);
+                    MessageService.DeleteMessage(scheduleerNotification.MessageId, scheduleerNotification.PopReceipt);
                 }
             });
         }

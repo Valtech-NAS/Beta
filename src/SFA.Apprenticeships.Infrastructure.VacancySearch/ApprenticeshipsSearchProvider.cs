@@ -73,8 +73,7 @@
 
             var aggregationResults = GetAggregationResultsFrom(search.Aggs);
 
-            var results = new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(search.Total, parameters.PageNumber,
-                responses, aggregationResults, parameters);
+            var results = new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(search.Total, responses, aggregationResults, parameters);
 
             return results;
         }
@@ -97,7 +96,7 @@
                         q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, vacancyReference)))));
 
             var responses = _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSearchResponse>>(searchResults.Documents).ToList();
-            var results = new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(searchResults.Total, 1, responses, null, null);
+            var results = new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(searchResults.Total, responses, null, new ApprenticeshipSearchParameters {PageNumber = 1});
             return results;
         }
 

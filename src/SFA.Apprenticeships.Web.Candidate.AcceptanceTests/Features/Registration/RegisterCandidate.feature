@@ -99,7 +99,7 @@ Scenario: As a candidate I want to be told quickly that my email/username is not
 		| Field                        | Rule   | Value                                                                                                                           |
 		| EmailAddressAvailableMessage | Equals | Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it. |
 
-Scenario: As a candidate I want to be submit my registration details so that I can apply for vacancies 
+Scenario: As a candidate I want to submit my registration details so that I can apply for vacancies 
 	Given I navigated to the RegisterCandidatePage page
 	And I have created a new email address
 	When I am on the RegisterCandidatePage page

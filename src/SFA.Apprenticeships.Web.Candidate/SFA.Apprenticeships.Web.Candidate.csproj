@@ -151,8 +151,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="NLog.Extended, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="NLog.Extended">
       <HintPath>..\packages\NLog.Extended.3.2.0.0\lib\net45-full\NLog.Extended.dll</HintPath>
     </Reference>
     <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
@@ -166,6 +165,9 @@
     <Reference Include="StructureMap.Net4">
       <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.Net4.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap.Web">
+      <HintPath>..\packages\structuremap.web.3.1.0.133\lib\net40\StructureMap.Web.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Net" />
@@ -622,6 +624,7 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_categoriesAndSubCategories.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\razorgenerator.directives" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -688,9 +691,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\StructuremapMvc.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="App_Start\WebApiConfig.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -714,6 +715,12 @@
     <Compile Include="Constants\Pages\ApprenticeshipVacancyDetailPageMessages.cs" />
     <Compile Include="Constants\Pages\VacancySearchResultsPageMessages.cs" />
     <Compile Include="Constants\Settings.cs" />
+    <Compile Include="Constants\CandidateDataItemNames.cs" />
+    <Compile Include="DependencyResolution\ControllerConvention.cs" />
+    <Compile Include="DependencyResolution\DefaultRegistry.cs" />
+    <Compile Include="DependencyResolution\IoC.cs" />
+    <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
+    <Compile Include="DependencyResolution\StructureMapScopeModule.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Helpers\FullNameFormatter.cs" />
@@ -1289,10 +1296,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Address\SFA.Apprenticeships.Infrastructure.Address.csproj">
       <Project>{969662B6-BB64-48EE-880D-9646AB6146A4}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Address</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.Session\SFA.Apprenticeships.Infrastructure.Azure.Session.csproj">
-      <Project>{2FC1A9D8-E66E-49D0-BEFF-C845AFDF34F6}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Azure.Session</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Azure\SFA.Apprenticeships.Infrastructure.Caching.Azure.csproj">
       <Project>{B3285E4A-29DD-4CB6-B8C9-51AA06DB4F83}</Project>

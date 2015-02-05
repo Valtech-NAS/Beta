@@ -19,8 +19,8 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Dashboard
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("ApplicationStatusses")]
-    public partial class ApplicationStatussesFeature
+    [NUnit.Framework.DescriptionAttribute("ApplicationStatuses")]
+    public partial class ApplicationStatusesFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -32,7 +32,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Dashboard
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "ApplicationStatusses", @"As a candidate who has already started an application for a vacancy 
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "ApplicationStatuses", @"As a candidate who has already started an application for a vacancy 
 I want to see my application on my dashboard 
 And select to resume completing my application 
 And save any changes 
@@ -113,7 +113,7 @@ this.FeatureBackground();
                         "Value"});
             table1.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table1.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
@@ -177,7 +177,7 @@ testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecF
                         "Value"});
             table3.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table3.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
@@ -235,7 +235,7 @@ testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecF
                         "Value"});
             table5.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table5.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
@@ -287,7 +287,7 @@ this.FeatureBackground();
                         "Value"});
             table7.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table7.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
@@ -343,7 +343,7 @@ this.FeatureBackground();
                         "Value"});
             table9.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table9.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
@@ -401,7 +401,7 @@ this.FeatureBackground();
                         "Value"});
             table11.AddRow(new string[] {
                         "EmailAddress",
-                        "{EmailAddressToken}"});
+                        "{EmailToken}"});
             table11.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});

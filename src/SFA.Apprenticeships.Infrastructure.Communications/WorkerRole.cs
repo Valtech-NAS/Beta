@@ -28,6 +28,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
         private static ILogService _logger;
         private const string ProcessName = "Communications Process";
         private CommunicationsControlQueueConsumer _communicationsControlQueueConsumer;
+        private StructureMap.IContainer _container;
 
         public override void Run()
         {
@@ -77,10 +78,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
         public override void OnStop()
         {
             // Kill the bus which will kill any subscriptions
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.GetInstance<IBus>().Advanced.Dispose();
-#pragma warning restore 0618
+            _container.GetInstance<IBus>().Advanced.Dispose();
 
             // Give it 5 seconds to finish processing any in flight subscriptions.
             Thread.Sleep(TimeSpan.FromSeconds(5));
@@ -104,16 +102,14 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
             }
         }
 
-        private static void InitializeIoC()
+        private void InitializeIoC()
         {
             var config = new ConfigurationManager();
             var useCacheSetting = config.TryGetAppSetting("UseCaching");
             bool useCache;
             bool.TryParse(useCacheSetting, out useCache);
 
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
@@ -128,21 +124,12 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
                 x.AddRegistry<CandidateRepositoryRegistry>();
             });
 
-            _logger = ObjectFactory.GetInstance<ILogService>();
-#pragma warning restore 0618
+            _logger = _container.GetInstance<ILogService>();
         }
 
         private void InitialiseRabbitMQSubscribers()
         {
-#pragma warning disable 618
-            //var subscriberBootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
-#pragma warning restore 618
-
-            //subscriberBootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(CommunicationsControlQueueConsumer)), "Communications");
-
-#pragma warning disable 618
-            _communicationsControlQueueConsumer = ObjectFactory.GetInstance<CommunicationsControlQueueConsumer>();
-#pragma warning restore 618
+            _communicationsControlQueueConsumer = _container.GetInstance<CommunicationsControlQueueConsumer>();
         }
     }
 }

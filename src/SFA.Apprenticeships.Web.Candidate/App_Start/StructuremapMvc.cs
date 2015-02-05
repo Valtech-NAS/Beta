@@ -1,76 +1,52 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="StructuremapMvc.cs" company="Web Advanced">
+// Copyright 2012 Web Advanced (www.webadvanced.com)
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 using SFA.Apprenticeships.Web.Candidate;
+
 using WebActivatorEx;
 
-[assembly: PreApplicationStartMethod(typeof (StructuremapMvc), "Start")]
+[assembly: PreApplicationStartMethod(typeof(StructuremapMvc), "Start")]
+[assembly: ApplicationShutdownMethod(typeof(StructuremapMvc), "End")]
 
-namespace SFA.Apprenticeships.Web.Candidate
-{
-    using Common.IoC;
-    using Infrastructure.Address.IoC;
-    using Infrastructure.Azure.Session.IoC;
-    using Infrastructure.Caching.Azure.IoC;
-    using Infrastructure.Common.Configuration;
-    using Infrastructure.Common.IoC;
-    using Infrastructure.Elastic.Common.IoC;
-    using Infrastructure.LegacyWebServices.IoC;
-    using Infrastructure.LocationLookup.IoC;
-    using Infrastructure.Logging.IoC;
-    using Infrastructure.Postcode.IoC;
-    using Infrastructure.RabbitMq.IoC;
-    using Infrastructure.Repositories.Applications.IoC;
-    using Infrastructure.Repositories.Candidates.IoC;
-    using Infrastructure.Repositories.Users.IoC;
-    using Infrastructure.UserDirectory.IoC;
-    using Infrastructure.VacancySearch.IoC;
-    using IoC;
-    using Infrastructure.Repositories.Authentication.IoC;
-    using StructureMap;
+namespace SFA.Apprenticeships.Web.Candidate {
+	using System.Web.Mvc;
+    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+	using DependencyResolution;
+    
+	public static class StructuremapMvc {
+        #region Public Properties
 
-    /// <summary>
-    ///     StructureMap MVC initialization. Sets the MVC resolver and the WebApi resolver to use structure map.
-    /// </summary>
-    public static class StructuremapMvc
-    {
-        public static void Start()
-        {
-            var config = new ConfigurationManager();
-            var useCacheSetting = config.TryGetAppSetting("UseCaching");
-            bool useCache;
-            bool.TryParse(useCacheSetting, out useCache);
+        public static StructureMapDependencyScope StructureMapDependencyScope { get; set; }
 
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
-            {
-                x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry<SessionRegistry>();
-
-                // service layer
-                x.AddRegistry<AzureCacheRegistry>();
-                //x.AddRegistry<MemoryCacheRegistry>();
-
-                x.AddRegistry<VacancySearchRegistry>();
-                x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(useCache));
-                x.AddRegistry<PostcodeRegistry>();
-                // TODO: DEBT: AG: if Rabbit is incorrectly configured, website fails to start properly. Need to more lazily initialise RabbitMQ.
-                x.AddRegistry<RabbitMqRegistry>();
-                x.AddRegistry<LocationLookupRegistry>();
-                x.AddRegistry<CandidateRepositoryRegistry>();
-                x.AddRegistry<ApplicationRepositoryRegistry>();
-                x.AddRegistry<AuthenticationRepositoryRegistry>();
-                x.AddRegistry<UserRepositoryRegistry>();
-                x.AddRegistry<UserDirectoryRegistry>();
-                x.AddRegistry<AddressRegistry>();
-
-                // web layer
-                x.AddRegistry<WebCommonRegistry>();
-                x.AddRegistry<CandidateWebRegistry>();
-            });
-
-            WebCommonRegistry.Configure(ObjectFactory.Container);
-#pragma warning restore 0618
+        #endregion
+		
+		#region Public Methods and Operators
+		
+		public static void End() {
+            StructureMapDependencyScope.Dispose();
         }
+		
+        public static void Start() {
+            var container = DependencyResolution.IoC.Initialize();
+            StructureMapDependencyScope = new StructureMapDependencyScope(container);
+            DependencyResolver.SetResolver(StructureMapDependencyScope);
+            DynamicModuleUtility.RegisterModule(typeof(StructureMapScopeModule));
+        }
+
+        #endregion
     }
 }

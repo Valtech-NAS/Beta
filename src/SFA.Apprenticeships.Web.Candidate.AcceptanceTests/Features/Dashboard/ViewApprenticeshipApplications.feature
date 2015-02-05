@@ -1,4 +1,4 @@
-﻿Feature: ApplicationStatusses
+﻿Feature: ApplicationStatuses
 	As a candidate who has already started an application for a vacancy 
 	I want to see my application on my dashboard 
 	And select to resume completing my application 
@@ -21,9 +21,9 @@ Scenario: As a candidate I want to see the applications in my dashboard grouped 
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see
@@ -40,9 +40,9 @@ Given I have an empty dashboard
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see
@@ -59,9 +59,9 @@ Given I have an empty dashboard
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see
@@ -75,9 +75,9 @@ Scenario: As a candidate I want to be shown a support message if my application 
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see
@@ -92,9 +92,9 @@ Scenario: As a candidate I do not want to be shown a support message if my appli
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see
@@ -110,9 +110,9 @@ Scenario: As a candidate I want to be shown a support message if any of my appli
 	And I navigated to the LoginPage page
 	When I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailAddressToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 	And I see

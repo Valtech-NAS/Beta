@@ -36,12 +36,17 @@
             </div>
         </div>
     }
-    
+
     @if (!string.IsNullOrEmpty(ViewBag.PlannedOutageMessage))
     {
-        <div id="planned-outage-message" class="cookie-banner">
+        <div id="planned-outage-message" class="maintenance-banner">
             <div class="content-container" role="alert">
-                <span class="copy-16">@Html.Raw(ViewBag.PlannedOutageMessage) <a href="@Url.Action("DismissPlannedOutageMessage", "Account", new { isJavascript = false })" class="notInterested link-unimp icon-black"><i id="dismiss-planned-outage-message" class="copy-16 fa fa-times-circle"></i></a></span>
+                <div class="font-xsmall maintenance-content">
+                    <p>@Html.Raw(ViewBag.PlannedOutageMessage)</p>
+                    <a href="@Url.Action("DismissPlannedOutageMessage", "Account", new { isJavascript = false })" class="maintenance-close">
+                        <i id="dismiss-planned-outage-message" class="icon-black fa fa-times-circle"></i>
+                    </a>
+                </div>
             </div>
         </div>
     }
@@ -143,7 +148,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/fastclick")
     @Scripts.Render("~/bundles/underscore")
-    
+
     <script type="text/javascript">
         if (typeof jQuery === 'undefined') {
             var e = document.createElement("script");
@@ -170,13 +175,13 @@
                 });
             });
         });
-    </script>    
+    </script>
 
     @Scripts.Render("~/bundles/nascript")
     @Scripts.Render("~/bundles/vendor")
     @Scripts.Render("~/bundles/nas")
 
     @RenderSection("scripts", required: false)
-    
+
 </body>
 </html>

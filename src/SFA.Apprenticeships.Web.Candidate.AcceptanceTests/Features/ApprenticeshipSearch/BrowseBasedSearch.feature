@@ -33,7 +33,7 @@ Scenario: Browse based search happy path
 	When I am on CategoryItems list item matching criteria
 		| Field | Rule   | Value                            |
 		| Text  | Equals | Business, Administration and Law |
-	And I choose WrappedElement
+	And I choose CategoryRadioButton
 	And I am on the ApprenticeshipSearchPage page
 	And I enter data
 		 | Field               | Value      |

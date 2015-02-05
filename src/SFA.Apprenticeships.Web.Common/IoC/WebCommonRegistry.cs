@@ -1,12 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.IoC
 {
-    using System.Web.Http;
-    using System.Web.Mvc;
-    using CuttingEdge.Conditions;
-    using Microsoft.Practices.ServiceLocation;
-    using Providers;
     using Services;
-    using StructureMap;
     using StructureMap.Configuration.DSL;
 
     public class WebCommonRegistry : Registry
@@ -14,28 +8,6 @@
         public WebCommonRegistry()
         {
             For<IAuthenticationTicketService>().Use<AuthenticationTicketService>();
-        }
-
-        public static void Configure(IContainer container)
-        {
-            Condition.Requires(container, "container").IsNotNull();
-
-            var resolver = new StructureMapDependencyResolver(container);
-
-            container.Configure(x =>
-            {
-                x.For<IContainer>().Use(container);
-                x.For<IServiceLocator>().Use(resolver);
-                x.For<IUserDataProvider>().Use<CookieUserDataProvider>();
-                x.For<IEuCookieDirectiveProvider>().Use<EuCookieDirectiveProvider>();
-                x.For<ICookieDetectionProvider>().Use<CookieDetectionProvider>();
-                x.For<IDismissPlannedOutageMessageCookieProvider>().Use<DismissPlannedOutageMessageCookieProvider>();
-            });
-
-            // Set the MVC/WebApi dependency resolver.
-            ServiceLocator.SetLocatorProvider(() => resolver);
-            DependencyResolver.SetResolver(ServiceLocator.Current);
-            GlobalConfiguration.Configuration.DependencyResolver = resolver;
         }
     }
 }

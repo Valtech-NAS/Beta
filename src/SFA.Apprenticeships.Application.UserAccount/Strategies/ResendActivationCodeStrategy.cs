@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Interfaces.Users;
-    using exceptions = Domain.Entities.Exceptions;
+    using UserErrorCodes = Interfaces.Users.ErrorCodes;
 
     public class ResendActivationCodeStrategy : IResendActivationCodeStrategy
     {
@@ -37,7 +37,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             if (user == null)
             {
-                throw new CustomException("Unknown username", exceptions.ErrorCodes.UnknownUserError);
+                throw new CustomException("Unknown username", UserErrorCodes.UnknownUserError);
             }
 
             user.AssertState("Resend activate code", UserStatuses.PendingActivation);

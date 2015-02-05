@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using Application.Candidate;
     using Application.Interfaces.Logging;
+    using Domain.Entities;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
@@ -114,7 +115,7 @@
                     _logger.Warn("Legacy Vacancy was in an invalid state. Traineeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
-                case ErrorCodes.ApplicationInIncorrectStateError:
+                case ErrorCodes.EntityStateError:
                     _logger.Error(string.Format("Traineeship application is in an invalid state: Application Id: \"{0}\"", request.ApplicationId), ex);
                     break;
 

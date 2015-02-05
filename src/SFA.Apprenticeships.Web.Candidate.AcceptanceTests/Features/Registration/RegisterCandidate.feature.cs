@@ -381,12 +381,12 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("As a candidate I want to be submit my registration details so that I can apply fo" +
-            "r vacancies")]
-        public virtual void AsACandidateIWantToBeSubmitMyRegistrationDetailsSoThatICanApplyForVacancies()
+        [NUnit.Framework.DescriptionAttribute("As a candidate I want to submit my registration details so that I can apply for v" +
+            "acancies")]
+        public virtual void AsACandidateIWantToSubmitMyRegistrationDetailsSoThatICanApplyForVacancies()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to be submit my registration details so that I can apply fo" +
-                    "r vacancies", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to submit my registration details so that I can apply for v" +
+                    "acancies", ((string[])(null)));
 #line 102
 this.ScenarioSetup(scenarioInfo);
 #line 7

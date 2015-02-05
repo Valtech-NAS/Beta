@@ -4,8 +4,10 @@
     using ApplicationUpdate;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
+    using Domain.Interfaces.Messaging;
     using Interfaces.Logging;
     using Vacancy;
+    using VacancyEtl.Entities;
     using ErrorCodes = Interfaces.Vacancies.ErrorCodes;
 
     public class LegacyGetCandidateVacancyDetailStrategy<TVacancyDetail> : ILegacyGetCandidateVacancyDetailStrategy<TVacancyDetail>
@@ -14,14 +16,18 @@
         private readonly ILogService _logger;
 
         private readonly IVacancyDataProvider<TVacancyDetail> _vacancyDataProvider;
-        private readonly IApplicationVacancyStatusUpdater _applicationVacancyStatusUpdater;
+        private readonly IApplicationVacancyUpdater _applicationVacancyUpdater;
+        private readonly IMessageBus _bus;
 
         public LegacyGetCandidateVacancyDetailStrategy(
             IVacancyDataProvider<TVacancyDetail> vacancyDataProvider,
-            IApplicationVacancyStatusUpdater applicationVacancyStatusUpdater, ILogService logger)
+            IApplicationVacancyUpdater applicationVacancyUpdater,
+            ILogService logger,
+            IMessageBus bus)
         {
+            _bus = bus;
             _vacancyDataProvider = vacancyDataProvider;
-            _applicationVacancyStatusUpdater = applicationVacancyStatusUpdater;
+            _applicationVacancyUpdater = applicationVacancyUpdater;
             _logger = logger;
         }
 
@@ -33,9 +39,9 @@
             {
                 var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
-                _applicationVacancyStatusUpdater.Update(candidateId, vacancyId, vacancyDetails.VacancyStatus);
+                _applicationVacancyUpdater.Update(candidateId, vacancyId, vacancyDetails);
 
-                // TODO: AG: queue latest vacancy status for other candidates.
+                QueueVacancyStatusSummaryUpdate(vacancyDetails);
 
                 return vacancyDetails;
             }
@@ -47,6 +53,19 @@
 
                 throw new CustomException(message, e, ErrorCodes.GetVacancyDetailsFailed);
             }
+        }
+
+        private void QueueVacancyStatusSummaryUpdate(TVacancyDetail vacancyDetails)
+        {
+            var vacancyStatusSummary = new VacancyStatusSummary
+            {
+                LegacyVacancyId = vacancyDetails.Id,
+                VacancyStatus = vacancyDetails.VacancyStatus,
+                ClosingDate = vacancyDetails.ClosingDate,
+                DateTime = DateTime.Now
+            };
+
+            _bus.PublishMessage(vacancyStatusSummary);
         }
     }
 }

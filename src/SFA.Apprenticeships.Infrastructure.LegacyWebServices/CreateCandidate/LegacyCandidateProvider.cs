@@ -10,6 +10,7 @@
     using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
     using CreateCandidateRequest = GatewayServiceProxy.CreateCandidateRequest;
+    using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
 
     public class LegacyCandidateProvider : ILegacyCandidateProvider
     {
@@ -66,7 +67,7 @@
                     _logger.Error("Legacy.CreateCandidate did not respond");
                 }
 
-                throw new CustomException("Failed to create candidate in Legacy.CreateCandidate", ErrorCodes.CandidateCreationError);
+                throw new CustomException("Failed to create candidate in Legacy.CreateCandidate", CandidateErrorCodes.CandidateCreationError);
             }
 
             var legacyCandidateId = response.CandidateId;

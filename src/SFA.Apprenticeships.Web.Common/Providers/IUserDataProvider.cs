@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface IUserDataProvider //todo: refactor!
+    public interface IUserDataProvider
     {
         UserContext GetUserContext();
 

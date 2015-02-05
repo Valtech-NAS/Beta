@@ -1,13 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers.Apprenticeships
 {
+    using System;
     using AutoMapper;
     using Domain.Entities.Vacancies;
-    using NLog;
 
     public class VacancyStatusResolver : ValueResolver<string, VacancyStatuses>
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
         protected override VacancyStatuses ResolveCore(string source)
         {
             switch (source)
@@ -27,8 +25,8 @@
                     return VacancyStatuses.Expired;
 
                 default:
-                    Logger.Error("Unknown Vacancy Status received from NAS Gateway Service, defaulting to Unavailable: \"{0}\".", source);
-                    return VacancyStatuses.Unavailable;
+                    throw new ArgumentOutOfRangeException("source",
+                        string.Format("Unknown Vacancy Status received from NAS Gateway Service: \"{0}\"", source));
             }
         }
     }

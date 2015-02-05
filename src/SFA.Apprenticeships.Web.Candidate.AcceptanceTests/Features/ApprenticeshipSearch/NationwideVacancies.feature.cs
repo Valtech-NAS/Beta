@@ -290,11 +290,11 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("nationwide apprenticeships are in closing date order")]
+        [NUnit.Framework.DescriptionAttribute("Nationwide apprenticeships are in closing date order")]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
         public virtual void NationwideApprenticeshipsAreInClosingDateOrder()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("nationwide apprenticeships are in closing date order", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Nationwide apprenticeships are in closing date order", new string[] {
                         "SmokeTests"});
 #line 78
 this.ScenarioSetup(scenarioInfo);
@@ -341,11 +341,11 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("nationwide apprenticeships found by keyword are in best match order")]
+        [NUnit.Framework.DescriptionAttribute("Nationwide apprenticeships found by keyword are in best match order")]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
         public virtual void NationwideApprenticeshipsFoundByKeywordAreInBestMatchOrder()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("nationwide apprenticeships found by keyword are in best match order", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Nationwide apprenticeships found by keyword are in best match order", new string[] {
                         "SmokeTests"});
 #line 94
 this.ScenarioSetup(scenarioInfo);

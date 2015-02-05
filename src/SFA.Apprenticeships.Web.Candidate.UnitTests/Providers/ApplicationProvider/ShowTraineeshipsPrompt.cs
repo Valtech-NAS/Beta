@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Application.Interfaces.Logging;
     using Domain.Entities.Candidates;
     using FluentAssertions;
     using Moq;
@@ -17,6 +18,7 @@
     {
         const int UnsuccessfulApplications = 3;
 
+        private Mock<ILogService> _logService;
         private Mock<ICandidateService> _candidateService;
         private Mock<IConfigurationManager> _configurationManager;
 
@@ -25,6 +27,7 @@
         [SetUp]
         public void SetUp()
         {
+            _logService = new Mock<ILogService>();
             _candidateService = new Mock<ICandidateService>();
             _configurationManager = new Mock<IConfigurationManager>();
 
@@ -32,7 +35,7 @@
                 .Returns(UnsuccessfulApplications);
 
             _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object,
-                null, _configurationManager.Object);
+                null, _configurationManager.Object, _logService.Object);
         }
 
         [Test]

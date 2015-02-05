@@ -30,7 +30,7 @@
 
         public void Run()
         {
-            var sb = new StringBuilder("The following actions were taken to resolve issues with traineeship application:");
+            var sb = new StringBuilder("The following actions were taken to resolve issues with traineeship applications:");
             sb.AppendLine();
 
             var applicationsToRequeue = _applicationDiagnosticsRepository.GetApplicationsForValidCandidatesWithUnsetLegacyId().ToList();
@@ -39,7 +39,7 @@
             {
                 _logger.Info("Requeuing create traineeship application message for application id: {0}", application.EntityId);
 
-                var message = new SubmitApprenticeshipApplicationRequest
+                var message = new SubmitTraineeshipApplicationRequest
                 {
                     ApplicationId = application.EntityId
                 };

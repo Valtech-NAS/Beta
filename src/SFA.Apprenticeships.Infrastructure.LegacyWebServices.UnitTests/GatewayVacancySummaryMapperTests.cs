@@ -32,6 +32,8 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             var src = new GatewayServiceProxy.VacancySummary
             {
                 VacancyId = 42,
+                VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard",
                 ClosingDate = DateTime.Today.AddDays(1),
                 EmployerName = "EmployerName",
                 VacancyTitle = "VacancyTitle",
@@ -55,6 +57,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             // Arrange.
             var src = new GatewayServiceProxy.VacancySummary
             {
+                VacancyType = "IntermediateLevelApprenticeship",
                 VacancyLocationType = "Standard"
             };
 
@@ -72,6 +75,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             // Arrange.
             var src = new GatewayServiceProxy.VacancySummary
             {
+                VacancyType = "IntermediateLevelApprenticeship",
                 VacancyLocationType = "MultipleLocation"
             };
 
@@ -89,6 +93,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             // Arrange.
             var src = new GatewayServiceProxy.VacancySummary
             {
+                VacancyType = "IntermediateLevelApprenticeship",
                 VacancyLocationType = "National"
             };
 
@@ -106,6 +111,8 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             // Arrange.
             var src = new GatewayServiceProxy.VacancySummary
             {
+                VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "Standard",
                 Address = new GatewayServiceProxy.VacancySummaryAddress
                 {
                     Latitude = 1.0m,
@@ -124,11 +131,13 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
         }
 
         [TestCase]
-        public void ShouldMapVacancyLocationWhenNotSpecified()
+        public void ShouldThrowIfUnknownVacancyLocationType()
         {
             // Arrange.
             var src = new GatewayServiceProxy.VacancySummary
             {
+                VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "MultipleLocation",
                 Address = null
             };
 

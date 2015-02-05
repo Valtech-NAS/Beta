@@ -4,6 +4,7 @@
     using Candidate.Mediators;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
+    using Constants;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Moq;
@@ -115,8 +116,8 @@
 
             ApprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
 
-            UserDataProvider.Setup(udp => udp.Pop(UserDataItemNames.VacancyDistance)).Returns(VacancyDistance);
-            UserDataProvider.Setup(udp => udp.Pop(UserDataItemNames.LastViewedVacancyId)).Returns(Convert.ToString(Id));
+            UserDataProvider.Setup(udp => udp.Pop(CandidateDataItemNames.VacancyDistance)).Returns(VacancyDistance);
+            UserDataProvider.Setup(udp => udp.Pop(CandidateDataItemNames.LastViewedVacancyId)).Returns(Convert.ToString(Id));
 
             var response = Mediator.Details(Id, null);
 

@@ -297,8 +297,8 @@
             var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
 
             // Clear last viewed vacancy and distance (if any).
-            var lastViewedVacancyId = UserData.Pop(UserDataItemNames.LastViewedVacancyId);
-            UserData.Pop(UserDataItemNames.VacancyDistance);
+            var lastViewedVacancyId = UserData.Pop(CandidateDataItemNames.LastViewedVacancyId);
+            UserData.Pop(CandidateDataItemNames.VacancyDistance);
 
             if (!string.IsNullOrWhiteSpace(returnUrl))
             {

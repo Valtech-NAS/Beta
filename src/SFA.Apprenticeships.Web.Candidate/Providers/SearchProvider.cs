@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Application.Interfaces.Locations;
+    using Application.Interfaces.Logging;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Constants.Pages;
@@ -15,7 +16,6 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Mapping;
-    using NLog;
     using ViewModels;
     using ViewModels.Locations;
     using ViewModels.VacancySearch;
@@ -23,7 +23,7 @@
 
     public class SearchProvider : ISearchProvider
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IAddressSearchService _addressSearchService;
         private readonly ILocationSearchService _locationSearchService;
         private readonly IMapper _apprenticeshipSearchMapper;
@@ -36,7 +36,7 @@
             IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> traineeshipSearchService,
             IAddressSearchService addressSearchService,
             IMapper apprenticeshipSearchMapper,
-            IMapper traineeshipSearchMapper)
+            IMapper traineeshipSearchMapper, ILogService logger)
         {
             _locationSearchService = locationSearchService;
             _apprenticeshipSearchService = apprenticeshipSearchService;
@@ -44,11 +44,12 @@
             _addressSearchService = addressSearchService;
             _apprenticeshipSearchMapper = apprenticeshipSearchMapper;
             _traineeshipSearchMapper = traineeshipSearchMapper;
+            _logger = logger;
         }
 
         public LocationsViewModel FindLocation(string placeNameOrPostcode)
         {
-            Logger.Debug("Calling SearchProvider to find the location for placename or postcode: {0}",
+            _logger.Debug("Calling SearchProvider to find the location for placename or postcode: {0}",
                 placeNameOrPostcode);
 
             try
@@ -80,20 +81,20 @@
                         break;
                 }
 
-                Logger.Error(errorMessage, e);
+                _logger.Error(errorMessage, e);
                 return new LocationsViewModel(message);
             }
             catch (Exception e)
             {
                 var message = string.Format("Find location failed for placename or postcode {0}", placeNameOrPostcode);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
                 throw;
             }
         }
 
         public ApprenticeshipSearchResponseViewModel FindVacancies(ApprenticeshipSearchViewModel search)
         {
-            Logger.Debug("Calling SearchProvider to find apprenticeship vacancies.");
+            _logger.Debug("Calling SearchProvider to find apprenticeship vacancies.");
 
             var searchLocation = _apprenticeshipSearchMapper.Map<ApprenticeshipSearchViewModel, Location>(search);
 
@@ -116,7 +117,7 @@
                     }
                     if (searchResults.Total > 1)
                     {
-                        Logger.Warn("{0} results found for Vacancy Reference Number {1} parsed from {2}. Expected 0 or 1", searchResults.Total, vacancyReference, search.Keywords);
+                        _logger.Warn("{0} results found for Vacancy Reference Number {1} parsed from {2}. Expected 0 or 1", searchResults.Total, vacancyReference, search.Keywords);
                     }
                     var response = new ApprenticeshipSearchResponseViewModel
                     {
@@ -181,12 +182,12 @@
             catch (CustomException ex)
             {
 // ReSharper disable once FormatStringProblem
-                Logger.Error("Find apprenticeship vacancies failed. Check inner details for more info", ex);
+                _logger.Error("Find apprenticeship vacancies failed. Check inner details for more info", ex);
                 return new ApprenticeshipSearchResponseViewModel(VacancySearchResultsPageMessages.VacancySearchFailed);
             }
             catch (Exception e)
             {
-                Logger.Error("Find apprenticeship vacancies failed. Check inner details for more info", e);
+                _logger.Error("Find apprenticeship vacancies failed. Check inner details for more info", e);
                 throw;
             }
         }
@@ -217,7 +218,7 @@
 
         public TraineeshipSearchResponseViewModel FindVacancies(TraineeshipSearchViewModel search)
         {
-            Logger.Debug("Calling SearchProvider to find traineeship vacancies.");
+            _logger.Debug("Calling SearchProvider to find traineeship vacancies.");
 
             var searchLocation = _traineeshipSearchMapper.Map<TraineeshipSearchViewModel, Location>(search);
 
@@ -247,12 +248,12 @@
             catch (CustomException ex)
             {
                 // ReSharper disable once FormatStringProblem
-                Logger.Error("Find traineeship vacancies failed. Check inner details for more info", ex);
+                _logger.Error("Find traineeship vacancies failed. Check inner details for more info", ex);
                 return new TraineeshipSearchResponseViewModel(VacancySearchResultsPageMessages.VacancySearchFailed);
             }
             catch (Exception e)
             {
-                Logger.Error("Find traineeship vacancies failed. Check inner details for more info", e);
+                _logger.Error("Find traineeship vacancies failed. Check inner details for more info", e);
                 throw;
             }
 
@@ -260,7 +261,7 @@
 
         public AddressSearchResult FindAddresses(string postcode)
         {
-            Logger.Debug("Calling SearchProvider to find out the addresses for postcode {0}.", postcode);
+            _logger.Debug("Calling SearchProvider to find out the addresses for postcode {0}.", postcode);
 
             var addressSearchViewModel = new AddressSearchResult();
 
@@ -272,14 +273,14 @@
             catch (CustomException e)
             {
                 var message = string.Format("FindAddresses for postcode {0} failed.", postcode);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
                 addressSearchViewModel.ErrorMessage = e.Message;
                 addressSearchViewModel.HasError = true;
             }
             catch (Exception e)
             {
                 var message = string.Format("FindAddresses for postcode {0} failed.", postcode);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
                 throw;
             }
 

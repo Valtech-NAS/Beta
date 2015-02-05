@@ -14,7 +14,6 @@
 
         public static CacheDuration CacheDuration(this VacancyStatusSummary vacancyStatusSummary)
         {
-            //TODO: Move cache config into Mongo collection (config service)
             return Domain.Interfaces.Caching.CacheDuration.ThirtyMinutes;
         }
     }

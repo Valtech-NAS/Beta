@@ -4,6 +4,7 @@
     using Domain.Entities.Exceptions;
     using Interfaces.Logging;
     using Interfaces.Users;
+    using ErrorCodes = Interfaces.Users.ErrorCodes;
 
     public class AuthenticationService : IAuthenticationService
     {
@@ -27,7 +28,7 @@
             _logger.Debug("Calling AuthenticationService to create a new user with Id={0}", userId);
             var succeeded = _userDirectoryProvider.CreateUser(userId.ToString(), password);
 
-            CheckAndThrowFailureError(succeeded, "User creation failed", Domain.Entities.Exceptions.ErrorCodes.UserCreationError);
+            CheckAndThrowFailureError(succeeded, "User creation failed", ErrorCodes.UserCreationError);
         }
 
         public void ResetUserPassword(Guid userId, string password)
@@ -35,7 +36,7 @@
             _logger.Debug("Calling AuthenticationService to reset password for the user with Id={0}", userId);
             var succeeded = _userDirectoryProvider.ResetPassword(userId.ToString(), password);
 
-            CheckAndThrowFailureError(succeeded, "Reset user password failed", Domain.Entities.Exceptions.ErrorCodes.UserResetPasswordError);
+            CheckAndThrowFailureError(succeeded, "Reset user password failed", ErrorCodes.UserResetPasswordError);
         }
 
         public void ChangePassword(Guid userId, string oldPassword, string newPassword)
@@ -43,7 +44,7 @@
             _logger.Debug("Calling AuthenticationService to change the password for the user with Id={0}", userId);
             var succeeded = _userDirectoryProvider.ChangePassword(userId.ToString(), oldPassword, newPassword);
 
-            CheckAndThrowFailureError(succeeded, "Change password failed", Domain.Entities.Exceptions.ErrorCodes.UserChangePasswordError);
+            CheckAndThrowFailureError(succeeded, "Change password failed", ErrorCodes.UserChangePasswordError);
         }
 
 // ReSharper disable once UnusedParameter.Local

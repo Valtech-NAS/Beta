@@ -3,7 +3,6 @@
     using Builders;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
-    using Domain.Entities.Users;
     using System;
     using SpecBind.Helpers;
     using TechTalk.SpecFlow;
@@ -11,12 +10,6 @@
     [Binding]
     public class DashboardBinding
     {
-        private const string UserEmailAddress = "nas.exemplar+acceptancetests@gmail.com";
-        private const string EmailAddressTokenName = "EmailAddressToken";
-        private const string PasswordTokenName = "PasswordToken";
-        private const string Password = "?Password01!";
-        private const int ExistentVacancyId = 445650;
-
         private readonly ITokenManager _tokenManager;
 
         private ApprenticeshipApplicationBuilder _apprenticeshipApplicationBuilder;
@@ -30,16 +23,13 @@
         [Given(@"I have an empty dashboard")]
         public void GivenIHaveAnEmptyDashboard()
         {
-            var candidate = new CandidateBuilder(UserEmailAddress)
+            var candidate = new CandidateBuilder(BindingData.UserEmailAddress)
                     .Build();
+            
+            SetTokens(candidate);
 
-            var user = new UserBuilder(UserEmailAddress)
-                .Build();
-
-            SetTokens(candidate, user);
-
-            _apprenticeshipApplicationBuilder = new ApprenticeshipApplicationBuilder(candidate.EntityId, UserEmailAddress);
-            _traineeshipApplicationBuilder = new TraineeshipApplicationBuilder(candidate.EntityId, UserEmailAddress);
+            _apprenticeshipApplicationBuilder = new ApprenticeshipApplicationBuilder(candidate.EntityId, BindingData.UserEmailAddress);
+            _traineeshipApplicationBuilder = new TraineeshipApplicationBuilder(candidate.EntityId, BindingData.UserEmailAddress);
 
             _apprenticeshipApplicationBuilder.DeleteApprenticeshipApplications(candidate.EntityId);
             _traineeshipApplicationBuilder.DeleteTraineeshipApplications(candidate.EntityId);
@@ -53,7 +43,7 @@
             {
                 var applicationStatus = (ApplicationStatuses)Enum.Parse(typeof(ApplicationStatuses), state);
                 _apprenticeshipApplicationBuilder
-                    .WithVacancyId(i + ExistentVacancyId)
+                    .WithVacancyId(i + BindingData.ExistentVacancyId)
                     .WithApplicationStatus(applicationStatus).Build();
             }
         }
@@ -83,13 +73,13 @@
             }
         }
 
-        private void SetTokens(Candidate candidate, User user)
+        private void SetTokens(Candidate candidate)
         {
             // Email.
-            _tokenManager.SetToken(EmailAddressTokenName, candidate.RegistrationDetails.EmailAddress);
+            _tokenManager.SetToken(BindingData.UserEmailAddressTokenName, candidate.RegistrationDetails.EmailAddress);
 
             // Password.
-            _tokenManager.SetToken(PasswordTokenName, Password);
+            _tokenManager.SetToken(BindingData.PasswordTokenName, BindingData.Password);
         }
     }
 }

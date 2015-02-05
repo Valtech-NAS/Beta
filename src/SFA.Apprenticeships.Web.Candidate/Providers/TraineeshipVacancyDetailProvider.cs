@@ -1,9 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
-    using Application.Interfaces.Search;
+    using Application.Interfaces.Logging;
     using Domain.Entities.Vacancies.Traineeships;
-    using NLog;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Vacancies;
     using Domain.Entities.Exceptions;
@@ -13,8 +12,7 @@
 
     public class TraineeshipVacancyDetailProvider : ITraineeshipVacancyDetailProvider
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private readonly ILogService _logger;
         private readonly IMapper _mapper;
         private readonly IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> _vacancySearchService;
         private readonly ICandidateService _candidateService;
@@ -22,16 +20,17 @@
         public TraineeshipVacancyDetailProvider(
             IMapper mapper,
             IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters> vacancySearchService, 
-            ICandidateService candidateService)
+            ICandidateService candidateService, ILogService logger)
         {
             _mapper = mapper;
             _vacancySearchService = vacancySearchService;
             _candidateService = candidateService;
+            _logger = logger;
         }
 
         public VacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId)
         {
-            Logger.Debug(
+            _logger.Debug(
                 "Calling TraineeshipVacancyDetailProvider to get the Vacancy detail View Model for candidate ID: {0}, vacancy ID: {1}.",
                 candidateId, vacancyId);
 
@@ -62,7 +61,7 @@
                     string.Format("Get Traineeship Vacancy View Model failed for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
 
-                Logger.Error(message, e);
+                _logger.Error(message, e);
 
                 return new VacancyDetailViewModel(TraineeshipVacancyDetailPageMessages.GetVacancyDetailFailed);
             }
@@ -72,7 +71,7 @@
                     string.Format("Get Traineeship Vacancy View Model failed for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
 
-                Logger.Error(message, e);
+                _logger.Error(message, e);
                 throw;
             }
         }

@@ -11,6 +11,7 @@
     using Newtonsoft.Json;
     using Wcf;
     using ErrorCodes = Application.VacancyEtl.ErrorCodes;
+    using VacancyErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
     using MessagingErrorCodes = Application.Interfaces.Messaging.ErrorCodes;
 
     public class LegacyVacancyDataProvider<TVacancyDetail> : IVacancyDataProvider<TVacancyDetail> where TVacancyDetail : VacancyDetail
@@ -51,7 +52,7 @@
                     {
                         if (errorIfNotFound)
                         {
-                            throw new CustomException("Vacancy not found with ID {0}.", MessagingErrorCodes.VacancyNotFoundError, vacancyId);
+                            throw new CustomException("Vacancy not found with ID {0}.", VacancyErrorCodes.VacancyNotFoundError, vacancyId);
                         }
 
                         _logger.Info("Vacancy not found with ID {0}. Returning null.", vacancyId);

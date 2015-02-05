@@ -4,6 +4,7 @@
     using Candidate.Mediators;
     using Candidate.ViewModels.Login;
     using Common.Constants;
+    using Constants;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
@@ -113,7 +114,7 @@
             };
 
             const string vacancyId = "1";
-            UserDataProvider.Setup(p => p.Pop(UserDataItemNames.LastViewedVacancyId)).Returns(vacancyId);
+            UserDataProvider.Setup(p => p.Pop(CandidateDataItemNames.LastViewedVacancyId)).Returns(vacancyId);
             CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { IsAuthenticated = true, EmailAddress = ValidEmailAddress });
             var entityId = Guid.NewGuid();
             CandidateServiceProvider.Setup(p => p.GetCandidate(ValidEmailAddress)).Returns(new Candidate { EntityId = entityId });
@@ -135,7 +136,7 @@
             };
 
             const string vacancyId = "1";
-            UserDataProvider.Setup(p => p.Pop(UserDataItemNames.LastViewedVacancyId)).Returns(vacancyId);
+            UserDataProvider.Setup(p => p.Pop(CandidateDataItemNames.LastViewedVacancyId)).Returns(vacancyId);
             CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { IsAuthenticated = true, EmailAddress = ValidEmailAddress });
             var entityId = Guid.NewGuid();
             CandidateServiceProvider.Setup(p => p.GetCandidate(ValidEmailAddress)).Returns(new Candidate { EntityId = entityId });

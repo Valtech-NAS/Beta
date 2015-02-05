@@ -3,9 +3,9 @@
     using System;
     using System.Linq;
     using System.Web;
+    using Application.Interfaces.Logging;
     using Common.Providers;
     using Constants;
-    using NLog;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Users;
     using Domain.Entities.Applications;
@@ -20,13 +20,13 @@
     using ViewModels.Register;
     using Common.Constants;
     using Common.Services;
-    using ErrorCodes = Domain.Entities.Exceptions.ErrorCodes;
+    using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
+    using UserErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
     public class CandidateServiceProvider : ICandidateServiceProvider
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogService _logger;
         private readonly IAuthenticationTicketService _authenticationTicketService;
-
         private readonly ICandidateService _candidateService;
         private readonly IConfigurationManager _configurationManager;
         private readonly HttpContextBase _httpContext;
@@ -41,7 +41,7 @@
             IAuthenticationTicketService authenticationTicketService,
             IMapper mapper,
             HttpContextBase httpContext,
-            IConfigurationManager configurationManager)
+            IConfigurationManager configurationManager, ILogService logger)
         {
             _candidateService = candidateService;
             _userAccountService = userAccountService;
@@ -50,11 +50,12 @@
             _mapper = mapper;
             _httpContext = httpContext;
             _configurationManager = configurationManager;
+            _logger = logger;
         }
 
         public UserNameAvailability IsUsernameAvailable(string username)
         {
-            Logger.Debug("Calling CandidateServiceProvider to if the username {0} is available.", username);
+            _logger.Debug("Calling CandidateServiceProvider to if the username {0} is available.", username);
 
             var userNameAvailability = new UserNameAvailability();
 
@@ -66,7 +67,7 @@
             {
                 const string errorMessage = "Error checking user name availability for {0}";
                 var message = string.Format(errorMessage, username);
-                Logger.Error(message, ex);
+                _logger.Error(message, ex);
 
                 userNameAvailability.HasError = true;
                 userNameAvailability.ErrorMessage = errorMessage;
@@ -77,7 +78,7 @@
 
         public UserStatusesViewModel GetUserStatus(string username)
         {
-            Logger.Debug("Calling CandidateServiceProvider to get the user status for the user {0}.", username);
+            _logger.Debug("Calling CandidateServiceProvider to get the user status for the user {0}.", username);
 
             try
             {
@@ -90,7 +91,7 @@
             {
                 const string errorMessage = "Error getting user status";
                 var message = string.Format("{0} for {1}", errorMessage, username);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
 
                 return new UserStatusesViewModel(e.Message);
             }
@@ -98,7 +99,7 @@
 
         public ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId)
         {
-            Logger.Debug(
+            _logger.Debug(
                 "Calling CandidateServiceProvider to get the application status for CandidateID={0}, VacancyId={1}.",
                 candidateId, vacancyId);
 
@@ -119,14 +120,14 @@
                 var message = string.Format("Get Application status failed for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
-                Logger.Error(message, e);
+                _logger.Error(message, e);
                 throw;
             }
         }
 
         public bool Register(RegisterViewModel model)
         {
-            Logger.Debug("Calling CandidateServiceProvider to register a new candidate");
+            _logger.Debug("Calling CandidateServiceProvider to register a new candidate");
 
             try
             {
@@ -143,26 +144,26 @@
             {
                 var message = string.Format("Candidate registration failed for {0}.", model.EmailAddress);
 
-                if (e.Code == ErrorCodes.UserInIncorrectStateError)
+                if (e.Code == Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError)
                 {
-                    Logger.Info(message, e);
+                    _logger.Info(message, e);
                 }
                 else
                 {
-                    Logger.Error(message, e);
+                    _logger.Error(message, e);
                 }
                 return false;
             }
             catch (Exception e)
             {
-                Logger.Error("Candidate registration failed for " + model.EmailAddress, e);
+                _logger.Error("Candidate registration failed for " + model.EmailAddress, e);
                 return false;
             }
         }
 
         public ActivationViewModel Activate(ActivationViewModel model, Guid candidateId)
         {
-            Logger.Debug(
+            _logger.Info(
                 "Calling CandidateServiceProvider to activate user with Id={0}",
                 candidateId);
 
@@ -177,39 +178,27 @@
             }
             catch (CustomException e)
             {
-                string message;
-
                 switch (e.Code)
                 {
-                    case Application.Interfaces.Candidates.ErrorCodes.ActivateUserFailed:
-                        Logger.Error("Candidate activation failed for " + model.EmailAddress, e);
-                        message = ActivationPageMessages.ActivationFailed;
-                        return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error,
-                            message);
+                    case Domain.Entities.ErrorCodes.EntityStateError:
+                        _logger.Error("Candidate was in an invalid state for activation:" + model.EmailAddress, e);
+                        return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error, ActivationPageMessages.ActivationFailed);
 
-                    case Application.Interfaces.Candidates.ErrorCodes.ActivateUserInvalidCode:
-                        Logger.Info("Candidate activation failed for " + model.EmailAddress, e);
-                        message = ActivationPageMessages.ActivationCodeIncorrect;
-                        return new ActivationViewModel(model.EmailAddress, model.ActivationCode,
-                            ActivateUserState.InvalidCode,
-                            message);
                     default:
-                        Logger.Error("Candidate activation failed for " + model.EmailAddress, e);
-                        break;
+                        _logger.Info("Candidate activation failed for " + model.EmailAddress, e);
+                        return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.InvalidCode, ActivationPageMessages.ActivationCodeIncorrect);
                 }
             }
             catch (Exception e)
             {
-                Logger.Error("Candidate activation failed for " + model.EmailAddress, e);
-                throw;
+                _logger.Error("Candidate activation failed for " + model.EmailAddress, e);
+                return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error, ActivationPageMessages.ActivationFailed);
             }
-
-            return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error);
         }
 
         public LoginResultViewModel Login(LoginViewModel model)
         {
-            Logger.Debug("Calling CandidateServiceProvider to log the user {0}",
+            _logger.Debug("Calling CandidateServiceProvider to log the user {0}",
                 model.EmailAddress);
 
             try
@@ -250,7 +239,7 @@
             }
             catch (Exception e)
             {
-                Logger.Error("Candidate login failed for " + model.EmailAddress, e);
+                _logger.Error("Candidate login failed for " + model.EmailAddress, e);
 
                 return new LoginResultViewModel(LoginPageMessages.LoginFailedErrorText)
                 {
@@ -261,7 +250,7 @@
 
         public bool RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model)
         {
-            Logger.Debug("Calling CandidateServiceProvider to request a password reset code for user {0}",
+            _logger.Debug("Calling CandidateServiceProvider to request a password reset code for user {0}",
                 model.EmailAddress);
 
             try
@@ -274,12 +263,12 @@
             {
                 switch (e.Code)
                 {
-                    case ErrorCodes.UserInIncorrectStateError:
+                    case Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError:
                     case Application.Interfaces.Users.ErrorCodes.UnknownUserError:
-                        Logger.Info(e.Message, e);
+                        _logger.Info(e.Message, e);
                         break;
                     default:
-                        Logger.Error(e.Message, e);
+                        _logger.Error(e.Message, e);
                         break;
                 }
 
@@ -287,7 +276,7 @@
             }
             catch (Exception e)
             {
-                Logger.Error("Send password reset code failed for " + model.EmailAddress, e);
+                _logger.Error("Send password reset code failed for " + model.EmailAddress, e);
 
                 return false;
             }
@@ -295,7 +284,7 @@
 
         public AccountUnlockViewModel RequestAccountUnlockCode(AccountUnlockViewModel model)
         {
-            Logger.Debug("Calling CandidateServiceProvider to request an account unlock code for user {0}",
+            _logger.Debug("Calling CandidateServiceProvider to request an account unlock code for user {0}",
                 model.EmailAddress);
 
             try
@@ -307,12 +296,12 @@
             {
                 switch (e.Code)
                 {
-                    case ErrorCodes.UserInIncorrectStateError:
+                    case Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError:
                     case Application.Interfaces.Users.ErrorCodes.UnknownUserError:
-                        Logger.Info(e.Message, e);
+                        _logger.Info(e.Message, e);
                         break;
                     default:
-                        Logger.Error(e.Message, e);
+                        _logger.Error(e.Message, e);
                         break;
                 }
                 return new AccountUnlockViewModel(e.Message) {EmailAddress = model.EmailAddress};
@@ -320,14 +309,14 @@
             catch (Exception e)
             {
                 var message = string.Format("Send account unlock code failed for " + model.EmailAddress);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
                 return new AccountUnlockViewModel(message) {EmailAddress = model.EmailAddress};
             }
         }
 
         public PasswordResetViewModel VerifyPasswordReset(PasswordResetViewModel passwordResetViewModel)
         {
-            Logger.Debug("Calling CandidateServiceProvider to verify password reset for user {0}", passwordResetViewModel.EmailAddress);
+            _logger.Debug("Calling CandidateServiceProvider to verify password reset for user {0}", passwordResetViewModel.EmailAddress);
             passwordResetViewModel.IsPasswordResetCodeValid = false;
 
             try
@@ -338,24 +327,24 @@
             }
             catch (CustomException e)
             {
-                Logger.Info("Reset forgotten password failed for " + passwordResetViewModel.EmailAddress, e);
+                _logger.Info("Reset forgotten password failed for " + passwordResetViewModel.EmailAddress, e);
 
                 switch (e.Code)
                 {
-                    case ErrorCodes.UnknownUserError:
-                    case ErrorCodes.UserInIncorrectStateError:
-                    case ErrorCodes.UserPasswordResetCodeExpiredError:
-                    case ErrorCodes.UserPasswordResetCodeIsInvalid:
+                    case UserErrorCodes.UnknownUserError:
+                    case Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError:
+                    case Application.Interfaces.Users.ErrorCodes.UserPasswordResetCodeExpiredError:
+                    case Application.Interfaces.Users.ErrorCodes.UserPasswordResetCodeIsInvalid:
                         passwordResetViewModel.IsPasswordResetCodeValid = false;
                         break;
 
-                    case ErrorCodes.UserAccountLockedError:
+                    case Application.Interfaces.Users.ErrorCodes.UserAccountLockedError:
                         passwordResetViewModel.UserStatus = UserStatuses.Locked;
                         break;
 
-                    case ErrorCodes.CandidateCreationError:
+                    case CandidateErrorCodes.CandidateCreationError:
                         passwordResetViewModel.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
-                        Logger.Error("Reset forgotten password failed for " + passwordResetViewModel.EmailAddress, e);
+                        _logger.Error("Reset forgotten password failed for " + passwordResetViewModel.EmailAddress, e);
                         break;
                     default:
                         passwordResetViewModel.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
@@ -364,7 +353,7 @@
             }
             catch (Exception e)
             {
-                Logger.Error("Reset forgotten password failed for " + passwordResetViewModel.EmailAddress, e);
+                _logger.Error("Reset forgotten password failed for " + passwordResetViewModel.EmailAddress, e);
 
                 passwordResetViewModel.ViewModelMessage = PasswordResetPageMessages.FailedPasswordReset;
             }
@@ -374,7 +363,7 @@
 
         public AccountUnlockViewModel VerifyAccountUnlockCode(AccountUnlockViewModel model)
         {
-            Logger.Debug("Calling CandidateServiceProvider to verify account unlock code for user {0}",
+            _logger.Debug("Calling CandidateServiceProvider to verify account unlock code for user {0}",
                 model.EmailAddress);
 
             try
@@ -386,34 +375,34 @@
             {
                 switch (e.Code)
                 {
-                    case ErrorCodes.UserInIncorrectStateError:
-                        Logger.Info(e.Message, e);
+                    case Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError:
+                        _logger.Info(e.Message, e);
                         return new AccountUnlockViewModel {Status = AccountUnlockState.UserInIncorrectState};
                     case Application.Interfaces.Users.ErrorCodes.AccountUnlockCodeExpired:
-                        Logger.Info(e.Message, e);
+                        _logger.Info(e.Message, e);
                         return new AccountUnlockViewModel {Status = AccountUnlockState.AccountUnlockCodeExpired};
                     case Application.Interfaces.Users.ErrorCodes.AccountUnlockCodeInvalid:
                     case Application.Interfaces.Users.ErrorCodes.UnknownUserError:
-                        Logger.Info(e.Message, e);
+                        _logger.Info(e.Message, e);
                         return new AccountUnlockViewModel
                         {
                             Status = AccountUnlockState.AccountEmailAddressOrUnlockCodeInvalid
                         };
                     default:
-                        Logger.Error(e.Message, e);
+                        _logger.Error(e.Message, e);
                         return new AccountUnlockViewModel {Status = AccountUnlockState.Error};
                 }
             }
             catch (Exception e)
             {
-                Logger.Error("Account unlock failed for " + model.EmailAddress, e);
+                _logger.Error("Account unlock failed for " + model.EmailAddress, e);
                 return new AccountUnlockViewModel {Status = AccountUnlockState.Error};
             }
         }
 
         public bool ResendActivationCode(string username)
         {
-            Logger.Debug("Calling CandidateServiceProvider to request activation code for user {0}.", username);
+            _logger.Debug("Calling CandidateServiceProvider to request activation code for user {0}.", username);
 
             try
             {
@@ -422,19 +411,19 @@
             }
             catch (CustomException e)
             {
-                Logger.Info("Reset activation code failed for " + username, e);
+                _logger.Info("Reset activation code failed for " + username, e);
                 return false;
             }
             catch (Exception e)
             {
-                Logger.Error("Reset activation code failed for " + username, e);
+                _logger.Error("Reset activation code failed for " + username, e);
                 return false;
             }
         }
 
         public Candidate GetCandidate(string username)
         {
-            Logger.Debug("Calling CandidateServiceProvider to get Candidate for user {0}.", username);
+            _logger.Debug("Calling CandidateServiceProvider to get Candidate for user {0}.", username);
 
             try
             {
@@ -443,7 +432,7 @@
             catch (Exception e)
             {
                 var message = string.Format("GetCandidate for user {0} failed.", username);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
                 throw;
             }
         }
@@ -457,7 +446,7 @@
             catch (Exception e)
             {
                 var message = string.Format("GetCandidate for user with Id={0} failed.", candidateId);
-                Logger.Error(message, e);
+                _logger.Error(message, e);
                 throw;
             }
         }
@@ -474,7 +463,7 @@
             }
             catch (Exception ex)
             {
-                Logger.Error("Error updating terms and conditions version", ex);
+                _logger.Error("Error updating terms and conditions version", ex);
                 return false;
             }
         }

@@ -10,6 +10,7 @@
     using Entities;
     using Mongo.Common;
     using MongoDB.Driver.Builders;
+    using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
 
     public class CandidateRepository : GenericMongoClient<MongoCandidate>, ICandidateReadRepository,
         ICandidateWriteRepository
@@ -46,7 +47,7 @@
                 var message = string.Format("Unknown candidate with Id={0}", id);
                 _logger.Debug(message);
 
-                throw new CustomException(message, ErrorCodes.UnknownCandidateError);
+                throw new CustomException(message, CandidateErrorCodes.UnknownCandidateError);
             }
 
             LogOutcome(id, mongoEntity);
@@ -65,7 +66,7 @@
                 var message = string.Format("Unknown candidate with EmailAddress={0}", username);
                 _logger.Debug(message, username);
 
-                throw new CustomException(message, ErrorCodes.UnknownCandidateError); 
+                throw new CustomException(message, CandidateErrorCodes.UnknownCandidateError); 
             }
 
             LogOutcome(username, mongoEntity);

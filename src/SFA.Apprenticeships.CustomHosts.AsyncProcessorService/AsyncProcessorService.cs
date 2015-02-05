@@ -21,6 +21,8 @@
 
     public partial class AsyncProcessorService : ServiceBase
     {
+        private StructureMap.IContainer _container;
+
         public AsyncProcessorService()
         {
             InitializeComponent();
@@ -37,38 +39,30 @@
         protected override void OnStop()
         {
             // Kill the bus which will kill any subscriptions
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.GetInstance<IBus>().Advanced.Dispose();
-#pragma warning restore 0618
-
+            _container.GetInstance<IBus>().Advanced.Dispose();
+            
             // Give it 5 seconds to finish processing any in flight subscriptions.
             Thread.Sleep(TimeSpan.FromSeconds(5));
         }
 
-        private static void Initialise()
+        private void Initialise()
         {
             InitializeIoC();
             InitializeRabbitMQSubscribers();
         }
 
-        private static void InitializeRabbitMQSubscribers()
+        private void InitializeRabbitMQSubscribers()
         {
             const string asyncProcessorSubscriptionId = "AsyncProcessor";
 
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            var bootstrapper = ObjectFactory.GetInstance<IBootstrapSubcribers>();
-#pragma warning restore 0618
+            var bootstrapper = _container.GetInstance<IBootstrapSubcribers>();
 
-            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(EmailRequestConsumerAsync)), asyncProcessorSubscriptionId);
+            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(EmailRequestConsumerAsync)), asyncProcessorSubscriptionId, _container);
         }
 
-        private static void InitializeIoC()
+        private void InitializeIoC()
         {
-#pragma warning disable 0618
-            // TODO: AG: CRITICAL: NuGet package update on 2014-10-30.
-            ObjectFactory.Initialize(x =>
+            _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
@@ -80,7 +74,6 @@
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<AsyncProcessorRegistry>();
             });
-#pragma warning restore 0618
         }
     }
 }

@@ -17,7 +17,7 @@
                     apprenticeshipApplicationDetail.Status,
                     expectedStatuses);
 
-                throw new CustomException(message, ErrorCodes.ApplicationInIncorrectStateError);
+                throw new CustomException(message, ErrorCodes.EntityStateError);
             }
         }
 

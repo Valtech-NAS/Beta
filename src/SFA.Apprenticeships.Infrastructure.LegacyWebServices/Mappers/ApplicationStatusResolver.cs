@@ -1,13 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
+    using System;
     using AutoMapper;
     using Domain.Entities.Applications;
-    using NLog;
 
     public class ApplicationStatusResolver : ValueResolver<string, ApplicationStatuses>
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
         protected override ApplicationStatuses ResolveCore(string source)
         {
             switch (source)
@@ -29,8 +27,7 @@
                     return ApplicationStatuses.ExpiredOrWithdrawn;
 
                 default:
-                    Logger.Error("Unknown Application Status received from NAS Gateway Service, defaulting to Unknown: \"{0}\".", source);
-                    return ApplicationStatuses.Unknown;
+                    throw new ArgumentOutOfRangeException("source", "Unknown Application Status received from NAS Gateway Service: " + source);
             }
         }
     }

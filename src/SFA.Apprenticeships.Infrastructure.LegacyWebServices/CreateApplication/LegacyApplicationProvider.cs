@@ -14,6 +14,9 @@
     using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
     using WorkExperience = GatewayServiceProxy.WorkExperience;
+    using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
+    using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
+    using VacancyErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
 
     public class LegacyApplicationProvider : ILegacyApplicationProvider
     {
@@ -60,10 +63,10 @@
             if (response != null)
             {
                 CheckDuplicateError(apprenticeshipApplicationDetail, apprenticeshipApplicationDetail.Vacancy.Id, response);
-                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.InvalidCandidateState, Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.LegacyCandidateStateError);
-                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.CandidateNotFound, Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.LegacyCandidateNotFoundError);
-                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.UnknownCandidate, Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.LegacyCandidateNotFoundError);
-                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.InvalidVacancyState, Apprenticeships.Application.Interfaces.Vacancies.ErrorCodes.LegacyVacancyStateError);
+                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.InvalidCandidateState, CandidateErrorCodes.LegacyCandidateStateError);
+                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.CandidateNotFound, CandidateErrorCodes.LegacyCandidateNotFoundError);
+                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.UnknownCandidate, CandidateErrorCodes.LegacyCandidateNotFoundError);
+                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.InvalidVacancyState, VacancyErrorCodes.LegacyVacancyStateError);
 
                 var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
@@ -80,7 +83,7 @@
                 string.Format("Failed to create apprenticeship application for candidate '{0}' and vacancy '{1}' in Legacy.CreateApplication",
                     apprenticeshipApplicationDetail.CandidateId, 
                     apprenticeshipApplicationDetail.Vacancy.Id), 
-                    ErrorCodes.ApplicationGatewayCreationError);
+                    ApplicationErrorCodes.ApplicationGatewayCreationError);
         }
 
         public int CreateApplication(TraineeshipApplicationDetail traineeshipApplicationDetail)
@@ -104,10 +107,10 @@
             if (response != null)
             {
                 CheckDuplicateError(traineeshipApplicationDetail, traineeshipApplicationDetail.Vacancy.Id, response);
-                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.InvalidCandidateState, Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.LegacyCandidateStateError);
-                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.CandidateNotFound, Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.LegacyCandidateNotFoundError);
-                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.UnknownCandidate, Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.LegacyCandidateNotFoundError);
-                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.InvalidVacancyState, Apprenticeships.Application.Interfaces.Vacancies.ErrorCodes.LegacyVacancyStateError);
+                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.InvalidCandidateState, CandidateErrorCodes.LegacyCandidateStateError);
+                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.CandidateNotFound, CandidateErrorCodes.LegacyCandidateNotFoundError);
+                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.UnknownCandidate, CandidateErrorCodes.LegacyCandidateNotFoundError);
+                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.InvalidVacancyState, VacancyErrorCodes.LegacyVacancyStateError);
 
                 var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
 
@@ -124,18 +127,15 @@
                 string.Format("Failed to create traineeship application for candidate '{0}' and vacancy '{1}' in Legacy.CreateApplication",
                     traineeshipApplicationDetail.CandidateId,
                     traineeshipApplicationDetail.Vacancy.Id),
-                    ErrorCodes.ApplicationGatewayCreationError);
+                    ApplicationErrorCodes.ApplicationGatewayCreationError);
         }
 
-        private void CheckDuplicateError(ApplicationDetail applicationDetail,
-            int vacancyId, CreateApplicationResponse response)
+        private void CheckDuplicateError(ApplicationDetail applicationDetail, int vacancyId, CreateApplicationResponse response)
         {
             if (response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.DuplicateApplication))
             {
                 var warnMessage = string.Format("Duplicate application for candidate '{0}' and vacancy '{1}'",
                     applicationDetail.CandidateId, vacancyId);
-
-                _logger.Warn(warnMessage);
 
                 throw new CustomException(warnMessage, Apprenticeships.Application.Interfaces.Applications.ErrorCodes.ApplicationDuplicatedError);
             }

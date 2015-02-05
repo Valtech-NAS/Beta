@@ -22,8 +22,7 @@
 }
 else if (Request.IsAuthenticated)
 {
-    if (Model.CandidateApplicationStatus.HasValue &&
-        Model.CandidateApplicationStatus.Value != ApplicationStatuses.Unknown)
+    if (Model.CandidateApplicationStatus.HasValue)
     {
         // Candidate has applied for this vacancy.
         if (Model.CandidateApplicationStatus.Value == ApplicationStatuses.Draft &&

@@ -48,7 +48,7 @@
                     user.Status,
                     expectedStatuses);
 
-                throw new CustomException(message, ErrorCodes.UserInIncorrectStateError);
+                throw new CustomException(message, ErrorCodes.EntityStateError);
             }
         }
 
