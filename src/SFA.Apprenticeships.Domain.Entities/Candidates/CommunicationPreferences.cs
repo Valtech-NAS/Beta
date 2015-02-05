@@ -17,6 +17,6 @@
 
         public bool AllowTraineeshipPrompts { get; set; }
 
-        //todo: marketing opt-in
+        //todo: marketing opt-in (for v1.6)
     }
 }
