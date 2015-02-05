@@ -2,7 +2,8 @@
 {
     public static class ErrorCodes
     {
-        public const string EmailError = "SendEmail.Failed";
-        public const string SmsError = "SendSms.Failed";
+        //todo: use meaningful/consistent error code strings
+        public const string EmailError = "SendEmail";
+        public const string SmsError = "SendSms";
     }
 }

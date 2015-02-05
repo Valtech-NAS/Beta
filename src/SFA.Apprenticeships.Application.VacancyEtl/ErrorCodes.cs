@@ -2,8 +2,8 @@
 {
     public static class ErrorCodes
     {
-        //todo: use meaningful strings here!
+        //todo: use meaningful/consistent error code strings. need more specific error codes for these:
         public const string GatewayServiceFailed = "GatewayService.Failed";
-        public const string VacancyIndexerServiceError = "VacancyIndexer001";
+        public const string VacancyIndexerServiceError = "VacancyIndexerService";
     }
 }
