@@ -13,7 +13,10 @@
         {
             Mapper.CreateMap<ApprenticeshipSummary, ApprenticeshipSummaryUpdate>();
             Mapper.CreateMap<TraineeshipSummary, TraineeshipSummaryUpdate>();
-            Mapper.CreateMap<ApprenticeshipApplicationSummary, ExpiringDraft>();
+            
+            Mapper.CreateMap<ApprenticeshipApplicationSummary, ExpiringApprenticeshipApplicationDraft>()
+                .ForMember(output => output.EntityId, map => map.MapFrom(input => input.ApplicationId))
+                .ForMember(output => output.VacancyId, map => map.MapFrom(input => input.LegacyVacancyId));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -13,10 +14,13 @@
     public class VacancyAboutToExpireConsumerAsync : IConsumeAsync<VacancyAboutToExpire>
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
-        private readonly IExpiringDraftRepository _expiringDraftRepository;
+        private readonly IExpiringApprenticeshipApplicationDraftRepository _expiringDraftRepository;
         private readonly IMapper _mapper;
 
-        public VacancyAboutToExpireConsumerAsync(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, IExpiringDraftRepository expiringDraftRepository, IMapper mapper)
+        public VacancyAboutToExpireConsumerAsync(
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, 
+            IExpiringApprenticeshipApplicationDraftRepository expiringDraftRepository, 
+            IMapper mapper)
         {
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _expiringDraftRepository = expiringDraftRepository;
@@ -36,11 +40,17 @@
 
                 //Map to expiring draft model
                 var expiringDrafts =
-                    _mapper.Map<IEnumerable<ApprenticeshipApplicationSummary>, IEnumerable<ExpiringDraft>>(
+                    _mapper.Map<IEnumerable<ApprenticeshipApplicationSummary>, IEnumerable<ExpiringApprenticeshipApplicationDraft>>(
                         expiringApplications).ToList();
 
+                //Get those already notified or marked for notification
+                var alreadyExpiringDrafts = _expiringDraftRepository.GetExpiringApplications(vacancy.Id);
+
+                //Get those that haven't been added to expiring repo
+                var newExpiringDrafts = expiringDrafts.Where(e => !alreadyExpiringDrafts.Select(ev => ev.EntityId).Contains(e.EntityId)).ToList();
+
                 //Write to repo
-                expiringDrafts.ForEach(_expiringDraftRepository.Save);
+                newExpiringDrafts.ForEach(_expiringDraftRepository.Save);
             });
         }
     }

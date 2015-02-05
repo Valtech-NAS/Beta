@@ -10,11 +10,11 @@
 
     public class CommunicationProcessor : ICommunicationProcessor
     {
-        private readonly IExpiringDraftRepository _expiringDraftRepository;
+        private readonly IExpiringApprenticeshipApplicationDraftRepository _expiringDraftRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IMessageBus _bus;
 
-        public CommunicationProcessor(IExpiringDraftRepository expiringDraftRepository, ICandidateReadRepository candidateReadRepository, IMessageBus bus)
+        public CommunicationProcessor(IExpiringApprenticeshipApplicationDraftRepository expiringDraftRepository, ICandidateReadRepository candidateReadRepository, IMessageBus bus)
         {
             _expiringDraftRepository = expiringDraftRepository;
             _candidateReadRepository = candidateReadRepository;

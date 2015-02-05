@@ -13,12 +13,12 @@
     using Repositories.Communication.Entities;
 
     [TestFixture]
-    public class ExpiringDraftsRepositoryTests : RepositoryIntegrationTest
+    public class ExpiringApprenticeshipApplicationDraftsRepositoryTests : RepositoryIntegrationTest
     {
         private IConfigurationManager _configurationManager;
-        private IExpiringDraftRepository _expiringDraftRepository;
+        private IExpiringApprenticeshipApplicationDraftRepository _expiringDraftRepository;
         private MongoDatabase _database;
-        private MongoCollection<MongoExpiringDraft> _collection;
+        private MongoCollection<MongoApprenticeshipApplicationExpiringDraft> _collection;
 
         private const int TestVacancyId = -200;
 
@@ -26,7 +26,7 @@
         public void SetUp()
         {
             _configurationManager = Container.GetInstance<IConfigurationManager>();
-            _expiringDraftRepository = Container.GetInstance<IExpiringDraftRepository>();
+            _expiringDraftRepository = Container.GetInstance<IExpiringApprenticeshipApplicationDraftRepository>();
 
             var mongoConnectionString = _configurationManager.GetAppSetting("Communications.mongoDB");
             var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
@@ -34,7 +34,7 @@
             _database = new MongoClient(mongoConnectionString)
                 .GetServer()
                 .GetDatabase(mongoDbName);
-            _collection = _database.GetCollection<MongoExpiringDraft>("expiringdrafts");
+            _collection = _database.GetCollection<MongoApprenticeshipApplicationExpiringDraft>("expiringdraftapplications");
         }
 
         [TearDown]
@@ -50,7 +50,7 @@
             var batchId = Guid.NewGuid();
             var sentDateTime = DateTime.Now;
             var expiringDrafts =
-                Builder<ExpiringDraft>.CreateListOfSize(3)
+                Builder<ExpiringApprenticeshipApplicationDraft>.CreateListOfSize(3)
                     .All()
                     .With(ed => ed.VacancyId = TestVacancyId)
                     .With(ed => ed.BatchId = batchId)

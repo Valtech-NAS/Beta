@@ -105,8 +105,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Entities\MongoExpiringDraft.cs" />
-    <Compile Include="ExpiringDraftRepository.cs" />
+    <Compile Include="Entities\MongoApprenitceshipApplicationExpiringDraft.cs" />
+    <Compile Include="ExpiringApprenticeshipApplicationDraftRepository.cs" />
     <Compile Include="IoC\CommunicationRepositoryRegistry.cs" />
     <Compile Include="CommunicationRepository.cs" />
     <Compile Include="Mappers\CommunicationMappers.cs" />

@@ -4,12 +4,14 @@
     using System.Collections.Generic;
     using Entities.Communication;
 
-    public interface IExpiringDraftRepository
+    public interface IExpiringApprenticeshipApplicationDraftRepository
     {
-        void Save(ExpiringDraft expiringDraft);
+        void Save(ExpiringApprenticeshipApplicationDraft expiringDraft);
 
-        void Delete(ExpiringDraft expiringDraft);
+        void Delete(ExpiringApprenticeshipApplicationDraft expiringDraft);
 
-        Dictionary<Guid, List<ExpiringDraft>> GetCandidatesDailyDigest();
+        List<ExpiringApprenticeshipApplicationDraft> GetExpiringApplications(int vacancyId);
+
+        Dictionary<Guid, List<ExpiringApprenticeshipApplicationDraft>> GetCandidatesDailyDigest();
     }
 }

@@ -10,8 +10,8 @@
         public CommunicationRepositoryRegistry()
         {
             For<IMapper>().Use<CommunicationMappers>().Name = "CommunicationMappers";
-            For<IExpiringDraftRepository>()
-                .Use<ExpiringDraftRepository>()
+            For<IExpiringApprenticeshipApplicationDraftRepository>()
+                .Use<ExpiringApprenticeshipApplicationDraftRepository>()
                 .Ctor<CommunicationMappers>()
                 .Named("CommunicationMappers");
         }

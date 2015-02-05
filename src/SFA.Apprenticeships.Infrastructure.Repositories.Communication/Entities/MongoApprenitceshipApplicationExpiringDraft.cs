@@ -4,7 +4,7 @@
     using Domain.Entities.Communication;
     using MongoDB.Bson.Serialization.Attributes;
 
-    public class MongoExpiringDraft : ExpiringDraft
+    public class MongoApprenticeshipApplicationExpiringDraft : ExpiringApprenticeshipApplicationDraft
     {
         [BsonId]
         public Guid Id

@@ -13,8 +13,8 @@
 
         private void InitialiseUserCredentialsMappers()
         {
-            Mapper.CreateMap<ExpiringDraft, MongoExpiringDraft>();
-            Mapper.CreateMap<MongoExpiringDraft, ExpiringDraft>();
+            Mapper.CreateMap<ExpiringApprenticeshipApplicationDraft, MongoApprenticeshipApplicationExpiringDraft>();
+            Mapper.CreateMap<MongoApprenticeshipApplicationExpiringDraft, ExpiringApprenticeshipApplicationDraft>();
         }
     }
 }

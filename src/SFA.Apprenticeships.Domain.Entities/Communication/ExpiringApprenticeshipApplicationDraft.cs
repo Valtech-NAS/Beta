@@ -2,10 +2,8 @@
 {
     using System;
 
-    public class ExpiringDraft : BaseEntity
+    public class ExpiringApprenticeshipApplicationDraft : BaseEntity
     {
-        public Guid ApplicationId { get; set; }
-
         public Guid CandidateId { get; set; }
         
         public int VacancyId { get; set; }
