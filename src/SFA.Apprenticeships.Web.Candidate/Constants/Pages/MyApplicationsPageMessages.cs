@@ -10,5 +10,6 @@
         public const string ApplicationInIncorrectState = "The application is not in draft state";
         public const string ApplicationNotFound = "The application has not been found";
         public const string DismissTraineeshipPromptsFailed = "There's been a problem updating your settings. Please try again.";
+        public const string UnhandledError = "Unhandled error";
     }
 }

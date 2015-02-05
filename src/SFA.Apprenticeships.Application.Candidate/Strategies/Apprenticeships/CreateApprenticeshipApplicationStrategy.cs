@@ -61,14 +61,7 @@
         {
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
-            // TODO: can we return null here and handle in the caller?
-            if (vacancyDetails == null || vacancyDetails.VacancyStatus != VacancyStatuses.Live)
-            {
-                return new ApprenticeshipApplicationDetail
-                {
-                    Status = ApplicationStatuses.ExpiredOrWithdrawn
-                };
-            }
+            if (vacancyDetails == null) return null;
 
             var candidate = _candidateReadRepository.Get(candidateId);
             var applicationDetail = CreateApplicationDetail(candidate, vacancyDetails);

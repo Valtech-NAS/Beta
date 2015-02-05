@@ -74,7 +74,7 @@
                         "Unhandled custom exception while getting the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
                         candidateId, vacancyId);
                 _logger.Error(message, e);
-                return new ApprenticeshipApplicationViewModel("Unhandled error", ApplicationViewModelStatus.Error);
+                return new ApprenticeshipApplicationViewModel(MyApplicationsPageMessages.UnhandledError, ApplicationViewModelStatus.Error);
             }
             catch (Exception e)
             {
@@ -99,6 +99,14 @@
             try
             {
                 var applicationDetails = _candidateService.CreateApplication(candidateId, vacancyId);
+                if (applicationDetails == null)
+                {
+                    return new ApprenticeshipApplicationViewModel
+                    {
+                        Status = ApplicationStatuses.ExpiredOrWithdrawn,
+                        ViewModelMessage = MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable
+                    };
+                }
                 var applicationViewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }

@@ -162,6 +162,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\ApprenticeshipApplicationDetailBuilder.cs" />
+    <Compile Include="Builders\ApprenticeshipSummaryBuilder.cs" />
     <Compile Include="Extensions\CollectionExtensionsTests.cs" />
     <Compile Include="Helpers\BaseExtensionTests.cs" />
     <Compile Include="Helpers\FormTextForTests.cs" />
@@ -216,6 +218,7 @@
     <Compile Include="Mediators\TraineeshipSearch\ResultsTests.cs" />
     <Compile Include="Mediators\TraineeshipSearch\TestsBase.cs" />
     <Compile Include="Mocks\HttpContextFactory.cs" />
+    <Compile Include="Providers\ApplicationProvider\GetOrCreateApplicationViewModel.cs" />
     <Compile Include="Providers\ApplicationProvider\GetApplicationViewModel.cs" />
     <Compile Include="Providers\ApplicationProvider\ShowTraineeshipsPrompt.cs" />
     <Compile Include="Providers\SearchProviderTests.cs" />
