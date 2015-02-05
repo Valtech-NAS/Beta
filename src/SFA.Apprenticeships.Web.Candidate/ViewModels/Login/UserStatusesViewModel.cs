@@ -12,6 +12,6 @@
         {
         }
 
-        public UserStatuses UserStatus { get; set; }
+        public UserStatuses? UserStatus { get; set; }
     }
 }

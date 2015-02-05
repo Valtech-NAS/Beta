@@ -17,7 +17,7 @@
 
         public string FullName { get; set; }
 
-        public UserStatuses UserStatus { get; set; }
+        public UserStatuses? UserStatus { get; set; }
 
         public bool IsAuthenticated { get; set; }
 

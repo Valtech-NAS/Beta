@@ -28,7 +28,7 @@
 
             response.AssertValidationResult(Codes.Login.Index.ValidationError);
         }
-        
+
         [Test]
         public void AccountLocked()
         {
@@ -38,13 +38,13 @@
                 Password = ValidPassword
             };
 
-            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel {UserStatus = UserStatuses.Locked});
+            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { UserStatus = UserStatuses.Locked });
 
             var response = Mediator.Index(viewModel);
 
             response.AssertCode(Codes.Login.Index.AccountLocked);
         }
-        
+
         [Test]
         public void PendingActivation()
         {
@@ -56,7 +56,7 @@
 
             var loginResultViewModel = new LoginResultViewModel
             {
-                IsAuthenticated = true, 
+                IsAuthenticated = true,
                 UserStatus = UserStatuses.PendingActivation
             };
             CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(loginResultViewModel);
@@ -77,7 +77,7 @@
 
             const string returnUrl = "http://return.url.com";
             UserDataProvider.Setup(p => p.Pop(UserDataItemNames.SessionReturnUrl)).Returns(returnUrl);
-            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { IsAuthenticated = true });
+            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { IsAuthenticated = true, UserStatus = UserStatuses.Active });
 
             var response = Mediator.Index(viewModel);
 
@@ -96,7 +96,7 @@
 
             const string returnUrl = "http://return.url.com";
             UserDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);
-            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { IsAuthenticated = true });
+            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { IsAuthenticated = true, UserStatus = UserStatuses.Active });
 
             var response = Mediator.Index(viewModel);
 
@@ -115,7 +115,7 @@
 
             const string vacancyId = "1";
             UserDataProvider.Setup(p => p.Pop(CandidateDataItemNames.LastViewedVacancyId)).Returns(vacancyId);
-            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { IsAuthenticated = true, EmailAddress = ValidEmailAddress });
+            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { IsAuthenticated = true, EmailAddress = ValidEmailAddress, UserStatus = UserStatuses.Active });
             var entityId = Guid.NewGuid();
             CandidateServiceProvider.Setup(p => p.GetCandidate(ValidEmailAddress)).Returns(new Candidate { EntityId = entityId });
             CandidateServiceProvider.Setup(p => p.GetApplicationStatus(entityId, 1)).Returns(ApplicationStatuses.Draft);
@@ -137,7 +137,7 @@
 
             const string vacancyId = "1";
             UserDataProvider.Setup(p => p.Pop(CandidateDataItemNames.LastViewedVacancyId)).Returns(vacancyId);
-            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { IsAuthenticated = true, EmailAddress = ValidEmailAddress });
+            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { IsAuthenticated = true, EmailAddress = ValidEmailAddress, UserStatus = UserStatuses.Active });
             var entityId = Guid.NewGuid();
             CandidateServiceProvider.Setup(p => p.GetCandidate(ValidEmailAddress)).Returns(new Candidate { EntityId = entityId });
 
@@ -157,7 +157,7 @@
             };
 
             const string viewModelMessage = "Invalid Email Address or Password";
-            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel {ViewModelMessage = viewModelMessage});
+            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { ViewModelMessage = viewModelMessage });
 
             var response = Mediator.Index(viewModel);
 
@@ -174,7 +174,7 @@
                 Password = ValidPassword
             };
 
-            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel {IsAuthenticated = true});
+            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { IsAuthenticated = true, UserStatus = UserStatuses.Active });
 
             var response = Mediator.Index(viewModel);
 
@@ -193,7 +193,7 @@
             const string returnUrl = "http://return.url.com";
             ConfigurationManager.Setup(x => x.GetAppSetting<string>(It.IsAny<string>())).Returns("2");
             UserDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);
-            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { IsAuthenticated = true, AcceptedTermsAndConditionsVersion = "1" });
+            CandidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModel { IsAuthenticated = true, AcceptedTermsAndConditionsVersion = "1", UserStatus = UserStatuses.Active });
 
             var response = Mediator.Index(viewModel);
 

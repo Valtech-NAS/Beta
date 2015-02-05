@@ -5,6 +5,5 @@
     [TestFixture]
     public class SessionTimeoutTests : TestsBase
     {
-         
     }
 }

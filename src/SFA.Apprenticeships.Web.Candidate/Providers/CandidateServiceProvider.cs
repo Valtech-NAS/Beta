@@ -205,34 +205,37 @@
             {
                 var userStatusViewModel = GetUserStatus(model.EmailAddress);
 
-                if (userStatusViewModel.UserStatus == UserStatuses.Locked)
+                if (userStatusViewModel.UserStatus.HasValue)
                 {
-                    return GetLoginResultViewModel(model, userStatusViewModel.UserStatus);
-                }
-
-                var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
-
-                if (candidate != null)
-                {
-                    // User is authentic.
-                    SetUserCookies(candidate, _userAccountService.GetRoleNames(model.EmailAddress));
-
-                    return new LoginResultViewModel
+                    if (userStatusViewModel.UserStatus == UserStatuses.Locked)
                     {
-                        EmailAddress = candidate.RegistrationDetails.EmailAddress,
-                        FullName = candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
-                        UserStatus = userStatusViewModel.UserStatus,
-                        IsAuthenticated = true,
-                        AcceptedTermsAndConditionsVersion = candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion
-                    };
-                }
+                        return GetLoginResultViewModel(model, userStatusViewModel.UserStatus.Value);
+                    }
 
-                userStatusViewModel = GetUserStatus(model.EmailAddress);
+                    var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
 
-                if (userStatusViewModel.UserStatus == UserStatuses.Locked)
-                {
-                    // Authentication failed, user just locked their account.
-                    return GetLoginResultViewModel(model, userStatusViewModel.UserStatus);
+                    if (candidate != null)
+                    {
+                        // User is authentic.
+                        SetUserCookies(candidate, _userAccountService.GetRoleNames(model.EmailAddress));
+
+                        return new LoginResultViewModel
+                        {
+                            EmailAddress = candidate.RegistrationDetails.EmailAddress,
+                            FullName = candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
+                            UserStatus = userStatusViewModel.UserStatus.Value,
+                            IsAuthenticated = true,
+                            AcceptedTermsAndConditionsVersion = candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion
+                        };
+                    }
+
+                    userStatusViewModel = GetUserStatus(model.EmailAddress);
+
+                    if (userStatusViewModel.UserStatus == UserStatuses.Locked)
+                    {
+                        // Authentication failed, user just locked their account.
+                        return GetLoginResultViewModel(model, userStatusViewModel.UserStatus.Value);
+                    }
                 }
 
                 return GetAuthenticationFailedViewModel(model, userStatusViewModel.UserStatus);
@@ -322,8 +325,9 @@
             try
             {
                 _candidateService.ResetForgottenPassword(passwordResetViewModel.EmailAddress, passwordResetViewModel.PasswordResetCode, passwordResetViewModel.Password);
+
                 passwordResetViewModel.IsPasswordResetCodeValid = true;
-                passwordResetViewModel.UserStatus = _userAccountService.GetUserStatus(passwordResetViewModel.EmailAddress);
+                passwordResetViewModel.UserStatus = UserStatuses.Active;
             }
             catch (CustomException e)
             {
@@ -477,8 +481,6 @@
                 roles);
         }
 
-        #endregion
-
 
         private static LoginResultViewModel GetLoginResultViewModel(LoginViewModel model, UserStatuses userStatus)
         {
@@ -489,15 +491,15 @@
             };
         }
 
-        private static LoginResultViewModel GetAuthenticationFailedViewModel(LoginViewModel model,
-            UserStatuses userStatus)
+        private static LoginResultViewModel GetAuthenticationFailedViewModel(LoginViewModel model, UserStatuses? userStatus)
         {
-            // Authentication failed, user's account is not locked yet.
             return new LoginResultViewModel(LoginPageMessages.InvalidUsernameOrPasswordErrorText)
             {
                 EmailAddress = model.EmailAddress,
                 UserStatus = userStatus
             };
         }
+
+        #endregion
     }
 }

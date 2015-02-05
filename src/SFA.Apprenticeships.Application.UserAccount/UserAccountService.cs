@@ -124,7 +124,7 @@
             _unlockAccountStrategy.UnlockAccount(username, accountUnlockCode);
         }
 
-        public UserStatuses GetUserStatus(string username)
+        public UserStatuses? GetUserStatus(string username)
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
@@ -132,7 +132,7 @@
 
             var user = _userReadRepository.Get(username, false);
 
-            return user == null ? UserStatuses.Unknown : user.Status;
+            return user == null ? default(UserStatuses) : user.Status;
         }
 
         public string[] GetRoleNames(string username)

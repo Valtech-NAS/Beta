@@ -47,56 +47,58 @@
 
             var result = _candidateServiceProvider.Login(viewModel);
 
-            if (result.UserStatus == UserStatuses.Locked)
+            if (result.UserStatus.HasValue)
             {
-                _userDataProvider.Push(UserDataItemNames.UnlockEmailAddress, result.EmailAddress);
-
-                return GetMediatorResponse(Codes.Login.Index.AccountLocked);
-            }
-
-            if (result.IsAuthenticated)
-            {
-                _userDataProvider.SetUserContext(result.EmailAddress, result.FullName, result.AcceptedTermsAndConditionsVersion);
-
-                if (result.UserStatus == UserStatuses.PendingActivation)
+                if (result.UserStatus == UserStatuses.Locked)
                 {
-                    return GetMediatorResponse(Codes.Login.Index.PendingActivation);
+                    _userDataProvider.Push(UserDataItemNames.UnlockEmailAddress, result.EmailAddress);
+
+                    return GetMediatorResponse(Codes.Login.Index.AccountLocked);
                 }
 
-                // Redirect to session return URL (if any).
-                var returnUrl = _userDataProvider.Pop(UserDataItemNames.SessionReturnUrl) ??
-                                       _userDataProvider.Pop(UserDataItemNames.ReturnUrl);
-
-                if (result.AcceptedTermsAndConditionsVersion != _configurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion))
+                if (result.IsAuthenticated)
                 {
-                    return !string.IsNullOrEmpty(returnUrl)
-                        ? GetMediatorResponse(Codes.Login.Index.TermsAndConditionsNeedAccepted, parameters: returnUrl)
-                        : GetMediatorResponse(Codes.Login.Index.TermsAndConditionsNeedAccepted);
-                }
+                    _userDataProvider.SetUserContext(result.EmailAddress, result.FullName, result.AcceptedTermsAndConditionsVersion);
 
-                if (!string.IsNullOrWhiteSpace(returnUrl))
-                {
-                    return GetMediatorResponse(Codes.Login.Index.ReturnUrl, parameters: returnUrl);
-                }
-
-                // Redirect to last viewed vacancy (if any).
-                var lastViewedVacancyId = _userDataProvider.Pop(CandidateDataItemNames.LastViewedVacancyId);
-
-                if (lastViewedVacancyId != null)
-                {
-                    var candidate = _candidateServiceProvider.GetCandidate(result.EmailAddress);
-
-                    var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId, int.Parse(lastViewedVacancyId));
-
-                    if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
+                    if (result.UserStatus == UserStatuses.PendingActivation)
                     {
-                        return GetMediatorResponse(Codes.Login.Index.ApprenticeshipApply, parameters: lastViewedVacancyId);
+                        return GetMediatorResponse(Codes.Login.Index.PendingActivation);
                     }
 
-                    return GetMediatorResponse(Codes.Login.Index.ApprenticeshipDetails, parameters: lastViewedVacancyId);
-                }
+                    // Redirect to session return URL (if any).
+                    var returnUrl = _userDataProvider.Pop(UserDataItemNames.SessionReturnUrl) ?? _userDataProvider.Pop(UserDataItemNames.ReturnUrl);
 
-                return GetMediatorResponse(Codes.Login.Index.Ok);
+                    if (result.AcceptedTermsAndConditionsVersion != _configurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion))
+                    {
+                        return !string.IsNullOrEmpty(returnUrl)
+                            ? GetMediatorResponse(Codes.Login.Index.TermsAndConditionsNeedAccepted, parameters: returnUrl)
+                            : GetMediatorResponse(Codes.Login.Index.TermsAndConditionsNeedAccepted);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(returnUrl))
+                    {
+                        return GetMediatorResponse(Codes.Login.Index.ReturnUrl, parameters: returnUrl);
+                    }
+
+                    // Redirect to last viewed vacancy (if any).
+                    var lastViewedVacancyId = _userDataProvider.Pop(CandidateDataItemNames.LastViewedVacancyId);
+
+                    if (lastViewedVacancyId != null)
+                    {
+                        var candidate = _candidateServiceProvider.GetCandidate(result.EmailAddress);
+
+                        var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId, int.Parse(lastViewedVacancyId));
+
+                        if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
+                        {
+                            return GetMediatorResponse(Codes.Login.Index.ApprenticeshipApply, parameters: lastViewedVacancyId);
+                        }
+
+                        return GetMediatorResponse(Codes.Login.Index.ApprenticeshipDetails, parameters: lastViewedVacancyId);
+                    }
+
+                    return GetMediatorResponse(Codes.Login.Index.Ok);
+                }                
             }
 
             return GetMediatorResponse(Codes.Login.Index.LoginFailed, parameters: result.ViewModelMessage);
