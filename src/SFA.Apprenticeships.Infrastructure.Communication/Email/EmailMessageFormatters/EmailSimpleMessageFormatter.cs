@@ -6,7 +6,7 @@
 
     public class EmailSimpleMessageFormatter : EmailMessageFormatter
     {
-        public override void PopulateMessage(EmailRequest request, SendGridMessage message)
+        public override void PopulateMessage(EmailRequest request, ISendGrid message)
         {
             foreach (var token in request.Tokens)
             {

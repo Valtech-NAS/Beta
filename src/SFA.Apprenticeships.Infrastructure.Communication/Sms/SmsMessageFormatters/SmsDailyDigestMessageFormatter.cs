@@ -13,7 +13,7 @@
 
         public override string GetMessage(IEnumerable<CommunicationToken> communicationTokens)
         {
-            var itemCount = communicationTokens.First(t => t.Key == CommunicationTokens.TotalItems).Value;
+            var itemCount = communicationTokens.First(t => t.Key == CommunicationTokens.ExpiringDraftsCount).Value;
 
             return string.Format(Message, itemCount);
         }

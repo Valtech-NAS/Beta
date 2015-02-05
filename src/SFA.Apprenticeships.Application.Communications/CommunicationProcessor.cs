@@ -1,12 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.Communications
 {
     using System;
-    using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Communications;
 
     public class CommunicationProcessor : ICommunicationProcessor
     {
@@ -31,33 +28,7 @@
 
                 if (candidate.CommunicationPreferences.AllowEmail || candidate.CommunicationPreferences.AllowMobile)
                 {
-                    var communicationMessage = new CommunicationRequest
-                    {
-                        EntityId = candidate.EntityId,
-                        MessageType = MessageTypes.DailyDigest
-                    };
-
-                    var commTokens = new List<CommunicationToken>();
-                    int counter = 1;
-
-                    commTokens.Add(new CommunicationToken(CommunicationTokens.CandidateEmailAddress, candidate.RegistrationDetails.EmailAddress));
-                    commTokens.Add(new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber));
-                    commTokens.Add(new CommunicationToken(CommunicationTokens.TotalItems, candidateDailyDigest.Value.Count().ToString(CultureInfo.InvariantCulture)));
-
-                    foreach (var draft in candidateDailyDigest.Value)
-                    {
-                        if (counter <= 10)
-                        {
-                            var pipeDelimitedDraftValues = string.Join("|",
-                                new[] {draft.Title, draft.EmployerName, draft.ClosingDate.ToLongDateString()});
-                            var token =
-                                new CommunicationToken((CommunicationTokens) Enum.Parse(typeof (CommunicationTokens), "Item" + counter++),
-                                    pipeDelimitedDraftValues);
-                            commTokens.Add(token);
-                        }
-                    }
-
-                    communicationMessage.Tokens = commTokens;
+                    var communicationMessage = CommunicationRequestFactory.GetCommunicationMessage(candidate, candidateDailyDigest.Value);
                     _bus.PublishMessage(communicationMessage);
 
                     // Update candidates expiring drafts to sent

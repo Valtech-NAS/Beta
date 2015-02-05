@@ -8,49 +8,45 @@
 
     public class EmailDailyDigestMessageFormatter : EmailMessageFormatter
     {
-        private const string OneSavedApplicationAboutToExpire = "You've saved an application for an apprenticeship that is due to expire soon.";
-
-        private const string MoreThanOneSaveApplicationAboutToExpire =
-            "You've saved applications for apprenticeships that are due to close soon.";
         private const string Pipe = "|";
+        private const char Tilda = '~';
 
-        public override void PopulateMessage(EmailRequest request, SendGridMessage message)
+        public const string OneSavedApplicationAboutToExpire = "You've saved an application for an apprenticeship that is due to expire soon.";
+        public const string MoreThanOneSaveApplicationAboutToExpire = "You've saved applications for apprenticeships that are due to close soon.";
+
+        public override void PopulateMessage(EmailRequest request, ISendGrid message)
         {
-            var itemCount = PopulateItemCountData(request, message);
+            PopulateItemCountData(request, message);
 
-            PopulateHtmlData(request, message, itemCount);
+            PopulateHtmlData(request, message);
         }
 
-        private static int PopulateItemCountData(EmailRequest request, SendGridMessage message)
+        private static void PopulateItemCountData(EmailRequest request, ISendGrid message)
         {
-            var itemCountToken =
-                SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.TotalItems);
+            var itemCountToken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.ExpiringDraftsCount);
 
-            var itemCount = Convert.ToInt32(request.Tokens.First(t => t.Key == CommunicationTokens.TotalItems).Value);
+            var itemCount = Convert.ToInt32(request.Tokens.First(t => t.Key == CommunicationTokens.ExpiringDraftsCount).Value);
 
             var substitutionText = itemCount == 1 ? OneSavedApplicationAboutToExpire : MoreThanOneSaveApplicationAboutToExpire;
 
             AddSubstitutionTo(message, itemCountToken, substitutionText);
-
-            return Convert.ToInt32(itemCount);
         }
 
-        private static void PopulateHtmlData(EmailRequest request, SendGridMessage message, int itemCount)
+        private static void PopulateHtmlData(EmailRequest request, ISendGrid message)
         {
-            var sendgridtoken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.Item1);
-            AddVacanciesDataSubstitution(request, message, itemCount, sendgridtoken);
+            var sendgridtoken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.ExpiringDrafts);
+            AddVacanciesDataSubstitution(request, message, sendgridtoken);
         }
 
-        private static void AddVacanciesDataSubstitution(EmailRequest request, SendGridMessage message, int itemCount, string sendgridtoken )
+        private static void AddVacanciesDataSubstitution(EmailRequest request, ISendGrid message, string sendgridtoken)
         {
             var substitutionText = "<ul>";
 
-            for (var i = 0; i < itemCount; i++)
-            {
-                var communicationToken = (CommunicationTokens) Enum.Parse(typeof (CommunicationTokens),
-                    string.Format("Item{0}", i+1));
+            var drafts = request.Tokens.First(t => t.Key == CommunicationTokens.ExpiringDrafts).Value;
 
-                substitutionText += FormatHtmlListElement(request.Tokens.First(t => t.Key == communicationToken).Value);
+            foreach (var draft in drafts.Split(Tilda))
+            {
+                substitutionText += FormatHtmlListElement(draft);
             }
 
             substitutionText += "</ul>";
@@ -58,7 +54,7 @@
             AddSubstitutionTo(message, sendgridtoken, substitutionText);
         }
 
-        private static void AddSubstitutionTo(SendGridMessage message, string sendgridtoken, string substitutionText)
+        private static void AddSubstitutionTo(ISendGrid message, string sendgridtoken, string substitutionText)
         {
             message.AddSubstitution(
                 sendgridtoken,

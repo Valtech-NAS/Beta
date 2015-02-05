@@ -51,11 +51,11 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                 case CommunicationTokens.ProviderContact:
                     emailTemplateToken = "Provider.Contact";
                     break;
-                case CommunicationTokens.TotalItems:
+                case CommunicationTokens.ExpiringDraftsCount:
                     emailTemplateToken = "Expiry.Vacancies.Count";
                     break;
-                case CommunicationTokens.Item1:
-                    emailTemplateToken = "Expiry.Vacancies.Info"; //todo: is this correct?
+                case CommunicationTokens.ExpiringDrafts:
+                    emailTemplateToken = "Expiry.Vacancies.Info";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("key");

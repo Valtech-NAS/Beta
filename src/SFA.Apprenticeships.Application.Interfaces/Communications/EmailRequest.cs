@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Communications
 {
-    using System;
     using System.Collections.Generic;
 
     /// <summary>
