@@ -80,21 +80,23 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Dashboard
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("I have not applied for any traineeships")]
+        [NUnit.Framework.DescriptionAttribute("I have applied for six traineeships")]
         [NUnit.Framework.CategoryAttribute("US586")]
-        public virtual void IHaveNotAppliedForAnyTraineeships()
+        public virtual void IHaveAppliedForSixTraineeships()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I have not applied for any traineeships", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I have applied for six traineeships", new string[] {
                         "US586"});
-#line 12
+#line 13
 this.ScenarioSetup(scenarioInfo);
 #line 5
 this.FeatureBackground();
-#line 13
- testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 14
- testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 15
+ testRunner.And("I applied for 6 traineeships", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 16
+ testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
  testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -106,11 +108,11 @@ this.FeatureBackground();
             table1.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
-#line 16
+#line 18
  testRunner.And("I enter data", ((string)(null)), table1, "And ");
-#line 20
+#line 22
  testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 21
+#line 23
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -118,138 +120,30 @@ this.FeatureBackground();
                         "Rule",
                         "Value"});
             table2.AddRow(new string[] {
-                        "TraineeshipTable",
-                        "Does Not Exist",
-                        ""});
-            table2.AddRow(new string[] {
-                        "TraineeshipApplicationsCount",
-                        "Does Not Exist",
-                        ""});
-#line 22
- testRunner.And("I see", ((string)(null)), table2, "And ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("I have applied for two traineeships")]
-        [NUnit.Framework.CategoryAttribute("US586")]
-        public virtual void IHaveAppliedForTwoTraineeships()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I have applied for two traineeships", new string[] {
-                        "US586"});
-#line 28
-this.ScenarioSetup(scenarioInfo);
-#line 5
-this.FeatureBackground();
-#line 29
- testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 30
- testRunner.And("I applied for 2 traineeships", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 31
- testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 32
- testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
-                        "Value"});
-            table3.AddRow(new string[] {
-                        "EmailAddress",
-                        "{EmailToken}"});
-            table3.AddRow(new string[] {
-                        "Password",
-                        "{PasswordToken}"});
-#line 33
- testRunner.And("I enter data", ((string)(null)), table3, "And ");
-#line 37
- testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 38
- testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
-                        "Rule",
-                        "Value"});
-            table4.AddRow(new string[] {
-                        "TraineeshipApplicationsCount",
-                        "Equals",
-                        "2"});
-            table4.AddRow(new string[] {
-                        "TraineeshipTableRowCount",
-                        "Equals",
-                        "2"});
-#line 39
- testRunner.And("I see", ((string)(null)), table4, "And ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("I have applied for six traineeships")]
-        [NUnit.Framework.CategoryAttribute("US586")]
-        public virtual void IHaveAppliedForSixTraineeships()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I have applied for six traineeships", new string[] {
-                        "US586"});
-#line 45
-this.ScenarioSetup(scenarioInfo);
-#line 5
-this.FeatureBackground();
-#line 46
- testRunner.Given("I have an empty dashboard", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 47
- testRunner.And("I applied for 6 traineeships", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 48
- testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 49
- testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
-                        "Value"});
-            table5.AddRow(new string[] {
-                        "EmailAddress",
-                        "{EmailToken}"});
-            table5.AddRow(new string[] {
-                        "Password",
-                        "{PasswordToken}"});
-#line 50
- testRunner.And("I enter data", ((string)(null)), table5, "And ");
-#line 54
- testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 55
- testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
-                        "Rule",
-                        "Value"});
-            table6.AddRow(new string[] {
                         "TraineeshipApplicationsCount",
                         "Equals",
                         "6"});
-            table6.AddRow(new string[] {
+            table2.AddRow(new string[] {
                         "TraineeshipTableRowCount",
                         "Equals",
                         "3"});
-#line 56
- testRunner.And("I see", ((string)(null)), table6, "And ");
-#line 60
+#line 24
+ testRunner.And("I see", ((string)(null)), table2, "And ");
+#line 28
  testRunner.When("I choose MoreTraineeshipsLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 61
+#line 29
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
-            table7.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "TraineeshipTableRowCount",
                         "Equals",
                         "6"});
-#line 62
- testRunner.And("I see", ((string)(null)), table7, "And ");
+#line 30
+ testRunner.And("I see", ((string)(null)), table3, "And ");
 #line hidden
             this.ScenarioCleanup();
         }

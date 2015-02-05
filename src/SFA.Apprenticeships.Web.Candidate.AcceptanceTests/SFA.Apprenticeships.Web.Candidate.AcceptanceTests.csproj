@@ -198,11 +198,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BrowseBasedSearch.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Dashboard\ViewApprenticeshipApplications.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ViewApprenticeshipApplications.feature</DependentUpon>
-    </Compile>
     <Compile Include="Features\Dashboard\ArchiveApprenticeshipApplications.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -414,10 +409,6 @@
     <None Include="Features\ApprenticeshipSearch\BrowseBasedSearch.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>BrowseBasedSearch.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\Dashboard\ViewApprenticeshipApplications.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ViewApprenticeshipApplications.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Dashboard\ArchiveApprenticeshipApplications.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

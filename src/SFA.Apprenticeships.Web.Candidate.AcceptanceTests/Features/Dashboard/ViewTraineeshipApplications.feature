@@ -8,38 +8,6 @@ Background:
 	And I navigated to the TraineeshipSearchPage page
 	Then I am on the TraineeshipSearchPage page
 
-@US586
-Scenario: I have not applied for any traineeships
-	Given I have an empty dashboard
-	And I navigated to the LoginPage page
-	When I am on the LoginPage page
-	And I enter data
-		| Field        | Value           |
-		| EmailAddress | {EmailToken}    |
-		| Password     | {PasswordToken} |
-	And I choose SignInButton
-	Then I am on the MyApplicationsPage page
-	And I see
-		| Field                        | Rule           | Value |
-		| TraineeshipTable             | Does Not Exist |       |
-		| TraineeshipApplicationsCount | Does Not Exist |       |
-
-@US586
-Scenario: I have applied for two traineeships
-	Given I have an empty dashboard
-	And I applied for 2 traineeships
-	And I navigated to the LoginPage page
-	When I am on the LoginPage page
-	And I enter data
-		| Field        | Value           |
-		| EmailAddress | {EmailToken}    |
-		| Password     | {PasswordToken} |
-	And I choose SignInButton
-	Then I am on the MyApplicationsPage page
-	And I see
-		| Field                        | Rule   | Value |
-		| TraineeshipApplicationsCount | Equals | 2     |
-		| TraineeshipTableRowCount     | Equals | 2     |
 
 @US586
 Scenario: I have applied for six traineeships

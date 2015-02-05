@@ -236,7 +236,10 @@
     <Compile Include="Views\ApprenticeshipSearch\ResultsSearchUpdateTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\ResultsSearchUpdateCategoriesAndSubCategoriesTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\ResultsTests.cs" />
-    <Compile Include="Views\Dashboard\DashboardTests.cs" />
+    <Compile Include="Views\Dashboard\DashboardApprenticeshipTests.cs" />
+    <Compile Include="Views\Dashboard\DashboardTestsHelper.cs" />
+    <Compile Include="Views\Dashboard\DashboardTraineeshipTests.cs" />
+    <Compile Include="Views\Dashboard\MyApplicationViewModelBuilder.cs" />
     <Compile Include="Views\TraineeshipSearch\ApplyPartialTests.cs" />
     <Compile Include="Views\TraineeshipSearch\DetailsTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\DetailsTests.cs" />

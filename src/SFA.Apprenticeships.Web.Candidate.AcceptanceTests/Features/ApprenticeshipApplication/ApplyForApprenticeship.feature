@@ -9,30 +9,6 @@ Background:
 	And I navigated to the ApprenticeshipSearchPage page
 	Then I am on the ApprenticeshipSearchPage page
 
-@US486 @US458 @US354 @US352
-Scenario: As a candidate I would like to preview an apprenticeship vacancy application
-	Given I have registered a new candidate
-	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
-	Then I am on the ApprenticeshipDetailsPage page
-	When I choose ApplyButton
-	Then I am on the ApprenticeshipApplicationPage page
-	When I choose SupportMeYes
-	And I enter data
-		| Field                   | Value                         |
-		| EducationNameOfSchool   | SchoolName                    |
-		| EducationFromYear       | 2010                          |
-		| EducationToYear         | 2012                          |
-		| WhatAreYourStrengths    | My strengths                  |
-		| WhatCanYouImprove       | What can I improve            |
-		| HobbiesAndInterests     | Hobbies and interests         |
-		| WhatCanWeDoToSupportYou | What can we do to support you |
-	And I enter employer question data if present
-		| Field                                              | Value |
-		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
-		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
-	And I choose ApplyButton
-	Then I am on the ApprenticeshipApplicationPreviewPage page
-
 @US461 @US154 @US458 @US464
 Scenario: As a candidate I want to save my apprenticeship application as a draft and be able to resume
 	Given I have registered a new candidate
