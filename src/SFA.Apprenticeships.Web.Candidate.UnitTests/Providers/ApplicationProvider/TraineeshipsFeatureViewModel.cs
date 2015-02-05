@@ -2,16 +2,16 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using Application.Interfaces.Candidates;
     using Application.Interfaces.Logging;
+    using Candidate.Providers;
+    using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Interfaces.Configuration;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using Application.Interfaces.Candidates;
-    using Domain.Entities.Applications;
-    using Domain.Interfaces.Configuration;
-    using Candidate.Providers;
-    using System.Linq;
 
     [TestFixture]
     public class TraineeshipsFeatureViewModel

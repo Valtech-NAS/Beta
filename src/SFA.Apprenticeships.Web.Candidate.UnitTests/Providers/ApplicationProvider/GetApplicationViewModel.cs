@@ -51,7 +51,7 @@
         public void GetNotFound()
         {
             var candidateId = Guid.NewGuid();
-            _candidateService.Setup(cs => cs.CreateApplication(candidateId, ValidVacancyId)).Returns((ApprenticeshipApplicationDetail)null);
+            _candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns((ApprenticeshipApplicationDetail)null);
             var viewModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();

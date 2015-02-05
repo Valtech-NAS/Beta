@@ -44,9 +44,14 @@
                 }
 
                 var applicationDetails = _candidateService.CreateTraineeshipApplication(candidateId, vacancyId);
-                var applicationViewModel =
-                    _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(applicationDetails);
-                
+                if (applicationDetails == null)
+                {
+                    return new TraineeshipApplicationViewModel
+                    {
+                        ViewModelMessage = MyApplicationsPageMessages.TraineeshipNoLongerAvailable
+                    };
+                }
+                var applicationViewModel =_mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(applicationDetails);
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
             catch (CustomException e)

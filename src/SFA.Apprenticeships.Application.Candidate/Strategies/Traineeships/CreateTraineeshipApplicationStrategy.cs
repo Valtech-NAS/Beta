@@ -5,7 +5,6 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
     using Vacancy;
@@ -27,11 +26,7 @@
         {
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
-            // TODO: can we return null here and handle in the caller?
-            if (vacancyDetails == null || vacancyDetails.VacancyStatus != VacancyStatuses.Live)
-            {
-                return new TraineeshipApplicationDetail();
-            }
+            if (vacancyDetails == null) return null;
 
             var candidate = _candidateReadRepository.Get(candidateId);
             var applicationDetail = CreateApplicationDetail(candidate, vacancyDetails);

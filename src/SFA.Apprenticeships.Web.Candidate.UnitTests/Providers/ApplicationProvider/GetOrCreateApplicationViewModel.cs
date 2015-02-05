@@ -61,7 +61,8 @@
             viewModel.HasError().Should().BeTrue();
         }
 
-        public void CreateApplicationReturnsVacancyStatusesUnavailable(VacancyStatuses vacancyStatus)
+        [Test]
+        public void CreateApplicationReturnsVacancyStatusesUnavailable()
         {
             var candidateId = Guid.NewGuid();
             _candidateService.Setup(cs => cs.CreateApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetail { VacancyStatus = VacancyStatuses.Unavailable });
