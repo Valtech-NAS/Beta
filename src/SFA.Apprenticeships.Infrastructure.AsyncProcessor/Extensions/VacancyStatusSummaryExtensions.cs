@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Extensions
 {
-    using Application.VacancyEtl.Entities;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Caching;
 
     public static class VacancyStatusSummaryExtensions

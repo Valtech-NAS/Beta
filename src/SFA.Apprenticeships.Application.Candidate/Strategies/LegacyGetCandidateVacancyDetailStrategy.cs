@@ -61,8 +61,7 @@
             {
                 LegacyVacancyId = vacancyDetails.Id,
                 VacancyStatus = vacancyDetails.VacancyStatus,
-                ClosingDate = vacancyDetails.ClosingDate,
-                DateTime = DateTime.Now
+                ClosingDate = vacancyDetails.ClosingDate
             };
 
             _bus.PublishMessage(vacancyStatusSummary);

@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.ApplicationUpdate.Strategies
 {
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Entities;
     using Extensions;
@@ -12,11 +14,17 @@
 
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
+        private readonly IMessageBus _bus;
 
-        public ApplicationStatusUpdateStrategy(IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository, ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository, ILogService logger)
+        public ApplicationStatusUpdateStrategy(
+            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository, 
+            ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository, 
+            IMessageBus bus,
+            ILogService logger)
         {
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
+            _bus = bus;
             _logger = logger;
         }
 
@@ -34,14 +42,23 @@
             // note, this flow will be extended to include a call to outbound communication later (when we do notifications)
             // note, may subsequently consolidate status updates for a candidate (when we do notifications) but may be done in another component
 
-            if (apprenticeshipApplication.UpdateApprenticeshipApplicationDetail(applicationStatusSummary))
+            if (!apprenticeshipApplication.UpdateApprenticeshipApplicationDetail(applicationStatusSummary))
             {
-                _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
-                // TODO: raise vacancy status summary in case anyone else interested
-                return true;
+                return false;
             }
 
-            return false;
+            _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
+
+            // note, to force vacancy status updates for users with draft applications for this vacancy
+            var vss = new VacancyStatusSummary
+            {
+                ClosingDate = applicationStatusSummary.ClosingDate,
+                LegacyVacancyId = applicationStatusSummary.LegacyVacancyId,
+                VacancyStatus = applicationStatusSummary.VacancyStatus
+            };
+            _bus.PublishMessage(vss);
+
+            return true;
         }
 
         public bool Update(TraineeshipApplicationDetail traineeeshipApplication, ApplicationStatusSummary applicationStatusSummary)
@@ -58,14 +75,13 @@
             // note, this flow will be extended to include a call to outbound communication later (when we do notifications)
             // note, may subsequently consolidate status updates for a candidate (when we do notifications) but may be done in another component
 
-            if (traineeeshipApplication.UpdateTraineeshipApplicationDetail(applicationStatusSummary))
+            if (!traineeeshipApplication.UpdateTraineeshipApplicationDetail(applicationStatusSummary))
             {
-                _traineeshipApplicationWriteRepository.Save(traineeeshipApplication);
-                // TODO: raise vacancy status summary in case anyone else interested
-                return true;
+                return false;
             }
 
-            return false;
+            _traineeshipApplicationWriteRepository.Save(traineeeshipApplication);
+            return true;
         }
     }
 }

@@ -122,6 +122,7 @@
     <Compile Include="Vacancies\Traineeships\TraineeshipSummary.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSummary.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipLevel.cs" />
+    <Compile Include="Vacancies\VacancyStatusSummary.cs" />
     <Compile Include="Vacancies\VacancySummary.cs" />
     <Compile Include="Vacancies\WageType.cs" />
   </ItemGroup>

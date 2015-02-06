@@ -110,8 +110,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VacancySummaryPageConsumerAsync.cs" />
     <Compile Include="VacancySchedulerConsumerTests.cs" />
+    <Compile Include="VacancySummaryPageConsumerAsyncTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

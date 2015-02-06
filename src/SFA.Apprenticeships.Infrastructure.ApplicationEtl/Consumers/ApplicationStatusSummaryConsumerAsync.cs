@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using Application.ApplicationUpdate;
     using Application.ApplicationUpdate.Entities;
-    using Application.VacancyEtl.Entities;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
 
@@ -46,8 +46,7 @@
                     {
                         LegacyVacancyId = applicationStatusSummaryToProcess.LegacyVacancyId,
                         VacancyStatus = applicationStatusSummaryToProcess.VacancyStatus,
-                        ClosingDate = applicationStatusSummaryToProcess.ClosingDate,
-                        DateTime = DateTime.Now
+                        ClosingDate = applicationStatusSummaryToProcess.ClosingDate
                     };
                     _bus.PublishMessage(vacancyStatusSummary);
                 }

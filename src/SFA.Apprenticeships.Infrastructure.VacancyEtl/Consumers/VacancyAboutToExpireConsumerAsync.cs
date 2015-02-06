@@ -38,6 +38,11 @@
                     _apprenticeshipApplicationReadRepository.GetApplicationSummaries(vacancy.Id)
                         .Where(v => v.Status == ApplicationStatuses.Draft);
 
+                if (!expiringApplications.Any())
+                {
+                    return;
+                }
+
                 //Map to expiring draft model
                 var expiringDrafts =
                     _mapper.Map<IEnumerable<ApprenticeshipApplicationSummary>, IEnumerable<ExpiringApprenticeshipApplicationDraft>>(

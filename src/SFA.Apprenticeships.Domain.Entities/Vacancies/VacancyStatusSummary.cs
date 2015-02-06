@@ -1,7 +1,6 @@
-﻿namespace SFA.Apprenticeships.Application.VacancyEtl.Entities
+﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
     using System;
-    using Domain.Entities.Vacancies;
 
     public class VacancyStatusSummary
     {
@@ -10,7 +9,5 @@
         public VacancyStatuses VacancyStatus { get; set; }
 
         public DateTime ClosingDate { get; set; }
-
-        public DateTime DateTime { get; set; }
     }
 }

@@ -3,7 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using Application.ApplicationUpdate;
-    using Application.VacancyEtl.Entities;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Caching;
     using EasyNetQ.AutoSubscribe;
     using Extensions;
