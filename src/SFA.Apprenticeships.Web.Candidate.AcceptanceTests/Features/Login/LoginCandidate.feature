@@ -11,18 +11,6 @@ Background:
 	And I navigated to the ApprenticeshipSearchPage page
 	Then I am on the ApprenticeshipSearchPage page
 
-@US415
-Scenario: As a candidate I can login with a registered and activated email address and password
-	Given I registered an account and activated it
-	And I navigated to the LoginPage page
-	When I am on the LoginPage page
-	And I enter data
-		| Field        | Value           |
-		| EmailAddress | {EmailToken}    |
-		| Password     | {PasswordToken} |
-	And I choose SignInButton
-	Then I am on the MyApplicationsPage page
-
 @US415 @SmokeTests
 Scenario: As a candidate I must provide an email address and password
 	Given I navigated to the LoginPage page
@@ -33,6 +21,7 @@ Scenario: As a candidate I must provide an email address and password
 		| Field                     | Rule   | Value |
 		| ValidationFieldErrorCount | Equals | 2     |
 @US415
+#TODO: replace with mediator tests?
 Scenario: As a candidate I want to be redirected to the previous page when I login
 	Given I registered an account and activated it
 	And I navigated to the ApprenticeshipSearchPage page

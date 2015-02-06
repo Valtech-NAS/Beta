@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.UserAccount;
     using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
-    using UserAccount;
-
+    
     [TestFixture]
     public class ActivationCodeGeneratorTests
     {

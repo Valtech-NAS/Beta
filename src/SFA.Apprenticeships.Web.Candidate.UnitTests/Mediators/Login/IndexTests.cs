@@ -15,6 +15,7 @@
     [TestFixture]
     public class IndexTests : TestsBase
     {
+        private const string InvalidEmailAddress = "invalid@users.com";
         private const string ValidEmailAddress = "user@users.com";
         private const string ValidPassword = "Password01";
         private const string InvalidPassword = "NotPassword01";

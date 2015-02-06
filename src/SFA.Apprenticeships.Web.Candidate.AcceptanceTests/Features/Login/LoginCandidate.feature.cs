@@ -84,45 +84,6 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Login
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("As a candidate I can login with a registered and activated email address and pass" +
-            "word")]
-        [NUnit.Framework.CategoryAttribute("US415")]
-        public virtual void AsACandidateICanLoginWithARegisteredAndActivatedEmailAddressAndPassword()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I can login with a registered and activated email address and pass" +
-                    "word", new string[] {
-                        "US415"});
-#line 15
-this.ScenarioSetup(scenarioInfo);
-#line 8
-this.FeatureBackground();
-#line 16
- testRunner.Given("I registered an account and activated it", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 17
- testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 18
- testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
-                        "Value"});
-            table1.AddRow(new string[] {
-                        "EmailAddress",
-                        "{EmailToken}"});
-            table1.AddRow(new string[] {
-                        "Password",
-                        "{PasswordToken}"});
-#line 19
- testRunner.And("I enter data", ((string)(null)), table1, "And ");
-#line 23
- testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 24
- testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("As a candidate I must provide an email address and password")]
         [NUnit.Framework.CategoryAttribute("US415")]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
@@ -131,29 +92,29 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I must provide an email address and password", new string[] {
                         "US415",
                         "SmokeTests"});
-#line 27
+#line 15
 this.ScenarioSetup(scenarioInfo);
 #line 8
 this.FeatureBackground();
-#line 28
+#line 16
  testRunner.Given("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 29
+#line 17
  testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 30
+#line 18
  testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 31
+#line 19
  testRunner.And("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
-            table2.AddRow(new string[] {
+            table1.AddRow(new string[] {
                         "ValidationFieldErrorCount",
                         "Equals",
                         "2"});
-#line 32
- testRunner.Then("I see", ((string)(null)), table2, "Then ");
+#line 20
+ testRunner.Then("I see", ((string)(null)), table1, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -165,33 +126,33 @@ this.FeatureBackground();
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to be redirected to the previous page when I login", new string[] {
                         "US415"});
-#line 36
+#line 25
 this.ScenarioSetup(scenarioInfo);
 #line 8
 this.FeatureBackground();
-#line 37
+#line 26
  testRunner.Given("I registered an account and activated it", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 38
+#line 27
  testRunner.And("I navigated to the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 39
+#line 28
  testRunner.When("I choose SignInLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 40
+#line 29
  testRunner.And("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Value"});
-            table3.AddRow(new string[] {
+            table2.AddRow(new string[] {
                         "EmailAddress",
                         "{EmailToken}"});
-            table3.AddRow(new string[] {
+            table2.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
-#line 41
- testRunner.And("I enter data", ((string)(null)), table3, "And ");
-#line 45
+#line 30
+ testRunner.And("I enter data", ((string)(null)), table2, "And ");
+#line 34
  testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 46
+#line 35
  testRunner.Then("I am on the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -204,54 +165,54 @@ this.FeatureBackground();
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I cannot login with an invalid password", new string[] {
                         "US415"});
-#line 49
+#line 38
 this.ScenarioSetup(scenarioInfo);
 #line 8
 this.FeatureBackground();
-#line 50
+#line 39
  testRunner.Given("I registered an account and activated it", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 51
+#line 40
  testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 52
+#line 41
  testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table3.AddRow(new string[] {
+                        "EmailAddress",
+                        "{EmailToken}"});
+            table3.AddRow(new string[] {
+                        "Password",
+                        "{InvalidPasswordToken}"});
+#line 42
+ testRunner.And("I enter data", ((string)(null)), table3, "And ");
+#line 46
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 47
+ testRunner.And("I wait to see ValidationSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
+                        "Rule",
                         "Value"});
             table4.AddRow(new string[] {
-                        "EmailAddress",
-                        "{EmailToken}"});
-            table4.AddRow(new string[] {
-                        "Password",
-                        "{InvalidPasswordToken}"});
-#line 53
- testRunner.And("I enter data", ((string)(null)), table4, "And ");
-#line 57
- testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 58
- testRunner.And("I wait to see ValidationSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+                        "ValidationSummaryNoLinkCount",
+                        "Equals",
+                        "1"});
+#line 48
+ testRunner.Then("I see", ((string)(null)), table4, "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
             table5.AddRow(new string[] {
-                        "ValidationSummaryNoLinkCount",
-                        "Equals",
-                        "1"});
-#line 59
- testRunner.Then("I see", ((string)(null)), table5, "Then ");
-#line hidden
-            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
-                        "Rule",
-                        "Value"});
-            table6.AddRow(new string[] {
                         "Text",
                         "Equals",
                         "Please enter a valid email address or password"});
-#line 62
- testRunner.And("I am on ValidationSummaryNoLinkItems list item matching criteria", ((string)(null)), table6, "And ");
+#line 51
+ testRunner.And("I am on ValidationSummaryNoLinkItems list item matching criteria", ((string)(null)), table5, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -269,44 +230,44 @@ this.FeatureBackground();
                         "US458",
                         "US444",
                         "US456"});
-#line 67
+#line 56
 this.ScenarioSetup(scenarioInfo);
 #line 8
 this.FeatureBackground();
-#line 68
+#line 57
  testRunner.Given("I registered an account but did not activate it", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 69
+#line 58
  testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 70
+#line 59
  testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table6.AddRow(new string[] {
+                        "EmailAddress",
+                        "{EmailToken}"});
+            table6.AddRow(new string[] {
+                        "Password",
+                        "{PasswordToken}"});
+#line 60
+ testRunner.And("I enter data", ((string)(null)), table6, "And ");
+#line 64
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 65
+ testRunner.And("I am on the ActivationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Value"});
             table7.AddRow(new string[] {
-                        "EmailAddress",
-                        "{EmailToken}"});
-            table7.AddRow(new string[] {
-                        "Password",
-                        "{PasswordToken}"});
-#line 71
- testRunner.And("I enter data", ((string)(null)), table7, "And ");
-#line 75
- testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 76
- testRunner.And("I am on the ActivationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
-                        "Value"});
-            table8.AddRow(new string[] {
                         "ActivationCode",
                         "{ActivationCodeToken}"});
-#line 77
- testRunner.And("I enter data", ((string)(null)), table8, "And ");
-#line 80
+#line 66
+ testRunner.And("I enter data", ((string)(null)), table7, "And ");
+#line 69
  testRunner.And("I choose ActivateButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 81
+#line 70
  testRunner.Then("I am on the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

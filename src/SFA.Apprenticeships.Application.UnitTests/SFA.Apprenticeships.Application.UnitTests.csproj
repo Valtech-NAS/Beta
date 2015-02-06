@@ -79,6 +79,12 @@
     <Reference Include="FizzWare.NBuilder">
       <HintPath>..\packages\NBuilder.3.0.1.1\lib\FizzWare.NBuilder.dll</HintPath>
     </Reference>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions.Core">
+      <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
@@ -101,9 +107,11 @@
     <Compile Include="CodeGeneratorTests.cs" />
     <Compile Include="Communications\CommunicationProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Candidate\Strategies\AuthenticateCandidateStrategyTests\GivenAUserWithSomeFailedLoginAttempts.cs" />
+    <Compile Include="Services\Candidate\Strategies\AuthenticateCandidateStrategyTests\AuthenticateCandidateStrategyTests.cs" />
     <Compile Include="Services\Candidate\Strategies\SaveCandidateStrategyTests.cs" />
     <Compile Include="Services\Location\LocationSearchServiceTests.cs" />
+    <Compile Include="UserAccount\SendAccountUnlockTests.cs" />
+    <Compile Include="UserAccount\UnlockAccountStrategyTests.cs" />
     <Compile Include="Vacancies\VacancySummaryProcessorTests.cs" />
   </ItemGroup>
   <ItemGroup>

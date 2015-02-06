@@ -59,8 +59,6 @@
             return null;
         }
 
-        #region Helpers
-
         private void RegisterFailedLogin(User user)
         {
             user.LoginIncorrectAttempts++;
@@ -74,7 +72,5 @@
                 _lockAccountStrategy.LockAccount(user);
             }
         }
-
-        #endregion
     }
 }
