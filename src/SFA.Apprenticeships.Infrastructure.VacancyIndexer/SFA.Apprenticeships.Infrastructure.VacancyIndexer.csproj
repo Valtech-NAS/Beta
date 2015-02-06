@@ -111,7 +111,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ErrorCodes.cs" />
     <Compile Include="IoC\VacancyIndexerRegistry.cs" />
     <Compile Include="Mappers\GeoPointDomainToElasticResolver.cs">
       <SubType>Code</SubType>

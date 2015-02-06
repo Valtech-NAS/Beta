@@ -5,7 +5,6 @@
     using System.Linq;
     using Application.Interfaces.Logging;
     using Application.VacancyEtl.Entities;
-    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
@@ -102,10 +101,7 @@
             }
             else
             {
-                var message = string.Format("Vacancy search index already created: {0}", newIndexName);
-
-                _logger.Error(message);
-                throw new CustomException(message, ErrorCodes.VacancyIndexerServiceError);
+                _logger.Error(string.Format("Vacancy search index already created: {0}", newIndexName));
             }
         }
 
