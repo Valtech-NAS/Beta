@@ -14,7 +14,7 @@
         private MemoryCacheService _memoryCacheService;
         private TestCacheKeyEntry _cacheKeyEntry;
         private TestCachedObject _testCachedObject;
-        private Func<int, string, TestCachedObject> _testFunc;
+        private Func<int, TestCachedObject> _testFunc;
 
         [SetUp]
         public void Setup()
@@ -22,7 +22,7 @@
             _memoryCacheService = new MemoryCacheService(new Mock<ILogService>().Object);
             _cacheKeyEntry = new TestCacheKeyEntry();
             _testCachedObject = new TestCachedObject { DateTimeCached = DateTime.Now };
-            _testFunc = ((i, s) => _testCachedObject);
+            _testFunc = (i => _testCachedObject);
         }
 
         [TearDown]
@@ -34,11 +34,11 @@
         [Test, Category("Integration")]
         public void AddsItemToCache()
         {
-            var nullResult = _memoryCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
+            var nullResult = _memoryCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1));
             nullResult.Should().BeNull();
 
-            _memoryCacheService.Get(_cacheKeyEntry, _testFunc, 1, "2");
-            var notNullResult = _memoryCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
+            _memoryCacheService.Get(_cacheKeyEntry, _testFunc, 1);
+            var notNullResult = _memoryCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1));
 
             notNullResult.Should().NotBe(null);
             notNullResult.DateTimeCached.Should().Be(_testCachedObject.DateTimeCached);
@@ -47,14 +47,14 @@
         [Test, Category("Integration")]
         public void RemovesItemFromCache()
         {
-            _memoryCacheService.Get(_cacheKeyEntry, _testFunc, 1, "2");
-            var notNullResult = _memoryCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
+            _memoryCacheService.Get(_cacheKeyEntry, _testFunc, 1);
+            var notNullResult = _memoryCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1));
 
             notNullResult.Should().NotBe(null);
             notNullResult.DateTimeCached.Should().Be(_testCachedObject.DateTimeCached);
 
-            _memoryCacheService.Remove(_cacheKeyEntry, 1, "2");
-            var nullResult = _memoryCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1, "2"));
+            _memoryCacheService.Remove(_cacheKeyEntry, 1);
+            var nullResult = _memoryCacheService.Get<TestCachedObject>(_cacheKeyEntry.Key(1));
             nullResult.Should().BeNull();
         }
 
