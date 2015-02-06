@@ -53,7 +53,7 @@
             var mongoExpiringDrafts = Collection.FindAs<MongoApprenticeshipApplicationExpiringDraft>(Query.EQ("VacancyId", vacancyId));
             var expiringDrafts = _mapper.Map<IEnumerable<MongoApprenticeshipApplicationExpiringDraft>, IEnumerable<ExpiringApprenticeshipApplicationDraft>>(mongoExpiringDrafts).ToList();
 
-            _logger.Debug("Found {0} expiring drafts for VacancyId={1}", vacancyId);
+            _logger.Debug("Found {0} expiring drafts for VacancyId={1}", expiringDrafts.Count, vacancyId);
 
             return expiringDrafts;
         }
