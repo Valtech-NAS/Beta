@@ -1,22 +1,22 @@
 ﻿namespace SFA.Apprenticeships.Application.UserAccount
 {
-    using Interfaces.Logging;
     using Interfaces.Users;
 
     public class StaticCodeGenerator : ICodeGenerator
     {
-        private readonly ILogService _logger;
-        public StaticCodeGenerator(ILogService logger)
+        private const string DefaultAlphanumericCode = "ABC123";
+        private const string DefaultNumericCode = "1234";
+
+        public string GenerateAlphaNumeric(int length = 6)
         {
-            _logger = logger;
+            // ignore length
+            return DefaultAlphanumericCode;
         }
 
-        private const string DefaultCode = "ABC123";
-
-        public string Generate()
+        public string GenerateNumeric(int length = 4)
         {
-            _logger.Debug("Generating new default code.");
-            return DefaultCode;
+            // ignore length
+            return DefaultNumericCode;
         }
     }
 }

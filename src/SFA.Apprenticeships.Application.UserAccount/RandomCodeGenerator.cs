@@ -13,27 +13,41 @@
             _logger = logger;
         }
 
-        public const int CodeLength = 6;
+        public const string Numerics = "123456789"; // note, no "0"
 
         // Vowels are omitted to avoid confusion with numbers (e.g. O and I) and to avoid profanities,
         // other letters and numbers are omitted to conform to the DEC Alphabet (http://en.wikipedia.org/wiki/Alphanumeric)
         // (i.e. I, O, Q, S, Z, 1, 0, 5, 3 and 2).
         public const string Alphanumerics = "46789BCDFGHJKLMNPRSTVWXY";
 
-        public string Generate()
+        public string GenerateAlphaNumeric(int length = 6)
         {
-            _logger.Debug("Generating new code.");
-            var bytes = GenerateRandomBytes(CodeLength);
-            var sb = new StringBuilder(CodeLength);
+            _logger.Debug("Generating new alphanumeric code");
 
-            for (var i = 0; i < CodeLength; i++)
+            return Generate(Alphanumerics, length);
+        }
+
+        public string GenerateNumeric(int length = 4)
+        {
+            _logger.Debug("Generating new numeric code");
+
+            return Generate(Numerics, length);
+        }
+
+        #region Helpers
+        private static string Generate(string characters, int length)
+        {
+            var bytes = GenerateRandomBytes(length);
+            var sb = new StringBuilder(length);
+
+            for (var i = 0; i < length; i++)
             {
-                var index = bytes[i] % Alphanumerics.Length;
+                var index = bytes[i] % characters.Length;
 
-                sb.Append(Alphanumerics[index]);
+                sb.Append(characters[index]);
             }
 
-            return sb.ToString();
+            return sb.ToString();    
         }
 
         private static byte[] GenerateRandomBytes(int length)
@@ -45,5 +59,7 @@
 
             return bytes;
         }
+
+        #endregion
     }
 }

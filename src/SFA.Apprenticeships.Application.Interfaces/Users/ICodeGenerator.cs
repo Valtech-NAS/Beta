@@ -4,6 +4,8 @@
 
     public interface ICodeGenerator
     {
-        string Generate();
+        string GenerateAlphaNumeric(int length = 6);
+
+        string GenerateNumeric(int length = 4);
     }
 }

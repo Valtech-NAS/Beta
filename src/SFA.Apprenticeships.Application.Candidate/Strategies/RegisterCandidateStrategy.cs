@@ -38,7 +38,7 @@
         public Candidate RegisterCandidate(Candidate newCandidate, string password)
         {
             var username = newCandidate.RegistrationDetails.EmailAddress;
-            var activationCode = _codeGenerator.Generate();
+            var activationCode = _codeGenerator.GenerateAlphaNumeric();
             
             var user = _userReadRepository.Get(username, false);
 

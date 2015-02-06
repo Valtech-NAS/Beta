@@ -59,7 +59,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             else
             {
                 // generate new code and send
-                passwordResetCode = _codeGenerator.Generate();
+                passwordResetCode = _codeGenerator.GenerateAlphaNumeric();
             }
 
             user.SetStatePasswordResetCode(passwordResetCode, expiry);

@@ -27,7 +27,7 @@
             // Create and set an unlock code, set code expiry, save user, send email containing unlock code.
             var unlockCodeExpiryDays = _configurationManager.GetAppSetting<int>("UnlockCodeExpiryDays");
 
-            var accountUnlockCode = _codeGenerator.Generate();
+            var accountUnlockCode = _codeGenerator.GenerateAlphaNumeric();
             var expiry = DateTime.Now.AddDays(unlockCodeExpiryDays);
 
             user.SetStateLocked(accountUnlockCode, expiry);
