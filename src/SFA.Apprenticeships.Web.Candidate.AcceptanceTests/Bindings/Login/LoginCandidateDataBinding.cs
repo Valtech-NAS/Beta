@@ -6,7 +6,7 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using global::SpecBind.Helpers;
+    using SpecBind.Helpers;
     using IoC;
     using TechTalk.SpecFlow;
 
@@ -23,14 +23,13 @@
             _userReadRepository = WebTestRegistry.Container.GetInstance<IUserReadRepository>();
         }
 
-        //TODO: create a mechanism where we won't need to login - just get the webdriver and set the auth cookie directly or similar
         [Given("I registered an account and activated it")]
         public void GivenIRegisteredAnAccountAndActivatedIt()
         {
             var candidate = new CandidateBuilder(BindingData.UserEmailAddress)
                 .Build();
 
-            var user = new UserBuilder(BindingData.UserEmailAddress)
+            new UserBuilder(BindingData.UserEmailAddress)
                 .Build();
             
             SetTokens(candidate);
@@ -42,7 +41,7 @@
             var candidate = new CandidateBuilder(BindingData.UserEmailAddress)
                 .Build();
 
-            var user = new UserBuilder(BindingData.UserEmailAddress, UserStatuses.PendingActivation)
+            new UserBuilder(BindingData.UserEmailAddress, UserStatuses.PendingActivation)
                 .WithActivationCode(BindingData.ActivationCode).Build();
             
             SetTokens(candidate);
@@ -54,7 +53,7 @@
             var candidate = new CandidateBuilder(BindingData.UserEmailAddress)
                 .Build();
 
-            var user = new UserBuilder(BindingData.UserEmailAddress)
+            new UserBuilder(BindingData.UserEmailAddress)
                 .WithLoginIncorrectAttempts(2).Build();
             
             SetTokens(candidate);
@@ -66,7 +65,7 @@
             var candidate = new CandidateBuilder(BindingData.UserEmailAddress)
                 .Build();
 
-            var user = new UserBuilder(BindingData.UserEmailAddress, UserStatuses.Locked)
+            new UserBuilder(BindingData.UserEmailAddress, UserStatuses.Locked)
                 .WithAccountUnlockCodeExpiry(DateTime.Now.AddDays(1))
                 .WithAccountUnlockCode(BindingData.AccountUnlockCode)
                 .Build();
@@ -81,18 +80,11 @@
             var candidate = new CandidateBuilder(BindingData.UserEmailAddress)
                 .Build();
 
-            var user = new UserBuilder(BindingData.UserEmailAddress, UserStatuses.Locked)
+            new UserBuilder(BindingData.UserEmailAddress, UserStatuses.Locked)
                 .WithAccountUnlockCodeExpiry(DateTime.Now.AddDays(-7))
                 .WithAccountUnlockCode(BindingData.AccountUnlockCode).Build();
 
             SetTokens(candidate);
-        }
-
-        //TODO: Dead code?
-        [Given("I am signed out")]
-        public void IAmSignedOut()
-        {
-            
         }
 
         [Then]
