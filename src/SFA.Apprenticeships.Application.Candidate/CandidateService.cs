@@ -9,17 +9,15 @@
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
-    using Domain.Entities.Exceptions;
     using Interfaces.Logging;
     using Strategies;
     using Strategies.Apprenticeships;
     using Strategies.Traineeships;
     using UserAccount.Strategies;
-    using ErrorCodes = Interfaces.Candidates.ErrorCodes;
 
     public class CandidateService : ICandidateService
     {
-        private readonly ILogService Logger;
+        private readonly ILogService _logger;
 
         private readonly IActivateCandidateStrategy _activateCandidateStrategy;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
@@ -87,7 +85,7 @@
             _getCandidateTraineeshipApplicationsStrategy = getCandidateTraineeshipApplicationsStrategy;
             _candidateApprenticeshipVacancyDetailStrategy = candidateApprenticeshipVacancyDetailStrategy;
             _candidateTraineeshipVacancyDetailStrategy = candidateTraineeshipVacancyDetailStrategy;
-            Logger = logService;
+            _logger = logService;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -95,7 +93,7 @@
             Condition.Requires(newCandidate);
             Condition.Requires(password).IsNotNullOrEmpty();
 
-            Logger.Debug("Calling CandidateService to register a new candidate.");
+            _logger.Debug("Calling CandidateService to register a new candidate.");
 
             var candidate = _registerCandidateStrategy.RegisterCandidate(newCandidate, password);
 
@@ -107,7 +105,7 @@
             Condition.Requires(username).IsNotNullOrEmpty();
             Condition.Requires(activationCode).IsNotNullOrEmpty();
 
-            Logger.Info("Calling CandidateService to activate the user {0}.", username);
+            _logger.Info("Calling CandidateService to activate the user {0}.", username);
 
             _activateCandidateStrategy.ActivateCandidate(username, activationCode);
         }
@@ -117,14 +115,14 @@
             Condition.Requires(username).IsNotNullOrEmpty();
             Condition.Requires(password).IsNotNullOrEmpty();
 
-            Logger.Debug("Calling CandidateService to authenticate the user {0}.", username);
+            _logger.Debug("Calling CandidateService to authenticate the user {0}.", username);
 
             return _authenticateCandidateStrategy.AuthenticateCandidate(username, password);
         }
 
         public Candidate GetCandidate(Guid id)
         {
-            Logger.Debug("Calling CandidateService to get the user with Id={0}.", id);
+            _logger.Debug("Calling CandidateService to get the user with Id={0}.", id);
             return _candidateReadRepository.Get(id);
         }
 
@@ -132,7 +130,7 @@
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
-            Logger.Debug("Calling CandidateService to get the user {0}.", username);
+            _logger.Debug("Calling CandidateService to get the user {0}.", username);
 
             return _candidateReadRepository.Get(username);
         }
@@ -141,7 +139,7 @@
         {
             Condition.Requires(candidate);
 
-            Logger.Debug("Calling CandidateService to save a candidate.");
+            _logger.Debug("Calling CandidateService to save a candidate.");
 
             return _saveCandidateStrategy.SaveCandidate(candidate);
         }
@@ -151,7 +149,7 @@
             Condition.Requires(username).IsNotNullOrEmpty();
             Condition.Requires(accountUnlockCode).IsNotNullOrEmpty();
 
-            Logger.Debug("Calling CandidateService to unlock the account of the user {0}.", username);
+            _logger.Debug("Calling CandidateService to unlock the account of the user {0}.", username);
 
             _unlockAccountStrategy.UnlockAccount(username, accountUnlockCode);
         }
@@ -162,7 +160,7 @@
             Condition.Requires(passwordCode).IsNotNullOrEmpty();
             Condition.Requires(newPassword).IsNotNullOrEmpty();
 
-            Logger.Debug("Calling CandidateService to reset the password for the user {0}.", username);
+            _logger.Debug("Calling CandidateService to reset the password for the user {0}.", username);
 
             _resetForgottenPasswordStrategy.ResetForgottenPassword(username, passwordCode, newPassword);
         }
@@ -171,7 +169,7 @@
         {
             Condition.Requires(candidateId);
 
-            Logger.Debug(
+            _logger.Debug(
                 "Calling CandidateService to create an apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
@@ -182,7 +180,7 @@
         {
             Condition.Requires(candidateId);
 
-            Logger.Debug(
+            _logger.Debug(
                 "Calling CandidateService to get the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
@@ -193,7 +191,7 @@
         {
             Condition.Requires(candidateId);
 
-            Logger.Debug(
+            _logger.Debug(
                 "Calling CandidateService to create a traineeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, traineeshipVacancyId);
 
@@ -204,7 +202,7 @@
         {
             Condition.Requires(candidateId);
 
-            Logger.Debug(
+            _logger.Debug(
                 "Calling CandidateService to archive the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
@@ -215,7 +213,7 @@
         {
             Condition.Requires(candidateId);
 
-            Logger.Debug(
+            _logger.Debug(
                 "Calling CandidateService to unarchive the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
@@ -226,7 +224,7 @@
         {
             Condition.Requires(candidateId);
 
-            Logger.Debug(
+            _logger.Debug(
                 "Calling CandidateService to delete the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
@@ -237,7 +235,7 @@
         {
             Condition.Requires(candidateId);
 
-            Logger.Debug(
+            _logger.Debug(
                 "Calling CandidateService to get the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
@@ -248,7 +246,7 @@
         {
             Condition.Requires(apprenticeshipApplication);
 
-            Logger.Debug(
+            _logger.Debug(
                 "Calling CandidateService to save the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
@@ -259,7 +257,7 @@
         {
             Condition.Requires(candidateId);
 
-            Logger.Debug(
+            _logger.Debug(
                 "Calling CandidateService to get the apprenticeship applications of the user with Id={0}.",
                 candidateId);
 
@@ -270,7 +268,7 @@
         {
             Condition.Requires(candidateId);
 
-            Logger.Debug(
+            _logger.Debug(
                 "Calling CandidateService to submit the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
@@ -282,7 +280,7 @@
         {
             Condition.Requires(candidateId);
 
-            Logger.Debug(
+            _logger.Debug(
                 "Calling CandidateService to submit the traineeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
@@ -294,7 +292,7 @@
         {
             Condition.Requires(candidateId);
 
-            Logger.Debug(
+            _logger.Debug(
                 "Calling CandidateService to get the traineeship applications of the user with Id={0}.",
                 candidateId);
 
@@ -306,7 +304,7 @@
             Condition.Requires(candidateId);
             Condition.Requires(vacancyId).IsGreaterOrEqual(0);
 
-            Logger.Debug("Calling CandidateService to get the apprenticeship vacancy ID {0} for candidaqte ID {1}.", vacancyId, candidateId);
+            _logger.Debug("Calling CandidateService to get the apprenticeship vacancy ID {0} for candidaqte ID {1}.", vacancyId, candidateId);
 
             return _candidateApprenticeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
         }
@@ -316,7 +314,7 @@
             Condition.Requires(candidateId);
             Condition.Requires(vacancyId).IsGreaterOrEqual(0);
 
-            Logger.Debug("Calling CandidateService to get the traineeship vacancy ID {0} for candidaqte ID {1}.", vacancyId, candidateId);
+            _logger.Debug("Calling CandidateService to get the traineeship vacancy ID {0} for candidaqte ID {1}.", vacancyId, candidateId);
 
             return _candidateTraineeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
         }
