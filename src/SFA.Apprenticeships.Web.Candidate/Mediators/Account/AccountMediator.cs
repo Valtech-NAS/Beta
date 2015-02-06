@@ -152,9 +152,11 @@
                 {
                     return GetMediatorResponse(Codes.AccountMediator.AcceptTermsAndConditions.SuccessfullyAccepted);
                 }
-
             }
-            catch{}
+            catch
+            {
+                // returns ErrorAccepting
+            }
 
             return GetMediatorResponse(Codes.AccountMediator.AcceptTermsAndConditions.ErrorAccepting);
         }
