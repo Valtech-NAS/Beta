@@ -307,16 +307,11 @@ WriteLiteral("                                </ul>\r\n                         
             
             #line 45 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                     }
+
             
             #line default
             #line hidden
-            
-            #line 45 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-                                                                
-            
-            #line default
-            #line hidden
-WriteLiteral("<div");
+WriteLiteral("                    <div");
 
 WriteLiteral(" class=\"form-group\"");
 
@@ -331,7 +326,7 @@ WriteLiteral(">Within</label>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 47 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 48 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                    Write(Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new {@id = "loc-within", @name = "WithinDistance"}));
 
             
@@ -352,7 +347,7 @@ WriteLiteral(">Apprenticeship level</label>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 51 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 52 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                    Write(Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new {@id = "apprenticeship-level", @name = "ApprenticeshipLevel"}));
 
             
@@ -387,7 +382,7 @@ WriteLiteral("></div>\r\n                    </div>\r\n\r\n");
 WriteLiteral("                    ");
 
             
-            #line 60 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 61 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                Write(Html.HiddenFor(m => m.Latitude));
 
             
@@ -398,7 +393,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 61 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 62 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                Write(Html.HiddenFor(m => m.Longitude));
 
             
@@ -409,7 +404,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 62 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 63 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                Write(Html.Hidden("Hash", Model.LatLonLocHash()));
 
             
@@ -420,7 +415,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                    ");
 
             
-            #line 63 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+            #line 64 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
                Write(Html.HiddenFor(m => m.SearchMode));
 
             

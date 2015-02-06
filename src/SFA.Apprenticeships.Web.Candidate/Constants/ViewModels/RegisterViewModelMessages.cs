@@ -56,7 +56,6 @@
 
         public static class TermsAndConditions
         {
-            //TODO: Check virtual root on href path
             public const string LabelText = "I accept the <a href='/terms' target='_blank' onclick=\"Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/register/readterms', 'WT.dl', '99', 'WT.ti', 'Read Terms and Conditions'] });\">terms and conditions</a>";
             public const string MustAcceptTermsAndConditions = "Please accept the terms and conditions";
         }

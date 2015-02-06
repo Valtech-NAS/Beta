@@ -64,9 +64,6 @@
         }
 
         public VacancyDetailViewModel VacancyDetail { get; set; }
-        //TODO Make this the summary info as don't need all details
-        //TODO: Keep this here?
-        //public CandidateViewModelBase Candidate { get; set; }
 
         public DateTime? DateUpdated { get; set; }
         public int VacancyId { get; set; }

@@ -42,7 +42,8 @@
                                 </ul>
                             </div>
                         </details>
-                    }@* TODO::Create a form control for this. *@<div class="form-group">
+                    }
+                    <div class="form-group">
                         <label for="loc-within" class="form-label">Within</label>
                         @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new {@id = "loc-within", @name = "WithinDistance"})
                     </div>
