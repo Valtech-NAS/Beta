@@ -6,54 +6,54 @@
         {
             public class Archive
             {
-                public const string SuccessfullyArchived = "SuccessfullyArchived";
-                public const string ErrorArchiving = "ErrorArchiving";
+                public const string SuccessfullyArchived = "AccountMediator.Archive.SuccessfullyArchived";
+                public const string ErrorArchiving = "AccountMediator.Archive.ErrorArchiving";
             }
 
             public class Index
             {
-                public const string Success = "Success";
+                public const string Success = "AccountMediator.Index.Success";
             }
 
             public class Delete
             {
-                public const string SuccessfullyDeleted = "SuccessfullyDeleted";
-                public const string SuccessfullyDeletedExpiredOrWithdrawn = "SuccessfullyDeletedExpiredOrWithdrawn";
-                public const string ErrorDeleting = "ErrorDeleting";
-                public const string AlreadyDeleted = "AlreadyDeleted";
+                public const string SuccessfullyDeleted = "AccountMediator.Delete.SuccessfullyDeleted";
+                public const string SuccessfullyDeletedExpiredOrWithdrawn = "AccountMediator.Delete.SuccessfullyDeletedExpiredOrWithdrawn";
+                public const string ErrorDeleting = "AccountMediator.Delete.ErrorDeleting";
+                public const string AlreadyDeleted = "AccountMediator.Delete.AlreadyDeleted";
             }
 
             public class Settings
             {
-                public const string Success = "Success";
-                public const string ValidationError = "ValError";
-                public const string SaveError = "SaveError";
+                public const string Success = "AccountMediator.Settings.Success";
+                public const string ValidationError = "AccountMediator.Settings.ValidationError";
+                public const string SaveError = "AccountMediator.Settings.SaveError";
             }
 
             public class DismissTraineeshipPrompts
             {
-                public const string SuccessfullyDismissed = "SuccessfullyDismissed";
-                public const string ErrorDismissing = "ErrorDismissing";
+                public const string SuccessfullyDismissed = "AccountMediator.DismissTraineeshipPrompts.SuccessfullyDismissed";
+                public const string ErrorDismissing = "AccountMediator.DismissTraineeshipPrompts.ErrorDismissing";
             }
 
             public class Track
             {
-                public const string SuccessfullyTracked = "SuccessfullyTracked";
-                public const string ErrorTracking = "ErrorTracking";
+                public const string SuccessfullyTracked = "AccountMediator.Track.SuccessfullyTracked";
+                public const string ErrorTracking = "AccountMediator.Track.ErrorTracking";
             }
 
             public class AcceptTermsAndConditions
             {
-                public const string SuccessfullyAccepted = "SuccessfullyAccepted";
-                public const string AlreadyAccepted = "AlreadyAccepted";
-                public const string ErrorAccepting = "ErrorAccepting";
+                public const string SuccessfullyAccepted = "AccountMediator.AcceptTermsAndConditions.SuccessfullyAccepted";
+                public const string AlreadyAccepted = "AccountMediator.AcceptTermsAndConditions.AlreadyAccepted";
+                public const string ErrorAccepting = "AccountMediator.AcceptTermsAndConditions.ErrorAccepting";
             }
 
             public class VacancyDetails
             {
-                public const string Available = "ApprenticeshipDetails.Available";
-                public const string Unavailable = "ApprenticeshipDetails.Unavailable";
-                public const string Error = "ApprenticeshipDetails.Error";
+                public const string Available = "AccountMediator.ApprenticeshipDetails.Available";
+                public const string Unavailable = "AccountMediator.ApprenticeshipDetails.Unavailable";
+                public const string Error = "AccountMediator.ApprenticeshipDetails.Error";
             }
         }
     }

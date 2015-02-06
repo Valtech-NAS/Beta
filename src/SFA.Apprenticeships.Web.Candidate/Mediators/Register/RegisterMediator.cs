@@ -103,15 +103,15 @@
 
             if (!validationResult.IsValid)
             {
-                return GetMediatorResponse(Codes.RegisterMediatorCodes.ForgotttenPassword.FailedValidation, forgottenPasswordViewModel, validationResult);
+                return GetMediatorResponse(Codes.RegisterMediatorCodes.ForgottenPassword.FailedValidation, forgottenPasswordViewModel, validationResult);
             }
 
             if (_candidateServiceProvider.RequestForgottenPasswordResetCode(forgottenPasswordViewModel))
             {
-                return GetMediatorResponse(Codes.RegisterMediatorCodes.ForgotttenPassword.PasswordSent, forgottenPasswordViewModel);
+                return GetMediatorResponse(Codes.RegisterMediatorCodes.ForgottenPassword.PasswordSent, forgottenPasswordViewModel);
             }
 
-            return GetMediatorResponse(Codes.RegisterMediatorCodes.ForgotttenPassword.FailedToSendResetCode, forgottenPasswordViewModel, PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
+            return GetMediatorResponse(Codes.RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode, forgottenPasswordViewModel, PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
         }
 
         public MediatorResponse<PasswordResetViewModel> ResetPassword(PasswordResetViewModel resetViewModel)

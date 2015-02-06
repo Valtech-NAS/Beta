@@ -37,7 +37,7 @@
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(Codes.ApprenticeshipApplication.Resume.HasError, null, model.ViewModelMessage, UserMessageLevel.Warning);
             }
 
-            return GetMediatorResponse<ApprenticeshipApplicationViewModel>(Codes.ApprenticeshipApplication.Submit.Ok, parameters: new { vacancyId });
+            return GetMediatorResponse<ApprenticeshipApplicationViewModel>(Codes.ApprenticeshipApplication.Resume.Ok, parameters: new { vacancyId });
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Apply(Guid candidateId, int vacancyId)

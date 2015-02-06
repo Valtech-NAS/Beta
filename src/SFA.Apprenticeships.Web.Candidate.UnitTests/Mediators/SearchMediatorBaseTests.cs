@@ -29,6 +29,8 @@
         [TestCase("488832apprenticeships", 488832, true)]
         [TestCase("447888f", 447888, true)]
         [TestCase("48830310 day weather forecast for lichfield", 48830310, true)]
+        [TestCase("48830310 day weather forecast for lichfield", 48830310, true)]
+        [TestCase("[[imgUrl]]", 0, false)]
         public void TryParseVacancyIdTests(string vacancyIdString, int expectedVacancyId, bool expectSuccess)
         {
             int vacancyId;

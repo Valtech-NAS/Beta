@@ -152,13 +152,13 @@
 
                 switch (response.Code)
                 {
-                    case Codes.RegisterMediatorCodes.ForgotttenPassword.FailedValidation:
+                    case Codes.RegisterMediatorCodes.ForgottenPassword.FailedValidation:
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(response.ViewModel);
-                    case Codes.RegisterMediatorCodes.ForgotttenPassword.FailedToSendResetCode:
+                    case Codes.RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
-                    case Codes.RegisterMediatorCodes.ForgotttenPassword.PasswordSent:
+                    case Codes.RegisterMediatorCodes.ForgottenPassword.PasswordSent:
                         UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
                         return RedirectToAction("ResetPassword");
                     default:

@@ -24,6 +24,19 @@
             response.AssertCode(Codes.ApprenticeshipSearch.Details.VacancyNotFound, false);
         }
 
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase(" 491802")]
+        [TestCase("VAC000547307")]
+        [TestCase("[[imgUrl]]")]
+        public void GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
+        {
+            var response = Mediator.Details(vacancyId, null);
+
+            response.AssertCode(Codes.ApprenticeshipSearch.Details.VacancyNotFound, false);
+        }
+
         [Test]
         public void VacancyHasError()
         {

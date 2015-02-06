@@ -6,33 +6,33 @@
         {
             public class Register
             {
-                public const string ValidationFailed = "ValidationFailed";
-                public const string RegistrationFailed = "RegistrationFailed";
-                public const string SuccessfullyRegistered = "SuccessfullyRegistered";
+                public const string ValidationFailed = "RegisterMediatorCodes.Register.ValidationFailed";
+                public const string RegistrationFailed = "RegisterMediatorCodes.Register.RegistrationFailed";
+                public const string SuccessfullyRegistered = "RegisterMediatorCodes.Register.SuccessfullyRegistered";
             }
 
             public class Activate
             {
-                public const string SuccessfullyActivated = "SuccessfullyActivated";
-                public const string InvalidActivationCode = "InvalidActivationCode";
-                public const string FailedValidation = "FailedValidation";
-                public const string ErrorActivating = "ErrorActivating";
+                public const string SuccessfullyActivated = "RegisterMediatorCodes.Activate.SuccessfullyActivated";
+                public const string InvalidActivationCode = "RegisterMediatorCodes.Activate.InvalidActivationCode";
+                public const string FailedValidation = "RegisterMediatorCodes.Activate.FailedValidation";
+                public const string ErrorActivating = "RegisterMediatorCodes.Activate.ErrorActivating";
             }
 
-            public class ForgotttenPassword
+            public class ForgottenPassword
             {
-                public const string FailedToSendResetCode = "FailedToSendResetCode";
-                public const string PasswordSent = "PasswordSent";
-                public const string FailedValidation = "FailedValidation";
+                public const string FailedToSendResetCode = "RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode";
+                public const string PasswordSent = "RegisterMediatorCodes.ForgottenPassword.PasswordSent";
+                public const string FailedValidation = "RegisterMediatorCodes.ForgottenPassword.FailedValidation";
             }
 
             public class ResetPassword
             {
-                public const string FailedValidation = "FailedValidation";
-                public const string InvalidResetCode = "InvalidResetCode";
-                public const string FailedToResetPassword = "FailedToResetPassword";
-                public const string UserAccountLocked = "UserAccountLocked";
-                public const string SuccessfullyResetPassword = "SuccessfullyResetPassword";
+                public const string FailedValidation = "RegisterMediatorCodes.ResetPassword.FailedValidation";
+                public const string InvalidResetCode = "RegisterMediatorCodes.ResetPassword.InvalidResetCode";
+                public const string FailedToResetPassword = "RegisterMediatorCodes.ResetPassword.FailedToResetPassword";
+                public const string UserAccountLocked = "RegisterMediatorCodes.ResetPassword.UserAccountLocked";
+                public const string SuccessfullyResetPassword = "RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword";
             }
         }
     }

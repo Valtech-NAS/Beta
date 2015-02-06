@@ -6,28 +6,28 @@
         {
             public class Index
             {
-                public const string Ok = "search";
+                public const string Ok = "ApprenticeshipSearch.Index.Ok";
             }
 
             public class SearchValidation
             {
-                public const string Ok = "results";
-                public const string ValidationError = "validationError";
+                public const string Ok = "ApprenticeshipSearch.SearchValidation.Ok";
+                public const string ValidationError = "ApprenticeshipSearch.SearchValidation.ValidationError";
             }
 
             public class Results
             {
-                public const string HasError = "message";
-                public const string Ok = "results";
-                public const string ValidationError = "validationError";
-                public const string ExactMatchFound = "exactMatchFound";
+                public const string HasError = "ApprenticeshipSearch.Results.HasError";
+                public const string Ok = "ApprenticeshipSearch.Results.Ok";
+                public const string ValidationError = "ApprenticeshipSearch.Results.ValidationError";
+                public const string ExactMatchFound = "ApprenticeshipSearch.Results.ExactMatchFound";
             }
 
             public class Details
             {
-                public const string VacancyNotFound = "410";
-                public const string VacancyHasError = "message";
-                public const string Ok = "details";
+                public const string VacancyNotFound = "ApprenticeshipSearch.Details.VacancyNotFound";
+                public const string VacancyHasError = "ApprenticeshipSearch.Details.VacancyHasError";
+                public const string Ok = "ApprenticeshipSearch.Details.Ok";
             }
         }
     }

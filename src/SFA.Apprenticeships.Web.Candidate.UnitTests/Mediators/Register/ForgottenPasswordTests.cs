@@ -23,7 +23,7 @@
 
             var response = _registerMediator.ForgottenPassword(forgottenPasswordViewModel);
 
-            response.AssertValidationResult(Codes.RegisterMediatorCodes.ForgotttenPassword.FailedValidation, true);
+            response.AssertValidationResult(Codes.RegisterMediatorCodes.ForgottenPassword.FailedValidation, true);
         }
 
         [Test]
@@ -39,7 +39,7 @@
 
             var response = _registerMediator.ForgottenPassword(forgottenPasswordViewModel);
 
-            response.AssertCode(Codes.RegisterMediatorCodes.ForgotttenPassword.PasswordSent, true);
+            response.AssertCode(Codes.RegisterMediatorCodes.ForgottenPassword.PasswordSent, true);
         }
 
         [Test]
@@ -55,7 +55,7 @@
 
             var response = _registerMediator.ForgottenPassword(forgottenPasswordViewModel);
 
-            response.AssertMessage(Codes.RegisterMediatorCodes.ForgotttenPassword.FailedToSendResetCode,
+            response.AssertMessage(Codes.RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode,
                 PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning, true);
         }
     }

@@ -6,21 +6,21 @@
         {
             public class Index
             {
-                public const string Ok = "search";
+                public const string Ok = "TraineeshipSearch.Index.Ok";
             }
 
             public class Results
             {
-                public const string Ok = "details";
-                public const string ValidationError = "validationError";
-                public const string HasError = "message";
+                public const string Ok = "TraineeshipSearch.Results.Ok";
+                public const string ValidationError = "TraineeshipSearch.Results.ValidationError";
+                public const string HasError = "TraineeshipSearch.Results.HasError";
             }
 
             public class Details
             {
-                public const string Ok = "details";
-                public const string VacancyNotFound = "410";
-                public const string VacancyHasError = "message";
+                public const string Ok = "TraineeshipSearch.Details.Ok";
+                public const string VacancyNotFound = "TraineeshipSearch.Details.VacancyNotFound";
+                public const string VacancyHasError = "TraineeshipSearch.Details.VacancyHasError";
             }
         }
     }

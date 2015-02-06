@@ -40,6 +40,20 @@
             response.AssertCode(Codes.TraineeshipSearch.Details.VacancyNotFound, false);
         }
 
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase(" 491802")]
+        [TestCase("VAC000547307")]
+        [TestCase("[[imgUrl]]")]
+        public void GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
+        {
+            var mediator = GetMediator(null);
+            var response = mediator.Details(vacancyId, null, null);
+
+            response.AssertCode(Codes.TraineeshipSearch.Details.VacancyNotFound, false);
+        }
+
         [Test]
         public void VacancyUnavailable()
         {

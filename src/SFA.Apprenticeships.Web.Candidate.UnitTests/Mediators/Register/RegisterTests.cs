@@ -146,7 +146,7 @@
             };
             var response = _registerMediator.Register(registerViewModel);
 
-            Assert.AreEqual(isValid, response.Code == "SuccessfullyRegistered");
+            Assert.AreEqual(isValid, response.Code == Codes.RegisterMediatorCodes.Register.SuccessfullyRegistered);
         }
 
         [Test]
