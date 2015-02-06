@@ -60,11 +60,17 @@ Scenario: Email is not pre populated when navigating to unlock page directly
          | EmailAddress      | Empty |       |
          | AccountUnlockCode | Empty |       |
 
-@US491
+@US491 @US415 
 Scenario: Reset password after locking an account unlocks the account
 	Given I have registered a new candidate
 	When I choose SignoutLink
 	Then I am on the LoginPage page
+	When I am on the LoginPage page
+	And I choose SignInButton
+	And I am on the LoginPage page
+	Then I see
+		| Field                     | Rule   | Value |
+		| ValidationFieldErrorCount | Equals | 2     |
 	When I enter data
 		| Field        | Value                  |
 		| EmailAddress | {EmailToken}           |

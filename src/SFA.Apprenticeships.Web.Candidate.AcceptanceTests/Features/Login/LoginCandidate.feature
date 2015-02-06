@@ -11,15 +11,6 @@ Background:
 	And I navigated to the ApprenticeshipSearchPage page
 	Then I am on the ApprenticeshipSearchPage page
 
-@US415 @SmokeTests
-Scenario: As a candidate I must provide an email address and password
-	Given I navigated to the LoginPage page
-	When I am on the LoginPage page
-	And I choose SignInButton
-	And I am on the LoginPage page
-	Then I see
-		| Field                     | Rule   | Value |
-		| ValidationFieldErrorCount | Equals | 2     |
 @US415
 Scenario: As a candidate I want to be redirected to the previous page when I login
 	Given I registered an account and activated it
@@ -27,9 +18,9 @@ Scenario: As a candidate I want to be redirected to the previous page when I log
 	When I choose SignInLink
 	And I am on the LoginPage page
 	And I enter data
-		| Field        | Value               |
-		| EmailAddress | {EmailToken} |
-		| Password     | {PasswordToken}     |
+		| Field        | Value           |
+		| EmailAddress | {EmailToken}    |
+		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the ApprenticeshipSearchPage page
 
