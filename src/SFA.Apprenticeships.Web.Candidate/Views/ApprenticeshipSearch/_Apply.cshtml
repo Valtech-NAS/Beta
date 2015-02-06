@@ -57,12 +57,7 @@ else if (Model.VacancyStatus == VacancyStatuses.Live)
     <a role="button" id="apply-button" class="button button-with-hint" title="Sign in to apply" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })" @Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signin/", "Apprenticeship – Sign In to Apply", ViewData["AnalyticsButtonPosition"]))>Sign in to apply</a>
 }
 
-@switch (Model.VacancyStatus)
+@if (Model.VacancyStatus == VacancyStatuses.Live)
 {
-    case VacancyStatuses.Live:
-        <p id="vacancy-closing-date" class="copy-16">Closing date: @Model.ClosingDate.ToFriendlyClosingToday()</p>
-        break;
-    case VacancyStatuses.Expired:
-        <p id="vacancy-closed-on-date"><strong>Closed on:</strong> @Html.DisplayFor(m => m.ClosingDate)</p>
-        break;
+    <p id="vacancy-closing-date" class="copy-16">Closing date: @Model.ClosingDate.ToFriendlyClosingToday()</p>
 }

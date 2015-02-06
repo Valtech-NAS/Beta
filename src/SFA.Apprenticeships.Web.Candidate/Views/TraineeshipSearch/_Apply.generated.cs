@@ -291,14 +291,13 @@ WriteLiteral("\r\n");
 
             
             #line 43 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
- switch (Model.VacancyStatus)
+ if (Model.VacancyStatus == VacancyStatuses.Live)
 {
-    case VacancyStatuses.Live:
 
             
             #line default
             #line hidden
-WriteLiteral("        <p");
+WriteLiteral("    <p");
 
 WriteLiteral(" id=\"vacancy-closing-date\"");
 
@@ -307,40 +306,16 @@ WriteLiteral(" class=\"copy-16\"");
 WriteLiteral(">Closing date: ");
 
             
+            #line 45 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
+                                                          Write(Model.ClosingDate.ToFriendlyClosingToday());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</p>\r\n");
+
+            
             #line 46 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-                                                              Write(Model.ClosingDate.ToFriendlyClosingToday());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n");
-
-            
-            #line 47 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-        break;
-    case VacancyStatuses.Expired:
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <p");
-
-WriteLiteral(" id=\"vacancy-closed-on-date\"");
-
-WriteLiteral("><strong>Closed on:</strong> ");
-
-            
-            #line 49 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-                                                              Write(Html.DisplayFor(m => m.ClosingDate));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n");
-
-            
-            #line 50 "..\..\Views\TraineeshipSearch\_Apply.cshtml"
-        break;
 }
 
             

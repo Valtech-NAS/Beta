@@ -281,21 +281,16 @@ else
                                         else
                                         {
                                             @Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
-                                            <br />
 
-                                            switch (application.VacancyStatus)
+                                            if (application.VacancyStatus == VacancyStatuses.Live)
                                             {
-                                                case VacancyStatuses.Live:
-                                                    <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
-                                                    break;
-                                                case VacancyStatuses.Expired:
-                                                    <strong>Closed on:</strong> @Html.DisplayFor(m => application.ClosingDate)
-                                                    break;
+                                                <br />
+                                                <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
                                             }
                                         }
                                     </td>
                                     <td class="ta-center">
-                                        @if (application.ApplicationStatus == ApplicationStatuses.Draft && (application.VacancyStatus == VacancyStatuses.Live))
+                                        @if (application.ApplicationStatus == ApplicationStatuses.Draft && application.VacancyStatus == VacancyStatuses.Live)
                                         {
                                             @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = application.VacancyId }, new { @class = "resume-link" })
                                         }

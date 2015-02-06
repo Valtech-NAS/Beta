@@ -211,21 +211,21 @@
         }
 
         [Test]
-        public void ShouldShowClosedOnDateForExpiredVacancy()
+        public void ShouldNotShowClosingDateForExpiredVacancy()
         {
             // Arrange.
             var index = new Apply();
             var vm = new VacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Expired,
-                ClosingDate = DateTime.Today.AddDays(42)
+                ClosingDate = DateTime.Today.AddDays(-42)
             };
 
             // Act.
             var view = index.RenderAsHtml(vm);
 
             // Assert.
-            view.GetElementbyId("vacancy-closed-on-date").Should().NotBeNull();
+            view.GetElementbyId("vacancy-closing-date").Should().BeNull();
         }
 
         private static HttpContextBase CreateMockContext(bool isAuthenticated)

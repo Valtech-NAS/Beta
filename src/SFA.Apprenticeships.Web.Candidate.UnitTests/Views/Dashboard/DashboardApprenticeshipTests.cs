@@ -72,7 +72,6 @@
             }
         }
 
-
         [TestCase(0, 0, false)]
         [TestCase(2, 0, true)]
         [TestCase(2, 3, true)]
@@ -210,7 +209,6 @@
             }
         }
 
-
         public void ShouldShowCandidateSupportMessage()
         {
             // Arrange.
@@ -227,7 +225,7 @@
             elem.Should().NotBeNull();
         }
 
-
+        [Test]
         public void ShouldNotShowCandidateSupportMessage()
         {
             // Arrange.
@@ -244,7 +242,7 @@
             elem.Should().BeNull();
         }
 
-
+        [Test]
         public void ShouldNotShowCandidateSupportMessageWithExpiredApplications()
         {
             // Arrange.

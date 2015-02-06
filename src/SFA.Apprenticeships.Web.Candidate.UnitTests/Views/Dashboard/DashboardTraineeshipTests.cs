@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Dashboard
 {
+    using System;
     using System.Web.Routing;
     using Candidate.ViewModels.Applications;
     using Candidate.Views.Account;
@@ -73,7 +74,7 @@
         }
 
         [TestCase(0,false)]
-        [TestCase(1, true)]
+        [TestCase(2, true)]
         public void ShowTraineeships(int traineeshipCount, bool shouldShow)
         {
             // Arrange.
@@ -90,6 +91,7 @@
             if (shouldShow)
             {
                 traineeshipsCount.Should().NotBeNull();
+                traineeshipsCount.InnerHtml.Should().Be(Convert.ToString(traineeshipCount));
                 traineeshipsTable.Should().NotBeNull();
             }
             else
