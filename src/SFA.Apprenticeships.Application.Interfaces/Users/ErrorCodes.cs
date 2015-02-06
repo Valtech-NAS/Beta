@@ -2,7 +2,6 @@
 {
     public static class ErrorCodes
     {
-        //todo: use meaningful/consistent error code strings
         public const string UserInIncorrectStateError = "User.UserInIncorrectStateError";
         public const string UserPasswordResetCodeExpiredError = "User.UserPasswordResetCodeExpiredError";
         public const string UserAccountLockedError = "User.UserAccountLockedError";
