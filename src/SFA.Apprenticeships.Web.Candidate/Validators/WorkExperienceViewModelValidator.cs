@@ -46,8 +46,6 @@
                 .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.MustBeGreaterThan(maxYear));
 
             RuleFor(x => x.ToYear)
-                .NotEmpty()
-                .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.RequiredErrorText)
                 .Matches(WorkExperienceViewModelMessages.ToYearMessages.WhiteListRegularExpression)
                 .WithMessage(WorkExperienceViewModelMessages.ToYearMessages.WhiteListErrorText)
                 .Must(ValidatorsHelper.BeNowOrInThePast)

@@ -13,6 +13,7 @@ Background:
 @SmokeTests
 Scenario: As a candidate I am on the registration page and all required fields are present and all validators show
 	Given I navigated to the RegisterCandidatePage page
+	And I have created a new email address
 	When I am on the RegisterCandidatePage page
 	And I wait to see Firstname
 	And I wait to see Lastname
@@ -37,6 +38,32 @@ Scenario: As a candidate I am on the registration page and all required fields a
 		| Field | Rule   | Value                  |
 		| Text  | Equals | Please enter last name |
 		| Href  | Equals | #lastname              |
+	When I am on the RegisterCandidatePage page
+	And I enter data
+		 | Field          | Value  |
+		 | PostcodeSearch | N7 8LS |
+	And I choose FindAddresses
+	And I wait 3 seconds
+	And I am on AddressDropdown list item matching criteria
+		| Field | Rule   | Value                  |
+		| Text  | Equals | Flat A, 6 Furlong Road |
+	And I choose WrappedElement
+	And I am on the RegisterCandidatePage page
+	And I enter data
+		| Field           | Value         |
+		| Firstname       | FirstnameTest |
+		| Lastname        | LastnameTest  |
+		| Day             | 01            |
+		| Month           | 01            |
+		| Year            | 1999          |
+		| EmailAddress    | {EmailToken}  |
+		| Phonenumber     | 07999999999   |
+		| Password        | ?Password01!  |
+		| ConfirmPassword | !10drowssaP?  |
+	And I choose HasAcceptedTermsAndConditions
+	Then I see 
+		| Field                     | Rule   | Value |
+		| ValidationFieldErrorCount | Equals | 0     |
 
 @SmokeTests
 Scenario: As a candidate on the registration page I want to be able to pick my address from a list returned from the postcode search
@@ -139,8 +166,6 @@ Scenario: As a candidate I must confirm my password
 		| Href  | Equals | #Password                         |
 
 @SmokeTests
-@Ignore
-#TODO: test server validations?
 Scenario: I cannot enter letters on day, month and year
 	Given I navigated to the RegisterCandidatePage page
 	When I am on the RegisterCandidatePage page

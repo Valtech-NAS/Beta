@@ -42,7 +42,6 @@
 
         public static class ToYearMessages
         {
-            public const string RequiredErrorText = "Please enter year finished";
             public const string MustBeNumericText = "Year finished must be a number";
             public const string WhiteListRegularExpression = Whitelists.YearWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Year finished " + Whitelists.YearWhitelist.ErrorText;
