@@ -5,6 +5,7 @@
         SendActivationCode,
         SendPasswordResetCode,
         SendAccountUnlockCode,
+        SendMobileVerificationCode,
         ApprenticeshipApplicationSubmitted,
         TraineeshipApplicationSubmitted,
         PasswordChanged,

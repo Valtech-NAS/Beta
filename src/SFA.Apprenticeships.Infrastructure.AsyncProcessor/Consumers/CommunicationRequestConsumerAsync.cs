@@ -33,9 +33,12 @@
                 var isOptionalMessageType = message.MessageType == MessageTypes.TraineeshipApplicationSubmitted ||
                                             message.MessageType == MessageTypes.ApprenticeshipApplicationSubmitted;
 
+                // note, some messages are channel specific
+                var isSmsOnly = message.MessageType == MessageTypes.SendMobileVerificationCode;
+
                 var candidate = _candidateReadRepository.Get(candidateId);
 
-                if (!isOptionalMessageType || candidate.CommunicationPreferences.AllowEmail)
+                if ((!isOptionalMessageType || candidate.CommunicationPreferences.AllowEmail) && !isSmsOnly)
                 {
                     SendEmailMessage(message);
                 }
