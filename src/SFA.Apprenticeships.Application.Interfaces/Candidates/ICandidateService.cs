@@ -55,5 +55,9 @@
         ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Guid candidateId, int vacancyId);
 
         TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Guid candidateId, int vacancyId);
+
+        //todo: 1.6: void SendMobileVerificationCode(string username);
+
+        //todo: 1.6: void VerifyMobilecode(string username, string verificationCode);
     }
 }
