@@ -116,12 +116,12 @@
             _candidateServiceProvider.Setup(csp => csp.VerifyPasswordReset(It.IsAny<PasswordResetViewModel>()))
                 .Returns(new PasswordResetViewModel
                 {
-                    UserStatus = UserStatuses.PendingActivation
+                    UserStatus = UserStatuses.PendingActivation,
+                    IsPasswordResetCodeValid = true
                 });
 
             var response = _registerMediator.ResetPassword(resetPasswordViewModel);
 
-            // response.AssertCode(Codes.RegisterMediatorCodes.ResetPassword.UserAccountLocked, true);
             response.AssertMessage(Codes.RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword,
                 PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success, true);
         }

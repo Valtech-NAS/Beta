@@ -21,7 +21,6 @@ Scenario: As a candidate I must provide an email address and password
 		| Field                     | Rule   | Value |
 		| ValidationFieldErrorCount | Equals | 2     |
 @US415
-#TODO: replace with mediator tests?
 Scenario: As a candidate I want to be redirected to the previous page when I login
 	Given I registered an account and activated it
 	And I navigated to the ApprenticeshipSearchPage page
