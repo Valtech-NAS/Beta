@@ -95,7 +95,7 @@
     <Compile Include="Repositories\ITraineeshipApplicationRepository.cs" />
     <Compile Include="Repositories\IApprenticeshipApplicationRepository.cs" />
     <Compile Include="Repositories\IAuthenticationRepository.cs" />
-    <Compile Include="Repositories\IExpiringDraftRepository.cs" />
+    <Compile Include="Repositories\IExpiringApprenticeshipApplicationDraftRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\ICandidateRepository.cs" />
     <Compile Include="Repositories\IWriteRepository.cs" />
