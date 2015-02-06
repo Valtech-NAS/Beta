@@ -47,7 +47,7 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ApplyWebTrends]
         [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
-        public async Task<ActionResult> Apply(int id)
+        public async Task<ActionResult> Apply(string id)
         {
             return await Task.Run<ActionResult>(() =>
             {

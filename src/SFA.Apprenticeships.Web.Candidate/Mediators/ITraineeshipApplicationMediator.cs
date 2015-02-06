@@ -5,7 +5,7 @@
 
     public interface ITraineeshipApplicationMediator
     {
-        MediatorResponse<TraineeshipApplicationViewModel> Apply(Guid candidateId, int vacancyId);
+        MediatorResponse<TraineeshipApplicationViewModel> Apply(Guid candidateId, string vacancyIdString);
 
         MediatorResponse<TraineeshipApplicationViewModel> Submit(Guid candidateId, int vacancyId, TraineeshipApplicationViewModel viewModel);
 

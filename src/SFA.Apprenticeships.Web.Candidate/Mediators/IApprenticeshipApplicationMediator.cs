@@ -7,7 +7,7 @@
     {
         MediatorResponse<ApprenticeshipApplicationViewModel> Resume(Guid candidateId, int vacancyId);
 
-        MediatorResponse<ApprenticeshipApplicationViewModel> Apply(Guid candidateId, int vacancyId);
+        MediatorResponse<ApprenticeshipApplicationViewModel> Apply(Guid candidateId, string vacancyIdString);
 
         MediatorResponse<ApprenticeshipApplicationViewModel> PreviewAndSubmit(Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel viewModel);
 

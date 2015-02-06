@@ -40,8 +40,15 @@
             return GetMediatorResponse<ApprenticeshipApplicationViewModel>(Codes.ApprenticeshipApplication.Resume.Ok, parameters: new { vacancyId });
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> Apply(Guid candidateId, int vacancyId)
+        public MediatorResponse<ApprenticeshipApplicationViewModel> Apply(Guid candidateId, string vacancyIdString)
         {
+            int vacancyId;
+
+            if (!TryParseVacancyId(vacancyIdString, out vacancyId))
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(Codes.ApprenticeshipApplication.Apply.VacancyNotFound);
+            }
+
             var model = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
 
             if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)

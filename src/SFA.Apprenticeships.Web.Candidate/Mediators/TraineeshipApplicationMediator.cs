@@ -21,8 +21,15 @@
             _traineeshipApplicationProvider = traineeshipApplicationProvider;
         }
 
-        public MediatorResponse<TraineeshipApplicationViewModel> Apply(Guid candidateId, int vacancyId)
+        public MediatorResponse<TraineeshipApplicationViewModel> Apply(Guid candidateId, string vacancyIdString)
         {
+            int vacancyId;
+
+            if (!TryParseVacancyId(vacancyIdString, out vacancyId))
+            {
+                return GetMediatorResponse<TraineeshipApplicationViewModel>(Codes.TraineeshipApplication.Apply.VacancyNotFound);
+            }
+
             var model = _traineeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (model.HasError())

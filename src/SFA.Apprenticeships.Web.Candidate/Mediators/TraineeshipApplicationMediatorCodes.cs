@@ -6,6 +6,7 @@
         {
             public class Apply
             {
+                public const string VacancyNotFound = "TraineeshipApplication.Apply.VacancyNotFound";
                 public const string Ok = "TraineeshipApplication.Apply.Ok";
                 public const string HasError = "TraineeshipApplication.Apply.HasError";
             }
