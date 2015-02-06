@@ -220,6 +220,7 @@
     <Compile Include="Mediators\TraineeshipSearch\TestsBase.cs" />
     <Compile Include="Mocks\HttpContextFactory.cs" />
     <Compile Include="Providers\ApplicationProvider\ApprenticeshipApplicationProviderTestsBase.cs" />
+    <Compile Include="Providers\ApplicationProvider\ArchiveApplicationTests.cs" />
     <Compile Include="Providers\ApplicationProvider\GetOrCreateApplicationViewModel.cs" />
     <Compile Include="Providers\ApplicationProvider\GetApplicationViewModel.cs" />
     <Compile Include="Providers\ApplicationProvider\PatchApplicationViewModelTests.cs" />
